@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+.DS_Store
+*.log
+coverage
+tsconfig.tsbuildinfo
+.codex-artifacts/
+.playwright-cli/
+output/
+work_pdf_translation/
+tmp/
+public/current-*.png
+public/qa-*.png

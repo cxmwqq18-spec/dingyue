@@ -1,0 +1,74 @@
+[
+  {
+    "filename": "shortcut-hot",
+    "alt": "Weekly supermarket deals with groceries and household essentials",
+    "prompt": "Square category image for a weekly supermarket deals shortcut, curated mix of fresh groceries, pantry products and household essentials in a bright white retail setting, bold blue and yellow accent props, realistic commercial photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-hot.jpg",
+    "byteLength": 675198
+  },
+  {
+    "filename": "shortcut-fresh",
+    "alt": "Fresh fruit and vegetables in a clean supermarket presentation",
+    "prompt": "Square category image for a fresh produce shortcut, colorful fruit and vegetables arranged neatly in a bright white retail setting, realistic supermarket photography, clean and modern, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-fresh.jpg",
+    "byteLength": 827999
+  },
+  {
+    "filename": "shortcut-food",
+    "alt": "Pantry foods and grocery staples",
+    "prompt": "Square category image for a grocery food shortcut, olive oil, pasta, chocolate, preserves and pantry staples styled on a clean white background, realistic supermarket product photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-food.jpg",
+    "byteLength": 506855
+  },
+  {
+    "filename": "shortcut-household",
+    "alt": "Household cleaning and everyday essentials",
+    "prompt": "Square category image for a household essentials shortcut, laundry detergent, paper towels, cleaning spray and storage items arranged on a bright white background, realistic retail photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-household.jpg",
+    "byteLength": 532995
+  },
+  {
+    "filename": "shortcut-beauty",
+    "alt": "Beauty and skincare products",
+    "prompt": "Square category image for a beauty shortcut, skincare cream jars, serum bottles and soft towels on a bright clean background, realistic commercial beauty photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-beauty.jpg",
+    "byteLength": 533808
+  },
+  {
+    "filename": "shortcut-baby",
+    "alt": "Baby care products and diapers",
+    "prompt": "Square category image for a baby products shortcut, baby diapers, soft baby blanket and gentle care items on a clean bright background, realistic retail photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-baby.jpg",
+    "byteLength": 541628
+  },
+  {
+    "filename": "shortcut-fashion",
+    "alt": "Casual fashion essentials",
+    "prompt": "Square category image for a fashion shortcut, folded t shirts, sneakers and casual accessories styled on a white background, realistic catalog photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-fashion.jpg",
+    "byteLength": 599532
+  },
+  {
+    "filename": "shortcut-electronics",
+    "alt": "Bluetooth earphones and compact electronics",
+    "prompt": "Square category image for an electronics shortcut, wireless bluetooth earphones and compact consumer electronics styled on a clean white background with subtle blue and yellow accents, realistic catalog photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/shortcut-electronics.jpg",
+    "byteLength": 424554
+  },
+  {
+    "filename": "feature-household",
+    "alt": "Household and cleaning essentials in a bright lifestyle scene",
+    "prompt": "Editorial style lifestyle image for household essentials, laundry detergent, paper towels, folded linens and home cleaning accessories arranged in a bright modern kitchen or utility room, clean European retail aesthetic, realistic photography, no text, no labels, no logos, no watermark",
+    "mimeType": "image/jpeg",
+    "outputPath": "/Users/cxm/saas/themes/theme1/assets/image/generated/lidl/feature-household.jpg",
+    "byteLength": 661191
+  }
+]

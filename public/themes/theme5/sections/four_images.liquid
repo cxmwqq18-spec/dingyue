@@ -1,0 +1,359 @@
+{% assign is_galina_editorial = false %}
+{% if shop.id == '145' or shop.domain contains 'galinamcreations.com' %}
+  {% assign is_galina_editorial = true %}
+{% endif %}
+{% if is_galina_editorial %}
+  {% assign gallery_1 = section.settings.image_url_1.src | default: section.settings.image_url_1 %}
+  {% assign gallery_2 = section.settings.image_url_2.src | default: section.settings.image_url_2 %}
+  {% assign gallery_3 = section.settings.image_url_3.src | default: section.settings.image_url_3 %}
+  {% assign gallery_4 = section.settings.image_url_4.src | default: section.settings.image_url_4 %}
+  <style>
+    .galina-follow {
+      background: linear-gradient(180deg, #fffdfa 0%, #f7efe8 100%);
+    }
+    .galina-follow__heading {
+      margin: 0;
+      color: #231916;
+      text-align: center;
+      font-family: "Baskerville", "Times New Roman", serif;
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .galina-follow__sub {
+      max-width: 42rem;
+      margin: 1rem auto 0;
+      color: #6a5446;
+      text-align: center;
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+    .galina-follow__grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2.2rem;
+    }
+    .galina-follow__item {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: 1.4rem;
+      box-shadow: 0 18px 42px rgba(69, 45, 30, 0.1);
+      aspect-ratio: 1 / 1;
+    }
+    .galina-follow__item--tall {
+      aspect-ratio: 0.78 / 1;
+    }
+    .galina-follow__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+    .galina-follow__item:hover img {
+      transform: scale(1.04);
+    }
+    .galina-follow__item::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(18, 12, 9, 0) 35%, rgba(18, 12, 9, 0.28) 100%);
+      content: '';
+      pointer-events: none;
+    }
+    .galina-follow__handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.35rem auto 0;
+      color: #8c684d;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .galina-follow__note {
+      margin-top: 2.4rem;
+      padding: 2rem 2rem 1.8rem;
+      border-radius: 1.75rem;
+      background: #1e1815;
+      box-shadow: 0 24px 54px rgba(30, 24, 21, 0.22);
+      text-align: center;
+    }
+    .galina-follow__note-title {
+      color: #fff8f2;
+      font-family: "Baskerville", "Times New Roman", serif;
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 400;
+      line-height: 1.12;
+    }
+    .galina-follow__note-text {
+      max-width: 38rem;
+      margin: 1rem auto 0;
+      color: rgba(255, 244, 237, 0.78);
+      font-size: 0.97rem;
+      line-height: 1.8;
+    }
+    .galina-follow__note-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.4rem;
+      padding: 0.95rem 1.7rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #c89a6d 0%, #a97853 100%);
+      color: #fffaf6;
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .galina-follow__note-cta:hover,
+    .galina-follow__note-cta:focus {
+      color: #fffaf6;
+      background: linear-gradient(135deg, #cfa47a 0%, #b1815d 100%);
+    }
+    #section_footer_plus.footer {
+      background: #181311 !important;
+      color: #f1e8e0 !important;
+    }
+    #section_footer_plus .footer-column__title,
+    #section_footer_plus .footer-menu__link,
+    #section_footer_plus .footer-info__desc,
+    #section_footer_plus .footer-copyright,
+    #section_footer_plus .footer__payment {
+      color: #f1e8e0 !important;
+    }
+    #section_footer_plus .footer-menu__link {
+      opacity: 0.82;
+    }
+    #section_footer_plus .footer-menu__link:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
+    #section_footer_plus .footer-newsletter__input {
+      border-color: rgba(255, 248, 242, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff8f2;
+    }
+    #section_footer_plus .footer-newsletter__btn.btn.btn-primary {
+      border: none !important;
+      background: linear-gradient(135deg, #c89a6d 0%, #a97853 100%) !important;
+      color: #fffaf6 !important;
+    }
+    #section_footer_plus .footer-copyright {
+      border-top-color: rgba(255, 248, 242, 0.12);
+    }
+    @media (max-width: 991.98px) {
+      .galina-follow__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 767.98px) {
+      .galina-follow__grid {
+        grid-template-columns: 1fr;
+      }
+      .galina-follow__note {
+        padding: 1.6rem 1.2rem 1.5rem;
+      }
+    }
+  </style>
+  <section class="galina-follow">
+    <div class="container container-gap">
+      <h2 class="galina-follow__heading">Follow the Collection</h2>
+      <div class="galina-follow__sub">A closer look at the drape, texture and quiet drama behind our signature pieces, captured in an editorial rhythm that feels polished and real.</div>
+      <div class="galina-follow__grid">
+        <a class="galina-follow__item galina-follow__item--tall" href="/collections/home">
+          <img src="{{ gallery_1 }}" alt="Galina editorial detail">
+        </a>
+        <a class="galina-follow__item" href="/collections/home">
+          <img src="{{ gallery_2 }}" alt="Galina texture detail">
+        </a>
+        <a class="galina-follow__item galina-follow__item--tall" href="/collections/home">
+          <img src="{{ gallery_3 }}" alt="Galina lookbook portrait">
+        </a>
+        <a class="galina-follow__item" href="/collections/home">
+          <img src="{{ gallery_4 }}" alt="Galina product drape">
+        </a>
+      </div>
+      <div class="text-center">
+        <span class="galina-follow__handle">@galinamcreations</span>
+      </div>
+      <div class="galina-follow__note">
+        <div class="galina-follow__note-title">Elegant pieces, thoughtful service, a more complete brand story.</div>
+        <div class="galina-follow__note-text">Explore the full collection or contact us for styling questions, product details and help choosing the right shawl for your occasion.</div>
+        <a class="galina-follow__note-cta" href="/pages/contact-us">Contact Us</a>
+      </div>
+    </div>
+  </section>
+{% else %}
+  <style>.four_images-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%; }
+
+  .four_images__item-3 {
+    grid-row: span 2 / span 2; }
+
+  .four_images__item-4 {
+    grid-column: span 2 / span 2; }
+
+  @media (max-width: 767.98px) {
+    .four_images-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 0 0.9375rem; }
+    .four_images__item-2 {
+      grid-row-start: 2; } }
+  </style>
+  <div class="four_images container container-gap">
+    <div class="row">
+      <div class="four_images-container">
+        {% include 'four_images_item', img: section.settings.image_url_1, link: section.settings.link_to_url_1, defaultImg: '/themes/theme1/assets/image/img1.png', class: 'four_images__item-1', dataTitle: 'Image-1' %}
+        {% include 'four_images_item', img: section.settings.image_url_2, link: section.settings.link_to_url_2, defaultImg: '/themes/theme1/assets/image/img2.png', class: 'four_images__item-2', dataTitle: 'Image-2' %}
+        {% include 'four_images_item', img: section.settings.image_url_3, link: section.settings.link_to_url_3, defaultImg: '/themes/theme1/assets/image/img3.png', class: 'four_images__item-3', dataTitle: 'Image-3' %}
+        {% include 'four_images_item', img: section.settings.image_url_4, link: section.settings.link_to_url_4, defaultImg: '/themes/theme1/assets/image/img4.png', class: 'four_images__item-4', dataTitle: 'Image-4' %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": "four_images",
+  "settings": [
+    {
+      "content": {
+        "en-US": "Image 1",
+        "zh-CN": "图1"
+      },
+      "type": "header"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_url_1",
+      "label": "",
+      "info": {
+        "zh-CN": "建议尺寸（宽*长）：800x800px,固定比例",
+        "en-US": "Recommended resolution (width * height):800x800px, fixed scale"
+      },
+      "default": ""
+    },
+    {
+      "type": "url",
+      "id": "link_to_url_1",
+      "label": {
+        "en-US": "Link",
+        "zh-CN": "链接"
+      },
+      "is_image_link": true,
+      "default": ""
+    },
+    {
+      "content": {
+        "en-US": "Image 2",
+        "zh-CN": "图2"
+      },
+      "type": "header"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_url_2",
+      "label": "",
+      "info": {
+        "zh-CN": "建议尺寸（宽*长）：800x800px,固定比例",
+        "en-US": "Recommended resolution (width * height):800x800px, fixed scale"
+      },
+      "default": ""
+    },
+    {
+      "type": "url",
+      "id": "link_to_url_2",
+      "label": {
+        "en-US": "Link",
+        "zh-CN": "链接"
+      },
+      "is_image_link": true,
+      "default": ""
+    },
+    {
+      "content": {
+        "en-US": "Image 3",
+        "zh-CN": "图3"
+      },
+      "type": "header"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_url_3",
+      "label": "",
+      "info": {
+        "zh-CN": "建议尺寸（宽*长）：688x1424px,固定比例",
+        "en-US": "Recommended resolution(width * height):688x1424px, fixed scale"
+      },
+      "default": ""
+    },
+    {
+      "type": "url",
+      "id": "link_to_url_3",
+      "label": {
+        "en-US": "Link",
+        "zh-CN": "链接"
+      },
+      "is_image_link": true,
+      "default": ""
+    },
+    {
+      "content": {
+        "en-US": "Image 4",
+        "zh-CN": "图4"
+      },
+      "type": "header"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_url_4",
+      "label": "",
+      "info": {
+        "zh-CN": "建议尺寸（宽*长）：1424x688px,固定比例",
+        "en-US": "Recommended resolution(width * height):1424x688px, fixed scale"
+      },
+      "default": ""
+    },
+    {
+      "type": "url",
+      "id": "link_to_url_4",
+      "label": {
+        "en-US": "Link",
+        "zh-CN": "链接"
+      },
+      "is_image_link": true,
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "four_images",
+      "cname": {
+        "zh-CN": "多图-4",
+        "en-US": "Images 4"
+      },
+      "category": {
+        "en-US": "Material",
+        "zh-CN": "素材"
+      },
+      "ccategory": {
+        "en-US": "Material",
+        "zh-CN": "素材"
+      },
+      "display": true,
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

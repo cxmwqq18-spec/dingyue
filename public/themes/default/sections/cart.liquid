@@ -1,0 +1,3 @@
+<div id="cart" class="cart container"></div>
+<div id="mobile-recommended" class="mobile-recommended"></div>
+{% include  'cart',cart:cart,paypal_btn_show:settings.is_paypal_btn_show,recprod:settings.is_cart_recommended_products_show %}

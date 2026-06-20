@@ -1,0 +1,36 @@
+import { NextResponse } from "next/server";
+import { settleGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
+import type { WorkerResultPayload } from "@/lib/worker";
+
+export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
+  const { jobId } = await params;
+  const body = (await request.json().catch(() => ({}))) as WorkerResultPayload;
+  if (!body.siteId || !body.requestId || !body.status || body.jobId !== jobId) {
+    return NextResponse.json({ error: "invalid_worker_result_payload" }, { status: 400 });
+  }
+  try {
+    const result = settleGenerationJob({
+      jobId,
+      siteId: body.siteId,
+      requestId: body.requestId,
+      status: body.status,
+      outputs: body.outputs,
+      providerTrace: body.providerTrace,
+      costTrace: body.costTrace,
+      error: body.error
+    });
+    return NextResponse.json({
+      accepted: true,
+      idempotencyKey: `${body.siteId}:${jobId}:${body.requestId}:result`,
+      alreadyProcessed: result.alreadyProcessed,
+      job: result.job,
+      customer: toPublicCustomer(result.customer),
+      customerBalance: result.customer.balance,
+      ledgerAction: result.ledger ?? null,
+      note: result.alreadyProcessed ? "Duplicate result ignored." : "Persisted result and settled reserved credits."
+    });
+  } catch (error) {
+    const status = error instanceof StoreError ? error.status : 500;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "worker_result_update_failed" }, { status });
+  }
+}

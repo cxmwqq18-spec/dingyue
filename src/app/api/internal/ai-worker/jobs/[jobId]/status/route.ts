@@ -1,0 +1,28 @@
+import { NextResponse } from "next/server";
+import { StoreError, updateGenerationJobStatus } from "@/lib/server-store";
+
+export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
+  const { jobId } = await params;
+  const body = (await request.json().catch(() => ({}))) as { siteId?: string; requestId?: string; status?: string; stage?: string };
+  if (!body.siteId || !body.requestId || !body.status) {
+    return NextResponse.json({ error: "invalid_worker_status_payload" }, { status: 400 });
+  }
+  try {
+    const result = updateGenerationJobStatus({
+      jobId,
+      siteId: body.siteId,
+      requestId: body.requestId,
+      status: body.status,
+      stage: body.stage
+    });
+    return NextResponse.json({
+      accepted: true,
+      job: result.job,
+      alreadyFinal: result.alreadyFinal,
+      note: "Persisted worker status without changing credits."
+    });
+  } catch (error) {
+    const status = error instanceof StoreError ? error.status : 500;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "worker_status_update_failed" }, { status });
+  }
+}

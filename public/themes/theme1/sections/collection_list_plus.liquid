@@ -1,0 +1,307 @@
+<style>.collectioin_list_plus .block-left__gap {
+  margin-bottom: 0.75rem; }
+  @media (min-width: 768px) {
+    .collectioin_list_plus .block-left__gap {
+      padding-right: 0.375rem; } }
+  @media (max-width: 767.98px) {
+    .collectioin_list_plus .block-left__gap {
+      padding: 0 0.375rem; } }
+
+.collectioin_list_plus .block-right__gap .row {
+  margin: 0 -0.75rem; }
+
+@media (max-width: 767.98px) {
+  .collectioin_list_plus .block-right__gap {
+    padding: 0 0.375rem; } }
+
+@media (min-width: 768px) {
+  .collectioin_list_plus .block-right__gap {
+    padding-left: 0.375rem; } }
+
+.collectioin_list_plus .block-right__item:first-child {
+  padding-left: 0.75rem;
+  padding-right: 0.375rem;
+  margin-bottom: 0.75rem; }
+
+.collectioin_list_plus .block-right__item:nth-child(2) {
+  padding-right: 0.75rem;
+  padding-left: 0.375rem;
+  margin-bottom: 0.75rem; }
+
+.collectioin_list_plus .block-right__item:nth-child(3) {
+  padding-left: 0.75rem;
+  padding-right: 0.375rem;
+  margin-bottom: 0; }
+
+.collectioin_list_plus .block-right__item:nth-child(4) {
+  padding-right: 0.75rem;
+  padding-left: 0.375rem;
+  margin-bottom: 0; }
+.lidl-shortcuts__title {
+  margin: 0 0 1.5rem;
+  color: #1d1d1b;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+.lidl-shortcuts__rail {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+.lidl-shortcuts__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+.lidl-shortcuts__label {
+  max-width: 6.5rem;
+  min-height: 3em;
+  margin: 0 auto;
+}
+@media (max-width: 767.98px) {
+  .lidl-shortcuts__rail {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.25rem 0 0.5rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .lidl-shortcuts__rail::-webkit-scrollbar {
+    display: none;
+  }
+  .lidl-shortcuts__item {
+    min-width: 5.875rem;
+  }
+  .lidl-shortcuts__label {
+    max-width: 5.875rem;
+    min-height: 3.2em;
+  }
+}
+</style>
+<div class="container container-gap lidl-shortcuts">
+  {% if section.settings.name %}
+    <h2 class="lidl-shortcuts__title xf_skin_title_font">{{ section.settings.name | escape }}</h2>
+  {% endif %}
+  {% assign shortcut_colors = "#c71b2e,#7b7f8b,#335c67,#c86b1f,#d12229,#355f9d,#2b7a4b,#6e4fa2" | split: "," %}
+  <div class="lidl-shortcuts__rail">
+    {% if section.blocks.size == 0 and shop.env == 1 %}
+      {% for block in (1..6) %}
+        {% assign shortcut_color = shortcut_colors[forloop.index0] | default: "#0050aa" %}
+        <a class="lidl-shortcuts__item" href="#">
+          <span class="lidl-shortcuts__circle" style="--shortcut-color: {{ shortcut_color }};">
+            <span class="lidl-shortcuts__glyph">{{ block }}</span>
+          </span>
+          <span class="lidl-shortcuts__label">Univers {{ block }}</span>
+        </a>
+      {% endfor %}
+    {% else %}
+      {% for block in section.blocks %}
+        {% assign collection_item = collections[block.settings.collection.id] %}
+        {% assign shortcut_color = shortcut_colors[forloop.index0] | default: "#0050aa" %}
+        {% assign shortcut_url = collection_item.url %}
+        {% if shortcut_url == blank and block.settings.collection.url %}
+          {% assign shortcut_url = block.settings.collection.url %}
+        {% endif %}
+        {% assign shortcut_handle = shortcut_url | split: "?" | first | split: "/" | last | downcase %}
+        {% assign shortcut_title = collection_item.name | default: collection_item.title %}
+        {% if shortcut_title == blank and block.settings.collection.title %}
+          {% assign shortcut_title = block.settings.collection.title %}
+        {% endif %}
+        {% if shortcut_title == blank %}
+          {% assign shortcut_title = shortcut_handle | replace: '-', ' ' | replace: '_', ' ' | replace: 'dcor', 'decor' %}
+        {% endif %}
+        {% assign shortcut_title = shortcut_title | strip %}
+        {% assign shortcut_title_key = shortcut_handle %}
+        {% if shortcut_title_key == blank %}
+          {% assign shortcut_title_key = shortcut_title | downcase | replace: '&', ' ' | replace: '_', ' ' | replace: '-', ' ' | replace: 'é', 'e' | replace: 'è', 'e' | replace: 'ê', 'e' | replace: 'à', 'a' | replace: 'ù', 'u' | replace: 'û', 'u' | replace: 'ç', 'c' | strip %}
+        {% endif %}
+        {% if shortcut_title == blank or shortcut_title == 'Collection' %}
+          {% assign shortcut_title = 'Nos sélections' %}
+        {% endif %}
+        {% assign shortcut_asset = '' %}
+        {% if shortcut_title_key == 'tous-les-produits' %}
+          {% assign shortcut_asset = 'https://lidlstyle.saasshopwz.top/public/uploads/226/lidl/cat_food.jpg' %}
+        {% elsif shortcut_title_key == 'promotions' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploader/b0c1006ead3b31894a531f342b1144904f48d1f88212f04e8c8edda0e3f04273.jpg' %}
+        {% elsif shortcut_title_key == 'outils-bricolage' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploader/74ce4093789fd14846368a9e2b658f93a695509a8ac0eac6a78a3116406824b1.jpg' %}
+        {% elsif shortcut_title_key == 'mobilier-jardin' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploader/d4d2c5a6d262bc3b122030bb075a932f59334dfcab087caa0d467b8a91a93a02.jpg' %}
+        {% elsif shortcut_title_key == 'cuisine-electromenager' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploader/b58438d87d8bf95231e61c03b4197ca9d61d6e1ee8fb55829fb38f8444651ea4.jpg' %}
+        {% elsif shortcut_title_key == 'sports-plein-air' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploads/163509/cart/resources/20250816/CB1A32B8-0320-5CAB-6833-3BC6DF4C12D4.jpg' %}
+        {% elsif shortcut_title_key == 'mobilite-electrique' %}
+          {% assign shortcut_asset = 'https://cdn.marvizocontent.com/uploader/187846dda7781e5e1a4ea38cc2953ddd09943efa9094d8a614a8f08af896fe14.jpg' %}
+        {% elsif shortcut_title_key == 'maison-confort' %}
+          {% assign shortcut_asset = 'https://lidlstyle.saasshopwz.top/public/uploads/226/lidl/cat_home.jpg' %}
+        {% elsif shortcut_title_key == 'planters' or shortcut_title_key == 'planter' or shortcut_title_key contains 'jardiniere' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-planters.jpg' %}
+        {% elsif shortcut_title_key == 'hot' or shortcut_title_key contains 'bons plans' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-hot.jpg' %}
+        {% elsif shortcut_title_key == 'fresh' or shortcut_title_key contains 'produits frais' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-fresh.jpg' %}
+        {% elsif shortcut_title_key == 'food' or shortcut_title_key contains 'epicerie' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-food.jpg' %}
+        {% elsif shortcut_title_key == 'household' or shortcut_title_key contains 'maison entretien' or shortcut_title_key contains 'entretien' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-household.jpg' %}
+        {% elsif shortcut_title_key == 'beauty' or shortcut_title_key contains 'beaute' or shortcut_title_key contains 'soin' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-beauty.jpg' %}
+        {% elsif shortcut_title_key == 'baby' or shortcut_title_key contains 'bebe' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-baby.jpg' %}
+        {% elsif shortcut_title_key == 'fashion' or shortcut_title_key contains 'mode' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-fashion.jpg' %}
+        {% elsif shortcut_title_key == 'electronics' or shortcut_title_key contains 'electronique' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-electronics.jpg' %}
+        {% elsif shortcut_title_key == 'vases-propagation' or shortcut_title_key == 'vases propagation' or shortcut_title_key contains 'bouturage' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-vases-propagation.jpg' %}
+        {% elsif shortcut_title_key == 'plant-stands-hangers' or shortcut_title_key == 'plant stands hangers' or shortcut_title_key == 'plantstandshangers' or shortcut_title_key contains 'suspensions' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-plant-stands-hangers.jpg' %}
+        {% elsif shortcut_title_key == 'home-dcor' or shortcut_title_key == 'home dcor' or shortcut_title_key == 'home decor' or shortcut_title_key contains 'deco maison' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-home-decor.jpg' %}
+        {% elsif shortcut_title_key == 'kitchen-dining' or shortcut_title_key == 'kitchen dining' or shortcut_title_key == 'kitchen--dining' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-kitchen-dining.jpg' %}
+        {% elsif shortcut_title_key == 'new-arrivals' or shortcut_title_key == 'new arrivals' or shortcut_title_key contains 'nouveaute' %}
+          {% assign shortcut_asset = '/themes/theme1/assets/image/generated/lidl/shortcut-new-arrivals.jpg' %}
+        {% endif %}
+        {% assign shortcut_image = collection_item.image.src | default: collection_item.image %}
+        {% if shortcut_image == blank %}
+          {% assign shortcut_image = shortcut_asset %}
+        {% endif %}
+        <a class="lidl-shortcuts__item" href="{{ shortcut_url | default: '#' }}">
+          <span class="lidl-shortcuts__circle{% if shortcut_image %} lidl-shortcuts__circle--photo{% endif %}" style="--shortcut-color: {{ shortcut_color }};">
+            {% if shortcut_image %}
+              <img
+                src="{{ shop.default_img }}"
+                class="lazyload imglazy lidl-shortcuts__circle-image"
+                data-src="{{ shortcut_image }}"
+                alt="{{ shortcut_title | escape }}"
+              >
+            {% else %}
+              <span class="lidl-shortcuts__glyph">{{ shortcut_title | slice: 0, 1 }}</span>
+            {% endif %}
+          </span>
+          <span class="lidl-shortcuts__label">{{ shortcut_title }}</span>
+        </a>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<style>
+  [data-section-id='{{section.id}}'] .common__mask_title::after {
+    {% assign titleFont = settings.skin_title_font_family %}
+    font-family: {{titleFont.family}},{{titleFont.fallback_families}};
+    font-style: {{titleFont.style}};
+    font-weight: {{titleFont.weight}};
+    color: {{section.settings.collection_title_color | default: '#ffffff'}};
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "collection_list_plus",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Settings",
+        "zh-CN": "设置"
+      }
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": {
+        "en-US": "Heading",
+        "zh-CN": "标题"
+      },
+      "default": "Collection list",
+      "placeholder": "Collection list"
+    },
+    {
+      "type": "color",
+      "id": "collection_title_color",
+      "default": "#ffffff",
+      "label": {
+        "zh-CN": "专辑名称颜色",
+        "en-US": "Collection"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Add collection",
+        "zh-CN": "添加专辑"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": {
+        "en-US": "Collection",
+        "zh-CN": "专辑"
+      },
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "collection_list_plus",
+      "cname": {
+        "en-US": "Collection list",
+        "zh-CN": "专辑列表"
+      },
+      "category": {
+        "zh-CN": "商品",
+        "en-US": "Products"
+      },
+      "ccategory": {
+        "en-US": "Product",
+        "zh-CN": "商品"
+      },
+      "display": true,
+      "blocks": [
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": {
+            "collection": null
+          }
+        },
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": {
+            "collection": null
+          }
+        },
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": {
+            "collection": null
+          }
+        },
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": {
+            "collection": null
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

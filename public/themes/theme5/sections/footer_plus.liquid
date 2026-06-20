@@ -1,0 +1,903 @@
+{% if theme_page == 'index' %}
+  {% if web_aqxrzs == 'on'  %}
+    {% include 'security_trust_assistant',security:'index',web_aqxrzs_set:web_aqxrzs_set %}
+  {% endif %}
+{% endif %}
+
+{% case section.blocks.size %}
+  {% when 1 %}
+    {% assign class_footer_item = 'footer__item_full-width text-center' %}
+  {% when 2 %}
+    {% assign class_footer_item = 'footer__item_one-half' %}
+  {% when 3 %}
+    {% assign class_footer_item = 'footer__item_one-third' %}
+  {% when 4 %}
+    {% assign class_footer_item = 'footer__item_one-quarter' %}
+{% endcase %}
+
+{% assign BlocksSize = section.blocks.size %}
+{% assign is_galina_footer = false %}
+{% if shop.id == '145' or shop.domain contains 'galinamcreations.com' %}
+  {% assign is_galina_footer = true %}
+{% endif %}
+{% assign is_whiteribbon_footer = false %}
+{% if shop.id == '144' or shop.domain contains 'whiteribbonboutiques.com' %}
+  {% assign is_whiteribbon_footer = true %}
+{% endif %}
+<footer id="section_{{section.id}}"
+  class="footer xf_skin_footer{% if is_galina_footer %} galina-footer{% elsif is_whiteribbon_footer %} whiteribbon-footer{% endif %}"
+  data-section-id="{{ section.id }}"
+  style="background: {{ section.settings.footer_bg_color }};
+    color: {{ section.settings.footer_text_color }};">
+  {% if is_galina_footer %}
+    <style>
+      #section_{{section.id}}.galina-footer {
+        background: linear-gradient(180deg, #faf6f0 0%, {{ section.settings.footer_bg_color }} 100%) !important;
+        border-top: 1px solid rgba(61, 47, 40, .10);
+      }
+      #section_{{section.id}} .galina-footer__shell {
+        padding: 56px 0 26px;
+      }
+      #section_{{section.id}} .galina-footer__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, .9fr)) minmax(0, 1.2fr);
+        gap: 26px;
+        align-items: start;
+      }
+      #section_{{section.id}} .galina-footer__eyebrow,
+      #section_{{section.id}} .galina-footer__heading {
+        display: block;
+        margin: 0 0 14px;
+        color: {{ section.settings.footer_title_color }};
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+      }
+      #section_{{section.id}} .galina-footer__brand-name {
+        margin: 0 0 14px;
+        color: {{ section.settings.footer_title_color }};
+        font-size: 30px;
+        line-height: 1.1;
+        font-weight: 600;
+      }
+      #section_{{section.id}} .galina-footer__copy,
+      #section_{{section.id}} .galina-footer__brand-copy {
+        margin: 0;
+        color: {{ section.settings.footer_text_color }};
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      #section_{{section.id}} .galina-footer__brand-copy + .galina-footer__brand-copy {
+        margin-top: 10px;
+      }
+      #section_{{section.id}} .galina-footer__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 18px;
+        padding: 11px 20px;
+        border: 1px solid rgba(61, 47, 40, .18);
+        border-radius: 999px;
+        color: {{ section.settings.footer_title_color }};
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: background .2s ease, color .2s ease, border-color .2s ease;
+      }
+      #section_{{section.id}} .galina-footer__cta:hover {
+        background: {{ section.settings.footer_title_color }};
+        border-color: {{ section.settings.footer_title_color }};
+        color: #fff;
+      }
+      #section_{{section.id}} .galina-footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      #section_{{section.id}} .galina-footer__link {
+        color: {{ section.settings.footer_text_color }};
+        font-size: 14px;
+        line-height: 1.6;
+        text-decoration: none;
+        transition: color .2s ease, transform .2s ease;
+      }
+      #section_{{section.id}} .galina-footer__link:hover {
+        color: {{ section.settings.footer_title_color }};
+        transform: translateX(2px);
+      }
+      #section_{{section.id}} .galina-footer__newsletter {
+        padding: 22px;
+        border: 1px solid rgba(61, 47, 40, .10);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, .55);
+      }
+      #section_{{section.id}} .galina-footer__newsletter .footer-newsletter__form {
+        margin-top: 18px;
+      }
+      #section_{{section.id}} .galina-footer__newsletter .footer-newsletter__input {
+        height: 50px;
+        border: 1px solid rgba(61, 47, 40, .14);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: none;
+        font-size: 14px;
+      }
+      #section_{{section.id}} .galina-footer__newsletter .footer-newsletter__btn {
+        min-width: 100%;
+        height: 48px;
+        border: none;
+        border-radius: 14px;
+        background: {{ section.settings.footer_title_color }};
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      #section_{{section.id}} .galina-footer__bottom {
+        border-top: 1px solid rgba(61, 47, 40, .10);
+      }
+      #section_{{section.id}} .galina-footer__bottom-inner {
+        display: grid;
+        grid-template-columns: auto minmax(220px, 1fr) auto;
+        gap: 18px;
+        align-items: center;
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+      #section_{{section.id}} .galina-footer__assurance {
+        color: {{ section.settings.footer_text_color }};
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: center;
+      }
+      #section_{{section.id}} .galina-footer__copyright {
+        justify-content: flex-end !important;
+        text-align: right;
+        color: {{ section.settings.footer_text_color }};
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      #section_{{section.id}} .galina-footer__special {
+        color: {{ section.settings.footer_text_color }};
+        font-size: 12px;
+        line-height: 1.7;
+        text-align: center;
+      }
+      @media (max-width: 1199px) {
+        #section_{{section.id}} .galina-footer__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 767px) {
+        #section_{{section.id}} .galina-footer__shell {
+          padding: 42px 0 18px;
+        }
+        #section_{{section.id}} .galina-footer__grid,
+        #section_{{section.id}} .galina-footer__bottom-inner {
+          grid-template-columns: 1fr;
+        }
+        #section_{{section.id}} .galina-footer__copyright,
+        #section_{{section.id}} .galina-footer__assurance {
+          text-align: left;
+          justify-content: flex-start !important;
+        }
+      }
+    </style>
+    <div class="container galina-footer__shell">
+      <div class="galina-footer__grid">
+        <div class="galina-footer__brand">
+          <span class="galina-footer__eyebrow">Maison de foulards</span>
+          <p class="galina-footer__brand-name">Galina Creations</p>
+          <p class="galina-footer__brand-copy">Des châles, foulards et accessoires pensés pour les cérémonies, les cadeaux raffinés et le quotidien élégant.</p>
+          <p class="galina-footer__brand-copy">Nous mettons l’accent sur la qualité visuelle, la simplicité d’achat et un service client attentif à chaque étape.</p>
+          <a
+            href="/collections/home"
+            class="galina-footer__cta"
+            data-track-event="jumpAddress"
+            data-track-href="/collections/home"
+          >
+            Voir la collection
+          </a>
+        </div>
+        <div class="galina-footer__column">
+          <p class="galina-footer__heading">Collections</p>
+          <div class="galina-footer__links">
+            <a href="/collections/premium-black-shawls" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/premium-black-shawls">Châles noirs premium</a>
+            <a href="/collections/vibrant-shawls" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/vibrant-shawls">Châles vibrants</a>
+            <a href="/collections/unicolor-shawls" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/unicolor-shawls">Châles unis</a>
+            <a href="/collections/linked-scarves" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/linked-scarves">Écharpes liées</a>
+            <a href="/collections/small-scarves" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/small-scarves">Petits foulards</a>
+            <a href="/collections/accessories" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/collections/accessories">Accessoires</a>
+          </div>
+        </div>
+        <div class="galina-footer__column">
+          <p class="galina-footer__heading">Service client</p>
+          <div class="galina-footer__links">
+            <a href="/pages/contact-us" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/contact-us">Nous contacter</a>
+            <a href="/pages/faq" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/faq">Questions fréquentes</a>
+            <a href="/search" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/search">Recherche</a>
+            <a href="/pages/payment-methods" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/payment-methods">Modes de paiement</a>
+            <a href="/pages/shipping-policy" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/shipping-policy">Expédition</a>
+            <a href="/pages/refund-policy" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/refund-policy">Remboursements</a>
+          </div>
+        </div>
+        <div class="galina-footer__column">
+          <p class="galina-footer__heading">Informations</p>
+          <div class="galina-footer__links">
+            <a href="/pages/about-us" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/about-us">À propos</a>
+            <a href="/pages/privacy-policy" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/privacy-policy">Confidentialité</a>
+            <a href="/pages/terms-of-service" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/terms-of-service">Conditions générales</a>
+            <a href="/pages/declaration" class="galina-footer__link" data-track-event="jumpAddress" data-track-href="/pages/declaration">Déclaration douanière</a>
+          </div>
+        </div>
+        <div class="galina-footer__column">
+          <div id="footer-newsletter" class="footer-newsletter galina-footer__newsletter">
+            <p class="galina-footer__heading">Newsletter</p>
+            <p class="galina-footer__copy">Recevez nos nouvelles collections, inspirations de style et offres privées directement par e-mail.</p>
+            <div class="footer-newsletter__form">
+              <div class="footer-newsletter__input-wrap">
+                <input id="input_email_footer_newsletter" type="email" class="footer-newsletter__input form-control" placeholder="Votre e-mail">
+                <div class="text-left invalid-feedback"></div>
+                <div class="text-left valid-feedback" style="color: {{ section.settings.footer_text_color }};"></div>
+              </div>
+              <div class="footer-newsletter__btn-wrap">
+                <input type="button" id="submit_footer_newsletter" class="footer-newsletter__btn btn btn-primary" type="submit" value="S'inscrire">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% elsif is_whiteribbon_footer %}
+    <style>
+      #section_{{section.id}}.whiteribbon-footer {
+        background: linear-gradient(180deg, #fcf4f1 0%, #fff9f7 100%) !important;
+        border-top: 1px solid rgba(34, 24, 24, 0.08);
+      }
+      #section_{{section.id}} .whiteribbon-footer__shell {
+        padding: 46px 0 22px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 0.9fr)) minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 0.8fr);
+        gap: 28px;
+        align-items: start;
+      }
+      #section_{{section.id}} .whiteribbon-footer__heading {
+        margin: 0 0 16px;
+        color: #1f1718;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      #section_{{section.id}} .whiteribbon-footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__link,
+      #section_{{section.id}} .whiteribbon-footer__copy {
+        color: #5f5357;
+        font-size: 0.95rem;
+        line-height: 1.75;
+        text-decoration: none;
+      }
+      #section_{{section.id}} .whiteribbon-footer__link:hover {
+        color: #dd7c85;
+      }
+      #section_{{section.id}} .whiteribbon-footer__copy + .whiteribbon-footer__copy {
+        margin-top: 8px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__socials {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 6px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__social {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: #fff;
+        color: #241b1b;
+        box-shadow: 0 12px 24px rgba(65, 35, 39, 0.08);
+        transition: transform .2s ease, color .2s ease, background .2s ease;
+      }
+      #section_{{section.id}} .whiteribbon-footer__social:hover {
+        background: #dd7c85;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      #section_{{section.id}} .whiteribbon-footer__social svg {
+        width: 18px;
+        height: 18px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__bottom {
+        border-top: 1px solid rgba(34, 24, 24, 0.08);
+      }
+      #section_{{section.id}} .whiteribbon-footer__bottom-inner {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        align-items: center;
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+      #section_{{section.id}} .whiteribbon-footer__copyright {
+        justify-content: flex-end !important;
+        color: #5f5357;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        text-align: right;
+      }
+      @media (max-width: 1199px) {
+        #section_{{section.id}} .whiteribbon-footer__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 767px) {
+        #section_{{section.id}} .whiteribbon-footer__shell {
+          padding: 36px 0 16px;
+        }
+        #section_{{section.id}} .whiteribbon-footer__grid,
+        #section_{{section.id}} .whiteribbon-footer__bottom-inner {
+          grid-template-columns: 1fr;
+        }
+        #section_{{section.id}} .whiteribbon-footer__copyright {
+          text-align: left;
+          justify-content: flex-start !important;
+        }
+      }
+    </style>
+    {% assign instagram = settings.instagram_url | default: 'https://instagram.com' %}
+    {% assign facebook = settings.facebook_url | default: 'https://facebook.com' %}
+    {% assign pinterest = settings.pinterest_url | default: 'https://pinterest.com' %}
+    {% assign tiktok = 'https://www.tiktok.com' %}
+    <div class="container whiteribbon-footer__shell">
+      <div class="whiteribbon-footer__grid">
+        <div class="whiteribbon-footer__column">
+          <p class="whiteribbon-footer__heading">Information</p>
+          <div class="whiteribbon-footer__links">
+            <a href="/pages/about-us" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/about-us">About Us</a>
+            <a href="/pages/store-opening-times" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/store-opening-times">Store Opening Times</a>
+            <a href="/pages/delivery" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/delivery">Delivery &amp; Returns</a>
+            <a href="/pages/secure-payments" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/secure-payments">Secure Payments</a>
+            <a href="/pages/contact-us" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/contact-us">Contact Us</a>
+          </div>
+        </div>
+        <div class="whiteribbon-footer__column">
+          <p class="whiteribbon-footer__heading">Our Policies</p>
+          <div class="whiteribbon-footer__links">
+            <a href="/pages/terms-of-service" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/terms-of-service">Terms of Service</a>
+            <a href="/pages/privacy-policy" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/privacy-policy">Privacy Policy</a>
+            <a href="/pages/refund-policy" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/refund-policy">Refund Policy</a>
+            <a href="/pages/delivery" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/delivery">Shipping and Returns</a>
+          </div>
+        </div>
+        <div class="whiteribbon-footer__column">
+          <p class="whiteribbon-footer__heading">About Us</p>
+          <div class="whiteribbon-footer__copy">White Ribbon Boutique is a family business.</div>
+          <div class="whiteribbon-footer__copy">We are a UK company based in Cheshire with 3 stores.</div>
+          <div class="whiteribbon-footer__copy">
+            <a href="/pages/about-us" class="whiteribbon-footer__link" data-track-event="jumpAddress" data-track-href="/pages/about-us">Find out more about us.</a>
+          </div>
+        </div>
+        <div class="whiteribbon-footer__column">
+          <p class="whiteribbon-footer__heading">How To Make A Return</p>
+          <div class="whiteribbon-footer__copy">If you need to return your item, you do not need to worry.</div>
+          <div class="whiteribbon-footer__copy">White Ribbon</div>
+          <div class="whiteribbon-footer__copy">Unit 1E, Road Six</div>
+          <div class="whiteribbon-footer__copy">Winsford Industrial Estate</div>
+          <div class="whiteribbon-footer__copy">Winsford, Cheshire, CW7 3QF</div>
+        </div>
+        <div class="whiteribbon-footer__column">
+          <p class="whiteribbon-footer__heading">Follow Us</p>
+          <div class="whiteribbon-footer__socials">
+            <a class="whiteribbon-footer__social" href="{{ instagram }}" target="_blank" rel="noopener" aria-label="Instagram" data-track-event="jumpAddress" data-track-href="{{ instagram }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1"></circle></svg></a>
+            <a class="whiteribbon-footer__social" href="{{ facebook }}" target="_blank" rel="noopener" aria-label="Facebook" data-track-event="jumpAddress" data-track-href="{{ facebook }}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.3h2.5l.4-3H13.5V8.8c0-.9.3-1.6 1.6-1.6h1.4V4.5c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.6v2.1H9v3h2.1V21h2.4Z"></path></svg></a>
+            <a class="whiteribbon-footer__social" href="{{ pinterest }}" target="_blank" rel="noopener" aria-label="Pinterest" data-track-event="jumpAddress" data-track-href="{{ pinterest }}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.1 3C7.6 3 5 6.1 5 9.5c0 2 1 3.8 2.7 4.4.3.1.4 0 .5-.2l.5-1.8c.1-.2 0-.3-.1-.5-.4-.5-.7-1.3-.7-2.3 0-3 2.2-5.7 5.8-5.7 3.2 0 4.9 2 4.9 4.5 0 3.4-1.5 6.3-3.8 6.3-1.3 0-2.2-1-1.9-2.3.4-1.6 1.1-3.2 1.1-4.3 0-1-.5-1.9-1.7-1.9-1.3 0-2.3 1.3-2.3 3 0 1.1.4 1.8.4 1.8l-1.4 5.7c-.4 1.5-.1 3.4-.1 3.6 0 .1.1.1.2.1 0 0 1.1-1.4 1.5-2.8.1-.4.7-2.7.7-2.7.3.7 1.3 1.2 2.3 1.2 3 0 5.1-2.7 5.1-6.5C20 5.6 16.8 3 12.1 3Z"></path></svg></a>
+            <a class="whiteribbon-footer__social" href="{{ tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" data-track-event="jumpAddress" data-track-href="{{ tiktok }}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.9 3c.3 2.2 1.6 3.5 3.8 3.7v2.5c-1.4.1-2.7-.3-3.8-1v6.2c0 3.2-1.8 5.4-5.1 5.4-3.1 0-5.1-2.2-5.1-4.9 0-3 2.3-5.1 5.5-4.8v2.7c-1.5-.2-2.8.7-2.8 2.1 0 1.2.8 2.2 2.1 2.2 1.6 0 2.4-1 2.4-3.1V3h3Z"></path></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="container d-flex footer-content footer-content-{{BlocksSize}}">
+      {% for item in section.blocks %}
+        {% if item.type == 'menu' %}
+		  {% assign  myblock = linklists[section.settings.menu.id].links %}
+          {% for mblock in myblock %}
+          <div class="footer__item {{ class_footer_item }}">
+            <div class="footer-menu">
+              {% if mblock.name %}
+                <p class="footer-column__title text-truncate xf_skin_footer_title"
+                  style="color: {{ section.settings.footer_title_color }};">{{ mblock.name | escape }}</p>
+              {% endif %}
+              {% assign links = mblock.son %}
+              <div class="footer-menu__link-wrap">
+                {% for firstLinks in links %}
+                  <a
+                    {% if firstLinks.url %}
+                      href="{{ firstLinks.url }}" class="footer-menu__link text-truncate has-link"
+                    {% else %}
+                      class="footer-menu__link text-truncate without-link"
+                    {% endif %}
+                    {% unless firstLinks.type != 'web' or firstLinks.url contains shop.domain %}
+                      target="{{ firstLinks.target }}"
+                    {% endunless %}
+                    data-track-event="jumpAddress"
+                    data-track-href= "{{ firstLinks.url }}"
+                  >
+                    {{ firstLinks.name | escape }}
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% elsif item.type == 'social' %}
+          <div class="footer__item {{ class_footer_item }}">
+            {% assign  insUrl = item.settings.instagram_url %}
+            {% assign  facebookUrl = item.settings.facebook_url %}
+            {% assign  twitterUrl = item.settings.twitter_url %}
+            {% assign  pinterestUrl = item.settings.pinterest_url %}
+            {% assign  youtubeUrl = item.settings.youtube_url %}
+            <div class="footer-social">
+              {% assign facebook = settings.facebook_url %}
+              {% assign twitter = settings.twitter_url %}
+              {% assign instagram = settings.instagram_url %}
+              {% assign pinterest = settings.pinterest_url %}
+              {% assign youtube = settings.youtube_url %}
+              {% if insUrl or facebookUrl or twitterUrl or pinterestUrl or youtubeUrl %}
+                <p class="footer-column__title xf_skin_footer_title"
+                  style="color: {{ section.settings.footer_title_color }};">{{ langs.general.footer.follow_us | t }}</p>
+              {% endif %}
+              {% if insUrl %}
+                <a
+                  class="xf_skin_link footer-social__link xf_skin_footer_title"
+                  {% if instagram %}
+                    href="{{ instagram }}"
+                    target="_blank"
+                    data-track-href= "{{ instagram }}"
+                  {% endif %}
+                  data-track-event="jumpAddress"
+                  style="color: {{ section.settings.footer_text_color }};"
+                >
+                  <i class="sep-font sep-font-instagram footer-social__icon xf_skin_link"></i>
+                </a>
+              {% endif %}
+              {% if facebookUrl %}
+                <a
+                  class="xf_skin_link footer-social__link xf_skin_footer_title"
+                  {% if facebook %}
+                    href="{{ facebook }}"
+                    target="_blank"
+                    data-track-href= "{{ facebook }}"
+                  {% endif %}
+                  data-track-event="jumpAddress"
+                  style="color: {{ section.settings.footer_text_color }};"
+                >
+                  <i class="sep-font sep-font-facebook footer-social__icon xf_skin_link"></i>
+                </a>
+              {% endif %}
+              {% if twitterUrl %}
+                <a
+                  class="xf_skin_link footer-social__link xf_skin_footer_title"
+                  {% if twitter %}
+                    href="{{ twitter }}"
+                    target="_blank"
+                    data-track-href= "{{ twitter }}"
+                  {% endif %}
+                  data-track-event="jumpAddress"
+                  style="color: {{ section.settings.footer_text_color }};"
+                >
+                  <i class="sep-font sep-font-twitter footer-social__icon xf_skin_link"></i>
+                </a>
+              {% endif %}
+              {% if pinterestUrl %}
+                <a
+                  class="xf_skin_link footer-social__link xf_skin_footer_title"
+                  {% if pinterest %}
+                    href="{{ pinterest }}"
+                    target="_blank"
+                    data-track-href= "{{ pinterest }}"
+                  {% endif %}
+                  data-track-event="jumpAddress"
+                  style="color: {{ section.settings.footer_text_color }};"
+                >
+                  <i class="sep-font sep-font-pinterest footer-social__icon xf_skin_link"></i>
+                </a>
+              {% endif %}
+              {% if youtubeUrl %}
+                <a
+                  class="xf_skin_link footer-social__link xf_skin_footer_title"
+                  {% if youtube %}
+                    href="{{ youtube }}"
+                    target="_blank"
+                    data-track-href= "{{ youtube }}"
+                  {% endif %}
+                  data-track-event="jumpAddress"
+                  style="color: {{ section.settings.footer_text_color }};"
+                >
+                  <i class="sep-font sep-font-youtube footer-social__icon xf_skin_link"></i>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% elsif item.type == 'info' %}
+          <div class="footer__item {{ class_footer_item }}">
+            {% assign logoDesc =  item.settings.richtext %}
+            {% assign logoUrl =  item.settings.logo_src %}
+            <div class="footer-info">
+              {% if logoUrl != '' %}
+                <img
+                  class="footer-info__img"
+                  src="{{ logoUrl | img_url: '600x' }}"
+                  alt="{{images[logoUrl].alt | escape}}"
+                >
+              {% else %}
+                <p class="footer-column__title text-truncate xf_skin_footer_title"
+                    style="color: {{ section.settings.footer_title_color }};">{{ shop.name }}</p>
+              {% endif %}
+              {% unless logoDesc == '' %}
+                <div class="footer-info__desc xf-mce-view" style="color: {{ section.settings.footer_text_color }};">{{ logoDesc }}</div>
+              {% endunless %}
+            </div>
+          </div>
+        {% elsif item.type == 'newsletter' %}
+          <div class="footer__item {{ class_footer_item }}">
+            {% assign newsletterTitle =  item.settings.title %}
+            {% assign describe = item.settings.describe | default: '' %}
+            <div id="footer-newsletter" class="footer-newsletter">
+              <p class="footer-column__title text-truncate xf_skin_footer_title"
+                style="color: {{ section.settings.footer_title_color }};">{{ newsletterTitle | escape }}</p>
+              {% unless describe == '' %}
+                <div class="footer-info__desc">
+                  {{ describe }}
+                </div>
+              {% endunless %}
+              <div class="footer-newsletter__form">
+                <div class="footer-newsletter__input-wrap">
+                  <input id="input_email_footer_newsletter" type="email" class=" footer-newsletter__input form-control" placeholder="{{ langs.general.footer.email_placeholder | t }}">
+                  <div class="text-left invalid-feedback"></div>
+                  <div class="text-left valid-feedback" style="color: {{ section.settings.footer_text_color }};"></div>
+                </div>
+                <div class="footer-newsletter__btn-wrap">
+                  <input type="button" id="submit_footer_newsletter" class="footer-newsletter__btn btn btn-primary" type="submit" value="{{ langs.general.footer.submit | t }}">
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if section.settings.footer_payment_icon or section.settings.copyright or section.settings.special_desc %}
+    <div class="footer-copyright{% if is_galina_footer %} galina-footer__bottom{% elsif is_whiteribbon_footer %} whiteribbon-footer__bottom{% endif %}">
+      <div class="container footer-copyright__inner{% if is_galina_footer %} galina-footer__bottom-inner{% elsif is_whiteribbon_footer %} whiteribbon-footer__bottom-inner{% endif %}">
+	  {% if section.settings.footer_payment_icon and payment_icon.size > 0 %}
+          <div class="footer__payment">
+              <ul>                
+                {% for icon in payment_icon %}
+                    <li>
+                      {% include 'lazyimg', src: icon, %}
+                    </li>
+                {% endfor %}
+              </ul>
+          </div>
+        {% endif %}
+        {% if is_galina_footer %}
+          <div class="galina-footer__assurance">Paiements sécurisés, livraison suivie et accompagnement client attentif pour chaque commande.</div>
+        {% endif %}
+        {% if section.settings.copyright %}
+          <div class="copyright d-flex align-items-center justify-content-center flex-wrap{% if is_galina_footer %} galina-footer__copyright{% elsif is_whiteribbon_footer %} whiteribbon-footer__copyright{% endif %}">
+            {{ section.settings.copyright }}
+          </div>
+        {% endif %}
+        {% unless is_galina_footer or is_whiteribbon_footer %}
+          {% if section.settings.special_desc %}
+            <div class="xf-mce-view">{{ section.settings.special_desc }}</div>
+          {% endif %}
+        {% endunless %}
+      </div>
+    </div>
+  {% endif %}
+</footer>
+
+{% javascript %}
+
+  $(function () {
+    $.card_footer && $.card_footer({
+      lan: {{ langs.general.footer | t | json }}
+    })
+  })
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "footer_plus",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Copyright",
+        "zh-CN": "版权"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "copyright",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": {
+        "zh-CN": "特殊信息说明",
+        "en-US": "Specific information description"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "special_desc",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": {
+        "zh-CN": "颜色",
+        "en-US": "Colors"
+      }
+    },
+    {
+      "type": "color",
+      "id": "footer_bg_color",
+      "label": {
+        "en-US": "Background",
+        "zh-CN": "背景"
+      },
+      "default": "#F5F5F5"
+    },
+    {
+      "type": "color",
+      "id": "footer_text_color",
+      "label": {
+        "en-US": "Text",
+        "zh-CN": "正文"
+      },
+      "default": "#3D4246"
+    },
+    {
+      "type": "color",
+      "id": "footer_title_color",
+      "label": {
+        "en-US": "Heading",
+        "zh-CN": "标题"
+      },
+      "default": "#3D4246"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_payment_icon",
+      "label": {
+        "en-US": "Show payment icons",
+        "zh-CN": "显示付款图标"
+      },
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Content",
+        "zh-CN": "内容"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "social",
+      "name": {
+        "en-US": "Social media",
+        "zh-CN": "社交媒体"
+      },
+      "info": {
+        "zh-CN": "图标跳转链接请点击全局配置填写",
+        "en-US": "Click \"Theme settings\" to set the jump link for icon."
+      },
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "instagram_url",
+          "label": "Instagram link",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "facebook_url",
+          "label": "Facebook link",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "twitter_url",
+          "label": "Twitter link",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "pinterest_url",
+          "label": "Pinterest link",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "youtube_url",
+          "label": "Youtube link",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": {
+        "en-US": "Menu link",
+        "zh-CN": "菜单链接"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en-US": "Heading",
+            "zh-CN": "标题"
+          },
+          "default": "SUPPORT"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": {
+            "zh-CN": "选择菜单",
+            "en-US": "Select menu"
+          },
+          "default": {
+            "id": "footer",
+            "type": "menu",
+            "title": {
+              "en-US": "Footer menu",
+              "zh-CN": "页尾菜单"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "name": {
+        "zh-CN": "文字介绍",
+        "en-US": "Text introduction"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_src",
+          "label": {
+            "en-US": "Logo image",
+            "zh-CN": "logo图片"
+          },
+          "info": {
+            "zh-CN": "建议尺寸（宽*长）：600x90px，减少左右边距留白",
+            "en-US": "Recommended resolution(width * height):600x90px, reduce the left and right blank margin"
+          },
+          "default": ""
+        },
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": {
+            "en-US": "Text",
+            "zh-CN": "正文"
+          },
+          "default": "<p><span>Use this text to share information about your brand with your customers.</span></p>"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": {
+        "zh-CN": "邮件订阅",
+        "en-US": "Newsletter"
+      },
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en-US": "Heading",
+            "zh-CN": "标题"
+          },
+          "default": "Newsletter",
+          "info": {
+            "zh-CN": "订阅用户将被添加到<a href='/admin/customers?tabKey=subscribed&subscribed=true' target='_blank'>顾客名单</a>中",
+            "en-US": "Customers who have placed order will be added to <a href='/admin/customers?tabKey=subscribed&subscribed=true' target='_blank'>customer list</a>"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "describe",
+          "label": {
+            "zh-CN": "描述",
+            "en-US": "Description"
+          },
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "footer",
+      "cname": {
+        "en-US": "Footer",
+        "zh-CN": "页尾"
+      },
+      "category": {
+        "en-US": "Navigation",
+        "zh-CN": "导航"
+      },
+      "ccategory": {
+        "en-US": "Navigation",
+        "zh-CN": "导航"
+      },
+      "display": false,
+      "blocks": [
+        {
+          "type": "social",
+          "settings": {
+            "instagram_url": true,
+            "facebook_url": true,
+            "twitter_url": true
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "title": "SUPPORT",
+            "menu": {
+              "id": "footer",
+              "type": "menu",
+              "title": {
+                "en-US": "Footer menu",
+                "zh-CN": "页尾菜单"
+              }
+            }
+          }
+        },
+        {
+          "type": "info",
+          "settings": {
+            "logo_src": "",
+            "richtext": "<p><span>Use this text to share information about your brand with your customers.</span></p>"
+          }
+        },
+        {
+          "type": "newsletter",
+          "settings": {
+            "title": "Newsletter",
+            "describe": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

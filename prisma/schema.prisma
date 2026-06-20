@@ -1,0 +1,327 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  id          String   @id
+  name        String
+  slug        String   @unique
+  status      String
+  timezone    String   @default("UTC")
+  currency    String   @default("usd")
+  branding    Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  domains     SiteDomain[]
+  admins      SiteAdmin[]
+  customers   Customer[]
+  pages       ThemePage[]
+  settings    ThemeSettings?
+  publications ThemePublication[]
+  connect     StripeConnectAccount?
+  aiApps      SiteAiApp[]
+  customerModels CustomerModel[]
+  albums      Album[]
+}
+
+model SiteDomain {
+  id        String   @id
+  siteId    String
+  domain    String   @unique
+  isPrimary Boolean  @default(false)
+  status    String
+  site      Site     @relation(fields: [siteId], references: [id])
+}
+
+model SiteAdmin {
+  id           String   @id
+  siteId       String
+  email        String
+  displayName  String
+  role         String
+  site         Site     @relation(fields: [siteId], references: [id])
+
+  @@unique([siteId, email])
+}
+
+model Customer {
+  id        String   @id
+  siteId    String
+  email     String
+  name      String
+  status    String
+  createdAt DateTime @default(now())
+  site      Site     @relation(fields: [siteId], references: [id])
+  subscriptions Subscription[]
+  orders    Order[]
+  ledger    CreditLedger[]
+  balance   CreditBalance?
+  jobs      GenerationJob[]
+  uploads   AssetUpload[]
+  models    CustomerModel[]
+  albums    Album[]
+
+  @@unique([siteId, email])
+}
+
+model StripeConnectAccount {
+  id              String   @id
+  siteId          String   @unique
+  stripeAccountId String   @unique
+  onboardingStatus String
+  chargesEnabled Boolean  @default(false)
+  payoutsEnabled Boolean  @default(false)
+  site            Site     @relation(fields: [siteId], references: [id])
+}
+
+model Product {
+  id        String   @id
+  siteId    String
+  name      String
+  type      String
+  status    String
+  prices    Price[]
+}
+
+model Price {
+  id             String   @id
+  siteId         String
+  productId      String
+  stripePriceId  String?
+  currency       String
+  amountCents    Int
+  interval       String?
+  creditsGranted Int
+  product        Product @relation(fields: [productId], references: [id])
+}
+
+model Subscription {
+  id                   String   @id
+  siteId               String
+  customerId           String
+  stripeSubscriptionId String   @unique
+  status               String
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  customer             Customer @relation(fields: [customerId], references: [id])
+}
+
+model Order {
+  id           String   @id
+  siteId       String
+  customerId   String
+  status       String
+  amountCents  Int
+  currency     String
+  credits      Int
+  customer     Customer @relation(fields: [customerId], references: [id])
+}
+
+model PaymentEvent {
+  id              String   @id
+  siteId          String
+  provider        String
+  providerEventId String
+  eventType       String
+  processedAt     DateTime?
+  payload         Json
+
+  @@unique([siteId, provider, providerEventId])
+}
+
+model CreditLedger {
+  id         String   @id
+  siteId     String
+  customerId String
+  amount     Int
+  type       String
+  sourceType String
+  sourceId   String
+  expiresAt  DateTime?
+  createdAt  DateTime @default(now())
+  customer   Customer @relation(fields: [customerId], references: [id])
+}
+
+model CreditBalance {
+  id          String   @id
+  siteId      String
+  customerId  String   @unique
+  balance     Int
+  reserved    Int
+  customer    Customer @relation(fields: [customerId], references: [id])
+}
+
+model AiApp {
+  id          String   @id
+  slug        String   @unique
+  name        String
+  description String
+  appType     String
+  parameterSchema Json
+  sites       SiteAiApp[]
+}
+
+model SiteAiApp {
+  id          String   @id
+  siteId      String
+  aiAppId     String
+  enabled     Boolean  @default(true)
+  creditCost  Int
+  routeKey    String
+  site        Site     @relation(fields: [siteId], references: [id])
+  aiApp       AiApp    @relation(fields: [aiAppId], references: [id])
+
+  @@unique([siteId, aiAppId])
+}
+
+model ThemePage {
+  id            String   @id
+  siteId        String
+  pageType      String
+  slug          String
+  title         String
+  draftJson     Json
+  publishedJson Json
+  updatedAt     DateTime @updatedAt
+  site          Site     @relation(fields: [siteId], references: [id])
+
+  @@unique([siteId, slug])
+}
+
+model ThemeSettings {
+  id            String   @id
+  siteId        String   @unique
+  draftJson     Json
+  publishedJson Json
+  site          Site     @relation(fields: [siteId], references: [id])
+}
+
+model SectionDefinition {
+  id          String @id
+  type        String @unique
+  label       String
+  category    String
+  schemaJson  Json
+  previewJson Json
+}
+
+model ThemePublication {
+  id          String   @id
+  siteId      String
+  version     Int
+  snapshot    Json
+  publishedBy String
+  publishedAt DateTime @default(now())
+  site        Site     @relation(fields: [siteId], references: [id])
+
+  @@unique([siteId, version])
+}
+
+model MediaAsset {
+  id          String   @id
+  siteId      String
+  label       String
+  storageKey  String
+  mimeType    String
+  usageType   String
+  createdAt   DateTime @default(now())
+}
+
+model CreativePack {
+  id               String   @id
+  siteId           String
+  name             String
+  headline         String
+  description      String
+  category         String
+  aiAppSlug        String
+  status           String
+  creditCost       Int
+  outputCount      Int
+  trainingRequired Boolean  @default(false)
+  generationCount  Int      @default(0)
+  conversionRate   Float    @default(0)
+  createdAt        DateTime @default(now())
+
+  @@index([siteId, status])
+}
+
+model CustomerModel {
+  id              String   @id
+  siteId          String
+  customerId      String
+  label           String
+  modelType       String
+  status          String
+  inputAssetCount Int
+  minInputAssets  Int
+  providerModelId String?
+  trainingJobId   String?
+  failureReason   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  site            Site     @relation(fields: [siteId], references: [id])
+  customer        Customer @relation(fields: [customerId], references: [id])
+
+  @@index([siteId, customerId, status])
+}
+
+model Album {
+  id             String   @id
+  siteId         String
+  customerId     String
+  title          String
+  sourceJobId    String?
+  creativePackId String?
+  status         String
+  outputCount    Int
+  coverAssetId   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  site           Site     @relation(fields: [siteId], references: [id])
+  customer       Customer @relation(fields: [customerId], references: [id])
+
+  @@index([siteId, customerId, status])
+}
+
+model AssetUpload {
+  id          String   @id
+  siteId      String
+  customerId  String
+  storageKey  String
+  visibility  String
+  reviewStatus String
+  deletedAt   DateTime?
+  customer    Customer @relation(fields: [customerId], references: [id])
+}
+
+model GenerationJob {
+  id              String   @id
+  siteId          String
+  customerId      String
+  aiAppId         String
+  status          String
+  creditsReserved Int
+  requestJson     Json
+  resultJson      Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  customer        Customer @relation(fields: [customerId], references: [id])
+}
+
+model AdminAuditLog {
+  id          String   @id
+  siteId      String?
+  actorType   String
+  actorId     String
+  action      String
+  targetType  String
+  targetId    String
+  metadata    Json
+  createdAt   DateTime @default(now())
+}

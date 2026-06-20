@@ -1,0 +1,1 @@
+.four_images-container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:100%}.four_images__item-3{grid-row:span 2/span 2}.four_images__item-4{grid-column:span 2/span 2}@media (max-width:767.98px){.four_images-container{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:0 .9375rem}.four_images__item-2{grid-row-start:2}}

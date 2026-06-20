@@ -1,0 +1,129 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Download, Trash2, UploadCloud } from "lucide-react";
+import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
+
+export function AssetsPanel({
+  siteId,
+  customer,
+  assets,
+  emptyTitle = "No private uploads yet.",
+  emptyBody = "Add private source photos before creating an album request."
+}: {
+  siteId: string;
+  customer: PublicCustomer;
+  assets: ThemeRuntimeAsset[];
+  emptyTitle?: string;
+  emptyBody?: string;
+}) {
+  const router = useRouter();
+  const [items, setItems] = useState(assets);
+  const [label, setLabel] = useState("reference portrait");
+  const [message, setMessage] = useState("Uploads stay private to this account.");
+
+  useEffect(() => {
+    setItems(assets);
+  }, [assets]);
+
+  async function createAsset(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ label, mimeType: "image/jpeg", role: "input" })
+    });
+    const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+    const createdAsset = result.asset;
+    if (response.ok && createdAsset) {
+      setItems((current) => [createdAsset, ...current]);
+      setLabel("");
+      setMessage(`${createdAsset.label} saved.`);
+      router.refresh();
+    } else {
+      setMessage(result.error ?? "Asset create failed.");
+    }
+  }
+
+  async function deleteAsset(assetId: string) {
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}`, { method: "DELETE" });
+    const result = (await response.json().catch(() => ({}))) as { error?: string };
+    if (response.ok) {
+      setItems((current) => current.filter((asset) => asset.id !== assetId));
+      setMessage("Upload deleted from this private account.");
+      router.refresh();
+    } else {
+      setMessage(result.error ?? "Asset delete failed.");
+    }
+  }
+
+  async function downloadAsset(assetId: string) {
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}/download`, { method: "POST" });
+    const result = (await response.json().catch(() => ({}))) as { downloadUrl?: string; expiresAt?: string; error?: string };
+    if (response.ok && result.downloadUrl) {
+      setMessage(`Download link ready until ${result.expiresAt}.`);
+      window.open(result.downloadUrl, "_blank");
+    } else {
+      setMessage(result.error ?? "Download link failed.");
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-5 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-semibold text-[#171514]">Private uploads</h2>
+          <p className="mt-1 text-sm text-[#6d665f]">{message}</p>
+        </div>
+      </div>
+      <form className="grid gap-3 md:grid-cols-[1fr_auto]" onSubmit={createAsset}>
+        <label className="grid gap-2 text-sm font-medium text-[#171514]">
+          Upload label
+          <input
+            className="rounded-[18px] border border-[#ded5ca] bg-white px-4 py-3 text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+            onChange={(event) => setLabel(event.target.value)}
+            placeholder="reference portrait"
+            value={label}
+          />
+        </label>
+        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98]">
+          <UploadCloud className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
+          Add upload
+        </button>
+      </form>
+      <div className="mt-5 grid gap-3">
+        {items.length ? (
+          items.map((asset) => (
+            <div className="grid gap-3 rounded-[20px] border border-[#e4dace] bg-white p-4 text-sm shadow-[0_16px_48px_-40px_rgba(20,22,26,0.14)] md:grid-cols-[92px_1fr_0.32fr_0.4fr]" key={asset.id}>
+              <div className="overflow-hidden rounded-[16px] bg-[#efe6d9]">
+                <img className="aspect-[4/5] h-full w-full object-cover" src={asset.previewUrl} alt={asset.label} />
+              </div>
+              <span className="min-w-0">
+                <span className="block font-medium text-[#171514]">{asset.label}</span>
+                <span className="mt-1 inline-flex rounded-full border border-[#eadfce] bg-[#fbf7f0] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#8a7a6d]">
+                  {asset.role === "input" ? "source photo" : "gallery image"}
+                </span>
+                <span className="mt-2 block text-xs text-[#8a7a6d]">{asset.role === "input" ? "Private source image" : "Private gallery image"}</span>
+              </span>
+              <span className="font-mono text-[#625d56]">{asset.mimeType}</span>
+              <span className="flex gap-2 md:justify-end">
+                <button className="rounded-[14px] border border-[#ded5ca] bg-[#fbf7f0] px-3 py-2 text-[#171514] active:scale-[0.98]" onClick={() => downloadAsset(asset.id)} type="button">
+                  <Download className="h-4 w-4" strokeWidth={1.8} />
+                </button>
+                <button className="rounded-[14px] border border-[#ded5ca] bg-[#fbf7f0] px-3 py-2 text-[#8f4d3a] active:scale-[0.98]" onClick={() => deleteAsset(asset.id)} type="button">
+                  <Trash2 className="h-4 w-4" strokeWidth={1.8} />
+                </button>
+              </span>
+            </div>
+          ))
+        ) : (
+          <div className="rounded-[20px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-5 text-sm text-[#6d665f]">
+            <p className="font-semibold text-[#171514]">{emptyTitle}</p>
+            <p className="mt-2 leading-6">{emptyBody}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

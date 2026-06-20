@@ -1,0 +1,408 @@
+{% assign is_whiteribbon_boutique = false %}
+{% if shop.id == '144' or shop.domain contains 'whiteribbonboutiques.com' %}
+  {% assign is_whiteribbon_boutique = true %}
+{% endif %}
+{% if is_whiteribbon_boutique %}
+  <section class="whiteribbon-benefits">
+    <style>
+      #xfcart-section-{{section.id}} .whiteribbon-benefits {
+        background: #fff;
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0;
+        border-top: 1px solid rgba(34, 24, 24, 0.08);
+        border-bottom: 1px solid rgba(34, 24, 24, 0.08);
+        background: linear-gradient(180deg, #fffefd 0%, #fff8f6 100%);
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__item {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+        padding: 24px 26px;
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__item + .whiteribbon-benefits__item {
+        border-left: 1px solid rgba(34, 24, 24, 0.08);
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__icon {
+        width: 26px;
+        height: 26px;
+        color: #241b1b;
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__title {
+        color: #241b1b;
+        font-size: 0.83rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      #xfcart-section-{{section.id}} .whiteribbon-benefits__text {
+        margin-top: 4px;
+        color: #5f5357;
+        font-size: 0.92rem;
+        line-height: 1.6;
+      }
+      @media (max-width: 991.98px) {
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item:nth-child(3),
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item:nth-child(4) {
+          border-top: 1px solid rgba(34, 24, 24, 0.08);
+        }
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item:nth-child(3) {
+          border-left: 0;
+        }
+      }
+      @media (max-width: 767.98px) {
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__grid {
+          grid-template-columns: 1fr;
+        }
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item,
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item:nth-child(3) {
+          border-left: 0;
+        }
+        #xfcart-section-{{section.id}} .whiteribbon-benefits__item + .whiteribbon-benefits__item {
+          border-top: 1px solid rgba(34, 24, 24, 0.08);
+        }
+      }
+    </style>
+    <div class="container">
+      <div class="whiteribbon-benefits__grid">
+        <article class="whiteribbon-benefits__item">
+          <svg class="whiteribbon-benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="7" width="10.5" height="8" rx="1.4"></rect><path d="M12 10h4l2.5 2.7V15H12z"></path><circle cx="6" cy="17.5" r="1.7"></circle><circle cx="17" cy="17.5" r="1.7"></circle></svg>
+          <div>
+            <div class="whiteribbon-benefits__title">Fast & Reliable Delivery</div>
+            <div class="whiteribbon-benefits__text">Quick delivery across the UK</div>
+          </div>
+        </article>
+        <article class="whiteribbon-benefits__item">
+          <svg class="whiteribbon-benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.4-7 10-7 10Z"></path></svg>
+          <div>
+            <div class="whiteribbon-benefits__title">Loved By Our Customers</div>
+            <div class="whiteribbon-benefits__text">Thousands of happy customers</div>
+          </div>
+        </article>
+        <article class="whiteribbon-benefits__item">
+          <svg class="whiteribbon-benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.4-6.4"></path><path d="M21 12a9 9 0 0 1-15.4 6.4"></path><path d="M18.2 2.8v3.8h-3.8"></path><path d="M5.8 21.2v-3.8h3.8"></path></svg>
+          <div>
+            <div class="whiteribbon-benefits__title">Easy Returns</div>
+            <div class="whiteribbon-benefits__text">Hassle-free returns</div>
+          </div>
+        </article>
+        <article class="whiteribbon-benefits__item">
+          <svg class="whiteribbon-benefits__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="10.5" width="13" height="10" rx="1.8"></rect><path d="M8.5 10.5V8.2a3.5 3.5 0 1 1 7 0v2.3"></path></svg>
+          <div>
+            <div class="whiteribbon-benefits__title">Secure Payments</div>
+            <div class="whiteribbon-benefits__text">Safe & encrypted checkout</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+{% else %}
+<style>.block__image {
+  margin-bottom: 0.9375rem; }
+  @media (min-width: 768px) {
+    .block__image {
+      margin-bottom: 1.25rem; } }
+
+.block__title {
+  font-size: 1.125rem;
+  margin-bottom: 0.625rem; }
+
+.block__text {
+  font-size: 0.875rem;
+  margin-bottom: 1.125rem; }
+
+.block__btn {
+  padding: 0.625rem 1.875rem;
+  font-size: 0.875rem; }
+</style>
+<div class="container container-gap">
+  {% assign  title= section.settings.title %}
+{% assign  align_text= section.settings.align_text %}
+{% assign  blocks= section.blocks %}
+{% if title != '' %}
+  {% include 'card_title', title: title | escape %}
+{% endif %}
+<div class="row common__product-row {% if blocks.size == 1 %} justify-content-center {% endif %}">
+  {%- assign flex_item_width = 'col-md-4' -%}
+  {% case blocks.size %}
+    {% when 1 %}
+      {%- assign flex_item_width = 'col-md-6' -%}
+    {% when 2 %}
+      {%- assign flex_item_width = 'col-md-6' -%}
+    {% when 4 %}
+      {%- assign flex_item_width = 'col-md-6' -%}
+  {% endcase %}
+  {% for block in blocks %}
+      {% if blocks.size == 5 and forloop.index < 3 %}
+        {%- assign column_width = 'col-md-6' -%}
+      {% else %}
+        {%- assign column_width = flex_item_width -%}
+      {% endif %}
+
+{% assign defaultImage = '/themes/theme1/assets/image/5643xcrwee3.png' | img_url %}
+
+<div class="block {{ column_width }} col-sm-12 text-{{ align_text }} common__product-gap">
+  {% if block.settings.enable_image %}
+    <div class="block__image">
+      {% assign link = block.settings.link %}
+      {% assign image = block.settings.image %}
+      <a class="common__img-wrapper_lazy"
+        {% if link.url != '' %}
+          href="{{ link.url }}"
+          data-track="viewImage"
+          data-track-url="{{ link.url }}"
+        {% endif %}
+        {% unless link.type != 'web' or link.url contains shop.domain %}
+          target="_blank"
+        {% endunless %}
+        style="padding-bottom:
+          {% if image != '' %}
+            {{ image.height | image_padding_bottom : image.width, origin: 'unlimit' }};
+          {% else %}
+            100%;
+          {% endif %}
+          width: 100%;">
+        {% if image != '' %}
+          {% assign class = 'img-full-width' %}
+          {% if link.url %}
+            {% assign class = 'img-full-width' | append: ' common__img_hover' %}
+          {% endif %}
+          {% include 'lazyimg', src: image.src, style: "margin: auto;", class: class %}
+        {% else %}
+          <img src="{{ defaultImage }}"/>
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+  {% if block.settings.title != '' %}
+    <div class="block__title xf_skin_title_font">{{ block.settings.title | escape }}</div>
+  {% endif %}
+  {% if block.settings.text != '' %}
+    <div class="block__text xf-mce-view xf_skin_text">{{ block.settings.text }}</div>
+  {% endif %}
+  {% if block.settings.button_label != '' and block.settings.button_link.url != '' %}
+    <a href="{{ block.settings.button_link.url }}" class="btn btn-primary block__btn"
+      {% unless block.settings.button_link.type != 'web' or block.settings.button_link.url contains shop.domain %}
+        target="_blank"
+      {% endunless %}
+    >
+      {{ block.settings.button_label | escape }}
+    </a>
+  {% endif %}
+</div>
+
+  {% endfor %}
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "feature_columns",
+  "max_blocks": 9999,
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Settings",
+        "zh-CN": "设置"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "en-US": "Heading",
+        "zh-CN": "标题"
+      },
+      "placeholder": "",
+      "default": "Text Columns With Images"
+    },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": {
+        "en-US": "Text alignment",
+        "zh-CN": "文字对齐方式"
+      },
+      "options": [
+        {
+          "value": "left",
+          "label": {
+            "en-US": "Text left",
+            "zh-CN": "居左"
+          }
+        },
+        {
+          "value": "center",
+          "label": {
+            "zh-CN": "居中",
+            "en-US": "Text center"
+          }
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": {
+        "en-US": "Content",
+        "zh-CN": "内容"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": {
+        "zh-CN": "图文",
+        "en-US": "Image with text"
+      },
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_image",
+          "label": {
+            "en-US": "Show images",
+            "zh-CN": "图片是否展示"
+          },
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": {
+            "zh-CN": "添加图片",
+            "en-US": "Add image"
+          },
+          "info": {
+            "zh-CN": "建议尺寸：宽度800px,高度可自适应",
+            "en-US": "Recommended resolution: width 800px,responsive height"
+          },
+          "default": ""
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": {
+            "en-US": "Link",
+            "zh-CN": "链接"
+          },
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en-US": "Heading",
+            "zh-CN": "标题"
+          },
+          "placeholder": "",
+          "default": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "en-US": "Text",
+            "zh-CN": "正文"
+          },
+          "default": "Use this text to describe products,share details on availability and style,or as a space to display recent reviews or FAQs."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": {
+            "en-US": "Button text",
+            "zh-CN": "按钮文字"
+          },
+          "default": ""
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": {
+            "en-US": "Button link",
+            "zh-CN": "按钮链接"
+          },
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "feature_columns",
+      "cname": {
+        "zh-CN": "图文列表",
+        "en-US": "Image with text list"
+      },
+      "category": {
+        "en-US": "Material",
+        "zh-CN": "素材"
+      },
+      "ccategory": {
+        "en-US": "Material",
+        "zh-CN": "素材"
+      },
+      "display": true,
+      "blocks": [
+        {
+          "type": "text_block",
+          "name": {
+            "zh-CN": "图文",
+            "en-US": "Image with text"
+          },
+          "settings": {
+            "enable_image": true,
+            "image": "",
+            "url": "",
+            "title": "Title",
+            "text": "Use this text to describe products,share details on availability and style,or as a space to display recent reviews or FAQs.",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        {
+          "type": "text_block",
+          "name": {
+            "zh-CN": "图文",
+            "en-US": "Image with text"
+          },
+          "settings": {
+            "enable_image": true,
+            "image": "",
+            "url": "",
+            "title": "Title",
+            "text": "Use this text to describe products,share details on availability and style,or as a space to display recent reviews or FAQs.",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        {
+          "type": "text_block",
+          "name": {
+            "zh-CN": "图文",
+            "en-US": "Image with text"
+          },
+          "settings": {
+            "enable_image": true,
+            "image": "",
+            "url": "",
+            "title": "Title",
+            "text": "Use this text to describe products,share details on availability and style,or as a space to display recent reviews or FAQs.",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+{% endif %}
