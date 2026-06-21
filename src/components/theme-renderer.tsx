@@ -2304,35 +2304,39 @@ function SectionView({
       const imageBadge = setting(section, "imageBadge", blockValue(heroStats[0], "value", "40") ? `${blockValue(heroStats[0], "value", "40")} photo album` : "40 photo album");
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
       return (
-        <section className="relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
+        <section className="dreamshoot-hero-motion relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
           <div className="absolute inset-0 -z-10">
-            <div className="grid h-full min-h-[640px] grid-cols-3 gap-3 opacity-55 blur-[0.25px] sm:min-h-[740px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
+            <div className="dreamshoot-hero-grid grid h-full min-h-[640px] grid-cols-3 gap-3 opacity-55 blur-[0.25px] sm:min-h-[740px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
               {Array.from({ length: 18 }).map((_, index) => (
                 <div
-                  className={`overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
+                  className={`dreamshoot-hero-tile overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
                   key={`dreamshoot_hero_grid_${index}`}
+                  style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
                   <img
-                    className="h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
+                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
                     src={gridImages[index % gridImages.length] ?? primaryImage}
                     alt=""
+                    style={{ animationDelay: `${-(index % 5) * 3.4}s` }}
                   />
                 </div>
               ))}
             </div>
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.99)_0%,rgba(5,7,14,0.92)_37%,rgba(5,7,14,0.62)_65%,rgba(5,7,14,0.86)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_19%_28%,rgba(122,76,255,0.34),transparent_30%),radial-gradient(circle_at_34%_58%,rgba(236,75,221,0.20),transparent_24%),radial-gradient(circle_at_76%_37%,rgba(22,220,240,0.18),transparent_27%),radial-gradient(circle_at_64%_11%,rgba(255,166,68,0.13),transparent_22%)]" />
+            <div className="dreamshoot-hero-aurora absolute inset-0 bg-[radial-gradient(circle_at_19%_28%,rgba(122,76,255,0.34),transparent_30%),radial-gradient(circle_at_34%_58%,rgba(236,75,221,0.20),transparent_24%),radial-gradient(circle_at_76%_37%,rgba(22,220,240,0.18),transparent_27%),radial-gradient(circle_at_64%_11%,rgba(255,166,68,0.13),transparent_22%)]" />
             <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#05070E] to-transparent" />
           </div>
           <div className="pointer-events-none absolute inset-0 -z-10 opacity-65">
             {Array.from({ length: 16 }).map((_, index) => (
               <span
-                className="absolute h-1.5 w-1.5 rounded-full shadow-[0_0_18px_rgba(255,255,255,0.55)]"
+                className="dreamshoot-hero-particle absolute h-1.5 w-1.5 rounded-full shadow-[0_0_18px_rgba(255,255,255,0.55)]"
                 key={`dreamshoot_particle_${index}`}
                 style={{
                   background: [dreamshootCyan, dreamshootMagenta, dreamshootOrange, "#ffffff"][index % 4],
                   left: `${(index * 37) % 100}%`,
-                  top: `${12 + ((index * 19) % 76)}%`
+                  top: `${12 + ((index * 19) % 76)}%`,
+                  animationDelay: `${-(index % 8) * 1.6}s`,
+                  animationDuration: `${13 + (index % 5) * 2.5}s`
                 }}
               />
             ))}
