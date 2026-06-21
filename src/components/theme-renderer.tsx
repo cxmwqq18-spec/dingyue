@@ -982,6 +982,7 @@ const dreamshootBg = "#05070E";
 const dreamshootSurface = "#10111A";
 const dreamshootGlass = "rgba(18, 18, 28, 0.86)";
 const dreamshootBrandGradient = `linear-gradient(90deg, ${dreamshootOrange} 0%, ${dreamshootMagenta} 38%, ${dreamshootPurple} 68%, ${dreamshootCyan} 100%)`;
+const googleIconPath = "/assets/brand/google-g.svg";
 const paperWarm = "#f4f1eb";
 const panelWarm = "#fbfaf7";
 const borderWarm = "#d8d2c7";
@@ -2413,7 +2414,10 @@ function SectionView({
                 </div>
                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))}>
-                    {setting(section, "authPrimaryLabel", "Continue with Google")}
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
+                      <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
+                    </span>
+                    <span>{setting(section, "authPrimaryLabel", "Continue with Google")}</span>
                   </Link>
                   <div className="hidden grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-white/54 sm:grid">
                     <span className="h-px bg-white/24" />
@@ -3130,10 +3134,17 @@ function SectionView({
                         { id: "google", type: "login_method", settings: { label: "Continue with Google", helper: "OAuth-ready entry.", kind: "google", href: "/login" } },
                         { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
                       ]).map((method, index) => (
-                        <Link className="flex items-center justify-between rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
-                          <span>
+                        <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
+                          <span className="flex min-w-0 items-start gap-3">
+                            {blockValue(method, "kind", "") === "google" ? (
+                              <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
+                                <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
+                              </span>
+                            ) : null}
+                            <span className="min-w-0">
                             <span className="block font-semibold text-white">{blockValue(method, "label")}</span>
                             <span className="mt-1 block text-xs leading-5 text-white/54">{blockValue(method, "helper")}</span>
+                            </span>
                           </span>
                           <ArrowRight className="h-4 w-4 text-white/62" strokeWidth={1.8} />
                         </Link>
