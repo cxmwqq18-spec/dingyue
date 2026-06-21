@@ -73,15 +73,12 @@ textarea {
     }
   }
 
-  @keyframes dreamshoot-hero-grid-drift {
-    0% {
-      transform: translate3d(-1.4%, -1.2%, 0) scale(1.035);
+  @keyframes dreamshoot-hero-grid-scroll {
+    from {
+      transform: translate3d(0, -1.2%, 0) scale(1.04);
     }
-    50% {
-      transform: translate3d(1.25%, 0.85%, 0) scale(1.055);
-    }
-    100% {
-      transform: translate3d(-1.4%, -1.2%, 0) scale(1.035);
+    to {
+      transform: translate3d(-216px, -1.2%, 0) scale(1.04);
     }
   }
 
@@ -133,7 +130,9 @@ textarea {
   }
 
   .dreamshoot-hero-motion .dreamshoot-hero-grid {
-    animation: dreamshoot-hero-grid-drift 34s ease-in-out infinite;
+    width: calc(100% + 520px);
+    margin-left: -260px;
+    animation: dreamshoot-hero-grid-scroll 34s linear infinite;
     transform-origin: center;
     will-change: transform;
   }
