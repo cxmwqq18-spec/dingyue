@@ -7,7 +7,7 @@ const fallbackImages = [
   "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
   "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
   "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-  "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
 ] as const;
 
 export function fallbackImageForSeed(seed: string): string {

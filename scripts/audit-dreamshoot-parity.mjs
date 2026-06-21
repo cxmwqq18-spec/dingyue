@@ -216,6 +216,41 @@ assert(homeCatalog?.type === "dreamshoot_package_catalog", "home page missing Dr
 assert(homeCatalog?.settings?.source === "creative_packs", "home package catalog must use active creative packs, not a short manual demo list");
 assert(Number(homeCatalog?.settings?.featuredCount ?? 0) >= 5, "home package catalog should feature at least 5 cards before the full directory");
 
+const featuredPack = homePage.publishedJson.sections?.featured_pack_1;
+assert(featuredPack?.type === "dreamshoot_featured_pack", "home page missing DreamShoot featured pack renderer");
+const featuredPackText = JSON.stringify(featuredPack);
+for (const phrase of [
+  "star-inspired",
+  "celebrity-inspired",
+  "football-star",
+  "sports-star",
+  "World Cup now. Holiday next.",
+  "World Cup|Christmas|Valentine|Wedding season",
+  "AI video"
+]) {
+  assert(!featuredPackText.toLowerCase().includes(phrase.toLowerCase()), `World Cup featured pack drifted back to forbidden copy: ${phrase}`);
+}
+for (const phrase of [
+  "World Cup fan photos for match-day moments.",
+  "Match-day looks without a studio.",
+  "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+  "Current campaign: World Cup Fan Photos"
+]) {
+  assert(featuredPackText.includes(phrase), `World Cup featured pack missing required copy: ${phrase}`);
+}
+const requiredWorldCupAssets = [
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+  "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"
+];
+for (const asset of requiredWorldCupAssets) {
+  assert(featuredPackText.includes(asset), `World Cup featured pack missing generated asset: ${asset}`);
+}
+assert(!featuredPackText.includes("/assets/dreamshoot/generated/20260619/world-cup-fan-star"), "World Cup featured pack still references old football-star asset");
+
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("plan_rules_1"), "pricing page must explain free tools, private model, and credits");
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "pricing page must include trust signals");
 

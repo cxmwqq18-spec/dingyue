@@ -307,7 +307,7 @@ products.push({
 
 const creativePacks = [
   ["pack_dreamshoot_headshots", "Professional Headshots", "Founder, LinkedIn, team, resume, and personal brand portraits from simple selfies.", "headshots", 20, 20, "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["pack_dreamshoot_worldcup", "World Cup Fan Photos", "Stadium tunnel meet-ups, football star-inspired portraits, fan posters, and match-day profile scenes.", "sports", 40, 26, "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"],
+  ["pack_dreamshoot_worldcup", "World Cup Fan Photos", "Stadium portraits, fan posters, match-day avatars, and private social albums.", "sports", 40, 26, "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
   ["pack_dreamshoot_hairstyle", "Hairstyle", "Preview hair directions, colors, and beauty styling before choosing a full image package.", "beauty", 20, 18, "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
   ["pack_dreamshoot_cyberpunk", "Cyberpunk", "Neon city portraits, future fashion, night-life looks, and high-contrast digital art scenes.", "creative", 20, 26, "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
   ["pack_dreamshoot_gala", "Gala Photos", "Formal night-out photos with polished editorial lighting, black-tie styling, and red-carpet energy.", "creative", 20, 24, "/assets/dreamshoot/frames/sample-gala.png"],
@@ -365,7 +365,12 @@ const mediaAssets = [
   ["media_dreamshoot_holiday_portrait", "DreamShootAI holiday portrait", "sites/site_dreamshoot/theme/holiday-portrait-v1.png", "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
   ["media_dreamshoot_mafia_noir", "DreamShootAI mafia noir", "sites/site_dreamshoot/theme/mafia-noir-single-v1.png", "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
   ["media_dreamshoot_nature_adventure", "DreamShootAI nature adventure", "sites/site_dreamshoot/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
-  ["media_dreamshoot_worldcup_fan", "DreamShootAI World Cup fan", "sites/site_dreamshoot/theme/world-cup-fan-star-clean-v1.png", "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"],
+  ["media_dreamshoot_worldcup_stadium", "DreamShootAI World Cup stadium portrait", "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
+  ["media_dreamshoot_worldcup_friends", "DreamShootAI World Cup friend fan photos", "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png"],
+  ["media_dreamshoot_worldcup_avatar", "DreamShootAI World Cup match-day avatar", "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png"],
+  ["media_dreamshoot_worldcup_poster", "DreamShootAI World Cup fan poster", "sites/site_dreamshoot/theme/worldcup-fan-poster.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png"],
+  ["media_dreamshoot_worldcup_story", "DreamShootAI World Cup social story", "sites/site_dreamshoot/theme/worldcup-social-story.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png"],
+  ["media_dreamshoot_worldcup_banner", "DreamShootAI World Cup banner cover", "sites/site_dreamshoot/theme/worldcup-banner-cover.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"],
   ["media_dreamshoot_cyberpunk_solo", "DreamShootAI cyberpunk solo", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"]
 ].map(([id, label, storageKey, previewUrl]) => ({
   id,

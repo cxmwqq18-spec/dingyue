@@ -12088,10 +12088,10 @@
                   "type": "tool_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                    "description": "Build stadium scenes, fan posters, and match-day profile images.",
                     "category": "Photo AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -12331,7 +12331,7 @@
                     "description": "Animate World Cup fan posters and match-day profile scenes.",
                     "category": "Video AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -12686,10 +12686,10 @@
                   "type": "tool_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                    "description": "Build stadium scenes, fan posters, and match-day profile images.",
                     "category": "Photo AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -12929,7 +12929,7 @@
                     "description": "Animate World Cup fan posters and match-day profile scenes.",
                     "category": "Video AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -13171,7 +13171,7 @@
                   "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                   "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                   "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
@@ -13302,10 +13302,10 @@
                     "type": "proof_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                      "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                       "category": "Sports",
                       "badge": "Featured",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -13364,26 +13364,34 @@
                 "settings": {
                   "anchor": "featured-pack",
                   "label": "Featured seasonal pack",
-                  "badge": "Featured pack",
-                  "title": "World Cup fan photos with star-inspired scenes",
-                  "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                  "primaryCta": "Create fan photos",
+                  "badge": "Match-day pack",
+                  "title": "World Cup fan photos for match-day moments.",
+                  "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                  "primaryCta": "Create Fan Photos",
                   "primaryHref": "/login",
-                  "secondaryCta": "View packs",
+                  "secondaryCta": "View Sports Packs",
                   "secondaryHref": "/collections",
                   "photos": "40 photos",
                   "credits": "26 credits",
-                  "privacy": "Private model",
-                  "slotTitle": "World Cup now. Holiday next.",
-                  "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                  "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                  "overlayTitle": "World Cup Pack",
+                  "overlaySubtitle": "Match-day looks without a studio.",
+                  "overlayChips": "fan poster|avatar|stadium|social-ready",
+                  "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                  "campaignLabel": "Current campaign: World Cup Fan Photos",
+                  "nextCampaignLabel": "Next: Valentine / Graduation Season"
                 },
                 "blocks": [
                   {
                     "id": "seasonal_worldcup_1",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Stadium hero",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "label": "Stadium Portrait",
+                      "meta": "Cinematic fan look",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "shape": "tall"
                     }
                   },
@@ -13391,8 +13399,9 @@
                     "id": "seasonal_worldcup_2",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Fan meet-up",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "label": "Friend Fan Photos",
+                      "meta": "Group-friendly shots",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                       "shape": "wide"
                     }
                   },
@@ -13400,27 +13409,40 @@
                     "id": "seasonal_worldcup_3",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Creator card",
-                      "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                      "shape": "wide"
+                      "label": "Match-day Avatar",
+                      "meta": "Profile-ready crop",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                      "shape": "square"
                     }
                   },
                   {
                     "id": "seasonal_worldcup_4",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Profile card",
-                      "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                      "shape": "square"
+                      "label": "Fan Poster",
+                      "meta": "Story and feed artwork",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                      "shape": "tall"
                     }
                   },
                   {
                     "id": "seasonal_worldcup_5",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Motion add-on",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                      "shape": "square"
+                      "label": "Social Story",
+                      "meta": "Mobile-first layout",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Banner / Cover",
+                      "meta": "Wide campaign image",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                      "shape": "wide"
                     }
                   }
                 ]
@@ -13447,7 +13469,7 @@
                       "category": "Sports",
                       "meta": "40 photos",
                       "credits": "26 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -13608,7 +13630,7 @@
                       "location": "London, UK",
                       "rating": "5",
                       "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                     }
                   },
                   {
@@ -13831,7 +13853,7 @@
                   "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                   "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                   "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
@@ -13962,10 +13984,10 @@
                     "type": "proof_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                      "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                       "category": "Sports",
                       "badge": "Featured",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -14024,26 +14046,34 @@
                 "settings": {
                   "anchor": "featured-pack",
                   "label": "Featured seasonal pack",
-                  "badge": "Featured pack",
-                  "title": "World Cup fan photos with star-inspired scenes",
-                  "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                  "primaryCta": "Create fan photos",
+                  "badge": "Match-day pack",
+                  "title": "World Cup fan photos for match-day moments.",
+                  "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                  "primaryCta": "Create Fan Photos",
                   "primaryHref": "/login",
-                  "secondaryCta": "View packs",
+                  "secondaryCta": "View Sports Packs",
                   "secondaryHref": "/collections",
                   "photos": "40 photos",
                   "credits": "26 credits",
-                  "privacy": "Private model",
-                  "slotTitle": "World Cup now. Holiday next.",
-                  "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                  "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                  "overlayTitle": "World Cup Pack",
+                  "overlaySubtitle": "Match-day looks without a studio.",
+                  "overlayChips": "fan poster|avatar|stadium|social-ready",
+                  "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                  "campaignLabel": "Current campaign: World Cup Fan Photos",
+                  "nextCampaignLabel": "Next: Valentine / Graduation Season"
                 },
                 "blocks": [
                   {
                     "id": "seasonal_worldcup_1",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Stadium hero",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "label": "Stadium Portrait",
+                      "meta": "Cinematic fan look",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "shape": "tall"
                     }
                   },
@@ -14051,8 +14081,9 @@
                     "id": "seasonal_worldcup_2",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Fan meet-up",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                      "label": "Friend Fan Photos",
+                      "meta": "Group-friendly shots",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                       "shape": "wide"
                     }
                   },
@@ -14060,27 +14091,40 @@
                     "id": "seasonal_worldcup_3",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Creator card",
-                      "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                      "shape": "wide"
+                      "label": "Match-day Avatar",
+                      "meta": "Profile-ready crop",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                      "shape": "square"
                     }
                   },
                   {
                     "id": "seasonal_worldcup_4",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Profile card",
-                      "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                      "shape": "square"
+                      "label": "Fan Poster",
+                      "meta": "Story and feed artwork",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                      "shape": "tall"
                     }
                   },
                   {
                     "id": "seasonal_worldcup_5",
                     "type": "seasonal_image",
                     "settings": {
-                      "label": "Motion add-on",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                      "shape": "square"
+                      "label": "Social Story",
+                      "meta": "Mobile-first layout",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Banner / Cover",
+                      "meta": "Wide campaign image",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                      "shape": "wide"
                     }
                   }
                 ]
@@ -14107,7 +14151,7 @@
                       "category": "Sports",
                       "meta": "40 photos",
                       "credits": "26 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -14268,7 +14312,7 @@
                       "location": "London, UK",
                       "rating": "5",
                       "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                     }
                   },
                   {
@@ -15027,10 +15071,10 @@
                     "type": "taxonomy_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                      "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                       "meta": "Sports",
-                      "keywords": "world cup photos|football fan photo|sports star",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "keywords": "world cup photos|football fan photo|match day avatar",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -15133,7 +15177,7 @@
                     "type": "sample",
                     "settings": {
                       "label": "World Cup",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "meta": "Fan meet-up"
                     }
                   }
@@ -15249,7 +15293,7 @@
                       "label": "Photo packages",
                       "title": "Pick a finished outcome",
                       "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -15422,10 +15466,10 @@
                     "type": "taxonomy_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                      "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                       "meta": "Sports",
-                      "keywords": "world cup photos|football fan photo|sports star",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "keywords": "world cup photos|football fan photo|match day avatar",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -15528,7 +15572,7 @@
                     "type": "sample",
                     "settings": {
                       "label": "World Cup",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "meta": "Fan meet-up"
                     }
                   }
@@ -15644,7 +15688,7 @@
                       "label": "Photo packages",
                       "title": "Pick a finished outcome",
                       "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -15820,10 +15864,10 @@
                     "type": "tool_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                      "description": "Build stadium scenes, fan posters, and match-day profile images.",
                       "category": "Photo AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -16063,7 +16107,7 @@
                       "description": "Animate World Cup fan posters and match-day profile scenes.",
                       "category": "Video AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -16146,7 +16190,7 @@
                       "label": "Photo packages",
                       "title": "Pick a finished outcome",
                       "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -16465,10 +16509,10 @@
                     "type": "tool_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                      "description": "Build stadium scenes, fan posters, and match-day profile images.",
                       "category": "Photo AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -16708,7 +16752,7 @@
                       "description": "Animate World Cup fan posters and match-day profile scenes.",
                       "category": "Video AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -16791,7 +16835,7 @@
                       "label": "Photo packages",
                       "title": "Pick a finished outcome",
                       "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -21792,7 +21836,7 @@
       "siteId": "site_dreamshoot",
       "name": "World Cup Fan Photos",
       "headline": "World Cup Fan Photos",
-      "description": "Stadium tunnel meet-ups, football star-inspired portraits, fan posters, and match-day profile scenes.",
+      "description": "Stadium portraits, fan posters, match-day avatars, and private social albums.",
       "category": "sports",
       "aiAppSlug": "image_generator",
       "status": "active",
@@ -21802,7 +21846,7 @@
       "generationCount": 137,
       "conversionRate": 9.5,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
     },
     {
       "id": "pack_dreamshoot_hairstyle",
@@ -22490,16 +22534,81 @@
       "createdAt": "2026-06-18T00:00:00.000Z"
     },
     {
-      "id": "media_dreamshoot_worldcup_fan",
+      "id": "media_dreamshoot_worldcup_stadium",
       "siteId": "site_dreamshoot",
-      "label": "DreamShootAI World Cup fan",
-      "storageKey": "sites/site_dreamshoot/theme/world-cup-fan-star-clean-v1.png",
+      "label": "DreamShootAI World Cup stadium portrait",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png",
       "mimeType": "image/png",
       "usage": "theme",
       "sourceType": "theme_seed",
-      "previewUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-      "originUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-      "altText": "DreamShootAI World Cup fan",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+      "altText": "DreamShootAI World Cup stadium portrait",
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "media_dreamshoot_worldcup_friends",
+      "siteId": "site_dreamshoot",
+      "label": "DreamShootAI World Cup friend fan photos",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+      "altText": "DreamShootAI World Cup friend fan photos",
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "media_dreamshoot_worldcup_avatar",
+      "siteId": "site_dreamshoot",
+      "label": "DreamShootAI World Cup match-day avatar",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+      "altText": "DreamShootAI World Cup match-day avatar",
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "media_dreamshoot_worldcup_poster",
+      "siteId": "site_dreamshoot",
+      "label": "DreamShootAI World Cup fan poster",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-fan-poster.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+      "altText": "DreamShootAI World Cup fan poster",
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "media_dreamshoot_worldcup_story",
+      "siteId": "site_dreamshoot",
+      "label": "DreamShootAI World Cup social story",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-social-story.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+      "altText": "DreamShootAI World Cup social story",
+      "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "media_dreamshoot_worldcup_banner",
+      "siteId": "site_dreamshoot",
+      "label": "DreamShootAI World Cup banner cover",
+      "storageKey": "sites/site_dreamshoot/theme/worldcup-banner-cover.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+      "originUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+      "altText": "DreamShootAI World Cup banner cover",
       "createdAt": "2026-06-18T00:00:00.000Z"
     },
     {
@@ -33938,7 +34047,7 @@
                 "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                 "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                 "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
@@ -34073,10 +34182,10 @@
                   "type": "proof_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                    "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                     "category": "Sports",
                     "badge": "Featured",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                     "href": "/collections?category=sports"
                   }
                 },
@@ -34137,26 +34246,34 @@
               "settings": {
                 "anchor": "featured-pack",
                 "label": "Featured seasonal pack",
-                "badge": "Featured pack",
-                "title": "World Cup fan photos with star-inspired scenes",
-                "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                "primaryCta": "Create fan photos",
+                "badge": "Match-day pack",
+                "title": "World Cup fan photos for match-day moments.",
+                "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                "primaryCta": "Create Fan Photos",
                 "primaryHref": "/login",
-                "secondaryCta": "View packs",
+                "secondaryCta": "View Sports Packs",
                 "secondaryHref": "/collections",
                 "photos": "40 photos",
                 "credits": "26 credits",
-                "privacy": "Private model",
-                "slotTitle": "World Cup now. Holiday next.",
-                "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                "privacy": "Private album",
+                "includedTitle": "Included outputs",
+                "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                "overlayTitle": "World Cup Pack",
+                "overlaySubtitle": "Match-day looks without a studio.",
+                "overlayChips": "fan poster|avatar|stadium|social-ready",
+                "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                "campaignLabel": "Current campaign: World Cup Fan Photos",
+                "nextCampaignLabel": "Next: Valentine / Graduation Season"
               },
               "blocks": [
                 {
                   "id": "seasonal_worldcup_1",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Stadium hero",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "label": "Stadium Portrait",
+                    "meta": "Cinematic fan look",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "shape": "tall"
                   }
                 },
@@ -34164,8 +34281,9 @@
                   "id": "seasonal_worldcup_2",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Fan meet-up",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "label": "Friend Fan Photos",
+                    "meta": "Group-friendly shots",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                     "shape": "wide"
                   }
                 },
@@ -34173,27 +34291,40 @@
                   "id": "seasonal_worldcup_3",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Creator card",
-                    "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                    "shape": "wide"
+                    "label": "Match-day Avatar",
+                    "meta": "Profile-ready crop",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                    "shape": "square"
                   }
                 },
                 {
                   "id": "seasonal_worldcup_4",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Profile card",
-                    "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                    "shape": "square"
+                    "label": "Fan Poster",
+                    "meta": "Story and feed artwork",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                    "shape": "tall"
                   }
                 },
                 {
                   "id": "seasonal_worldcup_5",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Motion add-on",
-                    "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                    "shape": "square"
+                    "label": "Social Story",
+                    "meta": "Mobile-first layout",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                    "shape": "tall"
+                  }
+                },
+                {
+                  "id": "seasonal_worldcup_6",
+                  "type": "seasonal_image",
+                  "settings": {
+                    "label": "Banner / Cover",
+                    "meta": "Wide campaign image",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                    "shape": "wide"
                   }
                 }
               ]
@@ -34222,7 +34353,7 @@
                     "category": "Sports",
                     "meta": "40 photos",
                     "credits": "26 credits",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -34389,7 +34520,7 @@
                     "location": "London, UK",
                     "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                    "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                    "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                   }
                 },
                 {
@@ -34906,10 +35037,10 @@
                   "type": "taxonomy_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                    "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                     "meta": "Sports",
-                    "keywords": "world cup photos|football fan photo|sports star",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "keywords": "world cup photos|football fan photo|match day avatar",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/collections?category=sports"
                   }
                 },
@@ -35016,7 +35147,7 @@
                   "type": "sample",
                   "settings": {
                     "label": "World Cup",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "meta": "Fan meet-up"
                   }
                 }
@@ -35138,7 +35269,7 @@
                     "label": "Photo packages",
                     "title": "Pick a finished outcome",
                     "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -35310,10 +35441,10 @@
                   "type": "tool_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                    "description": "Build stadium scenes, fan posters, and match-day profile images.",
                     "category": "Photo AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -35553,7 +35684,7 @@
                     "description": "Animate World Cup fan posters and match-day profile scenes.",
                     "category": "Video AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -35638,7 +35769,7 @@
                     "label": "Photo packages",
                     "title": "Pick a finished outcome",
                     "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -37771,10 +37902,10 @@
                     "type": "tool_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                      "description": "Build stadium scenes, fan posters, and match-day profile images.",
                       "category": "Photo AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -38014,7 +38145,7 @@
                       "description": "Animate World Cup fan posters and match-day profile scenes.",
                       "category": "Video AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -38416,7 +38547,7 @@
                 "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                 "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                 "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
@@ -38551,10 +38682,10 @@
                   "type": "proof_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                    "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                     "category": "Sports",
                     "badge": "Featured",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                     "href": "/collections?category=sports"
                   }
                 },
@@ -38615,26 +38746,34 @@
               "settings": {
                 "anchor": "featured-pack",
                 "label": "Featured seasonal pack",
-                "badge": "Featured pack",
-                "title": "World Cup fan photos with star-inspired scenes",
-                "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                "primaryCta": "Create fan photos",
+                "badge": "Match-day pack",
+                "title": "World Cup fan photos for match-day moments.",
+                "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                "primaryCta": "Create Fan Photos",
                 "primaryHref": "/login",
-                "secondaryCta": "View packs",
+                "secondaryCta": "View Sports Packs",
                 "secondaryHref": "/collections",
                 "photos": "40 photos",
                 "credits": "26 credits",
-                "privacy": "Private model",
-                "slotTitle": "World Cup now. Holiday next.",
-                "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                "privacy": "Private album",
+                "includedTitle": "Included outputs",
+                "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                "overlayTitle": "World Cup Pack",
+                "overlaySubtitle": "Match-day looks without a studio.",
+                "overlayChips": "fan poster|avatar|stadium|social-ready",
+                "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                "campaignLabel": "Current campaign: World Cup Fan Photos",
+                "nextCampaignLabel": "Next: Valentine / Graduation Season"
               },
               "blocks": [
                 {
                   "id": "seasonal_worldcup_1",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Stadium hero",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "label": "Stadium Portrait",
+                    "meta": "Cinematic fan look",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "shape": "tall"
                   }
                 },
@@ -38642,8 +38781,9 @@
                   "id": "seasonal_worldcup_2",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Fan meet-up",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                    "label": "Friend Fan Photos",
+                    "meta": "Group-friendly shots",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                     "shape": "wide"
                   }
                 },
@@ -38651,27 +38791,40 @@
                   "id": "seasonal_worldcup_3",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Creator card",
-                    "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                    "shape": "wide"
+                    "label": "Match-day Avatar",
+                    "meta": "Profile-ready crop",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                    "shape": "square"
                   }
                 },
                 {
                   "id": "seasonal_worldcup_4",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Profile card",
-                    "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                    "shape": "square"
+                    "label": "Fan Poster",
+                    "meta": "Story and feed artwork",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                    "shape": "tall"
                   }
                 },
                 {
                   "id": "seasonal_worldcup_5",
                   "type": "seasonal_image",
                   "settings": {
-                    "label": "Motion add-on",
-                    "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                    "shape": "square"
+                    "label": "Social Story",
+                    "meta": "Mobile-first layout",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                    "shape": "tall"
+                  }
+                },
+                {
+                  "id": "seasonal_worldcup_6",
+                  "type": "seasonal_image",
+                  "settings": {
+                    "label": "Banner / Cover",
+                    "meta": "Wide campaign image",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                    "shape": "wide"
                   }
                 }
               ]
@@ -38700,7 +38853,7 @@
                     "category": "Sports",
                     "meta": "40 photos",
                     "credits": "26 credits",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -38867,7 +39020,7 @@
                     "location": "London, UK",
                     "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                    "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                    "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                   }
                 },
                 {
@@ -39384,10 +39537,10 @@
                   "type": "taxonomy_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                    "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                     "meta": "Sports",
-                    "keywords": "world cup photos|football fan photo|sports star",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "keywords": "world cup photos|football fan photo|match day avatar",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/collections?category=sports"
                   }
                 },
@@ -39494,7 +39647,7 @@
                   "type": "sample",
                   "settings": {
                     "label": "World Cup",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "meta": "Fan meet-up"
                   }
                 }
@@ -39616,7 +39769,7 @@
                     "label": "Photo packages",
                     "title": "Pick a finished outcome",
                     "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -39788,10 +39941,10 @@
                   "type": "tool_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                    "description": "Build stadium scenes, fan posters, and match-day profile images.",
                     "category": "Photo AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -40031,7 +40184,7 @@
                     "description": "Animate World Cup fan posters and match-day profile scenes.",
                     "category": "Video AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -40116,7 +40269,7 @@
                     "label": "Photo packages",
                     "title": "Pick a finished outcome",
                     "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -42249,10 +42402,10 @@
                     "type": "tool_card",
                     "settings": {
                       "title": "World Cup fan photos",
-                      "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                      "description": "Build stadium scenes, fan posters, and match-day profile images.",
                       "category": "Photo AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -42492,7 +42645,7 @@
                       "description": "Animate World Cup fan posters and match-day profile scenes.",
                       "category": "Video AI",
                       "badge": "Sports",
-                      "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -50944,7 +51097,7 @@
                     "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                     "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                    "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                    "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                     "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                     "highlightWord": "real",
                     "heroBadge": "AI photo package studio",
@@ -51075,10 +51228,10 @@
                       "type": "proof_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                        "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                         "category": "Sports",
                         "badge": "Featured",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                         "href": "/collections?category=sports"
                       }
                     },
@@ -51137,26 +51290,34 @@
                   "settings": {
                     "anchor": "featured-pack",
                     "label": "Featured seasonal pack",
-                    "badge": "Featured pack",
-                    "title": "World Cup fan photos with star-inspired scenes",
-                    "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                    "primaryCta": "Create fan photos",
+                    "badge": "Match-day pack",
+                    "title": "World Cup fan photos for match-day moments.",
+                    "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                    "primaryCta": "Create Fan Photos",
                     "primaryHref": "/login",
-                    "secondaryCta": "View packs",
+                    "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/collections",
                     "photos": "40 photos",
                     "credits": "26 credits",
-                    "privacy": "Private model",
-                    "slotTitle": "World Cup now. Holiday next.",
-                    "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                    "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                    "overlayTitle": "World Cup Pack",
+                    "overlaySubtitle": "Match-day looks without a studio.",
+                    "overlayChips": "fan poster|avatar|stadium|social-ready",
+                    "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                    "campaignLabel": "Current campaign: World Cup Fan Photos",
+                    "nextCampaignLabel": "Next: Valentine / Graduation Season"
                   },
                   "blocks": [
                     {
                       "id": "seasonal_worldcup_1",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Stadium hero",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "label": "Stadium Portrait",
+                        "meta": "Cinematic fan look",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "shape": "tall"
                       }
                     },
@@ -51164,8 +51325,9 @@
                       "id": "seasonal_worldcup_2",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Fan meet-up",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "label": "Friend Fan Photos",
+                        "meta": "Group-friendly shots",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                         "shape": "wide"
                       }
                     },
@@ -51173,27 +51335,40 @@
                       "id": "seasonal_worldcup_3",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Creator card",
-                        "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                        "shape": "wide"
+                        "label": "Match-day Avatar",
+                        "meta": "Profile-ready crop",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                        "shape": "square"
                       }
                     },
                     {
                       "id": "seasonal_worldcup_4",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Profile card",
-                        "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                        "shape": "square"
+                        "label": "Fan Poster",
+                        "meta": "Story and feed artwork",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                        "shape": "tall"
                       }
                     },
                     {
                       "id": "seasonal_worldcup_5",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Motion add-on",
-                        "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                        "shape": "square"
+                        "label": "Social Story",
+                        "meta": "Mobile-first layout",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Banner / Cover",
+                        "meta": "Wide campaign image",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                        "shape": "wide"
                       }
                     }
                   ]
@@ -51220,7 +51395,7 @@
                         "category": "Sports",
                         "meta": "40 photos",
                         "credits": "26 credits",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -51381,7 +51556,7 @@
                         "location": "London, UK",
                         "rating": "5",
                         "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                       }
                     },
                     {
@@ -51890,10 +52065,10 @@
                       "type": "taxonomy_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                        "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                         "meta": "Sports",
-                        "keywords": "world cup photos|football fan photo|sports star",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "keywords": "world cup photos|football fan photo|match day avatar",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/collections?category=sports"
                       }
                     },
@@ -51996,7 +52171,7 @@
                       "type": "sample",
                       "settings": {
                         "label": "World Cup",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "meta": "Fan meet-up"
                       }
                     }
@@ -52112,7 +52287,7 @@
                         "label": "Photo packages",
                         "title": "Pick a finished outcome",
                         "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -52284,10 +52459,10 @@
                       "type": "tool_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                        "description": "Build stadium scenes, fan posters, and match-day profile images.",
                         "category": "Photo AI",
                         "badge": "Sports",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -52527,7 +52702,7 @@
                         "description": "Animate World Cup fan posters and match-day profile scenes.",
                         "category": "Video AI",
                         "badge": "Sports",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -52610,7 +52785,7 @@
                         "label": "Photo packages",
                         "title": "Pick a finished outcome",
                         "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -54916,10 +55091,10 @@
                   "type": "tool_card",
                   "settings": {
                     "title": "World Cup fan photos",
-                    "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                    "description": "Build stadium scenes, fan posters, and match-day profile images.",
                     "category": "Photo AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -55159,7 +55334,7 @@
                     "description": "Animate World Cup fan posters and match-day profile scenes.",
                     "category": "Video AI",
                     "badge": "Sports",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                     "href": "/tools/image-studio"
                   }
                 },
@@ -55536,7 +55711,7 @@
                     "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                     "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                    "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png|/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                    "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
                     "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                     "highlightWord": "real",
                     "heroBadge": "AI photo package studio",
@@ -55671,10 +55846,10 @@
                       "type": "proof_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Stadium posters, match-day portraits, and football-star-inspired scenes.",
+                        "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                         "category": "Sports",
                         "badge": "Featured",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                         "href": "/collections?category=sports"
                       }
                     },
@@ -55735,26 +55910,34 @@
                   "settings": {
                     "anchor": "featured-pack",
                     "label": "Featured seasonal pack",
-                    "badge": "Featured pack",
-                    "title": "World Cup fan photos with star-inspired scenes",
-                    "subtitle": "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-                    "primaryCta": "Create fan photos",
+                    "badge": "Match-day pack",
+                    "title": "World Cup fan photos for match-day moments.",
+                    "subtitle": "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+                    "primaryCta": "Create Fan Photos",
                     "primaryHref": "/login",
-                    "secondaryCta": "View packs",
+                    "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/collections",
                     "photos": "40 photos",
                     "credits": "26 credits",
-                    "privacy": "Private model",
-                    "slotTitle": "World Cup now. Holiday next.",
-                    "slotTabs": "World Cup|Christmas|Valentine|Wedding season"
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                    "safetyCopy": "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+                    "overlayTitle": "World Cup Pack",
+                    "overlaySubtitle": "Match-day looks without a studio.",
+                    "overlayChips": "fan poster|avatar|stadium|social-ready",
+                    "bottomNote": "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+                    "campaignLabel": "Current campaign: World Cup Fan Photos",
+                    "nextCampaignLabel": "Next: Valentine / Graduation Season"
                   },
                   "blocks": [
                     {
                       "id": "seasonal_worldcup_1",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Stadium hero",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "label": "Stadium Portrait",
+                        "meta": "Cinematic fan look",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "shape": "tall"
                       }
                     },
@@ -55762,8 +55945,9 @@
                       "id": "seasonal_worldcup_2",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Fan meet-up",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+                        "label": "Friend Fan Photos",
+                        "meta": "Group-friendly shots",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
                         "shape": "wide"
                       }
                     },
@@ -55771,27 +55955,40 @@
                       "id": "seasonal_worldcup_3",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Creator card",
-                        "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                        "shape": "wide"
+                        "label": "Match-day Avatar",
+                        "meta": "Profile-ready crop",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+                        "shape": "square"
                       }
                     },
                     {
                       "id": "seasonal_worldcup_4",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Profile card",
-                        "imageUrl": "/assets/dreamshoot/holiday-card-gpt2.png",
-                        "shape": "square"
+                        "label": "Fan Poster",
+                        "meta": "Story and feed artwork",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+                        "shape": "tall"
                       }
                     },
                     {
                       "id": "seasonal_worldcup_5",
                       "type": "seasonal_image",
                       "settings": {
-                        "label": "Motion add-on",
-                        "imageUrl": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-                        "shape": "square"
+                        "label": "Social Story",
+                        "meta": "Mobile-first layout",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Banner / Cover",
+                        "meta": "Wide campaign image",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
+                        "shape": "wide"
                       }
                     }
                   ]
@@ -55820,7 +56017,7 @@
                         "category": "Sports",
                         "meta": "40 photos",
                         "credits": "26 credits",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -55987,7 +56184,7 @@
                         "location": "London, UK",
                         "rating": "5",
                         "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png"
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
                       }
                     },
                     {
@@ -56504,10 +56701,10 @@
                       "type": "taxonomy_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.",
+                        "description": "Stadium fan scenes, fan posters, and match-day profile photos.",
                         "meta": "Sports",
-                        "keywords": "world cup photos|football fan photo|sports star",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "keywords": "world cup photos|football fan photo|match day avatar",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/collections?category=sports"
                       }
                     },
@@ -56614,7 +56811,7 @@
                       "type": "sample",
                       "settings": {
                         "label": "World Cup",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "meta": "Fan meet-up"
                       }
                     }
@@ -56736,7 +56933,7 @@
                         "label": "Photo packages",
                         "title": "Pick a finished outcome",
                         "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -56908,10 +57105,10 @@
                       "type": "tool_card",
                       "settings": {
                         "title": "World Cup fan photos",
-                        "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                        "description": "Build stadium scenes, fan posters, and match-day profile images.",
                         "category": "Photo AI",
                         "badge": "Sports",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -57151,7 +57348,7 @@
                         "description": "Animate World Cup fan posters and match-day profile scenes.",
                         "category": "Video AI",
                         "badge": "Sports",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -57236,7 +57433,7 @@
                         "label": "Photo packages",
                         "title": "Pick a finished outcome",
                         "description": "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
-                        "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -59369,10 +59566,10 @@
                         "type": "tool_card",
                         "settings": {
                           "title": "World Cup fan photos",
-                          "description": "Build stadium scenes, fan posters, and football-star-inspired profile images.",
+                          "description": "Build stadium scenes, fan posters, and match-day profile images.",
                           "category": "Photo AI",
                           "badge": "Sports",
-                          "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                          "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                           "href": "/tools/image-studio"
                         }
                       },
@@ -59612,7 +59809,7 @@
                           "description": "Animate World Cup fan posters and match-day profile scenes.",
                           "category": "Video AI",
                           "badge": "Sports",
-                          "imageUrl": "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+                          "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
                           "href": "/tools/image-studio"
                         }
                       },

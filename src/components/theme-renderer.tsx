@@ -1021,8 +1021,8 @@ const packImages: Record<string, string> = {
   creative: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
   creator: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
   gala: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-  sports: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-  seasonal: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+  sports: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+  seasonal: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
   beauty: "/assets/dreamshoot/beauty-portrait-gpt2.png",
   travel: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
   avatar: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
@@ -1065,7 +1065,7 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
   return [
     dreamshootToolBlock("mega_tool_headshot", "Professional headshot maker", "Create clean profile portraits for resumes, teams, and founder pages.", "Photo AI", packImages.headshots, "/tools/image-studio", "Profile"),
     dreamshootToolBlock("mega_tool_creator", "Creator portrait studio", "Generate creator-ready profile photos, channel visuals, and campaign portraits.", "Photo AI", packImages.creator, "/tools/image-studio", "Creator"),
-    dreamshootToolBlock("mega_tool_worldcup", "World Cup fan photos", "Build stadium scenes, fan posters, and football-star-inspired profile images.", "Photo AI", packImages.sports, "/tools/image-studio", "Sports"),
+    dreamshootToolBlock("mega_tool_worldcup", "World Cup fan photos", "Build stadium scenes, fan posters, and match-day profile images.", "Photo AI", packImages.sports, "/tools/image-studio", "Sports"),
     dreamshootToolBlock("mega_tool_cyberpunk", "Cyberpunk portrait maker", "Turn source selfies into neon city portraits and dramatic future looks.", "Photo AI", packImages.creative, "/tools/image-studio", "Scene"),
     dreamshootToolBlock("mega_tool_gala", "Gala photo maker", "Create formal night-out portraits with polished editorial lighting.", "Photo AI", packImages.gala, "/tools/image-studio", "Style"),
     dreamshootToolBlock("mega_tool_noir", "Noir character portraits", "Generate cinematic mafia, detective, and vintage city character looks.", "Photo AI", packImages.gala, "/tools/image-studio", "Noir"),
@@ -2366,7 +2366,7 @@ function SectionView({
         "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
         "/assets/dreamshoot/frames/sample-professional-headshot.png",
         "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-        "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+        "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
         "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"
       ])
         .filter(Boolean)
@@ -3355,7 +3355,7 @@ function SectionView({
       "items",
       [
         `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/tools/image_generator`,
-        `World Cup fan photos|Stadium tunnel meet-ups, fan posters, and sports-star-inspired scenes.|Sports|${packImages.sports}|/tools/image_generator`,
+        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/tools/image_generator`,
         `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/tools/image_generator`
       ],
       (item, index) => {
@@ -4066,7 +4066,7 @@ function SectionView({
   if (section.type === "dreamshoot_visual_proof") {
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
-      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters and football-star-inspired scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections?category=sports" } },
+      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections?category=sports" } },
       { id: "proof_headshots", type: "proof_card", settings: { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: packImages.headshots, href: "/collections?category=headshots" } },
       { id: "proof_style", type: "proof_card", settings: { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections?category=beauty" } },
       { id: "proof_creative", type: "proof_card", settings: { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: packImages.creative, href: "/collections?category=creative" } },
@@ -4170,89 +4170,139 @@ function SectionView({
   if (section.type === "dreamshoot_featured_pack") {
     const images = sectionBlocks(section, "seasonal_image");
     const fallbackImages: SectionBlockInstance[] = [
-      { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium hero", imageUrl: packImages.sports, shape: "tall" } },
-      { id: "featured_worldcup_2", type: "seasonal_image", settings: { label: "Fan meet-up", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png", shape: "wide" } },
-      { id: "featured_worldcup_3", type: "seasonal_image", settings: { label: "Creator card", imageUrl: "/assets/dreamshoot/holiday-card-gpt2.png", shape: "wide" } },
-      { id: "featured_worldcup_4", type: "seasonal_image", settings: { label: "Profile card", imageUrl: "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png", shape: "square" } },
-      { id: "featured_worldcup_5", type: "seasonal_image", settings: { label: "Motion add-on", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", shape: "square" } }
+      { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", shape: "tall" } },
+      { id: "featured_worldcup_2", type: "seasonal_image", settings: { label: "Friend Fan Photos", meta: "Group-friendly shots", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", shape: "wide" } },
+      { id: "featured_worldcup_3", type: "seasonal_image", settings: { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png", shape: "square" } },
+      { id: "featured_worldcup_4", type: "seasonal_image", settings: { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", shape: "tall" } },
+      { id: "featured_worldcup_5", type: "seasonal_image", settings: { label: "Social Story", meta: "Mobile-first layout", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png", shape: "tall" } },
+      { id: "featured_worldcup_6", type: "seasonal_image", settings: { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", shape: "wide" } }
     ];
     const collage = (images.length ? images : fallbackImages).slice(0, 6);
-    const slotTabs = listLines(setting(section, "slotTabs", "World Cup|Holiday|Valentine|Graduation"));
+    while (collage.length < 6) collage.push(fallbackImages[collage.length]);
+    const includedTokens = listLines(
+      setting(
+        section,
+        "includedOutputs",
+        "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing"
+      )
+    );
+    const includedOutputs = Array.from({ length: Math.ceil(includedTokens.length / 2) }, (_, index) => ({
+      title: includedTokens[index * 2] ?? "",
+      body: includedTokens[index * 2 + 1] ?? ""
+    })).filter((item) => item.title || item.body);
+    const overlayChips = listLines(setting(section, "overlayChips", "fan poster|avatar|stadium|social-ready"));
     const metrics = [
-      { value: setting(section, "photos", "40 photos"), label: "full album" },
-      { value: setting(section, "credits", "26 credits"), label: "shown upfront" },
-      { value: setting(section, "privacy", "Private model"), label: "identity-safe" }
+      { value: setting(section, "photos", "40 photos"), label: "Full album" },
+      { value: setting(section, "credits", "26 credits"), label: "Shown upfront" },
+      { value: setting(section, "privacy", "Private album"), label: "Identity-safe" }
+    ];
+    const collagePlacements = [
+      "col-span-12 row-span-3 md:col-span-5 md:row-span-5",
+      "col-span-7 row-span-2 md:col-span-7 md:row-span-3",
+      "col-span-5 row-span-2 md:col-span-3 md:row-span-2",
+      "col-span-6 row-span-2 md:col-span-4 md:row-span-3",
+      "col-span-6 row-span-2 md:col-span-4 md:row-span-3",
+      "col-span-12 row-span-2 md:col-span-4 md:row-span-3"
     ];
     return (
-      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "featured-pack")}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.28),transparent_32%),radial-gradient(circle_at_86%_12%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_55%_100%,rgba(255,166,68,0.22),transparent_38%)]" />
-        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:96px_96px]" />
+      <section className="relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, "featured-pack")}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.22),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(255,166,68,0.2),transparent_36%)]" />
+        <div className="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:96px_96px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">03</span>
+          <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56">
+            <span className="rounded-full border border-white/16 bg-white/[0.05] px-4 py-2 text-white">03</span>
             <span>{setting(section, "label", "Featured seasonal pack")}</span>
           </div>
-          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-stretch">
-            <div className="rounded-[34px] border border-white/14 bg-[#070911]/82 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-10">
-              <span className="inline-flex rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.04em] text-white" style={{ background: "linear-gradient(90deg,#ff5b51 0%,#ffa644 45%,#42d777 100%)" }}>
-                {setting(section, "badge", "Featured pack")}
+          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
+            <div className="flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9">
+              <span className="inline-flex w-fit rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] text-white shadow-[0_20px_58px_-34px_rgba(255,166,68,0.86)]" style={{ background: "linear-gradient(90deg,#ff7a3d 0%,#ec4bdd 48%,#16dcf0 100%)" }}>
+                {setting(section, "badge", "Match-day pack")}
               </span>
-              <h2 className="mt-10 max-w-xl text-[clamp(2.45rem,5vw,4.1rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "World Cup fan photos with star-inspired scenes")}
+              <h2 className="mt-7 max-w-xl text-[clamp(2.15rem,3.85vw,3.75rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "World Cup fan photos for match-day moments.")}
               </h2>
-              <p className="mt-8 max-w-lg text-[1.12rem] leading-[1.38] text-white/72">
-                {setting(section, "subtitle", "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.")}
+              <p className="mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72">
+                {setting(section, "subtitle", "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.")}
               </p>
-              <div className="mt-9 flex flex-wrap gap-4">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Link className="inline-flex items-center gap-2 rounded-[18px] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: dreamshootBrandGradient }}>
-                  {setting(section, "primaryCta", "Create fan photos")}
+                  {setting(section, "primaryCta", "Create Fan Photos")}
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
                 <Link className="inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]" href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-                  {setting(section, "secondaryCta", "View packs")}
+                  {setting(section, "secondaryCta", "View Sports Packs")}
                 </Link>
               </div>
-              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {metrics.map((metric) => (
-                  <div className="rounded-[18px] border border-white/12 bg-white/[0.06] p-4" key={metric.value}>
-                    <p className="text-[1.45rem] font-semibold tracking-[-0.03em] text-white">{metric.value}</p>
+                  <div className="rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]" key={metric.value}>
+                    <p className="text-[1.28rem] font-semibold tracking-[-0.03em] text-white">{metric.value}</p>
                     <p className="mt-1 text-xs leading-5 text-white/58">{metric.label}</p>
                   </div>
                 ))}
               </div>
+              <div className="mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5">
+                <p className="text-sm font-semibold tracking-[-0.01em] text-white">{setting(section, "includedTitle", "Included outputs")}</p>
+                <div className="mt-4 grid gap-3">
+                  {(includedOutputs.length ? includedOutputs : [
+                    { title: "Fan posters", body: "Large portrait graphics for match day" },
+                    { title: "Stadium portraits", body: "Cinematic scenes with floodlights" },
+                    { title: "Match-day avatars", body: "Profile-ready square crops" },
+                    { title: "Social banners", body: "Wide cover images for sharing" }
+                  ]).slice(0, 6).map((item) => (
+                    <div className="grid grid-cols-[10px_1fr] gap-3" key={`${item.title}-${item.body}`}>
+                      <span className="mt-2 h-2 w-2 rounded-full" style={{ background: dreamshootBrandGradient }} />
+                      <div>
+                        <p className="text-sm font-semibold text-white/92">{item.title}</p>
+                        {item.body ? <p className="mt-0.5 text-xs leading-5 text-white/52">{item.body}</p> : null}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-5 text-xs leading-5 text-white/45">
+                {setting(section, "safetyCopy", "Safe styling: no real player likenesses, official team logos, or protected marks required.")}
+              </p>
             </div>
-            <div className="relative min-h-[620px] overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/82 p-5 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-7">
-              <div className="grid h-full grid-cols-6 grid-rows-6 gap-4">
+            <div className="relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6">
+              <div className="grid h-[880px] grid-cols-12 grid-rows-[repeat(9,minmax(0,1fr))] gap-3 md:h-[690px] md:gap-4">
                 {collage.map((item, index) => {
-                  const shape = blockValue(item, "shape", index === 0 ? "tall" : "wide");
-                  const placement =
-                    index === 0
-                      ? "col-span-3 row-span-3"
-                      : index === 1
-                        ? "col-span-3 row-span-2"
-                        : index === 2
-                          ? "col-span-3 row-span-2"
-                          : "col-span-2 row-span-2";
                   return (
                     <div
-                      className={`relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.04] ${shape === "tall" ? placement : placement}`}
+                      className={`group relative overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] ${collagePlacements[index] ?? "col-span-4 row-span-3"}`}
                       key={instanceKey(item, index, "seasonal_image")}
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
-                      <img className="h-full w-full object-cover" src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))} alt={blockValue(item, "label", "Featured pack image")} />
+                      <img className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))} alt={blockValue(item, "label", "Featured pack image")} />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/24 to-transparent p-3 opacity-100 md:p-4">
+                        <p className="text-xs font-semibold text-white">{blockValue(item, "label", "World Cup image")}</p>
+                        {blockValue(item, "meta", "") ? <p className="mt-0.5 hidden text-[11px] leading-4 text-white/58 sm:block">{blockValue(item, "meta", "")}</p> : null}
+                      </div>
                     </div>
                   );
                 })}
               </div>
-              <div className="absolute left-1/2 top-1/2 w-[min(88%,440px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/12 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl">
-                <p className="text-sm font-semibold text-white/58">Seasonal slot</p>
-                <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">{setting(section, "slotTitle", "World Cup now. Holiday next.")}</h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {slotTabs.map((tab, index) => (
-                    <span className="rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/74" key={tab} style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
-                      {tab}
+              <div className="absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl">
+                <p className="text-sm font-semibold text-white/58">{setting(section, "overlayTitle", "World Cup Pack")}</p>
+                <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">{setting(section, "overlaySubtitle", "Match-day looks without a studio.")}</h3>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {overlayChips.map((chip, index) => (
+                    <span className="rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76" key={chip} style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
+                      {chip}
                     </span>
                   ))}
+                </div>
+              </div>
+              <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
+                <p className="rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54">
+                  {setting(section, "bottomNote", "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.")}
+                </p>
+                <div className="rounded-[18px] border border-white/10 bg-white/[0.055] p-3">
+                  <p className="text-xs font-semibold text-white">{setting(section, "campaignLabel", "Current campaign: World Cup Fan Photos")}</p>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <span className="block h-full w-[72%] rounded-full" style={{ background: dreamshootBrandGradient }} />
+                  </div>
+                  <p className="mt-2 text-[11px] leading-4 text-white/48">{setting(section, "nextCampaignLabel", "Next: Valentine / Graduation Season")}</p>
                 </div>
               </div>
             </div>
@@ -4690,7 +4740,7 @@ function SectionView({
           href: blockValue(item, "href", "/tools/image_generator")
         }));
     const fallbackCards = [
-      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium tunnel meet-ups, fan posters, and football star-inspired scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/image_generator" },
+      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/image_generator" },
       { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/tools/image_generator" },
       { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/tools/image_generator" }
     ];

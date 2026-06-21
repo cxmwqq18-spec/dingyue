@@ -343,7 +343,7 @@ const dreamshootProofCardBlock: ThemeBlockSchema = {
       description: "Package-ready looks with clear buyer intent.",
       category: "Sports",
       badge: "Featured",
-      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
       href: "/collections"
     }
   }
@@ -355,6 +355,7 @@ const dreamshootSeasonalImageBlock: ThemeBlockSchema = {
   maxBlocks: 8,
   settings: [
     text("label", "Label", "Fan poster"),
+    text("meta", "Meta", "Match-day crop"),
     image("imageUrl", "Image URL"),
     text("shape", "Shape", "wide")
   ],
@@ -362,7 +363,8 @@ const dreamshootSeasonalImageBlock: ThemeBlockSchema = {
     label: "Seasonal image",
     settings: {
       label: "Fan poster",
-      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      meta: "Match-day crop",
+      imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
       shape: "wide"
     }
   }
@@ -389,7 +391,7 @@ const dreamshootCatalogPackBlock: ThemeBlockSchema = {
       category: "Sports",
       meta: "40 photos",
       credits: "26 credits",
-      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
       href: "/tools/image-studio"
     }
   }
@@ -875,7 +877,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         },
         blocks: [
           block("occasion_photo", "occasion", { title: "Photo", description: "Profile, scene, and editorial creator looks.", tag: "Creator", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image_generator" }),
-          block("occasion_travel", "occasion", { title: "Sports fan portraits", description: "Stadium scenes, fan posters, and profile photos for match-day campaigns.", tag: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image_generator" }),
+          block("occasion_travel", "occasion", { title: "Sports fan portraits", description: "Stadium scenes, fan posters, and profile photos for match-day campaigns.", tag: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/image_generator" }),
           block("occasion_headshot", "occasion", { title: "Headshots", description: "Professional photos for founders, job search, and teams.", tag: "Professional", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/image_generator" })
         ]
       }
@@ -1161,7 +1163,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           block("sample_photo", "sample", { label: "Photo", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", meta: "Creator album" }),
           block("sample_headshot", "sample", { label: "Headshot", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", meta: "Profile pack" }),
           block("sample_fashion", "sample", { label: "Editorial", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", meta: "Studio set" }),
-          block("sample_travel", "sample", { label: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", meta: "Fan photo pack" })
+          block("sample_travel", "sample", { label: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png", meta: "Fan photo pack" })
         ]
       }
     ]
@@ -1341,11 +1343,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         },
         blocks: [
           block("tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Create clean profile portraits for resumes, teams, and founder pages.", category: "Photo AI", badge: "Profile", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image-studio" }),
-          block("tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and football-star-inspired profile images.", category: "Photo AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image-studio" }),
+          block("tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and match-day profile images.", category: "Photo AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", href: "/tools/image-studio" }),
           block("tool_bg_changer", "tool_card", { title: "Background changer", description: "Replace a plain selfie background before ordering a full photo package.", category: "AI Photo Edit", badge: "Free", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/image-studio" }),
           block("tool_photo_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Free", imageUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png", href: "/tools/image-studio" }),
           block("tool_image_to_video", "tool_card", { title: "Image to video concept", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/image-studio" }),
-          block("tool_fan_motion", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image-studio" })
+          block("tool_fan_motion", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", href: "/tools/image-studio" })
         ]
       }
     ]
@@ -1388,7 +1390,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|profile|linkedin", imageUrl: "/assets/dreamshoot/editorial-headshot-gpt2.png", href: "/collections?category=headshots" }),
           block("taxonomy_gala", "taxonomy_card", { title: "Gala and night-out", description: "Formal looks, evening styling, and red-carpet style portraits.", meta: "Style", keywords: "gala|formal|night out", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/collections?category=gala" }),
           block("taxonomy_travel", "taxonomy_card", { title: "Travel scenes", description: "Destination-style portraits without booking a photographer.", meta: "Lifestyle", keywords: "travel|destination|vacation", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", href: "/collections?category=travel" }),
-          block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium meet-ups, fan posters, and football star-inspired scenes.", meta: "Sports", keywords: "world cup|football fan|sports star", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/collections?category=sports" }),
+          block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup|football fan|match day avatar", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", href: "/collections?category=sports" }),
           block("taxonomy_tryon", "taxonomy_card", { title: "Virtual try-on", description: "Preview wardrobe, styling, and creator outfits before generation.", meta: "Try-on", keywords: "try on|outfit|style", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/tools/image-studio" })
         ]
       }
@@ -1425,7 +1427,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           primaryHref: "/login"
         },
         blocks: [
-          block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters and football-star-inspired scenes.", category: "Sports", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/collections?category=sports" }),
+          block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", href: "/collections?category=sports" }),
           block("proof_headshots", "proof_card", { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/collections?category=headshots" }),
           block("proof_style", "proof_card", { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections?category=beauty" }),
           block("proof_creative", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections?category=creative" }),
@@ -1443,18 +1445,25 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     settings: [
       text("anchor", "Anchor", "featured-pack"),
       text("label", "Small label", "Featured seasonal pack"),
-      text("badge", "Offer badge", "Featured pack"),
-      text("title", "Title", "World Cup fan photos with star-inspired scenes"),
-      textarea("subtitle", "Subtitle", "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot."),
-      text("primaryCta", "Primary CTA", "Create fan photos"),
+      text("badge", "Offer badge", "Match-day pack"),
+      text("title", "Title", "World Cup fan photos for match-day moments."),
+      textarea("subtitle", "Subtitle", "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing."),
+      text("primaryCta", "Primary CTA", "Create Fan Photos"),
       url("primaryHref", "Primary link", "/login"),
-      text("secondaryCta", "Secondary CTA", "View packs"),
+      text("secondaryCta", "Secondary CTA", "View Sports Packs"),
       url("secondaryHref", "Secondary link", "/collections"),
       text("photos", "Photos stat", "40 photos"),
       text("credits", "Credits stat", "26 credits"),
-      text("privacy", "Privacy stat", "Private model"),
-      text("slotTitle", "Slot title", "World Cup now. Holiday next."),
-      textarea("slotTabs", "Slot tabs", "World Cup|Holiday|Valentine|Graduation")
+      text("privacy", "Privacy stat", "Private album"),
+      text("includedTitle", "Included title", "Included outputs"),
+      textarea("includedOutputs", "Included outputs", "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing"),
+      textarea("safetyCopy", "Safety copy", "Safe styling: no real player likenesses, official team logos, or protected marks required."),
+      text("overlayTitle", "Overlay title", "World Cup Pack"),
+      text("overlaySubtitle", "Overlay subtitle", "Match-day looks without a studio."),
+      textarea("overlayChips", "Overlay chips", "fan poster|avatar|stadium|social-ready"),
+      textarea("bottomNote", "Bottom note", "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments."),
+      text("campaignLabel", "Campaign label", "Current campaign: World Cup Fan Photos"),
+      text("nextCampaignLabel", "Next campaign label", "Next: Valentine / Graduation Season")
     ],
     blocks: [dreamshootSeasonalImageBlock],
     presets: [
@@ -1463,25 +1472,33 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "featured-pack",
           label: "Featured seasonal pack",
-          badge: "Featured pack",
-          title: "World Cup fan photos with star-inspired scenes",
-          subtitle: "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-          primaryCta: "Create fan photos",
+          badge: "Match-day pack",
+          title: "World Cup fan photos for match-day moments.",
+          subtitle: "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+          primaryCta: "Create Fan Photos",
           primaryHref: "/login",
-          secondaryCta: "View packs",
+          secondaryCta: "View Sports Packs",
           secondaryHref: "/collections",
           photos: "40 photos",
           credits: "26 credits",
-          privacy: "Private model",
-          slotTitle: "World Cup now. Holiday next.",
-          slotTabs: "World Cup|Holiday|Valentine|Graduation"
+          privacy: "Private album",
+          includedTitle: "Included outputs",
+          includedOutputs: "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+          safetyCopy: "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+          overlayTitle: "World Cup Pack",
+          overlaySubtitle: "Match-day looks without a studio.",
+          overlayChips: "fan poster|avatar|stadium|social-ready",
+          bottomNote: "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+          campaignLabel: "Current campaign: World Cup Fan Photos",
+          nextCampaignLabel: "Next: Valentine / Graduation Season"
         },
         blocks: [
-          block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium hero", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", shape: "tall" }),
-          block("seasonal_worldcup_2", "seasonal_image", { label: "Fan meet-up", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png", shape: "wide" }),
-          block("seasonal_worldcup_3", "seasonal_image", { label: "Creator card", imageUrl: "/assets/dreamshoot/holiday-card-gpt2.png", shape: "wide" }),
-          block("seasonal_worldcup_4", "seasonal_image", { label: "Profile card", imageUrl: "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png", shape: "square" }),
-          block("seasonal_worldcup_5", "seasonal_image", { label: "Motion add-on", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", shape: "square" })
+          block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", shape: "tall" }),
+          block("seasonal_worldcup_2", "seasonal_image", { label: "Friend Fan Photos", meta: "Group-friendly shots", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", shape: "wide" }),
+          block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png", shape: "square" }),
+          block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", shape: "tall" }),
+          block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png", shape: "tall" }),
+          block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", shape: "wide" })
         ]
       }
     ]
@@ -1525,7 +1542,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           featuredCount: 5
         },
         blocks: [
-          block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image-studio" }),
+          block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", href: "/tools/image-studio" }),
           block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image-studio" }),
           block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/image-studio" }),
           block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/image-studio" }),
@@ -1566,7 +1583,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           subtitle: "Explain the 4-step flow, show a before/after transformation, and make credits feel safe.",
           beforeImage: "/assets/dreamshoot/frames/workflow-upload-source.png",
           afterImage: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-          albumImageOne: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+          albumImageOne: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
           albumImageTwo: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
           albumImageThree: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
           bridgeCta: "After this, show pricing with value already understood",
@@ -1684,7 +1701,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         },
         blocks: [
           block("marquee_photo", "package", { title: "AI Photo Sets", description: "Announcement, profile, and scene visuals.", meta: "40 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image_generator" }),
-          block("marquee_sports", "package", { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and creator portrait sets.", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image_generator" }),
+          block("marquee_sports", "package", { title: "World Cup Fan Photos", description: "Stadium fan scenes, fan posters, and creator portrait sets.", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/image_generator" }),
           block("marquee_gala", "package", { title: "Gala Photos", description: "Formal editorial night-out imagery.", meta: "40 photos", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/image_generator" })
         ]
       }

@@ -110,11 +110,11 @@ function mediaPreviewForStorageKey(value: string): string {
   if (!value) return "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png";
   if (value.startsWith("/assets/")) return value;
   if (value.startsWith("/themes/")) return "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png";
-  if (value.startsWith("http")) return "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png";
+  if (value.startsWith("http")) return "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png";
   const images = [
     "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
     "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-    "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+    "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
     "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
     "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
     "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"

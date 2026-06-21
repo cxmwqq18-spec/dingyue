@@ -41,8 +41,14 @@ const assets = {
   hairstyle: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
   upscaler: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
   cleanPortrait: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
-  worldCupFan: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-  worldCupFanAlt: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png",
+  worldCupFan: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+  worldCupFanAlt: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+  worldCupStadiumPortrait: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+  worldCupFriendFans: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+  worldCupAvatar: "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
+  worldCupFanPoster: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
+  worldCupSocialStory: "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
+  worldCupBanner: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
   mafiaNoir: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
   beautyPortraitSvg: "/assets/dreamshoot/beauty-portrait.svg",
   tryOn: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
@@ -65,7 +71,7 @@ const assets = {
 const dreamshootMegaTools = [
   block("mega_tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Create clean profile portraits for resumes, teams, and founder pages.", category: "Photo AI", badge: "Profile", imageUrl: assets.headshotLifestyle, href: "/tools/image-studio" }),
   block("mega_tool_creator", "tool_card", { title: "Creator portrait studio", description: "Generate creator-ready profile photos, channel visuals, and campaign portraits.", category: "Photo AI", badge: "Creator", imageUrl: assets.avatarPortrait, href: "/tools/image-studio" }),
-  block("mega_tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and football-star-inspired profile images.", category: "Photo AI", badge: "Sports", imageUrl: assets.worldCupFan, href: "/tools/image-studio" }),
+  block("mega_tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and match-day profile images.", category: "Photo AI", badge: "Sports", imageUrl: assets.worldCupStadiumPortrait, href: "/tools/image-studio" }),
   block("mega_tool_cyberpunk", "tool_card", { title: "Cyberpunk portrait maker", description: "Turn source selfies into neon city portraits and dramatic future looks.", category: "Photo AI", badge: "Scene", imageUrl: assets.cyberpunk, href: "/tools/image-studio" }),
   block("mega_tool_gala", "tool_card", { title: "Gala photo maker", description: "Create formal night-out portraits with polished editorial lighting.", category: "Photo AI", badge: "Style", imageUrl: assets.mafiaNoir, href: "/tools/image-studio" }),
   block("mega_tool_noir", "tool_card", { title: "Noir character portraits", description: "Generate cinematic mafia, detective, and vintage city character looks.", category: "Photo AI", badge: "Noir", imageUrl: assets.gala, href: "/tools/image-studio" }),
@@ -150,7 +156,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and football-star-inspired scenes.", category: "Sports", badge: "Featured", imageUrl: assets.worldCupFanAlt, href: "/collections?category=sports" }),
+      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.worldCupFriendFans, href: "/collections?category=sports" }),
       block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.headshot, href: "/collections?category=headshots" }),
       block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.hairstyle, href: "/collections?category=beauty" }),
       block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.sampleCyberpunk, href: "/collections?category=creative" }),
@@ -162,25 +168,33 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "featured-pack",
       label: "Featured seasonal pack",
-      badge: "Featured pack",
-      title: "World Cup fan photos with star-inspired scenes",
-      subtitle: "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
-      primaryCta: "Create fan photos",
+      badge: "Match-day pack",
+      title: "World Cup fan photos for match-day moments.",
+      subtitle: "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.",
+      primaryCta: "Create Fan Photos",
       primaryHref: "/login",
-      secondaryCta: "View packs",
+      secondaryCta: "View Sports Packs",
       secondaryHref: "/collections",
       photos: "40 photos",
       credits: "26 credits",
-      privacy: "Private model",
-      slotTitle: "World Cup now. Holiday next.",
-      slotTabs: "World Cup|Christmas|Valentine|Wedding season"
+      privacy: "Private album",
+      includedTitle: "Included outputs",
+      includedOutputs: "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+      safetyCopy: "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+      overlayTitle: "World Cup Pack",
+      overlaySubtitle: "Match-day looks without a studio.",
+      overlayChips: "fan poster|avatar|stadium|social-ready",
+      bottomNote: "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.",
+      campaignLabel: "Current campaign: World Cup Fan Photos",
+      nextCampaignLabel: "Next: Valentine / Graduation Season"
     },
     [
-      block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium hero", imageUrl: assets.worldCupFanAlt, shape: "tall" }),
-      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan meet-up", imageUrl: assets.worldCupFanAlt, shape: "wide" }),
-      block("seasonal_worldcup_3", "seasonal_image", { label: "Creator card", imageUrl: assets.holidayCard, shape: "wide" }),
-      block("seasonal_worldcup_4", "seasonal_image", { label: "Profile card", imageUrl: assets.holidayCard, shape: "square" }),
-      block("seasonal_worldcup_5", "seasonal_image", { label: "Motion add-on", imageUrl: assets.upscaler, shape: "square" })
+      block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: assets.worldCupStadiumPortrait, shape: "tall" }),
+      block("seasonal_worldcup_2", "seasonal_image", { label: "Friend Fan Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, shape: "wide" }),
+      block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, shape: "square" }),
+      block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: assets.worldCupFanPoster, shape: "tall" }),
+      block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, shape: "tall" }),
+      block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: assets.worldCupBanner, shape: "wide" })
     ]
   ),
   package_catalog_1: section(
@@ -237,7 +251,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections?category=headshots" }),
       block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections?category=beauty" }),
       block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections?category=creative" }),
-      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium tunnel meet-ups, football star-inspired scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup photos|football fan photo|sports star", imageUrl: assets.worldCupFan, href: "/collections?category=sports" }),
+      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections?category=sports" }),
       block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/tools/image-studio" }),
       block("taxonomy_creator", "taxonomy_card", { title: "Creator lifestyle", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Creator", keywords: "creator portraits|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections?category=creator" })
     ]
