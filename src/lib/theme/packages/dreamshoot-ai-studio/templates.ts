@@ -48,8 +48,18 @@ const assets = {
   tryOn: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
   upload: "/assets/dreamshoot/frames/faq-intro-portrait.png",
   selfie: "/assets/dreamshoot/frames/faq-intro-portrait.png",
-  socialCard: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-  cyberpunkSample: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+  socialCard: "/assets/dreamshoot/holiday-card-gpt2.png",
+  cyberpunkSample: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+  sampleCyberpunk: "/assets/dreamshoot/frames/sample-cyberpunk.png",
+  sampleGala: "/assets/dreamshoot/frames/sample-gala.png",
+  engagement: "/assets/dreamshoot/frames/sample-engagement.png",
+  weddingTrip: "/assets/dreamshoot/frames/sample-wedding-trip.png",
+  weddingLook: "/assets/dreamshoot/frames/story-wedding-look.png",
+  christmasCouple: "/assets/dreamshoot/frames/sample-christmas-couple.png",
+  christmasSolo: "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png",
+  dateNight: "/assets/dreamshoot/generated/20260618/city-date-night-v1.png",
+  holidayCard: "/assets/dreamshoot/holiday-card-gpt2.png",
+  virtualLooks: "/assets/dreamshoot/frames/tab-virtual-looks.png"
 } as const;
 
 const dreamshootMegaTools = [
@@ -127,6 +137,93 @@ const homeSections: ThemePageJson["sections"] = {
       block("logo_tryon", "logo", { name: "Virtual Try-On", imageUrl: "", badge: "Style" })
     ]
   ),
+  visual_proof_1: section(
+    "dreamshoot_visual_proof",
+    {
+      anchor: "proof-gallery",
+      label: "Visual proof gallery",
+      title: "See what your selfies can become.",
+      subtitle: "Show finished outcomes first: sports posters, clean headshots, cinematic portraits, style previews, and seasonal albums.",
+      tabs: "All|Sports|Headshots|Beauty|Creative|Wedding|Seasonal|Video",
+      badges: "Private model|Album-ready|Full package catalog",
+      primaryCta: "Start this pack",
+      primaryHref: "/login"
+    },
+    [
+      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and football-star-inspired scenes.", category: "Sports", badge: "Featured", imageUrl: assets.worldCupFanAlt, href: "/collections?category=sports" }),
+      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.headshot, href: "/collections?category=headshots" }),
+      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.hairstyle, href: "/collections?category=beauty" }),
+      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.sampleCyberpunk, href: "/collections?category=creative" }),
+      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.engagement, href: "/collections?category=couple" })
+    ]
+  ),
+  featured_pack_1: section(
+    "dreamshoot_featured_pack",
+    {
+      anchor: "featured-pack",
+      label: "Featured seasonal pack",
+      badge: "Featured pack",
+      title: "World Cup fan photos with star-inspired scenes",
+      subtitle: "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
+      primaryCta: "Create fan photos",
+      primaryHref: "/login",
+      secondaryCta: "View packs",
+      secondaryHref: "/collections",
+      photos: "40 photos",
+      credits: "26 credits",
+      privacy: "Private model",
+      slotTitle: "World Cup now. Holiday next.",
+      slotTabs: "World Cup|Christmas|Valentine|Wedding season"
+    },
+    [
+      block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium hero", imageUrl: assets.worldCupFanAlt, shape: "tall" }),
+      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan meet-up", imageUrl: assets.worldCupFanAlt, shape: "wide" }),
+      block("seasonal_worldcup_3", "seasonal_image", { label: "Creator card", imageUrl: assets.holidayCard, shape: "wide" }),
+      block("seasonal_worldcup_4", "seasonal_image", { label: "Profile card", imageUrl: assets.holidayCard, shape: "square" }),
+      block("seasonal_worldcup_5", "seasonal_image", { label: "Motion add-on", imageUrl: assets.upscaler, shape: "square" })
+    ]
+  ),
+  package_catalog_1: section(
+    "dreamshoot_package_catalog",
+    {
+      anchor: "packages",
+      label: "Photo package catalog",
+      title: "Choose a photo package first.",
+      subtitle: "Each package has a clear result, photo count, credit cost, and one next action. The full directory is powered by active creative packs.",
+      tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility",
+      steps: "Pick pack|See credit cost|Generate album",
+      source: "creative_packs",
+      featuredCount: 5
+    },
+    [
+      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: assets.worldCupFan, href: "/tools/image-studio" }),
+      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: assets.headshotLifestyle, href: "/tools/image-studio" }),
+      block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/tools/image-studio" }),
+      block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: "/tools/image-studio" })
+    ]
+  ),
+  flow_bridge_1: section(
+    "dreamshoot_flow_bridge",
+    {
+      anchor: "workflow",
+      label: "How it works + proof bridge",
+      title: "From upload to private album.",
+      subtitle: "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
+      beforeImage: assets.upload,
+      afterImage: assets.hairstyle,
+      albumImageOne: assets.socialCard,
+      albumImageTwo: assets.manPortrait,
+      albumImageThree: assets.sampleCyberpunk,
+      bridgeCta: "Compare plans after seeing the value",
+      bridgeHref: "/pricing"
+    },
+    [
+      block("flow_upload", "card", { title: "Upload selfies", text: "Add clear phone photos for the people in the album.", meta: "01" }),
+      block("flow_model", "card", { title: "Build private model", text: "Keep identity consistent across packages and styles.", meta: "02" }),
+      block("flow_pack", "card", { title: "Pick a package", text: "Choose the outcome first, then view the credit cost.", meta: "03" }),
+      block("flow_album", "card", { title: "Generate album", text: "Download finished results from the private gallery.", meta: "04" })
+    ]
+  ),
   taxonomy_1: section(
     "dreamshoot_package_taxonomy",
     {
@@ -170,7 +267,7 @@ const homeSections: ThemePageJson["sections"] = {
     subtitle: "Every package card stays tied to live creative packs, credit cost, training requirement, and checkout rules while the visual merchandising remains editable.",
     source: "creative_packs",
     layout: "editorial",
-    maxCount: "8"
+    maxCount: "32"
   }),
   packages_strip_1: section("feature_grid", {
     anchor: "package-path",
@@ -540,8 +637,8 @@ const templateSections = {
 export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "brand_strip_1", "taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
-    pickSections(homeSections, ["hero_1", "brand_strip_1", "taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
+    ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
+    pickSections(homeSections, ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
     1
   ),
   pricing: page(

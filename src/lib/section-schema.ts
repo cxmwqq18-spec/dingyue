@@ -324,6 +324,77 @@ const dreamshootTaxonomyBlock: ThemeBlockSchema = {
   }
 };
 
+const dreamshootProofCardBlock: ThemeBlockSchema = {
+  type: "proof_card",
+  label: "Proof card",
+  maxBlocks: 8,
+  settings: [
+    text("title", "Title", "World Cup fan photos"),
+    textarea("description", "Description", "Package-ready looks with clear buyer intent."),
+    text("category", "Category", "Sports"),
+    text("badge", "Badge", "Featured"),
+    image("imageUrl", "Image URL"),
+    url("href", "Link", "/collections")
+  ],
+  preset: {
+    label: "Proof card",
+    settings: {
+      title: "World Cup fan photos",
+      description: "Package-ready looks with clear buyer intent.",
+      category: "Sports",
+      badge: "Featured",
+      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      href: "/collections"
+    }
+  }
+};
+
+const dreamshootSeasonalImageBlock: ThemeBlockSchema = {
+  type: "seasonal_image",
+  label: "Seasonal image",
+  maxBlocks: 8,
+  settings: [
+    text("label", "Label", "Fan poster"),
+    image("imageUrl", "Image URL"),
+    text("shape", "Shape", "wide")
+  ],
+  preset: {
+    label: "Seasonal image",
+    settings: {
+      label: "Fan poster",
+      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      shape: "wide"
+    }
+  }
+};
+
+const dreamshootCatalogPackBlock: ThemeBlockSchema = {
+  type: "catalog_pack",
+  label: "Catalog pack",
+  maxBlocks: 32,
+  settings: [
+    text("title", "Title", "World Cup fan photos"),
+    textarea("description", "Description", "Match-day portraits, fan posters, and stadium-inspired profile images."),
+    text("category", "Category", "Sports"),
+    text("meta", "Photos", "40 photos"),
+    text("credits", "Credits", "26 credits"),
+    image("imageUrl", "Image URL"),
+    url("href", "Link", "/tools/image-studio")
+  ],
+  preset: {
+    label: "Catalog pack",
+    settings: {
+      title: "World Cup fan photos",
+      description: "Match-day portraits, fan posters, and stadium-inspired profile images.",
+      category: "Sports",
+      meta: "40 photos",
+      credits: "26 credits",
+      imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+      href: "/tools/image-studio"
+    }
+  }
+};
+
 const pricingPlanNoteBlock: ThemeBlockSchema = {
   type: "plan_note",
   label: "Plan note",
@@ -1319,6 +1390,193 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           block("taxonomy_travel", "taxonomy_card", { title: "Travel scenes", description: "Destination-style portraits without booking a photographer.", meta: "Lifestyle", keywords: "travel|destination|vacation", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", href: "/collections?category=travel" }),
           block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium meet-ups, fan posters, and football star-inspired scenes.", meta: "Sports", keywords: "world cup|football fan|sports star", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/collections?category=sports" }),
           block("taxonomy_tryon", "taxonomy_card", { title: "Virtual try-on", description: "Preview wardrobe, styling, and creator outfits before generation.", meta: "Try-on", keywords: "try on|outfit|style", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/tools/image-studio" })
+        ]
+      }
+    ]
+  },
+  dreamshoot_visual_proof: {
+    type: "dreamshoot_visual_proof",
+    label: "DreamShoot Visual Proof Gallery",
+    category: "Storefront",
+    description: "Second-screen proof gallery that sells finished photo outcomes before features.",
+    maxBlocks: 8,
+    settings: [
+      text("anchor", "Anchor", "proof-gallery"),
+      text("label", "Small label", "Visual proof gallery"),
+      text("title", "Title", "See what your selfies can become."),
+      textarea("subtitle", "Subtitle", "Lead with finished albums by intent, not a long feature list."),
+      textarea("tabs", "Tabs", "All|Sports|Headshots|Beauty|Creative|Wedding|Seasonal|Video"),
+      textarea("badges", "Badges", "Private model|Album-ready|15+ package themes"),
+      text("primaryCta", "Primary CTA", "Start this pack"),
+      url("primaryHref", "Primary link", "/login")
+    ],
+    blocks: [dreamshootProofCardBlock],
+    presets: [
+      {
+        label: "Visual proof gallery",
+        settings: {
+          anchor: "proof-gallery",
+          label: "Visual proof gallery",
+          title: "See what your selfies can become.",
+          subtitle: "Lead with finished albums by intent, not a long feature list.",
+          tabs: "All|Sports|Headshots|Beauty|Creative|Wedding|Seasonal|Video",
+          badges: "Private model|Album-ready|15+ package themes",
+          primaryCta: "Start this pack",
+          primaryHref: "/login"
+        },
+        blocks: [
+          block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters and football-star-inspired scenes.", category: "Sports", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/collections?category=sports" }),
+          block("proof_headshots", "proof_card", { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/collections?category=headshots" }),
+          block("proof_style", "proof_card", { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections?category=beauty" }),
+          block("proof_creative", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections?category=creative" }),
+          block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: "/assets/dreamshoot/frames/sample-engagement.png", href: "/collections?category=couple" })
+        ]
+      }
+    ]
+  },
+  dreamshoot_featured_pack: {
+    type: "dreamshoot_featured_pack",
+    label: "DreamShoot Featured Pack",
+    category: "Storefront",
+    description: "Seasonal or campaign pack module with a large offer panel and image collage.",
+    maxBlocks: 8,
+    settings: [
+      text("anchor", "Anchor", "featured-pack"),
+      text("label", "Small label", "Featured seasonal pack"),
+      text("badge", "Offer badge", "Featured pack"),
+      text("title", "Title", "World Cup fan photos with star-inspired scenes"),
+      textarea("subtitle", "Subtitle", "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot."),
+      text("primaryCta", "Primary CTA", "Create fan photos"),
+      url("primaryHref", "Primary link", "/login"),
+      text("secondaryCta", "Secondary CTA", "View packs"),
+      url("secondaryHref", "Secondary link", "/collections"),
+      text("photos", "Photos stat", "40 photos"),
+      text("credits", "Credits stat", "26 credits"),
+      text("privacy", "Privacy stat", "Private model"),
+      text("slotTitle", "Slot title", "World Cup now. Holiday next."),
+      textarea("slotTabs", "Slot tabs", "World Cup|Holiday|Valentine|Graduation")
+    ],
+    blocks: [dreamshootSeasonalImageBlock],
+    presets: [
+      {
+        label: "Featured seasonal pack",
+        settings: {
+          anchor: "featured-pack",
+          label: "Featured seasonal pack",
+          badge: "Featured pack",
+          title: "World Cup fan photos with star-inspired scenes",
+          subtitle: "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.",
+          primaryCta: "Create fan photos",
+          primaryHref: "/login",
+          secondaryCta: "View packs",
+          secondaryHref: "/collections",
+          photos: "40 photos",
+          credits: "26 credits",
+          privacy: "Private model",
+          slotTitle: "World Cup now. Holiday next.",
+          slotTabs: "World Cup|Holiday|Valentine|Graduation"
+        },
+        blocks: [
+          block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium hero", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", shape: "tall" }),
+          block("seasonal_worldcup_2", "seasonal_image", { label: "Fan meet-up", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png", shape: "wide" }),
+          block("seasonal_worldcup_3", "seasonal_image", { label: "Creator card", imageUrl: "/assets/dreamshoot/holiday-card-gpt2.png", shape: "wide" }),
+          block("seasonal_worldcup_4", "seasonal_image", { label: "Profile card", imageUrl: "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png", shape: "square" }),
+          block("seasonal_worldcup_5", "seasonal_image", { label: "Motion add-on", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", shape: "square" })
+        ]
+      }
+    ]
+  },
+  dreamshoot_package_catalog: {
+    type: "dreamshoot_package_catalog",
+    label: "DreamShoot Package Catalog",
+    category: "Storefront",
+    description: "Complete package catalog section with featured cards and a full category strip.",
+    maxBlocks: 32,
+    settings: [
+      text("anchor", "Anchor", "packages"),
+      text("label", "Small label", "Photo package catalog"),
+      text("title", "Title", "Choose a photo package first."),
+      textarea("subtitle", "Subtitle", "Each card has a clear outcome, credit cost, photo count, and next action."),
+      textarea("tabs", "Tabs", "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility"),
+      textarea("steps", "Buyer steps", "Pick pack|See credit cost|Generate album"),
+      select(
+        "source",
+        "Catalog source",
+        [
+          ["creative_packs", "Active creative packs"],
+          ["blocks", "Manual catalog blocks"]
+        ],
+        "creative_packs"
+      ),
+      range("featuredCount", "Featured cards", 5, 3, 6)
+    ],
+    blocks: [dreamshootCatalogPackBlock],
+    presets: [
+      {
+        label: "Complete DreamShootAI catalog",
+        settings: {
+          anchor: "packages",
+          label: "Photo package catalog",
+          title: "Choose a photo package first.",
+          subtitle: "Each card has a clear outcome, credit cost, photo count, and next action.",
+          tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility",
+          steps: "Pick pack|See credit cost|Generate album",
+          source: "creative_packs",
+          featuredCount: 5
+        },
+        blocks: [
+          block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image-studio" }),
+          block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image-studio" }),
+          block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/image-studio" }),
+          block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/image-studio" }),
+          block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-wedding-trip.png", href: "/tools/image-studio" }),
+          block("catalog_indian_wedding", "catalog_pack", { title: "Indian Wedding", description: "Traditional Indian wedding looks with lehenga, saree, sherwani, jewelry, and album-ready portraits.", category: "Cultural", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/story-wedding-look.png", href: "/tools/image-studio" }),
+          block("catalog_christmas", "catalog_pack", { title: "Christmas Photos", description: "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", category: "Seasonal", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", href: "/tools/image-studio" })
+        ]
+      }
+    ]
+  },
+  dreamshoot_flow_bridge: {
+    type: "dreamshoot_flow_bridge",
+    label: "DreamShoot Flow Bridge",
+    category: "Storefront",
+    description: "How-it-works section that bridges package browsing into pricing.",
+    maxBlocks: 8,
+    settings: [
+      text("anchor", "Anchor", "workflow"),
+      text("label", "Small label", "How it works + proof bridge"),
+      text("title", "Title", "From upload to private album."),
+      textarea("subtitle", "Subtitle", "Explain the 4-step flow, show a before/after transformation, and make credits feel safe."),
+      image("beforeImage", "Before image"),
+      image("afterImage", "After image"),
+      image("albumImageOne", "Album image one"),
+      image("albumImageTwo", "Album image two"),
+      image("albumImageThree", "Album image three"),
+      text("bridgeCta", "Bridge CTA", "After this, show pricing with value already understood"),
+      url("bridgeHref", "Bridge link", "/pricing")
+    ],
+    blocks: [cardBlock],
+    presets: [
+      {
+        label: "Upload to album bridge",
+        settings: {
+          anchor: "workflow",
+          label: "How it works + proof bridge",
+          title: "From upload to private album.",
+          subtitle: "Explain the 4-step flow, show a before/after transformation, and make credits feel safe.",
+          beforeImage: "/assets/dreamshoot/frames/workflow-upload-source.png",
+          afterImage: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
+          albumImageOne: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
+          albumImageTwo: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+          albumImageThree: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+          bridgeCta: "After this, show pricing with value already understood",
+          bridgeHref: "/pricing"
+        },
+        blocks: [
+          block("flow_upload", "card", { title: "Upload selfies", text: "Use 8-12 clear phone photos per person.", meta: "01" }),
+          block("flow_model", "card", { title: "Build private model", text: "Keep identity consistent across packages.", meta: "02" }),
+          block("flow_pack", "card", { title: "Pick a package", text: "Choose the result, not a blank prompt.", meta: "03" }),
+          block("flow_album", "card", { title: "Generate album", text: "Review, download, upscale, or make video.", meta: "04" })
         ]
       }
     ]

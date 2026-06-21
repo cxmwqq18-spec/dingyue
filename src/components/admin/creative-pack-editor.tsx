@@ -7,6 +7,26 @@ import { downloadCsv } from "@/components/admin/export-utils";
 import type { CreativePack, SiteAiApp } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
 
+const creativePackCategories: CreativePack["category"][] = [
+  "headshots",
+  "creator",
+  "sports",
+  "creative",
+  "beauty",
+  "fashion",
+  "travel",
+  "seasonal",
+  "wedding",
+  "couple",
+  "dating",
+  "cultural",
+  "boudoir",
+  "avatar",
+  "video",
+  "utility",
+  "copy"
+];
+
 function tone(status: CreativePack["status"]): "good" | "warn" | "neutral" {
   if (status === "active") return "good";
   if (status === "paused") return "warn";
@@ -216,7 +236,7 @@ export function CreativePackEditor({
           </select>
           <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setCategoryFilter(event.target.value as CreativePack["category"] | "")} value={categoryFilter}>
             <option value="">All categories</option>
-            {["headshots", "couple", "wedding", "dating", "fashion", "beauty", "travel", "seasonal", "copy"].map((category) => (
+            {creativePackCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -270,7 +290,7 @@ export function CreativePackEditor({
           <label className="grid gap-2 text-sm">
             Category
             <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => updateDraft("category", event.target.value as CreativePack["category"])} value={draftPack.category}>
-              {["headshots", "couple", "wedding", "dating", "fashion", "beauty", "travel", "seasonal", "copy"].map((category) => (
+              {creativePackCategories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -354,7 +374,7 @@ export function CreativePackEditor({
               <label className="grid gap-2 text-sm">
                 Category
                 <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => update(pack.id, "category", event.target.value as CreativePack["category"])} value={pack.category}>
-                  {["headshots", "couple", "wedding", "dating", "fashion", "beauty", "travel", "seasonal", "copy"].map((category) => (
+                  {creativePackCategories.map((category) => (
                     <option key={category} value={category}>
                       {category}
                     </option>

@@ -405,7 +405,24 @@ export interface CreativePack {
   name: string;
   headline: string;
   description: string;
-  category: "headshots" | "dating" | "fashion" | "travel" | "seasonal" | "copy" | "wedding" | "couple" | "beauty";
+  category:
+    | "headshots"
+    | "dating"
+    | "fashion"
+    | "travel"
+    | "seasonal"
+    | "copy"
+    | "wedding"
+    | "couple"
+    | "beauty"
+    | "creative"
+    | "sports"
+    | "creator"
+    | "avatar"
+    | "video"
+    | "utility"
+    | "boudoir"
+    | "cultural";
   aiAppSlug: string;
   status: "active" | "draft" | "paused";
   creditCost: number;

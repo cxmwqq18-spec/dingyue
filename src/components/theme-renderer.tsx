@@ -173,6 +173,17 @@ type CollectionPageCard = {
   href: string;
 };
 
+type DreamShootCatalogCard = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  meta: string;
+  credits: string;
+  imageUrl: string;
+  href: string;
+};
+
 export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
   return (
     <div
@@ -1301,7 +1312,7 @@ function selectedPackCards(site: Site, section: SectionInstance, creativePacks: 
       id: selected.id,
       title: selected.name,
       description: selected.description || selected.headline,
-      imageUrl: packImages[selected.category] ?? fallbackImageForSeed(`${site.slug}-${selected.id}`),
+      imageUrl: packImage(site, selected),
       href: `/tools/${selected.aiAppSlug}`,
       meta: `${selected.outputCount} images`,
       price: `${selected.creditCost} credits`
@@ -1324,11 +1335,70 @@ function packCards(site: Site, creativePacks: CreativePack[], maxCount = 6) {
     id: pack.id,
     title: pack.name,
     description: pack.description || pack.headline,
-    imageUrl: packImages[pack.category] ?? fallbackImageForSeed(`${site.slug}-${pack.id}`),
+    imageUrl: packImage(site, pack),
     href: `/tools/${pack.aiAppSlug}`,
     meta: `${pack.outputCount} images`,
     price: `${pack.creditCost} credits`
   }));
+}
+
+function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamShootCatalogCard {
+  return {
+    id: pack.id,
+    title: pack.name,
+    description: pack.description || pack.headline,
+    category: pack.category,
+    meta: `${pack.outputCount} photos`,
+    credits: `${pack.creditCost} credits`,
+    imageUrl: packImage(site, pack),
+    href: `/tools/${pack.aiAppSlug}`
+  };
+}
+
+function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance): DreamShootCatalogCard {
+  return {
+    id: block.id,
+    title: blockValue(block, "title", "Photo package"),
+    description: blockValue(block, "description", "A private AI photo package with album-ready outputs."),
+    category: blockValue(block, "category", "Package"),
+    meta: blockValue(block, "meta", "20 photos"),
+    credits: blockValue(block, "credits", "20 credits"),
+    imageUrl: mediaAssetUrl(site, blockValue(block, "imageUrl", packImages.creator)),
+    href: blockValue(block, "href", "/tools/image-studio")
+  };
+}
+
+function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
+  const title = card.title.toLowerCase();
+  const category = card.category.toLowerCase();
+  if (title.includes("world cup")) return 0;
+  if (title.includes("headshot")) return 1;
+  if (title.includes("hairstyle")) return 2;
+  if (title.includes("cyberpunk")) return 3;
+  if (title.includes("gala")) return 4;
+  if (title.includes("mafia")) return 5;
+  if (title.includes("nature")) return 6;
+  if (category.includes("creator") || title.includes("creator")) return 7;
+  if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 20;
+  return 10;
+}
+
+function dreamshootCategorySlug(value: string): string {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "all";
+}
+
+function dreamshootCategoryLabel(value: string): string {
+  const normalized = value.toLowerCase().replace(/[_-]+/g, " ");
+  if (normalized === "headshots") return "Headshots";
+  if (normalized === "sports") return "Sports";
+  if (normalized === "creator") return "Creator";
+  if (normalized === "creative") return "Creative";
+  if (normalized === "beauty") return "Beauty";
+  if (normalized === "avatar") return "Avatar";
+  if (normalized === "seasonal") return "Seasonal";
+  if (normalized === "couple") return "Couple";
+  if (normalized === "wedding") return "Wedding";
+  return normalized.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function youtubeEmbedUrl(url: string): string {
@@ -3733,7 +3803,7 @@ function SectionView({
                   <div className={index === 0 ? "aspect-[4/5] overflow-hidden" : "aspect-[16/10] overflow-hidden"}>
                     <img
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                      src={packImages[pack.category] ?? packImages.fashion}
+                      src={packImage(site, pack)}
                       alt={pack.name}
                     />
                   </div>
@@ -3987,6 +4057,448 @@ function SectionView({
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (section.type === "dreamshoot_visual_proof") {
+    const blocks = sectionBlocks(section, "proof_card");
+    const fallbackCards: SectionBlockInstance[] = [
+      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters and football-star-inspired scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections?category=sports" } },
+      { id: "proof_headshots", type: "proof_card", settings: { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: packImages.headshots, href: "/collections?category=headshots" } },
+      { id: "proof_style", type: "proof_card", settings: { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections?category=beauty" } },
+      { id: "proof_creative", type: "proof_card", settings: { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: packImages.creative, href: "/collections?category=creative" } },
+      { id: "proof_engagement", type: "proof_card", settings: { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: "/assets/dreamshoot/frames/sample-engagement.png", href: "/collections?category=couple" } }
+    ];
+    const cards = (blocks.length ? blocks : fallbackCards).slice(0, 5);
+    const lead = cards[0];
+    const tabs = listLines(setting(section, "tabs", "All|Couple|Seasonal|Headshots|Beauty|Creative|Video"));
+    const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes"));
+    return (
+      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "proof-gallery")}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]" />
+        <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]" />
+        <div className="relative mx-auto max-w-[var(--site-content-width)]">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">02</span>
+            <span>{setting(section, "label", "Visual proof gallery")}</span>
+          </div>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
+            <div>
+              <h2 className="max-w-3xl text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "See what your selfies can become.")}
+              </h2>
+              <div className="mt-10 flex flex-wrap gap-3">
+                {tabs.map((tab, index) => (
+                  <Link
+                    className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
+                    href={hrefFor(site, tab === "All" ? "/collections" : `/collections?category=${encodeURIComponent(tab.toLowerCase())}`)}
+                    key={tab}
+                    style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                  >
+                    {tab}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="lg:pb-7">
+              <p className="max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72">
+                {setting(section, "subtitle", "Use the second screen to prove output quality immediately. Lead with finished albums by intent, not a long feature list.")}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                {badges.map((badge, index) => (
+                  <span
+                    className="rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"
+                    key={badge}
+                    style={index === 1 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)]">
+            <Link
+              className="group relative min-h-[460px] overflow-hidden rounded-[28px] border border-white/14 bg-white/[0.05] shadow-[0_36px_120px_-70px_rgba(0,0,0,0.96)]"
+              href={hrefFor(site, blockValue(lead, "href", "/login"))}
+              {...xfcartBlockAttrs(lead, 0, "visual_proof")}
+            >
+              <img className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))} alt={blockValue(lead, "title", "Featured photo package")} />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,14,0.04)_0%,rgba(5,7,14,0.18)_42%,rgba(5,7,14,0.88)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                <span className="rounded-full border border-white/20 bg-white/16 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">{blockValue(lead, "badge", "Featured package")}</span>
+                <h3 className="mt-4 text-[clamp(2rem,3vw,2.6rem)] font-semibold leading-none tracking-[-0.04em] text-white">{blockValue(lead, "title", "Featured package")}</h3>
+                <div className="mt-4 flex flex-wrap items-center gap-4">
+                  <span className="inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-semibold text-white" style={{ background: dreamshootBrandGradient }}>
+                    {setting(section, "primaryCta", "Start this pack")}
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </span>
+                  <ArrowRight className="ml-auto h-6 w-6 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                </div>
+              </div>
+            </Link>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {cards.slice(1, 5).map((card, index) => (
+                <Link
+                  className="group relative min-h-[230px] overflow-hidden rounded-[24px] border border-white/14 bg-white/[0.05] shadow-[0_28px_90px_-66px_rgba(0,0,0,0.94)]"
+                  href={hrefFor(site, blockValue(card, "href", "/collections"))}
+                  key={instanceKey(card, index, "visual_proof_card")}
+                  {...xfcartBlockAttrs(card, index + 1, "visual_proof")}
+                >
+                  <img className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" src={mediaAssetUrl(site, blockValue(card, "imageUrl", packImages.fashion))} alt={blockValue(card, "title", "Photo result")} />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,14,0.08)_0%,rgba(5,7,14,0.2)_34%,rgba(5,7,14,0.88)_100%)]" />
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <span className="rounded-full border border-white/18 bg-black/24 px-3 py-1.5 text-xs font-medium text-white/86 backdrop-blur">{blockValue(card, "badge", blockValue(card, "category", "Package"))}</span>
+                    <h3 className="mt-4 text-[1.45rem] font-semibold leading-tight tracking-[-0.03em] text-white">{blockValue(card, "title", "Photo result")}</h3>
+                    <div className="mt-1 flex items-end justify-between gap-4">
+                      <p className="max-w-[17rem] text-sm leading-5 text-white/72">{blockValue(card, "description")}</p>
+                      <ArrowRight className="h-5 w-5 shrink-0 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (section.type === "dreamshoot_featured_pack") {
+    const images = sectionBlocks(section, "seasonal_image");
+    const fallbackImages: SectionBlockInstance[] = [
+      { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium hero", imageUrl: packImages.sports, shape: "tall" } },
+      { id: "featured_worldcup_2", type: "seasonal_image", settings: { label: "Fan meet-up", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-v1.png", shape: "wide" } },
+      { id: "featured_worldcup_3", type: "seasonal_image", settings: { label: "Creator card", imageUrl: "/assets/dreamshoot/holiday-card-gpt2.png", shape: "wide" } },
+      { id: "featured_worldcup_4", type: "seasonal_image", settings: { label: "Profile card", imageUrl: "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png", shape: "square" } },
+      { id: "featured_worldcup_5", type: "seasonal_image", settings: { label: "Motion add-on", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", shape: "square" } }
+    ];
+    const collage = (images.length ? images : fallbackImages).slice(0, 6);
+    const slotTabs = listLines(setting(section, "slotTabs", "World Cup|Holiday|Valentine|Graduation"));
+    const metrics = [
+      { value: setting(section, "photos", "40 photos"), label: "full album" },
+      { value: setting(section, "credits", "26 credits"), label: "shown upfront" },
+      { value: setting(section, "privacy", "Private model"), label: "identity-safe" }
+    ];
+    return (
+      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "featured-pack")}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.28),transparent_32%),radial-gradient(circle_at_86%_12%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_55%_100%,rgba(255,166,68,0.22),transparent_38%)]" />
+        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:96px_96px]" />
+        <div className="relative mx-auto max-w-[var(--site-content-width)]">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">03</span>
+            <span>{setting(section, "label", "Featured seasonal pack")}</span>
+          </div>
+          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-stretch">
+            <div className="rounded-[34px] border border-white/14 bg-[#070911]/82 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-10">
+              <span className="inline-flex rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.04em] text-white" style={{ background: "linear-gradient(90deg,#ff5b51 0%,#ffa644 45%,#42d777 100%)" }}>
+                {setting(section, "badge", "Featured pack")}
+              </span>
+              <h2 className="mt-10 max-w-xl text-[clamp(2.45rem,5vw,4.1rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "World Cup fan photos with star-inspired scenes")}
+              </h2>
+              <p className="mt-8 max-w-lg text-[1.12rem] leading-[1.38] text-white/72">
+                {setting(section, "subtitle", "Turn selfies into match-day posters, stadium moments, and football-star-inspired private albums without booking a shoot.")}
+              </p>
+              <div className="mt-9 flex flex-wrap gap-4">
+                <Link className="inline-flex items-center gap-2 rounded-[18px] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: dreamshootBrandGradient }}>
+                  {setting(section, "primaryCta", "Create fan photos")}
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                </Link>
+                <Link className="inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]" href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
+                  {setting(section, "secondaryCta", "View packs")}
+                </Link>
+              </div>
+              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+                {metrics.map((metric) => (
+                  <div className="rounded-[18px] border border-white/12 bg-white/[0.06] p-4" key={metric.value}>
+                    <p className="text-[1.45rem] font-semibold tracking-[-0.03em] text-white">{metric.value}</p>
+                    <p className="mt-1 text-xs leading-5 text-white/58">{metric.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative min-h-[620px] overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/82 p-5 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-7">
+              <div className="grid h-full grid-cols-6 grid-rows-6 gap-4">
+                {collage.map((item, index) => {
+                  const shape = blockValue(item, "shape", index === 0 ? "tall" : "wide");
+                  const placement =
+                    index === 0
+                      ? "col-span-3 row-span-3"
+                      : index === 1
+                        ? "col-span-3 row-span-2"
+                        : index === 2
+                          ? "col-span-3 row-span-2"
+                          : "col-span-2 row-span-2";
+                  return (
+                    <div
+                      className={`relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.04] ${shape === "tall" ? placement : placement}`}
+                      key={instanceKey(item, index, "seasonal_image")}
+                      {...xfcartBlockAttrs(item, index, "seasonal_image")}
+                    >
+                      <img className="h-full w-full object-cover" src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))} alt={blockValue(item, "label", "Featured pack image")} />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="absolute left-1/2 top-1/2 w-[min(88%,440px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/12 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl">
+                <p className="text-sm font-semibold text-white/58">Seasonal slot</p>
+                <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">{setting(section, "slotTitle", "World Cup now. Holiday next.")}</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {slotTabs.map((tab, index) => (
+                    <span className="rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/74" key={tab} style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
+                      {tab}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (section.type === "dreamshoot_package_catalog") {
+    const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
+    const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
+    const packItems = creativePacks.filter((pack) => pack.status === "active").map((pack) => dreamshootCatalogCardFromPack(site, pack));
+    const cards = usePacks && packItems.length ? packItems : manualCards;
+    const fallbackCards: DreamShootCatalogCard[] = [
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/image-studio" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/tools/image-studio" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/tools/image-studio" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/tools/image-studio" } })
+    ];
+    const displayCards = cards.length ? cards : fallbackCards;
+    const featuredCount = Math.max(3, Math.min(6, numberSetting(section, "featuredCount", 5)));
+    const featured = [...displayCards]
+      .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
+      .slice(0, featuredCount);
+    const featuredIds = new Set(featured.map((card) => card.id));
+    const directory = [
+      ...featured,
+      ...displayCards.filter((card) => !featuredIds.has(card.id))
+    ];
+    const rest = directory.slice(featured.length);
+    const tabs = listLines(setting(section, "tabs", "All|Headshots|Beauty|Creative|Sports|Wedding|Cultural|Couple|Seasonal|Video"));
+    const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
+    const directoryCount = directory.length;
+    return (
+      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "packages")} data-dreamshoot-catalog-count={directoryCount}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]" />
+        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" />
+        <div className="relative mx-auto max-w-[var(--site-content-width)]">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">04</span>
+            <span>{setting(section, "label", "Photo package catalog")}</span>
+          </div>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
+            <div>
+              <h2 className="max-w-[46rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "Choose a photo package first.")}
+              </h2>
+              <div className="mt-10 flex flex-wrap gap-3">
+                {tabs.map((tab, index) => (
+                  <Link
+                    className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
+                    href={hrefFor(site, tab === "All" ? "/collections" : `/collections?category=${encodeURIComponent(dreamshootCategorySlug(tab))}`)}
+                    key={tab}
+                    style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                  >
+                    {tab}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="lg:pb-4">
+              <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72">
+                {setting(section, "subtitle", "This is where browsing turns into buying: each card has a clear outcome, credit cost, photo count, and one next action.")}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                  {directoryCount} active packages
+                </span>
+                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                  Reference breadth covered
+                </span>
+                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                  Editable in Products
+                </span>
+              </div>
+              <div className="mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]">
+                <div className="flex flex-wrap items-center gap-4">
+                  {steps.map((step, index) => (
+                    <div className="flex items-center gap-3" key={step}>
+                      <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-white" style={{ background: dreamshootBrandGradient }}>{index + 1}</span>
+                      <span className="text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
+            {featured.map((card, index) => (
+              <Link
+                className="group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"
+                href={hrefFor(site, card.href)}
+                key={card.id}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.04]">
+                  <img className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" src={card.imageUrl} alt={card.title} />
+                  <span className="absolute left-4 top-4 rounded-full border border-white/18 bg-black/28 px-3 py-1.5 text-xs font-semibold text-white/88 backdrop-blur">{dreamshootCategoryLabel(card.category)}</span>
+                  {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: dreamshootBrandGradient }} /> : null}
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/62">{card.description}</p>
+                  <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
+                    <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.meta}</span>
+                    <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.credits}</span>
+                    <ArrowRight className="ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          {rest.length ? (
+            <div className="mt-9">
+              <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Full directory</p>
+                  <h3 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">All package outcomes, not a short demo list.</h3>
+                </div>
+                <Link className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
+                  Open collections
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {rest.map((card, index) => (
+                  <Link
+                    className="group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"
+                    href={hrefFor(site, card.href)}
+                    key={`rest_${card.id}`}
+                  >
+                    <div className="relative aspect-[1.42] overflow-hidden bg-white/[0.04]">
+                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]" src={card.imageUrl} alt={card.title} />
+                      <span className="absolute left-3 top-3 rounded-full border border-white/18 bg-black/32 px-2.5 py-1 text-[11px] font-semibold text-white/84 backdrop-blur">{dreamshootCategoryLabel(card.category)}</span>
+                      {index < 3 ? <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#10121a]">Popular</span> : null}
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="min-w-0">
+                          <h3 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h3>
+                          <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56">{card.description}</p>
+                        </div>
+                        <ArrowRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" strokeWidth={1.8} />
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.meta}</span>
+                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.credits}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </section>
+    );
+  }
+
+  if (section.type === "dreamshoot_flow_bridge") {
+    const steps = sectionBlocks(section, "card");
+    const fallbackSteps: SectionBlockInstance[] = [
+      { id: "flow_upload", type: "card", settings: { title: "Upload selfies", text: "Use 8-12 clear phone photos per person.", meta: "01" } },
+      { id: "flow_model", type: "card", settings: { title: "Build private model", text: "Keep identity consistent across packages.", meta: "02" } },
+      { id: "flow_pack", type: "card", settings: { title: "Pick a package", text: "Choose the result, not a blank prompt.", meta: "03" } },
+      { id: "flow_album", type: "card", settings: { title: "Generate album", text: "Review, download, upscale, or make video.", meta: "04" } }
+    ];
+    const displaySteps = (steps.length ? steps : fallbackSteps).slice(0, 4);
+    const beforeImage = mediaAssetUrl(site, setting(section, "beforeImage", "/assets/dreamshoot/frames/workflow-upload-source.png"));
+    const afterImage = mediaAssetUrl(site, setting(section, "afterImage", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"));
+    const albumImages = [
+      setting(section, "albumImageOne", packImages.sports),
+      setting(section, "albumImageTwo", packImages.headshots),
+      setting(section, "albumImageThree", packImages.creative)
+    ].map((image) => mediaAssetUrl(site, image));
+    return (
+      <section className="relative overflow-hidden bg-[#05070E] text-white" id={sectionAnchor(section, "workflow")}>
+        <div className="absolute inset-x-0 top-0 h-[46%] bg-[radial-gradient(circle_at_74%_0%,rgba(122,76,255,0.32),transparent_32%),#05070E]" />
+        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:96px_96px]" />
+        <div className="relative mx-auto max-w-[var(--site-content-width)] px-5 py-16 md:py-24">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">05</span>
+            <span>{setting(section, "label", "How it works + proof bridge")}</span>
+          </div>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)]">
+            <h2 className="max-w-[45rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
+              {setting(section, "title", "From upload to private album.")}
+            </h2>
+            <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72 lg:pt-4">
+              {setting(section, "subtitle", "After packages, reduce hesitation: explain the 4-step flow, show a before/after transformation, and make credits feel safe.")}
+            </p>
+          </div>
+        </div>
+        <div className="relative bg-[#F4F1EA] px-5 py-12 text-[#0C0D12] md:py-14">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {displaySteps.map((step, index) => (
+                <article className={`rounded-[26px] border p-6 shadow-[0_24px_78px_-62px_rgba(10,10,12,0.35)] ${index < 2 ? "border-[#D7D1C7] bg-white" : "border-[#11131B] bg-[#0D0F18] text-white"}`} key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(step, index, "flow_step")}>
+                  <div className="grid h-14 w-14 place-items-center rounded-full text-lg font-bold" style={index === 1 ? { background: dreamshootBrandGradient, color: "white" } : index < 2 ? { background: "#EFEFEF", color: "#0C0D12" } : { background: "rgba(255,255,255,0.08)", color: "white" }}>
+                    {blockValue(step, "meta", `0${index + 1}`)}
+                  </div>
+                  <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight tracking-[-0.03em]">{blockValue(step, "title", "Workflow step")}</h3>
+                  <p className={index < 2 ? "mt-2 text-sm leading-6 text-[#586071]" : "mt-2 text-sm leading-6 text-white/64"}>{blockValue(step, "text", blockValue(step, "description", ""))}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)]">
+              <div className="rounded-[28px] border border-[#D7D1C7] bg-white p-6 shadow-[0_24px_78px_-62px_rgba(10,10,12,0.35)]">
+                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">Before / after proof</h3>
+                <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#586071]">Do not just explain the model. Show the customer what changes.</p>
+                <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+                  <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
+                    <img className="h-full w-full object-cover" src={beforeImage} alt="Before upload" />
+                    <span className="absolute left-4 top-4 rounded-full bg-black/42 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
+                  </div>
+                  <div className="hidden h-[104px] w-px bg-[#b8b2a9] sm:block" />
+                  <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
+                    <img className="h-full w-full object-cover" src={afterImage} alt="After AI result" />
+                    <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: dreamshootBrandGradient }}>After</span>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-[28px] border border-[#11131B] bg-[#0D0F18] p-6 text-white shadow-[0_24px_78px_-62px_rgba(10,10,12,0.55)]">
+                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">Private album workspace</h3>
+                <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-white/68">One signed-in place for uploads, credit ledger, finished albums, and add-ons.</p>
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  {albumImages.map((image, index) => (
+                    <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white/[0.06]" key={image}>
+                      <img className="h-full w-full object-cover" src={image} alt={`Album preview ${index + 1}`} />
+                    </div>
+                  ))}
+                  <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-white/12 bg-white/[0.06] px-4 text-center">
+                    <div>
+                      <p className="text-2xl font-semibold">200</p>
+                      <p className="text-xs text-white/62">credits</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <Link className="inline-flex w-full max-w-[560px] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "bridgeHref", "/pricing"))} style={{ background: dreamshootBrandGradient }}>
+                {setting(section, "bridgeCta", "After this, show pricing with value already understood")}
+                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

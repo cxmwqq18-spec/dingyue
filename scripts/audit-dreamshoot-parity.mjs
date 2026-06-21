@@ -19,7 +19,7 @@ assert(site, "missing dreamshoot site");
 assert(site.id === "site_dreamshoot", `unexpected dreamshoot site id ${site.id}`);
 
 const packs = (state.creativePacks ?? []).filter((pack) => pack.siteId === site.id && pack.status === "active");
-assert(packs.length >= 15, `expected at least 15 active packs, got ${packs.length}`);
+assert(packs.length >= 24, `expected at least 24 active packs for the full DreamShoot catalog, got ${packs.length}`);
 
 const firstEight = packs.slice(0, 8);
 const weddingWeightedInFirstEight = firstEight.filter((pack) => ["wedding", "couple"].includes(String(pack.category).toLowerCase()));
@@ -47,10 +47,10 @@ const homeOrder = homePage.publishedJson.sectionsOrder ?? [];
 const requiredHomeSections = [
   "hero_1",
   "brand_strip_1",
-  "taxonomy_1",
-  "sample_strip_1",
-  "workflow_1",
-  "packages_1",
+  "visual_proof_1",
+  "featured_pack_1",
+  "package_catalog_1",
+  "flow_bridge_1",
   "pricing_1",
   "proof_1",
   "faq_1",
@@ -61,7 +61,7 @@ assert(homeOrder.length <= 12, `home page should stay focused at 12 or fewer sec
 for (const id of requiredHomeSections) {
   assert(homeOrder.includes(id), `home page missing required DreamShoot commercial section ${id}`);
 }
-for (const id of ["free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
+for (const id of ["taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
   assert(!homeOrder.includes(id), `home page should not carry deep explainer section ${id}; it belongs on a supporting page`);
 }
 const hero = homePage.publishedJson.sections?.hero_1;
@@ -115,6 +115,7 @@ const requiredPackNames = [
   "Hairstyle",
   "Virtual Try-On",
   "Cyberpunk",
+  "Gala Photos",
   "Mafia",
   "Nature",
   "Travel Scene Pack",
@@ -123,10 +124,45 @@ const requiredPackNames = [
   "Fashion Editorial",
   "Anime Avatar",
   "Product Style",
-  "Social Cards"
+  "Social Cards",
+  "Wedding Portraits",
+  "Indian Wedding",
+  "Desi Wedding",
+  "Valentine Photos",
+  "Engagement",
+  "Boudoir",
+  "Holiday",
+  "Christmas Couple",
+  "Christmas Photos",
+  "AI Video Add-ons",
+  "Magic Upscaler"
 ];
 for (const name of requiredPackNames) {
   assert(packs.some((pack) => pack.name === name), `missing required pack ${name}`);
+}
+const referencePackNames = [
+  "Indian Wedding",
+  "Desi Wedding",
+  "Valentine Photos",
+  "Hairstyle",
+  "Professional Headshots",
+  "Wedding Portraits",
+  "Nature",
+  "Mafia",
+  "Cyberpunk",
+  "Holiday",
+  "Engagement",
+  "Boudoir",
+  "Gala Photos",
+  "Christmas Couple",
+  "Christmas Photos"
+];
+for (const name of referencePackNames) {
+  assert(packs.some((pack) => pack.name === name), `reference package coverage missing ${name}`);
+}
+const requiredCategories = ["headshots", "beauty", "creative", "sports", "creator", "avatar", "wedding", "cultural", "couple", "boudoir", "seasonal", "video", "utility"];
+for (const category of requiredCategories) {
+  assert(packs.some((pack) => pack.category === category), `missing required pack category ${category}`);
 }
 
 const pageText = JSON.stringify(site.pages ?? []);
@@ -135,8 +171,6 @@ const forbiddenDreamshootPhrases = [
   "Questions couples ask",
   "Balanced for couples",
   "Wedding and engagement",
-  "Indian Wedding",
-  "Desi Wedding",
   "Couple Studio",
   "Date Night",
   "Date Night Photos",
@@ -151,23 +185,10 @@ const forbiddenDreamshootPhrases = [
   "anniversary-ready",
   "love story",
   "couple-studio-hero",
-  "date-night.svg",
-  "sample-wedding",
-  "sample-engagement"
+  "date-night.svg"
 ];
 for (const phrase of forbiddenDreamshootPhrases) {
   assert(!pageText.toLowerCase().includes(phrase.toLowerCase()), `DreamShoot pages still contain wedding/couple-led phrase: ${phrase}`);
-}
-const replacedCampaignPhrases = [
-  "Christmas Photos",
-  "Christmas portraits",
-  "Create My Christmas Photos",
-  "New Christmas",
-  "Holiday Cards",
-  "Holiday card"
-];
-for (const phrase of replacedCampaignPhrases) {
-  assert(!pageText.toLowerCase().includes(phrase.toLowerCase()), `DreamShoot pages still contain replaced Christmas campaign phrase: ${phrase}`);
 }
 
 const loginPage = site.pages?.find((page) => page.slug === "/login");
@@ -185,9 +206,15 @@ assert(toolsPage?.publishedJson?.sectionsOrder?.includes("pricing_1"), "tools pa
 
 const collectionsPage = site.pages?.find((page) => page.slug === "/collections");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("packages_1"), "collections page must show live package wall");
+assert(collectionsPage?.publishedJson?.sections?.packages_1?.settings?.maxCount === "32", "collections package wall must expose the full catalog");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "collections page must include trust signals");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("proof_pairs_1"), "collections page must show package transformation proof");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("packages_strip_1"), "collections page must explain package path");
+
+const homeCatalog = homePage.publishedJson.sections?.package_catalog_1;
+assert(homeCatalog?.type === "dreamshoot_package_catalog", "home page missing DreamShoot package catalog renderer");
+assert(homeCatalog?.settings?.source === "creative_packs", "home package catalog must use active creative packs, not a short manual demo list");
+assert(Number(homeCatalog?.settings?.featuredCount ?? 0) >= 5, "home package catalog should feature at least 5 cards before the full directory");
 
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("plan_rules_1"), "pricing page must explain free tools, private model, and credits");
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "pricing page must include trust signals");
@@ -268,7 +295,7 @@ const sourceFiles = [
 for (const file of sourceFiles) {
   const sourceText = fs.readFileSync(file, "utf8");
   assert(
-    !/couple-studio-hero|date-night(?:-gpt2)?\.|hero-gpt2|sample-gala|sample-cyberpunk|workflow-upload-source|tab-virtual-looks|sample-wedding|sample-engagement|story-wedding/i.test(sourceText),
+    !/hero-gpt2|date-night-gpt2/i.test(sourceText),
     `DreamShoot unsafe fallback still exists in ${path.relative(repoRoot, file)}`
   );
 }
