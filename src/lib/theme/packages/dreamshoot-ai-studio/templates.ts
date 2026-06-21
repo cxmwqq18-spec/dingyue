@@ -848,14 +848,14 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   },
   themeSettings: {
     colors: {
-      background: "#09090b",
-      foreground: "#f5f1eb",
-      accent: "#d7a36b",
-      muted: "#17181d"
+      background: "#05070E",
+      foreground: "#F8FAFC",
+      accent: "#EC4BDD",
+      muted: "#10111A"
     },
     typography: {
-      display: "Manrope",
-      body: "Geist"
+      display: "var(--font-display-ui), var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif",
+      body: "var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif"
     },
     radii: {
       section: 20,
@@ -885,7 +885,9 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           ctaLabel: "Start Making",
           ctaHref: "/login",
           style: "dark_pills",
-          mobileLabel: "Menu"
+          mobileLabel: "Menu",
+          logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
+          logoAlt: "DreamShootAI heart camera logo"
         },
         blocks: [
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photo Packages", href: "/collections" } },
@@ -928,16 +930,16 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {
-      skin_bg: "#09090b",
-      skin_title_color: "#f5f1eb",
-      skin_text_color: "#cfc5bb",
-      skin_price_color: "#d7a36b",
-      skin_primary_btn_bg_color: "#f5f1eb",
-      skin_primary_btn_text_color: "#111114",
-      skin_secondary_btn_bg_color: "rgba(255,255,255,0.08)",
-      skin_secondary_btn_text_color: "#f5f1eb",
-      skin_title_font_family: "Manrope",
-      skin_text_font_family: "Geist",
+      skin_bg: "#05070E",
+      skin_title_color: "#F8FAFC",
+      skin_text_color: "#CDD2E1",
+      skin_price_color: "#FFA644",
+      skin_primary_btn_bg_color: "linear-gradient(90deg,#FFA644 0%,#EC4BDD 38%,#7A4CFF 68%,#16DCF0 100%)",
+      skin_primary_btn_text_color: "#FFFFFF",
+      skin_secondary_btn_bg_color: "rgba(18,18,28,0.72)",
+      skin_secondary_btn_text_color: "#F8FAFC",
+      skin_title_font_family: "var(--font-display-ui), var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif",
+      skin_text_font_family: "var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif",
       general_layout_width: 1280,
       general_layout_spacing: 56,
       sections: {
@@ -949,7 +951,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
             is_announce_show: true,
             announce_title: "Create realistic AI photo packages from everyday uploads.",
             announce_color: "#ffffff",
-            announce_bg_color: "#09090b"
+            announce_bg_color: "#05070E"
           },
           blocks: []
         },

@@ -231,12 +231,13 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
   const mobileLabel = header ? setting(header, "mobileLabel", "Menu") : "Menu";
   const logoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
   const logoAlt = header ? setting(header, "logoAlt", title) : title;
+  const isDreamShoot = /dreamshoot/i.test(title);
   const brandMark = brandInitials(title);
   return (
     <header
       className={
         dark
-          ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-white/10 bg-[#0b0b0d]/90 text-white backdrop-blur-xl`
+          ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
           : lightCommerce
             ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
             : `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
@@ -252,7 +253,9 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
           href={`/site/${site.slug}`}
           className={
             dark
-              ? "inline-flex items-center gap-3 rounded-[16px] border border-white/10 bg-white px-3 py-2 text-zinc-950 shadow-[0_22px_60px_-38px_rgba(0,0,0,0.75)]"
+              ? isDreamShoot
+                ? "inline-flex items-center gap-3 rounded-[18px] px-0 py-0 text-white"
+                : "inline-flex items-center gap-3 rounded-[16px] border border-white/10 bg-white px-3 py-2 text-zinc-950 shadow-[0_22px_60px_-38px_rgba(0,0,0,0.75)]"
               : lightCommerce
                 ? "inline-flex min-w-0 items-center gap-3 text-[#14161a]"
                 : "font-mono text-sm uppercase tracking-[0.22em]"
@@ -261,22 +264,34 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
           {dark || lightCommerce ? (
             <>
               {logoImageUrl ? (
-                <img
+                <span
                   className={
-                    lightCommerce
-                      ? "h-11 w-11 shrink-0 rounded-full object-cover shadow-[0_16px_34px_-24px_rgba(184,138,89,0.85)] sm:h-14 sm:w-14"
-                      : "h-10 w-10 shrink-0 rounded-full object-cover"
+                    isDreamShoot && dark
+                      ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border border-white/10 bg-[#0b0d16] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)] before:absolute before:inset-[-1px] before:-z-10 before:rounded-[16px] before:bg-[linear-gradient(135deg,#7A4CFF_0%,#EC4BDD_48%,#16DCF0_100%)]"
+                      : lightCommerce
+                        ? "flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white shadow-[0_16px_34px_-24px_rgba(184,138,89,0.85)] sm:h-14 sm:w-14"
+                        : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white"
                   }
-                  src={mediaAssetUrl(site, logoImageUrl)}
-                  alt={logoAlt}
-                />
+                >
+                  <img
+                    className={
+                      isDreamShoot && dark
+                        ? "h-8 w-8 object-contain"
+                        : lightCommerce
+                          ? "h-full w-full rounded-full object-cover"
+                          : "h-full w-full rounded-full object-cover"
+                    }
+                    src={mediaAssetUrl(site, logoImageUrl)}
+                    alt={logoAlt}
+                  />
+                </span>
               ) : (
                 <span className={lightCommerce ? "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.16em] text-white" : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-[10px] font-semibold tracking-[0.16em] text-white"}>
                   {brandMark}
                 </span>
               )}
               <span className="min-w-0">
-                <span className={lightCommerce ? "block max-w-[9rem] truncate text-[1.72rem] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)] sm:max-w-[12rem] sm:text-[2.15rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"}>{title}</span>
+                <span className={lightCommerce ? "block max-w-[9rem] truncate text-[1.72rem] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)] sm:max-w-[12rem] sm:text-[2.15rem]" : isDreamShoot && dark ? "block text-[1.52rem] font-semibold leading-none tracking-[-0.035em] text-white sm:text-[1.66rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"}>{title}</span>
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
             </>
@@ -285,7 +300,9 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
         <nav className={dark ? "hidden items-center justify-center gap-4 lg:flex" : lightCommerce ? "hidden min-w-0 items-center justify-center gap-6 xl:flex xl:gap-8" : "hidden items-center gap-6 text-sm text-[var(--site-body)] md:flex"}>
           {links.map((link, index) => {
             const navClass = dark
-              ? "inline-flex items-center gap-2 rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:border-white/50 hover:bg-white/[0.08]"
+              ? isDreamShoot
+                ? `inline-flex items-center gap-2 rounded-[16px] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/[0.08] ${index === 0 ? "border border-transparent bg-[#0b0d16] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_0_1px_rgba(122,76,255,0.55),0_0_24px_-12px_rgba(22,220,240,0.8)]" : "border border-white/16 bg-white/[0.035]"}`
+                : "inline-flex items-center gap-2 rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:border-white/50 hover:bg-white/[0.08]"
               : lightCommerce
                 ? "inline-flex min-h-10 items-center gap-2 text-[0.98rem] font-medium text-[#171514] transition hover:text-[#b07b47]"
                 : "transition hover:text-[var(--site-fg)]";
@@ -323,13 +340,15 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
           <Link
             className={
               dark
-                ? "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
+                ? isDreamShoot
+                  ? "hidden rounded-[18px] border border-white/14 bg-white/[0.045] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.08] active:scale-[0.98] lg:inline-flex"
+                  : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
                 : lightCommerce
                   ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
                   : "rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98]"
             }
             href={hrefFor(site, ctaHref)}
-            style={dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
+            style={isDreamShoot && dark ? { background: dreamshootBrandGradient } : dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
           >
             {ctaLabel}
           </Link>
@@ -384,6 +403,7 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
           ) : null}
         </div>
       </div>
+      {isDreamShoot && dark ? <div className="h-px w-full" style={{ background: dreamshootBrandGradient, opacity: 0.72 }} /> : null}
     </header>
   );
 }
@@ -954,6 +974,14 @@ const accentBlueSoft = "#dbe7ff";
 const accentBlueDeep = "#173a8a";
 const accentCopper = "#b9773f";
 const accentForest = "#3f6b50";
+const dreamshootPurple = "#7A4CFF";
+const dreamshootMagenta = "#EC4BDD";
+const dreamshootCyan = "#16DCF0";
+const dreamshootOrange = "#FFA644";
+const dreamshootBg = "#05070E";
+const dreamshootSurface = "#10111A";
+const dreamshootGlass = "rgba(18, 18, 28, 0.86)";
+const dreamshootBrandGradient = `linear-gradient(90deg, ${dreamshootOrange} 0%, ${dreamshootMagenta} 38%, ${dreamshootPurple} 68%, ${dreamshootCyan} 100%)`;
 const paperWarm = "#f4f1eb";
 const panelWarm = "#fbfaf7";
 const borderWarm = "#d8d2c7";
@@ -2276,12 +2304,12 @@ function SectionView({
       const imageBadge = setting(section, "imageBadge", blockValue(heroStats[0], "value", "40") ? `${blockValue(heroStats[0], "value", "40")} photo album` : "40 photo album");
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
       return (
-        <section className="relative isolate overflow-hidden border-b border-white/10 bg-[#08080a] px-5 text-white">
+        <section className="relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
           <div className="absolute inset-0 -z-10">
-            <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 opacity-72 blur-[0.2px] sm:min-h-[720px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
+            <div className="grid h-full min-h-[640px] grid-cols-3 gap-3 opacity-55 blur-[0.25px] sm:min-h-[740px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
               {Array.from({ length: 18 }).map((_, index) => (
                 <div
-                  className={`overflow-hidden rounded-[16px] bg-zinc-900 sm:rounded-[18px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
+                  className={`overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
                   key={`dreamshoot_hero_grid_${index}`}
                 >
                   <img
@@ -2292,27 +2320,31 @@ function SectionView({
                 </div>
               ))}
             </div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_0%,rgba(255,255,255,0.14),transparent_18%),linear-gradient(90deg,rgba(8,8,10,0.98)_0%,rgba(8,8,10,0.88)_39%,rgba(8,8,10,0.54)_67%,rgba(8,8,10,0.74)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(47,111,237,0.22),transparent_30%),radial-gradient(circle_at_72%_42%,rgba(215,163,107,0.2),transparent_24%)]" />
-            <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#08080a] to-transparent" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.99)_0%,rgba(5,7,14,0.92)_37%,rgba(5,7,14,0.62)_65%,rgba(5,7,14,0.86)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_19%_28%,rgba(122,76,255,0.34),transparent_30%),radial-gradient(circle_at_34%_58%,rgba(236,75,221,0.20),transparent_24%),radial-gradient(circle_at_76%_37%,rgba(22,220,240,0.18),transparent_27%),radial-gradient(circle_at_64%_11%,rgba(255,166,68,0.13),transparent_22%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#05070E] to-transparent" />
           </div>
-          <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
-            {Array.from({ length: 22 }).map((_, index) => (
+          <div className="pointer-events-none absolute inset-0 -z-10 opacity-65">
+            {Array.from({ length: 16 }).map((_, index) => (
               <span
-                className="absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.85)]"
+                className="absolute h-1.5 w-1.5 rounded-full shadow-[0_0_18px_rgba(255,255,255,0.55)]"
                 key={`dreamshoot_particle_${index}`}
-                style={{ left: `${(index * 37) % 100}%`, top: `${12 + ((index * 19) % 76)}%` }}
+                style={{
+                  background: [dreamshootCyan, dreamshootMagenta, dreamshootOrange, "#ffffff"][index % 4],
+                  left: `${(index * 37) % 100}%`,
+                  top: `${12 + ((index * 19) % 76)}%`
+                }}
               />
             ))}
           </div>
-          <div className="mx-auto grid min-h-[620px] max-w-[var(--site-content-width)] gap-7 py-10 sm:min-h-[690px] md:py-12 lg:grid-cols-[0.62fr_0.38fr] lg:items-center lg:py-14">
+          <div className="mx-auto grid min-h-[640px] max-w-[var(--site-content-width)] gap-7 py-10 sm:min-h-[710px] md:py-12 lg:grid-cols-[0.62fr_0.38fr] lg:items-center lg:py-14">
             <div className="relative z-10 flex max-w-[760px] flex-col justify-center">
-              <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-white/[0.12] px-3 py-1.5 text-[11px] font-medium text-white/82 shadow-[0_18px_40px_-32px_rgba(0,0,0,0.55)] backdrop-blur">
-                <span className="h-2 w-2 rounded-full" style={{ background: accentBlue }} />
+              <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/[0.08] px-3.5 py-2 text-[12px] font-medium text-white/88 shadow-[0_18px_48px_-34px_rgba(22,220,240,0.6)] backdrop-blur">
+                <span className="h-2 w-2 rounded-full shadow-[0_0_16px_rgba(22,220,240,0.9)]" style={{ background: dreamshootBrandGradient }} />
                 {setting(section, "heroBadge", "Private AI portrait studio")}
               </div>
               <h1
-                className="mt-5 max-w-[760px] text-[clamp(2.45rem,6vw,5.85rem)] font-semibold leading-[0.94] tracking-tight text-balance [font-family:var(--site-title-font)] sm:leading-[0.92]"
+                className="mt-6 max-w-[780px] text-[clamp(2.55rem,6vw,5.95rem)] font-semibold leading-[0.94] tracking-tight text-balance text-white [font-family:var(--site-title-font)] sm:leading-[0.92]"
                 data-headline-text={setting(section, "headline")}
               >
                 {(() => {
@@ -2323,33 +2355,39 @@ function SectionView({
                   return (
                     <>
                       {parts[0]}
-                      <span style={{ color: accentBlueSoft }}>{highlight}</span>
+                      <span className="text-white">{highlight}</span>
                       {parts.slice(1).join(highlight)}
                     </>
                   );
                 })()}
               </h1>
-              <p className="mt-5 max-w-[620px] text-[1rem] leading-7 text-white/72 md:mt-6 md:text-lg md:leading-8">{setting(section, "subheadline")}</p>
+              <div className="mt-8 flex items-center gap-3">
+                <span className="h-1.5 w-[min(260px,42vw)] rounded-full" style={{ background: dreamshootBrandGradient }} />
+                <span className="h-4 w-4 rounded-full shadow-[0_0_24px_rgba(22,220,240,0.78)]" style={{ background: dreamshootCyan }} />
+              </div>
+              <p className="mt-7 max-w-[620px] text-[1.04rem] leading-7 text-white/82 md:text-lg md:leading-8">{setting(section, "subheadline")}</p>
               {primaryCta || secondaryCta ? (
                 <div className="mt-7 flex flex-wrap gap-3">
                   {primaryCta ? (
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, blockValue(primaryCta, "href", "/login"))}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-semibold text-white shadow-[0_22px_54px_-32px_rgba(236,75,221,0.82)] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, blockValue(primaryCta, "href", "/login"))} style={{ background: dreamshootBrandGradient }}>
                       {blockValue(primaryCta, "label", "Start")}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                   ) : null}
                   {secondaryCta ? (
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/18 bg-white/[0.08] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-white/[0.12] active:scale-[0.98]" href={hrefFor(site, blockValue(secondaryCta, "href", "/pricing"))}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/16 bg-black/20 px-5 py-3 text-sm font-medium text-white shadow-[inset_0_0_0_1px_rgba(22,220,240,0.25)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]" href={hrefFor(site, blockValue(secondaryCta, "href", "/pricing"))}>
                       {blockValue(secondaryCta, "label", "Pricing")}
                       <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                   ) : null}
                 </div>
               ) : null}
-              <div className="mt-7 grid max-w-[650px] gap-x-5 gap-y-2 sm:mt-8 sm:grid-cols-2">
+              <div className="mt-7 grid max-w-[650px] gap-x-5 gap-y-3 sm:mt-8 sm:grid-cols-2">
                 {proofBullets.map((item) => (
-                  <div className="inline-flex items-center gap-2 text-sm leading-6 text-white/78" key={item}>
-                    <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.8} style={{ color: accentBlueSoft }} />
+                  <div className="inline-flex items-start gap-2 text-sm leading-6 text-white/80" key={item}>
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white/18 bg-white/[0.05] shadow-[0_0_18px_-8px_rgba(22,220,240,0.9)]">
+                      <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.8} style={{ color: dreamshootCyan }} />
+                    </span>
                     <span>{item}</span>
                   </div>
                 ))}
@@ -2357,19 +2395,20 @@ function SectionView({
             </div>
 
             <div className="relative z-10 hidden items-center justify-end md:flex">
-              <div className="w-full max-w-[440px] rounded-[22px] border border-white/22 bg-black/46 p-4 text-white shadow-[0_34px_90px_-54px_rgba(0,0,0,0.95)] backdrop-blur-xl sm:rounded-[26px] sm:border-white/28 sm:bg-black/54 sm:p-7">
+              <div className="relative w-full max-w-[440px] rounded-[30px] p-[1px] shadow-[0_36px_100px_-48px_rgba(0,0,0,0.98),0_0_70px_-44px_rgba(22,220,240,0.92)]" style={{ background: dreamshootBrandGradient }}>
+                <div className="rounded-[29px] p-4 text-white backdrop-blur-xl sm:p-7" style={{ background: dreamshootGlass }}>
                 <div
-                  className="inline-flex -rotate-2 rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_20px_45px_-28px_rgba(47,111,237,0.38)] sm:-rotate-3 sm:px-4 sm:py-2 sm:text-[12px]"
-                  style={{ background: `linear-gradient(90deg, ${accentCopper}, ${accentBlue})` }}
+                  className="inline-flex rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_20px_45px_-28px_rgba(236,75,221,0.75)] sm:px-4 sm:py-2 sm:text-[12px]"
+                  style={{ background: dreamshootBrandGradient }}
                 >
                   {setting(section, "authRibbon", "New seasonal packs live")}
                 </div>
-                <div className="mt-4 rounded-[16px] border border-white/14 bg-white/[0.06] p-3 sm:mt-6 sm:rounded-[18px] sm:p-4">
+                <div className="mt-4 rounded-[18px] border border-white/12 bg-white/[0.07] p-3 shadow-[inset_0_0_0_1px_rgba(122,76,255,0.14)] sm:mt-6 sm:p-4">
                   <p className="text-xs font-semibold text-white sm:text-sm">{imageBadge}</p>
                   <p className="mt-1.5 text-lg font-semibold leading-tight sm:mt-2 sm:text-2xl">{imageCaption}</p>
                 </div>
                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
-                  <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[13px] border border-white/24 bg-white px-5 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:rounded-[14px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))}>
+                  <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))}>
                     {setting(section, "authPrimaryLabel", "Continue with Google")}
                   </Link>
                   <div className="hidden grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-white/54 sm:grid">
@@ -2378,30 +2417,31 @@ function SectionView({
                     <span className="h-px bg-white/24" />
                   </div>
                   <div className="hidden gap-2 sm:grid">
-                    <div className="rounded-[12px] border border-white/16 bg-white px-4 py-3 text-sm text-zinc-400">{setting(section, "authEmailPlaceholder", "Enter your email")}</div>
-                    <Link className="inline-flex min-h-[48px] items-center justify-center rounded-[12px] bg-[#0a0a0b] px-5 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "authEmailHref", "/login"))}>
+                    <div className="rounded-[13px] border border-white/16 bg-white px-4 py-3 text-sm text-zinc-500 shadow-[inset_0_-1px_0_rgba(22,220,240,0.35)]">{setting(section, "authEmailPlaceholder", "Enter your email")}</div>
+                    <Link className="inline-flex min-h-[48px] items-center justify-center rounded-[13px] px-5 text-sm font-semibold text-white shadow-[0_18px_48px_-32px_rgba(22,220,240,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "authEmailHref", "/login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.72), rgba(22,220,240,0.58))" }}>
                       {setting(section, "authButtonLabel", "Get Started with Email")}
                     </Link>
                   </div>
                 </div>
-                <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.07] px-3 py-2.5 sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
+                <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", "4.9/5 from photo-package subscribers")}</p>
                   <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, photo packages, private albums, and checkout stay tied to this storefront.</p>
+                </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] grid-cols-3 gap-4 border-t border-white/14 py-5 text-white">
+          <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] grid-cols-3 gap-3 border-t border-white/14 py-5 text-white sm:gap-4">
             {heroStats.map((item, index) => (
               <div className="min-w-0" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(item, index, "hero_stat")}>
-                <div className="font-mono text-[1.15rem] tracking-tight text-white">{blockValue(item, "value")}</div>
+                <div className="text-[1.05rem] font-semibold tracking-tight text-white sm:font-mono sm:text-[1.15rem]">{blockValue(item, "value")}</div>
                 <div className="mt-1 text-[11px] leading-4 text-white/58 sm:text-[12px] sm:leading-5">{blockValue(item, "label")}</div>
               </div>
             ))}
           </div>
           <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] pb-7 md:hidden">
-            <Link className="flex items-center justify-between rounded-[18px] border border-white/14 bg-white/[0.08] px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))}>
+            <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
               <span>{setting(section, "imageBadge", "15+ package categories")}: {setting(section, "authPrimaryLabel", "Continue with Google")}</span>
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>

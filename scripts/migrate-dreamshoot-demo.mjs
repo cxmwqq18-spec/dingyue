@@ -13,6 +13,9 @@ const siteSlug = "dreamshoot";
 const now = "2026-06-18T00:00:00.000Z";
 const siteName = "DreamShootAI";
 const themeKey = "dreamshoot-ai-studio";
+const logoImageUrl = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
+const displayFontStack = "var(--font-display-ui), var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif";
+const bodyFontStack = "var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif";
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -61,18 +64,20 @@ function buildThemeSettings() {
   const globalSections = clone(source.globalSections ?? {});
   globalSections.header = normalizeGlobalSection("header", globalSections.header);
   globalSections.footer = normalizeGlobalSection("footer", globalSections.footer);
+  globalSections.header.settings.logoImageUrl = globalSections.header.settings.logoImageUrl ?? logoImageUrl;
+  globalSections.header.settings.logoAlt = globalSections.header.settings.logoAlt ?? "DreamShootAI heart camera logo";
   const seo = source.seo ?? {};
 
   return {
     colors: {
-      background: source.colors?.background ?? "#09090b",
-      foreground: source.colors?.foreground ?? "#f5f1eb",
-      accent: source.colors?.accent ?? "#d7a36b",
-      muted: source.colors?.muted ?? "#17181d"
+      background: source.colors?.background ?? "#05070E",
+      foreground: source.colors?.foreground ?? "#F8FAFC",
+      accent: source.colors?.accent ?? "#EC4BDD",
+      muted: source.colors?.muted ?? "#10111A"
     },
     typography: {
-      display: source.typography?.display ?? "Manrope",
-      body: source.typography?.body ?? "Geist"
+      display: source.typography?.display ?? displayFontStack,
+      body: source.typography?.body ?? bodyFontStack
     },
     radii: {
       section: source.radii?.section ?? 20,
@@ -396,7 +401,8 @@ const site = {
   branding: {
     logoText: siteName,
     market: "AI photo packages, personal AI models, free tools, credits, AI video, and private albums",
-    description: dreamshootAiStudioSiteSettings.branding?.description ?? settings.seo.siteDescription
+    description: dreamshootAiStudioSiteSettings.branding?.description ?? settings.seo.siteDescription,
+    logoImageUrl
   },
   connect: {
     stripeAccountId: "acct_demo_dreamshoot",
