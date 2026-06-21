@@ -12,12 +12,14 @@
     "audit:ai-wedding-journey": "node scripts/audit-ai-wedding-customer-journey.mjs",
     "audit:ai-wedding-visual": "node scripts/audit-ai-wedding-visual.mjs",
     "audit:dreamshoot": "node scripts/audit-dreamshoot-parity.mjs",
+    "audit:domains": "node scripts/audit-domain-routing.mjs",
     "smoke:designer-ui": "node scripts/smoke-designer-ui.mjs",
     "audit:saas-themes": "node scripts/audit-saas-theme-parity.mjs",
     "extract:saas-themes": "node scripts/extract-saas-themes.mjs",
     "capture:pages": "node scripts/capture-page-shots.mjs",
     "design:briefs": "node scripts/build-image-redesign-prompts.mjs",
     "design:images": "node scripts/generate-image-redesigns.mjs",
+    "image:batch": "node scripts/generate-gpt-image-batch.mjs",
     "smoke:core": "node scripts/smoke-core.mjs"
   },
   "dependencies": {

@@ -10,6 +10,7 @@ import {
   WorkbenchSelect
 } from "@/components/admin/design-workbench";
 import { PlatformSiteAdminLink } from "@/components/platform/platform-site-admin-link";
+import { publicSiteUrlFromParts } from "@/lib/domain-routing";
 
 type PlatformSiteSnapshot = {
   site: {
@@ -291,7 +292,7 @@ export function PlatformSiteRegistryPanel({
                     ? "bad"
                     : "warn"
               }}
-              storefrontHref={`/site/${snapshot.site.slug}`}
+              storefrontHref={publicSiteUrlFromParts(snapshot.site)}
               subscriptionCount={snapshot.activeSubscriptions}
               themeHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin/themes")}`}
               actions={
@@ -302,7 +303,7 @@ export function PlatformSiteRegistryPanel({
                     path="/admin"
                     siteId={snapshot.site.id}
                   />
-                  <WorkbenchActionButton href={`/site/${snapshot.site.slug}`} label="前台" quiet />
+                  <WorkbenchActionButton href={publicSiteUrlFromParts(snapshot.site)} label="前台" quiet />
                   <PlatformSiteAdminLink
                     className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-white px-4 text-[13px] font-medium text-[#18212f] transition hover:border-[#bfd0f5] hover:text-[#2f6fed]"
                     label="主题"

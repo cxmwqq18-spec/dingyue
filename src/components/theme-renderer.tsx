@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
+import { hostAwareSitePath } from "@/lib/domain-routing";
 import {
   AlertTriangle,
   ArrowRight,
@@ -51,6 +52,11 @@ import type {
   ThemeSettingValue
 } from "@/lib/types";
 
+type StorefrontRouteMode = "host" | "path";
+type RoutedSite = Site & {
+  __storefrontBasePath?: string;
+};
+
 export function ThemeRenderer({
   site,
   page,
@@ -62,6 +68,7 @@ export function ThemeRenderer({
   mode = "published",
   pagePath,
   query = {},
+  routeMode = "path",
   previewSelection
 }: {
   site: Site;
@@ -74,12 +81,17 @@ export function ThemeRenderer({
   mode?: "published" | "preview";
   pagePath?: string;
   query?: Record<string, string | string[] | undefined>;
+  routeMode?: StorefrontRouteMode;
   previewSelection?: {
     sectionId?: string;
     blockId?: string;
   };
 }) {
   const entries = getSectionEntries(page);
+  const routedSite: RoutedSite = {
+    ...site,
+    __storefrontBasePath: routeMode === "host" ? "" : `/site/${site.slug}`
+  };
   const normalizedPath = pagePath ?? sitePathFromPage(site, page.pageType);
   const renderContext = {
     pagePath: normalizedPath,
@@ -96,7 +108,7 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader site={site} settings={settings} />
+        <ThemeGlobalHeader site={routedSite} settings={settings} />
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section]) => (
@@ -110,7 +122,7 @@ export function ThemeRenderer({
             renderContext={renderContext}
             runtime={runtime}
             section={section}
-            site={site}
+            site={routedSite}
             siteAiApps={siteAiApps}
           />
         ))}
@@ -123,7 +135,7 @@ export function ThemeRenderer({
         id="xfcart-section-footer_plus"
         {...previewSelectedAttrs(previewSelection, "footer_plus")}
       >
-        <ThemeGlobalFooter site={site} settings={settings} />
+        <ThemeGlobalFooter site={routedSite} settings={settings} />
       </div>
     </div>
   );
@@ -261,7 +273,7 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
       ) : null}
       <div className={lightCommerce ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : "mx-auto flex max-w-[var(--site-content-width)] items-center justify-between px-5 py-4"}>
         <Link
-          href={`/site/${site.slug}`}
+          href={hrefFor(site, "/")}
           className={
             dark
               ? isDreamShoot
@@ -795,12 +807,24 @@ function settingListBlocks(
   return listSetting(section, key, fallback).map(mapper);
 }
 
+function routedSitePath(site: Site, path = "/"): string {
+  const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+  const basePath = (site as RoutedSite).__storefrontBasePath;
+  if (typeof basePath === "string") {
+    if (!basePath) return normalizedPath;
+    return normalizedPath === "/" ? basePath : `${basePath}${normalizedPath}`;
+  }
+  return hostAwareSitePath(site, normalizedPath);
+}
+
 function hrefFor(site: Site, href: string): string {
-  if (!href) return `/site/${site.slug}`;
+  if (!href) return routedSitePath(site);
   if (href === "javascript:void(0);") return "#";
   if (href.startsWith("#") || href.startsWith("http")) return href;
-  if (href.startsWith(`/site/${site.slug}`)) return href;
-  return `/site/${site.slug}${href === "/" ? "" : href}`;
+  const legacyPrefix = `/site/${site.slug}`;
+  if (href === legacyPrefix) return routedSitePath(site, "/");
+  if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
+  return routedSitePath(site, href);
 }
 
 function sitePathFromPage(site: Site, pageType: string): string {
@@ -1291,7 +1315,7 @@ function packImage(site: Site, pack: CreativePack): string {
 }
 
 function productHref(site: Site, product: SiteProduct): string {
-  return product.type === "subscription" ? `/site/${site.slug}/pricing` : `/site/${site.slug}/login`;
+  return product.type === "subscription" ? hrefFor(site, "/pricing") : hrefFor(site, "/login");
 }
 
 function activeProducts(products: SiteProduct[]): SiteProduct[] {
@@ -1644,7 +1668,7 @@ function renderLegacySaasSection({
               </div>
               <span className="rounded-full bg-moss/10 px-3 py-1.5 text-xs font-medium text-moss">{setting(section, "is_stock_show", "true") === "false" ? "stock hidden" : "available"}</span>
             </div>
-            <Link className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--site-primary-button)] px-5 py-3 text-sm font-medium text-[var(--site-primary-button-text)]" href={`/site/${site.slug}/login`}>
+            <Link className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--site-primary-button)] px-5 py-3 text-sm font-medium text-[var(--site-primary-button-text)]" href={hrefFor(site, "/login")}>
               {setting(section, "add_cart_status", "true") === "false" ? "View plan" : "Subscribe or add credits"}
               <ShoppingCart className="h-4 w-4" strokeWidth={1.8} />
             </Link>
@@ -2120,7 +2144,7 @@ function renderLegacySaasSection({
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", product?.name ?? "Featured product")}</h2>
             <p className="mt-5 text-sm leading-7 text-zinc-600">{setting(section, "desc", "Featured product content is bound to the current site data.")}</p>
-            <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={product ? productHref(site, product) : `/site/${site.slug}/pricing`}>
+            <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={product ? productHref(site, product) : hrefFor(site, "/pricing")}>
               Open item
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
@@ -2142,7 +2166,7 @@ function renderLegacySaasSection({
             </div>
           ) : null}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link className="font-mono text-sm uppercase tracking-[0.22em]" href={`/site/${site.slug}`}>
+            <Link className="font-mono text-sm uppercase tracking-[0.22em]" href={hrefFor(site, "/")}>
               {setting(section, "shop_logo", site.branding.logoText)}
             </Link>
             <nav className="hidden items-center gap-5 text-sm text-zinc-600 md:flex">
@@ -2779,7 +2803,8 @@ function SectionView({
               {tabs.map((tab) => {
                 const lower = tab.toLowerCase();
                 const active = lower === selectedTag || (!selectedTag && lower === defaultTab);
-                const href = lower === "all" ? `/site/${site.slug}#${sectionAnchor(section, "styles")}` : `/site/${site.slug}?style=${encodeURIComponent(tab)}#${sectionAnchor(section, "styles")}`;
+                const rootHref = hrefFor(site, "/");
+                const href = lower === "all" ? `${rootHref}#${sectionAnchor(section, "styles")}` : `${rootHref}?style=${encodeURIComponent(tab)}#${sectionAnchor(section, "styles")}`;
                 return (
                   <Link
                     className={active ? "rounded-full border border-[#e7d9c6] bg-[#f2e7d8] px-4 py-2 text-xs font-semibold text-[#171514]" : "rounded-full border border-[#eadfce] bg-white px-4 py-2 text-xs font-medium text-[#7d7064] transition hover:border-[#d8c8b6] hover:text-[#171514]"}
@@ -3188,6 +3213,7 @@ function SectionView({
                     defaultPassword={auth?.defaultPassword}
                     initialMessage={auth?.initialMessage}
                     siteId={site.id}
+                    storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
                     siteSlug={site.slug}
                   />
                 ) : (
@@ -3783,7 +3809,7 @@ function SectionView({
               <p className="text-sm leading-7 text-zinc-600">{setting(section, "subtitle")}</p>
             </div>
             {isPackGrid ? (
-              <Link className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium md:justify-self-start" href={`/site/${site.slug}/login`}>
+              <Link className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium md:justify-self-start" href={hrefFor(site, "/login")}>
                 Create album
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
@@ -3797,7 +3823,7 @@ function SectionView({
                   className={`group overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 ${
                     index === 0 ? "md:col-span-1 md:row-span-2" : ""
                   }`}
-                  href={`/site/${site.slug}/tools/${pack.aiAppSlug}`}
+                  href={hrefFor(site, `/tools/${pack.aiAppSlug}`)}
                   key={pack.id}
                 >
                   <div className={index === 0 ? "aspect-[4/5] overflow-hidden" : "aspect-[16/10] overflow-hidden"}>
@@ -3908,13 +3934,13 @@ function SectionView({
           {usePacks ? (
             <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
               <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{displayCards.length} visible packs</span>
-              <Link className="rounded-full border border-black/10 bg-white px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900" href={`/site/${site.slug}/collections`}>
+              <Link className="rounded-full border border-black/10 bg-white px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900" href={hrefFor(site, "/collections")}>
                 All
               </Link>
               {Array.from(new Set(packItems.map((pack) => pack.category))).map((category) => (
                 <Link
                   className={`rounded-full border px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900 ${selectedCategory === category ? "border-zinc-950 bg-zinc-950 text-white" : "border-black/10 bg-white"}`}
-                  href={`/site/${site.slug}/collections?category=${encodeURIComponent(category)}`}
+                  href={hrefFor(site, `/collections?category=${encodeURIComponent(category)}`)}
                   key={category}
                 >
                   {category}
@@ -3953,7 +3979,7 @@ function SectionView({
             <div className="mt-7 flex justify-center sm:justify-start">
               <Link
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5"
-                href={`/site/${site.slug}/collections`}
+                href={hrefFor(site, "/collections")}
               >
                 Explore all photo packages
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
@@ -5138,7 +5164,7 @@ function SectionView({
           <div className="mt-9 grid gap-4 md:grid-cols-[1fr_1.25fr]">
             {apps.map((app, index) => (
               <Link
-                href={`/site/${site.slug}/tools/${app.aiApp.slug}`}
+                href={hrefFor(site, `/tools/${app.aiApp.slug}`)}
                 key={app.id}
                 className={`group rounded-[26px] border border-[#ded5ca] bg-[#f7f3ec] p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.24)] transition hover:-translate-y-1 hover:bg-white ${
                   index === 1 ? "md:row-span-2" : ""
@@ -5169,7 +5195,7 @@ function SectionView({
       siteAiApps.find((app) => app.enabled) ??
       siteAiApps[0];
     const customerSignedIn = Boolean(runtime?.customer) && !runtime?.isPreview;
-    const actionHref = customerSignedIn ? `/site/${site.slug}/app` : `/site/${site.slug}/login`;
+    const actionHref = hrefFor(site, customerSignedIn ? "/app" : "/login");
     const actionLabel = customerSignedIn ? setting(section, "ctaLabel", "Open workspace") : "Sign in to start";
     const heroImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.entry));
     return (
@@ -5506,11 +5532,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5572,11 +5598,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5635,11 +5661,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5722,11 +5748,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5794,11 +5820,11 @@ function SectionView({
                     Sign in to view waiting, creating, delivered, and review-needed album requests for this account only.
                   </p>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5854,11 +5880,11 @@ function SectionView({
                     Sign in to view waiting, creating, delivered, and review-needed album requests for this account only.
                   </p>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -5923,11 +5949,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -6002,11 +6028,11 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                       Sign in
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
-                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={`/site/${site.slug}/pricing`}>
+                    <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
                       View pricing
                     </Link>
                   </div>
@@ -6072,11 +6098,11 @@ function SectionView({
                     : "Sign in to view private gallery images and delivered albums for this account only."}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={`/site/${site.slug}/login`}>
+                  <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
                     Sign in
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
-                  <Link className={`inline-flex items-center gap-2 rounded-[16px] border px-5 py-3 text-sm font-semibold ${darkSection ? "border-white/12 bg-white/[0.05] text-white" : "border-[#ded5ca] bg-white/58 text-[#14161a]"}`} href={`/site/${site.slug}/pricing`}>
+                  <Link className={`inline-flex items-center gap-2 rounded-[16px] border px-5 py-3 text-sm font-semibold ${darkSection ? "border-white/12 bg-white/[0.05] text-white" : "border-[#ded5ca] bg-white/58 text-[#14161a]"}`} href={hrefFor(site, "/pricing")}>
                     View pricing
                   </Link>
                 </div>
@@ -6227,14 +6253,14 @@ function SectionView({
                       <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#8a7a6d]">recent requests</p>
                       <p className="mt-2 text-sm leading-6 text-[#625d56]">The workspace keeps the latest private requests close to the next action.</p>
                     </div>
-                    <Link className="inline-flex items-center gap-2 rounded-full border border-[#ded5ca] bg-[#f8f4ed] px-3 py-2 text-xs font-semibold text-[#706961]" href={`/site/${site.slug}/app/jobs/progress`}>
+                    <Link className="inline-flex items-center gap-2 rounded-full border border-[#ded5ca] bg-[#f8f4ed] px-3 py-2 text-xs font-semibold text-[#706961]" href={hrefFor(site, "/app/jobs/progress")}>
                       Open timeline
                       <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
                     </Link>
                   </div>
                   <div className="grid gap-3">
                     {jobs.length ? jobs.slice(0, 3).map((job, index) => (
-                      <Link className="grid gap-4 rounded-[20px] border border-[#e4dace] bg-white p-4 transition hover:-translate-y-0.5 hover:bg-[#fffaf3] md:grid-cols-[auto_1fr_auto]" href={`/site/${site.slug}/app/jobs/${job.id}`} key={job.id}>
+                      <Link className="grid gap-4 rounded-[20px] border border-[#e4dace] bg-white p-4 transition hover:-translate-y-0.5 hover:bg-[#fffaf3] md:grid-cols-[auto_1fr_auto]" href={hrefFor(site, `/app/jobs/${job.id}`)} key={job.id}>
                         <div className="flex items-start justify-center pt-1">
                           <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-xs font-semibold ${
                             job.status === "succeeded"
@@ -6379,7 +6405,7 @@ function SectionView({
                   {jobs.length ? (
                     <div className="grid gap-3">
                       {jobs.map((job, index) => (
-                        <Link className="grid gap-4 rounded-[20px] border border-[#e4dace] bg-[#f8f4ed] p-4 transition hover:-translate-y-0.5 hover:bg-white md:grid-cols-[auto_1fr_auto]" href={`/site/${site.slug}/app/jobs/${job.id}`} key={job.id}>
+                        <Link className="grid gap-4 rounded-[20px] border border-[#e4dace] bg-[#f8f4ed] p-4 transition hover:-translate-y-0.5 hover:bg-white md:grid-cols-[auto_1fr_auto]" href={hrefFor(site, `/app/jobs/${job.id}`)} key={job.id}>
                           <div className="flex items-start justify-center pt-1">
                             <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-xs font-semibold ${
                               job.status === "succeeded"
@@ -6496,8 +6522,8 @@ function SectionView({
                 {leadGalleryItem ? (
                   (() => {
                     const href = "outputCount" in leadGalleryItem
-                      ? (leadGalleryItem.sourceJobId ? `/site/${site.slug}/app/jobs/${leadGalleryItem.sourceJobId}` : `/site/${site.slug}/app`)
-                      : (leadGalleryItem.jobId ? `/site/${site.slug}/app/jobs/${leadGalleryItem.jobId}` : `/site/${site.slug}/app`);
+                      ? (leadGalleryItem.sourceJobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.sourceJobId}`) : hrefFor(site, "/app"))
+                      : (leadGalleryItem.jobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.jobId}`) : hrefFor(site, "/app"));
                     const title = "outputCount" in leadGalleryItem ? leadGalleryItem.title : leadGalleryItem.label;
                     const detail = "outputCount" in leadGalleryItem ? `${leadGalleryItem.outputCount} images` : "Private gallery image";
                     const status = "outputCount" in leadGalleryItem ? customerAlbumStatusLabel(leadGalleryItem.status) : customerAssetReviewLabel(leadGalleryItem.reviewStatus);
@@ -6528,11 +6554,11 @@ function SectionView({
                       const href =
                         "outputCount" in item
                           ? item.sourceJobId
-                            ? `/site/${site.slug}/app/jobs/${item.sourceJobId}`
-                            : `/site/${site.slug}/app`
+                            ? hrefFor(site, `/app/jobs/${item.sourceJobId}`)
+                            : hrefFor(site, "/app")
                           : item.jobId
-                            ? `/site/${site.slug}/app/jobs/${item.jobId}`
-                            : `/site/${site.slug}/app`;
+                            ? hrefFor(site, `/app/jobs/${item.jobId}`)
+                            : hrefFor(site, "/app");
                       const title = "outputCount" in item ? item.title : item.label;
                       const detail = "outputCount" in item ? `${item.outputCount} images` : "Private gallery image";
                       const status = "outputCount" in item ? customerAlbumStatusLabel(item.status) : customerAssetReviewLabel(item.reviewStatus);
@@ -6722,7 +6748,7 @@ function SectionView({
             <>
               <div className="grid gap-6 md:grid-cols-[1fr_0.82fr]">
                 <div>
-                  <Link className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-600" href={`/site/${site.slug}/app`}>
+                  <Link className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-600" href={hrefFor(site, "/app")}>
                     <ChevronRight className="h-4 w-4 rotate-180" strokeWidth={1.8} />
                     Back to workspace
                   </Link>
@@ -7120,7 +7146,7 @@ function SectionView({
             <p className="font-mono text-xs uppercase tracking-[0.24em] text-white/58">Featured storefront hero</p>
             <h1 className="mt-5 text-4xl font-semibold leading-none tracking-tight md:text-6xl">{title}</h1>
             <p className="mt-5 max-w-xl text-base leading-8 text-white/72">{subtitle}</p>
-            <Link className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-zinc-950" href={`/site/${site.slug}/login`}>
+            <Link className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-zinc-950" href={hrefFor(site, "/login")}>
               {cta}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
@@ -7145,7 +7171,7 @@ function SectionView({
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-4">
             {(packs.length ? packs : creativePacks).slice(0, Number(setting(section, "max_count", "4")) || 4).map((pack) => (
-              <Link className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={`/site/${site.slug}/tools/${pack.aiAppSlug}`} key={pack.id}>
+              <Link className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, `/tools/${pack.aiAppSlug}`)} key={pack.id}>
                 <div className="aspect-[4/5] overflow-hidden rounded-[0.9rem] bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={packImages[pack.category] ?? packImages.fashion} alt={pack.name} />
                 </div>
@@ -7241,13 +7267,13 @@ function SectionView({
             />
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={`/site/${site.slug}/privacy-policy`}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy-policy")}>
               Privacy Policy
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={`/site/${site.slug}/terms-of-service`}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms-of-service")}>
               Terms of Service
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={`/site/${site.slug}/help`}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/help")}>
               Help center
             </Link>
           </div>

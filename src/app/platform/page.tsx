@@ -24,6 +24,7 @@ import { PlatformSiteSettingsPanel } from "@/components/platform/platform-site-s
 import { SiteCreatePanel } from "@/components/platform/site-create-panel";
 import { ProgressBar, StatusPill } from "@/components/ui";
 import { platformAdminModules } from "@/lib/admin-menu";
+import { publicSiteUrl } from "@/lib/domain-routing";
 import { latestActivity, money, siteDemoSnapshot } from "@/lib/ops";
 import {
   getPlatformAdminBySessionFromState,
@@ -248,7 +249,7 @@ export default async function PlatformPage({
               </div>
               <div className="flex flex-wrap gap-2">
                 <PlatformSiteAdminLink className="admin_btn inline-flex h-[34px] items-center justify-center px-3.5" label="进入后台" siteId={selectedSnapshot.site.id} />
-                <Link className="admin_btn inline-flex h-[34px] items-center justify-center px-3.5" href={`/site/${selectedSnapshot.site.slug}`}>访问前台</Link>
+                <Link className="admin_btn inline-flex h-[34px] items-center justify-center px-3.5" href={publicSiteUrl(selectedSnapshot.site)}>访问前台</Link>
               </div>
             </ErpToolbar>
 

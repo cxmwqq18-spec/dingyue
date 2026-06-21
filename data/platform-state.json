@@ -11923,7 +11923,7 @@
       "name": "DreamShootAI",
       "slug": "dreamshoot",
       "status": "active",
-      "primaryDomain": "dreamshoot.localhost",
+      "primaryDomain": "www.mydreamshoots.com",
       "currency": "usd",
       "timezone": "America/New_York",
       "branding": {
@@ -20909,9 +20909,17 @@
       "id": "dom_dreamshoot_primary",
       "siteId": "site_dreamshoot",
       "domain": "dreamshoot.localhost",
-      "isPrimary": true,
+      "isPrimary": false,
       "status": "active",
       "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "dom_dreamshoot_mydreamshoots_primary",
+      "siteId": "site_dreamshoot",
+      "domain": "www.mydreamshoots.com",
+      "isPrimary": true,
+      "status": "active",
+      "createdAt": "2026-06-21T14:47:49.873Z"
     }
   ],
   "siteAdmins": [

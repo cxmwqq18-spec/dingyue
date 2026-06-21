@@ -411,7 +411,7 @@ const site = {
   name: siteName,
   slug: siteSlug,
   status: "active",
-  primaryDomain: "dreamshoot.localhost",
+  primaryDomain: "www.mydreamshoots.com",
   currency: "usd",
   timezone: "America/New_York",
   branding: {
@@ -434,8 +434,9 @@ const site = {
 };
 
 state.sites = replaceWhere(state.sites ?? [], (item) => item.id === siteId || item.slug === siteSlug, [site]);
-state.siteDomains = replaceWhere(state.siteDomains ?? [], (item) => item.siteId === siteId || item.domain === "dreamshoot.localhost", [
-  { id: "dom_dreamshoot_primary", siteId, domain: "dreamshoot.localhost", isPrimary: true, status: "active", createdAt: now }
+state.siteDomains = replaceWhere(state.siteDomains ?? [], (item) => item.siteId === siteId || item.domain === "dreamshoot.localhost" || item.domain === "www.mydreamshoots.com", [
+  { id: "dom_dreamshoot_primary", siteId, domain: "www.mydreamshoots.com", isPrimary: true, status: "active", createdAt: now },
+  { id: "dom_dreamshoot_localhost", siteId, domain: "dreamshoot.localhost", isPrimary: false, status: "active", createdAt: now }
 ]);
 state.siteAdmins = replaceWhere(state.siteAdmins ?? [], (item) => item.siteId === siteId, [
   {

@@ -1,10 +1,28 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
 import { readPlatformState } from "@/lib/server-store";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
+import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
+import { renderStorefrontPage } from "@/lib/storefront-render";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function HomePage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const platformState = readPlatformState();
+  const host = (await headers()).get("host");
+  if (isPlatformHost(host)) redirect("/platform");
+  const hostSite = getSiteByHostFromState(platformState, host);
+  if (hostSite) {
+    const query = searchParams ? await searchParams : {};
+    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host" });
+  }
   const totalSites = platformState.sites.length;
   const activeSites = platformState.sites.filter((site) => site.status === "active").length;
   const runningJobs = platformState.jobs.filter((job) => job.status === "running").length;

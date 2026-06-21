@@ -8,6 +8,7 @@ import { authMessageForCode } from "@/lib/auth-messages";
 export function LoginForm({
   siteId,
   siteSlug,
+  storefrontBasePath,
   defaultEmail,
   defaultPassword = "mara123",
   defaultName = "Mara Voss",
@@ -15,11 +16,18 @@ export function LoginForm({
 }: {
   siteId: string;
   siteSlug: string;
+  storefrontBasePath?: string;
   defaultEmail?: string;
   defaultPassword?: string;
   defaultName?: string;
   initialMessage?: string;
 }) {
+  const sitePath = (path = "/") => {
+    const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+    const basePath = storefrontBasePath ?? `/site/${siteSlug}`;
+    if (!basePath) return normalizedPath;
+    return normalizedPath === "/" ? basePath : `${basePath}${normalizedPath}`;
+  };
   const [email, setEmail] = useState(defaultEmail ?? "mara@northpier.studio");
   const [password, setPassword] = useState(defaultPassword);
   const [name, setName] = useState(defaultName);
@@ -42,7 +50,7 @@ export function LoginForm({
         setMessage(authMessageForCode("customer", error.error));
         return;
       }
-      window.location.replace(`/site/${siteSlug}/app`);
+      window.location.replace(sitePath("/app"));
     } catch {
       setPending(false);
       setMessage("网络异常，未能完成登录，请稍后重试。");
@@ -50,7 +58,7 @@ export function LoginForm({
   }
 
   return (
-    <form action={`/site/${siteSlug}/login/submit`} className="mx-auto grid w-full max-w-[420px] min-w-0 gap-3 text-white" method="post" onSubmit={submit}>
+    <form action={sitePath("/login/submit")} className="mx-auto grid w-full max-w-[420px] min-w-0 gap-3 text-white" method="post" onSubmit={submit}>
       <button
         className="flex min-h-[48px] w-full items-center justify-center gap-3 rounded-[6px] border border-white/20 bg-transparent px-4 text-base font-semibold text-white transition hover:border-white/42 hover:bg-white/[0.06] active:scale-[0.99]"
         type="button"
@@ -88,11 +96,11 @@ export function LoginForm({
       <p className="text-center text-xs leading-5 text-gray-400">Already have an account? You will be logged in automatically.</p>
       <p className="text-center text-xs leading-5 text-gray-400">
         By signing up, you agree to our{" "}
-        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={`/site/${siteSlug}/terms-of-service`}>
+        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/terms-of-service")}>
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={`/site/${siteSlug}/privacy-policy`}>
+        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/privacy-policy")}>
           Privacy Policy
         </Link>
         .
