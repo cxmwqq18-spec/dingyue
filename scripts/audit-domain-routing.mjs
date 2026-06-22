@@ -33,6 +33,7 @@ for (const [domain, siteIds] of duplicateDomains) {
 }
 
 assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.mydreamshoots.xyz" || domain.domain === "mydreamshoots.xyz"), "mydreamshoots.xyz must stay a platform host, not a site domain");
+assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.javawebshop.site"), "www.javawebshop.site is retired and must not be bound to a site");
 
 console.log(
   JSON.stringify(
