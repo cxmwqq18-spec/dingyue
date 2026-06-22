@@ -1162,9 +1162,13 @@ export function readPlatformState(): PlatformState {
     const raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
       cwd: process.cwd(),
       encoding: "utf8",
-      env: process.env
+      env: process.env,
+      maxBuffer: 1024 * 1024 * 64
     }).trim();
     if (raw) return normalizeState(JSON.parse(raw) as PlatformState);
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Postgres platform state is empty; import platform state before starting production.");
+    }
     return writePlatformState(cloneState(seedState));
   }
   if (!fs.existsSync(dataFile)) {
