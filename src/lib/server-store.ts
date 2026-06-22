@@ -2,6 +2,7 @@ import "server-only";
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
+import { execFileSync } from "child_process";
 import { platformState as seedState } from "./data";
 import {
   buildSaasThemeDraft,
@@ -79,6 +80,7 @@ import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } fro
 
 const dataDir = path.join(process.cwd(), "data");
 const dataFile = path.join(dataDir, "platform-state.json");
+const postgresBridgeScript = path.join(process.cwd(), "scripts", "platform-state-db-bridge.mjs");
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
 
 export class StoreError extends Error {
@@ -1156,6 +1158,15 @@ function normalizeSiteThemes(state: PlatformState): SiteTheme[] {
 }
 
 export function readPlatformState(): PlatformState {
+  if (process.env.PERSISTENCE_BACKEND === "postgres") {
+    const raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+      env: process.env
+    }).trim();
+    if (raw) return normalizeState(JSON.parse(raw) as PlatformState);
+    return writePlatformState(cloneState(seedState));
+  }
   if (!fs.existsSync(dataFile)) {
     return writePlatformState(cloneState(seedState));
   }
@@ -1165,6 +1176,16 @@ export function readPlatformState(): PlatformState {
 export function writePlatformState(nextState: PlatformState): PlatformState {
   fs.mkdirSync(dataDir, { recursive: true });
   const normalized = normalizeState(nextState);
+  if (process.env.PERSISTENCE_BACKEND === "postgres") {
+    execFileSync(process.execPath, [postgresBridgeScript, "write"], {
+      cwd: process.cwd(),
+      input: JSON.stringify(normalized),
+      encoding: "utf8",
+      env: process.env,
+      maxBuffer: 1024 * 1024 * 64
+    });
+    return normalized;
+  }
   fs.writeFileSync(dataFile, `${JSON.stringify(normalized, null, 2)}\n`);
   return normalized;
 }

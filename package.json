@@ -30,7 +30,12 @@
     "smoke:designer-concurrency": "node scripts/smoke-designer-concurrency.mjs",
     "storage:health": "node scripts/storage-health.mjs",
     "smoke:storage-health": "node scripts/smoke-storage-health.mjs",
-    "acceptance:risk-guard": "node scripts/acceptance-risk-guard.mjs"
+    "acceptance:risk-guard": "node scripts/acceptance-risk-guard.mjs",
+    "prisma:validate": "prisma validate",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "db:import-state": "node scripts/import-platform-state-to-prisma.mjs",
+    "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",
