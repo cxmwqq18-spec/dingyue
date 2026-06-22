@@ -1,4 +1,5 @@
-import Link from "next/link";
+import type { ComponentProps } from "react";
+import NextLink from "next/link";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
@@ -37,6 +38,10 @@ import {
   Users,
   Youtube
 } from "lucide-react";
+
+function Link({ prefetch = false, ...props }: ComponentProps<typeof NextLink>) {
+  return <NextLink prefetch={prefetch} {...props} />;
+}
 import { getSectionSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
 import { formatCurrency } from "@/lib/data";

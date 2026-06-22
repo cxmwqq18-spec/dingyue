@@ -599,7 +599,7 @@ model AssetUpload {
   job              GenerationJob? @relation(fields: [jobId], references: [id])
   albumCovers      Album[]        @relation("AlbumCoverAsset")
 
-  @@unique([siteId, storageKey])
+  @@index([siteId, storageKey])
   @@index([siteId, customerId, role])
   @@index([siteId, customerModelId])
   @@index([siteId, jobId])

@@ -580,6 +580,41 @@ const specs = [
   }
 ];
 
+const importOrder = [
+  "sites",
+  "domains",
+  "admins",
+  "customers",
+  "creditBalances",
+  "products",
+  "prices",
+  "subscriptions",
+  "orders",
+  "paymentEvents",
+  "aiApps",
+  "siteAiApps",
+  "gatewayGroups",
+  "creativePacks",
+  "mediaAssets",
+  "themePages",
+  "themeSettings",
+  "stripeConnectAccounts",
+  "themePublications",
+  "siteThemes",
+  "themeCopies",
+  "customerModels",
+  "jobs",
+  "assetUploads",
+  "albums",
+  "auditLogs",
+  "ledger"
+];
+
+function specsInImportOrder() {
+  const byKey = new Map(specs.map((spec) => [spec.key, spec]));
+  return importOrder.map((key) => byKey.get(key)).filter(Boolean);
+}
+
 async function loadState() {
   const sourceArg = argValue("--source");
   if (sourceArg) {
@@ -709,7 +744,7 @@ async function main() {
   }
 
   const results = [];
-  for (const spec of specs) {
+  for (const spec of specsInImportOrder()) {
     results.push(await importSpec(spec, state));
   }
 

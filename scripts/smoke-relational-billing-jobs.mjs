@@ -35,7 +35,8 @@ async function main() {
   const siteAiAppId = uid("siteapp");
   const jobId = uid("job");
 
-  await prisma.$transaction(async (tx) => {
+  try {
+    await prisma.$transaction(async (tx) => {
     await tx.site.create({
       data: {
         id: siteId,
@@ -75,7 +76,7 @@ async function main() {
     await tx.creditLedger.create({
       data: { id: uid("led"), siteId, customerId, amount: -5, type: "reserve", sourceType: "generation_job", sourceId: jobId }
     });
-  });
+    }, { timeout: 20000 });
 
   const firstSettle = await prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findUniqueOrThrow({ where: { id: jobId } });
@@ -88,16 +89,19 @@ async function main() {
     }
     await tx.generationJob.update({ where: { id: jobId }, data: { status: "succeeded", resultJson: { requestId: "smoke-1" } } });
     return tx.creditBalance.findUniqueOrThrow({ where: { customerId } });
-  });
+  }, { timeout: 20000 });
 
   const secondSettle = await prisma.$transaction(async (tx) => {
     const finalJob = await tx.generationJob.findUniqueOrThrow({ where: { id: jobId } });
     if (!["succeeded", "failed", "refunded"].includes(finalJob.status)) throw new Error("job was not final");
     return tx.creditBalance.findUniqueOrThrow({ where: { customerId } });
-  });
+  }, { timeout: 20000 });
 
   const ledgerCount = await prisma.creditLedger.count({ where: { siteId, customerId } });
   console.log(JSON.stringify({ ok: true, siteId, firstSettle, secondSettle, ledgerCount }, null, 2));
+  } finally {
+    await prisma.site.deleteMany({ where: { id: siteId } });
+  }
 }
 
 main()
