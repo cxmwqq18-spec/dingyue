@@ -47,12 +47,12 @@ export default async function HostStorefrontCatchAllPage({
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {
     if (path[1] === "jobs" && path[2] && path[2] !== "progress") {
-      return renderCustomerJobDetailPage({ site, jobId: path[2], query, routeMode: "host" });
+      return renderCustomerJobDetailPage({ site, jobId: path[2], query, routeMode: "host", state });
     }
-    return renderCustomerWorkspacePage({ site, slug: `/${path.join("/")}`, query, routeMode: "host" });
+    return renderCustomerWorkspacePage({ site, slug: `/${path.join("/")}`, query, routeMode: "host", state });
   }
   if (firstSegment === "tools" && path[1]) {
-    return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host" });
+    return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
   }
-  return renderStorefrontPage({ site, slug: `/${path.join("/")}`, query, routeMode: "host" });
+  return renderStorefrontPage({ site, slug: `/${path.join("/")}`, query, routeMode: "host", state });
 }

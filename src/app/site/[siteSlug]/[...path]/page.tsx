@@ -34,7 +34,7 @@ export default async function SiteCatchAllPage({
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
   if (slug === "/account") {
-    return renderCustomerWorkspacePage({ site, slug, query, routeMode: "path" });
+    return renderCustomerWorkspacePage({ site, slug, query, routeMode: "path", state });
   }
-  return renderStorefrontPage({ site, slug, query });
+  return renderStorefrontPage({ site, slug, query, state });
 }

@@ -25,5 +25,5 @@ export default async function SiteFrontPage({
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
-  return renderStorefrontPage({ site, slug: "/", query });
+  return renderStorefrontPage({ site, slug: "/", query, state });
 }

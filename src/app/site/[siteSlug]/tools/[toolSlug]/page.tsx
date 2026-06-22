@@ -27,8 +27,8 @@ export default async function ToolPage({
 }) {
   const { siteSlug, toolSlug } = await params;
   const query = searchParams ? await searchParams : {};
-  const { site, page, app } = resolveToolPage(siteSlug, toolSlug);
+  const { state, site, page, app } = resolveToolPage(siteSlug, toolSlug);
   if (!site || !page) notFound();
   if (!app && page.slug !== `/tools/${toolSlug}`) notFound();
-  return renderToolPage({ site, toolSlug, query, routeMode: "path" });
+  return renderToolPage({ site, toolSlug, query, routeMode: "path", state });
 }

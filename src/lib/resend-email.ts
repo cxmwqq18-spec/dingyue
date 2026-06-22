@@ -1,6 +1,23 @@
 import "server-only";
-import type { CloudflareDnsRecordInput } from "@/lib/cloudflare-dns";
-import type { PlatformEmailSettings, Site } from "@/lib/types";
+import type { Site } from "@/lib/types";
+
+type CloudflareDnsRecordInput = {
+  type: "MX" | "TXT" | "CNAME";
+  name: string;
+  content: string;
+  ttl?: number;
+  priority?: number;
+  proxied?: boolean;
+};
+
+type PlatformEmailSettings = {
+  provider: "resend";
+  apiKey?: string;
+  fromEmail?: string;
+  replyTo?: string;
+  updatedAt?: string;
+  updatedBy?: string;
+};
 
 export interface SendVerificationEmailParams {
   to: string;

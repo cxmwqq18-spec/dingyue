@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -6,9 +7,19 @@ import { readPlatformState } from "@/lib/server-store";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
+import { metadataForThemePage } from "@/lib/theme/seo";
+import { getPage } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const platformState = readPlatformState();
+  const host = (await headers()).get("host");
+  const hostSite = getSiteByHostFromState(platformState, host);
+  if (!hostSite) return {};
+  return metadataForThemePage(hostSite, getPage(hostSite, "/"));
+}
 
 export default async function HomePage({
   searchParams
@@ -21,7 +32,7 @@ export default async function HomePage({
   const hostSite = getSiteByHostFromState(platformState, host);
   if (hostSite) {
     const query = searchParams ? await searchParams : {};
-    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host" });
+    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: platformState });
   }
   const totalSites = platformState.sites.length;
   const activeSites = platformState.sites.filter((site) => site.status === "active").length;

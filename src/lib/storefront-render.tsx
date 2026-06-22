@@ -103,14 +103,16 @@ export async function renderStorefrontPage({
   site,
   slug,
   query = {},
-  routeMode = "path"
+  routeMode = "path",
+  state: providedState
 }: {
   site: Site;
   slug: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
+  state?: PlatformState;
 }) {
-  const state = readPlatformState();
+  const state = providedState ?? readPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);
@@ -145,14 +147,16 @@ export async function renderCustomerWorkspacePage({
   site,
   slug,
   query = {},
-  routeMode = "path"
+  routeMode = "path",
+  state: providedState
 }: {
   site: Site;
   slug: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
+  state?: PlatformState;
 }) {
-  const state = readPlatformState();
+  const state = providedState ?? readPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
@@ -187,14 +191,16 @@ export async function renderCustomerJobDetailPage({
   site,
   jobId,
   query = {},
-  routeMode = "path"
+  routeMode = "path",
+  state: providedState
 }: {
   site: Site;
   jobId: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
+  state?: PlatformState;
 }) {
-  const state = readPlatformState();
+  const state = providedState ?? readPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
@@ -241,14 +247,16 @@ export async function renderToolPage({
   site,
   toolSlug,
   query = {},
-  routeMode = "path"
+  routeMode = "path",
+  state: providedState
 }: {
   site: Site;
   toolSlug: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
+  state?: PlatformState;
 }) {
-  const state = readPlatformState();
+  const state = providedState ?? readPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);

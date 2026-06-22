@@ -21,6 +21,8 @@
     "design:images": "node scripts/generate-image-redesigns.mjs",
     "image:batch": "node scripts/generate-gpt-image-batch.mjs",
     "smoke:core": "node scripts/smoke-core.mjs",
+    "smoke:api-latency": "node scripts/smoke-api-latency.mjs",
+    "ops:prod-diagnose": "node scripts/ops-production-diagnose.mjs",
     "smoke:ai-providers": "node scripts/smoke-ai-providers.mjs",
     "smoke:platform-email-settings": "node scripts/smoke-platform-email-settings.mjs",
     "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",
