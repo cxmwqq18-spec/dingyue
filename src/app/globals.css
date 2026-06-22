@@ -182,6 +182,12 @@ textarea {
     text-wrap: balance;
   }
 
+  @media (max-width: 1023px) {
+    .storefront-global-header:has([data-storefront-mobile-menu][open]) {
+      z-index: 80;
+    }
+  }
+
   .grid-paper {
     background-image:
       linear-gradient(rgba(20, 22, 26, 0.035) 1px, transparent 1px),

@@ -259,11 +259,14 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
   return (
     <header
       className={
-        dark
-          ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
-          : lightCommerce
-            ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
-            : `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
+        [
+          "storefront-global-header",
+          dark
+            ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
+            : lightCommerce
+              ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
+              : `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
+        ].join(" ")
       }
     >
       {announceEnabled && announceText ? (
@@ -376,22 +379,32 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
             {ctaLabel}
           </Link>
           {dark || lightCommerce ? (
-            <details className="relative lg:hidden">
+            <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
               <summary
                 className={
                   dark
-                    ? "flex list-none items-center gap-2 rounded-[14px] border border-white/20 bg-white/[0.08] px-4 py-3 text-sm font-medium text-white shadow-[0_16px_44px_-34px_rgba(0,0,0,0.55)] backdrop-blur"
-                    : "flex list-none items-center gap-2 rounded-[14px] border border-[#ddd0c2] bg-white px-4 py-3 text-sm font-medium text-[#171514] shadow-[0_16px_44px_-34px_rgba(20,22,26,0.28)]"
+                    ? "relative z-[90] flex list-none items-center gap-2 rounded-[14px] border border-white/20 bg-white/[0.08] px-4 py-3 text-sm font-medium text-white shadow-[0_16px_44px_-34px_rgba(0,0,0,0.55)] backdrop-blur"
+                    : "relative z-[90] flex list-none items-center gap-2 rounded-[14px] border border-[#ddd0c2] bg-white px-4 py-3 text-sm font-medium text-[#171514] shadow-[0_16px_44px_-34px_rgba(20,22,26,0.28)]"
                 }
               >
                 {mobileLabel}
                 <Menu className="h-4 w-4" strokeWidth={1.8} />
               </summary>
               <div
+                aria-hidden="true"
+                className={
+                  isDreamShoot && dark
+                    ? "fixed inset-0 z-[72] bg-[#02030A]/82 backdrop-blur-[3px] lg:hidden"
+                    : "fixed inset-0 z-[72] bg-black/58 backdrop-blur-[2px] lg:hidden"
+                }
+              />
+              <div
                 className={
                   dark
-                    ? "absolute right-0 top-[calc(100%+12px)] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-white/14 bg-[#101114]/96 p-3 shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur"
-                    : "absolute right-0 top-[calc(100%+12px)] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-[#e2d7ca] bg-[#fffaf3]/96 p-3 shadow-[0_34px_88px_-52px_rgba(20,22,26,0.32)] backdrop-blur"
+                    ? isDreamShoot
+                      ? "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(22rem,calc(100vw-2rem))] rounded-[24px] border border-white/18 bg-[#070911]/[0.99] p-3 shadow-[0_38px_110px_-54px_rgba(0,0,0,0.96)] ring-1 ring-[#16DCF0]/20 backdrop-blur-xl"
+                      : "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-white/14 bg-[#101114]/[0.99] p-3 shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur"
+                    : "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-[#e2d7ca] bg-[#fffaf3] p-3 shadow-[0_34px_88px_-52px_rgba(20,22,26,0.32)] backdrop-blur"
                 }
               >
                 <div className="grid gap-1">
