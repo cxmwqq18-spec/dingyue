@@ -25,6 +25,40 @@ function pickSections(source: ThemePageJson["sections"], order: string[]): Theme
 }
 
 const assets = {
+  proofWorldcupGallery: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
+  catalogWorldcupCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
+  catalogHeadshotCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
+  heroGridBusiness: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png",
+  heroGridBeauty: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png",
+  heroGridCyber: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png",
+  heroGridTravel: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png",
+  heroGridSports: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png",
+  heroGridGala: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-gala.png",
+  heroGridAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png",
+  heroGridProduct: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png",
+  heroGridVideo: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png",
+  heroGridSocial: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png",
+  heroGridNoir: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png",
+  heroGridUpscale: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
+  heroPackageWall: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+  heroCreditStudioCard: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+  proofBusinessFounder: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-business-founder.png",
+  proofBeautyHair: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-beauty-hair.png",
+  proofCinematicWorlds: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png",
+  proofCoupleEngagement: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.png",
+  catalogHairstyleCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-hairstyle-card.png",
+  catalogGalaCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png",
+  flowBeforeUpload: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
+  flowPrivateAlbumWorkspace: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+  pricingCreditsVisual: "/assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png",
+  reviewAvaAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
+  reviewAvaResultGala: "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-result-gala.png",
+  reviewLucasAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
+  reviewLucasResultHeadshot: "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-result-headshot.png",
+  reviewMiaAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
+  reviewMiaResultBeautySports: "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-result-beauty-sports.png",
+  reviewNoahAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
+  reviewNoahResultSocialCard: "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-result-social-card.png",
   hero: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
   heroAlt: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
   casualPortrait: "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
@@ -91,7 +125,7 @@ const dreamshootMegaTools = [
   block("mega_edit_upscale", "tool_card", { title: "Magic upscaler", description: "Preview higher-resolution delivery for finished photos and profile images.", category: "AI Photo Edit", badge: "HD", imageUrl: assets.upscaler, href: "/tools/image-studio" }),
   block("mega_video_image", "tool_card", { title: "Image to video concept", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: assets.upscaler, href: "/tools/image-studio" }),
   block("mega_video_profile", "tool_card", { title: "Profile clip maker", description: "Create social profile motion from headshots or creator portraits.", category: "Video AI", badge: "Social", imageUrl: assets.headshotLifestyle, href: "/tools/image-studio" }),
-  block("mega_video_fan", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: assets.worldCupFan, href: "/tools/image-studio" }),
+  block("mega_video_fan", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: assets.catalogWorldcupCard, href: "/tools/image-studio" }),
   block("mega_video_intro", "tool_card", { title: "Creator intro video", description: "Turn creator portraits into short intro clips for profiles and reels.", category: "Video AI", badge: "Creator", imageUrl: assets.avatarPortrait, href: "/tools/image-studio" }),
   block("mega_video_product", "tool_card", { title: "Product teaser clip", description: "Create simple motion ideas for product-style package outputs.", category: "Video AI", badge: "Commerce", imageUrl: assets.upscaler, href: "/tools/image-studio" }),
   block("mega_video_avatar", "tool_card", { title: "Animated avatar preview", description: "Preview avatar-style motion concepts for profile campaigns.", category: "Video AI", badge: "Avatar", imageUrl: assets.beauty, href: "/tools/image-studio" }),
@@ -107,10 +141,10 @@ const homeSections: ThemePageJson["sections"] = {
       eyebrow: "",
       headline: "AI photo packages that feel like a real shoot",
       subheadline: "Upload selfies, build a private model, then buy photo packages with monthly credits.",
-      imageUrl: assets.hero,
-      secondaryImageUrl: assets.headshotLifestyle,
+      imageUrl: assets.heroPackageWall,
+      secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
-      heroGridImages: [assets.headshotLifestyle, assets.hairstyle, assets.cyberpunk, assets.natureSolo, assets.worldCupFan, assets.worldCupFanAlt, assets.travelScene, assets.mafiaNoir, assets.beauty, assets.avatarPortrait, assets.socialCard, assets.manPortrait, assets.womanPortrait, assets.headshot, assets.beautyPortraitSvg].join("|"),
+      heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
         "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
       highlightWord: "real",
@@ -156,11 +190,11 @@ const homeSections: ThemePageJson["sections"] = {
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.worldCupFriendFans, href: "/collections?category=sports" }),
-      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.headshot, href: "/collections?category=headshots" }),
-      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.hairstyle, href: "/collections?category=beauty" }),
-      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.sampleCyberpunk, href: "/collections?category=creative" }),
-      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.engagement, href: "/collections?category=couple" })
+      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.proofWorldcupGallery, href: "/collections?category=sports" }),
+      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.proofBusinessFounder, href: "/collections?category=headshots" }),
+      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.proofBeautyHair, href: "/collections?category=beauty" }),
+      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.proofCinematicWorlds, href: "/collections?category=creative" }),
+      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.proofCoupleEngagement, href: "/collections?category=couple" })
     ]
   ),
   featured_pack_1: section(
@@ -210,9 +244,11 @@ const homeSections: ThemePageJson["sections"] = {
       featuredCount: 5
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: assets.worldCupFan, href: "/tools/image-studio" }),
-      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: assets.headshotLifestyle, href: "/tools/image-studio" }),
+      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: "/tools/image-studio" }),
+      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: "/tools/image-studio" }),
       block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/tools/image-studio" }),
+      block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview hair directions, colors, and beauty styling before choosing a full image package.", category: "Beauty", meta: "20 photos", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/tools/image-studio" }),
+      block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out photos with editorial lighting and red-carpet energy.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/tools/image-studio" }),
       block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: "/tools/image-studio" })
     ]
   ),
@@ -223,9 +259,9 @@ const homeSections: ThemePageJson["sections"] = {
       label: "How it works + proof bridge",
       title: "From upload to private album.",
       subtitle: "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
-      beforeImage: assets.upload,
+      beforeImage: assets.flowBeforeUpload,
       afterImage: assets.hairstyle,
-      albumImageOne: assets.socialCard,
+      albumImageOne: assets.flowPrivateAlbumWorkspace,
       albumImageTwo: assets.manPortrait,
       albumImageThree: assets.sampleCyberpunk,
       bridgeCta: "Compare plans after seeing the value",
@@ -429,7 +465,7 @@ const homeSections: ThemePageJson["sections"] = {
     featuredProductId: "prod_dreamshoot_pro",
     featuredBadgeLabel: "Most Popular",
     showCheckoutNote: true,
-    backgroundImage: assets.cyberpunk
+    backgroundImage: assets.pricingCreditsVisual
   }),
   proof_1: section(
     "testimonial_wall",
@@ -449,8 +485,8 @@ const homeSections: ThemePageJson["sections"] = {
         role: "Gala package subscriber",
         location: "California, USA",
         rating: "5",
-        avatarUrl: assets.avatarPortrait,
-        resultImageUrl: assets.gala
+        avatarUrl: assets.reviewAvaAvatar,
+        resultImageUrl: assets.reviewAvaResultGala
       }),
       block("review_lucas", "testimonial", {
         quote: "The headshot pack was more useful than booking a last-minute studio. Clear pricing, clear credits, great results.",
@@ -458,8 +494,8 @@ const homeSections: ThemePageJson["sections"] = {
         role: "Founder",
         location: "Toronto, Canada",
         rating: "5",
-        avatarUrl: assets.manPortrait,
-        resultImageUrl: assets.headshotLifestyle
+        avatarUrl: assets.reviewLucasAvatar,
+        resultImageUrl: assets.reviewLucasResultHeadshot
       }),
       block("review_mia", "testimonial", {
         quote: "The free enhancer helped me choose the right inputs, then I used credits for beauty portraits and a World Cup fan set.",
@@ -467,8 +503,8 @@ const homeSections: ThemePageJson["sections"] = {
         role: "Creator",
         location: "London, UK",
         rating: "5",
-        avatarUrl: assets.beauty,
-        resultImageUrl: assets.worldCupFan
+        avatarUrl: assets.reviewMiaAvatar,
+        resultImageUrl: assets.reviewMiaResultBeautySports
       }),
       block("review_noah", "testimonial", {
         quote: "I used the Pro plan for headshots and social cards. The credit usage was clear before every generation.",
@@ -476,8 +512,8 @@ const homeSections: ThemePageJson["sections"] = {
         role: "Job seeker",
         location: "Austin, USA",
         rating: "5",
-        avatarUrl: assets.casualPortrait,
-        resultImageUrl: assets.headshotLifestyle
+        avatarUrl: assets.reviewNoahAvatar,
+        resultImageUrl: assets.reviewNoahResultSocialCard
       }),
       block("review_elena", "testimonial", {
         quote: "The cyberpunk pack looked distinct from the creator portraits, so I could use both sets for different channels.",

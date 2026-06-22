@@ -2402,7 +2402,7 @@ function SectionView({
         <section className="dreamshoot-hero-motion relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
           <div className="absolute inset-0 -z-10">
             <div className="dreamshoot-hero-grid grid h-full min-h-[640px] grid-cols-3 gap-3 opacity-55 blur-[0.25px] sm:min-h-[740px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
-              {Array.from({ length: 18 }).map((_, index) => (
+              {Array.from({ length: Math.max(8, gridImages.length) }).map((_, index) => (
                 <div
                   className={`dreamshoot-hero-tile overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
                   key={`dreamshoot_hero_grid_${index}`}

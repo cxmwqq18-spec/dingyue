@@ -13168,10 +13168,10 @@
                   "eyebrow": "",
                   "headline": "AI photo packages that feel like a real shoot",
                   "subheadline": "Upload selfies, build a private model, then buy photo packages with monthly credits.",
-                  "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                  "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                  "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+                  "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                  "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
                   "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
@@ -13305,7 +13305,7 @@
                       "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                       "category": "Sports",
                       "badge": "Featured",
-                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -13317,7 +13317,7 @@
                       "description": "Clean founder, LinkedIn, resume, and team-ready portraits.",
                       "category": "Headshots",
                       "badge": "Business",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-professional-headshot.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-business-founder.png",
                       "href": "/collections?category=headshots"
                     }
                   },
@@ -13329,7 +13329,7 @@
                       "description": "Preview hair direction, beauty styling, and polished profile looks.",
                       "category": "Beauty",
                       "badge": "Beauty",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-beauty-hair.png",
                       "href": "/collections?category=beauty"
                     }
                   },
@@ -13341,7 +13341,7 @@
                       "description": "Cyberpunk, noir, gala, and editorial scene concepts.",
                       "category": "Creative",
                       "badge": "Creative",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-cyberpunk.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png",
                       "href": "/collections?category=creative"
                     }
                   },
@@ -13353,7 +13353,7 @@
                       "description": "Announcement-ready portraits, proposal scenes, and romantic album ideas.",
                       "category": "Couple",
                       "badge": "Couple",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-engagement.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.png",
                       "href": "/collections?category=couple"
                     }
                   }
@@ -13469,7 +13469,7 @@
                       "category": "Sports",
                       "meta": "40 photos",
                       "credits": "26 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -13482,7 +13482,7 @@
                       "category": "Headshots",
                       "meta": "20 photos",
                       "credits": "20 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -13521,9 +13521,9 @@
                   "label": "How it works + proof bridge",
                   "title": "From upload to private album.",
                   "subtitle": "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
-                  "beforeImage": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                  "beforeImage": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
                   "afterImage": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-                  "albumImageOne": "/assets/dreamshoot/holiday-card-gpt2.png",
+                  "albumImageOne": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
                   "albumImageTwo": "/assets/dreamshoot/editorial-headshot-gpt2.png",
                   "albumImageThree": "/assets/dreamshoot/frames/sample-cyberpunk.png",
                   "bridgeCta": "Compare plans after seeing the value",
@@ -13578,7 +13578,7 @@
                   "featuredProductId": "prod_dreamshoot_pro",
                   "featuredBadgeLabel": "Most Popular",
                   "showCheckoutNote": true,
-                  "backgroundImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                  "backgroundImage": "/assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png"
                 },
                 "blocks": []
               },
@@ -13603,8 +13603,8 @@
                       "role": "Gala package subscriber",
                       "location": "California, USA",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-result-gala.png"
                     }
                   },
                   {
@@ -13616,8 +13616,8 @@
                       "role": "Founder",
                       "location": "Toronto, Canada",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/editorial-headshot-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-result-headshot.png"
                     }
                   },
                   {
@@ -13629,8 +13629,8 @@
                       "role": "Creator",
                       "location": "London, UK",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-result-beauty-sports.png"
                     }
                   },
                   {
@@ -13642,8 +13642,8 @@
                       "role": "Job seeker",
                       "location": "Austin, USA",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-result-social-card.png"
                     }
                   },
                   {
@@ -13655,8 +13655,8 @@
                       "role": "Solo creator",
                       "location": "Berlin, Germany",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
+                      "resultImageUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png"
                     }
                   },
                   {
@@ -13668,7 +13668,7 @@
                       "role": "Travel buyer",
                       "location": "Melbourne, Australia",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"
                     }
                   }
@@ -13850,10 +13850,10 @@
                   "eyebrow": "",
                   "headline": "AI photo packages that feel like a real shoot",
                   "subheadline": "Upload selfies, build a private model, then buy photo packages with monthly credits.",
-                  "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                  "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                  "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+                  "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                  "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                  "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
                   "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
@@ -13987,7 +13987,7 @@
                       "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                       "category": "Sports",
                       "badge": "Featured",
-                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
                       "href": "/collections?category=sports"
                     }
                   },
@@ -13999,7 +13999,7 @@
                       "description": "Clean founder, LinkedIn, resume, and team-ready portraits.",
                       "category": "Headshots",
                       "badge": "Business",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-professional-headshot.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-business-founder.png",
                       "href": "/collections?category=headshots"
                     }
                   },
@@ -14011,7 +14011,7 @@
                       "description": "Preview hair direction, beauty styling, and polished profile looks.",
                       "category": "Beauty",
                       "badge": "Beauty",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-beauty-hair.png",
                       "href": "/collections?category=beauty"
                     }
                   },
@@ -14023,7 +14023,7 @@
                       "description": "Cyberpunk, noir, gala, and editorial scene concepts.",
                       "category": "Creative",
                       "badge": "Creative",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-cyberpunk.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png",
                       "href": "/collections?category=creative"
                     }
                   },
@@ -14035,7 +14035,7 @@
                       "description": "Announcement-ready portraits, proposal scenes, and romantic album ideas.",
                       "category": "Couple",
                       "badge": "Couple",
-                      "imageUrl": "/assets/dreamshoot/frames/sample-engagement.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.png",
                       "href": "/collections?category=couple"
                     }
                   }
@@ -14151,7 +14151,7 @@
                       "category": "Sports",
                       "meta": "40 photos",
                       "credits": "26 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -14164,7 +14164,7 @@
                       "category": "Headshots",
                       "meta": "20 photos",
                       "credits": "20 credits",
-                      "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                       "href": "/tools/image-studio"
                     }
                   },
@@ -14203,9 +14203,9 @@
                   "label": "How it works + proof bridge",
                   "title": "From upload to private album.",
                   "subtitle": "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
-                  "beforeImage": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                  "beforeImage": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
                   "afterImage": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-                  "albumImageOne": "/assets/dreamshoot/holiday-card-gpt2.png",
+                  "albumImageOne": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
                   "albumImageTwo": "/assets/dreamshoot/editorial-headshot-gpt2.png",
                   "albumImageThree": "/assets/dreamshoot/frames/sample-cyberpunk.png",
                   "bridgeCta": "Compare plans after seeing the value",
@@ -14260,7 +14260,7 @@
                   "featuredProductId": "prod_dreamshoot_pro",
                   "featuredBadgeLabel": "Most Popular",
                   "showCheckoutNote": true,
-                  "backgroundImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                  "backgroundImage": "/assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png"
                 },
                 "blocks": []
               },
@@ -14285,8 +14285,8 @@
                       "role": "Gala package subscriber",
                       "location": "California, USA",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-result-gala.png"
                     }
                   },
                   {
@@ -14298,8 +14298,8 @@
                       "role": "Founder",
                       "location": "Toronto, Canada",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/editorial-headshot-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-result-headshot.png"
                     }
                   },
                   {
@@ -14311,8 +14311,8 @@
                       "role": "Creator",
                       "location": "London, UK",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-result-beauty-sports.png"
                     }
                   },
                   {
@@ -14324,8 +14324,8 @@
                       "role": "Job seeker",
                       "location": "Austin, USA",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
+                      "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-result-social-card.png"
                     }
                   },
                   {
@@ -14337,8 +14337,8 @@
                       "role": "Solo creator",
                       "location": "Berlin, Germany",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                      "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
+                      "resultImageUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png"
                     }
                   },
                   {
@@ -14350,7 +14350,7 @@
                       "role": "Travel buyer",
                       "location": "Melbourne, Australia",
                       "rating": "5",
-                      "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                      "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"
                     }
                   }
@@ -21837,7 +21837,7 @@
       "generationCount": 120,
       "conversionRate": 8.9,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png"
     },
     {
       "id": "pack_dreamshoot_worldcup",
@@ -21854,7 +21854,7 @@
       "generationCount": 137,
       "conversionRate": 9.5,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png"
     },
     {
       "id": "pack_dreamshoot_hairstyle",
@@ -21871,7 +21871,7 @@
       "generationCount": 154,
       "conversionRate": 10.1,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-hairstyle-card.png"
     },
     {
       "id": "pack_dreamshoot_cyberpunk",
@@ -21905,7 +21905,7 @@
       "generationCount": 188,
       "conversionRate": 11.3,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/frames/sample-gala.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png"
     },
     {
       "id": "pack_dreamshoot_mafia",
@@ -22024,7 +22024,7 @@
       "generationCount": 307,
       "conversionRate": 15.5,
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "imageUrl": "/assets/dreamshoot/editorial-headshot-gpt2.png"
+      "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-gala.png"
     },
     {
       "id": "pack_dreamshoot_anime_avatar",
@@ -22631,6 +22631,71 @@
       "originUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
       "altText": "DreamShootAI cyberpunk solo",
       "createdAt": "2026-06-18T00:00:00.000Z"
+    },
+    {
+      "id": "asset_dreamshoot_hero_unique",
+      "siteId": "site_dreamshoot",
+      "label": "Hero package wall",
+      "storageKey": "assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+      "altText": "Hero package wall",
+      "notes": "Generated for unique DreamShootAI homepage image mapping.",
+      "createdAt": "2026-06-22T00:00:00.000Z"
+    },
+    {
+      "id": "asset_dreamshoot_hero_card_unique",
+      "siteId": "site_dreamshoot",
+      "label": "Hero credit studio card",
+      "storageKey": "assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+      "altText": "Hero credit studio card",
+      "notes": "Generated for unique DreamShootAI homepage image mapping.",
+      "createdAt": "2026-06-22T00:00:00.000Z"
+    },
+    {
+      "id": "asset_dreamshoot_pricing_unique",
+      "siteId": "site_dreamshoot",
+      "label": "Pricing credits visual",
+      "storageKey": "assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png",
+      "altText": "Pricing credits visual",
+      "notes": "Generated for unique DreamShootAI homepage image mapping.",
+      "createdAt": "2026-06-22T00:00:00.000Z"
+    },
+    {
+      "id": "asset_dreamshoot_flow_before_unique",
+      "siteId": "site_dreamshoot",
+      "label": "Flow before upload",
+      "storageKey": "assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
+      "altText": "Flow before upload",
+      "notes": "Generated for unique DreamShootAI homepage image mapping.",
+      "createdAt": "2026-06-22T00:00:00.000Z"
+    },
+    {
+      "id": "asset_dreamshoot_flow_album_unique",
+      "siteId": "site_dreamshoot",
+      "label": "Private album workspace",
+      "storageKey": "assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+      "mimeType": "image/png",
+      "usage": "theme",
+      "sourceType": "theme_seed",
+      "previewUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+      "altText": "Private album workspace",
+      "notes": "Generated for unique DreamShootAI homepage image mapping.",
+      "createdAt": "2026-06-22T00:00:00.000Z"
     }
   ],
   "siteThemes": [
@@ -51102,10 +51167,10 @@
                     "eyebrow": "",
                     "headline": "AI photo packages that feel like a real shoot",
                     "subheadline": "Upload selfies, build a private model, then buy photo packages with monthly credits.",
-                    "imageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                    "secondaryImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                    "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+                    "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-                    "heroGridImages": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png|/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png|/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png|/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png|/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png|/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png|/assets/dreamshoot/frames/story-beauty-portrait.png|/assets/dreamshoot/avatar-nora-gpt2.png|/assets/dreamshoot/holiday-card-gpt2.png|/assets/dreamshoot/editorial-headshot-gpt2.png|/assets/dreamshoot/beauty-portrait-gpt2.png|/assets/dreamshoot/frames/sample-professional-headshot.png|/assets/dreamshoot/beauty-portrait.svg",
+                    "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
                     "bulletList": "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.",
                     "highlightWord": "real",
                     "heroBadge": "AI photo package studio",
@@ -51239,7 +51304,7 @@
                         "description": "Stadium posters, match-day portraits, and fan profile scenes.",
                         "category": "Sports",
                         "badge": "Featured",
-                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
                         "href": "/collections?category=sports"
                       }
                     },
@@ -51251,7 +51316,7 @@
                         "description": "Clean founder, LinkedIn, resume, and team-ready portraits.",
                         "category": "Headshots",
                         "badge": "Business",
-                        "imageUrl": "/assets/dreamshoot/frames/sample-professional-headshot.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-business-founder.png",
                         "href": "/collections?category=headshots"
                       }
                     },
@@ -51263,7 +51328,7 @@
                         "description": "Preview hair direction, beauty styling, and polished profile looks.",
                         "category": "Beauty",
                         "badge": "Beauty",
-                        "imageUrl": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-beauty-hair.png",
                         "href": "/collections?category=beauty"
                       }
                     },
@@ -51275,7 +51340,7 @@
                         "description": "Cyberpunk, noir, gala, and editorial scene concepts.",
                         "category": "Creative",
                         "badge": "Creative",
-                        "imageUrl": "/assets/dreamshoot/frames/sample-cyberpunk.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png",
                         "href": "/collections?category=creative"
                       }
                     },
@@ -51287,7 +51352,7 @@
                         "description": "Announcement-ready portraits, proposal scenes, and romantic album ideas.",
                         "category": "Couple",
                         "badge": "Couple",
-                        "imageUrl": "/assets/dreamshoot/frames/sample-engagement.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.png",
                         "href": "/collections?category=couple"
                       }
                     }
@@ -51403,7 +51468,7 @@
                         "category": "Sports",
                         "meta": "40 photos",
                         "credits": "26 credits",
-                        "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -51416,7 +51481,7 @@
                         "category": "Headshots",
                         "meta": "20 photos",
                         "credits": "20 credits",
-                        "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+                        "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                         "href": "/tools/image-studio"
                       }
                     },
@@ -51455,9 +51520,9 @@
                     "label": "How it works + proof bridge",
                     "title": "From upload to private album.",
                     "subtitle": "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
-                    "beforeImage": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                    "beforeImage": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
                     "afterImage": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-                    "albumImageOne": "/assets/dreamshoot/holiday-card-gpt2.png",
+                    "albumImageOne": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
                     "albumImageTwo": "/assets/dreamshoot/editorial-headshot-gpt2.png",
                     "albumImageThree": "/assets/dreamshoot/frames/sample-cyberpunk.png",
                     "bridgeCta": "Compare plans after seeing the value",
@@ -51512,7 +51577,7 @@
                     "featuredProductId": "prod_dreamshoot_pro",
                     "featuredBadgeLabel": "Most Popular",
                     "showCheckoutNote": true,
-                    "backgroundImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                    "backgroundImage": "/assets/dreamshoot/generated/20260622-homepage-unique/pricing-credits-visual.png"
                   },
                   "blocks": []
                 },
@@ -51537,8 +51602,8 @@
                         "role": "Gala package subscriber",
                         "location": "California, USA",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
+                        "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-result-gala.png"
                       }
                     },
                     {
@@ -51550,8 +51615,8 @@
                         "role": "Founder",
                         "location": "Toronto, Canada",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/editorial-headshot-gpt2.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                        "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-result-headshot.png"
                       }
                     },
                     {
@@ -51563,8 +51628,8 @@
                         "role": "Creator",
                         "location": "London, UK",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
+                        "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-result-beauty-sports.png"
                       }
                     },
                     {
@@ -51576,8 +51641,8 @@
                         "role": "Job seeker",
                         "location": "Austin, USA",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"
+                        "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
+                        "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-result-social-card.png"
                       }
                     },
                     {
@@ -51589,8 +51654,8 @@
                         "role": "Solo creator",
                         "location": "Berlin, Germany",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+                        "avatarUrl": "/assets/dreamshoot/frames/story-beauty-portrait.png",
+                        "resultImageUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png"
                       }
                     },
                     {
@@ -51602,7 +51667,7 @@
                         "role": "Travel buyer",
                         "location": "Melbourne, Australia",
                         "rating": "5",
-                        "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
+                        "avatarUrl": "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"
                       }
                     }

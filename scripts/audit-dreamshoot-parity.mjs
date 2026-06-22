@@ -85,7 +85,10 @@ assert(
 );
 
 const homeAssetRefs = [];
-function collectAssetRefs(value) {
+function collectAssetRefs(value, pathSegments = []) {
+  if (pathSegments.includes("package_catalog_1") && pathSegments.includes("blocks")) {
+    return;
+  }
   if (typeof value === "string") {
     for (const part of value.split("|").map((item) => item.trim()).filter(Boolean)) {
       if (part.includes("/assets/dreamshoot/")) homeAssetRefs.push(part);
@@ -93,22 +96,56 @@ function collectAssetRefs(value) {
     return;
   }
   if (Array.isArray(value)) {
-    value.forEach(collectAssetRefs);
+    value.forEach((item, index) => collectAssetRefs(item, [...pathSegments, String(index)]));
     return;
   }
   if (value && typeof value === "object") {
-    Object.values(value).forEach(collectAssetRefs);
+    Object.entries(value).forEach(([key, item]) => collectAssetRefs(item, [...pathSegments, key]));
   }
 }
 collectAssetRefs(homePage.publishedJson);
 const homeAssetCounts = new Map();
 for (const asset of homeAssetRefs) homeAssetCounts.set(asset, (homeAssetCounts.get(asset) ?? 0) + 1);
-const overusedHomeAssets = [...homeAssetCounts.entries()].filter(([, count]) => count > 6);
+const overusedHomeAssets = [...homeAssetCounts.entries()].filter(([, count]) => count > 1);
 assert(
   overusedHomeAssets.length === 0,
-  `home page repeats the same DreamShoot visual too often: ${overusedHomeAssets.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
+  `home page single-image assets must not repeat: ${overusedHomeAssets.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
 );
-assert(homeAssetCounts.size >= 16, `home page should use at least 16 distinct DreamShoot visuals, got ${homeAssetCounts.size}`);
+assert(homeAssetCounts.size >= 40, `home page should use at least 40 distinct DreamShoot visuals, got ${homeAssetCounts.size}`);
+for (const asset of homeAssetCounts.keys()) {
+  const assetPath = path.join(repoRoot, "public", asset.replace(/^\/+/, ""));
+  assert(fs.existsSync(assetPath), `home page references a missing image asset: ${asset}`);
+}
+
+function dreamshootFeaturedCatalogScore(pack) {
+  const title = String(pack.name ?? "").toLowerCase();
+  const category = String(pack.category ?? "").toLowerCase();
+  if (title.includes("world cup")) return 0;
+  if (title.includes("headshot")) return 1;
+  if (title.includes("hairstyle")) return 2;
+  if (title.includes("cyberpunk")) return 3;
+  if (title.includes("gala")) return 4;
+  if (title.includes("mafia")) return 5;
+  if (title.includes("nature")) return 6;
+  if (category.includes("creator") || title.includes("creator")) return 7;
+  if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 20;
+  return 10;
+}
+
+const runtimeHomeImageRefs = [...homeAssetRefs];
+const homeFeaturedPackImages = [...packs]
+  .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
+  .slice(0, Math.max(3, Math.min(6, Number(homePage.publishedJson.sections?.package_catalog_1?.settings?.featuredCount ?? 5))))
+  .map((pack) => pack.imageUrl)
+  .filter(Boolean);
+runtimeHomeImageRefs.push(...homeFeaturedPackImages);
+const runtimeHomeCounts = new Map();
+for (const asset of runtimeHomeImageRefs) runtimeHomeCounts.set(asset, (runtimeHomeCounts.get(asset) ?? 0) + 1);
+const runtimeDuplicates = [...runtimeHomeCounts.entries()].filter(([, count]) => count > 1);
+assert(
+  runtimeDuplicates.length === 0,
+  `rendered home page image assets must not repeat across sections and catalog packs: ${runtimeDuplicates.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
+);
 
 const requiredPackNames = [
   "Professional Headshots",
