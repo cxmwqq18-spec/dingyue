@@ -4121,7 +4121,6 @@ function SectionView({
         <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">02</span>
             <span>{setting(section, "label", "Visual proof gallery")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
@@ -4249,7 +4248,6 @@ function SectionView({
         <div className="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:96px_96px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56">
-            <span className="rounded-full border border-white/16 bg-white/[0.05] px-4 py-2 text-white">03</span>
             <span>{setting(section, "label", "Featured seasonal pack")}</span>
           </div>
           <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
@@ -4382,7 +4380,6 @@ function SectionView({
         <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">04</span>
             <span>{setting(section, "label", "Photo package catalog")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
@@ -4523,7 +4520,6 @@ function SectionView({
         <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:96px_96px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)] px-5 py-16 md:py-24">
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-            <span className="rounded-full border border-white/16 bg-white/[0.05] px-5 py-2 text-white">05</span>
             <span>{setting(section, "label", "How it works + proof bridge")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)]">
