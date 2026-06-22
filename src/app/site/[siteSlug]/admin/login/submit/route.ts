@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { createSiteAdminSession, readPlatformState, StoreError } from "@/lib/server-store";
-import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
+import { publicUrlForRequest, shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) return NextResponse.redirect(new URL("/", request.url), 303);
+  if (!site) return NextResponse.redirect(publicUrlForRequest(request, "/"), 303);
 
   const form = await request.formData();
   try {
@@ -15,7 +15,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? "")
     });
-    const response = NextResponse.redirect(new URL(`/site/${site.slug}/admin`, request.url), 303);
+    const response = NextResponse.redirect(publicUrlForRequest(request, `/site/${site.slug}/admin`), 303);
     response.cookies.set(siteAdminSessionCookie(site.id), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
@@ -26,6 +26,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
     return response;
   } catch (error) {
     const code = error instanceof StoreError ? error.message : "site_admin_login_failed";
-    return NextResponse.redirect(new URL(`/site/${site.slug}/admin/login?error=${encodeURIComponent(code)}`, request.url), 303);
+    return NextResponse.redirect(publicUrlForRequest(request, `/site/${site.slug}/admin/login?error=${encodeURIComponent(code)}`), 303);
   }
 }

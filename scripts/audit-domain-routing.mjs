@@ -32,12 +32,12 @@ for (const [domain, siteIds] of duplicateDomains) {
   assert(siteIds.length === 1, `${domain} is bound to multiple sites: ${siteIds.join(", ")}`);
 }
 
-assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.javawebshop.site"), "www.javawebshop.site must stay a platform host, not a site domain");
+assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.mydreamshoots.xyz" || domain.domain === "mydreamshoots.xyz"), "mydreamshoots.xyz must stay a platform host, not a site domain");
 
 console.log(
   JSON.stringify(
     {
-      platformHost: "www.javawebshop.site",
+      platformHost: "www.mydreamshoots.xyz",
       dreamshootPrimaryDomain: dreamshoot.primaryDomain,
       dreamshootDomainCount: dreamshootDomains.length
     },

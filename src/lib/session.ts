@@ -27,3 +27,18 @@ export function shouldUseSecureCookie(request?: Request): boolean {
     return process.env.NODE_ENV === "production";
   }
 }
+
+export function publicUrlForRequest(request: Request, path: string): URL {
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const host = forwardedHost || request.headers.get("host")?.split(",")[0]?.trim();
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const forwardedPort = request.headers.get("x-forwarded-port")?.split(",")[0]?.trim();
+  const fallback = new URL(request.url);
+  const protocol = forwardedProto || fallback.protocol.replace(":", "") || "http";
+  const externalHost = host || fallback.host;
+  const hostWithPort =
+    forwardedPort && externalHost && !externalHost.includes(":") && !["80", "443"].includes(forwardedPort)
+      ? `${externalHost}:${forwardedPort}`
+      : externalHost;
+  return new URL(path, `${protocol}://${hostWithPort || fallback.host}`);
+}

@@ -95,11 +95,21 @@ function reasonLabel(code: string): string {
     sender_domain_not_verified: "发件域名尚未在 Resend 验证。",
     local_domain_not_verifiable: "localhost / 127.0.0.1 不能作为 Resend 发件域名。",
     invalid_email: "请输入有效的测试邮箱。",
+    invalid_from_email: "请输入有效的发件邮箱。",
+    invalid_reply_to: "请输入有效的 Reply-To 邮箱。",
     email_provider_not_configured: "Resend API Key 或发件人地址未配置。",
     resend_domain_not_verified: "Resend 还没有验证发送域名，测试模式只能发到供应商账号自己的邮箱。",
+    resend_invalid_api_key: "Resend API Key 无效或已失效。",
+    resend_invalid_from_email: "Resend 拒绝当前发件邮箱，请使用已验证域名邮箱。",
+    resend_rate_limited: "Resend 触发限流，请稍后再试。",
     email_send_failed: "测试邮件发送失败，请稍后重试。",
     platform_login_required: "当前平台后台登录已失效，请重新登录。",
-    platform_forbidden: "当前平台账号没有权限修改邮箱服务。"
+    platform_forbidden: "当前平台账号没有权限修改邮箱服务。",
+    csrf_token_required: "安全校验已失效，请刷新页面后重试。",
+    csrf_token_mismatch: "安全校验不匹配，请刷新页面后重试。",
+    rate_limited: "发送太频繁，请稍后再试。",
+    site_not_found: "测试站点不存在，请刷新页面后重试。",
+    network_error: "网络请求失败，请检查服务状态后重试。"
   };
   return labels[code] ?? code;
 }
@@ -207,23 +217,34 @@ export function PlatformEmailPanel({
   }
 
   async function sendTest() {
-    setTesting(true);
-    const response = await fetch("/api/platform/email", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        "x-csrf-token": csrfTokenFromCookie()
-      },
-      body: JSON.stringify({ to: testTo, siteId: testSiteId })
-    });
-    const result = (await response.json().catch(() => ({}))) as { error?: string; messageId?: string };
-    setTesting(false);
-    if (!response.ok) {
-      setMessage(`测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}`);
+    const to = testTo.trim();
+    if (!to || !to.includes("@")) {
+      setMessage(`测试邮件发送失败：${reasonLabel("invalid_email")}`);
       return;
     }
-    setMessage(`测试邮件已发送，Resend message id: ${result.messageId ?? "provider accepted"}。`);
+    setTesting(true);
+    setMessage("测试邮件发送中...");
+    try {
+      const response = await fetch("/api/platform/email", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "x-csrf-token": csrfTokenFromCookie()
+        },
+        body: JSON.stringify({ to, siteId: testSiteId })
+      });
+      const result = (await response.json().catch(() => ({}))) as { error?: string; messageId?: string };
+      if (!response.ok) {
+        setMessage(`测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}`);
+        return;
+      }
+      setMessage(`测试邮件已发送，Resend message id: ${result.messageId ?? "provider accepted"}。`);
+    } catch {
+      setMessage(`测试邮件发送失败：${reasonLabel("network_error")}`);
+    } finally {
+      setTesting(false);
+    }
   }
 
   async function provisionDomain(row: PlatformEmailSiteRow) {

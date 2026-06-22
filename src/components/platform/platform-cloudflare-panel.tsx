@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Cloud, Save, ShieldCheck } from "lucide-react";
+import { Cloud, Save, ShieldCheck, Trash2 } from "lucide-react";
 import {
   WorkbenchActionButton,
   WorkbenchSearchInput,
@@ -71,6 +71,7 @@ function errorLabel(code?: string): string {
     missing_cloudflare_account_id: "请输入 Cloudflare Account ID。",
     missing_cloudflare_account: "请选择 Cloudflare 账号。",
     cloudflare_account_not_found: "Cloudflare 账号不存在。",
+    cloudflare_account_not_current: "该账号不是当前全局账号。",
     csrf_token_required: "安全令牌缺失，请刷新页面后重试。",
     platform_forbidden: "当前平台账号没有权限修改 Cloudflare 配置。"
   }[code ?? ""] ?? code ?? "unknown error";
@@ -86,6 +87,7 @@ export function PlatformCloudflarePanel({
   const [query, setQuery] = useState("");
   const [form, setForm] = useState({ id: "", label: "", email: "", accountId: "", apiToken: "", makeCurrent: true });
   const [saving, setSaving] = useState(false);
+  const [actingId, setActingId] = useState("");
   const [message, setMessage] = useState("配置多个 Cloudflare 账号后，可以选择一个作为当前全局 DNS 自动化账号。");
 
   const filtered = useMemo(() => {
@@ -130,7 +132,8 @@ export function PlatformCloudflarePanel({
     router.refresh();
   }
 
-  async function makeCurrent(accountId: string) {
+  async function updateCurrent(accountId: string, action: "set_current" | "clear_current") {
+    setActingId(accountId);
     const response = await fetch("/api/platform/cloudflare", {
       method: "POST",
       credentials: "same-origin",
@@ -138,18 +141,52 @@ export function PlatformCloudflarePanel({
         "Content-Type": "application/json",
         "x-csrf-token": csrfTokenFromCookie()
       },
-      body: JSON.stringify({ accountId })
+      body: JSON.stringify({ accountId, action })
     });
     const result = (await response.json().catch(() => ({}))) as CloudflarePayload & { error?: string };
+    setActingId("");
     if (!response.ok) {
-      setMessage(`切换失败：${errorLabel(result.error)}`);
+      setMessage(`${action === "clear_current" ? "取消失败" : "切换失败"}：${errorLabel(result.error)}`);
       if (response.status === 401 && result.error === "platform_login_required") {
         router.push("/platform/login");
       }
       return;
     }
     setStatus(result);
-    setMessage("当前全局 Cloudflare 账号已切换。");
+    setMessage(action === "clear_current" ? "当前全局 Cloudflare 账号已取消。" : "当前全局 Cloudflare 账号已切换。");
+    if (action === "clear_current" && form.id === accountId) {
+      setForm((current) => ({ ...current, makeCurrent: false }));
+    }
+    router.refresh();
+  }
+
+  async function deleteAccount(account: CloudflareAccountRow) {
+    const confirmed = window.confirm(`确认删除 Cloudflare 账号「${account.label}」？删除后不会再作为 Resend DNS 自动化账号使用。`);
+    if (!confirmed) return;
+    setActingId(account.id);
+    const response = await fetch("/api/platform/cloudflare", {
+      method: "DELETE",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "x-csrf-token": csrfTokenFromCookie()
+      },
+      body: JSON.stringify({ accountId: account.id })
+    });
+    const result = (await response.json().catch(() => ({}))) as CloudflarePayload & { error?: string };
+    setActingId("");
+    if (!response.ok) {
+      setMessage(`删除失败：${errorLabel(result.error)}`);
+      if (response.status === 401 && result.error === "platform_login_required") {
+        router.push("/platform/login");
+      }
+      return;
+    }
+    setStatus(result);
+    if (form.id === account.id) {
+      setForm({ id: "", label: "", email: "", accountId: "", apiToken: "", makeCurrent: true });
+    }
+    setMessage(`Cloudflare 账号「${account.label}」已删除。`);
     router.refresh();
   }
 
@@ -233,7 +270,19 @@ export function PlatformCloudflarePanel({
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button className="admin_btn h-[32px] px-3 text-[12px]" onClick={() => edit(account)} type="button">编辑</button>
-                  <button className="admin_btn h-[32px] px-3 text-[12px]" disabled={account.isCurrent} onClick={() => makeCurrent(account.id)} type="button">设为当前</button>
+                  {account.isCurrent ? (
+                    <button className="admin_btn h-[32px] px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "clear_current")} type="button">
+                      取消当前
+                    </button>
+                  ) : (
+                    <button className="admin_btn h-[32px] px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "set_current")} type="button">
+                      设为当前
+                    </button>
+                  )}
+                  <button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px] text-[#b42318]" disabled={actingId === account.id} onClick={() => deleteAccount(account)} type="button">
+                    <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    删除
+                  </button>
                 </div>
               </WorkbenchTableRow>
             )) : (

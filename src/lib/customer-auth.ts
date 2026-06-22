@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createCustomerSession, StoreError } from "@/lib/server-store";
-import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
+import { customerSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
 import type { Site } from "@/lib/types";
 
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
@@ -12,7 +12,7 @@ export async function handleCustomerLoginForm(request: Request, site: Site, succ
       password: String(form.get("password") ?? ""),
       name: String(form.get("name") ?? "")
     });
-    const response = NextResponse.redirect(new URL(successPath, request.url), 303);
+    const response = NextResponse.redirect(publicUrlForRequest(request, successPath), 303);
     response.cookies.set(customerSessionCookie(site.id), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
@@ -23,6 +23,6 @@ export async function handleCustomerLoginForm(request: Request, site: Site, succ
     return response;
   } catch (error) {
     const code = error instanceof StoreError ? error.message : "customer_login_failed";
-    return NextResponse.redirect(new URL(`${failurePath}?error=${encodeURIComponent(code)}`, request.url), 303);
+    return NextResponse.redirect(publicUrlForRequest(request, `${failurePath}?error=${encodeURIComponent(code)}`), 303);
   }
 }

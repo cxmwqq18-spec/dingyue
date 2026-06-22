@@ -181,73 +181,83 @@ export default async function PlatformPage({
     }
   };
   const emailConfig = resendEmailConfigStatusForSettings(platformState.platformEmailSettings);
-  const resendDomains = await listResendDomains(platformState.platformEmailSettings);
+  const shouldLoadEmailStatus = activeModule === "email";
+  const resendDomains = shouldLoadEmailStatus ? await listResendDomains(platformState.platformEmailSettings) : [];
   const emailSenderDomain = resendDomains.find((domain) => resendDomainMatchesSender(domain.name, emailConfig.fromDomain));
-  const emailSiteRows = platformState.sites.map((site) => {
-    const local = (emailConfig.fromEmail.split("@")[0] || "verify").trim() || "verify";
-    const candidateFromEmail = `${local}@${site.primaryDomain}`.toLowerCase();
-    const candidateDomain = domainFromEmail(candidateFromEmail);
-    const resendDomain = resendDomains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
-    const verified = resendDomain?.status === "verified";
-    const blockingReasons = [
-      !emailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
-      !emailConfig.fromConfigured ? "missing_resend_from_email" : "",
-      emailConfig.usingTestingSender ? "resend_testing_sender" : "",
-      isLocalEmailDomain(candidateDomain) ? "local_domain_not_verifiable" : "",
-      !isLocalEmailDomain(candidateDomain) && !resendDomain ? "sender_domain_not_found_in_resend" : "",
-      resendDomain && !verified ? "sender_domain_not_verified" : ""
-    ].filter(Boolean);
-    return {
-      site: {
-        id: site.id,
-        name: site.name,
-        slug: site.slug,
-        status: site.status,
-        primaryDomain: site.primaryDomain,
-        branding: site.branding
-      },
-      domains: getSiteDomainsFromState(platformState, site.id).map((domain) => ({
-        id: domain.id,
-        domain: domain.domain,
-        isPrimary: domain.isPrimary,
-        status: domain.status
-      })),
-      provider: "resend" as const,
-      candidateFromEmail,
-      candidateDomain,
-      resendDomain,
-      domainStatus: isLocalEmailDomain(candidateDomain) ? "local" : resendDomain?.status ?? "not_found",
-      readyForProduction: emailConfig.apiKeyConfigured && !emailConfig.usingTestingSender && verified,
-      blockingReasons
-    };
-  });
-  const emailReadySites = emailSiteRows.filter((row) => row.readyForProduction).length;
-  const platformEmailStatus = {
-    ok: true,
-    config: emailConfig,
-    domains: resendDomains,
-    senderDomain: emailSenderDomain,
-    blockingReasons: [
-      !emailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
-      !emailConfig.fromConfigured ? "missing_resend_from_email" : "",
-      emailConfig.usingTestingSender ? "resend_testing_sender" : "",
-      emailConfig.fromConfigured && !emailSenderDomain ? "sender_domain_not_found_in_resend" : "",
-      emailSenderDomain && emailSenderDomain.status !== "verified" ? "sender_domain_not_verified" : ""
-    ].filter(Boolean),
-    readyForProduction:
-      emailConfig.apiKeyConfigured &&
-      emailConfig.fromConfigured &&
-      !emailConfig.usingTestingSender &&
-      emailSenderDomain?.status === "verified",
-    summary: {
-      totalSites: emailSiteRows.length,
-      readySites: emailReadySites,
-      blockedSites: emailSiteRows.length - emailReadySites,
-      verifiedDomains: resendDomains.filter((domain) => domain.status === "verified").length
-    },
-    sites: emailSiteRows,
-    note: "一个 Resend API Key 可统一检测当前账号下多个 Domains；每个站点要用自己的域名发信时，该域名仍必须在 Resend 完成 DNS 验证。"
-  };
+  const emailSiteRows = shouldLoadEmailStatus
+    ? platformState.sites.map((site) => {
+        const local = (emailConfig.fromEmail.split("@")[0] || "verify").trim() || "verify";
+        const candidateFromEmail = `${local}@${site.primaryDomain}`.toLowerCase();
+        const candidateDomain = domainFromEmail(candidateFromEmail);
+        const resendDomain = resendDomains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
+        const verified = resendDomain?.status === "verified";
+        const blockingReasons = [
+          !emailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
+          !emailConfig.fromConfigured ? "missing_resend_from_email" : "",
+          emailConfig.usingTestingSender ? "resend_testing_sender" : "",
+          isLocalEmailDomain(candidateDomain) ? "local_domain_not_verifiable" : "",
+          !isLocalEmailDomain(candidateDomain) && !resendDomain ? "sender_domain_not_found_in_resend" : "",
+          resendDomain && !verified ? "sender_domain_not_verified" : ""
+        ].filter(Boolean);
+        return {
+          site: {
+            id: site.id,
+            name: site.name,
+            slug: site.slug,
+            status: site.status,
+            primaryDomain: site.primaryDomain,
+            branding: site.branding
+          },
+          domains: getSiteDomainsFromState(platformState, site.id).map((domain) => ({
+            id: domain.id,
+            domain: domain.domain,
+            isPrimary: domain.isPrimary,
+            status: domain.status
+          })),
+          provider: "resend" as const,
+          candidateFromEmail,
+          candidateDomain,
+          resendDomain,
+          domainStatus: isLocalEmailDomain(candidateDomain) ? "local" : resendDomain?.status ?? "not_found",
+          readyForProduction: emailConfig.apiKeyConfigured && !emailConfig.usingTestingSender && verified,
+          blockingReasons
+        };
+      })
+    : [];
+  const estimatedEmailReady = emailConfig.apiKeyConfigured && emailConfig.fromConfigured && !emailConfig.usingTestingSender;
+  const emailReadySites = shouldLoadEmailStatus
+    ? emailSiteRows.filter((row) => row.readyForProduction).length
+    : estimatedEmailReady
+      ? snapshots.length
+      : 0;
+  const platformEmailStatus = shouldLoadEmailStatus
+    ? {
+        ok: true,
+        config: emailConfig,
+        domains: resendDomains,
+        senderDomain: emailSenderDomain,
+        blockingReasons: [
+          !emailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
+          !emailConfig.fromConfigured ? "missing_resend_from_email" : "",
+          emailConfig.usingTestingSender ? "resend_testing_sender" : "",
+          emailConfig.fromConfigured && !emailSenderDomain ? "sender_domain_not_found_in_resend" : "",
+          emailSenderDomain && emailSenderDomain.status !== "verified" ? "sender_domain_not_verified" : ""
+        ].filter(Boolean),
+        readyForProduction:
+          emailConfig.apiKeyConfigured &&
+          emailConfig.fromConfigured &&
+          !emailConfig.usingTestingSender &&
+          emailSenderDomain?.status === "verified",
+        summary: {
+          totalSites: emailSiteRows.length,
+          readySites: emailReadySites,
+          blockedSites: emailSiteRows.length - emailReadySites,
+          verifiedDomains: resendDomains.filter((domain) => domain.status === "verified").length
+        },
+        sites: emailSiteRows,
+        note: "一个 Resend API Key 可统一检测当前账号下多个 Domains；每个站点要用自己的域名发信时，该域名仍必须在 Resend 完成 DNS 验证。"
+      }
+    : null;
   const cloudflareAccounts = platformState.platformCloudflareAccounts ?? [];
   const currentCloudflareAccount = cloudflareAccounts.find((account) => account.id === platformState.currentCloudflareAccountId) ?? cloudflareAccounts[0];
   const platformCloudflareStatus = {
@@ -289,6 +299,8 @@ export default async function PlatformPage({
   const selectedConnectLabel = selectedSnapshot
     ? `${connectStatusLabel(selectedSnapshot.site.connect.status)} / ${selectedSnapshot.site.connect.chargesEnabled ? "可收款" : "阻断"}`
     : "-";
+  const activeModuleLabel = platformAdminModules.find((item) => item.code === platformModuleCodeByParam[activeModule])?.label ?? "平台总览";
+  const activeTitleBadge = activeModule === "overview" ? undefined : activeModule === "sites" ? String(platformState.sites.length) : undefined;
 
   return (
     <AdminShell
@@ -306,7 +318,7 @@ export default async function PlatformPage({
       brand="DreamOps"
       breadcrumbs={[
         { label: "平台后台" },
-        { label: "店铺管理" }
+        { label: activeModuleLabel }
       ]}
       commandActions={[
         { label: "站点", href: platformModuleHref("sites"), icon: Building2, badge: String(platformState.sites.length), tone: "good" },
@@ -328,36 +340,7 @@ export default async function PlatformPage({
         { label: "审计风控", href: platformModuleHref("audit"), icon: ShieldCheck, group: "AI 基础设施" }
       ]}
       primaryModules={platformAdminModules}
-      rightRail={
-        activeModule === "overview" ? (
-          <>
-            <ErpSection description="这里只保留平台是否可继续开站、收款和发布的关键状态。" eyebrow="平台状态" title="平台状态">
-              <ErpInfoList
-                items={[
-                  { label: "运营店铺", value: `${activeSites}/${snapshots.length}`, tone: activeSites === snapshots.length ? "good" : "warn" },
-                  { label: "Connect 就绪", value: `${chargesReadySites}/${snapshots.length}`, tone: chargesReadySites === snapshots.length ? "good" : "warn" },
-                  { label: "发布快照", value: String(totalPublications), tone: totalPublications > 0 ? "good" : "neutral" },
-                  { label: "AI 网关组", value: String(activeGateways), tone: activeGateways > 0 ? "good" : "warn" }
-                ]}
-              />
-            </ErpSection>
-
-            <ErpSection description="平台侧只看跨站最新动作，详细处理仍进对应站点后台。" eyebrow="最近动态" title="最近动态">
-              <div className="overflow-hidden rounded-[8px] border border-[var(--admin-border-soft)] bg-white">
-                {recentPlatformActivity.map((item, index) => (
-                  <div className={`px-3 py-3 text-[12px] ${index < recentPlatformActivity.length - 1 ? "border-b border-[var(--admin-border-soft)]" : ""}`} key={item.id}>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-[#475467]">{item.label}</span>
-                      <StatusPill label={item.tone} tone={item.tone} />
-                    </div>
-                    <p className="mt-1 truncate font-mono text-[11px] text-[#8a94a6]">{item.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </ErpSection>
-          </>
-        ) : null
-      }
+      rightRail={null}
       shellLabel="平台后台"
       headerStats={[
         { label: "店铺", value: String(platformState.sites.length), tone: activeSites ? "good" : "warn" },
@@ -367,8 +350,8 @@ export default async function PlatformPage({
         { label: "健康度", value: `${averageHealth}%`, tone: toneFromScore(averageHealth) }
       ]}
       toolbarStats={[]}
-      title={platformAdminModules.find((item) => item.code === platformModuleCodeByParam[activeModule])?.label ?? "平台总览"}
-      titleBadge={String(platformState.sites.length)}
+      title={activeModuleLabel}
+      titleBadge={activeTitleBadge}
     >
       {activeModule === "overview" ? (
         <div className="sr-only" aria-hidden="true">
@@ -401,8 +384,29 @@ export default async function PlatformPage({
           columns={4}
         />
 
-        <ErpSection description="平台页核心就是店铺列表。先筛、再看状态、再进入单店后台处理。" eyebrow="店铺列表" title="店铺列表">
-          <PlatformSiteRegistryPanel snapshots={snapshots} />
+        <ErpSection description="这里只保留平台是否可继续开站、收款和发布的关键状态，不展示站点工厂列表。" eyebrow="平台状态" title="平台状态">
+          <ErpInfoList
+            items={[
+              { label: "运营店铺", value: `${activeSites}/${snapshots.length}`, tone: activeSites === snapshots.length ? "good" : "warn" },
+              { label: "Connect 就绪", value: `${chargesReadySites}/${snapshots.length}`, tone: chargesReadySites === snapshots.length ? "good" : "warn" },
+              { label: "发布快照", value: String(totalPublications), tone: totalPublications > 0 ? "good" : "neutral" },
+              { label: "AI 网关组", value: String(activeGateways), tone: activeGateways > 0 ? "good" : "warn" }
+            ]}
+          />
+        </ErpSection>
+
+        <ErpSection description="平台侧只看跨站最新动作，详细处理仍进入对应模块或站点后台。" eyebrow="最近动态" title="最近动态">
+          <div className="overflow-hidden rounded-[8px] border border-[var(--admin-border-soft)] bg-white">
+            {recentPlatformActivity.map((item, index) => (
+              <div className={`px-4 py-3 text-[12px] ${index < recentPlatformActivity.length - 1 ? "border-b border-[var(--admin-border-soft)]" : ""}`} key={item.id}>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="truncate text-[#475467]">{item.label}</span>
+                  <StatusPill label={item.tone} tone={item.tone} />
+                </div>
+                <p className="mt-1 truncate font-mono text-[11px] text-[#8a94a6]">{item.detail}</p>
+              </div>
+            ))}
+          </div>
         </ErpSection>
       </div> : null}
 
@@ -420,7 +424,7 @@ export default async function PlatformPage({
         <PlatformBillingPanel snapshots={snapshots} />
       </ErpSection> : null}
 
-      {activeModule === "email" ? <ErpSection description="统一配置 Resend 邮件服务，并跨站检测每个站点发件域名是否可用于验证码邮件。" eyebrow="邮件配置" title="邮件配置">
+      {activeModule === "email" && platformEmailStatus ? <ErpSection description="统一配置 Resend 邮件服务，并跨站检测每个站点发件域名是否可用于验证码邮件。" eyebrow="邮件配置" title="邮件配置">
         <PlatformEmailPanel initialStatus={platformEmailStatus} />
       </ErpSection> : null}
 

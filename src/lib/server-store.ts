@@ -81,7 +81,11 @@ import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } fro
 const dataDir = path.join(process.cwd(), "data");
 const dataFile = path.join(dataDir, "platform-state.json");
 const postgresBridgeScript = path.join(process.cwd(), "scripts", "platform-state-db-bridge.mjs");
+const postgresStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_CACHE_MS ?? "30000") || 0);
+const postgresStateCacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
+
+let postgresStateCache: { expiresAt: number; state: PlatformState } | null = null;
 
 export class StoreError extends Error {
   status: number;
@@ -99,6 +103,39 @@ function cloneState(state: PlatformState): PlatformState {
 
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function readPostgresStateCache(): PlatformState | null {
+  if (postgresStateCacheMs <= 0) return null;
+  const now = Date.now();
+  if (postgresStateCache && postgresStateCache.expiresAt > now) {
+    return cloneState(postgresStateCache.state);
+  }
+  try {
+    const cached = JSON.parse(fs.readFileSync(postgresStateCacheFile, "utf8")) as { expiresAt?: number; state?: PlatformState };
+    if (!cached.expiresAt || cached.expiresAt <= now || !cached.state) return null;
+    postgresStateCache = { expiresAt: cached.expiresAt, state: normalizeState(cached.state) };
+    return cloneState(postgresStateCache.state);
+  } catch {
+    return null;
+  }
+}
+
+function writePostgresStateCache(state: PlatformState): void {
+  if (postgresStateCacheMs <= 0) {
+    postgresStateCache = null;
+    return;
+  }
+  const nextCache = { expiresAt: Date.now() + postgresStateCacheMs, state: cloneState(state) };
+  postgresStateCache = nextCache;
+  try {
+    fs.mkdirSync(path.dirname(postgresStateCacheFile), { recursive: true });
+    const tempFile = `${postgresStateCacheFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(tempFile, JSON.stringify(nextCache));
+    fs.renameSync(tempFile, postgresStateCacheFile);
+  } catch {
+    // Cache writes should never block core persistence.
+  }
 }
 
 const customerAssetRoot = path.join(dataDir, "customer-assets");
@@ -718,7 +755,9 @@ function normalizeState(state: PlatformState): PlatformState {
       createdAt: account.createdAt || account.updatedAt || now
     };
   });
-  next.currentCloudflareAccountId ??= next.platformCloudflareAccounts[0]?.id;
+  if (next.currentCloudflareAccountId && !next.platformCloudflareAccounts.some((account) => account.id === next.currentCloudflareAccountId)) {
+    delete next.currentCloudflareAccountId;
+  }
   next.platformAiProviders ??= [];
   next.currentAiProviderId ??= next.platformAiProviders.find((provider) => provider.preferred)?.id ?? next.platformAiProviders[0]?.id;
   next.siteDomains ??= next.sites.map((site) => ({
@@ -1157,15 +1196,21 @@ function normalizeSiteThemes(state: PlatformState): SiteTheme[] {
   return records;
 }
 
-export function readPlatformState(): PlatformState {
+export function readPlatformState(options: { fresh?: boolean } = {}): PlatformState {
   if (process.env.PERSISTENCE_BACKEND === "postgres") {
+    const cachedState = options.fresh ? null : readPostgresStateCache();
+    if (cachedState) return cachedState;
     const raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
       cwd: process.cwd(),
       encoding: "utf8",
       env: process.env,
       maxBuffer: 1024 * 1024 * 64
     }).trim();
-    if (raw) return normalizeState(JSON.parse(raw) as PlatformState);
+    if (raw) {
+      const normalized = normalizeState(JSON.parse(raw) as PlatformState);
+      writePostgresStateCache(normalized);
+      return normalized;
+    }
     if (process.env.NODE_ENV === "production") {
       throw new Error("Postgres platform state is empty; import platform state before starting production.");
     }
@@ -1188,6 +1233,7 @@ export function writePlatformState(nextState: PlatformState): PlatformState {
       env: process.env,
       maxBuffer: 1024 * 1024 * 64
     });
+    writePostgresStateCache(normalized);
     return normalized;
   }
   fs.writeFileSync(dataFile, `${JSON.stringify(normalized, null, 2)}\n`);
@@ -1195,7 +1241,7 @@ export function writePlatformState(nextState: PlatformState): PlatformState {
 }
 
 export function mutatePlatformState(mutator: (state: PlatformState) => void): PlatformState {
-  const state = readPlatformState();
+  const state = readPlatformState({ fresh: true });
   mutator(state);
   return writePlatformState(state);
 }
@@ -4260,7 +4306,7 @@ export function upsertPlatformCloudflareAccount(params: {
     } else {
       state.platformCloudflareAccounts.push(account);
     }
-    if (params.makeCurrent || !state.currentCloudflareAccountId) {
+    if (params.makeCurrent) {
       state.currentCloudflareAccountId = account.id;
     }
     state.auditLogs.unshift({
@@ -4310,6 +4356,66 @@ export function setCurrentPlatformCloudflareAccount(params: { accountId: string;
   });
   if (!result) throw new StoreError("cloudflare_account_not_found", 404);
   return result;
+}
+
+export function clearCurrentPlatformCloudflareAccount(params: { accountId?: string; actor?: string }): void {
+  mutatePlatformState((state) => {
+    state.platformCloudflareAccounts ??= [];
+    const currentId = state.currentCloudflareAccountId;
+    if (!currentId) return;
+    if (params.accountId && params.accountId !== currentId) {
+      throw new StoreError("cloudflare_account_not_current", 400);
+    }
+    const account = state.platformCloudflareAccounts.find((item) => item.id === currentId);
+    delete state.currentCloudflareAccountId;
+    const now = new Date().toISOString();
+    state.auditLogs.unshift({
+      id: uid("audit"),
+      actorType: "platform_admin",
+      actorId: params.actor ?? "platform",
+      action: "platform_cloudflare_current_account_cleared",
+      targetType: "platform_cloudflare_account",
+      targetId: currentId,
+      createdAt: now,
+      metadata: {
+        label: account?.label ?? "",
+        accountId: account?.accountId ?? ""
+      }
+    });
+  });
+}
+
+export function deletePlatformCloudflareAccount(params: { accountId: string; actor?: string }): PlatformCloudflareAccount {
+  let removed: PlatformCloudflareAccount | undefined;
+  mutatePlatformState((state) => {
+    state.platformCloudflareAccounts ??= [];
+    const account = state.platformCloudflareAccounts.find((item) => item.id === params.accountId);
+    if (!account) throw new StoreError("cloudflare_account_not_found", 404);
+    const wasCurrent = state.currentCloudflareAccountId === account.id;
+    state.platformCloudflareAccounts = state.platformCloudflareAccounts.filter((item) => item.id !== account.id);
+    if (wasCurrent) {
+      delete state.currentCloudflareAccountId;
+    }
+    const now = new Date().toISOString();
+    state.auditLogs.unshift({
+      id: uid("audit"),
+      actorType: "platform_admin",
+      actorId: params.actor ?? "platform",
+      action: "platform_cloudflare_account_deleted",
+      targetType: "platform_cloudflare_account",
+      targetId: account.id,
+      createdAt: now,
+      metadata: {
+        label: account.label ?? "",
+        email: account.email ?? "",
+        accountId: account.accountId ?? "",
+        wasCurrent
+      }
+    });
+    removed = account;
+  });
+  if (!removed) throw new StoreError("cloudflare_account_not_found", 404);
+  return removed;
 }
 
 export function upsertPlatformAiProvider(params: {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
-import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
+import { platformSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? "")
     });
-    const response = NextResponse.redirect(new URL("/platform", request.url), 303);
+    const response = NextResponse.redirect(publicUrlForRequest(request, "/platform"), 303);
     response.cookies.set(platformSessionCookie(), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
@@ -20,6 +20,6 @@ export async function POST(request: Request) {
     return response;
   } catch (error) {
     const code = error instanceof StoreError ? error.message : "platform_login_failed";
-    return NextResponse.redirect(new URL(`/platform/login?error=${encodeURIComponent(code)}`, request.url), 303);
+    return NextResponse.redirect(publicUrlForRequest(request, `/platform/login?error=${encodeURIComponent(code)}`), 303);
   }
 }

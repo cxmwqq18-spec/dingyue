@@ -1,6 +1,6 @@
 import type { PlatformState, Site } from "@/lib/types";
 
-const PLATFORM_DOMAINS = new Set(["www.javawebshop.site", "javawebshop.site"]);
+const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz"]);
 
 export function cleanHost(host: string | null | undefined): string {
   return String(host ?? "")

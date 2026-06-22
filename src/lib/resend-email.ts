@@ -44,6 +44,16 @@ function maskApiKey(apiKey: string): string {
   return apiKey ? `${apiKey.slice(0, 6)}...${apiKey.slice(-4)}` : "";
 }
 
+function providerErrorCode(status: number, message: string): string {
+  const normalized = message.toLowerCase();
+  if (status === 401 || normalized.includes("api key")) return "resend_invalid_api_key";
+  if (status === 429) return "resend_rate_limited";
+  if (normalized.includes("only send testing emails to your own email address")) return "resend_domain_not_verified";
+  if (normalized.includes("domain is not verified") || normalized.includes("verify a domain")) return "resend_domain_not_verified";
+  if (normalized.includes("from") || normalized.includes("sender")) return "resend_invalid_from_email";
+  return "email_send_failed";
+}
+
 function smokeResendMockEnabled(): boolean {
   return process.env.SMOKE_PROVIDER_MOCK === "1" || process.env.SMOKE_RESEND_DOMAINS === "1";
 }
@@ -112,13 +122,10 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
     })
   });
 
-  const payload = (await response.json().catch(() => ({}))) as { id?: string; message?: string; error?: string };
+  const payload = (await response.json().catch(() => ({}))) as { id?: string; message?: string; error?: string; name?: string };
   if (!response.ok) {
-    const providerMessage = payload.message || payload.error || "";
-    if (providerMessage.includes("only send testing emails to your own email address")) {
-      throw new Error("resend_domain_not_verified");
-    }
-    throw new Error("email_send_failed");
+    const providerMessage = payload.message || payload.error || payload.name || "";
+    throw new Error(providerErrorCode(response.status, providerMessage));
   }
   return { messageId: payload.id };
 }
@@ -175,8 +182,13 @@ export function resendEmailConfigStatusForSettings(settings?: PlatformEmailSetti
 }
 
 export function domainFromEmail(email: string): string {
-  const [, domain = ""] = email.trim().toLowerCase().split("@");
-  return domain;
+  const normalized = email.trim().toLowerCase();
+  const angleMatch = normalized.match(/<[^@\s<>]+@([^@\s<>]+)>/);
+  if (angleMatch?.[1]) return angleMatch[1];
+  const plainMatch = normalized.match(/^[^@\s<>]+@([^@\s<>]+)$/);
+  if (plainMatch?.[1]) return plainMatch[1];
+  const [, domain = ""] = normalized.split("@");
+  return domain.replace(/[>\s].*$/, "");
 }
 
 export function resendDomainMatchesSender(domainName: string | undefined, fromDomain: string): boolean {

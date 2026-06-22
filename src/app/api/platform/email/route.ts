@@ -160,6 +160,13 @@ export async function POST(request: NextRequest) {
     const result = await sendEmailProviderTest({ to, site, settings: state.platformEmailSettings });
     return NextResponse.json({ ok: true, messageId: result.messageId, siteId: site.id });
   } catch (error) {
-    return NextResponse.json({ error: providerErrorCode(error) }, { status: 502 });
+    const code = providerErrorCode(error);
+    console.error("[platform-email-test] send failed", {
+      code,
+      siteId: site.id,
+      toDomain: domainFromEmail(to),
+      fromDomain: domainFromEmail(state.platformEmailSettings?.fromEmail ?? "")
+    });
+    return NextResponse.json({ error: code }, { status: 502 });
   }
 }

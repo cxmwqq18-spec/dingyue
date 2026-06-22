@@ -75,4 +75,65 @@ if (!account?.isCurrent || !account.status.apiTokenConfigured || account.status.
   throw new Error(`cloudflare account save/mask failed: ${JSON.stringify(saved.json)}`);
 }
 
-console.log(JSON.stringify({ ok: true, currentAccountId: saved.json.currentAccountId, totalAccounts: saved.json.summary.totalAccounts }, null, 2));
+const second = await request("/api/platform/cloudflare", {
+  method: "PUT",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { label: "Smoke CF Backup", email: "cf-backup@example.com", accountId: "cf_account_smoke_backup", apiToken: "cf_token_smoke_backup", makeCurrent: false }
+});
+const backup = second.json.accounts.find((item) => item.accountId === "cf_account_smoke_backup");
+if (!backup || second.json.currentAccountId !== account.id) {
+  throw new Error(`cloudflare backup account save failed: ${JSON.stringify(second.json)}`);
+}
+
+const switched = await request("/api/platform/cloudflare", {
+  method: "POST",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { accountId: backup.id, action: "set_current" }
+});
+if (switched.json.currentAccountId !== backup.id || !switched.json.accounts.find((item) => item.id === backup.id)?.isCurrent) {
+  throw new Error(`cloudflare set current failed: ${JSON.stringify(switched.json)}`);
+}
+
+const cleared = await request("/api/platform/cloudflare", {
+  method: "POST",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { accountId: backup.id, action: "clear_current" }
+});
+if (cleared.json.currentAccountId || cleared.json.accounts.some((item) => item.isCurrent)) {
+  throw new Error(`cloudflare clear current failed: ${JSON.stringify(cleared.json)}`);
+}
+
+const deletedBackup = await request("/api/platform/cloudflare", {
+  method: "DELETE",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { accountId: backup.id }
+});
+if (deletedBackup.json.accounts.some((item) => item.id === backup.id)) {
+  throw new Error(`cloudflare delete backup failed: ${JSON.stringify(deletedBackup.json)}`);
+}
+
+const restored = await request("/api/platform/cloudflare", {
+  method: "POST",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { accountId: account.id, action: "set_current" }
+});
+if (restored.json.currentAccountId !== account.id) {
+  throw new Error(`cloudflare restore current failed: ${JSON.stringify(restored.json)}`);
+}
+
+const deletedCurrent = await request("/api/platform/cloudflare", {
+  method: "DELETE",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { accountId: account.id }
+});
+if (deletedCurrent.json.currentAccountId === account.id || deletedCurrent.json.accounts.some((item) => item.id === account.id)) {
+  throw new Error(`cloudflare delete current failed: ${JSON.stringify(deletedCurrent.json)}`);
+}
+
+console.log(JSON.stringify({ ok: true, currentAccountId: deletedCurrent.json.currentAccountId, totalAccounts: deletedCurrent.json.summary.totalAccounts }, null, 2));

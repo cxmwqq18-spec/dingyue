@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { cloudflareAccountStatus } from "@/lib/cloudflare-dns";
 import {
+  clearCurrentPlatformCloudflareAccount,
+  deletePlatformCloudflareAccount,
   readPlatformState,
   setCurrentPlatformCloudflareAccount,
   StoreError,
@@ -11,7 +13,7 @@ import {
 function payload() {
   const state = readPlatformState();
   const accounts = state.platformCloudflareAccounts ?? [];
-  const current = accounts.find((account) => account.id === state.currentCloudflareAccountId) ?? accounts[0];
+  const current = accounts.find((account) => account.id === state.currentCloudflareAccountId);
   return {
     ok: true,
     currentAccountId: current?.id ?? "",
@@ -69,13 +71,31 @@ export async function PUT(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:cloudflare" });
   if (!permission.ok) return permission.response;
-  const body = (await request.json().catch(() => ({}))) as { accountId?: string };
+  const body = (await request.json().catch(() => ({}))) as { accountId?: string; action?: "set_current" | "clear_current" };
   if (!body.accountId) return NextResponse.json({ error: "missing_cloudflare_account" }, { status: 400 });
   try {
-    setCurrentPlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+    if (body.action === "clear_current") {
+      clearCurrentPlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+    } else {
+      setCurrentPlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+    }
     return NextResponse.json(payload());
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_current_account_failed" }, { status });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:cloudflare" });
+  if (!permission.ok) return permission.response;
+  const body = (await request.json().catch(() => ({}))) as { accountId?: string };
+  if (!body.accountId) return NextResponse.json({ error: "missing_cloudflare_account" }, { status: 400 });
+  try {
+    deletePlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+    return NextResponse.json(payload());
+  } catch (error) {
+    const status = error instanceof StoreError ? error.status : 500;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_delete_account_failed" }, { status });
   }
 }
