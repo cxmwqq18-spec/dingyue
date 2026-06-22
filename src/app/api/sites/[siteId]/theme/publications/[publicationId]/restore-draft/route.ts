@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { restoreDraftThemeFromPublication, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { restoreDraftThemeFromPublicationRelational } from "@/lib/stores/theme-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(
@@ -12,7 +13,7 @@ export async function POST(
   if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
   try {
-    const result = restoreDraftThemeFromPublication(siteId, publicationId, body.actor ?? "site_admin_demo");
+    const result = await restoreDraftThemeFromPublicationRelational(siteId, publicationId, body.actor ?? "site_admin_demo");
     return NextResponse.json({
       ok: true,
       action: "theme_draft_restored_from_publication",

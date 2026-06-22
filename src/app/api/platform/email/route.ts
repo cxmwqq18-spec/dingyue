@@ -9,9 +9,9 @@ import {
 } from "@/lib/resend-email";
 import {
   getSiteDomainsFromState,
-  readPlatformState,
-  updatePlatformEmailSettings
+  readPlatformState
 } from "@/lib/server-store";
+import { getPlatformOverviewRelational, updatePlatformEmailSettingsRelational } from "@/lib/stores/platform-store";
 import type { PlatformEmailSettings, PlatformState, Site } from "@/lib/types";
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
@@ -86,7 +86,12 @@ function buildSiteEmailRows(state: PlatformState, domains: ResendDomain[]) {
 }
 
 async function platformEmailPayload() {
-  const state = readPlatformState();
+  const overview = await getPlatformOverviewRelational();
+  const state = {
+    ...readPlatformState(),
+    sites: overview.sites,
+    platformEmailSettings: overview.platformEmailSettings
+  };
   const settings = state.platformEmailSettings;
   const config = resendEmailConfigStatusForSettings(settings);
   const domains = await listResendDomains(settings);
@@ -138,7 +143,7 @@ export async function PUT(request: NextRequest) {
   const replyTo = normalizeEmail(body.replyTo);
   if (fromEmail && !fromEmail.includes("@")) return NextResponse.json({ error: "invalid_from_email" }, { status: 400 });
   if (replyTo && !replyTo.includes("@")) return NextResponse.json({ error: "invalid_reply_to" }, { status: 400 });
-  updatePlatformEmailSettings({
+  await updatePlatformEmailSettingsRelational({
     apiKey,
     fromEmail,
     replyTo,
@@ -153,7 +158,12 @@ export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => ({}))) as { to?: string; siteId?: string };
   const to = body.to?.trim().toLowerCase();
   if (!to || !to.includes("@")) return NextResponse.json({ error: "invalid_email" }, { status: 400 });
-  const state = readPlatformState();
+  const overview = await getPlatformOverviewRelational();
+  const state = {
+    ...readPlatformState(),
+    sites: overview.sites,
+    platformEmailSettings: overview.platformEmailSettings
+  };
   const site = state.sites.find((item) => item.id === body.siteId) ?? state.sites[0];
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   try {

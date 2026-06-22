@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { createCustomerSession, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = createCustomerSession({ siteId, email: body.email, password: body.password, name: body.name });
+    const result = await createCustomerSessionRelational({ siteId, email: body.email, password: body.password, name: body.name });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,

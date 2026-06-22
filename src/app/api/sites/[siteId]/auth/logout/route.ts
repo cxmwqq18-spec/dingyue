@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { deleteCustomerSession } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
+import { deleteCustomerSessionRelational } from "@/lib/stores/customer-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
@@ -9,7 +9,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(cookieName)?.value;
   if (sessionId) {
-    deleteCustomerSession(sessionId);
+    await deleteCustomerSessionRelational(sessionId);
   }
   const response = NextResponse.json({ ok: true });
   response.cookies.set(cookieName, "", {

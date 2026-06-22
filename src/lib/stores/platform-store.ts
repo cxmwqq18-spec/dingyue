@@ -131,6 +131,73 @@ export async function upsertPlatformCloudflareAccountRelational(params: {
   return account;
 }
 
+export async function setCurrentPlatformCloudflareAccountRelational(params: {
+  accountId: string;
+  actor?: string;
+}): Promise<PlatformCloudflareAccount> {
+  const accountRecord = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
+  if (!accountRecord) throw new RelationalStoreError("cloudflare_account_not_found", 404);
+  const account = toPlatformCloudflareAccount(
+    await prisma.platformCloudflareAccount.update({
+      where: { id: params.accountId },
+      data: { updatedBy: params.actor }
+    })
+  );
+  await addAuditLogRelational(prisma, {
+    actorType: "platform_admin",
+    actorId: params.actor ?? "platform",
+    action: "platform_cloudflare_current_account_changed",
+    targetType: "platform_cloudflare_account",
+    targetId: account.id,
+    metadata: {
+      label: account.label,
+      accountId: account.accountId
+    }
+  });
+  return account;
+}
+
+export async function clearCurrentPlatformCloudflareAccountRelational(params: {
+  accountId?: string;
+  actor?: string;
+}): Promise<void> {
+  if (!params.accountId) return;
+  const account = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
+  if (!account) throw new RelationalStoreError("cloudflare_account_not_found", 404);
+  await addAuditLogRelational(prisma, {
+    actorType: "platform_admin",
+    actorId: params.actor ?? "platform",
+    action: "platform_cloudflare_current_account_cleared",
+    targetType: "platform_cloudflare_account",
+    targetId: account.id,
+    metadata: {
+      label: account.label,
+      accountId: account.accountId
+    }
+  });
+}
+
+export async function deletePlatformCloudflareAccountRelational(params: {
+  accountId: string;
+  actor?: string;
+}): Promise<PlatformCloudflareAccount> {
+  const account = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
+  if (!account) throw new RelationalStoreError("cloudflare_account_not_found", 404);
+  await prisma.platformCloudflareAccount.delete({ where: { id: account.id } });
+  await addAuditLogRelational(prisma, {
+    actorType: "platform_admin",
+    actorId: params.actor ?? "platform",
+    action: "platform_cloudflare_account_deleted",
+    targetType: "platform_cloudflare_account",
+    targetId: account.id,
+    metadata: {
+      label: account.label,
+      accountId: account.accountId
+    }
+  });
+  return toPlatformCloudflareAccount(account);
+}
+
 export async function upsertPlatformAiProviderRelational(params: {
   id?: string;
   label: string;
@@ -173,4 +240,20 @@ export async function upsertPlatformAiProviderRelational(params: {
   const provider = toPlatformAiProvider(providerRecord);
   if (!provider.label || !provider.aiUrl || !provider.modelType) throw new RelationalStoreError("invalid_ai_provider", 400);
   return provider;
+}
+
+export async function setCurrentPlatformAiProviderRelational(params: {
+  providerId: string;
+  actor?: string;
+}): Promise<PlatformAiProvider> {
+  const provider = await prisma.$transaction(async (tx) => {
+    const existing = await tx.platformAiProvider.findUnique({ where: { id: params.providerId } });
+    if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
+    await tx.platformAiProvider.updateMany({ data: { preferred: false } });
+    return tx.platformAiProvider.update({
+      where: { id: params.providerId },
+      data: { preferred: true, updatedBy: params.actor }
+    });
+  });
+  return toPlatformAiProvider(provider);
 }

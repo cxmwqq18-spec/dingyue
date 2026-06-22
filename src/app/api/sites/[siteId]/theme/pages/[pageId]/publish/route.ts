@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { publishDraftPage, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { publishDraftPageRelational } from "@/lib/stores/theme-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string; pageId: string }> }) {
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as { actor?: string; expectedRevision?: number; expectedEtag?: string };
   try {
-    const result = publishDraftPage(siteId, pageId, body.actor ?? "site_admin_demo", {
+    const result = await publishDraftPageRelational(siteId, pageId, body.actor ?? "site_admin_demo", {
       expectedRevision: body.expectedRevision,
       expectedEtag: body.expectedEtag
     });

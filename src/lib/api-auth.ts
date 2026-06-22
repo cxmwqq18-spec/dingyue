@@ -8,6 +8,7 @@ import {
 import { customerSessionCookie, platformSessionCookie, siteAdminSessionCookie } from "@/lib/session";
 import { requireCsrfToken } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS, type RateLimitConfig } from "@/lib/security/rate-limit";
+import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { NextRequest, NextResponse } from "next/server";
 import type { PlatformAdmin, PublicCustomer, SiteAdmin } from "@/lib/types";
 
@@ -36,8 +37,12 @@ export async function getCurrentSiteAdmin(siteId: string): Promise<CurrentSiteAd
 }
 
 export async function getCurrentCustomer(siteId: string, customerId: string): Promise<CurrentCustomer | undefined> {
-  const state = readPlatformState();
   const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+  const relational = await getCustomerBySessionRelational({ siteId, sessionId });
+  if (relational?.customer.id === customerId) {
+    return { customer: relational.customer, sessionId: relational.session.id };
+  }
+  const state = readPlatformState();
   const current = getCustomerBySessionFromState(state, siteId, sessionId);
   return current?.customer.id === customerId ? { customer: current.customer, sessionId: current.session.id } : undefined;
 }

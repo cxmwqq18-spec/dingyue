@@ -1,9 +1,10 @@
 import "server-only";
+import fs from "fs";
 import path from "path";
 import type { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
-import type { Album, AssetUpload, CustomerModel } from "@/lib/types";
+import type { Album, AssetUpload, CustomerModel, ThemeRuntimeAsset } from "@/lib/types";
 import {
   compactObject,
   prismaJsonObject,
@@ -15,6 +16,7 @@ import {
 } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
+const customerAssetRoot = path.join(process.cwd(), "data", "customer-assets");
 
 const requiredAssetMetadataFields = [
   "id",
@@ -121,6 +123,85 @@ export async function getCustomerAssetsRelational(
     orderBy: [{ createdAt: "desc" }, { id: "desc" }]
   });
   return { assets: assets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) };
+}
+
+export async function getCustomerAssetRelational(
+  params: { siteId: string; customerId: string; assetId: string; includeDeleted?: boolean },
+  client: DbClient = prisma
+): Promise<{ asset: AssetUpload }> {
+  const asset = await client.assetUpload.findFirst({
+    where: compactObject({
+      id: params.assetId,
+      siteId: params.siteId,
+      customerId: params.customerId,
+      deletedAt: params.includeDeleted ? undefined : null
+    })
+  });
+  if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
+  return { asset: toAssetUploadRelational(asset as unknown as Record<string, unknown>) };
+}
+
+export async function updateAssetReviewRelational(
+  params: { siteId: string; customerId: string; assetId: string; reviewStatus: AssetUpload["reviewStatus"] },
+  client: DbClient = prisma
+): Promise<{ asset: AssetUpload }> {
+  if (!["pending", "approved", "rejected"].includes(params.reviewStatus)) {
+    throw new StoreError("invalid_asset_review_status", 400);
+  }
+  const asset = await client.assetUpload.findFirst({
+    where: { id: params.assetId, siteId: params.siteId, customerId: params.customerId, deletedAt: null }
+  });
+  if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
+  const updated = await client.assetUpload.update({
+    where: { id: params.assetId },
+    data: { reviewStatus: params.reviewStatus }
+  });
+  return { asset: toAssetUploadRelational(updated as unknown as Record<string, unknown>) };
+}
+
+export async function createAssetDownloadLinkRelational(
+  params: { siteId: string; customerId: string; assetId: string },
+  client: DbClient = prisma
+): Promise<{ asset: AssetUpload; downloadUrl: string; expiresAt: string }> {
+  const { asset } = await getCustomerAssetRelational(params, client);
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 15).toISOString();
+  const token = Buffer.from(`${asset.id}:${asset.storageKey}:${expiresAt}`).toString("base64url");
+  return {
+    asset,
+    downloadUrl: `/api/sites/${params.siteId}/customers/${params.customerId}/assets/${params.assetId}/download?token=${token}`,
+    expiresAt
+  };
+}
+
+export function readCustomerAssetFileByStorageKey(params: {
+  siteId: string;
+  customerId: string;
+  asset: AssetUpload;
+}): { asset: AssetUpload; bytes: Buffer } {
+  const storageKey = safeCustomerAssetStorageKey({
+    siteId: params.siteId,
+    customerId: params.customerId,
+    storageKey: params.asset.storageKey
+  });
+  const filePath = path.join(customerAssetRoot, storageKey);
+  if (!filePath.startsWith(`${customerAssetRoot}${path.sep}`)) throw new StoreError("unsafe_asset_storage_key", 400);
+  if (!fs.existsSync(filePath)) throw new StoreError("asset_file_missing", 404);
+  return { asset: params.asset, bytes: fs.readFileSync(filePath) };
+}
+
+export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
+  const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
+  return {
+    id: asset.id,
+    jobId: asset.jobId,
+    label: asset.label,
+    previewUrl: `/api/local-assets/${storageKey}`,
+    downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
+    mimeType: asset.mimeType,
+    role: asset.role,
+    reviewStatus: asset.reviewStatus,
+    createdAt: asset.createdAt
+  };
 }
 
 export async function updateCustomerModelRelational(

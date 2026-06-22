@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, updateAlbum } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateAlbumRelational } from "@/lib/stores/asset-store";
 import type { Album } from "@/lib/types";
 
 export async function PATCH(
@@ -13,7 +14,7 @@ export async function PATCH(
   }
   const body = (await request.json().catch(() => ({}))) as Partial<Album>;
   try {
-    const result = updateAlbum({
+    const result = await updateAlbumRelational({
       siteId,
       albumId,
       status: body.status ?? "processing",

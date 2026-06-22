@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { createSiteAdmin, StoreError, toPublicSiteAdmin } from "@/lib/server-store";
+import { StoreError, toPublicSiteAdmin } from "@/lib/server-store";
+import { createSiteAdminRelational } from "@/lib/stores/site-store";
 import type { SiteAdmin } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = createSiteAdmin({
+    const result = await createSiteAdminRelational({
       siteId,
       email: body.email,
       password: body.password,

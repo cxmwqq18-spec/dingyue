@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, updateCustomerModel } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateCustomerModelRelational } from "@/lib/stores/asset-store";
 import type { CustomerModel } from "@/lib/types";
 
 export async function PATCH(
@@ -13,7 +14,7 @@ export async function PATCH(
   }
   const body = (await request.json().catch(() => ({}))) as Partial<CustomerModel>;
   try {
-    const result = updateCustomerModel({
+    const result = await updateCustomerModelRelational({
       siteId,
       modelId,
       status: body.status ?? "collecting_uploads",

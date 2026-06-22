@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { StoreError, updateGenerationJobStatus } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
   const { jobId } = await params;
@@ -8,7 +12,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
     return NextResponse.json({ error: "invalid_worker_status_payload" }, { status: 400 });
   }
   try {
-    const result = updateGenerationJobStatus({
+    const result = await updateGenerationJobStatusRelational({
       jobId,
       siteId: body.siteId,
       requestId: body.requestId,

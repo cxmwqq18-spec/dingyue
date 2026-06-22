@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { getPlatformAdminBySessionFromState, readPlatformState, StoreError, updateSiteSettings } from "@/lib/server-store";
+import { getPlatformAdminBySessionFromState, readPlatformState, StoreError } from "@/lib/server-store";
 import { platformSessionCookie } from "@/lib/session";
+import { updateSiteSettingsRelational } from "@/lib/stores/site-store";
 import type { Site } from "@/lib/types";
 
 async function requirePlatformAdmin() {
@@ -42,7 +43,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
   }
 
   try {
-    const result = updateSiteSettings({
+    const result = await updateSiteSettingsRelational({
       siteId,
       actor: current.platformAdmin.id,
       actorType: "platform_admin",

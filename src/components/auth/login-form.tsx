@@ -96,11 +96,11 @@ export function LoginForm({
       <p className="text-center text-xs leading-5 text-gray-400">Already have an account? You will be logged in automatically.</p>
       <p className="text-center text-xs leading-5 text-gray-400">
         By signing up, you agree to our{" "}
-        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")}>
+        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")} prefetch={false}>
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")}>
+        <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")} prefetch={false}>
           Privacy Policy
         </Link>
         .

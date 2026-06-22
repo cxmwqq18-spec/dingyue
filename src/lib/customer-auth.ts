@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { createCustomerSession, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
+import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { Site } from "@/lib/types";
 
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
   const form = await request.formData();
   try {
-    const result = createCustomerSession({
+    const result = await createCustomerSessionRelational({
       siteId: site.id,
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? ""),

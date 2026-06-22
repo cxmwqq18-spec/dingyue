@@ -5,11 +5,14 @@ import { requirePlatformMutation } from "@/lib/api-auth";
 import {
   getPlatformAdminBySessionFromState,
   readPlatformState,
-  setCurrentPlatformAiProvider,
-  StoreError,
-  upsertPlatformAiProvider
+  StoreError
 } from "@/lib/server-store";
 import { platformSessionCookie } from "@/lib/session";
+import {
+  getPlatformOverviewRelational,
+  setCurrentPlatformAiProviderRelational,
+  upsertPlatformAiProviderRelational
+} from "@/lib/stores/platform-store";
 import type { PlatformAiProvider } from "@/lib/types";
 
 const defaultModelTypes = ["gpt-image-2", "gpt-5.5"];
@@ -22,10 +25,10 @@ async function requirePlatformRead() {
   return { ok: true as const, current };
 }
 
-function payload(extra: Record<string, unknown> = {}) {
-  const state = readPlatformState();
-  const providers = state.platformAiProviders ?? [];
-  const current = providers.find((provider) => provider.id === state.currentAiProviderId) ?? providers[0];
+async function payload(extra: Record<string, unknown> = {}) {
+  const overview = await getPlatformOverviewRelational();
+  const providers = overview.platformAiProviders ?? [];
+  const current = providers.find((provider) => provider.id === overview.currentAiProviderId) ?? providers[0];
   return {
     ok: true,
     currentProviderId: current?.id ?? "",
@@ -52,9 +55,9 @@ function payload(extra: Record<string, unknown> = {}) {
   };
 }
 
-function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string }): Pick<PlatformAiProvider, "aiUrl" | "apiKey"> {
-  const state = readPlatformState();
-  const existing = body.id ? (state.platformAiProviders ?? []).find((provider) => provider.id === body.id) : undefined;
+async function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string }): Promise<Pick<PlatformAiProvider, "aiUrl" | "apiKey">> {
+  const overview = await getPlatformOverviewRelational();
+  const existing = body.id ? (overview.platformAiProviders ?? []).find((provider) => provider.id === body.id) : undefined;
   if (!body.aiUrl?.trim()) throw new Error("missing_ai_provider_url");
   return {
     aiUrl: body.aiUrl,
@@ -65,7 +68,7 @@ function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string }
 export async function GET() {
   const permission = await requirePlatformRead();
   if (!permission.ok) return permission.response;
-  return NextResponse.json(payload());
+  return NextResponse.json(await payload());
 }
 
 export async function PUT(request: NextRequest) {
@@ -89,7 +92,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "invalid_ai_provider_url" }, { status: 400 });
   }
 
-  upsertPlatformAiProvider({
+  await upsertPlatformAiProviderRelational({
     id: body.id,
     label: body.label,
     aiUrl: body.aiUrl,
@@ -98,7 +101,7 @@ export async function PUT(request: NextRequest) {
     makeCurrent: body.makeCurrent,
     actor: permission.current.platformAdmin.id
   });
-  return NextResponse.json(payload());
+  return NextResponse.json(await payload());
 }
 
 export async function POST(request: NextRequest) {
@@ -114,12 +117,12 @@ export async function POST(request: NextRequest) {
   };
   try {
     if (body.action === "test") {
-      const result = await testAiProviderConnection(providerFromBody(body));
-      return NextResponse.json(payload({ test: result }));
+      const result = await testAiProviderConnection(await providerFromBody(body));
+      return NextResponse.json(await payload({ test: result }));
     }
     if (!body.providerId) return NextResponse.json({ error: "missing_ai_provider" }, { status: 400 });
-    setCurrentPlatformAiProvider({ providerId: body.providerId, actor: permission.current.platformAdmin.id });
-    return NextResponse.json(payload());
+    await setCurrentPlatformAiProviderRelational({ providerId: body.providerId, actor: permission.current.platformAdmin.id });
+    return NextResponse.json(await payload());
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 400;
     return NextResponse.json({ error: error instanceof Error ? error.message : "ai_provider_action_failed" }, { status });

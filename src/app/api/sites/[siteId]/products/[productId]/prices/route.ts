@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { createProductPrice, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { upsertProductPriceRelational } from "@/lib/stores/billing-store";
 import type { Price } from "@/lib/types";
 
 export async function POST(
@@ -18,7 +19,7 @@ export async function POST(
   }
 
   try {
-    const result = createProductPrice({
+    const result = await upsertProductPriceRelational({
       siteId,
       productId,
       label: body.label,

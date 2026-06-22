@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { deleteProductPrice, readPlatformState, StoreError, upsertProductPrice } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { deleteProductPriceRelational, upsertProductPriceRelational } from "@/lib/stores/billing-store";
 import type { Price } from "@/lib/types";
 
 export async function PUT(
@@ -15,25 +16,24 @@ export async function PUT(
   if (!body?.label || typeof body.amountCents !== "number" || !body.currency || !body.interval || typeof body.creditsGranted !== "number") {
     return NextResponse.json({ error: "invalid_price_payload" }, { status: 400 });
   }
-  const state = readPlatformState();
-  const existing = state.products.find((product) => product.siteId === siteId && product.id === productId);
-  if (!existing) {
-    return NextResponse.json({ error: "product_not_found" }, { status: 404 });
+  try {
+    const result = await upsertProductPriceRelational({
+      siteId,
+      productId,
+      priceId,
+      label: body.label,
+      amountCents: Number(body.amountCents),
+      currency: body.currency,
+      interval: body.interval,
+      creditsGranted: Number(body.creditsGranted),
+      stripePriceId: body.stripePriceId,
+      metadata: body.metadata
+    });
+    return NextResponse.json({ ok: true, price: result.price });
+  } catch (error) {
+    const status = error instanceof StoreError ? error.status : 500;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "price_update_failed" }, { status });
   }
-  const price: Price = {
-    id: priceId,
-    siteId,
-    productId,
-    label: body.label,
-    amountCents: Number(body.amountCents),
-    currency: body.currency,
-    interval: body.interval,
-    creditsGranted: Number(body.creditsGranted),
-    stripePriceId: body.stripePriceId ?? `manual_${priceId}`,
-    metadata: body.metadata
-  };
-  upsertProductPrice(siteId, productId, price);
-  return NextResponse.json({ ok: true, price });
 }
 
 export async function DELETE(
@@ -45,7 +45,7 @@ export async function DELETE(
     return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
   }
   try {
-    const result = deleteProductPrice({ siteId, productId, priceId });
+    const result = await deleteProductPriceRelational({ siteId, productId, priceId });
     return NextResponse.json({ ok: true, deletedPrice: result.deletedPrice });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

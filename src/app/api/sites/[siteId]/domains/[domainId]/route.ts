@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { deleteSiteDomain, StoreError, updateSiteDomain } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { deleteSiteDomainRelational, updateSiteDomainRelational } from "@/lib/stores/site-store";
 import type { SiteDomain } from "@/lib/types";
 
 export async function PATCH(
@@ -18,7 +19,7 @@ export async function PATCH(
   };
 
   try {
-    const result = updateSiteDomain({
+    const result = await updateSiteDomainRelational({
       siteId,
       domainId,
       isPrimary: body.isPrimary,
@@ -41,7 +42,7 @@ export async function DELETE(
   }
 
   try {
-    const result = deleteSiteDomain({ siteId, domainId });
+    const result = await deleteSiteDomainRelational({ siteId, domainId });
     return NextResponse.json({ ok: true, deletedDomain: result.deletedDomain, site: result.site });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import { settleGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { settleGenerationJobRelational } from "@/lib/stores/job-store";
 import type { WorkerResultPayload } from "@/lib/worker";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
   const { jobId } = await params;
@@ -9,7 +13,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
     return NextResponse.json({ error: "invalid_worker_result_payload" }, { status: 400 });
   }
   try {
-    const result = settleGenerationJob({
+    const result = await settleGenerationJobRelational({
       jobId,
       siteId: body.siteId,
       requestId: body.requestId,
@@ -24,7 +28,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       idempotencyKey: `${body.siteId}:${jobId}:${body.requestId}:result`,
       alreadyProcessed: result.alreadyProcessed,
       job: result.job,
-      customer: toPublicCustomer(result.customer),
+      customer: result.customer,
       customerBalance: result.customer.balance,
       ledgerAction: result.ledger ?? null,
       note: result.alreadyProcessed ? "Duplicate result ignored." : "Persisted result and settled reserved credits."

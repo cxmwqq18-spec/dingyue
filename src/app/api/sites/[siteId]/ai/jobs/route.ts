@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
-import { createGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
+import { createGenerationJobRelational } from "@/lib/stores/job-store";
 import { buildWorkerPayload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const baseUrl = new URL(request.url).origin;
   try {
-    const { job, siteAiApp, ledger, customer } = createGenerationJob({
+    const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
       siteId,
       customerId: body.customerId,
       aiAppSlug: body.aiAppSlug,
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({
       ok: true,
       job,
-      customer: toPublicCustomer(customer),
+      customer,
       customerBalance: customer.balance,
       ledgerAction: ledger,
       workerPayload: buildWorkerPayload({ job, siteAiApp, baseUrl }),

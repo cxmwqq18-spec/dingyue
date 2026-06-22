@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, updateGatewayGroup } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateGatewayGroupRelational } from "@/lib/stores/site-store";
 import type { AiGatewayGroup } from "@/lib/types";
 
 export async function PUT(
@@ -30,7 +31,7 @@ export async function PUT(
         .filter((item) => Number.isInteger(item));
 
   try {
-    const result = updateGatewayGroup({
+    const result = await updateGatewayGroupRelational({
       siteId,
       groupId,
       status: body.status ?? "active",

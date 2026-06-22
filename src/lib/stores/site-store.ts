@@ -8,6 +8,7 @@ import type { AiGatewayGroup, Site, SiteAdmin, SiteAiApp, SiteDomain } from "@/l
 import {
   addAuditLogRelational,
   cloneJson,
+  hashRelationalPassword,
   RelationalStoreError,
   slugify,
   toGatewayGroup,
@@ -212,6 +213,40 @@ export async function updateSiteDomainRelational(params: {
   });
 }
 
+export async function deleteSiteDomainRelational(params: { siteId: string; domainId: string }): Promise<{ deletedDomain: SiteDomain; site: Site }> {
+  return prisma.$transaction(async (tx) => {
+    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+    if (!site) throw new RelationalStoreError("site_not_found", 404);
+    const domain = await tx.siteDomain.findFirst({ where: { siteId: params.siteId, id: params.domainId } });
+    if (!domain) throw new RelationalStoreError("site_domain_not_found", 404);
+    const fallback = domain.isPrimary
+      ? await tx.siteDomain.findFirst({
+          where: { siteId: params.siteId, id: { not: params.domainId } },
+          orderBy: { createdAt: "asc" }
+        })
+      : null;
+    if (domain.isPrimary && !fallback) throw new RelationalStoreError("site_requires_primary_domain", 409);
+
+    await tx.siteDomain.delete({ where: { id: domain.id } });
+    if (domain.isPrimary && fallback) {
+      const fallbackStatus = fallback.status === "failed" ? "pending" : fallback.status;
+      await tx.siteDomain.update({
+        where: { id: fallback.id },
+        data: { isPrimary: true, status: fallbackStatus }
+      });
+      await tx.site.update({
+        where: { id: params.siteId },
+        data: { primaryDomain: fallback.domain }
+      });
+    }
+
+    return {
+      deletedDomain: toSiteDomain(domain),
+      site: await getSiteRelational(params.siteId)
+    };
+  });
+}
+
 export async function updateSiteSettingsRelational(params: {
   siteId: string;
   actor?: string;
@@ -292,7 +327,7 @@ export async function createSiteAdminRelational(params: {
   if (!displayName) throw new RelationalStoreError("invalid_site_admin_name", 400);
   if (!["owner", "admin", "support"].includes(params.role)) throw new RelationalStoreError("invalid_site_admin_role", 400);
   const admin = await prisma.siteAdmin.create({
-    data: { id: uid("admin"), siteId: params.siteId, email, displayName, role: params.role }
+    data: { id: uid("admin"), siteId: params.siteId, email, passwordHash: hashRelationalPassword(params.password.trim()), displayName, role: params.role }
   });
   await addAuditLogRelational(prisma, {
     siteId: params.siteId,
@@ -409,11 +444,12 @@ export async function updateSiteAiAppRelational(params: {
   if (!Number.isInteger(params.creditCost) || params.creditCost < 0) throw new RelationalStoreError("invalid_credit_cost", 400);
   const routeKey = params.routeKey.trim();
   if (!routeKey) throw new RelationalStoreError("invalid_route_key", 400);
+  const existing = await prisma.siteAiApp.findFirst({ where: { id: params.siteAiAppId, siteId: params.siteId } });
+  if (!existing) throw new RelationalStoreError("site_ai_app_not_found", 404);
   const siteAiApp = await prisma.siteAiApp.update({
     where: { id: params.siteAiAppId },
     data: { enabled: params.enabled, creditCost: params.creditCost, routeKey },
     include: { aiApp: true }
   });
-  if (siteAiApp.siteId !== params.siteId) throw new RelationalStoreError("site_ai_app_not_found", 404);
   return { siteAiApp: toSiteAiApp(siteAiApp) };
 }

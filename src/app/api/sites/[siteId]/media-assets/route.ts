@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, upsertThemeMediaAsset } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { upsertThemeMediaAssetRelational } from "@/lib/stores/theme-store";
 import type { MediaAsset } from "@/lib/types";
 
 export async function POST(
@@ -13,7 +14,7 @@ export async function POST(
   }
   const body = (await request.json().catch(() => ({}))) as Partial<MediaAsset>;
   try {
-    const result = upsertThemeMediaAsset({
+    const result = await upsertThemeMediaAssetRelational({
       siteId,
       label: body.label ?? "",
       storageKey: body.storageKey ?? "",

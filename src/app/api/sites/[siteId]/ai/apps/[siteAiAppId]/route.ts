@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, updateSiteAiApp } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateSiteAiAppRelational } from "@/lib/stores/site-store";
 
 export async function PUT(
   request: Request,
@@ -17,7 +18,7 @@ export async function PUT(
   };
 
   try {
-    const result = updateSiteAiApp({
+    const result = await updateSiteAiAppRelational({
       siteId,
       siteAiAppId,
       enabled: Boolean(body.enabled),

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { rerunGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { rerunGenerationJobRelational } from "@/lib/stores/job-store";
 import { buildWorkerPayload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -15,12 +16,12 @@ export async function POST(
   const baseUrl = new URL(request.url).origin;
 
   try {
-    const result = rerunGenerationJob({ siteId, jobId, actor: body.actor });
+    const result = await rerunGenerationJobRelational({ siteId, jobId, actor: body.actor });
     return NextResponse.json({
       ok: true,
       sourceJob: result.sourceJob,
       job: result.job,
-      customer: toPublicCustomer(result.customer),
+      customer: result.customer,
       customerBalance: result.customer.balance,
       ledgerAction: result.ledger,
       workerPayload: buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl }),

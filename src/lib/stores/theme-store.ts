@@ -335,19 +335,27 @@ export async function upsertThemeMediaAssetRelational(params: {
   const existing = params.assetId
     ? await prisma.mediaAsset.findFirst({ where: { siteId: params.siteId, id: params.assetId } })
     : null;
+  const assetData = {
+    label,
+    storageKey,
+    mimeType,
+    usageType: params.usage,
+    sourceType: params.sourceType ?? "manual",
+    previewUrl: params.previewUrl?.trim() || null,
+    originUrl: params.originUrl?.trim() || null,
+    altText: params.altText?.trim() || null,
+    notes: params.notes?.trim() || null
+  };
   const record = existing
     ? await prisma.mediaAsset.update({
         where: { id: existing.id },
-        data: { label, storageKey, mimeType, usageType: params.usage }
+        data: assetData
       })
     : await prisma.mediaAsset.create({
         data: {
           id: params.assetId ?? uid("media"),
           siteId: params.siteId,
-          label,
-          storageKey,
-          mimeType,
-          usageType: params.usage
+          ...assetData
         }
       });
   return { asset: toMediaAsset(record), created: !existing };

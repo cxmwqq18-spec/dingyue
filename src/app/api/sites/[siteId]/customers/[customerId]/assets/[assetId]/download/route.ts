@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
-import { createAssetDownloadLink, readCustomerAssetFile, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import {
+  createAssetDownloadLinkRelational,
+  getCustomerAssetRelational,
+  readCustomerAssetFileByStorageKey
+} from "@/lib/stores/asset-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(
@@ -11,7 +16,7 @@ export async function POST(
   const guard = await requireCustomerMutation(request, siteId, customerId, { key: `${siteId}:${customerId}:asset-download` });
   if (!guard.ok) return guard.response;
   try {
-    const result = createAssetDownloadLink({ siteId, customerId, assetId });
+    const result = await createAssetDownloadLinkRelational({ siteId, customerId, assetId });
     return NextResponse.json({ ok: true, asset: result.asset, downloadUrl: result.downloadUrl, expiresAt: result.expiresAt });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -32,7 +37,8 @@ export async function GET(
     if (!token) {
       return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
     }
-    const result = readCustomerAssetFile({ siteId, customerId, assetId });
+    const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
+    const result = readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
     const extension = result.asset.mimeType.split("/")[1]?.replace(/[^a-z0-9]+/gi, "") || "bin";
     return new Response(new Uint8Array(result.bytes), {
       headers: {

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, updateSiteSettings } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateSiteSettingsRelational } from "@/lib/stores/site-store";
 import type { Site } from "@/lib/types";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
@@ -35,7 +36,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
   }
 
   try {
-    const result = updateSiteSettings({
+    const result = await updateSiteSettingsRelational({
       siteId,
       actor: body.actor,
       name: body.name,

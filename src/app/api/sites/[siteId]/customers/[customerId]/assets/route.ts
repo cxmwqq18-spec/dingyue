@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
-import { createAssetUpload, getCustomerAssetsFromState, readPlatformState, StoreError, toThemeRuntimeAsset, writeCustomerAssetFile } from "@/lib/server-store";
+import { StoreError, writeCustomerAssetFile } from "@/lib/server-store";
+import { createAssetUploadRelational, getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { prisma } from "@/lib/prisma";
 import type { NextRequest } from "next/server";
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string; customerId: string }> }) {
@@ -10,14 +12,14 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
   if (!(await hasCustomerSession(siteId, customerId))) {
     return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
   }
-  const state = readPlatformState();
-  const customer = state.customers.find((item) => item.siteId === siteId && item.id === customerId);
+  const customer = await prisma.customer.findFirst({ where: { id: customerId, siteId }, select: { id: true } });
   if (!customer) {
     return NextResponse.json({ error: "customer_not_found_for_site" }, { status: 404 });
   }
+  const result = await getCustomerAssetsRelational({ siteId, customerId });
   return NextResponse.json({
     ok: true,
-    assets: getCustomerAssetsFromState(state, siteId, customerId).map((asset) => toThemeRuntimeAsset(state, asset))
+    assets: result.assets.map(toThemeRuntimeAssetRelational)
   });
 }
 
@@ -65,7 +67,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = createAssetUpload({
+    const result = await createAssetUploadRelational({
       siteId,
       customerId,
       label: body.label ?? "",
@@ -80,8 +82,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         bytes: Buffer.from(await body.file.arrayBuffer())
       });
     }
-    const state = readPlatformState();
-    return NextResponse.json({ ok: true, asset: toThemeRuntimeAsset(state, result.asset) });
+    return NextResponse.json({ ok: true, asset: toThemeRuntimeAssetRelational(result.asset) });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "asset_create_failed" }, { status });
