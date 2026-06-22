@@ -36,7 +36,7 @@ export function AdminLoginScreen({
         </div>
         <div className="flex h-full items-center">
           {links.map((item) => (
-            <Link className="saas-login-toplink" href={item.href} key={item.href}>
+            <Link className="saas-login-toplink" href={item.href} key={`${item.label}:${item.href}`}>
               {item.label}
             </Link>
           ))}
@@ -59,7 +59,7 @@ export function AdminLoginScreen({
           </div>
           <div className="saas-login-link-row hidden md:flex">
             {links.map((item) => (
-              <Link className="saas-login-link-pill" href={item.href} key={item.href}>
+              <Link className="saas-login-link-pill" href={item.href} key={`${item.label}:${item.href}`}>
                 {item.label}
               </Link>
             ))}
@@ -99,7 +99,7 @@ export function AdminLoginScreen({
             {form}
             <div className="saas-login-mobile-links md:hidden">
               {links.map((item) => (
-                <Link className="saas-login-link-pill" href={item.href} key={item.href}>
+                <Link className="saas-login-link-pill" href={item.href} key={`${item.label}:${item.href}`}>
                   {item.label}
                 </Link>
               ))}

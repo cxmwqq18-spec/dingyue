@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { requirePlatformMutation } from "@/lib/api-auth";
 import { createSite, getPlatformAdminBySessionFromState, readPlatformState, StoreError, toPublicSiteAdmin } from "@/lib/server-store";
 import { platformSessionCookie } from "@/lib/session";
 
@@ -24,9 +25,9 @@ export async function GET() {
   });
 }
 
-export async function POST(request: Request) {
-  const current = await requirePlatformAdmin();
-  if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
+export async function POST(request: NextRequest) {
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:site-create" });
+  if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as {
     name?: string;
     slug?: string;

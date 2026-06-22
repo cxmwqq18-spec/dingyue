@@ -58,7 +58,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
                 {publishState.ok ? "Stripe Connect 和 active product 已满足，定价页可以绑定真实套餐。" : publishState.reason}
               </p>
             </div>
-            <Link className="mt-4 inline-flex w-full justify-center rounded-xl bg-[#2563eb] px-4 py-2.5 text-sm font-medium text-white" href={modulePath(data.site, "/admin/design")}>
+            <Link className="mt-4 inline-flex w-full justify-center whitespace-nowrap rounded-xl bg-[#2563eb] px-4 py-2.5 text-sm font-medium text-white" href={modulePath(data.site, "/admin/design")}>
               去装修定价区块
             </Link>
           </OpsCard>
@@ -111,41 +111,40 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
           </div>
         </ErpSection>
 
-        <div className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
-          <ErpSection
-            action={<ErpToolbarAction href={modulePath(data.site, "/admin/design")} label="前台装修" />}
-            description="拍摄包用于 DreamShoot 类前台入口，绑定工具、credit 消耗和输出数量。"
-            eyebrow="creative packs"
-            title="AI 拍摄包"
-          >
-            <CreativePackEditor packs={data.packs} siteAiApps={data.apps} siteId={data.site.id} />
-          </ErpSection>
-          <ErpSection
-            description="前台模块不允许手写和后台不一致的价格。定价区、上传区、生成表单都应从后台真实数据读取。"
-            eyebrow="frontend contract"
-            title="前台售卖约束"
-          >
-            <div className="grid gap-3">
-              {data.packs.map((pack) => (
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4" key={pack.id}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-semibold text-slate-900">{pack.name}</p>
-                      <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">{pack.category}</p>
-                    </div>
-                    <StatusPill label={pack.status} tone={data.statusTone(pack.status)} />
+        <ErpSection
+          action={<ErpToolbarAction href={modulePath(data.site, "/admin/design")} label="前台装修" />}
+          description="拍摄包用于 DreamShoot 类前台入口，绑定工具、credit 消耗和输出数量。"
+          eyebrow="creative packs"
+          title="AI 拍摄包"
+        >
+          <CreativePackEditor packs={data.packs} siteAiApps={data.apps} siteId={data.site.id} />
+        </ErpSection>
+
+        <ErpSection
+          description="前台模块不允许手写和后台不一致的价格。定价区、上传区、生成表单都应从后台真实数据读取。"
+          eyebrow="frontend contract"
+          title="前台售卖约束"
+        >
+          <div className="grid gap-3 lg:grid-cols-2">
+            {data.packs.map((pack) => (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4" key={pack.id}>
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-slate-900">{pack.name}</p>
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">{pack.category}</p>
                   </div>
-                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{pack.headline}</p>
-                  <div className="mt-4 grid grid-cols-3 gap-2 font-mono text-xs text-slate-500">
-                    <span>{pack.creditCost} cr</span>
-                    <span>{pack.outputCount} photos</span>
-                    <span>{pack.conversionRate.toFixed(1)}%</span>
-                  </div>
+                  <StatusPill label={pack.status} tone={data.statusTone(pack.status)} />
                 </div>
-              ))}
-            </div>
-          </ErpSection>
-        </div>
+                <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{pack.headline}</p>
+                <div className="mt-4 grid grid-cols-3 gap-2 font-mono text-xs text-slate-500">
+                  <span className="whitespace-nowrap">{pack.creditCost} cr</span>
+                  <span className="whitespace-nowrap">{pack.outputCount} photos</span>
+                  <span className="whitespace-nowrap">{pack.conversionRate.toFixed(1)}%</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ErpSection>
       </div>
     </AdminShell>
   );

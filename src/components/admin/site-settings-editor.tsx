@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Download, Plus, Save, Star, Trash2 } from "lucide-react";
 import type { Site, SiteDomain } from "@/lib/types";
+import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
 import {
@@ -64,6 +65,35 @@ function domainStatusTone(status: SiteDomain["status"]) {
   return "warn" as const;
 }
 
+function siteStatusLabel(status: Site["status"]) {
+  return {
+    active: "已启用",
+    draft: "草稿",
+    suspended: "已暂停"
+  }[status];
+}
+
+function connectStatusLabel(status: Site["connect"]["status"]) {
+  return {
+    not_started: "未开始",
+    pending: "待开通",
+    enabled: "已开通",
+    restricted: "受限"
+  }[status];
+}
+
+function enabledLabel(enabled: boolean) {
+  return enabled ? "已开启" : "未开启";
+}
+
+function domainStatusLabel(status: SiteDomain["status"]) {
+  return {
+    active: "已生效",
+    pending: "待验证",
+    failed: "验证失败"
+  }[status];
+}
+
 function describeDomainError(code?: string) {
   return {
     missing_domain: "请输入域名。",
@@ -89,6 +119,8 @@ export function SiteSettingsEditor({
   const [newPrimary, setNewPrimary] = useState(false);
   const [message, setMessage] = useState("站点名称、品牌、收款状态和域名现在都可以在站点后台直接维护。");
   const [saving, setSaving] = useState(false);
+  const [domainPage, setDomainPage] = useState(1);
+  const [domainPageSize, setDomainPageSize] = useState(10);
 
   useEffect(() => {
     setForm(createSiteSettingsForm(site));
@@ -101,6 +133,8 @@ export function SiteSettingsEditor({
   const dirty = useMemo(() => {
     return JSON.stringify(form) !== JSON.stringify(createSiteSettingsForm(site));
   }, [form, site]);
+  const currentDomainPage = clampPage(domainPage, domainItems.length, domainPageSize);
+  const visibleDomainItems = useMemo(() => pageItems(domainItems, currentDomainPage, domainPageSize), [domainItems, currentDomainPage, domainPageSize]);
 
   function update<K extends keyof SiteSettingsForm>(key: K, value: SiteSettingsForm[K]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -151,7 +185,7 @@ export function SiteSettingsEditor({
     if (result.site) {
       setForm(createSiteSettingsForm(result.site));
     }
-    setMessage("站点设置已保存。域名、Connect 状态和品牌文案已写入站点主记录。");
+    setMessage("设置收款已保存。站点资料、域名、Connect 状态和品牌文案已写入站点主记录。");
     router.refresh();
   }
 
@@ -225,7 +259,7 @@ export function SiteSettingsEditor({
       return;
     }
     setDomainItems((current) => current.map((item) => (item.id === domainId ? { ...item, status: result.domain?.status ?? item.status } : item)));
-    setMessage(`${result.domain.domain} 状态已更新为 ${result.domain.status}。`);
+    setMessage(`${result.domain.domain} 状态已更新为 ${domainStatusLabel(result.domain.status)}。`);
     router.refresh();
   }
 
@@ -270,13 +304,13 @@ export function SiteSettingsEditor({
         <ErpToolbar className="mb-5">
           <div className="flex flex-wrap gap-2">
             <ErpToolbarField label="站点" value={form.name} />
-            <ErpToolbarField label="状态" value={form.status} />
+            <ErpToolbarField label="状态" value={siteStatusLabel(form.status)} />
             <ErpToolbarField label="币种" value={form.currency} />
             <ErpToolbarField label="时区" value={form.timezone} />
           </div>
           <div className="flex flex-wrap gap-2">
             <span className={dirty ? "tag_org" : "tag_green"}>{dirty ? "有未保存修改" : "与当前配置一致"}</span>
-            <ErpToolbarAction label={saving ? "保存中" : "保存站点设置"} onClick={save} primary />
+            <ErpToolbarAction label={saving ? "保存中" : "保存设置收款"} onClick={save} primary />
           </div>
         </ErpToolbar>
         <ErpFormGrid>
@@ -285,9 +319,9 @@ export function SiteSettingsEditor({
           </ErpField>
           <ErpField label="站点状态">
             <ErpSelect onChange={(event) => update("status", event.target.value as Site["status"])} value={form.status}>
-              <option value="active">active</option>
-              <option value="draft">draft</option>
-              <option value="suspended">suspended</option>
+              <option value="active">已启用</option>
+              <option value="draft">草稿</option>
+              <option value="suspended">已暂停</option>
             </ErpSelect>
           </ErpField>
           <ErpField label="品牌简称">
@@ -312,13 +346,13 @@ export function SiteSettingsEditor({
             <span className="text-[12px] text-[#667085]">保存后同步站点名称、品牌文案和后台工作区摘要。</span>
           </div>
           <button
-            className="input_btn inline-flex h-[34px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-55"
+            className="input_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55"
             disabled={saving}
             onClick={save}
             type="button"
           >
             <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
-            {saving ? "保存中" : "保存站点设置"}
+            {saving ? "保存中" : "保存设置收款"}
           </button>
         </div>
       </ErpSection>
@@ -326,38 +360,38 @@ export function SiteSettingsEditor({
       <ErpSection
         description="站点独立收款能力在这里维护。第一版仍为本地状态管理，但数据流已经按真实 Connect 字段组织。"
         eyebrow="billing connection"
-        title="Stripe Connect 与收款状态"
+        title="设置收款"
       >
         <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
           <div>
             <ErpFormGrid>
-              <ErpField hint="后续接真实 Stripe Connect 时直接复用。" label="Stripe account" span="full">
+              <ErpField hint="后续接真实 Stripe Connect 时直接复用。" label="Stripe 收款账号" span="full">
                 <ErpInput className="font-mono" onChange={(event) => updateConnect("stripeAccountId", event.target.value)} value={form.connect.stripeAccountId} />
               </ErpField>
               <ErpField label="Connect 状态">
                 <ErpSelect onChange={(event) => updateConnect("status", event.target.value as Site["connect"]["status"])} value={form.connect.status}>
-                  <option value="not_started">not_started</option>
-                  <option value="pending">pending</option>
-                  <option value="enabled">enabled</option>
-                  <option value="restricted">restricted</option>
+                  <option value="not_started">未开始</option>
+                  <option value="pending">待开通</option>
+                  <option value="enabled">已开通</option>
+                  <option value="restricted">受限</option>
                 </ErpSelect>
               </ErpField>
-              <ErpField label="Charges">
+              <ErpField label="收款能力">
                 <ErpSelect onChange={(event) => updateConnect("chargesEnabled", event.target.value === "true")} value={String(form.connect.chargesEnabled)}>
-                  <option value="true">enabled</option>
-                  <option value="false">disabled</option>
+                  <option value="true">已开启</option>
+                  <option value="false">未开启</option>
                 </ErpSelect>
               </ErpField>
-              <ErpField label="Payouts">
+              <ErpField label="打款能力">
                 <ErpSelect onChange={(event) => updateConnect("payoutsEnabled", event.target.value === "true")} value={String(form.connect.payoutsEnabled)}>
-                  <option value="true">enabled</option>
-                  <option value="false">disabled</option>
+                  <option value="true">已开启</option>
+                  <option value="false">未开启</option>
                 </ErpSelect>
               </ErpField>
               <ErpField label="上线判定">
-                <div className="flex min-h-[38px] items-center">
+                <div className="flex min-h-[38px] items-center" title={form.connect.chargesEnabled && form.connect.payoutsEnabled ? "launchable" : "needs onboarding"}>
                   <StatusPill
-                    label={form.connect.chargesEnabled && form.connect.payoutsEnabled ? "launchable" : "needs onboarding"}
+                    label={form.connect.chargesEnabled && form.connect.payoutsEnabled ? "可上线" : "需完成开通"}
                     tone={form.connect.chargesEnabled && form.connect.payoutsEnabled ? "good" : "warn"}
                   />
                 </div>
@@ -367,12 +401,12 @@ export function SiteSettingsEditor({
           <div className="grid gap-3">
             <ErpInfoList
               items={[
-                { label: "Connect", value: form.connect.status, tone: form.connect.status === "enabled" ? "good" : "warn" },
-                { label: "Charges", value: form.connect.chargesEnabled ? "enabled" : "disabled", tone: form.connect.chargesEnabled ? "good" : "warn" },
-                { label: "Payouts", value: form.connect.payoutsEnabled ? "enabled" : "disabled", tone: form.connect.payoutsEnabled ? "good" : "warn" },
+                { label: "Connect", value: connectStatusLabel(form.connect.status), tone: form.connect.status === "enabled" ? "good" : "warn" },
+                { label: "收款", value: enabledLabel(form.connect.chargesEnabled), tone: form.connect.chargesEnabled ? "good" : "warn" },
+                { label: "打款", value: enabledLabel(form.connect.payoutsEnabled), tone: form.connect.payoutsEnabled ? "good" : "warn" },
                 {
-                  label: "Launch",
-                  value: form.connect.chargesEnabled && form.connect.payoutsEnabled ? "ready" : "blocked",
+                  label: "上线",
+                  value: form.connect.chargesEnabled && form.connect.payoutsEnabled ? "可上线" : "待开通",
                   tone: form.connect.chargesEnabled && form.connect.payoutsEnabled ? "good" : "warn"
                 }
               ]}
@@ -396,12 +430,12 @@ export function SiteSettingsEditor({
             </div>
             <ErpCheckboxRow checked={newPrimary} label="设为主域名" onChange={setNewPrimary} />
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button className="admin_btn inline-flex h-[34px] items-center gap-1" onClick={exportDomains} type="button">
+          <div className="flex flex-nowrap gap-2">
+            <button className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap" onClick={exportDomains} type="button">
               <Download className="h-3.5 w-3.5" strokeWidth={1.8} />
               导出域名
             </button>
-            <button className="admin_btn inline-flex h-[34px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-55" disabled={saving} onClick={addDomain} type="button">
+            <button className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55" disabled={saving} onClick={addDomain} type="button">
               <Plus className="h-3.5 w-3.5" strokeWidth={1.8} />
               添加域名
             </button>
@@ -418,7 +452,7 @@ export function SiteSettingsEditor({
               </tr>
             </thead>
             <tbody>
-              {domainItems.map((domain) => (
+              {visibleDomainItems.map((domain) => (
                 <tr key={domain.id}>
                   <td className="aleft">
                     <span className="block font-medium text-[#333]">{domain.domain}</span>
@@ -426,32 +460,38 @@ export function SiteSettingsEditor({
                   </td>
                   <td>
                     <div className="flex flex-col items-center gap-2">
-                      <StatusPill label={domain.status} tone={domainStatusTone(domain.status)} />
+                      <span title={domain.status}>
+                        <StatusPill label={domainStatusLabel(domain.status)} tone={domainStatusTone(domain.status)} />
+                      </span>
                       <select
                         className="selectmini min-w-[110px]"
                         disabled={saving}
                         onChange={(event) => updateDomainStatus(domain.id, event.target.value as SiteDomain["status"])}
                         value={domain.status}
                       >
-                        <option value="active">active</option>
-                        <option value="pending">pending</option>
-                        <option value="failed">failed</option>
+                        <option value="active">已生效</option>
+                        <option value="pending">待验证</option>
+                        <option value="failed">验证失败</option>
                       </select>
                     </div>
                   </td>
-                  <td className="font-mono text-[11px] text-[#666]">{domain.isPrimary ? "primary" : "alias"}</td>
                   <td>
-                    <div className="flex flex-wrap justify-center gap-1">
+                    <span className="whitespace-nowrap text-[12px] text-[#666]" title={domain.isPrimary ? "primary" : "alias"}>
+                      {domain.isPrimary ? "主域名" : "别名"}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex flex-nowrap justify-center gap-1">
                       {!domain.isPrimary ? (
-                        <button className="admin_btn inline-flex items-center gap-1" disabled={saving} onClick={() => makePrimary(domain.id)} type="button">
+                        <button className="admin_btn inline-flex shrink-0 items-center gap-1 whitespace-nowrap" disabled={saving} onClick={() => makePrimary(domain.id)} type="button">
                           <Star className="h-3.5 w-3.5" strokeWidth={1.8} />
                           设为主域名
                         </button>
                       ) : (
-                        <span className="tag_green">当前主域名</span>
+                        <span className="tag_green whitespace-nowrap">当前主域名</span>
                       )}
                       {domainItems.length > 1 ? (
-                        <button className="admin_del inline-flex items-center gap-1" disabled={saving} onClick={() => removeDomain(domain.id)} type="button">
+                        <button className="admin_del inline-flex shrink-0 items-center gap-1 whitespace-nowrap" disabled={saving} onClick={() => removeDomain(domain.id)} type="button">
                           <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
                           删除
                         </button>
@@ -463,6 +503,16 @@ export function SiteSettingsEditor({
             </tbody>
           </table>
         </div>
+        <AdminPagination
+          total={domainItems.length}
+          page={currentDomainPage}
+          pageSize={domainPageSize}
+          onPageChange={setDomainPage}
+          onPageSizeChange={(nextPageSize) => {
+            setDomainPageSize(nextPageSize);
+            setDomainPage(1);
+          }}
+        />
       </ErpSection>
     </div>
   );

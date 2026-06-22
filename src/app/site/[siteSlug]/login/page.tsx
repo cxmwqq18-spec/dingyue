@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 import { getPage } from "@/lib/data";
-import { readPlatformState } from "@/lib/server-store";
+import { getCustomerBySessionFromState, readPlatformState } from "@/lib/server-store";
 import { renderStorefrontPage } from "@/lib/storefront-render";
+import { customerSessionCookie } from "@/lib/session";
 import { metadataForThemePage } from "@/lib/theme/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
@@ -24,5 +26,9 @@ export default async function SiteLoginPage({
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
+  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  if (getCustomerBySessionFromState(state, site.id, sessionId)) {
+    redirect(`/site/${site.slug}/app`);
+  }
   return renderStorefrontPage({ site, slug: "/login", query: await searchParams, routeMode: "path" });
 }

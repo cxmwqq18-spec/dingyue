@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
-import { hasCustomerSession } from "@/lib/api-auth";
-import { createAssetDownloadLink, StoreError } from "@/lib/server-store";
+import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
+import { createAssetDownloadLink, readCustomerAssetFile, StoreError } from "@/lib/server-store";
+import type { NextRequest } from "next/server";
 
 export async function POST(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; customerId: string; assetId: string }> }
 ) {
   const { siteId, customerId, assetId } = await params;
-  if (!(await hasCustomerSession(siteId, customerId))) {
-    return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
-  }
+  const guard = await requireCustomerMutation(request, siteId, customerId, { key: `${siteId}:${customerId}:asset-download` });
+  if (!guard.ok) return guard.response;
   try {
     const result = createAssetDownloadLink({ siteId, customerId, assetId });
     return NextResponse.json({ ok: true, asset: result.asset, downloadUrl: result.downloadUrl, expiresAt: result.expiresAt });
@@ -29,14 +29,15 @@ export async function GET(
   }
   const token = new URL(request.url).searchParams.get("token");
   try {
-    const result = createAssetDownloadLink({ siteId, customerId, assetId });
     if (!token) {
       return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
     }
-    return new Response(`dev-download:${result.asset.storageKey}\n`, {
+    const result = readCustomerAssetFile({ siteId, customerId, assetId });
+    const extension = result.asset.mimeType.split("/")[1]?.replace(/[^a-z0-9]+/gi, "") || "bin";
+    return new Response(new Uint8Array(result.bytes), {
       headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Content-Disposition": `attachment; filename="${result.asset.id}.txt"`
+        "Content-Type": result.asset.mimeType,
+        "Content-Disposition": `attachment; filename="${result.asset.id}.${extension}"`
       }
     });
   } catch (error) {

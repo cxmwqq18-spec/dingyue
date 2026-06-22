@@ -8,7 +8,7 @@ import type { SiteAiApp } from "@/lib/types";
 export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiApp[] }) {
   const router = useRouter();
   const [items, setItems] = useState(apps);
-  const [message, setMessage] = useState("Tool enablement, credit cost, and worker route persist to the site record.");
+  const [message, setMessage] = useState("工具启用状态、扣费点数和 worker 路由会保存到本站配置。");
 
   useEffect(() => {
     setItems(apps);
@@ -40,11 +40,11 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
     const result = (await response.json().catch(() => ({}))) as { siteAiApp?: SiteAiApp; error?: string };
     if (response.ok && result.siteAiApp) {
       setItems((current) => current.map((item) => (item.id === result.siteAiApp?.id ? result.siteAiApp : item)));
-      setMessage(`${app.aiApp.name} saved.`);
+      setMessage(`${app.aiApp.name} 已保存。`);
       router.refresh();
       return;
     }
-    setMessage(result.error ?? `${app.aiApp.name} save failed.`);
+    setMessage(result.error ?? `${app.aiApp.name} 保存失败。`);
   }
 
   return (
@@ -62,7 +62,7 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
               <th className="bgtt aleft">工具</th>
               <th className="bgtt">启用</th>
               <th className="bgtt">单次扣费</th>
-              <th className="bgtt aleft">Worker Route</th>
+              <th className="bgtt aleft">Worker 路由</th>
               <th className="bgtt">保存</th>
             </tr>
           </thead>
@@ -79,8 +79,8 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
                     onChange={(event) => update(app.id, "enabled", event.target.value === "true")}
                     value={String(app.enabled)}
                   >
-                    <option value="true">enabled</option>
-                    <option value="false">disabled</option>
+                    <option value="true">启用</option>
+                    <option value="false">停用</option>
                   </select>
                 </td>
                 <td>
@@ -90,7 +90,7 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
                   <input className="inputtext w-full font-mono" onChange={(event) => update(app.id, "routeKey", event.target.value)} value={app.routeKey} />
                 </td>
                 <td>
-                  <button className="input_btn inline-flex h-[30px] items-center gap-1" onClick={() => save(app)}>
+                  <button className="input_btn inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap" onClick={() => save(app)} type="button">
                     <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
                     保存
                   </button>

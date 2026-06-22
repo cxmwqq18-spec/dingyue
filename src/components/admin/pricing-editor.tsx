@@ -284,7 +284,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           <h2 className="text-[16px] font-semibold text-[#333]">套餐与价格</h2>
           <p className="mt-1 text-[12px] text-[#666]">{message}</p>
         </div>
-        <button className="admin_btn inline-flex h-[30px] items-center gap-1" onClick={exportPrices} type="button">
+        <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={exportPrices} type="button">
           导出 CSV
         </button>
       </div>
@@ -298,12 +298,12 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                   {product.type} / {product.status} / {product.prices.length} price{product.prices.length > 1 ? "s" : ""}
                 </p>
               </div>
-              <div className="rounded-full border border-[#dbe4f0] bg-white px-3 py-1 text-[11px] font-medium text-[#4b5563]">
+              <div className="whitespace-nowrap rounded-full border border-[#dbe4f0] bg-white px-3 py-1 text-[11px] font-medium text-[#4b5563]">
                 {product.type === "subscription" ? "订阅套餐" : "积分加购"}
               </div>
             </div>
 
-            <div className="mt-4 grid gap-3 xl:grid-cols-2">
+            <div className="mt-4 grid gap-3">
               {product.prices.map((price) => (
                 <div className="rounded-[14px] border border-[#e4e9f0] bg-white p-4 shadow-[0_10px_24px_-26px_rgba(15,23,42,0.3)]" key={price.id}>
                   <div className="flex items-start justify-between gap-3">
@@ -312,7 +312,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       <p className="mt-1 truncate font-mono text-[10px] text-[#98a2b3]">{price.id}</p>
                     </div>
                     {price.metadata?.featured ? (
-                      <span className="rounded-full border border-[#f4d7a2] bg-[#fff6e7] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#c47a15]">
+                      <span className="whitespace-nowrap rounded-full border border-[#f4d7a2] bg-[#fff6e7] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#c47a15]">
                         featured
                       </span>
                     ) : null}
@@ -357,7 +357,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                   </div>
 
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#eef2f6] pt-4">
-                    <label className="inline-flex items-center gap-2 text-[12px] font-medium text-[#4b5563]">
+                    <label className="inline-flex items-center gap-2 whitespace-nowrap text-[12px] font-medium text-[#4b5563]">
                       <input
                         checked={Boolean(price.metadata?.featured)}
                         onChange={(event) => updatePriceMeta(product.id, price.id, "featured", event.target.checked)}
@@ -366,11 +366,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       设为主推套餐
                     </label>
                     <div className="flex items-center gap-2">
-                      <button className="input_btn inline-flex h-[30px] items-center gap-1" onClick={() => save(product, price.id)} type="button">
+                      <button className="input_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => save(product, price.id)} type="button">
                         <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
                         保存
                       </button>
-                      <button className="admin_del inline-flex h-[30px] items-center gap-1" onClick={() => deletePrice(product, price.id)} type="button">
+                      <button className="admin_del inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => deletePrice(product, price.id)} type="button">
                         <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
                         删除
                       </button>
@@ -385,7 +385,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     <p className="text-[13px] font-semibold text-[#111827]">新增价格</p>
                     <p className="mt-1 text-[12px] leading-5 text-[#98a2b3]">为当前商品添加新的订阅价或积分包价格。</p>
                   </div>
-                  <span className="rounded-full border border-[#dbe4f0] bg-[#f8fafc] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+                  <span className="whitespace-nowrap rounded-full border border-[#dbe4f0] bg-[#f8fafc] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#64748b]">
                     new
                   </span>
                 </div>
@@ -429,7 +429,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#eef2f6] pt-4">
-                  <label className="inline-flex items-center gap-2 text-[12px] font-medium text-[#4b5563]">
+                  <label className="inline-flex items-center gap-2 whitespace-nowrap text-[12px] font-medium text-[#4b5563]">
                     <input
                       checked={Boolean(drafts[product.id]?.metadata.featured)}
                       onChange={(event) => updateDraftMeta(product.id, "featured", event.target.checked)}
@@ -437,7 +437,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     />
                     设为主推套餐
                   </label>
-                  <button className="admin_btn inline-flex h-[30px] items-center gap-1" onClick={() => createPrice(product)} type="button">
+                  <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => createPrice(product)} type="button">
                     <Plus className="h-3.5 w-3.5" strokeWidth={1.8} />
                     新增
                   </button>

@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
+import { requireSiteMutation } from "@/lib/api-auth";
 import { installInternalThemePackageForSite, installSaasThemeForSite, StoreError } from "@/lib/server-store";
+import type { NextRequest } from "next/server";
 
-export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
+  const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:theme-install` });
+  if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as { name?: string; actor?: string; themeKey?: string; installType?: "saas" | "internal" };
   try {
     const result =

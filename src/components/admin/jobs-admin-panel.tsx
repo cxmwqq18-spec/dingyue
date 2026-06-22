@@ -1,10 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RotateCcw } from "lucide-react";
-import type { AiApp, GenerationJob, PublicCustomer } from "@/lib/types";
+import { AdminPagination, clampPage, pageItems, adminPageSizeOptions } from "@/components/admin/admin-pagination";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
+import type { AiApp, GenerationJob, JobStatus, PublicCustomer } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
+
+const jobStatusLabels: Record<JobStatus, string> = {
+  queued: "排队中",
+  running: "生成中",
+  succeeded: "已完成",
+  failed: "失败",
+  refunded: "已退款"
+};
 
 function tone(status: string): "good" | "warn" | "bad" | "neutral" {
   if (status === "succeeded") return "good";
@@ -26,25 +36,35 @@ export function JobsAdminPanel({
 }) {
   const router = useRouter();
   const [items, setItems] = useState(jobs);
-  const [message, setMessage] = useState("Failed or refunded jobs can be rerun from the site admin.");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<number>(adminPageSizeOptions[0]);
+  const [message, setMessage] = useState("失败或已退款的任务可在站点后台重新运行。");
 
   useEffect(() => {
     setItems(jobs);
   }, [jobs]);
 
+  const currentPage = clampPage(page, items.length, pageSize);
+  const visibleItems = useMemo(() => pageItems(items, currentPage, pageSize), [items, currentPage, pageSize]);
+
+  useEffect(() => {
+    setPage((current) => clampPage(current, items.length, pageSize));
+  }, [items.length, pageSize]);
+
   async function rerun(jobId: string) {
     const response = await fetch(`/api/sites/${siteId}/ai/jobs/${jobId}/rerun`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const result = (await response.json().catch(() => ({}))) as { job?: GenerationJob; error?: string };
     if (response.ok && result.job) {
       setItems((current) => [result.job as GenerationJob, ...current]);
-      setMessage(`Rerun created: ${result.job.id}.`);
+      setPage(1);
+      setMessage(`已创建重跑任务：${result.job.id}。`);
       router.refresh();
     } else {
-      setMessage(result.error ?? "Rerun failed.");
+      setMessage(result.error ?? "重跑失败。");
     }
   }
 
@@ -68,7 +88,7 @@ export function JobsAdminPanel({
             </tr>
           </thead>
           <tbody>
-            {items.map((job) => {
+            {visibleItems.map((job) => {
               const customer = customers.find((item) => item.id === job.customerId);
               const app = aiApps.find((item) => item.id === job.aiAppId);
               const canRerun = job.status === "failed" || job.status === "refunded";
@@ -79,13 +99,14 @@ export function JobsAdminPanel({
                     <span className="font-mono text-[11px] text-[#999]">{job.id}</span>
                   </td>
                   <td className="aleft truncate text-[#666]">{customer?.email ?? job.customerId}</td>
-                  <td><StatusPill label={job.status} tone={tone(job.status)} /></td>
-                  <td className="font-mono text-[#333]">{job.creditsReserved} cr</td>
+                  <td><StatusPill label={jobStatusLabels[job.status]} tone={tone(job.status)} /></td>
+                  <td className="font-mono text-[#333]">{job.creditsReserved} 点</td>
                   <td>
                     <button
-                      className="admin_btn inline-flex items-center gap-1 disabled:opacity-35"
+                      className="admin_btn inline-flex shrink-0 items-center gap-1 whitespace-nowrap disabled:opacity-35"
                       disabled={!canRerun}
                       onClick={() => rerun(job.id)}
+                      type="button"
                     >
                       <RotateCcw className="h-3 w-3" strokeWidth={1.8} />
                       重跑
@@ -94,9 +115,24 @@ export function JobsAdminPanel({
                 </tr>
               );
             })}
+            {!items.length ? (
+              <tr>
+                <td className="text-center text-[#999]" colSpan={5}>暂无生成任务。</td>
+              </tr>
+            ) : null}
           </tbody>
         </table>
       </div>
+      <AdminPagination
+        total={items.length}
+        page={currentPage}
+        pageSize={pageSize}
+        onPageChange={setPage}
+        onPageSizeChange={(nextPageSize) => {
+          setPageSize(nextPageSize);
+          setPage(1);
+        }}
+      />
     </div>
   );
 }

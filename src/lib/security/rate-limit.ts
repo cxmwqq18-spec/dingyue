@@ -3,7 +3,7 @@
  * 用于防止API滥用和DDoS攻击
  */
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // 内存存储（生产环境应使用Redis）
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -36,6 +36,9 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
 
   // 文件上传 - 每分钟20次
   upload: { windowMs: 60000, maxRequests: 20, keyPrefix: "upload" },
+
+  // 后台高风险变更 - 每分钟8次
+  adminMutation: { windowMs: 60000, maxRequests: 8, keyPrefix: "admin_mutation" },
 };
 
 interface RateLimitResult {
@@ -116,6 +119,31 @@ export function getClientIP(request: NextRequest): string {
   }
 
   return "unknown";
+}
+
+export function rateLimitResponse(result: RateLimitResult): NextResponse {
+  const retryAfter = Math.max(1, Math.ceil((result.retryAfterMs ?? 0) / 1000));
+  return NextResponse.json(
+    { error: "rate_limited", retryAfter },
+    {
+      status: 429,
+      headers: {
+        "Retry-After": String(retryAfter),
+        "X-RateLimit-Remaining": String(result.remaining),
+        "X-RateLimit-Reset": String(Math.ceil(result.resetTime / 1000))
+      }
+    }
+  );
+}
+
+export function checkRateLimitOrResponse(
+  request: NextRequest,
+  config: RateLimitConfig,
+  identifier?: string
+): { allowed: true; result: RateLimitResult } | { allowed: false; response: NextResponse } {
+  const result = checkRateLimit(request, config, identifier);
+  if (!result.allowed) return { allowed: false, response: rateLimitResponse(result) };
+  return { allowed: true, result };
 }
 
 /**

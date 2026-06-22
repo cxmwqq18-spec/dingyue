@@ -1,10 +1,12 @@
 import {
   Bot,
   Building2,
+  Cloud,
   CreditCard,
   FileText,
   Gauge,
   LayoutDashboard,
+  MailCheck,
   Palette,
   ReceiptText,
   Settings2,
@@ -31,6 +33,8 @@ export type PlatformAdminModuleCode =
   | "sites"
   | "billing"
   | "gateway"
+  | "email"
+  | "cloudflare"
   | "audit";
 
 export type AdminModuleCode = SiteAdminModuleCode | PlatformAdminModuleCode;
@@ -162,7 +166,7 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     label: "平台总览",
     code: "platform_overview",
     icon: Gauge,
-    href: "#overview",
+    href: "/platform?module=overview",
     metric: "总控",
     tone: "good",
     description: "跨站点看经营状态、上线准备、收入、订阅、AI 队列和风险信号。",
@@ -174,7 +178,7 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     label: "站点工厂",
     code: "sites",
     icon: Building2,
-    href: "#sites",
+    href: "/platform?module=sites",
     metric: "店铺",
     tone: "good",
     description: "创建站点、复制主题、绑定域名、进入单站后台和检查站点健康。",
@@ -186,7 +190,7 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     label: "收款订阅",
     code: "billing",
     icon: CreditCard,
-    href: "#billing",
+    href: "/platform?module=billing",
     metric: "收款",
     tone: "warn",
     description: "跨站检查 Stripe Connect、订阅套餐、订单入账、credits 发放和 webhook 风险。",
@@ -198,7 +202,7 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     label: "AI 网关",
     code: "gateway",
     icon: Bot,
-    href: "#gateway",
+    href: "/platform?module=gateway",
     metric: "网关",
     tone: "good",
     description: "管理 AI provider、账号池、worker 路由、失败率、耗时和成本。",
@@ -207,10 +211,34 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     items: ["工具目录", "账号池", "路由策略", "成本跟踪"]
   },
   {
+    label: "邮件配置",
+    code: "email",
+    icon: MailCheck,
+    href: "/platform?module=email",
+    metric: "邮箱",
+    tone: "warn",
+    description: "统一维护 Resend 发信配置，跨站检测发件域名验证和验证码发送能力。",
+    aiExtension: "一个 Resend API Key 可统一检测账号下 Domains，但每个站点发件域名仍需 DNS 验证。",
+    keywords: ["email", "resend", "verification", "mail", "邮箱", "邮件", "验证码"],
+    items: ["Resend 配置", "发件域名", "验证码测试", "跨站检测"]
+  },
+  {
+    label: "Cloudflare",
+    code: "cloudflare",
+    icon: Cloud,
+    href: "/platform?module=cloudflare",
+    metric: "DNS",
+    tone: "warn",
+    description: "维护多个 Cloudflare 账号，选择全局 DNS 自动化账号，并支持 Resend 域名验证写入。",
+    aiExtension: "Resend 创建域名后，平台可用当前 Cloudflare 账号自动写 DNS 记录并触发验证。",
+    keywords: ["cloudflare", "dns", "zone", "api token", "域名", "解析", "验证"],
+    items: ["API Token", "Account ID", "当前账号", "DNS 自动写入"]
+  },
+  {
     label: "审计风控",
     code: "audit",
     icon: ShieldCheck,
-    href: "#audit",
+    href: "/platform?module=audit",
     metric: "审计",
     tone: "neutral",
     description: "查看跨站操作日志、敏感查看、支付事件、worker 回调和人工重跑记录。",

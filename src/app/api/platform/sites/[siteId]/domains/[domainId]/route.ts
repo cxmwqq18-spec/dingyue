@@ -1,22 +1,16 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { deleteSiteDomain, getPlatformAdminBySessionFromState, readPlatformState, StoreError, updateSiteDomain } from "@/lib/server-store";
+import { NextRequest, NextResponse } from "next/server";
+import { requirePlatformMutation } from "@/lib/api-auth";
+import { deleteSiteDomain, StoreError, updateSiteDomain } from "@/lib/server-store";
 import type { SiteDomain } from "@/lib/types";
-import { platformSessionCookie } from "@/lib/session";
-
-async function requirePlatformAdmin() {
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  return getPlatformAdminBySessionFromState(state, sessionId);
-}
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; domainId: string }> }
 ) {
-  const current = await requirePlatformAdmin();
-  if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
   const { siteId, domainId } = await params;
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:domain:${siteId}:${domainId}` });
+  if (!guard.ok) return guard.response;
+
   const body = (await request.json().catch(() => ({}))) as {
     isPrimary?: boolean;
     status?: SiteDomain["status"];
@@ -37,12 +31,12 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; domainId: string }> }
 ) {
-  const current = await requirePlatformAdmin();
-  if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
   const { siteId, domainId } = await params;
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:domain:${siteId}:${domainId}` });
+  if (!guard.ok) return guard.response;
 
   try {
     const result = deleteSiteDomain({ siteId, domainId });

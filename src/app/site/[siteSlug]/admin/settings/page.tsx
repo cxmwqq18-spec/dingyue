@@ -1,9 +1,10 @@
 import { CreditCard, Globe2, ShieldCheck, Users } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
+import { AuditFeedPanel } from "@/components/admin/audit-feed-panel";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { SiteAdminsPanel } from "@/components/admin/site-admins-panel";
 import { SiteSettingsEditor } from "@/components/admin/site-settings-editor";
-import { OpsCard, StatusPill } from "@/components/ui";
+import { OpsCard } from "@/components/ui";
 import { toPublicSiteAdmin } from "@/lib/server-store";
 import {
   getSiteAdminData,
@@ -16,6 +17,35 @@ import {
   siteAdminStats,
   siteAdminWorkspace
 } from "../_lib/site-admin-context";
+
+function siteStatusLabel(status: string) {
+  return {
+    active: "已启用",
+    draft: "草稿",
+    suspended: "已暂停"
+  }[status] ?? status;
+}
+
+function connectStatusLabel(status: string) {
+  return {
+    not_started: "未开始",
+    pending: "待开通",
+    enabled: "已开通",
+    restricted: "受限"
+  }[status] ?? status;
+}
+
+function readyLabel(ready: boolean) {
+  return ready ? "已就绪" : "待配置";
+}
+
+function gatewayStatusLabel(status?: string) {
+  return {
+    active: "已启用",
+    paused: "已暂停",
+    missing: "未配置"
+  }[status ?? "missing"] ?? status ?? "未配置";
+}
 
 export default async function SettingsPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
@@ -30,18 +60,18 @@ export default async function SettingsPage({ params }: { params: Promise<{ siteS
       action={{ label: "查看前台", href: `/site/${data.site.slug}` }}
       breadcrumbs={[
         { label: "店铺管理", href: modulePath(data.site, "/admin") },
-        { label: "站点设置" }
+        { label: "设置收款" }
       ]}
       brand={data.site.branding.logoText}
       commandActions={siteAdminCommandActions(data.site, data)}
-      eyebrow="settings and guardrails"
+      eyebrow="billing and settings"
       moduleLinks={siteAdminModuleLinks}
       nav={siteAdminNav(data.site, data)}
       quickActions={siteAdminQuickActions(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
-      subtitle="域名、Stripe Connect、管理员、AI 网关、安全审计和上线阻断条件集中在设置模块，避免后台配置分散。"
-      title="站点设置"
+      subtitle="收款、域名、管理员、AI 网关、安全审计和上线阻断条件集中在这里，点击设置收款后能直接处理收款与站点配置。"
+      title="设置收款"
       titleBadge={String(data.domains.length)}
       workspace={siteAdminWorkspace(data, "settings workspace")}
       rightRail={
@@ -52,11 +82,11 @@ export default async function SettingsPage({ params }: { params: Promise<{ siteS
             <div className="mt-4">
               <ErpInfoList
                 items={[
-                  { label: "Active site", value: data.site.status, tone: data.site.status === "active" ? "good" : "warn" },
-                  { label: "Primary domain", value: data.site.primaryDomain, tone: data.site.primaryDomain ? "good" : "warn" },
-                  { label: "Stripe charges", value: data.site.connect.chargesEnabled ? "enabled" : "disabled", tone: data.site.connect.chargesEnabled ? "good" : "warn" },
-                  { label: "Theme publication", value: String(data.publications.length), tone: data.publications.length > 0 ? "good" : "warn" },
-                  { label: "AI gateway", value: data.gateway?.status ?? "missing", tone: data.gateway?.status === "active" ? "good" : "warn" }
+                  { label: "站点状态", value: siteStatusLabel(data.site.status), tone: data.site.status === "active" ? "good" : "warn" },
+                  { label: "主域名", value: data.site.primaryDomain, tone: data.site.primaryDomain ? "good" : "warn" },
+                  { label: "Stripe 收款", value: readyLabel(data.site.connect.chargesEnabled), tone: data.site.connect.chargesEnabled ? "good" : "warn" },
+                  { label: "主题发布", value: `${data.publications.length} 个版本`, tone: data.publications.length > 0 ? "good" : "warn" },
+                  { label: "AI 网关", value: gatewayStatusLabel(data.gateway?.status), tone: data.gateway?.status === "active" ? "good" : "warn" }
                 ]}
               />
             </div>
@@ -67,24 +97,24 @@ export default async function SettingsPage({ params }: { params: Promise<{ siteS
       <div className="grid gap-5">
         <ErpStatGrid
           items={[
-            { label: "domains", value: String(data.domains.length), detail: `${data.domains.filter((domain) => domain.status === "active").length} active domains`, icon: Globe2, tone: data.domains.length ? "good" : "warn" },
-            { label: "connect", value: data.site.connect.status, detail: data.site.connect.stripeAccountId, icon: CreditCard, tone: data.site.connect.chargesEnabled ? "good" : "warn" },
-            { label: "admins", value: String(siteAdmins.length), detail: "site admin accounts", icon: Users, tone: siteAdmins.length ? "good" : "warn" },
-            { label: "audit", value: String(data.auditLogs.length), detail: "site audit rows", icon: ShieldCheck, tone: data.auditLogs.length ? "good" : "neutral" }
+            { label: "域名", value: String(data.domains.length), detail: `${data.domains.filter((domain) => domain.status === "active").length} 个已生效域名`, icon: Globe2, tone: data.domains.length ? "good" : "warn" },
+            { label: "收款", value: connectStatusLabel(data.site.connect.status), detail: data.site.connect.stripeAccountId, icon: CreditCard, tone: data.site.connect.chargesEnabled ? "good" : "warn" },
+            { label: "管理员", value: String(siteAdmins.length), detail: "本站后台账号", icon: Users, tone: siteAdmins.length ? "good" : "warn" },
+            { label: "审计", value: String(data.auditLogs.length), detail: "敏感操作记录", icon: ShieldCheck, tone: data.auditLogs.length ? "good" : "neutral" }
           ]}
         />
 
         <ErpSection
           action={<ErpToolbarAction href={modulePath(data.site, "/admin/media")} label="媒体库" />}
           description="站点名称、品牌、域名和 Stripe Connect 都应在本站后台直接维护，而不是只看静态状态表。"
-          eyebrow="editable site record"
-          title="站点配置中心"
+          eyebrow="billing settings"
+          title="设置收款与站点资料"
         >
           <ErpToolbar>
             <div className="flex flex-wrap gap-3">
               <ErpToolbarField label="站点" value={data.site.name} />
               <ErpToolbarField label="主域名" value={data.site.primaryDomain} />
-              <ErpToolbarField label="Connect" value={data.site.connect.status} />
+              <ErpToolbarField label="Connect" value={connectStatusLabel(data.site.connect.status)} />
               <ErpToolbarField label="币种" value={data.site.currency} />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -112,20 +142,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ siteS
             eyebrow="audit trail"
             title="敏感操作"
           >
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-              <div className="grid gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 md:grid-cols-[0.7fr_1fr_0.5fr]">
-                <span>动作</span>
-                <span>详情</span>
-                <span>时间</span>
-              </div>
-              {data.feed.map((item) => (
-                <div className="grid gap-3 border-b border-slate-100 px-4 py-4 text-sm last:border-b-0 md:grid-cols-[0.7fr_1fr_0.5fr]" key={item.id}>
-                  <span className="font-medium text-slate-900">{item.label}</span>
-                  <span className="truncate font-mono text-xs text-slate-500">{item.detail}</span>
-                  <span className="font-mono text-xs text-slate-400">{new Date(item.at).toLocaleDateString("en-US")}</span>
-                </div>
-              ))}
-            </div>
+            <AuditFeedPanel items={data.feed} />
           </ErpSection>
         </div>
       </div>

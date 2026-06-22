@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CopyPlus } from "lucide-react";
 import type { Site } from "@/lib/types";
+import { platformJsonHeaders } from "@/lib/client-csrf";
 
 export function SiteCreatePanel({ sites }: { sites: Site[] }) {
   const [name, setName] = useState("Nova Image Studio");
@@ -16,7 +17,7 @@ export function SiteCreatePanel({ sites }: { sites: Site[] }) {
     event.preventDefault();
     const response = await fetch("/api/platform/sites", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify({ name, slug, ownerEmail, ownerPassword, sourceSiteId })
     });
     const result = (await response.json().catch(() => ({}))) as { site?: Site; error?: string };
@@ -24,7 +25,7 @@ export function SiteCreatePanel({ sites }: { sites: Site[] }) {
       setMessage(`${result.site.name} 已创建，正在进入站点后台。`);
       const bridge = await fetch(`/api/platform/sites/${result.site.id}/admin-bridge`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: platformJsonHeaders(),
         body: JSON.stringify({ path: "/admin" })
       });
       const bridgeResult = (await bridge.json().catch(() => ({}))) as { redirectTo?: string; error?: string };

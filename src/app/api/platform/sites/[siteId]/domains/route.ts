@@ -1,15 +1,12 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { addSiteDomain, getPlatformAdminBySessionFromState, readPlatformState, StoreError } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+import { NextRequest, NextResponse } from "next/server";
+import { requirePlatformMutation } from "@/lib/api-auth";
+import { addSiteDomain, StoreError } from "@/lib/server-store";
 
-export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  if (!getPlatformAdminBySessionFromState(state, sessionId)) {
-    return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
-  }
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:domain:${siteId}:create` });
+  if (!guard.ok) return guard.response;
+
   const body = (await request.json().catch(() => ({}))) as { domain?: string; isPrimary?: boolean };
   if (!body.domain) {
     return NextResponse.json({ error: "missing_domain" }, { status: 400 });

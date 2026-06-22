@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { platformJsonHeaders } from "@/lib/client-csrf";
 
 export function PlatformSiteAdminLink({
   siteId,
@@ -19,7 +20,7 @@ export function PlatformSiteAdminLink({
     setPending(true);
     const response = await fetch(`/api/platform/sites/${siteId}/admin-bridge`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify({ path })
     });
     const result = (await response.json().catch(() => ({}))) as { redirectTo?: string; error?: string };

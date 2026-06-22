@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { CustomerSessionBadge } from "@/components/app/customer-session-badge";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
@@ -23,6 +24,36 @@ import { themeStyleVars } from "@/lib/theme";
 import type { PlatformState, Site } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
+
+function withAccountDashboardPage(pageJson: ReturnType<typeof getPage>["publishedJson"]) {
+  if (pageJson.sections.account_ops_1) return pageJson;
+  return {
+    ...pageJson,
+    sectionsOrder: ["account_ops_1", ...pageJson.sectionsOrder.filter((sectionId) => sectionId !== "intro_1")],
+    sections: {
+      ...pageJson.sections,
+      account_ops_1: {
+        type: "ai_feature_launcher",
+        settings: {
+          anchor: "account-ops",
+          eyebrow: "Customer account",
+          title: "Your personal center for credits, orders, albums, and AI progress.",
+          subtitle: "Review profile information, plan status, order history, private albums, active jobs, and credit activity from one signed-in account page.",
+          surface: "account",
+          ctaLabel: "Open workspace",
+          ctaHref: "/app#upload_1",
+          chipList: "Profile|Plan and credits|Orders|Albums and progress"
+        },
+        blocks: [
+          { id: "account_uploads", type: "feature", settings: { title: "Upload photos", description: "Add source portraits and style references before requesting images.", meta: "Assets", href: "/app#upload_1" } },
+          { id: "account_create", type: "feature", settings: { title: "Create AI images", description: "Choose prompts and reserve credits for a private generation request.", meta: "Generate", href: "/app#create" } },
+          { id: "account_progress", type: "feature", settings: { title: "AI generation progress", description: "Open queued, running, delivered, and review-needed requests.", meta: "Progress", href: "/app/jobs/progress" } },
+          { id: "account_albums", type: "feature", settings: { title: "Personal albums", description: "Review delivered images and private gallery downloads.", meta: "Gallery", href: "/album" } }
+        ]
+      }
+    }
+  };
+}
 
 export function getSiteBySlugFromState(state: PlatformState, siteSlug: string): Site | undefined {
   return state.sites.find((item) => item.slug === siteSlug);
@@ -96,7 +127,7 @@ export async function renderStorefrontPage({
     <div style={themeStyleVars(settings)}>
       <ThemeRenderer
         creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
-        page={page.publishedJson}
+        page={slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson}
         pagePath={directPage.slug === slug ? slug : "/404"}
         products={getSiteProductsFromState(state, currentSite.id)}
         query={query}
@@ -135,9 +166,10 @@ export async function renderCustomerWorkspacePage({
 
   return (
     <div style={themeStyleVars(settings)}>
+      <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
       <ThemeRenderer
         creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
-        page={page.publishedJson}
+        page={slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson}
         pagePath={slug}
         products={getSiteProductsFromState(state, currentSite.id)}
         query={query}
@@ -188,6 +220,7 @@ export async function renderCustomerJobDetailPage({
 
   return (
     <div style={themeStyleVars(settings)}>
+      <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
       <ThemeRenderer
         creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
         page={page.publishedJson}

@@ -2,6 +2,7 @@ import { GalleryVerticalEnd, Sparkles, UploadCloud, Users } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { AlbumDeliveryPanel } from "@/components/admin/album-delivery-panel";
+import { CustomerAssetReviewPanel } from "@/components/admin/customer-asset-review-panel";
 import { CustomerAdminPanel } from "@/components/admin/customer-admin-panel";
 import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import { OpsCard, StatusPill } from "@/components/ui";
@@ -22,6 +23,7 @@ export default async function CustomersPage({ params }: { params: Promise<{ site
   const data = await getSiteAdminData(siteSlug);
   const blockedCustomers = data.customers.filter((customer) => customer.status === "blocked").length;
   const pastDueCustomers = data.customers.filter((customer) => customer.status === "past_due").length;
+  const customerAssets = data.state.assetUploads.filter((asset) => asset.siteId === data.site.id && !asset.deletedAt);
 
   return (
     <AdminShell
@@ -120,6 +122,19 @@ export default async function CustomersPage({ params }: { params: Promise<{ site
             <AlbumDeliveryPanel albums={data.albums} assets={data.generatedAssets} customers={data.customers} packs={data.packs} siteId={data.site.id} />
           </ErpSection>
         </div>
+
+        <ErpSection
+          description="源图、训练图和输出图按当前站点筛选展示，便于验收客户私有素材边界和审核状态。"
+          eyebrow="customer assets"
+          title="客户素材表格"
+        >
+          <CustomerAssetReviewPanel
+            assets={customerAssets}
+            customers={data.customers}
+            models={data.customerModels}
+            siteId={data.site.id}
+          />
+        </ErpSection>
       </div>
     </AdminShell>
   );

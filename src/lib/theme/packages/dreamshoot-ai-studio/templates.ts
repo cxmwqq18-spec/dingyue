@@ -799,10 +799,23 @@ export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, 
   ),
   "app-home": page(
     "workspace",
-    ["launcher_1", "upload_1", "progress_1", "album_1", "trust_1"],
+    ["launcher_1", "upload_1", "form_1", "progress_1", "album_1", "trust_1"],
     {
-      launcher_1: section("ai_feature_launcher", { anchor: "features", eyebrow: "Studio features", title: "A real customer workspace, not just a landing page.", subtitle: "Customers can upload, generate, track progress, view albums, and manage credits from one signed-in area." }),
+      launcher_1: section("ai_feature_launcher", {
+        anchor: "features",
+        eyebrow: "Studio features",
+        title: "A real customer workspace, not just a landing page.",
+        subtitle: "Customers can upload, generate, track progress, view albums, and manage credits from one signed-in area.",
+        ctaLabel: "Start with uploads",
+        ctaHref: "/app#upload_1"
+      }, [
+        block("feature_upload", "feature", { title: "Upload photos", description: "Collect selfies and source images inside a private customer workspace.", meta: "Private intake", href: "/app#upload_1" }),
+        block("feature_prepare", "feature", { title: "Prepare portraits", description: "Choose style prompts and attach uploaded source photos before generation.", meta: "Consistent look", href: "/app#create" }),
+        block("feature_progress", "feature", { title: "Track progress", description: "Show queued, creating, delivered, review-needed, and returned-credit states.", meta: "Live progress", href: "/app/jobs/progress" }),
+        block("feature_album", "feature", { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/album" })
+      ]),
       upload_1: section("upload_panel", { title: "Private upload intake", helper: "Upload source photos for the current customer only.", imageUrl: assets.upload }),
+      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Create a private AI image request", helper: "Choose prompt settings, attach uploaded source photos, reserve credits, and send a signed worker job." }),
       progress_1: section("job_progress", { title: "Recent generation status" }),
       album_1: section("album_gallery", { title: "Generated albums", showDownloads: true }),
       trust_1: homeSections.trust_1
@@ -1016,6 +1029,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       headerLinks: [
         { label: "Photo Packages", href: "/collections" },
         { label: "Tools", href: "/tools" },
+        { label: "Workspace", href: "/app" },
         { label: "How it works", href: "#workflow" },
         { label: "Pricing", href: "/pricing" },
         { label: "FAQ", href: "#faq" }
@@ -1043,6 +1057,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         blocks: [
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photo Packages", href: "/collections" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
+          { id: "dreamshoot_header_workspace", type: "menu_link", settings: { label: "Workspace", href: "/app" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "#workflow" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
           { id: "dreamshoot_header_faq", type: "menu_link", settings: { label: "FAQ", href: "#faq" } },

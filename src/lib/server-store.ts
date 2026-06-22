@@ -38,6 +38,8 @@ import type {
   Order,
   PaymentEvent,
   PlatformAdmin,
+  PlatformAiProvider,
+  PlatformCloudflareAccount,
   PublicCustomer,
   PublicPlatformAdmin,
   PublicSiteAdmin,
@@ -53,6 +55,7 @@ import type {
   SiteTheme,
   Subscription,
   ThemeCopy,
+  ThemeDraftMeta,
   ThemePublication,
   ThemePage,
   ThemePageJson,
@@ -65,6 +68,8 @@ import type {
   ThemeRuntimeCustomerModel,
   ThemeRuntimeJob,
   ThemeRuntimeLedgerEntry,
+  ThemeRuntimeOrder,
+  ThemeRuntimeSubscription,
   ThemeNavLink,
   ThemeSettings,
   ThemeSettingValue
@@ -92,6 +97,20 @@ function cloneState(state: PlatformState): PlatformState {
 
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+const customerAssetRoot = path.join(dataDir, "customer-assets");
+
+function safeCustomerAssetRelativePath(storageKey: string): string {
+  const normalized = storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, "");
+  if (!normalized || normalized.includes("..") || path.isAbsolute(normalized)) {
+    throw new StoreError("unsafe_asset_storage_key", 400);
+  }
+  return normalized;
+}
+
+function customerAssetFilePath(storageKey: string): string {
+  return path.join(customerAssetRoot, safeCustomerAssetRelativePath(storageKey));
 }
 
 type TextReplacement = {
@@ -129,6 +148,39 @@ function siteTextReplacements(sourceSite: Site, targetSite: Site): TextReplaceme
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function themeDraftEtag(page: ThemePage, revision: number, updatedAt: string): string {
+  return crypto.createHash("sha256").update(`${page.siteId}:${page.id}:${revision}:${updatedAt}`).digest("base64url");
+}
+
+function ensureThemeDraftMeta(page: ThemePage): ThemeDraftMeta {
+  if (page.draftMeta) return page.draftMeta;
+  const updatedAt = new Date().toISOString();
+  const revision = page.draftJson.version;
+  const meta = { revision, updatedAt, etag: themeDraftEtag(page, revision, updatedAt) };
+  page.draftMeta = meta;
+  return meta;
+}
+
+function assertThemeDraftVersion(page: ThemePage, expected?: { expectedRevision?: number; expectedEtag?: string }) {
+  if (expected?.expectedRevision === undefined && expected?.expectedEtag === undefined) return;
+  const meta = ensureThemeDraftMeta(page);
+  if (
+    (expected.expectedRevision !== undefined && meta.revision !== expected.expectedRevision) ||
+    (expected.expectedEtag !== undefined && meta.etag !== expected.expectedEtag)
+  ) {
+    throw new StoreError("theme_draft_conflict", 409);
+  }
+}
+
+function bumpThemeDraftMeta(page: ThemePage): ThemeDraftMeta {
+  const current = ensureThemeDraftMeta(page);
+  const revision = current.revision + 1;
+  const updatedAt = new Date().toISOString();
+  const meta = { revision, updatedAt, etag: themeDraftEtag(page, revision, updatedAt) };
+  page.draftMeta = meta;
+  return meta;
 }
 
 function hashPassword(password: string): string {
@@ -651,6 +703,22 @@ function normalizeState(state: PlatformState): PlatformState {
     passwordHash: admin.passwordHash ?? hashPassword("platform123")
   }));
   next.platformSessions ??= [];
+  next.platformEmailSettings ??= { provider: "resend" };
+  next.platformCloudflareAccounts ??= [];
+  next.platformCloudflareAccounts = next.platformCloudflareAccounts.map((account) => {
+    const id = account.id || `cf_${crypto.createHash("sha1").update(`${account.accountId}:${account.email}`).digest("hex").slice(0, 10)}`;
+    const now = new Date().toISOString();
+    return {
+      ...account,
+      id,
+      label: account.label || account.email || account.accountId || id,
+      email: account.email || "",
+      createdAt: account.createdAt || account.updatedAt || now
+    };
+  });
+  next.currentCloudflareAccountId ??= next.platformCloudflareAccounts[0]?.id;
+  next.platformAiProviders ??= [];
+  next.currentAiProviderId ??= next.platformAiProviders.find((provider) => provider.preferred)?.id ?? next.platformAiProviders[0]?.id;
   next.siteDomains ??= next.sites.map((site) => ({
     id: `dom_${site.id}_primary`,
     siteId: site.id,
@@ -1266,7 +1334,8 @@ export function toThemeRuntimeJob(job: GenerationJob): ThemeRuntimeJob {
     status: job.status,
     creditsReserved: job.creditsReserved,
     createdAt: job.createdAt,
-    updatedAt: job.updatedAt
+    updatedAt: job.updatedAt,
+    requestJson: job.requestJson
   };
 }
 
@@ -1277,6 +1346,7 @@ export function toThemeRuntimeAsset(state: PlatformState, asset: AssetUpload): T
     jobId: asset.jobId,
     label: asset.label,
     previewUrl: site ? resolveMediaAssetUrl(site, asset.storageKey) : "",
+    downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,
     reviewStatus: asset.reviewStatus,
@@ -1320,6 +1390,30 @@ export function toThemeRuntimeCustomerModel(model: CustomerModel): ThemeRuntimeC
   };
 }
 
+export function toThemeRuntimeSubscription(subscription: Subscription): ThemeRuntimeSubscription {
+  return {
+    id: subscription.id,
+    productId: subscription.productId,
+    priceId: subscription.priceId,
+    status: subscription.status,
+    currentPeriodEnd: subscription.currentPeriodEnd,
+    creditsPerCycle: subscription.creditsPerCycle,
+    createdAt: subscription.createdAt
+  };
+}
+
+export function toThemeRuntimeOrder(order: Order): ThemeRuntimeOrder {
+  return {
+    id: order.id,
+    status: order.status,
+    amountCents: order.amountCents,
+    currency: order.currency,
+    credits: order.credits,
+    sourceId: order.sourceId,
+    createdAt: order.createdAt
+  };
+}
+
 export function getThemeRuntimeForCustomer(state: PlatformState, siteId: string, customerId: string): ThemeRuntimeData {
   const customer = state.customers.find((item) => item.siteId === siteId && item.id === customerId);
   const jobs = getCustomerJobsFromState(state, siteId, customerId);
@@ -1327,13 +1421,17 @@ export function getThemeRuntimeForCustomer(state: PlatformState, siteId: string,
   const albums = getSiteAlbumsFromState(state, siteId).filter((album) => album.customerId === customerId);
   const ledger = getCustomerLedgerFromState(state, siteId, customerId);
   const customerModels = getSiteCustomerModelsFromState(state, siteId).filter((model) => model.customerId === customerId);
+  const subscriptions = state.subscriptions.filter((subscription) => subscription.siteId === siteId && subscription.customerId === customerId);
+  const orders = state.orders.filter((order) => order.siteId === siteId && order.customerId === customerId);
   return {
     customer: customer ? toPublicCustomer(customer) : undefined,
     jobs: jobs.map(toThemeRuntimeJob),
     assets: assets.map((asset) => toThemeRuntimeAsset(state, asset)),
     albums: albums.map(toThemeRuntimeAlbum),
     ledger: ledger.map(toThemeRuntimeLedgerEntry),
-    customerModels: customerModels.map(toThemeRuntimeCustomerModel)
+    customerModels: customerModels.map(toThemeRuntimeCustomerModel),
+    subscriptions: subscriptions.map(toThemeRuntimeSubscription),
+    orders: orders.map(toThemeRuntimeOrder)
   };
 }
 
@@ -1349,6 +1447,8 @@ export function getThemeRuntimeFromSession(
       assets: [],
       albums: [],
       ledger: [],
+      subscriptions: [],
+      orders: [],
       customerModels: []
     };
   }
@@ -1364,6 +1464,8 @@ export function getPreviewThemeRuntime(state: PlatformState, siteId: string): Th
         assets: [],
         albums: [],
         ledger: [],
+        subscriptions: [],
+        orders: [],
         customerModels: []
       };
   return {
@@ -1411,6 +1513,31 @@ export function createAssetUpload(params: {
   });
   if (!result) throw new StoreError("asset_create_failed", 500);
   return result;
+}
+
+export function writeCustomerAssetFile(params: {
+  storageKey: string;
+  bytes: Buffer;
+}): { path: string; size: number } {
+  const filePath = customerAssetFilePath(params.storageKey);
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, params.bytes);
+  return { path: filePath, size: params.bytes.length };
+}
+
+export function readCustomerAssetFile(params: {
+  siteId: string;
+  customerId: string;
+  assetId: string;
+}): { asset: AssetUpload; bytes: Buffer } {
+  const state = readPlatformState();
+  const asset = state.assetUploads.find(
+    (item) => item.siteId === params.siteId && item.customerId === params.customerId && item.id === params.assetId && !item.deletedAt
+  );
+  if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
+  const filePath = customerAssetFilePath(asset.storageKey);
+  if (!fs.existsSync(filePath)) throw new StoreError("asset_file_missing", 404);
+  return { asset, bytes: fs.readFileSync(filePath) };
 }
 
 export function deleteAssetUpload(params: {
@@ -1683,11 +1810,19 @@ export function findDraftThemeSection(state: PlatformState, siteId: string, page
   return { site, page, section };
 }
 
-export function saveDraftPage(siteId: string, pageId: string, draftJson: ThemePageJson): PlatformState {
-  return mutatePlatformState((state) => {
+export function saveDraftPage(
+  siteId: string,
+  pageId: string,
+  draftJson: ThemePageJson,
+  expected?: { expectedRevision?: number; expectedEtag?: string }
+): { state: PlatformState; draftVersion: ThemeDraftMeta } {
+  let draftVersion: ThemeDraftMeta | undefined;
+  const state = mutatePlatformState((state) => {
     const { site, page } = findThemePage(state, siteId, pageId);
     if (!site || !page) throw new Error("theme_page_not_found");
+    assertThemeDraftVersion(page, expected);
     page.draftJson = draftJson;
+    draftVersion = bumpThemeDraftMeta(page);
     const draftTheme = getPrimaryDraftSiteTheme(state, siteId);
     if (draftTheme) {
       const record = buildSaasThemeDraft(site, draftTheme.themeKey);
@@ -1697,6 +1832,8 @@ export function saveDraftPage(siteId: string, pageId: string, draftJson: ThemePa
       draftTheme.updatedAt = new Date().toISOString();
     }
   });
+  if (!draftVersion) throw new StoreError("theme_draft_save_failed", 500);
+  return { state, draftVersion };
 }
 
 export function saveDraftThemeSettings(siteId: string, draftJson: Site["themeSettings"]["draftJson"]): PlatformState {
@@ -2175,10 +2312,18 @@ export function applyXfcartThemeEdit(
   return { state, sectionId, responseType, pageId };
 }
 
-export function publishDraftPage(siteId: string, pageId: string, actor = "site_admin_demo"): PlatformState {
-  return mutatePlatformState((state) => {
+export function publishDraftPage(
+  siteId: string,
+  pageId: string,
+  actor = "site_admin_demo",
+  expected?: { expectedRevision?: number; expectedEtag?: string }
+): { state: PlatformState; draftVersion?: ThemeDraftMeta; publishedVersion: number } {
+  let draftVersion: ThemeDraftMeta | undefined;
+  let publishedVersion = 0;
+  const state = mutatePlatformState((state) => {
     const { site, page } = findThemePage(state, siteId, pageId);
     if (!site || !page) throw new Error("theme_page_not_found");
+    assertThemeDraftVersion(page, expected);
     const themeKey =
       getPrimaryDraftSiteTheme(state, siteId)?.themeKey ??
       getActiveSiteTheme(state, siteId)?.themeKey ??
@@ -2186,10 +2331,13 @@ export function publishDraftPage(siteId: string, pageId: string, actor = "site_a
     site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
     const currentMax = site.pages.reduce((max, item) => Math.max(max, item.publishedJson.version), 0);
     const version = currentMax + 1;
+    publishedVersion = version;
     for (const themePage of site.pages) {
       themePage.publishedJson = JSON.parse(JSON.stringify(themePage.draftJson)) as ThemePageJson;
       themePage.publishedJson.version = version;
       themePage.draftJson.version = version;
+      const nextMeta = bumpThemeDraftMeta(themePage);
+      if (themePage.id === pageId) draftVersion = nextMeta;
     }
     state.sites = state.sites.map((item) => (item.id === siteId ? site : item));
     const activeRecord = buildSaasThemePublication(site, version, themeKey).theme;
@@ -2250,6 +2398,7 @@ export function publishDraftPage(siteId: string, pageId: string, actor = "site_a
       metadata: { version, pageId }
     });
   });
+  return { state, draftVersion, publishedVersion };
 }
 
 export function rollbackDraftPage(siteId: string, pageId: string): PlatformState {
@@ -2257,6 +2406,7 @@ export function rollbackDraftPage(siteId: string, pageId: string): PlatformState
     const { site, page } = findThemePage(state, siteId, pageId);
     if (!site || !page) throw new Error("theme_page_not_found");
     page.draftJson = cloneJson(page.publishedJson);
+    bumpThemeDraftMeta(page);
     site.themeSettings.draftJson = cloneJson(site.themeSettings.publishedJson);
   });
 }
@@ -3733,6 +3883,18 @@ export function createGenerationJob(params: {
     );
     if (!siteAiApp) throw new StoreError("ai_app_not_enabled_for_site", 404);
     if (customer.balance.available < siteAiApp.creditCost) throw new StoreError("insufficient_credits", 402);
+    const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
+      ? params.requestJson.assetIds.filter((item): item is string => typeof item === "string")
+      : [];
+    if (requestedAssetIds.length) {
+      const validAssetIds = new Set(
+        state.assetUploads
+          .filter((asset) => asset.siteId === params.siteId && asset.customerId === params.customerId && !asset.deletedAt)
+          .map((asset) => asset.id)
+      );
+      const invalidAssetId = requestedAssetIds.find((assetId) => !validAssetIds.has(assetId));
+      if (invalidAssetId) throw new StoreError("asset_not_found_for_customer", 404);
+    }
 
     const now = new Date().toISOString();
     const job: GenerationJob = {
@@ -3992,5 +4154,199 @@ export function recordStripeWebhook(payload: {
     result = { event, siteId, alreadyProcessed: false };
   });
   if (!result) throw new StoreError("webhook_record_failed", 500);
+  return result;
+}
+
+export function getPlatformAiProviderFallbackQueue(): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred">> {
+  const state = readPlatformState();
+  const providers = state.platformAiProviders ?? [];
+  return providers
+    .slice()
+    .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)
+    .map(({ id, label, aiUrl, modelType, priority, preferred }) => ({ id, label, aiUrl, modelType, priority, preferred }));
+}
+
+export function updatePlatformEmailSettings(params: {
+  apiKey?: string;
+  fromEmail?: string;
+  replyTo?: string;
+  actor?: string;
+}): PlatformState {
+  return mutatePlatformState((state) => {
+    const current = state.platformEmailSettings ?? { provider: "resend" as const };
+    const nextApiKey = params.apiKey?.trim();
+    const fromEmail = params.fromEmail?.trim();
+    const replyTo = params.replyTo?.trim();
+    const now = new Date().toISOString();
+    state.platformEmailSettings = {
+      provider: "resend",
+      apiKey: nextApiKey || current.apiKey,
+      fromEmail: fromEmail ?? current.fromEmail,
+      replyTo: replyTo ?? current.replyTo,
+      updatedAt: now,
+      updatedBy: params.actor
+    };
+    state.auditLogs.unshift({
+      id: uid("audit"),
+      actorType: "platform_admin",
+      actorId: params.actor ?? "platform",
+      action: "platform_email_settings_updated",
+      targetType: "platform_email_settings",
+      targetId: "resend",
+      createdAt: now,
+      metadata: {
+        fromEmailConfigured: Boolean(state.platformEmailSettings.fromEmail),
+        replyToConfigured: Boolean(state.platformEmailSettings.replyTo),
+        apiKeyUpdated: Boolean(nextApiKey)
+      }
+    });
+  });
+}
+
+export function upsertPlatformCloudflareAccount(params: {
+  id?: string;
+  label: string;
+  email: string;
+  accountId: string;
+  apiToken?: string;
+  makeCurrent?: boolean;
+  actor?: string;
+}): PlatformCloudflareAccount {
+  let result: PlatformCloudflareAccount | undefined;
+  mutatePlatformState((state) => {
+    state.platformCloudflareAccounts ??= [];
+    const now = new Date().toISOString();
+    const accountId = params.accountId.trim();
+    const existing = params.id
+      ? state.platformCloudflareAccounts.find((account) => account.id === params.id)
+      : state.platformCloudflareAccounts.find((account) => account.accountId === accountId);
+    const account: PlatformCloudflareAccount = {
+      id: existing?.id ?? uid("cf"),
+      label: params.label.trim(),
+      email: params.email.trim().toLowerCase(),
+      accountId,
+      apiToken: params.apiToken?.trim() || existing?.apiToken || "",
+      createdAt: existing?.createdAt ?? now,
+      updatedAt: now,
+      updatedBy: params.actor
+    };
+    if (existing) {
+      state.platformCloudflareAccounts = state.platformCloudflareAccounts.map((item) => (item.id === existing.id ? account : item));
+    } else {
+      state.platformCloudflareAccounts.push(account);
+    }
+    if (params.makeCurrent || !state.currentCloudflareAccountId) {
+      state.currentCloudflareAccountId = account.id;
+    }
+    state.auditLogs.unshift({
+      id: uid("audit"),
+      actorType: "platform_admin",
+      actorId: params.actor ?? "platform",
+      action: "platform_cloudflare_account_upserted",
+      targetType: "platform_cloudflare_account",
+      targetId: account.id,
+      createdAt: now,
+      metadata: {
+        label: account.label ?? "",
+        email: account.email ?? "",
+        accountIdConfigured: Boolean(account.accountId),
+        apiTokenUpdated: Boolean(params.apiToken?.trim())
+      }
+    });
+    result = account;
+  });
+  if (!result) throw new StoreError("cloudflare_account_save_failed", 500);
+  return result;
+}
+
+export function setCurrentPlatformCloudflareAccount(params: { accountId: string; actor?: string }): PlatformCloudflareAccount {
+  let result: PlatformCloudflareAccount | undefined;
+  mutatePlatformState((state) => {
+    state.platformCloudflareAccounts ??= [];
+    const account = state.platformCloudflareAccounts.find((item) => item.id === params.accountId);
+    if (!account) throw new StoreError("cloudflare_account_not_found", 404);
+    state.currentCloudflareAccountId = account.id;
+    account.updatedAt = new Date().toISOString();
+    account.updatedBy = params.actor;
+    state.auditLogs.unshift({
+      id: uid("audit"),
+      actorType: "platform_admin",
+      actorId: params.actor ?? "platform",
+      action: "platform_cloudflare_current_account_changed",
+      targetType: "platform_cloudflare_account",
+      targetId: account.id,
+      createdAt: account.updatedAt,
+      metadata: {
+        label: account.label ?? "",
+        accountId: account.accountId
+      }
+    });
+    result = account;
+  });
+  if (!result) throw new StoreError("cloudflare_account_not_found", 404);
+  return result;
+}
+
+export function upsertPlatformAiProvider(params: {
+  id?: string;
+  label: string;
+  aiUrl: string;
+  apiKey?: string;
+  modelType: string;
+  makeCurrent?: boolean;
+  actor?: string;
+}): PlatformAiProvider {
+  let result: PlatformAiProvider | undefined;
+  mutatePlatformState((state) => {
+    const providers = state.platformAiProviders ?? [];
+    state.platformAiProviders = providers;
+    const now = new Date().toISOString();
+    const existing = params.id ? providers.find((provider) => provider.id === params.id) : undefined;
+    if (existing) {
+      existing.label = params.label.trim();
+      existing.aiUrl = params.aiUrl.trim();
+      existing.apiKey = params.apiKey?.trim() || existing.apiKey;
+      existing.modelType = params.modelType.trim();
+      existing.updatedAt = now;
+      existing.updatedBy = params.actor;
+      result = existing;
+    } else {
+      result = {
+        id: uid("aiprov"),
+        label: params.label.trim(),
+        aiUrl: params.aiUrl.trim(),
+        apiKey: params.apiKey?.trim() || undefined,
+        modelType: params.modelType.trim(),
+        priority: providers.length + 1,
+        preferred: providers.length === 0,
+        createdAt: now,
+        updatedAt: now,
+        updatedBy: params.actor
+      };
+      providers.push(result);
+    }
+    if (params.makeCurrent || !state.currentAiProviderId) {
+      state.currentAiProviderId = result.id;
+      for (const provider of providers) provider.preferred = provider.id === result.id;
+    }
+  });
+  if (!result) throw new StoreError("ai_provider_save_failed", 500);
+  return result;
+}
+
+export function setCurrentPlatformAiProvider(params: { providerId: string; actor?: string }): PlatformAiProvider {
+  let result: PlatformAiProvider | undefined;
+  mutatePlatformState((state) => {
+    const providers = state.platformAiProviders ?? [];
+    state.platformAiProviders = providers;
+    const provider = providers.find((item) => item.id === params.providerId);
+    if (!provider) throw new StoreError("ai_provider_not_found", 404);
+    state.currentAiProviderId = provider.id;
+    for (const item of providers) item.preferred = item.id === provider.id;
+    provider.updatedAt = new Date().toISOString();
+    provider.updatedBy = params.actor;
+    result = provider;
+  });
+  if (!result) throw new StoreError("ai_provider_not_found", 404);
   return result;
 }

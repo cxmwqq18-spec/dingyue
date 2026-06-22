@@ -751,8 +751,15 @@ const workspaceJson: ThemePageJson = {
       anchor: "workspace",
       eyebrow: "Customer workspace",
       title: "A real account area for uploads, jobs, and delivered albums.",
-      subtitle: "This page is editable like the storefront, while every module still reads the signed-in customer's runtime data."
-    }),
+      subtitle: "This page is editable like the storefront, while every module still reads the signed-in customer's runtime data.",
+      ctaLabel: "Start with uploads",
+      ctaHref: "/app#upload_1"
+    }, [
+      { id: "feature_upload", type: "feature", settings: { title: "Upload photos", description: "Collect selfies and source images inside a private customer workspace.", meta: "Private intake", href: "/app#upload_1" } },
+      { id: "feature_prepare", type: "feature", settings: { title: "Prepare portraits", description: "Choose style prompts and attach uploaded source photos before generation.", meta: "Consistent look", href: "/app#create" } },
+      { id: "feature_progress", type: "feature", settings: { title: "Track progress", description: "Show queued, creating, delivered, review-needed, and returned-credit states.", meta: "Live progress", href: "/app/jobs/progress" } },
+      { id: "feature_album", type: "feature", settings: { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/album" } }
+    ]),
     upload_1: section("upload_panel", {
       title: "Private uploads",
       helper: "Upload source photos into the current customer's private site library."

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import type { ThemeRuntimeAsset } from "@/lib/types";
+import { customerJsonHeaders } from "@/lib/client-csrf";
 
 function reviewLabel(status: ThemeRuntimeAsset["reviewStatus"]) {
   if (status === "approved") return "Ready";
@@ -23,7 +24,7 @@ export function JobAssetsPanel({
   const [message, setMessage] = useState("Delivered images stay private to this account.");
 
   async function download(assetId: string) {
-    const response = await fetch(`/api/sites/${siteId}/customers/${customerId}/assets/${assetId}/download`, { method: "POST" });
+    const response = await fetch(`/api/sites/${siteId}/customers/${customerId}/assets/${assetId}/download`, { method: "POST", headers: customerJsonHeaders(siteId) });
     const result = (await response.json().catch(() => ({}))) as { downloadUrl?: string; expiresAt?: string; error?: string };
     if (response.ok && result.downloadUrl) {
       setMessage(`Download link ready until ${result.expiresAt}.`);
@@ -34,7 +35,7 @@ export function JobAssetsPanel({
   }
 
   async function remove(assetId: string) {
-    const response = await fetch(`/api/sites/${siteId}/customers/${customerId}/assets/${assetId}`, { method: "DELETE" });
+    const response = await fetch(`/api/sites/${siteId}/customers/${customerId}/assets/${assetId}`, { method: "DELETE", headers: customerJsonHeaders(siteId) });
     const result = (await response.json().catch(() => ({}))) as { error?: string };
     if (response.ok) {
       setItems((current) => current.filter((asset) => asset.id !== assetId));

@@ -1,21 +1,22 @@
 import { NextResponse } from "next/server";
-import { hasCustomerSession } from "@/lib/api-auth";
+import { requireCustomerMutation } from "@/lib/api-auth";
 import { createGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
+import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { buildWorkerPayload } from "@/lib/worker";
+import type { NextRequest } from "next/server";
 
-export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const body = (await request.json().catch(() => ({}))) as {
     customerId?: string;
     aiAppSlug?: string;
-    params?: Record<string, unknown>;
+    params?: Record<string, unknown> & { assetIds?: unknown };
   };
   if (!body.customerId || !body.aiAppSlug) {
     return NextResponse.json({ error: "missing_customer_or_ai_app" }, { status: 400 });
   }
-  if (!(await hasCustomerSession(siteId, body.customerId))) {
-    return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
-  }
+  const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.generation, key: `${siteId}:${body.customerId}:jobs` });
+  if (!guard.ok) return guard.response;
   const baseUrl = new URL(request.url).origin;
   try {
     const { job, siteAiApp, ledger, customer } = createGenerationJob({
@@ -24,6 +25,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       aiAppSlug: body.aiAppSlug,
       requestJson: {
         ...(body.params ?? {}),
+        assetIds: Array.isArray(body.params?.assetIds) ? body.params.assetIds.filter((item): item is string => typeof item === "string") : [],
         creativePackId: typeof body.params?.creativePackId === "string" ? body.params.creativePackId : undefined,
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
       }

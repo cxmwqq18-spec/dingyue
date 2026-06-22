@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { getPlatformAiProviderFallbackQueue } from "@/lib/server-store";
 import type { GenerationJob, SiteAiApp } from "./types";
 
 export interface WorkerPayload {
@@ -8,6 +9,17 @@ export interface WorkerPayload {
   aiApp: string;
   inputAssets: Array<{ assetId: string; signedUrl: string }>;
   params: Record<string, unknown>;
+  aiProviderFallback: {
+    strategy: "preferred_then_priority";
+    providers: Array<{
+      id: string;
+      label: string;
+      aiUrl: string;
+      modelType: string;
+      priority: number;
+      preferred: boolean;
+    }>;
+  };
   callbackUrl: string;
   statusCallbackUrl: string;
   requestId: string;
@@ -36,13 +48,17 @@ export function buildWorkerPayload(params: {
   secret?: string;
 }): WorkerPayload {
   const requestId = `req_${params.job.id}`;
-  const unsigned = {
+  const unsigned: Omit<WorkerPayload, "signature"> = {
     jobId: params.job.id,
     siteId: params.job.siteId,
     customerId: params.job.customerId,
     aiApp: params.siteAiApp.aiApp.slug,
     inputAssets: [{ assetId: "asset_demo", signedUrl: `${params.baseUrl}/api/demo-assets/input.jpg` }],
     params: params.job.requestJson,
+    aiProviderFallback: {
+      strategy: "preferred_then_priority",
+      providers: getPlatformAiProviderFallbackQueue()
+    },
     callbackUrl: `${params.baseUrl}/api/internal/ai-worker/jobs/${params.job.id}/result`,
     statusCallbackUrl: `${params.baseUrl}/api/internal/ai-worker/jobs/${params.job.id}/status`,
     requestId

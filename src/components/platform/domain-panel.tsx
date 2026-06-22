@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Download, Plus, Star, Trash2 } from "lucide-react";
 import { downloadCsv } from "@/components/admin/export-utils";
+import { platformJsonHeaders } from "@/lib/client-csrf";
 import type { SiteDomain } from "@/lib/types";
 
 function describeDomainError(code?: string) {
@@ -38,7 +39,7 @@ export function DomainPanel({ siteId, domains }: { siteId: string; domains: Site
     setSaving(true);
     const response = await fetch(`/api/platform/sites/${siteId}/domains`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify({ domain, isPrimary: newPrimary })
     });
     const result = (await response.json().catch(() => ({}))) as { domain?: SiteDomain; error?: string };
@@ -66,7 +67,7 @@ export function DomainPanel({ siteId, domains }: { siteId: string; domains: Site
     setSaving(true);
     const response = await fetch(`/api/platform/sites/${siteId}/domains/${domainId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify({ status })
     });
     const result = (await response.json().catch(() => ({}))) as { domain?: SiteDomain; error?: string };
@@ -84,7 +85,7 @@ export function DomainPanel({ siteId, domains }: { siteId: string; domains: Site
     setSaving(true);
     const response = await fetch(`/api/platform/sites/${siteId}/domains/${domainId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify({ isPrimary: true })
     });
     const result = (await response.json().catch(() => ({}))) as { domain?: SiteDomain; error?: string };
@@ -107,7 +108,8 @@ export function DomainPanel({ siteId, domains }: { siteId: string; domains: Site
   async function removeDomain(domainId: string) {
     setSaving(true);
     const response = await fetch(`/api/platform/sites/${siteId}/domains/${domainId}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: platformJsonHeaders()
     });
     const result = (await response.json().catch(() => ({}))) as { deletedDomain?: SiteDomain; error?: string };
     setSaving(false);

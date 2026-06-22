@@ -1,19 +1,15 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { getPlatformAdminBySessionFromState, readPlatformState, StoreError, updateGatewayGroup } from "@/lib/server-store";
+import { NextRequest, NextResponse } from "next/server";
+import { requirePlatformMutation } from "@/lib/api-auth";
+import { StoreError, updateGatewayGroup } from "@/lib/server-store";
 import type { AiGatewayGroup } from "@/lib/types";
-import { platformSessionCookie } from "@/lib/session";
 
 export async function PUT(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; groupId: string }> }
 ) {
   const { siteId, groupId } = await params;
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  if (!getPlatformAdminBySessionFromState(state, sessionId)) {
-    return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
-  }
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:gateway-group:${siteId}:${groupId}` });
+  if (!guard.ok) return guard.response;
 
   const body = (await request.json().catch(() => ({}))) as Partial<AiGatewayGroup> & {
     modelAllowlist?: string[] | string;

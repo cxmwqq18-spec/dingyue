@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, Copy, Download, Eye, Layers3, Play, Plus, RefreshCcw, Sparkles, Trash2, WandSparkles } from "lucide-react";
 import type { SiteTheme, ThemeCopy, ThemePublication } from "@/lib/types";
 import { downloadJson } from "@/components/admin/export-utils";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 
 type ThemeRecord = {
   themeId: string;
@@ -217,7 +218,7 @@ export function ThemeManagerPanel({
   async function installTheme(themeKey = "theme1") {
     const response = await fetch(`/api/sites/${siteId}/theme/install`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo", themeKey })
     });
     const json = await response.json().catch(() => ({}));
@@ -233,7 +234,7 @@ export function ThemeManagerPanel({
   async function installInternalTheme(packageKey: string, label: string) {
     const response = await fetch(`/api/sites/${siteId}/theme/install`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo", themeKey: packageKey, installType: "internal" })
     });
     const json = await response.json().catch(() => ({}));
@@ -249,7 +250,7 @@ export function ThemeManagerPanel({
   async function duplicate(source: "draft" | "active") {
     const response = await fetch(`/api/sites/${siteId}/theme/duplicate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ source, actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -265,7 +266,7 @@ export function ThemeManagerPanel({
   async function duplicateTheme(theme: SiteTheme) {
     const response = await fetch(`/api/sites/${siteId}/theme/duplicate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ source: theme.status, sourceThemeId: theme.id, name: `${theme.name} copy`, actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -293,7 +294,7 @@ export function ThemeManagerPanel({
   async function resetDraft() {
     const response = await fetch(`/api/sites/${siteId}/theme/reset-draft`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -309,7 +310,7 @@ export function ThemeManagerPanel({
   async function applyToDraft(theme: SiteTheme) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}/apply-to-draft`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -325,7 +326,7 @@ export function ThemeManagerPanel({
   async function activateTheme(theme: SiteTheme) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}/activate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -341,7 +342,7 @@ export function ThemeManagerPanel({
   async function deleteTheme(theme: SiteTheme) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));

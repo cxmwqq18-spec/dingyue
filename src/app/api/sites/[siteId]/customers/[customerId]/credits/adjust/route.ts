@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
+import { requireSiteMutation } from "@/lib/api-auth";
 import { adjustCustomerCredits, StoreError, toPublicCustomer } from "@/lib/server-store";
+import type { NextRequest } from "next/server";
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; customerId: string }> }
 ) {
   const { siteId, customerId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
+  const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:credits-adjust` });
+  if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as {
     amount?: number;
     reason?: string;

@@ -12,6 +12,12 @@ export async function POST(_request: Request, { params }: { params: Promise<{ si
     deleteCustomerSession(sessionId);
   }
   const response = NextResponse.json({ ok: true });
-  response.cookies.delete(cookieName);
+  response.cookies.set(cookieName, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    expires: new Date(0)
+  });
   return response;
 }

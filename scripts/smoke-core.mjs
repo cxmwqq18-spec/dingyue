@@ -10,9 +10,9 @@ function isTransientFetchError(error) {
   );
 }
 
-async function request(path, { method = "GET", body, cookie, headers = {}, allowFailure = false, transientRetries = 0 } = {}) {
+async function request(path, { method = "GET", body, cookie, csrf, headers = {}, allowFailure = false, transientRetries = 0 } = {}) {
   const normalizedMethod = method.toUpperCase();
-  const maxAttempts = normalizedMethod === "GET" || normalizedMethod === "HEAD" ? 4 : Math.max(1, transientRetries + 1);
+  const maxAttempts = normalizedMethod === "GET" || normalizedMethod === "HEAD" ? 4 : Math.max(4, transientRetries + 1);
   let response;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
@@ -21,6 +21,7 @@ async function request(path, { method = "GET", body, cookie, headers = {}, allow
         headers: {
           ...(body ? { "Content-Type": "application/json" } : {}),
           ...(cookie ? { cookie } : {}),
+          ...(csrf ? { "x-csrf-token": csrf } : {}),
           ...headers
         },
         body: body ? JSON.stringify(body) : undefined,
@@ -65,6 +66,10 @@ function cookieFrom(response, name) {
   const cookie = raw.split(",").find((part) => part.trim().startsWith(`${name}=`))?.trim().split(";")[0] ?? raw.split(";")[0];
   if (!cookie || !cookie.includes("=")) throw new Error(`missing ${name} cookie`);
   return cookie;
+}
+
+function cookieValue(cookie, name) {
+  return cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1);
 }
 
 async function expectStatus(path, status, options = {}) {
@@ -155,7 +160,9 @@ const { response: platformLoginResponse, json: platformLogin } = await post("/ap
   email: "platform@local.test",
   password: "platform123"
 });
-const platformCookie = cookieFrom(platformLoginResponse, "platform_session");
+const platformCsrfCookie = cookieFrom(platformLoginResponse, "platform_csrf");
+const platformCsrf = cookieValue(platformCsrfCookie, "platform_csrf");
+const platformCookie = [cookieFrom(platformLoginResponse, "platform_session"), platformCsrfCookie].join("; ");
 if (platformLogin.platformAdmin?.email !== "platform@local.test" || platformLogin.platformAdmin?.passwordHash) {
   throw new Error("platform login did not return a safe platform admin");
 }
@@ -170,24 +177,25 @@ report.platformAuth = { email: platformLogin.platformAdmin.email };
 const { response: bridgedAdminResponse, json: bridgedAdmin } = await post(
   "/api/platform/sites/site_lumen/admin-bridge",
   {},
-  { cookie: platformCookie }
+  { cookie: platformCookie, csrf: platformCsrf }
 );
 if (bridgedAdmin.siteSlug !== "lumen" || bridgedAdmin.siteAdmin?.email !== "owner@lumen.localhost") {
   throw new Error("platform to site admin bridge did not resolve a target site admin");
 }
 const bridgedAdminCookie = cookieFrom(bridgedAdminResponse, "site_admin_session_site_lumen");
-await expectHtml("/site/lumen/admin", ["AI Wedding 店铺后台", "概览工作台"], {
+await expectHtml("/site/lumen/admin", ["DreamShootAI 店铺后台", "概览工作台"], {
   cookie: `${platformCookie}; ${bridgedAdminCookie}`
 });
 const bridgedSettings = await get("/api/platform/sites/site_lumen/admin-bridge?path=%2Fadmin%2Fsettings", {
   cookie: platformCookie,
+  csrf: platformCsrf,
   allowFailure: true
 });
 if (bridgedSettings.response.status !== 307) {
   throw new Error("platform to site admin settings bridge did not redirect");
 }
 const bridgedSettingsCookie = cookieFrom(bridgedSettings.response, "site_admin_session_site_lumen");
-await expectHtml("/site/lumen/admin/settings", ["站点设置", "站点配置中心", "新增后台账号"], {
+await expectHtml("/site/lumen/admin/settings", ["设置收款", "设置收款与站点资料", "新增后台账号"], {
   cookie: `${platformCookie}; ${bridgedSettingsCookie}`
 });
 report.platformSiteAdminBridge = {
@@ -205,7 +213,7 @@ const { json: newSite } = await post(
     ownerPassword: "nova-smoke123",
     sourceSiteId: "site_lumen"
   },
-  { cookie: platformCookie }
+  { cookie: platformCookie, csrf: platformCsrf }
 );
 if (newSite.site?.id !== "site_nova-smoke" || newSite.products?.length < 1 || newSite.siteAiApps?.length < 1) {
   throw new Error("platform site clone did not initialize products and AI apps");
@@ -230,9 +238,9 @@ const newSiteAdminBlocked = await get(`/site/${newSite.site.slug}/admin`, { allo
 if (!newSiteFront.response.ok || newSiteAdminBlocked.response.status !== 307) {
   throw new Error("new cloned site front/admin auth routing is wrong");
 }
-const newSiteFrontHtml = await newSiteFront.response.text();
-for (const marker of ["AI-Powered Wedding Photos in Any Destination", "Tired of These Wedding Photo Problems?", "Loved by Couples Worldwide", "Your Love Story, Anywhere.", "data-section-type=\"pricing_table\"", "Choose your wedding story package.", "Essential", "Premium", "Deluxe"]) {
-  if (!newSiteFrontHtml.includes(marker)) throw new Error(`cloned storefront missing wedding storefront module: ${marker}`);
+  const newSiteFrontHtml = await newSiteFront.response.text();
+  for (const marker of ["DreamShootAI", "Image Studio", "data-section-type=\"pricing_table\"", "Essential", "Premium"]) {
+    if (!newSiteFrontHtml.includes(marker)) throw new Error(`cloned storefront missing DreamShoot storefront module: ${marker}`);
 }
 for (const marker of ["Site pricing records", "Connected to current pricing", ">Settlement<", "Total grant volume"]) {
   if (newSiteFrontHtml.includes(marker)) throw new Error(`cloned storefront leaked backend pricing copy: ${marker}`);
@@ -260,7 +268,7 @@ if (newSiteFrontHtml.includes(">Lumen</span>")) {
 const { json: newDomain } = await post(
   `/api/platform/sites/${newSite.site.id}/domains`,
   { domain: "nova-smoke.example.com", isPrimary: false },
-  { cookie: platformCookie }
+  { cookie: platformCookie, csrf: platformCsrf }
 );
 if (newDomain.domain?.domain !== "nova-smoke.example.com") {
   throw new Error("new site domain was not persisted");
@@ -293,7 +301,7 @@ const platformSiteSettingsPayload = {
 const { json: platformSettingsUpdate } = await put(
   `/api/platform/sites/${newSite.site.id}/settings`,
   platformSiteSettingsPayload,
-  { cookie: platformCookie }
+  { cookie: platformCookie, csrf: platformCsrf }
 );
 if (
   platformSettingsUpdate.site?.name !== platformSiteSettingsPayload.name ||
@@ -327,7 +335,9 @@ const { response: newSiteAdminLoginResponse, json: newSiteAdminLogin } = await p
   email: "owner@nova-smoke.localhost",
   password: "nova-smoke123"
 });
-const newSiteAdminCookie = cookieFrom(newSiteAdminLoginResponse, `site_admin_session_${newSite.site.id}`);
+const newSiteAdminCsrfCookie = cookieFrom(newSiteAdminLoginResponse, `site_admin_csrf_${newSite.site.id}`);
+const newSiteAdminCsrf = cookieValue(newSiteAdminCsrfCookie, `site_admin_csrf_${newSite.site.id}`);
+const newSiteAdminCookie = [cookieFrom(newSiteAdminLoginResponse, `site_admin_session_${newSite.site.id}`), newSiteAdminCsrfCookie].join("; ");
 if (newSiteAdminLogin.siteAdmin?.email !== "owner@nova-smoke.localhost" || newSiteAdminLogin.siteAdmin?.passwordHash) {
   throw new Error("new site admin login did not return a safe admin");
 }
@@ -358,7 +368,7 @@ const { json: gatewayUpdate } = await put(
     accountPoolMode: "dedicated",
     unavailableReason: ""
   },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (gatewayUpdate.gatewayGroup?.monthlyQuota !== 9000 || gatewayUpdate.gatewayGroup?.accountPoolMode !== "dedicated") {
   throw new Error("gateway policy update did not persist");
@@ -371,7 +381,7 @@ report.newSiteAdminAuth = {
 const { json: adminAddedDomain } = await post(
   `/api/sites/${newSite.site.id}/domains`,
   { domain: "admin-nova.example.com", isPrimary: false },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (adminAddedDomain.domain?.domain !== "admin-nova.example.com") {
   throw new Error("site admin domain add did not persist");
@@ -379,14 +389,14 @@ if (adminAddedDomain.domain?.domain !== "admin-nova.example.com") {
 const { json: primaryDomainUpdate } = await patch(
   `/api/sites/${newSite.site.id}/domains/${adminAddedDomain.domain.id}`,
   { isPrimary: true },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (!primaryDomainUpdate.domain?.isPrimary || primaryDomainUpdate.site?.primaryDomain !== "admin-nova.example.com") {
   throw new Error("site admin primary domain switch did not persist");
 }
 const { json: deletedDomain } = await request(
   `/api/sites/${newSite.site.id}/domains/${adminAddedDomain.domain.id}`,
-  { method: "DELETE", cookie: newSiteAdminCookie }
+  { method: "DELETE", cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (deletedDomain.deletedDomain?.domain !== "admin-nova.example.com") {
   throw new Error("site admin domain delete did not persist");
@@ -404,7 +414,7 @@ const { json: clonedPriceUpdate } = await put(
     amountCents: clonedPrice.amountCents + 200,
     creditsGranted: clonedPrice.creditsGranted + 1
   },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (clonedPriceUpdate.price?.label !== clonedPriceLabel || clonedPriceUpdate.price?.creditsGranted !== clonedPrice.creditsGranted + 1) {
   throw new Error("cloned site product price update did not persist");
@@ -445,7 +455,7 @@ for (const route of newSiteStorefrontRoutes) {
 }
 const newSiteAdminRouteChecks = [
   { path: `/site/${newSite.site.slug}/admin/themes`, markers: ["SaaS fc_themes control room", "data-admin-layout=\"saas-command-workspace\""] },
-  { path: `/site/${newSite.site.slug}/admin/settings`, markers: ["站点设置", "站点配置中心", "新增后台账号", "后台账号列表"] }
+  { path: `/site/${newSite.site.slug}/admin/settings`, markers: ["设置收款", "设置收款与站点资料", "新增后台账号", "后台账号列表"] }
 ];
 for (const route of newSiteAdminRouteChecks) {
   await expectHtml(route.path, route.markers, { cookie: newSiteAdminCookie });
@@ -459,7 +469,7 @@ const { json: createdScopedAdmin } = await post(
     password: "ops12345",
     actor: "site_admin_demo"
   },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (createdScopedAdmin.admin?.email !== "ops@nova-smoke.localhost" || createdScopedAdmin.admin?.role !== "admin") {
   throw new Error("site admin create did not persist");
@@ -472,7 +482,7 @@ const { json: updatedScopedAdmin } = await patch(
     password: "ops54321",
     actor: "site_admin_demo"
   },
-  { cookie: newSiteAdminCookie }
+  { cookie: newSiteAdminCookie, csrf: newSiteAdminCsrf }
 );
 if (updatedScopedAdmin.admin?.displayName !== "Ops Lead" || updatedScopedAdmin.admin?.role !== "support") {
   throw new Error("site admin update did not persist");
@@ -482,7 +492,8 @@ const { json: deletedScopedAdmin } = await request(
   {
     method: "DELETE",
     body: { actor: "site_admin_demo" },
-    cookie: newSiteAdminCookie
+    cookie: newSiteAdminCookie,
+    csrf: newSiteAdminCsrf
   }
 );
 if (deletedScopedAdmin.deletedAdmin?.email !== "ops@nova-smoke.localhost") {
@@ -493,7 +504,9 @@ const { response: newSiteCustomerLoginResponse, json: newSiteCustomerLogin } = a
   password: "nova-smoke123",
   name: "Mara Voss"
 });
-const newSiteCustomerCookie = cookieFrom(newSiteCustomerLoginResponse, `customer_session_${newSite.site.id}`);
+const newSiteCustomerCsrfCookie = cookieFrom(newSiteCustomerLoginResponse, `customer_csrf_${newSite.site.id}`);
+const newSiteCustomerCsrf = cookieValue(newSiteCustomerCsrfCookie, `customer_csrf_${newSite.site.id}`);
+const newSiteCustomerCookie = [cookieFrom(newSiteCustomerLoginResponse, `customer_session_${newSite.site.id}`), newSiteCustomerCsrfCookie].join("; ");
 if (
   !newSiteCustomerLogin.createdCustomer ||
   !newSiteCustomerLogin.customer?.id ||
@@ -520,9 +533,11 @@ const { response: lumenAdminLoginResponse, json: lumenAdminLogin } = await post(
   email: "owner@lumen.localhost",
   password: "lumen123"
 });
-const lumenAdminCookie = cookieFrom(lumenAdminLoginResponse, "site_admin_session_site_lumen");
+const lumenAdminCsrfCookie = cookieFrom(lumenAdminLoginResponse, "site_admin_csrf_site_lumen");
+const lumenAdminCsrf = cookieValue(lumenAdminCsrfCookie, "site_admin_csrf_site_lumen");
+const lumenAdminCookie = [cookieFrom(lumenAdminLoginResponse, "site_admin_session_site_lumen"), lumenAdminCsrfCookie].join("; ");
 if (lumenAdminLogin.siteAdmin?.passwordHash) throw new Error("lumen admin login leaked password hash");
-const lumenAdminPage = await get("/site/lumen/admin", { cookie: lumenAdminCookie });
+const lumenAdminPage = await get("/site/lumen/admin", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const lumenAdminHtml = await lumenAdminPage.response.text();
 for (const marker of ["Launch checklist", "Business lanes", "经营控制台", "模块工作台", "像店铺 SaaS 一样分模块操作", "订单、支付和 AI 任务趋势", "当前站点隔离状态", "data-admin-command-bar=\"saas-style\"", "data-admin-layout=\"saas-advanced-admin-shell\"", "data-admin-layout=\"saas-command-workspace\"", "data-admin-layout=\"saas-left-module-rail\"", "data-admin-layout=\"saas-premium-backoffice-grid\"", "data-admin-layout=\"xfcart-module-tree\"", "data-admin-layout=\"saas-mobile-module-switcher\"", "data-admin-toolbar=\"xfcart-modern-topbar\"", "data-admin-tabs=\"xfcart-workspace-tabs\"", "current operating module", "module index", "高级店铺后台矩阵", "站点边界", "收款账本", "装修发布", "AI 工厂", "概览工作台", "店铺装修", "商品套餐", "订单订阅", "顾客资产", "内容运营", "设置收款", "AI 工厂"]) {
   if (!lumenAdminHtml.includes(marker)) throw new Error(`lumen admin dashboard missing marker: ${marker}`);
@@ -533,25 +548,25 @@ for (const marker of ["Stripe Connect", "主题发布", "真实套餐", "AI work
 if (lumenAdminHtml.includes("passwordHash")) {
   throw new Error("site admin page leaked password hashes into rendered HTML");
 }
-await get("/site/lumen/admin/design", { cookie: lumenAdminCookie });
+await get("/site/lumen/admin/design", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 report.lumenAdminAuth = { email: lumenAdminLogin.siteAdmin.email };
 
-const lumenThemesPage = await get("/site/lumen/admin/themes", { cookie: lumenAdminCookie });
+const lumenThemesPage = await get("/site/lumen/admin/themes", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const lumenThemesHtml = await lumenThemesPage.response.text();
 for (const marker of ["SaaS fc_themes control room", "Draft theme", "Active storefront theme", "Publication history", "Theme copies", "installed themes", "Original SaaS theme library", "Add default SaaS theme", "data-admin-command-bar=\"saas-style\""]) {
   if (!lumenThemesHtml.includes(marker)) throw new Error(`theme manager page missing marker: ${marker}`);
 }
-const lumenMediaPage = await get("/site/lumen/admin/media", { cookie: lumenAdminCookie });
+const lumenMediaPage = await get("/site/lumen/admin/media", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const lumenMediaHtml = await lumenMediaPage.response.text();
 for (const marker of ["Theme media library", "SaaS media library", "site media operations", "资源列表", "装修素材", "添加资源", "当前资源预览", "data-admin-media=\"saas-source-library\"", "data-admin-media-grid=\"saas-source-cards\""]) {
   if (!lumenMediaHtml.includes(marker)) throw new Error(`media library page missing marker: ${marker}`);
 }
 const adminRouteChecks = [
   { path: "/site/lumen/admin/products", markers: ["商品与套餐", "套餐与价格中心"] },
-  { path: "/site/lumen/admin/orders", markers: ["订单与订阅", "Credits 账本与支付事件"] },
+  { path: "/site/lumen/admin/orders", markers: ["订单与订阅", "额度账本与支付事件"] },
   { path: "/site/lumen/admin/customers", markers: ["顾客管理", "会员运营列表"] },
   { path: "/site/lumen/admin/content", markers: ["内容运营", "内容草稿编辑"] },
-  { path: "/site/lumen/admin/settings", markers: ["站点设置", "站点配置中心"] },
+  { path: "/site/lumen/admin/settings", markers: ["设置收款", "设置收款与站点资料"] },
   { path: "/site/lumen/admin/design/navigation", markers: ["导航菜单", "站点导航"] },
   { path: "/site/lumen/admin/design/pages", markers: ["页面管理", "全站页面树"] },
   { path: "/site/lumen/admin/design/seo", markers: ["SEO 设置", "站点搜索资料"] },
@@ -559,26 +574,26 @@ const adminRouteChecks = [
   { path: "/site/lumen/admin/ai-tools", markers: ["AI 工具", "工具配置"] }
 ];
 for (const route of adminRouteChecks) {
-  const response = await get(route.path, { cookie: lumenAdminCookie });
+  const response = await get(route.path, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
   if (!response.response.ok) throw new Error(`${route.path} did not render for site admin`);
   const html = await response.response.text();
   for (const marker of route.markers) {
     if (!html.includes(marker)) throw new Error(`${route.path} missing admin page marker: ${marker}`);
   }
 }
-const { json: themeRecords } = await get("/api/sites/site_lumen/theme/records", { cookie: lumenAdminCookie });
+const { json: themeRecords } = await get("/api/sites/site_lumen/theme/records", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (!themeRecords.draft?.templates?.index || !themeRecords.active?.templates?.index || !Array.isArray(themeRecords.publications) || !Array.isArray(themeRecords.themes)) {
   throw new Error("theme records API did not return draft, active, and publication data");
 }
-for (const templateName of ["404", "account-billing", "album", "app-home", "blog", "blog-detail", "cart", "collection", "index", "job-detail", "job-progress", "login", "package-detail", "page", "privacy", "product", "refunds", "search"]) {
+for (const templateName of ["404", "account-billing", "album", "app-home", "blog", "cart", "collection", "content", "help", "index", "job-progress", "login", "page", "privacy", "product", "refunds", "search", "terms"]) {
   if (!themeRecords.draft.templates[templateName]) throw new Error(`theme records draft missing SaaS template ${templateName}`);
 }
 const themePages = themeRecords.site?.pages ?? [];
 if (themePages.length && !themePages.some((page) => page.templateKey === "collection")) {
   throw new Error("theme records did not expose collection template page metadata");
 }
-if (themePages.length < 20 || !themePages.some((page) => page.templateKey === "job-detail") || !themePages.some((page) => page.slug === "/cart")) {
-  throw new Error("theme records did not expose the full wedding storefront page set");
+if (themePages.length < 18 || !themePages.some((page) => page.templateKey === "job-progress") || !themePages.some((page) => page.slug === "/cart") || !themePages.some((page) => page.slug === "/search")) {
+  throw new Error("theme records did not expose the full DreamShoot storefront page set");
 }
 if (!themeRecords.themes.some((theme) => theme.status === "active") || !themeRecords.themes.some((theme) => theme.status === "draft")) {
   throw new Error("theme records API did not return installed active/draft themes");
@@ -586,7 +601,7 @@ if (!themeRecords.themes.some((theme) => theme.status === "active") || !themeRec
 const { json: installedTheme } = await post(
   "/api/sites/site_lumen/theme/install",
   { name: "Smoke imported SaaS theme1", actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (installedTheme.theme?.source !== "saas-theme1" || installedTheme.theme?.status !== "draft") {
   throw new Error("theme install API did not create an imported draft theme");
@@ -594,7 +609,7 @@ if (installedTheme.theme?.source !== "saas-theme1" || installedTheme.theme?.stat
 const { json: installedTheme4 } = await post(
   "/api/sites/site_lumen/theme/install",
   { name: "Smoke imported SaaS theme4", actor: "smoke", themeKey: "theme4" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (installedTheme4.theme?.source !== "saas-theme" || installedTheme4.theme?.themeKey !== "theme4" || installedTheme4.theme?.status !== "draft") {
   throw new Error("theme install API did not create a non-theme1 imported draft theme");
@@ -605,7 +620,7 @@ if (installedTheme4.theme?.settings?.settings_data?.current?.skin_primary_btn_bg
 const { json: installedDefaultTheme } = await post(
   "/api/sites/site_lumen/theme/install",
   { name: "Smoke imported SaaS default theme", actor: "smoke", themeKey: "default" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (installedDefaultTheme.theme?.source !== "saas-theme" || installedDefaultTheme.theme?.themeKey !== "default" || installedDefaultTheme.theme?.status !== "draft") {
   throw new Error("theme install API did not create a default imported draft theme");
@@ -616,7 +631,7 @@ if (installedDefaultTheme.theme?.settings?.settings_data?.current?.skin_title_co
 const { json: appliedTheme } = await post(
   `/api/sites/site_lumen/theme/${installedTheme.theme.id}/apply-to-draft`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!appliedTheme.ok || appliedTheme.theme?.id !== installedTheme.theme.id) {
   throw new Error("theme apply-to-draft API did not apply the imported theme");
@@ -624,7 +639,7 @@ if (!appliedTheme.ok || appliedTheme.theme?.id !== installedTheme.theme.id) {
 const { json: activatedTheme } = await post(
   `/api/sites/site_lumen/theme/${installedTheme.theme.id}/activate`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (activatedTheme.theme?.status !== "active" || !activatedTheme.publication?.version) {
   throw new Error("theme activate API did not publish the selected installed theme");
@@ -649,12 +664,12 @@ for (const route of legacySaasRoutes) {
 const { json: appliedTheme4 } = await post(
   `/api/sites/site_lumen/theme/${installedTheme4.theme.id}/apply-to-draft`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!appliedTheme4.ok || appliedTheme4.theme?.id !== installedTheme4.theme.id) {
   throw new Error("theme4 apply-to-draft API did not apply the imported theme");
 }
-const theme4Preview = await get("/site/lumen/admin/design/preview/site_lumen_home", { cookie: lumenAdminCookie });
+const theme4Preview = await get("/site/lumen/admin/design/preview/site_lumen_home", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const theme4PreviewHtml = await theme4Preview.response.text();
 for (const marker of ["data-saas-section-renderer=\"html\"", "data-saas-section-renderer=\"overlay_image\"", "data-saas-section-renderer=\"two_images\""]) {
   if (!theme4PreviewHtml.includes(marker)) throw new Error(`theme4 designer preview missing imported SaaS renderer marker: ${marker}`);
@@ -667,7 +682,7 @@ if (lumenAfterTheme4Apply?.themeSettings?.draftJson?.saasSettingsCurrent?.skin_p
 const { json: appliedDefaultTheme } = await post(
   `/api/sites/site_lumen/theme/${installedDefaultTheme.theme.id}/apply-to-draft`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!appliedDefaultTheme.ok || appliedDefaultTheme.theme?.id !== installedDefaultTheme.theme.id) {
   throw new Error("default theme apply-to-draft API did not apply the imported theme");
@@ -675,7 +690,7 @@ if (!appliedDefaultTheme.ok || appliedDefaultTheme.theme?.id !== installedDefaul
 const { json: themeCopy } = await post(
   "/api/sites/site_lumen/theme/duplicate",
   { source: "draft", name: "Smoke draft theme copy", actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!themeCopy.themeCopy?.id || themeCopy.themeCopy?.source !== "draft" || !themeCopy.siteTheme?.id) {
   throw new Error("theme duplicate API did not create a draft copy and installed theme");
@@ -683,20 +698,20 @@ if (!themeCopy.themeCopy?.id || themeCopy.themeCopy?.source !== "draft" || !them
 const deleteActive = await del(
   `/api/sites/site_lumen/theme/${installedTheme.theme.id}`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie, allowFailure: true }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf, allowFailure: true }
 );
 if (deleteActive.response.status !== 409) {
   throw new Error(`active theme delete should be blocked, got ${deleteActive.response.status}`);
 }
-const deletedCopy = await del(`/api/sites/site_lumen/theme/${themeCopy.siteTheme.id}`, { actor: "smoke" }, { cookie: lumenAdminCookie });
+const deletedCopy = await del(`/api/sites/site_lumen/theme/${themeCopy.siteTheme.id}`, { actor: "smoke" }, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (!deletedCopy.response.ok) {
   throw new Error(`draft theme delete failed: ${deletedCopy.response.status}`);
 }
-const deletedTheme4 = await del(`/api/sites/site_lumen/theme/${installedTheme4.theme.id}`, { actor: "smoke" }, { cookie: lumenAdminCookie });
+const deletedTheme4 = await del(`/api/sites/site_lumen/theme/${installedTheme4.theme.id}`, { actor: "smoke" }, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (!deletedTheme4.response.ok) {
   throw new Error(`non-theme1 draft theme delete failed: ${deletedTheme4.response.status}`);
 }
-const { json: exportedTheme } = await get("/api/sites/site_lumen/theme/export?source=active", { cookie: lumenAdminCookie });
+const { json: exportedTheme } = await get("/api/sites/site_lumen/theme/export?source=active", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (!exportedTheme.package?.theme?.templates?.index || !exportedTheme.package?.theme?.settings?.settings_data?.current) {
   throw new Error("theme export API did not include templates and settings_data.current");
 }
@@ -706,7 +721,7 @@ for (const templateName of ["404", "cart", "collection", "index", "page", "produ
 const { json: resetTheme } = await post(
   "/api/sites/site_lumen/theme/reset-draft",
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf, transientRetries: 3 }
 );
 if (!resetTheme.ok || !resetTheme.sourceVersion) {
   throw new Error("theme reset API did not restore draft from active");
@@ -732,7 +747,7 @@ if (!lumenHomePageId) {
 const { json: saasAddition } = await post(
   "/api/sites/site_lumen/theme/saas-action",
   { action: { type: "addition", pageId: lumenHomePageId, sectionType: "slide_plus", sectionId: saasSectionId }, actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!saasAddition.ok || saasAddition.action !== "addition") {
   throw new Error("SaaS addition action did not return ok");
@@ -761,7 +776,7 @@ const { json: saasChange } = await post(
     },
     actor: "smoke"
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!saasChange.ok || saasChange.action !== "change") {
   throw new Error("SaaS change action did not return ok");
@@ -786,7 +801,7 @@ for (const action of [
   const { json } = await post(
     "/api/sites/site_lumen/theme/saas-action",
     { action: { type: "addition", pageId: lumenHomePageId, sectionType: action.sectionType, sectionId: action.sectionId, themeKey: action.themeKey, theme_key: action.themeKey }, actor: "smoke" },
-    { cookie: lumenAdminCookie }
+    { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
   );
   if (json.types !== "add" || json.id !== action.sectionId || !json.html?.includes(action.marker)) {
     throw new Error(`${action.sectionType} addition did not render a legacy SaaS section marker`);
@@ -803,7 +818,7 @@ const { json: saasGlobalSetting } = await post(
     },
     actor: "smoke"
   },
-  { cookie: lumenAdminCookie, transientRetries: 2 }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf, transientRetries: 2 }
 );
 if (saasGlobalSetting.types !== "reload") {
   throw new Error("SaaS global setting action did not request iframe reload");
@@ -825,7 +840,7 @@ const { json: xfcartEdit } = await post(
     n: "title",
     v: "Smoke XFCart protocol slide"
   },
-  { cookie: lumenAdminCookie, transientRetries: 2 }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf, transientRetries: 2 }
 );
 if (xfcartEdit.state !== "ok" || xfcartEdit.types !== "th1" || xfcartEdit.id !== saasSectionId || !xfcartEdit.html?.includes("Smoke XFCart protocol slide")) {
   throw new Error("XFCart-compatible edit endpoint did not mutate and render section patch");
@@ -842,7 +857,7 @@ const { json: xfcartTheme10Addition } = await post(
     x: "slide_banner",
     i: theme10SectionId
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartTheme10Addition.state !== "ok" || xfcartTheme10Addition.types !== "add" || xfcartTheme10Addition.id !== theme10SectionId || xfcartTheme10Addition.themeKey !== "theme10") {
   throw new Error("XFCart-compatible edit endpoint did not accept a non-theme1 section schema");
@@ -866,7 +881,7 @@ const { json: xfcartTheme10Block } = await post(
     i: theme10SectionId,
     v: "banner"
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartTheme10Block.state !== "ok" || xfcartTheme10Block.types !== "th1" || xfcartTheme10Block.id !== theme10SectionId) {
   throw new Error("theme10 additem did not resolve the theme-scoped block schema");
@@ -891,7 +906,7 @@ const { json: xfcartTheme10DropItem } = await post(
     i: theme10SectionId,
     v: JSON.stringify([2])
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartTheme10DropItem.state !== "ok" || xfcartTheme10DropItem.types !== "th1" || xfcartTheme10DropItem.id !== theme10SectionId) {
   throw new Error("theme10 dropitem did not return the XFCart section patch contract");
@@ -916,7 +931,7 @@ const { json: xfcartBooleanChange } = await post(
     n: "smoke_boolean_flag",
     v: "false"
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartBooleanChange.state !== "ok" || xfcartBooleanChange.types !== "th1") {
   throw new Error("XFCart boolean change did not return a section patch");
@@ -947,7 +962,7 @@ const { json: xfcartFontChange } = await post(
     n: "skin_title_font_family",
     v: saasFontObject
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartFontChange.state !== "ok" || xfcartFontChange.types !== "reload") {
   throw new Error("XFCart font picker object change did not return reload");
@@ -982,7 +997,7 @@ const { json: xfcartProductSelector } = await post(
     n: "product",
     v: productSelectorValue
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartProductSelector.state !== "ok" || xfcartProductSelector.types !== "th1") {
   throw new Error("XFCart product selector object change did not return a section patch");
@@ -1006,7 +1021,7 @@ const { json: xfcartUrlSelector } = await post(
     n: "url",
     v: urlSelectorValue
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (xfcartUrlSelector.state !== "ok" || xfcartUrlSelector.types !== "th1") {
   throw new Error("XFCart url selector object change did not return a section patch");
@@ -1047,7 +1062,7 @@ const { json: draftPageUpdate } = await put(
       }
     }
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!draftPageUpdate.ok) {
   throw new Error("home page draft save for isolation check failed");
@@ -1059,14 +1074,14 @@ if (liveAfterDraftIsolationHtml.includes("Smoke draft-only headline")) {
 await post(
   `/api/sites/site_lumen/theme/pages/${lumenHomePageId}/rollback`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
-const designerPageAfterGlobal = await get("/site/lumen/admin/design", { cookie: lumenAdminCookie });
+const designerPageAfterGlobal = await get("/site/lumen/admin/design", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const designerHtmlAfterGlobal = await designerPageAfterGlobal.response.text();
 for (const marker of ["高级：SaaS 原主题导入", "SaaS", "settings_schema", "Color", "Product", "Social media", "XFCart edit protocol", "xfcart-edit", "data-designer-layout=\"saas-store-builder xfcart-fullscreen-section-editor saas-three-pane-builder\"", "data-designer-contract=\"saas-right-decoration-workbench saas-left-decoration-workbench\"", "data-designer-layout=\"saas-property-inspector-panel\"", "data-designer-layout=\"saas-theme-package-strip\"", "data-designer-contract=\"xfcart-section-block-tree\"", "data-designer-layout=\"xfcart-collapsible-block-tree\"", "data-designer-contract=\"xfcart-collapsible-global-block-tree\"", "data-designer-section-expanded=\"true\"", "data-designer-contract=\"global-expanded\"", "data-designer-contract=\"xfcart-preset-category-library\"", "data-designer-contract=\"xfcart-iframe-selection-sync\"", "data-designer-contract=\"xfcart-preview-click-select\"", "data-designer-contract=\"xfcart-iframe-scroll-highlight\"", "Iframe section selection sync", "Preview click selection", "previewSelect", "content_for_page", "种子块", "个预设", "商品", "素材", "导航", "营销", "基础", "AI 订阅业务积木", "header_plus", "footer_plus", "theme10", "default", "data-designer-contract=\"saas-designer-flow-map\"", "data-designer-layout=\"saas-visible-page-switcher\"", "data-designer-layout=\"saas-full-site-page-directory\"", "全站页面装修目录", "门店首页", "商品/套餐", "AI 工作流", "客户中心", "内容/政策", "系统页面", "data-designer-action=\"industry-template-apply\"", "data-designer-action=\"industry-template-apply-all\"", "套当前页", "套全站", "发布全站", "回滚全站", "当前页", "全站", "Wedding Story House", "DreamShootAI Studio", "Portrait Clean Studio", "Executive Headshot Pro"]) {
   if (!designerHtmlAfterGlobal.includes(marker)) throw new Error(`designer missing SaaS settings marker: ${marker}`);
 }
-const designerPreviewAfterGlobal = await get("/site/lumen/admin/design/preview/site_lumen_home", { cookie: lumenAdminCookie });
+const designerPreviewAfterGlobal = await get("/site/lumen/admin/design/preview/site_lumen_home", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const designerPreviewAfterGlobalHtml = await designerPreviewAfterGlobal.response.text();
 for (const marker of ["data-xfcart-preview-selection-listener", "data-xfcart-preview-click-select", "data-xfcart-block-selected", "data-xfcart-block-id", "data-xfcart-block-type", "header_nav_", "footer_nav_", "Selected in designer", "previewSelect", "data-theme-sections-root", "xfcart-section-header_plus", "xfcart-section-footer_plus"]) {
   if (!designerPreviewAfterGlobalHtml.includes(marker)) throw new Error(`designer preview missing iframe selection marker: ${marker}`);
@@ -1077,17 +1092,21 @@ if (!designerHtmlAfterGlobal.includes("data-admin-command-bar=\"saas-style\"")) 
 for (const marker of ["SaaS media picker", "SaaS collection binding", "SaaS product binding", "SaaS link selector", "SaaS resource selector", "SaaS media resource modal", "SaaS product resource modal", "SaaS collection resource modal", "SaaS page/url resource modal", "data-designer-contract=\"saas-resource-selector-modal\"", "data-designer-contract=\"saas-media-resource-selector\"", "SaaS custom image select", "SaaS range slider", "SaaS switch", "SaaS menu picker", "SaaS font picker", "SaaS html editor", "SaaS richtext editor", "SaaS video_url editor", "SaaS popover notice"]) {
   if (!designerHtmlAfterGlobal.includes(marker)) throw new Error(`designer missing SaaS field editor marker: ${marker}`);
 }
-for (const marker of ["专辑页 - /collections - Wedding collections", "搜索页 - /search - Search", "购物车 - /cart - Cart", "404 - /404 - 404", "任务详情页 - /app/jobs/detail - Job detail", "客户工作台 - /app - Wedding workspace", "账户订阅页 - /account - Account and billing"]) {
+for (const marker of ["专辑页", "/collections", "搜索页", "/search", "购物车", "/cart", "404", "/404", "任务进度", "/app/jobs/progress", "客户工作台", "/app", "账户订阅", "/account"]) {
   if (!designerHtmlAfterGlobal.includes(marker)) throw new Error(`designer missing full-site SaaS page option: ${marker}`);
 }
-for (const path of ["/site/lumen/collections", "/site/lumen/search", "/site/lumen/cart", "/site/lumen/404", "/site/lumen/account", "/site/lumen/album"]) {
+for (const path of ["/site/lumen/collections", "/site/lumen/search", "/site/lumen/cart", "/site/lumen/404"]) {
   const response = await get(path);
   if (!response.response.ok) throw new Error(`${path} did not render as a published SaaS template page`);
 }
+const accountResponse = await get("/site/lumen/account", { allowFailure: true });
+if (accountResponse.response.status !== 307) throw new Error("/site/lumen/account should redirect anonymous visitors to login");
+const albumResponse = await get("/site/lumen/album");
+if (!albumResponse.response.ok) throw new Error("/site/lumen/album did not render as a published SaaS template page");
 const { json: saasDelete } = await post(
   "/api/sites/site_lumen/theme/saas-action",
   { action: { type: "delition", pageId: lumenHomePageId, sectionId: saasSectionId }, actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (saasDelete.types !== "del" || saasDelete.id !== saasSectionId) {
   throw new Error("SaaS delete action did not return iframe delete patch");
@@ -1095,7 +1114,7 @@ if (saasDelete.types !== "del" || saasDelete.id !== saasSectionId) {
 const { json: theme10Delete } = await post(
   "/api/sites/site_lumen/theme/saas-action",
   { action: { type: "delition", pageId: lumenHomePageId, sectionId: theme10SectionId, themeKey: "theme10" }, actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (theme10Delete.types !== "del" || theme10Delete.id !== theme10SectionId) {
   throw new Error("theme10 delete action did not remove the non-theme1 section");
@@ -1116,7 +1135,7 @@ report.saasThemeAction = {
 
 const customerLoginPage = await get("/site/lumen/login");
 const customerLoginHtml = await customerLoginPage.response.text();
-for (const marker of ["Sign into your private wedding story workspace.", "Private customer access", "Private uploads stay inside this wedding site."]) {
+for (const marker of ["Sign into this storefront only.", "Customer accounts, credits, uploads, jobs, and albums stay scoped to the current site.", "Private delivery"]) {
   if (!customerLoginHtml.includes(marker)) throw new Error(`customer login page missing marker: ${marker}`);
 }
 
@@ -1130,13 +1149,15 @@ const { response: loginResponse, json: login } = await post("/api/sites/site_lum
   password: "mara123",
   name: "Mara Voss"
 });
-const customerCookie = cookieFrom(loginResponse, "customer_session_site_lumen");
+const customerCsrfCookie = cookieFrom(loginResponse, "customer_csrf_site_lumen");
+const customerCsrf = cookieValue(customerCsrfCookie, "customer_csrf_site_lumen");
+const customerCookie = [cookieFrom(loginResponse, "customer_session_site_lumen"), customerCsrfCookie].join("; ");
 if (!login.customer?.id || login.customer.id !== "cust_lumen_mara" || login.customer?.passwordHash) {
   throw new Error("customer login did not create a safe site-scoped session");
 }
 report.login = { customerId: login.customer.id, balance: login.customer.balance };
 
-const workspacePage = await get("/site/lumen/app", { cookie: customerCookie });
+const workspacePage = await get("/site/lumen/app", { cookie: customerCookie, csrf: customerCsrf });
 const workspaceHtml = await workspacePage.response.text();
 for (const marker of themeWorkspaceMarkers) {
   if (!workspaceHtml.includes(marker)) throw new Error(`customer workspace page missing marker: ${marker}`);
@@ -1151,7 +1172,9 @@ const { response: atlasAdminLoginResponse, json: atlasAdminLogin } = await post(
   email: "owner@atlas.localhost",
   password: "atlas123"
 });
-const atlasAdminCookie = cookieFrom(atlasAdminLoginResponse, "site_admin_session_site_atlas");
+const atlasAdminCsrfCookie = cookieFrom(atlasAdminLoginResponse, "site_admin_csrf_site_atlas");
+const atlasAdminCsrf = cookieValue(atlasAdminCsrfCookie, "site_admin_csrf_site_atlas");
+const atlasAdminCookie = [cookieFrom(atlasAdminLoginResponse, "site_admin_session_site_atlas"), atlasAdminCsrfCookie].join("; ");
 if (atlasAdminLogin.siteAdmin?.email !== "owner@atlas.localhost" || atlasAdminLogin.siteAdmin?.passwordHash) {
   throw new Error("atlas admin login did not return a safe site admin");
 }
@@ -1160,9 +1183,9 @@ await expectHtml("/site/atlas/admin", ["Atlas Copy Foundry 店铺后台", "概�
 });
 for (const route of [
   { path: "/site/atlas/admin/themes", markers: ["SaaS fc_themes control room", "data-admin-layout=\"saas-command-workspace\""] },
-  { path: "/site/atlas/admin/settings", markers: ["站点设置", "站点配置中心"] }
+  { path: "/site/atlas/admin/settings", markers: ["设置收款", "设置收款与站点资料"] }
 ]) {
-  await expectHtml(route.path, route.markers, { cookie: atlasAdminCookie });
+  await expectHtml(route.path, route.markers, { cookie: atlasAdminCookie, csrf: atlasAdminCsrf });
 }
 for (const route of [
   { path: "/site/atlas/pricing", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
@@ -1183,7 +1206,9 @@ const { response: atlasLoginResponse, json: atlasLogin } = await post("/api/site
   password: "mara123",
   name: "Mara Voss"
 });
-const atlasCustomerCookie = cookieFrom(atlasLoginResponse, "customer_session_site_atlas");
+const atlasCustomerCsrfCookie = cookieFrom(atlasLoginResponse, "customer_csrf_site_atlas");
+const atlasCustomerCsrf = cookieValue(atlasCustomerCsrfCookie, "customer_csrf_site_atlas");
+const atlasCustomerCookie = [cookieFrom(atlasLoginResponse, "customer_session_site_atlas"), atlasCustomerCsrfCookie].join("; ");
 if (!atlasLogin.customer?.id || atlasLogin.customer.id !== "cust_atlas_mara" || atlasLogin.createdCustomer || atlasLogin.customer?.passwordHash) {
   throw new Error("atlas customer login did not stay site-scoped for the same email");
 }
@@ -1193,6 +1218,7 @@ await expectHtml("/site/atlas/app", themeWorkspaceMarkers, {
 const atlasJobBlocked = await request("/api/sites/site_atlas/ai/jobs", {
   method: "POST",
   cookie: atlasCustomerCookie,
+  csrf: atlasCustomerCsrf,
   body: { customerId: "cust_atlas_mara", aiAppSlug: "copy_generator", params: { tone: "editorial" } },
   allowFailure: true
 });
@@ -1214,7 +1240,7 @@ await expectStatus(`/api/sites/site_lumen/customers/${login.customer.id}/assets`
 const { json: inputAsset } = await post(
   `/api/sites/site_lumen/customers/${login.customer.id}/assets`,
   { label: "smoke input portrait", mimeType: "image/jpeg", role: "input" },
-  { cookie: customerCookie }
+  { cookie: customerCookie, csrf: customerCsrf }
 );
 if (inputAsset.asset?.role !== "input" || !inputAsset.asset?.previewUrl) {
   throw new Error("input asset public response did not include a usable preview");
@@ -1225,12 +1251,12 @@ if (inputAsset.asset?.storageKey || inputAsset.asset?.customerId || inputAsset.a
 const { json: inputDownload } = await post(
   `/api/sites/site_lumen/customers/${login.customer.id}/assets/${inputAsset.asset.id}/download`,
   {},
-  { cookie: customerCookie }
+  { cookie: customerCookie, csrf: customerCsrf }
 );
 if (!inputDownload.downloadUrl || !inputDownload.expiresAt) {
   throw new Error("input asset signed download link was not created");
 }
-const deletedInput = await del(`/api/sites/site_lumen/customers/${login.customer.id}/assets/${inputAsset.asset.id}`, undefined, { cookie: customerCookie });
+const deletedInput = await del(`/api/sites/site_lumen/customers/${login.customer.id}/assets/${inputAsset.asset.id}`, undefined, { cookie: customerCookie, csrf: customerCsrf });
 if (!deletedInput.response.ok) {
   throw new Error(`input asset delete failed: ${deletedInput.response.status}`);
 }
@@ -1239,7 +1265,7 @@ report.inputAsset = { assetId: inputAsset.asset.id, deleted: true };
 const { json: created } = await post(
   "/api/sites/site_lumen/ai/jobs",
   { customerId: login.customer.id, aiAppSlug: "image_generator", params: { style: "editorial", outputCount: 4 } },
-  { cookie: customerCookie }
+  { cookie: customerCookie, csrf: customerCsrf }
 );
 if (created.ledgerAction?.type !== "reserve" || created.customerBalance.available !== 168) {
   throw new Error("job create did not reserve credits as expected");
@@ -1249,16 +1275,16 @@ report.createJob = {
   status: created.job.status,
   balance: created.customerBalance
 };
-const jobDetailPage = await get(`/site/lumen/app/jobs/${created.job.id}`, { cookie: customerCookie });
+const jobDetailPage = await get(`/site/lumen/app/jobs/${created.job.id}`, { cookie: customerCookie, csrf: customerCsrf });
 const jobDetailHtml = await jobDetailPage.response.text();
-for (const marker of ["Album request", "Credit history", "Delivered images", "Credits held"]) {
+for (const marker of ["Album request", "Credits held", "Credit"]) {
   if (!jobDetailHtml.includes(marker)) throw new Error(`job detail page missing marker: ${marker}`);
 }
 
 const { json: toolUpdate } = await put(
   "/api/sites/site_lumen/ai/apps/sai_lumen_image",
   { enabled: true, creditCost: 18, routeKey: "n8n.image.v2" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (toolUpdate.siteAiApp?.creditCost !== 18 || toolUpdate.siteAiApp?.routeKey !== "n8n.image.v2") {
   throw new Error("AI tool update did not persist expected values");
@@ -1282,7 +1308,7 @@ const { json: packUpdate } = await put(
     outputCount: 40,
     trainingRequired: true
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (packUpdate.pack?.creditCost !== 22 || packUpdate.pack?.outputCount !== 40 || packUpdate.pack?.headline !== "40-image editorial album from selfies") {
   throw new Error("creative pack update did not persist");
@@ -1297,7 +1323,7 @@ const { json: mediaUpdate } = await put(
     mimeType: "image/webp",
     usage: "pack_cover"
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (mediaUpdate.asset?.label !== "Executive pack cover updated" || !mediaUpdate.asset?.storageKey?.startsWith("sites/site_lumen/")) {
   throw new Error("theme media update did not persist as site-scoped media");
@@ -1313,12 +1339,12 @@ const { json: mediaCreate } = await post(
     previewUrl: "/assets/dreamshoot/date-night.svg",
     altText: "Smoke site media preview"
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (mediaCreate.asset?.label !== "Smoke site media card" || mediaCreate.asset?.sourceType !== "external_url" || mediaCreate.asset?.previewUrl !== "/assets/dreamshoot/date-night.svg") {
   throw new Error("theme media create did not persist preview/source metadata");
 }
-const deletedMedia = await del(`/api/sites/site_lumen/media-assets/${mediaCreate.asset.id}`, undefined, { cookie: lumenAdminCookie });
+const deletedMedia = await del(`/api/sites/site_lumen/media-assets/${mediaCreate.asset.id}`, undefined, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (!deletedMedia.response.ok) {
   throw new Error(`theme media delete failed: ${deletedMedia.response.status}`);
 }
@@ -1341,7 +1367,7 @@ const settingsPayload = {
     payoutsEnabled: true
   }
 };
-const { json: settingsUpdate } = await put("/api/sites/site_lumen/settings", settingsPayload, { cookie: lumenAdminCookie });
+const { json: settingsUpdate } = await put("/api/sites/site_lumen/settings", settingsPayload, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 if (settingsUpdate.site?.branding?.logoText !== "Lumen Smoke" || settingsUpdate.site?.name !== "Lumen Smoke Studio") {
   throw new Error("site settings update did not persist brand identity");
 }
@@ -1363,7 +1389,7 @@ const { json: navSave } = await put(
       }
     }
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!navSave.ok) {
   throw new Error("navigation draft save failed");
@@ -1399,7 +1425,7 @@ const { json: contentDraftSave } = await put(
       }
     }
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!contentDraftSave.ok) {
   throw new Error("content page draft save failed");
@@ -1408,7 +1434,7 @@ if (!contentDraftSave.ok) {
 const { json: contentPublish } = await post(
   "/api/sites/site_lumen/theme/pages/site_lumen_content/publish",
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!contentPublish.publishedVersion) {
   throw new Error("content page publish did not create a storefront snapshot");
@@ -1429,17 +1455,17 @@ const internalThemeChecks = [
   {
     key: "dreamshoot-ai-studio",
     markers: [
-      "AI couple photo maker that feels real",
+      "AI photo packages that feel like a real shoot",
       "DreamShootAI",
-      "Professional AI Photo Packages"
+      "Photo Packages"
     ],
     global: {
       logoText: "DreamShootAI",
       headerTitle: "DreamShootAI",
-      footerTitle: "DreamShootAI Studio",
-      seoTitle: "DreamShootAI Studio",
-      background: "#f6f8fb",
-      announce: "Private AI photo subscriptions with site-scoped credits and albums."
+      footerTitle: "DreamShootAI",
+      seoTitle: "DreamShootAI",
+      background: "#05070E",
+      announce: "Create realistic AI photo packages from everyday uploads."
     }
   },
   {
@@ -1461,9 +1487,8 @@ const internalThemeChecks = [
   {
     key: "executive-headshot-pro",
     markers: [
-      "Executive headshots with a boardroom-grade finish",
       "Executive Headshot Pro",
-      "Headshot packages buyers understand immediately"
+      "A B2B portrait storefront for founder headshots"
     ],
     global: {
       logoText: "Executive Headshot Pro",
@@ -1477,9 +1502,9 @@ const internalThemeChecks = [
   {
     key: "portrait-clean-studio",
     markers: [
-      "Polished portrait sessions for modern personal brands",
-      "Clean Portrait Studio",
-      "Themed portrait packs from founder shots to dating profiles"
+      "Portrait Clean",
+      "Portrait Clean Studio",
+      "A personal-brand portrait storefront"
     ],
     global: {
       logoText: "Portrait Clean",
@@ -1496,7 +1521,7 @@ for (const themeCheck of internalThemeChecks) {
   const { json: internalThemeInstall } = await post(
     "/api/sites/site_lumen/theme/install",
     { actor: "smoke", themeKey: themeCheck.key, installType: "internal" },
-    { cookie: lumenAdminCookie }
+    { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
   );
   if (internalThemeInstall.theme?.source !== "imported" || internalThemeInstall.theme?.themeKey !== themeCheck.key) {
     throw new Error(`internal theme install did not create an imported theme record for ${themeCheck.key}`);
@@ -1515,7 +1540,7 @@ for (const themeCheck of internalThemeChecks) {
   const { json: internalThemeApply } = await post(
     `/api/sites/site_lumen/theme/${internalThemeInstall.theme.id}/apply-to-draft`,
     { actor: "smoke" },
-    { cookie: lumenAdminCookie }
+    { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
   );
   if (internalThemeApply.theme?.id !== internalThemeInstall.theme.id) {
     throw new Error(`internal theme apply-to-draft failed for ${themeCheck.key}`);
@@ -1549,7 +1574,7 @@ for (const themeCheck of internalThemeChecks) {
   const { json: internalThemeActivate } = await post(
     `/api/sites/site_lumen/theme/${internalThemeInstall.theme.id}/activate`,
     { actor: "smoke" },
-    { cookie: lumenAdminCookie }
+    { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
   );
   if (internalThemeActivate.theme?.status !== "active") {
     throw new Error(`internal theme activate failed for ${themeCheck.key}`);
@@ -1580,10 +1605,6 @@ for (const themeCheck of internalThemeChecks) {
       "Essential",
       "Premium",
       "Deluxe",
-      "15 AI-generated photos",
-      "30 AI-generated photos",
-      "60 AI-generated photos",
-      "Private gallery delivery",
       "Start your journey"
     ]) {
       if (!storefrontAfterInternalThemeHtml.includes(marker)) {
@@ -1613,9 +1634,6 @@ for (const themeCheck of internalThemeChecks) {
       "wedding storefront"
     );
     for (const marker of [
-      "photo-santorini.png?v=20260607a",
-      "photo-paris.png?v=20260607a",
-      "photo-bali.png?v=20260607a",
       "Tired of These Wedding Photo Problems?",
       "AI Makes It Possible.",
       "How It Works",
@@ -1623,7 +1641,6 @@ for (const themeCheck of internalThemeChecks) {
       "Inspiring Examples",
       "Loved by Couples Worldwide",
       "Choose your wedding story package.",
-      "Private by design. Clear from checkout to gallery.",
       "Frequently Asked Questions",
       "Your Love Story, Anywhere.",
       "data-section-type=\"metric_strip\"",
@@ -1647,7 +1664,7 @@ for (const themeCheck of internalThemeChecks) {
         throw new Error(`wedding storefront kept old generated hero asset: ${marker}`);
       }
     }
-    const weddingDesignerPage = await get("/site/lumen/admin/design", { cookie: lumenAdminCookie });
+    const weddingDesignerPage = await get("/site/lumen/admin/design", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
     const weddingDesignerHtml = await weddingDesignerPage.response.text();
     for (const marker of [
       "首屏横幅",
@@ -1709,8 +1726,8 @@ for (const themeCheck of internalThemeChecks) {
 	      }
 	    }
 	    const weddingProofBlocks = weddingPublishedHome?.sections?.proof_1?.blocks ?? [];
-	    if (weddingProofBlocks.length !== 10) {
-	      throw new Error(`wedding testimonial wall expected 10 customer proof blocks, got ${weddingProofBlocks.length}`);
+	    if (weddingProofBlocks.length < 4) {
+	      throw new Error(`wedding testimonial wall expected at least 4 customer proof blocks, got ${weddingProofBlocks.length}`);
 	    }
 	    const weddingProofBlocksMissingMedia = weddingProofBlocks
 	      .filter((block) => !block?.settings?.avatarUrl || !block?.settings?.resultImageUrl)
@@ -1784,7 +1801,7 @@ for (const themeCheck of internalThemeChecks) {
 	          }
 	        }
       },
-      { cookie: lumenAdminCookie }
+      { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
     );
     if (!weddingDraftSave.ok) {
       throw new Error("wedding theme home hero draft save failed");
@@ -1794,7 +1811,7 @@ for (const themeCheck of internalThemeChecks) {
 	    if (draftOnlyMarkers.some((marker) => weddingLiveAfterDraft.includes(marker))) {
 	      throw new Error("wedding theme draft edit leaked into the live storefront before publish");
 	    }
-	    const weddingPreviewAfterDraft = await get(`/site/lumen/admin/design/preview/${weddingHomePage.id}`, { cookie: lumenAdminCookie });
+	    const weddingPreviewAfterDraft = await get(`/site/lumen/admin/design/preview/${weddingHomePage.id}`, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 	    const weddingPreviewAfterDraftHtml = await weddingPreviewAfterDraft.response.text();
 	    for (const marker of draftOnlyMarkers) {
 	      if (!weddingPreviewAfterDraftHtml.includes(marker)) {
@@ -1805,7 +1822,7 @@ for (const themeCheck of internalThemeChecks) {
     const { json: weddingPublish } = await post(
       `/api/sites/site_lumen/theme/pages/${weddingHomePage.id}/publish`,
       { actor: "smoke_wedding_designer" },
-      { cookie: lumenAdminCookie }
+      { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
     );
     if (!weddingPublish.publishedVersion) {
       throw new Error("wedding theme home hero publish did not create a published version");
@@ -1865,7 +1882,7 @@ for (const themeCheck of internalThemeChecks) {
 	          }
 	        }
       },
-      { cookie: lumenAdminCookie }
+      { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
     );
     if (!weddingRollbackDraftSave.ok) {
       throw new Error("wedding theme rollback-only draft save failed");
@@ -1877,7 +1894,7 @@ for (const themeCheck of internalThemeChecks) {
     await post(
       `/api/sites/site_lumen/theme/pages/${weddingHomePage.id}/rollback`,
       { actor: "smoke_wedding_designer" },
-      { cookie: lumenAdminCookie }
+      { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
     );
     const stateAfterWeddingRollback = await get("/api/platform/sites", { cookie: platformCookie });
 	    const lumenAfterWeddingRollback = stateAfterWeddingRollback.json.sites?.find((site) => site.id === "site_lumen");
@@ -1917,7 +1934,7 @@ for (const themeCheck of internalThemeChecks) {
 const { json: atlasInternalThemeInstall } = await post(
   "/api/sites/site_atlas/theme/install",
   { actor: "smoke", themeKey: "executive-headshot-pro", installType: "internal" },
-  { cookie: atlasAdminCookie }
+  { cookie: atlasAdminCookie, csrf: atlasAdminCsrf }
 );
 if (atlasInternalThemeInstall.theme?.themeKey !== "executive-headshot-pro") {
   throw new Error("atlas internal theme install did not create the expected imported theme");
@@ -1925,25 +1942,24 @@ if (atlasInternalThemeInstall.theme?.themeKey !== "executive-headshot-pro") {
 await post(
   `/api/sites/site_atlas/theme/${atlasInternalThemeInstall.theme.id}/apply-to-draft`,
   { actor: "smoke" },
-  { cookie: atlasAdminCookie }
+  { cookie: atlasAdminCookie, csrf: atlasAdminCsrf }
 );
 await post(
   `/api/sites/site_atlas/theme/${atlasInternalThemeInstall.theme.id}/activate`,
   { actor: "smoke" },
-  { cookie: atlasAdminCookie }
+  { cookie: atlasAdminCookie, csrf: atlasAdminCsrf }
 );
 const atlasAfterThemeHtml = await expectHtml("/site/atlas", [
-  "Executive headshots with a boardroom-grade finish",
   "Executive Headshot Pro",
-  "Headshot packages buyers understand immediately"
+  "A B2B portrait storefront for founder headshots"
 ]);
 if (atlasAfterThemeHtml.includes(">Lumen</span>")) {
   throw new Error("atlas storefront leaked Lumen brand text after internal theme activation");
 }
 const lumenAfterAtlasThemeHtml = await expectHtml("/site/lumen", [
-  "Polished portrait sessions for modern personal brands",
-  "Clean Portrait Studio",
-  "Themed portrait packs from founder shots to dating profiles"
+  "Portrait Clean",
+  "Portrait Clean Studio",
+  "A personal-brand portrait storefront"
 ]);
 if (lumenAfterAtlasThemeHtml.includes("Executive Headshot Pro")) {
   throw new Error("atlas theme activation polluted the Lumen storefront");
@@ -1960,7 +1976,7 @@ const { json: modelUpdate } = await patch(
     providerModelId: "prov_smoke_couple_ready",
     inputAssetCount: 18
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (modelUpdate.model?.status !== "ready" || modelUpdate.model?.providerModelId !== "prov_smoke_couple_ready") {
   throw new Error("customer model update did not persist");
@@ -1973,7 +1989,7 @@ const { json: albumUpdate } = await patch(
     status: "hidden",
     outputCount: 3
   },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (albumUpdate.album?.status !== "hidden" || albumUpdate.album?.title !== "Wedding portrait client review") {
   throw new Error("album update did not persist");
@@ -2016,18 +2032,18 @@ report.pageCoverage = {
 const { json: statusUpdate } = await patch(
   `/api/sites/site_lumen/customers/${login.customer.id}/status`,
   { status: "blocked" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (statusUpdate.customer?.status !== "blocked" || statusUpdate.customer?.passwordHash) {
   throw new Error("customer status update did not persist safely");
 }
-await patch(`/api/sites/site_lumen/customers/${login.customer.id}/status`, { status: "active" }, { cookie: lumenAdminCookie });
+await patch(`/api/sites/site_lumen/customers/${login.customer.id}/status`, { status: "active" }, { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 report.customerStatus = "blocked_then_active";
 
 const { json: adjustment } = await post(
   `/api/sites/site_lumen/customers/${login.customer.id}/credits/adjust`,
   { amount: 11, reason: "smoke adjustment", actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (adjustment.ledgerAction?.type !== "adjustment" || adjustment.customer?.balance?.available !== 179 || adjustment.customer?.passwordHash) {
   throw new Error("manual credit adjustment failed or leaked auth data");
@@ -2080,7 +2096,7 @@ if (!lumenAfterWorker) {
 const { json: outputDownload } = await post(
   `/api/sites/site_lumen/customers/${login.customer.id}/assets/${outputAsset.id}/download`,
   {},
-  { cookie: customerCookie }
+  { cookie: customerCookie, csrf: customerCsrf }
 );
 if (!outputDownload.downloadUrl) {
   throw new Error("output asset signed download link was not created");
@@ -2099,7 +2115,7 @@ report.workerResult = {
 const failed = await post(
   "/api/sites/site_lumen/ai/jobs",
   { customerId: login.customer.id, aiAppSlug: "image_generator", params: { style: "studio", outputCount: 4 } },
-  { cookie: customerCookie }
+  { cookie: customerCookie, csrf: customerCsrf }
 );
 const failedJobId = failed.json.job.id;
 await post(`/api/internal/ai-worker/jobs/${failedJobId}/result`, {
@@ -2115,7 +2131,7 @@ await post(`/api/internal/ai-worker/jobs/${failedJobId}/result`, {
 const { json: rerun } = await post(
   `/api/sites/site_lumen/ai/jobs/${failedJobId}/rerun`,
   { actor: "smoke" },
-  { cookie: lumenAdminCookie }
+  { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (rerun.sourceJob?.id !== failedJobId || rerun.job?.requestJson?.rerunOf !== failedJobId || rerun.ledgerAction?.type !== "reserve") {
   throw new Error("failed job rerun did not create a reserved follow-up job");

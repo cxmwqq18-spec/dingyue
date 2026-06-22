@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Download, Trash2, UploadCloud } from "lucide-react";
 import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
+import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 
 export function AssetsPanel({
   siteId,
@@ -21,7 +22,9 @@ export function AssetsPanel({
   const router = useRouter();
   const [items, setItems] = useState(assets);
   const [label, setLabel] = useState("reference portrait");
+  const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("Uploads stay private to this account.");
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     setItems(assets);
@@ -29,25 +32,37 @@ export function AssetsPanel({
 
   async function createAsset(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!file) {
+      setMessage("Choose an image file before uploading.");
+      return;
+    }
+    setPending(true);
+    setMessage("Uploading the private source photo...");
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("label", label || file.name.replace(/\.[^.]+$/, ""));
+    formData.append("role", "input");
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ label, mimeType: "image/jpeg", role: "input" })
+      headers: csrfHeader(`customer_csrf_${siteId}`),
+      body: formData
     });
     const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
     const createdAsset = result.asset;
     if (response.ok && createdAsset) {
       setItems((current) => [createdAsset, ...current]);
-      setLabel("");
-      setMessage(`${createdAsset.label} saved.`);
+      setLabel("reference portrait");
+      setFile(null);
+      setMessage(`${createdAsset.label} uploaded and saved to this account.`);
       router.refresh();
     } else {
       setMessage(result.error ?? "Asset create failed.");
     }
+    setPending(false);
   }
 
   async function deleteAsset(assetId: string) {
-    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}`, { method: "DELETE" });
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}`, { method: "DELETE", headers: customerJsonHeaders(siteId) });
     const result = (await response.json().catch(() => ({}))) as { error?: string };
     if (response.ok) {
       setItems((current) => current.filter((asset) => asset.id !== assetId));
@@ -59,7 +74,7 @@ export function AssetsPanel({
   }
 
   async function downloadAsset(assetId: string) {
-    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}/download`, { method: "POST" });
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}/download`, { method: "POST", headers: customerJsonHeaders(siteId) });
     const result = (await response.json().catch(() => ({}))) as { downloadUrl?: string; expiresAt?: string; error?: string };
     if (response.ok && result.downloadUrl) {
       setMessage(`Download link ready until ${result.expiresAt}.`);
@@ -78,18 +93,29 @@ export function AssetsPanel({
         </div>
       </div>
       <form className="grid gap-3 md:grid-cols-[1fr_auto]" onSubmit={createAsset}>
-        <label className="grid gap-2 text-sm font-medium text-[#171514]">
-          Upload label
-          <input
-            className="rounded-[18px] border border-[#ded5ca] bg-white px-4 py-3 text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
-            onChange={(event) => setLabel(event.target.value)}
-            placeholder="reference portrait"
-            value={label}
-          />
-        </label>
-        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98]">
+        <div className="grid gap-3">
+          <label className="grid gap-2 text-sm font-medium text-[#171514]">
+            Image file
+            <input
+              accept="image/*"
+              className="rounded-[18px] border border-dashed border-[#cdbfae] bg-white px-4 py-3 text-sm text-[#171514] file:mr-4 file:rounded-full file:border-0 file:bg-[#171514] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
+              onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              type="file"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium text-[#171514]">
+            Upload label
+            <input
+              className="rounded-[18px] border border-[#ded5ca] bg-white px-4 py-3 text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+              onChange={(event) => setLabel(event.target.value)}
+              placeholder={file?.name.replace(/\.[^.]+$/, "") || "reference portrait"}
+              value={label}
+            />
+          </label>
+        </div>
+        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !file}>
           <UploadCloud className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
-          Add upload
+          {pending ? "Uploading" : "Upload photo"}
         </button>
       </form>
       <div className="mt-5 grid gap-3">

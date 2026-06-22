@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExternalLink, RefreshCcw, RotateCcw, Send, Undo2 } from "lucide-react";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 
 function actionButtonClass(tone: "dark" | "light" | "warn" = "light") {
   if (tone === "dark") return "input_btn border-[#00a95f] bg-[#09c878] text-white hover:bg-[#08b66d]";
@@ -46,7 +47,7 @@ export function DesignPageActions({
         : `/api/sites/${siteId}/theme/pages/${pageId}/rollback`;
     const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -116,7 +117,7 @@ export function PublicationActions({
     setBusy("publish");
     const response = await fetch(`/api/sites/${siteId}/theme/pages/${pageId}/publish`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -133,7 +134,7 @@ export function PublicationActions({
     setBusy("reset");
     const response = await fetch(`/api/sites/${siteId}/theme/reset-draft`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));
@@ -200,7 +201,7 @@ export function RestorePublicationButton({
     setBusy(true);
     const response = await fetch(`/api/sites/${siteId}/theme/publications/${publicationId}/restore-draft`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const json = await response.json().catch(() => ({}));

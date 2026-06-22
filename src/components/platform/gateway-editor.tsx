@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { platformJsonHeaders } from "@/lib/client-csrf";
 import type { AiGatewayGroup } from "@/lib/types";
 
 export function GatewayEditor({ siteId, group }: { siteId: string; group: AiGatewayGroup }) {
@@ -20,7 +21,7 @@ export function GatewayEditor({ siteId, group }: { siteId: string; group: AiGate
   async function save() {
     const response = await fetch(`/api/platform/sites/${siteId}/gateway-groups/${group.id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: platformJsonHeaders(),
       body: JSON.stringify(item)
     });
     const result = (await response.json().catch(() => ({}))) as { gatewayGroup?: AiGatewayGroup; error?: string };

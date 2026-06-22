@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
+import { requireSiteMutation } from "@/lib/api-auth";
 import { rerunGenerationJob, StoreError, toPublicCustomer } from "@/lib/server-store";
 import { buildWorkerPayload } from "@/lib/worker";
+import type { NextRequest } from "next/server";
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; jobId: string }> }
 ) {
   const { siteId, jobId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
+  const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:job-rerun` });
+  if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
   const baseUrl = new URL(request.url).origin;
 

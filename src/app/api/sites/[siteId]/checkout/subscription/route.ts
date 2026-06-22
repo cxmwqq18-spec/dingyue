@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
-import { hasCustomerSession } from "@/lib/api-auth";
+import { requireCustomerMutation } from "@/lib/api-auth";
 import { buildCheckoutMetadata, canPublishPaidProducts } from "@/lib/billing";
 import { getSiteProductsFromState, readPlatformState } from "@/lib/server-store";
+import { RATE_LIMITS } from "@/lib/security/rate-limit";
+import type { NextRequest } from "next/server";
 
-export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const body = (await request.json().catch(() => ({}))) as { customerId?: string; priceId?: string };
   const state = readPlatformState();
@@ -18,9 +20,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   if (!body.customerId || !body.priceId) {
     return NextResponse.json({ error: "missing_customer_or_price" }, { status: 400 });
   }
-  if (!(await hasCustomerSession(siteId, body.customerId))) {
-    return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
-  }
+  const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.checkout, key: `${siteId}:${body.customerId}:checkout` });
+  if (!guard.ok) return guard.response;
   const customer = state.customers.find((item) => item.siteId === siteId && item.id === body.customerId);
   const price = state.products.flatMap((product) => product.prices).find((item) => item.siteId === siteId && item.id === body.priceId);
   if (!customer || !price) {

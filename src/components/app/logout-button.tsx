@@ -8,7 +8,7 @@ export function LogoutButton({ siteId, siteSlug }: { siteId: string; siteSlug: s
 
   async function logout() {
     setPending(true);
-    await fetch(`/api/sites/${siteId}/auth/logout`, { method: "POST" });
+    await fetch(`/api/sites/${siteId}/auth/logout`, { method: "POST", credentials: "same-origin" });
     window.location.href = `/site/${siteSlug}/login`;
   }
 

@@ -20,9 +20,20 @@
     "design:briefs": "node scripts/build-image-redesign-prompts.mjs",
     "design:images": "node scripts/generate-image-redesigns.mjs",
     "image:batch": "node scripts/generate-gpt-image-batch.mjs",
-    "smoke:core": "node scripts/smoke-core.mjs"
+    "smoke:core": "node scripts/smoke-core.mjs",
+    "smoke:ai-providers": "node scripts/smoke-ai-providers.mjs",
+    "smoke:platform-email-settings": "node scripts/smoke-platform-email-settings.mjs",
+    "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",
+    "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
+    "smoke:server": "node scripts/run-smoke-server.mjs",
+    "smoke:security-baseline": "node scripts/smoke-security-baseline.mjs",
+    "smoke:designer-concurrency": "node scripts/smoke-designer-concurrency.mjs",
+    "storage:health": "node scripts/storage-health.mjs",
+    "smoke:storage-health": "node scripts/smoke-storage-health.mjs",
+    "acceptance:risk-guard": "node scripts/acceptance-risk-guard.mjs"
   },
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "lucide-react": "^0.468.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
@@ -37,6 +48,7 @@
     "eslint-config-next": "^15.0.0",
     "playwright": "^1.60.0",
     "postcss": "^8.4.49",
+    "prisma": "^7.8.0",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2"
   }

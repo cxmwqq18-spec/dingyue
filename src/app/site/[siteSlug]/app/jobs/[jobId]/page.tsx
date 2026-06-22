@@ -11,7 +11,9 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const { siteSlug } = await params;
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
-  const page = site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail");
+  const page =
+    site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ??
+    site?.pages.find((item) => item.slug === "/app/jobs/progress");
   return site && page ? metadataForThemePage(site, page) : {};
 }
 

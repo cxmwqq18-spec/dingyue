@@ -33,6 +33,7 @@ import {
   Sparkles,
   Tags,
   UploadCloud,
+  UserRound,
   Users,
   Youtube
 } from "lucide-react";
@@ -108,7 +109,7 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader site={routedSite} settings={settings} />
+        <ThemeGlobalHeader runtime={runtime} site={routedSite} settings={settings} />
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section]) => (
@@ -229,7 +230,7 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: ThemeSettings }) {
+export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings }) {
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
   const title = header ? setting(header, "title", site.branding.logoText) : site.branding.logoText;
@@ -256,16 +257,17 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
   const logoAlt = header ? setting(header, "logoAlt", title) : title;
   const isDreamShoot = /dreamshoot/i.test(title);
   const brandMark = brandInitials(title);
+  const customer = runtime?.customer;
   return (
     <header
       className={
         [
           "storefront-global-header",
           dark
-            ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
+            ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
             : lightCommerce
-              ? `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
-              : `${sticky ? "sticky top-0" : "relative"} z-30 border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
+              ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
+              : `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
         ].join(" ")
       }
     >
@@ -349,7 +351,7 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
             return (
               <div className="group relative" key={`${link.label}_${link.href}`}>
                 {linkNode}
-                <div className={`pointer-events-none fixed left-1/2 z-50 w-[min(92vw,1180px)] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 ease-out group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}>
+                <div className={`invisible pointer-events-none fixed left-1/2 z-50 w-[min(92vw,1180px)] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 ease-out group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}>
                   <DreamShootMegaToolsPanel
                     ctaHref="/tools"
                     ctaLabel="Explore all tools"
@@ -363,24 +365,50 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
           })}
         </nav>
         <div className="flex items-center justify-end gap-3">
-          <Link
-            className={
-              dark
-                ? isDreamShoot
-                  ? "hidden rounded-[18px] border border-white/14 bg-white/[0.045] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.08] active:scale-[0.98] lg:inline-flex"
-                  : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
-                : lightCommerce
-                  ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
-                  : "rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98]"
-            }
-            href={hrefFor(site, ctaHref)}
-            style={isDreamShoot && dark ? { background: dreamshootBrandGradient } : dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
-          >
-            {ctaLabel}
-          </Link>
+          {customer ? (
+            <div className={dark ? "hidden items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex"}>
+              <Link className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
+                <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
+                  <UserRound className="h-4 w-4" strokeWidth={1.8} />
+                </span>
+                <span className="min-w-0 text-left">
+                  <span className="block max-w-[11rem] truncate text-sm font-semibold">{customer.name}</span>
+                  <span className={dark ? "block max-w-[13rem] truncate text-xs text-white/62" : "block max-w-[13rem] truncate text-xs text-[#64605a]"}>
+                    {customer.email} · {customer.balance.available} credits
+                  </span>
+                </span>
+              </Link>
+              <Link className={dark ? "hidden rounded-full border border-white/12 px-3 py-2 text-xs font-semibold text-white/76 transition hover:bg-white/[0.08] xl:inline-flex" : "hidden rounded-full border border-black/10 px-3 py-2 text-xs font-semibold text-[#4f4944] transition hover:bg-black/[0.04] xl:inline-flex"} href={hrefFor(site, "/app")}>
+                Workspace
+              </Link>
+              <form action={hrefFor(site, "/logout")} method="post">
+                <input name="siteId" type="hidden" value={site.id} />
+                <button className={dark ? "inline-flex items-center rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex items-center rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]"} type="submit">
+                  Sign out
+                </button>
+              </form>
+            </div>
+          ) : (
+            <Link
+              className={
+                dark
+                  ? isDreamShoot
+                    ? "hidden rounded-[18px] border border-white/14 bg-white/[0.045] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.08] active:scale-[0.98] lg:inline-flex"
+                    : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
+                  : lightCommerce
+                    ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
+                    : "rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98]"
+              }
+              href={hrefFor(site, ctaHref)}
+              style={isDreamShoot && dark ? { background: dreamshootBrandGradient } : dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
+            >
+              {ctaLabel}
+            </Link>
+          )}
           {dark || lightCommerce ? (
             <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
               <summary
+                aria-label={mobileLabel}
                 className={
                   dark
                     ? "relative z-[90] flex list-none items-center gap-2 rounded-[14px] border border-white/20 bg-white/[0.08] px-4 py-3 text-sm font-medium text-white shadow-[0_16px_44px_-34px_rgba(0,0,0,0.55)] backdrop-blur"
@@ -423,17 +451,38 @@ export function ThemeGlobalHeader({ site, settings }: { site: Site; settings: Th
                     </Link>
                   ))}
                 </div>
-                <Link
-                  className={
-                    dark
-                      ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-4 py-3 text-sm font-semibold text-[#101114]"
-                      : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white"
-                  }
-                  href={hrefFor(site, ctaHref)}
-                >
-                  {ctaLabel}
-                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-                </Link>
+                {customer ? (
+                  <div className={dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]"}>
+                    <p className="truncate text-sm font-semibold">{customer.name}</p>
+                    <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email} · {customer.balance.available} credits</p>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <Link className={dark ? "inline-flex justify-center rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/app")}>
+                        Workspace
+                      </Link>
+                      <Link className={dark ? "inline-flex justify-center rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/account")}>
+                        Account
+                      </Link>
+                    </div>
+                    <form action={hrefFor(site, "/logout")} className="mt-3" method="post">
+                      <input name="siteId" type="hidden" value={site.id} />
+                      <button className={dark ? "inline-flex w-full justify-center rounded-[14px] border border-white/14 px-4 py-3 text-sm font-semibold text-white" : "inline-flex w-full justify-center rounded-[14px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white"} type="submit">
+                        Sign out
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <Link
+                    className={
+                      dark
+                        ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-4 py-3 text-sm font-semibold text-[#101114]"
+                        : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white"
+                    }
+                    href={hrefFor(site, ctaHref)}
+                  >
+                    {ctaLabel}
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                )}
               </div>
             </details>
           ) : null}
@@ -833,11 +882,32 @@ function routedSitePath(site: Site, path = "/"): string {
 function hrefFor(site: Site, href: string): string {
   if (!href) return routedSitePath(site);
   if (href === "javascript:void(0);") return "#";
+  if (href === "#workflow") return routedSitePath(site, "/#workflow");
+  if (href === "#faq") return routedSitePath(site, "/help");
+  if (href.startsWith("/app#")) return `${routedSitePath(site, "/app")}${href.slice("/app".length)}`;
+  if (href === "/privacy-policy") return routedSitePath(site, "/policies/privacy");
+  if (href === "/terms-of-service") return routedSitePath(site, "/policies/terms");
   if (href.startsWith("#") || href.startsWith("http")) return href;
   const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
   return routedSitePath(site, href);
+}
+
+function customerAccountStatusLabel(status: string): string {
+  if (status === "active") return "Active";
+  if (status === "past_due") return "Payment attention";
+  if (status === "blocked") return "Blocked";
+  return status;
+}
+
+function orderStatusLabel(status: string): string {
+  if (status === "paid") return "Paid";
+  if (status === "fulfilled") return "Fulfilled";
+  if (status === "checkout_started") return "Checkout started";
+  if (status === "refunded") return "Refunded";
+  if (status === "expired") return "Expired";
+  return "Created";
 }
 
 function sitePathFromPage(site: Site, pageType: string): string {
@@ -3590,6 +3660,13 @@ function SectionView({
     }
 
     if (launcherSurface === "account") {
+      const subscriptions = runtime?.subscriptions ?? [];
+      const orders = runtime?.orders ?? [];
+      const activeSubscription = subscriptions.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? subscriptions[0];
+      const activeProduct = activeSubscription ? products.find((product) => product.id === activeSubscription.productId) : undefined;
+      const recentJobs = (runtime?.jobs ?? []).slice(0, 4);
+      const recentAlbums = (runtime?.albums ?? []).slice(0, 4);
+      const recentLedger = (runtime?.ledger ?? []).slice(0, 4);
       return (
         <section className="bg-[#f6efe5] px-5 py-10 text-[#14161a]" id={sectionAnchor(section, "account-ops")}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -3617,6 +3694,25 @@ function SectionView({
                       </span>
                     ))}
                   </div>
+                  {customer ? (
+                    <div className="mt-6 rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">profile</p>
+                      <div className="mt-4 grid gap-3 text-sm">
+                        <div>
+                          <p className="text-xs text-[#8a7a6d]">Name</p>
+                          <p className="mt-1 font-semibold text-[#171514]">{customer.name}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-[#8a7a6d]">Email</p>
+                          <p className="mt-1 break-all font-semibold text-[#171514]">{customer.email}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-[#8a7a6d]">Account status</p>
+                          <p className="mt-1 font-semibold text-[#171514]">{customerAccountStatusLabel(customer.status)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
                 <div className="px-6 py-6 xl:px-8 xl:py-8">
                   <div className="mb-5 flex items-center justify-between gap-4">
@@ -3652,6 +3748,82 @@ function SectionView({
                         </Link>
                       );
                     })}
+                  </div>
+                  <div className="mt-6 grid gap-4 xl:grid-cols-2">
+                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">plan</p>
+                          <h3 className="mt-2 text-xl font-semibold text-[#171514]">{activeProduct?.name ?? "No active plan"}</h3>
+                        </div>
+                        <span className="rounded-full border border-[#e2d6c8] bg-[#fbf7f0] px-3 py-1 text-xs font-semibold text-[#7d6e61]">
+                          {activeSubscription?.status ?? "none"}
+                        </span>
+                      </div>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
+                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">cycle credits</p>
+                          <p className="mt-2 text-2xl font-semibold">{activeSubscription?.creditsPerCycle ?? 0}</p>
+                        </div>
+                        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
+                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">period end</p>
+                          <p className="mt-2 text-sm font-semibold">{activeSubscription ? new Date(activeSubscription.currentPeriodEnd).toLocaleDateString("zh-CN") : "Not started"}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">orders</p>
+                      <div className="mt-4 grid gap-3">
+                        {orders.length ? orders.slice(0, 3).map((order) => (
+                          <div className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={order.id}>
+                            <div>
+                              <p className="font-semibold text-[#171514]">{formatCurrency(order.amountCents, order.currency)}</p>
+                              <p className="mt-1 text-xs text-[#7d7064]">{order.credits} credits · {new Date(order.createdAt).toLocaleDateString("zh-CN")}</p>
+                            </div>
+                            <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{orderStatusLabel(order.status)}</span>
+                          </div>
+                        )) : (
+                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No orders recorded for this account yet.</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">generation progress</p>
+                        <Link className="text-xs font-semibold text-[#171514]" href={hrefFor(site, "/app/jobs/progress")}>Open timeline</Link>
+                      </div>
+                      <div className="mt-4 grid gap-3">
+                        {recentJobs.length ? recentJobs.map((job, index) => (
+                          <Link className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={hrefFor(site, `/app/jobs/${job.id}`)} key={job.id}>
+                            <p className="font-semibold text-[#171514]">{customerRequestTitle(job, index)}</p>
+                            <p className="mt-1 text-xs text-[#7d7064]">{customerStatusLabel(job.status)} · {job.creditsReserved} credits held</p>
+                          </Link>
+                        )) : (
+                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No generation jobs yet.</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">albums and ledger</p>
+                        <Link className="text-xs font-semibold text-[#171514]" href={hrefFor(site, "/album")}>Open albums</Link>
+                      </div>
+                      <div className="mt-4 grid gap-3">
+                        {recentAlbums.length ? recentAlbums.map((album) => (
+                          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={album.id}>
+                            <p className="font-semibold text-[#171514]">{album.title}</p>
+                            <p className="mt-1 text-xs text-[#7d7064]">{customerAlbumStatusLabel(album.status)} · {album.outputCount} images</p>
+                          </div>
+                        )) : recentLedger.length ? recentLedger.map((entry) => (
+                          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={entry.id}>
+                            <p className="font-semibold text-[#171514]">{customerLedgerLabel(entry.type)}</p>
+                            <p className="mt-1 text-xs text-[#7d7064]">{entry.amount} credits · {new Date(entry.createdAt).toLocaleDateString("zh-CN")}</p>
+                          </div>
+                        )) : (
+                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Albums and ledger activity will appear here after the first request.</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -5996,7 +6168,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open downloads" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? "Open gallery" : "Open album"}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -6071,7 +6243,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open downloads" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? "Open gallery" : "Open album"}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -6208,6 +6380,7 @@ function SectionView({
                   <p className="mt-2 text-sm leading-6 text-white/68">{setting(section, "helper", "Hold credits and begin the current customer's private album request.")}</p>
                 </div>
                 <JobCreateForm
+                  assets={assets}
                   customer={customer}
                   emptyBody={emptyBody}
                   emptyTitle={emptyTitle}
@@ -6586,7 +6759,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open downloads" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? "Open request" : "Open album"}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -7276,10 +7449,10 @@ function SectionView({
             />
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy-policy")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/privacy")}>
               Privacy Policy
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms-of-service")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/terms")}>
               Terms of Service
             </Link>
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/help")}>

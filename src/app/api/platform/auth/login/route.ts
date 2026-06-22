@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
 import { platformSessionCookie } from "@/lib/session";
+import { setCsrfCookie } from "@/lib/security/csrf";
+import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import type { NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `platform:${request.headers.get("x-forwarded-for") ?? "local"}`);
+  if (!limited.allowed) return limited.response;
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string };
   if (!body.email || !body.password) {
     return NextResponse.json({ error: "missing_email_or_password" }, { status: 400 });
@@ -18,9 +23,11 @@ export async function POST(request: Request) {
     response.cookies.set(platformSessionCookie(), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
+    setCsrfCookie(response, "platform", result.session.id, result.session.expiresAt);
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

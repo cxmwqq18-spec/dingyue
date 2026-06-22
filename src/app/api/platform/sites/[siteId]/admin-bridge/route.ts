@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { requirePlatformMutation } from "@/lib/api-auth";
 import {
   createSiteAdminSessionByAdminId,
   getPlatformAdminBySessionFromState,
@@ -8,6 +9,7 @@ import {
   toPublicSiteAdmin
 } from "@/lib/server-store";
 import { platformSessionCookie, siteAdminSessionCookie } from "@/lib/session";
+import { setCsrfCookie } from "@/lib/security/csrf";
 
 function normalizeAdminPath(value?: string | null): string {
   const trimmed = value?.trim();
@@ -53,9 +55,11 @@ async function buildBridgeResponse(siteId: string, requestedPath?: string | null
     response.cookies.set(siteAdminSessionCookie(siteId), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
+    setCsrfCookie(response, `site-admin:${siteId}`, result.session.id, result.session.expiresAt);
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -64,10 +68,13 @@ async function buildBridgeResponse(siteId: string, requestedPath?: string | null
 }
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string }> }
 ) {
   const { siteId } = await params;
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:admin-bridge:${siteId}` });
+  if (!guard.ok) return guard.response;
+
   const path = new URL(request.url).searchParams.get("path");
   const response = await buildBridgeResponse(siteId, path);
   if (!response.ok) return response;
@@ -80,10 +87,13 @@ export async function GET(
 }
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string }> }
 ) {
   const { siteId } = await params;
+  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:admin-bridge:${siteId}` });
+  if (!guard.ok) return guard.response;
+
   const body = (await request.json().catch(() => ({}))) as { path?: string };
   return buildBridgeResponse(siteId, body.path);
 }

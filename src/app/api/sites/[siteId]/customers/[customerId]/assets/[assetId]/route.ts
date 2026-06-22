@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
-import { hasCustomerSession } from "@/lib/api-auth";
+import { requireCustomerMutation } from "@/lib/api-auth";
 import { deleteAssetUpload, readPlatformState, StoreError, toThemeRuntimeAsset } from "@/lib/server-store";
+import type { NextRequest } from "next/server";
 
 export async function DELETE(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ siteId: string; customerId: string; assetId: string }> }
 ) {
   const { siteId, customerId, assetId } = await params;
-  if (!(await hasCustomerSession(siteId, customerId))) {
-    return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
-  }
+  const guard = await requireCustomerMutation(request, siteId, customerId, { key: `${siteId}:${customerId}:asset-delete` });
+  if (!guard.ok) return guard.response;
   try {
     const result = deleteAssetUpload({ siteId, customerId, assetId });
     const state = readPlatformState();

@@ -1,25 +1,28 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
-import { publishDraftPage } from "@/lib/server-store";
+import { requireSiteMutation } from "@/lib/api-auth";
+import { publishDraftPage, StoreError } from "@/lib/server-store";
+import type { NextRequest } from "next/server";
 
-export async function POST(request: Request, { params }: { params: Promise<{ siteId: string; pageId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string; pageId: string }> }) {
   const { siteId, pageId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
-  const body = (await request.json().catch(() => ({}))) as { actor?: string };
+  const guard = await requireSiteMutation(request, siteId, { key: `${siteId}:theme-publish` });
+  if (!guard.ok) return guard.response;
+  const body = (await request.json().catch(() => ({}))) as { actor?: string; expectedRevision?: number; expectedEtag?: string };
   try {
-    const state = publishDraftPage(siteId, pageId, body.actor ?? "site_admin_demo");
-    const site = state.sites.find((item) => item.id === siteId);
-    const page = site?.pages.find((item) => item.id === pageId);
+    const result = publishDraftPage(siteId, pageId, body.actor ?? "site_admin_demo", {
+      expectedRevision: body.expectedRevision,
+      expectedEtag: body.expectedEtag
+    });
     return NextResponse.json({
       ok: true,
       siteId,
       pageId,
       action: "published",
-      publishedVersion: page?.publishedJson.version
+      publishedVersion: result.publishedVersion,
+      draftVersion: result.draftVersion
     });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "publish_failed" }, { status: 404 });
+    const status = error instanceof StoreError ? error.status : 404;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "publish_failed" }, { status });
   }
 }

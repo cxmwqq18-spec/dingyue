@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { KeyRound, Plus, Save, Trash2 } from "lucide-react";
 import type { PublicSiteAdmin, SiteAdmin } from "@/lib/types";
+import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import {
   ErpField,
   ErpFormGrid,
@@ -11,6 +12,7 @@ import {
   ErpSection,
   ErpSelect
 } from "@/components/admin/erp-primitives";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 
 type AdminDraft = {
   displayName: string;
@@ -44,6 +46,8 @@ export function SiteAdminsPanel({
   const [items, setItems] = useState(admins);
   const [message, setMessage] = useState("站点后台账号现在可以在这里直接维护。");
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [drafts, setDrafts] = useState<Record<string, AdminDraft>>(() =>
     Object.fromEntries(
       admins.map((admin) => [
@@ -80,6 +84,8 @@ export function SiteAdminsPanel({
   }, [admins]);
 
   const ownerCount = useMemo(() => items.filter((admin) => admin.role === "owner").length, [items]);
+  const currentPage = clampPage(page, items.length, pageSize);
+  const visibleItems = useMemo(() => pageItems(items, currentPage, pageSize), [items, currentPage, pageSize]);
 
   function patchDraft(adminId: string, patch: Partial<AdminDraft>) {
     setDrafts((current) => ({
@@ -95,7 +101,7 @@ export function SiteAdminsPanel({
     setBusyId("create");
     const response = await fetch(`/api/sites/${siteId}/admins`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({
         ...createForm,
         actor: "site_admin_demo"
@@ -119,7 +125,7 @@ export function SiteAdminsPanel({
     setBusyId(admin.id);
     const response = await fetch(`/api/sites/${siteId}/admins/${admin.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({
         displayName: draft.displayName,
         role: draft.role,
@@ -143,7 +149,7 @@ export function SiteAdminsPanel({
     setBusyId(`delete:${admin.id}`);
     const response = await fetch(`/api/sites/${siteId}/admins/${admin.id}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({ actor: "site_admin_demo" })
     });
     const result = (await response.json().catch(() => ({}))) as { deletedAdmin?: PublicSiteAdmin; error?: string };
@@ -212,7 +218,7 @@ export function SiteAdminsPanel({
         title={`后台账号列表 (${items.length})`}
       >
         <div className="grid gap-4">
-          {items.map((admin) => {
+          {visibleItems.map((admin) => {
             const draft = drafts[admin.id] ?? { displayName: admin.displayName, role: admin.role, password: "" };
             const deleting = busyId === `delete:${admin.id}`;
             const saving = busyId === admin.id;
@@ -240,13 +246,13 @@ export function SiteAdminsPanel({
                       <option value="support">support</option>
                     </ErpSelect>
                   </ErpField>
-                  <div className="flex flex-wrap items-center gap-2 xl:justify-end">
-                    <button className="admin_btn inline-flex h-[34px] items-center gap-2 px-3" disabled={saving} onClick={() => saveAdmin(admin)} type="button">
+                  <div className="flex flex-nowrap items-center gap-2 xl:justify-end">
+                    <button className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-2 whitespace-nowrap px-3" disabled={saving} onClick={() => saveAdmin(admin)} type="button">
                       <Save className="h-4 w-4" strokeWidth={1.8} />
                       {saving ? "保存中" : "保存"}
                     </button>
                     <button
-                      className="admin_btn inline-flex h-[34px] items-center gap-2 px-3"
+                      className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-2 whitespace-nowrap px-3"
                       disabled={saving}
                       onClick={() => saveAdmin({ ...admin, displayName: draft.displayName, role: draft.role })}
                       type="button"
@@ -255,7 +261,7 @@ export function SiteAdminsPanel({
                       重置密码
                     </button>
                     <button
-                      className="admin_btn inline-flex h-[34px] items-center gap-2 px-3 text-[#b42318]"
+                      className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-2 whitespace-nowrap px-3 text-[#b42318]"
                       disabled={deleting || isLastOwner}
                       onClick={() => removeAdmin(admin)}
                       type="button"
@@ -284,6 +290,16 @@ export function SiteAdminsPanel({
             );
           })}
         </div>
+        <AdminPagination
+          total={items.length}
+          page={currentPage}
+          pageSize={pageSize}
+          onPageChange={setPage}
+          onPageSizeChange={(nextPageSize) => {
+            setPageSize(nextPageSize);
+            setPage(1);
+          }}
+        />
       </ErpSection>
     </div>
   );

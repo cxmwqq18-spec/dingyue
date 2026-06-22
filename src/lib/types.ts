@@ -72,6 +72,12 @@ export interface ThemePageJson {
   sections: Record<string, SectionInstance>;
 }
 
+export interface ThemeDraftMeta {
+  revision: number;
+  updatedAt: string;
+  etag: string;
+}
+
 export interface ThemePage {
   id: string;
   siteId: string;
@@ -81,6 +87,7 @@ export interface ThemePage {
   title: string;
   draftJson: ThemePageJson;
   publishedJson: ThemePageJson;
+  draftMeta?: ThemeDraftMeta;
 }
 
 export interface ThemeSettings {
@@ -284,6 +291,26 @@ export interface PlatformAdmin {
 
 export type PublicPlatformAdmin = Omit<PlatformAdmin, "passwordHash">;
 
+export interface PlatformCloudflareAccount {
+  id: string;
+  label: string;
+  email: string;
+  accountId: string;
+  apiToken: string;
+  createdAt: string;
+  updatedAt?: string;
+  updatedBy?: string;
+}
+
+export interface PlatformEmailSettings {
+  provider: "resend";
+  apiKey?: string;
+  fromEmail?: string;
+  replyTo?: string;
+  updatedAt?: string;
+  updatedBy?: string;
+}
+
 export interface PlatformSession {
   id: string;
   platformAdminId: string;
@@ -372,6 +399,19 @@ export interface AiGatewayGroup {
   rateLimitPerMinute: number;
   accountPoolMode: "shared" | "dedicated";
   unavailableReason?: string;
+}
+
+export interface PlatformAiProvider {
+  id: string;
+  label: string;
+  aiUrl: string;
+  apiKey?: string;
+  modelType: "gpt-image-2" | "gpt-5.5" | string;
+  priority: number;
+  preferred: boolean;
+  createdAt: string;
+  updatedAt: string;
+  updatedBy?: string;
 }
 
 export interface GenerationJob {
@@ -546,13 +586,17 @@ export interface AssetUpload {
   id: string;
   siteId: string;
   customerId: string;
+  customerModelId?: string;
+  subjectRole?: "primary" | "partner" | "product" | "reference" | string;
   jobId?: string;
   label: string;
   storageKey: string;
   mimeType: string;
-  role: "input" | "output";
+  role: "input" | "output" | "training_input";
   visibility: "private";
   reviewStatus: "pending" | "approved" | "rejected";
+  validationStatus?: "pending" | "passed" | "failed";
+  validationReport?: Record<string, string | number | boolean>;
   createdAt: string;
   deletedAt?: string;
 }
@@ -575,6 +619,7 @@ export interface ThemeRuntimeJob {
   creditsReserved: number;
   createdAt: string;
   updatedAt: string;
+  requestJson?: Record<string, unknown>;
 }
 
 export interface ThemeRuntimeAsset {
@@ -582,6 +627,7 @@ export interface ThemeRuntimeAsset {
   jobId?: string;
   label: string;
   previewUrl: string;
+  downloadUrl?: string;
   mimeType: string;
   role: AssetUpload["role"];
   reviewStatus: AssetUpload["reviewStatus"];
@@ -618,12 +664,34 @@ export interface ThemeRuntimeCustomerModel {
   updatedAt: string;
 }
 
+export interface ThemeRuntimeSubscription {
+  id: string;
+  productId: string;
+  priceId: string;
+  status: Subscription["status"];
+  currentPeriodEnd: string;
+  creditsPerCycle: number;
+  createdAt: string;
+}
+
+export interface ThemeRuntimeOrder {
+  id: string;
+  status: Order["status"];
+  amountCents: number;
+  currency: string;
+  credits: number;
+  sourceId: string;
+  createdAt: string;
+}
+
 export interface ThemeRuntimeData {
   customer?: PublicCustomer;
   jobs: ThemeRuntimeJob[];
   assets: ThemeRuntimeAsset[];
   albums: ThemeRuntimeAlbum[];
   ledger: ThemeRuntimeLedgerEntry[];
+  subscriptions?: ThemeRuntimeSubscription[];
+  orders?: ThemeRuntimeOrder[];
   jobDetail?: {
     job: ThemeRuntimeJob;
     ledger: ThemeRuntimeLedgerEntry[];
@@ -642,6 +710,9 @@ export interface ThemeRuntimeData {
 export interface PlatformState {
   platformAdmins: PlatformAdmin[];
   platformSessions: PlatformSession[];
+  platformEmailSettings?: PlatformEmailSettings;
+  platformCloudflareAccounts?: PlatformCloudflareAccount[];
+  currentCloudflareAccountId?: string;
   sites: Site[];
   siteDomains: SiteDomain[];
   siteAdmins: SiteAdmin[];
@@ -666,4 +737,6 @@ export interface PlatformState {
   jobs: GenerationJob[];
   assetUploads: AssetUpload[];
   ledger: CreditLedgerEntry[];
+  platformAiProviders?: PlatformAiProvider[];
+  currentAiProviderId?: string;
 }
