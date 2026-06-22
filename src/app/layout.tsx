@@ -1,30 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans-ui",
-  display: "swap"
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono-ui",
-  display: "swap"
-});
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-display-ui",
-  display: "swap"
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-editorial-ui",
-  display: "swap"
-});
 
 export const metadata: Metadata = {
   title: "AI Subscription Platform",
@@ -37,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} ${playfairDisplay.variable}`}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

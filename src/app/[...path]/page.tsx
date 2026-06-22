@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
 import { getPage } from "@/lib/data";
-import { readPlatformState } from "@/lib/server-store";
+import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import {
   renderCustomerJobDetailPage,
   renderCustomerWorkspacePage,
@@ -17,7 +17,7 @@ export const revalidate = 0;
 
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
   const { path } = await params;
-  const state = readPlatformState();
+  const state = readStorefrontPlatformState();
   const site = getSiteByHostFromState(state, (await headers()).get("host"));
   if (!site) return {};
   const slug = `/${path.join("/")}`;
@@ -41,7 +41,7 @@ export default async function HostStorefrontCatchAllPage({
 
   const host = (await headers()).get("host");
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
-  const state = readPlatformState();
+  const state = readStorefrontPlatformState();
   const site = getSiteByHostFromState(state, host);
   if (!site) notFound();
   const query = searchParams ? await searchParams : {};

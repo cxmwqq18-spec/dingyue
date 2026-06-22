@@ -256,9 +256,9 @@ export function PlatformCloudflarePanel({
             actions={<WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />}
           />
           <WorkbenchTableShell>
-            <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,1fr)_minmax(160px,0.8fr)_minmax(160px,0.8fr)_minmax(160px,0.7fr)]" columns={["账号", "Account ID", "状态", "操作"]} />
+            <WorkbenchTableHeader className="md:grid-cols-[minmax(170px,1fr)_minmax(150px,0.75fr)_minmax(140px,0.65fr)_260px]" columns={["账号", "Account ID", "状态", "操作"]} />
             {filtered.length ? filtered.map((account) => (
-              <WorkbenchTableRow className="md:grid-cols-[minmax(180px,1fr)_minmax(160px,0.8fr)_minmax(160px,0.8fr)_minmax(160px,0.7fr)]" key={account.id}>
+              <WorkbenchTableRow className="md:grid-cols-[minmax(170px,1fr)_minmax(150px,0.75fr)_minmax(140px,0.65fr)_260px]" key={account.id}>
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{account.label}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{account.email}</div>
@@ -268,18 +268,18 @@ export function PlatformCloudflarePanel({
                   <StatusPill label={account.status.configured ? "已配置" : "缺失"} tone={account.status.configured ? "good" : "warn"} />
                   {account.isCurrent ? <StatusPill label="当前" tone="good" /> : null}
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <button className="admin_btn h-[32px] px-3 text-[12px]" onClick={() => edit(account)} type="button">编辑</button>
+                <div className="flex flex-nowrap items-center justify-end gap-2 whitespace-nowrap">
+                  <button className="admin_btn h-[32px] shrink-0 px-3 text-[12px]" onClick={() => edit(account)} type="button">编辑</button>
                   {account.isCurrent ? (
-                    <button className="admin_btn h-[32px] px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "clear_current")} type="button">
+                    <button className="admin_btn h-[32px] shrink-0 px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "clear_current")} type="button">
                       取消当前
                     </button>
                   ) : (
-                    <button className="admin_btn h-[32px] px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "set_current")} type="button">
+                    <button className="admin_btn h-[32px] shrink-0 px-3 text-[12px]" disabled={actingId === account.id} onClick={() => updateCurrent(account.id, "set_current")} type="button">
                       设为当前
                     </button>
                   )}
-                  <button className="admin_btn inline-flex h-[32px] items-center gap-1 px-3 text-[12px] text-[#b42318]" disabled={actingId === account.id} onClick={() => deleteAccount(account)} type="button">
+                  <button className="admin_btn inline-flex h-[32px] shrink-0 items-center gap-1 px-3 text-[12px] text-[#b42318]" disabled={actingId === account.id} onClick={() => deleteAccount(account)} type="button">
                     <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
                     删除
                   </button>

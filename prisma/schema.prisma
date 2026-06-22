@@ -14,26 +14,118 @@ model PlatformStateDocument {
   updatedAt DateTime @updatedAt
 }
 
+model PlatformSetting {
+  id        String   @id
+  key       String   @unique
+  value     Json
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlatformEmailSettings {
+  id        String   @id @default("platform_email_settings")
+  provider  String   @default("resend")
+  apiKey    String?
+  fromEmail String?
+  replyTo   String?
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlatformAdmin {
+  id           String            @id
+  email        String            @unique
+  passwordHash String?
+  displayName  String
+  role         String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  sessions     PlatformSession[]
+}
+
+model PlatformSession {
+  id              String        @id
+  platformAdminId String
+  createdAt       DateTime      @default(now())
+  expiresAt       DateTime
+  platformAdmin   PlatformAdmin @relation(fields: [platformAdminId], references: [id], onDelete: Cascade)
+
+  @@index([platformAdminId])
+  @@index([expiresAt])
+}
+
+model PlatformCloudflareAccount {
+  id        String   @id
+  label     String
+  email     String
+  accountId String
+  apiToken  String
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email, accountId])
+  @@index([accountId])
+}
+
+model PlatformAiProvider {
+  id        String   @id
+  label     String
+  aiUrl     String
+  apiKey    String?
+  modelType String
+  priority  Int      @default(0)
+  preferred Boolean  @default(false)
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([preferred, priority])
+}
+
 model Site {
-  id          String   @id
-  name        String
-  slug        String   @unique
-  status      String
-  timezone    String   @default("UTC")
-  currency    String   @default("usd")
-  branding    Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  domains     SiteDomain[]
-  admins      SiteAdmin[]
-  customers   Customer[]
-  pages       ThemePage[]
-  settings    ThemeSettings?
-  publications ThemePublication[]
-  connect     StripeConnectAccount?
-  aiApps      SiteAiApp[]
-  customerModels CustomerModel[]
-  albums      Album[]
+  id               String                @id
+  name             String
+  slug             String                @unique
+  status           String
+  primaryDomain    String
+  timezone         String                @default("UTC")
+  currency         String                @default("usd")
+  branding         Json
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  domains          SiteDomain[]
+  admins           SiteAdmin[]
+  adminSessions    SiteAdminSession[]
+  customers        Customer[]
+  customerSessions CustomerSession[]
+  products         Product[]
+  prices           Price[]
+  subscriptions    Subscription[]
+  orders           Order[]
+  paymentEvents    PaymentEvent[]
+  ledger           CreditLedger[]
+  balances         CreditBalance[]
+  pages            ThemePage[]
+  settings         ThemeSettings?
+  publications     ThemePublication[]
+  siteThemes       SiteTheme[]
+  themeCopies      ThemeCopy[]
+  connect          StripeConnectAccount?
+  aiApps           SiteAiApp[]
+  gatewayGroups    AiGatewayGroup[]
+  creativePacks    CreativePack[]
+  mediaAssets      MediaAsset[]
+  customerModels   CustomerModel[]
+  albums           Album[]
+  jobs             GenerationJob[]
+  uploads          AssetUpload[]
+  auditLogs        AuditLog[]
+
+  @@index([status])
+  @@index([primaryDomain])
 }
 
 model SiteDomain {
@@ -42,107 +134,188 @@ model SiteDomain {
   domain    String   @unique
   isPrimary Boolean  @default(false)
   status    String
-  site      Site     @relation(fields: [siteId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, isPrimary])
+  @@index([siteId, status])
 }
 
 model SiteAdmin {
-  id           String   @id
+  id           String             @id
   siteId       String
   email        String
+  passwordHash String?
   displayName  String
   role         String
-  site         Site     @relation(fields: [siteId], references: [id])
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  site         Site               @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  sessions     SiteAdminSession[]
 
   @@unique([siteId, email])
+  @@index([siteId, role])
+}
+
+model SiteAdminSession {
+  id          String    @id
+  siteId      String
+  siteAdminId String
+  createdAt   DateTime  @default(now())
+  expiresAt   DateTime
+  site        Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  siteAdmin   SiteAdmin @relation(fields: [siteAdminId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, siteAdminId])
+  @@index([expiresAt])
 }
 
 model Customer {
-  id        String   @id
-  siteId    String
-  email     String
-  name      String
-  status    String
-  createdAt DateTime @default(now())
-  site      Site     @relation(fields: [siteId], references: [id])
+  id            String            @id
+  siteId        String
+  email         String
+  passwordHash  String?
+  name          String
+  status        String
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  site          Site              @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  sessions      CustomerSession[]
   subscriptions Subscription[]
-  orders    Order[]
-  ledger    CreditLedger[]
-  balance   CreditBalance?
-  jobs      GenerationJob[]
-  uploads   AssetUpload[]
-  models    CustomerModel[]
-  albums    Album[]
+  orders        Order[]
+  ledger        CreditLedger[]
+  balance       CreditBalance?
+  jobs          GenerationJob[]
+  uploads       AssetUpload[]
+  models        CustomerModel[]
+  albums        Album[]
 
   @@unique([siteId, email])
+  @@index([siteId, status])
+}
+
+model CustomerSession {
+  id         String   @id
+  siteId     String
+  customerId String
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId])
+  @@index([expiresAt])
 }
 
 model StripeConnectAccount {
-  id              String   @id
-  siteId          String   @unique
-  stripeAccountId String   @unique
+  id               String   @id
+  siteId           String   @unique
+  stripeAccountId  String   @unique
   onboardingStatus String
-  chargesEnabled Boolean  @default(false)
-  payoutsEnabled Boolean  @default(false)
-  site            Site     @relation(fields: [siteId], references: [id])
+  chargesEnabled   Boolean  @default(false)
+  payoutsEnabled   Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
 
 model Product {
-  id        String   @id
-  siteId    String
-  name      String
-  type      String
-  status    String
-  prices    Price[]
+  id            String         @id
+  siteId        String
+  name          String
+  type          String
+  status        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  site          Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  prices        Price[]
+  subscriptions Subscription[]
+
+  @@index([siteId, status])
+  @@index([siteId, type])
 }
 
 model Price {
-  id             String   @id
+  id             String         @id
   siteId         String
   productId      String
-  stripePriceId  String?
-  currency       String
+  label          String
   amountCents    Int
-  interval       String?
+  currency       String
+  interval       String
   creditsGranted Int
-  product        Product @relation(fields: [productId], references: [id])
+  stripePriceId  String?
+  metadata       Json?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  site           Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  product        Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  subscriptions  Subscription[]
+
+  @@unique([siteId, stripePriceId])
+  @@index([siteId, productId])
+  @@index([siteId, interval])
 }
 
 model Subscription {
-  id                   String   @id
+  id                   String    @id
   siteId               String
   customerId           String
-  stripeSubscriptionId String   @unique
+  productId            String
+  priceId              String
+  stripeSubscriptionId String    @unique
   status               String
-  currentPeriodStart   DateTime
+  currentPeriodStart   DateTime?
   currentPeriodEnd     DateTime
-  customer             Customer @relation(fields: [customerId], references: [id])
+  creditsPerCycle      Int
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  site                 Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer             Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product              Product   @relation(fields: [productId], references: [id])
+  price                Price     @relation(fields: [priceId], references: [id])
+
+  @@index([siteId, customerId, status])
+  @@index([siteId, productId])
 }
 
 model Order {
-  id           String   @id
-  siteId       String
-  customerId   String
-  status       String
-  amountCents  Int
-  currency     String
-  credits      Int
-  customer     Customer @relation(fields: [customerId], references: [id])
+  id          String   @id
+  siteId      String
+  customerId  String
+  status      String
+  amountCents Int
+  currency    String
+  credits     Int
+  sourceId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId, createdAt])
+  @@index([siteId, status])
+  @@index([siteId, sourceId])
 }
 
 model PaymentEvent {
-  id              String   @id
+  id              String    @id
   siteId          String
   provider        String
   providerEventId String
   eventType       String
   processedAt     DateTime?
   payload         Json
+  site            Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, provider, providerEventId])
+  @@index([siteId, eventType])
+  @@index([processedAt])
 }
 
 model CreditLedger {
-  id         String   @id
+  id         String    @id
   siteId     String
   customerId String
   amount     Int
@@ -150,54 +323,97 @@ model CreditLedger {
   sourceType String
   sourceId   String
   expiresAt  DateTime?
-  createdAt  DateTime @default(now())
-  customer   Customer @relation(fields: [customerId], references: [id])
+  createdAt  DateTime  @default(now())
+  site       Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId, createdAt])
+  @@index([siteId, sourceType, sourceId])
 }
 
 model CreditBalance {
-  id          String   @id
-  siteId      String
-  customerId  String   @unique
-  balance     Int
-  reserved    Int
-  customer    Customer @relation(fields: [customerId], references: [id])
+  id         String   @id
+  siteId     String
+  customerId String   @unique
+  balance    Int      @default(0)
+  reserved   Int      @default(0)
+  updatedAt  DateTime @updatedAt
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, customerId])
+  @@index([siteId])
 }
 
 model AiApp {
-  id          String   @id
-  slug        String   @unique
-  name        String
-  description String
-  appType     String
+  id              String          @id
+  slug            String          @unique
+  name            String
+  description     String
+  appType         String
   parameterSchema Json
-  sites       SiteAiApp[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  sites           SiteAiApp[]
+  jobs            GenerationJob[]
+
+  @@index([appType])
 }
 
 model SiteAiApp {
-  id          String   @id
-  siteId      String
-  aiAppId     String
-  enabled     Boolean  @default(true)
-  creditCost  Int
-  routeKey    String
-  site        Site     @relation(fields: [siteId], references: [id])
-  aiApp       AiApp    @relation(fields: [aiAppId], references: [id])
+  id         String   @id
+  siteId     String
+  aiAppId    String
+  enabled    Boolean  @default(true)
+  creditCost Int
+  routeKey   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  aiApp      AiApp    @relation(fields: [aiAppId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, aiAppId])
+  @@unique([siteId, routeKey])
+  @@index([siteId, enabled])
+}
+
+model AiGatewayGroup {
+  id                 String   @id
+  siteId             String
+  name               String
+  status             String
+  modelAllowlist     String[]
+  monthlyQuota       Int
+  usedQuota          Int      @default(0)
+  retryStatusCodes   Int[]
+  rateLimitPerMinute Int
+  accountPoolMode    String
+  unavailableReason  String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  site               Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, name])
+  @@index([siteId, status])
 }
 
 model ThemePage {
   id            String   @id
   siteId        String
   pageType      String
+  templateKey   String?
   slug          String
   title         String
   draftJson     Json
   publishedJson Json
+  draftMeta     Json?
+  createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  site          Site     @relation(fields: [siteId], references: [id])
+  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, slug])
+  @@index([siteId, pageType])
+  @@index([siteId, templateKey])
 }
 
 model ThemeSettings {
@@ -205,7 +421,59 @@ model ThemeSettings {
   siteId        String   @unique
   draftJson     Json
   publishedJson Json
-  site          Site     @relation(fields: [siteId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+}
+
+model ThemePublication {
+  id          String   @id
+  siteId      String
+  version     Int
+  snapshot    Json
+  publishedBy String
+  publishedAt DateTime @default(now())
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, version])
+  @@index([siteId, publishedAt])
+}
+
+model SiteTheme {
+  id        String   @id
+  siteId    String
+  name      String
+  themeId   String
+  themeKey  String
+  status    String
+  templates Json
+  settings  Json
+  source    String
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, themeId])
+  @@index([siteId, status])
+  @@index([siteId, themeKey])
+}
+
+model ThemeCopy {
+  id        String   @id
+  siteId    String
+  name      String
+  themeKey  String
+  source    String
+  templates Json
+  settings  Json
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, themeKey])
+  @@index([siteId, createdAt])
 }
 
 model SectionDefinition {
@@ -217,26 +485,24 @@ model SectionDefinition {
   previewJson Json
 }
 
-model ThemePublication {
-  id          String   @id
-  siteId      String
-  version     Int
-  snapshot    Json
-  publishedBy String
-  publishedAt DateTime @default(now())
-  site        Site     @relation(fields: [siteId], references: [id])
-
-  @@unique([siteId, version])
-}
-
 model MediaAsset {
-  id          String   @id
-  siteId      String
-  label       String
-  storageKey  String
-  mimeType    String
-  usageType   String
-  createdAt   DateTime @default(now())
+  id         String   @id
+  siteId     String
+  label      String
+  storageKey String
+  mimeType   String
+  usageType  String
+  sourceType String?
+  previewUrl String?
+  originUrl  String?
+  altText    String?
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, storageKey])
+  @@index([siteId, usageType])
 }
 
 model CreativePack {
@@ -253,13 +519,19 @@ model CreativePack {
   trainingRequired Boolean  @default(false)
   generationCount  Int      @default(0)
   conversionRate   Float    @default(0)
+  imageUrl         String?
   createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  albums           Album[]
 
   @@index([siteId, status])
+  @@index([siteId, category])
+  @@index([siteId, aiAppSlug])
 }
 
 model CustomerModel {
-  id              String   @id
+  id              String        @id
   siteId          String
   customerId      String
   label           String
@@ -270,16 +542,18 @@ model CustomerModel {
   providerModelId String?
   trainingJobId   String?
   failureReason   String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  site            Site     @relation(fields: [siteId], references: [id])
-  customer        Customer @relation(fields: [customerId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  site            Site          @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer        Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  uploads         AssetUpload[]
 
   @@index([siteId, customerId, status])
+  @@index([siteId, providerModelId])
 }
 
 model Album {
-  id             String   @id
+  id             String         @id
   siteId         String
   customerId     String
   title          String
@@ -288,27 +562,52 @@ model Album {
   status         String
   outputCount    Int
   coverAssetId   String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  site           Site     @relation(fields: [siteId], references: [id])
-  customer       Customer @relation(fields: [customerId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  site           Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  sourceJob      GenerationJob? @relation(fields: [sourceJobId], references: [id])
+  creativePack   CreativePack?  @relation(fields: [creativePackId], references: [id])
+  coverAsset     AssetUpload?   @relation("AlbumCoverAsset", fields: [coverAssetId], references: [id])
 
   @@index([siteId, customerId, status])
+  @@index([siteId, sourceJobId])
+  @@index([siteId, creativePackId])
 }
 
 model AssetUpload {
-  id          String   @id
-  siteId      String
-  customerId  String
-  storageKey  String
-  visibility  String
-  reviewStatus String
-  deletedAt   DateTime?
-  customer    Customer @relation(fields: [customerId], references: [id])
+  id               String         @id
+  siteId           String
+  customerId       String
+  customerModelId  String?
+  subjectRole      String?
+  jobId            String?
+  label            String
+  storageKey       String
+  mimeType         String
+  role             String
+  visibility       String
+  reviewStatus     String
+  validationStatus String?
+  validationReport Json?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  deletedAt        DateTime?
+  site             Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer         Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerModel    CustomerModel? @relation(fields: [customerModelId], references: [id])
+  job              GenerationJob? @relation(fields: [jobId], references: [id])
+  albumCovers      Album[]        @relation("AlbumCoverAsset")
+
+  @@unique([siteId, storageKey])
+  @@index([siteId, customerId, role])
+  @@index([siteId, customerModelId])
+  @@index([siteId, jobId])
+  @@index([siteId, reviewStatus])
 }
 
 model GenerationJob {
-  id              String   @id
+  id              String        @id
   siteId          String
   customerId      String
   aiAppId         String
@@ -316,19 +615,32 @@ model GenerationJob {
   creditsReserved Int
   requestJson     Json
   resultJson      Json?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  customer        Customer @relation(fields: [customerId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  site            Site          @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer        Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  aiApp           AiApp         @relation(fields: [aiAppId], references: [id])
+  uploads         AssetUpload[]
+  albums          Album[]
+
+  @@index([siteId, customerId, createdAt])
+  @@index([siteId, status])
+  @@index([siteId, aiAppId])
 }
 
-model AdminAuditLog {
-  id          String   @id
-  siteId      String?
-  actorType   String
-  actorId     String
-  action      String
-  targetType  String
-  targetId    String
-  metadata    Json
-  createdAt   DateTime @default(now())
+model AuditLog {
+  id         String   @id
+  siteId     String?
+  actorType  String
+  actorId    String
+  action     String
+  targetType String
+  targetId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  site       Site?    @relation(fields: [siteId], references: [id], onDelete: SetNull)
+
+  @@index([siteId, createdAt])
+  @@index([actorType, actorId])
+  @@index([targetType, targetId])
 }

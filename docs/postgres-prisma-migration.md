@@ -62,6 +62,38 @@ Smoke:
 DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run smoke:postgres-state
 ```
 
+## Import Legacy State Into Relational Tables
+
+After the normalized Prisma schema has been pushed and `@prisma/client` has been regenerated, import the legacy `PlatformState` arrays into relational tables.
+
+Dry run from a JSON file:
+
+```bash
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --dry-run
+```
+
+Apply from a JSON file and verify counts:
+
+```bash
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --verify
+```
+
+Apply from the default `PlatformStateDocument(id=platform)` bridge row:
+
+```bash
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --verify
+```
+
+Run verification only:
+
+```bash
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:verify-relational-state -- --source data/platform-state.json
+```
+
+The relational importer flattens `products[].prices`, creates `CreditBalance` rows from `customers[].balance`, imports nested `site.pages` and `site.themeSettings`, converts `site.connect` to `StripeConnectAccount`, and maps `siteAiApps[].aiApp.id` to `aiAppId`. It uses id-based upserts in small transactions so repeated imports update rows instead of failing on duplicates. Duplicate or missing legacy IDs are reported in the JSON summary and skipped.
+
+If a normalized model has not been merged into `prisma/schema.prisma` yet, that section reports `missing_prisma_model`; regenerate Prisma Client after the schema worker lands the remaining models and rerun the same command.
+
 ## Run App Against Postgres
 
 ```bash

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
+import { setCsrfCookie } from "@/lib/security/csrf";
 import { platformSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
 
 export async function POST(request: Request) {
@@ -17,6 +18,7 @@ export async function POST(request: Request) {
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
+    setCsrfCookie(response, "platform", result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
     const code = error instanceof StoreError ? error.message : "platform_login_failed";

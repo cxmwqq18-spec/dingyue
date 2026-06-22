@@ -14,16 +14,60 @@ import {
   getSiteProductsFromState,
   getThemeRuntimeForCustomer,
   getThemeRuntimeFromSession,
-  readPlatformState,
   toThemeRuntimeAsset,
   toThemeRuntimeJob,
   toThemeRuntimeLedgerEntry
 } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
+import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import { themeStyleVars } from "@/lib/theme";
-import type { PlatformState, Site } from "@/lib/types";
+import type { PlatformState, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
+
+type SiteRenderData = {
+  creativePacks: ReturnType<typeof getSiteCreativePacksFromState>;
+  mediaAssets: ReturnType<typeof getSiteMediaAssetsFromState>;
+  products: ReturnType<typeof getSiteProductsFromState>;
+  siteAiApps: ReturnType<typeof getSiteAppsFromState>;
+};
+
+function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData {
+  return {
+    creativePacks: getSiteCreativePacksFromState(state, siteId),
+    mediaAssets: getSiteMediaAssetsFromState(state, siteId),
+    products: getSiteProductsFromState(state, siteId),
+    siteAiApps: getSiteAppsFromState(state, siteId)
+  };
+}
+
+function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
+  return {
+    jobs: [],
+    assets: [],
+    albums: [],
+    ledger: [],
+    subscriptions: [],
+    orders: [],
+    customerModels: [],
+    ...runtime
+  };
+}
+
+function getLightCustomerRuntime(state: PlatformState, siteId: string, sessionId?: string): ThemeRuntimeData {
+  if (!sessionId) return runtimeWithEmptyCollections();
+  return runtimeWithEmptyCollections({
+    customer: getCustomerBySessionFromState(state, siteId, sessionId)?.customer
+  });
+}
+
+function pageNeedsFullCustomerRuntime(pageJson: ThemePageJson, slug: string): boolean {
+  if (slug === "/album" || slug === "/app" || slug === "/account" || slug.startsWith("/app/")) return true;
+  return pageJson.sectionsOrder.some((sectionId) => {
+    const type = pageJson.sections[sectionId]?.type;
+    return type === "upload_panel" || type === "generation_form" || type === "job_progress" || type === "album_gallery";
+  });
+}
 
 function withAccountDashboardPage(pageJson: ReturnType<typeof getPage>["publishedJson"]) {
   if (pageJson.sections.account_ops_1) return pageJson;
@@ -69,8 +113,7 @@ export function getDefaultCustomerAuth(state: PlatformState, siteId: string, err
   };
 }
 
-export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string) {
-  const siteAiApps = getSiteAppsFromState(state, site.id);
+export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
   const directApp = siteAiApps.find((siteApp) => siteApp.aiApp.slug === toolSlug);
   const directPageSlug = `/tools/${toolSlug}`;
   const aliasMap = new Map<string, string>();
@@ -80,7 +123,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     aliasMap.set(page.slug.replace(/^\/tools\//, ""), page.slug);
   }
 
-  for (const pack of getSiteCreativePacksFromState(state, site.id)) {
+  for (const pack of creativePacks) {
     const slugCandidates = [
       pack.aiAppSlug,
       pack.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -99,6 +142,43 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   return { siteAiApps, page, app };
 }
 
+function renderThemePage({
+  currentSite,
+  page,
+  pagePath,
+  query,
+  renderData,
+  routeMode,
+  runtime,
+  settings
+}: {
+  currentSite: Site;
+  page: ThemePageJson;
+  pagePath: string;
+  query: Record<string, string | string[] | undefined>;
+  renderData: SiteRenderData;
+  routeMode: "host" | "path";
+  runtime: ThemeRuntimeData;
+  settings: Site["themeSettings"]["publishedJson"];
+}) {
+  return (
+    <div style={themeStyleVars(settings)}>
+      <ThemeRenderer
+        creativePacks={renderData.creativePacks}
+        page={page}
+        pagePath={pagePath}
+        products={renderData.products}
+        query={query}
+        routeMode={routeMode}
+        runtime={runtime}
+        settings={settings}
+        site={currentSite}
+        siteAiApps={renderData.siteAiApps}
+      />
+    </div>
+  );
+}
+
 export async function renderStorefrontPage({
   site,
   slug,
@@ -112,35 +192,34 @@ export async function renderStorefrontPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readPlatformState();
+  const state = providedState ?? readStorefrontPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
-  currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = getPage(currentSite, slug);
   const page = directPage.slug === slug ? directPage : currentSite.pages.find((item) => item.slug === "/404") ?? directPage;
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const runtime = {
-    ...getThemeRuntimeFromSession(state, currentSite.id, sessionId),
+  const pageJson = slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson;
+  const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
+    ? getThemeRuntimeFromSession(state, currentSite.id, sessionId)
+    : getLightCustomerRuntime(state, currentSite.id, sessionId);
+  const runtimeWithAuth = {
+    ...runtime,
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
   };
 
-  return (
-    <div style={themeStyleVars(settings)}>
-      <ThemeRenderer
-        creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
-        page={slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson}
-        pagePath={directPage.slug === slug ? slug : "/404"}
-        products={getSiteProductsFromState(state, currentSite.id)}
-        query={query}
-        routeMode={routeMode}
-        runtime={runtime}
-        settings={settings}
-        site={currentSite}
-        siteAiApps={getSiteAppsFromState(state, currentSite.id)}
-      />
-    </div>
-  );
+  return renderThemePage({
+    currentSite,
+    page: pageJson,
+    pagePath: directPage.slug === slug ? slug : "/404",
+    query,
+    renderData,
+    routeMode,
+    runtime: runtimeWithAuth,
+    settings
+  });
 }
 
 export async function renderCustomerWorkspacePage({
@@ -156,14 +235,15 @@ export async function renderCustomerWorkspacePage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readPlatformState();
+  const state = providedState ?? readStorefrontPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
   const current = getCustomerBySessionFromState(state, currentSite.id, sessionId);
   if (!current) redirect(routeMode === "host" ? "/login" : `/site/${currentSite.slug}/login`);
 
-  currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
   const runtime = getThemeRuntimeFromSession(state, currentSite.id, sessionId);
@@ -172,16 +252,16 @@ export async function renderCustomerWorkspacePage({
     <div style={themeStyleVars(settings)}>
       <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
       <ThemeRenderer
-        creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
+        creativePacks={renderData.creativePacks}
         page={slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson}
         pagePath={slug}
-        products={getSiteProductsFromState(state, currentSite.id)}
+        products={renderData.products}
         query={query}
         routeMode={routeMode}
         runtime={runtime}
         settings={settings}
         site={currentSite}
-        siteAiApps={getSiteAppsFromState(state, currentSite.id)}
+        siteAiApps={renderData.siteAiApps}
       />
     </div>
   );
@@ -200,7 +280,7 @@ export async function renderCustomerJobDetailPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readPlatformState();
+  const state = providedState ?? readStorefrontPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
@@ -210,7 +290,8 @@ export async function renderCustomerJobDetailPage({
   const job = state.jobs.find((item) => item.id === jobId && item.siteId === currentSite.id && item.customerId === current.customer.id);
   if (!job) notFound();
 
-  currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
   const page = currentSite.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ?? getPage(currentSite, "/app/jobs/progress");
   const settings = currentSite.themeSettings.publishedJson;
   const runtime = {
@@ -228,16 +309,16 @@ export async function renderCustomerJobDetailPage({
     <div style={themeStyleVars(settings)}>
       <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
       <ThemeRenderer
-        creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
+        creativePacks={renderData.creativePacks}
         page={page.publishedJson}
         pagePath={`/app/jobs/${job.id}`}
-        products={getSiteProductsFromState(state, currentSite.id)}
+        products={renderData.products}
         query={query}
         routeMode={routeMode}
         runtime={runtime}
         settings={settings}
         site={currentSite}
-        siteAiApps={getSiteAppsFromState(state, currentSite.id)}
+        siteAiApps={renderData.siteAiApps}
       />
     </div>
   );
@@ -256,29 +337,26 @@ export async function renderToolPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readPlatformState();
+  const state = providedState ?? readStorefrontPlatformState();
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
-  currentSite.mediaAssets = getSiteMediaAssetsFromState(state, currentSite.id);
-  const { siteAiApps, page, app } = resolveToolPageForSite(state, currentSite, toolSlug);
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
+  const { page, app } = resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
   if (!app && page.slug !== `/tools/${toolSlug}`) notFound();
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const runtime = getThemeRuntimeFromSession(state, currentSite.id, sessionId);
-  return (
-    <div style={themeStyleVars(settings)}>
-      <ThemeRenderer
-        creativePacks={getSiteCreativePacksFromState(state, currentSite.id)}
-        page={page.publishedJson}
-        pagePath={page.slug}
-        products={getSiteProductsFromState(state, currentSite.id)}
-        query={query}
-        routeMode={routeMode}
-        runtime={runtime}
-        settings={settings}
-        site={currentSite}
-        siteAiApps={siteAiApps}
-      />
-    </div>
-  );
+  const runtime = sessionId && pageNeedsFullCustomerRuntime(page.publishedJson, page.slug)
+    ? getThemeRuntimeFromSession(state, currentSite.id, sessionId)
+    : getLightCustomerRuntime(state, currentSite.id, sessionId);
+  return renderThemePage({
+    currentSite,
+    page: page.publishedJson,
+    pagePath: page.slug,
+    query,
+    renderData,
+    routeMode,
+    runtime,
+    settings
+  });
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
-import { readPlatformState } from "@/lib/server-store";
+import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const platformState = readPlatformState();
+  const platformState = readStorefrontPlatformState();
   const host = (await headers()).get("host");
   const hostSite = getSiteByHostFromState(platformState, host);
   if (!hostSite) return {};
@@ -26,7 +26,7 @@ export default async function HomePage({
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const platformState = readPlatformState();
+  const platformState = readStorefrontPlatformState();
   const host = (await headers()).get("host");
   if (isPlatformHost(host)) redirect("/platform");
   const hostSite = getSiteByHostFromState(platformState, host);

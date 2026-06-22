@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getPage } from "@/lib/data";
-import { readPlatformState } from "@/lib/server-store";
+import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import { renderCustomerWorkspacePage, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
-  const state = readPlatformState();
+  const state = readStorefrontPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) return {};
   const slug = `/${path.join("/")}`;
@@ -30,7 +30,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/tool") redirect(`/site/${siteSlug}/tools`);
   if (path[0] === "job" && path[1]) redirect(`/site/${siteSlug}/app/jobs/${path[1]}`);
   const query = searchParams ? await searchParams : {};
-  const state = readPlatformState();
+  const state = readStorefrontPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
   if (slug === "/account") {

@@ -1,0 +1,722 @@
+import crypto from "crypto";
+import type { Prisma, PrismaClient } from "@prisma/client";
+import type {
+  AiApp,
+  Album,
+  AssetUpload,
+  CreditLedgerEntry,
+  Customer,
+  CustomerModel,
+  CustomerSession,
+  GenerationJob,
+  LedgerType,
+  Price,
+  Product,
+  PublicCustomer,
+  SiteAiApp
+} from "@/lib/types";
+import { StoreError } from "@/lib/server-store";
+
+type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
+type CustomerWithBalance = Prisma.CustomerGetPayload<{ include: { balance: true } }>;
+type SiteAiAppWithAiApp = Prisma.SiteAiAppGetPayload<{ include: { aiApp: true } }>;
+
+function iso(value: Date | string): string {
+  return value instanceof Date ? value.toISOString() : value;
+}
+
+function jsonRecord(value: Prisma.JsonValue | null | undefined): Record<string, unknown> | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  return value as Record<string, unknown>;
+}
+
+function jsonArray<T>(value: Prisma.JsonValue | null | undefined): T[] {
+  return Array.isArray(value) ? (value as T[]) : [];
+}
+
+export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial<Price>): Price {
+  const record = row as Prisma.PriceGetPayload<object> & { label?: string; metadata?: Prisma.JsonValue | null };
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    productId: row.productId,
+    label: fallback?.label ?? record.label ?? row.id,
+    amountCents: row.amountCents,
+    currency: row.currency,
+    interval: row.interval === "one_time" ? "one_time" : "month",
+    creditsGranted: row.creditsGranted,
+    stripePriceId: row.stripePriceId ?? fallback?.stripePriceId ?? `manual_${row.id}`,
+    metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined)
+  };
+}
+
+export function mapProduct(row: ProductWithPrices): Product {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    name: row.name,
+    type: row.type === "credit_pack" ? "credit_pack" : "subscription",
+    status: row.status === "draft" ? "draft" : "active",
+    prices: row.prices.map((price) => mapPrice(price))
+  };
+}
+
+export function mapCustomer(row: CustomerWithBalance): Customer {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    email: row.email,
+    name: row.name,
+    status: row.status === "past_due" || row.status === "blocked" ? row.status : "active",
+    balance: {
+      available: row.balance?.balance ?? 0,
+      reserved: row.balance?.reserved ?? 0
+    }
+  };
+}
+
+export function mapCreditLedger(row: Prisma.CreditLedgerGetPayload<object>): CreditLedgerEntry {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    amount: row.amount,
+    type: row.type as LedgerType,
+    sourceType: row.sourceType,
+    sourceId: row.sourceId,
+    createdAt: iso(row.createdAt)
+  };
+}
+
+export function mapAiApp(row: Prisma.AiAppGetPayload<object>): AiApp {
+  return {
+    id: row.id,
+    slug: row.slug,
+    name: row.name,
+    description: row.description,
+    appType: row.appType === "copy" || row.appType === "avatar" ? row.appType : "image",
+    parameterSchema: jsonArray(row.parameterSchema)
+  };
+}
+
+export function mapSiteAiApp(row: SiteAiAppWithAiApp): SiteAiApp {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    aiApp: mapAiApp(row.aiApp),
+    enabled: row.enabled,
+    creditCost: row.creditCost,
+    routeKey: row.routeKey
+  };
+}
+
+export function mapGenerationJob(row: Prisma.GenerationJobGetPayload<object>): GenerationJob {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    aiAppId: row.aiAppId,
+    status: row.status as GenerationJob["status"],
+    creditsReserved: row.creditsReserved,
+    createdAt: iso(row.createdAt),
+    updatedAt: iso(row.updatedAt),
+    requestJson: jsonRecord(row.requestJson) ?? {},
+    resultJson: jsonRecord(row.resultJson)
+  };
+}
+
+export function mapAlbum(row: Prisma.AlbumGetPayload<object>): Album {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    title: row.title,
+    sourceJobId: row.sourceJobId ?? undefined,
+    creativePackId: row.creativePackId ?? undefined,
+    status: row.status === "hidden" || row.status === "processing" ? row.status : "ready",
+    outputCount: row.outputCount,
+    coverAssetId: row.coverAssetId ?? undefined,
+    createdAt: iso(row.createdAt),
+    updatedAt: iso(row.updatedAt)
+  };
+}
+
+export function mapAssetUpload(row: Prisma.AssetUploadGetPayload<object>): AssetUpload {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    label: row.id,
+    storageKey: row.storageKey,
+    mimeType: "image/webp",
+    role: "output",
+    visibility: "private",
+    reviewStatus: row.reviewStatus === "pending" || row.reviewStatus === "rejected" ? row.reviewStatus : "approved",
+    deletedAt: row.deletedAt ? iso(row.deletedAt) : undefined,
+    createdAt: new Date(0).toISOString()
+  };
+}
+
+export const relationalSessionTtlMs = 1000 * 60 * 60 * 24 * 30;
+
+export function relationalUid(prefix: string): string {
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function hashRelationalPassword(password: string): string {
+  return `sha256:${crypto.createHash("sha256").update(password).digest("hex")}`;
+}
+
+export function verifyRelationalPassword(password: string, passwordHash?: string | null): boolean {
+  return Boolean(passwordHash) && hashRelationalPassword(password) === passwordHash;
+}
+
+export function toIsoString(value: Date | string | null | undefined): string | undefined {
+  if (!value) return undefined;
+  return value instanceof Date ? value.toISOString() : value;
+}
+
+export function toPublicCustomerRelational(customer: Record<string, unknown>): PublicCustomer {
+  return {
+    id: String(customer.id),
+    siteId: String(customer.siteId),
+    email: String(customer.email),
+    name: String(customer.name),
+    status: customer.status as Customer["status"],
+    balance: {
+      available: numberFromUnknown((customer.balance as { balance?: unknown } | null | undefined)?.balance, 0),
+      reserved: numberFromUnknown((customer.balance as { reserved?: unknown } | null | undefined)?.reserved, 0)
+    }
+  };
+}
+
+export function toCustomerSessionRelational(session: Record<string, unknown>): CustomerSession {
+  const createdAt = toIsoString(session.createdAt as Date | string | undefined) ?? new Date().toISOString();
+  const expiresAt = toIsoString(session.expiresAt as Date | string | undefined) ?? createdAt;
+  return {
+    id: String(session.id),
+    siteId: String(session.siteId),
+    customerId: String(session.customerId),
+    createdAt,
+    expiresAt
+  };
+}
+
+export function toAssetUploadRelational(asset: Record<string, unknown>): AssetUpload {
+  const createdAt = toIsoString(asset.createdAt as Date | string | undefined) ?? new Date(0).toISOString();
+  const deletedAt = toIsoString(asset.deletedAt as Date | string | undefined);
+  return {
+    id: String(asset.id),
+    siteId: String(asset.siteId),
+    customerId: String(asset.customerId),
+    customerModelId: optionalString(asset.customerModelId),
+    subjectRole: optionalString(asset.subjectRole),
+    jobId: optionalString(asset.jobId),
+    label: optionalString(asset.label) ?? String(asset.id),
+    storageKey: String(asset.storageKey),
+    mimeType: optionalString(asset.mimeType) ?? "application/octet-stream",
+    role: (optionalString(asset.role) ?? "input") as AssetUpload["role"],
+    visibility: (optionalString(asset.visibility) ?? "private") as AssetUpload["visibility"],
+    reviewStatus: (optionalString(asset.reviewStatus) ?? "approved") as AssetUpload["reviewStatus"],
+    validationStatus: optionalString(asset.validationStatus) as AssetUpload["validationStatus"],
+    validationReport: objectRecord(asset.validationReport),
+    createdAt,
+    deletedAt
+  };
+}
+
+export function toCustomerModelRelational(model: Record<string, unknown>): CustomerModel {
+  return {
+    id: String(model.id),
+    siteId: String(model.siteId),
+    customerId: String(model.customerId),
+    label: String(model.label),
+    modelType: model.modelType as CustomerModel["modelType"],
+    status: model.status as CustomerModel["status"],
+    inputAssetCount: numberFromUnknown(model.inputAssetCount, 0),
+    minInputAssets: numberFromUnknown(model.minInputAssets, 0),
+    providerModelId: optionalString(model.providerModelId),
+    trainingJobId: optionalString(model.trainingJobId),
+    failureReason: optionalString(model.failureReason),
+    createdAt: toIsoString(model.createdAt as Date | string | undefined) ?? new Date(0).toISOString(),
+    updatedAt: toIsoString(model.updatedAt as Date | string | undefined) ?? new Date(0).toISOString()
+  };
+}
+
+export function toAlbumRelational(album: Record<string, unknown>): Album {
+  return {
+    id: String(album.id),
+    siteId: String(album.siteId),
+    customerId: String(album.customerId),
+    title: String(album.title),
+    sourceJobId: optionalString(album.sourceJobId),
+    creativePackId: optionalString(album.creativePackId),
+    status: album.status as Album["status"],
+    outputCount: numberFromUnknown(album.outputCount, 0),
+    coverAssetId: optionalString(album.coverAssetId),
+    createdAt: toIsoString(album.createdAt as Date | string | undefined) ?? new Date(0).toISOString(),
+    updatedAt: toIsoString(album.updatedAt as Date | string | undefined) ?? new Date(0).toISOString()
+  };
+}
+
+export async function getModelFields(client: PrismaClient, modelName: string): Promise<Set<string>> {
+  const dmmf = (client as unknown as { _runtimeDataModel: { models: Record<string, { fields: Array<{ name: string }> }> } })
+    ._runtimeDataModel;
+  const model = dmmf.models[modelName];
+  return new Set(model?.fields.map((field) => field.name) ?? []);
+}
+
+export async function requireModelFields(client: PrismaClient, modelName: string, fields: string[]): Promise<void> {
+  const available = await getModelFields(client, modelName);
+  const missing = fields.filter((field) => !available.has(field));
+  if (missing.length) {
+    throw new StoreError(`relational_schema_missing_${modelName}_${missing.join("_")}`, 500);
+  }
+}
+
+export async function requireDelegate(client: PrismaClient, delegateName: string): Promise<void> {
+  if (!(delegateName in client)) {
+    throw new StoreError(`relational_schema_missing_${delegateName}`, 500);
+  }
+}
+
+export function compactObject<T extends Record<string, unknown>>(value: T): T {
+  return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry !== undefined)) as T;
+}
+
+export function prismaJsonObject(value: Record<string, unknown> | undefined): Prisma.InputJsonObject | undefined {
+  return value ? (value as Prisma.InputJsonObject) : undefined;
+}
+
+function optionalString(value: unknown): string | undefined {
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+function numberFromUnknown(value: unknown, fallback: number): number {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
+function objectRecord(value: unknown): Record<string, string | number | boolean> | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const entries = Object.entries(value).filter((entry): entry is [string, string | number | boolean] => {
+    return ["string", "number", "boolean"].includes(typeof entry[1]);
+  });
+  return entries.length ? Object.fromEntries(entries) : undefined;
+}
+
+export type PrismaLike = PrismaClient | Prisma.TransactionClient;
+
+export const PLATFORM_DOCUMENT_ID = "platform";
+
+export const RelationalStoreError = StoreError;
+
+export function cloneJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+export const uid = relationalUid;
+
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .trim()
+    .replace(/['"]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48);
+}
+
+export function makeThemeDraftMeta(page: Pick<import("@/lib/types").ThemePage, "draftJson" | "draftMeta">): import("@/lib/types").ThemeDraftMeta {
+  const revision = (page.draftMeta?.revision ?? page.draftJson.version ?? 0) + 1;
+  const updatedAt = new Date().toISOString();
+  return {
+    revision,
+    updatedAt,
+    etag: `W/"${revision}-${Date.parse(updatedAt).toString(36)}"`
+  };
+}
+
+export function assertThemeDraftVersion(
+  page: Pick<import("@/lib/types").ThemePage, "draftMeta">,
+  expected?: { expectedRevision?: number; expectedEtag?: string }
+) {
+  if (!expected) return;
+  if (expected.expectedRevision !== undefined && page.draftMeta?.revision !== expected.expectedRevision) {
+    throw new StoreError("theme_draft_revision_conflict", 409);
+  }
+  if (expected.expectedEtag !== undefined && page.draftMeta?.etag !== expected.expectedEtag) {
+    throw new StoreError("theme_draft_etag_conflict", 409);
+  }
+}
+
+export function toThemePage(record: {
+  id: string;
+  siteId: string;
+  pageType: string;
+  slug: string;
+  title: string;
+  draftJson: unknown;
+  publishedJson: unknown;
+}): import("@/lib/types").ThemePage {
+  const draftJson = cloneJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
+    draftMeta?: import("@/lib/types").ThemeDraftMeta;
+  };
+  const draftMeta = draftJson.draftMeta;
+  if (draftMeta) delete draftJson.draftMeta;
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    pageType: record.pageType,
+    slug: record.slug,
+    title: record.title,
+    draftJson,
+    publishedJson: cloneJson(record.publishedJson) as import("@/lib/types").ThemePageJson,
+    draftMeta
+  };
+}
+
+export function draftJsonWithMeta(page: import("@/lib/types").ThemePage): Prisma.InputJsonValue {
+  return cloneJson({
+    ...page.draftJson,
+    draftMeta: page.draftMeta
+  }) as unknown as Prisma.InputJsonValue;
+}
+
+export function toThemeSettings(record?: { draftJson: unknown; publishedJson: unknown } | null): import("@/lib/types").Site["themeSettings"] {
+  return {
+    draftJson: cloneJson(record?.draftJson ?? {}) as import("@/lib/types").ThemeSettings,
+    publishedJson: cloneJson(record?.publishedJson ?? {}) as import("@/lib/types").ThemeSettings
+  };
+}
+
+export function toSite(record: {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  timezone: string;
+  currency: string;
+  branding: unknown;
+  domains?: Array<{ domain: string; isPrimary: boolean }>;
+  pages?: Array<Parameters<typeof toThemePage>[0]>;
+  settings?: { draftJson: unknown; publishedJson: unknown } | null;
+  connect?: { stripeAccountId: string; onboardingStatus: string; chargesEnabled: boolean; payoutsEnabled: boolean } | null;
+}): import("@/lib/types").Site {
+  const primaryDomain = record.domains?.find((domain) => domain.isPrimary)?.domain ?? record.domains?.[0]?.domain ?? "";
+  return {
+    id: record.id,
+    name: record.name,
+    slug: record.slug,
+    status: record.status as import("@/lib/types").Site["status"],
+    primaryDomain,
+    currency: record.currency,
+    timezone: record.timezone,
+    branding: cloneJson(record.branding) as import("@/lib/types").Site["branding"],
+    connect: {
+      stripeAccountId: record.connect?.stripeAccountId ?? `acct_pending_${record.slug}`,
+      status: (record.connect?.onboardingStatus ?? "pending") as import("@/lib/types").Site["connect"]["status"],
+      chargesEnabled: Boolean(record.connect?.chargesEnabled),
+      payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
+    },
+    themeSettings: toThemeSettings(record.settings),
+    pages: (record.pages ?? []).map(toThemePage)
+  };
+}
+
+export function toSiteDomain(record: {
+  id: string;
+  siteId: string;
+  domain: string;
+  isPrimary: boolean;
+  status: string;
+  createdAt?: Date | string;
+}): import("@/lib/types").SiteDomain {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    domain: record.domain,
+    isPrimary: record.isPrimary,
+    status: record.status as import("@/lib/types").SiteDomain["status"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toSiteAdmin(record: {
+  id: string;
+  siteId: string;
+  email: string;
+  displayName: string;
+  role: string;
+  createdAt?: Date | string;
+}): import("@/lib/types").SiteAdmin {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    email: record.email,
+    displayName: record.displayName,
+    role: record.role as import("@/lib/types").SiteAdmin["role"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toMediaAsset(record: {
+  id: string;
+  siteId: string;
+  label: string;
+  storageKey: string;
+  mimeType: string;
+  usageType?: string;
+  usage?: string;
+  sourceType?: string | null;
+  previewUrl?: string | null;
+  originUrl?: string | null;
+  altText?: string | null;
+  notes?: string | null;
+  createdAt: Date | string;
+}): import("@/lib/types").MediaAsset {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    label: record.label,
+    storageKey: record.storageKey,
+    mimeType: record.mimeType,
+    usage: (record.usageType ?? record.usage ?? "theme") as import("@/lib/types").MediaAsset["usage"],
+    sourceType: (record.sourceType ?? "manual") as import("@/lib/types").MediaAsset["sourceType"],
+    previewUrl: record.previewUrl ?? undefined,
+    originUrl: record.originUrl ?? undefined,
+    altText: record.altText ?? undefined,
+    notes: record.notes ?? undefined,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toSiteAiApp(record: {
+  id: string;
+  siteId: string;
+  enabled: boolean;
+  creditCost: number;
+  routeKey: string;
+  aiApp: {
+    id: string;
+    slug: string;
+    name: string;
+    description: string;
+    appType: string;
+    parameterSchema: unknown;
+  };
+}): import("@/lib/types").SiteAiApp {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    enabled: record.enabled,
+    creditCost: record.creditCost,
+    routeKey: record.routeKey,
+    aiApp: {
+      id: record.aiApp.id,
+      slug: record.aiApp.slug,
+      name: record.aiApp.name,
+      description: record.aiApp.description,
+      appType: record.aiApp.appType as import("@/lib/types").AiApp["appType"],
+      parameterSchema: Array.isArray(record.aiApp.parameterSchema)
+        ? (cloneJson(record.aiApp.parameterSchema) as import("@/lib/types").AiApp["parameterSchema"])
+        : []
+    }
+  };
+}
+
+export function toThemePublication(record: {
+  id: string;
+  siteId: string;
+  version: number;
+  snapshot: unknown;
+  publishedBy: string;
+  publishedAt: Date | string;
+}): import("@/lib/types").ThemePublication {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    version: record.version,
+    snapshot: cloneJson(record.snapshot) as import("@/lib/types").ThemePublication["snapshot"],
+    publishedBy: record.publishedBy,
+    publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString()
+  };
+}
+
+export function toSiteTheme(record: {
+  id: string;
+  siteId: string;
+  name: string;
+  themeId: string;
+  themeKey: string;
+  status: string;
+  templates: unknown;
+  settings: unknown;
+  source: string;
+  createdBy: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}): import("@/lib/types").SiteTheme {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    name: record.name,
+    themeId: record.themeId,
+    themeKey: record.themeKey,
+    status: record.status as import("@/lib/types").SiteTheme["status"],
+    templates: cloneJson(record.templates),
+    settings: cloneJson(record.settings),
+    source: record.source as import("@/lib/types").SiteTheme["source"],
+    createdBy: record.createdBy,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString()
+  };
+}
+
+export function toGatewayGroup(record: {
+  id: string;
+  siteId: string;
+  name: string;
+  status: string;
+  modelAllowlist: string[];
+  monthlyQuota: number;
+  usedQuota: number;
+  retryStatusCodes: number[];
+  rateLimitPerMinute: number;
+  accountPoolMode: string;
+  unavailableReason?: string | null;
+}): import("@/lib/types").AiGatewayGroup {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    name: record.name,
+    status: record.status as import("@/lib/types").AiGatewayGroup["status"],
+    modelAllowlist: record.modelAllowlist,
+    monthlyQuota: record.monthlyQuota,
+    usedQuota: record.usedQuota,
+    retryStatusCodes: record.retryStatusCodes,
+    rateLimitPerMinute: record.rateLimitPerMinute,
+    accountPoolMode: record.accountPoolMode as import("@/lib/types").AiGatewayGroup["accountPoolMode"],
+    unavailableReason: record.unavailableReason ?? undefined
+  };
+}
+
+export function toPlatformEmailSettings(record: {
+  provider: string;
+  apiKey?: string | null;
+  fromEmail?: string | null;
+  replyTo?: string | null;
+  updatedBy?: string | null;
+  updatedAt: Date | string;
+}): import("@/lib/types").PlatformEmailSettings {
+  return {
+    provider: "resend",
+    apiKey: record.apiKey ?? undefined,
+    fromEmail: record.fromEmail ?? undefined,
+    replyTo: record.replyTo ?? undefined,
+    updatedAt: toIsoString(record.updatedAt),
+    updatedBy: record.updatedBy ?? undefined
+  };
+}
+
+export function toPlatformCloudflareAccount(record: {
+  id: string;
+  label: string;
+  email: string;
+  accountId: string;
+  apiToken: string;
+  createdAt: Date | string;
+  updatedAt?: Date | string;
+  updatedBy?: string | null;
+}): import("@/lib/types").PlatformCloudflareAccount {
+  return {
+    id: record.id,
+    label: record.label,
+    email: record.email,
+    accountId: record.accountId,
+    apiToken: record.apiToken,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt),
+    updatedBy: record.updatedBy ?? undefined
+  };
+}
+
+export function toPlatformAiProvider(record: {
+  id: string;
+  label: string;
+  aiUrl: string;
+  apiKey?: string | null;
+  modelType: string;
+  priority: number;
+  preferred: boolean;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  updatedBy?: string | null;
+}): import("@/lib/types").PlatformAiProvider {
+  return {
+    id: record.id,
+    label: record.label,
+    aiUrl: record.aiUrl,
+    apiKey: record.apiKey ?? undefined,
+    modelType: record.modelType,
+    priority: record.priority,
+    preferred: record.preferred,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString(),
+    updatedBy: record.updatedBy ?? undefined
+  };
+}
+
+export async function getPlatformDocumentState(db: PrismaLike): Promise<Partial<import("@/lib/types").PlatformState>> {
+  const document = await db.platformStateDocument.findUnique({ where: { id: PLATFORM_DOCUMENT_ID } });
+  return cloneJson((document?.state ?? {}) as Partial<import("@/lib/types").PlatformState>);
+}
+
+export async function updatePlatformDocumentState<T>(
+  db: PrismaLike,
+  mutator: (state: Partial<import("@/lib/types").PlatformState>) => T
+): Promise<T> {
+  const state = await getPlatformDocumentState(db);
+  const result = mutator(state);
+  await db.platformStateDocument.upsert({
+    where: { id: PLATFORM_DOCUMENT_ID },
+    create: { id: PLATFORM_DOCUMENT_ID, state: state as unknown as Prisma.InputJsonValue },
+    update: { state: state as unknown as Prisma.InputJsonValue }
+  });
+  return result;
+}
+
+export async function addAuditLogRelational(
+  db: PrismaLike,
+  entry: Omit<import("@/lib/types").AuditLogEntry, "id" | "createdAt"> & { id?: string; createdAt?: string }
+) {
+  const createdAt = entry.createdAt ? new Date(entry.createdAt) : new Date();
+  const id = entry.id ?? relationalUid("audit");
+  const auditDelegate = "auditLog" in db ? db.auditLog : (db as unknown as { adminAuditLog: Prisma.TransactionClient["auditLog"] }).adminAuditLog;
+  await auditDelegate.create({
+    data: {
+      id,
+      siteId: entry.siteId,
+      actorType: entry.actorType,
+      actorId: entry.actorId,
+      action: entry.action,
+      targetType: entry.targetType,
+      targetId: entry.targetId,
+      metadata: (entry.metadata ?? {}) as unknown as Prisma.InputJsonValue,
+      createdAt
+    }
+  });
+  await updatePlatformDocumentState(db, (state) => {
+    state.auditLogs ??= [];
+    state.auditLogs.unshift({
+      id,
+      siteId: entry.siteId,
+      actorType: entry.actorType,
+      actorId: entry.actorId,
+      action: entry.action,
+      targetType: entry.targetType,
+      targetId: entry.targetId,
+      createdAt: createdAt.toISOString(),
+      metadata: entry.metadata
+    });
+  });
+}

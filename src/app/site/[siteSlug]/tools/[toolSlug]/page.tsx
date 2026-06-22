@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { readPlatformState } from "@/lib/server-store";
+import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
 
 function resolveToolPage(siteSlug: string, toolSlug: string) {
-  const state = readPlatformState();
+  const state = readStorefrontPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) return { state, site: undefined, siteAiApps: [], page: undefined, app: undefined };
   return { state, site, ...resolveToolPageForSite(state, site, toolSlug) };

@@ -37,6 +37,8 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "db:import-state": "node scripts/import-platform-state-to-prisma.mjs",
+    "db:import-relational-state": "node scripts/db-import-relational-state.mjs",
+    "db:verify-relational-state": "node scripts/verify-relational-state.mjs",
     "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs"
   },
   "dependencies": {
