@@ -25,6 +25,11 @@ async function main() {
     "platformStateDocument"
   ].forEach(requireDelegate);
 
+  if (!process.env.DATABASE_URL) {
+    console.log(JSON.stringify({ ok: true, schema: { delegates: "available" }, db: { checked: false, reason: "DATABASE_URL_missing" } }, null, 2));
+    return;
+  }
+
   const [
     siteCount,
     pageCount,
