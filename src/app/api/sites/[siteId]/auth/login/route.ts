@@ -3,7 +3,7 @@ import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
-import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
+import { createExistingCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -16,14 +16,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = await createCustomerSessionRelational({ siteId, email: body.email, password: body.password, name: body.name });
+    const result = await createExistingCustomerSessionRelational({ siteId, email: body.email, password: body.password });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,
       createdCustomer: result.createdCustomer,
-      note: result.createdCustomer
-        ? "Customer account created for this site with a password-backed session."
-        : "Customer password verified and site-scoped session created."
+      note: "Customer password verified and site-scoped session created."
     });
     response.cookies.set(customerSessionCookie(siteId), result.session.id, {
       httpOnly: true,

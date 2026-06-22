@@ -101,6 +101,7 @@ model Site {
   adminSessions    SiteAdminSession[]
   customers        Customer[]
   customerSessions CustomerSession[]
+  emailVerifications CustomerEmailVerification[]
   products         Product[]
   prices           Price[]
   subscriptions    Subscription[]
@@ -218,6 +219,26 @@ model StripeConnectAccount {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+}
+
+model CustomerEmailVerification {
+  id                String    @id
+  siteId            String
+  email             String
+  codeHash          String
+  purpose           String
+  attempts          Int       @default(0)
+  providerMessageId String?
+  deliveryStatus    String?
+  deliveryError     String?
+  consumedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  expiresAt         DateTime
+  site              Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, email, expiresAt])
+  @@index([expiresAt])
+  @@index([consumedAt])
 }
 
 model Product {

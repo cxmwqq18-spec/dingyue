@@ -16,6 +16,8 @@ const authMessageMap: Record<string, string> = {
   invalid_email: "邮箱格式不正确。",
   invalid_verification_code: "验证码不正确，请检查后重试。",
   verification_code_expired: "验证码已过期，请重新发送。",
+  customer_already_exists: "该邮箱已注册，请直接登录。",
+  customer_not_found_for_site: "未找到该邮箱对应的客户账号。",
   email_code_send_failed: "验证码邮件发送失败，请稍后重试。",
   email_code_verify_failed: "邮箱验证码验证失败，请稍后重试。",
   email_provider_not_configured: "邮件服务还未配置完成，无法发送验证码。",

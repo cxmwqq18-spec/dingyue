@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyCustomerEmailCode } from "@/lib/customer-email-auth";
-import { StoreError, readPlatformState } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
@@ -11,14 +11,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer-email-verify:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
   if (!limited.allowed) return limited.response;
 
-  const body = (await request.json().catch(() => ({}))) as { email?: string; code?: string; name?: string };
+  const body = (await request.json().catch(() => ({}))) as { email?: string; code?: string; password?: string; purpose?: "register" | "password_reset"; name?: string };
   if (!body.email || !body.code) return NextResponse.json({ error: "missing_email_or_code" }, { status: 400 });
 
   try {
-    const state = readPlatformState({ fresh: true });
-    const site = state.sites.find((item) => item.id === siteId);
-    if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
-    const result = await verifyCustomerEmailCode({ site, email: body.email, code: body.code, name: body.name });
+    const result = await verifyCustomerEmailCode({ siteId, email: body.email, code: body.code, password: body.password, purpose: body.purpose, name: body.name });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,

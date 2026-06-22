@@ -92,6 +92,45 @@ export async function createCustomerSessionRelational(
   return result;
 }
 
+export async function createExistingCustomerSessionRelational(
+  params: { siteId: string; email: string; password: string },
+  client: DbClient = prisma
+) {
+  const email = params.email.trim().toLowerCase();
+  if (!email.includes("@")) throw new StoreError("invalid_email", 400);
+  if (params.password.trim().length < 6) throw new StoreError("password_min_6_chars", 400);
+  await requireDelegate(client, "customerSession");
+  await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status", "passwordHash"]);
+  await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
+
+  const result = await client.$transaction(async (tx) => {
+    const customer = await tx.customer.findUnique({
+      where: { siteId_email: { siteId: params.siteId, email } },
+      include: { balance: true }
+    });
+    if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
+      throw new StoreError("invalid_customer_credentials", 401);
+    }
+
+    const session = await (tx as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
+      data: {
+        id: relationalUid("sess"),
+        siteId: params.siteId,
+        customerId: customer.id,
+        expiresAt: new Date(Date.now() + relationalSessionTtlMs)
+      }
+    });
+
+    return {
+      customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
+      session: toCustomerSessionRelational(session),
+      createdCustomer: false
+    };
+  });
+
+  return result;
+}
+
 export async function deleteCustomerSessionRelational(sessionId: string, client: DbClient = prisma): Promise<void> {
   await requireDelegate(client, "customerSession");
   await (client as unknown as { customerSession: { deleteMany(args: unknown): Promise<unknown> } }).customerSession.deleteMany({

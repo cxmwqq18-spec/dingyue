@@ -143,6 +143,7 @@ function summaryCounts(state) {
     domains: asArray(state.siteDomains).length,
     admins: asArray(state.siteAdmins).length,
     customers: asArray(state.customers).length,
+    customerEmailVerifications: asArray(state.customerEmailVerifications).length,
     creditBalances: customerBalances(state).length,
     products: asArray(state.products).length,
     prices: flattenPrices(state).length,
@@ -238,6 +239,25 @@ const specs = [
       status: customer.status,
       passwordHash: customer.passwordHash,
       createdAt: toDate(customer.createdAt)
+    })
+  },
+  {
+    key: "customerEmailVerifications",
+    model: "customerEmailVerification",
+    items: (state) => asArray(state.customerEmailVerifications),
+    data: (verification) => ({
+      id: verification.id,
+      siteId: verification.siteId,
+      email: verification.email,
+      codeHash: verification.codeHash,
+      purpose: verification.purpose ?? "register",
+      attempts: verification.attempts ?? 0,
+      providerMessageId: verification.providerMessageId,
+      deliveryStatus: verification.deliveryStatus,
+      deliveryError: verification.deliveryError,
+      consumedAt: toDate(verification.consumedAt),
+      createdAt: toDate(verification.createdAt),
+      expiresAt: toDate(verification.expiresAt, new Date())
     })
   },
   {
@@ -606,6 +626,7 @@ const importOrder = [
   "domains",
   "admins",
   "customers",
+  "customerEmailVerifications",
   "creditBalances",
   "products",
   "prices",
