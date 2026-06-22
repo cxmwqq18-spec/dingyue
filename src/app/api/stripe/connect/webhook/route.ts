@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { recordStripeWebhook, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { recordStripeWebhookRelational } from "@/lib/stores/billing-store";
 
 export async function POST(request: Request) {
   const payload = (await request.json().catch(() => ({}))) as {
@@ -9,7 +10,7 @@ export async function POST(request: Request) {
     data?: { object?: { metadata?: { siteId?: string; customerId?: string; priceId?: string; creditsGranted?: string } } };
   };
   try {
-    const result = recordStripeWebhook(payload);
+    const result = await recordStripeWebhookRelational(payload);
     return NextResponse.json({
       received: true,
       providerEventId: payload.id,

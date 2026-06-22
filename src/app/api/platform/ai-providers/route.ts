@@ -1,13 +1,9 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { aiProviderStatus, assertValidAiProviderUrl, testAiProviderConnection } from "@/lib/ai-provider-config";
-import { requirePlatformMutation } from "@/lib/api-auth";
+import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import {
-  getPlatformAdminBySessionFromState,
-  readPlatformState,
   StoreError
 } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
 import {
   getPlatformOverviewRelational,
   setCurrentPlatformAiProviderRelational,
@@ -18,9 +14,7 @@ import type { PlatformAiProvider } from "@/lib/types";
 const defaultModelTypes = ["gpt-image-2", "gpt-5.5"];
 
 async function requirePlatformRead() {
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  const current = getPlatformAdminBySessionFromState(state, sessionId);
+  const current = await getCurrentPlatformAdmin();
   if (!current) return { ok: false as const, response: NextResponse.json({ error: "platform_login_required" }, { status: 401 }) };
   return { ok: true as const, current };
 }

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -8,7 +9,7 @@ const batchSize = 50;
 
 function usage() {
   console.log(
-    "Usage: node scripts/db-import-relational-state.mjs [--source data/platform-state.json] [--dry-run] [--verify]\n" +
+    "Usage: node scripts/db-import-relational-state.mjs [--source data/platform-state.json] [--dry-run] [--verify] [--replace]\n" +
       "       node scripts/verify-relational-state.mjs [--source data/platform-state.json]"
   );
 }
@@ -53,20 +54,21 @@ function firstPriceForProduct(state, productId) {
   return flattenPrices(state).find((price) => price.productId === productId);
 }
 
-function uniqueById(items) {
+function uniqueByIdentity(items, identity = (item) => item?.id) {
   const seen = new Set();
   const unique = [];
   const duplicates = [];
   for (const item of items) {
-    if (!item?.id) {
+    const key = identity(item);
+    if (!key) {
       duplicates.push({ id: null, reason: "missing_id" });
       continue;
     }
-    if (seen.has(item.id)) {
-      duplicates.push({ id: item.id, reason: "duplicate_id" });
+    if (seen.has(key)) {
+      duplicates.push({ id: item?.id ?? null, identity: key, reason: "duplicate_identity" });
       continue;
     }
-    seen.add(item.id);
+    seen.add(key);
     unique.push(item);
   }
   return { unique, duplicates };
@@ -136,6 +138,7 @@ function siteAiApps(state) {
 
 function summaryCounts(state) {
   return {
+    platformAdmins: asArray(state.platformAdmins).length,
     sites: asArray(state.sites).length,
     domains: asArray(state.siteDomains).length,
     admins: asArray(state.siteAdmins).length,
@@ -167,6 +170,19 @@ function summaryCounts(state) {
 }
 
 const specs = [
+  {
+    key: "platformAdmins",
+    model: "platformAdmin",
+    items: (state) => asArray(state.platformAdmins),
+    data: (admin) => ({
+      id: admin.id,
+      email: admin.email,
+      passwordHash: admin.passwordHash,
+      displayName: admin.displayName,
+      role: admin.role,
+      createdAt: toDate(admin.createdAt)
+    })
+  },
   {
     key: "sites",
     model: "site",
@@ -204,8 +220,10 @@ const specs = [
       id: admin.id,
       siteId: admin.siteId,
       email: admin.email,
+      passwordHash: admin.passwordHash,
       displayName: admin.displayName,
-      role: admin.role
+      role: admin.role,
+      createdAt: toDate(admin.createdAt)
     })
   },
   {
@@ -218,6 +236,7 @@ const specs = [
       email: customer.email,
       name: customer.name,
       status: customer.status,
+      passwordHash: customer.passwordHash,
       createdAt: toDate(customer.createdAt)
     })
   },
@@ -377,13 +396,14 @@ const specs = [
     key: "mediaAssets",
     model: "mediaAsset",
     items: (state) => asArray(state.mediaAssets),
+    identity: (asset) => (asset?.siteId && asset?.storageKey ? `${asset.siteId}::${asset.storageKey}` : asset?.id),
     data: (asset) => ({
       id: asset.id,
       siteId: asset.siteId,
       label: asset.label,
       storageKey: asset.storageKey,
-      mimeType: asset.mimeType,
-      usageType: asset.usageType ?? asset.usage,
+      mimeType: asset.mimeType ?? "image/png",
+      usageType: asset.usageType ?? asset.usage ?? "theme",
       createdAt: toDate(asset.createdAt)
     })
   },
@@ -581,6 +601,7 @@ const specs = [
 ];
 
 const importOrder = [
+  "platformAdmins",
   "sites",
   "domains",
   "admins",
@@ -615,6 +636,15 @@ function specsInImportOrder() {
   return importOrder.map((key) => byKey.get(key)).filter(Boolean);
 }
 
+async function clearRelationalTables() {
+  for (const spec of [...specsInImportOrder()].reverse()) {
+    const delegate = delegateFor(spec.model);
+    if (delegate?.deleteMany) {
+      await delegate.deleteMany({});
+    }
+  }
+}
+
 async function loadState() {
   const sourceArg = argValue("--source");
   if (sourceArg) {
@@ -631,7 +661,7 @@ function buildPlan(state) {
   const counts = summaryCounts(state);
   const plan = specs.map((spec) => {
     const items = spec.items(state);
-    const { unique, duplicates } = uniqueById(items);
+    const { unique, duplicates } = uniqueByIdentity(items, spec.identity);
     return {
       key: spec.key,
       model: spec.model,
@@ -647,7 +677,7 @@ function buildPlan(state) {
 async function importSpec(spec, state) {
   const delegate = delegateFor(spec.model);
   const items = spec.items(state);
-  const { unique, duplicates } = uniqueById(items);
+  const { unique, duplicates } = uniqueByIdentity(items, spec.identity);
   if (!delegate?.upsert) {
     return {
       key: spec.key,
@@ -692,7 +722,7 @@ async function verifyState(state) {
   const checks = [];
   for (const spec of specs) {
     const delegate = delegateFor(spec.model);
-    const sourceCount = spec.items(state).length;
+    const sourceCount = uniqueByIdentity(spec.items(state), spec.identity).unique.length;
     if (!delegate?.count) {
       checks.push({
         key: spec.key,
@@ -726,6 +756,7 @@ async function main() {
   }
 
   const dryRun = process.argv.includes("--dry-run");
+  const replace = process.argv.includes("--replace");
   const verifyOnly = path.basename(process.argv[1] ?? "") === "verify-relational-state.mjs";
   const shouldVerify = verifyOnly || process.argv.includes("--verify");
   const { state, source } = await loadState();
@@ -744,13 +775,16 @@ async function main() {
   }
 
   const results = [];
+  if (replace) {
+    await clearRelationalTables();
+  }
   for (const spec of specsInImportOrder()) {
     results.push(await importSpec(spec, state));
   }
 
   const output = {
     ok: true,
-    mode: "import",
+    mode: replace ? "replace" : "import",
     source,
     counts: plan.counts,
     results

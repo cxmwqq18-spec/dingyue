@@ -1,15 +1,9 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { requirePlatformMutation } from "@/lib/api-auth";
-import {
-  createSiteAdminSessionByAdminId,
-  getPlatformAdminBySessionFromState,
-  readPlatformState,
-  StoreError,
-  toPublicSiteAdmin
-} from "@/lib/server-store";
-import { platformSessionCookie, shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
+import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
+import { StoreError } from "@/lib/server-store";
+import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
+import { createSiteAdminSessionByAdminIdRelational, getSiteAdminBridgeTargetRelational } from "@/lib/stores/site-store";
 
 function normalizeAdminPath(value?: string | null): string {
   const trimmed = value?.trim();
@@ -19,28 +13,14 @@ function normalizeAdminPath(value?: string | null): string {
 }
 
 async function buildBridgeResponse(request: NextRequest, siteId: string, requestedPath?: string | null) {
-  const state = readPlatformState();
-  const platformSessionId = (await cookies()).get(platformSessionCookie())?.value;
-  const current = getPlatformAdminBySessionFromState(state, platformSessionId);
+  const current = await getCurrentPlatformAdmin();
   if (!current) {
     return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
   }
 
-  const site = state.sites.find((item) => item.id === siteId);
-  if (!site) {
-    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
-  }
-
-  const targetAdmin =
-    state.siteAdmins.find((admin) => admin.siteId === siteId && admin.role === "owner") ??
-    state.siteAdmins.find((admin) => admin.siteId === siteId);
-
-  if (!targetAdmin) {
-    return NextResponse.json({ error: "site_admin_not_found" }, { status: 404 });
-  }
-
   try {
-    const result = createSiteAdminSessionByAdminId({
+    const { site, admin: targetAdmin } = await getSiteAdminBridgeTargetRelational(siteId);
+    const result = await createSiteAdminSessionByAdminIdRelational({
       siteId,
       siteAdminId: targetAdmin.id
     });
@@ -49,7 +29,7 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
     const response = NextResponse.json({
       ok: true,
       siteSlug: site.slug,
-      siteAdmin: toPublicSiteAdmin(targetAdmin),
+      siteAdmin: result.siteAdmin,
       redirectTo
     });
     response.cookies.set(siteAdminSessionCookie(siteId), result.session.id, {

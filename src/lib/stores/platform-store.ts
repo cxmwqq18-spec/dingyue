@@ -1,31 +1,77 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import type { PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailSettings, Site } from "@/lib/types";
+import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain } from "@/lib/types";
 
 import {
   addAuditLogRelational,
+  relationalSessionTtlMs,
+  relationalUid,
   RelationalStoreError,
+  toPlatformSessionRelational,
   toPlatformAiProvider,
   toPlatformCloudflareAccount,
   toPlatformEmailSettings,
+  toPublicPlatformAdminRelational,
+  toPublicSiteAdminRelational,
+  toGatewayGroup,
   toSite,
-  uid
+  toSiteDomain,
+  uid,
+  verifyRelationalPassword
 } from "./prisma-mappers";
+
+export async function createPlatformAdminSessionRelational(params: { email: string; password: string }) {
+  const email = params.email.trim().toLowerCase();
+  const admin = await prisma.platformAdmin.findUnique({ where: { email } });
+  if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
+    throw new RelationalStoreError("invalid_platform_credentials", 401);
+  }
+  const session = await prisma.platformSession.create({
+    data: {
+      id: relationalUid("psess"),
+      platformAdminId: admin.id,
+      expiresAt: new Date(Date.now() + relationalSessionTtlMs)
+    }
+  });
+  return {
+    platformAdmin: toPublicPlatformAdminRelational(admin),
+    session: toPlatformSessionRelational(session)
+  };
+}
+
+export async function deletePlatformAdminSessionRelational(sessionId: string): Promise<void> {
+  await prisma.platformSession.deleteMany({ where: { id: sessionId } });
+}
+
+export async function getPlatformAdminBySessionRelational(sessionId?: string) {
+  if (!sessionId) return undefined;
+  const session = await prisma.platformSession.findFirst({
+    where: { id: sessionId, expiresAt: { gt: new Date() } },
+    include: { platformAdmin: true }
+  });
+  if (!session?.platformAdmin) return undefined;
+  return {
+    platformAdmin: toPublicPlatformAdminRelational(session.platformAdmin),
+    session: toPlatformSessionRelational(session)
+  };
+}
 
 export async function getPlatformOverviewRelational(): Promise<{
   sites: Site[];
+  siteDomains: SiteDomain[];
   platformEmailSettings?: PlatformEmailSettings;
   platformCloudflareAccounts: PlatformCloudflareAccount[];
   currentCloudflareAccountId?: string;
   platformAiProviders: PlatformAiProvider[];
   currentAiProviderId?: string;
 }> {
-  const [sites, emailSettings, cloudflareAccounts, aiProviders] = await Promise.all([
+  const [sites, siteDomains, emailSettings, cloudflareAccounts, aiProviders] = await Promise.all([
     prisma.site.findMany({
       orderBy: { createdAt: "asc" },
       include: { domains: true, pages: true, settings: true, connect: true }
     }),
+    prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
     prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
     prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
     prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
@@ -33,12 +79,42 @@ export async function getPlatformOverviewRelational(): Promise<{
   const preferredProvider = aiProviders.find((provider) => provider.preferred);
   return {
     sites: sites.map(toSite),
+    siteDomains: siteDomains.map((domain) => ({
+      id: domain.id,
+      siteId: domain.siteId,
+      domain: domain.domain,
+      isPrimary: domain.isPrimary,
+      status: domain.status as SiteDomain["status"],
+      createdAt: domain.createdAt.toISOString()
+    })),
     platformEmailSettings: emailSettings ? toPlatformEmailSettings(emailSettings) : undefined,
     platformCloudflareAccounts: cloudflareAccounts.map(toPlatformCloudflareAccount),
     currentCloudflareAccountId: cloudflareAccounts[0]?.id,
     platformAiProviders: aiProviders.map(toPlatformAiProvider),
     currentAiProviderId: preferredProvider?.id
   };
+}
+
+export async function getPlatformSitesRelational(): Promise<
+  Array<Site & { domains: SiteDomain[]; admins: PublicSiteAdmin[]; gatewayGroups: AiGatewayGroup[] }>
+> {
+  const sites = await prisma.site.findMany({
+    orderBy: { createdAt: "asc" },
+    include: {
+      domains: { orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] },
+      admins: { orderBy: [{ role: "asc" }, { createdAt: "asc" }] },
+      gatewayGroups: { orderBy: [{ status: "asc" }, { name: "asc" }] },
+      pages: { orderBy: { slug: "asc" } },
+      settings: true,
+      connect: true
+    }
+  });
+  return sites.map((site) => ({
+    ...toSite(site),
+    domains: site.domains.map(toSiteDomain),
+    admins: site.admins.map(toPublicSiteAdminRelational),
+    gatewayGroups: site.gatewayGroups.map(toGatewayGroup)
+  }));
 }
 
 export async function updatePlatformEmailSettingsRelational(params: {

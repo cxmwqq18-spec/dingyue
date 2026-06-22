@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, toPublicCustomer, updateCustomerStatus } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { updateCustomerStatusRelational } from "@/lib/stores/customer-store";
 import type { Customer } from "@/lib/types";
 
 export async function PATCH(
@@ -17,8 +18,8 @@ export async function PATCH(
   }
 
   try {
-    const result = updateCustomerStatus({ siteId, customerId, status: body.status });
-    return NextResponse.json({ ok: true, customer: toPublicCustomer(result.customer) });
+    const result = await updateCustomerStatusRelational({ siteId, customerId, status: body.status });
+    return NextResponse.json({ ok: true, customer: result.customer });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "customer_status_update_failed" }, { status });

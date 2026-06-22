@@ -6,7 +6,7 @@ import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, L
 import { readPlatformState } from "@/lib/server-store";
 import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
-import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
+import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
 import { getPage } from "@/lib/data";
@@ -16,8 +16,8 @@ export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   const platformState = readPlatformState();
-  const host = (await headers()).get("host");
-  const hostSite = getSiteByHostFromState(platformState, host);
+  const headerStore = await headers();
+  const hostSite = getSiteByHostCandidatesFromState(platformState, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
   if (!hostSite) return {};
   return metadataForThemePage(hostSite, getPage(hostSite, "/"));
 }
@@ -28,9 +28,10 @@ export default async function HomePage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const platformState = readStorefrontPlatformState();
-  const host = (await headers()).get("host");
+  const headerStore = await headers();
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isPlatformHost(host)) redirect("/platform");
-  const hostSite = getSiteByHostFromState(platformState, host);
+  const hostSite = getSiteByHostCandidatesFromState(platformState, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
   if (hostSite) {
     const query = searchParams ? await searchParams : {};
     return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: platformState });

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePlatformMutation } from "@/lib/api-auth";
-import { addSiteDomain, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { addSiteDomainRelational } from "@/lib/stores/site-store";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
@@ -12,7 +13,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: "missing_domain" }, { status: 400 });
   }
   try {
-    const result = addSiteDomain({ siteId, domain: body.domain, isPrimary: body.isPrimary });
+    const result = await addSiteDomainRelational({ siteId, domain: body.domain, isPrimary: body.isPrimary });
     return NextResponse.json({ ok: true, domain: result.domain, site: result.site });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

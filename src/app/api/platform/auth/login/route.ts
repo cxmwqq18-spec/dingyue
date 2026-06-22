@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { createPlatformAdminSessionRelational } from "@/lib/stores/platform-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = createPlatformAdminSession({ email: body.email, password: body.password });
+    const result = await createPlatformAdminSessionRelational({ email: body.email, password: body.password });
     const response = NextResponse.json({
       ok: true,
       platformAdmin: result.platformAdmin,

@@ -1,27 +1,19 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { requirePlatformMutation } from "@/lib/api-auth";
-import { createSite, getPlatformAdminBySessionFromState, readPlatformState, StoreError, toPublicSiteAdmin } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
+import { createSiteRelational } from "@/lib/stores/site-store";
+import { StoreError } from "@/lib/server-store";
+import { getPlatformSitesRelational } from "@/lib/stores/platform-store";
 
 async function requirePlatformAdmin() {
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  return getPlatformAdminBySessionFromState(state, sessionId);
+  return getCurrentPlatformAdmin();
 }
 
 export async function GET() {
   const current = await requirePlatformAdmin();
   if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
-  const state = readPlatformState();
   return NextResponse.json({
     ok: true,
-    sites: state.sites.map((site) => ({
-      ...site,
-      domains: state.siteDomains.filter((domain) => domain.siteId === site.id),
-      admins: state.siteAdmins.filter((admin) => admin.siteId === site.id).map(toPublicSiteAdmin),
-      gatewayGroups: state.aiGatewayGroups.filter((group) => group.siteId === site.id)
-    }))
+    sites: await getPlatformSitesRelational()
   });
 }
 
@@ -41,7 +33,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = createSite({
+    const result = await createSiteRelational({
       name: body.name,
       slug: body.slug,
       ownerEmail: body.ownerEmail,
@@ -49,7 +41,7 @@ export async function POST(request: NextRequest) {
       sourceSiteId: body.sourceSiteId,
       domain: body.domain
     });
-    return NextResponse.json({ ok: true, ...result, admin: toPublicSiteAdmin(result.admin) });
+    return NextResponse.json({ ok: true, ...result });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "site_create_failed" }, { status });

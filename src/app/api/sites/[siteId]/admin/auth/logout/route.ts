@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { deleteSiteAdminSession } from "@/lib/server-store";
 import { siteAdminSessionCookie } from "@/lib/session";
+import { deleteSiteAdminSessionRelational } from "@/lib/stores/site-store";
 
 export async function POST(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
@@ -9,7 +9,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ si
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(cookieName)?.value;
   if (sessionId) {
-    deleteSiteAdminSession(sessionId);
+    await deleteSiteAdminSessionRelational(sessionId);
   }
   const response = NextResponse.json({ ok: true });
   response.cookies.delete(cookieName);

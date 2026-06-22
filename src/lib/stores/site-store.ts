@@ -3,20 +3,26 @@ import "server-only";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
-import type { AiGatewayGroup, Site, SiteAdmin, SiteAiApp, SiteDomain } from "@/lib/types";
+import type { AiGatewayGroup, CreativePack, Site, SiteAdmin, SiteAiApp, SiteDomain } from "@/lib/types";
 
 import {
   addAuditLogRelational,
   cloneJson,
   hashRelationalPassword,
+  relationalSessionTtlMs,
+  relationalUid,
   RelationalStoreError,
   slugify,
   toGatewayGroup,
+  toCreativePack,
+  toPublicSiteAdminRelational,
   toSite,
   toSiteAdmin,
+  toSiteAdminSessionRelational,
   toSiteAiApp,
   toSiteDomain,
   uid,
+  verifyRelationalPassword,
 } from "./prisma-mappers";
 
 async function getSiteRelational(siteId: string): Promise<Site> {
@@ -31,6 +37,103 @@ async function getSiteRelational(siteId: string): Promise<Site> {
   });
   if (!site) throw new RelationalStoreError("site_not_found", 404);
   return toSite(site);
+}
+
+export async function createSiteAdminSessionRelational(params: { siteId: string; email: string; password: string }) {
+  const email = params.email.trim().toLowerCase();
+  const admin = await prisma.siteAdmin.findUnique({ where: { siteId_email: { siteId: params.siteId, email } } });
+  if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
+    throw new RelationalStoreError("invalid_site_admin_credentials", 401);
+  }
+  const session = await prisma.siteAdminSession.create({
+    data: {
+      id: relationalUid("sasess"),
+      siteId: params.siteId,
+      siteAdminId: admin.id,
+      expiresAt: new Date(Date.now() + relationalSessionTtlMs)
+    }
+  });
+  return {
+    siteAdmin: toPublicSiteAdminRelational(admin),
+    session: toSiteAdminSessionRelational(session)
+  };
+}
+
+export async function createSiteAdminSessionByAdminIdRelational(params: { siteId: string; siteAdminId: string }) {
+  const admin = await prisma.siteAdmin.findFirst({ where: { siteId: params.siteId, id: params.siteAdminId } });
+  if (!admin) throw new RelationalStoreError("site_admin_not_found", 404);
+  const session = await prisma.siteAdminSession.create({
+    data: {
+      id: relationalUid("sasess"),
+      siteId: params.siteId,
+      siteAdminId: admin.id,
+      expiresAt: new Date(Date.now() + relationalSessionTtlMs)
+    }
+  });
+  return {
+    siteAdmin: toPublicSiteAdminRelational(admin),
+    session: toSiteAdminSessionRelational(session)
+  };
+}
+
+export async function deleteSiteAdminSessionRelational(sessionId: string): Promise<void> {
+  await prisma.siteAdminSession.deleteMany({ where: { id: sessionId } });
+}
+
+export async function getSiteAdminBySessionRelational(params: { siteId: string; sessionId?: string }) {
+  if (!params.sessionId) return undefined;
+  const session = await prisma.siteAdminSession.findFirst({
+    where: { id: params.sessionId, siteId: params.siteId, expiresAt: { gt: new Date() } },
+    include: { siteAdmin: true }
+  });
+  if (!session?.siteAdmin) return undefined;
+  return {
+    siteAdmin: toPublicSiteAdminRelational(session.siteAdmin),
+    session: toSiteAdminSessionRelational(session)
+  };
+}
+
+export async function getSiteAdminBridgeTargetRelational(siteId: string) {
+  const site = await prisma.site.findUnique({
+    where: { id: siteId },
+    select: { id: true, slug: true }
+  });
+  if (!site) throw new RelationalStoreError("site_not_found", 404);
+
+  const admin =
+    (await prisma.siteAdmin.findFirst({
+      where: { siteId, role: "owner" },
+      orderBy: { createdAt: "asc" }
+    })) ??
+    (await prisma.siteAdmin.findFirst({
+      where: { siteId },
+      orderBy: { createdAt: "asc" }
+    }));
+  if (!admin) throw new RelationalStoreError("site_admin_not_found", 404);
+
+  return { site, admin: toPublicSiteAdminRelational(admin) };
+}
+
+export async function getSiteBySlugRelational(slug: string): Promise<Site | undefined> {
+  const site = await prisma.site.findUnique({
+    where: { slug },
+    include: {
+      domains: true,
+      pages: { orderBy: { slug: "asc" } },
+      settings: true,
+      connect: true
+    }
+  });
+  return site ? toSite(site) : undefined;
+}
+
+export async function getFirstSiteAdminEmailRelational(siteId: string): Promise<string | undefined> {
+  const admin = await prisma.siteAdmin.findFirst({
+    where: { siteId },
+    orderBy: { createdAt: "asc" },
+    select: { email: true }
+  });
+  return admin?.email;
 }
 
 export async function createSiteRelational(params: {
@@ -102,6 +205,7 @@ export async function createSiteRelational(params: {
         id: uid("admin"),
         siteId,
         email: ownerEmail,
+        passwordHash: hashRelationalPassword(params.ownerPassword || `${slug}123`),
         displayName: ownerEmail.split("@")[0] || ownerEmail,
         role: "owner"
       }
@@ -187,6 +291,42 @@ export async function createSiteRelational(params: {
       siteAiApps,
       gatewayGroup
     };
+  });
+}
+
+export async function addSiteDomainRelational(params: {
+  siteId: string;
+  domain: string;
+  isPrimary?: boolean;
+}): Promise<{ domain: SiteDomain; site: Site }> {
+  const domainName = params.domain.trim().toLowerCase();
+  if (!domainName.includes(".")) throw new RelationalStoreError("invalid_domain", 400);
+
+  return prisma.$transaction(async (tx) => {
+    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+    if (!site) throw new RelationalStoreError("site_not_found", 404);
+    const existingDomain = await tx.siteDomain.findUnique({ where: { domain: domainName } });
+    if (existingDomain) throw new RelationalStoreError("site_domain_exists", 409);
+    if (params.isPrimary) {
+      await tx.siteDomain.updateMany({ where: { siteId: params.siteId }, data: { isPrimary: false } });
+    }
+    const domain = await tx.siteDomain.create({
+      data: {
+        id: uid("dom"),
+        siteId: params.siteId,
+        domain: domainName,
+        isPrimary: Boolean(params.isPrimary),
+        status: "pending"
+      }
+    });
+    if (params.isPrimary) {
+      await tx.site.update({ where: { id: params.siteId }, data: { primaryDomain: domainName } });
+    }
+    const updatedSite = await tx.site.findUniqueOrThrow({
+      where: { id: params.siteId },
+      include: { domains: true, pages: true, settings: true, connect: true }
+    });
+    return { domain: toSiteDomain(domain), site: toSite(updatedSite) };
   });
 }
 
@@ -349,7 +489,7 @@ export async function updateSiteAdminRelational(params: {
   password?: string;
   actor?: string;
 }): Promise<{ admin: SiteAdmin }> {
-  const data: { displayName?: string; role?: string } = {};
+  const data: { displayName?: string; role?: string; passwordHash?: string } = {};
   const metadata: Record<string, string | boolean> = {};
   if (params.displayName !== undefined) {
     data.displayName = params.displayName.trim();
@@ -363,11 +503,14 @@ export async function updateSiteAdminRelational(params: {
   }
   if (params.password !== undefined) {
     if (params.password.trim().length < 6) throw new RelationalStoreError("invalid_site_admin_password", 400);
+    data.passwordHash = hashRelationalPassword(params.password.trim());
     metadata.passwordReset = true;
   }
   if (!Object.keys(metadata).length) throw new RelationalStoreError("site_admin_update_empty", 400);
 
-  const admin = await prisma.siteAdmin.update({ where: { id: params.adminId }, data });
+  const existing = await prisma.siteAdmin.findFirst({ where: { siteId: params.siteId, id: params.adminId } });
+  if (!existing) throw new RelationalStoreError("site_admin_not_found", 404);
+  const admin = await prisma.siteAdmin.update({ where: { id: existing.id }, data });
   await addAuditLogRelational(prisma, {
     siteId: params.siteId,
     actorType: "site_admin",
@@ -402,6 +545,83 @@ export async function deleteSiteAdminRelational(params: {
     metadata: { email: admin.email, role: admin.role }
   });
   return { deletedAdmin: toSiteAdmin(admin) };
+}
+
+export async function upsertCreativePackRelational(params: {
+  siteId: string;
+  packId?: string;
+  name: string;
+  headline: string;
+  description: string;
+  category: CreativePack["category"];
+  aiAppSlug: string;
+  status: CreativePack["status"];
+  creditCost: number;
+  outputCount: number;
+  trainingRequired: boolean;
+}): Promise<{ pack: CreativePack; created: boolean }> {
+  const site = await prisma.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+  if (!site) throw new RelationalStoreError("site_not_found", 404);
+  const name = params.name.trim();
+  if (name.length < 2) throw new RelationalStoreError("creative_pack_name_required", 400);
+  const headline = params.headline.trim() || name;
+  const description = params.description.trim();
+  if (description.length < 8) throw new RelationalStoreError("creative_pack_description_required", 400);
+  const aiApp = await prisma.aiApp.findUnique({ where: { slug: params.aiAppSlug }, select: { id: true } });
+  if (!aiApp) throw new RelationalStoreError("ai_app_not_found", 404);
+  if (!Number.isInteger(params.creditCost) || params.creditCost < 0) throw new RelationalStoreError("invalid_credit_cost", 400);
+  if (!Number.isInteger(params.outputCount) || params.outputCount < 1) throw new RelationalStoreError("invalid_output_count", 400);
+
+  const existing = params.packId
+    ? await prisma.creativePack.findFirst({ where: { siteId: params.siteId, id: params.packId } })
+    : null;
+  const pack = existing
+    ? await prisma.creativePack.update({
+        where: { id: existing.id },
+        data: {
+          name,
+          headline,
+          description,
+          category: params.category,
+          aiAppSlug: params.aiAppSlug,
+          status: params.status,
+          creditCost: params.creditCost,
+          outputCount: params.outputCount,
+          trainingRequired: params.trainingRequired
+        }
+      })
+    : await prisma.creativePack.create({
+        data: {
+          id: params.packId ?? uid("pack"),
+          siteId: params.siteId,
+          name,
+          headline,
+          description,
+          category: params.category,
+          aiAppSlug: params.aiAppSlug,
+          status: params.status,
+          creditCost: params.creditCost,
+          outputCount: params.outputCount,
+          trainingRequired: params.trainingRequired,
+          generationCount: 0,
+          conversionRate: 0
+        }
+      });
+
+  return { pack: toCreativePack(pack), created: !existing };
+}
+
+export async function deleteCreativePackRelational(params: {
+  siteId: string;
+  packId: string;
+}): Promise<{ deletedPack: CreativePack }> {
+  const pack = await prisma.creativePack.findFirst({ where: { siteId: params.siteId, id: params.packId } });
+  if (!pack) throw new RelationalStoreError("creative_pack_not_found", 404);
+  await prisma.$transaction(async (tx) => {
+    await tx.album.updateMany({ where: { siteId: params.siteId, creativePackId: pack.id }, data: { creativePackId: null } });
+    await tx.creativePack.delete({ where: { id: pack.id } });
+  });
+  return { deletedPack: toCreativePack(pack) };
 }
 
 export async function updateGatewayGroupRelational(params: {

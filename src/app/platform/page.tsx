@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
@@ -28,11 +27,11 @@ import { PlatformSiteRegistryPanel } from "@/components/platform/platform-site-r
 import { PlatformSiteSettingsPanel } from "@/components/platform/platform-site-settings-panel";
 import { SiteCreatePanel } from "@/components/platform/site-create-panel";
 import { ProgressBar, StatusPill } from "@/components/ui";
+import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { platformAdminModules, type PlatformAdminModuleCode } from "@/lib/admin-menu";
 import { latestActivity, money, siteDemoSnapshot } from "@/lib/ops";
 import { domainFromEmail, listResendDomains, resendDomainMatchesSender, resendEmailConfigStatusForSettings } from "@/lib/resend-email";
 import {
-  getPlatformAdminBySessionFromState,
   getPlatformAuditLogsFromState,
   getSiteAdminsFromState,
   getSiteAlbumsFromState,
@@ -50,7 +49,10 @@ import {
   readPlatformState,
   toPublicSiteAdmin
 } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function toneFromScore(score: number): "good" | "warn" | "bad" {
   if (score >= 76) return "good";
@@ -102,8 +104,7 @@ export default async function PlatformPage({
   searchParams?: PlatformPageSearchParams;
 }) {
   const platformState = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  const current = getPlatformAdminBySessionFromState(platformState, sessionId);
+  const current = await getCurrentPlatformAdmin();
   if (!current) redirect("/platform/login");
   const query = searchParams ? await searchParams : undefined;
   const activeModule = resolvePlatformModule(query?.module);

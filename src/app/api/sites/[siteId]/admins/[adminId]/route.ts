@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { deleteSiteAdmin, StoreError, toPublicSiteAdmin, updateSiteAdmin } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { deleteSiteAdminRelational, updateSiteAdminRelational } from "@/lib/stores/site-store";
 import type { SiteAdmin } from "@/lib/types";
 
 export async function PATCH(
@@ -26,7 +27,7 @@ export async function PATCH(
   }
 
   try {
-    const result = updateSiteAdmin({
+    const result = await updateSiteAdminRelational({
       siteId,
       adminId,
       displayName: body.displayName,
@@ -34,7 +35,7 @@ export async function PATCH(
       password: body.password,
       actor: body.actor
     });
-    return NextResponse.json({ ok: true, admin: toPublicSiteAdmin(result.admin) });
+    return NextResponse.json({ ok: true, admin: result.admin });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "site_admin_update_failed" }, { status });
@@ -53,12 +54,12 @@ export async function DELETE(
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
 
   try {
-    const result = deleteSiteAdmin({
+    const result = await deleteSiteAdminRelational({
       siteId,
       adminId,
       actor: body.actor
     });
-    return NextResponse.json({ ok: true, deletedAdmin: toPublicSiteAdmin(result.deletedAdmin) });
+    return NextResponse.json({ ok: true, deletedAdmin: result.deletedAdmin });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "site_admin_delete_failed" }, { status });

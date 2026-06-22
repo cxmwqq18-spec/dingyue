@@ -3,7 +3,7 @@ import "server-only";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
-import type { MediaAsset, Site, SiteTheme, ThemeDraftMeta, ThemePage, ThemePublication, ThemeSettings } from "@/lib/types";
+import type { MediaAsset, Site, SiteTheme, ThemeCopy, ThemeDraftMeta, ThemePage, ThemePublication, ThemeSettings } from "@/lib/types";
 
 import {
   addAuditLogRelational,
@@ -16,6 +16,7 @@ import {
   toMediaAsset,
   toSite,
   toSiteTheme,
+  toThemeCopy,
   toThemePage,
   toThemePublication,
   uid,
@@ -143,6 +144,84 @@ export async function saveThemeSettingsDraftRelational(params: {
   return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
 }
 
+export async function rollbackThemePageDraftRelational(params: {
+  siteId: string;
+  pageId: string;
+}): Promise<{ page: ThemePage; draftVersion: ThemeDraftMeta }> {
+  return prisma.$transaction(async (tx) => {
+    const pageRecord = await tx.themePage.findFirst({ where: { siteId: params.siteId, id: params.pageId } });
+    if (!pageRecord) throw new RelationalStoreError("theme_page_not_found", 404);
+    const page = toThemePage(pageRecord);
+    page.draftJson = cloneJson(page.publishedJson);
+    page.draftMeta = makeThemeDraftMeta(page);
+    const updated = await tx.themePage.update({
+      where: { id: page.id },
+      data: { draftJson: draftJsonWithMeta(page) }
+    });
+    const settings = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
+    if (settings) {
+      await tx.themeSettings.update({
+        where: { siteId: params.siteId },
+        data: { draftJson: cloneJson(settings.publishedJson) as unknown as Prisma.InputJsonValue }
+      });
+    }
+    return { page: toThemePage(updated), draftVersion: page.draftMeta };
+  });
+}
+
+export async function resetDraftThemeFromActiveRelational(
+  siteId: string,
+  actor = "site_admin_demo"
+): Promise<{ site: Site; sourceVersion: number }> {
+  return prisma.$transaction(async (tx) => {
+    const siteRecord = await getSiteWithThemeRecords(tx, siteId);
+    const site = toSite(siteRecord);
+    const latestPublicationRecord = await tx.themePublication.findFirst({
+      where: { siteId },
+      orderBy: [{ version: "desc" }, { publishedAt: "desc" }]
+    });
+    const latestPublication = latestPublicationRecord ? toThemePublication(latestPublicationRecord) : undefined;
+    const sourceVersion = latestPublication?.version ?? site.pages[0]?.publishedJson.version ?? 1;
+    const publishedByPage = new Map(latestPublication?.snapshot.pages.map((page) => [page.id, page.publishedJson]) ?? []);
+
+    for (const page of site.pages) {
+      const published = publishedByPage.get(page.id) ?? page.publishedJson;
+      page.draftJson = cloneJson(published);
+      page.draftMeta = makeThemeDraftMeta(page);
+      await tx.themePage.update({
+        where: { id: page.id },
+        data: { draftJson: draftJsonWithMeta(page) }
+      });
+    }
+
+    const settingsDraft = cloneJson(latestPublication?.snapshot.themeSettings ?? site.themeSettings.publishedJson);
+    await tx.themeSettings.upsert({
+      where: { siteId },
+      create: {
+        id: `settings_${siteId}`,
+        siteId,
+        draftJson: settingsDraft as unknown as Prisma.InputJsonValue,
+        publishedJson: settingsDraft as unknown as Prisma.InputJsonValue
+      },
+      update: {
+        draftJson: settingsDraft as unknown as Prisma.InputJsonValue
+      }
+    });
+
+    await addAuditLogRelational(tx, {
+      siteId,
+      actorType: "site_admin",
+      actorId: actor,
+      action: "theme_draft_reset_from_active",
+      targetType: "theme",
+      targetId: siteId,
+      metadata: { version: sourceVersion }
+    });
+
+    return { site: toSite(await getSiteWithThemeRecords(tx, siteId)), sourceVersion };
+  }, { timeout: 20000 });
+}
+
 export async function publishDraftPageRelational(
   siteId: string,
   pageId: string,
@@ -194,33 +273,45 @@ export async function publishDraftPageRelational(
       orderBy: { updatedAt: "desc" }
     });
     const draftTheme = draftThemeRecord ? toSiteTheme(draftThemeRecord) : undefined;
-    await tx.siteTheme.updateMany({ where: { siteId, status: "active" }, data: { status: "draft" } });
     const nextActive = activeThemeFromDraft(siteId, draftTheme, actor);
-    const activeThemeRecord = await tx.siteTheme.upsert({
-      where: { id: nextActive.id },
-      create: {
-        id: nextActive.id,
-        siteId,
-        name: nextActive.name,
-        themeId: nextActive.themeId,
-        themeKey: nextActive.themeKey,
-        status: "active",
-        templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
-        settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
-        source: nextActive.source,
-        createdBy: nextActive.createdBy
-      },
-      update: {
-        name: nextActive.name,
-        themeId: nextActive.themeId,
-        themeKey: nextActive.themeKey,
-        status: "active",
-        templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
-        settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
-        source: nextActive.source,
-        createdBy: nextActive.createdBy
-      }
-    });
+    await tx.siteTheme.updateMany({ where: { siteId, status: "active" }, data: { status: "draft" } });
+    const activeThemeRecord = draftThemeRecord
+      ? await tx.siteTheme.update({
+          where: { id: draftThemeRecord.id },
+          data: {
+            name: nextActive.name,
+            themeKey: nextActive.themeKey,
+            status: "active",
+            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
+            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
+            source: nextActive.source,
+            createdBy: nextActive.createdBy
+          }
+        })
+      : await tx.siteTheme.upsert({
+          where: { siteId_themeId: { siteId, themeId: nextActive.themeId } },
+          create: {
+            id: nextActive.id,
+            siteId,
+            name: nextActive.name,
+            themeId: nextActive.themeId,
+            themeKey: nextActive.themeKey,
+            status: "active",
+            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
+            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
+            source: nextActive.source,
+            createdBy: nextActive.createdBy
+          },
+          update: {
+            name: nextActive.name,
+            themeKey: nextActive.themeKey,
+            status: "active",
+            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
+            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
+            source: nextActive.source,
+            createdBy: nextActive.createdBy
+          }
+        });
     const activeTheme = toSiteTheme(activeThemeRecord);
 
     const publicationRecord = await tx.themePublication.create({
@@ -243,7 +334,7 @@ export async function publishDraftPageRelational(
       metadata: { version: publishedVersion, pageId }
     });
     return { site, draftVersion, publication, publishedVersion };
-  });
+  }, { timeout: 20000 });
 }
 
 export async function restoreDraftThemeFromPublicationRelational(
@@ -307,7 +398,7 @@ export async function restoreDraftThemeFromPublicationRelational(
     });
 
     return { site, publication };
-  });
+  }, { timeout: 20000 });
 }
 
 export async function upsertThemeMediaAssetRelational(params: {
@@ -369,4 +460,175 @@ export async function deleteThemeMediaAssetRelational(params: {
   if (!existing) throw new RelationalStoreError("theme_media_not_found", 404);
   await prisma.mediaAsset.delete({ where: { id: existing.id } });
   return { asset: toMediaAsset(existing) };
+}
+
+export async function applySiteThemeToDraftRelational(params: {
+  siteId: string;
+  themeId: string;
+  actor?: string;
+}): Promise<{ theme: SiteTheme; site: Site }> {
+  return prisma.$transaction(async (tx) => {
+    const theme = await tx.siteTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId } });
+    if (!theme) throw new RelationalStoreError("theme_not_found", 404);
+    await tx.siteTheme.update({ where: { id: theme.id }, data: { status: "draft" } });
+    await addAuditLogRelational(tx, {
+      siteId: params.siteId,
+      actorType: "site_admin",
+      actorId: params.actor ?? "site_admin_demo",
+      action: "theme_applied_to_draft",
+      targetType: "site_theme",
+      targetId: theme.id,
+      metadata: { themeKey: theme.themeKey }
+    });
+    return {
+      theme: toSiteTheme({ ...theme, status: "draft", updatedAt: new Date() }),
+      site: toSite(await getSiteWithThemeRecords(tx, params.siteId))
+    };
+  });
+}
+
+export async function activateSiteThemeRelational(params: {
+  siteId: string;
+  themeId: string;
+  actor?: string;
+}): Promise<{ theme: SiteTheme; publication: ThemePublication }> {
+  return prisma.$transaction(async (tx) => {
+    const siteRecord = await getSiteWithThemeRecords(tx, params.siteId);
+    const site = toSite(siteRecord);
+    const theme = await tx.siteTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId } });
+    if (!theme) throw new RelationalStoreError("theme_not_found", 404);
+    const currentMax = await tx.themePublication.aggregate({
+      where: { siteId: params.siteId },
+      _max: { version: true }
+    });
+    const version = (currentMax._max.version ?? 0) + 1;
+    await tx.siteTheme.updateMany({ where: { siteId: params.siteId, status: "active" }, data: { status: "draft" } });
+    const activeThemeRecord = await tx.siteTheme.update({ where: { id: theme.id }, data: { status: "active" } });
+    for (const page of site.pages) {
+      const publishedJson = cloneJson(page.draftJson);
+      publishedJson.version = version;
+      await tx.themePage.update({
+        where: { id: page.id },
+        data: { publishedJson: publishedJson as unknown as Prisma.InputJsonValue }
+      });
+      page.publishedJson = publishedJson;
+    }
+    await tx.themeSettings.upsert({
+      where: { siteId: params.siteId },
+      create: {
+        id: `settings_${params.siteId}`,
+        siteId: params.siteId,
+        draftJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue,
+        publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
+      },
+      update: { publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue }
+    });
+    site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
+    const activeTheme = toSiteTheme(activeThemeRecord);
+    const publicationRecord = await tx.themePublication.create({
+      data: {
+        id: `pub_${params.siteId}_${Date.now().toString(36)}`,
+        siteId: params.siteId,
+        version,
+        snapshot: buildPublicationSnapshot(site, activeTheme) as unknown as Prisma.InputJsonValue,
+        publishedBy: params.actor ?? "site_admin_demo"
+      }
+    });
+    await addAuditLogRelational(tx, {
+      siteId: params.siteId,
+      actorType: "site_admin",
+      actorId: params.actor ?? "site_admin_demo",
+      action: "theme_activated",
+      targetType: "site_theme",
+      targetId: activeTheme.id,
+      metadata: { version, themeKey: activeTheme.themeKey }
+    });
+    return { theme: activeTheme, publication: toThemePublication(publicationRecord) };
+  }, { timeout: 20000 });
+}
+
+export async function deleteSiteThemeRelational(params: {
+  siteId: string;
+  themeId: string;
+  actor?: string;
+}): Promise<{ deletedThemeId: string }> {
+  const theme = await prisma.siteTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId } });
+  if (!theme) throw new RelationalStoreError("theme_not_found", 404);
+  if (theme.status === "active") throw new RelationalStoreError("cannot_delete_active_theme", 409);
+  await prisma.$transaction(async (tx) => {
+    await tx.siteTheme.delete({ where: { id: theme.id } });
+    await addAuditLogRelational(tx, {
+      siteId: params.siteId,
+      actorType: "site_admin",
+      actorId: params.actor ?? "site_admin_demo",
+      action: "theme_deleted",
+      targetType: "site_theme",
+      targetId: theme.id,
+      metadata: { themeKey: theme.themeKey }
+    });
+  });
+  return { deletedThemeId: theme.id };
+}
+
+export async function duplicateSiteThemeRelational(params: {
+  siteId: string;
+  name?: string;
+  source?: "draft" | "active";
+  sourceThemeId?: string;
+  actor?: string;
+}): Promise<{ themeCopy: ThemeCopy; siteTheme: SiteTheme }> {
+  return prisma.$transaction(async (tx) => {
+    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+    if (!site) throw new RelationalStoreError("site_not_found", 404);
+    const source = params.source ?? "draft";
+    const sourceTheme = params.sourceThemeId
+      ? await tx.siteTheme.findFirst({ where: { siteId: params.siteId, id: params.sourceThemeId } })
+      : await tx.siteTheme.findFirst({
+          where: { siteId: params.siteId, status: source === "active" ? "active" : "draft" },
+          orderBy: { updatedAt: "desc" }
+        });
+    if (!sourceTheme) throw new RelationalStoreError("theme_not_found", 404);
+    const now = new Date();
+    const createdBy = params.actor ?? "site_admin_demo";
+    const themeCopyRecord = await tx.themeCopy.create({
+      data: {
+        id: uid("theme_copy"),
+        siteId: params.siteId,
+        name: params.name?.trim() || `${sourceTheme.name} copy`,
+        themeKey: sourceTheme.themeKey,
+        source,
+        templates: cloneJson(sourceTheme.templates) as unknown as Prisma.InputJsonValue,
+        settings: cloneJson(sourceTheme.settings) as unknown as Prisma.InputJsonValue,
+        createdBy
+      }
+    });
+    const siteThemeRecord = await tx.siteTheme.create({
+      data: {
+        id: uid("site_theme"),
+        siteId: params.siteId,
+        name: themeCopyRecord.name,
+        themeId: `theme_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+        themeKey: sourceTheme.themeKey,
+        status: "draft",
+        templates: cloneJson(sourceTheme.templates) as unknown as Prisma.InputJsonValue,
+        settings: cloneJson(sourceTheme.settings) as unknown as Prisma.InputJsonValue,
+        source: "copy",
+        createdBy,
+        createdAt: now
+      }
+    });
+    await addAuditLogRelational(tx, {
+      siteId: params.siteId,
+      actorType: "site_admin",
+      actorId: createdBy,
+      action: "theme_duplicated",
+      targetType: "site_theme",
+      targetId: siteThemeRecord.id,
+      metadata: { source, themeCopyId: themeCopyRecord.id }
+    });
+    return {
+      themeCopy: toThemeCopy(themeCopyRecord),
+      siteTheme: toSiteTheme(siteThemeRecord)
+    };
+  });
 }

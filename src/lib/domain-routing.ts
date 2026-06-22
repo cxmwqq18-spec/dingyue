@@ -28,6 +28,14 @@ export function getSiteByHostFromState(state: PlatformState, host: string | null
   return state.sites.find((site) => cleanHost(site.primaryDomain) === value);
 }
 
+export function getSiteByHostCandidatesFromState(state: PlatformState, hosts: Array<string | null | undefined>): Site | undefined {
+  for (const host of hosts) {
+    const site = getSiteByHostFromState(state, host);
+    if (site) return site;
+  }
+  return undefined;
+}
+
 export function hostAwareSitePath(site: Site, path = "/"): string {
   const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
   const primaryHost = cleanHost(site.primaryDomain);

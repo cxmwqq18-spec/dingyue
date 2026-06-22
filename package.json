@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NEXT_PRIVATE_BUILD_WORKER=1 next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -37,6 +37,7 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "db:import-state": "node scripts/import-platform-state-to-prisma.mjs",
+    "db:fix-platform-state-source": "node scripts/fix-platform-postgres-state-source.mjs",
     "db:import-relational-state": "node scripts/db-import-relational-state.mjs",
     "db:verify-relational-state": "node scripts/verify-relational-state.mjs",
     "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs"

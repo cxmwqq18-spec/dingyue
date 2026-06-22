@@ -5,14 +5,18 @@ import type {
   Album,
   AssetUpload,
   CreditLedgerEntry,
+  CreativePack,
   Customer,
   CustomerModel,
   CustomerSession,
   GenerationJob,
   LedgerType,
+  PaymentEvent,
   Price,
   Product,
   PublicCustomer,
+  PublicPlatformAdmin,
+  PublicSiteAdmin,
   SiteAiApp
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
@@ -85,6 +89,18 @@ export function mapCreditLedger(row: Prisma.CreditLedgerGetPayload<object>): Cre
     sourceType: row.sourceType,
     sourceId: row.sourceId,
     createdAt: iso(row.createdAt)
+  };
+}
+
+export function mapPaymentEvent(row: Prisma.PaymentEventGetPayload<object>): PaymentEvent {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    provider: row.provider === "stripe" ? "stripe" : "stripe",
+    providerEventId: row.providerEventId,
+    eventType: row.eventType,
+    processedAt: toIsoString(row.processedAt) ?? new Date().toISOString(),
+    payload: cloneJson(row.payload) as Record<string, unknown>
   };
 }
 
@@ -187,6 +203,50 @@ export function toPublicCustomerRelational(customer: Record<string, unknown>): P
       available: numberFromUnknown((customer.balance as { balance?: unknown } | null | undefined)?.balance, 0),
       reserved: numberFromUnknown((customer.balance as { reserved?: unknown } | null | undefined)?.reserved, 0)
     }
+  };
+}
+
+export function toPublicPlatformAdminRelational(admin: Record<string, unknown>): PublicPlatformAdmin {
+  return {
+    id: String(admin.id),
+    email: String(admin.email),
+    displayName: String(admin.displayName),
+    role: admin.role as PublicPlatformAdmin["role"],
+    createdAt: toIsoString(admin.createdAt as Date | string | undefined) ?? new Date(0).toISOString()
+  };
+}
+
+export function toPlatformSessionRelational(session: Record<string, unknown>) {
+  const createdAt = toIsoString(session.createdAt as Date | string | undefined) ?? new Date().toISOString();
+  const expiresAt = toIsoString(session.expiresAt as Date | string | undefined) ?? createdAt;
+  return {
+    id: String(session.id),
+    platformAdminId: String(session.platformAdminId),
+    createdAt,
+    expiresAt
+  };
+}
+
+export function toPublicSiteAdminRelational(admin: Record<string, unknown>): PublicSiteAdmin {
+  return {
+    id: String(admin.id),
+    siteId: String(admin.siteId),
+    email: String(admin.email),
+    displayName: String(admin.displayName),
+    role: admin.role as PublicSiteAdmin["role"],
+    createdAt: toIsoString(admin.createdAt as Date | string | undefined) ?? new Date(0).toISOString()
+  };
+}
+
+export function toSiteAdminSessionRelational(session: Record<string, unknown>) {
+  const createdAt = toIsoString(session.createdAt as Date | string | undefined) ?? new Date().toISOString();
+  const expiresAt = toIsoString(session.expiresAt as Date | string | undefined) ?? createdAt;
+  return {
+    id: String(session.id),
+    siteId: String(session.siteId),
+    siteAdminId: String(session.siteAdminId),
+    createdAt,
+    expiresAt
   };
 }
 
@@ -459,6 +519,42 @@ export function toSiteAdmin(record: {
   };
 }
 
+export function toCreativePack(record: {
+  id: string;
+  siteId: string;
+  name: string;
+  headline: string;
+  description: string;
+  category: string;
+  aiAppSlug: string;
+  status: string;
+  creditCost: number;
+  outputCount: number;
+  trainingRequired: boolean;
+  generationCount: number;
+  conversionRate: number;
+  imageUrl?: string | null;
+  createdAt?: Date | string;
+}): CreativePack {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    name: record.name,
+    headline: record.headline,
+    description: record.description,
+    category: record.category as CreativePack["category"],
+    aiAppSlug: record.aiAppSlug,
+    status: record.status as CreativePack["status"],
+    creditCost: record.creditCost,
+    outputCount: record.outputCount,
+    trainingRequired: record.trainingRequired,
+    generationCount: record.generationCount,
+    conversionRate: record.conversionRate,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    imageUrl: record.imageUrl ?? undefined
+  };
+}
+
 export function toMediaAsset(record: {
   id: string;
   siteId: string;
@@ -566,6 +662,32 @@ export function toSiteTheme(record: {
     templates: cloneJson(record.templates),
     settings: cloneJson(record.settings),
     source: record.source as import("@/lib/types").SiteTheme["source"],
+    createdBy: record.createdBy,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString()
+  };
+}
+
+export function toThemeCopy(record: {
+  id: string;
+  siteId: string;
+  name: string;
+  themeKey: string;
+  source: string;
+  templates: unknown;
+  settings: unknown;
+  createdBy: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}): import("@/lib/types").ThemeCopy {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    name: record.name,
+    themeKey: record.themeKey,
+    source: record.source as import("@/lib/types").ThemeCopy["source"],
+    templates: cloneJson(record.templates),
+    settings: cloneJson(record.settings),
     createdBy: record.createdBy,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString()

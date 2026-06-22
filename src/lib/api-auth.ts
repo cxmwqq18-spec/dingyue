@@ -9,6 +9,8 @@ import { customerSessionCookie, platformSessionCookie, siteAdminSessionCookie } 
 import { requireCsrfToken } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS, type RateLimitConfig } from "@/lib/security/rate-limit";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
+import { getPlatformAdminBySessionRelational } from "@/lib/stores/platform-store";
+import { getSiteAdminBySessionRelational } from "@/lib/stores/site-store";
 import { NextRequest, NextResponse } from "next/server";
 import type { PlatformAdmin, PublicCustomer, SiteAdmin } from "@/lib/types";
 
@@ -17,27 +19,36 @@ export type CurrentSiteAdmin = { siteAdmin: SiteAdmin; sessionId: string };
 export type CurrentCustomer = { customer: PublicCustomer; sessionId: string };
 
 export async function hasPlatformSession(): Promise<boolean> {
-  const state = readPlatformState();
   const sessionId = (await cookies()).get(platformSessionCookie())?.value;
+  if (!sessionId) return false;
+  if (await getPlatformAdminBySessionRelational(sessionId)) return true;
+  const state = readPlatformState();
   return Boolean(getPlatformAdminBySessionFromState(state, sessionId));
 }
 
 export async function getCurrentPlatformAdmin(): Promise<CurrentPlatformAdmin | undefined> {
-  const state = readPlatformState();
   const sessionId = (await cookies()).get(platformSessionCookie())?.value;
+  if (!sessionId) return undefined;
+  const relational = await getPlatformAdminBySessionRelational(sessionId);
+  if (relational) return { platformAdmin: relational.platformAdmin, sessionId: relational.session.id };
+  const state = readPlatformState();
   const current = getPlatformAdminBySessionFromState(state, sessionId);
   return current ? { platformAdmin: current.platformAdmin, sessionId: current.session.id } : undefined;
 }
 
 export async function getCurrentSiteAdmin(siteId: string): Promise<CurrentSiteAdmin | undefined> {
-  const state = readPlatformState();
   const sessionId = (await cookies()).get(siteAdminSessionCookie(siteId))?.value;
+  if (!sessionId) return undefined;
+  const relational = await getSiteAdminBySessionRelational({ siteId, sessionId });
+  if (relational) return { siteAdmin: relational.siteAdmin, sessionId: relational.session.id };
+  const state = readPlatformState();
   const current = getSiteAdminBySessionFromState(state, siteId, sessionId);
   return current ? { siteAdmin: current.siteAdmin, sessionId: current.session.id } : undefined;
 }
 
 export async function getCurrentCustomer(siteId: string, customerId: string): Promise<CurrentCustomer | undefined> {
   const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+  if (!sessionId) return undefined;
   const relational = await getCustomerBySessionRelational({ siteId, sessionId });
   if (relational?.customer.id === customerId) {
     return { customer: relational.customer, sessionId: relational.session.id };

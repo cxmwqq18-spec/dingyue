@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { cloudflareAccountStatus } from "@/lib/cloudflare-dns";
+import { StoreError } from "@/lib/server-store";
 import {
-  clearCurrentPlatformCloudflareAccount,
-  deletePlatformCloudflareAccount,
-  readPlatformState,
-  setCurrentPlatformCloudflareAccount,
-  StoreError,
-  upsertPlatformCloudflareAccount
-} from "@/lib/server-store";
+  clearCurrentPlatformCloudflareAccountRelational,
+  deletePlatformCloudflareAccountRelational,
+  getPlatformOverviewRelational,
+  setCurrentPlatformCloudflareAccountRelational,
+  upsertPlatformCloudflareAccountRelational
+} from "@/lib/stores/platform-store";
 
-function payload() {
-  const state = readPlatformState();
-  const accounts = state.platformCloudflareAccounts ?? [];
-  const current = accounts.find((account) => account.id === state.currentCloudflareAccountId);
+async function payload() {
+  const overview = await getPlatformOverviewRelational();
+  const accounts = overview.platformCloudflareAccounts;
+  const current = accounts.find((account) => account.id === overview.currentCloudflareAccountId);
   return {
     ok: true,
     currentAccountId: current?.id ?? "",
@@ -39,7 +39,7 @@ function payload() {
 export async function GET() {
   const current = await getCurrentPlatformAdmin();
   if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
-  return NextResponse.json(payload());
+  return NextResponse.json(await payload());
 }
 
 export async function PUT(request: NextRequest) {
@@ -56,7 +56,7 @@ export async function PUT(request: NextRequest) {
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_cloudflare_label" }, { status: 400 });
   if (!body.email?.trim() || !body.email.includes("@")) return NextResponse.json({ error: "invalid_cloudflare_email" }, { status: 400 });
   if (!body.accountId?.trim()) return NextResponse.json({ error: "missing_cloudflare_account_id" }, { status: 400 });
-  upsertPlatformCloudflareAccount({
+  await upsertPlatformCloudflareAccountRelational({
     id: body.id,
     label: body.label,
     email: body.email,
@@ -65,7 +65,7 @@ export async function PUT(request: NextRequest) {
     makeCurrent: body.makeCurrent,
     actor: permission.current.platformAdmin.id
   });
-  return NextResponse.json(payload());
+  return NextResponse.json(await payload());
 }
 
 export async function POST(request: NextRequest) {
@@ -75,11 +75,11 @@ export async function POST(request: NextRequest) {
   if (!body.accountId) return NextResponse.json({ error: "missing_cloudflare_account" }, { status: 400 });
   try {
     if (body.action === "clear_current") {
-      clearCurrentPlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+      await clearCurrentPlatformCloudflareAccountRelational({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
     } else {
-      setCurrentPlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+      await setCurrentPlatformCloudflareAccountRelational({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
     }
-    return NextResponse.json(payload());
+    return NextResponse.json(await payload());
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_current_account_failed" }, { status });
@@ -92,8 +92,8 @@ export async function DELETE(request: NextRequest) {
   const body = (await request.json().catch(() => ({}))) as { accountId?: string };
   if (!body.accountId) return NextResponse.json({ error: "missing_cloudflare_account" }, { status: 400 });
   try {
-    deletePlatformCloudflareAccount({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
-    return NextResponse.json(payload());
+    await deletePlatformCloudflareAccountRelational({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
+    return NextResponse.json(await payload());
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_delete_account_failed" }, { status });

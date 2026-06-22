@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { platformSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
+import { createPlatformAdminSessionRelational } from "@/lib/stores/platform-store";
 
 export async function POST(request: Request) {
   const form = await request.formData();
   try {
-    const result = createPlatformAdminSession({
+    const result = await createPlatformAdminSessionRelational({
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? "")
     });

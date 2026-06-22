@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { deleteSiteTheme, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { deleteSiteThemeRelational } from "@/lib/stores/theme-store";
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ siteId: string; themeRecordId: string }> }) {
   const { siteId, themeRecordId } = await params;
@@ -9,7 +10,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ s
   }
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
   try {
-    const result = deleteSiteTheme({
+    const result = await deleteSiteThemeRelational({
       siteId,
       themeId: themeRecordId,
       actor: body.actor

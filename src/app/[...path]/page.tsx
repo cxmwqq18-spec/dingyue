@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { getSiteByHostFromState, isPlatformHost } from "@/lib/domain-routing";
+import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { getPage } from "@/lib/data";
 import { readStorefrontPlatformState } from "@/lib/storefront-state";
 import {
@@ -18,7 +18,8 @@ export const revalidate = 0;
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
   const { path } = await params;
   const state = readStorefrontPlatformState();
-  const site = getSiteByHostFromState(state, (await headers()).get("host"));
+  const headerStore = await headers();
+  const site = getSiteByHostCandidatesFromState(state, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
   if (!site) return {};
   const slug = `/${path.join("/")}`;
   const page = getPage(site, slug);
@@ -39,10 +40,11 @@ export default async function HostStorefrontCatchAllPage({
     notFound();
   }
 
-  const host = (await headers()).get("host");
+  const headerStore = await headers();
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
   const state = readStorefrontPlatformState();
-  const site = getSiteByHostFromState(state, host);
+  const site = getSiteByHostCandidatesFromState(state, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
   if (!site) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {

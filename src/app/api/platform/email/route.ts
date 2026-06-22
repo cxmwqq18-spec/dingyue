@@ -7,12 +7,8 @@ import {
   resendEmailConfigStatusForSettings,
   sendEmailProviderTest
 } from "@/lib/resend-email";
-import {
-  getSiteDomainsFromState,
-  readPlatformState
-} from "@/lib/server-store";
 import { getPlatformOverviewRelational, updatePlatformEmailSettingsRelational } from "@/lib/stores/platform-store";
-import type { PlatformEmailSettings, PlatformState, Site } from "@/lib/types";
+import type { PlatformEmailSettings, PlatformState, Site, SiteDomain } from "@/lib/types";
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
 
@@ -41,11 +37,14 @@ function candidateFromForSite(site: Site, settings: PlatformEmailSettings | unde
   return `${local}@${site.primaryDomain}`.toLowerCase();
 }
 
-function buildSiteEmailRows(state: PlatformState, domains: ResendDomain[]) {
+function buildSiteEmailRows(
+  state: Pick<PlatformState, "platformEmailSettings" | "sites"> & { siteDomains: SiteDomain[] },
+  domains: ResendDomain[]
+) {
   const settings = state.platformEmailSettings;
   const config = resendEmailConfigStatusForSettings(settings);
   return state.sites.map((site) => {
-    const siteDomains = getSiteDomainsFromState(state, site.id);
+    const siteDomains = state.siteDomains.filter((domain) => domain.siteId === site.id);
     const candidateFromEmail = candidateFromForSite(site, settings);
     const candidateDomain = domainFromEmail(candidateFromEmail);
     const resendDomain = domains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
@@ -88,8 +87,8 @@ function buildSiteEmailRows(state: PlatformState, domains: ResendDomain[]) {
 async function platformEmailPayload() {
   const overview = await getPlatformOverviewRelational();
   const state = {
-    ...readPlatformState(),
     sites: overview.sites,
+    siteDomains: overview.siteDomains,
     platformEmailSettings: overview.platformEmailSettings
   };
   const settings = state.platformEmailSettings;
@@ -160,8 +159,8 @@ export async function POST(request: NextRequest) {
   if (!to || !to.includes("@")) return NextResponse.json({ error: "invalid_email" }, { status: 400 });
   const overview = await getPlatformOverviewRelational();
   const state = {
-    ...readPlatformState(),
     sites: overview.sites,
+    siteDomains: overview.siteDomains,
     platformEmailSettings: overview.platformEmailSettings
   };
   const site = state.sites.find((item) => item.id === body.siteId) ?? state.sites[0];

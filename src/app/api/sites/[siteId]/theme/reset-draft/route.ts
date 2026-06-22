@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { resetDraftThemeFromActive, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { resetDraftThemeFromActiveRelational } from "@/lib/stores/theme-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
@@ -9,7 +10,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   }
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
   try {
-    const result = resetDraftThemeFromActive(siteId, body.actor ?? "site_admin_demo");
+    const result = await resetDraftThemeFromActiveRelational(siteId, body.actor ?? "site_admin_demo");
     return NextResponse.json({ ok: true, action: "theme_draft_reset_from_active", sourceVersion: result.sourceVersion });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

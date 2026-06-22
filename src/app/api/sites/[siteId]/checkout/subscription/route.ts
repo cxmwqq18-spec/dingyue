@@ -5,6 +5,17 @@ import { getSiteProductsFromState, readPlatformState } from "@/lib/server-store"
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import type { NextRequest } from "next/server";
 
+export async function HEAD() {
+  return new Response(null, { status: 200 });
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: { Allow: "HEAD,POST,OPTIONS" }
+  });
+}
+
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const body = (await request.json().catch(() => ({}))) as { customerId?: string; priceId?: string };

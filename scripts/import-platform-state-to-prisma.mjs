@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();

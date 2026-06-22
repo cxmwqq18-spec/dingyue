@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { saveDraftThemeSettings } from "@/lib/server-store";
+import { saveThemeSettingsDraftRelational } from "@/lib/stores/theme-store";
 import type { ThemeSettings } from "@/lib/types";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
@@ -13,7 +13,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
     return NextResponse.json({ error: "invalid_theme_settings_json" }, { status: 400 });
   }
   try {
-    saveDraftThemeSettings(siteId, body.draftJson);
+    await saveThemeSettingsDraftRelational({ siteId, draftJson: body.draftJson });
     return NextResponse.json({ ok: true, siteId, action: "theme_settings_draft_saved" });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "theme_settings_save_failed" }, { status: 404 });

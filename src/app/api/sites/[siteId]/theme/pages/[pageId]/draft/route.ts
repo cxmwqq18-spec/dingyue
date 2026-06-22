@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { saveDraftPage, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { saveThemePageDraftRelational } from "@/lib/stores/theme-store";
 import type { ThemePageJson } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
@@ -13,7 +14,13 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json({ error: "invalid_theme_page_json" }, { status: 400 });
   }
   try {
-    const result = saveDraftPage(siteId, pageId, body.draftJson, { expectedRevision: body.expectedRevision, expectedEtag: body.expectedEtag });
+    const result = await saveThemePageDraftRelational({
+      siteId,
+      pageId,
+      draftJson: body.draftJson,
+      expected: { expectedRevision: body.expectedRevision, expectedEtag: body.expectedEtag },
+      actor: guard.current.siteAdmin.id
+    });
     return NextResponse.json({ ok: true, siteId, pageId, action: "draft_saved", draftVersion: result.draftVersion });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 404;

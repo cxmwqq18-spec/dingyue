@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { deleteCreativePack, StoreError, upsertCreativePack } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { deleteCreativePackRelational, upsertCreativePackRelational } from "@/lib/stores/site-store";
 import type { CreativePack } from "@/lib/types";
 
 export async function PUT(
@@ -13,7 +14,7 @@ export async function PUT(
   }
   const body = (await request.json().catch(() => ({}))) as Partial<CreativePack>;
   try {
-    const result = upsertCreativePack({
+    const result = await upsertCreativePackRelational({
       siteId,
       packId,
       name: body.name ?? "",
@@ -42,7 +43,7 @@ export async function DELETE(
     return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
   }
   try {
-    const result = deleteCreativePack({ siteId, packId });
+    const result = await deleteCreativePackRelational({ siteId, packId });
     return NextResponse.json({ ok: true, deletedPack: result.deletedPack });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

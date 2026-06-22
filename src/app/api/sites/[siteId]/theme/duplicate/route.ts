@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { duplicateSiteTheme, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { duplicateSiteThemeRelational } from "@/lib/stores/theme-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
@@ -14,7 +15,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
     actor?: string;
   };
   try {
-    const result = duplicateSiteTheme({
+    const result = await duplicateSiteThemeRelational({
       siteId,
       name: body.name,
       source: body.source,

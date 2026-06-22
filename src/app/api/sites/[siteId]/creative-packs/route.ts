@@ -1,7 +1,33 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError, upsertCreativePack } from "@/lib/server-store";
+import { getSiteCreativePacksFromState, readPlatformState, StoreError } from "@/lib/server-store";
+import { upsertCreativePackRelational } from "@/lib/stores/site-store";
 import type { CreativePack } from "@/lib/types";
+
+export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+  const { siteId } = await params;
+  const state = readPlatformState();
+  if (!state.sites.some((site) => site.id === siteId)) {
+    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+  }
+  return NextResponse.json({
+    ok: true,
+    packs: getSiteCreativePacksFromState(state, siteId).filter((pack) => pack.status === "active")
+  });
+}
+
+export async function HEAD(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+  const { siteId } = await params;
+  const state = readPlatformState();
+  return new Response(null, { status: state.sites.some((site) => site.id === siteId) ? 200 : 404 });
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: { Allow: "GET,HEAD,POST,OPTIONS" }
+  });
+}
 
 export async function POST(
   request: Request,
@@ -14,7 +40,7 @@ export async function POST(
 
   const body = (await request.json().catch(() => ({}))) as Partial<CreativePack>;
   try {
-    const result = upsertCreativePack({
+    const result = await upsertCreativePackRelational({
       siteId,
       name: body.name ?? "",
       headline: body.headline ?? "",

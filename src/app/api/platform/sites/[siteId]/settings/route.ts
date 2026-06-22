@@ -1,14 +1,11 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { getPlatformAdminBySessionFromState, readPlatformState, StoreError } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+import { getCurrentPlatformAdmin } from "@/lib/api-auth";
+import { StoreError } from "@/lib/server-store";
 import { updateSiteSettingsRelational } from "@/lib/stores/site-store";
 import type { Site } from "@/lib/types";
 
 async function requirePlatformAdmin() {
-  const state = readPlatformState();
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  return getPlatformAdminBySessionFromState(state, sessionId);
+  return getCurrentPlatformAdmin();
 }
 
 export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string }> }) {

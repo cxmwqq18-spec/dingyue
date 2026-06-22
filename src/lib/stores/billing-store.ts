@@ -2,9 +2,9 @@ import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import type { CreditLedgerEntry, Customer, Price, Product } from "@/lib/types";
+import type { CreditLedgerEntry, Customer, PaymentEvent, Price, Product } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
-import { mapCreditLedger, mapCustomer, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
+import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
 
 type Tx = Prisma.TransactionClient;
 
@@ -159,5 +159,92 @@ export async function adjustCustomerCreditsRelational(params: {
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
     return { customer: mapCustomer(updatedCustomer), ledger: mapCreditLedger(ledger) };
+  });
+}
+
+export async function recordStripeWebhookRelational(payload: {
+  id?: string;
+  type?: string;
+  account?: string;
+  data?: { object?: { metadata?: { siteId?: string; customerId?: string; priceId?: string; creditsGranted?: string } } };
+}): Promise<{ event: PaymentEvent; siteId: string; alreadyProcessed: boolean; ledger?: CreditLedgerEntry }> {
+  if (!payload.id || !payload.type) throw new StoreError("invalid_webhook_payload", 400);
+  const providerEventId = payload.id;
+  const eventType = payload.type;
+  return prisma.$transaction(async (tx) => {
+    const siteId =
+      payload.data?.object?.metadata?.siteId ??
+      (payload.account
+        ? (await tx.stripeConnectAccount.findFirst({ where: { stripeAccountId: payload.account }, select: { siteId: true } }))?.siteId
+        : undefined);
+    if (!siteId) throw new StoreError("site_not_found_for_webhook", 400);
+
+    const existing = await tx.paymentEvent.findUnique({
+      where: { siteId_provider_providerEventId: { siteId, provider: "stripe", providerEventId } }
+    });
+    if (existing) {
+      const ledger = await tx.creditLedger.findFirst({
+        where: { siteId, sourceType: "stripe_webhook", sourceId: providerEventId }
+      });
+      return {
+        event: mapPaymentEvent(existing),
+        siteId,
+        alreadyProcessed: true,
+        ledger: ledger ? mapCreditLedger(ledger) : undefined
+      };
+    }
+
+    const event = await tx.paymentEvent.create({
+      data: {
+        id: uid("payevt"),
+        siteId,
+        provider: "stripe",
+        providerEventId,
+        eventType,
+        processedAt: new Date(),
+        payload: payload as Prisma.InputJsonObject
+      }
+    });
+
+    const metadata = payload.data?.object?.metadata;
+    const paidEvent = ["checkout.session.completed", "invoice.paid", "payment_intent.succeeded"].includes(eventType);
+    const customer = metadata?.customerId
+      ? await tx.customer.findFirst({ where: { siteId, id: metadata.customerId }, include: { balance: true } })
+      : null;
+    const price = metadata?.priceId
+      ? await tx.price.findFirst({
+          where: {
+            siteId,
+            OR: [{ id: metadata.priceId }, { stripePriceId: metadata.priceId }]
+          }
+        })
+      : null;
+    const credits = Number(metadata?.creditsGranted ?? price?.creditsGranted ?? 0);
+    if (!paidEvent || !customer || !Number.isFinite(credits) || credits <= 0) {
+      return { event: mapPaymentEvent(event), siteId, alreadyProcessed: false };
+    }
+
+    await readCustomerForUpdate(tx, siteId, customer.id);
+    const ledger = await tx.creditLedger.create({
+      data: {
+        id: uid("led"),
+        siteId,
+        customerId: customer.id,
+        amount: credits,
+        type: "grant",
+        sourceType: "stripe_webhook",
+        sourceId: providerEventId
+      }
+    });
+    await tx.creditBalance.update({
+      where: { customerId: customer.id },
+      data: { balance: { increment: credits } }
+    });
+    return {
+      event: mapPaymentEvent(event),
+      siteId,
+      alreadyProcessed: false,
+      ledger: mapCreditLedger(ledger)
+    };
   });
 }

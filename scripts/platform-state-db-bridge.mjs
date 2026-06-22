@@ -1,9 +1,12 @@
 import fs from "node:fs";
+import path from "node:path";
+import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const documentId = "platform";
 const command = process.argv[2];
+const cacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
 
 async function readStdin() {
   return new Promise((resolve, reject) => {
@@ -50,6 +53,12 @@ async function main() {
       update: { state }
     });
     process.stdout.write(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  if (command === "clear-cache") {
+    if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
+    process.stdout.write(JSON.stringify({ ok: true, cacheFile }));
     return;
   }
 

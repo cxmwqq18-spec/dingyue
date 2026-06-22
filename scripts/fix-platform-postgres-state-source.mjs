@@ -1,0 +1,108 @@
+import fs from "node:fs";
+import path from "node:path";
+import { execFileSync } from "node:child_process";
+import { PrismaClient } from "@prisma/client";
+
+const envFile = path.join(process.cwd(), ".env.local");
+const stateFile = path.join(process.cwd(), "data", "platform-state.json");
+const cacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
+const serviceName = process.env.OPS_SERVICE || "mydreamshoots.service";
+const shouldRestart = process.argv.includes("--restart");
+
+function parseEnv(text) {
+  const env = {};
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue;
+    const index = trimmed.indexOf("=");
+    const key = trimmed.slice(0, index).trim();
+    const value = trimmed.slice(index + 1).trim().replace(/^['"]|['"]$/g, "");
+    env[key] = value;
+  }
+  return env;
+}
+
+function writeEnvPort() {
+  if (!fs.existsSync(envFile)) throw new Error(".env.local missing");
+  const before = fs.readFileSync(envFile, "utf8");
+  const after = before.replace(
+    /^(DATABASE_URL=.*@(?:127\.0\.0\.1|localhost):)15432(\/.*)$/m,
+    "$1" + "5432" + "$2"
+  );
+  if (after !== before) {
+    fs.writeFileSync(envFile, after);
+  }
+  const env = parseEnv(after);
+  if (!env.DATABASE_URL) throw new Error("DATABASE_URL missing in .env.local");
+  const url = new URL(env.DATABASE_URL);
+  if ((url.hostname === "127.0.0.1" || url.hostname === "localhost") && url.port !== "5432") {
+    throw new Error(`DATABASE_URL local Postgres port is ${url.port || "(default)"}, expected 5432`);
+  }
+  process.env.DATABASE_URL = env.DATABASE_URL;
+  process.env.PERSISTENCE_BACKEND = env.PERSISTENCE_BACKEND || "postgres";
+  process.env.PLATFORM_STATE_DISK_CACHE = "0";
+  return { changed: after !== before, host: url.hostname, port: url.port || "5432" };
+}
+
+function summarize(state) {
+  return {
+    sites: state.sites?.length ?? 0,
+    siteNames: (state.sites ?? []).map((site) => site.name),
+    siteSlugs: (state.sites ?? []).map((site) => site.slug),
+    customers: state.customers?.length ?? 0,
+    products: state.products?.length ?? 0,
+    jobs: state.jobs?.length ?? 0
+  };
+}
+
+function assertExpectedState(summary) {
+  if (summary.sites < 3) throw new Error(`expected at least 3 sites, got ${summary.sites}`);
+  if (!summary.siteNames.includes("DreamShootAI")) throw new Error("DreamShootAI site missing");
+}
+
+async function main() {
+  const envStatus = writeEnvPort();
+  if (!fs.existsSync(stateFile)) throw new Error(`state file not found: ${stateFile}`);
+  const state = JSON.parse(fs.readFileSync(stateFile, "utf8"));
+  const sourceSummary = summarize(state);
+  assertExpectedState(sourceSummary);
+
+  const prisma = new PrismaClient();
+  try {
+    await prisma.$queryRaw`select 1`;
+    await prisma.platformStateDocument.upsert({
+      where: { id: "platform" },
+      create: { id: "platform", state },
+      update: { state }
+    });
+    const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+    const dbSummary = summarize(document?.state ?? {});
+    assertExpectedState(dbSummary);
+    if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
+    if (shouldRestart) {
+      execFileSync("systemctl", ["daemon-reload"], { stdio: "inherit" });
+      execFileSync("systemctl", ["restart", serviceName], { stdio: "inherit" });
+    }
+    console.log(
+      JSON.stringify(
+        {
+          ok: true,
+          env: { changed: envStatus.changed, databaseHost: envStatus.host, databasePort: envStatus.port },
+          cacheCleared: true,
+          restarted: shouldRestart ? serviceName : false,
+          sourceSummary,
+          dbSummary
+        },
+        null,
+        2
+      )
+    );
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+main().catch((error) => {
+  console.error(error?.message || String(error));
+  process.exit(1);
+});

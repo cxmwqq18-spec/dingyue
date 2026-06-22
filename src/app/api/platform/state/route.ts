@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePlatformMutation } from "@/lib/api-auth";
-import { readPlatformState, writePlatformState } from "@/lib/server-store";
-import { platformState } from "@/lib/data";
+import { readPlatformState } from "@/lib/server-store";
 
 export async function GET() {
   const state = readPlatformState();
@@ -17,6 +16,16 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const legacyResetEnabled = process.env.PLATFORM_STATE_LEGACY_RESET_ENABLED === "1";
+  if (!legacyResetEnabled) {
+    return NextResponse.json(
+      {
+        error: "platform_state_write_disabled",
+        note: "Platform state writes are legacy-only. Use db:import-relational-state -- --replace for resets."
+      },
+      { status: 410 }
+    );
+  }
   const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
   if (isProduction) {
     const secret = process.env.PLATFORM_STATE_RESET_SECRET;
@@ -28,14 +37,10 @@ export async function POST(request: NextRequest) {
   } else if (request.headers.get("x-smoke-reset") !== "true") {
     return NextResponse.json({ error: "smoke_reset_header_required" }, { status: 403 });
   }
-  const body = (await request.json().catch(() => ({}))) as { reset?: boolean };
-  if (body.reset) {
-    writePlatformState(JSON.parse(JSON.stringify(platformState)));
-  }
   const state = readPlatformState();
   return NextResponse.json({
     ok: true,
-    reset: Boolean(body.reset),
+    reset: false,
     sites: state.sites.length,
     customers: state.customers.length,
     products: state.products.length,

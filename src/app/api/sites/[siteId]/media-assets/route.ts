@@ -1,8 +1,33 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { StoreError } from "@/lib/server-store";
+import { getSiteMediaAssetsFromState, readPlatformState, StoreError } from "@/lib/server-store";
 import { upsertThemeMediaAssetRelational } from "@/lib/stores/theme-store";
 import type { MediaAsset } from "@/lib/types";
+
+export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+  const { siteId } = await params;
+  const state = readPlatformState();
+  if (!state.sites.some((site) => site.id === siteId)) {
+    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+  }
+  return NextResponse.json({
+    ok: true,
+    assets: getSiteMediaAssetsFromState(state, siteId)
+  });
+}
+
+export async function HEAD(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+  const { siteId } = await params;
+  const state = readPlatformState();
+  return new Response(null, { status: state.sites.some((site) => site.id === siteId) ? 200 : 404 });
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: { Allow: "GET,HEAD,POST,OPTIONS" }
+  });
+}
 
 export async function POST(
   request: Request,

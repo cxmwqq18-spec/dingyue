@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { createSiteAdminSession, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { createSiteAdminSessionRelational } from "@/lib/stores/site-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = createSiteAdminSession({ siteId, email: body.email, password: body.password });
+    const result = await createSiteAdminSessionRelational({ siteId, email: body.email, password: body.password });
     const response = NextResponse.json({
       ok: true,
       siteAdmin: result.siteAdmin,

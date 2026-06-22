@@ -6,6 +6,9 @@ import type { Site } from "@/lib/types";
 
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
   const form = await request.formData();
+  if (!form.get("password")) {
+    return NextResponse.redirect(publicUrlForRequest(request, `${failurePath}?error=${encodeURIComponent("missing_email_or_code")}`), 303);
+  }
   try {
     const result = await createCustomerSessionRelational({
       siteId: site.id,

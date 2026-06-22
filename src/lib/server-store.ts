@@ -83,6 +83,7 @@ const dataFile = path.join(dataDir, "platform-state.json");
 const postgresBridgeScript = path.join(process.cwd(), "scripts", "platform-state-db-bridge.mjs");
 const postgresStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_CACHE_MS ?? "30000") || 0);
 const postgresStateCacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
+const postgresStateDiskCacheEnabled = process.env.PLATFORM_STATE_DISK_CACHE !== "0";
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
 
 let postgresStateCache: { expiresAt: number; state: PlatformState } | null = null;
@@ -111,6 +112,7 @@ function readPostgresStateCache(): PlatformState | null {
   if (postgresStateCache && postgresStateCache.expiresAt > now) {
     return cloneState(postgresStateCache.state);
   }
+  if (!postgresStateDiskCacheEnabled) return null;
   try {
     const cached = JSON.parse(fs.readFileSync(postgresStateCacheFile, "utf8")) as { expiresAt?: number; state?: PlatformState };
     if (!cached.expiresAt || cached.expiresAt <= now || !cached.state) return null;
@@ -128,6 +130,7 @@ function writePostgresStateCache(state: PlatformState): void {
   }
   const nextCache = { expiresAt: Date.now() + postgresStateCacheMs, state: cloneState(state) };
   postgresStateCache = nextCache;
+  if (!postgresStateDiskCacheEnabled) return;
   try {
     fs.mkdirSync(path.dirname(postgresStateCacheFile), { recursive: true });
     const tempFile = `${postgresStateCacheFile}.${process.pid}.${Date.now()}.tmp`;

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
-import { applySiteThemeToDraft, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { applySiteThemeToDraftRelational } from "@/lib/stores/theme-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteId: string; themeRecordId: string }> }) {
   const { siteId, themeRecordId } = await params;
@@ -9,7 +10,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   }
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
   try {
-    const result = applySiteThemeToDraft({
+    const result = await applySiteThemeToDraftRelational({
       siteId,
       themeId: themeRecordId,
       actor: body.actor

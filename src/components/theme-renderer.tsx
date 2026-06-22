@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
@@ -784,7 +785,65 @@ function storefrontSectionLabel(type: string): string {
 }
 
 function mediaAssetUrl(site: Site, value: string): string {
-  return resolveMediaAssetUrl(site, value);
+  return preferDreamshootOptimizedImage(resolveMediaAssetUrl(site, value));
+}
+
+function preferDreamshootOptimizedImage(src: string): string {
+  if (!src.startsWith("/assets/dreamshoot/")) return src;
+  return src.replace(/\.png(\?.*)?$/i, (match, query = "") => `.webp${query}`);
+}
+
+type StorefrontImageProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+  priority?: boolean;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
+};
+
+function canUseNextImage(src: string): boolean {
+  return src.startsWith("/") && /\.(png|jpe?g|webp|avif)(\?|$)/i.test(src);
+}
+
+function StorefrontImage({
+  src,
+  alt,
+  className,
+  sizes = "(max-width: 768px) 100vw, 33vw",
+  priority = false,
+  loading,
+  fetchPriority
+}: StorefrontImageProps) {
+  const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
+  const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
+  const isOptimizedDreamShootAsset = src.startsWith("/assets/dreamshoot/") && /\.(webp|avif)(\?|$)/i.test(src);
+  if (isOptimizedDreamShootAsset || !canUseNextImage(src)) {
+    return (
+      <img
+        alt={alt}
+        className={className}
+        decoding={priority ? "sync" : "async"}
+        fetchPriority={resolvedFetchPriority}
+        loading={resolvedLoading}
+        src={src}
+      />
+    );
+  }
+  return (
+    <NextImage
+      alt={alt}
+      className={className}
+      decoding={priority ? "sync" : "async"}
+      fetchPriority={resolvedFetchPriority}
+      fill
+      loading={priority ? undefined : resolvedLoading}
+      priority={priority}
+      sizes={sizes}
+      src={src}
+    />
+  );
 }
 
 function runtimeCollectionImage(
@@ -2492,15 +2551,17 @@ function SectionView({
             <div className="dreamshoot-hero-grid grid h-full min-h-[640px] grid-cols-3 gap-3 opacity-55 blur-[0.25px] sm:min-h-[740px] sm:grid-cols-4 sm:gap-4 lg:grid-cols-6">
               {Array.from({ length: Math.max(8, gridImages.length) }).map((_, index) => (
                 <div
-                  className={`dreamshoot-hero-tile overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
+                  className={`dreamshoot-hero-tile relative overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
                   key={`dreamshoot_hero_grid_${index}`}
                   style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
-                  <img
-                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-                    src={gridImages[index % gridImages.length] ?? primaryImage}
+                  <StorefrontImage
                     alt=""
-                    style={{ animationDelay: `${-(index % 5) * 3.4}s` }}
+                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
+                    fetchPriority={index < 3 ? "auto" : "low"}
+                    loading={index < 3 ? "eager" : "lazy"}
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
+                    src={gridImages[index % gridImages.length] ?? primaryImage}
                   />
                 </div>
               ))}
@@ -3280,7 +3341,9 @@ function SectionView({
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-[#11131a] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-4 md:p-5">
             <div className="min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-[#0c0e13] shadow-[0_24px_80px_-58px_rgba(0,0,0,0.9)]">
               <div className="relative overflow-hidden border-b border-white/10 bg-[#10131a]">
-                <img className="aspect-[16/9] w-full object-cover md:aspect-[16/10]" src={featureImage} alt={setting(section, "title")} />
+                <div className="relative aspect-[16/9] w-full md:aspect-[16/10]">
+                  <StorefrontImage className="h-full w-full object-cover" sizes="(max-width: 1024px) 100vw, 42vw" src={featureImage} alt={setting(section, "title")} />
+                </div>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,10,14,0.14)_0%,rgba(9,10,14,0.2)_38%,rgba(9,10,14,0.78)_100%)]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/12 bg-black/32 px-3 py-1.5 text-[11px] font-medium text-white/86 backdrop-blur">
                   {featureLabel}
@@ -3290,7 +3353,9 @@ function SectionView({
                   <p className="mt-2 max-w-lg text-xs leading-5 text-white/72 md:text-sm md:leading-6">{featureMeta}</p>
                 </div>
                 <div className="absolute bottom-4 right-4 hidden w-[108px] overflow-hidden rounded-[18px] border border-white/12 bg-black/28 shadow-[0_18px_48px_-36px_rgba(0,0,0,0.8)] backdrop-blur-sm md:block">
-                  <img className="aspect-[4/5] w-full object-cover" src={secondaryImage} alt={featureLabel} />
+                  <div className="relative aspect-[4/5] w-full">
+                    <StorefrontImage className="h-full w-full object-cover" sizes="108px" src={secondaryImage} alt={featureLabel} />
+                  </div>
                 </div>
               </div>
               <div className="p-3 md:p-4">
@@ -3298,7 +3363,6 @@ function SectionView({
                   <LoginForm
                     defaultEmail={auth?.defaultEmail}
                     defaultName={auth?.defaultName}
-                    defaultPassword={auth?.defaultPassword}
                     initialMessage={auth?.initialMessage}
                     siteId={site.id}
                     storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
@@ -3387,7 +3451,12 @@ function SectionView({
     return (
       <section className="relative overflow-hidden border-y border-[#eadfce] bg-[#f7f1e8] px-5 py-8 text-[#171514]" id={sectionAnchor(section, "journey")}>
         <div className="absolute inset-0">
-          <img className="h-full w-full object-cover opacity-[0.12]" src={backgroundImage} alt={setting(section, "title", "Final call to action")} />
+          <StorefrontImage
+            alt={setting(section, "title", "Final call to action")}
+            className="h-full w-full object-cover opacity-[0.12]"
+            sizes="100vw"
+            src={backgroundImage}
+          />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(247,241,232,0.98)_0%,rgba(247,241,232,0.94)_45%,rgba(247,241,232,0.9)_100%)]" />
         </div>
         <div className="relative mx-auto grid max-w-[var(--site-content-width)] gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
@@ -3449,7 +3518,12 @@ function SectionView({
               ))}
             </div>
             <div className="relative min-h-[320px] overflow-hidden rounded-[1.7rem] border border-black/10 bg-zinc-200 shadow-diffusion sm:min-h-[400px] xl:min-h-[520px]">
-              <img className="absolute inset-0 h-full w-full object-cover" src={mediaAssetUrl(site, blockValue(lead, "imageUrl", fallbackHeroImages[0]))} alt={blockValue(lead, "title", "AI photo feature")} />
+              <StorefrontImage
+                alt={blockValue(lead, "title", "AI photo feature")}
+                className="absolute inset-0 h-full w-full object-cover"
+                sizes="(max-width: 1280px) 100vw, 58vw"
+                src={mediaAssetUrl(site, blockValue(lead, "imageUrl", fallbackHeroImages[0]))}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/72 via-transparent to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
                 <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/60">Featured flow</p>
@@ -3493,7 +3567,12 @@ function SectionView({
               const image = mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.fashion));
               return (
                 <Link className="group relative min-h-[340px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion" href={hrefFor(site, blockValue(item, "href", "/tools/image_generator"))} key={instanceKey(item, index, "occasion")} {...xfcartBlockAttrs(item, index, "occasion")}>
-                  <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={title} />
+                  <StorefrontImage
+                    alt={title}
+                    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                    sizes={index === 0 ? "(max-width: 1024px) 100vw, 45vw" : "(max-width: 1024px) 100vw, 28vw"}
+                    src={image}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/76 via-zinc-950/16 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                     <span className="rounded-full bg-white/18 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] backdrop-blur">{blockValue(item, "tag", "Photo set")}</span>
@@ -4250,8 +4329,13 @@ function SectionView({
                   key={instanceKey(card, index, "dreamshoot_taxonomy")}
                   {...xfcartBlockAttrs(card, index, "dreamshoot_taxonomy")}
                 >
-                  <div className={editorial && index === 0 ? "aspect-[16/11] overflow-hidden bg-zinc-900 lg:aspect-[16/12]" : "aspect-[16/10] overflow-hidden bg-zinc-900"}>
-                    <img className="h-full w-full object-cover opacity-92 transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockValue(card, "title", "Package category")} />
+                  <div className={editorial && index === 0 ? "relative aspect-[16/11] overflow-hidden bg-zinc-900 lg:aspect-[16/12]" : "relative aspect-[16/10] overflow-hidden bg-zinc-900"}>
+                      <StorefrontImage
+                        alt={blockValue(card, "title", "Package category")}
+                        className="h-full w-full object-cover opacity-92 transition duration-500 group-hover:scale-[1.04]"
+                        sizes={editorial && index === 0 ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1280px) 50vw, 33vw"}
+                        src={image}
+                      />
                   </div>
                   <div className="p-5 sm:p-6">
                     <div className="flex items-center justify-between gap-3">
@@ -4341,7 +4425,12 @@ function SectionView({
               href={hrefFor(site, blockValue(lead, "href", "/login"))}
               {...xfcartBlockAttrs(lead, 0, "visual_proof")}
             >
-              <img className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))} alt={blockValue(lead, "title", "Featured photo package")} />
+              <StorefrontImage
+                alt={blockValue(lead, "title", "Featured photo package")}
+                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+                sizes="(max-width: 1024px) 100vw, 49vw"
+                src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))}
+              />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,14,0.04)_0%,rgba(5,7,14,0.18)_42%,rgba(5,7,14,0.88)_100%)]" />
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
                 <span className="rounded-full border border-white/20 bg-white/16 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">{blockValue(lead, "badge", "Featured package")}</span>
@@ -4363,7 +4452,12 @@ function SectionView({
                   key={instanceKey(card, index, "visual_proof_card")}
                   {...xfcartBlockAttrs(card, index + 1, "visual_proof")}
                 >
-                  <img className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" src={mediaAssetUrl(site, blockValue(card, "imageUrl", packImages.fashion))} alt={blockValue(card, "title", "Photo result")} />
+                  <StorefrontImage
+                    alt={blockValue(card, "title", "Photo result")}
+                    className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    src={mediaAssetUrl(site, blockValue(card, "imageUrl", packImages.fashion))}
+                  />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,14,0.08)_0%,rgba(5,7,14,0.2)_34%,rgba(5,7,14,0.88)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 p-5">
                     <span className="rounded-full border border-white/18 bg-black/24 px-3 py-1.5 text-xs font-medium text-white/86 backdrop-blur">{blockValue(card, "badge", blockValue(card, "category", "Package"))}</span>
@@ -4487,7 +4581,12 @@ function SectionView({
                       key={instanceKey(item, index, "seasonal_image")}
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
-                      <img className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))} alt={blockValue(item, "label", "Featured pack image")} />
+                      <StorefrontImage
+                        alt={blockValue(item, "label", "Featured pack image")}
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 18vw"
+                        src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))}
+                      />
                       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/24 to-transparent p-3 opacity-100 md:p-4">
                         <p className="text-xs font-semibold text-white">{blockValue(item, "label", "World Cup image")}</p>
                         {blockValue(item, "meta", "") ? <p className="mt-0.5 hidden text-[11px] leading-4 text-white/58 sm:block">{blockValue(item, "meta", "")}</p> : null}
@@ -4612,7 +4711,12 @@ function SectionView({
                 key={card.id}
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.04]">
-                  <img className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" src={card.imageUrl} alt={card.title} />
+                  <StorefrontImage
+                    alt={card.title}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 20vw"
+                    src={card.imageUrl}
+                  />
                   <span className="absolute left-4 top-4 rounded-full border border-white/18 bg-black/28 px-3 py-1.5 text-xs font-semibold text-white/88 backdrop-blur">{dreamshootCategoryLabel(card.category)}</span>
                   {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: dreamshootBrandGradient }} /> : null}
                 </div>
@@ -4648,7 +4752,12 @@ function SectionView({
                     key={`rest_${card.id}`}
                   >
                     <div className="relative aspect-[1.42] overflow-hidden bg-white/[0.04]">
-                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]" src={card.imageUrl} alt={card.title} />
+                      <StorefrontImage
+                        alt={card.title}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                        src={card.imageUrl}
+                      />
                       <span className="absolute left-3 top-3 rounded-full border border-white/18 bg-black/32 px-2.5 py-1 text-[11px] font-semibold text-white/84 backdrop-blur">{dreamshootCategoryLabel(card.category)}</span>
                       {index < 3 ? <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#10121a]">Popular</span> : null}
                     </div>
@@ -4818,8 +4927,13 @@ function SectionView({
           <div className="absolute inset-0 -z-10 opacity-46">
             <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 blur-[0.2px] sm:grid-cols-4 lg:grid-cols-6">
               {tools.slice(0, 12).map((tool, index) => (
-                <div className={`overflow-hidden rounded-[16px] bg-zinc-900 ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
-                  <img className="h-full min-h-[180px] w-full object-cover opacity-76" src={mediaAssetUrl(site, blockValue(tool, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))} alt="" />
+                <div className={`relative overflow-hidden rounded-[16px] bg-zinc-900 ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
+                  <StorefrontImage
+                    alt=""
+                    className="h-full min-h-[180px] w-full object-cover opacity-76"
+                    sizes="(max-width: 768px) 33vw, 16vw"
+                    src={mediaAssetUrl(site, blockValue(tool, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))}
+                  />
                 </div>
               ))}
             </div>
@@ -4889,8 +5003,13 @@ function SectionView({
                           {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
                         >
                           <div className="grid grid-cols-[104px_1fr] gap-0 sm:grid-cols-[128px_1fr]">
-                            <div className="h-full min-h-[148px] overflow-hidden bg-zinc-900">
-                              <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockValue(tool, "title", "AI tool")} />
+                            <div className="relative h-full min-h-[148px] overflow-hidden bg-zinc-900">
+                              <StorefrontImage
+                                alt={blockValue(tool, "title", "AI tool")}
+                                className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                                sizes="(max-width: 640px) 104px, 128px"
+                                src={image}
+                              />
                             </div>
                             <div className="flex min-w-0 flex-col p-4">
                               <div className="flex items-center justify-between gap-2">
@@ -5206,7 +5325,12 @@ function SectionView({
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]" />
           <div className="absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block">
-            <img className="h-full w-full object-cover object-center opacity-[0.9]" src={pricingImage} alt={setting(section, "title", "Pricing background")} />
+            <StorefrontImage
+              alt={setting(section, "title", "Pricing background")}
+              className="h-full w-full object-cover object-center opacity-[0.9]"
+              sizes="52vw"
+              src={pricingImage}
+            />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]" />
           </div>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]" />
