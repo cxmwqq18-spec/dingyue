@@ -25,6 +25,10 @@ function pickSections(source: ThemePageJson["sections"], order: string[]): Theme
 }
 
 const assets = {
+  desiWeddingPack: "/assets/dreamshoot/generated/20260622-pack-fill/desi-wedding-pack.png",
+  holidayTravelPack: "/assets/dreamshoot/generated/20260622-pack-fill/holiday-travel-pack.png",
+  aiVideoAddonsPack: "/assets/dreamshoot/generated/20260622-pack-fill/ai-video-addons-pack.png",
+  magicUpscalerPack: "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.png",
   proofWorldcupGallery: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
   catalogWorldcupCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
   catalogHeadshotCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",

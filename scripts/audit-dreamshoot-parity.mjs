@@ -31,6 +31,7 @@ assert(
 const imageMap = new Map();
 for (const pack of packs) {
   assert(pack.imageUrl, `${pack.name} is missing imageUrl`);
+  assert(!/\.svg($|\?)/i.test(pack.imageUrl), `${pack.name} is still using an SVG placeholder image: ${pack.imageUrl}`);
   const list = imageMap.get(pack.imageUrl) ?? [];
   list.push(pack.name);
   imageMap.set(pack.imageUrl, list);
