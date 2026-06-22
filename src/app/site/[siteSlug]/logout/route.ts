@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { deleteCustomerSession, readPlatformState } from "@/lib/server-store";
-import { customerSessionCookie } from "@/lib/session";
+import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
@@ -18,14 +18,14 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   response.cookies.set(cookieName, "", {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureCookie(request),
     path: "/",
     expires: new Date(0)
   });
   response.cookies.set(`customer_csrf_${site.id}`, "", {
     httpOnly: false,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureCookie(request),
     path: "/",
     expires: new Date(0)
   });

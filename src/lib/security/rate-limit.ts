@@ -6,7 +6,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // 内存存储（生产环境应使用Redis）
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const rateLimitStore =
+  ((globalThis as typeof globalThis & {
+    __dingyueRateLimitStore?: Map<string, { count: number; resetTime: number }>;
+  }).__dingyueRateLimitStore ??= new Map<string, { count: number; resetTime: number }>());
 
 export interface RateLimitConfig {
   windowMs: number;      // 时间窗口（毫秒）

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -13,6 +13,7 @@ export async function POST(request: Request) {
     response.cookies.set(platformSessionCookie(), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createCustomerSession, StoreError } from "@/lib/server-store";
-import { customerSessionCookie } from "@/lib/session";
+import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
 import type { NextRequest } from "next/server";
@@ -27,11 +27,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     response.cookies.set(customerSessionCookie(siteId), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
-    setCsrfCookie(response, `customer:${siteId}`, result.session.id, result.session.expiresAt);
+    setCsrfCookie(response, `customer:${siteId}`, result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

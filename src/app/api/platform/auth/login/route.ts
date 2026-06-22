@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPlatformAdminSession, StoreError } from "@/lib/server-store";
-import { platformSessionCookie } from "@/lib/session";
+import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
 import type { NextRequest } from "next/server";
@@ -23,11 +23,11 @@ export async function POST(request: NextRequest) {
     response.cookies.set(platformSessionCookie(), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
-    setCsrfCookie(response, "platform", result.session.id, result.session.expiresAt);
+    setCsrfCookie(response, "platform", result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

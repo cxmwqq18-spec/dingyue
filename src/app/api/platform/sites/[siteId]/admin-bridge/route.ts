@@ -8,7 +8,7 @@ import {
   StoreError,
   toPublicSiteAdmin
 } from "@/lib/server-store";
-import { platformSessionCookie, siteAdminSessionCookie } from "@/lib/session";
+import { platformSessionCookie, shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 
 function normalizeAdminPath(value?: string | null): string {
@@ -18,7 +18,7 @@ function normalizeAdminPath(value?: string | null): string {
   return trimmed;
 }
 
-async function buildBridgeResponse(siteId: string, requestedPath?: string | null) {
+async function buildBridgeResponse(request: NextRequest, siteId: string, requestedPath?: string | null) {
   const state = readPlatformState();
   const platformSessionId = (await cookies()).get(platformSessionCookie())?.value;
   const current = getPlatformAdminBySessionFromState(state, platformSessionId);
@@ -55,11 +55,11 @@ async function buildBridgeResponse(siteId: string, requestedPath?: string | null
     response.cookies.set(siteAdminSessionCookie(siteId), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
-    setCsrfCookie(response, `site-admin:${siteId}`, result.session.id, result.session.expiresAt);
+    setCsrfCookie(response, `site-admin:${siteId}`, result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -76,7 +76,7 @@ export async function GET(
   if (!guard.ok) return guard.response;
 
   const path = new URL(request.url).searchParams.get("path");
-  const response = await buildBridgeResponse(siteId, path);
+  const response = await buildBridgeResponse(request, siteId, path);
   if (!response.ok) return response;
   const body = (await response.json()) as { redirectTo: string };
   const redirect = NextResponse.redirect(new URL(body.redirectTo, request.url));
@@ -95,5 +95,5 @@ export async function POST(
   if (!guard.ok) return guard.response;
 
   const body = (await request.json().catch(() => ({}))) as { path?: string };
-  return buildBridgeResponse(siteId, body.path);
+  return buildBridgeResponse(request, siteId, body.path);
 }

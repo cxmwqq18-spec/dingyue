@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { shouldUseSecureCookie } from "@/lib/session";
 
 export type CsrfScope = "platform" | `site-admin:${string}` | `customer:${string}`;
 
@@ -33,12 +34,12 @@ export function verifyCsrfToken(scope: CsrfScope, sessionId: string, token?: str
   return crypto.timingSafeEqual(actualBuffer, expectedBuffer);
 }
 
-export function setCsrfCookie(response: NextResponse, scope: CsrfScope, sessionId: string, expiresAt: string): string {
+export function setCsrfCookie(response: NextResponse, scope: CsrfScope, sessionId: string, expiresAt: string, request?: Request): string {
   const token = createCsrfToken(scope, sessionId);
   response.cookies.set(csrfCookieName(scope), token, {
     httpOnly: false,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureCookie(request),
     path: "/",
     expires: new Date(expiresAt)
   });

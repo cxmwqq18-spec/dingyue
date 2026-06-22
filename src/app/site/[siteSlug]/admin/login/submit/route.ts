@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createSiteAdminSession, readPlatformState, StoreError } from "@/lib/server-store";
-import { siteAdminSessionCookie } from "@/lib/session";
+import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
@@ -19,6 +19,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
     response.cookies.set(siteAdminSessionCookie(site.id), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });

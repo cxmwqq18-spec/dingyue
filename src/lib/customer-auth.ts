@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createCustomerSession, StoreError } from "@/lib/server-store";
-import { customerSessionCookie } from "@/lib/session";
+import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import type { Site } from "@/lib/types";
 
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
@@ -16,6 +16,7 @@ export async function handleCustomerLoginForm(request: Request, site: Site, succ
     response.cookies.set(customerSessionCookie(site.id), result.session.id, {
       httpOnly: true,
       sameSite: "lax",
+      secure: shouldUseSecureCookie(request),
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
