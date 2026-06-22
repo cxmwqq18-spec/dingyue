@@ -40,6 +40,19 @@ function delegateFor(model) {
   return prisma[model];
 }
 
+function primaryDomainForSite(state, site) {
+  return (
+    site.primaryDomain ||
+    asArray(state.siteDomains).find((domain) => domain.siteId === site.id && domain.isPrimary)?.domain ||
+    asArray(state.siteDomains).find((domain) => domain.siteId === site.id)?.domain ||
+    `${site.slug}.localhost`
+  );
+}
+
+function firstPriceForProduct(state, productId) {
+  return flattenPrices(state).find((price) => price.productId === productId);
+}
+
 function uniqueById(items) {
   const seen = new Set();
   const unique = [];
@@ -158,11 +171,12 @@ const specs = [
     key: "sites",
     model: "site",
     items: (state) => asArray(state.sites),
-    data: (site) => ({
+    data: (site, state) => ({
       id: site.id,
       name: site.name,
       slug: site.slug,
       status: site.status,
+      primaryDomain: primaryDomainForSite(state, site),
       timezone: site.timezone ?? "UTC",
       currency: site.currency ?? "usd",
       branding: json(site.branding),
@@ -233,6 +247,7 @@ const specs = [
       id: price.id,
       siteId: price.siteId,
       productId: price.productId,
+      label: price.label ?? price.id,
       stripePriceId: price.stripePriceId,
       currency: price.currency,
       amountCents: price.amountCents,
@@ -244,15 +259,24 @@ const specs = [
     key: "subscriptions",
     model: "subscription",
     items: (state) => asArray(state.subscriptions),
-    data: (subscription) => ({
-      id: subscription.id,
-      siteId: subscription.siteId,
-      customerId: subscription.customerId,
-      stripeSubscriptionId: subscription.stripeSubscriptionId,
-      status: subscription.status,
-      currentPeriodStart: toDate(subscription.currentPeriodStart, toDate(subscription.createdAt, new Date(0))),
-      currentPeriodEnd: toDate(subscription.currentPeriodEnd)
-    })
+    data: (subscription, state) => {
+      const price = subscription.priceId
+        ? flattenPrices(state).find((item) => item.id === subscription.priceId)
+        : firstPriceForProduct(state, subscription.productId);
+      return {
+        id: subscription.id,
+        siteId: subscription.siteId,
+        customerId: subscription.customerId,
+        productId: subscription.productId ?? price?.productId,
+        priceId: subscription.priceId ?? price?.id,
+        stripeSubscriptionId: subscription.stripeSubscriptionId,
+        status: subscription.status,
+        currentPeriodStart: toDate(subscription.currentPeriodStart, toDate(subscription.createdAt, new Date(0))),
+        currentPeriodEnd: toDate(subscription.currentPeriodEnd),
+        creditsPerCycle: subscription.creditsPerCycle ?? price?.creditsGranted ?? 0,
+        createdAt: toDate(subscription.createdAt)
+      };
+    }
   },
   {
     key: "orders",
@@ -265,7 +289,9 @@ const specs = [
       status: order.status,
       amountCents: order.amountCents,
       currency: order.currency,
-      credits: order.credits
+      credits: order.credits,
+      sourceId: order.sourceId ?? order.id,
+      createdAt: toDate(order.createdAt)
     })
   },
   {
@@ -482,7 +508,7 @@ const specs = [
   },
   {
     key: "auditLogs",
-    model: "adminAuditLog",
+    model: "auditLog",
     items: (state) => asArray(state.auditLogs),
     data: (log) => ({
       id: log.id,
@@ -521,9 +547,18 @@ const specs = [
       id: asset.id,
       siteId: asset.siteId,
       customerId: asset.customerId,
+      customerModelId: asset.customerModelId,
+      subjectRole: asset.subjectRole,
+      jobId: asset.jobId,
+      label: asset.label ?? asset.id,
       storageKey: asset.storageKey,
+      mimeType: asset.mimeType ?? "application/octet-stream",
+      role: asset.role ?? "input",
       visibility: asset.visibility,
       reviewStatus: asset.reviewStatus,
+      validationStatus: asset.validationStatus,
+      validationReport: asset.validationReport,
+      createdAt: toDate(asset.createdAt),
       deletedAt: toDate(asset.deletedAt)
     })
   },

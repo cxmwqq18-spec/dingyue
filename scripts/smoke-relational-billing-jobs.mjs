@@ -2,11 +2,32 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function requireDelegate(name) {
+  if (!prisma[name]) throw new Error(`missing_prisma_delegate:${name}`);
+}
+
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 async function main() {
+  [
+    "site",
+    "customer",
+    "creditBalance",
+    "product",
+    "price",
+    "aiApp",
+    "siteAiApp",
+    "generationJob",
+    "creditLedger"
+  ].forEach(requireDelegate);
+
+  if (!process.env.DATABASE_URL) {
+    console.log(JSON.stringify({ ok: true, schema: { delegates: "available" }, db: { checked: false, reason: "DATABASE_URL_missing" } }, null, 2));
+    return;
+  }
+
   const siteId = `smoke_site_${Date.now().toString(36)}`;
   const customerId = uid("cust");
   const productId = uid("prod");
