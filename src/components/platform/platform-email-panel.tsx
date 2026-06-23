@@ -203,9 +203,12 @@ export function PlatformEmailPanel({
   const [selectedConfigBySite, setSelectedConfigBySite] = useState<Record<string, string>>(() =>
     Object.fromEntries(initialStatus.sites.map((row) => [row.site.id, row.emailConfigId ?? row.resendConfigId ?? "default"]))
   );
-  const [message, setMessage] = useState(initialStatus.note ?? "统一配置 Resend API Key 后，平台会按各站点主域名匹配 Resend Domains 验证状态。");
+  const [configMessage, setConfigMessage] = useState(initialStatus.note ?? "统一配置 Resend API Key 后，平台会按各站点主域名匹配 Resend Domains 验证状态。");
+  const [testMessage, setTestMessage] = useState("");
+  const [rowMessageBySite, setRowMessageBySite] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
+  const [testingSiteId, setTestingSiteId] = useState("");
   const [loading, setLoading] = useState(false);
   const [provisioningSiteId, setProvisioningSiteId] = useState("");
 
@@ -242,25 +245,25 @@ export function PlatformEmailPanel({
     });
   }, [filter, query, status.sites]);
 
-  async function refreshStatus() {
+  async function refreshStatus(options: { silent?: boolean } = {}) {
     setLoading(true);
     const response = await fetch("/api/platform/email", { cache: "no-store", credentials: "same-origin" });
     const result = (await response.json().catch(() => ({}))) as PlatformEmailPayload & { error?: string };
     setLoading(false);
     if (!response.ok) {
-      setMessage(`检测失败：${reasonLabel(result.error ?? "email_status_fetch_failed")}`);
+      if (!options.silent) setConfigMessage(`检测失败：${reasonLabel(result.error ?? "email_status_fetch_failed")}`);
       return;
     }
     setStatus(result);
     setFromEmail(result.config.fromEmail);
     setReplyTo(result.config.replyTo);
     setSelectedConfigBySite((current) => ({
-      ...Object.fromEntries(result.sites.map((row) => [row.site.id, current[row.site.id] || row.resendConfigId || "default"]))
+      ...Object.fromEntries(result.sites.map((row) => [row.site.id, current[row.site.id] || row.emailConfigId || row.resendConfigId || "default"]))
     }));
     const domainCheckDetail = result.domainCheckError
       ? ` Resend 检测提示：${reasonLabel(result.domainCheckError.error)}${providerDetailSuffix(result.domainCheckError)}`
       : "";
-    setMessage(`检测完成：${result.summary.readySites} 个站点就绪，${result.summary.blockedSites} 个站点阻断。${domainCheckDetail}`);
+    if (!options.silent) setConfigMessage(`检测完成：${result.summary.readySites} 个站点就绪，${result.summary.blockedSites} 个站点阻断。${domainCheckDetail}`);
     router.refresh();
   }
 
@@ -282,12 +285,12 @@ export function PlatformEmailPanel({
     const result = (await response.json().catch(() => ({}))) as PlatformEmailPayload & { error?: string };
     setSaving(false);
     if (!response.ok) {
-      setMessage(`保存失败：${reasonLabel(result.error ?? "email_send_failed")}`);
+      setConfigMessage(`保存失败：${reasonLabel(result.error ?? "email_send_failed")}`);
       return;
     }
     setApiKey("");
     setStatus(result);
-    setMessage("邮箱服务配置已保存，并已重新检测 Resend Domains。");
+    setConfigMessage("邮箱服务配置已保存，并已重新检测 Resend Domains。");
     router.refresh();
   }
 
@@ -308,7 +311,7 @@ export function PlatformEmailPanel({
     });
     const result = (await response.json().catch(() => ({}))) as PlatformEmailPayload & { error?: string };
     if (!response.ok) {
-      setMessage(`绑定失败：${reasonLabel(result.error ?? "email_send_failed")}`);
+      setConfigMessage(`绑定失败：${reasonLabel(result.error ?? "email_send_failed")}`);
       await refreshStatus();
       return;
     }
@@ -317,22 +320,28 @@ export function PlatformEmailPanel({
     const configName = result.configs?.find((config) => config.id === configId)?.label
       ?? result.resendConfigs?.find((config) => config.id === configId)?.label
       ?? configId;
-    setMessage(`${siteName} 已绑定到 ${configName}。`);
+    setConfigMessage(`${siteName} 已绑定到 ${configName}。`);
     router.refresh();
   }
 
   async function sendTest(siteIdOverride?: string) {
     const to = testTo.trim();
     if (!to || !to.includes("@")) {
-      setMessage(`测试邮件发送失败：${reasonLabel("invalid_email")}`);
+      setTestMessage(`测试邮件发送失败：${reasonLabel("invalid_email")}`);
       return;
     }
     const siteId = siteIdOverride || testSiteId;
     const row = status.sites.find((item) => item.site.id === siteId);
     const selectedConfig = row ? selectedConfigForSite(row, resendConfigChoices, selectedConfigBySite) : resendConfigChoices[0];
     setTesting(true);
+    setTestingSiteId(siteIdOverride ? siteId : "");
     setTestSiteId(siteId);
-    setMessage(`测试邮件发送中：${row?.site.name ?? "当前站点"} / ${configLabel(selectedConfig, resendConfigChoices.indexOf(selectedConfig))}`);
+    const sendingMessage = `测试邮件发送中：${row?.site.name ?? "当前站点"} / ${configLabel(selectedConfig, resendConfigChoices.indexOf(selectedConfig))}`;
+    if (siteIdOverride) {
+      setRowMessageBySite((current) => ({ ...current, [siteId]: sendingMessage }));
+    } else {
+      setTestMessage(sendingMessage);
+    }
     try {
       const response = await fetch("/api/platform/email", {
         method: "POST",
@@ -350,14 +359,30 @@ export function PlatformEmailPanel({
         providerMessage?: string;
       };
       if (!response.ok) {
-        setMessage(`测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}${providerDetailSuffix(result)}`);
+        const failureMessage = `测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}${providerDetailSuffix(result)}`;
+        if (siteIdOverride) {
+          setRowMessageBySite((current) => ({ ...current, [siteId]: failureMessage }));
+        } else {
+          setTestMessage(failureMessage);
+        }
         return;
       }
-      setMessage(`测试邮件已发送，Resend message id: ${result.messageId ?? "provider accepted"}。`);
+      const successMessage = `测试邮件已发送，Resend message id: ${result.messageId ?? "provider accepted"}。`;
+      if (siteIdOverride) {
+        setRowMessageBySite((current) => ({ ...current, [siteId]: successMessage }));
+      } else {
+        setTestMessage(successMessage);
+      }
     } catch {
-      setMessage(`测试邮件发送失败：${reasonLabel("network_error")}`);
+      const networkMessage = `测试邮件发送失败：${reasonLabel("network_error")}`;
+      if (siteIdOverride) {
+        setRowMessageBySite((current) => ({ ...current, [siteId]: networkMessage }));
+      } else {
+        setTestMessage(networkMessage);
+      }
     } finally {
       setTesting(false);
+      setTestingSiteId("");
     }
   }
 
@@ -385,14 +410,15 @@ export function PlatformEmailPanel({
         dnsRecords?: Array<{ type?: string; name?: string; content?: string }>;
       };
       if (!response.ok) {
-        setMessage(`Resend 验证检测失败：${reasonLabel(result.error ?? "email_domain_provision_failed")}`);
+        setRowMessageBySite((current) => ({ ...current, [row.site.id]: `Resend 验证检测失败：${reasonLabel(result.error ?? "email_domain_provision_failed")}` }));
         return;
       }
       const dnsCount = result.dnsRecords?.length ?? 0;
-      setMessage(`Resend 验证检测已执行：${row.site.name} 使用 ${configLabel(selectedConfig, resendConfigChoices.indexOf(selectedConfig))}，当前状态 ${result.resend?.verificationStatus ?? "pending"}；DNS 记录 ${dnsCount} 条可用于手动核对。`);
-      await refreshStatus();
+      const dnsMessage = `Resend 验证检测已执行：${row.site.name} 使用 ${configLabel(selectedConfig, resendConfigChoices.indexOf(selectedConfig))}，当前状态 ${result.resend?.verificationStatus ?? "pending"}；DNS 记录 ${dnsCount} 条可用于手动核对。`;
+      await refreshStatus({ silent: true });
+      setRowMessageBySite((current) => ({ ...current, [row.site.id]: dnsMessage }));
     } catch {
-      setMessage(`Resend 验证检测失败：${reasonLabel("network_error")}`);
+      setRowMessageBySite((current) => ({ ...current, [row.site.id]: `Resend 验证检测失败：${reasonLabel("network_error")}` }));
     } finally {
       setProvisioningSiteId("");
     }
@@ -426,7 +452,7 @@ export function PlatformEmailPanel({
           <ErpToolbarField label="Ready" value={`${status.summary.readySites}/${status.summary.totalSites}`} />
         </div>
         <div className="flex flex-wrap gap-2">
-          <button className="admin_btn inline-flex h-[34px] items-center gap-1 px-3 disabled:opacity-55" disabled={loading} onClick={refreshStatus} type="button">
+          <button className="admin_btn inline-flex h-[34px] items-center gap-1 px-3 disabled:opacity-55" disabled={loading} onClick={() => refreshStatus()} type="button">
             <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
             {loading ? "检测中" : "检测配置"}
           </button>
@@ -495,7 +521,7 @@ export function PlatformEmailPanel({
               </ErpField>
             </ErpFormGrid>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="tixing min-w-0 flex-1">{message}</div>
+              <div className="tixing min-w-0 flex-1">{configMessage}</div>
               <button className="input_btn inline-flex h-[38px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={saving} onClick={saveSettings} type="button">
                 <Save className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 {saving ? "保存中" : "保存配置"}
@@ -522,6 +548,7 @@ export function PlatformEmailPanel({
               <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
               {testing ? "发送中" : "发送测试"}
             </button>
+            {testMessage ? <div className="tixing">{testMessage}</div> : null}
             <p className="text-[12px] leading-5 text-[#667085]">
               也可以在下方站点域名行直接发送测试；如果仍使用 Resend 测试发件人，只能发给 Resend 账号自己的邮箱。
             </p>
@@ -534,7 +561,7 @@ export function PlatformEmailPanel({
           actions={
             <>
               <WorkbenchActionButton label="重置" onClick={() => { setQuery(""); setFilter(""); }} quiet />
-              <WorkbenchActionButton label="检测配置" onClick={refreshStatus} />
+              <WorkbenchActionButton label="检测配置" onClick={() => refreshStatus()} />
             </>
           }
           controls={
@@ -594,25 +621,28 @@ export function PlatformEmailPanel({
                 <div className="min-w-0 text-[12px] leading-5 text-[#667085]">
                   {row.blockingReasons.length ? row.blockingReasons.map(reasonLabel).join(" ") : "当前站点发件域名已通过检测。"}
                 </div>
-                <div className="flex min-w-[200px] flex-nowrap items-center gap-2">
-                  <button
-                    className="admin_btn inline-flex h-[32px] min-w-[92px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
-                    disabled={provisioningSiteId === row.site.id}
-                    onClick={() => provisionDomain(row)}
-                    type="button"
-                  >
-                    <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
-                    {provisioningSiteId === row.site.id ? "检测中" : "DNS 检测"}
-                  </button>
-                  <button
-                    className="input_btn inline-flex h-[32px] min-w-[72px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
-                    disabled={testing || !testTo.trim()}
-                    onClick={() => sendTest(row.site.id)}
-                    type="button"
-                  >
-                    <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
-                    测试
-                  </button>
+                <div className="grid min-w-[210px] gap-2">
+                  <div className="flex flex-nowrap items-center gap-2">
+                    <button
+                      className="admin_btn inline-flex h-[32px] min-w-[92px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
+                      disabled={provisioningSiteId === row.site.id}
+                      onClick={() => provisionDomain(row)}
+                      type="button"
+                    >
+                      <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+                      {provisioningSiteId === row.site.id ? "检测中" : "DNS 检测"}
+                    </button>
+                    <button
+                      className="input_btn inline-flex h-[32px] min-w-[72px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
+                      disabled={(testing && testingSiteId !== row.site.id) || !testTo.trim()}
+                      onClick={() => sendTest(row.site.id)}
+                      type="button"
+                    >
+                      <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+                      {testingSiteId === row.site.id ? "发送中" : "测试"}
+                    </button>
+                  </div>
+                  {rowMessageBySite[row.site.id] ? <div className="tixing text-[11px] leading-5">{rowMessageBySite[row.site.id]}</div> : null}
                 </div>
                 </WorkbenchTableRow>
               );

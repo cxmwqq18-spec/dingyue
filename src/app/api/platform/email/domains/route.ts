@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePlatformMutation } from "@/lib/api-auth";
 import {
+  domainFromEmail,
   ensureResendDomain,
   resendRecordsToCloudflare,
   resolveResendSettingsForSite,
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
       : overview.siteEmailConfigAssignments
   };
   const settings = resolveResendSettingsForSite(settingsContext, body.siteId);
-  const domain = normalizeDomain(body.domain || site?.primaryDomain);
+  const domain = normalizeDomain(domainFromEmail(settings.fromEmail ?? "") || body.domain || site?.primaryDomain);
   if (!domain) return NextResponse.json({ error: "missing_domain" }, { status: 400 });
   if (!domain.includes(".") || isLocalDomain(domain)) {
     return NextResponse.json({ error: "local_domain_not_verifiable" }, { status: 400 });

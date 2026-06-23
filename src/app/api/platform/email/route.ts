@@ -40,11 +40,6 @@ function normalizeEmail(value?: string): string {
   return value?.trim() ?? "";
 }
 
-function senderLocalPart(email: string): string {
-  const [local = "verify"] = email.split("@");
-  return local.trim() || "verify";
-}
-
 function isLocalDomain(domain: string): boolean {
   const normalized = domain.trim().toLowerCase();
   return normalized === "localhost" || normalized === "127.0.0.1" || normalized.endsWith(".localhost");
@@ -54,8 +49,7 @@ type EmailState = Pick<PlatformState, "platformEmailSettings" | "sites" | "platf
 
 function candidateFromForSite(site: Site, state: EmailState): string {
   const config = resendEmailConfigStatusForSite(state, site.id);
-  const local = senderLocalPart(config.fromEmail || "verify@example.com");
-  return `${local}@${site.primaryDomain}`.toLowerCase();
+  return (config.fromEmail || `verify@${site.primaryDomain}`).trim().toLowerCase();
 }
 
 function buildSiteEmailRows(
@@ -158,7 +152,8 @@ async function platformEmailPayload() {
       ...resendEmailConfigStatusForSettings(item),
       id: item.id,
       label: item.label,
-      isDefault: item.isDefault
+      isDefault: item.isDefault,
+      domains: domainsByConfigId[item.id] ?? []
     })),
     siteEmailConfigAssignments: overview.siteEmailConfigAssignments,
     domains,

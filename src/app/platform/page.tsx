@@ -199,8 +199,7 @@ export default async function PlatformPage({
     ? platformState.sites.map((site) => {
         const siteEmailConfig = resendEmailConfigStatusForSite(emailState, site.id);
         const selectedSettings = resolveResendSettingsForSite(emailState, site.id);
-        const local = (siteEmailConfig.fromEmail.split("@")[0] || "verify").trim() || "verify";
-        const candidateFromEmail = `${local}@${site.primaryDomain}`.toLowerCase();
+        const candidateFromEmail = (siteEmailConfig.fromEmail || `verify@${site.primaryDomain}`).trim().toLowerCase();
         const candidateDomain = domainFromEmail(candidateFromEmail);
         const localDomain = isLocalEmailDomain(candidateDomain);
         const blockingReasons = [

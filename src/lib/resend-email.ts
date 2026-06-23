@@ -31,6 +31,8 @@ type ResendErrorPayload = {
   name?: string;
 };
 
+const resendDomainListTimeoutMs = Math.max(500, Number(process.env.RESEND_DOMAIN_LIST_TIMEOUT_MS ?? "1500") || 1500);
+
 export class ResendProviderError extends Error {
   code: string;
   status: number;
@@ -333,7 +335,7 @@ export async function listResendDomains(settings?: PlatformEmailSettings): Promi
         "Content-Type": "application/json"
       },
       cache: "no-store",
-      signal: AbortSignal.timeout(4000)
+      signal: AbortSignal.timeout(resendDomainListTimeoutMs)
     });
   } catch (error) {
     throw new ResendProviderError({
@@ -440,7 +442,7 @@ export async function sendEmailProviderTest(params: {
   settings?: PlatformEmailSettings;
   settingsContext?: ResendSettingsContext;
 }): Promise<{ messageId?: string }> {
-  const code = "123456";
+  const code = String(Math.floor(100000 + Math.random() * 900000));
   return sendVerificationEmail({
     to: params.to,
     code,
