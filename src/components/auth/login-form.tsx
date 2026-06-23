@@ -16,28 +16,28 @@ const modeCopy: Record<CustomerAuthMode, {
   codeSubmit: string;
 }> = {
   login: {
-    tab: "登录",
-    submit: "登录",
-    pending: "登录中",
-    helper: "已有账号请直接输入邮箱和密码登录。",
-    message: "请输入邮箱和密码后进入当前站点。",
+    tab: "Log in",
+    submit: "Log in",
+    pending: "Signing in",
+    helper: "Already have an account? Sign in with your email and password.",
+    message: "Enter your email and password to open this site.",
     codeSubmit: ""
   },
   register: {
-    tab: "注册",
-    submit: "发送注册验证码",
-    pending: "发送中",
-    helper: "新访客先验证邮箱，再设置密码完成注册。",
-    message: "请输入邮箱和新密码，我们会发送注册验证码。",
-    codeSubmit: "完成注册"
+    tab: "Register",
+    submit: "Send registration code",
+    pending: "Sending",
+    helper: "New visitors verify email first, then set a password to finish registration.",
+    message: "Enter your email and new password. We will send a registration code.",
+    codeSubmit: "Complete registration"
   },
   password_reset: {
-    tab: "找回密码",
-    submit: "发送找回验证码",
-    pending: "发送中",
-    helper: "忘记密码时，先验证邮箱，再设置新密码。",
-    message: "请输入注册邮箱和新密码，我们会发送找回验证码。",
-    codeSubmit: "重置密码并登录"
+    tab: "Reset password",
+    submit: "Send reset code",
+    pending: "Sending",
+    helper: "Forgot your password? Verify your email, then set a new password.",
+    message: "Enter your account email and new password. We will send a reset code.",
+    codeSubmit: "Reset password and sign in"
   }
 };
 
@@ -83,7 +83,7 @@ export function LoginForm({
   async function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
-    setMessage("正在校验邮箱和密码...");
+    setMessage("Checking your email and password...");
     try {
       const response = await fetch(`/api/sites/${siteId}/auth/login`, {
         method: "POST",
@@ -99,14 +99,14 @@ export function LoginForm({
       window.location.replace(sitePath("/app"));
     } catch {
       setPending(false);
-      setMessage("网络异常，未能完成登录，请稍后重试。");
+      setMessage("Network error. We could not complete sign-in. Please try again.");
     }
   }
 
   async function requestCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
-    setMessage(mode === "register" ? "正在发送注册验证码..." : "正在发送找回验证码...");
+    setMessage(mode === "register" ? "Sending your registration code..." : "Sending your reset code...");
     try {
       const response = await fetch(`/api/sites/${siteId}/auth/email-code`, {
         method: "POST",
@@ -125,21 +125,21 @@ export function LoginForm({
       setPending(false);
       setMessage(
         result.deliveryStatus === "sent"
-          ? "验证码已发送，请查看邮箱。"
+          ? "Code sent. Please check your email."
           : result.devCode
-            ? `邮件服务未完成配置，开发验证码：${result.devCode}`
-            : `验证码已生成，但邮件发送失败：${result.deliveryError ?? "email_send_failed"}`
+            ? `Email delivery is not fully configured. Development code: ${result.devCode}`
+            : `Code generated, but email delivery failed: ${result.deliveryError ?? "email_send_failed"}`
       );
     } catch {
       setPending(false);
-      setMessage("网络异常，未能发送验证码，请稍后重试。");
+      setMessage("Network error. We could not send the code. Please try again.");
     }
   }
 
   async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
-    setMessage(mode === "register" ? "正在完成注册..." : "正在重置密码...");
+    setMessage(mode === "register" ? "Completing registration..." : "Resetting your password...");
     try {
       const response = await fetch(`/api/sites/${siteId}/auth/email-verify`, {
         method: "POST",
@@ -155,7 +155,7 @@ export function LoginForm({
       window.location.replace(sitePath("/app"));
     } catch {
       setPending(false);
-      setMessage("网络异常，未能完成验证，请稍后重试。");
+      setMessage("Network error. We could not verify the code. Please try again.");
     }
   }
 
@@ -167,16 +167,16 @@ export function LoginForm({
       <button
         className="flex min-h-[48px] w-full items-center justify-center gap-3 rounded-[6px] border border-white/20 bg-transparent px-4 text-base font-semibold text-white transition hover:border-white/42 hover:bg-white/[0.06] active:scale-[0.99]"
         type="button"
-        onClick={() => setMessage("Google 登录是生产 OAuth 入口；当前演示版本请使用邮箱登录。")}
+        onClick={() => setMessage("Google is reserved for the production OAuth entry. Use email login in this build.")}
       >
         <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_6px_18px_-12px_rgba(255,255,255,0.9)]">
           <img className="h-5 w-5" src="/assets/brand/google-g.svg" alt="" aria-hidden="true" />
         </span>
-        <span>继续使用 Google</span>
+        <span>Continue with Google</span>
       </button>
       <div className="flex items-center justify-center gap-4 py-2">
         <div className="h-px flex-1 bg-white/22" />
-        <span className="text-sm text-white/58">或者</span>
+        <span className="text-sm text-white/58">or</span>
         <div className="h-px flex-1 bg-white/22" />
       </div>
       <div className="grid grid-cols-3 gap-1 rounded-[8px] border border-white/10 bg-white/[0.04] p-1">
@@ -201,7 +201,7 @@ export function LoginForm({
         id={`${siteSlug}-customer-email`}
         name="email"
         onChange={(event) => setEmail(event.target.value)}
-        placeholder="请输入邮箱"
+        placeholder="Email address"
         required
         type="email"
         value={email}
@@ -215,7 +215,7 @@ export function LoginForm({
         id={`${siteSlug}-customer-password`}
         name="password"
         onChange={(event) => setPassword(event.target.value)}
-        placeholder={mode === "login" ? "请输入密码" : "设置新密码"}
+        placeholder={mode === "login" ? "Password" : "Set a new password"}
         required
         type="password"
         value={password}
@@ -233,7 +233,7 @@ export function LoginForm({
             maxLength={6}
             name="code"
             onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
-            placeholder="请输入 6 位验证码"
+            placeholder="Enter 6-digit code"
             required
             type="text"
             value={code}
@@ -241,7 +241,7 @@ export function LoginForm({
         </>
       ) : null}
       <button className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-white px-5 text-base font-semibold text-black transition hover:bg-gray-200 active:scale-[0.99]" disabled={pending} type="submit">
-        {pending ? (isEmailCodeMode && !codeSent ? modeCopy[mode].pending : "验证中") : isEmailCodeMode && codeSent ? modeCopy[mode].codeSubmit : modeCopy[mode].submit}
+        {pending ? (isEmailCodeMode && !codeSent ? modeCopy[mode].pending : "Verifying") : isEmailCodeMode && codeSent ? modeCopy[mode].codeSubmit : modeCopy[mode].submit}
       </button>
       <p className="text-center text-xs leading-5 text-gray-400">{modeCopy[mode].helper}</p>
       {isEmailCodeMode && codeSent ? (
@@ -251,22 +251,22 @@ export function LoginForm({
           onClick={() => {
             setCodeSent(false);
             setCode("");
-            setMessage("可以重新发送验证码，或更换邮箱地址。");
+            setMessage("You can resend the code or use a different email address.");
           }}
           type="button"
         >
-          更换邮箱或重新发送验证码
+          Change email or resend code
         </button>
       ) : null}
       {mode !== "login" ? (
         <p className="text-center text-xs leading-5 text-gray-400">
-          注册即表示您同意我们的{" "}
+          By registering, you agree to our{" "}
           <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")} prefetch={false}>
-            服务条款
+            Terms of Service
           </Link>{" "}
-          和{" "}
+          and{" "}
           <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")} prefetch={false}>
-            隐私政策
+            Privacy Policy
           </Link>
           .
         </p>
