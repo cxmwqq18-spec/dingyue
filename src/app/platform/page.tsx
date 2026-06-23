@@ -30,7 +30,7 @@ import { ProgressBar, StatusPill } from "@/components/ui";
 import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { platformAdminModules, type PlatformAdminModuleCode } from "@/lib/admin-menu";
 import { latestActivity, money, siteDemoSnapshot } from "@/lib/ops";
-import { domainFromEmail, listResendDomains, ResendProviderError, resendDomainMatchesSender, resendEmailConfigStatusForSettings, resendEmailConfigStatusForSite, resolveResendSettingsForSite } from "@/lib/resend-email";
+import { domainFromEmail, resendEmailConfigStatusForSettings, resendEmailConfigStatusForSite, resolveResendSettingsForSite } from "@/lib/resend-email";
 import { getPlatformOverviewRelational } from "@/lib/stores/platform-store";
 import {
   getPlatformAuditLogsFromState,
@@ -97,26 +97,6 @@ function connectStatusLabel(status: string): string {
 function isLocalEmailDomain(domain: string): boolean {
   const normalized = domain.trim().toLowerCase();
   return normalized === "localhost" || normalized === "127.0.0.1" || normalized.endsWith(".localhost");
-}
-
-function safeProviderMessage(message: string): string {
-  return message.replace(/re_[A-Za-z0-9_-]+/g, "re_***").slice(0, 500);
-}
-
-function providerErrorDetails(error: unknown): {
-  error: string;
-  providerStatus?: number;
-  providerMessage?: string;
-} {
-  if (!(error instanceof Error)) return { error: "resend_domain_api_failed" };
-  if (error instanceof ResendProviderError) {
-    return {
-      error: error.code,
-      providerStatus: error.status,
-      providerMessage: error.providerMessage ? safeProviderMessage(error.providerMessage) : undefined
-    };
-  }
-  return { error: error.message || "resend_domain_api_failed" };
 }
 
 export default async function PlatformPage({
@@ -213,42 +193,22 @@ export default async function PlatformPage({
     siteEmailConfigAssignments: emailOverview?.siteEmailConfigAssignments ?? platformState.siteEmailConfigAssignments
   };
   const emailConfig = resendEmailConfigStatusForSettings(emailSettings);
-  let emailDomainCheckError: ReturnType<typeof providerErrorDetails> | undefined;
-  let resendDomains: Array<{ id?: string; name?: string; status?: string; region?: string; created_at?: string }> = [];
-  const resendDomainsByConfigId: Record<string, Array<{ id?: string; name?: string; status?: string; region?: string; created_at?: string }>> = {};
-  if (shouldLoadEmailStatus) {
-    try {
-      resendDomains = await listResendDomains(emailSettings);
-    } catch (error) {
-      emailDomainCheckError = providerErrorDetails(error);
-    }
-    await Promise.all((emailState.platformEmailConfigs ?? []).map(async (config) => {
-      try {
-        resendDomainsByConfigId[config.id] = config.isDefault ? resendDomains : await listResendDomains(config);
-      } catch (error) {
-        resendDomainsByConfigId[config.id] = [];
-        emailDomainCheckError ??= providerErrorDetails(error);
-      }
-    }));
-  }
-  const emailSenderDomain = resendDomains.find((domain) => resendDomainMatchesSender(domain.name, emailConfig.fromDomain));
+  const resendDomains: Array<{ id?: string; name?: string; status?: string; region?: string; created_at?: string }> = [];
+  const emailSenderDomain = undefined;
   const emailSiteRows = shouldLoadEmailStatus
     ? platformState.sites.map((site) => {
         const siteEmailConfig = resendEmailConfigStatusForSite(emailState, site.id);
         const selectedSettings = resolveResendSettingsForSite(emailState, site.id);
-        const siteResendDomains = resendDomainsByConfigId[selectedSettings.id] ?? resendDomains;
         const local = (siteEmailConfig.fromEmail.split("@")[0] || "verify").trim() || "verify";
         const candidateFromEmail = `${local}@${site.primaryDomain}`.toLowerCase();
         const candidateDomain = domainFromEmail(candidateFromEmail);
-        const resendDomain = siteResendDomains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
-        const verified = resendDomain?.status === "verified";
+        const localDomain = isLocalEmailDomain(candidateDomain);
         const blockingReasons = [
           !siteEmailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
           !siteEmailConfig.fromConfigured ? "missing_resend_from_email" : "",
           siteEmailConfig.usingTestingSender ? "resend_testing_sender" : "",
-          isLocalEmailDomain(candidateDomain) ? "local_domain_not_verifiable" : "",
-          !isLocalEmailDomain(candidateDomain) && !resendDomain ? "sender_domain_not_found_in_resend" : "",
-          resendDomain && !verified ? "sender_domain_not_verified" : ""
+          localDomain ? "local_domain_not_verifiable" : "",
+          !localDomain ? "domain_check_not_run" : ""
         ].filter(Boolean);
         return {
           site: {
@@ -270,9 +230,9 @@ export default async function PlatformPage({
           emailConfigLabel: selectedSettings.label,
           candidateFromEmail,
           candidateDomain,
-          resendDomain,
-          domainStatus: isLocalEmailDomain(candidateDomain) ? "local" : resendDomain?.status ?? "not_found",
-          readyForProduction: siteEmailConfig.apiKeyConfigured && !siteEmailConfig.usingTestingSender && verified,
+          resendDomain: undefined,
+          domainStatus: localDomain ? "local" : "unchecked",
+          readyForProduction: false,
           blockingReasons
         };
       })
@@ -288,21 +248,15 @@ export default async function PlatformPage({
         ok: true,
         config: emailConfig,
         domains: resendDomains,
-        domainCheckError: emailDomainCheckError,
+        domainCheckError: undefined,
         senderDomain: emailSenderDomain,
         blockingReasons: [
           !emailConfig.apiKeyConfigured ? "missing_resend_api_key" : "",
           !emailConfig.fromConfigured ? "missing_resend_from_email" : "",
           emailConfig.usingTestingSender ? "resend_testing_sender" : "",
-          emailDomainCheckError?.error ?? "",
-          emailConfig.fromConfigured && !emailSenderDomain ? "sender_domain_not_found_in_resend" : "",
-          emailSenderDomain && emailSenderDomain.status !== "verified" ? "sender_domain_not_verified" : ""
+          emailConfig.fromConfigured ? "domain_check_not_run" : ""
         ].filter(Boolean),
-        readyForProduction:
-          emailConfig.apiKeyConfigured &&
-          emailConfig.fromConfigured &&
-          !emailConfig.usingTestingSender &&
-          emailSenderDomain?.status === "verified",
+        readyForProduction: false,
         summary: {
           totalSites: emailSiteRows.length,
           readySites: emailReadySites,

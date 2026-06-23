@@ -325,13 +325,23 @@ export async function listResendDomains(settings?: PlatformEmailSettings): Promi
       { id: "resend_domain_smoke", name: "smoke.example.com", status: "verified", region: "us-east-1" }
     ];
   }
-  const response = await fetch("https://api.resend.com/domains", {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
-    },
-    cache: "no-store"
-  });
+  let response: Response;
+  try {
+    response = await fetch("https://api.resend.com/domains", {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      cache: "no-store",
+      signal: AbortSignal.timeout(4000)
+    });
+  } catch (error) {
+    throw new ResendProviderError({
+      code: "resend_domain_api_failed",
+      status: 504,
+      providerMessage: error instanceof Error ? error.message : "resend_domain_request_failed"
+    });
+  }
   const payload = (await response.json().catch(() => ({}))) as {
     data?: Array<{ id?: string; name?: string; status?: string; region?: string; created_at?: string }>;
   } & ResendErrorPayload;

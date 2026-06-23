@@ -109,6 +109,7 @@ function reasonLabel(code: string): string {
     resend_testing_sender: "当前仍使用 Resend 测试发件人。",
     sender_domain_not_found_in_resend: "发件域名没有出现在 Resend Domains。",
     sender_domain_not_verified: "发件域名尚未在 Resend 验证。",
+    domain_check_not_run: "尚未执行 Resend 域名检测。",
     local_domain_not_verifiable: "localhost / 127.0.0.1 不能作为 Resend 发件域名。",
     invalid_email: "请输入有效的测试邮箱。",
     invalid_from_email: "请输入有效的发件邮箱。",
@@ -144,6 +145,7 @@ function providerDetailSuffix(result: { providerStatus?: number; providerMessage
 function domainStatusLabel(status: string): string {
   const labels: Record<string, string> = {
     verified: "已验证",
+    unchecked: "未检测",
     pending: "待验证",
     not_found: "未添加",
     local: "本地域名",
@@ -155,7 +157,7 @@ function domainStatusLabel(status: string): string {
 function statusTone(status: string): EmailTone {
   if (status === "verified" || status === "ready") return "good";
   if (status === "local" || status === "failed" || status === "blocked") return "bad";
-  if (status === "pending" || status === "not_found") return "warn";
+  if (status === "pending" || status === "not_found" || status === "unchecked") return "warn";
   return "neutral";
 }
 
