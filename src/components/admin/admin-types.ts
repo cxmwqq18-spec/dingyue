@@ -63,6 +63,7 @@ export type AdminShellProps = {
   headerStats?: AdminStatBadge[];
   toolbarStats?: AdminStatBadge[];
   rightRail?: ReactNode;
+  rightRailMode?: "aside" | "stacked";
   activeModuleCode?: string;
   siteSlug?: string;
   moduleLinks?: AdminModuleLink[];

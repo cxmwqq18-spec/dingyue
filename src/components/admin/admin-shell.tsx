@@ -41,6 +41,7 @@ export function AdminShell({
   account,
   workspace,
   rightRail,
+  rightRailMode = "aside",
   activeModuleCode,
   siteSlug,
   moduleLinks = [],
@@ -56,6 +57,7 @@ export function AdminShell({
   const resolvedHeaderStats = headerStats ?? stats;
   const resolvedToolbarStats = toolbarStats ?? stats;
   const resolvedQuickActions = commandActions.length ? [] : quickActions;
+  const showCommandWorkspace = activeModuleCode === "overview";
   const moduleHrefByCode = moduleHrefMap(moduleLinks, siteSlug);
   const allNavText = nav.map((item) => `${item.label} ${item.group ?? ""}`).join(" ").toLowerCase();
   const activeModule =
@@ -220,16 +222,21 @@ export function AdminShell({
                     </div>
                   </div>
                 ) : null}
-                {commandActions.length || resolvedQuickActions.length || resolvedToolbarStats.length ? (
+                {showCommandWorkspace && (commandActions.length || resolvedQuickActions.length || resolvedToolbarStats.length) ? (
                   <div className="search">
                     <AdminCommandBar commandActions={commandActions} quickActions={resolvedQuickActions} stats={resolvedToolbarStats} />
                   </div>
                 ) : null}
 
-                {rightRail ? (
+                {rightRail && rightRailMode === "aside" ? (
                   <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_292px]">
                     <div className="min-w-0">{children}</div>
                     <aside className="grid h-fit gap-3 xl:sticky xl:top-[112px]">{rightRail}</aside>
+                  </div>
+                ) : rightRail ? (
+                  <div className="grid gap-4">
+                    <div className="min-w-0">{children}</div>
+                    <aside className="grid gap-3 md:grid-cols-2 xl:grid-cols-2">{rightRail}</aside>
                   </div>
                 ) : (
                   children

@@ -74,6 +74,11 @@ function formatAmount(amountCents: number, currency: string) {
   }).format(amountCents / 100);
 }
 
+function majorAmountValue(amountCents: number) {
+  const amount = amountCents / 100;
+  return Number.isInteger(amount) ? String(amount) : amount.toFixed(2).replace(/\.?0+$/, "");
+}
+
 function productSummary(product: Product) {
   const featured = product.prices.find((price) => price.metadata?.featured) ?? product.prices[0];
   const cheapest = [...product.prices].sort((left, right) => left.amountCents - right.amountCents)[0];
@@ -137,6 +142,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
     );
   }
 
+  function updatePriceAmount(productId: string, priceId: string, value: string) {
+    const cents = Math.round(numberValue(value) * 100);
+    updatePrice(productId, priceId, "amountCents", String(cents));
+  }
+
   function updatePriceMeta(productId: string, priceId: string, field: string, value: string | boolean) {
     setItems((current) =>
       current.map((product) => {
@@ -157,6 +167,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
         [field]: field === "amountCents" || field === "creditsGranted" ? numberValue(value) : value
       }
     }));
+  }
+
+  function updateDraftAmount(productId: string, value: string) {
+    const cents = Math.round(numberValue(value) * 100);
+    updateDraft(productId, "amountCents", String(cents));
   }
 
   function updateDraftMeta(productId: string, field: string, value: string | boolean) {
@@ -333,7 +348,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           </div>
           <div>
             <p className="font-semibold text-[#1d4ed8]">注意</p>
-            <p className="mt-1">金额按 cents 保存，例如 5000 表示 50 美元。</p>
+            <p className="mt-1">这里直接填写美元金额，例如 50；系统会自动按 cents 保存。</p>
           </div>
         </div>
       </div>
@@ -415,8 +430,8 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       </select>
                     </label>
                     <label className="block">
-                      {fieldLabel("金额（cents）")}
-                      <input className="inputtext w-full" onChange={(event) => updatePrice(activeProduct.id, price.id, "amountCents", event.target.value)} value={price.amountCents} />
+                      {fieldLabel("金额（美元）")}
+                      <input className="inputtext w-full" inputMode="decimal" onChange={(event) => updatePriceAmount(activeProduct.id, price.id, event.target.value)} value={majorAmountValue(price.amountCents)} />
                     </label>
                     <label className="block">
                       {fieldLabel("到账 Credits")}
@@ -487,8 +502,8 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     </select>
                   </label>
                   <label className="block">
-                    {fieldLabel("金额（cents）")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraft(activeProduct.id, "amountCents", event.target.value)} value={activeDraft?.amountCents ?? 0} />
+                    {fieldLabel("金额（美元）")}
+                    <input className="inputtext w-full" inputMode="decimal" onChange={(event) => updateDraftAmount(activeProduct.id, event.target.value)} value={majorAmountValue(activeDraft?.amountCents ?? 0)} />
                   </label>
                   <label className="block">
                     {fieldLabel("到账 Credits")}

@@ -12,13 +12,35 @@ import {
   moduleIcons,
   modulePath,
   siteAdminAccount,
-  siteAdminCommandActions,
   siteAdminModuleLinks,
   siteAdminNav,
-  siteAdminQuickActions,
   siteAdminStats,
   siteAdminWorkspace
 } from "../_lib/site-admin-context";
+
+const packCategoryLabels: Record<string, string> = {
+  headshots: "职业头像",
+  couple: "情侣写真",
+  wedding: "婚礼跟拍",
+  dating: "约会形象",
+  fashion: "时尚大片",
+  beauty: "美妆造型",
+  travel: "旅行写真",
+  seasonal: "节日主题",
+  copy: "文案生成",
+  creative: "创意大片",
+  sports: "运动主题",
+  creator: "创作者形象",
+  avatar: "头像形象",
+  video: "视频生成",
+  utility: "实用工具",
+  boudoir: "私房写真",
+  cultural: "文化主题"
+};
+
+function packCategoryLabel(category: string) {
+  return packCategoryLabels[category] ?? category;
+}
 
 export default async function ProductsPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
@@ -60,10 +82,8 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
         { label: "商品与套餐" }
       ]}
       brand={data.site.branding.logoText}
-      commandActions={siteAdminCommandActions(data.site, data)}
       moduleLinks={siteAdminModuleLinks}
       nav={siteAdminNav(data.site, data)}
-      quickActions={siteAdminQuickActions(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
       subtitle="统一维护付费价格、Credit 包和 AI 拍摄包。前台定价页、上传入口和生成表单都读取这里的数据。"
@@ -201,15 +221,15 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
             <div className="mb-4 rounded-[12px] border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-800">
               检查方式：价格套餐保存后打开定价页；拍摄包保存后打开前台工具入口。前台显示金额、Credits、消耗积分必须和本页一致。
             </div>
-            <div className="grid gap-3 lg:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {data.packs.map((pack) => (
                 <div className="rounded-[12px] border border-slate-200 bg-slate-50 p-4" key={pack.id}>
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-semibold text-slate-900">{pack.name}</p>
-                      <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">{pack.category}</p>
+                      <p className="mt-1 text-[12px] text-slate-500">{packCategoryLabel(pack.category)}</p>
                     </div>
-                    <StatusPill label={pack.status} tone={data.statusTone(pack.status)} />
+                    <StatusPill label={pack.status === "active" ? "已上架" : pack.status === "draft" ? "草稿" : "已暂停"} tone={data.statusTone(pack.status)} />
                   </div>
                   <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{pack.headline}</p>
                   <div className="mt-4 grid grid-cols-3 gap-2 font-mono text-xs text-slate-500">
