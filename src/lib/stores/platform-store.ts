@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { readPlatformState, writePlatformState } from "@/lib/server-store";
 import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment } from "@/lib/types";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
+import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 
 import {
   addAuditLogRelational,
@@ -48,10 +49,17 @@ export async function deletePlatformAdminSessionRelational(sessionId: string): P
 
 export async function getPlatformAdminBySessionRelational(sessionId?: string) {
   if (!sessionId) return undefined;
-  const session = await prisma.platformSession.findFirst({
-    where: { id: sessionId, expiresAt: { gt: new Date() } },
-    include: { platformAdmin: true }
-  });
+  let session;
+  try {
+    session = await prisma.platformSession.findFirst({
+      where: { id: sessionId, expiresAt: { gt: new Date() } },
+      include: { platformAdmin: true }
+    });
+  } catch (error) {
+    if (!shouldFallbackRelationalRead(error)) throw error;
+    warnRelationalFallback("platform session lookup", error);
+    return undefined;
+  }
   if (!session?.platformAdmin) return undefined;
   return {
     platformAdmin: toPublicPlatformAdminRelational(session.platformAdmin),

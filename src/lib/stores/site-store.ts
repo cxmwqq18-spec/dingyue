@@ -3,6 +3,7 @@ import "server-only";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
+import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import type { AiGatewayGroup, CreativePack, Site, SiteAdmin, SiteAiApp, SiteDomain } from "@/lib/types";
 
 import {
@@ -82,10 +83,17 @@ export async function deleteSiteAdminSessionRelational(sessionId: string): Promi
 
 export async function getSiteAdminBySessionRelational(params: { siteId: string; sessionId?: string }) {
   if (!params.sessionId) return undefined;
-  const session = await prisma.siteAdminSession.findFirst({
-    where: { id: params.sessionId, siteId: params.siteId, expiresAt: { gt: new Date() } },
-    include: { siteAdmin: true }
-  });
+  let session;
+  try {
+    session = await prisma.siteAdminSession.findFirst({
+      where: { id: params.sessionId, siteId: params.siteId, expiresAt: { gt: new Date() } },
+      include: { siteAdmin: true }
+    });
+  } catch (error) {
+    if (!shouldFallbackRelationalRead(error)) throw error;
+    warnRelationalFallback("site admin session lookup", error);
+    return undefined;
+  }
   if (!session?.siteAdmin) return undefined;
   return {
     siteAdmin: toPublicSiteAdminRelational(session.siteAdmin),

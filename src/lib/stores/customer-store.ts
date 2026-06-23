@@ -2,6 +2,7 @@ import "server-only";
 import type { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
+import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import type { Customer, PublicCustomer } from "@/lib/types";
 import {
   hashRelationalPassword,
@@ -143,19 +144,26 @@ export async function getCustomerBySessionRelational(
   client: DbClient = prisma
 ): Promise<{ customer: PublicCustomer; session: ReturnType<typeof toCustomerSessionRelational> } | undefined> {
   if (!params.sessionId) return undefined;
-  await requireDelegate(client, "customerSession");
-  const session = await (client as unknown as {
-    customerSession: { findFirst(args: unknown): Promise<(Record<string, unknown> & { customer?: Record<string, unknown> }) | null> };
-  }).customerSession.findFirst({
-    where: {
-      id: params.sessionId,
-      siteId: params.siteId,
-      expiresAt: { gt: new Date() }
-    },
-    include: {
-      customer: { include: { balance: true } }
-    }
-  });
+  let session;
+  try {
+    await requireDelegate(client, "customerSession");
+    session = await (client as unknown as {
+      customerSession: { findFirst(args: unknown): Promise<(Record<string, unknown> & { customer?: Record<string, unknown> }) | null> };
+    }).customerSession.findFirst({
+      where: {
+        id: params.sessionId,
+        siteId: params.siteId,
+        expiresAt: { gt: new Date() }
+      },
+      include: {
+        customer: { include: { balance: true } }
+      }
+    });
+  } catch (error) {
+    if (!shouldFallbackRelationalRead(error)) throw error;
+    warnRelationalFallback("customer session lookup", error);
+    return undefined;
+  }
   if (!session?.customer) return undefined;
   return {
     customer: toPublicCustomerRelational(session.customer),
