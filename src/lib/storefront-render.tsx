@@ -113,14 +113,71 @@ export function getDefaultCustomerAuth(state: PlatformState, siteId: string, err
   };
 }
 
+function normalizeToolLookup(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/^\/tools\//, "")
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+const dreamshootImageStudioToolAliases = new Set([
+  "professional-headshot-maker",
+  "headshot",
+  "creator-portrait-studio",
+  "creator-portrait",
+  "world-cup-fan-photos",
+  "cyberpunk-portrait-maker",
+  "cyberpunk-portrait",
+  "gala-photo-maker",
+  "gala-photo",
+  "noir-character-portraits",
+  "noir-portrait",
+  "anime-avatar-builder",
+  "anime-avatar",
+  "nature-adventure-photos",
+  "nature-adventure",
+  "fashion-editorial-set",
+  "fashion-editorial",
+  "product-lifestyle-photos",
+  "product-lifestyle",
+  "background-changer",
+  "background-remover",
+  "magic-eraser",
+  "photo-enhancer",
+  "portrait-retouch",
+  "unblur-image",
+  "color-correction",
+  "old-photo-restoration",
+  "edit-by-prompt",
+  "magic-upscaler",
+  "image-to-video-concept",
+  "image-to-video",
+  "profile-clip-maker",
+  "profile-clip",
+  "fan-poster-motion",
+  "creator-intro-video",
+  "product-teaser-clip",
+  "animated-avatar-preview",
+  "animated-avatar",
+  "fashion-reel-starter",
+  "fashion-reel",
+  "album-story-video"
+]);
+
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
-  const directApp = siteAiApps.find((siteApp) => siteApp.aiApp.slug === toolSlug);
+  const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const directPageSlug = `/tools/${toolSlug}`;
+  const normalizedPageSlug = normalizedToolSlug ? `/tools/${normalizedToolSlug}` : directPageSlug;
   const aliasMap = new Map<string, string>();
 
   for (const page of site.pages.filter((item) => item.pageType === "ai_tool")) {
     aliasMap.set(page.slug, page.slug);
     aliasMap.set(page.slug.replace(/^\/tools\//, ""), page.slug);
+    aliasMap.set(normalizeToolLookup(page.slug), page.slug);
   }
 
   for (const pack of creativePacks) {
@@ -133,13 +190,26 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       if (!candidate) continue;
       aliasMap.set(candidate, "/tools/image-studio");
       aliasMap.set(`/tools/${candidate}`, "/tools/image-studio");
+      aliasMap.set(normalizeToolLookup(candidate), "/tools/image-studio");
     }
   }
 
-  const resolvedSlug = aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? directPageSlug;
-  const app = directApp ?? siteAiApps.find((siteApp) => siteApp.aiApp.slug === toolSlug || siteApp.aiApp.slug === "image_generator");
-  const page = site.pages.find((item) => item.slug === resolvedSlug) ?? getPage(site, "/tools/image-studio");
-  return { siteAiApps, page, app };
+  if (/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+    for (const alias of dreamshootImageStudioToolAliases) {
+      aliasMap.set(alias, "/tools/image-studio");
+      aliasMap.set(`/tools/${alias}`, "/tools/image-studio");
+    }
+  }
+
+  const directApp = siteAiApps.find((siteApp) => normalizeToolLookup(siteApp.aiApp.slug) === normalizedToolSlug);
+  const legacyImageApp = normalizedToolSlug === "image-studio" || normalizedToolSlug === "image-generator"
+    ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator")
+    : undefined;
+  const resolvedSlug = aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
+  const page = site.pages.find((item) => item.slug === resolvedSlug);
+  const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
+  const matched = Boolean(page || directApp || legacyImageApp || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
+  return { siteAiApps, page: page ?? getPage(site, "/tools/image-studio"), app, matched, resolvedSlug };
 }
 
 function renderThemePage({
@@ -342,8 +412,8 @@ export async function renderToolPage({
   if (!currentSite) notFound();
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const { page, app } = resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
-  if (!app && page.slug !== `/tools/${toolSlug}`) notFound();
+  const { page, matched } = resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
+  if (!matched) notFound();
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
   const runtime = sessionId && pageNeedsFullCustomerRuntime(page.publishedJson, page.slug)

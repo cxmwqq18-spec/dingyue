@@ -8,7 +8,8 @@ import {
   renderCustomerJobDetailPage,
   renderCustomerWorkspacePage,
   renderStorefrontPage,
-  renderToolPage
+  renderToolPage,
+  resolveToolPageForSite
 } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
 
@@ -22,6 +23,11 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const site = getSiteByHostCandidatesFromState(state, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
   if (!site) return {};
   const slug = `/${path.join("/")}`;
+  if (path[0] === "tools" && path[1]) {
+    const { page, matched } = resolveToolPageForSite(state, site, path[1]);
+    if (!matched) return {};
+    return metadataForThemePage(site, page);
+  }
   const page = getPage(site, slug);
   const resolvedPage = page.slug === slug ? page : site.pages.find((item) => item.slug === "/404") ?? page;
   return metadataForThemePage(site, resolvedPage);

@@ -302,6 +302,46 @@ export default async function PlatformPage({
     : "-";
   const activeModuleLabel = platformAdminModules.find((item) => item.code === platformModuleCodeByParam[activeModule])?.label ?? "平台总览";
   const activeTitleBadge = activeModule === "overview" ? undefined : activeModule === "sites" ? String(platformState.sites.length) : undefined;
+  const siteRegistrySnapshots = snapshots.map((snapshot) => ({
+    site: {
+      id: snapshot.site.id,
+      name: snapshot.site.name,
+      slug: snapshot.site.slug,
+      primaryDomain: snapshot.site.primaryDomain,
+      status: snapshot.site.status,
+      connect: {
+        chargesEnabled: snapshot.site.connect.chargesEnabled
+      }
+    },
+    ownerEmail: snapshot.ownerEmail,
+    domains: snapshot.domains.map((domain) => ({ id: domain.id })),
+    customerCount: snapshot.customerCount,
+    activeSubscriptions: snapshot.activeSubscriptions,
+    revenueCents: snapshot.revenueCents,
+    jobCount: snapshot.jobCount,
+    enabledAppCount: snapshot.enabledAppCount,
+    appCount: snapshot.appCount,
+    publicationCount: snapshot.publicationCount,
+    healthScore: snapshot.healthScore
+  }));
+  const billingSnapshots = snapshots.map((snapshot) => ({
+    site: {
+      id: snapshot.site.id,
+      name: snapshot.site.name,
+      slug: snapshot.site.slug,
+      primaryDomain: snapshot.site.primaryDomain,
+      connect: {
+        stripeAccountId: snapshot.site.connect.stripeAccountId,
+        status: snapshot.site.connect.status,
+        chargesEnabled: snapshot.site.connect.chargesEnabled,
+        payoutsEnabled: snapshot.site.connect.payoutsEnabled
+      }
+    },
+    productCount: snapshot.productCount,
+    activeSubscriptions: snapshot.activeSubscriptions,
+    customerCount: snapshot.customerCount,
+    revenueCents: snapshot.revenueCents
+  }));
 
   return (
     <AdminShell
@@ -417,12 +457,12 @@ export default async function PlatformPage({
         </ErpSection>
 
         <ErpSection description="每个站点的数据独立展示，筛选后直接进入对应单店后台处理。" eyebrow="站点工厂" title="站点列表">
-          <PlatformSiteRegistryPanel snapshots={snapshots} />
+          <PlatformSiteRegistryPanel snapshots={siteRegistrySnapshots} />
         </ErpSection>
       </div> : null}
 
       {activeModule === "billing" ? <ErpSection description="这里只核查每个站点的 Connect、套餐数和收入概况，具体套餐维护进入单店。" eyebrow="收款订阅" title="收款订阅">
-        <PlatformBillingPanel snapshots={snapshots} />
+        <PlatformBillingPanel snapshots={billingSnapshots} />
       </ErpSection> : null}
 
       {activeModule === "email" && platformEmailStatus ? <ErpSection description="统一配置 Resend 邮件服务，并跨站检测每个站点发件域名是否可用于验证码邮件。" eyebrow="邮件配置" title="邮件配置">

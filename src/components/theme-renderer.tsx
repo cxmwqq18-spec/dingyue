@@ -958,6 +958,24 @@ function hrefFor(site: Site, href: string): string {
   return routedSitePath(site, href);
 }
 
+function toolActionHref(site: Site, href: string, fallbackToolId = ""): string {
+  const normalizedHref = href || "/tools/image-studio";
+  if (normalizedHref.startsWith("#") || normalizedHref.startsWith("http")) return hrefFor(site, normalizedHref);
+
+  const [pathWithMaybeHash, existingSearch = ""] = normalizedHref.split("?");
+  const [path, hash = ""] = pathWithMaybeHash.split("#");
+  const params = new URLSearchParams(existingSearch);
+  const toolId = params.get("tool") || params.get("preset") || fallbackToolId;
+
+  if (toolId) {
+    params.set("tool", toolId);
+  }
+
+  const query = params.toString();
+  const rebuilt = `${path || "/tools/image-studio"}${query ? `?${query}` : ""}${hash ? `#${hash}` : ""}`;
+  return hrefFor(site, rebuilt);
+}
+
 function customerAccountStatusLabel(status: string): string {
   if (status === "active") return "Active";
   if (status === "past_due") return "Payment attention";
@@ -1227,41 +1245,41 @@ function dreamshootToolBlock(
       category,
       badge,
       imageUrl,
-      href
+      href: href.includes("?") || !href.startsWith("/tools/image-studio") ? href : `${href}?tool=${id}`
     }
   };
 }
 
 function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
   return [
-    dreamshootToolBlock("mega_tool_headshot", "Professional headshot maker", "Create clean profile portraits for resumes, teams, and founder pages.", "Photo AI", packImages.headshots, "/tools/image-studio", "Profile"),
-    dreamshootToolBlock("mega_tool_creator", "Creator portrait studio", "Generate creator-ready profile photos, channel visuals, and campaign portraits.", "Photo AI", packImages.creator, "/tools/image-studio", "Creator"),
-    dreamshootToolBlock("mega_tool_worldcup", "World Cup fan photos", "Build stadium scenes, fan posters, and match-day profile images.", "Photo AI", packImages.sports, "/tools/image-studio", "Sports"),
-    dreamshootToolBlock("mega_tool_cyberpunk", "Cyberpunk portrait maker", "Turn source selfies into neon city portraits and dramatic future looks.", "Photo AI", packImages.creative, "/tools/image-studio", "Scene"),
-    dreamshootToolBlock("mega_tool_gala", "Gala photo maker", "Create formal night-out portraits with polished editorial lighting.", "Photo AI", packImages.gala, "/tools/image-studio", "Style"),
-    dreamshootToolBlock("mega_tool_noir", "Noir character portraits", "Generate cinematic mafia, detective, and vintage city character looks.", "Photo AI", packImages.gala, "/tools/image-studio", "Noir"),
-    dreamshootToolBlock("mega_tool_anime", "Anime avatar builder", "Create stylized profile avatars and character-inspired social images.", "Photo AI", packImages.avatar, "/tools/image-studio", "Avatar"),
-    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in scenic outdoor, hiking, and travel-inspired scenes.", "Photo AI", packImages.sports, "/tools/image-studio", "Outdoor"),
-    dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images.", "Photo AI", packImages.fashion, "/tools/image-studio", "Editorial"),
-    dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/image-studio", "Commerce"),
-    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full photo package.", "AI Photo Edit", dreamshootToolSceneDefaults.entry),
-    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "AI Photo Edit", dreamshootToolSceneDefaults.upload),
-    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "AI Photo Edit", dreamshootToolSceneDefaults.form),
-    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "AI Photo Edit", packImages.headshots),
-    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "AI Photo Edit", packImages.beauty),
-    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "AI Photo Edit", dreamshootToolSceneDefaults.progress),
-    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "AI Photo Edit", packImages.fashion),
-    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "AI Photo Edit", packImages.copy),
-    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "AI Photo Edit", dreamshootToolSceneDefaults.entry),
-    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "AI Photo Edit", packImages.copy),
-    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished photo package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-studio", "Preview"),
-    dreamshootToolBlock("mega_video_profile", "Profile clip maker", "Create social profile motion from headshots or creator portraits.", "Video AI", packImages.headshots, "/tools/image-studio", "Social"),
-    dreamshootToolBlock("mega_video_fan", "Fan poster motion", "Animate World Cup fan posters and match-day profile scenes.", "Video AI", packImages.sports, "/tools/image-studio", "Sports"),
-    dreamshootToolBlock("mega_video_intro", "Creator intro video", "Turn creator portraits into short intro clips for profiles and reels.", "Video AI", packImages.creator, "/tools/image-studio", "Creator"),
-    dreamshootToolBlock("mega_video_product", "Product teaser clip", "Create simple motion ideas for product-style package outputs.", "Video AI", packImages.copy, "/tools/image-studio", "Commerce"),
-    dreamshootToolBlock("mega_video_avatar", "Animated avatar preview", "Preview avatar-style motion concepts for profile campaigns.", "Video AI", packImages.avatar, "/tools/image-studio", "Avatar"),
-    dreamshootToolBlock("mega_video_fashion", "Fashion reel starter", "Create short reel concepts from editorial and try-on package outputs.", "Video AI", packImages.fashion, "/tools/image-studio", "Style"),
-    dreamshootToolBlock("mega_video_album", "Album story video", "Turn favorite generated images into a compact customer album story.", "Video AI", dreamshootToolSceneDefaults.album, "/tools/image-studio", "Album")
+    dreamshootToolBlock("mega_tool_headshot", "Professional headshot maker", "Create clean profile portraits for resumes, teams, and founder pages.", "Photo AI", packImages.headshots, "/tools/headshot", "Profile"),
+    dreamshootToolBlock("mega_tool_creator", "Creator portrait studio", "Generate creator-ready profile photos, channel visuals, and campaign portraits.", "Photo AI", packImages.creator, "/tools/creator-portrait", "Creator"),
+    dreamshootToolBlock("mega_tool_worldcup", "World Cup fan photos", "Build stadium scenes, fan posters, and match-day profile images.", "Photo AI", packImages.sports, "/tools/world-cup-fan-photos", "Sports"),
+    dreamshootToolBlock("mega_tool_cyberpunk", "Cyberpunk portrait maker", "Turn source selfies into neon city portraits and dramatic future looks.", "Photo AI", packImages.creative, "/tools/cyberpunk-portrait", "Scene"),
+    dreamshootToolBlock("mega_tool_gala", "Gala photo maker", "Create formal night-out portraits with polished editorial lighting.", "Photo AI", packImages.gala, "/tools/gala-photo", "Style"),
+    dreamshootToolBlock("mega_tool_noir", "Noir character portraits", "Generate cinematic mafia, detective, and vintage city character looks.", "Photo AI", packImages.gala, "/tools/noir-portrait", "Noir"),
+    dreamshootToolBlock("mega_tool_anime", "Anime avatar builder", "Create stylized profile avatars and character-inspired social images.", "Photo AI", packImages.avatar, "/tools/anime-avatar", "Avatar"),
+    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in scenic outdoor, hiking, and travel-inspired scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
+    dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images.", "Photo AI", packImages.fashion, "/tools/fashion-editorial", "Editorial"),
+    dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/product-lifestyle", "Commerce"),
+    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full photo package.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
+    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "AI Photo Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
+    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "AI Photo Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
+    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "AI Photo Edit", packImages.headshots, "/tools/photo-enhancer"),
+    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "AI Photo Edit", packImages.beauty, "/tools/portrait-retouch"),
+    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "AI Photo Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
+    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "AI Photo Edit", packImages.fashion, "/tools/color-correction"),
+    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "AI Photo Edit", packImages.copy, "/tools/old-photo-restoration"),
+    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
+    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "AI Photo Edit", packImages.copy, "/tools/magic-upscaler"),
+    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished photo package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
+    dreamshootToolBlock("mega_video_profile", "Profile clip maker", "Create social profile motion from headshots or creator portraits.", "Video AI", packImages.headshots, "/tools/profile-clip", "Social"),
+    dreamshootToolBlock("mega_video_fan", "Fan poster motion", "Animate World Cup fan posters and match-day profile scenes.", "Video AI", packImages.sports, "/tools/fan-poster-motion", "Sports"),
+    dreamshootToolBlock("mega_video_intro", "Creator intro video", "Turn creator portraits into short intro clips for profiles and reels.", "Video AI", packImages.creator, "/tools/creator-intro-video", "Creator"),
+    dreamshootToolBlock("mega_video_product", "Product teaser clip", "Create simple motion ideas for product-style package outputs.", "Video AI", packImages.copy, "/tools/product-teaser-clip", "Commerce"),
+    dreamshootToolBlock("mega_video_avatar", "Animated avatar preview", "Preview avatar-style motion concepts for profile campaigns.", "Video AI", packImages.avatar, "/tools/animated-avatar", "Avatar"),
+    dreamshootToolBlock("mega_video_fashion", "Fashion reel starter", "Create short reel concepts from editorial and try-on package outputs.", "Video AI", packImages.fashion, "/tools/fashion-reel", "Style"),
+    dreamshootToolBlock("mega_video_album", "Album story video", "Turn favorite generated images into a compact customer album story.", "Video AI", dreamshootToolSceneDefaults.album, "/tools/album-story-video", "Album")
   ];
 }
 
@@ -1374,8 +1392,8 @@ function DreamShootMegaToolsPanel({
                   const Icon = dreamshootToolIcon(index, group.category);
                   return (
                     <Link
-                      className="group/tool flex min-h-8 items-start gap-2.5 text-[0.94rem] leading-6 text-white/82 transition hover:text-white"
-                      href={hrefFor(site, blockValue(tool, "href", "/tools/image-studio"))}
+                      className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"
+                      href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
                       key={instanceKey(tool, index, "dreamshoot_mega_tool")}
                       {...xfcartBlockAttrs(tool, index, "dreamshoot_mega_tool")}
                     >
@@ -4998,7 +5016,7 @@ function SectionView({
                       return (
                         <Link
                           className={dark ? "group overflow-hidden rounded-[22px] border border-white/10 bg-black/24 text-white transition hover:-translate-y-1 hover:bg-black/32" : "group overflow-hidden rounded-[22px] border border-[#e5dbce] bg-[#fbfaf7] text-[#14161a] transition hover:-translate-y-1 hover:bg-white"}
-                          href={hrefFor(site, blockValue(tool, "href", "/tools/image-studio"))}
+                          href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
                           key={instanceKey(tool, index, "dreamshoot_tool")}
                           {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
                         >

@@ -7,14 +7,14 @@ import { metadataForThemePage } from "@/lib/theme/seo";
 function resolveToolPage(siteSlug: string, toolSlug: string) {
   const state = readStorefrontPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) return { state, site: undefined, siteAiApps: [], page: undefined, app: undefined };
+  if (!site) return { state, site: undefined, siteAiApps: [], page: undefined, app: undefined, matched: false };
   return { state, site, ...resolveToolPageForSite(state, site, toolSlug) };
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  const { site, page, app } = resolveToolPage(siteSlug, toolSlug);
-  if (!site || !page || (!app && page.slug !== `/tools/${toolSlug}`)) return {};
+  const { site, page, matched } = resolveToolPage(siteSlug, toolSlug);
+  if (!site || !page || !matched) return {};
   return metadataForThemePage(site, page);
 }
 
@@ -27,8 +27,8 @@ export default async function ToolPage({
 }) {
   const { siteSlug, toolSlug } = await params;
   const query = searchParams ? await searchParams : {};
-  const { state, site, page, app } = resolveToolPage(siteSlug, toolSlug);
+  const { state, site, page, matched } = resolveToolPage(siteSlug, toolSlug);
   if (!site || !page) notFound();
-  if (!app && page.slug !== `/tools/${toolSlug}`) notFound();
+  if (!matched) notFound();
   return renderToolPage({ site, toolSlug, query, routeMode: "path", state });
 }

@@ -53,9 +53,14 @@ function siteBaseUrl(site: Site): string {
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
   const value = cleanText(pathOrUrl);
   if (!value) return undefined;
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
+  const optimizedValue = preferOptimizedShareImage(value);
+  if (optimizedValue.startsWith("http://") || optimizedValue.startsWith("https://")) return optimizedValue;
   const base = siteBaseUrl(site).replace(/\/$/, "");
-  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+  return `${base}${optimizedValue.startsWith("/") ? optimizedValue : `/${optimizedValue}`}`;
+}
+
+function preferOptimizedShareImage(pathOrUrl: string): string {
+  return pathOrUrl.replace(/(\/assets\/dreamshoot\/[^?#]+)\.png([?#].*)?$/i, (_match, path, suffix = "") => `${path}.webp${suffix}`);
 }
 
 export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNullable<ThemeSettings["seo"]> {
