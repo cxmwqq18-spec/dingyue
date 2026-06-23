@@ -2,7 +2,7 @@ import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import type { CreditLedgerEntry, Customer, PaymentEvent, Price, Product } from "@/lib/types";
+import type { CreditLedgerEntry, Customer, Order, PaymentEvent, Price, Product, Subscription } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
 
@@ -159,6 +159,144 @@ export async function adjustCustomerCreditsRelational(params: {
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
     return { customer: mapCustomer(updatedCustomer), ledger: mapCreditLedger(ledger) };
+  });
+}
+
+function mapOrder(row: Prisma.OrderGetPayload<object>): Order {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    status: row.status as Order["status"],
+    amountCents: row.amountCents,
+    currency: row.currency,
+    credits: row.credits,
+    sourceId: row.sourceId,
+    createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : String(row.createdAt)
+  };
+}
+
+function mapSubscription(row: Prisma.SubscriptionGetPayload<object>): Subscription {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    customerId: row.customerId,
+    productId: row.productId,
+    priceId: row.priceId,
+    stripeSubscriptionId: row.stripeSubscriptionId,
+    status: row.status as Subscription["status"],
+    currentPeriodEnd: row.currentPeriodEnd instanceof Date ? row.currentPeriodEnd.toISOString() : String(row.currentPeriodEnd),
+    creditsPerCycle: row.creditsPerCycle,
+    createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : String(row.createdAt)
+  };
+}
+
+export async function completeAdminCheckoutRelational(params: {
+  siteId: string;
+  customerId: string;
+  priceId: string;
+  actor?: string;
+  intentId?: string;
+}): Promise<{ customer: Customer; order: Order; ledger: CreditLedgerEntry; subscription?: Subscription; grantedCredits: number }> {
+  return prisma.$transaction(async (tx) => {
+    const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
+    const price = await tx.price.findFirst({
+      where: { siteId: params.siteId, id: params.priceId },
+      include: { product: true }
+    });
+    if (!price || price.product.siteId !== params.siteId) throw new StoreError("price_not_found_for_site", 404);
+    if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
+    if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);
+
+    const intentId = params.intentId?.trim().replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 120);
+    const sourceId = intentId ? `admin_comp:${intentId}` : `admin_comp:${uid("intent")}`;
+    const existingOrder = await tx.order.findFirst({
+      where: { siteId: params.siteId, customerId: params.customerId, sourceId }
+    });
+    if (existingOrder) {
+      const [existingLedger, existingSubscription, updatedCustomer] = await Promise.all([
+        tx.creditLedger.findFirst({ where: { siteId: params.siteId, customerId: params.customerId, sourceType: { startsWith: "admin_comp_checkout" }, sourceId: existingOrder.id } }),
+        tx.subscription.findFirst({ where: { siteId: params.siteId, customerId: params.customerId, stripeSubscriptionId: `admin_comp_${existingOrder.id}` } }),
+        tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } })
+      ]);
+      if (!existingLedger) throw new StoreError("admin_checkout_ledger_missing", 409);
+      return {
+        customer: mapCustomer(updatedCustomer),
+        order: mapOrder(existingOrder),
+        ledger: mapCreditLedger(existingLedger),
+        subscription: existingSubscription ? mapSubscription(existingSubscription) : undefined,
+        grantedCredits: existingOrder.credits
+      };
+    }
+
+    const orderId = uid("ord");
+    const orderRow = await tx.order.create({
+      data: {
+        id: orderId,
+        siteId: params.siteId,
+        customerId: params.customerId,
+        status: "fulfilled",
+        amountCents: price.amountCents,
+        currency: price.currency,
+        credits: price.creditsGranted,
+        sourceId
+      }
+    });
+
+    const ledgerRow = await tx.creditLedger.create({
+      data: {
+        id: uid("led"),
+        siteId: params.siteId,
+        customerId: params.customerId,
+        amount: price.creditsGranted,
+        type: "grant",
+        sourceType: `admin_comp_checkout:${params.actor ?? "customer_admin"}`,
+        sourceId: orderId
+      }
+    });
+
+    await tx.creditBalance.update({
+      where: { customerId: customer.id },
+      data: { balance: { increment: price.creditsGranted } }
+    });
+
+    let subscriptionRow: Prisma.SubscriptionGetPayload<object> | undefined;
+    if (price.interval === "month" || price.product.type === "subscription") {
+      const periodEnd = new Date();
+      periodEnd.setMonth(periodEnd.getMonth() + 1);
+      await tx.subscription.updateMany({
+        where: {
+          siteId: params.siteId,
+          customerId: params.customerId,
+          productId: price.productId,
+          status: { in: ["trialing", "active", "past_due"] }
+        },
+        data: { status: "canceled" }
+      });
+      subscriptionRow = await tx.subscription.create({
+        data: {
+          id: uid("sub"),
+          siteId: params.siteId,
+          customerId: params.customerId,
+          productId: price.productId,
+          priceId: price.id,
+          stripeSubscriptionId: `admin_comp_${orderId}`,
+          status: "active",
+          currentPeriodStart: new Date(),
+          currentPeriodEnd: periodEnd,
+          creditsPerCycle: price.creditsGranted
+        }
+      });
+    }
+
+    const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
+    return {
+      customer: mapCustomer(updatedCustomer),
+      order: mapOrder(orderRow),
+      ledger: mapCreditLedger(ledgerRow),
+      subscription: subscriptionRow ? mapSubscription(subscriptionRow) : undefined,
+      grantedCredits: price.creditsGranted
+    };
   });
 }
 

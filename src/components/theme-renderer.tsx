@@ -4,6 +4,7 @@ import NextLink from "next/link";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
+import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import {
   AlertTriangle,
@@ -6998,6 +6999,9 @@ function SectionView({
     }, 0);
     const currency = selectedPrice?.currency ?? productsForCart[0]?.prices[0]?.currency ?? site.currency;
     const returnHref = setting(section, "returnHref", "/pricing");
+    const selectedLinePrice = selectedPrice ?? (selectedProduct ? productPrice(selectedProduct) : productsForCart[0] ? productPrice(productsForCart[0]) : undefined);
+    const customer = runtime?.customer;
+    const loginHref = hrefFor(site, `/login?next=${encodeURIComponent(`/cart?product=${selectedProduct?.id ?? ""}&price=${selectedLinePrice?.id ?? ""}`)}`);
     return (
       <section className="px-5 py-14" data-saas-section-renderer="cart_summary" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[1fr_360px]">
@@ -7034,7 +7038,7 @@ function SectionView({
             <h3 className="mt-5 text-2xl font-semibold">Checkout summary</h3>
             <p className="mt-2 text-sm leading-6 text-stone-300">
               {settingBool(section, "showCheckoutNote", true)
-                ? "Credits appear after payment confirmation, so the account balance stays accurate."
+                ? "Credits appear only after a completed checkout action, so the account balance stays accurate."
                 : "Review selected items before checkout."}
             </p>
             <div className="mt-6 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4">
@@ -7051,9 +7055,15 @@ function SectionView({
                 <span>{estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}</span>
               </div>
             </div>
-            <Link className="mt-6 inline-flex w-full justify-center rounded-full bg-white px-4 py-3 text-sm font-medium text-zinc-950" href={hrefFor(site, returnHref)}>
-              {setting(section, "returnLabel", "Back to pricing")}
-            </Link>
+            <CartCheckoutPanel
+              customer={customer}
+              loginHref={loginHref}
+              returnHref={hrefFor(site, returnHref)}
+              selectedAmountLabel={estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}
+              selectedCredits={estimatedCredits}
+              selectedPriceId={selectedLinePrice?.id}
+              siteId={site.id}
+            />
           </aside>
         </div>
       </section>

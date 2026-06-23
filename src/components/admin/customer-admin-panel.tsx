@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { Coins } from "lucide-react";
+import { Coins, ShieldCheck } from "lucide-react";
 import { AdminPagination, clampPage, pageItems, adminPageSizeOptions } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
@@ -99,6 +99,30 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
     setMessage(`已导出 ${filteredItems.length} 条顾客记录。`);
   }
 
+  async function promoteToAdmin(customer: PublicCustomer) {
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/admin-role`, {
+      method: "PATCH",
+      headers: siteAdminJsonHeaders(siteId),
+      body: JSON.stringify({ role: "admin" })
+    });
+    const result = (await response.json().catch(() => ({}))) as {
+      admin?: { email: string; role: string };
+      created?: boolean;
+      temporaryPassword?: string;
+      error?: string;
+    };
+    if (response.ok && result.admin) {
+      setMessage(
+        result.created
+          ? `${result.admin.email} 已设为站点管理员。临时密码：${result.temporaryPassword}`
+          : `${result.admin.email} 已更新为站点管理员。`
+      );
+      router.refresh();
+    } else {
+      setMessage(result.error ?? "管理员类型设置失败。");
+    }
+  }
+
   return (
     <div>
       <div className="flex items-start justify-between gap-4">
@@ -144,12 +168,13 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
         </div>
       </div>
       <div className="mt-4 overflow-x-auto">
-        <table className="list min-w-[960px]">
+        <table className="list min-w-[1080px]">
           <thead>
             <tr>
               <th className="bgtt aleft">客户</th>
               <th className="bgtt aleft">邮箱</th>
               <th className="bgtt">状态</th>
+              <th className="bgtt">后台类型</th>
               <th className="bgtt">余额</th>
               <th className="bgtt">调整额度</th>
             </tr>
@@ -174,6 +199,12 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
                   </select>
                 </td>
                 <td>
+                  <button className="admin_btn inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap" onClick={() => promoteToAdmin(customer)} type="button">
+                    <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    设为管理员
+                  </button>
+                </td>
+                <td>
                   <span className="block font-mono text-[#333]">{customer.balance.available} 点</span>
                   <span className="font-mono text-[11px] text-[#999]">预扣 {customer.balance.reserved} 点</span>
                 </td>
@@ -196,7 +227,7 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
             ))}
             {!filteredItems.length ? (
               <tr>
-                <td className="text-center text-[#999]" colSpan={5}>当前筛选下没有顾客记录。</td>
+                <td className="text-center text-[#999]" colSpan={6}>当前筛选下没有顾客记录。</td>
               </tr>
             ) : null}
           </tbody>

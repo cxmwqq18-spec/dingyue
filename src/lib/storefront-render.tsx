@@ -13,15 +13,15 @@ import {
   getSiteMediaAssetsFromState,
   getSiteProductsFromState,
   getThemeRuntimeForCustomer,
-  getThemeRuntimeFromSession,
   toThemeRuntimeAsset,
   toThemeRuntimeJob,
   toThemeRuntimeLedgerEntry
 } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
 import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { themeStyleVars } from "@/lib/theme";
-import type { PlatformState, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
+import type { CustomerSession, PlatformState, PublicCustomer, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 
@@ -54,15 +54,43 @@ function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): T
   };
 }
 
-function getLightCustomerRuntime(state: PlatformState, siteId: string, sessionId?: string): ThemeRuntimeData {
+async function getCurrentCustomerSession(
+  state: PlatformState,
+  siteId: string,
+  sessionId?: string
+): Promise<{ customer: PublicCustomer; session: CustomerSession } | undefined> {
+  if (!sessionId) return undefined;
+  const relational = await getCustomerBySessionRelational({ siteId, sessionId });
+  if (relational) return relational;
+  return getCustomerBySessionFromState(state, siteId, sessionId);
+}
+
+function getCustomerRuntimeFromState(state: PlatformState, siteId: string, customer: PublicCustomer, full: boolean): ThemeRuntimeData {
+  const runtime = full ? getThemeRuntimeForCustomer(state, siteId, customer.id) : runtimeWithEmptyCollections();
+  return {
+    ...runtime,
+    customer
+  };
+}
+
+async function getLightCustomerRuntime(state: PlatformState, siteId: string, sessionId?: string): Promise<ThemeRuntimeData> {
   if (!sessionId) return runtimeWithEmptyCollections();
+  const current = await getCurrentCustomerSession(state, siteId, sessionId);
+  if (current) return getCustomerRuntimeFromState(state, siteId, current.customer, false);
   return runtimeWithEmptyCollections({
     customer: getCustomerBySessionFromState(state, siteId, sessionId)?.customer
   });
 }
 
+async function getFullCustomerRuntime(state: PlatformState, siteId: string, sessionId?: string): Promise<ThemeRuntimeData> {
+  if (!sessionId) return runtimeWithEmptyCollections();
+  const current = await getCurrentCustomerSession(state, siteId, sessionId);
+  if (!current) return runtimeWithEmptyCollections();
+  return getCustomerRuntimeFromState(state, siteId, current.customer, true);
+}
+
 function pageNeedsFullCustomerRuntime(pageJson: ThemePageJson, slug: string): boolean {
-  if (slug === "/album" || slug === "/app" || slug === "/account" || slug.startsWith("/app/")) return true;
+  if (slug === "/album" || slug === "/app" || slug === "/account" || slug === "/cart" || slug.startsWith("/app/")) return true;
   return pageJson.sectionsOrder.some((sectionId) => {
     const type = pageJson.sections[sectionId]?.type;
     return type === "upload_panel" || type === "generation_form" || type === "job_progress" || type === "album_gallery";
@@ -273,8 +301,8 @@ export async function renderStorefrontPage({
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
   const pageJson = slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson;
   const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
-    ? getThemeRuntimeFromSession(state, currentSite.id, sessionId)
-    : getLightCustomerRuntime(state, currentSite.id, sessionId);
+    ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
+    : await getLightCustomerRuntime(state, currentSite.id, sessionId);
   const runtimeWithAuth = {
     ...runtime,
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
