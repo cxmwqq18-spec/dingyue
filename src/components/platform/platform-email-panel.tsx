@@ -447,7 +447,7 @@ export function PlatformEmailPanel({
         ]}
       />
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_0.85fr]">
+      <div className="grid gap-4">
         <ErpSection
           description="这里维护平台 Resend 发信账号。API Key 只回显掩码；站点可在下方域名行选择账号并执行 DNS 检测或单封测试。"
           eyebrow="email provider"
@@ -496,8 +496,8 @@ export function PlatformEmailPanel({
             </ErpFormGrid>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="tixing min-w-0 flex-1">{message}</div>
-              <button className="input_btn inline-flex h-[38px] items-center gap-1 px-4 disabled:opacity-55" disabled={saving} onClick={saveSettings} type="button">
-                <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <button className="input_btn inline-flex h-[38px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={saving} onClick={saveSettings} type="button">
+                <Save className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 {saving ? "保存中" : "保存配置"}
               </button>
             </div>
@@ -518,8 +518,8 @@ export function PlatformEmailPanel({
                 ))}
               </ErpSelect>
             </ErpField>
-            <button className="input_btn inline-flex h-[40px] items-center justify-center gap-1 disabled:opacity-55" disabled={testing || !testTo.trim()} onClick={() => sendTest()} type="button">
-              <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
+            <button className="input_btn inline-flex h-[40px] items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={testing || !testTo.trim()} onClick={() => sendTest()} type="button">
+              <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
               {testing ? "发送中" : "发送测试"}
             </button>
             <p className="text-[12px] leading-5 text-[#667085]">
@@ -556,12 +556,12 @@ export function PlatformEmailPanel({
           }
         />
         <WorkbenchTableShell>
-          <WorkbenchTableHeader className="md:grid-cols-[minmax(190px,0.95fr)_minmax(190px,0.9fr)_minmax(150px,0.72fr)_minmax(150px,0.65fr)_minmax(190px,1fr)_minmax(170px,0.76fr)]" columns={["店铺 / 主域名", "发件邮箱", "Resend 配置", "DNS 状态", "阻断原因", "操作"]} />
+          <WorkbenchTableHeader className="md:grid-cols-[minmax(190px,0.95fr)_minmax(190px,0.9fr)_minmax(150px,0.72fr)_minmax(150px,0.65fr)_minmax(190px,1fr)_minmax(210px,max-content)]" columns={["店铺 / 主域名", "发件邮箱", "Resend 配置", "DNS 状态", "阻断原因", "操作"]} />
           {filteredSites.length ? (
             filteredSites.map((row) => {
               const selectedConfig = selectedConfigForSite(row, resendConfigChoices, selectedConfigBySite);
               return (
-                <WorkbenchTableRow className="md:grid-cols-[minmax(190px,0.95fr)_minmax(190px,0.9fr)_minmax(150px,0.72fr)_minmax(150px,0.65fr)_minmax(190px,1fr)_minmax(170px,0.76fr)]" key={row.site.id}>
+                <WorkbenchTableRow className="md:grid-cols-[minmax(190px,0.95fr)_minmax(190px,0.9fr)_minmax(150px,0.72fr)_minmax(150px,0.65fr)_minmax(190px,1fr)_minmax(210px,max-content)]" key={row.site.id}>
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{row.site.name}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{row.site.slug} / {row.site.primaryDomain}</div>
@@ -594,23 +594,23 @@ export function PlatformEmailPanel({
                 <div className="min-w-0 text-[12px] leading-5 text-[#667085]">
                   {row.blockingReasons.length ? row.blockingReasons.map(reasonLabel).join(" ") : "当前站点发件域名已通过检测。"}
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex min-w-[200px] flex-nowrap items-center gap-2">
                   <button
-                    className="admin_btn inline-flex h-[32px] items-center justify-center gap-1 px-3 text-[12px] disabled:opacity-55"
+                    className="admin_btn inline-flex h-[32px] min-w-[92px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
                     disabled={provisioningSiteId === row.site.id}
                     onClick={() => provisionDomain(row)}
                     type="button"
                   >
-                    <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                     {provisioningSiteId === row.site.id ? "检测中" : "DNS 检测"}
                   </button>
                   <button
-                    className="input_btn inline-flex h-[32px] items-center justify-center gap-1 px-3 text-[12px] disabled:opacity-55"
+                    className="input_btn inline-flex h-[32px] min-w-[72px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
                     disabled={testing || !testTo.trim()}
                     onClick={() => sendTest(row.site.id)}
                     type="button"
                   >
-                    <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                     测试
                   </button>
                 </div>

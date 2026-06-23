@@ -188,12 +188,12 @@ export function SiteEmailPanel({
               <ErpToolbarField label="域名" value={status.candidateDomain || "-"} />
             </div>
             <div className="flex flex-wrap gap-2">
-              <button className="admin_btn inline-flex h-[34px] items-center gap-1 px-3 disabled:opacity-55" disabled={busy} onClick={refreshStatus} type="button">
-                <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <button className="admin_btn inline-flex h-[34px] items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55" disabled={busy} onClick={refreshStatus} type="button">
+                <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 刷新
               </button>
-              <button className="admin_btn inline-flex h-[34px] items-center gap-1 px-3 disabled:opacity-55" disabled={busy} onClick={runDnsCheck} type="button">
-                <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <button className="admin_btn inline-flex h-[34px] items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55" disabled={busy} onClick={runDnsCheck} type="button">
+                <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 DNS 检测
               </button>
             </div>
@@ -215,12 +215,12 @@ export function SiteEmailPanel({
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="tixing min-w-0 flex-1">{message}</div>
             <div className="flex flex-wrap gap-2">
-              <button className="admin_btn inline-flex h-[38px] items-center gap-1 px-4 disabled:opacity-55" disabled={busy || !testTo.trim()} onClick={sendTest} type="button">
-                <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <button className="admin_btn inline-flex h-[38px] items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={busy || !testTo.trim()} onClick={sendTest} type="button">
+                <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 发送测试
               </button>
-              <button className="input_btn inline-flex h-[38px] items-center gap-1 px-4 disabled:opacity-55" disabled={busy} onClick={saveSettings} type="button">
-                <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <button className="input_btn inline-flex h-[38px] items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={busy} onClick={saveSettings} type="button">
+                <Save className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 保存配置
               </button>
             </div>
