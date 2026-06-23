@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Download, Pencil, Plus, Save, Trash2, X } from "lucide-react";
-import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
+import { Download, Pencil, Plus, Search, Save, Trash2, X } from "lucide-react";
+import { AdminPagination } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import type { CreativePack, SiteAiApp } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
@@ -60,6 +60,20 @@ function tone(status: CreativePack["status"]): "good" | "warn" | "neutral" {
   return "neutral";
 }
 
+type CreativePackQueryResult = {
+  packs?: CreativePack[];
+  total?: number;
+  page?: number;
+  pageSize?: number;
+  counts?: {
+    all?: number;
+    active?: number;
+    draft?: number;
+    paused?: number;
+  };
+  error?: string;
+};
+
 function createDraftPack(siteAiApps: SiteAiApp[]): Omit<CreativePack, "id" | "siteId" | "generationCount" | "conversionRate" | "createdAt"> {
   return {
     name: "新拍摄包",
@@ -91,6 +105,14 @@ export function CreativePackEditor({
   const [appFilter, setAppFilter] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(packs.length);
+  const [counts, setCounts] = useState({
+    all: packs.length,
+    active: packs.filter((pack) => pack.status === "active").length,
+    draft: packs.filter((pack) => pack.status === "draft").length,
+    paused: packs.filter((pack) => pack.status === "paused").length
+  });
+  const [loading, setLoading] = useState(false);
   const [savingPackId, setSavingPackId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
@@ -100,33 +122,56 @@ export function CreativePackEditor({
 
   useEffect(() => {
     setItems(packs);
+    setTotal(packs.length);
+    setCounts({
+      all: packs.length,
+      active: packs.filter((pack) => pack.status === "active").length,
+      draft: packs.filter((pack) => pack.status === "draft").length,
+      paused: packs.filter((pack) => pack.status === "paused").length
+    });
   }, [packs]);
 
   useEffect(() => {
     setDraftPack(createDraftPack(siteAiApps));
   }, [siteAiApps]);
 
-  const filteredItems = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    return items.filter((pack) => {
-      if (statusFilter && pack.status !== statusFilter) return false;
-      if (categoryFilter && pack.category !== categoryFilter) return false;
-      if (appFilter && pack.aiAppSlug !== appFilter) return false;
-      if (!normalized) return true;
-      return [pack.name, pack.headline, pack.description, pack.aiAppSlug, pack.category].join(" ").toLowerCase().includes(normalized);
-    });
-  }, [appFilter, categoryFilter, items, query, statusFilter]);
-
-  useEffect(() => {
-    setPage((current) => clampPage(current, filteredItems.length, pageSize));
-  }, [filteredItems.length, pageSize]);
-
-  const pagedItems = useMemo(() => pageItems(filteredItems, page, pageSize), [filteredItems, page, pageSize]);
   const editingPack = useMemo(() => items.find((pack) => pack.id === editingPackId) ?? null, [editingPackId, items]);
 
-  const activeCount = items.filter((pack) => pack.status === "active").length;
-  const draftCount = items.filter((pack) => pack.status === "draft").length;
-  const pausedCount = items.filter((pack) => pack.status === "paused").length;
+  async function queryPacks(next: Partial<{ page: number; pageSize: number; query: string; statusFilter: CreativePack["status"] | ""; categoryFilter: CreativePack["category"] | ""; appFilter: string }> = {}) {
+    const nextPage = next.page ?? page;
+    const nextPageSize = next.pageSize ?? pageSize;
+    const nextQuery = next.query ?? query;
+    const nextStatus = next.statusFilter ?? statusFilter;
+    const nextCategory = next.categoryFilter ?? categoryFilter;
+    const nextApp = next.appFilter ?? appFilter;
+    const params = new URLSearchParams({
+      page: String(nextPage),
+      pageSize: String(nextPageSize)
+    });
+    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextStatus) params.set("status", nextStatus);
+    if (nextCategory) params.set("category", nextCategory);
+    if (nextApp) params.set("app", nextApp);
+    setLoading(true);
+    const response = await fetch(`/api/sites/${siteId}/creative-packs?${params.toString()}`, { method: "GET" });
+    const result = (await response.json().catch(() => ({}))) as CreativePackQueryResult;
+    setLoading(false);
+    if (response.ok && result.packs) {
+      setItems(result.packs);
+      setTotal(result.total ?? result.packs.length);
+      setPage(result.page ?? nextPage);
+      setPageSize(result.pageSize ?? nextPageSize);
+      setCounts({
+        all: result.counts?.all ?? counts.all,
+        active: result.counts?.active ?? counts.active,
+        draft: result.counts?.draft ?? counts.draft,
+        paused: result.counts?.paused ?? counts.paused
+      });
+      setMessage(`已查询到 ${result.total ?? result.packs.length} 个拍摄包。`);
+      return;
+    }
+    setMessage(result.error ?? "拍摄包查询失败。");
+  }
 
   function update<K extends keyof CreativePack>(packId: string, key: K, value: CreativePack[K]) {
     setItems((current) =>
@@ -174,6 +219,12 @@ export function CreativePackEditor({
     setCreating(false);
     if (response.ok && result.pack) {
       setItems((current) => [result.pack!, ...current]);
+      setTotal((current) => current + 1);
+      setCounts((current) => ({
+        ...current,
+        all: current.all + 1,
+        [result.pack!.status]: current[result.pack!.status] + 1
+      }));
       setDraftPack(createDraftPack(siteAiApps));
       setPage(1);
       setCreateOpen(false);
@@ -191,6 +242,12 @@ export function CreativePackEditor({
     const result = (await response.json().catch(() => ({}))) as { deletedPack?: CreativePack; error?: string };
     if (response.ok && result.deletedPack) {
       setItems((current) => current.filter((item) => item.id !== packId));
+      setTotal((current) => Math.max(0, current - 1));
+      setCounts((current) => ({
+        ...current,
+        all: Math.max(0, current.all - 1),
+        [result.deletedPack!.status]: Math.max(0, current[result.deletedPack!.status] - 1)
+      }));
       setEditingPackId((current) => (current === packId ? null : current));
       setMessage(`${result.deletedPack.name} 已删除。`);
       router.refresh();
@@ -205,12 +262,13 @@ export function CreativePackEditor({
     setCategoryFilter("");
     setAppFilter("");
     setPage(1);
+    void queryPacks({ page: 1, query: "", statusFilter: "", categoryFilter: "", appFilter: "" });
   }
 
   function exportPacks() {
     downloadCsv(
       `${siteId}-creative-packs.csv`,
-      filteredItems.map((pack) => ({
+      items.map((pack) => ({
         packId: pack.id,
         name: pack.name,
         headline: pack.headline,
@@ -239,12 +297,33 @@ export function CreativePackEditor({
         "createdAt"
       ]
     );
-    setMessage(`已导出 ${filteredItems.length} 个拍摄包。`);
+    setMessage(`已导出 ${items.length} 个拍摄包。`);
   }
 
   function updatePageSize(nextPageSize: number) {
-    setPageSize(nextPageSize);
+    void queryPacks({ page: 1, pageSize: nextPageSize });
+  }
+
+  function updatePage(nextPage: number) {
+    void queryPacks({ page: nextPage });
+  }
+
+  function updateStatusFilter(nextStatus: CreativePack["status"] | "") {
+    setStatusFilter(nextStatus);
     setPage(1);
+    void queryPacks({ page: 1, statusFilter: nextStatus });
+  }
+
+  function updateCategoryFilter(nextCategory: CreativePack["category"] | "") {
+    setCategoryFilter(nextCategory);
+    setPage(1);
+    void queryPacks({ page: 1, categoryFilter: nextCategory });
+  }
+
+  function updateAppFilter(nextApp: string) {
+    setAppFilter(nextApp);
+    setPage(1);
+    void queryPacks({ page: 1, appFilter: nextApp });
   }
 
   return (
@@ -262,29 +341,28 @@ export function CreativePackEditor({
       </div>
       <div className="mt-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
         <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
-          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">共 {items.length} 个</span>
-          <span className="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{activeCount} 个已上架</span>
-          <span className="whitespace-nowrap rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700">{draftCount} 个草稿</span>
-          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">{pausedCount} 个暂停</span>
-          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">当前 {filteredItems.length} 个</span>
+          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">共 {counts.all} 个</span>
+          <span className="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{counts.active} 个已上架</span>
+          <span className="whitespace-nowrap rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700">{counts.draft} 个草稿</span>
+          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">{counts.paused} 个暂停</span>
+          <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">当前查询 {total} 个</span>
         </div>
-        <div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.2fr)_repeat(3,minmax(0,0.8fr))_auto]">
+        <div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.2fr)_repeat(3,minmax(0,0.8fr))_auto_auto]">
           <input
             className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
             onChange={(event) => {
               setQuery(event.target.value);
-              setPage(1);
             }}
             placeholder="搜索拍摄包名称、标题、工具..."
             value={query}
           />
-          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => { setStatusFilter(event.target.value as CreativePack["status"] | ""); setPage(1); }} value={statusFilter}>
+          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateStatusFilter(event.target.value as CreativePack["status"] | "")} value={statusFilter}>
             <option value="">全部状态</option>
             <option value="active">已上架</option>
             <option value="draft">草稿</option>
             <option value="paused">已暂停</option>
           </select>
-          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => { setCategoryFilter(event.target.value as CreativePack["category"] | ""); setPage(1); }} value={categoryFilter}>
+          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategoryFilter(event.target.value as CreativePack["category"] | "")} value={categoryFilter}>
             <option value="">全部分类</option>
             {categoryOptions.map((category) => (
               <option key={category} value={category}>
@@ -292,7 +370,7 @@ export function CreativePackEditor({
               </option>
             ))}
           </select>
-          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => { setAppFilter(event.target.value); setPage(1); }} value={appFilter}>
+          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateAppFilter(event.target.value)} value={appFilter}>
             <option value="">全部工具</option>
             {siteAiApps.map((app) => (
               <option key={app.id} value={app.aiApp.slug}>
@@ -300,11 +378,15 @@ export function CreativePackEditor({
               </option>
             ))}
           </select>
+          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-zinc-950 px-4 py-2 text-sm text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60" disabled={loading} onClick={() => queryPacks({ page: 1 })} type="button">
+            <Search className="mr-2 h-4 w-4" strokeWidth={1.8} />
+            {loading ? "查询中" : "查询"}
+          </button>
           <button className="whitespace-nowrap rounded-xl border border-black/10 bg-white px-4 py-2 text-sm active:scale-[0.98]" onClick={resetFilters} type="button">
             重置筛选
           </button>
         </div>
-        <AdminPagination onPageChange={setPage} onPageSizeChange={updatePageSize} page={page} pageSize={pageSize} total={filteredItems.length} />
+        <AdminPagination onPageChange={updatePage} onPageSizeChange={updatePageSize} page={page} pageSize={pageSize} total={total} />
       </div>
       <details className="mt-5 rounded-[12px] border border-dashed border-zinc-300 bg-white p-5" open={createOpen} onToggle={(event) => setCreateOpen(event.currentTarget.open)}>
         <summary className="flex cursor-pointer list-none flex-wrap items-start justify-between gap-4">
@@ -383,7 +465,7 @@ export function CreativePackEditor({
         </div>
       </details>
       <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {pagedItems.map((pack) => (
+        {items.map((pack) => (
           <button
             className="group min-h-[188px] rounded-[12px] border border-zinc-200 bg-white p-4 text-left transition hover:border-blue-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
             key={pack.id}
@@ -421,8 +503,8 @@ export function CreativePackEditor({
             </div>
           </button>
         ))}
-        {!filteredItems.length ? (
-          <div className="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 px-5 py-10 text-center text-sm text-zinc-500">
+        {!items.length ? (
+          <div className="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 px-5 py-10 text-center text-sm text-zinc-500 sm:col-span-2 xl:col-span-4">
             当前筛选下没有匹配的拍摄包。
           </div>
         ) : null}
