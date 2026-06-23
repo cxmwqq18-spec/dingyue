@@ -510,6 +510,8 @@ export function SiteRegistryRowCard({
   settingsHref: string;
   actions?: ReactNode;
 }) {
+  const adminBridgeLink = adminHref.includes("/admin-bridge");
+
   return (
     <div className="grid gap-4 rounded-[8px] border border-[#edf2f7] bg-white px-4 py-4 shadow-[0_12px_24px_-30px_rgba(15,23,42,0.12)] lg:grid-cols-[56px_minmax(0,1.2fr)_minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_180px]">
       <div className="flex items-start justify-between gap-3 lg:block">
@@ -518,9 +520,13 @@ export function SiteRegistryRowCard({
       </div>
 
       <div className="min-w-0">
-        <Link className="truncate text-[15px] font-semibold text-[#2f6fed]" href={adminHref}>
-          {name}
-        </Link>
+        {adminBridgeLink ? (
+          <span className="block truncate text-[15px] font-semibold text-[#2f6fed]">{name}</span>
+        ) : (
+          <Link className="truncate text-[15px] font-semibold text-[#2f6fed]" href={adminHref} prefetch={false}>
+            {name}
+          </Link>
+        )}
         <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{siteId}</div>
         <div className="mt-3 flex flex-wrap items-center gap-2 text-[12px] text-[#667085]">
           <span>{slug}</span>
@@ -529,7 +535,7 @@ export function SiteRegistryRowCard({
       </div>
 
       <div className="min-w-0">
-        <Link className="truncate text-[14px] font-medium text-[#18212f]" href={storefrontHref}>
+        <Link className="truncate text-[14px] font-medium text-[#18212f]" href={storefrontHref} prefetch={false}>
           {domain}
         </Link>
         <div className="mt-1 text-[12px] text-[#98a2b3]">{domainCount} 个域名</div>
