@@ -98,6 +98,66 @@ export async function upsertProductPriceRelational(params: {
   });
 }
 
+export async function createProductWithPriceRelational(params: {
+  siteId: string;
+  name: string;
+  type: Product["type"];
+  status: Product["status"];
+  price: {
+    label: string;
+    amountCents: number;
+    currency: string;
+    interval: Price["interval"];
+    creditsGranted: number;
+    stripePriceId?: string;
+    metadata?: Price["metadata"];
+  };
+}): Promise<{ product: Product }> {
+  return prisma.$transaction(async (tx) => {
+    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+    if (!site) throw new StoreError("site_not_found", 404);
+    const name = params.name.trim();
+    const label = params.price.label.trim();
+    const currency = params.price.currency.trim().toLowerCase();
+    if (name.length < 2) throw new StoreError("product_name_required", 400);
+    if (!["subscription", "credit_pack"].includes(params.type)) throw new StoreError("invalid_product_type", 400);
+    if (!["active", "draft"].includes(params.status)) throw new StoreError("invalid_product_status", 400);
+    if (!label) throw new StoreError("price_label_required", 400);
+    if (!Number.isInteger(params.price.amountCents) || params.price.amountCents < 0) throw new StoreError("invalid_price_amount", 400);
+    if (!currency) throw new StoreError("invalid_price_currency", 400);
+    if (!["month", "one_time"].includes(params.price.interval)) throw new StoreError("invalid_price_interval", 400);
+    if (!Number.isInteger(params.price.creditsGranted) || params.price.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
+
+    const productId = uid("prod");
+    const priceId = uid("price");
+    const stripePriceId = params.price.stripePriceId?.trim() || `manual_${priceId}`;
+    const product = await tx.product.create({
+      data: {
+        id: productId,
+        siteId: params.siteId,
+        name,
+        type: params.type,
+        status: params.status,
+        prices: {
+          create: {
+            id: priceId,
+            siteId: params.siteId,
+            label,
+            stripePriceId,
+            metadata: params.price.metadata ? (params.price.metadata as Prisma.InputJsonObject) : undefined,
+            currency,
+            amountCents: params.price.amountCents,
+            interval: params.price.interval,
+            creditsGranted: params.price.creditsGranted
+          }
+        }
+      },
+      include: { prices: true }
+    });
+    return { product: mapProduct(product) };
+  });
+}
+
 export async function deleteProductPriceRelational(params: {
   siteId: string;
   productId: string;

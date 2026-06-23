@@ -127,10 +127,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
       <div className="grid gap-5">
         <ErpStatGrid
           items={[
-            { label: "商品", value: `${data.activeProducts}/${data.products.length}`, detail: `${data.totalPrices} 个真实价格`, icon: ShoppingBag, tone: data.activeProducts ? "good" : "warn" },
-            { label: "订阅套餐", value: String(subscriptionProducts.length), detail: "按月收费商品", icon: CreditCard, tone: subscriptionProducts.length ? "good" : "neutral" },
+            { label: "收款商品", value: `${data.activeProducts}/${data.products.length}`, detail: `${data.totalPrices} 个真实价格`, icon: ShoppingBag, tone: data.activeProducts ? "good" : "warn" },
+            { label: "订阅套餐", value: String(subscriptionProducts.length), detail: "按月收费的收款商品", icon: CreditCard, tone: subscriptionProducts.length ? "good" : "neutral" },
             { label: "Credit 包", value: String(creditPacks.length), detail: "一次性充值积分包", icon: PackageCheck, tone: creditPacks.length ? "good" : "neutral" },
-            { label: "拍摄包", value: `${data.activePacks}/${data.packs.length}`, detail: lowestPrice ? `入口价 ${money(lowestPrice.amountCents, lowestPrice.currency)}` : "未配置价格", icon: moduleIcons.packs, tone: data.activePacks ? "good" : "warn" }
+            { label: "AI 拍摄主题", value: `${data.activePacks}/${data.packs.length}`, detail: lowestPrice ? `由 Credits 消耗，入口价 ${money(lowestPrice.amountCents, lowestPrice.currency)}` : "未配置价格", icon: moduleIcons.packs, tone: data.activePacks ? "good" : "warn" }
           ]}
         />
 
@@ -178,14 +178,14 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
         <div className="scroll-mt-24" id="pricing-center">
           <ErpSection
             action={<ErpToolbarAction href={modulePath(data.site, "/pricing")} label="打开定价页" primary />}
-            description="维护真实收款价格：订阅、Credit 包、金额、周期、额度和主推标记。保存后会影响结账页和充值到账数据。"
+            description="这里维护的是 4 个收款商品，不是下方 26 个 AI 拍摄主题。订阅、Credit 包、金额、周期、额度和主推标记会影响结账页和充值到账数据。"
             eyebrow="价格套餐"
             title="价格套餐"
           >
             <ErpToolbar>
               <div className="flex flex-wrap gap-3">
-                <ErpToolbarField label="订阅套餐" value={String(subscriptionProducts.length)} />
-                <ErpToolbarField label="Credit 包" value={String(creditPacks.length)} />
+                <ErpToolbarField label="收款订阅商品" value={String(subscriptionProducts.length)} />
+                <ErpToolbarField label="收款 Credit 包" value={String(creditPacks.length)} />
                 <ErpToolbarField label="真实价格" value={String(data.totalPrices)} />
               </div>
               <div className="flex flex-wrap gap-2">
@@ -201,12 +201,12 @@ export default async function ProductsPage({ params }: { params: Promise<{ siteS
         <div className="scroll-mt-24" id="creative-packs">
           <ErpSection
             action={<ErpToolbarAction href={modulePath(data.site, "/admin/design")} label="前台装修" />}
-            description="维护前台可见的 AI 服务入口：标题、分类、绑定工具、消耗积分、输出数量和上下架状态。"
+            description="这里维护的是 AI 拍摄主题入口，数量可以多于收款商品。客户购买上方套餐获得 Credits，再使用这些主题消耗 Credits。"
             eyebrow="拍摄包入口"
             title="拍摄包入口"
           >
             <div className="mb-4 rounded-[12px] border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-              操作提示：拍摄包不是收款价格，它决定客户购买 Credits 后可以使用哪些 AI 生成入口，以及每次生成会消耗多少 Credits。
+              操作提示：拍摄主题不是收款商品。上方 4 个商品负责收款和充值，下方 {data.packs.length} 个主题负责前台可选的生成入口和每次消耗。
             </div>
             <CreativePackEditor packs={data.packs} siteAiApps={data.apps} siteId={data.site.id} />
           </ErpSection>

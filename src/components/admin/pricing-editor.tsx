@@ -16,6 +16,13 @@ type PriceDraft = {
   metadata: Record<string, string | number | boolean>;
 };
 
+type ProductDraft = {
+  name: string;
+  type: Product["type"];
+  status: Product["status"];
+  price: PriceDraft;
+};
+
 function normalizeMetadata(metadata?: Price["metadata"]): Record<string, string | number | boolean> {
   return {
     generatedPhotos: typeof metadata?.generatedPhotos === "number" ? metadata.generatedPhotos : 0,
@@ -42,6 +49,29 @@ function createDraftPrice(product: Product): PriceDraft {
       deliveryDays: 0,
       revisions: "",
       featured: false
+    }
+  };
+}
+
+function createDraftProduct(): ProductDraft {
+  return {
+    name: "新套餐",
+    type: "subscription",
+    status: "active",
+    price: {
+      label: "新套餐",
+      amountCents: 0,
+      currency: "usd",
+      interval: "month",
+      creditsGranted: 0,
+      stripePriceId: "",
+      metadata: {
+        generatedPhotos: 0,
+        destinationCount: 0,
+        deliveryDays: 0,
+        revisions: "",
+        featured: false
+      }
     }
   };
 }
@@ -113,6 +143,8 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
   const router = useRouter();
   const [items, setItems] = useState(products.map((product) => ({ ...product, prices: product.prices.map(normalizePrice) })));
   const [drafts, setDrafts] = useState<Record<string, PriceDraft>>({});
+  const [productDraft, setProductDraft] = useState<ProductDraft>(() => createDraftProduct());
+  const [creatingProduct, setCreatingProduct] = useState(false);
   const [message, setMessage] = useState("选择一个商品后维护价格。保存后会影响前台定价页、结账页和充值到账积分。");
   const [activeProductId, setActiveProductId] = useState(products[0]?.id ?? "");
 
@@ -172,6 +204,44 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
   function updateDraftAmount(productId: string, value: string) {
     const cents = Math.round(numberValue(value) * 100);
     updateDraft(productId, "amountCents", String(cents));
+  }
+
+  function updateProductDraft<K extends keyof ProductDraft>(field: K, value: ProductDraft[K]) {
+    setProductDraft((current) => {
+      if (field === "type") {
+        const nextType = value as Product["type"];
+        return {
+          ...current,
+          type: nextType,
+          price: {
+            ...current.price,
+            interval: nextType === "subscription" ? "month" : "one_time"
+          }
+        };
+      }
+      return { ...current, [field]: value };
+    });
+  }
+
+  function updateProductDraftPrice(field: keyof PriceDraft, value: string) {
+    setProductDraft((current) => ({
+      ...current,
+      price: {
+        ...current.price,
+        [field]: field === "amountCents" || field === "creditsGranted" ? numberValue(value) : value
+      }
+    }));
+  }
+
+  function updateProductDraftAmount(value: string) {
+    updateProductDraftPrice("amountCents", String(Math.round(numberValue(value) * 100)));
+  }
+
+  function updateProductDraftMeta(field: string, value: string | boolean) {
+    setProductDraft((current) => ({
+      ...current,
+      price: updateDraftMetadata(current.price, field, value)
+    }));
   }
 
   function updateDraftMeta(productId: string, field: string, value: string | boolean) {
@@ -246,6 +316,28 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
       return;
     }
     setMessage(result.error ? `${product.name} 新增失败：${result.error}` : `${product.name} 新增失败。`);
+  }
+
+  async function createProduct() {
+    setCreatingProduct(true);
+    const response = await fetch(`/api/sites/${siteId}/products`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productDraft)
+    });
+    const result = (await response.json().catch(() => ({}))) as { product?: Product; error?: string };
+    setCreatingProduct(false);
+    if (response.ok && result.product) {
+      const normalized = { ...result.product, prices: result.product.prices.map(normalizePrice) };
+      setItems((current) => [normalized, ...current]);
+      setDrafts((current) => ({ ...current, [normalized.id]: createDraftPrice(normalized) }));
+      setActiveProductId(normalized.id);
+      setProductDraft(createDraftProduct());
+      setMessage(`${normalized.name} 已创建，并已自动创建首个价格。`);
+      router.refresh();
+      return;
+    }
+    setMessage(result.error ? `新增套餐商品失败：${result.error}` : "新增套餐商品失败。");
   }
 
   async function deletePrice(product: Product, priceId: string) {
@@ -352,6 +444,66 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           </div>
         </div>
       </div>
+
+      <details className="mt-4 rounded-[12px] border border-dashed border-[#cbd5e1] bg-white p-4">
+        <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[14px] font-semibold text-[#111827]">新增套餐商品</p>
+            <p className="mt-1 text-[12px] leading-5 text-[#667085]">用于新增一个前台可售卖的订阅套餐或一次性 Credit 包，并自动创建首个价格。</p>
+          </div>
+          <span className="inline-flex items-center rounded-full border border-[#dbe4f0] bg-[#f8fafc] px-3 py-1.5 text-[12px] font-semibold text-[#475467]">
+            <Plus className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+            展开新增
+          </span>
+        </summary>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <label className="block">
+            {fieldLabel("商品名称")}
+            <input className="inputtext w-full" onChange={(event) => updateProductDraft("name", event.target.value)} value={productDraft.name} />
+          </label>
+          <label className="block">
+            {fieldLabel("商品类型")}
+            <select className="selectmini w-full" onChange={(event) => updateProductDraft("type", event.target.value as Product["type"])} value={productDraft.type}>
+              <option value="subscription">月度订阅商品</option>
+              <option value="credit_pack">一次性 Credit 包</option>
+            </select>
+          </label>
+          <label className="block">
+            {fieldLabel("上架状态")}
+            <select className="selectmini w-full" onChange={(event) => updateProductDraft("status", event.target.value as Product["status"])} value={productDraft.status}>
+              <option value="active">上架</option>
+              <option value="draft">草稿</option>
+            </select>
+          </label>
+          <label className="block">
+            {fieldLabel("首个价格标签")}
+            <input className="inputtext w-full" onChange={(event) => updateProductDraftPrice("label", event.target.value)} value={productDraft.price.label} />
+          </label>
+          <label className="block">
+            {fieldLabel("金额（美元）")}
+            <input className="inputtext w-full" inputMode="decimal" onChange={(event) => updateProductDraftAmount(event.target.value)} value={majorAmountValue(productDraft.price.amountCents)} />
+          </label>
+          <label className="block">
+            {fieldLabel("到账 Credits")}
+            <input className="inputtext w-full" onChange={(event) => updateProductDraftPrice("creditsGranted", event.target.value)} value={productDraft.price.creditsGranted} />
+          </label>
+          <label className="block">
+            {fieldLabel("套餐成片数")}
+            <input className="inputtext w-full" onChange={(event) => updateProductDraftMeta("generatedPhotos", event.target.value)} value={String(productDraft.price.metadata.generatedPhotos ?? 0)} />
+          </label>
+          <label className="block">
+            {fieldLabel("可选目的地数")}
+            <input className="inputtext w-full" onChange={(event) => updateProductDraftMeta("destinationCount", event.target.value)} value={String(productDraft.price.metadata.destinationCount ?? 0)} />
+          </label>
+        </div>
+        <div className="mt-4 flex justify-end border-t border-[#eef2f6] pt-4">
+          <button className="admin_btn inline-flex h-[34px] min-w-[108px] items-center justify-center gap-1.5 whitespace-nowrap px-3 disabled:cursor-not-allowed disabled:opacity-60" disabled={creatingProduct} onClick={createProduct} type="button">
+            <Plus className="h-3.5 w-3.5" strokeWidth={1.8} />
+            {creatingProduct ? "新增中" : "新增套餐"}
+          </button>
+        </div>
+      </details>
 
       <div className="mt-4 grid gap-3 lg:grid-cols-3">
         {items.map((product) => {
