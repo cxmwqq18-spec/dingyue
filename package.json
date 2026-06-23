@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NEXT_DIST_DIR=.next-build NEXT_PRIVATE_BUILD_WORKER=1 next build && node scripts/restore-next-env.mjs",
+    "build": "NEXT_DIST_DIR=.next-build NEXT_PRIVATE_BUILD_WORKER=1 next build; status=$?; node scripts/restore-next-env.mjs; exit $status",
     "start": "NEXT_DIST_DIR=.next-build next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
