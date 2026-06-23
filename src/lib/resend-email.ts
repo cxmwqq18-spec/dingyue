@@ -19,6 +19,28 @@ type PlatformEmailSettings = {
   updatedBy?: string;
 };
 
+type ResendErrorPayload = {
+  message?: string;
+  error?: string;
+  name?: string;
+};
+
+export class ResendProviderError extends Error {
+  code: string;
+  status: number;
+  providerMessage: string;
+  providerName?: string;
+
+  constructor(params: { code: string; status: number; providerMessage?: string; providerName?: string }) {
+    super(params.code);
+    this.name = "ResendProviderError";
+    this.code = params.code;
+    this.status = params.status;
+    this.providerMessage = params.providerMessage ?? "";
+    this.providerName = params.providerName;
+  }
+}
+
 export interface SendVerificationEmailParams {
   to: string;
   code: string;
@@ -46,10 +68,19 @@ export type ResendDomainDetail = {
   records?: ResendDnsRecord[];
 };
 
+export function normalizeResendApiKey(value?: string | null): string | undefined {
+  const key = value?.trim();
+  if (!key) return undefined;
+  if (!key.startsWith("re_")) return undefined;
+  if (key.includes("...")) return undefined;
+  if (key.length < 30) return undefined;
+  return key;
+}
+
 function effectiveResendSettings(settings?: PlatformEmailSettings): Required<Pick<PlatformEmailSettings, "provider">> & Pick<PlatformEmailSettings, "apiKey" | "fromEmail" | "replyTo" | "updatedAt" | "updatedBy"> {
   return {
     provider: "resend",
-    apiKey: settings?.apiKey?.trim() || process.env.RESEND_API_KEY?.trim() || undefined,
+    apiKey: normalizeResendApiKey(settings?.apiKey) || normalizeResendApiKey(process.env.RESEND_API_KEY),
     fromEmail: settings?.fromEmail?.trim() || process.env.RESEND_FROM_EMAIL?.trim() || undefined,
     replyTo: settings?.replyTo?.trim() || process.env.RESEND_REPLY_TO?.trim() || undefined,
     updatedAt: settings?.updatedAt,
@@ -69,6 +100,21 @@ function providerErrorCode(status: number, message: string): string {
   if (normalized.includes("domain is not verified") || normalized.includes("verify a domain")) return "resend_domain_not_verified";
   if (normalized.includes("from") || normalized.includes("sender")) return "resend_invalid_from_email";
   return "email_send_failed";
+}
+
+function providerMessageFromPayload(payload: ResendErrorPayload): string {
+  return payload.message || payload.error || payload.name || "";
+}
+
+function resendProviderError(status: number, payload: ResendErrorPayload, fallbackCode = "email_send_failed"): ResendProviderError {
+  const providerMessage = providerMessageFromPayload(payload);
+  const code = providerErrorCode(status, providerMessage);
+  return new ResendProviderError({
+    code: code === "email_send_failed" ? fallbackCode : code,
+    status,
+    providerMessage,
+    providerName: payload.name
+  });
 }
 
 function smokeResendMockEnabled(): boolean {
@@ -92,11 +138,11 @@ async function resendFetch<T>(settings: PlatformEmailSettings | undefined, path:
     },
     cache: "no-store"
   });
-  const payload = (await response.json().catch(() => ({}))) as T & { message?: string; error?: string };
+  const payload = (await response.json().catch(() => ({}))) as T & ResendErrorPayload;
   if (!response.ok) {
-    if (response.status === 404) throw new Error("resend_domain_not_found");
-    if (response.status === 429) throw new Error("resend_rate_limited");
-    throw new Error("resend_domain_api_failed");
+    if (response.status === 404) throw new ResendProviderError({ code: "resend_domain_not_found", status: response.status, providerMessage: providerMessageFromPayload(payload), providerName: payload.name });
+    if (response.status === 429) throw new ResendProviderError({ code: "resend_rate_limited", status: response.status, providerMessage: providerMessageFromPayload(payload), providerName: payload.name });
+    throw resendProviderError(response.status, payload, "resend_domain_api_failed");
   }
   return payload;
 }
@@ -139,10 +185,9 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
     })
   });
 
-  const payload = (await response.json().catch(() => ({}))) as { id?: string; message?: string; error?: string; name?: string };
+  const payload = (await response.json().catch(() => ({}))) as { id?: string } & ResendErrorPayload;
   if (!response.ok) {
-    const providerMessage = payload.message || payload.error || payload.name || "";
-    throw new Error(providerErrorCode(response.status, providerMessage));
+    throw resendProviderError(response.status, payload);
   }
   return { messageId: payload.id };
 }
@@ -230,10 +275,13 @@ export async function listResendDomains(settings?: PlatformEmailSettings): Promi
     },
     cache: "no-store"
   });
-  if (!response.ok) return [];
   const payload = (await response.json().catch(() => ({}))) as {
     data?: Array<{ id?: string; name?: string; status?: string; region?: string; created_at?: string }>;
-  };
+  } & ResendErrorPayload;
+  if (!response.ok) {
+    if (response.status === 404) throw new ResendProviderError({ code: "resend_domain_not_found", status: response.status, providerMessage: providerMessageFromPayload(payload), providerName: payload.name });
+    throw resendProviderError(response.status, payload, "resend_domain_api_failed");
+  }
   return payload.data ?? [];
 }
 

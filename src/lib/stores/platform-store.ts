@@ -2,6 +2,7 @@ import "server-only";
 
 import { prisma } from "@/lib/prisma";
 import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain } from "@/lib/types";
+import { normalizeResendApiKey } from "@/lib/resend-email";
 
 import {
   addAuditLogRelational,
@@ -124,17 +125,19 @@ export async function updatePlatformEmailSettingsRelational(params: {
   actor?: string;
 }): Promise<PlatformEmailSettings> {
   const current = await prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } });
+  const nextApiKey = normalizeResendApiKey(params.apiKey);
+  const currentApiKey = normalizeResendApiKey(current?.apiKey);
   const settingsRecord = await prisma.platformEmailSettings.upsert({
     where: { id: "platform_email_settings" },
     create: {
       provider: "resend",
-      apiKey: params.apiKey?.trim() || undefined,
+      apiKey: nextApiKey,
       fromEmail: params.fromEmail?.trim() || undefined,
       replyTo: params.replyTo?.trim() || undefined,
       updatedBy: params.actor
     },
     update: {
-      apiKey: params.apiKey?.trim() || current?.apiKey,
+      apiKey: nextApiKey ?? currentApiKey ?? null,
       fromEmail: params.fromEmail?.trim() ?? current?.fromEmail,
       replyTo: params.replyTo?.trim() ?? current?.replyTo,
       updatedBy: params.actor
@@ -150,7 +153,7 @@ export async function updatePlatformEmailSettingsRelational(params: {
     metadata: {
       fromEmailConfigured: Boolean(settings.fromEmail),
       replyToConfigured: Boolean(settings.replyTo),
-      apiKeyUpdated: Boolean(params.apiKey?.trim())
+      apiKeyUpdated: Boolean(nextApiKey)
     }
   });
   return settings;

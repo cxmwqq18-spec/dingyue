@@ -64,6 +64,11 @@ type PlatformEmailPayload = {
   ok: boolean;
   config: PlatformEmailConfig;
   domains: Array<{ id?: string; name?: string; status?: string; region?: string }>;
+  domainCheckError?: {
+    error: string;
+    providerStatus?: number;
+    providerMessage?: string;
+  };
   senderDomain?: { id?: string; name?: string; status?: string; region?: string };
   blockingReasons: string[];
   readyForProduction: boolean;
@@ -100,8 +105,11 @@ function reasonLabel(code: string): string {
     email_provider_not_configured: "Resend API Key 或发件人地址未配置。",
     resend_domain_not_verified: "Resend 还没有验证发送域名，测试模式只能发到供应商账号自己的邮箱。",
     resend_invalid_api_key: "Resend API Key 无效或已失效。",
+    invalid_resend_api_key_format: "请输入完整有效的 Resend API Key，不要使用占位或掩码内容。",
     resend_invalid_from_email: "Resend 拒绝当前发件邮箱，请使用已验证域名邮箱。",
     resend_rate_limited: "Resend 触发限流，请稍后再试。",
+    resend_domain_api_failed: "读取 Resend Domains 失败，请检查 API Key 是否属于当前 Resend 账号。",
+    resend_domain_not_found: "Resend 没有找到该发送域名。",
     email_send_failed: "测试邮件发送失败，请稍后重试。",
     platform_login_required: "当前平台后台登录已失效，请重新登录。",
     platform_forbidden: "当前平台账号没有权限修改邮箱服务。",
@@ -112,6 +120,14 @@ function reasonLabel(code: string): string {
     network_error: "网络请求失败，请检查服务状态后重试。"
   };
   return labels[code] ?? code;
+}
+
+function providerDetailSuffix(result: { providerStatus?: number; providerMessage?: string }): string {
+  const parts = [
+    result.providerStatus ? `HTTP ${result.providerStatus}` : "",
+    result.providerMessage?.trim() ?? ""
+  ].filter(Boolean);
+  return parts.length ? `（${parts.join("：")}）` : "";
 }
 
 function domainStatusLabel(status: string): string {
@@ -185,7 +201,10 @@ export function PlatformEmailPanel({
     setStatus(result);
     setFromEmail(result.config.fromEmail);
     setReplyTo(result.config.replyTo);
-    setMessage(`检测完成：${result.summary.readySites} 个站点就绪，${result.summary.blockedSites} 个站点阻断。`);
+    const domainCheckDetail = result.domainCheckError
+      ? ` Resend 检测提示：${reasonLabel(result.domainCheckError.error)}${providerDetailSuffix(result.domainCheckError)}`
+      : "";
+    setMessage(`检测完成：${result.summary.readySites} 个站点就绪，${result.summary.blockedSites} 个站点阻断。${domainCheckDetail}`);
     router.refresh();
   }
 
@@ -234,9 +253,14 @@ export function PlatformEmailPanel({
         },
         body: JSON.stringify({ to, siteId: testSiteId })
       });
-      const result = (await response.json().catch(() => ({}))) as { error?: string; messageId?: string };
+      const result = (await response.json().catch(() => ({}))) as {
+        error?: string;
+        messageId?: string;
+        providerStatus?: number;
+        providerMessage?: string;
+      };
       if (!response.ok) {
-        setMessage(`测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}`);
+        setMessage(`测试邮件发送失败：${reasonLabel(result.error ?? "email_send_failed")}${providerDetailSuffix(result)}`);
         return;
       }
       setMessage(`测试邮件已发送，Resend message id: ${result.messageId ?? "provider accepted"}。`);
@@ -259,23 +283,21 @@ export function PlatformEmailPanel({
       body: JSON.stringify({
         siteId: row.site.id,
         domain: row.site.primaryDomain,
-        autoDns: true,
         verify: true
       })
     });
     const result = (await response.json().catch(() => ({}))) as {
       error?: string;
-      cloudflare?: { changes?: Array<{ created?: boolean; skipped?: boolean }> };
       resend?: { verificationStatus?: string };
+      dnsRecords?: Array<{ type?: string; name?: string; content?: string }>;
     };
     setProvisioningSiteId("");
     if (!response.ok) {
-      setMessage(`自动验证失败：${reasonLabel(result.error ?? "email_domain_provision_failed")}`);
+      setMessage(`Resend 验证检测失败：${reasonLabel(result.error ?? "email_domain_provision_failed")}`);
       return;
     }
-    const created = result.cloudflare?.changes?.filter((change) => change.created).length ?? 0;
-    const skipped = result.cloudflare?.changes?.filter((change) => change.skipped).length ?? 0;
-    setMessage(`自动验证已执行：Cloudflare 新增 ${created} 条，跳过 ${skipped} 条；Resend 状态 ${result.resend?.verificationStatus ?? "pending"}。`);
+    const dnsCount = result.dnsRecords?.length ?? 0;
+    setMessage(`Resend 验证检测已执行：当前状态 ${result.resend?.verificationStatus ?? "pending"}；DNS 记录 ${dnsCount} 条可用于手动核对。`);
     await refreshStatus();
   }
 
@@ -391,7 +413,7 @@ export function PlatformEmailPanel({
         </ErpSection>
       </div>
 
-      <ErpSection description="按每个站点主域名推导候选发件邮箱，并匹配 Resend Domains 验证状态。" eyebrow="cross-site readiness" title="跨站发送域名">
+      <ErpSection description="按每个站点主域名推导候选发件邮箱，并匹配 Resend Domains 验证状态；DNS 记录由你在域名服务商里手动维护。" eyebrow="cross-site readiness" title="跨站发送域名">
         <WorkbenchSearchRow
           actions={
             <>
@@ -449,7 +471,7 @@ export function PlatformEmailPanel({
                     onClick={() => provisionDomain(row)}
                     type="button"
                   >
-                    {provisioningSiteId === row.site.id ? "执行中" : "DNS 自动验证"}
+                    {provisioningSiteId === row.site.id ? "检测中" : "检测 Resend"}
                   </button>
                 </div>
               </WorkbenchTableRow>

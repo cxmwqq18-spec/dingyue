@@ -3,6 +3,8 @@ import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth
 import {
   domainFromEmail,
   listResendDomains,
+  ResendProviderError,
+  normalizeResendApiKey,
   resendDomainMatchesSender,
   resendEmailConfigStatusForSettings,
   sendEmailProviderTest
@@ -12,9 +14,24 @@ import type { PlatformEmailSettings, PlatformState, Site, SiteDomain } from "@/l
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
 
-function providerErrorCode(error: unknown): string {
-  if (!(error instanceof Error)) return "email_send_failed";
-  return error.message || "email_send_failed";
+function safeProviderMessage(message: string): string {
+  return message.replace(/re_[A-Za-z0-9_-]+/g, "re_***").slice(0, 500);
+}
+
+function providerErrorDetails(error: unknown): {
+  error: string;
+  providerStatus?: number;
+  providerMessage?: string;
+} {
+  if (!(error instanceof Error)) return { error: "email_send_failed" };
+  if (error instanceof ResendProviderError) {
+    return {
+      error: error.code,
+      providerStatus: error.status,
+      providerMessage: error.providerMessage ? safeProviderMessage(error.providerMessage) : undefined
+    };
+  }
+  return { error: error.message || "email_send_failed" };
 }
 
 function normalizeEmail(value?: string): string {
@@ -93,7 +110,13 @@ async function platformEmailPayload() {
   };
   const settings = state.platformEmailSettings;
   const config = resendEmailConfigStatusForSettings(settings);
-  const domains = await listResendDomains(settings);
+  let domainCheckError: ReturnType<typeof providerErrorDetails> | undefined;
+  let domains: ResendDomain[] = [];
+  try {
+    domains = await listResendDomains(settings);
+  } catch (error) {
+    domainCheckError = providerErrorDetails(error);
+  }
   const senderDomain = domains.find((domain) => resendDomainMatchesSender(domain.name, config.fromDomain));
   const senderDomainVerified = senderDomain?.status === "verified";
   const siteRows = buildSiteEmailRows(state, domains);
@@ -102,6 +125,7 @@ async function platformEmailPayload() {
     !config.apiKeyConfigured ? "missing_resend_api_key" : "",
     !config.fromConfigured ? "missing_resend_from_email" : "",
     config.usingTestingSender ? "resend_testing_sender" : "",
+    domainCheckError?.error ?? "",
     config.fromConfigured && !senderDomain ? "sender_domain_not_found_in_resend" : "",
     senderDomain && !senderDomainVerified ? "sender_domain_not_verified" : ""
   ].filter(Boolean);
@@ -109,6 +133,7 @@ async function platformEmailPayload() {
     ok: true,
     config,
     domains,
+    domainCheckError,
     senderDomain,
     blockingReasons,
     readyForProduction: config.apiKeyConfigured && config.fromConfigured && !config.usingTestingSender && senderDomainVerified,
@@ -142,6 +167,7 @@ export async function PUT(request: NextRequest) {
   const replyTo = normalizeEmail(body.replyTo);
   if (fromEmail && !fromEmail.includes("@")) return NextResponse.json({ error: "invalid_from_email" }, { status: 400 });
   if (replyTo && !replyTo.includes("@")) return NextResponse.json({ error: "invalid_reply_to" }, { status: 400 });
+  if (apiKey && !normalizeResendApiKey(apiKey)) return NextResponse.json({ error: "invalid_resend_api_key_format" }, { status: 400 });
   await updatePlatformEmailSettingsRelational({
     apiKey,
     fromEmail,
@@ -169,13 +195,15 @@ export async function POST(request: NextRequest) {
     const result = await sendEmailProviderTest({ to, site, settings: state.platformEmailSettings });
     return NextResponse.json({ ok: true, messageId: result.messageId, siteId: site.id });
   } catch (error) {
-    const code = providerErrorCode(error);
+    const details = providerErrorDetails(error);
     console.error("[platform-email-test] send failed", {
-      code,
+      code: details.error,
+      providerStatus: details.providerStatus,
+      providerMessage: details.providerMessage,
       siteId: site.id,
       toDomain: domainFromEmail(to),
       fromDomain: domainFromEmail(state.platformEmailSettings?.fromEmail ?? "")
     });
-    return NextResponse.json({ error: code }, { status: 502 });
+    return NextResponse.json(details, { status: 502 });
   }
 }
