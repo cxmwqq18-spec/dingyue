@@ -26,6 +26,7 @@ export type SiteAdminModuleCode =
   | "customers"
   | "ai"
   | "content"
+  | "email"
   | "settings";
 
 export type PlatformAdminModuleCode =
@@ -143,6 +144,18 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     items: ["政策页面", "FAQ", "帮助中心", "博客列表"]
   },
   {
+    label: "邮件管理",
+    code: "email",
+    icon: MailCheck,
+    href: "/admin/email",
+    metric: "邮箱",
+    tone: "warn",
+    description: "维护本站单独的 Resend 发信参数，检测域名 DNS 验证并发送验证码测试。",
+    aiExtension: "单站后台只允许维护当前站点的一套 Resend 配置，不影响其他站点。",
+    keywords: ["email", "resend", "mail", "verification", "邮件", "邮箱", "验证码"],
+    items: ["Resend 参数", "DNS 检测", "验证码测试", "域名验证"]
+  },
+  {
     label: "设置收款",
     code: "settings",
     icon: Settings2,
@@ -229,10 +242,10 @@ export const platformAdminModules: AdminModuleDefinition[] = [
     href: "/platform?module=cloudflare",
     metric: "DNS",
     tone: "warn",
-    description: "维护多个 Cloudflare 账号，选择全局 DNS 自动化账号，并支持 Resend 域名验证写入。",
-    aiExtension: "Resend 创建域名后，平台可用当前 Cloudflare 账号自动写 DNS 记录并触发验证。",
+    description: "维护多个 Cloudflare 账号，用于平台域名与 DNS 运维记录。",
+    aiExtension: "邮箱发信域名的 DNS 验证可在 Cloudflare 手动完成，平台只检测 Resend 当前验证状态。",
     keywords: ["cloudflare", "dns", "zone", "api token", "域名", "解析", "验证"],
-    items: ["API Token", "Account ID", "当前账号", "DNS 自动写入"]
+    items: ["API Token", "Account ID", "当前账号", "DNS 运维记录"]
   },
   {
     label: "审计风控",

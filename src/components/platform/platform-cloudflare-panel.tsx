@@ -88,7 +88,7 @@ export function PlatformCloudflarePanel({
   const [form, setForm] = useState({ id: "", label: "", email: "", accountId: "", apiToken: "", makeCurrent: true });
   const [saving, setSaving] = useState(false);
   const [actingId, setActingId] = useState("");
-  const [message, setMessage] = useState("配置多个 Cloudflare 账号后，可以选择一个作为当前全局 DNS 自动化账号。");
+  const [message, setMessage] = useState("配置多个 Cloudflare 账号后，可以选择一个作为当前平台 DNS 运维账号。");
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -161,7 +161,7 @@ export function PlatformCloudflarePanel({
   }
 
   async function deleteAccount(account: CloudflareAccountRow) {
-    const confirmed = window.confirm(`确认删除 Cloudflare 账号「${account.label}」？删除后不会再作为 Resend DNS 自动化账号使用。`);
+    const confirmed = window.confirm(`确认删除 Cloudflare 账号「${account.label}」？删除后不会再作为平台 DNS 运维账号使用。`);
     if (!confirmed) return;
     setActingId(account.id);
     const response = await fetch("/api/platform/cloudflare", {
@@ -250,7 +250,7 @@ export function PlatformCloudflarePanel({
           </div>
         </ErpSection>
 
-        <ErpSection description="选择哪个 Cloudflare 账号作为 Resend 域名自动 DNS 写入的全局账号。" eyebrow="accounts" title="账号列表">
+        <ErpSection description="选择哪个 Cloudflare 账号作为平台 DNS 运维记录的全局账号。" eyebrow="accounts" title="账号列表">
           <WorkbenchSearchRow
             controls={<WorkbenchSearchInput onChange={setQuery} placeholder="搜索账号、邮箱、account id" value={query} />}
             actions={<WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />}

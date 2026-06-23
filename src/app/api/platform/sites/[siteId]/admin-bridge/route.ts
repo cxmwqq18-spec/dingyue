@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
+import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
+import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
-import { setCsrfCookie } from "@/lib/security/csrf";
+import { requireCsrfToken, setCsrfCookie } from "@/lib/security/csrf";
 import { createSiteAdminSessionByAdminIdRelational, getSiteAdminBridgeTargetRelational } from "@/lib/stores/site-store";
 
 function normalizeAdminPath(value?: string | null): string {
@@ -47,12 +48,25 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
   }
 }
 
+async function requireAdminBridge(request: NextRequest, siteId: string) {
+  const current = await getCurrentPlatformAdmin();
+  if (!current) return { ok: false as const, response: NextResponse.json({ error: "platform_login_required" }, { status: 401 }) };
+  if (!["super_admin", "ops"].includes(current.platformAdmin.role)) {
+    return { ok: false as const, response: NextResponse.json({ error: "platform_forbidden" }, { status: 403 }) };
+  }
+  const csrf = requireCsrfToken(request, "platform", current.sessionId);
+  if (csrf) return { ok: false as const, response: csrf };
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.adminBridge, `platform:${current.platformAdmin.id}:admin-bridge:${siteId}`);
+  if (!limited.allowed) return { ok: false as const, response: limited.response };
+  return { ok: true as const, current };
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ siteId: string }> }
 ) {
   const { siteId } = await params;
-  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:admin-bridge:${siteId}` });
+  const guard = await requireAdminBridge(request, siteId);
   if (!guard.ok) return guard.response;
 
   const path = new URL(request.url).searchParams.get("path");
@@ -71,7 +85,7 @@ export async function POST(
   { params }: { params: Promise<{ siteId: string }> }
 ) {
   const { siteId } = await params;
-  const guard = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: `platform:admin-bridge:${siteId}` });
+  const guard = await requireAdminBridge(request, siteId);
   if (!guard.ok) return guard.response;
 
   const body = (await request.json().catch(() => ({}))) as { path?: string };

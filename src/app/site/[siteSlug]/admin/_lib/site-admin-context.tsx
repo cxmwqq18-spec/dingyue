@@ -14,6 +14,7 @@ import {
   ImageIcon,
   LayoutDashboard,
   Layers3,
+  MailCheck,
   Palette,
   ReceiptText,
   SearchCode,
@@ -27,7 +28,6 @@ import { LogoutActionButton } from "@/components/auth/logout-action-button";
 import { siteAdminModuleLinks, type SiteAdminModuleCode } from "@/lib/admin-menu";
 import {
   getPublicSiteCustomersFromState,
-  getSiteAdminBySessionFromState,
   getSiteAlbumsFromState,
   getSiteAppsFromState,
   getSiteAuditLogsFromState,
@@ -45,7 +45,7 @@ import {
   getSiteCustomersFromState,
   readPlatformState
 } from "@/lib/server-store";
-import { siteAdminSessionCookie } from "@/lib/session";
+import { getCurrentSiteAdmin } from "@/lib/api-auth";
 import { latestActivity, siteAvailableCredits, siteHealthScore, siteReservedCredits, siteRevenue } from "@/lib/ops";
 import type { PlatformState, Site, SiteAdminSession, SiteAdmin, JobStatus } from "@/lib/types";
 
@@ -99,6 +99,7 @@ export function siteAdminNav(site: Site, data: SiteAdminData) {
     { label: "顾客管理", href: modulePath(site, "/admin/customers"), icon: Users, group: "交易与客户", badge: String(data.customers.length) },
     { label: "AI 工具", href: modulePath(site, "/admin/ai-tools"), icon: Bot, group: "AI 订阅", badge: `${data.activeAiApps}/${data.apps.length}` },
     { label: "内容运营", href: modulePath(site, "/admin/content"), icon: FileText, group: "运营内容", badge: String(data.contentPageCount) },
+    { label: "邮件管理", href: modulePath(site, "/admin/email"), icon: MailCheck, group: "设置与安全", badge: data.emailReady ? "ready" : "setup" },
     { label: "站点设置", href: modulePath(site, "/admin/settings"), icon: Settings2, group: "设置与安全", badge: data.site.connect.chargesEnabled ? "ready" : "setup" }
   ];
 }
@@ -217,8 +218,8 @@ export async function getSiteAdminData(siteSlug: string) {
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
-  const sessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
-  const current = getSiteAdminBySessionFromState(state, site.id, sessionId);
+  await cookies();
+  const current = await getCurrentSiteAdmin(site.id);
   if (!current) redirect(`/site/${site.slug}/admin/login`);
 
   const rawCustomers = getSiteCustomersFromState(state, site.id);
@@ -258,6 +259,9 @@ export async function getSiteAdminData(siteSlug: string) {
   const dirtyPages = site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson)).length;
   const latestPublication = publications.at(-1);
   const feed = latestActivity(auditLogs, jobs, orders, 8);
+  const emailAssignment = state.siteEmailConfigAssignments?.find((assignment) => assignment.siteId === site.id);
+  const emailConfig = state.platformEmailConfigs?.find((config) => config.id === emailAssignment?.configId);
+  const emailReady = Boolean(emailConfig?.apiKey?.trim() && emailConfig.fromEmail?.trim());
 
   return {
     state: state as PlatformState,
@@ -300,6 +304,7 @@ export async function getSiteAdminData(siteSlug: string) {
     dirtyPages,
     latestPublication,
     feed,
+    emailReady,
     availableCredits: siteAvailableCredits(rawCustomers),
     reservedCredits: siteReservedCredits(rawCustomers),
     statusTone,

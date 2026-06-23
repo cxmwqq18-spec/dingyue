@@ -26,6 +26,7 @@
     "ops:prod-diagnose": "node scripts/ops-production-diagnose.mjs",
     "smoke:ai-providers": "node scripts/smoke-ai-providers.mjs",
     "smoke:platform-email-settings": "node scripts/smoke-platform-email-settings.mjs",
+    "smoke:platform-email-config-bindings": "node scripts/smoke-platform-email-config-bindings.mjs",
     "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",
     "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
     "smoke:server": "node scripts/run-smoke-server.mjs",

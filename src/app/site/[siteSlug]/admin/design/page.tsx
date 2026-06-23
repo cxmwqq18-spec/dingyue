@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { DesignerClient } from "@/components/designer/designer-client";
 import { LogoutActionButton } from "@/components/auth/logout-action-button";
@@ -6,7 +5,6 @@ import Link from "next/link";
 import { ArrowLeft, Layers3 } from "lucide-react";
 import { createDesignerPreviewToken } from "@/lib/designer-preview-auth";
 import {
-  getSiteAdminBySessionFromState,
   getSiteAppsFromState,
   getSiteCreativePacksFromState,
   getSiteMediaAssetsFromState,
@@ -15,7 +13,7 @@ import {
   getSiteThemePublicationsFromState,
   readPlatformState
 } from "@/lib/server-store";
-import { siteAdminSessionCookie } from "@/lib/session";
+import { getCurrentSiteAdmin } from "@/lib/api-auth";
 
 export default async function DesignPage({
   params,
@@ -29,8 +27,7 @@ export default async function DesignPage({
   const state = readPlatformState();
   const site = state.sites.find((item) => item.slug === siteSlug);
   if (!site) notFound();
-  const sessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
-  const current = getSiteAdminBySessionFromState(state, site.id, sessionId);
+  const current = await getCurrentSiteAdmin(site.id);
   if (!current) redirect(`/site/${site.slug}/admin/login`);
   const previewToken = createDesignerPreviewToken({
     sessionId: current.session.id,

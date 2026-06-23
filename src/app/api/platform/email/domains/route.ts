@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requirePlatformMutation } from "@/lib/api-auth";
-import { publishDnsRecordsToCloudflare } from "@/lib/cloudflare-dns";
 import {
   ensureResendDomain,
   resendRecordsToCloudflare,
+  resolveResendSettingsForSite,
   verifyResendDomain
 } from "@/lib/resend-email";
-import { readPlatformState } from "@/lib/server-store";
+import { getPlatformOverviewRelational } from "@/lib/stores/platform-store";
 
 function isLocalDomain(domain: string): boolean {
   const normalized = domain.trim().toLowerCase();
@@ -28,53 +28,53 @@ export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => ({}))) as {
     domain?: string;
     siteId?: string;
-    autoDns?: boolean;
+    configId?: string;
+    resendConfigId?: string;
     verify?: boolean;
   };
-  const state = readPlatformState();
-  const site = body.siteId ? state.sites.find((item) => item.id === body.siteId) : undefined;
+  const overview = await getPlatformOverviewRelational();
+  const site = body.siteId ? overview.sites.find((item) => item.id === body.siteId) : undefined;
+  const requestedConfigId = body.resendConfigId ?? body.configId;
+  const settingsContext = {
+    platformEmailSettings: overview.platformEmailSettings,
+    platformEmailConfigs: overview.platformEmailConfigs,
+    siteEmailConfigAssignments: requestedConfigId && body.siteId
+      ? [{ siteId: body.siteId, configId: requestedConfigId }]
+      : overview.siteEmailConfigAssignments
+  };
+  const settings = resolveResendSettingsForSite(settingsContext, body.siteId);
   const domain = normalizeDomain(body.domain || site?.primaryDomain);
   if (!domain) return NextResponse.json({ error: "missing_domain" }, { status: 400 });
   if (!domain.includes(".") || isLocalDomain(domain)) {
     return NextResponse.json({ error: "local_domain_not_verifiable" }, { status: 400 });
   }
-  const cfAccount = (state.platformCloudflareAccounts ?? []).find((account) => account.id === state.currentCloudflareAccountId);
   try {
-    const resend = await ensureResendDomain({ domain, settings: state.platformEmailSettings });
+    const resend = await ensureResendDomain({ domain, settings });
     const dnsRecords = resendRecordsToCloudflare(resend.domain.records);
-    if (!dnsRecords.length) return NextResponse.json({ error: "resend_domain_records_missing" }, { status: 502 });
-    const cloudflare = body.autoDns === false
-      ? undefined
-      : await publishDnsRecordsToCloudflare({
-          account: cfAccount,
-          domain,
-          records: dnsRecords
-        });
     const verified = body.verify === false || !resend.domain.id
       ? undefined
-      : await verifyResendDomain({ domainId: resend.domain.id, settings: state.platformEmailSettings });
+      : await verifyResendDomain({ domainId: resend.domain.id, settings });
     return NextResponse.json({
       ok: true,
       domain,
       resend: {
+        configId: settings.id,
+        configLabel: settings.label,
         domain: resend.domain,
         created: resend.created,
         verificationStatus: verified?.status ?? resend.domain.status
       },
       dnsRecords,
-      cloudflare,
       verified
     });
   } catch (error) {
     const code = providerErrorCode(error);
     const status =
-      code === "missing_resend_api_key" ||
-      code === "missing_cloudflare_api_token" ||
-      code === "missing_cloudflare_account_id"
+      code === "missing_resend_api_key"
         ? 400
-        : code === "cloudflare_zone_not_found" || code === "resend_domain_not_found"
+        : code === "resend_domain_not_found"
           ? 404
-          : code === "cloudflare_rate_limited" || code === "resend_rate_limited"
+          : code === "resend_rate_limited"
             ? 429
             : 502;
     return NextResponse.json({ error: code }, { status });

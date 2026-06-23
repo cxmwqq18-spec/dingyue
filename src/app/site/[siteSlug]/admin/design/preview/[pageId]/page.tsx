@@ -13,6 +13,7 @@ import {
   readPlatformState
 } from "@/lib/server-store";
 import { siteAdminSessionCookie } from "@/lib/session";
+import { getSiteAdminBySessionRelational } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 
 export default async function ThemePreviewPage({
@@ -30,8 +31,13 @@ export default async function ThemePreviewPage({
   site.mediaAssets = getSiteMediaAssetsFromState(state, site.id);
   const cookieSessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
   const tokenPayload = verifyDesignerPreviewToken(query.previewToken, { siteId: site.id, siteSlug: site.slug });
-  const cookieSession = getSiteAdminBySessionFromState(state, site.id, cookieSessionId);
-  const tokenSession = tokenPayload ? getSiteAdminBySessionFromState(state, site.id, tokenPayload.sessionId) : undefined;
+  const cookieSession =
+    (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: cookieSessionId })) ??
+    getSiteAdminBySessionFromState(state, site.id, cookieSessionId);
+  const tokenSession = tokenPayload
+    ? (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: tokenPayload.sessionId })) ??
+      getSiteAdminBySessionFromState(state, site.id, tokenPayload.sessionId)
+    : undefined;
   if (!cookieSession && !tokenSession) redirect(`/site/${site.slug}/admin/login`);
   const page = site.pages.find((item) => item.id === pageId);
   if (!page) notFound();

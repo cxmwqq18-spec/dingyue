@@ -1,5 +1,5 @@
 import "server-only";
-import type { Site } from "@/lib/types";
+import type { PlatformEmailConfig, Site } from "@/lib/types";
 
 type CloudflareDnsRecordInput = {
   type: "MX" | "TXT" | "CNAME";
@@ -17,6 +17,12 @@ type PlatformEmailSettings = {
   replyTo?: string;
   updatedAt?: string;
   updatedBy?: string;
+};
+
+export type ResendSettingsContext = {
+  platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs?: PlatformEmailConfig[];
+  siteEmailConfigAssignments?: Array<{ siteId: string; configId: string }>;
 };
 
 type ResendErrorPayload = {
@@ -45,8 +51,9 @@ export interface SendVerificationEmailParams {
   to: string;
   code: string;
   purpose: "register" | "password_reset";
-  site: Pick<Site, "name" | "branding">;
+  site: Pick<Site, "id" | "name" | "branding">;
   settings?: PlatformEmailSettings;
+  settingsContext?: ResendSettingsContext;
 }
 
 export type ResendDnsRecord = {
@@ -75,6 +82,43 @@ export function normalizeResendApiKey(value?: string | null): string | undefined
   if (key.includes("...")) return undefined;
   if (key.length < 30) return undefined;
   return key;
+}
+
+export function normalizePlatformEmailConfig(config: Partial<PlatformEmailConfig> & { id?: string }, fallback?: PlatformEmailSettings): PlatformEmailConfig {
+  const id = config.id?.trim() || "resend_default";
+  return {
+    id,
+    label: config.label?.trim() || (id === "resend_default" ? "Default Resend" : id),
+    provider: "resend",
+    apiKey: normalizeResendApiKey(config.apiKey) ?? normalizeResendApiKey(fallback?.apiKey),
+    fromEmail: config.fromEmail?.trim() || fallback?.fromEmail?.trim() || undefined,
+    replyTo: config.replyTo?.trim() || fallback?.replyTo?.trim() || undefined,
+    isDefault: Boolean(config.isDefault),
+    updatedAt: config.updatedAt ?? fallback?.updatedAt,
+    updatedBy: config.updatedBy ?? fallback?.updatedBy
+  };
+}
+
+export function resolvePlatformEmailConfigs(context?: ResendSettingsContext | PlatformEmailSettings): PlatformEmailConfig[] {
+  const maybeContext = context as ResendSettingsContext | undefined;
+  const hasContextShape = Boolean(maybeContext && ("platformEmailSettings" in maybeContext || "platformEmailConfigs" in maybeContext || "siteEmailConfigAssignments" in maybeContext));
+  const legacy = hasContextShape ? maybeContext?.platformEmailSettings : (context as PlatformEmailSettings | undefined);
+  const rawConfigs = hasContextShape ? maybeContext?.platformEmailConfigs ?? [] : [];
+  const configs = rawConfigs.map((config) => normalizePlatformEmailConfig(config, legacy));
+  if (!configs.length) {
+    configs.push(normalizePlatformEmailConfig({ id: "resend_default", label: "Default Resend", isDefault: true }, legacy));
+  }
+  if (!configs.some((config) => config.isDefault)) configs[0].isDefault = true;
+  return configs;
+}
+
+export function resolveResendSettingsForSite(context?: ResendSettingsContext | PlatformEmailSettings, siteId?: string): PlatformEmailConfig {
+  const configs = resolvePlatformEmailConfigs(context);
+  const maybeContext = context as ResendSettingsContext | undefined;
+  const assignment = siteId && maybeContext && "siteEmailConfigAssignments" in maybeContext
+    ? maybeContext.siteEmailConfigAssignments?.find((item) => item.siteId === siteId)
+    : undefined;
+  return configs.find((config) => config.id === assignment?.configId) ?? configs.find((config) => config.isDefault) ?? configs[0];
 }
 
 function effectiveResendSettings(settings?: PlatformEmailSettings): Required<Pick<PlatformEmailSettings, "provider">> & Pick<PlatformEmailSettings, "apiKey" | "fromEmail" | "replyTo" | "updatedAt" | "updatedBy"> {
@@ -148,7 +192,8 @@ async function resendFetch<T>(settings: PlatformEmailSettings | undefined, path:
 }
 
 export async function sendVerificationEmail(params: SendVerificationEmailParams): Promise<{ messageId?: string }> {
-  const settings = effectiveResendSettings(params.settings);
+  const selected = params.settingsContext ? resolveResendSettingsForSite(params.settingsContext, params.site.id) : params.settings;
+  const settings = effectiveResendSettings(selected);
   const apiKey = settings.apiKey;
   const from = settings.fromEmail;
   if (!apiKey || !from) {
@@ -240,6 +285,18 @@ export function resendEmailConfigStatusForSettings(settings?: PlatformEmailSetti
     source,
     updatedAt: settings?.updatedAt,
     updatedBy: settings?.updatedBy
+  };
+}
+
+export function resendEmailConfigStatusForSite(context?: ResendSettingsContext | PlatformEmailSettings, siteId?: string): ReturnType<typeof resendEmailConfigStatus> & {
+  configId?: string;
+  configLabel?: string;
+} {
+  const selected = resolveResendSettingsForSite(context, siteId);
+  return {
+    ...resendEmailConfigStatusForSettings(selected),
+    configId: selected.id,
+    configLabel: selected.label
   };
 }
 
@@ -367,14 +424,20 @@ function smokeResendDomain(domain: string, status: string, id = `resend_domain_$
   };
 }
 
-export async function sendEmailProviderTest(params: { to: string; site: Pick<Site, "name" | "branding">; settings?: PlatformEmailSettings }): Promise<{ messageId?: string }> {
+export async function sendEmailProviderTest(params: {
+  to: string;
+  site: Pick<Site, "id" | "name" | "branding">;
+  settings?: PlatformEmailSettings;
+  settingsContext?: ResendSettingsContext;
+}): Promise<{ messageId?: string }> {
   const code = "123456";
   return sendVerificationEmail({
     to: params.to,
     code,
     purpose: "register",
     site: params.site,
-    settings: params.settings
+    settings: params.settings,
+    settingsContext: params.settingsContext
   });
 }
 

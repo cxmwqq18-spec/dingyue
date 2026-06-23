@@ -1,8 +1,9 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain } from "@/lib/types";
-import { normalizeResendApiKey } from "@/lib/resend-email";
+import { readPlatformState, writePlatformState } from "@/lib/server-store";
+import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment } from "@/lib/types";
+import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 
 import {
   addAuditLogRelational,
@@ -62,6 +63,8 @@ export async function getPlatformOverviewRelational(): Promise<{
   sites: Site[];
   siteDomains: SiteDomain[];
   platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs: PlatformEmailConfig[];
+  siteEmailConfigAssignments: SiteEmailConfigAssignment[];
   platformCloudflareAccounts: PlatformCloudflareAccount[];
   currentCloudflareAccountId?: string;
   platformAiProviders: PlatformAiProvider[];
@@ -78,6 +81,12 @@ export async function getPlatformOverviewRelational(): Promise<{
     prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
   ]);
   const preferredProvider = aiProviders.find((provider) => provider.preferred);
+  const jsonState = readPlatformState();
+  const legacyEmailSettings = emailSettings ? toPlatformEmailSettings(emailSettings) : jsonState.platformEmailSettings;
+  const platformEmailConfigs = (jsonState.platformEmailConfigs ?? []).map((config) => normalizePlatformEmailConfig(config, legacyEmailSettings));
+  if (!platformEmailConfigs.length) {
+    platformEmailConfigs.push(normalizePlatformEmailConfig({ id: "resend_default", label: "Default Resend", isDefault: true }, legacyEmailSettings));
+  }
   return {
     sites: sites.map(toSite),
     siteDomains: siteDomains.map((domain) => ({
@@ -88,7 +97,9 @@ export async function getPlatformOverviewRelational(): Promise<{
       status: domain.status as SiteDomain["status"],
       createdAt: domain.createdAt.toISOString()
     })),
-    platformEmailSettings: emailSettings ? toPlatformEmailSettings(emailSettings) : undefined,
+    platformEmailSettings: legacyEmailSettings,
+    platformEmailConfigs,
+    siteEmailConfigAssignments: jsonState.siteEmailConfigAssignments ?? [],
     platformCloudflareAccounts: cloudflareAccounts.map(toPlatformCloudflareAccount),
     currentCloudflareAccountId: cloudflareAccounts[0]?.id,
     platformAiProviders: aiProviders.map(toPlatformAiProvider),
@@ -119,27 +130,80 @@ export async function getPlatformSitesRelational(): Promise<
 }
 
 export async function updatePlatformEmailSettingsRelational(params: {
+  configId?: string;
+  label?: string;
   apiKey?: string;
   fromEmail?: string;
   replyTo?: string;
+  isDefault?: boolean;
+  siteAssignments?: Array<{ siteId: string; configId: string }>;
   actor?: string;
 }): Promise<PlatformEmailSettings> {
   const current = await prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } });
   const nextApiKey = normalizeResendApiKey(params.apiKey);
   const currentApiKey = normalizeResendApiKey(current?.apiKey);
+  const jsonState = readPlatformState();
+  const legacySettings = current ? toPlatformEmailSettings(current) : jsonState.platformEmailSettings;
+  const currentConfigs = (jsonState.platformEmailConfigs ?? []).map((config) => normalizePlatformEmailConfig(config, legacySettings));
+  const targetId = params.configId?.trim() || currentConfigs.find((config) => config.isDefault)?.id || currentConfigs[0]?.id || "resend_default";
+  const existingConfig = currentConfigs.find((config) => config.id === targetId);
+  const updatedConfig = normalizePlatformEmailConfig(
+    {
+      ...(existingConfig ?? { id: targetId }),
+      label: params.label ?? existingConfig?.label,
+      apiKey: nextApiKey ?? existingConfig?.apiKey ?? legacySettings?.apiKey,
+      fromEmail: params.fromEmail?.trim() ?? existingConfig?.fromEmail ?? legacySettings?.fromEmail,
+      replyTo: params.replyTo?.trim() ?? existingConfig?.replyTo ?? legacySettings?.replyTo,
+      isDefault: params.isDefault ?? existingConfig?.isDefault ?? !currentConfigs.some((config) => config.isDefault),
+      updatedBy: params.actor,
+      updatedAt: new Date().toISOString()
+    },
+    legacySettings
+  );
+  const nextConfigs = [
+    updatedConfig,
+    ...currentConfigs.filter((config) => config.id !== targetId)
+  ].map((config) => ({
+    ...config,
+    isDefault: updatedConfig.isDefault ? config.id === updatedConfig.id : config.isDefault
+  }));
+  if (!nextConfigs.some((config) => config.isDefault)) nextConfigs[0].isDefault = true;
+  const validConfigIds = new Set(nextConfigs.map((config) => config.id));
+  const nextAssignments = (params.siteAssignments ?? jsonState.siteEmailConfigAssignments ?? [])
+    .filter((assignment) => assignment.siteId && validConfigIds.has(assignment.configId))
+    .map((assignment) => ({
+      siteId: assignment.siteId,
+      configId: assignment.configId,
+      updatedAt: new Date().toISOString(),
+      updatedBy: params.actor
+    }));
+  writePlatformState({
+    ...jsonState,
+    platformEmailSettings: {
+      provider: "resend",
+      apiKey: nextConfigs.find((config) => config.isDefault)?.apiKey,
+      fromEmail: nextConfigs.find((config) => config.isDefault)?.fromEmail,
+      replyTo: nextConfigs.find((config) => config.isDefault)?.replyTo,
+      updatedAt: updatedConfig.updatedAt,
+      updatedBy: params.actor
+    },
+    platformEmailConfigs: nextConfigs,
+    siteEmailConfigAssignments: nextAssignments
+  });
+  const defaultConfig = nextConfigs.find((config) => config.isDefault) ?? updatedConfig;
   const settingsRecord = await prisma.platformEmailSettings.upsert({
     where: { id: "platform_email_settings" },
     create: {
       provider: "resend",
-      apiKey: nextApiKey,
-      fromEmail: params.fromEmail?.trim() || undefined,
-      replyTo: params.replyTo?.trim() || undefined,
+      apiKey: defaultConfig.apiKey,
+      fromEmail: defaultConfig.fromEmail,
+      replyTo: defaultConfig.replyTo,
       updatedBy: params.actor
     },
     update: {
-      apiKey: nextApiKey ?? currentApiKey ?? null,
-      fromEmail: params.fromEmail?.trim() ?? current?.fromEmail,
-      replyTo: params.replyTo?.trim() ?? current?.replyTo,
+      apiKey: defaultConfig.apiKey ?? currentApiKey ?? null,
+      fromEmail: defaultConfig.fromEmail ?? current?.fromEmail,
+      replyTo: defaultConfig.replyTo ?? current?.replyTo,
       updatedBy: params.actor
     }
   });
@@ -153,7 +217,9 @@ export async function updatePlatformEmailSettingsRelational(params: {
     metadata: {
       fromEmailConfigured: Boolean(settings.fromEmail),
       replyToConfigured: Boolean(settings.replyTo),
-      apiKeyUpdated: Boolean(nextApiKey)
+      apiKeyUpdated: Boolean(nextApiKey),
+      configId: updatedConfig.id,
+      siteAssignmentsUpdated: Boolean(params.siteAssignments)
     }
   });
   return settings;

@@ -311,6 +311,19 @@ export interface PlatformEmailSettings {
   updatedBy?: string;
 }
 
+export interface PlatformEmailConfig extends PlatformEmailSettings {
+  id: string;
+  label: string;
+  isDefault?: boolean;
+}
+
+export interface SiteEmailConfigAssignment {
+  siteId: string;
+  configId: string;
+  updatedAt?: string;
+  updatedBy?: string;
+}
+
 export interface PlatformSession {
   id: string;
   platformAdminId: string;
@@ -711,6 +724,8 @@ export interface PlatformState {
   platformAdmins: PlatformAdmin[];
   platformSessions: PlatformSession[];
   platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs?: PlatformEmailConfig[];
+  siteEmailConfigAssignments?: SiteEmailConfigAssignment[];
   platformCloudflareAccounts?: PlatformCloudflareAccount[];
   currentCloudflareAccountId?: string;
   sites: Site[];

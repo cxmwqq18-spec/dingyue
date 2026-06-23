@@ -2,7 +2,7 @@ import "server-only";
 import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { sendVerificationEmail } from "@/lib/resend-email";
-import { StoreError } from "@/lib/server-store";
+import { readPlatformState, StoreError } from "@/lib/server-store";
 import {
   hashRelationalPassword,
   relationalSessionTtlMs,
@@ -112,7 +112,13 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
     expiresAt: new Date(createdAt.getTime() + verificationTtlMs).toISOString()
   };
   const emailSettings = await prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } });
-  const settings = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
+  const jsonState = readPlatformState();
+  const settings = emailSettings ? toPlatformEmailSettings(emailSettings) : jsonState.platformEmailSettings;
+  const settingsContext = {
+    platformEmailSettings: settings,
+    platformEmailConfigs: jsonState.platformEmailConfigs,
+    siteEmailConfigAssignments: jsonState.siteEmailConfigAssignments
+  };
 
   try {
     const sent = await sendVerificationEmail({
@@ -120,7 +126,7 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
       code,
       purpose,
       site,
-      settings
+      settingsContext
     });
     verification.deliveryStatus = "sent";
     verification.providerMessageId = sent.messageId;

@@ -76,6 +76,7 @@ import type {
   ThemeSettingValue
 } from "./types";
 import { resolveMediaAssetUrl } from "@/lib/media";
+import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
 
 const dataDir = path.join(process.cwd(), "data");
@@ -87,6 +88,7 @@ const postgresStateDiskCacheEnabled = process.env.PLATFORM_STATE_DISK_CACHE !== 
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
 
 let postgresStateCache: { expiresAt: number; state: PlatformState } | null = null;
+let postgresFallbackWarned = false;
 
 export class StoreError extends Error {
   status: number;
@@ -121,6 +123,30 @@ function readPostgresStateCache(): PlatformState | null {
   } catch {
     return null;
   }
+}
+
+function shouldFallbackToJsonState(): boolean {
+  return process.env.PERSISTENCE_BACKEND === "postgres" && process.env.NODE_ENV !== "production" && process.env.PLATFORM_STATE_POSTGRES_STRICT !== "1";
+}
+
+function warnPostgresFallback(error: unknown): void {
+  if (postgresFallbackWarned) return;
+  postgresFallbackWarned = true;
+  const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
+  console.warn(`[platform-state] Postgres unavailable; using JSON fallback for local development. ${message}`);
+}
+
+function readJsonPlatformStateFallback(): PlatformState {
+  if (!fs.existsSync(dataFile)) {
+    return normalizeState(cloneState(seedState));
+  }
+  return normalizeState(JSON.parse(fs.readFileSync(dataFile, "utf8")) as PlatformState);
+}
+
+function writeJsonPlatformStateFallback(nextState: PlatformState): PlatformState {
+  fs.mkdirSync(dataDir, { recursive: true });
+  fs.writeFileSync(dataFile, `${JSON.stringify(nextState, null, 2)}\n`);
+  return nextState;
 }
 
 function writePostgresStateCache(state: PlatformState): void {
@@ -746,6 +772,15 @@ function normalizeState(state: PlatformState): PlatformState {
   }));
   next.platformSessions ??= [];
   next.platformEmailSettings ??= { provider: "resend" };
+  const legacyEmailSettings = next.platformEmailSettings;
+  next.platformEmailConfigs = (next.platformEmailConfigs ?? []).map((config) => normalizePlatformEmailConfig(config, legacyEmailSettings));
+  if (!next.platformEmailConfigs.length) {
+    next.platformEmailConfigs = [normalizePlatformEmailConfig({ id: "resend_default", label: "Default Resend", isDefault: true }, legacyEmailSettings)];
+  }
+  if (!next.platformEmailConfigs.some((config) => config.isDefault)) next.platformEmailConfigs[0].isDefault = true;
+  next.siteEmailConfigAssignments = (next.siteEmailConfigAssignments ?? []).filter((assignment) => {
+    return next.sites?.some((site) => site.id === assignment.siteId) && next.platformEmailConfigs?.some((config) => config.id === assignment.configId);
+  });
   next.platformCloudflareAccounts ??= [];
   next.platformCloudflareAccounts = next.platformCloudflareAccounts.map((account) => {
     const id = account.id || `cf_${crypto.createHash("sha1").update(`${account.accountId}:${account.email}`).digest("hex").slice(0, 10)}`;
@@ -1203,12 +1238,21 @@ export function readPlatformState(options: { fresh?: boolean } = {}): PlatformSt
   if (process.env.PERSISTENCE_BACKEND === "postgres") {
     const cachedState = options.fresh ? null : readPostgresStateCache();
     if (cachedState) return cachedState;
-    const raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      env: process.env,
-      maxBuffer: 1024 * 1024 * 64
-    }).trim();
+    let raw = "";
+    try {
+      raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+        env: process.env,
+        maxBuffer: 1024 * 1024 * 64
+      }).trim();
+    } catch (error) {
+      if (!shouldFallbackToJsonState()) throw error;
+      warnPostgresFallback(error);
+      const fallbackState = readJsonPlatformStateFallback();
+      writePostgresStateCache(fallbackState);
+      return fallbackState;
+    }
     if (raw) {
       const normalized = normalizeState(JSON.parse(raw) as PlatformState);
       writePostgresStateCache(normalized);
@@ -1229,13 +1273,20 @@ export function writePlatformState(nextState: PlatformState): PlatformState {
   fs.mkdirSync(dataDir, { recursive: true });
   const normalized = normalizeState(nextState);
   if (process.env.PERSISTENCE_BACKEND === "postgres") {
-    execFileSync(process.execPath, [postgresBridgeScript, "write"], {
-      cwd: process.cwd(),
-      input: JSON.stringify(normalized),
-      encoding: "utf8",
-      env: process.env,
-      maxBuffer: 1024 * 1024 * 64
-    });
+    try {
+      execFileSync(process.execPath, [postgresBridgeScript, "write"], {
+        cwd: process.cwd(),
+        input: JSON.stringify(normalized),
+        encoding: "utf8",
+        env: process.env,
+        maxBuffer: 1024 * 1024 * 64
+      });
+    } catch (error) {
+      if (!shouldFallbackToJsonState()) throw error;
+      warnPostgresFallback(error);
+      writePostgresStateCache(normalized);
+      return writeJsonPlatformStateFallback(normalized);
+    }
     writePostgresStateCache(normalized);
     return normalized;
   }
@@ -4248,7 +4299,7 @@ export function updatePlatformEmailSettings(params: {
 }): PlatformState {
   return mutatePlatformState((state) => {
     const current = state.platformEmailSettings ?? { provider: "resend" as const };
-    const nextApiKey = params.apiKey?.trim();
+    const nextApiKey = normalizeResendApiKey(params.apiKey);
     const fromEmail = params.fromEmail?.trim();
     const replyTo = params.replyTo?.trim();
     const now = new Date().toISOString();
@@ -4260,6 +4311,21 @@ export function updatePlatformEmailSettings(params: {
       updatedAt: now,
       updatedBy: params.actor
     };
+    const configs = state.platformEmailConfigs ?? [];
+    const defaultConfig = configs.find((config) => config.isDefault) ?? configs[0];
+    const nextConfig = normalizePlatformEmailConfig(
+      {
+        ...(defaultConfig ?? { id: "resend_default", label: "Default Resend", isDefault: true }),
+        apiKey: nextApiKey ?? defaultConfig?.apiKey ?? current.apiKey,
+        fromEmail: fromEmail ?? defaultConfig?.fromEmail ?? current.fromEmail,
+        replyTo: replyTo ?? defaultConfig?.replyTo ?? current.replyTo,
+        isDefault: true,
+        updatedAt: now,
+        updatedBy: params.actor
+      },
+      state.platformEmailSettings
+    );
+    state.platformEmailConfigs = [nextConfig, ...configs.filter((config) => config.id !== nextConfig.id).map((config) => ({ ...config, isDefault: false }))];
     state.auditLogs.unshift({
       id: uid("audit"),
       actorType: "platform_admin",
