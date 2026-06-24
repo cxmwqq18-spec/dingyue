@@ -2,7 +2,8 @@
 
 function escapeCsvCell(value: unknown): string {
   if (value === null || value === undefined) return "";
-  const text = String(value);
+  const rawText = String(value);
+  const text = /^[=+\-@]/.test(rawText) ? `'${rawText}` : rawText;
   if (/["\n,]/.test(text)) {
     return `"${text.replace(/"/g, "\"\"")}"`;
   }
@@ -34,5 +35,5 @@ export function downloadJson(filename: string, data: unknown) {
 }
 
 export function downloadCsv(filename: string, rows: Array<Record<string, unknown>>, columns?: string[]) {
-  downloadTextFile(filename, rowsToCsv(rows, columns), "text/csv;charset=utf-8");
+  downloadTextFile(filename, `\uFEFF${rowsToCsv(rows, columns)}`, "text/csv;charset=utf-8");
 }

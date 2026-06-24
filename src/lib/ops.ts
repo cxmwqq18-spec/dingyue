@@ -74,7 +74,7 @@ export function latestActivity(
 ): Array<{ id: string; label: string; detail: string; at: string; tone: "good" | "warn" | "bad" | "neutral" }> {
   const audit = auditLogs.map((entry) => ({
     id: entry.id,
-    label: entry.action.replace(/_/g, " "),
+    label: entry.action,
     detail: `${entry.targetType}:${entry.targetId}`,
     at: entry.createdAt,
     tone: "neutral" as const
