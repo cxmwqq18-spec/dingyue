@@ -1,8 +1,10 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { AdminModuleDefinition, AdminModuleLink } from "@/lib/admin-menu";
+import { AdminInstantLink } from "@/components/admin/admin-instant-link";
+import { AdminModuleRailLink } from "@/components/admin/admin-module-rail-link";
 import { StatusPill } from "@/components/ui";
-import type { AdminNavItem, AdminWorkspace } from "./admin-types";
+import type { AdminNavItem, AdminWorkspaceSummary } from "./admin-types";
 
 export function scopedAdminHref(href: string, siteSlug?: string): string {
   if (!siteSlug) return href;
@@ -45,7 +47,7 @@ export function MobileAdminModuleSwitcher({
 }: {
   brand: string;
   shellLabel: string;
-  workspace?: AdminWorkspace;
+  workspace?: AdminWorkspaceSummary;
   modules: AdminModuleDefinition[];
   activeModule: AdminModuleDefinition;
   moduleHrefByCode: Map<string, string>;
@@ -70,19 +72,22 @@ export function MobileAdminModuleSwitcher({
       <nav className="mt-3 flex gap-2 overflow-x-auto pb-1" data-admin-layout="saas-left-module-rail">
         {modules.map((group) => {
           const isActive = group.code === activeModule.code;
+          const href = moduleHrefByCode.get(group.code) ?? scopedAdminHref(group.href, siteSlug);
           return (
-            <Link
-              className={`inline-flex min-w-[110px] items-center justify-center gap-2 rounded-[12px] border px-3 py-2 text-xs font-medium transition active:scale-[0.98] ${
-                isActive
-                  ? "border-[#2f6fed] bg-[#2f6fed] text-white shadow-[0_14px_24px_-18px_rgba(47,111,237,0.9)]"
-                  : "border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/20 hover:bg-white/[0.08]"
-              }`}
-              href={moduleHrefByCode.get(group.code) ?? scopedAdminHref(group.href, siteSlug)}
+            <AdminModuleRailLink
+              activeClassName="border-[#2f6fed] bg-[#2f6fed] text-white shadow-[0_14px_24px_-18px_rgba(47,111,237,0.9)]"
+              baseClassName="inline-flex min-w-[110px] items-center justify-center gap-2 rounded-[12px] border px-3 py-2 text-xs font-medium transition active:scale-[0.98]"
+              href={href}
+              inactiveClassName="border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/20 hover:bg-white/[0.08]"
+              isActive={isActive}
               key={`mobile-module:${group.label}`}
+              moduleCode={group.code}
+              moduleHref={scopedAdminHref(group.href, siteSlug)}
+              siteSlug={siteSlug}
             >
               <group.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
               <span className="truncate">{group.label}</span>
-            </Link>
+            </AdminModuleRailLink>
           );
         })}
       </nav>
@@ -103,7 +108,7 @@ export function AdminModuleRail({
 }: {
   brand: string;
   shellLabel: string;
-  workspace?: AdminWorkspace;
+  workspace?: AdminWorkspaceSummary;
   modules: AdminModuleDefinition[];
   activeModule: AdminModuleDefinition;
   activeModuleNav: AdminNavItem[];
@@ -135,7 +140,7 @@ export function AdminModuleRail({
                 {workspace?.statusLabel ?? "已隔离"}
               </span>
             </div>
-            <p className="mt-1 truncate text-[11px] text-white/38">{workspace?.meta ?? workspace?.label ?? "站点隔离"}</p>
+            <p className="mt-1 truncate text-[11px] text-white/38">{workspace?.meta ?? "站点隔离"}</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <span className="rounded-[8px] border border-white/8 bg-white/[0.04] px-2.5 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-white/48">
                 scoped
@@ -152,22 +157,25 @@ export function AdminModuleRail({
           <div>
             {modules.map((group) => {
               const isActive = group.code === activeModule.code;
+              const href = moduleHrefByCode.get(group.code) ?? scopedAdminHref(group.href, siteSlug);
               return (
-                <Link
-                  className={`relative mx-2 flex min-h-[38px] items-center gap-3 rounded-[8px] px-3 py-2 text-[13px] transition ${
-                    isActive
-                      ? "bg-[#2f6fed] text-white shadow-[0_18px_28px_-22px_rgba(47,111,237,0.95)]"
-                      : "text-white/72 hover:bg-white/[0.045] hover:text-white"
-                  }`}
-                  href={moduleHrefByCode.get(group.code) ?? scopedAdminHref(group.href, siteSlug)}
+                <AdminModuleRailLink
+                  activeClassName="bg-[#2f6fed] text-white shadow-[0_18px_28px_-22px_rgba(47,111,237,0.95)]"
+                  baseClassName="relative mx-2 flex min-h-[38px] items-center gap-3 rounded-[8px] px-3 py-2 text-[13px] transition"
+                  href={href}
+                  inactiveClassName="text-white/72 hover:bg-white/[0.045] hover:text-white"
+                  isActive={isActive}
                   key={`module:${group.label}`}
+                  moduleCode={group.code}
+                  moduleHref={scopedAdminHref(group.href, siteSlug)}
+                  siteSlug={siteSlug}
                 >
                   <group.icon className="h-4 w-4 shrink-0" strokeWidth={1.8} />
                   <span className="min-w-0 flex-1 truncate font-medium tracking-[-0.01em]">{group.label}</span>
                   <span className={`rounded-[4px] px-1.5 py-0.5 text-[10px] font-mono ${isActive ? "bg-white/15 text-white" : "bg-white/[0.06] text-white/35"}`}>
                     {group.metric}
                   </span>
-                </Link>
+                </AdminModuleRailLink>
               );
             })}
           </div>
@@ -177,10 +185,11 @@ export function AdminModuleRail({
               <p className="px-5 pb-2 text-[11px] uppercase tracking-[0.16em] text-white/28">当前模块</p>
               <div>
                 {activeModuleNav.map((item) => (
-                  <Link
+                  <AdminInstantLink
                     className="mx-2 grid min-h-[32px] grid-cols-[16px_1fr_auto] items-center gap-2 rounded-[8px] px-3 py-1.5 text-[12px] text-white/58 transition hover:bg-white/[0.05] hover:text-white"
                     href={scopedAdminHref(item.href, siteSlug)}
                     key={`${activeModule.code}:${item.href}:${item.label}`}
+                    prefetch={false}
                   >
                     <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
                     <span className="truncate">{item.label}</span>
@@ -189,7 +198,7 @@ export function AdminModuleRail({
                         {item.badge}
                       </span>
                     ) : null}
-                  </Link>
+                  </AdminInstantLink>
                 ))}
               </div>
             </div>
