@@ -114,7 +114,7 @@ export function AdminRoutePendingPreview() {
             <div className="min-w-0">
               <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#98a2b3]">{meta.eyebrow}</p>
               <div className="mt-0.5 flex min-w-0 items-center gap-2">
-                <h1 className="shrink-0 text-[14px] font-semibold leading-5 text-[var(--admin-text)]">正在进入 {meta.title}</h1>
+                <strong className="shrink-0 text-[14px] font-semibold leading-5 text-[var(--admin-text)]">正在进入 {meta.title}</strong>
                 <span className="hidden truncate text-[12px] text-[#667085] md:inline">{meta.subtitle}</span>
               </div>
             </div>
