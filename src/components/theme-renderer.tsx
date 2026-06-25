@@ -133,7 +133,7 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
+        <ThemeGlobalHeader creativePacks={creativePacks} runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section]) => (
@@ -268,7 +268,7 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: { runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
+export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings, pagePath = "/" }: { creativePacks?: CreativePack[]; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -295,6 +295,8 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
   const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && toolMegaBlocks.length > 0;
+  const photoPackageMegaGroups = getPhotoPackageMegaGroups(creativePacks);
+  const showPhotoPackageMega = dark && /dreamshoot/i.test(title) && photoPackageMegaGroups.length > 0;
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
@@ -381,7 +383,9 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
                 ? "inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-[0.94rem] font-medium text-[#171514] transition hover:text-[#b07b47] 2xl:text-[0.98rem]"
                 : "inline-flex shrink-0 whitespace-nowrap transition hover:text-[var(--site-fg)]";
             const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
-            const linkNode = isToolsLink ? (
+            const isPackagesLink = showPhotoPackageMega && /photo packages|packages/i.test(link.label);
+            const isMegaLink = isToolsLink || isPackagesLink;
+            const linkNode = isMegaLink ? (
               <button
                 aria-expanded="false"
                 className={navClass}
@@ -400,20 +404,24 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
                 {link.label}
               </HeaderLink>
             );
-            if (!isToolsLink) {
+            if (!isMegaLink) {
               return <span key={`${link.label}_${link.href}`}>{linkNode}</span>;
             }
             return (
               <div className="group relative" key={`${link.label}_${link.href}`}>
                 {linkNode}
                 <div className={`invisible pointer-events-none fixed left-1/2 z-50 w-[min(92vw,1180px)] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 ease-out group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}>
-                  <DreamShootMegaToolsPanel
-                    ctaHref="/tools"
-                    ctaLabel="View all tools"
-                    site={site}
-                    tools={toolMegaBlocks}
-                    variant="popover"
-                  />
+                  {isPackagesLink ? (
+                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} />
+                  ) : (
+                    <DreamShootMegaToolsPanel
+                      ctaHref="/tools"
+                      ctaLabel="View all tools"
+                      site={site}
+                      tools={toolMegaBlocks}
+                      variant="popover"
+                    />
+                  )}
                 </div>
               </div>
             );
@@ -1018,6 +1026,10 @@ function collectionHref(category: string): string {
   return slug ? `/collections/${slug}` : "/collections";
 }
 
+function creativePackCollectionHref(pack: CreativePack): string {
+  return collectionHref(pack.categoryRecord?.slug || pack.name);
+}
+
 const dreamshootStaticToolSlugByKey: Record<string, string> = {
   mega_tool_headshot: "headshot",
   "professional-headshot-maker": "headshot",
@@ -1574,6 +1586,64 @@ function getDreamshootToolBlocks(blocks: SectionBlockInstance[] | undefined): Se
   return configured.length ? configured : dreamshootDefaultMegaToolBlocks();
 }
 
+function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageMegaGroup[] {
+  const groups = new Map<string, PhotoPackageMegaGroup>();
+  creativePacks
+    .filter((pack) => pack.status === "active")
+    .forEach((pack) => {
+      const parent = pack.categoryRecord?.parent;
+      const groupLabel = parent?.label || dreamshootCategoryLabel(pack.categoryRecord?.slug || pack.category);
+      const groupSlug = parent?.slug || dreamshootCategorySlug(groupLabel);
+      const group = groups.get(groupSlug) ?? { label: groupLabel, slug: groupSlug, items: [] };
+      const itemLabel = pack.categoryRecord?.label || pack.name;
+      const itemSlug = pack.categoryRecord?.slug || dreamshootCategorySlug(pack.name);
+      if (!group.items.some((item) => item.slug === itemSlug)) {
+        group.items.push({ label: itemLabel, slug: itemSlug, href: creativePackCollectionHref(pack) });
+      }
+      groups.set(groupSlug, group);
+    });
+  return Array.from(groups.values())
+    .map((group) => ({
+      ...group,
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label))
+    }))
+    .filter((group) => group.items.length > 0)
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .slice(0, 6);
+}
+
+function PhotoPackageMegaPanel({ groups, site }: { groups: PhotoPackageMegaGroup[]; site: Site }) {
+  return (
+    <div className="rounded-[20px] border border-white/10 bg-[#05070E]/96 p-6 text-white shadow-[0_26px_90px_-42px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">AI Photo Packages</p>
+          <h2 className="mt-1 text-2xl font-semibold tracking-[-0.035em]">Browse package themes</h2>
+        </div>
+        <Link className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
+          View all packages
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </Link>
+      </div>
+      <div className="grid gap-5 md:grid-cols-3">
+        {groups.map((group) => (
+          <div key={group.slug}>
+            <p className="border-b border-white/12 pb-3 text-sm font-semibold text-white/88">{group.label}</p>
+            <div className="mt-3 grid gap-2">
+              {group.items.slice(0, 7).map((item) => (
+                <Link className="flex items-center justify-between gap-3 rounded-[12px] px-2 py-1.5 text-sm font-medium text-white/72 transition hover:bg-white/[0.07] hover:text-white" href={hrefFor(site, item.href)} key={item.slug}>
+                  <span className="truncate">{item.label}</span>
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white/38" strokeWidth={2} />
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function dreamshootMegaCategoryMeta(category: string) {
   const normalized = category.toLowerCase();
   if (normalized.includes("video")) {
@@ -1816,7 +1886,7 @@ function packCards(site: Site, creativePacks: CreativePack[], maxCount = 6) {
     title: pack.name,
     description: pack.description || pack.headline,
     imageUrl: packImage(site, pack),
-    href: `/tools/${pack.aiAppSlug}`,
+    href: creativePackCollectionHref(pack),
     meta: `${pack.outputCount} images`,
     price: `${pack.creditCost} credits`
   }));
@@ -1831,7 +1901,7 @@ function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamSho
     meta: `${pack.outputCount} photos`,
     credits: `${pack.creditCost} credits`,
     imageUrl: packImage(site, pack),
-    href: dreamshootStaticToolPath(pack.id, pack.name)
+    href: creativePackCollectionHref(pack)
   };
 }
 
