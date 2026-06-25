@@ -1,4 +1,6 @@
 import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
+import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
+import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import type { PublicCustomer, Site } from "@/lib/types";
 
@@ -6,9 +8,12 @@ type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding">;
 
 export function CustomerAccountShell({ site, customer }: { site: CustomerAccountSite; customer: PublicCustomer }) {
   const basePath = `/site/${site.slug}`;
+  const prefetchPaths = [`${basePath}/app`, `${basePath}/pricing`, `${basePath}/tools`];
 
   return (
     <div className="min-h-screen bg-[#f4ede2] text-[#171514]">
+      <CustomerRoutePrefetch paths={prefetchPaths} />
+      <StorefrontNavigationFeedback />
       <header className="sticky top-0 z-50 border-b border-[#eadfce] bg-[#fffaf3]/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
           <StorefrontInstantLink className="text-lg font-semibold tracking-tight" href={basePath}>

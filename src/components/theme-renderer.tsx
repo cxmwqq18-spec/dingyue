@@ -3,6 +3,7 @@ import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
 import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
+import { CustomerBootstrapPrefetch } from "@/components/storefront/customer-bootstrap-client";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
@@ -109,7 +110,9 @@ export function ThemeRenderer({
   const customerPrefetchPaths = runtime?.customer && mode === "published"
     ? [
         hrefFor(routedSite, "/account"),
-        hrefFor(routedSite, "/app")
+        hrefFor(routedSite, "/app"),
+        hrefFor(routedSite, "/pricing"),
+        hrefFor(routedSite, "/tools")
       ]
     : [];
   const renderContext = {
@@ -120,6 +123,7 @@ export function ThemeRenderer({
   return (
     <div className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]">
       {customerPrefetchPaths.length ? <CustomerRoutePrefetch paths={customerPrefetchPaths} /> : null}
+      {runtime?.customer && mode === "published" ? <CustomerBootstrapPrefetch siteSlug={publicSlug} /> : null}
       <StorefrontNavigationFeedback />
       <div
         className="xfcart-section"

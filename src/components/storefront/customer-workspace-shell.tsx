@@ -1,5 +1,7 @@
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
+import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
+import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset } from "@/lib/types";
 
@@ -21,9 +23,12 @@ export function CustomerWorkspaceShell({
   initialCreativePackId?: string;
 }) {
   const basePath = `/site/${site.slug}`;
+  const prefetchPaths = [`${basePath}/account`, `${basePath}/pricing`, `${basePath}/tools`];
 
   return (
     <div className="min-h-screen bg-[#f4ede2] text-[#171514]">
+      <CustomerRoutePrefetch paths={prefetchPaths} />
+      <StorefrontNavigationFeedback />
       <header className="sticky top-0 z-50 border-b border-[#eadfce] bg-[#fffaf3]/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
           <StorefrontInstantLink className="text-lg font-semibold tracking-tight" href={basePath}>
