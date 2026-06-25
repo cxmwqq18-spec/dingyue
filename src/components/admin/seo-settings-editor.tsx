@@ -3,16 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Download,
   Eye,
   EyeOff,
   Image as ImageIcon,
-  RotateCcw,
-  Save
 } from "lucide-react";
 import {
   DesignWorkbenchLayout,
-  PublicationConfidence,
   WorkbenchActionButton,
   WorkbenchMetricStrip,
   WorkbenchSidebarCard,

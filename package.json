@@ -20,6 +20,7 @@
     "smoke:site-admin-module-latency": "node scripts/smoke-site-admin-module-latency.mjs",
     "smoke:site-admin-api-timing": "node scripts/smoke-site-admin-api-timing.mjs",
     "smoke:creative-pack-editor": "node scripts/smoke-creative-pack-editor.mjs",
+    "smoke:seo-tdk-editor": "node scripts/smoke-seo-tdk-editor.mjs",
     "audit:saas-themes": "node scripts/audit-saas-theme-parity.mjs",
     "extract:saas-themes": "node scripts/extract-saas-themes.mjs",
     "capture:pages": "node scripts/capture-page-shots.mjs",

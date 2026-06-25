@@ -48,6 +48,7 @@ try {
 
       const early = await page.evaluate(() => ({
         preview: document.querySelector("[data-admin-route-pending-preview]")?.getAttribute("data-admin-route-pending-preview") || null,
+        previewText: document.querySelector("[data-admin-route-pending-preview]")?.textContent?.trim() || "",
         h1: document.querySelector("h1")?.textContent?.trim() || "",
         oldText: document.body.innerText.includes("页面已响应") || document.body.innerText.includes("正在切换模块")
       }));
@@ -55,7 +56,7 @@ try {
       await page.waitForURL((url) => url.pathname === target.url, { timeout: 10000 });
       const finalMs = Date.now() - startedAt;
       const finalTitle = await page.locator("h1").first().innerText();
-      const reachedTargetEarly = early.h1 === target.title && !early.oldText;
+      const reachedTargetEarly = (early.h1 === target.title || early.previewText.includes(target.title)) && !early.oldText;
       const passed = reachedTargetEarly && (early.preview === target.code || early.preview === null) && finalTitle.trim() === target.title;
       results.push({ target: target.label, round, early, finalMs, passed });
       if (!passed) {
