@@ -1014,7 +1014,7 @@ function hrefFor(site: Site, href: string): string {
 }
 
 function collectionHref(category: string): string {
-  const slug = dreamshootToolLookupKey(category);
+  const slug = dreamshootCategorySlug(category);
   return slug ? `/collections/${slug}` : "/collections";
 }
 
