@@ -17,6 +17,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
         status?: Site["status"];
         currency?: string;
         timezone?: string;
+        signupCreditGrant?: number;
         branding?: {
           logoText?: string;
           market?: string;
@@ -43,6 +44,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       status: body.status,
       currency: body.currency,
       timezone: body.timezone,
+      signupCreditGrant: body.signupCreditGrant === undefined ? undefined : Number(body.signupCreditGrant),
       branding: {
         logoText: body.branding.logoText ?? "",
         market: body.branding.market ?? "",

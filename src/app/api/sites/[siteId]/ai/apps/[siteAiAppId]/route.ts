@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { updateSiteAiAppRelational } from "@/lib/stores/site-store";
+import type { AiProviderConfig, AiWorkflowConfig } from "@/lib/types";
 
 export async function PUT(
   request: Request,
@@ -15,6 +16,8 @@ export async function PUT(
     enabled?: boolean;
     creditCost?: number;
     routeKey?: string;
+    workflowConfig?: AiWorkflowConfig;
+    providerConfig?: AiProviderConfig;
   };
 
   try {
@@ -23,7 +26,9 @@ export async function PUT(
       siteAiAppId,
       enabled: Boolean(body.enabled),
       creditCost: Number(body.creditCost),
-      routeKey: body.routeKey ?? ""
+      routeKey: body.routeKey ?? "",
+      workflowConfig: body.workflowConfig,
+      providerConfig: body.providerConfig
     });
     return NextResponse.json({ ok: true, siteAiApp: result.siteAiApp });
   } catch (error) {

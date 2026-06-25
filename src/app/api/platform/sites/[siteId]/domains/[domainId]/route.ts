@@ -15,6 +15,7 @@ export async function PATCH(
   const body = (await request.json().catch(() => ({}))) as {
     isPrimary?: boolean;
     status?: SiteDomain["status"];
+    allowedAiProviderIds?: string[];
   };
 
   try {
@@ -22,7 +23,8 @@ export async function PATCH(
       siteId,
       domainId,
       isPrimary: body.isPrimary,
-      status: body.status
+      status: body.status,
+      allowedAiProviderIds: Array.isArray(body.allowedAiProviderIds) ? body.allowedAiProviderIds : undefined
     });
     return NextResponse.json({ ok: true, domain: result.domain, site: result.site });
   } catch (error) {

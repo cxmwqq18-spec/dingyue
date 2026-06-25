@@ -1,15 +1,20 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LogOut } from "lucide-react";
 
 export function LogoutButton({ siteId, siteSlug }: { siteId: string; siteSlug: string }) {
+  const router = useRouter();
   const [pending, setPending] = useState(false);
 
   async function logout() {
     setPending(true);
     await fetch(`/api/sites/${siteId}/auth/logout`, { method: "POST", credentials: "same-origin" });
-    window.location.href = `/site/${siteSlug}/login`;
+    const href = `/site/${siteSlug}/login`;
+    window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
+    router.replace(href);
+    router.refresh();
   }
 
   return (

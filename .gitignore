@@ -1,5 +1,8 @@
 node_modules
 .next
+.next-dev
+.next-3002
+.next-*
 .next-build
 out
 dist
@@ -10,10 +13,12 @@ dist
 coverage
 tsconfig.tsbuildinfo
 .codex-artifacts/
+.codex/
 .playwright-cli/
 output/
 work_pdf_translation/
 tmp/
+.tmp-*.cjs
 public/current-*.png
 public/qa-*.png
 data/customer-assets/

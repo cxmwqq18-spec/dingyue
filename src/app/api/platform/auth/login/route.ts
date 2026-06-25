@@ -3,6 +3,7 @@ import { StoreError } from "@/lib/server-store";
 import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { clearPlatformSessionAuthCache } from "@/lib/api-auth";
 import { createPlatformAdminSessionRelational } from "@/lib/stores/platform-store";
 import type { NextRequest } from "next/server";
 
@@ -16,6 +17,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const result = await createPlatformAdminSessionRelational({ email: body.email, password: body.password });
+    clearPlatformSessionAuthCache();
     const response = NextResponse.json({
       ok: true,
       platformAdmin: result.platformAdmin,

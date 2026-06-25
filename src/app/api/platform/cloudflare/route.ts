@@ -5,13 +5,13 @@ import { StoreError } from "@/lib/server-store";
 import {
   clearCurrentPlatformCloudflareAccountRelational,
   deletePlatformCloudflareAccountRelational,
-  getPlatformOverviewRelational,
+  getPlatformCloudflareOverviewRelational,
   setCurrentPlatformCloudflareAccountRelational,
   upsertPlatformCloudflareAccountRelational
 } from "@/lib/stores/platform-store";
 
 async function payload() {
-  const overview = await getPlatformOverviewRelational();
+  const overview = await getPlatformCloudflareOverviewRelational();
   const accounts = overview.platformCloudflareAccounts;
   const current = accounts.find((account) => account.id === overview.currentCloudflareAccountId);
   return {
@@ -36,36 +36,49 @@ async function payload() {
   };
 }
 
+function cloudflareErrorResponse(error: unknown, fallback: string) {
+  const status = error instanceof StoreError ? error.status : 500;
+  return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : fallback }, { status });
+}
+
 export async function GET() {
-  const current = await getCurrentPlatformAdmin();
-  if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
-  return NextResponse.json(await payload());
+  try {
+    const current = await getCurrentPlatformAdmin();
+    if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
+    return NextResponse.json(await payload());
+  } catch (error) {
+    return cloudflareErrorResponse(error, "cloudflare_read_failed");
+  }
 }
 
 export async function PUT(request: NextRequest) {
-  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:cloudflare" });
-  if (!permission.ok) return permission.response;
-  const body = (await request.json().catch(() => ({}))) as {
-    id?: string;
-    label?: string;
-    email?: string;
-    accountId?: string;
-    apiToken?: string;
-    makeCurrent?: boolean;
-  };
-  if (!body.label?.trim()) return NextResponse.json({ error: "missing_cloudflare_label" }, { status: 400 });
-  if (!body.email?.trim() || !body.email.includes("@")) return NextResponse.json({ error: "invalid_cloudflare_email" }, { status: 400 });
-  if (!body.accountId?.trim()) return NextResponse.json({ error: "missing_cloudflare_account_id" }, { status: 400 });
-  await upsertPlatformCloudflareAccountRelational({
-    id: body.id,
-    label: body.label,
-    email: body.email,
-    accountId: body.accountId,
-    apiToken: body.apiToken,
-    makeCurrent: body.makeCurrent,
-    actor: permission.current.platformAdmin.id
-  });
-  return NextResponse.json(await payload());
+  try {
+    const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:cloudflare" });
+    if (!permission.ok) return permission.response;
+    const body = (await request.json().catch(() => ({}))) as {
+      id?: string;
+      label?: string;
+      email?: string;
+      accountId?: string;
+      apiToken?: string;
+      makeCurrent?: boolean;
+    };
+    if (!body.label?.trim()) return NextResponse.json({ error: "missing_cloudflare_label" }, { status: 400 });
+    if (!body.email?.trim() || !body.email.includes("@")) return NextResponse.json({ error: "invalid_cloudflare_email" }, { status: 400 });
+    if (!body.accountId?.trim()) return NextResponse.json({ error: "missing_cloudflare_account_id" }, { status: 400 });
+    await upsertPlatformCloudflareAccountRelational({
+      id: body.id,
+      label: body.label,
+      email: body.email,
+      accountId: body.accountId,
+      apiToken: body.apiToken,
+      makeCurrent: body.makeCurrent,
+      actor: permission.current.platformAdmin.id
+    });
+    return NextResponse.json(await payload());
+  } catch (error) {
+    return cloudflareErrorResponse(error, "cloudflare_account_update_failed");
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -81,8 +94,7 @@ export async function POST(request: NextRequest) {
     }
     return NextResponse.json(await payload());
   } catch (error) {
-    const status = error instanceof StoreError ? error.status : 500;
-    return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_current_account_failed" }, { status });
+    return cloudflareErrorResponse(error, "cloudflare_current_account_failed");
   }
 }
 
@@ -95,7 +107,6 @@ export async function DELETE(request: NextRequest) {
     await deletePlatformCloudflareAccountRelational({ accountId: body.accountId, actor: permission.current.platformAdmin.id });
     return NextResponse.json(await payload());
   } catch (error) {
-    const status = error instanceof StoreError ? error.status : 500;
-    return NextResponse.json({ error: error instanceof Error ? error.message : "cloudflare_delete_account_failed" }, { status });
+    return cloudflareErrorResponse(error, "cloudflare_delete_account_failed");
   }
 }

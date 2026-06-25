@@ -8,14 +8,25 @@ import type { SiteTheme, ThemeCopy, ThemePublication } from "@/lib/types";
 import { downloadJson } from "@/components/admin/export-utils";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 
+type ThemeRecordStats = {
+  templateCount: number;
+  sectionCount: number;
+  blockCount?: number;
+  templateNames?: string[];
+  settingsFieldCount?: number;
+  settingsGlobalSections?: string[];
+  hasSettingsData?: boolean;
+};
+
 type ThemeRecord = {
   themeId: string;
   name: string;
   themeKey: string;
   status: "draft" | "active";
-  templates: Record<string, { content_for_page: string[]; sections: Record<string, unknown> }>;
-  settings: unknown;
+  templates?: Record<string, { content_for_page: string[]; sections: Record<string, unknown> }>;
+  settings?: unknown;
   updatedAt: string;
+  stats?: ThemeRecordStats;
 };
 
 type AvailableSaasTheme = {
@@ -48,12 +59,44 @@ type InternalThemePackage = {
 type ThemeLibrarySnapshot = {
   draft: ThemeRecord;
   active: ThemeRecord;
-  themes: SiteTheme[];
-  copies: ThemeCopy[];
-  publications: ThemePublication[];
+  themes: SiteThemeSummary[];
+  copies: ThemeCopySummary[];
+  publications: ThemePublicationSummary[];
 };
 
+export type ThemePublicationSummary = Pick<ThemePublication, "id" | "version" | "publishedAt" | "publishedBy"> & {
+  pageCount?: number;
+  sectionCount?: number;
+  snapshot?: ThemePublication["snapshot"];
+};
+
+export type SiteThemeSummary = Omit<SiteTheme, "templates" | "settings"> & {
+  templates?: SiteTheme["templates"];
+  settings?: SiteTheme["settings"];
+  stats?: ThemeRecordStats;
+};
+
+export type ThemeCopySummary = Omit<ThemeCopy, "templates" | "settings"> & {
+  templates?: ThemeCopy["templates"];
+  settings?: ThemeCopy["settings"];
+  stats?: ThemeRecordStats;
+};
+
+export function toThemePublicationSummary(publication: ThemePublication | ThemePublicationSummary): ThemePublicationSummary {
+  const snapshot = "snapshot" in publication ? publication.snapshot : undefined;
+  return {
+    id: publication.id,
+    version: publication.version,
+    publishedAt: publication.publishedAt,
+    publishedBy: publication.publishedBy,
+    pageCount: "pageCount" in publication ? publication.pageCount : snapshot?.pages?.length ?? 0,
+    sectionCount: "sectionCount" in publication ? publication.sectionCount : undefined,
+    snapshot
+  };
+}
+
 function templateStats(templates: ThemeRecord["templates"]) {
+  if (!templates) return { templateCount: 0, sectionCount: 0, blockCount: 0, templateNames: [] };
   const entries = Object.entries(templates);
   const sectionCount = entries.reduce((total, [, template]) => total + Object.keys(template.sections ?? {}).length, 0);
   const blockCount = entries.reduce(
@@ -66,6 +109,29 @@ function templateStats(templates: ThemeRecord["templates"]) {
     0
   );
   return { templateCount: entries.length, sectionCount, blockCount, templateNames: entries.map(([name]) => name) };
+}
+
+function themeStats(theme: ThemeRecord | SiteThemeSummary) {
+  if ("stats" in theme && theme.stats) {
+    return {
+      templateCount: theme.stats.templateCount,
+      sectionCount: theme.stats.sectionCount,
+      blockCount: theme.stats.blockCount ?? 0,
+      templateNames: theme.stats.templateNames ?? []
+    };
+  }
+  return templateStats((theme.templates ?? {}) as ThemeRecord["templates"]);
+}
+
+function themeSettingStats(theme: ThemeRecord | SiteThemeSummary) {
+  if ("stats" in theme && theme.stats) {
+    return {
+      fieldCount: theme.stats.settingsFieldCount ?? 0,
+      globalSections: theme.stats.settingsGlobalSections ?? [],
+      hasSettingsData: Boolean(theme.stats.hasSettingsData)
+    };
+  }
+  return settingStats(theme.settings);
 }
 
 function settingStats(settings: unknown) {
@@ -109,11 +175,11 @@ export function ThemeManagerPanel({
   siteId: string;
   draft: ThemeRecord;
   active: ThemeRecord;
-  themes: SiteTheme[];
+  themes: SiteThemeSummary[];
   availableThemes: AvailableSaasTheme[];
   internalPackages: InternalThemePackage[];
-  copies: ThemeCopy[];
-  publications: ThemePublication[];
+  copies: ThemeCopySummary[];
+  publications: ThemePublicationSummary[];
 }) {
   const router = useRouter();
   const [message, setMessage] = useState("主题库已载入，可在这里管理草稿、启用版和导入源主题。");
@@ -122,7 +188,7 @@ export function ThemeManagerPanel({
     active: initialActive,
     themes: initialThemes,
     copies: initialCopies,
-    publications: initialPublications
+    publications: initialPublications.map(toThemePublicationSummary)
   });
   const [selectedSaasThemeKey, setSelectedSaasThemeKey] = useState(availableThemes[0]?.themeKey ?? "theme1");
   const [selectedInternalThemeKey, setSelectedInternalThemeKey] = useState(internalPackages[0]?.key ?? "");
@@ -193,23 +259,24 @@ export function ThemeManagerPanel({
     { label: "发布上线", detail: "确认草稿后发布，前台只读取最近一次已发布快照。" }
   ];
 
-  async function refreshThemeSnapshot() {
+  async function refreshThemeSnapshot(detail: "summary" | "full" = "summary") {
     setRefreshing(true);
     try {
-      const response = await fetch(`/api/sites/${siteId}/theme/records`);
+      const response = await fetch(`/api/sites/${siteId}/theme/records${detail === "full" ? "?detail=full" : ""}`);
       const json = await response.json().catch(() => ({}));
       if (!response.ok) {
         setMessage(`刷新主题状态失败：${json.error ?? "未知错误"}`);
         return false;
       }
-      setThemeSnapshot({
+      const nextSnapshot: ThemeLibrarySnapshot = {
         draft: json.draft,
         active: json.active,
         themes: json.themes,
         copies: json.copies,
-        publications: json.publications
-      });
-      return true;
+        publications: (json.publications ?? []).map((publication: ThemePublication | ThemePublicationSummary) => toThemePublicationSummary(publication))
+      };
+      setThemeSnapshot(nextSnapshot);
+      return nextSnapshot;
     } finally {
       setRefreshing(false);
     }
@@ -263,7 +330,7 @@ export function ThemeManagerPanel({
     setMessage(`已从${source === "draft" ? "草稿版" : "启用版"}复制出新主题分支。`);
   }
 
-  async function duplicateTheme(theme: SiteTheme) {
+  async function duplicateTheme(theme: SiteThemeSummary) {
     const response = await fetch(`/api/sites/${siteId}/theme/duplicate`, {
       method: "POST",
       headers: siteAdminJsonHeaders(siteId),
@@ -307,7 +374,7 @@ export function ThemeManagerPanel({
     setMessage(`草稿已恢复到发布版本 v${json.sourceVersion}。`);
   }
 
-  async function applyToDraft(theme: SiteTheme) {
+  async function applyToDraft(theme: SiteThemeSummary) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}/apply-to-draft`, {
       method: "POST",
       headers: siteAdminJsonHeaders(siteId),
@@ -323,7 +390,7 @@ export function ThemeManagerPanel({
     setMessage(`${theme.name} 已应用到当前草稿，可继续进入设计器编辑。`);
   }
 
-  async function activateTheme(theme: SiteTheme) {
+  async function activateTheme(theme: SiteThemeSummary) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}/activate`, {
       method: "POST",
       headers: siteAdminJsonHeaders(siteId),
@@ -339,7 +406,7 @@ export function ThemeManagerPanel({
     setMessage(`${theme.name} 已发布为当前线上主题。`);
   }
 
-  async function deleteTheme(theme: SiteTheme) {
+  async function deleteTheme(theme: SiteThemeSummary) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}`, {
       method: "DELETE",
       headers: siteAdminJsonHeaders(siteId),
@@ -355,22 +422,34 @@ export function ThemeManagerPanel({
     setMessage(`${theme.name} 已从站点主题库移除。`);
   }
 
-  function exportInstalledTheme(theme: SiteTheme) {
+  async function exportInstalledTheme(theme: SiteThemeSummary) {
+    let exportTheme = theme;
+    if (!theme.templates || !theme.settings) {
+      const refreshed = await refreshThemeSnapshot("full");
+      if (!refreshed) return;
+      const fullTheme = refreshed.themes.find((item) => item.id === theme.id);
+      if (fullTheme?.templates && fullTheme.settings) {
+        exportTheme = fullTheme;
+      } else {
+        setMessage("正在刷新完整主题数据，请稍后再导出。");
+        return;
+      }
+    }
     downloadJson(`${siteSlug}-${theme.themeKey}-${theme.status}.json`, {
       exportedAt: new Date().toISOString(),
       siteSlug,
       theme: {
-        id: theme.id,
-        name: theme.name,
-        themeId: theme.themeId,
-        themeKey: theme.themeKey,
-        status: theme.status,
-        source: theme.source,
-        createdBy: theme.createdBy,
-        createdAt: theme.createdAt,
-        updatedAt: theme.updatedAt,
-        templates: theme.templates,
-        settings: theme.settings
+        id: exportTheme.id,
+        name: exportTheme.name,
+        themeId: exportTheme.themeId,
+        themeKey: exportTheme.themeKey,
+        status: exportTheme.status,
+        source: exportTheme.source,
+        createdBy: exportTheme.createdBy,
+        createdAt: exportTheme.createdAt,
+        updatedAt: exportTheme.updatedAt,
+        templates: exportTheme.templates,
+        settings: exportTheme.settings
       }
     });
     setMessage(`${theme.name} 已导出为站点主题快照。`);
@@ -492,8 +571,8 @@ export function ThemeManagerPanel({
           <ThemeMetricCard detail="站点内可直接应用与复制" label="主题数量" value={String(themeRecords.length)} />
           <ThemeMetricCard detail="复制分支与实验主题" label="主题复制" value={String(copies.length)} />
           <ThemeMetricCard detail="线上可回滚的版本记录" label="发布次数" value={String(publications.length)} />
-          <ThemeMetricCard detail="当前草稿页面模板总数" label="页面模板" value={String(templateStats(draft.templates).templateCount)} />
-          <ThemeMetricCard detail="当前草稿全局设置字段数" label="主题配置" value={String(settingStats(draft.settings).fieldCount)} />
+          <ThemeMetricCard detail="当前草稿页面模板总数" label="页面模板" value={String(themeStats(draft).templateCount)} />
+          <ThemeMetricCard detail="当前草稿全局设置字段数" label="主题配置" value={String(themeSettingStats(draft).fieldCount)} />
         </div>
 
         <div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1fr)_320px]">
@@ -525,7 +604,7 @@ export function ThemeManagerPanel({
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <button className="admin_btn inline-flex items-center gap-1" disabled={refreshing} onClick={refreshThemeSnapshot} type="button">
+          <button className="admin_btn inline-flex items-center gap-1" disabled={refreshing} onClick={() => void refreshThemeSnapshot()} type="button">
             <RefreshCcw className="h-3 w-3" strokeWidth={1.8} />
             {refreshing ? "刷新中" : "刷新状态"}
           </button>
@@ -745,7 +824,7 @@ function InstalledThemeCard({
   onDelete,
   onExport
 }: {
-  theme: SiteTheme;
+  theme: SiteThemeSummary;
   siteSlug: string;
   onApply: () => void;
   onActivate: () => void;
@@ -753,8 +832,8 @@ function InstalledThemeCard({
   onDelete: () => void;
   onExport: () => void;
 }) {
-  const stats = templateStats((theme.templates ?? {}) as ThemeRecord["templates"]);
-  const settings = settingStats(theme.settings);
+  const stats = themeStats(theme);
+  const settings = themeSettingStats(theme);
   return (
     <article className="rounded-[14px] border border-[var(--admin-border-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#fbfcfe_100%)] p-4 shadow-[0_14px_28px_-24px_rgba(15,23,42,0.18)]">
       <div className="flex items-start justify-between gap-3">
@@ -910,7 +989,8 @@ function InternalThemePackageCard({
   );
 }
 
-function PublicationCard({ publication }: { publication: ThemePublication }) {
+function PublicationCard({ publication }: { publication: ThemePublicationSummary }) {
+  const pageCount = publication.pageCount ?? publication.snapshot?.pages?.length ?? 0;
   return (
     <article className="rounded-[14px] border border-[var(--admin-border-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#fbfcfe_100%)] p-4 shadow-[0_12px_24px_-24px_rgba(15,23,42,0.18)]">
       <div className="flex items-center justify-between gap-3">
@@ -922,12 +1002,12 @@ function PublicationCard({ publication }: { publication: ThemePublication }) {
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
-        <ThemeMetricCard detail="页面快照" label="页面" value={String(publication.snapshot.pages.length)} />
+        <ThemeMetricCard detail="页面快照" label="页面" value={String(pageCount)} />
         <ThemeMetricCard detail="发布者" label="操作人" value={publication.publishedBy} />
       </div>
 
       <div className="mt-4 rounded-[12px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-4 py-3 text-[12px] leading-5 text-[var(--admin-muted)]">
-        <div>{publication.snapshot.pages.length} 个页面快照与一份全局主题设置。</div>
+        <div>{pageCount} 个页面快照与一份全局主题设置。</div>
         <div className="mt-2 font-mono text-[11px] text-[#8a94a6]">{formatDateTime(publication.publishedAt)}</div>
       </div>
     </article>
@@ -935,8 +1015,8 @@ function PublicationCard({ publication }: { publication: ThemePublication }) {
 }
 
 function ThemeRecordCard({ label, record }: { label: string; record: ThemeRecord }) {
-  const stats = templateStats(record.templates);
-  const settings = settingStats(record.settings);
+  const stats = themeStats(record);
+  const settings = themeSettingStats(record);
   return (
     <article className="right_box border border-[var(--admin-border-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#fbfcfe_100%)] p-4 shadow-[0_16px_32px_-28px_rgba(15,23,42,0.24)]">
       <div className="flex items-start justify-between gap-3">

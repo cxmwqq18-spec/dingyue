@@ -305,6 +305,25 @@ function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSetti
   return normalizeGlobalSections(next);
 }
 
+export type DesignerClientProps = {
+  site: Site;
+  pages: ThemePage[];
+  products: Product[];
+  siteAiApps: SiteAiApp[];
+  creativePacks: CreativePack[];
+  mediaAssets: MediaAsset[];
+  previewToken: string;
+  publicationCount?: number;
+  initialPageId?: string;
+  initialThemeKey?: string;
+  activeThemeName: string;
+  activeThemeKey: string;
+  draftThemeName: string;
+  draftThemeKey: string;
+  toolbarLeading?: ReactNode;
+  toolbarTrailing?: ReactNode;
+};
+
 export function DesignerClient({
   site,
   pages,
@@ -322,24 +341,7 @@ export function DesignerClient({
   draftThemeKey,
   toolbarLeading,
   toolbarTrailing
-}: {
-  site: Site;
-  pages: ThemePage[];
-  products: Product[];
-  siteAiApps: SiteAiApp[];
-  creativePacks: CreativePack[];
-  mediaAssets: MediaAsset[];
-  previewToken: string;
-  publicationCount?: number;
-  initialPageId?: string;
-  initialThemeKey?: string;
-  activeThemeName: string;
-  activeThemeKey: string;
-  draftThemeName: string;
-  draftThemeKey: string;
-  toolbarLeading?: ReactNode;
-  toolbarTrailing?: ReactNode;
-}) {
+}: DesignerClientProps) {
   function expansionStateForPage(page?: ThemePageJson, preferredSectionId?: string) {
     const firstSectionId = preferredSectionId || page?.sectionsOrder[0] || "";
     return Object.fromEntries((page?.sectionsOrder ?? []).map((sectionId) => [sectionId, sectionId === firstSectionId]));

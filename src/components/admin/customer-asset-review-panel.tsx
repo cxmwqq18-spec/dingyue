@@ -144,6 +144,7 @@ export function CustomerAssetReviewPanel({
           <p className="text-xs font-medium text-clay">素材审核</p>
           <h2 className="mt-2 text-xl font-semibold">客户素材审核</h2>
           <p className="mt-2 text-sm leading-6 text-zinc-500">{message}</p>
+          <p className="mt-1 text-xs leading-5 text-zinc-500">用途说明：这里审核客户上传的源图、训练图和任务输出图，避免未授权或质量不合格的素材进入训练、生成和相册交付流程。</p>
         </div>
         <button className="inline-flex shrink-0 items-center whitespace-nowrap rounded-[8px] border border-black/10 px-4 py-2 text-sm active:scale-[0.98]" onClick={exportAssets} type="button">
           <Download className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
@@ -235,7 +236,16 @@ export function CustomerAssetReviewPanel({
                   </tr>
                 );
               })}
-              {!filteredItems.length ? <tr><td className="text-center text-zinc-500" colSpan={8}>当前筛选下没有客户素材。</td></tr> : null}
+              {!filteredItems.length ? (
+                <tr>
+                  <td className="text-left text-zinc-600" colSpan={8}>
+                    <div className="rounded-[10px] border border-dashed border-zinc-300 bg-zinc-50 p-5">
+                      <p className="font-semibold text-zinc-900">当前筛选下没有客户素材。</p>
+                      <p className="mt-2 leading-6">操作手册：客户上传图片后会出现在这里。源图和训练图用于模型训练，输出图用于相册交付。运维需要查看素材详情，确认顾客、模型、文件类型和路径无误后点击“通过”；不合规素材点击“拒绝”，拒绝后不要进入训练或交付流程。</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

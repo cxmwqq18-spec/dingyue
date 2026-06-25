@@ -1,4 +1,5 @@
 import "server-only";
+import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformAiProvider } from "@/lib/types";
 
 export function maskAiProviderKey(apiKey?: string): string {
@@ -34,6 +35,9 @@ export function assertValidAiProviderUrl(aiUrl: string): string {
   return trimmed;
 }
 
+const aiProviderHeadTimeoutMs = Math.max(500, Number(process.env.AI_PROVIDER_HEAD_TIMEOUT_MS ?? "3000") || 3000);
+const aiProviderGetTimeoutMs = Math.max(1000, Number(process.env.AI_PROVIDER_GET_TIMEOUT_MS ?? "5000") || 5000);
+
 export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey">): Promise<{
   ok: boolean;
   status?: number;
@@ -48,11 +52,14 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   }
 
   const headers = { Authorization: `Bearer ${apiKey}` };
-  const head = await fetch(aiUrl, { method: "HEAD", headers, cache: "no-store" }).catch((error) => error as Error);
+  const head = await fetchWithTimeout(aiUrl, { method: "HEAD", headers, cache: "no-store", timeoutMs: aiProviderHeadTimeoutMs }).catch((error) => error as Error);
   if (!(head instanceof Error) && head.status < 500) {
     return { ok: head.ok, status: head.status, method: "HEAD", message: head.ok ? "provider reachable" : `provider returned ${head.status}` };
   }
+  if (head instanceof FetchTimeoutError) {
+    return { ok: false, status: 504, method: "HEAD", message: "provider timeout" };
+  }
 
-  const get = await fetch(aiUrl, { method: "GET", headers, cache: "no-store" });
+  const get = await fetchWithTimeout(aiUrl, { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
   return { ok: get.ok, status: get.status, method: "GET", message: get.ok ? "provider reachable" : `provider returned ${get.status}` };
 }

@@ -20,12 +20,14 @@ export async function PUT(
       name: body.name ?? "",
       headline: body.headline ?? "",
       description: body.description ?? "",
+      prompt: body.prompt,
       category: body.category ?? "headshots",
       aiAppSlug: body.aiAppSlug ?? "",
       status: body.status ?? "draft",
       creditCost: Number(body.creditCost),
       outputCount: Number(body.outputCount),
-      trainingRequired: Boolean(body.trainingRequired)
+      trainingRequired: Boolean(body.trainingRequired),
+      imageUrl: body.imageUrl
     });
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });
   } catch (error) {

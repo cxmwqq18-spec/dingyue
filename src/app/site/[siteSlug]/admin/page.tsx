@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   Activity,
   Bot,
-  CheckCircle2,
   CreditCard,
   GalleryVerticalEnd,
   ImageIcon,
@@ -19,11 +18,10 @@ import type { LucideIcon } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { ProgressBar } from "@/components/ui";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
-import { canPublishPaidProducts } from "@/lib/billing";
 import { money, siteRevenue } from "@/lib/ops";
 import type { AdminTone } from "@/lib/admin-menu";
 import {
-  getSiteAdminData,
+  getSiteAdminOverviewData,
   ModuleLinkCard,
   modulePath,
   siteAdminAccount,
@@ -70,16 +68,23 @@ function statusText(tone: AdminTone): string {
 
 export default async function SiteAdminPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const data = await getSiteAdminData(siteSlug);
-  const publishState = canPublishPaidProducts(data.site.connect.chargesEnabled, data.products);
+  const data = await getSiteAdminOverviewData(siteSlug, 60);
+  const publishState = data.site.connect.chargesEnabled && data.activeProducts > 0
+    ? { ok: true }
+    : {
+        ok: false,
+        reason: !data.site.connect.chargesEnabled
+          ? "Stripe Connect onboarding is not complete for this site."
+          : "Create at least one active subscription or credit pack."
+      };
   const pendingOrders = data.orders.filter((order) => order.status === "created" || order.status === "checkout_started").length;
   const monthOrders = data.orders.filter((order) => withinDays(order.createdAt, 30));
   const monthRevenue = siteRevenue(monthOrders);
   const todayJobs = data.jobs.filter((job) => withinDays(job.createdAt, 1));
   const monthJobs = data.jobs.filter((job) => withinDays(job.createdAt, 30));
   const gatewayUsage = data.gateway ? Math.round((data.gateway.usedQuota / Math.max(data.gateway.monthlyQuota, 1)) * 100) : 0;
-  const conversionRate = data.rate(data.paidOrders, Math.max(data.customers.length, 1));
-  const albumReadiness = data.rate(data.readyAlbums, Math.max(data.albums.length, 1));
+  const conversionRate = data.rate(data.paidOrders, Math.max(data.customerCount, 1));
+  const albumReadiness = data.rate(data.readyAlbums, Math.max(data.albumCount, 1));
   const dirtyPages = data.dirtyPages;
 
   const sevenDayOps = Array.from({ length: 7 }, (_, index) => {
@@ -126,14 +131,14 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
       metric: `${data.site.pages.length} 页`,
       detail: "页面树、区块树、全局页眉页脚、预览、草稿、发布和回滚。",
       items: "主题管理 / 页面装修 / 媒体库",
-      tone: data.publications.length ? "good" : "warn"
+      tone: data.publicationCount ? "good" : "warn"
     },
     {
       label: "商品套餐",
       english: "套餐价格",
       href: modulePath(data.site, "/admin/products"),
       icon: ShoppingBag,
-      metric: `${data.activeProducts}/${data.products.length}`,
+      metric: `${data.activeProducts}/${data.productCount}`,
       detail: "订阅套餐、credit pack 和 DreamShoot 风格拍摄包统一管理。",
       items: "订阅产品 / Credit packs / 拍摄包",
       tone: data.activeProducts ? "good" : "warn"
@@ -146,24 +151,24 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
       metric: money(data.revenue, data.site.currency),
       detail: "Checkout、支付事件、订阅状态、credits 账本和退款记录。",
       items: "订单 / 订阅 / 账本",
-      tone: data.paidOrders || data.ledger.length ? "good" : "neutral"
+      tone: data.paidOrders || data.orderCount ? "good" : "neutral"
     },
     {
       label: "顾客会员",
       english: "客户资产",
       href: modulePath(data.site, "/admin/customers"),
       icon: Users,
-      metric: String(data.customers.length),
+      metric: String(data.customerCount),
       detail: "每站独立客户、会员状态、余额、私有素材和相册。",
       items: "客户 / 余额 / 相册",
-      tone: data.customers.length ? "good" : "warn"
+      tone: data.customerCount ? "good" : "warn"
     },
     {
       label: "AI 工具",
       english: "AI 工厂",
       href: modulePath(data.site, "/admin/ai-tools"),
       icon: Bot,
-      metric: `${data.activeAiApps}/${data.apps.length}`,
+      metric: `${data.activeAiApps}/${data.appCount}`,
       detail: "AI 工具启用、扣费规则、worker 队列、失败重跑和成本。",
       items: "工具启用 / 队列 / 重跑",
       tone: data.failedJobs ? "bad" : data.activeAiApps ? "good" : "warn"
@@ -183,10 +188,10 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
       english: "站点素材",
       href: modulePath(data.site, "/admin/media"),
       icon: ImageIcon,
-      metric: `${data.media.length}`,
+      metric: `${data.mediaCount}`,
       detail: "装修素材、拍摄包封面、站点媒体和外链资源。",
       items: "图库 / 封面 / 外链",
-      tone: data.media.length ? "good" : "warn"
+      tone: data.mediaCount ? "good" : "warn"
     },
     {
       label: "站点设置",
@@ -234,11 +239,11 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     },
     {
       label: "待交付相册",
-      value: String(Math.max(data.albums.length - data.readyAlbums, 0)),
+      value: String(Math.max(data.albumCount - data.readyAlbums, 0)),
       href: modulePath(data.site, "/admin/customers"),
       detail: "客户相册尚未全部进入已交付状态。",
       owner: "顾客资产",
-      tone: data.readyAlbums === data.albums.length && data.albums.length ? "good" : "warn"
+      tone: data.readyAlbums === data.albumCount && data.albumCount ? "good" : "warn"
     }
   ];
 
@@ -252,8 +257,8 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     },
     {
       label: "主题发布",
-      detail: data.publications.length ? `${data.publications.length} 个发布快照，可回滚。` : "需要至少发布一次线上快照。",
-      ok: data.publications.length > 0,
+      detail: data.publicationCount ? `${data.publicationCount} 个发布快照，可回滚。` : "需要至少发布一次线上快照。",
+      ok: data.publicationCount > 0,
       href: modulePath(data.site, "/admin/design"),
       icon: Palette
     },
@@ -273,7 +278,7 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     },
     {
       label: "客户交付",
-      detail: `${data.readyAlbums}/${data.albums.length} 个相册已交付，${data.generatedAssets.length} 个输出素材。`,
+      detail: `${data.readyAlbums}/${data.albumCount} 个相册已交付，${data.generatedAssetCount} 个输出素材。`,
       ok: data.readyAlbums > 0,
       href: modulePath(data.site, "/admin/customers"),
       icon: GalleryVerticalEnd
@@ -284,22 +289,22 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     {
       label: "客户到付费",
       value: conversionRate,
-      progress: data.paidOrders ? Math.min(100, Math.round((data.paidOrders / Math.max(data.customers.length, 1)) * 100)) : 0,
+      progress: data.paidOrders ? Math.min(100, Math.round((data.paidOrders / Math.max(data.customerCount, 1)) * 100)) : 0,
       tone: "good" as const,
       detail: "当前客户付费转化率"
     },
     {
       label: "AI 完成率",
-      value: data.rate(data.completedJobs, data.jobs.length),
-      progress: data.jobs.length ? Math.round((data.completedJobs / data.jobs.length) * 100) : 0,
+      value: data.rate(data.completedJobs, Math.max(data.jobs.length, data.completedJobs + data.failedJobs + data.openJobs)),
+      progress: data.jobs.length ? Math.round((data.completedJobs / data.jobs.length) * 100) : data.completedJobs + data.failedJobs + data.openJobs ? Math.round((data.completedJobs / (data.completedJobs + data.failedJobs + data.openJobs)) * 100) : 0,
       tone: data.failedJobs ? ("warn" as const) : ("good" as const),
       detail: "任务成功与失败重跑情况"
     },
     {
       label: "相册交付",
       value: albumReadiness,
-      progress: data.albums.length ? Math.round((data.readyAlbums / data.albums.length) * 100) : 0,
-      tone: data.readyAlbums === data.albums.length ? ("good" as const) : ("warn" as const),
+      progress: data.albumCount ? Math.round((data.readyAlbums / data.albumCount) * 100) : 0,
+      tone: data.readyAlbums === data.albumCount ? ("good" as const) : ("warn" as const),
       detail: "客户输出相册交付率"
     },
     {
@@ -317,48 +322,55 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     detail: string;
     icon: LucideIcon;
     tone: AdminTone;
+    href: string;
   }> = [
     {
       label: "客户总数",
-      value: String(data.customers.length),
+      value: String(data.customerCount),
       detail: `${data.activeSubscriptions} 个有效订阅`,
       icon: Users,
-      tone: data.customers.length ? "good" : "neutral"
+      tone: data.customerCount ? "good" : "neutral",
+      href: modulePath(data.site, "/admin/customers")
     },
     {
       label: "可用 Credits",
       value: String(data.availableCredits),
       detail: `${data.reservedCredits} 已预扣`,
       icon: CreditCard,
-      tone: data.reservedCredits ? "warn" : "good"
+      tone: data.reservedCredits ? "warn" : "good",
+      href: modulePath(data.site, "/admin/orders?tab=ledger")
     },
     {
       label: "今日任务",
       value: String(todayJobs.length),
       detail: "最近 24 小时内新建 AI 任务",
       icon: Bot,
-      tone: todayJobs.length ? "good" : "neutral"
+      tone: todayJobs.length ? "good" : "neutral",
+      href: modulePath(data.site, "/admin/ai-tools")
     },
     {
       label: "运行中",
       value: String(data.openJobs),
       detail: "仍占用预扣 credits 的任务",
       icon: Activity,
-      tone: data.failedJobs ? "bad" : data.openJobs ? "warn" : "good"
+      tone: data.failedJobs ? "bad" : data.openJobs ? "warn" : "good",
+      href: modulePath(data.site, "/admin/ai-tools")
     },
     {
       label: "交付相册",
-      value: `${data.readyAlbums}/${data.albums.length || 0}`,
-      detail: `${data.generatedAssets.length} 个输出素材`,
+      value: `${data.readyAlbums}/${data.albumCount || 0}`,
+      detail: `${data.generatedAssetCount} 个输出素材`,
       icon: GalleryVerticalEnd,
-      tone: data.readyAlbums ? "good" : data.albums.length ? "warn" : "neutral"
+      tone: data.readyAlbums ? "good" : data.albumCount ? "warn" : "neutral",
+      href: modulePath(data.site, "/admin/customers")
     },
     {
       label: "30天收入",
       value: money(monthRevenue, data.site.currency),
       detail: `${monthOrders.length} 笔已确认订单`,
       icon: ReceiptText,
-      tone: monthRevenue ? "good" : "neutral"
+      tone: monthRevenue ? "good" : "neutral",
+      href: modulePath(data.site, "/admin/orders")
     }
   ];
 
@@ -368,18 +380,18 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     tone: AdminTone;
   }> = [
     { label: "店铺 / 域名", value: `${data.site.name} / ${data.site.primaryDomain}`, tone: "good" },
-    { label: "客户 / 订阅", value: `${data.customers.length} / ${data.activeSubscriptions}`, tone: data.customers.length ? "good" : "warn" },
+    { label: "客户 / 订阅", value: `${data.customerCount} / ${data.activeSubscriptions}`, tone: data.customerCount ? "good" : "warn" },
     { label: "Stripe Connect", value: data.site.connect.chargesEnabled ? "已就绪" : "待配置", tone: data.site.connect.chargesEnabled ? "good" : "warn" },
     { label: "Credits", value: `${data.availableCredits} 可用 / ${data.reservedCredits} 预扣`, tone: data.reservedCredits ? "warn" : "good" },
     { label: "Jobs", value: `${data.completedJobs} 成功 / ${data.failedJobs} 失败`, tone: data.failedJobs ? "bad" : data.completedJobs ? "good" : "neutral" },
-    { label: "审计记录", value: `${data.auditLogs.length} 条`, tone: data.auditLogs.length ? "good" : "neutral" }
+    { label: "待发布草稿", value: `${dirtyPages} 页`, tone: dirtyPages ? "warn" : "good" }
   ];
 
   return (
     <AdminShell
       activeModuleCode="overview"
       account={siteAdminAccount(data.site, data.current)}
-      action={{ label: "打开装修", href: modulePath(data.site, "/admin/design") }}
+      action={{ label: "打开装修", href: modulePath(data.site, "/admin/design/workbench") }}
       breadcrumbs={[
         { label: "店铺管理" },
         { label: "概览工作台" }
@@ -425,6 +437,7 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
           </ErpSection>
         </>
       }
+      rightRailMode="stacked"
       siteSlug={data.site.slug}
       headerStats={siteAdminStats(data)}
       toolbarStats={[]}
@@ -447,7 +460,7 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
             <ErpToolbarField label="网关" value={data.gateway ? `${gatewayUsage}%` : "none"} />
           </div>
           <div className="flex flex-wrap gap-2">
-            <ErpToolbarAction href={modulePath(data.site, "/admin/design")} label="打开装修" primary />
+            <ErpToolbarAction href={modulePath(data.site, "/admin/design/workbench")} label="打开装修" primary />
             <ErpToolbarAction href={modulePath(data.site, "/admin/orders")} label="订单账本" />
             <ErpToolbarAction href={modulePath(data.site, "")} label="访问前台" />
           </div>
@@ -455,7 +468,7 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
 
         <ErpStatGrid columns={6} items={summaryMetrics} />
 
-        <div className="grid gap-3 xl:grid-cols-[1.14fr_0.86fr]">
+        <div className="grid gap-3">
           <ErpSection description="发布、收款、套餐、AI worker 和交付状态是当前站点的上线门槛。" eyebrow="launch checklist" title="启动检查清单">
             <div className="overflow-hidden rounded-[12px] border border-[var(--admin-border-soft)] bg-white">
               <div className="flex items-center justify-between gap-3 border-b border-[var(--admin-border-soft)] px-4 py-3">
@@ -482,17 +495,17 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
                   {launchChecks.map((item) => (
                     <tr key={item.label}>
                       <td className="aleft">
-                        <Link className="inline-flex items-center gap-2 cblue text-[13px]" href={item.href}>
+                        <Link className="inline-flex items-center gap-2 whitespace-nowrap cblue text-[13px]" href={item.href}>
                           <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
                           {item.label}
                         </Link>
                       </td>
                       <td className="aleft text-[12px] text-[#8a94a6]">{item.detail}</td>
                       <td>
-                        <span className={item.ok ? "tag_green" : "tag_org"}>{item.ok ? "已完成" : "待处理"}</span>
+                        <span className={`${item.ok ? "tag_green" : "tag_org"} whitespace-nowrap`}>{item.ok ? "已完成" : "待处理"}</span>
                       </td>
                       <td>
-                        <Link className="admin_edit" href={item.href}>查看</Link>
+                        <Link className="admin_edit whitespace-nowrap" href={item.href}>查看</Link>
                       </td>
                     </tr>
                   ))}
@@ -547,7 +560,7 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
         </ErpSection>
 
         <ErpSection description="这里直接进入每个真实后台模块，不把用户先扔进一堆报表里。" eyebrow="module entry" title="店铺模块入口">
-          <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {workbenchModules.map((module) => (
               <ModuleLinkCard
                 detail={module.detail}

@@ -3,18 +3,13 @@ import { notFound, redirect } from "next/navigation";
 import { IframePatchListener } from "@/components/designer/iframe-patch-listener";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { verifyDesignerPreviewToken } from "@/lib/designer-preview-auth";
-import {
-  getPreviewThemeRuntime,
-  getSiteAdminBySessionFromState,
-  getSiteAppsFromState,
-  getSiteCreativePacksFromState,
-  getSiteMediaAssetsFromState,
-  getSiteProductsFromState,
-  readPlatformState
-} from "@/lib/server-store";
 import { siteAdminSessionCookie } from "@/lib/session";
-import { getSiteAdminBySessionRelational } from "@/lib/stores/site-store";
+import { getSiteAdminBySessionRelational, getSiteAdminContextRelationalState, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
+import { prisma } from "@/lib/prisma";
+import { toCreativePack } from "@/lib/stores/prisma-mappers";
+import { getSiteThemeStateRelational } from "@/lib/stores/theme-store";
 import { themeStyleVars } from "@/lib/theme";
+import type { ThemeRuntimeData } from "@/lib/types";
 
 export default async function ThemePreviewPage({
   params,
@@ -25,38 +20,59 @@ export default async function ThemePreviewPage({
 }) {
   const { siteSlug, pageId } = await params;
   const query = searchParams ? await searchParams : {};
-  const state = readPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) notFound();
-  site.mediaAssets = getSiteMediaAssetsFromState(state, site.id);
+  const stateSite = await getSiteBySlugForAdmin(siteSlug);
+  if (!stateSite) notFound();
+  const themeState = await getSiteThemeStateRelational(stateSite.id);
+  const site = themeState.site;
+  site.mediaAssets = themeState.mediaAssets;
   const cookieSessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
   const tokenPayload = verifyDesignerPreviewToken(query.previewToken, { siteId: site.id, siteSlug: site.slug });
-  const cookieSession =
-    (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: cookieSessionId })) ??
-    getSiteAdminBySessionFromState(state, site.id, cookieSessionId);
+  const cookieSession = await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: cookieSessionId });
   const tokenSession = tokenPayload
-    ? (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: tokenPayload.sessionId })) ??
-      getSiteAdminBySessionFromState(state, site.id, tokenPayload.sessionId)
+    ? await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: tokenPayload.sessionId })
     : undefined;
   if (!cookieSession && !tokenSession) redirect(`/site/${site.slug}/admin/login`);
   const page = site.pages.find((item) => item.id === pageId);
   if (!page) notFound();
   const settings = site.themeSettings.draftJson;
-  const runtime = getPreviewThemeRuntime(state, site.id);
+  const relationalState = await getSiteAdminContextRelationalState(site.id, {
+    products: true,
+    jobs: false,
+    apps: true,
+    media: false,
+    publications: false,
+    auditLogs: false,
+    domains: false,
+    gateways: false,
+    siteAdmins: false
+  });
+  const creativePacks = await prisma.creativePack
+    .findMany({ where: { siteId: site.id }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] })
+    .then((rows) => rows.map(toCreativePack));
+  const runtime: ThemeRuntimeData = {
+    jobs: [],
+    assets: [],
+    albums: [],
+    ledger: [],
+    subscriptions: [],
+    orders: [],
+    customerModels: [],
+    isPreview: true
+  };
   return (
     <div style={themeStyleVars(settings)}>
       <IframePatchListener />
       <ThemeRenderer
-        creativePacks={getSiteCreativePacksFromState(state, site.id)}
+        creativePacks={creativePacks}
         mode="preview"
         page={page.draftJson}
         pagePath={page.slug}
-        products={getSiteProductsFromState(state, site.id)}
+        products={relationalState.products ?? []}
         query={query}
         runtime={runtime}
         settings={settings}
         site={site}
-        siteAiApps={getSiteAppsFromState(state, site.id)}
+        siteAiApps={relationalState.apps ?? []}
       />
     </div>
   );

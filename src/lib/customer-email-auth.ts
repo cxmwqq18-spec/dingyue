@@ -1,14 +1,17 @@
 import "server-only";
 import crypto from "crypto";
+import { getCustomerPasswordPolicyError, normalizeCustomerPassword } from "@/lib/customer-password-policy";
 import { prisma } from "@/lib/prisma";
 import { sendVerificationEmail } from "@/lib/resend-email";
-import { readPlatformState, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
 import {
   hashRelationalPassword,
   relationalSessionTtlMs,
   relationalUid,
   toCustomerSessionRelational,
+  toPlatformEmailConfig,
   toPlatformEmailSettings,
+  toSiteEmailConfigAssignment,
   toPublicCustomerRelational
 } from "@/lib/stores/prisma-mappers";
 import type { CustomerSession, PublicCustomer, Site } from "@/lib/types";
@@ -16,7 +19,7 @@ import type { CustomerSession, PublicCustomer, Site } from "@/lib/types";
 type VerificationPurpose = "register" | "password_reset";
 
 type CustomerEmailVerificationDeliveryStatus = "sent" | "dev" | "failed";
-type EmailAuthSite = Pick<Site, "id" | "name" | "slug" | "branding">;
+type EmailAuthSite = Pick<Site, "id" | "name" | "slug" | "branding" | "signupCreditGrant">;
 
 type CustomerEmailVerificationResult = {
   id: string;
@@ -58,10 +61,10 @@ function normalizePurpose(purpose: string | undefined): VerificationPurpose {
   return purpose === "password_reset" ? "password_reset" : "register";
 }
 
-function normalizePassword(password: string | undefined): string {
-  const normalized = String(password ?? "").trim();
-  if (normalized.length < 6) throw new StoreError("password_min_6_chars", 400);
-  return normalized;
+function normalizePassword(password: string | undefined, confirmPassword?: string): string {
+  const error = getCustomerPasswordPolicyError(password, confirmPassword);
+  if (error) throw new StoreError(error, 400);
+  return normalizeCustomerPassword(password);
 }
 
 async function requireEmailAuthSite(siteId: string): Promise<EmailAuthSite> {
@@ -71,6 +74,7 @@ async function requireEmailAuthSite(siteId: string): Promise<EmailAuthSite> {
       id: true,
       name: true,
       slug: true,
+      signupCreditGrant: true,
       branding: true
     }
   });
@@ -79,6 +83,7 @@ async function requireEmailAuthSite(siteId: string): Promise<EmailAuthSite> {
     id: site.id,
     name: site.name,
     slug: site.slug,
+    signupCreditGrant: Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0))),
     branding: site.branding as Site["branding"]
   };
 }
@@ -111,13 +116,16 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
     createdAt: createdAt.toISOString(),
     expiresAt: new Date(createdAt.getTime() + verificationTtlMs).toISOString()
   };
-  const emailSettings = await prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } });
-  const jsonState = readPlatformState();
-  const settings = emailSettings ? toPlatformEmailSettings(emailSettings) : jsonState.platformEmailSettings;
+  const [emailSettings, emailConfigs, siteEmailConfigAssignments] = await Promise.all([
+    prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+    prisma.platformEmailConfig.findMany({ orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }] }),
+    prisma.siteEmailConfigAssignment.findMany({ orderBy: [{ siteId: "asc" }] })
+  ]);
+  const settings = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
   const settingsContext = {
     platformEmailSettings: settings,
-    platformEmailConfigs: jsonState.platformEmailConfigs,
-    siteEmailConfigAssignments: jsonState.siteEmailConfigAssignments
+    platformEmailConfigs: emailConfigs.map(toPlatformEmailConfig),
+    siteEmailConfigAssignments: siteEmailConfigAssignments.map(toSiteEmailConfigAssignment)
   };
 
   try {
@@ -172,7 +180,7 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
   };
 }
 
-async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "slug">; email: string; password: string; purpose: VerificationPurpose; name?: string }) {
+async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "slug" | "signupCreditGrant">; email: string; password: string; purpose: VerificationPurpose; name?: string }) {
   return prisma.$transaction(async (tx) => {
     const existing = await tx.customer.findUnique({
       where: { siteId_email: { siteId: params.site.id, email: params.email } },
@@ -184,6 +192,7 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
       if (customer) throw new StoreError("customer_already_exists", 409);
       createdCustomer = true;
       const customerId = relationalUid(`cust_${params.site.slug}`);
+      const signupCreditGrant = Math.max(0, Math.trunc(Number(params.site.signupCreditGrant ?? 0)));
       customer = await tx.customer.create({
         data: {
           id: customerId,
@@ -196,20 +205,24 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
             create: {
               id: relationalUid("bal"),
               siteId: params.site.id,
-              balance: 48,
+              balance: signupCreditGrant,
               reserved: 0
             }
           },
-          ledger: {
-            create: {
-              id: relationalUid("led"),
-              siteId: params.site.id,
-              amount: 48,
-              type: "grant",
-              sourceType: "signup_credit",
-              sourceId: `signup_${customerId}`
-            }
-          }
+          ...(signupCreditGrant > 0
+            ? {
+                ledger: {
+                  create: {
+                    id: relationalUid("led"),
+                    siteId: params.site.id,
+                    amount: signupCreditGrant,
+                    type: "grant",
+                    sourceType: "signup_credit",
+                    sourceId: `signup_${customerId}`
+                  }
+                }
+              }
+            : {})
         },
         include: { balance: true }
       });
@@ -239,7 +252,7 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
   });
 }
 
-export async function verifyCustomerEmailCode(params: { siteId: string; email: string; code: string; password?: string; purpose?: VerificationPurpose; name?: string }): Promise<{
+export async function verifyCustomerEmailCode(params: { siteId: string; email: string; code: string; password?: string; confirmPassword?: string; purpose?: VerificationPurpose; name?: string }): Promise<{
   customer: PublicCustomer;
   session: CustomerSession;
   createdCustomer: boolean;
@@ -247,7 +260,7 @@ export async function verifyCustomerEmailCode(params: { siteId: string; email: s
   const email = normalizeEmail(params.email);
   const code = params.code.trim();
   const purpose = normalizePurpose(params.purpose);
-  const password = normalizePassword(params.password);
+  const password = normalizePassword(params.password, params.confirmPassword);
   if (!/^\d{6}$/.test(code)) throw new StoreError("invalid_verification_code", 400);
 
   const site = await requireEmailAuthSite(params.siteId);

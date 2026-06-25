@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
+import { verifyWorkerCallbackSignature } from "@/lib/worker";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
   const { jobId } = await params;
-  const body = (await request.json().catch(() => ({}))) as { siteId?: string; requestId?: string; status?: string; stage?: string };
+  const body = (await request.json().catch(() => ({}))) as { siteId?: string; requestId?: string; status?: string; stage?: string; signature?: string };
   if (!body.siteId || !body.requestId || !body.status) {
     return NextResponse.json({ error: "invalid_worker_status_payload" }, { status: 400 });
+  }
+  if (!verifyWorkerCallbackSignature(body as Record<string, unknown>)) {
+    return NextResponse.json({ error: "invalid_worker_signature" }, { status: 401 });
+  }
+  if (body.status !== "queued" && body.status !== "running" && body.status !== "failed") {
+    return NextResponse.json({ error: "invalid_worker_status" }, { status: 400 });
   }
   try {
     const result = await updateGenerationJobStatusRelational({

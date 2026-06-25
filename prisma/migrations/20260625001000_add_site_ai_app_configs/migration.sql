@@ -1,0 +1,3 @@
+ALTER TABLE "SiteAiApp"
+  ADD COLUMN IF NOT EXISTS "workflowConfig" JSONB,
+  ADD COLUMN IF NOT EXISTS "providerConfig" JSONB;

@@ -7,7 +7,7 @@ import {
   resolveResendSettingsForSite,
   verifyResendDomain
 } from "@/lib/resend-email";
-import { getPlatformOverviewRelational } from "@/lib/stores/platform-store";
+import { getPlatformEmailOverviewRelational } from "@/lib/stores/platform-store";
 
 function isLocalDomain(domain: string): boolean {
   const normalized = domain.trim().toLowerCase();
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     resendConfigId?: string;
     verify?: boolean;
   };
-  const overview = await getPlatformOverviewRelational();
+  const overview = await getPlatformEmailOverviewRelational();
   const site = body.siteId ? overview.sites.find((item) => item.id === body.siteId) : undefined;
   const requestedConfigId = body.resendConfigId ?? body.configId;
   const settingsContext = {

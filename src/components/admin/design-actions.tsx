@@ -102,11 +102,13 @@ export function DesignPageActions({
 export function PublicationActions({
   siteId,
   pageId,
-  canPublish
+  canPublish,
+  onBeforePublish
 }: {
   siteId: string;
   pageId?: string;
   canPublish: boolean;
+  onBeforePublish?: () => Promise<void>;
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState<"publish" | "reset" | null>(null);
@@ -114,6 +116,17 @@ export function PublicationActions({
 
   async function publish() {
     if (!pageId) return;
+    if (!canPublish && onBeforePublish) {
+      setBusy("publish");
+      await onBeforePublish();
+      setBusy(null);
+      setMessage("已刷新发布检查，请确认通过后再次发布。");
+      return;
+    }
+    if (!canPublish) {
+      setMessage("发布检查尚未通过，请先刷新发布检查。");
+      return;
+    }
     setBusy("publish");
     const response = await fetch(`/api/sites/${siteId}/theme/pages/${pageId}/publish`, {
       method: "POST",
@@ -152,7 +165,7 @@ export function PublicationActions({
       <div className="flex flex-wrap gap-2">
         <button
           className={`inline-flex min-h-[30px] items-center gap-1 border px-3 text-xs font-normal transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${actionButtonClass("dark")}`}
-          disabled={!canPublish || !pageId || busy !== null}
+          disabled={!pageId || busy !== null}
           onClick={publish}
           type="button"
         >

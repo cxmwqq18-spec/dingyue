@@ -11,7 +11,7 @@ const dataPath = path.join(workspaceRoot, "data", "platform-state.json");
 const siteId = "site_dreamshoot";
 const siteSlug = "dreamshoot";
 const now = "2026-06-18T00:00:00.000Z";
-const siteName = "DreamShootAI";
+const siteName = "MydreamShoots";
 const themeKey = "dreamshoot-ai-studio";
 const logoImageUrl = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
 const displayFontStack = "var(--font-display-ui), var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif";
@@ -65,7 +65,7 @@ function buildThemeSettings() {
   globalSections.header = normalizeGlobalSection("header", globalSections.header);
   globalSections.footer = normalizeGlobalSection("footer", globalSections.footer);
   globalSections.header.settings.logoImageUrl = globalSections.header.settings.logoImageUrl ?? logoImageUrl;
-  globalSections.header.settings.logoAlt = globalSections.header.settings.logoAlt ?? "DreamShootAI heart camera logo";
+  globalSections.header.settings.logoAlt = globalSections.header.settings.logoAlt ?? "MydreamShoots heart camera logo";
   const seo = source.seo ?? {};
 
   return {
@@ -127,12 +127,12 @@ function buildSaasSettings(settings) {
           header_plus: {
             ...sectionForSaas(settings.globalSections.header),
             type: "header_plus",
-            card_name: "DreamShootAI header"
+            card_name: "MydreamShoots header"
           },
           footer_plus: {
             ...sectionForSaas(settings.globalSections.footer),
             type: "footer_plus",
-            card_name: "DreamShootAI footer"
+            card_name: "MydreamShoots footer"
           }
         }
       },
@@ -146,7 +146,7 @@ const pageMappings = [
   { idSuffix: "pricing", packageTemplate: "pricing", templateKey: "page", slug: "/pricing", title: "Pricing", pageType: "pricing" },
   { idSuffix: "collections", packageTemplate: "packages", templateKey: "collection", slug: "/collections", title: "Photo packages", pageType: "collection" },
   { idSuffix: "tools", packageTemplate: "tools", templateKey: "tools", slug: "/tools", title: "Free AI tools", pageType: "tools" },
-  { idSuffix: "tool_image", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/image-studio", title: "AI Image Studio", pageType: "ai_tool" },
+  { idSuffix: "tool_image", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/headshot", title: "Headshot Generator", pageType: "ai_tool" },
   { idSuffix: "login", packageTemplate: "login", templateKey: "login", slug: "/login", title: "Customer login", pageType: "login" },
   { idSuffix: "app", packageTemplate: "app-home", templateKey: "app-home", slug: "/app", title: "Customer workspace", pageType: "workspace" },
   { idSuffix: "job_progress", packageTemplate: "job-progress", templateKey: "job-progress", slug: "/app/jobs/progress", title: "Job progress", pageType: "job_progress" },
@@ -176,8 +176,8 @@ function pageJsonFor(mapping, version) {
       ...pageJson.sections.policy_1.settings,
       title: "Privacy policy",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
-      body: "<h3>1. Information we collect</h3><p>We collect the email address used for your account, source photos you upload, generation settings, payment status, credit movements, and delivered outputs needed to operate the service.</p><h3>2. How we use data</h3><p>We use your data to create AI photo packages, manage credits and subscriptions, deliver private galleries, provide support, prevent abuse, and improve product reliability.</p><h3>3. Photo privacy</h3><p>Uploads and generated images stay tied to the current site and customer account. We do not sell personal photos, and site data is kept separate from other storefronts.</p><h3>4. Payments</h3><p>Payments are processed by Stripe or the connected payment account for this storefront. We store billing state and ledger records, not full card numbers.</p><h3>5. Security</h3><p>The service is served over HTTPS. Access to private albums, customer assets, jobs, and billing records is scoped by site and customer session.</p><h3>6. Retention and deletion</h3><p>You may request deletion of uploaded assets or generated outputs. Some billing, ledger, and abuse-prevention records may be retained where legally or operationally required.</p><h3>7. Contact</h3><p>Email <a href=\"mailto:support@dreamshootai.com\">support@dreamshootai.com</a> for privacy, account, or deletion requests.</p>"
+      contactEmail: "support@mydreamshoots.com",
+      body: "<h3>1. Information we collect</h3><p>We collect the email address used for your account, source photos you upload, generation settings, payment status, credit movements, and delivered outputs needed to operate the service.</p><h3>2. How we use data</h3><p>We use your data to create AI photo packages, manage credits and subscriptions, deliver private galleries, provide support, prevent abuse, and improve product reliability.</p><h3>3. Photo privacy</h3><p>Uploads and generated images stay tied to the current site and customer account. We do not sell personal photos, and site data is kept separate from other storefronts.</p><h3>4. Payments</h3><p>Payments are processed by Stripe or the connected payment account for this storefront. We store billing state and ledger records, not full card numbers.</p><h3>5. Security</h3><p>The service is served over HTTPS. Access to private albums, customer assets, jobs, and billing records is scoped by site and customer session.</p><h3>6. Retention and deletion</h3><p>You may request deletion of uploaded assets or generated outputs. Some billing, ledger, and abuse-prevention records may be retained where legally or operationally required.</p><h3>7. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for privacy, account, or deletion requests.</p>"
     };
   }
 
@@ -186,7 +186,7 @@ function pageJsonFor(mapping, version) {
       ...pageJson.sections.policy_1.settings,
       title: "Refund policy",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
+      contactEmail: "support@mydreamshoots.com",
       body: "<h3>Refund eligibility</h3><p>You may request a refund for purchased credits if none of the credits from that purchase have been used. Once credits have been spent on a successful generation, that purchase becomes non-refundable.</p><h3>Refund window</h3><p>Refund requests should be submitted within 30 days of the purchase date with your account email and purchase details.</p><h3>Subscriptions</h3><p>If a subscription is canceled, the customer keeps access to purchased credits until they are used or expire according to the plan rules. Cancellation does not automatically refund credits already used.</p><h3>Technical failures</h3><p>If a technical failure on our side prevents credit use or delivery, support may release credits, rerun the job, or approve a refund after review.</p><h3>Ledger handling</h3><p>Refunds and billing reversals are recorded against this storefront. Checkout completion never grants credits before payment confirmation, and every adjustment is written through the credit ledger.</p>"
     };
   }
@@ -196,8 +196,8 @@ function pageJsonFor(mapping, version) {
       ...pageJson.sections.policy_1.settings,
       title: "Terms of Service",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
-      body: "<h3>1. Acceptance</h3><p>By using this site, you agree to these terms and to the privacy policy that governs uploads, generated outputs, purchases, and private delivery.</p><h3>2. Accounts</h3><p>Customers must provide accurate account information and keep credentials secure. Each account belongs to the current storefront and cannot be shared across unrelated site customer records.</p><h3>3. Subscriptions and credits</h3><p>Subscriptions and one-time credit packs provide credits for AI photo generation. Credits are granted after confirmed payment, reserved when a job starts, consumed after successful delivery, and released when a job fails or times out.</p><h3>4. Refunds</h3><p>Unused credits may be reviewed for refund eligibility within 30 days. Credits already spent on successful generations are not refundable unless support confirms a service-side technical failure.</p><h3>5. Uploaded content</h3><p>You may only upload images and references you control or have permission to use. The site may reject, review, remove, or block content that violates law, platform rules, or safety policy.</p><h3>6. Delivery</h3><p>Completed jobs are delivered to the signed-in customer account. Delivery states, retries, credit releases, and refunds are handled by the backend and recorded in the ledger.</p><h3>7. Liability</h3><p>The service is provided as a software subscription. To the extent permitted by law, liability is limited to the fees paid for the current billing period or the affected credit purchase.</p><h3>8. Contact us</h3><p>Email <a href=\"mailto:support@dreamshootai.com\">support@dreamshootai.com</a> for account, billing, refund, or policy questions.</p>"
+      contactEmail: "support@mydreamshoots.com",
+      body: "<h3>1. Acceptance</h3><p>By using this site, you agree to these terms and to the privacy policy that governs uploads, generated outputs, purchases, and private delivery.</p><h3>2. Accounts</h3><p>Customers must provide accurate account information and keep credentials secure. Each account belongs to the current storefront and cannot be shared across unrelated site customer records.</p><h3>3. Subscriptions and credits</h3><p>Subscriptions and one-time credit packs provide credits for AI photo generation. Credits are granted after confirmed payment, reserved when a job starts, consumed after successful delivery, and released when a job fails or times out.</p><h3>4. Refunds</h3><p>Unused credits may be reviewed for refund eligibility within 30 days. Credits already spent on successful generations are not refundable unless support confirms a service-side technical failure.</p><h3>5. Uploaded content</h3><p>You may only upload images and references you control or have permission to use. The site may reject, review, remove, or block content that violates law, platform rules, or safety policy.</p><h3>6. Delivery</h3><p>Completed jobs are delivered to the signed-in customer account. Delivery states, retries, credit releases, and refunds are handled by the backend and recorded in the ledger.</p><h3>7. Liability</h3><p>The service is provided as a software subscription. To the extent permitted by law, liability is limited to the fees paid for the current billing period or the affected credit purchase.</p><h3>8. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, or policy questions.</p>"
     };
   }
 
@@ -205,7 +205,7 @@ function pageJsonFor(mapping, version) {
     pageJson.sections.policy_1.settings = {
       ...pageJson.sections.policy_1.settings,
       title: "Content policy",
-      body: "<p>Customers may upload only photos they control or have permission to use. DreamShootAI scene packs are for private customer galleries and storefront-approved creative categories.</p>"
+      body: "<p>Customers may upload only photos they control or have permission to use. MydreamShoots scene packs are for private customer galleries and storefront-approved creative categories.</p>"
     };
   }
 
@@ -278,7 +278,7 @@ const products = [
         featured,
         planSubtitle,
         editingLabel,
-        publicReference: `DreamShootAI ${String(name).toLowerCase()} credit package`
+        publicReference: `MydreamShoots ${String(name).toLowerCase()} credit package`
       }
     }
   ]
@@ -351,27 +351,27 @@ const creativePacks = [
 }));
 
 const mediaAssets = [
-  ["media_dreamshoot_hero", "DreamShootAI hero", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
-  ["media_dreamshoot_alt_hero", "DreamShootAI hero alt", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["media_dreamshoot_lifestyle", "DreamShootAI creator portrait", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
-  ["media_dreamshoot_social_cards", "DreamShootAI social cards", "sites/site_dreamshoot/theme/holiday-card-gpt2.png", "/assets/dreamshoot/holiday-card-gpt2.png"],
-  ["media_dreamshoot_travel", "DreamShootAI travel scene", "sites/site_dreamshoot/theme/cliffside-holiday-v1.png", "/assets/dreamshoot/generated/20260618/cliffside-holiday-v1.png"],
-  ["media_dreamshoot_avatar", "DreamShootAI avatar", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
-  ["media_dreamshoot_headshot", "DreamShootAI headshot", "sites/site_dreamshoot/theme/editorial-headshot-gpt2.png", "/assets/dreamshoot/editorial-headshot-gpt2.png"],
-  ["media_dreamshoot_beauty", "DreamShootAI beauty portrait", "sites/site_dreamshoot/theme/beauty-portrait-gpt2.png", "/assets/dreamshoot/beauty-portrait-gpt2.png"],
-  ["media_dreamshoot_lifestyle_headshot", "DreamShootAI lifestyle headshot", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["media_dreamshoot_hairstyle_preview", "DreamShootAI hairstyle preview", "sites/site_dreamshoot/theme/hairstyle-preview-v1.png", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
-  ["media_dreamshoot_upscaler_utility", "DreamShootAI upscaler utility", "sites/site_dreamshoot/theme/upscaler-utility-v1.png", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
-  ["media_dreamshoot_holiday_portrait", "DreamShootAI holiday portrait", "sites/site_dreamshoot/theme/holiday-portrait-v1.png", "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
-  ["media_dreamshoot_mafia_noir", "DreamShootAI mafia noir", "sites/site_dreamshoot/theme/mafia-noir-single-v1.png", "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
-  ["media_dreamshoot_nature_adventure", "DreamShootAI nature adventure", "sites/site_dreamshoot/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
-  ["media_dreamshoot_worldcup_stadium", "DreamShootAI World Cup stadium portrait", "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
-  ["media_dreamshoot_worldcup_friends", "DreamShootAI World Cup friend fan photos", "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png"],
-  ["media_dreamshoot_worldcup_avatar", "DreamShootAI World Cup match-day avatar", "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png"],
-  ["media_dreamshoot_worldcup_poster", "DreamShootAI World Cup fan poster", "sites/site_dreamshoot/theme/worldcup-fan-poster.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png"],
-  ["media_dreamshoot_worldcup_story", "DreamShootAI World Cup social story", "sites/site_dreamshoot/theme/worldcup-social-story.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png"],
-  ["media_dreamshoot_worldcup_banner", "DreamShootAI World Cup banner cover", "sites/site_dreamshoot/theme/worldcup-banner-cover.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"],
-  ["media_dreamshoot_cyberpunk_solo", "DreamShootAI cyberpunk solo", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"]
+  ["media_dreamshoot_hero", "MydreamShoots hero", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
+  ["media_dreamshoot_alt_hero", "MydreamShoots hero alt", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
+  ["media_dreamshoot_lifestyle", "MydreamShoots creator portrait", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
+  ["media_dreamshoot_social_cards", "MydreamShoots social cards", "sites/site_dreamshoot/theme/holiday-card-gpt2.png", "/assets/dreamshoot/holiday-card-gpt2.png"],
+  ["media_dreamshoot_travel", "MydreamShoots travel scene", "sites/site_dreamshoot/theme/cliffside-holiday-v1.png", "/assets/dreamshoot/generated/20260618/cliffside-holiday-v1.png"],
+  ["media_dreamshoot_avatar", "MydreamShoots avatar", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
+  ["media_dreamshoot_headshot", "MydreamShoots headshot", "sites/site_dreamshoot/theme/editorial-headshot-gpt2.png", "/assets/dreamshoot/editorial-headshot-gpt2.png"],
+  ["media_dreamshoot_beauty", "MydreamShoots beauty portrait", "sites/site_dreamshoot/theme/beauty-portrait-gpt2.png", "/assets/dreamshoot/beauty-portrait-gpt2.png"],
+  ["media_dreamshoot_lifestyle_headshot", "MydreamShoots lifestyle headshot", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
+  ["media_dreamshoot_hairstyle_preview", "MydreamShoots hairstyle preview", "sites/site_dreamshoot/theme/hairstyle-preview-v1.png", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
+  ["media_dreamshoot_upscaler_utility", "MydreamShoots upscaler utility", "sites/site_dreamshoot/theme/upscaler-utility-v1.png", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
+  ["media_dreamshoot_holiday_portrait", "MydreamShoots holiday portrait", "sites/site_dreamshoot/theme/holiday-portrait-v1.png", "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
+  ["media_dreamshoot_mafia_noir", "MydreamShoots mafia noir", "sites/site_dreamshoot/theme/mafia-noir-single-v1.png", "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
+  ["media_dreamshoot_nature_adventure", "MydreamShoots nature adventure", "sites/site_dreamshoot/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
+  ["media_dreamshoot_worldcup_stadium", "MydreamShoots World Cup stadium portrait", "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
+  ["media_dreamshoot_worldcup_friends", "MydreamShoots World Cup friend fan photos", "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png"],
+  ["media_dreamshoot_worldcup_avatar", "MydreamShoots World Cup match-day avatar", "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png"],
+  ["media_dreamshoot_worldcup_poster", "MydreamShoots World Cup fan poster", "sites/site_dreamshoot/theme/worldcup-fan-poster.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png"],
+  ["media_dreamshoot_worldcup_story", "MydreamShoots World Cup social story", "sites/site_dreamshoot/theme/worldcup-social-story.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png"],
+  ["media_dreamshoot_worldcup_banner", "MydreamShoots World Cup banner cover", "sites/site_dreamshoot/theme/worldcup-banner-cover.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"],
+  ["media_dreamshoot_cyberpunk_solo", "MydreamShoots cyberpunk solo", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"]
 ].map(([id, label, storageKey, previewUrl]) => ({
   id,
   siteId,
@@ -391,7 +391,7 @@ const settings = buildThemeSettings();
 const draftTheme = buildThemeRecord({
   id: "theme_site_dreamshoot_draft",
   status: "draft",
-  name: "DreamShootAI Draft",
+  name: "MydreamShoots Draft",
   themeId: "site_dreamshoot_draft",
   pages,
   settings
@@ -399,7 +399,7 @@ const draftTheme = buildThemeRecord({
 const activeTheme = buildThemeRecord({
   id: "theme_site_dreamshoot_active",
   status: "active",
-  name: "DreamShootAI Live",
+  name: "MydreamShoots Live",
   themeId: "site_dreamshoot_active_v1",
   pages,
   settings
@@ -434,17 +434,17 @@ const site = {
 };
 
 state.sites = replaceWhere(state.sites ?? [], (item) => item.id === siteId || item.slug === siteSlug, [site]);
-state.siteDomains = replaceWhere(state.siteDomains ?? [], (item) => item.siteId === siteId || item.domain === "dreamshoot.localhost" || item.domain === "www.mydreamshoots.com", [
+state.siteDomains = replaceWhere(state.siteDomains ?? [], (item) => item.siteId === siteId || item.domain === "mydreamshoots.localhost" || item.domain === "www.mydreamshoots.com", [
   { id: "dom_dreamshoot_primary", siteId, domain: "www.mydreamshoots.com", isPrimary: true, status: "active", createdAt: now },
-  { id: "dom_dreamshoot_localhost", siteId, domain: "dreamshoot.localhost", isPrimary: false, status: "active", createdAt: now }
+  { id: "dom_dreamshoot_localhost", siteId, domain: "mydreamshoots.localhost", isPrimary: false, status: "active", createdAt: now }
 ]);
 state.siteAdmins = replaceWhere(state.siteAdmins ?? [], (item) => item.siteId === siteId, [
   {
     id: "admin_dreamshoot_owner",
     siteId,
-    email: "owner@dreamshoot.localhost",
+    email: "owner@mydreamshoots.localhost",
     passwordHash: hashPassword("dreamshoot123"),
-    displayName: "DreamShootAI Owner",
+    displayName: "MydreamShoots Owner",
     role: "owner",
     createdAt: now
   }
@@ -462,7 +462,7 @@ const baseImageApp = (state.aiApps ?? []).find((app) => app.slug === "image_gene
 };
 const imageApp = {
   ...baseImageApp,
-  name: "DreamShootAI Image Studio",
+  name: "MydreamShoots Image Studio",
   description: "Private AI photo packs, scene generation, AI video-ready outputs, and customer-only gallery delivery.",
   parameterSchema: [
     { id: "style", label: "Style", type: "select", options: ["world-cup", "gala", "creator", "travel", "headshot", "beauty", "virtual-try-on", "sports"] },
@@ -476,7 +476,7 @@ state.aiGatewayGroups = replaceWhere(state.aiGatewayGroups ?? [], (item) => item
   {
     id: "gw_dreamshoot_primary",
     siteId,
-    name: "DreamShootAI image quota",
+    name: "MydreamShoots image quota",
     status: "active",
     modelAllowlist: ["gpt-image-2", "gpt-4.1-mini"],
     monthlyQuota: 10000,
@@ -490,7 +490,7 @@ state.customers = replaceWhere(state.customers ?? [], (item) => item.siteId === 
   {
     id: "cust_dreamshoot_nora",
     siteId,
-    email: "nora@dreamshoot.localhost",
+    email: "nora@mydreamshoots.localhost",
     passwordHash: hashPassword("nora123"),
     name: "Nora Whitman",
     status: "active",

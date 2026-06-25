@@ -1,4 +1,5 @@
 import "server-only";
+import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformCloudflareAccount } from "@/lib/types";
 
 export type CloudflareDnsRecordInput = {
@@ -26,6 +27,8 @@ function smokeMockEnabled(): boolean {
   return process.env.SMOKE_PROVIDER_MOCK === "1" || process.env.SMOKE_CLOUDFLARE_DNS === "1";
 }
 
+const cloudflareApiTimeoutMs = Math.max(1000, Number(process.env.CLOUDFLARE_API_TIMEOUT_MS ?? "6000") || 6000);
+
 export function maskCloudflareToken(token?: string): string {
   const value = token?.trim() ?? "";
   return value ? `${value.slice(0, 6)}...${value.slice(-4)}` : "";
@@ -52,15 +55,22 @@ function requireCloudflareAccount(account?: PlatformCloudflareAccount): Platform
 }
 
 async function cloudflareFetch<T>(account: PlatformCloudflareAccount, path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`https://api.cloudflare.com/client/v4${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${account.apiToken}`,
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {})
-    },
-    cache: "no-store"
-  });
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(`https://api.cloudflare.com/client/v4${path}`, {
+      ...init,
+      headers: {
+        Authorization: `Bearer ${account.apiToken}`,
+        "Content-Type": "application/json",
+        ...(init?.headers ?? {})
+      },
+      cache: "no-store",
+      timeoutMs: cloudflareApiTimeoutMs
+    });
+  } catch (error) {
+    if (error instanceof FetchTimeoutError) throw new Error("cloudflare_timeout");
+    throw error;
+  }
   const payload = (await response.json().catch(() => ({}))) as { success?: boolean; result?: T; errors?: Array<{ code?: number; message?: string }> };
   if (!response.ok || payload.success === false) {
     if (response.status === 429) throw new Error("cloudflare_rate_limited");

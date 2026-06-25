@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Clock3, Download, History, Send } from "lucide-react";
+import { Clock3, Download, History, RefreshCcw, Send } from "lucide-react";
 import {
   DesignWorkbenchLayout,
   PublicationConfidence,
@@ -39,6 +39,7 @@ export function DesignPublicationsWorkbench({
   settingsDirty,
   canPublish,
   preflightScore,
+  preflightStale = false,
   firstPageId,
   siteId
 }: {
@@ -52,12 +53,20 @@ export function DesignPublicationsWorkbench({
   settingsDirty: boolean;
   canPublish: boolean;
   preflightScore: number;
+  preflightStale?: boolean;
   firstPageId?: string;
   siteId: string;
 }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [publisherFilter, setPublisherFilter] = useState("all");
+  const [preflight, setPreflight] = useState({
+    canPublish,
+    score: preflightScore,
+    stale: preflightStale,
+    loading: false,
+    message: preflightStale ? "发布检查将在点击时执行，避免切换页面时等待完整校验。" : "发布检查已就绪。"
+  });
 
   const publisherOptions = useMemo(
     () => ["all", ...Array.from(new Set(publications.map((publication) => publication.publishedBy)))],
@@ -100,6 +109,34 @@ export function DesignPublicationsWorkbench({
     );
   }
 
+  async function refreshPreflight() {
+    setPreflight((current) => ({ ...current, loading: true, message: "正在执行发布检查..." }));
+    const response = await fetch(`/api/sites/${siteId}/admin/publish-preflight`);
+    const json = (await response.json().catch(() => ({}))) as {
+      canPublish?: boolean;
+      score?: number;
+      blockerCount?: number;
+      warningCount?: number;
+      error?: string;
+    };
+    if (!response.ok) {
+      setPreflight((current) => ({
+        ...current,
+        loading: false,
+        stale: true,
+        message: `发布检查失败：${json.error ?? "unknown error"}`
+      }));
+      return;
+    }
+    setPreflight({
+      canPublish: Boolean(json.canPublish),
+      score: Number(json.score ?? 0),
+      stale: false,
+      loading: false,
+      message: `检查完成：${json.blockerCount ?? 0} 个阻断项，${json.warningCount ?? 0} 个提醒。`
+    });
+  }
+
   return (
     <div className="grid gap-5">
       <WorkbenchMetricStrip
@@ -107,7 +144,7 @@ export function DesignPublicationsWorkbench({
           { label: "Current release", value: latestVersion ? `v${latestVersion}` : "-" },
           { label: "Snapshot count", value: publications.length },
           { label: "Latest pages", value: latestPageCount },
-          { label: "Confidence", value: `${preflightScore}%` }
+          { label: "Confidence", value: preflight.stale ? "待检查" : `${preflight.score}%` }
         ]}
       />
 
@@ -138,7 +175,7 @@ export function DesignPublicationsWorkbench({
             </WorkbenchSidebarCard>
 
             <WorkbenchSidebarCard eyebrow="confidence" title="Release confidence">
-              <PublicationConfidence label="发布置信度" value={preflightScore} />
+              <PublicationConfidence label="发布置信度" value={preflight.stale ? 0 : preflight.score} />
               <div className="mt-4 space-y-2 text-[12px] text-[#667085]">
                 <div className="flex items-center justify-between gap-3">
                   <span>草稿页面</span>
@@ -150,9 +187,19 @@ export function DesignPublicationsWorkbench({
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <span>自动化检查</span>
-                  <span>{canPublish ? "通过" : "待处理"}</span>
+                  <span>{preflight.stale ? "待检查" : preflight.canPublish ? "通过" : "待处理"}</span>
                 </div>
               </div>
+              <button
+                className="admin_btn mt-4 inline-flex h-[32px] items-center gap-1"
+                disabled={preflight.loading}
+                onClick={refreshPreflight}
+                type="button"
+              >
+                <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+                {preflight.loading ? "检查中" : "刷新发布检查"}
+              </button>
+              <p className="mt-2 text-[12px] leading-5 text-[#98a2b3]">{preflight.message}</p>
             </WorkbenchSidebarCard>
           </div>
         }
@@ -185,7 +232,12 @@ export function DesignPublicationsWorkbench({
                 </p>
               </div>
               <div className="shrink-0">
-                <PublicationActions canPublish={Boolean(firstPageId) && canPublish} pageId={firstPageId} siteId={siteId} />
+                <PublicationActions
+                  canPublish={Boolean(firstPageId) && preflight.canPublish && !preflight.stale}
+                  onBeforePublish={refreshPreflight}
+                  pageId={firstPageId}
+                  siteId={siteId}
+                />
               </div>
             </div>
           </div>

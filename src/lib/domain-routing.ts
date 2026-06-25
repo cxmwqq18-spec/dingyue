@@ -1,6 +1,9 @@
 import type { PlatformState, Site } from "@/lib/types";
 
 const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz"]);
+const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
+  dreamshoot: "mydreamshoots"
+};
 
 export function cleanHost(host: string | null | undefined): string {
   return String(host ?? "")
@@ -13,6 +16,19 @@ export function cleanHost(host: string | null | undefined): string {
 export function isPlatformHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
   return PLATFORM_DOMAINS.has(value);
+}
+
+export function publicSiteSlug(slug: string): string {
+  return PUBLIC_SITE_SLUG_ALIASES[slug] ?? slug;
+}
+
+export function canonicalSiteSlug(slug: string): string {
+  return publicSiteSlug(slug);
+}
+
+export function legacySiteSlugCandidates(slug: string): string[] {
+  const publicSlug = publicSiteSlug(slug);
+  return Array.from(new Set([publicSlug, slug, ...Object.entries(PUBLIC_SITE_SLUG_ALIASES).filter(([, current]) => current === publicSlug).map(([legacy]) => legacy)]));
 }
 
 export function getSiteByHostFromState(state: PlatformState, host: string | null | undefined): Site | undefined {
@@ -41,12 +57,13 @@ export function hostAwareSitePath(site: Site, path = "/"): string {
   const primaryHost = cleanHost(site.primaryDomain);
   const hasProductionDomain = Boolean(primaryHost && primaryHost !== "localhost" && primaryHost !== "127.0.0.1" && !primaryHost.endsWith(".localhost"));
   if (hasProductionDomain) return normalizedPath;
-  if (normalizedPath === "/") return `/site/${site.slug}`;
-  return `/site/${site.slug}${normalizedPath}`;
+  const slug = publicSiteSlug(site.slug);
+  if (normalizedPath === "/") return `/site/${slug}`;
+  return `/site/${slug}${normalizedPath}`;
 }
 
 export function publicSiteUrl(site: Site, path = "/"): string {
-  return publicSiteUrlFromParts({ slug: site.slug, primaryDomain: site.primaryDomain }, path);
+  return publicSiteUrlFromParts({ slug: publicSiteSlug(site.slug), primaryDomain: site.primaryDomain }, path);
 }
 
 export function publicSiteUrlFromParts(site: { slug: string; primaryDomain: string }, path = "/"): string {

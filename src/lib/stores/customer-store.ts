@@ -5,6 +5,7 @@ import { StoreError } from "@/lib/server-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import type { Customer, PublicCustomer } from "@/lib/types";
 import {
+  mapCustomer,
   hashRelationalPassword,
   relationalSessionTtlMs,
   relationalUid,
@@ -16,6 +17,19 @@ import {
 } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
+
+export async function listSiteCustomersRelational(
+  siteId: string,
+  client: DbClient = prisma
+): Promise<{ customers: PublicCustomer[] }> {
+  await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status"]);
+  const customers = await client.customer.findMany({
+    where: { siteId },
+    include: { balance: true },
+    orderBy: [{ createdAt: "asc" }, { email: "asc" }]
+  });
+  return { customers: customers.map((customer) => mapCustomer(customer)) };
+}
 
 export async function createCustomerSessionRelational(
   params: { siteId: string; email: string; password: string; name?: string },
@@ -29,8 +43,9 @@ export async function createCustomerSessionRelational(
   await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
 
   const result = await client.$transaction(async (tx) => {
-    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true, slug: true } });
+    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true, slug: true, signupCreditGrant: true } });
     if (!site) throw new StoreError("site_not_found", 404);
+    const signupCreditGrant = Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0)));
 
     const existing = await tx.customer.findUnique({
       where: { siteId_email: { siteId: params.siteId, email } },
@@ -53,20 +68,24 @@ export async function createCustomerSessionRelational(
             create: {
               id: relationalUid("bal"),
               siteId: params.siteId,
-              balance: 48,
+              balance: signupCreditGrant,
               reserved: 0
             }
           },
-          ledger: {
-            create: {
-              id: relationalUid("led"),
-              siteId: params.siteId,
-              amount: 48,
-              type: "grant",
-              sourceType: "signup_credit",
-              sourceId: `signup_${customerId}`
-            }
-          }
+          ...(signupCreditGrant > 0
+            ? {
+                ledger: {
+                  create: {
+                    id: relationalUid("led"),
+                    siteId: params.siteId,
+                    amount: signupCreditGrant,
+                    type: "grant",
+                    sourceType: "signup_credit",
+                    sourceId: `signup_${customerId}`
+                  }
+                }
+              }
+            : {})
         },
         include: { balance: true }
       });

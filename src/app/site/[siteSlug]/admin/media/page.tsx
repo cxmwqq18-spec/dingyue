@@ -3,52 +3,51 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { ThemeMediaPanel } from "@/components/admin/theme-media-panel";
 import { OpsCard, StatusPill } from "@/components/ui";
+import { getSiteMediaSummaryRelational } from "@/lib/stores/site-store";
 import {
   getSiteAdminData,
   modulePath,
   siteAdminAccount,
-  siteAdminCommandActions,
   siteAdminModuleLinks,
   siteAdminNav,
-  siteAdminQuickActions,
   siteAdminStats
 } from "../_lib/site-admin-context";
 
 export default async function SiteMediaPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const data = await getSiteAdminData(siteSlug);
-  const themeAssets = data.media.filter((asset) => asset.usage === "theme").length;
-  const packAssets = data.media.filter((asset) => asset.usage === "pack_cover").length;
-  const externalAssets = data.media.filter((asset) => asset.sourceType === "external_url").length;
-  const uploadAssets = data.media.filter((asset) => asset.sourceType === "site_upload").length;
+  const data = await getSiteAdminData(siteSlug, { include: ["media"], summary: false, take: 40 });
+  const mediaSummary = await getSiteMediaSummaryRelational(data.site.id);
+  const themeAssets = mediaSummary.usageCounts.theme ?? 0;
+  const packAssets = mediaSummary.usageCounts.pack_cover ?? 0;
+  const externalAssets = mediaSummary.sourceCounts.external_url ?? 0;
+  const uploadAssets = mediaSummary.sourceCounts.site_upload ?? 0;
+  const mediaTotal = mediaSummary.total;
 
   return (
     <AdminShell
       activeModuleCode="design"
       account={siteAdminAccount(data.site, data.current)}
-      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design") }}
+      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design/workbench") }}
       breadcrumbs={[
         { label: "店铺管理", href: modulePath(data.site, "/admin") },
         { label: "店铺装修", href: modulePath(data.site, "/admin/design") },
         { label: "素材中心" }
       ]}
       brand={data.site.branding.logoText}
-      commandActions={siteAdminCommandActions(data.site, data)}
       eyebrow="site media operations"
       moduleLinks={siteAdminModuleLinks}
       nav={siteAdminNav(data.site, data)}
-      quickActions={siteAdminQuickActions(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
       subtitle="站点级素材库用于服务装修器、套餐封面、政策页图片和品牌资源，不与客户私有上传混用。"
       title="素材中心"
-      titleBadge={String(data.media.length)}
+      titleBadge={String(mediaTotal)}
       workspace={{
         label: "media workspace",
         name: `${data.site.name} Theme Assets`,
-        meta: `${data.media.length} records / current site only`,
-        statusLabel: data.media.length ? "ready" : "empty",
-        statusTone: data.media.length ? "good" : "warn"
+        meta: `${mediaTotal} records / current site only`,
+        statusLabel: mediaTotal ? "ready" : "empty",
+        statusTone: mediaTotal ? "good" : "warn"
       }}
       rightRail={
         <>
@@ -58,7 +57,7 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
             <div className="mt-4">
               <ErpInfoList
                 items={[
-                  { label: "Site media", value: String(data.media.length), tone: data.media.length ? "good" : "warn" },
+                  { label: "Site media", value: String(mediaTotal), tone: mediaTotal ? "good" : "warn" },
                   { label: "Theme usage", value: String(themeAssets), tone: "good" },
                   { label: "Pack covers", value: String(packAssets), tone: "neutral" },
                   { label: "External refs", value: String(externalAssets), tone: "neutral" }
@@ -87,7 +86,7 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
       <div className="grid gap-5">
         <ErpStatGrid
           items={[
-            { label: "assets", value: String(data.media.length), detail: "site-scoped media records", icon: ImageIcon, tone: data.media.length ? "good" : "warn" },
+            { label: "assets", value: String(mediaTotal), detail: "site-scoped media records", icon: ImageIcon, tone: mediaTotal ? "good" : "warn" },
             { label: "theme", value: String(themeAssets), detail: "section and theme assets", icon: Palette, tone: themeAssets ? "good" : "neutral" },
             { label: "pack covers", value: String(packAssets), detail: "creative pack cover assets", icon: Layers3, tone: packAssets ? "good" : "neutral" },
             { label: "external", value: String(externalAssets), detail: `${uploadAssets} uploaded / ${externalAssets} linked`, icon: Link2, tone: externalAssets ? "neutral" : "good" }
@@ -95,14 +94,14 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
         />
 
         <ErpSection
-          action={<ErpToolbarAction href={modulePath(data.site, "/admin/design")} label="打开装修器" primary />}
+          action={<ErpToolbarAction href={modulePath(data.site, "/admin/design/workbench")} label="打开装修器" primary />}
           description="装修素材、拍摄包封面、政策页图片和品牌资源都在站点级素材库里管理，供 section 字段直接绑定。"
           eyebrow="media workspace"
           title="站点素材库"
         >
           <ErpToolbar>
             <div className="flex flex-wrap gap-3">
-              <ErpToolbarField label="总资源" value={String(data.media.length)} />
+              <ErpToolbarField label="总资源" value={String(mediaTotal)} />
               <ErpToolbarField label="主题资源" value={String(themeAssets)} />
               <ErpToolbarField label="站点上传" value={String(uploadAssets)} />
             </div>
@@ -112,7 +111,13 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
             </div>
           </ErpToolbar>
           <div className="mt-5">
-            <ThemeMediaPanel media={data.media} site={data.site} />
+            <ThemeMediaPanel
+              initialTotal={mediaTotal}
+              media={data.media}
+              site={data.site}
+              sourceCounts={mediaSummary.sourceCounts}
+              usageCounts={mediaSummary.usageCounts}
+            />
           </div>
         </ErpSection>
 

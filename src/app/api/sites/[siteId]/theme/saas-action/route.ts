@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { fetchWithTimeout } from "@/lib/fetch-timeout";
 import {
-  applySaasThemeAction,
+  applySaasThemeActionRelational,
   type SaasThemeAction
-} from "@/lib/server-store";
+} from "@/lib/stores/theme-store";
 import type { SectionBlockInstance, SectionInstance } from "@/lib/types";
 
 function extractElementById(html: string, id: string): string {
@@ -27,14 +28,19 @@ function extractElementById(html: string, id: string): string {
 
 async function renderPreviewSectionFromRoute(request: Request, siteSlug: string, pageId: string, sectionId: string) {
   const previewUrl = new URL(`/site/${siteSlug}/admin/design/preview/${pageId}`, request.url);
-  const response = await fetch(previewUrl, {
-    cache: "no-store",
-    headers: {
-      cookie: request.headers.get("cookie") ?? ""
-    }
-  });
-  if (!response.ok) return "";
-  return extractElementById(await response.text(), `xfcart-section-${sectionId}`);
+  try {
+    const response = await fetchWithTimeout(previewUrl, {
+      cache: "no-store",
+      headers: {
+        cookie: request.headers.get("cookie") ?? ""
+      },
+      timeoutMs: 2500
+    });
+    if (!response.ok) return "";
+    return extractElementById(await response.text(), `xfcart-section-${sectionId}`);
+  } catch {
+    return "";
+  }
 }
 
 function fallbackSectionHtml(sectionId: string, section?: SectionInstance): string {
@@ -89,9 +95,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
     return NextResponse.json({ error: "invalid_saas_theme_action" }, { status: 400 });
   }
   try {
-    const result = applySaasThemeAction(siteId, body.action, body.actor ?? "site_admin_demo");
-    const site = result.state.sites.find((item) => item.id === siteId);
-    if (!site) throw new Error("site_not_found");
+    const result = await applySaasThemeActionRelational(siteId, body.action, body.actor ?? "site_admin_demo");
+    const site = result.site;
     const pageId = "pageId" in body.action ? body.action.pageId : site.pages[0]?.id;
     let html =
       pageId && result.sectionId && (result.responseType === "th1" || result.responseType === "add")

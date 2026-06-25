@@ -7,6 +7,7 @@ import { FieldEditor, parseFieldValue } from "@/components/designer/field-editor
 import { updatePageBlockSetting, updatePageSectionSetting } from "@/components/designer/designer-draft-operations";
 import { clonePage, safeBlocks } from "@/components/designer/designer-theme-utils";
 import { saveAllThemePageDrafts } from "@/components/designer/designer-theme-persistence";
+import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import { blockLabel, getSectionSchema } from "@/lib/section-schema";
 import { downloadCsv } from "@/components/admin/export-utils";
 import type {
@@ -28,6 +29,16 @@ function sectionTitle(page: ThemePage, sectionId: string) {
   return schema?.label ?? section?.type ?? sectionId;
 }
 
+export type ContentDraftEditorProps = {
+  site: Site;
+  editablePages: ThemePage[];
+  allPages: ThemePage[];
+  products: Product[];
+  siteAiApps: SiteAiApp[];
+  mediaAssets: MediaAsset[];
+  creativePacks: CreativePack[];
+};
+
 export function ContentDraftEditor({
   site,
   editablePages,
@@ -36,15 +47,7 @@ export function ContentDraftEditor({
   siteAiApps,
   mediaAssets,
   creativePacks
-}: {
-  site: Site;
-  editablePages: ThemePage[];
-  allPages: ThemePage[];
-  products: Product[];
-  siteAiApps: SiteAiApp[];
-  mediaAssets: MediaAsset[];
-  creativePacks: CreativePack[];
-}) {
+}: ContentDraftEditorProps) {
   const router = useRouter();
   const draftSeed = useMemo<PageDraftMap>(
     () => Object.fromEntries(editablePages.map((page) => [page.id, clonePage(page.draftJson)])),
@@ -63,8 +66,10 @@ export function ContentDraftEditor({
   const [selectedPageId, setSelectedPageId] = useState(editablePages[0]?.id ?? "");
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "draft" | "live">("all");
-  const [message, setMessage] = useState("内容页现在支持 section 内容草稿编辑、保存、回滚和整站发布。");
+  const [message, setMessage] = useState("内容页现在支持区块内容草稿编辑、保存、回滚和整站发布。");
   const [busy, setBusy] = useState<"save" | "publish" | "rollback" | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const fieldOptions = useMemo(
     () => ({ pages: allPages, products, siteAiApps, mediaAssets, creativePacks }),
     [allPages, products, siteAiApps, mediaAssets, creativePacks]
@@ -99,6 +104,8 @@ export function ContentDraftEditor({
   const selectedPage = selectedPageState?.page;
   const draft = selectedPageState?.pageDraft;
   const dirtyCount = pageStates.filter((item) => item.dirty).length;
+  const safePage = clampPage(page, filteredPages.length, pageSize);
+  const visiblePages = pageItems(filteredPages, safePage, pageSize);
 
   useEffect(() => {
     setDrafts(draftSeed);
@@ -113,6 +120,10 @@ export function ContentDraftEditor({
       setSelectedPageId(editablePages[0]?.id ?? "");
     }
   }, [editablePages, selectedPageId]);
+
+  useEffect(() => {
+    setPage((current) => clampPage(current, filteredPages.length, pageSize));
+  }, [filteredPages.length, pageSize]);
 
   function setDraft(pageId: string, next: ThemePageJson) {
     setDrafts((current) => ({
@@ -254,6 +265,12 @@ export function ContentDraftEditor({
   function resetFilters() {
     setQuery("");
     setStatusFilter("all");
+    setPage(1);
+  }
+
+  function updatePageSize(nextPageSize: number) {
+    setPageSize(nextPageSize);
+    setPage(1);
   }
 
   if (!selectedPage || !draft) {
@@ -275,21 +292,21 @@ export function ContentDraftEditor({
         </div>
         <div className="search mt-3 border border-[#f1f1f1] bg-[#fafafa] px-3 py-1">
           <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
               <span className={dirty ? "tag_org" : "tag_green"}>{dirty ? "当前页草稿有修改" : "当前页与线上一致"}</span>
               <span className="tag_gray">内容脏页 {dirtyCount}</span>
-              <span className="text-[12px] text-[#666]">{message}</span>
+              <span className="min-w-0 break-words text-[12px] text-[#666]">{message}</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              <button className="admin_btn inline-flex h-[30px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={rollback} type="button">
+              <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={rollback} type="button">
                 <RefreshCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
                 {busy === "rollback" ? "回滚中" : "恢复草稿"}
               </button>
-              <button className="admin_btn inline-flex h-[30px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={save} type="button">
+              <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={save} type="button">
                 <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
                 {busy === "save" ? "保存中" : "保存草稿"}
               </button>
-              <button className="input_btn inline-flex h-[30px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={publish} type="button">
+              <button className="input_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={publish} type="button">
                 <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
                 {busy === "publish" ? "发布中" : "发布整站"}
               </button>
@@ -316,10 +333,10 @@ export function ContentDraftEditor({
                   <option value="draft">仅草稿</option>
                   <option value="live">仅线上一致</option>
                 </select>
-                <button className="admin_btn inline-flex h-[30px] items-center gap-1" onClick={resetFilters} type="button">
+                <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={resetFilters} type="button">
                   重置
                 </button>
-                <button className="admin_btn inline-flex h-[30px] items-center gap-1" onClick={exportPageInventory} type="button">
+                <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={exportPageInventory} type="button">
                   <Download className="h-3.5 w-3.5" strokeWidth={1.8} />
                   导出页面
                 </button>
@@ -332,7 +349,7 @@ export function ContentDraftEditor({
             </div>
           </div>
           <div className="mt-3 grid gap-2">
-            {filteredPages.map(({ page, pageDraft, dirty: pageDirty }) => {
+            {visiblePages.map(({ page, pageDraft, dirty: pageDirty }) => {
               const selected = page.id === selectedPageId;
               return (
                 <button
@@ -343,15 +360,18 @@ export function ContentDraftEditor({
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="truncate font-semibold text-[#333]">{page.title}</span>
-                    <span className={pageDirty ? "tag_org" : "tag_green"}>{pageDirty ? "draft" : "live"}</span>
+                    <span className={pageDirty ? "tag_org" : "tag_green"}>{pageDirty ? "草稿待发布" : "线上一致"}</span>
                   </div>
                   <p className="mt-1 truncate font-mono text-[11px] text-[#999]">{page.slug}</p>
-                  <p className="mt-1 text-[12px] text-[#666]">{pageDraft.sectionsOrder.length} sections</p>
+                  <p className="mt-1 text-[12px] text-[#666]">{pageDraft.sectionsOrder.length} 个区块</p>
                 </button>
               );
             })}
             {!filteredPages.length ? <div className="px-3 py-6 text-center text-[12px] text-[#999]">当前筛选下没有内容页。</div> : null}
           </div>
+          {filteredPages.length > 10 ? (
+            <AdminPagination onPageChange={setPage} onPageSizeChange={updatePageSize} page={safePage} pageSize={pageSize} total={filteredPages.length} />
+          ) : null}
         </div>
 
         <div className="grid gap-5">

@@ -360,12 +360,73 @@ export async function completeAdminCheckoutRelational(params: {
   });
 }
 
+function checkoutSourceId(intentId?: string): string {
+  const safeIntentId = intentId?.trim().replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 120);
+  return safeIntentId ? `stripe_checkout:${safeIntentId}` : `stripe_checkout:${uid("intent")}`;
+}
+
+export async function startCustomerCheckoutRelational(params: {
+  siteId: string;
+  customerId: string;
+  priceId: string;
+  intentId?: string;
+}): Promise<{ customer: Customer; order: Order; price: Price; product: Product; metadata: Record<string, string> }> {
+  return prisma.$transaction(async (tx) => {
+    const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
+    const price = await tx.price.findFirst({
+      where: { siteId: params.siteId, id: params.priceId },
+      include: { product: { include: { prices: true } } }
+    });
+    if (!price || price.product.siteId !== params.siteId) throw new StoreError("price_not_found_for_site", 404);
+    if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
+    if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);
+
+    const sourceId = checkoutSourceId(params.intentId);
+    const existingOrder = await tx.order.findFirst({
+      where: { siteId: params.siteId, customerId: params.customerId, sourceId }
+    });
+    const order = existingOrder ?? await tx.order.create({
+      data: {
+        id: uid("ord"),
+        siteId: params.siteId,
+        customerId: params.customerId,
+        status: "checkout_started",
+        amountCents: price.amountCents,
+        currency: price.currency,
+        credits: price.creditsGranted,
+        sourceId
+      }
+    });
+
+    return {
+      customer: mapCustomer(customer),
+      order: mapOrder(order),
+      price: mapPrice(price),
+      product: mapProduct(price.product),
+      metadata: {
+        siteId: params.siteId,
+        customerId: params.customerId,
+        priceId: price.id,
+        orderId: order.id,
+        creditsGranted: String(price.creditsGranted),
+        fulfillment: "credits_ledger_grant"
+      }
+    };
+  });
+}
+
 export async function recordStripeWebhookRelational(payload: {
   id?: string;
   type?: string;
   account?: string;
-  data?: { object?: { metadata?: { siteId?: string; customerId?: string; priceId?: string; creditsGranted?: string } } };
-}): Promise<{ event: PaymentEvent; siteId: string; alreadyProcessed: boolean; ledger?: CreditLedgerEntry }> {
+  data?: {
+    object?: {
+      id?: string;
+      subscription?: string;
+      metadata?: { siteId?: string; customerId?: string; priceId?: string; orderId?: string; creditsGranted?: string };
+    };
+  };
+}): Promise<{ event: PaymentEvent; siteId: string; alreadyProcessed: boolean; ledger?: CreditLedgerEntry; order?: Order; subscription?: Subscription }> {
   if (!payload.id || !payload.type) throw new StoreError("invalid_webhook_payload", 400);
   const providerEventId = payload.id;
   const eventType = payload.type;
@@ -384,11 +445,15 @@ export async function recordStripeWebhookRelational(payload: {
       const ledger = await tx.creditLedger.findFirst({
         where: { siteId, sourceType: "stripe_webhook", sourceId: providerEventId }
       });
+      const existingOrder = payload.data?.object?.metadata?.orderId
+        ? await tx.order.findFirst({ where: { siteId, id: payload.data.object.metadata.orderId } })
+        : null;
       return {
         event: mapPaymentEvent(existing),
         siteId,
         alreadyProcessed: true,
-        ledger: ledger ? mapCreditLedger(ledger) : undefined
+        ledger: ledger ? mapCreditLedger(ledger) : undefined,
+        order: existingOrder ? mapOrder(existingOrder) : undefined
       };
     }
 
@@ -423,7 +488,28 @@ export async function recordStripeWebhookRelational(payload: {
     }
 
     await readCustomerForUpdate(tx, siteId, customer.id);
-    const ledger = await tx.creditLedger.create({
+    let order = metadata?.orderId
+      ? await tx.order.findFirst({ where: { siteId, id: metadata.orderId, customerId: customer.id } })
+      : null;
+    if (!order) {
+      order = await tx.order.create({
+        data: {
+          id: uid("ord"),
+          siteId,
+          customerId: customer.id,
+          status: "checkout_started",
+          amountCents: price?.amountCents ?? 0,
+          currency: price?.currency ?? "usd",
+          credits,
+          sourceId: `stripe_webhook:${providerEventId}`
+        }
+      });
+    }
+
+    const existingLedger = await tx.creditLedger.findFirst({
+      where: { siteId, customerId: customer.id, sourceType: "stripe_webhook", sourceId: providerEventId }
+    });
+    const ledger = existingLedger ?? await tx.creditLedger.create({
       data: {
         id: uid("led"),
         siteId,
@@ -434,15 +520,73 @@ export async function recordStripeWebhookRelational(payload: {
         sourceId: providerEventId
       }
     });
-    await tx.creditBalance.update({
-      where: { customerId: customer.id },
-      data: { balance: { increment: credits } }
+    if (!existingLedger) {
+      await tx.creditBalance.update({
+        where: { customerId: customer.id },
+        data: { balance: { increment: credits } }
+      });
+    }
+    const fulfilledOrder = await tx.order.update({
+      where: { id: order.id },
+      data: {
+        status: "fulfilled",
+        amountCents: price?.amountCents ?? order.amountCents,
+        currency: price?.currency ?? order.currency,
+        credits
+      }
     });
+
+    let subscriptionRow: Prisma.SubscriptionGetPayload<object> | undefined;
+    if (price && (price.interval === "month" || price.productId)) {
+      const product = await tx.product.findFirst({ where: { siteId, id: price.productId } });
+      if (product?.type === "subscription" || price.interval === "month") {
+        const periodEnd = new Date();
+        periodEnd.setMonth(periodEnd.getMonth() + 1);
+        const stripeSubscriptionId =
+          payload.data?.object?.subscription ??
+          (payload.data?.object?.id?.startsWith("sub_") ? payload.data.object.id : undefined) ??
+          `stripe_event_${providerEventId}`;
+        await tx.subscription.updateMany({
+          where: {
+            siteId,
+            customerId: customer.id,
+            productId: price.productId,
+            status: { in: ["trialing", "active", "past_due"] },
+            stripeSubscriptionId: { not: stripeSubscriptionId }
+          },
+          data: { status: "canceled" }
+        });
+        subscriptionRow = await tx.subscription.upsert({
+          where: { stripeSubscriptionId },
+          create: {
+            id: uid("sub"),
+            siteId,
+            customerId: customer.id,
+            productId: price.productId,
+            priceId: price.id,
+            stripeSubscriptionId,
+            status: "active",
+            currentPeriodStart: new Date(),
+            currentPeriodEnd: periodEnd,
+            creditsPerCycle: credits
+          },
+          update: {
+            status: "active",
+            priceId: price.id,
+            currentPeriodStart: new Date(),
+            currentPeriodEnd: periodEnd,
+            creditsPerCycle: credits
+          }
+        });
+      }
+    }
     return {
       event: mapPaymentEvent(event),
       siteId,
       alreadyProcessed: false,
-      ledger: mapCreditLedger(ledger)
+      ledger: mapCreditLedger(ledger),
+      order: mapOrder(fulfilledOrder),
+      subscription: subscriptionRow ? mapSubscription(subscriptionRow) : undefined
     };
   });
 }

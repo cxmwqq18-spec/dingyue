@@ -84,6 +84,18 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     items: ["页面装修", "主题库", "素材库", "导航菜单", "SEO 设置"]
   },
   {
+    label: "内容运营",
+    code: "content",
+    icon: FileText,
+    href: "/admin/content",
+    metric: "内容",
+    tone: "neutral",
+    description: "政策页、FAQ、帮助中心、博客列表和转化内容模块。",
+    aiExtension: "内容页也走主题模板和发布快照，不做零散静态页。",
+    keywords: ["content", "marketing", "growth", "blog", "policy", "营销", "内容"],
+    items: ["政策页面", "FAQ", "帮助中心", "博客列表"]
+  },
+  {
     label: "商品套餐",
     code: "products",
     icon: ShoppingBag,
@@ -130,18 +142,6 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     aiExtension: "N8N 只作为 worker，不接支付、不决定额度、不写账本。",
     keywords: ["ai", "worker", "model", "album", "AI", "工厂", "相册"],
     items: ["AI 工具", "扣费规则", "任务队列", "失败重跑"]
-  },
-  {
-    label: "内容运营",
-    code: "content",
-    icon: FileText,
-    href: "/admin/content",
-    metric: "内容",
-    tone: "neutral",
-    description: "政策页、FAQ、帮助中心、博客列表和转化内容模块。",
-    aiExtension: "内容页也走主题模板和发布快照，不做零散静态页。",
-    keywords: ["content", "marketing", "growth", "blog", "policy", "营销", "内容"],
-    items: ["政策页面", "FAQ", "帮助中心", "博客列表"]
   },
   {
     label: "邮件管理",

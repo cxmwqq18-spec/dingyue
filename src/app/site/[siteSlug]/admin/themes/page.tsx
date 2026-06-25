@@ -1,8 +1,8 @@
-import { Layers3 } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { ErpInfoList, ErpSection, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { ThemeManagerPanel } from "@/components/admin/theme-manager-panel";
+import type { SiteThemeSummary, ThemeCopySummary, ThemePublicationSummary } from "@/components/admin/theme-manager-panel";
 import {
   getSiteAdminData,
   modulePath,
@@ -11,23 +11,30 @@ import {
   siteAdminNav,
   siteAdminWorkspace
 } from "../_lib/site-admin-context";
-import { getAvailableInternalThemePackages, getAvailableSaasThemesForInstall, getSiteSaasThemeRecords } from "@/lib/server-store";
+import { getAvailableInternalThemePackageSummaries, getAvailableSaasThemeSummariesForInstall, getSiteSaasThemeRecords } from "@/lib/server-store";
+import { getSiteSaasThemeRecordsSummaryRelational } from "@/lib/stores/theme-store";
 
 export default async function SiteThemesPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const data = await getSiteAdminData(siteSlug);
-  const records = getSiteSaasThemeRecords(data.site.id);
-  const availableThemes = getAvailableSaasThemesForInstall();
-  const internalPackages = getAvailableInternalThemePackages();
+  const data = await getSiteAdminData(siteSlug, { include: ["themeSettings"], summary: false, take: 0 });
+  const [records, availableThemes, internalPackages] = await Promise.all([
+    getSiteSaasThemeRecordsSummaryRelational(data.site.id).catch(() => getSiteSaasThemeRecords(data.site.id)),
+    Promise.resolve(getAvailableSaasThemeSummariesForInstall()),
+    Promise.resolve(getAvailableInternalThemePackageSummaries())
+  ]);
+  const themeRecords = records.themes as SiteThemeSummary[];
+  const themeCopies = records.copies as ThemeCopySummary[];
+  const themePublications = records.publications as ThemePublicationSummary[];
   const seoReady = Boolean(data.site.themeSettings.draftJson.seo?.siteTitle && data.site.themeSettings.draftJson.seo?.siteDescription);
-  const activeThemes = records.themes.filter((theme) => theme.status === "active").length;
-  const latestPublication = records.publications.at(-1);
+  const activeThemes = themeRecords.filter((theme) => theme.status === "active").length;
+  const latestPublication = themePublications.at(-1);
+  const latestPublicationPageCount = latestPublication?.pageCount ?? 0;
 
   return (
     <AdminShell
       activeModuleCode="design"
       account={siteAdminAccount(data.site, data.current)}
-      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design") }}
+      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design/workbench") }}
       breadcrumbs={[
         { label: "店铺管理", href: modulePath(data.site, "/admin") },
         { label: "店铺装修", href: modulePath(data.site, "/admin/design") },
@@ -45,8 +52,8 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
                 { label: "Active theme", value: records.active.name, tone: "good" },
                 { label: "Status", value: records.active.status, tone: "good" },
                 { label: "Theme key", value: records.active.themeKey, tone: "neutral" },
-                { label: "Publications", value: String(records.publications.length), tone: records.publications.length ? "good" : "warn" },
-                { label: "Copies", value: String(records.copies.length), tone: records.copies.length ? "good" : "neutral" }
+                { label: "Publications", value: String(themePublications.length), tone: themePublications.length ? "good" : "warn" },
+                { label: "Copies", value: String(themeCopies.length), tone: themeCopies.length ? "good" : "neutral" }
               ]}
             />
           </ErpSection>
@@ -56,7 +63,7 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
               <ErpInfoList
                 items={[
                   { label: "Version", value: `v${latestPublication.version}`, tone: "good" },
-                  { label: "Pages", value: `${latestPublication.snapshot.pages.length} 个页面`, tone: "good" },
+                  { label: "Pages", value: `${latestPublicationPageCount} 个页面`, tone: "good" },
                   { label: "Published", value: new Date(latestPublication.publishedAt).toLocaleString("zh-CN"), tone: "neutral" }
                 ]}
               />
@@ -72,7 +79,7 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
       siteSlug={data.site.slug}
       subtitle="按站点管理主题安装、草稿应用、发布快照和版本复制。主题包、发布记录和草稿状态都在这里统一维护。"
       title="主题库"
-      titleBadge={String(records.themes.length)}
+      titleBadge={String(themeRecords.length)}
       workspace={siteAdminWorkspace(data, "theme library")}
     >
       <div className="grid gap-3">
@@ -84,7 +91,7 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
         >
           <ErpToolbar>
             <div className="flex flex-wrap gap-3">
-              <ErpToolbarField label="主题总数" value={String(records.themes.length)} />
+              <ErpToolbarField label="主题总数" value={String(themeRecords.length)} />
               <ErpToolbarField label="线上启用" value={`${activeThemes} 个`} />
               <ErpToolbarField label="导入源" value={`${availableThemes.length + internalPackages.length} 个`} />
               <ErpToolbarField label="排序" value="最近更新" />
@@ -97,9 +104,9 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
           <div className="mt-3">
             <DesignWorkspaceTabs
               activePath="/admin/themes"
-              mediaCount={data.media.length}
+              mediaCount={data.mediaCount}
               pageCount={data.site.pages.length}
-              publicationCount={records.publications.length}
+              publicationCount={themePublications.length}
               seoReady={seoReady}
               siteSlug={data.site.slug}
             />
@@ -111,13 +118,13 @@ export default async function SiteThemesPage({ params }: { params: Promise<{ sit
               <ThemeManagerPanel
                 active={records.active}
                 availableThemes={availableThemes}
-                copies={records.copies}
+                copies={themeCopies}
                 draft={records.draft}
                 internalPackages={internalPackages}
-                publications={records.publications}
+                publications={themePublications}
                 siteId={data.site.id}
                 siteSlug={data.site.slug}
-                themes={records.themes}
+                themes={themeRecords}
               />
           </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MailCheck, RefreshCcw, Save, Send } from "lucide-react";
+import { MailCheck, Save, Send } from "lucide-react";
 import { ErpField, ErpFormGrid, ErpInput, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
 
@@ -25,6 +25,8 @@ type SiteEmailStatus = {
   resendDomain?: { id?: string; name?: string; status?: string };
   dnsRecords?: Array<{ type?: string; name?: string; content?: string }>;
 };
+
+type TestState = "passed" | "failed" | "sending" | "idle";
 
 function csrfTokenFromCookie(siteId: string): string {
   if (typeof document === "undefined") return "";
@@ -53,19 +55,19 @@ function reasonLabel(code: string): string {
   return labels[code] ?? code;
 }
 
-function domainStatusLabel(status: string): string {
+function testStateLabel(state: TestState): string {
   return {
-    verified: "已验证",
-    pending: "待验证",
-    not_found: "未添加",
-    local: "本地域名"
-  }[status] ?? status;
+    passed: "测试通过",
+    failed: "测试失败",
+    sending: "发送中",
+    idle: "未测试"
+  }[state];
 }
 
-function statusTone(status: string): "good" | "warn" | "bad" | "neutral" {
-  if (status === "verified") return "good";
-  if (status === "local") return "bad";
-  if (status === "pending" || status === "not_found") return "warn";
+function testStateTone(state: TestState): "good" | "warn" | "bad" | "neutral" {
+  if (state === "passed") return "good";
+  if (state === "failed") return "bad";
+  if (state === "sending") return "warn";
   return "neutral";
 }
 
@@ -83,7 +85,8 @@ export function SiteEmailPanel({
   const [fromEmail, setFromEmail] = useState(initialStatus.config.fromEmail);
   const [replyTo, setReplyTo] = useState(initialStatus.config.replyTo);
   const [testTo, setTestTo] = useState("");
-  const [message, setMessage] = useState("本站后台只维护当前域名的一套 Resend 参数。");
+  const [message, setMessage] = useState("本站后台只维护当前站点的一套 Resend 参数；发送测试邮件成功即视为通过。");
+  const [testState, setTestState] = useState<TestState>("idle");
   const [busy, setBusy] = useState(false);
 
   async function request(method: "GET" | "PUT" | "POST", body?: Record<string, unknown>) {
@@ -109,9 +112,9 @@ export function SiteEmailPanel({
       setStatus(result);
       setFromEmail(result.config.fromEmail);
       setReplyTo(result.config.replyTo);
-      setMessage(`检测完成：${domainStatusLabel(result.domainStatus)}。`);
+      setMessage("配置已刷新。请发送测试邮件到目标邮箱，发送成功即视为通过。");
     } catch (error) {
-      setMessage(`检测失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
+      setMessage(`刷新失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
     } finally {
       setBusy(false);
     }
@@ -127,22 +130,9 @@ export function SiteEmailPanel({
       });
       setApiKey("");
       setStatus(result);
-      setMessage("本站 Resend 配置已保存。");
+      setMessage("本站 Resend 配置已保存。请发送测试邮件到目标邮箱验证。");
     } catch (error) {
       setMessage(`保存失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function runDnsCheck() {
-    setBusy(true);
-    try {
-      const result = await request("POST", { action: "dns_check" });
-      setStatus(result);
-      setMessage(`DNS 检测完成：${domainStatusLabel(result.domainStatus)}。`);
-    } catch (error) {
-      setMessage(`DNS 检测失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
     } finally {
       setBusy(false);
     }
@@ -151,14 +141,18 @@ export function SiteEmailPanel({
   async function sendTest() {
     if (!testTo.trim().includes("@")) {
       setMessage(`测试失败：${reasonLabel("invalid_email")}`);
+      setTestState("failed");
       return;
     }
     setBusy(true);
+    setTestState("sending");
     try {
       const result = await request("POST", { action: "send_test", to: testTo.trim() });
-      setMessage(`测试邮件已发送：${result.messageId ?? "provider accepted"}。`);
+      setMessage(`测试通过：邮件已发送到 ${testTo.trim()}，message id: ${result.messageId ?? "provider accepted"}。`);
+      setTestState("passed");
     } catch (error) {
       setMessage(`测试失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
+      setTestState("failed");
     } finally {
       setBusy(false);
     }
@@ -168,8 +162,8 @@ export function SiteEmailPanel({
     <div className="grid gap-5">
       <ErpStatGrid
         items={[
-          { label: "发件状态", value: status.readyForProduction ? "ready" : "blocked", detail: status.blockingReasons.length ? status.blockingReasons.map(reasonLabel).join(" ") : "当前域名可用于生产发信", icon: MailCheck, tone: status.readyForProduction ? "good" : "warn" },
-          { label: "DNS", value: domainStatusLabel(status.domainStatus), detail: status.resendDomain?.id ?? status.resendDomain?.name ?? "not found", icon: RefreshCcw, tone: statusTone(status.domainStatus) },
+          { label: "测试状态", value: testStateLabel(testState), detail: "以发送测试邮件成功为准", icon: MailCheck, tone: testStateTone(testState) },
+          { label: "测试收件人", value: testTo || "未填写", detail: "发送到目标邮箱即通过", icon: Send, tone: testTo ? "good" : "neutral" },
           { label: "From", value: status.candidateDomain || "missing", detail: status.candidateFromEmail || "未配置发件邮箱", icon: Send, tone: status.config.fromEmail ? "good" : "warn" },
           { label: "配置", value: status.config.apiKeyConfigured ? "configured" : "missing", detail: status.config.apiKeyConfigured ? status.config.apiKeyPreview : "缺少 API Key", icon: Save, tone: status.config.apiKeyConfigured ? "good" : "warn" }
         ]}
@@ -189,12 +183,8 @@ export function SiteEmailPanel({
             </div>
             <div className="flex flex-wrap gap-2">
               <button className="admin_btn inline-flex h-[34px] items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55" disabled={busy} onClick={refreshStatus} type="button">
-                <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+                <MailCheck className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 刷新
-              </button>
-              <button className="admin_btn inline-flex h-[34px] items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55" disabled={busy} onClick={runDnsCheck} type="button">
-                <RefreshCcw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
-                DNS 检测
               </button>
             </div>
           </ErpToolbar>
@@ -213,8 +203,8 @@ export function SiteEmailPanel({
             </ErpField>
           </ErpFormGrid>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="tixing min-w-0 flex-1">{message}</div>
-            <div className="flex flex-wrap gap-2">
+            <div className="tixing min-w-[260px] flex-1 break-words [overflow-wrap:anywhere]">{message}</div>
+            <div className="flex shrink-0 flex-wrap gap-2">
               <button className="admin_btn inline-flex h-[38px] items-center justify-center gap-1 whitespace-nowrap px-4 disabled:opacity-55" disabled={busy || !testTo.trim()} onClick={sendTest} type="button">
                 <Send className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
                 发送测试
@@ -226,9 +216,9 @@ export function SiteEmailPanel({
             </div>
           </div>
           <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 text-[12px] leading-5 text-[#667085]">
-            <div className="flex items-center gap-2">
-              <StatusPill label={domainStatusLabel(status.domainStatus)} tone={statusTone(status.domainStatus)} />
-              <span>{status.blockingReasons.length ? status.blockingReasons.map(reasonLabel).join(" ") : "域名验证正常。"}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <StatusPill label={testStateLabel(testState)} tone={testStateTone(testState)} />
+              <span className="min-w-0 break-words [overflow-wrap:anywhere]">这里以真实邮件发送为准。测试按钮能把邮件发到目标邮箱，就当作测试通过。</span>
             </div>
           </div>
         </div>

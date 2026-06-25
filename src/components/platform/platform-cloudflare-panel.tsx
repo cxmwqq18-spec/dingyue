@@ -129,7 +129,6 @@ export function PlatformCloudflarePanel({
     setStatus(result);
     setForm({ id: "", label: "", email: "", accountId: "", apiToken: "", makeCurrent: true });
     setMessage("Cloudflare 账号配置已保存。");
-    router.refresh();
   }
 
   async function updateCurrent(accountId: string, action: "set_current" | "clear_current") {
@@ -157,7 +156,6 @@ export function PlatformCloudflarePanel({
     if (action === "clear_current" && form.id === accountId) {
       setForm((current) => ({ ...current, makeCurrent: false }));
     }
-    router.refresh();
   }
 
   async function deleteAccount(account: CloudflareAccountRow) {
@@ -187,7 +185,6 @@ export function PlatformCloudflarePanel({
       setForm({ id: "", label: "", email: "", accountId: "", apiToken: "", makeCurrent: true });
     }
     setMessage(`Cloudflare 账号「${account.label}」已删除。`);
-    router.refresh();
   }
 
   const current = status.accounts.find((account) => account.id === status.currentAccountId);

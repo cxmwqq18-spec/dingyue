@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
+import { setCsrfCookie } from "@/lib/security/csrf";
 import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { Site } from "@/lib/types";
 
@@ -24,6 +25,7 @@ export async function handleCustomerLoginForm(request: Request, site: Site, succ
       path: "/",
       expires: new Date(result.session.expiresAt)
     });
+    setCsrfCookie(response, `customer:${site.id}`, result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
     const code = error instanceof StoreError ? error.message : "customer_login_failed";

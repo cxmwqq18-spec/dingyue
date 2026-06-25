@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { settleGenerationJobRelational } from "@/lib/stores/job-store";
-import type { WorkerResultPayload } from "@/lib/worker";
+import { verifyWorkerCallbackSignature, type WorkerResultPayload } from "@/lib/worker";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,6 +11,12 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
   const body = (await request.json().catch(() => ({}))) as WorkerResultPayload;
   if (!body.siteId || !body.requestId || !body.status || body.jobId !== jobId) {
     return NextResponse.json({ error: "invalid_worker_result_payload" }, { status: 400 });
+  }
+  if (!verifyWorkerCallbackSignature(body as unknown as Record<string, unknown>)) {
+    return NextResponse.json({ error: "invalid_worker_signature" }, { status: 401 });
+  }
+  if (body.status !== "succeeded" && body.status !== "failed") {
+    return NextResponse.json({ error: "invalid_worker_result_status" }, { status: 400 });
   }
   try {
     const result = await settleGenerationJobRelational({

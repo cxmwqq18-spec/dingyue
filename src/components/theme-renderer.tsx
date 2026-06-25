@@ -1,11 +1,13 @@
-import type { ComponentProps } from "react";
 import NextImage from "next/image";
-import NextLink from "next/link";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
+import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
+import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
+import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
+import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
-import { hostAwareSitePath } from "@/lib/domain-routing";
+import { hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import {
   AlertTriangle,
   ArrowRight,
@@ -41,8 +43,8 @@ import {
   Youtube
 } from "lucide-react";
 
-function Link({ prefetch = false, ...props }: ComponentProps<typeof NextLink>) {
-  return <NextLink prefetch={prefetch} {...props} />;
+function Link(props: StorefrontInstantLinkProps) {
+  return <StorefrontInstantLink {...props} />;
 }
 import { getSectionSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
@@ -54,6 +56,8 @@ import type {
   SectionBlockInstance,
   SectionInstance,
   Site,
+  ThemeRuntimeAlbum,
+  ThemeRuntimeAsset,
   ThemePageJson,
   ThemeRuntimeData,
   ThemeSettings,
@@ -95,12 +99,19 @@ export function ThemeRenderer({
     blockId?: string;
   };
 }) {
-  const entries = getSectionEntries(page);
+  const normalizedPath = pagePath ?? sitePathFromPage(site, page.pageType);
+  const entries = visibleSectionEntriesForRoute(getSectionEntries(page), normalizedPath, site);
+  const publicSlug = publicSiteSlug(site.slug);
   const routedSite: RoutedSite = {
     ...site,
-    __storefrontBasePath: routeMode === "host" ? "" : `/site/${site.slug}`
+    __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
-  const normalizedPath = pagePath ?? sitePathFromPage(site, page.pageType);
+  const customerPrefetchPaths = runtime?.customer && mode === "published"
+    ? [
+        hrefFor(routedSite, "/account"),
+        hrefFor(routedSite, "/app")
+      ]
+    : [];
   const renderContext = {
     pagePath: normalizedPath,
     query,
@@ -108,6 +119,8 @@ export function ThemeRenderer({
   };
   return (
     <div className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]">
+      {customerPrefetchPaths.length ? <CustomerRoutePrefetch paths={customerPrefetchPaths} /> : null}
+      <StorefrontNavigationFeedback />
       <div
         className="xfcart-section"
         data-section-id="header_plus"
@@ -116,7 +129,7 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader runtime={runtime} site={routedSite} settings={settings} />
+        <ThemeGlobalHeader runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section]) => (
@@ -204,6 +217,18 @@ type DreamShootCatalogCard = {
   href: string;
 };
 
+function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, site: Site): Array<[string, SectionInstance]> {
+  const isDreamShoot = /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+  if (!isDreamShoot || pagePath !== "/") return entries;
+  const deferredHomeSectionIds = new Set([
+    "featured_pack_1",
+    "package_catalog_1",
+    "proof_1",
+    "trust_1"
+  ]);
+  return entries.filter(([id]) => !deferredHomeSectionIds.has(id));
+}
+
 export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
   return (
     <div
@@ -237,7 +262,8 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings }) {
+export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: { runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
+  const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
   const title = header ? setting(header, "title", site.branding.logoText) : site.branding.logoText;
@@ -245,17 +271,24 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
   const sticky = header ? settingBool(header, "sticky", true) : true;
   const announceEnabled = saasBool(saasHeader?.settings?.is_announce_show, false);
   const announceText = themeValueToString(saasHeader?.settings?.announce_title, "");
-  const headerBlocks = header?.blocks?.filter((block) => block.type === "menu_link") ?? [];
+  const isWorkspaceNavLink = (label: string, href: string) => {
+    const normalizedLabel = label.trim().toLowerCase();
+    const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
+    return normalizedLabel === "workspace" || normalizedLabel === "工作区" || normalizedHref === "/app";
+  };
+  const headerBlocks = header?.blocks?.filter((block) => block.type === "menu_link" && !isWorkspaceNavLink(blockValue(block, "label"), blockValue(block, "href", "#"))) ?? [];
   const links = headerBlocks.length
     ? headerBlocks.map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
-    : settings.navigation.headerLinks.map((link, index) => ({
-        ...link,
-        block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
-      }));
+    : settings.navigation.headerLinks
+        .filter((link) => !isWorkspaceNavLink(link.label, link.href))
+        .map((link, index) => ({
+          ...link,
+          block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
+        }));
   const toolMegaBlocks = getDreamshootToolBlocks(header?.blocks);
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
-  const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && toolMegaBlocks.length > 0;
+  const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && pagePath.startsWith("/tools") && toolMegaBlocks.length > 0;
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
@@ -283,8 +316,8 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
           {announceText}
         </div>
       ) : null}
-      <div className={lightCommerce ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : "mx-auto flex max-w-[var(--site-content-width)] items-center justify-between px-5 py-4"}>
-        <Link
+      <div className={lightCommerce ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
+        <HeaderLink
           href={hrefFor(site, "/")}
           className={
             dark
@@ -331,26 +364,26 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
               </span>
             </>
           ) : title}
-        </Link>
-        <nav className={dark ? "hidden items-center justify-center gap-4 lg:flex" : lightCommerce ? "hidden min-w-0 items-center justify-center gap-6 xl:flex xl:gap-8" : "hidden items-center gap-6 text-sm text-[var(--site-body)] md:flex"}>
+        </HeaderLink>
+        <nav className={dark ? "hidden min-w-0 items-center justify-center gap-2 lg:flex xl:gap-3" : lightCommerce ? "hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7" : "hidden min-w-0 items-center justify-center gap-5 text-sm text-[var(--site-body)] md:flex"}>
           {links.map((link, index) => {
             const navClass = dark
               ? isDreamShoot
-                ? `inline-flex items-center gap-2 rounded-[16px] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/[0.08] ${index === 0 ? "border border-transparent bg-[#0b0d16] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_0_1px_rgba(122,76,255,0.55),0_0_24px_-12px_rgba(22,220,240,0.8)]" : "border border-white/16 bg-white/[0.035]"}`
-                : "inline-flex items-center gap-2 rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:border-white/50 hover:bg-white/[0.08]"
+                ? `inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[16px] px-3.5 py-2.5 text-[0.82rem] font-semibold text-white transition hover:bg-white/[0.08] xl:px-4 xl:text-sm ${index === 0 ? "border border-transparent bg-[#0b0d16] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_0_1px_rgba(122,76,255,0.55),0_0_24px_-12px_rgba(22,220,240,0.8)]" : "border border-white/16 bg-white/[0.035]"}`
+                : "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:border-white/50 hover:bg-white/[0.08]"
               : lightCommerce
-                ? "inline-flex min-h-10 items-center gap-2 text-[0.98rem] font-medium text-[#171514] transition hover:text-[#b07b47]"
-                : "transition hover:text-[var(--site-fg)]";
+                ? "inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-[0.94rem] font-medium text-[#171514] transition hover:text-[#b07b47] 2xl:text-[0.98rem]"
+                : "inline-flex shrink-0 whitespace-nowrap transition hover:text-[var(--site-fg)]";
             const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
             const linkNode = (
-              <Link
+              <HeaderLink
                 className={navClass}
                 href={hrefFor(site, link.href)}
                 {...xfcartBlockAttrs(link.block, index, "header_nav")}
               >
                 {link.label}
                 {isToolsLink ? <ChevronRight className="h-3.5 w-3.5 rotate-90 text-white/72" strokeWidth={2} /> : null}
-              </Link>
+              </HeaderLink>
             );
             if (!isToolsLink) {
               return <span key={`${link.label}_${link.href}`}>{linkNode}</span>;
@@ -373,30 +406,27 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
         </nav>
         <div className="flex items-center justify-end gap-3">
           {customer ? (
-            <div className={dark ? "hidden items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex"}>
-              <Link className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
+            <div className={dark ? "hidden shrink-0 items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex"}>
+              <HeaderLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
                 <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
                   <UserRound className="h-4 w-4" strokeWidth={1.8} />
                 </span>
                 <span className="min-w-0 text-left">
                   <span className="block max-w-[11rem] truncate text-sm font-semibold">{customer.name}</span>
                   <span className={dark ? "block max-w-[13rem] truncate text-xs text-white/62" : "block max-w-[13rem] truncate text-xs text-[#64605a]"}>
-                    {customer.email} · {customer.balance.available} credits
+                    {customer.email}
                   </span>
                 </span>
-              </Link>
-              <Link className={dark ? "hidden rounded-full border border-white/12 px-3 py-2 text-xs font-semibold text-white/76 transition hover:bg-white/[0.08] xl:inline-flex" : "hidden rounded-full border border-black/10 px-3 py-2 text-xs font-semibold text-[#4f4944] transition hover:bg-black/[0.04] xl:inline-flex"} href={hrefFor(site, "/app")}>
-                Workspace
-              </Link>
+              </HeaderLink>
               <form action={hrefFor(site, "/logout")} method="post">
                 <input name="siteId" type="hidden" value={site.id} />
-                <button className={dark ? "inline-flex items-center rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex items-center rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]"} type="submit">
+                <button className={dark ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]"} type="submit">
                   Sign out
                 </button>
               </form>
             </div>
           ) : (
-            <Link
+            <HeaderLink
               className={
                 dark
                   ? isDreamShoot
@@ -410,7 +440,7 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
               style={isDreamShoot && dark ? { background: dreamshootBrandGradient } : dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
             >
               {ctaLabel}
-            </Link>
+            </HeaderLink>
           )}
           {dark || lightCommerce ? (
             <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
@@ -444,7 +474,7 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
               >
                 <div className="grid gap-1">
                   {links.map((link, index) => (
-                    <Link
+                    <HeaderLink
                       className={
                         dark
                           ? "rounded-[16px] px-4 py-3 text-sm font-medium text-white/76 transition hover:bg-white/[0.08] hover:text-white"
@@ -455,20 +485,17 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
                       {...xfcartBlockAttrs(link.block, index, "header_nav_mobile")}
                     >
                       {link.label}
-                    </Link>
+                    </HeaderLink>
                   ))}
                 </div>
                 {customer ? (
                   <div className={dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]"}>
                     <p className="truncate text-sm font-semibold">{customer.name}</p>
-                    <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email} · {customer.balance.available} credits</p>
-                    <div className="mt-3 grid grid-cols-2 gap-2">
-                      <Link className={dark ? "inline-flex justify-center rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/app")}>
-                        Workspace
-                      </Link>
-                      <Link className={dark ? "inline-flex justify-center rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/account")}>
+                    <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
+                    <div className="mt-3 grid gap-2">
+                      <HeaderLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/account")}>
                         Account
-                      </Link>
+                      </HeaderLink>
                     </div>
                     <form action={hrefFor(site, "/logout")} className="mt-3" method="post">
                       <input name="siteId" type="hidden" value={site.id} />
@@ -478,7 +505,7 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
                     </form>
                   </div>
                 ) : (
-                  <Link
+                  <HeaderLink
                     className={
                       dark
                         ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-4 py-3 text-sm font-semibold text-[#101114]"
@@ -488,7 +515,7 @@ export function ThemeGlobalHeader({ runtime, site, settings }: { runtime?: Theme
                   >
                     {ctaLabel}
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-                  </Link>
+                  </HeaderLink>
                 )}
               </div>
             </details>
@@ -882,6 +909,10 @@ function albumPreviewUrl(site: Site, album: ThemeRuntimeData["albums"][number], 
   return fallbackImageForSeed(`${site.slug}-${album.id}-album`);
 }
 
+function isRuntimeAlbum(item: ThemeRuntimeData["albums"][number] | ThemeRuntimeData["assets"][number]): item is ThemeRuntimeData["albums"][number] {
+  return "outputCount" in item;
+}
+
 function priceMetaNumber(price: SiteProduct["prices"][number] | undefined, key: string, fallback: number): number {
   const raw = price?.metadata?.[key];
   if (typeof raw === "number") return raw;
@@ -956,10 +987,162 @@ function hrefFor(site: Site, href: string): string {
   const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
+  if (href.startsWith("/collections?")) {
+    const category = new URLSearchParams(href.slice(href.indexOf("?") + 1)).get("category") ?? "";
+    return routedSitePath(site, collectionHref(category));
+  }
+  if (href.startsWith("/cart?")) return routedSitePath(site, "/cart");
+  if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+    return routedSitePath(site, "/tools");
+  }
   return routedSitePath(site, href);
 }
 
-function toolActionHref(site: Site, href: string, fallbackToolId = ""): string {
+function collectionHref(category: string): string {
+  const slug = dreamshootToolLookupKey(category);
+  return slug ? `/collections/${slug}` : "/collections";
+}
+
+const dreamshootStaticToolSlugByKey: Record<string, string> = {
+  mega_tool_headshot: "headshot",
+  "professional-headshot-maker": "headshot",
+  "professional-headshots": "headshot",
+  "pack-dreamshoot-headshots": "headshot",
+  mega_tool_creator: "creator-portrait",
+  "creator-portrait-studio": "creator-portrait",
+  "creator-portraits": "creator-portrait",
+  "pack-dreamshoot-creator-portraits": "creator-portrait",
+  mega_tool_worldcup: "world-cup-fan-photos",
+  catalog_worldcup: "world-cup-fan-photos",
+  "world-cup-fan-photos": "world-cup-fan-photos",
+  "pack-dreamshoot-worldcup": "world-cup-fan-photos",
+  mega_tool_cyberpunk: "cyberpunk-portrait",
+  catalog_cyberpunk: "cyberpunk-portrait",
+  "cyberpunk-portrait-maker": "cyberpunk-portrait",
+  cyberpunk: "cyberpunk-portrait",
+  "pack-dreamshoot-cyberpunk": "cyberpunk-portrait",
+  mega_tool_gala: "gala-photo",
+  catalog_gala: "gala-photo",
+  "gala-photo-maker": "gala-photo",
+  "gala-photos": "gala-photo",
+  "pack-dreamshoot-gala": "gala-photo",
+  mega_tool_noir: "noir-portrait",
+  "noir-character-portraits": "noir-portrait",
+  mafia: "noir-portrait",
+  "pack-dreamshoot-mafia": "noir-portrait",
+  mega_tool_anime: "anime-avatar",
+  "anime-avatar-builder": "anime-avatar",
+  "pack-dreamshoot-anime-avatar": "anime-avatar",
+  mega_tool_nature: "nature-adventure",
+  "nature-adventure-photos": "nature-adventure",
+  nature: "nature-adventure",
+  "pack-dreamshoot-nature": "nature-adventure",
+  mega_tool_fashion: "fashion-editorial",
+  "fashion-editorial-set": "fashion-editorial",
+  "pack-dreamshoot-fashion-editorial": "fashion-editorial",
+  mega_tool_product: "product-lifestyle",
+  "product-lifestyle-photos": "product-lifestyle",
+  "product-style": "product-lifestyle",
+  "pack-dreamshoot-product-style": "product-lifestyle",
+  mega_edit_background: "background-changer",
+  tool_background: "background-changer",
+  "background-changer": "background-changer",
+  mega_edit_remove_bg: "background-remover",
+  "background-remover": "background-remover",
+  mega_edit_magic_eraser: "magic-eraser",
+  "magic-eraser": "magic-eraser",
+  mega_edit_enhancer: "photo-enhancer",
+  "photo-enhancer": "photo-enhancer",
+  mega_edit_retouch: "portrait-retouch",
+  "portrait-retouch": "portrait-retouch",
+  mega_edit_unblur: "unblur-image",
+  "unblur-image": "unblur-image",
+  mega_edit_color: "color-correction",
+  "color-correction": "color-correction",
+  mega_edit_restore: "old-photo-restoration",
+  "old-photo-restoration": "old-photo-restoration",
+  mega_edit_prompt: "edit-by-prompt",
+  "edit-by-prompt": "edit-by-prompt",
+  mega_edit_upscale: "magic-upscaler",
+  "magic-upscaler": "magic-upscaler",
+  mega_video_image: "image-to-video",
+  tool_video: "image-to-video",
+  taxonomy_video: "image-to-video",
+  "image-to-video": "image-to-video",
+  "image-to-video-concept": "image-to-video",
+  mega_video_profile: "profile-clip",
+  "profile-clip-maker": "profile-clip",
+  mega_video_fan: "fan-poster-motion",
+  "fan-poster-motion": "fan-poster-motion",
+  mega_video_intro: "creator-intro-video",
+  "creator-intro-video": "creator-intro-video",
+  mega_video_product: "product-teaser-clip",
+  "product-teaser-clip": "product-teaser-clip",
+  mega_video_avatar: "animated-avatar",
+  "animated-avatar-preview": "animated-avatar",
+  mega_video_fashion: "fashion-reel",
+  "fashion-reel-starter": "fashion-reel",
+  mega_video_album: "album-story-video",
+  "album-story-video": "album-story-video",
+  catalog_headshot: "headshot",
+  catalog_hairstyle: "hairstyle-preview",
+  hairstyle: "hairstyle-preview",
+  "pack-dreamshoot-hairstyle": "hairstyle-preview",
+  catalog_wedding: "wedding-portraits",
+  "wedding-portraits": "wedding-portraits",
+  "pack-dreamshoot-wedding": "wedding-portraits",
+  catalog_indian_wedding: "indian-wedding",
+  "pack-dreamshoot-indian-wedding": "indian-wedding",
+  "desi-wedding": "indian-wedding",
+  "pack-dreamshoot-desi-wedding": "indian-wedding",
+  catalog_christmas: "christmas-photos",
+  "christmas-photos": "christmas-photos",
+  holiday: "christmas-photos",
+  "pack-dreamshoot-holiday": "christmas-photos",
+  "christmas-couple": "christmas-photos",
+  "pack-dreamshoot-christmas-couple": "christmas-photos",
+  "pack-dreamshoot-christmas": "christmas-photos",
+  taxonomy_tryon: "virtual-try-on",
+  "virtual-try-on": "virtual-try-on",
+  "pack-dreamshoot-virtual-tryon": "virtual-try-on",
+  tool_preview: "package-preview",
+  "package-preview": "package-preview",
+  "profile-cards": "package-preview",
+  "pack-dreamshoot-profile-cards": "package-preview",
+  "social-cards": "package-preview",
+  "pack-dreamshoot-social-cards": "package-preview",
+  "travel-scene-pack": "nature-adventure",
+  "pack-dreamshoot-travel": "nature-adventure",
+  "valentine-photos": "wedding-portraits",
+  "pack-dreamshoot-valentine": "wedding-portraits",
+  engagement: "wedding-portraits",
+  "pack-dreamshoot-engagement": "wedding-portraits",
+  boudoir: "fashion-editorial",
+  "pack-dreamshoot-boudoir": "fashion-editorial",
+  "ai-video-add-ons": "image-to-video",
+  "pack-dreamshoot-ai-video": "image-to-video",
+  "pack-dreamshoot-upscaler": "magic-upscaler",
+  dreamshoot_footer_tool: "",
+  "image-studio": ""
+};
+
+function dreamshootToolLookupKey(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/^\/tools\//, "")
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function dreamshootStaticToolPath(fallbackToolId = "", fallbackToolTitle = ""): string {
+  const slug = dreamshootStaticToolSlugByKey[fallbackToolId] ?? dreamshootStaticToolSlugByKey[dreamshootToolLookupKey(fallbackToolId)] ?? dreamshootStaticToolSlugByKey[dreamshootToolLookupKey(fallbackToolTitle)];
+  return slug ? `/tools/${slug}` : "/tools";
+}
+
+function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
   const normalizedHref = href || "/tools/image-studio";
   if (normalizedHref.startsWith("#") || normalizedHref.startsWith("http")) return hrefFor(site, normalizedHref);
 
@@ -968,12 +1151,15 @@ function toolActionHref(site: Site, href: string, fallbackToolId = ""): string {
   const params = new URLSearchParams(existingSearch);
   const toolId = params.get("tool") || params.get("preset") || fallbackToolId;
 
-  if (toolId) {
-    params.set("tool", toolId);
+  if ((path || "/tools/image-studio") === "/tools/image-studio") {
+    const staticPath = dreamshootStaticToolPath(toolId, fallbackToolTitle);
+    if (staticPath !== "/tools/image-studio") {
+      return hrefFor(site, `${staticPath}${hash ? `#${hash}` : ""}`);
+    }
   }
 
   const query = params.toString();
-  const rebuilt = `${path || "/tools/image-studio"}${query ? `?${query}` : ""}${hash ? `#${hash}` : ""}`;
+  const rebuilt = `${path || "/tools"}${query ? `?${query}` : ""}${hash ? `#${hash}` : ""}`;
   return hrefFor(site, rebuilt);
 }
 
@@ -1029,6 +1215,81 @@ function pageQueryHref(
   });
   const search = params.toString();
   return `${hrefFor(site, pagePath || "/")}${search ? `?${search}` : ""}${hash ? `#${hash}` : ""}`;
+}
+
+function queryPage(query: Record<string, string | string[] | undefined>, key: string): number {
+  const parsed = queryInt(query[key], 1);
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 1;
+}
+
+function paginateItems<T>(items: T[], page: number, pageSize: number): { items: T[]; page: number; total: number; totalPages: number; start: number } {
+  const total = items.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const start = (safePage - 1) * pageSize;
+  return {
+    items: items.slice(start, start + pageSize),
+    page: safePage,
+    total,
+    totalPages,
+    start
+  };
+}
+
+function Pager({
+  site,
+  pagePath,
+  query,
+  queryKey,
+  page,
+  totalPages,
+  total,
+  hash,
+  dark = false
+}: {
+  site: Site;
+  pagePath: string;
+  query: Record<string, string | string[] | undefined>;
+  queryKey: string;
+  page: number;
+  totalPages: number;
+  total: number;
+  hash?: string;
+  dark?: boolean;
+}) {
+  if (totalPages <= 1) return null;
+  const prevPage = Math.max(1, page - 1);
+  const nextPage = Math.min(totalPages, page + 1);
+  const labelClass = dark ? "text-white/62" : "text-[#7d7064]";
+  const buttonClass = dark
+    ? "inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-white/12 bg-white/[0.05] px-3 text-xs font-semibold text-white transition hover:bg-white/[0.09]"
+    : "inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#e2d6c8] bg-white px-3 text-xs font-semibold text-[#171514] transition hover:bg-[#fbf7f0]";
+  const disabledClass = dark
+    ? "inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-white/8 bg-white/[0.02] px-3 text-xs font-semibold text-white/32"
+    : "inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#eadfce] bg-[#fbf7f0] px-3 text-xs font-semibold text-[#b2a394]";
+  return (
+    <div className={`mt-4 flex flex-wrap items-center justify-between gap-3 text-xs ${labelClass}`}>
+      <span className="whitespace-nowrap">
+        Page {page} of {totalPages} · {total} total
+      </span>
+      <div className="flex items-center gap-2">
+        {page > 1 ? (
+          <Link className={buttonClass} href={pageQueryHref(site, pagePath, query, { [queryKey]: prevPage }, hash)}>
+            Previous
+          </Link>
+        ) : (
+          <span className={disabledClass}>Previous</span>
+        )}
+        {page < totalPages ? (
+          <Link className={buttonClass} href={pageQueryHref(site, pagePath, query, { [queryKey]: nextPage }, hash)}>
+            Next
+          </Link>
+        ) : (
+          <span className={disabledClass}>Next</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function slugify(value: string): string {
@@ -1246,7 +1507,7 @@ function dreamshootToolBlock(
       category,
       badge,
       imageUrl,
-      href: href.includes("?") || !href.startsWith("/tools/image-studio") ? href : `${href}?tool=${id}`
+      href: href.includes("?") || !href.startsWith("/tools/image-studio") ? href : dreamshootStaticToolPath(id, title)
     }
   };
 }
@@ -1541,20 +1802,23 @@ function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamSho
     meta: `${pack.outputCount} photos`,
     credits: `${pack.creditCost} credits`,
     imageUrl: packImage(site, pack),
-    href: `/tools/${pack.aiAppSlug}`
+    href: dreamshootStaticToolPath(pack.id, pack.name)
   };
 }
 
 function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance): DreamShootCatalogCard {
+  const title = blockValue(block, "title", "Photo package");
   return {
     id: block.id,
-    title: blockValue(block, "title", "Photo package"),
+    title,
     description: blockValue(block, "description", "A private AI photo package with album-ready outputs."),
     category: blockValue(block, "category", "Package"),
     meta: blockValue(block, "meta", "20 photos"),
     credits: blockValue(block, "credits", "20 credits"),
     imageUrl: mediaAssetUrl(site, blockValue(block, "imageUrl", packImages.creator)),
-    href: blockValue(block, "href", "/tools/image-studio")
+    href: blockValue(block, "href", "/tools/image-studio") === "/tools/image-studio"
+      ? dreamshootStaticToolPath(block.id, title)
+      : blockValue(block, "href", "/tools/image-studio")
   };
 }
 
@@ -1866,7 +2130,7 @@ function renderLegacySaasSection({
             <div className="lg:sticky lg:top-28">
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Photo collections</p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">{title}</h2>
-              <p className="mt-5 text-sm leading-7 text-zinc-600">A vertical product and collection showcase bound to this site's active creative packs.</p>
+              <p className="mt-5 text-sm leading-7 text-zinc-600">A vertical product and collection showcase bound to this site&apos;s active creative packs.</p>
               <Link className="mt-7 inline-flex rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={hrefFor(site, "/pricing")}>
                 {setting(section, "button_label", "View all")}
               </Link>
@@ -3507,9 +3771,9 @@ function SectionView({
   if (section.type === "dreamshoot_feature_tabs") {
     const tabs = sectionBlocks(section, "feature_tab");
     const items = tabs.length ? tabs : [
-      { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a known package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk instead of a blank prompt.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/tools/image_generator" } },
-      { id: "tab_tryon", type: "feature_tab", settings: { label: "Try-on and style", title: "Preview themed looks", description: "Simulate wardrobe, hairstyle, beauty, or gala directions before full-package generation.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/image_generator" } },
-      { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image_generator" } }
+      { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a known package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk instead of a blank prompt.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/tools/headshot" } },
+      { id: "tab_tryon", type: "feature_tab", settings: { label: "Try-on and style", title: "Preview themed looks", description: "Simulate wardrobe, hairstyle, beauty, or gala directions before full-package generation.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/virtual-try-on" } },
+      { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
     ];
     const lead = items[0];
     return (
@@ -3525,7 +3789,7 @@ function SectionView({
           <div className="mt-9 grid gap-5 xl:grid-cols-[minmax(320px,0.42fr)_minmax(0,0.58fr)] xl:items-stretch">
             <div className="grid gap-3">
               {items.map((item, index) => (
-                <Link className={`group rounded-[1.25rem] border p-4 shadow-[0_20px_48px_-42px_rgba(20,22,26,0.18)] transition hover:-translate-y-1 sm:p-5 ${index === 0 ? "border-zinc-950 bg-white" : "border-black/10 bg-white/70"}`} href={hrefFor(site, blockValue(item, "href", "/tools/image_generator"))} key={instanceKey(item, index, "feature_tab")} {...xfcartBlockAttrs(item, index, "feature_tab")}>
+                <Link className={`group rounded-[1.25rem] border p-4 shadow-[0_20px_48px_-42px_rgba(20,22,26,0.18)] transition hover:-translate-y-1 sm:p-5 ${index === 0 ? "border-zinc-950 bg-white" : "border-black/10 bg-white/70"}`} href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "feature_tab")} {...xfcartBlockAttrs(item, index, "feature_tab")}>
                   <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--site-accent)]">{blockValue(item, "label")}</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight">{blockValue(item, "title")}</h3>
                   <p className="mt-2 text-sm leading-6 text-zinc-600">{blockValue(item, "description")}</p>
@@ -3561,9 +3825,9 @@ function SectionView({
       section,
       "items",
       [
-        `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/tools/image_generator`,
-        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/tools/image_generator`,
-        `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/tools/image_generator`
+        `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/tools/creator-portrait`,
+        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/tools/world-cup-fan-photos`,
+        `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/tools/headshot`
       ],
       (item, index) => {
         const [title, description, tag, imageUrl, href] = item.split("|");
@@ -3585,7 +3849,7 @@ function SectionView({
               const title = blockValue(item, "title");
               const image = mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.fashion));
               return (
-                <Link className="group relative min-h-[340px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion" href={hrefFor(site, blockValue(item, "href", "/tools/image_generator"))} key={instanceKey(item, index, "occasion")} {...xfcartBlockAttrs(item, index, "occasion")}>
+                <Link className="group relative min-h-[340px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion" href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "occasion")} {...xfcartBlockAttrs(item, index, "occasion")}>
                   <StorefrontImage
                     alt={title}
                     className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
@@ -3617,10 +3881,10 @@ function SectionView({
       section,
       "items",
       [
-        "Upload photos|Collect selfies and source images inside a private customer workspace.|Private intake|/app",
-        "Prepare portraits|Prepare solo, creator, or brand looks before package generation.|Consistent look|/app",
-        "Track progress|Show waiting, creating, delivered, review-needed, and returned-credit states.|Live progress|/app",
-        "Download albums|Deliver finished images to private customer galleries.|Private delivery|/app"
+        "Choose a tool|Pick the photo workflow first, then attach the source photos it needs.|Tool first|/app#create",
+        "Upload photos|Collect selfies and source images inside a private customer workspace.|Private intake|/app#upload_1",
+        "Track progress|Show waiting, creating, delivered, review-needed, and returned-credit states.|Live progress|/app#progress_1",
+        "Download albums|Deliver finished images to private customer galleries.|Private delivery|/app#album_1"
       ],
       (item, index) => {
         const [title, description, meta, href] = item.split("|");
@@ -3728,33 +3992,59 @@ function SectionView({
                   </div>
                 </div>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                {features.slice(0, 4).map((feature, index) => {
-                  const Icon = icons[index % icons.length];
-                  return (
-                    <Link
-                      className="group rounded-[26px] border border-[#ddd1c1] bg-[#fffaf3] p-6 shadow-[0_22px_62px_-54px_rgba(20,22,26,0.14)] transition hover:-translate-y-0.5"
-                      href={hrefFor(site, blockValue(feature, "href", "/app"))}
-                      key={`launcher_workspace_${instanceKey(feature, index, "workspace")}`}
-                      {...xfcartBlockAttrs(feature, index, "launcher_workspace")}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-white">
-                          <Icon className="h-5 w-5" strokeWidth={1.8} />
+              <div className="rounded-[24px] border border-[#ddd1c1] bg-[#fffaf3] p-5 shadow-[0_22px_62px_-54px_rgba(20,22,26,0.14)]">
+                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[#eadfce] pb-4">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9b8a79]">workflow</p>
+                    <h3 className="mt-2 text-xl font-semibold leading-tight tracking-tight text-[#171514]">Start with the right photo tool</h3>
+                    <p className="mt-2 max-w-md text-sm leading-6 text-[#625d56]">
+                      Choose the output first, then upload only the source files that workflow needs.
+                    </p>
+                  </div>
+                  <Link
+                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[14px] bg-[#14161a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"
+                    href={hrefFor(site, blockValue(leadFeature ?? { id: "lead", type: "feature", settings: {} }, "href", "/tools"))}
+                  >
+                    Choose tool
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                </div>
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                  {features.slice(0, 4).map((feature, index) => {
+                    const Icon = icons[index % icons.length];
+                    const fallbackHrefs = ["/app#create", "/app#upload_1", "/app#progress_1", "/app#album_1"];
+                    const rawHref = blockValue(feature, "href", fallbackHrefs[index] ?? "/app#create");
+                    const featureHref = rawHref === "/album" ? "/app#album_1" : rawHref;
+                    return (
+                      <Link
+                        className="group flex min-h-[150px] flex-col rounded-[18px] border border-[#e6dacb] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#d0bdab] hover:bg-[#fffdf9]"
+                        href={hrefFor(site, featureHref)}
+                        key={`launcher_workspace_${instanceKey(feature, index, "workspace")}`}
+                        {...xfcartBlockAttrs(feature, index, "launcher_workspace")}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#171514] text-white">
+                            <Icon className="h-4 w-4" strokeWidth={1.8} />
+                          </div>
+                          <div className="flex flex-wrap justify-end gap-2 text-right">
+                            <span className="rounded-full border border-[#eadfce] bg-[#fbf7f0] px-2 py-0.5 text-[10px] font-semibold text-[#7d6e61]">
+                              Step {index + 1}
+                            </span>
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#9b8a79]">{blockValue(feature, "meta")}</span>
+                          </div>
                         </div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">{blockValue(feature, "meta")}</span>
-                      </div>
-                      <h3 className="mt-6 text-[1.45rem] font-semibold leading-tight tracking-tight text-[#171514] [font-family:var(--site-title-font)]">
-                        {blockValue(feature, "title")}
-                      </h3>
-                      <p className="mt-3 text-sm leading-6 text-[#625d56]">{blockValue(feature, "description")}</p>
-                      <p className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#171514]">
-                        Open
-                        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
-                      </p>
-                    </Link>
-                  );
-                })}
+                        <div className="mt-3 min-w-0">
+                          <h4 className="text-[1.08rem] font-semibold leading-tight text-[#171514]">{blockValue(feature, "title")}</h4>
+                          <p className="mt-2 line-clamp-2 text-sm leading-5 text-[#625d56]">{blockValue(feature, "description")}</p>
+                        </div>
+                        <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-semibold text-[#171514] transition group-hover:translate-x-0.5">
+                          Open
+                          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -3763,13 +4053,11 @@ function SectionView({
     }
 
     if (launcherSurface === "account") {
-      const subscriptions = runtime?.subscriptions ?? [];
-      const orders = runtime?.orders ?? [];
-      const activeSubscription = subscriptions.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? subscriptions[0];
-      const activeProduct = activeSubscription ? products.find((product) => product.id === activeSubscription.productId) : undefined;
-      const recentJobs = (runtime?.jobs ?? []).slice(0, 4);
-      const recentAlbums = (runtime?.albums ?? []).slice(0, 4);
-      const recentLedger = (runtime?.ledger ?? []).slice(0, 4);
+      const accountChipAnchors = ["account-profile", "account-plan", "account-orders", "account-albums"];
+      const accountFeatureHref = (feature: SectionBlockInstance, index: number) => {
+        const fallbackHrefs = ["/app#upload_1", "/app#create", "/app/jobs/progress", "/album"];
+        return blockValue(feature, "href", fallbackHrefs[index] ?? "#account-profile");
+      };
       return (
         <section className="bg-[#f6efe5] px-5 py-10 text-[#14161a]" id={sectionAnchor(section, "account-ops")}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -3791,14 +4079,14 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-5 flex flex-wrap gap-2">
-                    {workspaceChips.map((chip) => (
-                      <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] text-[#7d6e61]" key={chip}>
+                    {workspaceChips.map((chip, index) => (
+                      <Link className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-[#e2d6c8] bg-white px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] text-[#7d6e61] transition hover:bg-[#fbf7f0] hover:text-[#171514]" href={`#${accountChipAnchors[index] ?? "account-profile"}`} key={chip}>
                         {chip}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                   {customer ? (
-                    <div className="mt-6 rounded-[24px] border border-[#dfd3c4] bg-white p-5">
+                    <div className="mt-6 scroll-mt-28 rounded-[24px] border border-[#dfd3c4] bg-white p-5" id="account-profile">
                       <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">profile</p>
                       <div className="mt-4 grid gap-3 text-sm">
                         <div>
@@ -3833,101 +4121,26 @@ function SectionView({
                       const Icon = icons[index % icons.length];
                       return (
                         <Link
-                          className="group rounded-[24px] border border-[#dfd3c4] bg-[#fdf8f1] p-5 shadow-[0_20px_56px_-48px_rgba(20,22,26,0.1)] transition hover:-translate-y-0.5"
-                          href={hrefFor(site, blockValue(feature, "href", "/account"))}
+                          className="group flex min-h-[150px] flex-col rounded-[18px] border border-[#dfd3c4] bg-[#fdf8f1] p-4 transition hover:-translate-y-0.5 hover:border-[#d3c2b0] hover:bg-white"
+                          href={hrefFor(site, accountFeatureHref(feature, index))}
                           key={`launcher_account_${instanceKey(feature, index, "account")}`}
                           {...xfcartBlockAttrs(feature, index, "launcher_account")}
                         >
                           <div className="flex items-start justify-between gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#171514] text-white">
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#171514] text-white">
                               <Icon className="h-4 w-4" strokeWidth={1.8} />
                             </div>
                             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">{blockValue(feature, "meta")}</span>
                           </div>
-                          <p className="mt-5 text-[1.25rem] font-semibold leading-tight tracking-tight text-[#171514] [font-family:var(--site-title-font)]">
-                            {blockValue(feature, "title")}
-                          </p>
-                          <p className="mt-2 text-sm leading-6 text-[#625d56]">{blockValue(feature, "description")}</p>
+                          <div className="mt-3 min-w-0">
+                            <p className="text-[1.08rem] font-semibold leading-tight text-[#171514]">{blockValue(feature, "title")}</p>
+                            <p className="mt-2 line-clamp-2 text-sm leading-5 text-[#625d56]">{blockValue(feature, "description")}</p>
+                          </div>
                         </Link>
                       );
                     })}
                   </div>
-                  <div className="mt-6 grid gap-4 xl:grid-cols-2">
-                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">plan</p>
-                          <h3 className="mt-2 text-xl font-semibold text-[#171514]">{activeProduct?.name ?? "No active plan"}</h3>
-                        </div>
-                        <span className="rounded-full border border-[#e2d6c8] bg-[#fbf7f0] px-3 py-1 text-xs font-semibold text-[#7d6e61]">
-                          {activeSubscription?.status ?? "none"}
-                        </span>
-                      </div>
-                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">cycle credits</p>
-                          <p className="mt-2 text-2xl font-semibold">{activeSubscription?.creditsPerCycle ?? 0}</p>
-                        </div>
-                        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-                          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">period end</p>
-                          <p className="mt-2 text-sm font-semibold">{activeSubscription ? new Date(activeSubscription.currentPeriodEnd).toLocaleDateString("zh-CN") : "Not started"}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">orders</p>
-                      <div className="mt-4 grid gap-3">
-                        {orders.length ? orders.slice(0, 3).map((order) => (
-                          <div className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={order.id}>
-                            <div>
-                              <p className="font-semibold text-[#171514]">{formatCurrency(order.amountCents, order.currency)}</p>
-                              <p className="mt-1 text-xs text-[#7d7064]">{order.credits} credits · {new Date(order.createdAt).toLocaleDateString("zh-CN")}</p>
-                            </div>
-                            <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{orderStatusLabel(order.status)}</span>
-                          </div>
-                        )) : (
-                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No orders recorded for this account yet.</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">generation progress</p>
-                        <Link className="text-xs font-semibold text-[#171514]" href={hrefFor(site, "/app/jobs/progress")}>Open timeline</Link>
-                      </div>
-                      <div className="mt-4 grid gap-3">
-                        {recentJobs.length ? recentJobs.map((job, index) => (
-                          <Link className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={hrefFor(site, `/app/jobs/${job.id}`)} key={job.id}>
-                            <p className="font-semibold text-[#171514]">{customerRequestTitle(job, index)}</p>
-                            <p className="mt-1 text-xs text-[#7d7064]">{customerStatusLabel(job.status)} · {job.creditsReserved} credits held</p>
-                          </Link>
-                        )) : (
-                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No generation jobs yet.</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="rounded-[24px] border border-[#dfd3c4] bg-white p-5">
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">albums and ledger</p>
-                        <Link className="text-xs font-semibold text-[#171514]" href={hrefFor(site, "/album")}>Open albums</Link>
-                      </div>
-                      <div className="mt-4 grid gap-3">
-                        {recentAlbums.length ? recentAlbums.map((album) => (
-                          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={album.id}>
-                            <p className="font-semibold text-[#171514]">{album.title}</p>
-                            <p className="mt-1 text-xs text-[#7d7064]">{customerAlbumStatusLabel(album.status)} · {album.outputCount} images</p>
-                          </div>
-                        )) : recentLedger.length ? recentLedger.map((entry) => (
-                          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={entry.id}>
-                            <p className="font-semibold text-[#171514]">{customerLedgerLabel(entry.type)}</p>
-                            <p className="mt-1 text-xs text-[#7d7064]">{entry.amount} credits · {new Date(entry.createdAt).toLocaleDateString("zh-CN")}</p>
-                          </div>
-                        )) : (
-                          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Albums and ledger activity will appear here after the first request.</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                  <CustomerAccountDataIsland siteId={site.id} siteSlug={site.slug} />
                 </div>
               </div>
             </div>
@@ -4181,7 +4394,7 @@ function SectionView({
           meta: `${pack.outputCount} photos`,
           credits: `${pack.creditCost} credits`,
           imageUrl: packImage(site, pack),
-          href: `/tools/${pack.aiAppSlug}`
+          href: dreamshootStaticToolPath(pack.id, pack.name)
         }))
       : manualItems.map((item) => ({
           id: item.id,
@@ -4190,7 +4403,7 @@ function SectionView({
           meta: blockValue(item, "meta"),
           credits: blockValue(item, "credits"),
           imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.creator)),
-          href: blockValue(item, "href", "/tools/image_generator")
+          href: blockValue(item, "href", "/tools")
         }));
     const fallbackCards = [
       {
@@ -4200,7 +4413,7 @@ function SectionView({
         meta: "40 photos",
         credits: "24 credits",
         imageUrl: packImages.creator,
-        href: "/tools/image_generator"
+        href: "/tools"
       }
     ];
     const allCards = cards.length
@@ -4228,7 +4441,7 @@ function SectionView({
               {Array.from(new Set(packItems.map((pack) => pack.category))).map((category) => (
                 <Link
                   className={`rounded-full border px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900 ${selectedCategory === category ? "border-zinc-950 bg-zinc-950 text-white" : "border-black/10 bg-white"}`}
-                  href={hrefFor(site, `/collections?category=${encodeURIComponent(category)}`)}
+                  href={hrefFor(site, collectionHref(category))}
                   key={category}
                 >
                   {category}
@@ -4291,7 +4504,7 @@ function SectionView({
           meta: "Creator",
           keywords: "creator portraits|profile photos|personal brand",
           imageUrl: packImages.creator,
-          href: "/collections?category=creator"
+          href: "/collections/creator"
         }
       },
       {
@@ -4303,7 +4516,7 @@ function SectionView({
           meta: "Professional",
           keywords: "headshot|profile|linkedin",
           imageUrl: packImages.headshots,
-          href: "/collections?category=headshots"
+          href: "/collections/headshots"
         }
       },
       {
@@ -4315,7 +4528,7 @@ function SectionView({
           meta: "Creative",
           keywords: "cyberpunk|mafia|nature|gala",
           imageUrl: packImages.sports,
-          href: "/collections?category=creative"
+          href: "/collections/creative"
         }
       }
     ];
@@ -4385,11 +4598,11 @@ function SectionView({
   if (section.type === "dreamshoot_visual_proof") {
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
-      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections?category=sports" } },
-      { id: "proof_headshots", type: "proof_card", settings: { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: packImages.headshots, href: "/collections?category=headshots" } },
-      { id: "proof_style", type: "proof_card", settings: { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections?category=beauty" } },
-      { id: "proof_creative", type: "proof_card", settings: { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: packImages.creative, href: "/collections?category=creative" } },
-      { id: "proof_engagement", type: "proof_card", settings: { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: "/assets/dreamshoot/frames/sample-engagement.png", href: "/collections?category=couple" } }
+      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections/sports" } },
+      { id: "proof_headshots", type: "proof_card", settings: { title: "Professional portraits", description: "Clean founder, resume, and team-ready headshots.", category: "Headshots", badge: "Business", imageUrl: packImages.headshots, href: "/collections/headshots" } },
+      { id: "proof_style", type: "proof_card", settings: { title: "Style previews", description: "Hairstyle, beauty, and try-on looks before a full album.", category: "Beauty", badge: "Beauty", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/collections/beauty" } },
+      { id: "proof_creative", type: "proof_card", settings: { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: packImages.creative, href: "/collections/creative" } },
+      { id: "proof_engagement", type: "proof_card", settings: { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: "/assets/dreamshoot/frames/sample-engagement.png", href: "/collections/couple" } }
     ];
     const cards = (blocks.length ? blocks : fallbackCards).slice(0, 5);
     const lead = cards[0];
@@ -4412,7 +4625,7 @@ function SectionView({
                 {tabs.map((tab, index) => (
                   <Link
                     className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
-                    href={hrefFor(site, tab === "All" ? "/collections" : `/collections?category=${encodeURIComponent(tab.toLowerCase())}`)}
+                    href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(tab))}
                     key={tab}
                     style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
@@ -4650,10 +4863,10 @@ function SectionView({
     const packItems = creativePacks.filter((pack) => pack.status === "active").map((pack) => dreamshootCatalogCardFromPack(site, pack));
     const cards = usePacks && packItems.length ? packItems : manualCards;
     const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/image-studio" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/tools/image-studio" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/tools/image-studio" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/tools/image-studio" } })
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/world-cup-fan-photos" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/tools/headshot" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/tools/cyberpunk-portrait" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/tools/gala-photo" } })
     ];
     const displayCards = cards.length ? cards : fallbackCards;
     const featuredCount = Math.max(3, Math.min(6, numberSetting(section, "featuredCount", 5)));
@@ -4686,7 +4899,7 @@ function SectionView({
                 {tabs.map((tab, index) => (
                   <Link
                     className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
-                    href={hrefFor(site, tab === "All" ? "/collections" : `/collections?category=${encodeURIComponent(dreamshootCategorySlug(tab))}`)}
+                    href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(dreamshootCategorySlug(tab)))}
                     key={tab}
                     style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
@@ -4907,7 +5120,7 @@ function SectionView({
           category: "AI Photo Edit",
           badge: "Free",
           imageUrl: dreamshootToolSceneDefaults.entry,
-          href: "/tools/image-studio"
+          href: "/tools/background-changer"
         }
       },
       {
@@ -4919,7 +5132,7 @@ function SectionView({
           category: "AI Photo",
           badge: "Popular",
           imageUrl: fallbackHeroImages[0],
-          href: "/tools/image-studio"
+          href: "/tools/package-preview"
         }
       },
       {
@@ -4931,7 +5144,7 @@ function SectionView({
           category: "AI Video",
           badge: "Preview",
           imageUrl: dreamshootToolSceneDefaults.progress,
-          href: "/tools/image-studio"
+          href: "/tools/image-to-video"
         }
       }
     ];
@@ -5077,7 +5290,7 @@ function SectionView({
           description: pack.description || pack.headline,
           meta: `${pack.outputCount} photos`,
           credits: `${pack.creditCost} credits`,
-          imageUrl: packImages[pack.category] ?? packImages.fashion,
+          imageUrl: packImage(site, pack),
           href: `/tools/${pack.aiAppSlug}`
         }))
       : manualItems.map((item) => ({
@@ -5087,12 +5300,12 @@ function SectionView({
           meta: blockValue(item, "meta"),
           credits: blockValue(item, "credits"),
           imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.seasonal)),
-          href: blockValue(item, "href", "/tools/image_generator")
+          href: blockValue(item, "href", "/tools")
         }));
     const fallbackCards = [
-      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/image_generator" },
-      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/tools/image_generator" },
-      { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/tools/image_generator" }
+      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/world-cup-fan-photos" },
+      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/tools/creator-portrait" },
+      { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/tools/gala-photo" }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -5617,6 +5830,7 @@ function SectionView({
     const boundApps = section.type === "generation_form"
       ? enabledApps.filter((app) => app.aiApp.slug === boundAppSlug)
       : enabledApps;
+    const formApps = renderContext.pagePath === "/app" ? enabledApps : (boundApps.length ? boundApps : enabledApps);
     const visibleOutputAssets = assets.filter((asset) => asset.role === "output");
     const previewCards = {
       upload_panel: assets.slice(0, 3).map((asset) => ({
@@ -5782,7 +5996,7 @@ function SectionView({
     if (previewMode) {
       const cards = previewCards[section.type];
       return (
-        <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id={section.type === "generation_form" ? "create" : id}>
+        <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id={section.type === "generation_form" ? "create" : id}>
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
             <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
               <div className="border-b border-black/5 p-6 lg:border-b-0 lg:border-r lg:border-r-black/5 xl:p-8">
@@ -5792,7 +6006,7 @@ function SectionView({
                   {sectionSubtitle || "Review how this private photo workspace step will feel before it goes live."}
                 </p>
                 <p className={`mt-4 max-w-xl text-sm leading-6 ${sectionBody}`}>
-                  Sample activity shows spacing, cards, and account flow. Live storefronts show each customer's own credits, uploads, and album requests.
+                  Sample activity shows spacing, cards, and account flow. Live storefronts show each customer&apos;s own credits, uploads, and album requests.
                 </p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {summaryCards.map((card) => (
@@ -5837,7 +6051,7 @@ function SectionView({
     if (!customer) {
       if (journeySurface && section.type === "upload_panel") {
         return (
-          <section className={`${sectionTheme.shell} px-5 py-10 ${sectionText}`} id={id}>
+          <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-10 ${sectionText}`} id={id}>
             <div className={`mx-auto overflow-hidden rounded-[36px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_28px_82px_-64px_rgba(20,22,26,0.22)]`}>
               {renderJourneyRail(false)}
               <div className="grid gap-0 xl:grid-cols-[0.92fr_1.08fr]">
@@ -5904,7 +6118,7 @@ function SectionView({
 
       if (section.type === "upload_panel") {
         return (
-          <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id={id}>
+          <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id={id}>
             <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
               <div className="grid gap-0 xl:grid-cols-[0.9fr_1.1fr]">
                 <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
@@ -6408,7 +6622,7 @@ function SectionView({
       }
 
       return (
-        <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id={section.type === "generation_form" ? "create" : id}>
+        <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id={section.type === "generation_form" ? "create" : id}>
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
             <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
               <div className="border-b border-black/5 p-6 lg:border-b-0 lg:border-r lg:border-r-black/5 xl:p-8">
@@ -6457,36 +6671,20 @@ function SectionView({
 
     if (section.type === "upload_panel") {
       return (
-        <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id={id}>
+        <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id={id}>
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
-            <div className="grid gap-0 lg:grid-cols-[0.84fr_1.16fr]">
-              <div className="border-b border-black/5 p-6 lg:border-b-0 lg:border-r lg:border-r-black/5 xl:p-8">
+            <div className="grid gap-0">
+              <div className="border-b border-black/5 p-6 xl:p-8">
                 <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                 <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
                 <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || setting(section, "helper", "Upload source photos into the current customer's private site library.")}</p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {summaryCards.map((card) => (
-                    <div className="rounded-[18px] border border-[#e4dace] bg-white p-4" key={card.label}>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d]">{card.label}</p>
-                      <p className="mt-3 text-2xl font-semibold text-[#14161a]">{card.value}</p>
-                      <p className="mt-1 text-xs leading-5 text-[#625d56]">{card.detail}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 relative overflow-hidden rounded-[24px] border border-[#e4dace] bg-[#efe6d9]">
-                  <img className="aspect-[4/3] w-full object-cover" src={featureImage} alt={sectionTitle} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/52 via-black/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
-                    <p className="mt-2 text-lg font-semibold">Keep the customer upload intake elegant and private.</p>
-                  </div>
+                <div className="mt-5 flex flex-wrap gap-2 text-xs font-semibold text-[#6d665f]">
+                  <span className="rounded-full border border-[#eadfce] bg-white px-3 py-1.5">Step 02</span>
+                  <span className="rounded-full border border-[#eadfce] bg-white px-3 py-1.5">Private source photos</span>
+                  <a className="rounded-full border border-[#171514] bg-[#171514] px-3 py-1.5 text-white" href="#create">Back to tool setup</a>
                 </div>
               </div>
               <div className="p-6 xl:p-8">
-                <div className="mb-5">
-                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#8a7a6d]">private upload intake</p>
-                  <p className="mt-2 text-sm leading-6 text-[#625d56]">{setting(section, "helper", "Upload source photos into the current customer's private site library.")}</p>
-                </div>
                 <AssetsPanel assets={assets} customer={customer} emptyBody={emptyBody} emptyTitle={emptyTitle} siteId={site.id} />
               </div>
             </div>
@@ -6497,7 +6695,7 @@ function SectionView({
 
     if (section.type === "generation_form") {
       return (
-        <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id="create">
+        <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id="create">
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.3)]`}>
             <div className="grid gap-0 lg:grid-cols-[0.84fr_1.16fr]">
               <div className="border-b border-white/8 p-6 lg:border-b-0 lg:border-r lg:border-r-white/8 xl:p-8">
@@ -6534,7 +6732,9 @@ function SectionView({
                   emptyTitle={emptyTitle}
                   siteId={site.id}
                   siteSlug={site.slug}
-                  siteAiApps={boundApps.length ? boundApps : enabledApps}
+                  siteAiApps={formApps}
+                  creativePacks={creativePacks.map((pack) => ({ ...pack, prompt: undefined }))}
+                  initialCreativePackId={queryValue(renderContext.query.pack)}
                 />
               </div>
             </div>
@@ -6549,6 +6749,8 @@ function SectionView({
         section,
         renderContext.pagePath === "/app/jobs/progress" ? "timeline" : "workspace"
       );
+      const jobsPage = queryPage(renderContext.query, "jobsPage");
+      const pagedJobs = paginateItems(jobs, jobsPage, 8);
 
       if (progressSurface === "workspace") {
         return (
@@ -6732,9 +6934,9 @@ function SectionView({
                       </div>
                     </div>
                   ) : null}
-                  {jobs.length ? (
+                  {pagedJobs.items.length ? (
                     <div className="grid gap-3">
-                      {jobs.map((job, index) => (
+                      {pagedJobs.items.map((job, index) => (
                         <Link className="grid gap-4 rounded-[20px] border border-[#e4dace] bg-[#f8f4ed] p-4 transition hover:-translate-y-0.5 hover:bg-white md:grid-cols-[auto_1fr_auto]" href={hrefFor(site, `/app/jobs/${job.id}`)} key={job.id}>
                           <div className="flex items-start justify-center pt-1">
                             <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-xs font-semibold ${
@@ -6746,12 +6948,12 @@ function SectionView({
                                 ? "bg-amber-50 text-amber-700"
                                 : "bg-zinc-100 text-zinc-700"
                             }`}>
-                              {String(index + 1).padStart(2, "0")}
+                              {String(pagedJobs.start + index + 1).padStart(2, "0")}
                             </span>
                           </div>
                           <div>
                             <div className="flex flex-wrap items-center gap-3">
-                              <p className="font-semibold text-[#14161a]">{customerRequestTitle(job, index)}</p>
+                              <p className="font-semibold text-[#14161a]">{customerRequestTitle(job, pagedJobs.start + index)}</p>
                               <span className={`rounded-full px-3 py-1 text-xs font-medium ${
                                 job.status === "succeeded"
                                   ? "bg-emerald-50 text-emerald-700"
@@ -6783,6 +6985,7 @@ function SectionView({
                       <p className="mt-2 leading-6">{emptyBody}</p>
                     </div>
                   )}
+                  <Pager hash={id} page={pagedJobs.page} pagePath="/app/jobs/progress" query={renderContext.query} queryKey="jobsPage" site={site} total={pagedJobs.total} totalPages={pagedJobs.totalPages} />
                 </div>
               </div>
             </div>
@@ -6791,9 +6994,11 @@ function SectionView({
       );
     }
 
-    const galleryItems = (albums.length ? albums : visibleOutputAssets);
-    const leadGalleryItem = galleryItems[0];
-    const secondaryGalleryItems = galleryItems.slice(1);
+    const galleryItems: Array<ThemeRuntimeData["albums"][number] | ThemeRuntimeData["assets"][number]> = albums.length ? albums : visibleOutputAssets;
+    const galleryPage = queryPage(renderContext.query, "galleryPage");
+    const pagedGallery = paginateItems(galleryItems, galleryPage, 7);
+    const leadGalleryItem = pagedGallery.items[0];
+    const secondaryGalleryItems = pagedGallery.items.slice(1);
     const secondaryDisplayItems = secondaryGalleryItems.length ? secondaryGalleryItems : leadGalleryItem ? [leadGalleryItem] : [];
     return (
       <section className={`${sectionTheme.shell} px-5 py-8 ${sectionText}`} id={id}>
@@ -6851,14 +7056,14 @@ function SectionView({
               <div className="grid gap-4">
                 {leadGalleryItem ? (
                   (() => {
-                    const href = "outputCount" in leadGalleryItem
+                    const href = isRuntimeAlbum(leadGalleryItem)
                       ? (leadGalleryItem.sourceJobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.sourceJobId}`) : hrefFor(site, "/app"))
                       : (leadGalleryItem.jobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.jobId}`) : hrefFor(site, "/app"));
-                    const title = "outputCount" in leadGalleryItem ? leadGalleryItem.title : leadGalleryItem.label;
-                    const detail = "outputCount" in leadGalleryItem ? `${leadGalleryItem.outputCount} images` : "Private gallery image";
-                    const status = "outputCount" in leadGalleryItem ? customerAlbumStatusLabel(leadGalleryItem.status) : customerAssetReviewLabel(leadGalleryItem.reviewStatus);
+                    const title = isRuntimeAlbum(leadGalleryItem) ? leadGalleryItem.title : leadGalleryItem.label;
+                    const detail = isRuntimeAlbum(leadGalleryItem) ? `${leadGalleryItem.outputCount} images` : "Private gallery image";
+                    const status = isRuntimeAlbum(leadGalleryItem) ? customerAlbumStatusLabel(leadGalleryItem.status) : customerAssetReviewLabel(leadGalleryItem.reviewStatus);
                     const thumb =
-                      "outputCount" in leadGalleryItem
+                      isRuntimeAlbum(leadGalleryItem)
                         ? albumPreviewUrl(site, leadGalleryItem, runtime)
                         : assetPreviewUrl(site, leadGalleryItem.id, runtime) || fallbackImageForSeed(`${site.slug}-${leadGalleryItem.id}-album`);
                     return (
@@ -6882,18 +7087,18 @@ function SectionView({
                   <div className="grid gap-4 md:grid-cols-2">
                     {secondaryDisplayItems.map((item) => {
                       const href =
-                        "outputCount" in item
+                        isRuntimeAlbum(item)
                           ? item.sourceJobId
                             ? hrefFor(site, `/app/jobs/${item.sourceJobId}`)
                             : hrefFor(site, "/app")
                           : item.jobId
                             ? hrefFor(site, `/app/jobs/${item.jobId}`)
                             : hrefFor(site, "/app");
-                      const title = "outputCount" in item ? item.title : item.label;
-                      const detail = "outputCount" in item ? `${item.outputCount} images` : "Private gallery image";
-                      const status = "outputCount" in item ? customerAlbumStatusLabel(item.status) : customerAssetReviewLabel(item.reviewStatus);
+                      const title = isRuntimeAlbum(item) ? item.title : item.label;
+                      const detail = isRuntimeAlbum(item) ? `${item.outputCount} images` : "Private gallery image";
+                      const status = isRuntimeAlbum(item) ? customerAlbumStatusLabel(item.status) : customerAssetReviewLabel(item.reviewStatus);
                       const thumb =
-                        "outputCount" in item
+                        isRuntimeAlbum(item)
                           ? albumPreviewUrl(site, item, runtime)
                           : assetPreviewUrl(site, item.id, runtime) || fallbackImageForSeed(`${site.slug}-${item.id}-album`);
                       return (
@@ -6923,6 +7128,7 @@ function SectionView({
                     <p className="mt-2 leading-6">{emptyBody}</p>
                   </div>
                 ) : null}
+                <Pager dark hash={id} page={pagedGallery.page} pagePath="/album" query={renderContext.query} queryKey="galleryPage" site={site} total={pagedGallery.total} totalPages={pagedGallery.totalPages} />
               </div>
             </div>
           </div>
@@ -7579,7 +7785,7 @@ function SectionView({
   if (section.type === "policy_content") {
     const title = setting(section, "title", "Policy");
     const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
-    const contactEmail = setting(section, "contactEmail", "support@dreamshootai.com");
+    const contactEmail = setting(section, "contactEmail", "support@mydreamshoots.com");
     const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
     return (
       <section className="bg-[#f6f5f1] px-4 py-8 text-[#16181d] sm:px-5 md:py-12" id={sectionAnchor(section, id)}>

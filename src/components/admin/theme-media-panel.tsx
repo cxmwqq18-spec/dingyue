@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, ExternalLink, ImageIcon, PencilLine, Plus, Save, Search, Trash2, UploadCloud } from "lucide-react";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
@@ -40,6 +40,7 @@ function emptyAsset(siteId: string): MediaAsset {
 }
 
 function previewFor(site: Site, asset: MediaAsset) {
+  if (!asset.id && !asset.previewUrl && !asset.originUrl) return "";
   return asset.previewUrl || asset.originUrl || resolveMediaAssetUrl(site, asset.id || asset.storageKey) || fallbackImageForSeed(`${site.slug}-${asset.label || asset.storageKey}`);
 }
 
@@ -50,14 +51,22 @@ function cloneAsset(asset: MediaAsset): MediaAsset {
 export function ThemeMediaPanel({
   site,
   media,
+  initialTotal,
+  usageCounts,
+  sourceCounts,
   compact = false
 }: {
   site: Site;
   media: MediaAsset[];
+  initialTotal?: number;
+  usageCounts?: Record<string, number>;
+  sourceCounts?: Record<string, number>;
   compact?: boolean;
 }) {
   const router = useRouter();
   const [items, setItems] = useState(media);
+  const [total, setTotal] = useState(initialTotal ?? media.length);
+  const [hasMore, setHasMore] = useState((initialTotal ?? media.length) > media.length);
   const [draft, setDraft] = useState<MediaAsset>(emptyAsset(site.id));
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingDraft, setEditingDraft] = useState<MediaAsset | null>(null);
@@ -66,11 +75,45 @@ export function ThemeMediaPanel({
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
   const [message, setMessage] = useState("Theme media is separated from customer private uploads and feeds the designer resource selector.");
   const [submitting, setSubmitting] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
+  const didMountFilters = useRef(false);
   const editing = Boolean(editingId);
 
   useEffect(() => {
     setItems(media);
-  }, [media]);
+    setTotal(initialTotal ?? media.length);
+    setHasMore((initialTotal ?? media.length) > media.length);
+  }, [initialTotal, media]);
+
+  async function loadMediaPage(params: { append?: boolean; resetOffset?: boolean } = {}) {
+    setLoadingPage(true);
+    try {
+      const append = Boolean(params.append);
+      const offset = append && !params.resetOffset ? items.length : 0;
+      const searchParams = new URLSearchParams({
+        limit: "40",
+        offset: String(offset)
+      });
+      if (filter !== "all") searchParams.set("usage", filter);
+      if (sourceFilter !== "all") searchParams.set("source", sourceFilter);
+      if (query.trim()) searchParams.set("q", query.trim());
+      const response = await fetch(`/api/sites/${site.id}/media-assets?${searchParams.toString()}`);
+      const result = (await response.json().catch(() => ({}))) as {
+        assets?: MediaAsset[];
+        pageInfo?: { total?: number; hasMore?: boolean };
+        error?: string;
+      };
+      if (!response.ok || !result.assets) {
+        setMessage(result.error ?? "加载素材失败。");
+        return;
+      }
+      setItems((current) => (append ? [...current, ...result.assets!] : result.assets!));
+      setTotal(result.pageInfo?.total ?? result.assets.length);
+      setHasMore(Boolean(result.pageInfo?.hasMore));
+    } finally {
+      setLoadingPage(false);
+    }
+  }
 
   const filtered = useMemo(() => {
     return items.filter((asset) => {
@@ -81,6 +124,18 @@ export function ThemeMediaPanel({
       return matchesFilter && matchesSource && matchesQuery;
     });
   }, [filter, items, query, sourceFilter]);
+
+  useEffect(() => {
+    if (!didMountFilters.current) {
+      didMountFilters.current = true;
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      void loadMediaPage({ resetOffset: true });
+    }, 180);
+    return () => window.clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, sourceFilter, query]);
 
   function beginEditing(asset: MediaAsset) {
     setEditingId(asset.id);
@@ -112,6 +167,7 @@ export function ThemeMediaPanel({
       }
       if (mode === "create") {
         setItems((current) => [result.asset!, ...current]);
+        setTotal((current) => current + 1);
         setDraft(emptyAsset(site.id));
         setMessage(`${result.asset.label} created in site media library.`);
       } else {
@@ -136,6 +192,7 @@ export function ThemeMediaPanel({
         return;
       }
       setItems((current) => current.filter((item) => item.id !== asset.id));
+      setTotal((current) => Math.max(0, current - 1));
       if (editingId === asset.id) {
         setEditingId(null);
         setEditingDraft(null);
@@ -175,6 +232,7 @@ export function ThemeMediaPanel({
   }
 
   const activeAsset = editingId ? editingDraft ?? draft : draft;
+  const activePreviewUrl = previewFor(site, activeAsset);
 
   return (
     <div className="mt-5 grid gap-3" data-admin-media="saas-source-library">
@@ -194,7 +252,7 @@ export function ThemeMediaPanel({
           <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex flex-wrap items-center gap-2">
               {usageTabs.map((tab) => {
-                const count = tab.value === "all" ? items.length : items.filter((asset) => asset.usage === tab.value).length;
+                const count = tab.value === "all" ? initialTotal ?? total : usageCounts?.[tab.value] ?? items.filter((asset) => asset.usage === tab.value).length;
                 const active = filter === tab.value;
                 return (
                   <button
@@ -236,10 +294,10 @@ export function ThemeMediaPanel({
             </div>
           </div>
           <div className="mt-2 flex flex-wrap gap-2 text-[12px] text-[#666]">
-            <span className="tag_gray">可见 {filtered.length}</span>
-            <span className="tag_gray">装修素材 {items.filter((asset) => asset.usage === "theme").length}</span>
-            <span className="tag_gray">封面 {items.filter((asset) => asset.usage === "pack_cover").length}</span>
-            <span className="tag_gray">外链 {items.filter((asset) => asset.sourceType === "external_url").length}</span>
+            <span className="tag_gray">可见 {filtered.length} / {total}</span>
+            <span className="tag_gray">装修素材 {usageCounts?.theme ?? items.filter((asset) => asset.usage === "theme").length}</span>
+            <span className="tag_gray">封面 {usageCounts?.pack_cover ?? items.filter((asset) => asset.usage === "pack_cover").length}</span>
+            <span className="tag_gray">外链 {sourceCounts?.external_url ?? items.filter((asset) => asset.sourceType === "external_url").length}</span>
           </div>
         </div>
       </div>
@@ -269,7 +327,13 @@ export function ThemeMediaPanel({
                   return (
                     <tr className={isEditing ? "bg-[#f2f6fc]" : ""} key={asset.id}>
                       <td>
-                        <img alt={asset.altText || asset.label} className="mx-auto h-11 w-14 border border-[#eee] object-cover" src={previewFor(site, asset)} />
+                        <img
+                          alt={asset.altText || asset.label}
+                          className="mx-auto h-11 w-14 border border-[#eee] object-cover"
+                          decoding="async"
+                          loading="lazy"
+                          src={previewFor(site, asset)}
+                        />
                       </td>
                       <td className="aleft">
                         <div className="font-semibold text-[#333]">{asset.label}</div>
@@ -307,6 +371,13 @@ export function ThemeMediaPanel({
               </tbody>
             </table>
           </div>
+          {hasMore ? (
+            <div className="mt-3 flex justify-center">
+              <button className="admin_btn inline-flex h-[32px] items-center" disabled={loadingPage} onClick={() => loadMediaPage({ append: true })} type="button">
+                {loadingPage ? "加载中" : "加载更多素材"}
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <div className="grid gap-3">
@@ -400,7 +471,19 @@ export function ThemeMediaPanel({
               <div className="clear" />
             </div>
             <div className="mt-3 grid gap-3">
-              <img alt={activeAsset.altText || activeAsset.label || "Site media preview"} className="aspect-[4/3] w-full border border-[#eee] object-cover" src={previewFor(site, activeAsset)} />
+              {activePreviewUrl ? (
+                <img
+                  alt={activeAsset.altText || activeAsset.label || "Site media preview"}
+                  className="aspect-[4/3] w-full border border-[#eee] object-cover"
+                  decoding="async"
+                  loading="lazy"
+                  src={activePreviewUrl}
+                />
+              ) : (
+                <div className="flex aspect-[4/3] w-full items-center justify-center border border-dashed border-[#ddd] bg-[#fafafa] px-4 text-center text-[12px] text-[#999]">
+                  填写预览地址或选择已有资源后显示预览
+                </div>
+              )}
               <div className="grid gap-2 text-[12px] leading-5 text-[#666]">
                 <p className="flex items-center gap-2"><ImageIcon className="h-4 w-4 text-[#999]" strokeWidth={1.8} />装修器中的 image_picker / media_asset 直接读取这批站点素材。</p>
                 <p className="flex items-center gap-2"><UploadCloud className="h-4 w-4 text-[#999]" strokeWidth={1.8} />可用 /assets/...、外部 URL 或站点路径记录，第一版不接真实对象存储上传。</p>

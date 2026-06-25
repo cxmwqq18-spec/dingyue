@@ -3,23 +3,89 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
-import { readPlatformState } from "@/lib/server-store";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import {
+  readStorefrontAccessSummaryFromDatabase,
+  readStorefrontPlatformStateFromDatabase,
+  readStorefrontPublicRuntimeStateByHostFromDatabase,
+  readStorefrontSiteByHostFromDatabase
+} from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
-import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
+import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
 import { getPage } from "@/lib/data";
+import type { PlatformState, Site } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const platformState = readPlatformState();
   const headerStore = await headers();
-  const hostSite = getSiteByHostCandidatesFromState(platformState, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
+  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  if (!shouldResolveHostSite(hostCandidates)) return {};
+  const hostSite = await getHostSiteWithFallback(hostCandidates);
   if (!hostSite) return {};
   return metadataForThemePage(hostSite, getPage(hostSite, "/"));
+}
+
+function shouldResolveHostSite(hosts: Array<string | null>): boolean {
+  return hosts.some((host) => {
+    const value = cleanHost(host);
+    return Boolean(value && !isPlatformHost(value) && value !== "localhost" && value !== "127.0.0.1");
+  });
+}
+
+async function getHostSiteWithFallback(hosts: Array<string | null>): Promise<Site | undefined> {
+  if (!shouldResolveHostSite(hosts)) return undefined;
+  try {
+    for (const host of hosts) {
+      const site = await readStorefrontSiteByHostFromDatabase(host);
+      if (site) return site;
+    }
+  } catch {
+    // Fall through to the full state reader for local or migrating databases.
+  }
+  const platformState = await readStorefrontPlatformStateFromDatabase();
+  return getSiteByHostCandidatesFromState(platformState, hosts);
+}
+
+async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
+  if (!shouldResolveHostSite(hosts)) return undefined;
+  try {
+    for (const host of hosts) {
+      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host);
+      if (state) return state;
+    }
+  } catch {
+    // Fall through to the full state reader for local or migrating databases.
+  }
+  const platformState = await readStorefrontPlatformStateFromDatabase();
+  const site = getSiteByHostCandidatesFromState(platformState, hosts);
+  return site ? platformState : undefined;
+}
+
+async function getAccessSummaryWithFallback() {
+  try {
+    return await readStorefrontAccessSummaryFromDatabase();
+  } catch {
+    const platformState = await readStorefrontPlatformStateFromDatabase();
+    return {
+      sites: platformState.sites.slice(0, 4).map((site) => ({
+        id: site.id,
+        name: site.name,
+        slug: site.slug,
+        status: site.status,
+        primaryDomain: site.primaryDomain,
+        branding: site.branding,
+        adminEmail: platformState.siteAdmins.find((admin) => admin.siteId === site.id)?.email,
+        customerEmail: platformState.customers.find((customer) => customer.siteId === site.id)?.email
+      })),
+      totalSites: platformState.sites.length,
+      activeSites: platformState.sites.filter((site) => site.status === "active").length,
+      runningJobs: platformState.jobs.filter((job) => job.status === "running").length,
+      platformAdmin: platformState.platformAdmins[0]
+    };
+  }
 }
 
 export default async function HomePage({
@@ -27,29 +93,27 @@ export default async function HomePage({
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const platformState = readStorefrontPlatformState();
   const headerStore = await headers();
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isPlatformHost(host)) redirect("/platform");
-  const hostSite = getSiteByHostCandidatesFromState(platformState, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
-  if (hostSite) {
+  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  const hostRuntimeState = await getHostRuntimeStateWithFallback(hostCandidates);
+  const hostSite = hostRuntimeState ? getSiteByHostCandidatesFromState(hostRuntimeState, hostCandidates) ?? hostRuntimeState.sites[0] : undefined;
+  if (hostSite && hostRuntimeState) {
     const query = searchParams ? await searchParams : {};
-    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: platformState });
+    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: hostRuntimeState });
   }
-  const totalSites = platformState.sites.length;
-  const activeSites = platformState.sites.filter((site) => site.status === "active").length;
-  const runningJobs = platformState.jobs.filter((job) => job.status === "running").length;
-  const primarySite = platformState.sites[0];
-  const platformRoutes = platformState.sites.slice(0, 3).flatMap((site) => [
+  const accessSummary = await getAccessSummaryWithFallback();
+  const totalSites = accessSummary.totalSites;
+  const activeSites = accessSummary.activeSites;
+  const runningJobs = accessSummary.runningJobs;
+  const primarySite = accessSummary.sites[0];
+  const platformRoutes = accessSummary.sites.slice(0, 3).flatMap((site) => [
     { label: `${site.branding.logoText} 前台`, href: `/site/${site.slug}` },
     { label: `${site.branding.logoText} 后台`, href: `/site/${site.slug}/admin` }
   ]);
-  const listedSites = platformState.sites.slice(0, 4).map((site) => ({
-    site,
-    admin: platformState.siteAdmins.find((admin) => admin.siteId === site.id),
-    customer: platformState.customers.find((customer) => customer.siteId === site.id)
-  }));
-  const platformAdmin = platformState.platformAdmins[0];
+  const listedSites = accessSummary.sites;
+  const platformAdmin = accessSummary.platformAdmin;
   const accessEntries = [
     {
       label: "平台总后台",
@@ -58,19 +122,19 @@ export default async function HomePage({
       account: platformAdmin ? `${platformAdmin.email} / platform123` : "platform@local.test / platform123",
       detail: "Cross-site control plane for tenants, domains, Connect state, gateway policy and global operations."
     },
-    ...listedSites.slice(0, 3).flatMap((entry) => [
+    ...listedSites.slice(0, 3).flatMap((site) => [
       {
-        label: `${entry.site.branding.logoText} 前台`,
-        href: `/site/${entry.site.slug}`,
+        label: `${site.branding.logoText} 前台`,
+        href: `/site/${site.slug}`,
         role: "customer storefront",
-        account: `${entry.customer?.email ?? "seed customer"} / mara123`,
+        account: `${site.customerEmail ?? "seed customer"} / mara123`,
         detail: "Site-scoped storefront with independent pages, pricing, content, and navigation."
       },
       {
-        label: `${entry.site.branding.logoText} 后台`,
-        href: `/site/${entry.site.slug}/admin/login`,
+        label: `${site.branding.logoText} 后台`,
+        href: `/site/${site.slug}/admin/login`,
         role: "site admin",
-        account: `${entry.admin?.email ?? `owner@${entry.site.slug}.localhost`} / ${entry.site.slug}123`,
+        account: `${site.adminEmail ?? `owner@${site.slug}.localhost`} / ${site.slug}123`,
         detail: "Theme designer, products, customers, subscriptions, media, and content for this site only."
       }
     ])
@@ -195,26 +259,26 @@ export default async function HomePage({
               这里读取的是当前持久化平台状态，不是静态展示数据。每个站点都具备独立后台、独立客户体系、独立前台页面和独立主题内容。
             </p>
             <div className="mt-5 grid gap-3">
-              {listedSites.map((entry) => (
-                <div className="rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_18px_48px_-44px_rgba(24,24,27,0.45)]" key={entry.site.id}>
+              {listedSites.map((site) => (
+                <div className="rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_18px_48px_-44px_rgba(24,24,27,0.45)]" key={site.id}>
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-sm font-semibold text-zinc-900">{entry.site.name}</p>
-                      <p className="mt-1 font-mono text-[11px] text-zinc-500">{entry.site.primaryDomain}</p>
+                      <p className="text-sm font-semibold text-zinc-900">{site.name}</p>
+                      <p className="mt-1 font-mono text-[11px] text-zinc-500">{site.primaryDomain}</p>
                     </div>
-                    <StatusPill label={entry.site.status} tone={entry.site.status === "active" ? "good" : "warn"} />
+                    <StatusPill label={site.status} tone={site.status === "active" ? "good" : "warn"} />
                   </div>
                   <div className="mt-3 grid gap-1 text-xs leading-5 text-zinc-500">
-                    <p>{`后台账号: ${entry.admin?.email ?? `owner@${entry.site.slug}.localhost`} / ${entry.site.slug}123`}</p>
-                    <p>{`客户账号: ${entry.customer?.email ?? "mara@northpier.studio"} / mara123`}</p>
+                    <p>{`后台账号: ${site.adminEmail ?? `owner@${site.slug}.localhost`} / ${site.slug}123`}</p>
+                    <p>{`客户账号: ${site.customerEmail ?? "mara@northpier.studio"} / mara123`}</p>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {[
-                      { label: "前台", href: `/site/${entry.site.slug}` },
-                      { label: "后台", href: `/site/${entry.site.slug}/admin/login` },
-                      { label: "设计器", href: `/site/${entry.site.slug}/admin/design` }
+                      { label: "前台", href: `/site/${site.slug}` },
+                      { label: "后台", href: `/site/${site.slug}/admin/login` },
+                      { label: "设计器", href: `/site/${site.slug}/admin/design` }
                     ].map((item) => (
-                      <Link className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-[#fbfbfa] px-3 py-2 text-xs font-medium text-zinc-800 transition hover:bg-zinc-50" href={item.href} key={`${entry.site.id}:${item.label}`}>
+                      <Link className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-[#fbfbfa] px-3 py-2 text-xs font-medium text-zinc-800 transition hover:bg-zinc-50" href={item.href} key={`${site.id}:${item.label}`}>
                         <span>{item.label}</span>
                         <ArrowUpRight className="h-3.5 w-3.5 text-zinc-400" strokeWidth={1.8} />
                       </Link>

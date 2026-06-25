@@ -23,6 +23,8 @@ export type AdminWorkspace = {
   statusTone?: AdminTone;
 };
 
+export type AdminWorkspaceSummary = Pick<AdminWorkspace, "name" | "meta" | "statusLabel" | "statusTone">;
+
 export type AdminQuickAction = {
   label: string;
   href: string;
@@ -43,6 +45,7 @@ export type AdminStatBadge = {
   label: string;
   value: string;
   tone?: AdminTone;
+  href?: string;
 };
 
 export type AdminShellProps = {

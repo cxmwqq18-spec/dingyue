@@ -11,11 +11,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer-email-verify:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
   if (!limited.allowed) return limited.response;
 
-  const body = (await request.json().catch(() => ({}))) as { email?: string; code?: string; password?: string; purpose?: "register" | "password_reset"; name?: string };
+  const body = (await request.json().catch(() => ({}))) as { email?: string; code?: string; password?: string; confirmPassword?: string; purpose?: "register" | "password_reset"; name?: string };
   if (!body.email || !body.code) return NextResponse.json({ error: "missing_email_or_code" }, { status: 400 });
 
   try {
-    const result = await verifyCustomerEmailCode({ siteId, email: body.email, code: body.code, password: body.password, purpose: body.purpose, name: body.name });
+    const result = await verifyCustomerEmailCode({ siteId, email: body.email, code: body.code, password: body.password, confirmPassword: body.confirmPassword, purpose: body.purpose, name: body.name });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,

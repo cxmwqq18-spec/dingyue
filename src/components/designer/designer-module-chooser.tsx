@@ -79,7 +79,7 @@ export function DesignerModuleChooser({
         const availableBelow = Math.max(0, window.innerHeight - rect.bottom - viewportPadding);
         const placeAbove = availableBelow < 220 && availableAbove > availableBelow;
         const maxHeight = Math.max(180, Math.min(preferredHeight, placeAbove ? availableAbove : availableBelow));
-        let top = placeAbove ? Math.max(viewportPadding, rect.top - maxHeight - 6) : rect.bottom + 6;
+        const top = placeAbove ? Math.max(viewportPadding, rect.top - maxHeight - 6) : rect.bottom + 6;
         setPopoverStyle({
           position: "fixed",
           left,

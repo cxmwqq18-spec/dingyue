@@ -1,28 +1,398 @@
 import "server-only";
 
+import { cache } from "react";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { readPlatformState, writePlatformState } from "@/lib/server-store";
-import type { AiGatewayGroup, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment } from "@/lib/types";
+import { aiProviderStatus } from "@/lib/ai-provider-config";
+import { latestActivity, siteDemoSnapshot } from "@/lib/ops";
+import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 
 import {
   addAuditLogRelational,
+  mapCreditLedger,
+  mapCustomer,
+  mapGenerationJob,
+  mapProduct,
   relationalSessionTtlMs,
   relationalUid,
   RelationalStoreError,
   toPlatformSessionRelational,
   toPlatformAiProvider,
   toPlatformCloudflareAccount,
+  toPlatformEmailConfig,
   toPlatformEmailSettings,
   toPublicPlatformAdminRelational,
   toPublicSiteAdminRelational,
+  toAlbumRelational,
+  toAssetUploadRelational,
+  toCreativePack,
+  toCustomerModelRelational,
   toGatewayGroup,
+  toMediaAsset,
+  toSiteEmailConfigAssignment,
+  toSiteAiApp,
   toSite,
   toSiteDomain,
+  toThemePublication,
   uid,
   verifyRelationalPassword
 } from "./prisma-mappers";
+
+const cloudflareCurrentAccountSettingKey = "cloudflare_current_account_id";
+const platformEmailTestResultsKey = "platform_email_test_results";
+const platformReadCache = createServerTtlCache("platform-store", 30_000);
+
+export function clearPlatformReadCache(): void {
+  platformReadCache.clear();
+}
+
+function cloudflareCurrentAccountIdFromSetting(value: unknown): string | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const accountId = (value as { accountId?: unknown }).accountId;
+  return typeof accountId === "string" && accountId.trim() ? accountId : undefined;
+}
+
+function objectRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function parsePlatformEmailTestResult(value: unknown): PlatformEmailTestResult | undefined {
+  const record = objectRecord(value);
+  const state = record.state === "passed" || record.state === "failed" ? record.state : undefined;
+  const testedAt = typeof record.testedAt === "string" ? record.testedAt : undefined;
+  if (!state || !testedAt) return undefined;
+  return {
+    state,
+    testedAt,
+    to: typeof record.to === "string" ? record.to : undefined,
+    messageId: typeof record.messageId === "string" ? record.messageId : undefined,
+    configId: typeof record.configId === "string" ? record.configId : undefined,
+    configLabel: typeof record.configLabel === "string" ? record.configLabel : undefined,
+    testedBy: typeof record.testedBy === "string" ? record.testedBy : undefined,
+    error: typeof record.error === "string" ? record.error : undefined,
+    providerStatus: typeof record.providerStatus === "number" ? record.providerStatus : undefined,
+    providerMessage: typeof record.providerMessage === "string" ? record.providerMessage : undefined
+  };
+}
+
+export async function readPlatformEmailTestResultsRelational(): Promise<Record<string, PlatformEmailTestResult>> {
+  const setting = await prisma.platformSetting.findUnique({ where: { key: platformEmailTestResultsKey } });
+  const sites = objectRecord(objectRecord(setting?.value).sites);
+  return Object.fromEntries(
+    Object.entries(sites)
+      .map(([siteId, value]) => [siteId, parsePlatformEmailTestResult(value)] as const)
+      .filter((entry): entry is [string, PlatformEmailTestResult] => Boolean(entry[1]))
+  );
+}
+
+export async function writePlatformEmailTestResultRelational(siteId: string, result: PlatformEmailTestResult): Promise<void> {
+  const current = await readPlatformEmailTestResultsRelational();
+  const next = { ...current, [siteId]: result };
+  const value = { sites: next } as unknown as Prisma.InputJsonValue;
+  await prisma.platformSetting.upsert({
+    where: { key: platformEmailTestResultsKey },
+    create: {
+      id: platformEmailTestResultsKey,
+      key: platformEmailTestResultsKey,
+      value,
+      updatedBy: result.testedBy
+    },
+    update: {
+      value,
+      updatedBy: result.testedBy
+    }
+  });
+  clearPlatformReadCache();
+}
+
+async function getCurrentCloudflareAccountIdRelational(): Promise<string | undefined> {
+  const setting = await prisma.platformSetting.findUnique({ where: { key: cloudflareCurrentAccountSettingKey } });
+  return cloudflareCurrentAccountIdFromSetting(setting?.value);
+}
+
+function shouldFallbackLegacyEmailConfig(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.includes("P2021") ||
+    message.includes("PlatformEmailConfig") ||
+    message.includes("SiteEmailConfigAssignment")
+  );
+}
+
+function defaultPlatformEmailConfig(settings?: PlatformEmailSettings): PlatformEmailConfig {
+  return normalizePlatformEmailConfig({ id: "resend_default", label: "Default Resend", isDefault: true }, settings);
+}
+
+function toSubscriptionRelational(record: {
+  id: string;
+  siteId: string;
+  customerId: string;
+  productId: string;
+  priceId: string;
+  stripeSubscriptionId: string;
+  status: string;
+  currentPeriodEnd: Date | string;
+  creditsPerCycle: number;
+  createdAt: Date | string;
+}): Subscription {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    customerId: record.customerId,
+    productId: record.productId,
+    priceId: record.priceId,
+    stripeSubscriptionId: record.stripeSubscriptionId,
+    status: record.status as Subscription["status"],
+    currentPeriodEnd: record.currentPeriodEnd instanceof Date ? record.currentPeriodEnd.toISOString() : record.currentPeriodEnd,
+    creditsPerCycle: record.creditsPerCycle,
+    createdAt: record.createdAt instanceof Date ? record.createdAt.toISOString() : record.createdAt
+  };
+}
+
+function toOrderRelational(record: {
+  id: string;
+  siteId: string;
+  customerId: string;
+  status: string;
+  amountCents: number;
+  currency: string;
+  credits: number;
+  sourceId: string;
+  createdAt: Date | string;
+}): Order {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    customerId: record.customerId,
+    status: record.status as Order["status"],
+    amountCents: record.amountCents,
+    currency: record.currency,
+    credits: record.credits,
+    sourceId: record.sourceId,
+    createdAt: record.createdAt instanceof Date ? record.createdAt.toISOString() : record.createdAt
+  };
+}
+
+function toAuditLogRelational(record: {
+  id: string;
+  siteId?: string | null;
+  actorType: string;
+  actorId: string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  metadata?: unknown;
+  createdAt: Date | string;
+}): AuditLogEntry {
+  const metadata = record.metadata && typeof record.metadata === "object" && !Array.isArray(record.metadata)
+    ? Object.fromEntries(Object.entries(record.metadata).filter((entry): entry is [string, string | number | boolean] =>
+        ["string", "number", "boolean"].includes(typeof entry[1])
+      ))
+    : undefined;
+  return {
+    id: record.id,
+    siteId: record.siteId ?? undefined,
+    actorType: record.actorType as AuditLogEntry["actorType"],
+    actorId: record.actorId,
+    action: record.action,
+    targetType: record.targetType,
+    targetId: record.targetId,
+    createdAt: record.createdAt instanceof Date ? record.createdAt.toISOString() : record.createdAt,
+    metadata: metadata && Object.keys(metadata).length ? metadata : undefined
+  };
+}
+
+export type PlatformDashboardSnapshot = {
+  site: Site;
+  ownerEmail: string;
+  domains: SiteDomain[];
+  customerCount: number;
+  activeSubscriptions: number;
+  revenueCents: number;
+  productCount: number;
+  jobCount: number;
+  failedJobs: number;
+  appCount: number;
+  enabledAppCount: number;
+  gateway?: AiGatewayGroup;
+  publicationCount: number;
+  healthScore: number;
+};
+
+type PlatformActivityItem = ReturnType<typeof latestActivity>[number];
+export type PlatformStateCounts = {
+  sites: number;
+  customers: number;
+  products: number;
+  jobs: number;
+  customerModels: number;
+  albums: number;
+};
+
+function latestPlatformActivity(
+  auditLogs: AuditLogEntry[],
+  jobs: Array<{ id: string; status: string; aiAppId: string; updatedAt: Date | string }>,
+  orders: Array<{ id: string; status: string; amountCents: number; currency: string; createdAt: Date | string }>,
+  limit = 40
+): PlatformActivityItem[] {
+  return latestActivity(
+    auditLogs,
+    jobs.map((job) => ({
+      id: job.id,
+      siteId: "",
+      customerId: "",
+      aiAppId: job.aiAppId,
+      status: job.status as ReturnType<typeof mapGenerationJob>["status"],
+      creditsReserved: 0,
+      requestJson: {},
+      resultJson: undefined,
+      createdAt: job.updatedAt instanceof Date ? job.updatedAt.toISOString() : job.updatedAt,
+      updatedAt: job.updatedAt instanceof Date ? job.updatedAt.toISOString() : job.updatedAt
+    })),
+    orders.map((order) => ({
+      id: order.id,
+      siteId: "",
+      customerId: "",
+      status: order.status as Order["status"],
+      amountCents: order.amountCents,
+      currency: order.currency,
+      credits: 0,
+      sourceId: "",
+      createdAt: order.createdAt instanceof Date ? order.createdAt.toISOString() : order.createdAt
+    })),
+    limit
+  );
+}
+
+function mapSiteWithCounts(
+  site: {
+    _count: {
+      customers: number;
+      products: number;
+      aiApps: number;
+      publications: number;
+      jobs: number;
+    };
+    admins?: Array<{ email?: string }>;
+    domains?: Array<Parameters<typeof toSiteDomain>[0]>;
+    gatewayGroups?: Array<Parameters<typeof toGatewayGroup>[0]>;
+  } & Parameters<typeof toSite>[0],
+  aggregates: {
+    revenueBySiteId: Map<string, number>;
+    activeSubscriptionsBySiteId: Map<string, number>;
+    failedJobsBySiteId: Map<string, number>;
+    enabledAppsBySiteId: Map<string, number>;
+  }
+): PlatformDashboardSnapshot {
+  const mappedSite = toSite(site);
+  const domains = (site.domains ?? []).map(toSiteDomain);
+  const gateway = site.gatewayGroups?.[0] ? toGatewayGroup(site.gatewayGroups[0]) : undefined;
+  const customerCount = site._count.customers;
+  const failedJobs = aggregates.failedJobsBySiteId.get(site.id) ?? 0;
+  const publicationCount = site._count.publications;
+  const connectScore = mappedSite.connect.chargesEnabled ? 24 : 8;
+  const customerScore = customerCount > 0 ? 18 : 6;
+  const jobScore = site._count.jobs === 0 ? 12 : Math.max(8, 24 - failedJobs * 4);
+  const gatewayScore = gateway?.status === "active" ? 18 : 6;
+  const themeScore = publicationCount > 0 ? 16 : 8;
+  return {
+    site: mappedSite,
+    ownerEmail: site.admins?.[0]?.email ?? "not assigned",
+    domains,
+    customerCount,
+    activeSubscriptions: aggregates.activeSubscriptionsBySiteId.get(site.id) ?? 0,
+    revenueCents: aggregates.revenueBySiteId.get(site.id) ?? 0,
+    productCount: site._count.products,
+    jobCount: site._count.jobs,
+    failedJobs,
+    appCount: site._count.aiApps,
+    enabledAppCount: aggregates.enabledAppsBySiteId.get(site.id) ?? 0,
+    gateway,
+    publicationCount,
+    healthScore: Math.min(100, connectScore + customerScore + jobScore + gatewayScore + themeScore)
+  };
+}
+
+async function getPlatformSnapshotsByModeRelational(mode: "overview" | "sites" | "billing" | "gateway") {
+  const [
+    sites,
+    paidOrderRevenue,
+    activeSubscriptionCounts,
+    failedJobCounts,
+    enabledAppCounts
+  ] = await Promise.all([
+    prisma.site.findMany({
+      orderBy: { createdAt: "asc" },
+      include: {
+        admins: mode === "billing" ? false : { orderBy: [{ role: "asc" }, { createdAt: "asc" }], take: 1 },
+        domains: mode === "gateway" ? { orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] } : { where: { isPrimary: true }, take: 1 },
+        pages: false,
+        settings: false,
+        connect: true,
+        gatewayGroups: mode === "billing" ? false : { orderBy: [{ status: "asc" }, { name: "asc" }], take: 1 },
+        _count: {
+          select: {
+            customers: true,
+            products: true,
+            aiApps: true,
+            publications: true,
+            jobs: true
+          }
+        }
+      }
+    }),
+    prisma.order.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["paid", "fulfilled"] } },
+      _sum: { amountCents: true }
+    }),
+    prisma.subscription.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["active", "trialing"] } },
+      _count: { _all: true }
+    }),
+    prisma.generationJob.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["failed", "refunded"] } },
+      _count: { _all: true }
+    }),
+    prisma.siteAiApp.groupBy({
+      by: ["siteId"],
+      where: { enabled: true },
+      _count: { _all: true }
+    })
+  ]);
+  const aggregates = {
+    revenueBySiteId: new Map(paidOrderRevenue.map((row) => [row.siteId, row._sum.amountCents ?? 0])),
+    activeSubscriptionsBySiteId: new Map(activeSubscriptionCounts.map((row) => [row.siteId, row._count._all])),
+    failedJobsBySiteId: new Map(failedJobCounts.map((row) => [row.siteId, row._count._all])),
+    enabledAppsBySiteId: new Map(enabledAppCounts.map((row) => [row.siteId, row._count._all]))
+  };
+  return sites.map((site) => mapSiteWithCounts(site, aggregates));
+}
+
+async function listPlatformEmailConfigsRelational() {
+  try {
+    return await prisma.platformEmailConfig.findMany({ orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }] });
+  } catch (error) {
+    if (!shouldFallbackLegacyEmailConfig(error)) throw error;
+    warnRelationalFallback("platform email configs", error);
+    return [];
+  }
+}
+
+async function listSiteEmailConfigAssignmentsRelational() {
+  try {
+    return await prisma.siteEmailConfigAssignment.findMany({ orderBy: [{ siteId: "asc" }] });
+  } catch (error) {
+    if (!shouldFallbackLegacyEmailConfig(error)) throw error;
+    warnRelationalFallback("site email config assignments", error);
+    return [];
+  }
+}
 
 export async function createPlatformAdminSessionRelational(params: { email: string; password: string }) {
   const email = params.email.trim().toLowerCase();
@@ -67,7 +437,7 @@ export async function getPlatformAdminBySessionRelational(sessionId?: string) {
   };
 }
 
-export async function getPlatformOverviewRelational(): Promise<{
+async function loadPlatformOverviewRelational(): Promise<{
   sites: Site[];
   siteDomains: SiteDomain[];
   platformEmailSettings?: PlatformEmailSettings;
@@ -78,22 +448,28 @@ export async function getPlatformOverviewRelational(): Promise<{
   platformAiProviders: PlatformAiProvider[];
   currentAiProviderId?: string;
 }> {
-  const [sites, siteDomains, emailSettings, cloudflareAccounts, aiProviders] = await Promise.all([
+  const [sites, siteDomains, emailSettings, emailConfigs, emailAssignments, cloudflareAccounts, currentCloudflareSetting, aiProviders] = await Promise.all([
     prisma.site.findMany({
       orderBy: { createdAt: "asc" },
-      include: { domains: true, pages: true, settings: true, connect: true }
+      include: { domains: true, connect: true }
     }),
     prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
     prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+    listPlatformEmailConfigsRelational(),
+    listSiteEmailConfigAssignmentsRelational(),
     prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
+    prisma.platformSetting.findUnique({ where: { key: cloudflareCurrentAccountSettingKey } }),
     prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
   ]);
   const preferredProvider = aiProviders.find((provider) => provider.preferred);
-  const jsonState = readPlatformState();
-  const legacyEmailSettings = emailSettings ? toPlatformEmailSettings(emailSettings) : jsonState.platformEmailSettings;
-  const platformEmailConfigs = (jsonState.platformEmailConfigs ?? []).map((config) => normalizePlatformEmailConfig(config, legacyEmailSettings));
+  const currentCloudflareAccountId = cloudflareCurrentAccountIdFromSetting(currentCloudflareSetting?.value);
+  const validCurrentCloudflareAccountId = cloudflareAccounts.some((account) => account.id === currentCloudflareAccountId)
+    ? currentCloudflareAccountId
+    : undefined;
+  const emailSettingsValue = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
+  const platformEmailConfigs = emailConfigs.map((config) => normalizePlatformEmailConfig(toPlatformEmailConfig(config), emailSettingsValue));
   if (!platformEmailConfigs.length) {
-    platformEmailConfigs.push(normalizePlatformEmailConfig({ id: "resend_default", label: "Default Resend", isDefault: true }, legacyEmailSettings));
+    platformEmailConfigs.push(defaultPlatformEmailConfig(emailSettingsValue));
   }
   return {
     sites: sites.map(toSite),
@@ -103,30 +479,475 @@ export async function getPlatformOverviewRelational(): Promise<{
       domain: domain.domain,
       isPrimary: domain.isPrimary,
       status: domain.status as SiteDomain["status"],
+      allowedAiProviderIds: domain.allowedAiProviderIds ?? [],
       createdAt: domain.createdAt.toISOString()
     })),
-    platformEmailSettings: legacyEmailSettings,
+    platformEmailSettings: emailSettingsValue,
     platformEmailConfigs,
-    siteEmailConfigAssignments: jsonState.siteEmailConfigAssignments ?? [],
+    siteEmailConfigAssignments: emailAssignments.map(toSiteEmailConfigAssignment),
     platformCloudflareAccounts: cloudflareAccounts.map(toPlatformCloudflareAccount),
-    currentCloudflareAccountId: cloudflareAccounts[0]?.id,
+    currentCloudflareAccountId: validCurrentCloudflareAccountId,
     platformAiProviders: aiProviders.map(toPlatformAiProvider),
     currentAiProviderId: preferredProvider?.id
   };
 }
 
-export async function getPlatformSitesRelational(): Promise<
+export const getPlatformOverviewRelational = cache(() => platformReadCache.get("overview", loadPlatformOverviewRelational));
+
+async function loadPlatformEmailOverviewRelational(): Promise<{
+  sites: Site[];
+  siteDomains: SiteDomain[];
+  platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs: PlatformEmailConfig[];
+  siteEmailConfigAssignments: SiteEmailConfigAssignment[];
+  emailTestResults: Record<string, PlatformEmailTestResult>;
+}> {
+  const [sites, siteDomains, emailSettings, emailConfigs, emailAssignments, emailTestResults] = await Promise.all([
+    prisma.site.findMany({
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        status: true,
+        timezone: true,
+        currency: true,
+        signupCreditGrant: true,
+        branding: true,
+        primaryDomain: true,
+        connect: {
+          select: {
+            stripeAccountId: true,
+            onboardingStatus: true,
+            chargesEnabled: true,
+            payoutsEnabled: true
+          }
+        }
+      }
+    }),
+    prisma.siteDomain.findMany({
+      orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }],
+      select: { id: true, siteId: true, domain: true, isPrimary: true, status: true, allowedAiProviderIds: true, createdAt: true }
+    }),
+    prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+    listPlatformEmailConfigsRelational(),
+    listSiteEmailConfigAssignmentsRelational(),
+    readPlatformEmailTestResultsRelational()
+  ]);
+  const emailSettingsValue = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
+  const platformEmailConfigs = emailConfigs.map((config) => normalizePlatformEmailConfig(toPlatformEmailConfig(config), emailSettingsValue));
+  if (!platformEmailConfigs.length) {
+    platformEmailConfigs.push(defaultPlatformEmailConfig(emailSettingsValue));
+  }
+  return {
+    sites: sites.map(toSite),
+    siteDomains: siteDomains.map(toSiteDomain),
+    platformEmailSettings: emailSettingsValue,
+    platformEmailConfigs,
+    siteEmailConfigAssignments: emailAssignments.map(toSiteEmailConfigAssignment),
+    emailTestResults
+  };
+}
+
+export const getPlatformEmailOverviewRelational = cache(() =>
+  platformReadCache.get("email-overview", loadPlatformEmailOverviewRelational)
+);
+
+export async function getSiteEmailOverviewRelational(siteId: string): Promise<{
+  site?: Site;
+  siteDomains: SiteDomain[];
+  platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs: PlatformEmailConfig[];
+  siteEmailConfigAssignments: SiteEmailConfigAssignment[];
+}> {
+  return platformReadCache.get(`site-email:${siteId}`, async () => {
+    const [site, siteDomains, emailSettings, emailConfigs, emailAssignments] = await Promise.all([
+      prisma.site.findUnique({
+        where: { id: siteId },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          status: true,
+          timezone: true,
+          currency: true,
+          signupCreditGrant: true,
+          branding: true,
+        connect: { select: { stripeAccountId: true, onboardingStatus: true, chargesEnabled: true, payoutsEnabled: true } }
+      }
+    }),
+      prisma.siteDomain.findMany({
+        where: { siteId },
+        orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
+        select: { id: true, siteId: true, domain: true, isPrimary: true, status: true, allowedAiProviderIds: true, createdAt: true }
+      }),
+      prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+      prisma.platformEmailConfig.findMany({
+        where: {
+          OR: [
+            { isDefault: true },
+            { siteAssignments: { some: { siteId } } }
+          ]
+        },
+        orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }]
+      }),
+      prisma.siteEmailConfigAssignment.findMany({ where: { siteId } })
+    ]);
+    const emailSettingsValue = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
+    const platformEmailConfigs = emailConfigs.map((config) => normalizePlatformEmailConfig(toPlatformEmailConfig(config), emailSettingsValue));
+    if (!platformEmailConfigs.length) {
+      platformEmailConfigs.push(defaultPlatformEmailConfig(emailSettingsValue));
+    }
+    return {
+      site: site ? toSite(site) : undefined,
+      siteDomains: siteDomains.map(toSiteDomain),
+      platformEmailSettings: emailSettingsValue,
+      platformEmailConfigs,
+      siteEmailConfigAssignments: emailAssignments.map(toSiteEmailConfigAssignment)
+    };
+  }, 15_000);
+}
+
+export async function getSiteEmailConfigStateRelational(siteId: string): Promise<{
+  platformEmailSettings?: PlatformEmailSettings;
+  platformEmailConfigs: PlatformEmailConfig[];
+  siteEmailConfigAssignments: SiteEmailConfigAssignment[];
+}> {
+  return platformReadCache.get(`site-email-config:${siteId}`, async () => {
+    type SiteEmailConfigStateRow = {
+      platformEmailSettings: Parameters<typeof toPlatformEmailSettings>[0] | null;
+      platformEmailConfigs: Array<Parameters<typeof toPlatformEmailConfig>[0]>;
+      siteEmailConfigAssignments: Array<Parameters<typeof toSiteEmailConfigAssignment>[0]>;
+    };
+    const rows = await prisma.$queryRaw<SiteEmailConfigStateRow[]>`
+      SELECT
+        (SELECT row_to_json(pes) FROM "PlatformEmailSettings" pes WHERE pes."id" = 'platform_email_settings') AS "platformEmailSettings",
+        COALESCE((
+          SELECT jsonb_agg(to_jsonb(pec) ORDER BY pec."isDefault" DESC, pec."updatedAt" DESC)
+          FROM "PlatformEmailConfig" pec
+          WHERE pec."isDefault" = true OR EXISTS (
+            SELECT 1
+            FROM "SiteEmailConfigAssignment" sea
+            WHERE sea."configId" = pec."id"
+              AND sea."siteId" = ${siteId}
+          )
+        ), '[]'::jsonb) AS "platformEmailConfigs",
+        COALESCE((
+          SELECT jsonb_agg(to_jsonb(sea))
+          FROM "SiteEmailConfigAssignment" sea
+          WHERE sea."siteId" = ${siteId}
+        ), '[]'::jsonb) AS "siteEmailConfigAssignments"
+    `;
+    const row = rows[0] ?? { platformEmailSettings: null, platformEmailConfigs: [], siteEmailConfigAssignments: [] };
+    const emailSettings = row.platformEmailSettings;
+    const emailConfigs = row.platformEmailConfigs;
+    const emailAssignments = row.siteEmailConfigAssignments;
+    const emailSettingsValue = emailSettings ? toPlatformEmailSettings(emailSettings) : undefined;
+    const platformEmailConfigs = emailConfigs.map((config) => normalizePlatformEmailConfig(toPlatformEmailConfig(config), emailSettingsValue));
+    if (!platformEmailConfigs.length) {
+      platformEmailConfigs.push(defaultPlatformEmailConfig(emailSettingsValue));
+    }
+    return {
+      platformEmailSettings: emailSettingsValue,
+      platformEmailConfigs,
+      siteEmailConfigAssignments: emailAssignments.map(toSiteEmailConfigAssignment)
+    };
+  }, 15_000);
+}
+
+async function loadPlatformCloudflareOverviewRelational(): Promise<{
+  platformCloudflareAccounts: PlatformCloudflareAccount[];
+  currentCloudflareAccountId?: string;
+}> {
+  const [cloudflareAccounts, currentCloudflareSetting] = await Promise.all([
+    prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
+    prisma.platformSetting.findUnique({ where: { key: cloudflareCurrentAccountSettingKey } })
+  ]);
+  const currentCloudflareAccountId = cloudflareCurrentAccountIdFromSetting(currentCloudflareSetting?.value);
+  return {
+    platformCloudflareAccounts: cloudflareAccounts.map(toPlatformCloudflareAccount),
+    currentCloudflareAccountId: cloudflareAccounts.some((account) => account.id === currentCloudflareAccountId)
+      ? currentCloudflareAccountId
+      : undefined
+  };
+}
+
+export const getPlatformCloudflareOverviewRelational = cache(() =>
+  platformReadCache.get("cloudflare-overview", loadPlatformCloudflareOverviewRelational)
+);
+
+async function loadPlatformDashboardSummaryRelational() {
+  const [snapshots, gatewayCount, platformActivity] = await Promise.all([
+    getPlatformSnapshotsByModeRelational("overview"),
+    prisma.aiGatewayGroup.count({ where: { status: "active" } }),
+    getPlatformActivityRelational(6)
+  ]);
+  return {
+    sites: snapshots.map((snapshot) => snapshot.site),
+    siteDomains: snapshots.flatMap((snapshot) => snapshot.domains),
+    aiGatewayGroupCount: gatewayCount,
+    snapshots,
+    platformActivity
+  };
+}
+
+export const getPlatformDashboardSummaryRelational = cache(() =>
+  platformReadCache.get("dashboard-summary", loadPlatformDashboardSummaryRelational)
+);
+
+async function loadPlatformSiteRegistryRelational() {
+  const snapshots = await getPlatformSnapshotsByModeRelational("sites");
+  return {
+    sites: snapshots.map((snapshot) => snapshot.site),
+    siteDomains: snapshots.flatMap((snapshot) => snapshot.domains),
+    snapshots
+  };
+}
+
+export const getPlatformSiteRegistryRelational = cache(() =>
+  platformReadCache.get("site-registry", loadPlatformSiteRegistryRelational)
+);
+
+async function loadPlatformBillingSummaryRelational() {
+  const snapshots = await getPlatformSnapshotsByModeRelational("billing");
+  return {
+    sites: snapshots.map((snapshot) => snapshot.site),
+    snapshots
+  };
+}
+
+export const getPlatformBillingSummaryRelational = cache(() =>
+  platformReadCache.get("billing-summary", loadPlatformBillingSummaryRelational)
+);
+
+async function loadPlatformGatewaySummaryRelational() {
+  const [
+    sites,
+    paidOrderRevenue,
+    activeSubscriptionCounts,
+    failedJobCounts,
+    enabledAppCounts
+  ] = await Promise.all([
+    prisma.site.findMany({
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        status: true,
+        timezone: true,
+        currency: true,
+        signupCreditGrant: true,
+        branding: true,
+        primaryDomain: true,
+        connect: true,
+        domains: {
+          orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
+          select: {
+            id: true,
+            siteId: true,
+            domain: true,
+            isPrimary: true,
+            status: true,
+            allowedAiProviderIds: true,
+            createdAt: true
+          }
+        },
+        gatewayGroups: {
+          orderBy: [{ status: "asc" }, { name: "asc" }],
+          take: 1,
+          select: {
+            id: true,
+            siteId: true,
+            name: true,
+            status: true,
+            modelAllowlist: true,
+            monthlyQuota: true,
+            usedQuota: true,
+            retryStatusCodes: true,
+            rateLimitPerMinute: true,
+            accountPoolMode: true,
+            unavailableReason: true
+          }
+        },
+        _count: {
+          select: {
+            customers: true,
+            products: true,
+            aiApps: true,
+            publications: true,
+            jobs: true
+          }
+        }
+      }
+    }),
+    prisma.order.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["paid", "fulfilled"] } },
+      _sum: { amountCents: true }
+    }),
+    prisma.subscription.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["active", "trialing"] } },
+      _count: { _all: true }
+    }),
+    prisma.generationJob.groupBy({
+      by: ["siteId"],
+      where: { status: { in: ["failed", "refunded"] } },
+      _count: { _all: true }
+    }),
+    prisma.siteAiApp.groupBy({
+      by: ["siteId"],
+      where: { enabled: true },
+      _count: { _all: true }
+    })
+  ]);
+  const aggregates = {
+    revenueBySiteId: new Map(paidOrderRevenue.map((row) => [row.siteId, row._sum.amountCents ?? 0])),
+    activeSubscriptionsBySiteId: new Map(activeSubscriptionCounts.map((row) => [row.siteId, row._count._all])),
+    failedJobsBySiteId: new Map(failedJobCounts.map((row) => [row.siteId, row._count._all])),
+    enabledAppsBySiteId: new Map(enabledAppCounts.map((row) => [row.siteId, row._count._all]))
+  };
+  const snapshots = sites.map((site) => mapSiteWithCounts(site, aggregates));
+  return {
+    sites: snapshots.map((snapshot) => snapshot.site),
+    siteDomains: snapshots.flatMap((snapshot) => snapshot.domains),
+    aiGatewayGroups: snapshots.map((snapshot) => snapshot.gateway).filter((group): group is AiGatewayGroup => Boolean(group)),
+    snapshots
+  };
+}
+
+export const getPlatformGatewaySummaryRelational = cache(() =>
+  platformReadCache.get("gateway-summary", loadPlatformGatewaySummaryRelational)
+);
+
+async function loadPlatformActivityRelational(limit = 40): Promise<PlatformActivityItem[]> {
+  const take = Math.max(limit, 1);
+  const [auditLogs, jobs, orders] = await Promise.all([
+    prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take }),
+    prisma.generationJob.findMany({
+      orderBy: { updatedAt: "desc" },
+      select: { id: true, status: true, aiAppId: true, updatedAt: true },
+      take
+    }),
+    prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+      select: { id: true, status: true, amountCents: true, currency: true, createdAt: true },
+      take
+    })
+  ]);
+  return latestPlatformActivity(auditLogs.map(toAuditLogRelational), jobs, orders, limit);
+}
+
+export const getPlatformActivityRelational = cache((limit = 40) =>
+  platformReadCache.get(`activity:${limit}`, () => loadPlatformActivityRelational(limit), 15_000)
+);
+
+async function loadPlatformAiProviderStatusRelational() {
+  const aiProviderRecords = await prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+  const aiProviders = aiProviderRecords.map(toPlatformAiProvider);
+  const currentAiProviderId = aiProviders.find((provider) => provider.preferred)?.id;
+  const currentAiProvider = aiProviders.find((provider) => provider.id === currentAiProviderId) ?? aiProviders.find((provider) => provider.preferred) ?? aiProviders[0];
+  return {
+    aiProviders,
+    platformAiProviderStatus: {
+      ok: true,
+      currentProviderId: currentAiProvider?.id ?? "",
+      modelTypes: Array.from(new Set(["gpt-image-2", "gpt-5.5", ...aiProviders.map((provider) => provider.modelType).filter(Boolean)])),
+      providers: aiProviders.map((provider) => ({
+        id: provider.id,
+        label: provider.label,
+        aiUrl: provider.aiUrl,
+        modelType: provider.modelType,
+        priority: provider.priority,
+        preferred: provider.preferred,
+        createdAt: provider.createdAt,
+        updatedAt: provider.updatedAt,
+        updatedBy: provider.updatedBy,
+        isCurrent: provider.id === currentAiProvider?.id,
+        status: {
+          ...aiProviderStatus(provider),
+          label: provider.label,
+          aiUrl: provider.aiUrl,
+          modelType: provider.modelType
+        }
+      })),
+      summary: {
+        totalProviders: aiProviders.length,
+        configuredProviders: aiProviders.filter((provider) => aiProviderStatus(provider).configured).length,
+        currentConfigured: aiProviderStatus(currentAiProvider).configured
+      }
+    }
+  };
+}
+
+export const getPlatformAiProviderStatusRelational = cache(() =>
+  platformReadCache.get("ai-provider-status", loadPlatformAiProviderStatusRelational)
+);
+
+async function loadPlatformSitesRelational(): Promise<
   Array<Site & { domains: SiteDomain[]; admins: PublicSiteAdmin[]; gatewayGroups: AiGatewayGroup[] }>
 > {
   const sites = await prisma.site.findMany({
     orderBy: { createdAt: "asc" },
-    include: {
-      domains: { orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] },
-      admins: { orderBy: [{ role: "asc" }, { createdAt: "asc" }] },
-      gatewayGroups: { orderBy: [{ status: "asc" }, { name: "asc" }] },
-      pages: { orderBy: { slug: "asc" } },
-      settings: true,
-      connect: true
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      status: true,
+      timezone: true,
+      currency: true,
+      signupCreditGrant: true,
+      branding: true,
+      connect: {
+        select: {
+          stripeAccountId: true,
+          onboardingStatus: true,
+          chargesEnabled: true,
+          payoutsEnabled: true
+        }
+      },
+      domains: {
+        orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
+        select: {
+          id: true,
+          siteId: true,
+          domain: true,
+          isPrimary: true,
+          status: true,
+          allowedAiProviderIds: true,
+          createdAt: true
+        }
+      },
+      admins: {
+        orderBy: [{ role: "asc" }, { createdAt: "asc" }],
+        take: 1,
+        select: {
+          id: true,
+          siteId: true,
+          email: true,
+          displayName: true,
+          role: true,
+          createdAt: true
+        }
+      },
+      gatewayGroups: {
+        orderBy: [{ status: "asc" }, { name: "asc" }],
+        take: 1,
+        select: {
+          id: true,
+          siteId: true,
+          name: true,
+          status: true,
+          modelAllowlist: true,
+          monthlyQuota: true,
+          usedQuota: true,
+          retryStatusCodes: true,
+          rateLimitPerMinute: true,
+          accountPoolMode: true,
+          unavailableReason: true
+        }
+      }
     }
   });
   return sites.map((site) => ({
@@ -135,6 +956,139 @@ export async function getPlatformSitesRelational(): Promise<
     admins: site.admins.map(toPublicSiteAdminRelational),
     gatewayGroups: site.gatewayGroups.map(toGatewayGroup)
   }));
+}
+
+export const getPlatformSitesRelational = cache(() =>
+  platformReadCache.get("platform-sites", loadPlatformSitesRelational)
+);
+
+async function loadPlatformStateCountsRelational(): Promise<PlatformStateCounts> {
+  const [sites, customers, products, jobs, customerModels, albums] = await Promise.all([
+    prisma.site.count(),
+    prisma.customer.count(),
+    prisma.product.count(),
+    prisma.generationJob.count(),
+    prisma.customerModel.count(),
+    prisma.album.count()
+  ]);
+  return { sites, customers, products, jobs, customerModels, albums };
+}
+
+export const getPlatformStateCountsRelational = cache(() =>
+  platformReadCache.get("state-counts", loadPlatformStateCountsRelational, Number(process.env.PLATFORM_STATE_COUNTS_CACHE_TTL_MS ?? 60_000))
+);
+
+export async function getPlatformDashboardAggregateRelational(): Promise<
+  | {
+      sites: Site[];
+      siteDomains: SiteDomain[];
+      aiGatewayGroups: AiGatewayGroup[];
+      jobs: ReturnType<typeof mapGenerationJob>[];
+      orders: Order[];
+      snapshots: ReturnType<typeof siteDemoSnapshot>[];
+      platformActivity: ReturnType<typeof latestActivity>;
+    }
+  | undefined
+> {
+  try {
+    const [
+      sites,
+      siteDomains,
+      customers,
+      products,
+      subscriptions,
+      orders,
+      jobs,
+      ledger,
+      siteApps,
+      gatewayGroups,
+      creativePacks,
+      mediaAssets,
+      publications,
+      assetUploads,
+      customerModels,
+      albums,
+      auditLogs
+    ] = await Promise.all([
+      prisma.site.findMany({
+        orderBy: { createdAt: "asc" },
+        include: { domains: true, admins: true, pages: true, settings: true, connect: true }
+      }),
+      prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
+      prisma.customer.findMany({ include: { balance: true }, orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.product.findMany({ include: { prices: true }, orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.subscription.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.order.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
+      prisma.generationJob.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
+      prisma.creditLedger.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
+      prisma.siteAiApp.findMany({
+        include: { aiApp: true },
+        orderBy: [{ siteId: "asc" }, { routeKey: "asc" }]
+      }),
+      prisma.aiGatewayGroup.findMany({ orderBy: [{ siteId: "asc" }, { status: "asc" }, { name: "asc" }] }),
+      prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { publishedAt: "desc" }] }),
+      prisma.assetUpload.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
+      prisma.customerModel.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
+      prisma.album.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
+      prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 80 })
+    ]);
+
+    const mappedSites = sites.map(toSite);
+    const mappedDomains = siteDomains.map(toSiteDomain);
+    const mappedCustomers = customers.map(mapCustomer);
+    const mappedProducts = products.map(mapProduct);
+    const mappedSubscriptions = subscriptions.map(toSubscriptionRelational);
+    const mappedOrders = orders.map(toOrderRelational);
+    const mappedJobs = jobs.map(mapGenerationJob);
+    const mappedLedger = ledger.map(mapCreditLedger);
+    const mappedApps = siteApps.map(toSiteAiApp);
+    const mappedGatewayGroups = gatewayGroups.map(toGatewayGroup);
+    const mappedCreativePacks = creativePacks.map(toCreativePack);
+    const mappedMediaAssets = mediaAssets.map(toMediaAsset);
+    const mappedPublications = publications.map(toThemePublication);
+    const mappedAssetUploads = assetUploads.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>));
+    const mappedCustomerModels = customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>));
+    const mappedAlbums = albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>));
+    const mappedAuditLogs = auditLogs.map(toAuditLogRelational);
+
+    const snapshots = mappedSites.map((site) => {
+      const siteId = site.id;
+      return siteDemoSnapshot({
+        site,
+        domains: mappedDomains.filter((domain) => domain.siteId === siteId),
+        admins: sites.find((record) => record.id === siteId)?.admins?.map(toPublicSiteAdminRelational) ?? [],
+        customers: mappedCustomers.filter((customer) => customer.siteId === siteId),
+        products: mappedProducts.filter((product) => product.siteId === siteId),
+        subscriptions: mappedSubscriptions.filter((subscription) => subscription.siteId === siteId),
+        orders: mappedOrders.filter((order) => order.siteId === siteId),
+        jobs: mappedJobs.filter((job) => job.siteId === siteId),
+        ledger: mappedLedger.filter((entry) => entry.siteId === siteId),
+        apps: mappedApps.filter((app) => app.siteId === siteId),
+        gateway: mappedGatewayGroups.find((group) => group.siteId === siteId),
+        packs: mappedCreativePacks.filter((pack) => pack.siteId === siteId),
+        media: mappedMediaAssets.filter((asset) => asset.siteId === siteId),
+        publications: mappedPublications.filter((publication) => publication.siteId === siteId),
+        assets: mappedAssetUploads.filter((asset) => asset.siteId === siteId),
+        customerModels: mappedCustomerModels.filter((model) => model.siteId === siteId),
+        albums: mappedAlbums.filter((album) => album.siteId === siteId)
+      });
+    });
+
+    return {
+      sites: mappedSites,
+      siteDomains: mappedDomains,
+      aiGatewayGroups: mappedGatewayGroups,
+      jobs: mappedJobs,
+      orders: mappedOrders,
+      snapshots,
+      platformActivity: latestActivity(mappedAuditLogs, mappedJobs, mappedOrders, 40)
+    };
+  } catch (error) {
+    warnRelationalFallback("platform dashboard aggregate", error);
+    return undefined;
+  }
 }
 
 export async function updatePlatformEmailSettingsRelational(params: {
@@ -147,26 +1101,32 @@ export async function updatePlatformEmailSettingsRelational(params: {
   siteAssignments?: Array<{ siteId: string; configId: string }>;
   actor?: string;
 }): Promise<PlatformEmailSettings> {
-  const current = await prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } });
+  const [current, relationalConfigs, relationalAssignments, sites] = await Promise.all([
+    prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+    listPlatformEmailConfigsRelational(),
+    listSiteEmailConfigAssignmentsRelational(),
+    prisma.site.findMany({ select: { id: true } })
+  ]);
   const nextApiKey = normalizeResendApiKey(params.apiKey);
   const currentApiKey = normalizeResendApiKey(current?.apiKey);
-  const jsonState = readPlatformState();
-  const legacySettings = current ? toPlatformEmailSettings(current) : jsonState.platformEmailSettings;
-  const currentConfigs = (jsonState.platformEmailConfigs ?? []).map((config) => normalizePlatformEmailConfig(config, legacySettings));
+  const currentSettings = current ? toPlatformEmailSettings(current) : undefined;
+  const currentConfigs = relationalConfigs.length
+    ? relationalConfigs.map((config) => normalizePlatformEmailConfig(toPlatformEmailConfig(config), currentSettings))
+    : [defaultPlatformEmailConfig(currentSettings)];
   const targetId = params.configId?.trim() || currentConfigs.find((config) => config.isDefault)?.id || currentConfigs[0]?.id || "resend_default";
   const existingConfig = currentConfigs.find((config) => config.id === targetId);
   const updatedConfig = normalizePlatformEmailConfig(
     {
       ...(existingConfig ?? { id: targetId }),
       label: params.label ?? existingConfig?.label,
-      apiKey: nextApiKey ?? existingConfig?.apiKey ?? legacySettings?.apiKey,
-      fromEmail: params.fromEmail?.trim() ?? existingConfig?.fromEmail ?? legacySettings?.fromEmail,
-      replyTo: params.replyTo?.trim() ?? existingConfig?.replyTo ?? legacySettings?.replyTo,
+      apiKey: nextApiKey ?? existingConfig?.apiKey ?? currentSettings?.apiKey,
+      fromEmail: params.fromEmail?.trim() ?? existingConfig?.fromEmail ?? currentSettings?.fromEmail,
+      replyTo: params.replyTo?.trim() ?? existingConfig?.replyTo ?? currentSettings?.replyTo,
       isDefault: params.isDefault ?? existingConfig?.isDefault ?? !currentConfigs.some((config) => config.isDefault),
       updatedBy: params.actor,
       updatedAt: new Date().toISOString()
     },
-    legacySettings
+    currentSettings
   );
   const nextConfigs = [
     updatedConfig,
@@ -177,44 +1137,83 @@ export async function updatePlatformEmailSettingsRelational(params: {
   }));
   if (!nextConfigs.some((config) => config.isDefault)) nextConfigs[0].isDefault = true;
   const validConfigIds = new Set(nextConfigs.map((config) => config.id));
-  const nextAssignments = (params.siteAssignments ?? jsonState.siteEmailConfigAssignments ?? [])
+  const currentAssignments = relationalAssignments.map(toSiteEmailConfigAssignment);
+  const validSiteIds = new Set(sites.map((site) => site.id));
+  const nextAssignments = (params.siteAssignments ?? currentAssignments)
     .filter((assignment) => assignment.siteId && validConfigIds.has(assignment.configId))
+    .filter((assignment) => validSiteIds.has(assignment.siteId))
     .map((assignment) => ({
       siteId: assignment.siteId,
       configId: assignment.configId,
       updatedAt: new Date().toISOString(),
       updatedBy: params.actor
     }));
-  writePlatformState({
-    ...jsonState,
-    platformEmailSettings: {
-      provider: "resend",
-      apiKey: nextConfigs.find((config) => config.isDefault)?.apiKey,
-      fromEmail: nextConfigs.find((config) => config.isDefault)?.fromEmail,
-      replyTo: nextConfigs.find((config) => config.isDefault)?.replyTo,
-      updatedAt: updatedConfig.updatedAt,
-      updatedBy: params.actor
-    },
-    platformEmailConfigs: nextConfigs,
-    siteEmailConfigAssignments: nextAssignments
-  });
   const defaultConfig = nextConfigs.find((config) => config.isDefault) ?? updatedConfig;
-  const settingsRecord = await prisma.platformEmailSettings.upsert({
-    where: { id: "platform_email_settings" },
-    create: {
-      provider: "resend",
-      apiKey: defaultConfig.apiKey,
-      fromEmail: defaultConfig.fromEmail,
-      replyTo: defaultConfig.replyTo,
-      updatedBy: params.actor
-    },
-    update: {
-      apiKey: defaultConfig.apiKey ?? currentApiKey ?? null,
-      fromEmail: defaultConfig.fromEmail ?? current?.fromEmail,
-      replyTo: defaultConfig.replyTo ?? current?.replyTo,
-      updatedBy: params.actor
+  let settingsRecord;
+  try {
+    settingsRecord = await prisma.$transaction(async (tx) => {
+      await Promise.all(nextConfigs.map((config) =>
+        tx.platformEmailConfig.upsert({
+          where: { id: config.id },
+          create: {
+            id: config.id,
+            label: config.label,
+            provider: "resend",
+            apiKey: config.apiKey,
+            fromEmail: config.fromEmail,
+            replyTo: config.replyTo,
+            isDefault: Boolean(config.isDefault),
+            updatedBy: params.actor
+          },
+          update: {
+            label: config.label,
+            apiKey: config.apiKey ?? null,
+            fromEmail: config.fromEmail ?? null,
+            replyTo: config.replyTo ?? null,
+            isDefault: Boolean(config.isDefault),
+            updatedBy: params.actor
+          }
+        })
+      ));
+      await tx.platformEmailConfig.deleteMany({ where: { id: { notIn: nextConfigs.map((config) => config.id) } } });
+    if (params.siteAssignments) {
+      await tx.siteEmailConfigAssignment.deleteMany({});
     }
-  });
+      await Promise.all(nextAssignments.map((assignment) =>
+        tx.siteEmailConfigAssignment.upsert({
+          where: { siteId: assignment.siteId },
+          create: {
+            siteId: assignment.siteId,
+            configId: assignment.configId,
+            updatedBy: params.actor
+          },
+          update: {
+            configId: assignment.configId,
+            updatedBy: params.actor
+          }
+        })
+      ));
+      return tx.platformEmailSettings.upsert({
+        where: { id: "platform_email_settings" },
+        create: {
+          provider: "resend",
+          apiKey: defaultConfig.apiKey,
+          fromEmail: defaultConfig.fromEmail,
+          replyTo: defaultConfig.replyTo,
+          updatedBy: params.actor
+        },
+        update: {
+          apiKey: defaultConfig.apiKey ?? currentApiKey ?? null,
+          fromEmail: defaultConfig.fromEmail ?? current?.fromEmail,
+          replyTo: defaultConfig.replyTo ?? current?.replyTo,
+          updatedBy: params.actor
+        }
+      });
+    });
+  } catch (error) {
+    if (shouldFallbackLegacyEmailConfig(error)) warnRelationalFallback("platform email settings write", error);
+    throw error;
+  }
   const settings = toPlatformEmailSettings(settingsRecord);
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
@@ -230,6 +1229,7 @@ export async function updatePlatformEmailSettingsRelational(params: {
       siteAssignmentsUpdated: Boolean(params.siteAssignments)
     }
   });
+  clearPlatformReadCache();
   return settings;
 }
 
@@ -243,30 +1243,49 @@ export async function upsertPlatformCloudflareAccountRelational(params: {
   actor?: string;
 }): Promise<PlatformCloudflareAccount> {
   const accountId = params.accountId.trim();
-  const existing = params.id
-    ? await prisma.platformCloudflareAccount.findUnique({ where: { id: params.id } })
-    : await prisma.platformCloudflareAccount.findFirst({ where: { accountId } });
-  const accountRecord = existing
-    ? await prisma.platformCloudflareAccount.update({
-        where: { id: existing.id },
-        data: {
-          label: params.label.trim(),
-          email: params.email.trim().toLowerCase(),
-          accountId,
-          apiToken: params.apiToken?.trim() || existing.apiToken,
+  const accountRecord = await prisma.$transaction(async (tx) => {
+    const existing = params.id
+      ? await tx.platformCloudflareAccount.findUnique({ where: { id: params.id } })
+      : await tx.platformCloudflareAccount.findFirst({ where: { accountId } });
+    const accountCount = await tx.platformCloudflareAccount.count();
+    const record = existing
+      ? await tx.platformCloudflareAccount.update({
+          where: { id: existing.id },
+          data: {
+            label: params.label.trim(),
+            email: params.email.trim().toLowerCase(),
+            accountId,
+            apiToken: params.apiToken?.trim() || existing.apiToken,
+            updatedBy: params.actor
+          }
+        })
+      : await tx.platformCloudflareAccount.create({
+          data: {
+            id: params.id ?? uid("cf"),
+            label: params.label.trim(),
+            email: params.email.trim().toLowerCase(),
+            accountId,
+            apiToken: params.apiToken?.trim() || "",
+            updatedBy: params.actor
+          }
+        });
+    if (params.makeCurrent || accountCount === 0) {
+      await tx.platformSetting.upsert({
+        where: { key: cloudflareCurrentAccountSettingKey },
+        create: {
+          id: cloudflareCurrentAccountSettingKey,
+          key: cloudflareCurrentAccountSettingKey,
+          value: { accountId: record.id },
           updatedBy: params.actor
-        }
-      })
-    : await prisma.platformCloudflareAccount.create({
-        data: {
-          id: params.id ?? uid("cf"),
-          label: params.label.trim(),
-          email: params.email.trim().toLowerCase(),
-          accountId,
-          apiToken: params.apiToken?.trim() || "",
+        },
+        update: {
+          value: { accountId: record.id },
           updatedBy: params.actor
         }
       });
+    }
+    return record;
+  });
   const account = toPlatformCloudflareAccount(accountRecord);
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
@@ -281,6 +1300,7 @@ export async function upsertPlatformCloudflareAccountRelational(params: {
       apiTokenUpdated: Boolean(params.apiToken?.trim())
     }
   });
+  clearPlatformReadCache();
   return account;
 }
 
@@ -288,14 +1308,27 @@ export async function setCurrentPlatformCloudflareAccountRelational(params: {
   accountId: string;
   actor?: string;
 }): Promise<PlatformCloudflareAccount> {
-  const accountRecord = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
-  if (!accountRecord) throw new RelationalStoreError("cloudflare_account_not_found", 404);
-  const account = toPlatformCloudflareAccount(
-    await prisma.platformCloudflareAccount.update({
+  const account = toPlatformCloudflareAccount(await prisma.$transaction(async (tx) => {
+    const accountRecord = await tx.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
+    if (!accountRecord) throw new RelationalStoreError("cloudflare_account_not_found", 404);
+    await tx.platformSetting.upsert({
+      where: { key: cloudflareCurrentAccountSettingKey },
+      create: {
+        id: cloudflareCurrentAccountSettingKey,
+        key: cloudflareCurrentAccountSettingKey,
+        value: { accountId: params.accountId },
+        updatedBy: params.actor
+      },
+      update: {
+        value: { accountId: params.accountId },
+        updatedBy: params.actor
+      }
+    });
+    return tx.platformCloudflareAccount.update({
       where: { id: params.accountId },
       data: { updatedBy: params.actor }
-    })
-  );
+    });
+  }));
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
     actorId: params.actor ?? "platform",
@@ -307,6 +1340,7 @@ export async function setCurrentPlatformCloudflareAccountRelational(params: {
       accountId: account.accountId
     }
   });
+  clearPlatformReadCache();
   return account;
 }
 
@@ -314,9 +1348,11 @@ export async function clearCurrentPlatformCloudflareAccountRelational(params: {
   accountId?: string;
   actor?: string;
 }): Promise<void> {
-  if (!params.accountId) return;
-  const account = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
+  const currentAccountId = params.accountId ?? await getCurrentCloudflareAccountIdRelational();
+  if (!currentAccountId) return;
+  const account = await prisma.platformCloudflareAccount.findUnique({ where: { id: currentAccountId } });
   if (!account) throw new RelationalStoreError("cloudflare_account_not_found", 404);
+  await prisma.platformSetting.deleteMany({ where: { key: cloudflareCurrentAccountSettingKey } });
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
     actorId: params.actor ?? "platform",
@@ -328,6 +1364,7 @@ export async function clearCurrentPlatformCloudflareAccountRelational(params: {
       accountId: account.accountId
     }
   });
+  clearPlatformReadCache();
 }
 
 export async function deletePlatformCloudflareAccountRelational(params: {
@@ -336,7 +1373,13 @@ export async function deletePlatformCloudflareAccountRelational(params: {
 }): Promise<PlatformCloudflareAccount> {
   const account = await prisma.platformCloudflareAccount.findUnique({ where: { id: params.accountId } });
   if (!account) throw new RelationalStoreError("cloudflare_account_not_found", 404);
-  await prisma.platformCloudflareAccount.delete({ where: { id: account.id } });
+  const currentAccountId = await getCurrentCloudflareAccountIdRelational();
+  await prisma.$transaction(async (tx) => {
+    await tx.platformCloudflareAccount.delete({ where: { id: account.id } });
+    if (currentAccountId === account.id) {
+      await tx.platformSetting.deleteMany({ where: { key: cloudflareCurrentAccountSettingKey } });
+    }
+  });
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
     actorId: params.actor ?? "platform",
@@ -348,7 +1391,26 @@ export async function deletePlatformCloudflareAccountRelational(params: {
       accountId: account.accountId
     }
   });
+  clearPlatformReadCache();
   return toPlatformCloudflareAccount(account);
+}
+
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred">>;
+
+export async function listPlatformAiProvidersRelational(): Promise<PlatformAiProvider[]> {
+  const records = await prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+  return records.map(toPlatformAiProvider);
+}
+
+export async function getPlatformAiProviderRelational(providerId?: string): Promise<PlatformAiProvider | undefined> {
+  if (!providerId) return undefined;
+  const record = await prisma.platformAiProvider.findUnique({ where: { id: providerId } });
+  return record ? toPlatformAiProvider(record) : undefined;
+}
+
+export async function getPlatformAiProviderFallbackQueueRelational(): Promise<PlatformAiProviderFallbackQueue> {
+  const providers = await listPlatformAiProvidersRelational();
+  return providers.map(({ id, label, aiUrl, modelType, priority, preferred }) => ({ id, label, aiUrl, modelType, priority, preferred }));
 }
 
 export async function upsertPlatformAiProviderRelational(params: {
@@ -363,6 +1425,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
   const providerCount = await prisma.platformAiProvider.count();
   const shouldPrefer = Boolean(params.makeCurrent || providerCount === 0);
+  const aiUrl = params.aiUrl.trim() || existing?.aiUrl || "";
   const providerRecord = await prisma.$transaction(async (tx) => {
     if (shouldPrefer) await tx.platformAiProvider.updateMany({ data: { preferred: false } });
     return existing
@@ -370,7 +1433,7 @@ export async function upsertPlatformAiProviderRelational(params: {
           where: { id: existing.id },
           data: {
             label: params.label.trim(),
-            aiUrl: params.aiUrl.trim(),
+            aiUrl,
             apiKey: params.apiKey?.trim() || existing.apiKey,
             modelType: params.modelType.trim(),
             preferred: shouldPrefer || existing.preferred,
@@ -381,7 +1444,7 @@ export async function upsertPlatformAiProviderRelational(params: {
           data: {
             id: uid("aiprov"),
             label: params.label.trim(),
-            aiUrl: params.aiUrl.trim(),
+            aiUrl,
             apiKey: params.apiKey?.trim() || undefined,
             modelType: params.modelType.trim(),
             priority: providerCount + 1,
@@ -391,7 +1454,8 @@ export async function upsertPlatformAiProviderRelational(params: {
         });
   });
   const provider = toPlatformAiProvider(providerRecord);
-  if (!provider.label || !provider.aiUrl || !provider.modelType) throw new RelationalStoreError("invalid_ai_provider", 400);
+  if (!provider.label || !provider.modelType || (!existing && !provider.aiUrl)) throw new RelationalStoreError("invalid_ai_provider", 400);
+  clearPlatformReadCache();
   return provider;
 }
 
@@ -408,5 +1472,56 @@ export async function setCurrentPlatformAiProviderRelational(params: {
       data: { preferred: true, updatedBy: params.actor }
     });
   });
+  clearPlatformReadCache();
   return toPlatformAiProvider(provider);
+}
+
+export async function deletePlatformAiProviderRelational(params: {
+  providerId: string;
+  actor?: string;
+}): Promise<PlatformAiProvider> {
+  const deleted = await prisma.$transaction(async (tx) => {
+    const providers = await tx.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+    const existing = providers.find((provider) => provider.id === params.providerId);
+    if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
+    if (providers.length <= 1) throw new RelationalStoreError("ai_provider_delete_last", 400);
+
+    const domains = await tx.siteDomain.findMany({
+      where: { allowedAiProviderIds: { has: params.providerId } },
+      select: { id: true, allowedAiProviderIds: true }
+    });
+    await Promise.all(domains.map((domain) =>
+      tx.siteDomain.update({
+        where: { id: domain.id },
+        data: { allowedAiProviderIds: domain.allowedAiProviderIds.filter((providerId) => providerId !== params.providerId) }
+      })
+    ));
+
+    const record = await tx.platformAiProvider.delete({ where: { id: existing.id } });
+    const remaining = providers.filter((provider) => provider.id !== existing.id);
+    if (existing.preferred && remaining[0]) {
+      await tx.platformAiProvider.updateMany({ data: { preferred: false } });
+      await tx.platformAiProvider.update({
+        where: { id: remaining[0].id },
+        data: { preferred: true, updatedBy: params.actor }
+      });
+    }
+    return record;
+  });
+
+  await addAuditLogRelational(prisma, {
+    actorType: "platform_admin",
+    actorId: params.actor ?? "platform",
+    action: "platform_ai_provider_deleted",
+    targetType: "platform_ai_provider",
+    targetId: deleted.id,
+    metadata: {
+      label: deleted.label,
+      aiUrl: deleted.aiUrl,
+      modelType: deleted.modelType
+    }
+  });
+  const removed = toPlatformAiProvider(deleted);
+  clearPlatformReadCache();
+  return removed;
 }

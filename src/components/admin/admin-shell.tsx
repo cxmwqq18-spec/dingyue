@@ -1,8 +1,10 @@
-import Link from "next/link";
 import { Globe2 } from "lucide-react";
 import { siteAdminModules } from "@/lib/admin-menu";
 import { Shell } from "@/components/ui";
 import { AdminCommandBar } from "./admin-command-bar";
+import { AdminInstantLink } from "./admin-instant-link";
+import { AdminRoutePrefetcher } from "./admin-route-prefetcher";
+import { AdminRoutePendingPreview } from "./admin-route-pending-preview";
 import {
   AdminModuleRail,
   MobileAdminModuleSwitcher,
@@ -10,6 +12,7 @@ import {
   navBelongsToModule,
   scopedAdminHref
 } from "./admin-module-rail";
+import { AdminNavigationFeedback } from "./admin-navigation-feedback";
 import type { AdminBreadcrumb, AdminShellProps } from "./admin-types";
 
 function fallbackBreadcrumbs({
@@ -59,22 +62,35 @@ export function AdminShell({
   const resolvedQuickActions = commandActions.length ? [] : quickActions;
   const showCommandWorkspace = activeModuleCode === "overview";
   const moduleHrefByCode = moduleHrefMap(moduleLinks, siteSlug);
-  const allNavText = nav.map((item) => `${item.label} ${item.group ?? ""}`).join(" ").toLowerCase();
-  const activeModule =
-    primaryModules.find((group) => group.code === activeModuleCode) ??
-    primaryModules.find((group) =>
+  const activeModuleByCode = primaryModules.find((group) => group.code === activeModuleCode);
+  const activeModule = activeModuleByCode ?? (() => {
+    const allNavText = nav.map((item) => `${item.label} ${item.group ?? ""}`).join(" ").toLowerCase();
+    return primaryModules.find((group) =>
       group.keywords.some((keyword) => allNavText.includes(keyword.toLowerCase()))
-    ) ??
-    primaryModules[0];
+    ) ?? primaryModules[0];
+  })();
   const activeModuleNav = nav.filter((item) => navBelongsToModule(item, activeModule));
+  const modulePrefetchHrefs = primaryModules
+    .map((module) => moduleHrefByCode.get(module.code))
+    .filter((href): href is string => Boolean(href && href !== moduleHrefByCode.get(activeModule.code)));
   const resolvedBreadcrumbs = breadcrumbs?.length
     ? breadcrumbs
     : fallbackBreadcrumbs({ shellLabel, workspace, title });
   const workspaceName = workspace?.name ?? brand;
   const workspaceMeta = workspace?.meta ?? siteSlug ?? "platform";
+  const railWorkspace = workspace
+    ? {
+        name: workspace.name,
+        meta: workspace.meta,
+        statusLabel: workspace.statusLabel,
+        statusTone: workspace.statusTone
+      }
+    : undefined;
 
   return (
     <Shell tone="admin">
+      <AdminNavigationFeedback />
+      <AdminRoutePrefetcher hrefs={modulePrefetchHrefs} />
       <div
         className="min-h-[100dvh] bg-[var(--admin-bg)] text-[var(--admin-muted)]"
         data-admin-layout="saas-clean-admin-shell"
@@ -96,7 +112,7 @@ export function AdminShell({
           modules={primaryModules}
           shellLabel={shellLabel}
           siteSlug={siteSlug}
-          workspace={workspace}
+          workspace={railWorkspace}
         />
 
         <AdminModuleRail
@@ -108,7 +124,7 @@ export function AdminShell({
           modules={primaryModules}
           shellLabel={shellLabel}
           siteSlug={siteSlug}
-          workspace={workspace}
+          workspace={railWorkspace}
         />
 
         <div className="min-w-0 lg:ml-[216px]">
@@ -128,32 +144,45 @@ export function AdminShell({
               </div>
 
               <div className="flex h-full items-center">
-              {resolvedHeaderStats.slice(0, 4).map((item) => (
-                <span
-                  className="hidden h-[64px] min-w-[92px] flex-col justify-center border-l border-[var(--admin-border-soft)] px-3 text-[12px] text-[var(--admin-muted)] xl:flex"
-                  key={`${item.label}:${item.value}`}
-                >
-                  <span className="truncate whitespace-nowrap text-[11px] leading-4 text-[#8a94a6]">{item.label}</span>
-                  <span className="mt-0.5 truncate whitespace-nowrap font-mono text-[13px] leading-4 text-[var(--admin-text)]">{item.value}</span>
-                </span>
-              ))}
+              {resolvedHeaderStats.slice(0, 4).map((item) => {
+                const statClass = "hidden h-[64px] min-w-[92px] flex-col justify-center border-l border-[var(--admin-border-soft)] px-3 text-[12px] text-[var(--admin-muted)] transition xl:flex";
+                const statContent = (
+                  <>
+                    <span className="truncate whitespace-nowrap text-[11px] leading-4 text-[#8a94a6]">{item.label}</span>
+                    <span className="mt-0.5 truncate whitespace-nowrap font-mono text-[13px] leading-4 text-[var(--admin-text)]">{item.value}</span>
+                  </>
+                );
+                return item.href ? (
+                  <AdminInstantLink
+                    className={`${statClass} hover:bg-[var(--admin-panel)] hover:text-[var(--admin-accent)]`}
+                    href={item.href}
+                    key={`${item.label}:${item.value}`}
+                  >
+                    {statContent}
+                  </AdminInstantLink>
+                ) : (
+                  <span className={statClass} key={`${item.label}:${item.value}`}>
+                    {statContent}
+                  </span>
+                );
+              })}
                 {siteSlug ? (
-                  <Link
+                  <AdminInstantLink
                     className="ml-3 inline-flex h-[34px] items-center gap-1 rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-3 text-[12px] font-medium text-[var(--admin-text)] shadow-[0_8px_18px_-24px_rgba(15,23,42,0.18)] transition hover:bg-[var(--admin-panel)]"
                     href={scopedAdminHref("/", siteSlug)}
                     title="访问前台"
                   >
                     <Globe2 className="h-3.5 w-3.5" strokeWidth={1.8} />
                     前台
-                  </Link>
+                  </AdminInstantLink>
                 ) : null}
                 {action ? (
-                  <Link
+                  <AdminInstantLink
                     className="ml-2 inline-flex h-[34px] items-center rounded-[8px] bg-[var(--admin-accent)] px-3.5 text-[12px] font-semibold text-white shadow-[0_16px_26px_-22px_rgba(27,119,243,0.78)] transition hover:bg-[#1666d6]"
                     href={action.href}
                   >
                     {action.label}
-                  </Link>
+                  </AdminInstantLink>
                 ) : null}
               </div>
             </div>
@@ -161,7 +190,8 @@ export function AdminShell({
 
           <main className="px-[16px] pb-8 pt-4 lg:px-[22px] lg:pt-[80px]">
             <div className="right mx-auto w-full max-w-[1700px]">
-              <div className="admin-shell-surface" data-admin-layout="saas-command-workspace-surface">
+              <div className="admin-shell-surface relative" data-admin-layout="saas-command-workspace-surface">
+              <AdminRoutePendingPreview />
               <div className="mb-3 flex flex-col gap-2 xl:flex-row xl:items-end xl:justify-between">
                 <div className="min-w-0">
                   <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#98a2b3]">{eyebrow}</p>
@@ -177,9 +207,9 @@ export function AdminShell({
                   </div>
                 </div>
                 {action ? (
-                  <Link className="input_btn inline-flex h-[38px] items-center justify-center px-4 lg:hidden" href={action.href}>
+                  <AdminInstantLink className="input_btn inline-flex h-[38px] items-center justify-center px-4 lg:hidden" href={action.href}>
                     {action.label}
-                  </Link>
+                  </AdminInstantLink>
                 ) : null}
               </div>
 

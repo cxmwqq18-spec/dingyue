@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getPage } from "@/lib/data";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import {
+  readStorefrontPublicRuntimeStateBySlugFromDatabase
+} from "@/lib/storefront-state";
 import { renderCustomerWorkspacePage } from "@/lib/storefront-render";
+import { customerSessionCookie } from "@/lib/session";
 import { metadataForThemePage } from "@/lib/theme/seo";
+import { publicSiteSlug } from "@/lib/domain-routing";
+import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
+  const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/app/jobs/progress");
   return site && page ? metadataForThemePage(site, page) : {};
 }
 
 export default async function CustomerJobProgressPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) notFound();
-  return renderCustomerWorkspacePage({ site, slug: "/app/jobs/progress", routeMode: "path", state });
+  redirectLegacySiteSlug(siteSlug, "/app/jobs/progress");
+  const publicState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
+  const publicSite = publicState?.sites[0];
+  if (!publicSite) notFound();
+  const sessionId = (await cookies()).get(customerSessionCookie(publicSite.id))?.value;
+  if (!sessionId) redirect(`/site/${publicSiteSlug(publicSite.slug)}/login`);
+  return renderCustomerWorkspacePage({ site: publicSite, slug: "/app/jobs/progress", routeMode: "path" });
 }

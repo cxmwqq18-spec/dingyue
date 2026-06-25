@@ -116,6 +116,7 @@ export interface ThemeSettings {
   seo?: {
     siteTitle: string;
     siteDescription: string;
+    siteKeywords?: string;
     titleTemplate: string;
     defaultOgImage?: string;
     robots: {
@@ -127,6 +128,7 @@ export interface ThemeSettings {
       {
         title: string;
         description: string;
+        keywords?: string;
         ogImage?: string;
         canonicalPath?: string;
         index?: boolean;
@@ -225,6 +227,7 @@ export interface Site {
   primaryDomain: string;
   currency: string;
   timezone: string;
+  signupCreditGrant: number;
   branding: {
     logoText: string;
     market: string;
@@ -250,6 +253,7 @@ export interface SiteDomain {
   domain: string;
   isPrimary: boolean;
   status: "active" | "pending" | "failed";
+  allowedAiProviderIds?: string[];
   createdAt: string;
 }
 
@@ -315,6 +319,19 @@ export interface PlatformEmailConfig extends PlatformEmailSettings {
   id: string;
   label: string;
   isDefault?: boolean;
+}
+
+export interface PlatformEmailTestResult {
+  state: "passed" | "failed";
+  to?: string;
+  messageId?: string;
+  configId?: string;
+  configLabel?: string;
+  testedAt: string;
+  testedBy?: string;
+  error?: string;
+  providerStatus?: number;
+  providerMessage?: string;
 }
 
 export interface SiteEmailConfigAssignment {
@@ -391,6 +408,45 @@ export interface AiApp {
   parameterSchema: Array<{ id: string; label: string; type: "text" | "select"; options?: string[] }>;
 }
 
+export type AiWorkflowField =
+  | { id: string; label: string; type: "text" | "textarea"; required?: boolean; placeholder?: string; default?: string; helpText?: string }
+  | { id: string; label: string; type: "select" | "radio"; required?: boolean; options: Array<{ label: string; value: string }>; default?: string; helpText?: string }
+  | { id: string; label: string; type: "number"; required?: boolean; min?: number; max?: number; step?: number; default?: number; helpText?: string }
+  | { id: string; label: string; type: "boolean"; required?: boolean; default?: boolean; helpText?: string };
+
+export interface AiWorkflowStep {
+  id: string;
+  title: string;
+  description?: string;
+  kind: "asset_select" | "fields" | "review";
+  fields?: AiWorkflowField[];
+  assetRules?: {
+    min?: number;
+    max?: number;
+    roles?: string[];
+    accept?: string[];
+    required?: boolean;
+  };
+}
+
+export interface AiWorkflowConfig {
+  version: number;
+  flowName?: string;
+  description?: string;
+  materialRules?: string[];
+  submitLabel?: string;
+  promptTemplate?: string;
+  negativePrompt?: string;
+  steps: AiWorkflowStep[];
+}
+
+export interface AiProviderConfig {
+  mode: "platform_fallback" | "preferred_provider" | "fixed_provider";
+  providerId?: string;
+  modelType?: string;
+  fallbackEnabled?: boolean;
+}
+
 export interface SiteAiApp {
   id: string;
   siteId: string;
@@ -398,6 +454,8 @@ export interface SiteAiApp {
   enabled: boolean;
   creditCost: number;
   routeKey: string;
+  workflowConfig?: AiWorkflowConfig;
+  providerConfig?: AiProviderConfig;
 }
 
 export interface AiGatewayGroup {
@@ -458,6 +516,7 @@ export interface CreativePack {
   name: string;
   headline: string;
   description: string;
+  prompt?: string;
   category:
     | "headshots"
     | "dating"

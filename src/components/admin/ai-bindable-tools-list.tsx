@@ -21,9 +21,19 @@ export function AiBindableToolsList({ apps }: { apps: SiteAiApp[] }) {
               <StatusPill label={app.enabled ? "已启用" : "已停用"} tone={app.enabled ? "good" : "warn"} />
             </div>
             <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-500">{app.aiApp.description}</p>
-            <div className="mt-4 grid grid-cols-2 gap-2 font-mono text-xs text-slate-500">
-              <span>{app.creditCost} 点/次</span>
-              <span>{app.routeKey}</span>
+            <div className="mt-4 grid gap-2 text-xs text-slate-500">
+              <div className="flex items-center justify-between gap-3 rounded-[8px] bg-slate-50 px-3 py-2">
+                <span>顾客扣费</span>
+                <span className="font-mono text-slate-800">{app.creditCost} 点/次</span>
+              </div>
+              <div className="flex items-center justify-between gap-3 rounded-[8px] bg-slate-50 px-3 py-2">
+                <span>worker routeKey</span>
+                <span className="truncate font-mono text-slate-800">{app.routeKey}</span>
+              </div>
+              <div className="flex items-center justify-between gap-3 rounded-[8px] bg-slate-50 px-3 py-2">
+                <span>前台绑定值</span>
+                <span className="truncate font-mono text-slate-800">{app.aiApp.slug}</span>
+              </div>
             </div>
           </div>
         ))}

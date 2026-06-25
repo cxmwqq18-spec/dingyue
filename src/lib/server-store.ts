@@ -15,6 +15,7 @@ import {
   getImportedSaasSectionSchemasForTheme,
   getSaasThemePackage,
   getSaasThemePackageList,
+  getSaasThemePackageSummaryList,
   normalizeSaasSettingsCurrent,
   resetSaasSettingsCurrentForTheme,
   normalizeSaasSettingsCurrentForTheme
@@ -85,9 +86,21 @@ const postgresBridgeScript = path.join(process.cwd(), "scripts", "platform-state
 const postgresStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_CACHE_MS ?? "30000") || 0);
 const postgresStateCacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
 const postgresStateDiskCacheEnabled = process.env.PLATFORM_STATE_DISK_CACHE !== "0";
+const jsonStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_JSON_CACHE_MS ?? "5000") || 0);
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
+const themePackageListCacheMs = Math.max(0, Number(process.env.THEME_PACKAGE_LIST_CACHE_MS ?? "60000") || 0);
 
 let postgresStateCache: { expiresAt: number; state: PlatformState } | null = null;
+let jsonStateCache: { expiresAt: number; mtimeMs: number; state: PlatformState } | null = null;
+let availableSaasThemeSummaryCache: { expiresAt: number; themes: ReturnType<typeof getSaasThemePackageSummaryList> } | null = null;
+let availableInternalThemeSummaryCache: {
+  expiresAt: number;
+  themes: Array<
+    Pick<ThemePackageManifest, "key" | "name" | "description" | "audience" | "accent" | "thumbnailUrl" | "templates" | "featuredSections"> & {
+      installType: "internal";
+    }
+  >;
+} | null = null;
 let postgresFallbackWarned = false;
 
 export class StoreError extends Error {
@@ -140,12 +153,22 @@ function readJsonPlatformStateFallback(): PlatformState {
   if (!fs.existsSync(dataFile)) {
     return normalizeState(cloneState(seedState));
   }
-  return normalizeState(JSON.parse(fs.readFileSync(dataFile, "utf8")) as PlatformState);
+  const stat = fs.statSync(dataFile);
+  const now = Date.now();
+  if (jsonStateCacheMs > 0 && jsonStateCache && jsonStateCache.expiresAt > now && jsonStateCache.mtimeMs === stat.mtimeMs) {
+    return cloneState(jsonStateCache.state);
+  }
+  const normalized = normalizeState(JSON.parse(fs.readFileSync(dataFile, "utf8")) as PlatformState);
+  if (jsonStateCacheMs > 0) {
+    jsonStateCache = { expiresAt: now + jsonStateCacheMs, mtimeMs: stat.mtimeMs, state: cloneState(normalized) };
+  }
+  return normalized;
 }
 
 function writeJsonPlatformStateFallback(nextState: PlatformState): PlatformState {
   fs.mkdirSync(dataDir, { recursive: true });
   fs.writeFileSync(dataFile, `${JSON.stringify(nextState, null, 2)}\n`);
+  jsonStateCache = null;
   return nextState;
 }
 
@@ -504,7 +527,7 @@ function fallbackPageSlug(templateKey: string): string {
     index: "/",
     login: "/login",
     page: "/pricing",
-    product: "/tools/image-studio",
+    product: "/tools/headshot",
     search: "/search"
   };
   return slugs[templateKey] ?? `/${templateKey}`;
@@ -1291,6 +1314,7 @@ export function writePlatformState(nextState: PlatformState): PlatformState {
     return normalized;
   }
   fs.writeFileSync(dataFile, `${JSON.stringify(normalized, null, 2)}\n`);
+  jsonStateCache = null;
   return normalized;
 }
 
@@ -1714,6 +1738,7 @@ export function upsertCreativePack(params: {
   creditCost: number;
   outputCount: number;
   trainingRequired: boolean;
+  imageUrl?: string;
 }): { pack: CreativePack; created: boolean } {
   let result: { pack: CreativePack; created: boolean } | undefined;
   mutatePlatformState((state) => {
@@ -1723,6 +1748,7 @@ export function upsertCreativePack(params: {
     if (name.length < 2) throw new StoreError("creative_pack_name_required", 400);
     const headline = params.headline.trim() || name;
     const description = params.description.trim();
+    const imageUrl = params.imageUrl?.trim() || undefined;
     if (description.length < 8) throw new StoreError("creative_pack_description_required", 400);
     if (!state.aiApps.some((app) => app.slug === params.aiAppSlug)) throw new StoreError("ai_app_not_found", 404);
     if (!Number.isInteger(params.creditCost) || params.creditCost < 0) throw new StoreError("invalid_credit_cost", 400);
@@ -1740,6 +1766,7 @@ export function upsertCreativePack(params: {
       existing.creditCost = params.creditCost;
       existing.outputCount = params.outputCount;
       existing.trainingRequired = params.trainingRequired;
+      existing.imageUrl = imageUrl;
       result = { pack: existing, created: false };
       return;
     }
@@ -1755,6 +1782,7 @@ export function upsertCreativePack(params: {
       creditCost: params.creditCost,
       outputCount: params.outputCount,
       trainingRequired: params.trainingRequired,
+      imageUrl,
       generationCount: 0,
       conversionRate: 0,
       createdAt: new Date().toISOString()
@@ -2749,11 +2777,54 @@ export function getAvailableSaasThemesForInstall() {
   return getSaasThemePackageList();
 }
 
+export function getAvailableSaasThemeSummariesForInstall() {
+  const now = Date.now();
+  if (themePackageListCacheMs > 0 && availableSaasThemeSummaryCache && availableSaasThemeSummaryCache.expiresAt > now) {
+    return availableSaasThemeSummaryCache.themes;
+  }
+  const themes = getSaasThemePackageSummaryList();
+  if (themePackageListCacheMs > 0) {
+    availableSaasThemeSummaryCache = { expiresAt: now + themePackageListCacheMs, themes };
+  }
+  return themes;
+}
+
 export function getAvailableInternalThemePackages(): Array<ThemePackageManifest & { installType: "internal" }> {
   return getThemePackages().map((themePackage) => ({
     ...themePackage,
     installType: "internal" as const
   }));
+}
+
+export function getAvailableInternalThemePackageSummaries(): Array<
+  Pick<ThemePackageManifest, "key" | "name" | "description" | "audience" | "accent" | "thumbnailUrl" | "templates" | "featuredSections"> & {
+    installType: "internal";
+  }
+> {
+  const now = Date.now();
+  if (themePackageListCacheMs > 0 && availableInternalThemeSummaryCache && availableInternalThemeSummaryCache.expiresAt > now) {
+    return availableInternalThemeSummaryCache.themes;
+  }
+  const themes = getThemePackages().map((themePackage) => ({
+    key: themePackage.key,
+    name: themePackage.name,
+    description: themePackage.description,
+    audience: themePackage.audience,
+    accent: themePackage.accent,
+    thumbnailUrl: themePackage.thumbnailUrl,
+    templates: themePackage.templates.map((template) => ({
+      key: template.key,
+      label: template.label,
+      pageType: template.pageType,
+      sectionCount: template.sectionCount
+    })),
+    featuredSections: themePackage.featuredSections.slice(0, 8),
+    installType: "internal" as const
+  }));
+  if (themePackageListCacheMs > 0) {
+    availableInternalThemeSummaryCache = { expiresAt: now + themePackageListCacheMs, themes };
+  }
+  return themes;
 }
 
 export function applySiteThemeToDraft(params: {
@@ -3949,6 +4020,7 @@ export function createCustomerSession(params: { siteId: string; email: string; p
     let createdCustomer = false;
     if (!customer) {
       createdCustomer = true;
+      const signupCreditGrant = Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0)));
       customer = {
         id: uid(`cust_${site.slug}`),
         siteId: params.siteId,
@@ -3956,17 +4028,19 @@ export function createCustomerSession(params: { siteId: string; email: string; p
         passwordHash: hashPassword(params.password),
         name: params.name?.trim() || email.split("@")[0],
         status: "active",
-        balance: { available: 48, reserved: 0 }
+        balance: { available: signupCreditGrant, reserved: 0 }
       };
       state.customers.push(customer);
-      pushLedgerOnce(state, {
-        siteId: params.siteId,
-        customerId: customer.id,
-        amount: 48,
-        type: "grant",
-        sourceType: "signup_credit",
-        sourceId: `signup_${customer.id}`
-      });
+      if (signupCreditGrant > 0) {
+        pushLedgerOnce(state, {
+          siteId: params.siteId,
+          customerId: customer.id,
+          amount: signupCreditGrant,
+          type: "grant",
+          sourceType: "signup_credit",
+          sourceId: `signup_${customer.id}`
+        });
+      }
     } else if (!verifyPassword(params.password, customer.passwordHash)) {
       throw new StoreError("invalid_customer_credentials", 401);
     }
@@ -4058,9 +4132,8 @@ export function rerunGenerationJob(params: {
   jobId: string;
   actor?: string;
 }): { sourceJob: GenerationJob; job: GenerationJob; siteAiApp: SiteAiApp; ledger: CreditLedgerEntry; customer: Customer } {
-  let sourceJob: GenerationJob | undefined;
   const state = readPlatformState();
-  sourceJob = state.jobs.find((item) => item.siteId === params.siteId && item.id === params.jobId);
+  const sourceJob = state.jobs.find((item) => item.siteId === params.siteId && item.id === params.jobId);
   if (!sourceJob) throw new StoreError("job_not_found", 404);
   if (sourceJob.status !== "failed" && sourceJob.status !== "refunded") {
     throw new StoreError("only_failed_or_refunded_jobs_can_be_rerun", 409);

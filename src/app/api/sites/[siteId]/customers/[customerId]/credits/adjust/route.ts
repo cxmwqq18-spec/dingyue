@@ -16,13 +16,21 @@ export async function POST(
     reason?: string;
     actor?: string;
   };
+  const amount = Number(body.amount);
+  const reason = body.reason?.trim() ?? "";
+  if (!Number.isInteger(amount) || amount === 0) {
+    return NextResponse.json({ error: "invalid_adjustment_amount" }, { status: 400 });
+  }
+  if (reason.length < 3) {
+    return NextResponse.json({ error: "adjustment_reason_required" }, { status: 400 });
+  }
 
   try {
     const result = await adjustCustomerCreditsRelational({
       siteId,
       customerId,
-      amount: Number(body.amount),
-      reason: body.reason ?? "",
+      amount,
+      reason,
       actor: body.actor
     });
     return NextResponse.json({ ok: true, customer: result.customer, ledgerAction: result.ledger });

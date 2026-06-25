@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPage } from "@/lib/data";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
 
-export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
-  const { siteSlug } = await params;
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) return {};
-  return metadataForThemePage(site, getPage(site, "/pricing"));
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: "Pricing" };
 }
 
 export default async function PricingPage({
@@ -21,9 +16,11 @@ export default async function PricingPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
+  redirectLegacySiteSlug(siteSlug, "/pricing");
   const query = searchParams ? await searchParams : {};
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/pricing");
+  const site = state?.sites[0];
+  if (!state) notFound();
   if (!site) notFound();
   return renderStorefrontPage({ site, slug: "/pricing", query, routeMode: "path", state });
 }

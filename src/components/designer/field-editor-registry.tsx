@@ -593,7 +593,7 @@ function SaasUrlSelector({
           <input
             className={cx(saasInputClass, "min-w-0")}
             onChange={(event) => onChange(selectorJson(staticUrlSelector("urls", event.target.value)))}
-            placeholder="/pricing, /tools/image_generator, or https://..."
+            placeholder="/pricing, /tools/headshot, or https://..."
             value={customValue}
           />
           <button className="rounded-[2px] border border-[#c4c7cc] bg-white px-3 text-xs text-[#6b7282] transition hover:border-[#479dff] hover:text-[#479dff]" onClick={(event) => { event.preventDefault(); onChange(selectorJson(staticUrlSelector("urls", "/pricing"))); }} type="button">Pricing</button>

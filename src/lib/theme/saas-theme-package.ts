@@ -131,6 +131,21 @@ export function getSaasThemePackageList() {
   });
 }
 
+export function getSaasThemePackageSummaryList() {
+  return saasThemePackageRegistry.summary.themeKeys.map((themeKey) => {
+    const theme = getSaasThemePackage(themeKey);
+    return {
+      themeKey,
+      sourceRoot: theme.sourceRoot,
+      counts: theme.counts,
+      thumbnailUrl: theme.thumbnailUrl ?? null,
+      templateNames: theme.templateNames.slice(0, 8),
+      sectionNames: theme.sectionNames.slice(0, 8),
+      skippedSections: theme.skippedSections.slice(0, 3)
+    };
+  });
+}
+
 interface RawSaasTemplateSection {
   type: string;
   settings?: Record<string, ThemeSettingValue>;

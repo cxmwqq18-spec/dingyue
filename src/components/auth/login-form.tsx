@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { ShieldCheck } from "lucide-react";
 import { authMessageForCode } from "@/lib/auth-messages";
+import { customerPasswordPolicyMessage, getCustomerPasswordPolicyError } from "@/lib/customer-password-policy";
 
 type CustomerAuthMode = "login" | "register" | "password_reset";
 
@@ -56,6 +58,7 @@ export function LoginForm({
   defaultName?: string;
   initialMessage?: string;
 }) {
+  const router = useRouter();
   const sitePath = (path = "/") => {
     const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
     const basePath = storefrontBasePath ?? `/site/${siteSlug}`;
@@ -65,19 +68,65 @@ export function LoginForm({
   const [mode, setMode] = useState<CustomerAuthMode>("login");
   const [email, setEmail] = useState(defaultEmail ?? "");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name] = useState(defaultName);
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
   const [message, setMessage] = useState(initialMessage ?? modeCopy.login.message);
   const [pending, setPending] = useState(false);
   const [devCode, setDevCode] = useState("");
+  const [codeCooldownUntil, setCodeCooldownUntil] = useState(0);
+  const [now, setNow] = useState(0);
+
+  const cooldownKey = useMemo(() => {
+    const normalizedEmail = email.trim().toLowerCase();
+    return normalizedEmail && mode !== "login" ? `customer-email-code:${siteId}:${mode}:${normalizedEmail}` : "";
+  }, [email, mode, siteId]);
+  const cooldownSeconds = Math.max(0, Math.ceil((codeCooldownUntil - now) / 1000));
 
   function switchMode(nextMode: CustomerAuthMode) {
     setMode(nextMode);
     setCode("");
     setCodeSent(false);
     setDevCode("");
+    setConfirmPassword("");
     setMessage(modeCopy[nextMode].message);
+  }
+
+  useEffect(() => {
+    setNow(Date.now());
+    const interval = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (!cooldownKey) {
+      setCodeCooldownUntil(0);
+      return;
+    }
+    const stored = Number(window.localStorage.getItem(cooldownKey) ?? "0");
+    setCodeCooldownUntil(Number.isFinite(stored) ? stored : 0);
+  }, [cooldownKey]);
+
+  function startCodeCooldown(seconds = 60) {
+    const until = Date.now() + seconds * 1000;
+    setCodeCooldownUntil(until);
+    if (cooldownKey) window.localStorage.setItem(cooldownKey, String(until));
+  }
+
+  function openCustomerWorkspace() {
+    const href = sitePath("/app");
+    window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
+    router.replace(href);
+  }
+
+  function validateNewPassword() {
+    const error = getCustomerPasswordPolicyError(password, confirmPassword || undefined);
+    if (error) {
+      setMessage(authMessageForCode("customer", error));
+      return false;
+    }
+    return true;
   }
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
@@ -96,7 +145,7 @@ export function LoginForm({
         setMessage(authMessageForCode("customer", error.error));
         return;
       }
-      window.location.replace(sitePath("/app"));
+      openCustomerWorkspace();
     } catch {
       setPending(false);
       setMessage("Network error. We could not complete sign-in. Please try again.");
@@ -105,6 +154,11 @@ export function LoginForm({
 
   async function requestCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!validateNewPassword()) return;
+    if (cooldownSeconds > 0) {
+      setMessage(`Please wait ${cooldownSeconds}s before sending another verification code.`);
+      return;
+    }
     setPending(true);
     setMessage(mode === "register" ? "Sending your registration code..." : "Sending your reset code...");
     try {
@@ -115,6 +169,8 @@ export function LoginForm({
       });
       if (!response.ok) {
         const error = (await response.json().catch(() => ({}))) as { error?: string };
+        const retryAfter = Number(response.headers.get("Retry-After") ?? "0");
+        if (response.status === 429 && Number.isFinite(retryAfter) && retryAfter > 0) startCodeCooldown(retryAfter);
         setPending(false);
         setMessage(authMessageForCode("customer", error.error));
         return;
@@ -122,6 +178,7 @@ export function LoginForm({
       const result = (await response.json()) as { devCode?: string; deliveryStatus?: string; deliveryError?: string };
       setDevCode(result.devCode ?? "");
       setCodeSent(true);
+      startCodeCooldown(60);
       setPending(false);
       setMessage(
         result.deliveryStatus === "sent"
@@ -138,13 +195,14 @@ export function LoginForm({
 
   async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!validateNewPassword()) return;
     setPending(true);
     setMessage(mode === "register" ? "Completing registration..." : "Resetting your password...");
     try {
       const response = await fetch(`/api/sites/${siteId}/auth/email-verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, code, name, purpose: mode })
+        body: JSON.stringify({ email, password, confirmPassword, code, name, purpose: mode })
       });
       if (!response.ok) {
         const error = (await response.json().catch(() => ({}))) as { error?: string };
@@ -152,7 +210,7 @@ export function LoginForm({
         setMessage(authMessageForCode("customer", error.error));
         return;
       }
-      window.location.replace(sitePath("/app"));
+      openCustomerWorkspace();
     } catch {
       setPending(false);
       setMessage("Network error. We could not verify the code. Please try again.");
@@ -220,6 +278,25 @@ export function LoginForm({
         type="password"
         value={password}
       />
+      {isEmailCodeMode ? (
+        <>
+          <label className="sr-only" htmlFor={`${siteSlug}-customer-confirm-password`}>
+            Confirm password
+          </label>
+          <input
+            autoComplete="new-password"
+            className="min-h-[48px] min-w-0 rounded-[6px] border border-white bg-white px-4 text-base text-gray-900 shadow-sm outline-none transition placeholder:text-gray-500 focus:border-white focus:ring-2 focus:ring-white/24"
+            id={`${siteSlug}-customer-confirm-password`}
+            name="confirmPassword"
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            placeholder="Confirm new password"
+            required
+            type="password"
+            value={confirmPassword}
+          />
+          <p className="text-xs leading-5 text-white/58">{customerPasswordPolicyMessage}</p>
+        </>
+      ) : null}
       {isEmailCodeMode && codeSent ? (
         <>
           <label className="sr-only" htmlFor={`${siteSlug}-customer-code`}>
@@ -240,8 +317,14 @@ export function LoginForm({
           />
         </>
       ) : null}
-      <button className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-white px-5 text-base font-semibold text-black transition hover:bg-gray-200 active:scale-[0.99]" disabled={pending} type="submit">
-        {pending ? (isEmailCodeMode && !codeSent ? modeCopy[mode].pending : "Verifying") : isEmailCodeMode && codeSent ? modeCopy[mode].codeSubmit : modeCopy[mode].submit}
+      <button className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-white px-5 text-base font-semibold text-black transition hover:bg-gray-200 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-white/60 disabled:text-black/60" disabled={pending || (isEmailCodeMode && !codeSent && cooldownSeconds > 0)} type="submit">
+        {pending
+          ? (isEmailCodeMode && !codeSent ? modeCopy[mode].pending : "Verifying")
+          : isEmailCodeMode && !codeSent && cooldownSeconds > 0
+            ? `Send again in ${cooldownSeconds}s`
+            : isEmailCodeMode && codeSent
+              ? modeCopy[mode].codeSubmit
+              : modeCopy[mode].submit}
       </button>
       <p className="text-center text-xs leading-5 text-gray-400">{modeCopy[mode].helper}</p>
       {isEmailCodeMode && codeSent ? (
@@ -261,11 +344,11 @@ export function LoginForm({
       {mode !== "login" ? (
         <p className="text-center text-xs leading-5 text-gray-400">
           By registering, you agree to our{" "}
-          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")} prefetch={false}>
+          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")}>
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")} prefetch={false}>
+          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")}>
             Privacy Policy
           </Link>
           .

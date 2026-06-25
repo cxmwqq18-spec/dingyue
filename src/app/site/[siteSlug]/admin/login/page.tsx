@@ -3,8 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { AdminLoginScreen } from "@/components/auth/admin-login-screen";
 import { PasswordLoginForm } from "@/components/auth/password-login-form";
 import { authMessageForCode } from "@/lib/auth-messages";
-import { getFirstSiteAdminEmailRelational, getSiteAdminBySessionRelational, getSiteBySlugRelational } from "@/lib/stores/site-store";
 import { siteAdminSessionCookie } from "@/lib/session";
+import { getFirstSiteAdminEmail, getSiteAdminBySessionRelational, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
 
 export default async function SiteAdminLoginPage({
   params,
@@ -14,11 +14,11 @@ export default async function SiteAdminLoginPage({
   searchParams?: Promise<{ error?: string }>;
 }) {
   const { siteSlug } = await params;
-  const site = await getSiteBySlugRelational(siteSlug);
+  const site = await getSiteBySlugForAdmin(siteSlug);
   if (!site) notFound();
   const sessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
-  if (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId })) redirect(`/site/${site.slug}/admin`);
-  const defaultEmail = (await getFirstSiteAdminEmailRelational(site.id)) ?? `owner@${site.slug}.localhost`;
+  if (sessionId && (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId }))) redirect(`/site/${site.slug}/admin`);
+  const defaultEmail = (await getFirstSiteAdminEmail(site.id)) ?? `owner@${site.slug}.localhost`;
   const errorCode = (await searchParams)?.error;
 
   return (

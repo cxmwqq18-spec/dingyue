@@ -34,6 +34,11 @@ function jsonRecord(value: Prisma.JsonValue | null | undefined): Record<string, 
   return value as Record<string, unknown>;
 }
 
+function jsonObject<T>(value: Prisma.JsonValue | null | undefined): T | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  return cloneJson(value) as T;
+}
+
 function jsonArray<T>(value: Prisma.JsonValue | null | undefined): T[] {
   return Array.isArray(value) ? (value as T[]) : [];
 }
@@ -116,13 +121,19 @@ export function mapAiApp(row: Prisma.AiAppGetPayload<object>): AiApp {
 }
 
 export function mapSiteAiApp(row: SiteAiAppWithAiApp): SiteAiApp {
+  const record = row as SiteAiAppWithAiApp & {
+    providerConfig?: Prisma.JsonValue | null;
+    workflowConfig?: Prisma.JsonValue | null;
+  };
   return {
     id: row.id,
     siteId: row.siteId,
     aiApp: mapAiApp(row.aiApp),
     enabled: row.enabled,
     creditCost: row.creditCost,
-    routeKey: row.routeKey
+    routeKey: row.routeKey,
+    workflowConfig: jsonObject<SiteAiApp["workflowConfig"]>(record.workflowConfig),
+    providerConfig: jsonObject<SiteAiApp["providerConfig"]>(record.providerConfig)
   };
 }
 
@@ -456,6 +467,7 @@ export function toSite(record: {
   status: string;
   timezone: string;
   currency: string;
+  signupCreditGrant?: number | null;
   branding: unknown;
   domains?: Array<{ domain: string; isPrimary: boolean }>;
   pages?: Array<Parameters<typeof toThemePage>[0]>;
@@ -471,6 +483,7 @@ export function toSite(record: {
     primaryDomain,
     currency: record.currency,
     timezone: record.timezone,
+    signupCreditGrant: Math.max(0, Math.trunc(Number(record.signupCreditGrant ?? 0))),
     branding: cloneJson(record.branding) as import("@/lib/types").Site["branding"],
     connect: {
       stripeAccountId: record.connect?.stripeAccountId ?? `acct_pending_${record.slug}`,
@@ -489,6 +502,7 @@ export function toSiteDomain(record: {
   domain: string;
   isPrimary: boolean;
   status: string;
+  allowedAiProviderIds?: string[] | null;
   createdAt?: Date | string;
 }): import("@/lib/types").SiteDomain {
   return {
@@ -497,6 +511,7 @@ export function toSiteDomain(record: {
     domain: record.domain,
     isPrimary: record.isPrimary,
     status: record.status as import("@/lib/types").SiteDomain["status"],
+    allowedAiProviderIds: record.allowedAiProviderIds ?? [],
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
   };
 }
@@ -525,6 +540,7 @@ export function toCreativePack(record: {
   name: string;
   headline: string;
   description: string;
+  prompt?: string | null;
   category: string;
   aiAppSlug: string;
   status: string;
@@ -542,6 +558,7 @@ export function toCreativePack(record: {
     name: record.name,
     headline: record.headline,
     description: record.description,
+    prompt: record.prompt ?? undefined,
     category: record.category as CreativePack["category"],
     aiAppSlug: record.aiAppSlug,
     status: record.status as CreativePack["status"],
@@ -592,6 +609,8 @@ export function toSiteAiApp(record: {
   enabled: boolean;
   creditCost: number;
   routeKey: string;
+  workflowConfig?: unknown;
+  providerConfig?: unknown;
   aiApp: {
     id: string;
     slug: string;
@@ -607,6 +626,8 @@ export function toSiteAiApp(record: {
     enabled: record.enabled,
     creditCost: record.creditCost,
     routeKey: record.routeKey,
+    workflowConfig: jsonObject<import("@/lib/types").SiteAiApp["workflowConfig"]>(record.workflowConfig as Prisma.JsonValue | null | undefined),
+    providerConfig: jsonObject<import("@/lib/types").SiteAiApp["providerConfig"]>(record.providerConfig as Prisma.JsonValue | null | undefined),
     aiApp: {
       id: record.aiApp.id,
       slug: record.aiApp.slug,
@@ -735,6 +756,44 @@ export function toPlatformEmailSettings(record: {
     apiKey: record.apiKey ?? undefined,
     fromEmail: record.fromEmail ?? undefined,
     replyTo: record.replyTo ?? undefined,
+    updatedAt: toIsoString(record.updatedAt),
+    updatedBy: record.updatedBy ?? undefined
+  };
+}
+
+export function toPlatformEmailConfig(record: {
+  id: string;
+  label: string;
+  provider: string;
+  apiKey?: string | null;
+  fromEmail?: string | null;
+  replyTo?: string | null;
+  isDefault: boolean;
+  updatedBy?: string | null;
+  updatedAt: Date | string;
+}): import("@/lib/types").PlatformEmailConfig {
+  return {
+    id: record.id,
+    label: record.label,
+    provider: "resend",
+    apiKey: record.apiKey ?? undefined,
+    fromEmail: record.fromEmail ?? undefined,
+    replyTo: record.replyTo ?? undefined,
+    isDefault: record.isDefault,
+    updatedAt: toIsoString(record.updatedAt),
+    updatedBy: record.updatedBy ?? undefined
+  };
+}
+
+export function toSiteEmailConfigAssignment(record: {
+  siteId: string;
+  configId: string;
+  updatedBy?: string | null;
+  updatedAt: Date | string;
+}): import("@/lib/types").SiteEmailConfigAssignment {
+  return {
+    siteId: record.siteId,
+    configId: record.configId,
     updatedAt: toIsoString(record.updatedAt),
     updatedBy: record.updatedBy ?? undefined
   };

@@ -7,7 +7,13 @@ export async function POST(request: Request) {
     id?: string;
     type?: string;
     account?: string;
-    data?: { object?: { metadata?: { siteId?: string; customerId?: string; priceId?: string; creditsGranted?: string } } };
+    data?: {
+      object?: {
+        id?: string;
+        subscription?: string;
+        metadata?: { siteId?: string; customerId?: string; priceId?: string; orderId?: string; creditsGranted?: string };
+      };
+    };
   };
   try {
     const result = await recordStripeWebhookRelational(payload);
@@ -19,6 +25,8 @@ export async function POST(request: Request) {
       idempotent: true,
       alreadyProcessed: result.alreadyProcessed,
       paymentEvent: result.event,
+      order: result.order ?? null,
+      subscription: result.subscription ?? null,
       ledgerAction: result.ledger ?? null,
       fulfillmentAction: result.alreadyProcessed ? "skipped" : result.ledger ? "credits_granted" : "event_recorded_without_credit_grant",
       note: "Dev mode persists webhook idempotently. Production must verify Stripe signature before this step."

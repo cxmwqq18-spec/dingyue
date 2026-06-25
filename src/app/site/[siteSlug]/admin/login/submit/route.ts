@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
+import { primeSiteAdminSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { publicUrlForRequest, shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { createSiteAdminSessionRelational, getSiteBySlugRelational } from "@/lib/stores/site-store";
+import { createSiteAdminSessionRelational, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const site = await getSiteBySlugRelational(siteSlug);
+  const site = await getSiteBySlugForAdmin(siteSlug);
   if (!site) return NextResponse.redirect(publicUrlForRequest(request, "/"), 303);
 
   const form = await request.formData();
@@ -15,6 +16,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       siteId: site.id,
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? "")
+    });
+    primeSiteAdminSessionAuthCache({
+      siteAdmin: result.siteAdmin,
+      session: result.session,
+      sessionId: result.session.id
     });
     const response = NextResponse.redirect(publicUrlForRequest(request, `/site/${site.slug}/admin`), 303);
     response.cookies.set(siteAdminSessionCookie(site.id), result.session.id, {

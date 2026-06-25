@@ -1,50 +1,132 @@
 import Link from "next/link";
-import { CreditCard, Database, ReceiptText, WalletCards } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { BillingEventsTables } from "@/components/admin/billing-events-tables";
-import { OrdersWorkbenchClient } from "@/components/admin/orders-workbench-client";
-import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
+import { OrdersPageClient } from "@/components/admin/orders-page-client";
+import { ErpInfoList } from "@/components/admin/erp-primitives";
 import { OpsCard } from "@/components/ui";
-import { money } from "@/lib/ops";
 import {
   getSiteAdminData,
   modulePath,
   siteAdminAccount,
-  siteAdminCommandActions,
   siteAdminModuleLinks,
   siteAdminNav,
-  siteAdminQuickActions,
   siteAdminStats,
   siteAdminWorkspace
 } from "../_lib/site-admin-context";
 
-export default async function OrdersPage({ params }: { params: Promise<{ siteSlug: string }> }) {
+type OrdersTab = "overview" | "orders" | "subscriptions" | "ledger" | "events";
+
+function normalizeOrdersTab(value?: string): OrdersTab {
+  if (value === "orders" || value === "subscriptions" || value === "ledger" || value === "events") return value;
+  return "overview";
+}
+
+function OrdersModuleTabs({
+  active,
+  baseHref,
+  items
+}: {
+  active: OrdersTab;
+  baseHref: string;
+  items: Array<{ key: OrdersTab; label: string; badge: string; hint: string }>;
+}) {
+  return (
+    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-2 shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)]">
+      <div className="flex gap-2 overflow-x-auto" role="tablist" aria-label="订单工作台栏目">
+        {items.map((item) => {
+          const selected = item.key === active;
+          const href = item.key === "overview" ? baseHref : `${baseHref}?tab=${item.key}`;
+          return (
+            <Link
+              aria-selected={selected}
+              className={`inline-flex min-h-[38px] shrink-0 items-center gap-2 rounded-[8px] border px-3 text-[12px] font-medium transition ${
+                selected
+                  ? "border-[var(--admin-accent)] bg-[var(--admin-accent)] text-white shadow-[0_14px_24px_-18px_rgba(27,119,243,0.42)]"
+                  : "border-[var(--admin-border-soft)] bg-white text-[var(--admin-muted)] hover:border-[var(--admin-accent-soft)] hover:text-[var(--admin-accent)]"
+              }`}
+              href={href}
+              key={item.key}
+              prefetch={false}
+              role="tab"
+              scroll={false}
+            >
+              <span>{item.label}</span>
+              <span className={`rounded-full border px-1.5 py-0.5 font-mono text-[10px] ${selected ? "border-white/20 bg-white/15 text-white" : "border-[var(--admin-border-soft)] bg-[var(--admin-panel)] text-[#8a94a6]"}`}>
+                {item.badge}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+      <p className="mt-2 px-1 text-[12px] leading-5 text-[#667085]">{items.find((item) => item.key === active)?.hint}</p>
+    </div>
+  );
+}
+
+export default async function OrdersPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ siteSlug: string }>;
+  searchParams?: Promise<{ tab?: string }>;
+}) {
   const { siteSlug } = await params;
-  const data = await getSiteAdminData(siteSlug);
-  const unsettledOrders = data.orders.filter((order) => order.status === "created" || order.status === "checkout_started");
-  const paymentEvents = data.state.paymentEvents.filter((event) => event.siteId === data.site.id);
+  const activeTab = normalizeOrdersTab((await searchParams)?.tab);
+  const data = await getSiteAdminData(siteSlug, { include: [], summary: false, take: 0 });
+  const baseHref = modulePath(data.site, "/admin/orders");
+  const pricingHref = modulePath(data.site, "/pricing");
+  const tabItems: Array<{ key: OrdersTab; label: string; badge: string; hint: string }> = [
+    {
+      key: "overview",
+      label: "总览指标",
+      badge: `${data.orderCount} 单`,
+      hint: "先看收入、订单、订阅、额度和支付事件是否闭环，再进入具体列表排查。"
+    },
+    {
+      key: "orders",
+      label: "订单记录",
+      badge: String(data.orderCount),
+      hint: "订单记录表示一次 Checkout 或额度包购买请求，重点看金额、额度、状态和来源。"
+    },
+    {
+      key: "subscriptions",
+      label: "订阅记录",
+      badge: String(data.subscriptionCount),
+      hint: "订阅记录表示顾客持续生效的套餐权益，不等同于一次支付事件。"
+    },
+    {
+      key: "ledger",
+      label: "额度账本",
+      badge: String(data.ledgerCount),
+      hint: "额度账本是不可以随意覆盖的积分流水，用来追踪购买入账、生成预扣、扣减、释放和人工调整。"
+    },
+    {
+      key: "events",
+      label: "支付事件",
+      badge: String(data.paymentEventCount),
+      hint: "支付事件是 Stripe webhook 的幂等记录，用来核对支付、退款、订阅变更是否已经被系统处理。"
+    }
+  ];
 
   return (
     <AdminShell
       activeModuleCode="orders"
       account={siteAdminAccount(data.site, data.current)}
-      action={{ label: "查看前台定价", href: modulePath(data.site, "/pricing") }}
+      action={{ label: "查看前台定价", href: pricingHref }}
       breadcrumbs={[
         { label: "店铺管理", href: modulePath(data.site, "/admin") },
         { label: "订单与订阅" }
       ]}
       brand={data.site.branding.logoText}
-      commandActions={siteAdminCommandActions(data.site, data)}
       eyebrow="订单与订阅"
       moduleLinks={siteAdminModuleLinks}
       nav={siteAdminNav(data.site, data)}
-      quickActions={siteAdminQuickActions(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
       subtitle="订单、订阅、Stripe webhook 入账和额度账本按站点隔离查看。Checkout 跳回不提前发放额度，只以 webhook/账本为准。"
       title="订单与订阅"
-      titleBadge={String(data.orders.length)}
+      titleBadge={String(data.orderCount)}
       workspace={siteAdminWorkspace(data, "订单工作台")}
+      rightRailMode="stacked"
       rightRail={
         <>
           <OpsCard className="p-5">
@@ -54,8 +136,8 @@ export default async function OrdersPage({ params }: { params: Promise<{ siteSlu
               <ErpInfoList
                 items={[
                   { label: "Stripe Connect", value: data.site.connect.chargesEnabled ? "已就绪" : "待设置", tone: data.site.connect.chargesEnabled ? "good" : "warn" },
-                  { label: "支付事件", value: String(paymentEvents.length), tone: paymentEvents.length ? "good" : "warn" },
-                  { label: "账本记录", value: String(data.ledger.length), tone: data.ledger.length ? "good" : "warn" },
+                  { label: "支付事件", value: String(data.paymentEventCount), tone: data.paymentEventCount ? "good" : "warn" },
+                  { label: "账本记录", value: String(data.ledgerCount), tone: data.ledgerCount ? "good" : "warn" },
                   { label: "预扣额度", value: String(data.reservedCredits), tone: data.reservedCredits === 0 ? "good" : "warn" }
                 ]}
               />
@@ -74,54 +156,24 @@ export default async function OrdersPage({ params }: { params: Promise<{ siteSlu
       }
     >
       <div className="grid gap-5">
-        <ErpStatGrid
-          items={[
-            { label: "收入", value: money(data.revenue, data.site.currency), detail: `${data.paidOrders}/${data.orders.length} 已支付或已发放`, icon: ReceiptText, tone: data.paidOrders ? "good" : "neutral" },
-            { label: "订单", value: String(data.orders.length), detail: `${unsettledOrders.length} 条待完成收银台记录`, icon: CreditCard, tone: unsettledOrders.length ? "warn" : "good" },
-            { label: "订阅", value: String(data.activeSubscriptions), detail: "生效中或试用中", icon: WalletCards, tone: data.activeSubscriptions ? "good" : "neutral" },
-            { label: "额度", value: String(data.ledger.length), detail: `${data.availableCredits} 可用 / ${data.reservedCredits} 预扣`, icon: Database, tone: data.reservedCredits ? "warn" : "good" }
-          ]}
+        <OrdersModuleTabs active={activeTab} baseHref={baseHref} items={tabItems} />
+        <OrdersPageClient
+          activeTab={activeTab}
+          currency={data.site.currency}
+          initialCounts={{
+            activeSubscriptions: data.activeSubscriptions,
+            availableCredits: data.availableCredits,
+            ledgerCount: data.ledgerCount,
+            orderCount: data.orderCount,
+            paidOrders: data.paidOrders,
+            paymentEventCount: data.paymentEventCount,
+            reservedCredits: data.reservedCredits,
+            revenue: data.revenue,
+            subscriptionCount: data.subscriptionCount
+          }}
+          pricingHref={pricingHref}
+          siteId={data.site.id}
         />
-
-        <div className="grid gap-5">
-          <ErpSection
-            action={<ErpToolbarAction href={modulePath(data.site, "/pricing")} label="查看前台定价" />}
-            description="Checkout 订单、一次性额度包和支付状态统一在这里查看。"
-            eyebrow="订单列表"
-            title="订单与订阅记录"
-          >
-            <ErpToolbar>
-              <div className="flex flex-wrap gap-3">
-                <ErpToolbarField label="订单数" value={String(data.orders.length)} />
-                <ErpToolbarField label="待付款" value={String(unsettledOrders.length)} />
-                <ErpToolbarField label="支付事件" value={String(paymentEvents.length)} />
-              </div>
-            </ErpToolbar>
-            <div className="mt-5">
-              <OrdersWorkbenchClient
-                customers={data.customers}
-                orders={data.orders}
-                paymentEvents={paymentEvents}
-                siteId={data.site.id}
-                subscriptions={data.subscriptions}
-              />
-            </div>
-          </ErpSection>
-        </div>
-
-        <ErpSection
-          description="额度账本是不可变流水。支付事件先入幂等表，再影响客户余额。"
-          eyebrow="账本与事件"
-          title="额度账本与支付事件"
-        >
-          <BillingEventsTables
-            customers={data.customers}
-            jobs={data.jobs}
-            ledger={data.ledger}
-            orders={data.orders}
-            paymentEvents={paymentEvents}
-          />
-        </ErpSection>
       </div>
     </AdminShell>
   );

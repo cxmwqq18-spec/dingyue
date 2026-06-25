@@ -38,7 +38,7 @@ export function ErpSection({
 }) {
   return (
     <section
-      className={`right_box overflow-hidden rounded-[8px] border border-[var(--admin-border-soft)] bg-white shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)] ${className}`}
+      className={`right_box rounded-[8px] border border-[var(--admin-border-soft)] bg-white shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)] ${className}`}
       {...props}
     >
       <div className="px-4 pt-4">
@@ -96,8 +96,8 @@ export function ErpToolbarAction({
   onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 }) {
   const className = primary
-    ? "input_btn inline-flex h-[34px] items-center justify-center px-3.5"
-    : "admin_btn inline-flex h-[34px] items-center justify-center px-3.5";
+    ? "input_btn inline-flex h-[34px] items-center justify-center whitespace-nowrap px-3.5"
+    : "admin_btn inline-flex h-[34px] items-center justify-center whitespace-nowrap px-3.5";
 
   if (href) {
     return (
@@ -124,6 +124,7 @@ export function ErpStatGrid({
     detail: string;
     icon?: LucideIcon;
     tone?: Tone;
+    href?: string;
   }>;
   columns?: 2 | 3 | 4 | 5 | 6;
 }) {
@@ -152,16 +153,18 @@ export function ErpStatCard({
   value,
   detail,
   icon: Icon,
-  tone = "neutral"
+  tone = "neutral",
+  href
 }: {
   label: string;
   value: string;
   detail: string;
   icon?: LucideIcon;
   tone?: Tone;
+  href?: string;
 }) {
-  return (
-    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-4 py-3.5 shadow-[0_14px_24px_-30px_rgba(15,23,42,0.14)]">
+  const card = (
+    <div className="h-full rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-4 py-3.5 shadow-[0_14px_24px_-30px_rgba(15,23,42,0.14)] transition hover:border-[var(--admin-accent-soft)] hover:shadow-[0_18px_34px_-30px_rgba(15,23,42,0.28)]">
       <div className="flex items-start justify-between gap-3">
         <span className="min-w-0">
           <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#98a2b3]">{label}</span>
@@ -174,12 +177,20 @@ export function ErpStatCard({
       </div>
       <div className="mt-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-mono text-[30px] leading-8 tracking-[-0.04em] text-[var(--admin-text)]">{value}</p>
-          <p className="mt-1.5 text-[11px] leading-5 text-[#98a2b3]">{detail}</p>
+          <p className="break-words font-mono text-[30px] leading-8 tracking-[-0.04em] text-[var(--admin-text)] [overflow-wrap:anywhere]">{value}</p>
+          <p className="mt-1.5 break-words text-[11px] leading-5 text-[#98a2b3] [overflow-wrap:anywhere]">{detail}</p>
         </div>
         <span className={`h-2.5 w-2.5 rounded-full ${toneClass(tone)}`} />
       </div>
     </div>
+  );
+
+  return href ? (
+    <Link className="block h-full" href={href} prefetch={false}>
+      {card}
+    </Link>
+  ) : (
+    card
   );
 }
 

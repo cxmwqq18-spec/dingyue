@@ -10,7 +10,6 @@ import {
   WorkbenchSelect
 } from "@/components/admin/design-workbench";
 import { PlatformSiteAdminLink } from "@/components/platform/platform-site-admin-link";
-import { publicSiteUrlFromParts } from "@/lib/domain-routing";
 
 type PlatformSiteSnapshot = {
   site: {
@@ -66,6 +65,32 @@ const emptyFilters = {
 };
 
 type QuickFilterKey = "all" | "active" | "billing" | "draft" | "suspended";
+
+function PlatformSiteExternalLinkButton({
+  href,
+  label,
+  className
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
+  function openExternalSite() {
+    const externalWindow = window.open("about:blank", "_blank");
+    if (!externalWindow) {
+      window.alert("浏览器拦截了新窗口，请允许弹出窗口后再访问前台。");
+      return;
+    }
+    externalWindow.opener = null;
+    externalWindow.location.replace(href);
+  }
+
+  return (
+    <button className={className} onClick={openExternalSite} type="button">
+      {label}
+    </button>
+  );
+}
 
 export function PlatformSiteRegistryPanel({
   snapshots
@@ -263,63 +288,70 @@ export function PlatformSiteRegistryPanel({
 
       <div className="grid gap-3">
         {filteredSnapshots.length ? (
-          filteredSnapshots.map((snapshot, index) => (
-            <SiteRegistryRowCard
-              adminHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin")}`}
-              appCount={snapshot.appCount}
-              chargesReady={snapshot.site.connect.chargesEnabled}
-              customerCount={snapshot.customerCount}
-              domain={snapshot.site.primaryDomain}
-              domainCount={snapshot.domains.length}
-              enabledAppCount={snapshot.enabledAppCount}
-              healthScore={snapshot.healthScore}
-              index={index + 1}
-              jobCount={snapshot.jobCount}
-              key={snapshot.site.id}
-              name={snapshot.site.name}
-              owner={snapshot.ownerEmail}
-              publicationCount={snapshot.publicationCount}
-              revenueLabel={money(snapshot.revenueCents)}
-              settingsHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin/settings")}`}
-              siteId={snapshot.site.id}
-              slug={snapshot.site.slug}
-              status={{
-                label: statusLabel(snapshot.site.status),
-                tone:
-                  snapshot.site.status === "active"
-                    ? "good"
-                    : snapshot.site.status === "suspended"
-                    ? "bad"
-                    : "warn"
-              }}
-              storefrontHref={publicSiteUrlFromParts(snapshot.site)}
-              subscriptionCount={snapshot.activeSubscriptions}
-              themeHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin/themes")}`}
-              actions={
-                <>
-                  <PlatformSiteAdminLink
-                    className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#edf2f7] bg-white px-4 text-[13px] font-medium text-[#667085] transition hover:text-[#18212f]"
-                    label="后台"
-                    path="/admin"
-                    siteId={snapshot.site.id}
-                  />
-                  <WorkbenchActionButton href={publicSiteUrlFromParts(snapshot.site)} label="前台" quiet />
-                  <PlatformSiteAdminLink
-                    className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-white px-4 text-[13px] font-medium text-[#18212f] transition hover:border-[#bfd0f5] hover:text-[#2f6fed]"
-                    label="主题"
-                    path="/admin/themes"
-                    siteId={snapshot.site.id}
-                  />
-                  <PlatformSiteAdminLink
-                    className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-white px-4 text-[13px] font-medium text-[#18212f] transition hover:border-[#bfd0f5] hover:text-[#2f6fed]"
-                    label="配置"
-                    path="/admin/settings"
-                    siteId={snapshot.site.id}
-                  />
-                </>
-              }
-            />
-          ))
+          filteredSnapshots.map((snapshot, index) => {
+            const storefrontHref = `/site/${snapshot.site.slug}`;
+            return (
+              <SiteRegistryRowCard
+                adminHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin")}`}
+                appCount={snapshot.appCount}
+                chargesReady={snapshot.site.connect.chargesEnabled}
+                customerCount={snapshot.customerCount}
+                domain={snapshot.site.primaryDomain}
+                domainCount={snapshot.domains.length}
+                enabledAppCount={snapshot.enabledAppCount}
+                healthScore={snapshot.healthScore}
+                index={index + 1}
+                jobCount={snapshot.jobCount}
+                key={snapshot.site.id}
+                name={snapshot.site.name}
+                owner={snapshot.ownerEmail}
+                publicationCount={snapshot.publicationCount}
+                revenueLabel={money(snapshot.revenueCents)}
+                settingsHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin/settings")}`}
+                siteId={snapshot.site.id}
+                slug={snapshot.site.slug}
+                status={{
+                  label: statusLabel(snapshot.site.status),
+                  tone:
+                    snapshot.site.status === "active"
+                      ? "good"
+                      : snapshot.site.status === "suspended"
+                      ? "bad"
+                      : "warn"
+                }}
+                storefrontHref={storefrontHref}
+                subscriptionCount={snapshot.activeSubscriptions}
+                themeHref={`/api/platform/sites/${snapshot.site.id}/admin-bridge?path=${encodeURIComponent("/admin/themes")}`}
+                actions={
+                  <>
+                    <PlatformSiteAdminLink
+                      className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#edf2f7] bg-white px-4 text-[13px] font-medium text-[#667085] transition hover:text-[#18212f]"
+                      label="后台"
+                      path="/admin"
+                      siteId={snapshot.site.id}
+                    />
+                    <PlatformSiteExternalLinkButton
+                      className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#edf2f7] bg-white px-4 text-[13px] font-medium text-[#667085] transition hover:text-[#18212f]"
+                      href={storefrontHref}
+                      label="前台"
+                    />
+                    <PlatformSiteAdminLink
+                      className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-white px-4 text-[13px] font-medium text-[#18212f] transition hover:border-[#bfd0f5] hover:text-[#2f6fed]"
+                      label="主题"
+                      path="/admin/themes"
+                      siteId={snapshot.site.id}
+                    />
+                    <PlatformSiteAdminLink
+                      className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-white px-4 text-[13px] font-medium text-[#18212f] transition hover:border-[#bfd0f5] hover:text-[#2f6fed]"
+                      label="配置"
+                      path="/admin/settings"
+                      siteId={snapshot.site.id}
+                    />
+                  </>
+                }
+              />
+            );
+          })
         ) : (
           <div className="rounded-[16px] border border-dashed border-[#d8e0ea] bg-white px-6 py-10 text-center text-[13px] text-[#98a2b3]">
             当前筛选条件下没有匹配店铺。

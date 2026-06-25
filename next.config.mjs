@@ -3,6 +3,13 @@ const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   devIndicators: false,
   typedRoutes: false,
+  images: {
+    localPatterns: [
+      { pathname: "/assets/site-media/**" },
+      { pathname: "/assets/customer-assets/**" },
+      { pathname: "/assets/dreamshoot/**" }
+    ]
+  },
   async headers() {
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },

@@ -35,6 +35,7 @@ import {
   weddingStoryHouseTemplates
 } from "./theme/packages/wedding-story-house";
 import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplates } from "./theme/packages/dreamshoot-ai-studio";
+import { canonicalSiteSlug, legacySiteSlugCandidates } from "./domain-routing";
 import type { ThemePackageTemplateKey } from "./theme/packages/types";
 
 function cloneSeed<T>(value: T): T {
@@ -186,10 +187,10 @@ function buildThemeSettings(params: {
   return next;
 }
 
-const weddingSiteName = dreamshootAiStudioSiteSettings.branding?.logoText ?? "DreamShootAI";
+const weddingSiteName = dreamshootAiStudioSiteSettings.branding?.logoText ?? "MydreamShoots";
 const weddingSiteDescription =
   dreamshootAiStudioSiteSettings.branding?.description ??
-  "DreamShootAI is a premium AI photo subscription storefront for themed photo packages, personal AI models, free utility tools, AI video-ready outputs, and private gallery delivery.";
+  "MydreamShoots is a premium AI photo subscription storefront for themed photo packages, personal AI models, free utility tools, AI video-ready outputs, and private gallery delivery.";
 
 function packageGlobalSection(
   type: "header" | "footer",
@@ -264,7 +265,7 @@ const dreamShootHomeSections = {
     anchor: "start",
     eyebrow: "Start your AI shoot",
     title: "Begin with email, then choose a private photo package.",
-    subtitle: "A DreamShootAI-style customer entry module that routes into this site's login, subscription, credits, and album flow.",
+    subtitle: "A MydreamShoots-style customer entry module that routes into this site's login, subscription, credits, and album flow.",
     placeholder: "you@example.com",
     buttonLabel: "Continue",
     actionHref: "/login"
@@ -301,15 +302,15 @@ const dreamShootHomeSections = {
     subtitle: "Expose multiple AI offers as real storefront modules instead of a single generic prompt box.",
     layout: "split"
   }, [
-    { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Professional headshot packs", description: "Create profile, founder, resume, and team portraits from everyday uploads.", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image_generator" } },
-    { id: "tab_video", type: "feature_tab", settings: { label: "AI video", title: "Short-form photo video packs", description: "Package generated portraits into social-ready motion concepts for campaigns and personal channels.", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/image_generator" } },
-    { id: "tab_tryon", type: "feature_tab", settings: { label: "Virtual try-on", title: "Preview outfits and themed looks", description: "Use style prompts and pack rules to simulate editorial looks before generation starts.", imageUrl: "/assets/dreamshoot/frames/tab-virtual-looks.png", href: "/tools/image_generator" } }
+    { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Professional headshot packs", description: "Create profile, founder, resume, and team portraits from everyday uploads.", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
+    { id: "tab_video", type: "feature_tab", settings: { label: "AI video", title: "Short-form photo video packs", description: "Package generated portraits into social-ready motion concepts for campaigns and personal channels.", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/image-to-video" } },
+    { id: "tab_tryon", type: "feature_tab", settings: { label: "Virtual try-on", title: "Preview outfits and themed looks", description: "Use style prompts and pack rules to simulate editorial looks before generation starts.", imageUrl: "/assets/dreamshoot/frames/tab-virtual-looks.png", href: "/tools/virtual-try-on" } }
   ]),
   sample_strip_1: section("sample_strip", {
     anchor: "samples",
     eyebrow: "Generated looks",
     title: "One upload set can become travel, headshot, beauty, and fashion photos.",
-    subtitle: "This is the DreamShoot-style visual shelf: many concrete outputs before asking for registration.",
+    subtitle: "This is the MydreamShoots-style visual shelf: many concrete outputs before asking for registration.",
     speed: "slow"
   }, [
     { id: "sample_creator", type: "sample", settings: { label: "Creator", imageUrl: "/assets/dreamshoot/avatar-nora-gpt2-fast.png", meta: "Profile album" } },
@@ -335,9 +336,9 @@ const dreamShootHomeSections = {
     title: "Choose the story your AI shoot should tell.",
     subtitle: "Merchandise concrete customer outcomes: creator portraits, World Cup fan photos, headshots, beauty, travel, and editorial sets."
   }, [
-    { id: "occasion_creator", type: "occasion", settings: { title: "Creator portraits", description: "Profile, portfolio, and social channel visuals for solo creators.", tag: "Creator", imageUrl: "/assets/dreamshoot/avatar-nora-gpt2-fast.png", href: "/tools/image_generator" } },
-    { id: "occasion_worldcup", type: "occasion", settings: { title: "World Cup fan photos", description: "Stadium meet-ups, fan posters, and sports profile scenes.", tag: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image_generator" } },
-    { id: "occasion_headshot", type: "occasion", settings: { title: "Headshots", description: "Professional photos for founders, job search, and teams.", tag: "Professional", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image_generator" } }
+    { id: "occasion_creator", type: "occasion", settings: { title: "Creator portraits", description: "Profile, portfolio, and social channel visuals for solo creators.", tag: "Creator", imageUrl: "/assets/dreamshoot/avatar-nora-gpt2-fast.png", href: "/tools/creator-portrait" } },
+    { id: "occasion_worldcup", type: "occasion", settings: { title: "World Cup fan photos", description: "Stadium meet-ups, fan posters, and sports profile scenes.", tag: "Sports", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
+    { id: "occasion_headshot", type: "occasion", settings: { title: "Headshots", description: "Professional photos for founders, job search, and teams.", tag: "Professional", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } }
   ]),
   pack_marquee_1: section("shoot_pack_marquee", {
     anchor: "packs",
@@ -346,9 +347,9 @@ const dreamShootHomeSections = {
     subtitle: "World Cup, gala, travel, headshot, beauty, try-on, creator, and editorial packs can be managed in the backend.",
     source: "creative_packs"
   }, [
-    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/image_generator" } },
-    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/image_generator" } },
-    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/image_generator" } }
+    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
+    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
+    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/gala-photo" } }
   ]),
   launcher_1: section("ai_feature_launcher", {
     anchor: "features",
@@ -414,7 +415,7 @@ const homeJson: ThemePageJson = {
       authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Enter your email",
       authButtonLabel: "Get Started with Email",
-      socialProofLabel: "Creators use DreamShootAI Pro for private photo packs",
+      socialProofLabel: "Creators use MydreamShoots Pro for private photo packs",
       layout: "immersive_dark"
     }, [
       { id: "hero_cta_primary", type: "cta", settings: { label: "Get Started", href: "/login", style: "primary" } }
@@ -527,9 +528,9 @@ const homeJson: ThemePageJson = {
       subtitle: "Expose multiple AI offers as storefront modules instead of a single generic prompt box.",
       layout: "split"
     }, [
-      { id: "tab_creator", type: "feature_tab", settings: { label: "Creator photos", title: "AI creator portrait maker", description: "Profile, portfolio, social, and fan-poster image sets.", imageUrl: "media_lumen_hero", href: "/tools/image_generator" } },
-      { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Executive profile packs", description: "Professional portraits for founders, teams, and consultants.", imageUrl: "media_lumen_pack_exec", href: "/tools/image_generator" } },
-      { id: "tab_editorial", type: "feature_tab", settings: { label: "Editorial", title: "Studio editorial looks", description: "Magazine-style fashion and premium social profile imagery.", imageUrl: "media_lumen_editorial_close", href: "/tools/image_generator" } }
+      { id: "tab_creator", type: "feature_tab", settings: { label: "Creator photos", title: "AI creator portrait maker", description: "Profile, portfolio, social, and fan-poster image sets.", imageUrl: "media_lumen_hero", href: "/tools/creator-portrait" } },
+      { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Executive profile packs", description: "Professional portraits for founders, teams, and consultants.", imageUrl: "media_lumen_pack_exec", href: "/tools/headshot" } },
+      { id: "tab_editorial", type: "feature_tab", settings: { label: "Editorial", title: "Studio editorial looks", description: "Magazine-style fashion and premium social profile imagery.", imageUrl: "media_lumen_editorial_close", href: "/tools/fashion-editorial" } }
     ]),
     proof_1: section("testimonial_wall", {
       anchor: "proof",
@@ -703,7 +704,7 @@ const loginJson: ThemePageJson = {
     intro_1: section("rich_text", {
       eyebrow: "Customer login",
       title: "Continue with Google or email to enter your private account.",
-      body: "DreamShootAI-style customer sign-in, with uploads, subscriptions, jobs, credits, and albums kept inside one site boundary.",
+      body: "MydreamShoots-style customer sign-in, with uploads, subscriptions, jobs, credits, and albums kept inside one site boundary.",
       primaryCta: "Start creating",
       primaryHref: "/pricing",
       secondaryCta: "View privacy",
@@ -733,7 +734,7 @@ const loginJson: ThemePageJson = {
       { id: "trust_albums", type: "stat", settings: { value: "Albums", label: "customer delivery" } }
     ]),
     footer_1: section("footer", {
-      title: "DreamShootAI",
+      title: "MydreamShoots",
       body: "Private uploads, billing, and albums stay scoped to the current site."
     }, [
       { id: "login_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms-of-service", group: "support" } },
@@ -889,8 +890,8 @@ const privacyJson: ThemePageJson = {
     policy_1: section("policy_content", {
       title: "Privacy policy",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
-      body: "<h3>1. Information we collect</h3><p>We collect the email address used for your account, source photos you upload, generation settings, payment status, credit movements, and delivered outputs needed to operate the service.</p><h3>2. How we use data</h3><p>We use your data to create AI photo packages, manage credits and subscriptions, deliver private galleries, provide support, prevent abuse, and improve product reliability.</p><h3>3. Photo privacy</h3><p>Uploads and generated images stay tied to the current site and customer account. We do not sell personal photos, and site data is kept separate from other storefronts.</p><h3>4. Payments</h3><p>Payments are processed by Stripe or the connected payment account for this storefront. We store billing state and ledger records, not full card numbers.</p><h3>5. Security</h3><p>The service is served over HTTPS. Access to private albums, customer assets, jobs, and billing records is scoped by site and customer session.</p><h3>6. Retention and deletion</h3><p>You may request deletion of uploaded assets or generated outputs. Some billing, ledger, and abuse-prevention records may be retained where legally or operationally required.</p><h3>7. Contact</h3><p>Email <a href=\"mailto:support@dreamshootai.com\">support@dreamshootai.com</a> for privacy, account, or deletion requests.</p>",
+      contactEmail: "support@mydreamshoots.com",
+      body: "<h3>1. Information we collect</h3><p>We collect the email address used for your account, source photos you upload, generation settings, payment status, credit movements, and delivered outputs needed to operate the service.</p><h3>2. How we use data</h3><p>We use your data to create AI photo packages, manage credits and subscriptions, deliver private galleries, provide support, prevent abuse, and improve product reliability.</p><h3>3. Photo privacy</h3><p>Uploads and generated images stay tied to the current site and customer account. We do not sell personal photos, and site data is kept separate from other storefronts.</p><h3>4. Payments</h3><p>Payments are processed by Stripe or the connected payment account for this storefront. We store billing state and ledger records, not full card numbers.</p><h3>5. Security</h3><p>The service is served over HTTPS. Access to private albums, customer assets, jobs, and billing records is scoped by site and customer session.</p><h3>6. Retention and deletion</h3><p>You may request deletion of uploaded assets or generated outputs. Some billing, ledger, and abuse-prevention records may be retained where legally or operationally required.</p><h3>7. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for privacy, account, or deletion requests.</p>",
       sections: "privacy"
     }),
     footer_1: section("footer", {
@@ -913,7 +914,7 @@ const refundsJson: ThemePageJson = {
     policy_1: section("policy_content", {
       title: "Refunds and reversals",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
+      contactEmail: "support@mydreamshoots.com",
       body: "<h3>Refund eligibility</h3><p>You may request a refund for purchased credits if none of the credits from that purchase have been used. Once credits have been spent on a successful generation, that purchase becomes non-refundable.</p><h3>Refund window</h3><p>Refund requests should be submitted within 30 days of the purchase date with your account email and purchase details.</p><h3>Subscriptions</h3><p>If a subscription is canceled, the customer keeps access to purchased credits until they are used or expire according to the plan rules. Cancellation does not automatically refund credits already used.</p><h3>Technical failures</h3><p>If a technical failure on our side prevents credit use or delivery, support may release credits, rerun the job, or approve a refund after review.</p><h3>Ledger handling</h3><p>Refunds and billing reversals are recorded against this storefront. Checkout completion never grants credits before payment confirmation, and every adjustment is written through the credit ledger.</p>",
       sections: "refunds"
     }),
@@ -937,7 +938,7 @@ const contentPolicyJson: ThemePageJson = {
     policy_1: section("policy_content", {
       title: "Content policy",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
+      contactEmail: "support@mydreamshoots.com",
       body: "Customers may only upload assets they control or have permission to use. Generated output remains within the site's account scope, and moderation or review states can block publication when needed.",
       sections: "content"
     }),
@@ -989,8 +990,8 @@ const termsJson: ThemePageJson = {
     policy_1: section("policy_content", {
       title: "Terms of service",
       lastUpdated: "June 25, 2024",
-      contactEmail: "support@dreamshootai.com",
-      body: "<h3>1. Acceptance</h3><p>By using this site, you agree to these terms and to the privacy policy that governs uploads, generated outputs, purchases, and private delivery.</p><h3>2. Accounts</h3><p>Customers must provide accurate account information and keep credentials secure. Each account belongs to the current storefront and cannot be shared across unrelated site customer records.</p><h3>3. Subscriptions and credits</h3><p>Subscriptions and one-time credit packs provide credits for AI photo generation. Credits are granted after confirmed payment, reserved when a job starts, consumed after successful delivery, and released when a job fails or times out.</p><h3>4. Refunds</h3><p>Unused credits may be reviewed for refund eligibility within 30 days. Credits already spent on successful generations are not refundable unless support confirms a service-side technical failure.</p><h3>5. Uploaded content</h3><p>You may only upload images and references you control or have permission to use. The site may reject, review, remove, or block content that violates law, platform rules, or safety policy.</p><h3>6. Delivery</h3><p>Completed jobs are delivered to the signed-in customer account. Delivery states, retries, credit releases, and refunds are handled by the backend and recorded in the ledger.</p><h3>7. Liability</h3><p>The service is provided as a software subscription. To the extent permitted by law, liability is limited to the fees paid for the current billing period or the affected credit purchase.</p><h3>8. Contact us</h3><p>Email <a href=\"mailto:support@dreamshootai.com\">support@dreamshootai.com</a> for account, billing, refund, or policy questions.</p>"
+      contactEmail: "support@mydreamshoots.com",
+      body: "<h3>1. Acceptance</h3><p>By using this site, you agree to these terms and to the privacy policy that governs uploads, generated outputs, purchases, and private delivery.</p><h3>2. Accounts</h3><p>Customers must provide accurate account information and keep credentials secure. Each account belongs to the current storefront and cannot be shared across unrelated site customer records.</p><h3>3. Subscriptions and credits</h3><p>Subscriptions and one-time credit packs provide credits for AI photo generation. Credits are granted after confirmed payment, reserved when a job starts, consumed after successful delivery, and released when a job fails or times out.</p><h3>4. Refunds</h3><p>Unused credits may be reviewed for refund eligibility within 30 days. Credits already spent on successful generations are not refundable unless support confirms a service-side technical failure.</p><h3>5. Uploaded content</h3><p>You may only upload images and references you control or have permission to use. The site may reject, review, remove, or block content that violates law, platform rules, or safety policy.</p><h3>6. Delivery</h3><p>Completed jobs are delivered to the signed-in customer account. Delivery states, retries, credit releases, and refunds are handled in the ledger.</p><h3>7. Liability</h3><p>The service is provided as a software subscription. To the extent permitted by law, liability is limited to the fees paid for the current billing period or the affected credit purchase.</p><h3>8. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, or policy questions.</p>"
     }),
     footer_1: section("footer", {
       title: "Terms",
@@ -1049,8 +1050,8 @@ const sharedPages = (siteId: string): ThemePage[] => [
     siteId,
     pageType: "ai_tool",
     templateKey: "product",
-    slug: "/tools/image-studio",
-    title: "Image Studio",
+    slug: "/tools/headshot",
+    title: "Headshot Generator",
     draftJson: cloneSeed(toolJson),
     publishedJson: cloneSeed(toolJson)
   },
@@ -1220,7 +1221,7 @@ const weddingPageMappings: WeddingPageMapping[] = [
   { idSuffix: "pricing", packageTemplate: "pricing", templateKey: "page", slug: "/pricing", title: "Pricing", pageType: "pricing" },
   { idSuffix: "collections", packageTemplate: "packages", templateKey: "collection", slug: "/collections", title: "Wedding collections", pageType: "collection" },
   { idSuffix: "collection_signature", packageTemplate: "package-detail", templateKey: "package-detail", slug: "/collections/signature-ceremony", title: "Signature ceremony collection", pageType: "package_detail" },
-  { idSuffix: "tool_image", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/image-studio", title: "Wedding generator", pageType: "ai_tool" },
+  { idSuffix: "tool_image", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/wedding-portraits", title: "Wedding generator", pageType: "ai_tool" },
   { idSuffix: "login", packageTemplate: "login", templateKey: "login", slug: "/login", title: "Customer login", pageType: "login" },
   { idSuffix: "app", packageTemplate: "app-home", templateKey: "app-home", slug: "/app", title: "Wedding workspace", pageType: "workspace" },
   { idSuffix: "job_progress", packageTemplate: "job-progress", templateKey: "job-progress", slug: "/app/jobs/progress", title: "Job progress", pageType: "job_progress" },
@@ -1308,14 +1309,15 @@ const weddingPages = (siteId: string): ThemePage[] =>
 
 const weddingSeedSite: Site = {
   id: "site_lumen",
-  name: dreamshootAiStudioSiteSettings.branding?.logoText ?? "DreamShootAI",
+  name: dreamshootAiStudioSiteSettings.branding?.logoText ?? "MydreamShoots",
   slug: "lumen",
   status: "active",
   primaryDomain: "lumen.localhost",
   currency: "usd",
   timezone: "America/Chicago",
+  signupCreditGrant: 0,
   branding: {
-    logoText: dreamshootAiStudioSiteSettings.branding?.logoText ?? "DreamShootAI",
+    logoText: dreamshootAiStudioSiteSettings.branding?.logoText ?? "MydreamShoots",
     market: dreamshootAiStudioSiteSettings.branding?.market ?? "AI photo packages, personal AI models, free tools, credits, AI video, and private albums",
     description: weddingSiteDescription
   },
@@ -1340,6 +1342,7 @@ const atlasSeedSite: Site = {
   primaryDomain: "atlas.localhost",
   currency: "usd",
   timezone: "Europe/London",
+  signupCreditGrant: 0,
   branding: {
     logoText: "Atlas",
     market: "AI copy systems for boutique stores",
@@ -2241,13 +2244,15 @@ platformState.siteAiApps[1].aiApp = platformState.aiApps[2];
 platformState.siteAiApps[2].aiApp = platformState.aiApps[1];
 
 export function getSiteBySlug(slug: string): Site | undefined {
-  return platformState.sites.find((site) => site.slug === slug);
+  const canonicalSlug = canonicalSiteSlug(slug);
+  const candidates = legacySiteSlugCandidates(slug);
+  return platformState.sites.find((site) => site.slug === canonicalSlug) ?? platformState.sites.find((site) => candidates.includes(site.slug));
 }
 
 export function getSiteByHost(host: string): Site {
   const cleanHost = host.split(":")[0].toLowerCase();
   return (
-    platformState.sites.find((site) => site.primaryDomain === cleanHost || cleanHost.includes(site.slug)) ??
+    platformState.sites.find((site) => site.primaryDomain === cleanHost || cleanHost.includes(site.slug) || cleanHost.includes(canonicalSiteSlug(site.slug))) ??
     platformState.sites[0]
   );
 }

@@ -212,21 +212,21 @@ const homeSections: ThemePageJson["sections"] = {
         description: "Save-the-date portraits, proposal announcements, and engagement landing page imagery.",
         tag: "Before the day",
         imageUrl: weddingAssets.exampleParis,
-        href: "/collections?category=wedding"
+        href: "/collections/wedding"
       }),
       block("occasion_ceremony", "occasion", {
         title: "Ceremony album",
         description: "Editorial aisle shots, vow moments, and clean ceremony hero images.",
         tag: "Ceremony",
         imageUrl: weddingAssets.santorini,
-        href: "/collections?category=wedding"
+        href: "/collections/wedding"
       }),
       block("occasion_reception", "occasion", {
         title: "Reception recap",
         description: "After-party edits, toasts, dance floor frames, and thank-you page visuals.",
         tag: "Reception",
         imageUrl: weddingAssets.marrakech,
-        href: "/collections?category=wedding"
+        href: "/collections/wedding"
       })
     ]
   ),

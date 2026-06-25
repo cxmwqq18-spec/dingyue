@@ -10,8 +10,11 @@ const defaultEndpoints = [
   ["GET", "/platform/login"],
   ["GET", "/api/platform/state"],
   ["GET", "/api/platform/sites"],
+  ["GET", "/api/platform/ai-providers"],
   ["GET", "/api/platform/cloudflare"],
   ["GET", "/api/platform/email"],
+  ["GET", "/api/sites/site_dreamshoot/email"],
+  ["GET", "/api/sites/site_dreamshoot/customers/export"],
   ["GET", "/site/dreamshoot"],
   ["GET", "/site/dreamshoot/admin/login"],
   ["GET", "/site/dreamshoot/pricing"]

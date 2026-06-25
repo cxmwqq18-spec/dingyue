@@ -3,7 +3,11 @@ import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { getPage } from "@/lib/data";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import {
+  readStorefrontPlatformStateFromDatabase,
+  readStorefrontPublicRuntimeStateByHostFromDatabase,
+  readStorefrontRuntimeStateByHostFromDatabase
+} from "@/lib/storefront-state";
 import {
   renderCustomerJobDetailPage,
   renderCustomerWorkspacePage,
@@ -12,15 +16,42 @@ import {
   resolveToolPageForSite
 } from "@/lib/storefront-render";
 import { metadataForThemePage } from "@/lib/theme/seo";
+import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
+  return getHostRuntimeStateForModeWithFallback(hosts, "private");
+}
+
+async function getHostPublicRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
+  return getHostRuntimeStateForModeWithFallback(hosts, "public");
+}
+
+async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null>, mode: "public" | "private"): Promise<PlatformState | undefined> {
+  try {
+    for (const host of hosts) {
+      const state = mode === "public"
+        ? await readStorefrontPublicRuntimeStateByHostFromDatabase(host)
+        : await readStorefrontRuntimeStateByHostFromDatabase(host);
+      if (state) return state;
+    }
+  } catch {
+    // Fall through to the full state reader for local or migrating databases.
+  }
+  const state = await readStorefrontPlatformStateFromDatabase();
+  const site = getSiteByHostCandidatesFromState(state, hosts);
+  return site ? state : undefined;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
-  const { path } = await params;
-  const state = readStorefrontPlatformState();
-  const headerStore = await headers();
-  const site = getSiteByHostCandidatesFromState(state, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
+  const [resolvedParams, headerStore] = await Promise.all([params, headers()]);
+  const { path } = resolvedParams;
+  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  const state = await getHostPublicRuntimeStateWithFallback(hostCandidates);
+  if (!state) return {};
+  const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
   const slug = `/${path.join("/")}`;
   if (path[0] === "tools" && path[1]) {
@@ -40,17 +71,21 @@ export default async function HostStorefrontCatchAllPage({
   params: Promise<{ path: string[] }>;
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { path } = await params;
+  const [{ path }, headerStore] = await Promise.all([params, headers()]);
   const firstSegment = path[0] ?? "";
   if (firstSegment === "platform" || firstSegment === "site" || firstSegment === "api" || firstSegment === "_next") {
     notFound();
   }
 
-  const headerStore = await headers();
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
-  const state = readStorefrontPlatformState();
-  const site = getSiteByHostCandidatesFromState(state, [headerStore.get("x-forwarded-host"), headerStore.get("host")]);
+  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  const needsPrivateRuntime = firstSegment === "app";
+  const state = needsPrivateRuntime
+    ? await getHostRuntimeStateWithFallback(hostCandidates)
+    : await getHostPublicRuntimeStateWithFallback(hostCandidates);
+  if (!state) notFound();
+  const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {

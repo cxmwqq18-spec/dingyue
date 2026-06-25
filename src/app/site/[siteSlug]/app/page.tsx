@@ -1,22 +1,42 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getPage } from "@/lib/data";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
-import { renderCustomerWorkspacePage } from "@/lib/storefront-render";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { CustomerWorkspaceShell } from "@/components/storefront/customer-workspace-shell";
+import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
+import { getCustomerWorkspaceBootstrapRelational } from "@/lib/stores/site-store";
+import { publicSiteSlug } from "@/lib/domain-routing";
+import { customerSessionCookie } from "@/lib/session";
 
-export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
-  const { siteSlug } = await params;
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
-  const page = site?.pages.find((item) => item.slug === "/app");
-  return site && page ? metadataForThemePage(site, page) : {};
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: "Workspace" };
 }
 
-export default async function CustomerWorkspacePage({ params }: { params: Promise<{ siteSlug: string }> }) {
+export default async function CustomerWorkspacePage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ siteSlug: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { siteSlug } = await params;
-  const state = readStorefrontPlatformState();
-  const site = state.sites.find((item) => item.slug === siteSlug);
-  if (!site) notFound();
-  return renderCustomerWorkspacePage({ site, slug: "/app", routeMode: "path", state });
+  const publicSlug = publicSiteSlug(siteSlug);
+  const bootstrap = await getCustomerWorkspaceBootstrapRelational(siteSlug);
+  if (!bootstrap) notFound();
+
+  const sessionId = (await cookies()).get(customerSessionCookie(bootstrap.site.id))?.value;
+  if (!sessionId) redirect(`/site/${publicSlug}/login`);
+  const current = await getCustomerBySessionRelational({ siteId: bootstrap.site.id, sessionId });
+  if (!current) redirect(`/site/${publicSlug}/login`);
+
+  const query = searchParams ? await searchParams : {};
+  return (
+    <CustomerWorkspaceShell
+      assets={[]}
+      creativePacks={bootstrap.creativePacks}
+      customer={current.customer}
+      initialCreativePackId={typeof query.pack === "string" ? query.pack : undefined}
+      site={bootstrap.site}
+      siteAiApps={bootstrap.siteAiApps}
+    />
+  );
 }

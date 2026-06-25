@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
-import { installInternalThemePackageForSite, installSaasThemeForSite, StoreError } from "@/lib/server-store";
+import { StoreError } from "@/lib/server-store";
+import { installInternalThemePackageForSiteRelational, installSaasThemeForSiteRelational } from "@/lib/stores/theme-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -11,13 +12,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   try {
     const result =
       body.installType === "internal"
-        ? installInternalThemePackageForSite({
+        ? await installInternalThemePackageForSiteRelational({
             siteId,
             name: body.name,
             actor: body.actor,
             packageKey: body.themeKey ?? "dreamshoot-ai-studio"
           })
-        : installSaasThemeForSite({
+        : await installSaasThemeForSiteRelational({
             siteId,
             name: body.name,
             actor: body.actor,

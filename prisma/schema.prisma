@@ -34,6 +34,35 @@ model PlatformEmailSettings {
   updatedAt DateTime @updatedAt
 }
 
+model PlatformEmailConfig {
+  id              String                      @id
+  label           String
+  provider        String                      @default("resend")
+  apiKey          String?
+  fromEmail       String?
+  replyTo         String?
+  isDefault       Boolean                     @default(false)
+  updatedBy       String?
+  createdAt       DateTime                    @default(now())
+  updatedAt       DateTime                    @updatedAt
+  siteAssignments SiteEmailConfigAssignment[]
+
+  @@index([isDefault])
+}
+
+model SiteEmailConfigAssignment {
+  siteId    String
+  configId  String
+  updatedBy String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  site      Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  config    PlatformEmailConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@id([siteId])
+  @@index([configId])
+}
+
 model PlatformAdmin {
   id           String            @id
   email        String            @unique
@@ -85,62 +114,88 @@ model PlatformAiProvider {
   @@index([preferred, priority])
 }
 
+model PlatformAsyncJob {
+  id         String    @id
+  kind       String
+  status     String
+  actorId    String?
+  metadata   Json
+  result     Json?
+  error      Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  startedAt  DateTime?
+  finishedAt DateTime?
+  expiresAt  DateTime
+
+  @@index([actorId, createdAt])
+  @@index([kind, status])
+  @@index([expiresAt])
+}
+
 model Site {
-  id               String                @id
-  name             String
-  slug             String                @unique
-  status           String
-  primaryDomain    String
-  timezone         String                @default("UTC")
-  currency         String                @default("usd")
-  branding         Json
-  createdAt        DateTime              @default(now())
-  updatedAt        DateTime              @updatedAt
-  domains          SiteDomain[]
-  admins           SiteAdmin[]
-  adminSessions    SiteAdminSession[]
-  customers        Customer[]
-  customerSessions CustomerSession[]
+  id                 String                      @id
+  name               String
+  slug               String                      @unique
+  status             String
+  primaryDomain      String
+  timezone           String                      @default("UTC")
+  currency           String                      @default("usd")
+  signupCreditGrant  Int                         @default(0)
+  branding           Json
+  createdAt          DateTime                    @default(now())
+  updatedAt          DateTime                    @updatedAt
+  domains            SiteDomain[]
+  admins             SiteAdmin[]
+  adminSessions      SiteAdminSession[]
+  customers          Customer[]
+  customerSessions   CustomerSession[]
   emailVerifications CustomerEmailVerification[]
-  products         Product[]
-  prices           Price[]
-  subscriptions    Subscription[]
-  orders           Order[]
-  paymentEvents    PaymentEvent[]
-  ledger           CreditLedger[]
-  balances         CreditBalance[]
-  pages            ThemePage[]
-  settings         ThemeSettings?
-  publications     ThemePublication[]
-  siteThemes       SiteTheme[]
-  themeCopies      ThemeCopy[]
-  connect          StripeConnectAccount?
-  aiApps           SiteAiApp[]
-  gatewayGroups    AiGatewayGroup[]
-  creativePacks    CreativePack[]
-  mediaAssets      MediaAsset[]
-  customerModels   CustomerModel[]
-  albums           Album[]
-  jobs             GenerationJob[]
-  uploads          AssetUpload[]
-  auditLogs        AuditLog[]
+  products           Product[]
+  prices             Price[]
+  subscriptions      Subscription[]
+  orders             Order[]
+  paymentEvents      PaymentEvent[]
+  ledger             CreditLedger[]
+  balances           CreditBalance[]
+  pages              ThemePage[]
+  settings           ThemeSettings?
+  publications       ThemePublication[]
+  siteThemes         SiteTheme[]
+  themeCopies        ThemeCopy[]
+  connect            StripeConnectAccount?
+  aiApps             SiteAiApp[]
+  gatewayGroups      AiGatewayGroup[]
+  creativePacks      CreativePack[]
+  mediaAssets        MediaAsset[]
+  customerModels     CustomerModel[]
+  albums             Album[]
+  jobs               GenerationJob[]
+  uploads            AssetUpload[]
+  auditLogs          AuditLog[]
+  emailConfigAssignment SiteEmailConfigAssignment?
 
   @@index([status])
   @@index([primaryDomain])
+  @@index([status, createdAt])
+  @@index([createdAt])
 }
 
 model SiteDomain {
-  id        String   @id
-  siteId    String
-  domain    String   @unique
-  isPrimary Boolean  @default(false)
-  status    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id                   String   @id
+  siteId               String
+  domain               String   @unique
+  isPrimary            Boolean  @default(false)
+  status               String
+  allowedAiProviderIds String[] @default([])
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  site                 Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@index([siteId, isPrimary])
   @@index([siteId, status])
+  @@index([siteId, isPrimary, createdAt])
+  @@index([siteId, status, createdAt])
 }
 
 model SiteAdmin {
@@ -157,6 +212,7 @@ model SiteAdmin {
 
   @@unique([siteId, email])
   @@index([siteId, role])
+  @@index([siteId, role, createdAt])
 }
 
 model SiteAdminSession {
@@ -194,6 +250,8 @@ model Customer {
 
   @@unique([siteId, email])
   @@index([siteId, status])
+  @@index([siteId, createdAt])
+  @@index([siteId, status, createdAt])
 }
 
 model CustomerSession {
@@ -206,6 +264,7 @@ model CustomerSession {
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([siteId, customerId])
+  @@index([siteId, customerId, expiresAt])
   @@index([expiresAt])
 }
 
@@ -255,6 +314,8 @@ model Product {
 
   @@index([siteId, status])
   @@index([siteId, type])
+  @@index([siteId, status, createdAt])
+  @@index([siteId, type, createdAt])
 }
 
 model Price {
@@ -299,6 +360,8 @@ model Subscription {
 
   @@index([siteId, customerId, status])
   @@index([siteId, productId])
+  @@index([siteId, status, createdAt])
+  @@index([siteId, status, currentPeriodEnd])
 }
 
 model Order {
@@ -318,6 +381,7 @@ model Order {
   @@index([siteId, customerId, createdAt])
   @@index([siteId, status])
   @@index([siteId, sourceId])
+  @@index([siteId, status, createdAt])
 }
 
 model PaymentEvent {
@@ -332,6 +396,7 @@ model PaymentEvent {
 
   @@unique([siteId, provider, providerEventId])
   @@index([siteId, eventType])
+  @@index([siteId, processedAt])
   @@index([processedAt])
 }
 
@@ -350,6 +415,7 @@ model CreditLedger {
 
   @@index([siteId, customerId, createdAt])
   @@index([siteId, sourceType, sourceId])
+  @@index([siteId, type, createdAt])
 }
 
 model CreditBalance {
@@ -382,20 +448,23 @@ model AiApp {
 }
 
 model SiteAiApp {
-  id         String   @id
-  siteId     String
-  aiAppId    String
-  enabled    Boolean  @default(true)
-  creditCost Int
-  routeKey   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  aiApp      AiApp    @relation(fields: [aiAppId], references: [id], onDelete: Cascade)
+  id             String   @id
+  siteId         String
+  aiAppId        String
+  enabled        Boolean  @default(true)
+  creditCost     Int
+  routeKey       String
+  workflowConfig Json?
+  providerConfig Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  site           Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  aiApp          AiApp    @relation(fields: [aiAppId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, aiAppId])
   @@unique([siteId, routeKey])
   @@index([siteId, enabled])
+  @@index([siteId, enabled, routeKey])
 }
 
 model AiGatewayGroup {
@@ -416,6 +485,7 @@ model AiGatewayGroup {
 
   @@unique([siteId, name])
   @@index([siteId, status])
+  @@index([siteId, status, name])
 }
 
 model ThemePage {
@@ -435,6 +505,7 @@ model ThemePage {
   @@unique([siteId, slug])
   @@index([siteId, pageType])
   @@index([siteId, templateKey])
+  @@index([siteId, updatedAt])
 }
 
 model ThemeSettings {
@@ -458,6 +529,7 @@ model ThemePublication {
 
   @@unique([siteId, version])
   @@index([siteId, publishedAt])
+  @@index([siteId, version])
 }
 
 model SiteTheme {
@@ -524,6 +596,8 @@ model MediaAsset {
 
   @@unique([siteId, storageKey])
   @@index([siteId, usageType])
+  @@index([siteId, usageType, createdAt])
+  @@index([siteId, createdAt])
 }
 
 model CreativePack {
@@ -532,6 +606,7 @@ model CreativePack {
   name             String
   headline         String
   description      String
+  prompt           String?
   category         String
   aiAppSlug        String
   status           String
@@ -549,6 +624,7 @@ model CreativePack {
   @@index([siteId, status])
   @@index([siteId, category])
   @@index([siteId, aiAppSlug])
+  @@index([siteId, status, createdAt])
 }
 
 model CustomerModel {
@@ -571,6 +647,8 @@ model CustomerModel {
 
   @@index([siteId, customerId, status])
   @@index([siteId, providerModelId])
+  @@index([siteId, status, updatedAt])
+  @@index([siteId, updatedAt])
 }
 
 model Album {
@@ -594,6 +672,8 @@ model Album {
   @@index([siteId, customerId, status])
   @@index([siteId, sourceJobId])
   @@index([siteId, creativePackId])
+  @@index([siteId, status, updatedAt])
+  @@index([siteId, updatedAt])
 }
 
 model AssetUpload {
@@ -625,6 +705,9 @@ model AssetUpload {
   @@index([siteId, customerModelId])
   @@index([siteId, jobId])
   @@index([siteId, reviewStatus])
+  @@index([siteId, reviewStatus, createdAt])
+  @@index([siteId, customerId, createdAt])
+  @@index([siteId, createdAt])
 }
 
 model GenerationJob {
@@ -647,6 +730,9 @@ model GenerationJob {
   @@index([siteId, customerId, createdAt])
   @@index([siteId, status])
   @@index([siteId, aiAppId])
+  @@index([siteId, status, updatedAt])
+  @@index([siteId, updatedAt])
+  @@index([status, updatedAt])
 }
 
 model AuditLog {
@@ -664,4 +750,5 @@ model AuditLog {
   @@index([siteId, createdAt])
   @@index([actorType, actorId])
   @@index([targetType, targetId])
+  @@index([createdAt])
 }

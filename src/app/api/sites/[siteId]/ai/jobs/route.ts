@@ -48,7 +48,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       customer,
       customerBalance: customer.balance,
       ledgerAction: ledger,
-      workerPayload: buildWorkerPayload({ job, siteAiApp, baseUrl }),
+      workerPayload: await buildWorkerPayload({ job, siteAiApp, baseUrl }),
       note: "Persisted job and reserved credits before worker dispatch."
     });
   } catch (error) {

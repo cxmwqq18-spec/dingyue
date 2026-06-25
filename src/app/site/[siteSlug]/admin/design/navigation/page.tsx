@@ -4,25 +4,15 @@ import {
   getSiteAdminData,
   modulePath,
   siteAdminAccount,
-  siteAdminCommandActions,
   siteAdminModuleLinks,
   siteAdminNav,
-  siteAdminQuickActions,
   siteAdminStats,
   siteAdminWorkspace
 } from "../../_lib/site-admin-context";
 
-function globalBlockCount(settings: ReturnType<typeof getGlobalSettings>, type: "header" | "footer") {
-  return settings.globalSections?.[type]?.blocks?.length ?? 0;
-}
-
-function getGlobalSettings(settings: Awaited<ReturnType<typeof getSiteAdminData>>["site"]["themeSettings"]["draftJson"]) {
-  return settings;
-}
-
 export default async function DesignNavigationPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const data = await getSiteAdminData(siteSlug);
+  const data = await getSiteAdminData(siteSlug, { include: ["themeSettings"], summary: false });
   const draftSettings = data.site.themeSettings.draftJson;
   const publishedSettings = data.site.themeSettings.publishedJson;
   const headerCount = draftSettings.navigation.headerLinks.length;
@@ -32,18 +22,16 @@ export default async function DesignNavigationPage({ params }: { params: Promise
     <AdminShell
       activeModuleCode="design"
       account={siteAdminAccount(data.site, data.current)}
-      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design") }}
+      action={{ label: "打开装修器", href: modulePath(data.site, "/admin/design/workbench") }}
       breadcrumbs={[
         { label: "店铺管理", href: modulePath(data.site, "/admin") },
         { label: "店铺装修", href: modulePath(data.site, "/admin/design") },
         { label: "导航菜单" }
       ]}
       brand={data.site.branding.logoText}
-      commandActions={siteAdminCommandActions(data.site, data)}
       eyebrow="navigation and global sections"
       moduleLinks={siteAdminModuleLinks}
       nav={siteAdminNav(data.site, data)}
-      quickActions={siteAdminQuickActions(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
       subtitle="导航菜单属于主题全局设置，保存草稿后仍需发布整站快照，前台才读取最新 published theme settings。"

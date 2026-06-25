@@ -1,7 +1,7 @@
 import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
-export type DreamShootAiStudioTemplateKey = ThemePackageTemplateKey | "tools";
+export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -198,11 +198,11 @@ const homeSections: ThemePageJson["sections"] = {
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.proofWorldcupGallery, href: "/collections?category=sports" }),
-      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.proofBusinessFounder, href: "/collections?category=headshots" }),
-      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.proofBeautyHair, href: "/collections?category=beauty" }),
-      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.proofCinematicWorlds, href: "/collections?category=creative" }),
-      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.proofCoupleEngagement, href: "/collections?category=couple" })
+      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.proofWorldcupGallery, href: "/collections/sports" }),
+      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.proofBusinessFounder, href: "/collections/headshots" }),
+      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.proofBeautyHair, href: "/collections/beauty" }),
+      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.proofCinematicWorlds, href: "/collections/creative" }),
+      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.proofCoupleEngagement, href: "/collections/couple" })
     ]
   ),
   featured_pack_1: section(
@@ -252,12 +252,12 @@ const homeSections: ThemePageJson["sections"] = {
       featuredCount: 5
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: "/tools/image-studio" }),
-      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: "/tools/image-studio" }),
-      block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/tools/image-studio" }),
-      block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview hair directions, colors, and beauty styling before choosing a full image package.", category: "Beauty", meta: "20 photos", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/tools/image-studio" }),
-      block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out photos with editorial lighting and red-carpet energy.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/tools/image-studio" }),
-      block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: "/tools/image-studio" })
+      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: toolHref("world-cup-fan-photos") }),
+      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: toolHref("headshot") }),
+      block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: toolHref("cyberpunk-portrait") }),
+      block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview hair directions, colors, and beauty styling before choosing a full image package.", category: "Beauty", meta: "20 photos", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: toolHref("hairstyle-preview") }),
+      block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out photos with editorial lighting and red-carpet energy.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: toolHref("gala-photo") }),
+      block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: toolHref("wedding-portraits") })
     ]
   ),
   flow_bridge_1: section(
@@ -292,12 +292,12 @@ const homeSections: ThemePageJson["sections"] = {
       layout: "editorial"
     },
     [
-      block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections?category=headshots" }),
-      block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections?category=beauty" }),
-      block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections?category=creative" }),
-      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections?category=sports" }),
-      block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/tools/image-studio" }),
-      block("taxonomy_creator", "taxonomy_card", { title: "Creator lifestyle", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Creator", keywords: "creator portraits|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections?category=creator" })
+      block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshots" }),
+      block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/beauty" }),
+      block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections/creative" }),
+      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/sports" }),
+      block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: toolHref("image-to-video") }),
+      block("taxonomy_creator", "taxonomy_card", { title: "Creator lifestyle", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Creator", keywords: "creator portraits|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections/creator" })
     ]
   ),
   sample_strip_1: section(
@@ -355,21 +355,21 @@ const homeSections: ThemePageJson["sections"] = {
         title: "Pick a finished outcome",
         description: "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
         imageUrl: assets.worldCupFan,
-        href: "/tools/image-studio"
+        href: toolHref("ai-image-studio")
       }),
       block("tab_video", "feature_tab", {
         label: "AI video",
         title: "Turn package results into motion",
         description: "Convert favorite generated photos into short video ideas without leaving the same customer account.",
         imageUrl: assets.travelScene,
-        href: "/tools/image-studio"
+        href: toolHref("image-to-video")
       }),
       block("tab_tryon", "feature_tab", {
         label: "Try-on and style",
         title: "Preview looks before a full package",
         description: "Test hairstyle, wardrobe, beauty, or gala directions before spending credits on a premium pack.",
         imageUrl: assets.tryOn,
-        href: "/tools/image-studio"
+        href: toolHref("virtual-try-on")
       })
     ]
   ),
@@ -484,7 +484,7 @@ const homeSections: ThemePageJson["sections"] = {
       summaryTitle: "Loved by creators, job seekers, and solo buyers",
       summaryBody: "The strongest proof is simple: ordinary input photos, believable output sets, clear credits, and no studio booking.",
       summaryRating: "4.9/5",
-      summaryMeta: "Demo review wall aligned to the DreamShootAI direction"
+      summaryMeta: "Demo review wall aligned to the MydreamShoots direction"
     },
     [
       block("review_ava", "testimonial", {
@@ -565,7 +565,7 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("faq_cost", "faq_item", {
-        question: "Can I try DreamShootAI for free?",
+        question: "Can I try MydreamShoots for free?",
         answer: "Some lightweight tools can be free, but private model creation and premium packs require a paid plan because they consume dedicated generation credits."
       }),
       block("faq_uploads", "faq_item", {
@@ -599,7 +599,7 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "start",
       eyebrow: "Start creating",
-      title: "Open your private DreamShootAI studio.",
+      title: "Open your private MydreamShoots studio.",
       subtitle: "Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
       primaryCta: "Start Making",
       primaryHref: "/login",
@@ -692,7 +692,7 @@ const templateSections = {
   })
 };
 
-export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, ThemePageJson> = {
+export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
     ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
@@ -781,7 +781,7 @@ export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, 
         {
           anchor: "start",
           eyebrow: "Customer login",
-          title: "Start with a private DreamShootAI account.",
+          title: "Start with a private MydreamShoots account.",
           subtitle: "Customers sign in before upload, subscription, generation, progress, and private album access.",
           emailPlaceholder: "you@example.com",
           buttonLabel: "Continue with email",
@@ -803,26 +803,25 @@ export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, 
   ),
   "app-home": page(
     "workspace",
-    ["launcher_1", "upload_1", "form_1", "progress_1", "album_1", "trust_1"],
+    ["launcher_1", "form_1", "upload_1", "progress_1", "album_1"],
     {
       launcher_1: section("ai_feature_launcher", {
         anchor: "features",
         eyebrow: "Studio features",
         title: "A real customer workspace, not just a landing page.",
         subtitle: "Customers can upload, generate, track progress, view albums, and manage credits from one signed-in area.",
-        ctaLabel: "Start with uploads",
-        ctaHref: "/app#upload_1"
+        ctaLabel: "Choose a tool",
+        ctaHref: "/app#create"
       }, [
+        block("feature_prepare", "feature", { title: "Choose a tool", description: "Pick the photo workflow first, then attach the source photos it needs.", meta: "Tool first", href: "/app#create" }),
         block("feature_upload", "feature", { title: "Upload photos", description: "Collect selfies and source images inside a private customer workspace.", meta: "Private intake", href: "/app#upload_1" }),
-        block("feature_prepare", "feature", { title: "Prepare portraits", description: "Choose style prompts and attach uploaded source photos before generation.", meta: "Consistent look", href: "/app#create" }),
-        block("feature_progress", "feature", { title: "Track progress", description: "Show queued, creating, delivered, review-needed, and returned-credit states.", meta: "Live progress", href: "/app/jobs/progress" }),
-        block("feature_album", "feature", { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/album" })
+        block("feature_progress", "feature", { title: "Track progress", description: "Show queued, creating, delivered, review-needed, and returned-credit states.", meta: "Live progress", href: "/app#progress_1" }),
+        block("feature_album", "feature", { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/app#album_1" })
       ]),
-      upload_1: section("upload_panel", { title: "Private upload intake", helper: "Upload source photos for the current customer only.", imageUrl: assets.upload }),
-      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Create a private AI image request", helper: "Choose prompt settings, attach uploaded source photos, reserve credits, and send a signed worker job." }),
+      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Choose a photo tool", helper: "Pick one backend-enabled tool first. Then upload the source photos it asks for and start a private request." }),
+      upload_1: section("upload_panel", { title: "Upload source photos", helper: "Upload only the source photos needed for the selected tool.", imageUrl: assets.upload }),
       progress_1: section("job_progress", { title: "Recent generation status" }),
-      album_1: section("album_gallery", { title: "Generated albums", showDownloads: true }),
-      trust_1: homeSections.trust_1
+      album_1: section("album_gallery", { title: "Generated albums", showDownloads: true })
     },
     1
   ),
@@ -952,7 +951,7 @@ export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, 
       }),
       cart_1: section("cart_summary", {
         eyebrow: "Checkout summary",
-        title: "Your selected DreamShootAI plan",
+        title: "Your selected MydreamShoots plan",
         subtitle: "Products, prices, credits, and checkout state are site-scoped. Credits are granted only after fulfilment.",
         emptyTitle: "Choose a plan first",
         emptyBody: "Open pricing to select a subscription or one-time credit pack.",
@@ -986,7 +985,7 @@ export const dreamshootAiStudioTemplates: Record<DreamShootAiStudioTemplateKey, 
   )
 };
 
-export const dreamshootAiStudioTemplateLabels: Record<DreamShootAiStudioTemplateKey, string> = {
+export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTemplateKey, string> = {
   home: "Home",
   pricing: "Pricing",
   packages: "Photo Packages",
@@ -1010,9 +1009,9 @@ export const dreamshootAiStudioTemplateLabels: Record<DreamShootAiStudioTemplate
 
 export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
-    logoText: "DreamShootAI",
+    logoText: "MydreamShoots",
     market: "AI photo packages, personal AI models, free tools, credits, AI video, and private albums",
-    description: "DreamShootAI is a premium AI photo subscription storefront for themed photo packages, personal AI models, free utility tools, AI video-ready outputs, and private gallery delivery."
+    description: "MydreamShoots is a premium AI photo subscription storefront for themed photo packages, personal AI models, free utility tools, AI video-ready outputs, and private gallery delivery."
   },
   themeSettings: {
     colors: {
@@ -1033,7 +1032,6 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       headerLinks: [
         { label: "Photo Packages", href: "/collections" },
         { label: "Tools", href: "/tools" },
-        { label: "Workspace", href: "/app" },
         { label: "How it works", href: "#workflow" },
         { label: "Pricing", href: "/pricing" },
         { label: "FAQ", href: "#faq" }
@@ -1049,19 +1047,18 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     globalSections: {
       header: {
         settings: {
-          title: "DreamShootAI",
+          title: "MydreamShoots",
           sticky: true,
           ctaLabel: "Start Making",
           ctaHref: "/login",
           style: "dark_pills",
           mobileLabel: "Menu",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
-          logoAlt: "DreamShootAI heart camera logo"
+          logoAlt: "MydreamShoots heart camera logo"
         },
         blocks: [
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photo Packages", href: "/collections" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
-          { id: "dreamshoot_header_workspace", type: "menu_link", settings: { label: "Workspace", href: "/app" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "#workflow" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
           { id: "dreamshoot_header_faq", type: "menu_link", settings: { label: "FAQ", href: "#faq" } },
@@ -1070,7 +1067,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       },
       footer: {
         settings: {
-          title: "DreamShootAI",
+          title: "MydreamShoots",
           tagline: "AI photo packages, personal models, free tools, credits, and private gallery delivery",
           body: "Transform everyday selfies into themed photo packages, headshots, World Cup fan photos, cyberpunk portraits, gala scenes, AI motion ideas, and virtual try-on previews from one subscription.",
           productHeading: "Explore",
@@ -1079,13 +1076,13 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           socialHeading: "Why it works",
           socialBody: "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
           bottomLine: "Monthly credits, one-time top-ups, and site-scoped galleries in one storefront.",
-          copyright: "DreamShootAI demo. All rights reserved."
+          copyright: "MydreamShoots. All rights reserved."
         },
         blocks: [
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
           { id: "dreamshoot_footer_packs", type: "menu_link", settings: { label: "Packs", href: "/collections", group: "product" } },
           { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "Free tools", href: "/tools", group: "product" } },
-          { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Image studio", href: "/tools/image-studio", group: "product" } },
+          { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Image studio", href: toolHref("ai-image-studio"), group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "Help center", href: "/help", group: "support" } },
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy", href: "/policies/privacy", group: "support" } },
           { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/policies/refunds", group: "support" } },
@@ -1094,9 +1091,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       }
     },
     seo: {
-      siteTitle: "DreamShootAI",
+      siteTitle: "MydreamShoots",
       siteDescription: "AI photo package subscription with personal AI models, private uploads, free tools, AI video-ready outputs, and customer-only galleries.",
-      titleTemplate: "%s | DreamShootAI",
+      siteKeywords: "MydreamShoots, AI photo packages, AI portraits, personal AI model, private photo gallery, AI photo subscription",
+      titleTemplate: "%s | MydreamShoots",
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {
@@ -1116,7 +1114,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         header_plus: {
           type: "header_plus",
           version: "1",
-          card_name: "DreamShootAI header",
+          card_name: "MydreamShoots header",
           settings: {
             is_announce_show: true,
             announce_title: "Create realistic AI photo packages from everyday uploads.",
@@ -1128,7 +1126,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         footer_plus: {
           type: "footer_plus",
           version: "1",
-          card_name: "DreamShootAI footer",
+          card_name: "MydreamShoots footer",
           settings: {
             footer_bg_color: "#111114",
             footer_text_color: "#d8d0c7"

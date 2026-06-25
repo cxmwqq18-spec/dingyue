@@ -13,9 +13,12 @@ import {
   sendEmailProviderTest,
   verifyResendDomain
 } from "@/lib/resend-email";
-import { getPlatformOverviewRelational, updatePlatformEmailSettingsRelational } from "@/lib/stores/platform-store";
+import { getPlatformEmailOverviewRelational, getSiteEmailOverviewRelational, updatePlatformEmailSettingsRelational } from "@/lib/stores/platform-store";
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
+type ResendSettingsForCache = Parameters<typeof listResendDomains>[0] & { id?: string };
+const resendDomainCache = new Map<string, { domains: ResendDomain[]; expiresAt: number }>();
+const resendDomainCacheTtlMs = 60_000;
 
 function siteConfigId(siteId: string): string {
   return `site_${siteId}_resend`;
@@ -49,9 +52,21 @@ function fromDomainAllowed(fromEmail: string, allowedDomains: string[]): boolean
   return Boolean(fromDomain) && allowedDomains.some((domain) => domain === fromDomain || fromDomain.endsWith(`.${domain}`));
 }
 
+function getCachedResendDomains(selected: ResendSettingsForCache) {
+  const cacheKey = `${selected?.id ?? "default"}:${selected?.apiKey?.slice(-8) ?? "no-key"}`;
+  const cached = resendDomainCache.get(cacheKey);
+  if (cached?.expiresAt && cached.expiresAt > Date.now()) return cached.domains;
+  return [];
+}
+
+function rememberResendDomains(selected: ResendSettingsForCache, domains: ResendDomain[]) {
+  const cacheKey = `${selected?.id ?? "default"}:${selected?.apiKey?.slice(-8) ?? "no-key"}`;
+  resendDomainCache.set(cacheKey, { domains, expiresAt: Date.now() + resendDomainCacheTtlMs });
+}
+
 async function buildPayload(siteId: string, domainOverride?: ResendDomain[], dnsRecords?: Array<{ type?: string; name?: string; content?: string }>) {
-  const overview = await getPlatformOverviewRelational();
-  const site = overview.sites.find((item) => item.id === siteId);
+  const overview = await getSiteEmailOverviewRelational(siteId);
+  const site = overview.site;
   if (!site) return { error: "site_not_found" as const, status: 404 as const };
   const state = {
     platformEmailSettings: overview.platformEmailSettings,
@@ -65,11 +80,7 @@ async function buildPayload(siteId: string, domainOverride?: ResendDomain[], dns
   const candidateDomain = domainFromEmail(candidateFromEmail);
   let domains = domainOverride ?? [];
   if (!domainOverride && status.apiKeyConfigured) {
-    try {
-      domains = await listResendDomains(selected);
-    } catch {
-      domains = [];
-    }
+    domains = getCachedResendDomains(selected);
   }
   const resendDomain = domains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
   const verified = resendDomain?.status === "verified";
@@ -118,7 +129,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     fromEmail?: string;
     replyTo?: string;
   };
-  const overview = await getPlatformOverviewRelational();
+  const overview = await getPlatformEmailOverviewRelational();
   const site = overview.sites.find((item) => item.id === siteId);
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   const allowedDomains = [
@@ -170,7 +181,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     action?: "dns_check" | "send_test";
     to?: string;
   };
-  const overview = await getPlatformOverviewRelational();
+  const overview = await getPlatformEmailOverviewRelational();
   const site = overview.sites.find((item) => item.id === siteId);
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   const state = {
@@ -197,6 +208,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
   try {
     const resend = await ensureResendDomain({ domain, settings: selected });
+    rememberResendDomains(selected, [resend.domain]);
     const dnsRecords = resendRecordsToCloudflare(resend.domain.records);
     const verified = resend.domain.id
       ? await verifyResendDomain({ domainId: resend.domain.id, settings: selected })

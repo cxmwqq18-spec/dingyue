@@ -30,7 +30,7 @@ function dispatchAdminNavigationStart(href: string) {
 export function AdminInstantLink({
   children,
   href,
-  navigationMode: _navigationMode,
+  navigationMode = "soft",
   onClick,
   onFocus,
   onIntent,
@@ -62,6 +62,10 @@ export function AdminInstantLink({
     if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;
 
     dispatchAdminNavigationStart(adminHrefFromUrl(targetUrl));
+    if (navigationMode === "document") {
+      event.preventDefault();
+      window.location.assign(targetUrl.href);
+    }
   }
 
   return (

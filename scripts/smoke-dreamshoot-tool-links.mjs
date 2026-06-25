@@ -35,7 +35,7 @@ const expectedTools = [
 ];
 
 function fail(message, details = {}) {
-  console.error(`DreamShoot tool-link smoke failed: ${message}`);
+  console.error(`MydreamShoots tool-link smoke failed: ${message}`);
   if (Object.keys(details).length) console.error(JSON.stringify(details, null, 2));
   process.exit(1);
 }
@@ -56,6 +56,7 @@ const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/template
 const renderer = readText("src/components/theme-renderer.tsx");
 const schema = readText("src/lib/section-schema.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
+const platformState = JSON.parse(readText("data/platform-state.json"));
 
 const missingTemplateLinks = [];
 const missingSchemaLinks = [];
@@ -90,12 +91,43 @@ assert(countMatches(templates, /href: toolHref\("/g) >= expectedTools.length, "t
 assert(new Set(expectedTools.map((item) => item[1])).size === expectedTools.length, "expected tool slugs must be unique");
 assert(!missingTemplateLinks.length, "template package is missing expected semantic tool links", { missingTemplateLinks });
 assert(!missingSchemaLinks.length, "section schema preset is missing expected semantic links", { missingSchemaLinks });
-assert(!missingAliases.length, "tool resolver is missing DreamShoot semantic aliases", { missingAliases });
+assert(!missingAliases.length, "tool resolver is missing MydreamShoots semantic aliases", { missingAliases });
 assert(renderer.includes("function toolActionHref"), "renderer must route tool links through toolActionHref");
+assert(!renderer.includes("?tool="), "renderer must not generate query-param tool URLs");
+assert(!renderer.includes("?pack="), "renderer must not generate query-param pack URLs");
+assert(!renderer.includes("/tools/image_generator"), "renderer must not generate legacy underscore tool URLs");
+assert(!templates.includes("/tools/image-studio"), "template package must use static semantic tool paths");
+assert(!templates.includes("/tools/image_generator"), "template package must not use legacy underscore tool paths");
+assert(!templates.includes("/collections?category="), "template package must use static collection paths");
+assert(!schema.includes("/tools/image-studio"), "section schema presets must use static semantic tool paths");
+assert(!schema.includes("/tools/image_generator"), "section schema presets must not use legacy underscore tool paths");
+assert(!schema.includes("/collections?category="), "section schema presets must use static collection paths");
+const staleRuntimeLinks = [];
+function collectStaleRuntimeLinks(value, pathLabel = "$") {
+  if (!value || typeof value !== "object") return;
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${pathLabel}.${key}`;
+    if (
+      (key === "href" || key === "canonicalPath" || key === "primaryHref" || key === "secondaryHref" || key === "slug") &&
+      (child === "/tools/image-studio" || child === "/tools/ai-image-studio" || child === "/tools/image_generator")
+    ) {
+      staleRuntimeLinks.push({ path: childPath, value: child });
+    }
+    if (key === "slug" && child === "dreamshoot") staleRuntimeLinks.push({ path: childPath, value: child });
+    collectStaleRuntimeLinks(child, childPath);
+  }
+}
+collectStaleRuntimeLinks(platformState);
+assert(!staleRuntimeLinks.length, "runtime state must not expose old tool paths or old site slug", { staleRuntimeLinks: staleRuntimeLinks.slice(0, 20) });
+assert(templates.includes("MydreamShoots"), "template package must use the MydreamShoots brand casing");
+assert(!templates.includes("mydreamshoots"), "template package customer copy must not use lowercase mydreamshoots");
+assert(!schema.includes("DreamShootAI") && !schema.includes("DreamShoot") && !schema.includes("Mydreamshoots"), "section schema customer defaults must not expose old brand casing");
+assert(storefrontRender.includes('"ai-image-studio"'), "tool resolver must support the static image studio alias");
+assert(storefrontRender.includes('"virtual-try-on"'), "tool resolver must support the static virtual try-on alias");
 assert(renderer.includes("focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"), "mega tool links must keep a visible keyboard focus style");
 assert(storefrontRender.includes("normalizeToolLookup"), "tool resolver must normalize incoming tool slugs");
 assert(storefrontRender.includes("image-studio") && storefrontRender.includes("image_generator"), "legacy image-studio and image_generator slugs must remain compatible");
-assert(storefrontRender.includes("/dreamshoot/i.test"), "DreamShoot semantic aliases must stay scoped to DreamShoot sites");
+assert(storefrontRender.includes("/dreamshoot/i.test"), "MydreamShoots semantic aliases must stay scoped to MydreamShoots sites");
 
 console.log(JSON.stringify({
   ok: true,

@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
-import { buildCheckoutMetadata, canPublishPaidProducts } from "@/lib/billing";
-import { getSiteProductsFromState, readPlatformState } from "@/lib/server-store";
+import { canPublishPaidProducts } from "@/lib/billing";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
-import { completeAdminCheckoutRelational } from "@/lib/stores/billing-store";
+import { completeAdminCheckoutRelational, startCustomerCheckoutRelational } from "@/lib/stores/billing-store";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
+import { mapProduct } from "@/lib/stores/prisma-mappers";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -22,8 +22,13 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const body = (await request.json().catch(() => ({}))) as { customerId?: string; priceId?: string; intentId?: string };
-  const state = readPlatformState();
-  const site = state.sites.find((item) => item.id === siteId);
+  const site = await prisma.site.findUnique({
+    where: { id: siteId },
+    include: {
+      connect: true,
+      products: { include: { prices: true } }
+    }
+  });
   if (!site) {
     return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   }
@@ -32,14 +37,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
   const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.checkout, key: `${siteId}:${body.customerId}:checkout` });
   if (!guard.ok) return guard.response;
-  const statePrice = state.products.flatMap((product) => product.prices).find((item) => item.siteId === siteId && item.id === body.priceId);
-  const relationalPrice = statePrice
-    ? undefined
-    : await prisma.price.findFirst({
-        where: { siteId, id: body.priceId },
-        select: { id: true, interval: true }
-      }).catch(() => null);
-  if (!statePrice && !relationalPrice) {
+  const price = await prisma.price.findFirst({
+    where: { siteId, id: body.priceId },
+    select: { id: true, interval: true, stripePriceId: true }
+  }).catch(() => null);
+  if (!price) {
     return NextResponse.json({ error: "price_not_found_for_site" }, { status: 404 });
   }
 
@@ -79,19 +81,37 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
   }
 
-  const allowed = canPublishPaidProducts(site.connect.chargesEnabled, getSiteProductsFromState(state, site.id));
+  const allowed = canPublishPaidProducts(Boolean(site.connect?.chargesEnabled), site.products.map(mapProduct));
   if (!allowed.ok) {
     return NextResponse.json({ error: "connect_not_ready", checkoutStatus: "payment_provider_not_ready", message: allowed.reason }, { status: 409 });
+  }
+
+  let checkout;
+  try {
+    checkout = await startCustomerCheckoutRelational({
+      siteId,
+      customerId: body.customerId,
+      priceId: body.priceId,
+      intentId: body.intentId
+    });
+  } catch (error) {
+    const status = error instanceof StoreError ? error.status : 500;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "checkout_start_failed" }, { status });
   }
 
   return NextResponse.json({
     ok: false,
     checkoutStatus: "payment_required",
     error: "payment_provider_not_enabled_for_customer",
-    checkoutUrl: `https://checkout.stripe.com/c/demo_${body.priceId}`,
-    stripeAccount: site.connect.stripeAccountId,
-    mode: (statePrice?.interval ?? relationalPrice?.interval) === "month" ? "subscription" : "payment",
-    metadata: buildCheckoutMetadata(site.id, body.customerId, body.priceId),
+    checkoutUrl: `https://checkout.stripe.com/c/demo_${checkout.order.id}`,
+    stripeAccount: site.connect?.stripeAccountId,
+    mode: price.interval === "month" ? "subscription" : "payment",
+    price: checkout.price,
+    order: checkout.order,
+    metadata: {
+      ...checkout.metadata,
+      stripePriceId: price.stripePriceId ?? checkout.price.stripePriceId
+    },
     note: "Checkout is contract-shaped in dev. Credits are only granted by webhook, not by this response."
   });
 }

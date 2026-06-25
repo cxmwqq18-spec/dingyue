@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Download, Trash2, UploadCloud } from "lucide-react";
 import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
+
+const PAGE_SIZE = 8;
 
 export function AssetsPanel({
   siteId,
@@ -19,16 +21,36 @@ export function AssetsPanel({
   emptyTitle?: string;
   emptyBody?: string;
 }) {
-  const router = useRouter();
   const [items, setItems] = useState(assets);
   const [label, setLabel] = useState("reference portrait");
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("Uploads stay private to this account.");
   const [pending, setPending] = useState(false);
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pageStart = (safePage - 1) * PAGE_SIZE;
+  const visibleItems = items.slice(pageStart, pageStart + PAGE_SIZE);
 
   useEffect(() => {
     setItems(assets);
   }, [assets]);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadCustomerAssets(siteId, customer.id)
+      .then((result) => {
+        if (!cancelled) setItems(result);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [customer.id, siteId]);
+
+  useEffect(() => {
+    setPage((current) => Math.min(current, Math.max(1, Math.ceil(items.length / PAGE_SIZE))));
+  }, [items.length]);
 
   async function createAsset(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,11 +72,13 @@ export function AssetsPanel({
     const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
     const createdAsset = result.asset;
     if (response.ok && createdAsset) {
+      invalidateCustomerAssets(siteId, customer.id);
       setItems((current) => [createdAsset, ...current]);
+      setPage(1);
       setLabel("reference portrait");
       setFile(null);
-      setMessage(`${createdAsset.label} uploaded and saved to this account.`);
-      router.refresh();
+      setMessage(`${createdAsset.label} uploaded. Continue to tool setup when your source photos are ready.`);
+      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
     } else {
       setMessage(result.error ?? "Asset create failed.");
     }
@@ -65,9 +89,10 @@ export function AssetsPanel({
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}`, { method: "DELETE", headers: customerJsonHeaders(siteId) });
     const result = (await response.json().catch(() => ({}))) as { error?: string };
     if (response.ok) {
+      invalidateCustomerAssets(siteId, customer.id);
       setItems((current) => current.filter((asset) => asset.id !== assetId));
       setMessage("Upload deleted from this private account.");
-      router.refresh();
+      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
     } else {
       setMessage(result.error ?? "Asset delete failed.");
     }
@@ -118,9 +143,15 @@ export function AssetsPanel({
           {pending ? "Uploading" : "Upload photo"}
         </button>
       </form>
+      <div className="mt-4 flex flex-wrap items-center gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] px-4 py-3 text-sm text-[#625d56]">
+        <span>After uploading the needed photos, return to the selected tool and start the private request.</span>
+        <a className="inline-flex rounded-full bg-[#171514] px-4 py-2 text-xs font-semibold text-white" href="#create">
+          Continue to tool setup
+        </a>
+      </div>
       <div className="mt-5 grid gap-3">
-        {items.length ? (
-          items.map((asset) => (
+        {visibleItems.length ? (
+          visibleItems.map((asset) => (
             <div className="grid gap-3 rounded-[20px] border border-[#e4dace] bg-white p-4 text-sm shadow-[0_16px_48px_-40px_rgba(20,22,26,0.14)] md:grid-cols-[92px_1fr_0.32fr_0.4fr]" key={asset.id}>
               <div className="overflow-hidden rounded-[16px] bg-[#efe6d9]">
                 <img className="aspect-[4/5] h-full w-full object-cover" src={asset.previewUrl} alt={asset.label} />
@@ -150,6 +181,31 @@ export function AssetsPanel({
           </div>
         )}
       </div>
+      {totalPages > 1 ? (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#6d665f]">
+          <span className="whitespace-nowrap">
+            Page {safePage} of {totalPages} · {items.length} uploads
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#ded5ca] bg-white px-3 font-semibold text-[#171514] disabled:cursor-not-allowed disabled:opacity-45"
+              disabled={safePage <= 1}
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              type="button"
+            >
+              Previous
+            </button>
+            <button
+              className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#ded5ca] bg-white px-3 font-semibold text-[#171514] disabled:cursor-not-allowed disabled:opacity-45"
+              disabled={safePage >= totalPages}
+              onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+              type="button"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

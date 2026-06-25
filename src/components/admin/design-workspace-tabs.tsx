@@ -32,13 +32,14 @@ export function DesignWorkspaceTabs({
   tone = "light"
 }: DesignWorkspaceTabsProps) {
   const items = [
-    { label: "装修器", href: `/site/${siteSlug}/admin/design`, icon: Palette, badge: String(pageCount) },
+    { label: "总览", href: `/site/${siteSlug}/admin/design`, icon: Palette, badge: String(pageCount) },
     { label: "页面", href: `/site/${siteSlug}/admin/design/pages`, icon: FileText, badge: String(pageCount) },
     { label: "导航", href: `/site/${siteSlug}/admin/design/navigation`, icon: GalleryVerticalEnd, badge: "menu" },
     { label: "SEO", href: `/site/${siteSlug}/admin/design/seo`, icon: SearchCode, badge: seoReady ? "meta" : "setup" },
     { label: "主题", href: `/site/${siteSlug}/admin/themes`, icon: Layers3, badge: "library" },
     { label: "素材", href: `/site/${siteSlug}/admin/media`, icon: ImageIcon, badge: String(mediaCount) },
     { label: "发布", href: `/site/${siteSlug}/admin/design/publications`, icon: FileClock, badge: String(publicationCount) },
+    { label: "装修器", href: `/site/${siteSlug}/admin/design/workbench`, icon: Palette, badge: "edit" },
     { label: "前台", href: `/site/${siteSlug}`, icon: ExternalLink, badge: "live" }
   ];
 

@@ -1,4 +1,5 @@
 import "server-only";
+import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformEmailConfig, Site } from "@/lib/types";
 
 type CloudflareDnsRecordInput = {
@@ -32,6 +33,8 @@ type ResendErrorPayload = {
 };
 
 const resendDomainListTimeoutMs = Math.max(500, Number(process.env.RESEND_DOMAIN_LIST_TIMEOUT_MS ?? "1500") || 1500);
+const resendApiTimeoutMs = Math.max(1000, Number(process.env.RESEND_API_TIMEOUT_MS ?? "5000") || 5000);
+const resendSendTimeoutMs = Math.max(1000, Number(process.env.RESEND_SEND_TIMEOUT_MS ?? "5000") || 5000);
 
 export class ResendProviderError extends Error {
   code: string;
@@ -175,15 +178,25 @@ function requireResendApiKey(settings?: PlatformEmailSettings): string {
 
 async function resendFetch<T>(settings: PlatformEmailSettings | undefined, path: string, init?: RequestInit): Promise<T> {
   const apiKey = requireResendApiKey(settings);
-  const response = await fetch(`https://api.resend.com${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {})
-    },
-    cache: "no-store"
-  });
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(`https://api.resend.com${path}`, {
+      ...init,
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        ...(init?.headers ?? {})
+      },
+      cache: "no-store",
+      timeoutMs: resendApiTimeoutMs
+    });
+  } catch (error) {
+    throw new ResendProviderError({
+      code: error instanceof FetchTimeoutError ? "resend_timeout" : "resend_domain_api_failed",
+      status: 504,
+      providerMessage: error instanceof Error ? error.message : "resend_request_failed"
+    });
+  }
   const payload = (await response.json().catch(() => ({}))) as T & ResendErrorPayload;
   if (!response.ok) {
     if (response.status === 404) throw new ResendProviderError({ code: "resend_domain_not_found", status: response.status, providerMessage: providerMessageFromPayload(payload), providerName: payload.name });
@@ -209,19 +222,22 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
   const escapedCode = escapeHtml(params.code);
   const escapedSiteName = escapeHtml(siteName);
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from,
-      to: [params.to],
-      subject,
-      ...(replyTo ? { reply_to: replyTo } : {}),
-      text: `Your ${siteName} verification code is ${params.code}. It expires in 10 minutes.`,
-      html: `
+  let response: Response;
+  try {
+    response = await fetchWithTimeout("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      timeoutMs: resendSendTimeoutMs,
+      body: JSON.stringify({
+        from,
+        to: [params.to],
+        subject,
+        ...(replyTo ? { reply_to: replyTo } : {}),
+        text: `Your ${siteName} verification code is ${params.code}. It expires in 10 minutes.`,
+        html: `
         <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827">
           <h1 style="font-size:20px;margin:0 0 12px">${escapedSiteName} verification code</h1>
           <p>Use this code to ${escapeHtml(action)}. It expires in 10 minutes.</p>
@@ -229,8 +245,15 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
           <p>If you did not request this code, you can safely ignore this email.</p>
         </div>
       `
-    })
-  });
+      })
+    });
+  } catch (error) {
+    throw new ResendProviderError({
+      code: error instanceof FetchTimeoutError ? "resend_timeout" : "email_send_failed",
+      status: 504,
+      providerMessage: error instanceof Error ? error.message : "resend_send_failed"
+    });
+  }
 
   const payload = (await response.json().catch(() => ({}))) as { id?: string } & ResendErrorPayload;
   if (!response.ok) {
@@ -329,17 +352,17 @@ export async function listResendDomains(settings?: PlatformEmailSettings): Promi
   }
   let response: Response;
   try {
-    response = await fetch("https://api.resend.com/domains", {
+    response = await fetchWithTimeout("https://api.resend.com/domains", {
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json"
       },
       cache: "no-store",
-      signal: AbortSignal.timeout(resendDomainListTimeoutMs)
+      timeoutMs: resendDomainListTimeoutMs
     });
   } catch (error) {
     throw new ResendProviderError({
-      code: "resend_domain_api_failed",
+      code: error instanceof FetchTimeoutError ? "resend_timeout" : "resend_domain_api_failed",
       status: 504,
       providerMessage: error instanceof Error ? error.message : "resend_domain_request_failed"
     });

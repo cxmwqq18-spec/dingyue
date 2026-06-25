@@ -120,7 +120,7 @@ export function StatusPill({ label, tone = "neutral" }: { label: string; tone?: 
       : label;
   return (
     <span
-      className={`inline-flex h-[24px] items-center rounded-[999px] border px-2.5 font-mono text-[10px] uppercase tracking-[0.08em] leading-[20px] ${toneClass}`}
+      className={`inline-flex h-[24px] w-fit max-w-full items-center justify-center whitespace-nowrap rounded-[999px] border px-2.5 font-mono text-[10px] uppercase tracking-[0.08em] leading-[20px] ${toneClass}`}
     >
       {normalizedLabel}
     </span>

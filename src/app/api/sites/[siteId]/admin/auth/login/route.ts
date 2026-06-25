@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { primeSiteAdminSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
@@ -17,6 +18,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const result = await createSiteAdminSessionRelational({ siteId, email: body.email, password: body.password });
+    primeSiteAdminSessionAuthCache({
+      siteAdmin: result.siteAdmin,
+      session: result.session,
+      sessionId: result.session.id
+    });
     const response = NextResponse.json({
       ok: true,
       siteAdmin: result.siteAdmin,

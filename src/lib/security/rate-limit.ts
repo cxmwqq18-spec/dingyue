@@ -116,6 +116,9 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   // 注册 - 每小时10次
   register: { windowMs: 3600000, maxRequests: 10, keyPrefix: "register" },
 
+  // 邮箱验证码 - 同一站点/邮箱/来源每60秒1次
+  emailCode: { windowMs: 60000, maxRequests: 1, keyPrefix: "email_code" },
+
   // 文件上传 - 每分钟20次
   upload: { windowMs: 60000, maxRequests: 20, keyPrefix: "upload" },
 

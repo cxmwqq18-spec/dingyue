@@ -6,7 +6,7 @@ import { Coins, ShieldCheck } from "lucide-react";
 import { AdminPagination, clampPage, pageItems, adminPageSizeOptions } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
-import type { Customer, PublicCustomer } from "@/lib/types";
+import type { Customer, PublicCustomer, SiteAdmin } from "@/lib/types";
 
 const customerStatusLabels: Record<Customer["status"], string> = {
   active: "正常",
@@ -14,19 +14,50 @@ const customerStatusLabels: Record<Customer["status"], string> = {
   blocked: "已封禁"
 };
 
-export function CustomerAdminPanel({ siteId, customers }: { siteId: string; customers: PublicCustomer[] }) {
+const siteAdminRoleLabels: Record<SiteAdmin["role"], string> = {
+  owner: "站点所有者",
+  admin: "站点管理员",
+  support: "客服支持"
+};
+
+export function CustomerAdminPanel({
+  siteId,
+  customers,
+  signupCreditGrant = 0,
+  siteAdmins = []
+}: {
+  siteId: string;
+  customers: PublicCustomer[];
+  signupCreditGrant?: number;
+  siteAdmins?: SiteAdmin[];
+}) {
   const router = useRouter();
   const [items, setItems] = useState(customers);
+  const [adminItems, setAdminItems] = useState(siteAdmins);
   const [adjustments, setAdjustments] = useState<Record<string, string>>({});
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<Customer["status"] | "">("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(adminPageSizeOptions[0]);
+  const [signupGrant, setSignupGrant] = useState(String(signupCreditGrant));
+  const [savingSignupGrant, setSavingSignupGrant] = useState(false);
   const [message, setMessage] = useState("客户变更仅作用于当前站点，并会立即保存。");
 
   useEffect(() => {
     setItems(customers);
   }, [customers]);
+
+  useEffect(() => {
+    setAdminItems(siteAdmins);
+  }, [siteAdmins]);
+
+  useEffect(() => {
+    setSignupGrant(String(signupCreditGrant));
+  }, [signupCreditGrant]);
+
+  const adminByEmail = useMemo(() => {
+    return new Map(adminItems.map((admin) => [admin.email.trim().toLowerCase(), admin]));
+  }, [adminItems]);
 
   const filteredItems = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -99,6 +130,26 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
     setMessage(`已导出 ${filteredItems.length} 条顾客记录。`);
   }
 
+  async function saveSignupCreditGrant() {
+    const nextGrant = Math.max(0, Math.trunc(Number(signupGrant || 0)));
+    setSavingSignupGrant(true);
+    const response = await fetch(`/api/sites/${siteId}/settings/signup-credit-grant`, {
+      method: "PUT",
+      headers: siteAdminJsonHeaders(siteId),
+      body: JSON.stringify({ signupCreditGrant: nextGrant })
+    });
+    const result = (await response.json().catch(() => ({}))) as { site?: { signupCreditGrant?: number }; error?: string };
+    setSavingSignupGrant(false);
+    if (response.ok) {
+      const savedGrant = result.site?.signupCreditGrant ?? nextGrant;
+      setSignupGrant(String(savedGrant));
+      setMessage(`新用户注册赠送额度已设置为 ${savedGrant} 点。该配置只影响后续新注册客户。`);
+      router.refresh();
+    } else {
+      setMessage(result.error ?? "注册赠送额度保存失败。");
+    }
+  }
+
   async function promoteToAdmin(customer: PublicCustomer) {
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/admin-role`, {
       method: "PATCH",
@@ -112,6 +163,29 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
       error?: string;
     };
     if (response.ok && result.admin) {
+      setAdminItems((current) => {
+        const normalizedEmail = result.admin?.email.trim().toLowerCase();
+        const exists = current.some((admin) => admin.email.trim().toLowerCase() === normalizedEmail);
+        if (!result.admin || !normalizedEmail) return current;
+        if (exists) {
+          return current.map((admin) =>
+            admin.email.trim().toLowerCase() === normalizedEmail
+              ? { ...admin, role: result.admin?.role as SiteAdmin["role"] }
+              : admin
+          );
+        }
+        return [
+          ...current,
+          {
+            id: normalizedEmail,
+            siteId,
+            email: result.admin.email,
+            displayName: customer.name || result.admin.email,
+            role: result.admin.role as SiteAdmin["role"],
+            createdAt: new Date().toISOString()
+          }
+        ];
+      });
       setMessage(
         result.created
           ? `${result.admin.email} 已设为站点管理员。临时密码：${result.temporaryPassword}`
@@ -129,6 +203,36 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
         <div>
           <h2 className="text-[16px] font-semibold text-[#333]">会员与顾客列表</h2>
           <p className="mt-1 text-[12px] text-[#666]">{message}</p>
+        </div>
+      </div>
+      <div className="mt-4 rounded-[12px] border border-[#e4edf8] bg-[#f8fbff] px-4 py-4">
+        <div className="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <h3 className="text-[14px] font-semibold text-[#26364a]">新用户注册赠送额度</h3>
+            <p className="mt-1 text-[12px] leading-5 text-[#667085]">
+              控制新客户首次注册时自动写入的可用点数。默认 0 点，只影响之后注册的客户，已有客户余额请在列表里手动调整。
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <label className="grid gap-1 text-[12px] text-[#667085]">
+              赠送点数
+              <input
+                className="inputtext h-[34px] w-[120px] text-center"
+                min={0}
+                onChange={(event) => setSignupGrant(event.target.value)}
+                type="number"
+                value={signupGrant}
+              />
+            </label>
+            <button
+              className="admin_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap"
+              disabled={savingSignupGrant}
+              onClick={saveSignupCreditGrant}
+              type="button"
+            >
+              {savingSignupGrant ? "保存中" : "保存配置"}
+            </button>
+          </div>
         </div>
       </div>
       <div className="mt-4 rounded-[12px] border border-[#edf2f7] bg-[#fbfcfe] px-3 py-3">
@@ -180,7 +284,9 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
             </tr>
           </thead>
           <tbody>
-            {visibleItems.map((customer) => (
+            {visibleItems.map((customer) => {
+              const admin = adminByEmail.get(customer.email.trim().toLowerCase());
+              return (
               <tr key={customer.id}>
                 <td className="aleft">
                   <span className="block font-medium text-[#333]">{customer.name}</span>
@@ -199,10 +305,17 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
                   </select>
                 </td>
                 <td>
-                  <button className="admin_btn inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap" onClick={() => promoteToAdmin(customer)} type="button">
-                    <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
-                    设为管理员
-                  </button>
+                  {admin ? (
+                    <span className="inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap rounded-[8px] border border-emerald-200 bg-emerald-50 px-3 text-[12px] font-semibold text-emerald-700">
+                      <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      {siteAdminRoleLabels[admin.role]}
+                    </span>
+                  ) : (
+                    <button className="admin_btn inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap" onClick={() => promoteToAdmin(customer)} type="button">
+                      <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      设为管理员
+                    </button>
+                  )}
                 </td>
                 <td>
                   <span className="block font-mono text-[#333]">{customer.balance.available} 点</span>
@@ -224,7 +337,8 @@ export function CustomerAdminPanel({ siteId, customers }: { siteId: string; cust
                   </span>
                 </td>
               </tr>
-            ))}
+            );
+            })}
             {!filteredItems.length ? (
               <tr>
                 <td className="text-center text-[#999]" colSpan={6}>当前筛选下没有顾客记录。</td>

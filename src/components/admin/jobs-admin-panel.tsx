@@ -31,7 +31,7 @@ export function JobsAdminPanel({
 }: {
   siteId: string;
   jobs: GenerationJob[];
-  customers: PublicCustomer[];
+  customers: Array<Pick<PublicCustomer, "id" | "email">>;
   aiApps: AiApp[];
 }) {
   const router = useRouter();

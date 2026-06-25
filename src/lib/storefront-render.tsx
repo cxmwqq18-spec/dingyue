@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { CustomerSessionBadge } from "@/components/app/customer-session-badge";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
@@ -18,9 +17,17 @@ import {
   toThemeRuntimeLedgerEntry
 } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
-import { readStorefrontPlatformState } from "@/lib/storefront-state";
+import {
+  readStorefrontCustomerRuntimeStateForSiteFromDatabase,
+  readStorefrontPlatformState,
+  readStorefrontPublicRuntimeStateBySlugFromDatabase,
+  readStorefrontPublicRuntimeStateForSiteFromDatabase,
+  readStorefrontRuntimeStateForSiteFromDatabase
+} from "@/lib/storefront-state";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
+import { getSiteIdBySlugRelational } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
+import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import type { CustomerSession, PlatformState, PublicCustomer, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -39,6 +46,35 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     products: getSiteProductsFromState(state, siteId),
     siteAiApps: getSiteAppsFromState(state, siteId)
   };
+}
+
+async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path", providedState?: PlatformState): Promise<PlatformState> {
+  if (providedState) return providedState;
+  if (routeMode === "host") {
+    try {
+      const runtimeState = await readStorefrontRuntimeStateForSiteFromDatabase(site.id);
+      if (runtimeState) return runtimeState;
+    } catch {
+      // Fall through to the legacy reader for local or migrating databases.
+    }
+  }
+  return readStorefrontPlatformState();
+}
+
+async function getStateForCustomerRuntimeRender(
+  site: Site,
+  sessionId?: string,
+  providedState?: PlatformState,
+  profile: "full" | "workspace" | "account" = "full"
+): Promise<PlatformState | undefined> {
+  if (providedState) return providedState;
+  if (!sessionId) return undefined;
+  try {
+    return await readStorefrontCustomerRuntimeStateForSiteFromDatabase({ siteId: site.id, sessionId, profile });
+  } catch {
+    // Fall through to the legacy full-site state reader for local or migrating databases.
+    return undefined;
+  }
 }
 
 function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
@@ -60,9 +96,11 @@ async function getCurrentCustomerSession(
   sessionId?: string
 ): Promise<{ customer: PublicCustomer; session: CustomerSession } | undefined> {
   if (!sessionId) return undefined;
+  const stateResult = getCustomerBySessionFromState(state, siteId, sessionId);
+  if (stateResult) return stateResult;
   const relational = await getCustomerBySessionRelational({ siteId, sessionId });
   if (relational) return relational;
-  return getCustomerBySessionFromState(state, siteId, sessionId);
+  return undefined;
 }
 
 function getCustomerRuntimeFromState(state: PlatformState, siteId: string, customer: PublicCustomer, full: boolean): ThemeRuntimeData {
@@ -70,6 +108,20 @@ function getCustomerRuntimeFromState(state: PlatformState, siteId: string, custo
   return {
     ...runtime,
     customer
+  };
+}
+
+function trimCustomerRuntimeForWorkspace(runtime: ThemeRuntimeData, slug: string): ThemeRuntimeData {
+  if (slug !== "/app") return runtime;
+  return {
+    ...runtime,
+    jobs: (runtime.jobs ?? []).slice(0, 8),
+    assets: (runtime.assets ?? []).slice(0, 24),
+    albums: (runtime.albums ?? []).slice(0, 8),
+    ledger: (runtime.ledger ?? []).slice(0, 12),
+    subscriptions: (runtime.subscriptions ?? []).slice(0, 4),
+    orders: (runtime.orders ?? []).slice(0, 6),
+    customerModels: (runtime.customerModels ?? []).slice(0, 4)
   };
 }
 
@@ -98,37 +150,91 @@ function pageNeedsFullCustomerRuntime(pageJson: ThemePageJson, slug: string): bo
 }
 
 function withAccountDashboardPage(pageJson: ReturnType<typeof getPage>["publishedJson"]) {
-  if (pageJson.sections.account_ops_1) return pageJson;
+  const accountSection = pageJson.sections.account_ops_1 ?? {
+    type: "ai_feature_launcher" as const,
+    settings: {
+      anchor: "account-ops",
+      eyebrow: "Customer account",
+      title: "Your personal center for credits, orders, albums, and AI progress.",
+      subtitle: "Review profile information, plan status, order history, private albums, active jobs, and credit activity from one signed-in account page.",
+      surface: "account",
+      ctaLabel: "Open workspace",
+      ctaHref: "/app#upload_1",
+      chipList: "Profile|Plan and credits|Orders|Albums and progress"
+    },
+    blocks: [
+      { id: "account_uploads", type: "feature" as const, settings: { title: "Upload photos", description: "Add source portraits and style references before requesting images.", meta: "Assets", href: "/app#upload_1" } },
+      { id: "account_create", type: "feature" as const, settings: { title: "Create AI images", description: "Choose prompts and reserve credits for a private generation request.", meta: "Generate", href: "/app#create" } },
+      { id: "account_progress", type: "feature" as const, settings: { title: "AI generation progress", description: "Open queued, running, delivered, and review-needed requests.", meta: "Progress", href: "/app/jobs/progress" } },
+      { id: "account_albums", type: "feature" as const, settings: { title: "Personal albums", description: "Review delivered images and private gallery downloads.", meta: "Gallery", href: "/album" } }
+    ]
+  };
   return {
     ...pageJson,
-    sectionsOrder: ["account_ops_1", ...pageJson.sectionsOrder.filter((sectionId) => sectionId !== "intro_1")],
+    sectionsOrder: ["account_ops_1"],
     sections: {
-      ...pageJson.sections,
-      account_ops_1: {
-        type: "ai_feature_launcher",
-        settings: {
-          anchor: "account-ops",
-          eyebrow: "Customer account",
-          title: "Your personal center for credits, orders, albums, and AI progress.",
-          subtitle: "Review profile information, plan status, order history, private albums, active jobs, and credit activity from one signed-in account page.",
-          surface: "account",
-          ctaLabel: "Open workspace",
-          ctaHref: "/app#upload_1",
-          chipList: "Profile|Plan and credits|Orders|Albums and progress"
-        },
-        blocks: [
-          { id: "account_uploads", type: "feature", settings: { title: "Upload photos", description: "Add source portraits and style references before requesting images.", meta: "Assets", href: "/app#upload_1" } },
-          { id: "account_create", type: "feature", settings: { title: "Create AI images", description: "Choose prompts and reserve credits for a private generation request.", meta: "Generate", href: "/app#create" } },
-          { id: "account_progress", type: "feature", settings: { title: "AI generation progress", description: "Open queued, running, delivered, and review-needed requests.", meta: "Progress", href: "/app/jobs/progress" } },
-          { id: "account_albums", type: "feature", settings: { title: "Personal albums", description: "Review delivered images and private gallery downloads.", meta: "Gallery", href: "/album" } }
-        ]
-      }
+      account_ops_1: accountSection
     }
   };
 }
 
+function withCustomerWorkspaceFlowPage(pageJson: ThemePageJson): ThemePageJson {
+  const sections: ThemePageJson["sections"] = {
+    ...pageJson.sections,
+    launcher_1: {
+      ...pageJson.sections.launcher_1,
+      type: "ai_feature_launcher" as const,
+      settings: {
+        ...(pageJson.sections.launcher_1?.settings ?? {}),
+        ctaLabel: pageJson.sections.launcher_1?.settings?.ctaLabel ?? "Choose a tool",
+        ctaHref: pageJson.sections.launcher_1?.settings?.ctaHref ?? "/app#create"
+      },
+      blocks: [
+        { id: "feature_prepare", type: "feature", settings: { title: "Choose a tool", description: "Pick the photo workflow first, then attach the source photos it needs.", meta: "Tool first", href: "/app#create" } },
+        { id: "feature_upload", type: "feature", settings: { title: "Upload photos", description: "Add private source portraits and references for this account.", meta: "Private intake", href: "/app#upload_1" } },
+        { id: "feature_progress", type: "feature", settings: { title: "Track progress", description: "Review queued, running, delivered, and review-needed requests.", meta: "Live progress", href: "/app#progress_1" } },
+        { id: "feature_album", type: "feature", settings: { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/app#album_1" } }
+      ]
+    },
+    form_1: pageJson.sections.form_1 ?? {
+      type: "generation_form" as const,
+      settings: {
+        aiAppSlug: "image_generator",
+        title: "Choose a photo tool",
+        helper: "Pick one backend-enabled tool first. Then upload the source photos it asks for and start a private request.",
+        surface: "workspace"
+      },
+      blocks: []
+    },
+    upload_1: pageJson.sections.upload_1
+      ? {
+          ...pageJson.sections.upload_1,
+          settings: {
+            ...pageJson.sections.upload_1.settings,
+            title: pageJson.sections.upload_1.settings.title ?? "Upload source photos",
+            helper: pageJson.sections.upload_1.settings.helper ?? "Upload only the source photos needed for the selected tool."
+          }
+        }
+      : pageJson.sections.upload_1
+  };
+  delete sections.trust_1;
+
+  const desiredOrder = ["launcher_1", "form_1", "upload_1", "progress_1", "album_1"];
+  const ordered = [
+    ...desiredOrder.filter((sectionId) => sections[sectionId]),
+    ...pageJson.sectionsOrder.filter((sectionId) => !desiredOrder.includes(sectionId) && sectionId !== "trust_1")
+  ];
+
+  return {
+    ...pageJson,
+    sections,
+    sectionsOrder: ordered
+  };
+}
+
 export function getSiteBySlugFromState(state: PlatformState, siteSlug: string): Site | undefined {
-  return state.sites.find((item) => item.slug === siteSlug);
+  const canonicalSlug = canonicalSiteSlug(siteSlug);
+  return state.sites.find((item) => item.slug === canonicalSlug);
 }
 
 export function getDefaultCustomerAuth(state: PlatformState, siteId: string, errorCode?: string) {
@@ -153,6 +259,8 @@ function normalizeToolLookup(value: string): string {
 }
 
 const dreamshootImageStudioToolAliases = new Set([
+  "headshot-generator",
+  "headshot-maker",
   "professional-headshot-maker",
   "headshot",
   "creator-portrait-studio",
@@ -172,6 +280,7 @@ const dreamshootImageStudioToolAliases = new Set([
   "fashion-editorial",
   "product-lifestyle-photos",
   "product-lifestyle",
+  "ai-image-studio",
   "background-changer",
   "background-remover",
   "magic-eraser",
@@ -193,7 +302,13 @@ const dreamshootImageStudioToolAliases = new Set([
   "animated-avatar",
   "fashion-reel-starter",
   "fashion-reel",
-  "album-story-video"
+  "album-story-video",
+  "hairstyle-preview",
+  "wedding-portraits",
+  "indian-wedding",
+  "christmas-photos",
+  "virtual-try-on",
+  "package-preview"
 ]);
 
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
@@ -290,7 +405,7 @@ export async function renderStorefrontPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readStorefrontPlatformState();
+  const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const renderData = getSiteRenderData(state, currentSite.id);
@@ -333,36 +448,117 @@ export async function renderCustomerWorkspacePage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readStorefrontPlatformState();
+  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  const profile = slug === "/account" ? "account" : slug === "/app" ? "workspace" : "full";
+  const state = (await getStateForCustomerRuntimeRender(site, sessionId, providedState, profile)) ?? await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
-  const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const current = getCustomerBySessionFromState(state, currentSite.id, sessionId);
+  const current = await getCurrentCustomerSession(state, currentSite.id, sessionId);
   if (!current) redirect(routeMode === "host" ? "/login" : `/site/${currentSite.slug}/login`);
 
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
-  const runtime = getThemeRuntimeFromSession(state, currentSite.id, sessionId);
+  const runtime = trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug);
 
-  return (
-    <div style={themeStyleVars(settings)}>
-      <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
-      <ThemeRenderer
-        creativePacks={renderData.creativePacks}
-        page={slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson}
-        pagePath={slug}
-        products={renderData.products}
-        query={query}
-        routeMode={routeMode}
-        runtime={runtime}
-        settings={settings}
-        site={currentSite}
-        siteAiApps={renderData.siteAiApps}
-      />
-    </div>
-  );
+  const pageJson = slug === "/account"
+    ? withAccountDashboardPage(page.publishedJson)
+    : slug === "/app"
+    ? withCustomerWorkspaceFlowPage(page.publishedJson)
+    : page.publishedJson;
+
+  return renderThemePage({
+    currentSite,
+    page: pageJson,
+    pagePath: slug,
+    query,
+    renderData,
+    routeMode,
+    runtime,
+    settings
+  });
+}
+
+export async function renderCustomerWorkspacePageBySlug({
+  siteSlug,
+  slug,
+  query = {},
+  routeMode = "path"
+}: {
+  siteSlug: string;
+  slug: string;
+  query?: Record<string, string | string[] | undefined>;
+  routeMode?: "host" | "path";
+}) {
+  const canonicalSlug = canonicalSiteSlug(siteSlug);
+  const routeSlug = publicSiteSlug(canonicalSlug);
+  if (slug === "/account" || slug === "/app") {
+    const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(canonicalSlug, slug) ?? await readStorefrontPlatformState();
+    const currentSite = state.sites.find((item) => item.slug === canonicalSlug);
+    if (!currentSite) notFound();
+    const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
+    if (!sessionId) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+    const current = await getCustomerBySessionRelational({ siteId: currentSite.id, sessionId });
+    if (!current) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+
+    const renderData = getSiteRenderData(state, currentSite.id);
+    currentSite.mediaAssets = renderData.mediaAssets;
+    const page = getPage(currentSite, slug);
+    const settings = currentSite.themeSettings.publishedJson;
+    const runtime = runtimeWithEmptyCollections({ customer: current.customer });
+
+    const pageJson = slug === "/account"
+      ? withAccountDashboardPage(page.publishedJson)
+      : withCustomerWorkspaceFlowPage(page.publishedJson);
+
+    return renderThemePage({
+      currentSite,
+      page: pageJson,
+      pagePath: slug,
+      query,
+      renderData,
+      routeMode,
+      runtime,
+      settings
+    });
+  }
+
+  const siteId = await getSiteIdBySlugRelational(canonicalSlug);
+  if (!siteId) notFound();
+  const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+  if (!sessionId) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+
+  const profile = slug === "/account" ? "account" : slug === "/app" ? "workspace" : "full";
+  const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({ siteId, sessionId, profile });
+  if (!state) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+  const currentSite = state.sites.find((item) => item.id === siteId);
+  if (!currentSite) notFound();
+  const current = await getCurrentCustomerSession(state, currentSite.id, sessionId);
+  if (!current) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
+  const page = getPage(currentSite, slug);
+  const settings = currentSite.themeSettings.publishedJson;
+  const runtime = trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug);
+
+  const pageJson = slug === "/account"
+    ? withAccountDashboardPage(page.publishedJson)
+    : slug === "/app"
+    ? withCustomerWorkspaceFlowPage(page.publishedJson)
+    : page.publishedJson;
+
+  return renderThemePage({
+    currentSite,
+    page: pageJson,
+    pagePath: slug,
+    query,
+    renderData,
+    routeMode,
+    runtime,
+    settings
+  });
 }
 
 export async function renderCustomerJobDetailPage({
@@ -378,11 +574,11 @@ export async function renderCustomerJobDetailPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readStorefrontPlatformState();
+  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  const state = (await getStateForCustomerRuntimeRender(site, sessionId, providedState)) ?? await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
-  const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const current = getCustomerBySessionFromState(state, currentSite.id, sessionId);
+  const current = await getCurrentCustomerSession(state, currentSite.id, sessionId);
   if (!current) redirect(routeMode === "host" ? "/login" : `/site/${currentSite.slug}/login`);
 
   const job = state.jobs.find((item) => item.id === jobId && item.siteId === currentSite.id && item.customerId === current.customer.id);
@@ -403,23 +599,16 @@ export async function renderCustomerJobDetailPage({
     }
   };
 
-  return (
-    <div style={themeStyleVars(settings)}>
-      <CustomerSessionBadge customer={current.customer} siteId={currentSite.id} siteSlug={currentSite.slug} />
-      <ThemeRenderer
-        creativePacks={renderData.creativePacks}
-        page={page.publishedJson}
-        pagePath={`/app/jobs/${job.id}`}
-        products={renderData.products}
-        query={query}
-        routeMode={routeMode}
-        runtime={runtime}
-        settings={settings}
-        site={currentSite}
-        siteAiApps={renderData.siteAiApps}
-      />
-    </div>
-  );
+  return renderThemePage({
+    currentSite,
+    page: page.publishedJson,
+    pagePath: `/app/jobs/${job.id}`,
+    query,
+    renderData,
+    routeMode,
+    runtime,
+    settings
+  });
 }
 
 export async function renderToolPage({
@@ -435,7 +624,7 @@ export async function renderToolPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = providedState ?? readStorefrontPlatformState();
+  const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const renderData = getSiteRenderData(state, currentSite.id);
@@ -445,8 +634,8 @@ export async function renderToolPage({
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
   const runtime = sessionId && pageNeedsFullCustomerRuntime(page.publishedJson, page.slug)
-    ? getThemeRuntimeFromSession(state, currentSite.id, sessionId)
-    : getLightCustomerRuntime(state, currentSite.id, sessionId);
+    ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
+    : await getLightCustomerRuntime(state, currentSite.id, sessionId);
   return renderThemePage({
     currentSite,
     page: page.publishedJson,

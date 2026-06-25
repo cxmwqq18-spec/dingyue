@@ -37,13 +37,11 @@ function hrefFromUrl(targetUrl: URL) {
 }
 
 function showPending(href?: string) {
-  emitSnapshot({ href, pending: false });
+  if (snapshot.pending && snapshot.href === href) return;
+  emitSnapshot({ href, pending: true });
   if (pendingDelayTimeout) window.clearTimeout(pendingDelayTimeout);
   if (fallbackTimeout) window.clearTimeout(fallbackTimeout);
-  pendingDelayTimeout = window.setTimeout(() => {
-    emitSnapshot({ href, pending: true });
-    fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
-  }, 180);
+  fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
 }
 
 function clearPending() {
@@ -114,12 +112,10 @@ export function AdminNavigationFeedback() {
     };
   }, []);
 
-  if (!pending) return null;
-
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[2200]" aria-live="polite" aria-label="正在切换后台模块">
       <div className="h-[2px] w-full overflow-hidden bg-transparent">
-        <div className="h-full w-1/3 animate-[admin-progress_1.15s_ease-in-out_infinite] bg-[#2f6fed] shadow-[0_0_14px_rgba(47,111,237,0.62)]" />
+        {pending ? <div className="h-full w-1/3 animate-[admin-progress_1.15s_ease-in-out_infinite] bg-[#2f6fed] shadow-[0_0_14px_rgba(47,111,237,0.62)]" /> : null}
       </div>
     </div>
   );

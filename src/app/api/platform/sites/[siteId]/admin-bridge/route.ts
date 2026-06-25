@@ -4,13 +4,77 @@ import { StoreError } from "@/lib/server-store";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { requireCsrfToken, setCsrfCookie } from "@/lib/security/csrf";
-import { createSiteAdminSessionByAdminIdRelational, getSiteAdminBridgeTargetRelational } from "@/lib/stores/site-store";
+import {
+  createSiteAdminBridgeSessionRelational,
+  deleteSiteAdminSessionRelational,
+  getSiteAdminBridgeSessionRelational
+} from "@/lib/stores/site-store";
+
+const adminBridgeTimeoutMs = 7000;
+const adminBridgeTimeoutCode = "site_admin_bridge_timeout";
+
+type AdminBridgeWorkResult = Awaited<ReturnType<typeof createAdminBridgeSession>>;
+
+class AdminBridgeTimeoutError extends Error {
+  constructor() {
+    super(adminBridgeTimeoutCode);
+    this.name = "AdminBridgeTimeoutError";
+  }
+}
 
 function normalizeAdminPath(value?: string | null): string {
   const trimmed = value?.trim();
   if (!trimmed) return "/admin";
   if (!trimmed.startsWith("/admin")) return "/admin";
   return trimmed;
+}
+
+function bridgeErrorResponse(code: string, status: number, detail?: string) {
+  return NextResponse.json(
+    {
+      error: code,
+      details: {
+        code,
+        status,
+        ...(detail ? { detail } : {})
+      }
+    },
+    { status }
+  );
+}
+
+async function createAdminBridgeSession(siteId: string) {
+  return createSiteAdminBridgeSessionRelational(siteId);
+}
+
+async function cleanupTimedOutAdminBridgeSession(work: Promise<AdminBridgeWorkResult>) {
+  try {
+    const { result } = await work;
+    await deleteSiteAdminSessionRelational(result.session.id);
+  } catch (error) {
+    console.error("[admin-bridge] timed-out session cleanup failed", {
+      error: error instanceof Error ? error.message : String(error)
+    });
+  }
+}
+
+async function withBridgeTimeout(work: Promise<AdminBridgeWorkResult>): Promise<AdminBridgeWorkResult> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  let timedOut = false;
+  const timer = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => {
+      timedOut = true;
+      reject(new AdminBridgeTimeoutError());
+    }, adminBridgeTimeoutMs);
+  });
+  try {
+    return await Promise.race([work, timer]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
+    if (timedOut) {
+      void cleanupTimedOutAdminBridgeSession(work);
+    }
+  }
 }
 
 async function buildBridgeResponse(request: NextRequest, siteId: string, requestedPath?: string | null) {
@@ -20,11 +84,11 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
   }
 
   try {
-    const { site, admin: targetAdmin } = await getSiteAdminBridgeTargetRelational(siteId);
-    const result = await createSiteAdminSessionByAdminIdRelational({
-      siteId,
-      siteAdminId: targetAdmin.id
-    });
+    const existingSessionId = request.cookies.get(siteAdminSessionCookie(siteId))?.value;
+    const existingSession = await getSiteAdminBridgeSessionRelational({ siteId, sessionId: existingSessionId });
+    const { site, result } = existingSession
+      ? existingSession
+      : await withBridgeTimeout(createAdminBridgeSession(siteId));
     const redirectPath = normalizeAdminPath(requestedPath);
     const redirectTo = `/site/${site.slug}${redirectPath}`;
     const response = NextResponse.json({
@@ -33,18 +97,25 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
       siteAdmin: result.siteAdmin,
       redirectTo
     });
-    response.cookies.set(siteAdminSessionCookie(siteId), result.session.id, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: shouldUseSecureCookie(request),
-      path: "/",
-      expires: new Date(result.session.expiresAt)
-    });
-    setCsrfCookie(response, `site-admin:${siteId}`, result.session.id, result.session.expiresAt, request);
+    if (!existingSession) {
+      response.cookies.set(siteAdminSessionCookie(siteId), result.session.id, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: shouldUseSecureCookie(request),
+        path: "/",
+        expires: new Date(result.session.expiresAt)
+      });
+      setCsrfCookie(response, `site-admin:${siteId}`, result.session.id, result.session.expiresAt, request);
+    }
     return response;
   } catch (error) {
+    if (error instanceof AdminBridgeTimeoutError) {
+      return bridgeErrorResponse(adminBridgeTimeoutCode, 504);
+    }
     const status = error instanceof StoreError ? error.status : 500;
-    return NextResponse.json({ error: error instanceof Error ? error.message : "site_admin_bridge_failed" }, { status });
+    const code = error instanceof StoreError ? error.message : "site_admin_bridge_failed";
+    const detail = error instanceof StoreError ? undefined : error instanceof Error ? error.message : undefined;
+    return bridgeErrorResponse(code, status, detail);
   }
 }
 

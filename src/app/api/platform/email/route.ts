@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import {
   domainFromEmail,
-  listResendDomains,
   ResendProviderError,
   normalizeResendApiKey,
   resendEmailConfigStatusForSite,
@@ -11,8 +10,8 @@ import {
   resolveResendSettingsForSite,
   sendEmailProviderTest
 } from "@/lib/resend-email";
-import { getPlatformOverviewRelational, updatePlatformEmailSettingsRelational } from "@/lib/stores/platform-store";
-import type { PlatformState, Site, SiteDomain, SiteEmailConfigAssignment } from "@/lib/types";
+import { getPlatformEmailOverviewRelational, updatePlatformEmailSettingsRelational, writePlatformEmailTestResultRelational } from "@/lib/stores/platform-store";
+import type { PlatformEmailTestResult, PlatformState, Site, SiteDomain, SiteEmailConfigAssignment } from "@/lib/types";
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
 
@@ -55,13 +54,20 @@ function candidateFromForSite(site: Site, state: EmailState): string {
 function buildSiteEmailRows(
   state: EmailState,
   domains: ResendDomain[],
-  domainsByConfigId: Record<string, ResendDomain[]>
+  domainsByConfigId: Record<string, ResendDomain[]>,
+  testResults: Record<string, PlatformEmailTestResult>
 ) {
+  const domainsBySiteId = new Map<string, SiteDomain[]>();
+  for (const domain of state.siteDomains) {
+    const siteDomains = domainsBySiteId.get(domain.siteId);
+    if (siteDomains) siteDomains.push(domain);
+    else domainsBySiteId.set(domain.siteId, [domain]);
+  }
   return state.sites.map((site) => {
     const config = resendEmailConfigStatusForSite(state, site.id);
     const selectedSettings = resolveResendSettingsForSite(state, site.id);
     const configDomains = domainsByConfigId[selectedSettings.id] ?? domains;
-    const siteDomains = state.siteDomains.filter((domain) => domain.siteId === site.id);
+    const siteDomains = domainsBySiteId.get(site.id) ?? [];
     const candidateFromEmail = candidateFromForSite(site, state);
     const candidateDomain = domainFromEmail(candidateFromEmail);
     const resendDomain = configDomains.find((domain) => resendDomainMatchesSender(domain.name, candidateDomain));
@@ -98,69 +104,50 @@ function buildSiteEmailRows(
       resendDomain,
       domainStatus: localDomain ? "local" : resendDomain?.status ?? "not_found",
       readyForProduction: config.apiKeyConfigured && !config.usingTestingSender && verified,
-      blockingReasons
+      blockingReasons,
+      testResult: testResults[site.id]
     };
   });
 }
 
 async function platformEmailPayload() {
-  const overview = await getPlatformOverviewRelational();
+  const snapshot = await getPlatformEmailOverviewRelational();
   const state = {
-    sites: overview.sites,
-    siteDomains: overview.siteDomains,
-    platformEmailSettings: overview.platformEmailSettings,
-    platformEmailConfigs: overview.platformEmailConfigs,
-    siteEmailConfigAssignments: overview.siteEmailConfigAssignments
+    sites: snapshot.sites,
+    siteDomains: snapshot.siteDomains,
+    platformEmailSettings: snapshot.platformEmailSettings,
+    platformEmailConfigs: snapshot.platformEmailConfigs ?? [],
+    siteEmailConfigAssignments: snapshot.siteEmailConfigAssignments ?? []
   };
   const settings = state.platformEmailSettings;
   const config = resendEmailConfigStatusForSettings(settings);
-  let domainCheckError: ReturnType<typeof providerErrorDetails> | undefined;
-  let domains: ResendDomain[] = [];
+  const domains: ResendDomain[] = [];
   const domainsByConfigId: Record<string, ResendDomain[]> = {};
-  try {
-    domains = await listResendDomains(settings);
-  } catch (error) {
-    domainCheckError = providerErrorDetails(error);
-  }
-  await Promise.all(overview.platformEmailConfigs.map(async (emailConfig) => {
-    try {
-      const configDomains = emailConfig.id === (overview.platformEmailConfigs.find((item) => item.isDefault)?.id ?? overview.platformEmailConfigs[0]?.id)
-        ? domains
-        : await listResendDomains(emailConfig);
-      domainsByConfigId[emailConfig.id] = configDomains;
-    } catch (error) {
-      domainsByConfigId[emailConfig.id] = [];
-      domainCheckError ??= providerErrorDetails(error);
-    }
-  }));
   const senderDomain = domains.find((domain) => resendDomainMatchesSender(domain.name, config.fromDomain));
-  const senderDomainVerified = senderDomain?.status === "verified";
-  const siteRows = buildSiteEmailRows(state, domains, domainsByConfigId);
-  const readySites = siteRows.filter((row) => row.readyForProduction).length;
+  const siteRows = buildSiteEmailRows(state, domains, domainsByConfigId, snapshot.emailTestResults ?? {});
+  const configured = config.apiKeyConfigured && config.fromConfigured && !config.usingTestingSender;
+  const readySites = configured ? siteRows.length : 0;
   const blockingReasons = [
     !config.apiKeyConfigured ? "missing_resend_api_key" : "",
     !config.fromConfigured ? "missing_resend_from_email" : "",
-    config.usingTestingSender ? "resend_testing_sender" : "",
-    domainCheckError?.error ?? "",
-    config.fromConfigured && !senderDomain ? "sender_domain_not_found_in_resend" : "",
-    senderDomain && !senderDomainVerified ? "sender_domain_not_verified" : ""
+    config.usingTestingSender ? "resend_testing_sender" : ""
   ].filter(Boolean);
   return {
     ok: true,
     config,
-    configs: overview.platformEmailConfigs.map((item) => ({
+    configs: state.platformEmailConfigs.map((item) => ({
       ...resendEmailConfigStatusForSettings(item),
       id: item.id,
       label: item.label,
       isDefault: item.isDefault,
       domains: domainsByConfigId[item.id] ?? []
     })),
-    siteEmailConfigAssignments: overview.siteEmailConfigAssignments,
+    siteEmailConfigAssignments: state.siteEmailConfigAssignments,
     domains,
-    domainCheckError,
+    domainCheckError: undefined,
     senderDomain,
     blockingReasons,
-    readyForProduction: config.apiKeyConfigured && config.fromConfigured && !config.usingTestingSender && senderDomainVerified,
+    readyForProduction: configured,
     summary: {
       totalSites: siteRows.length,
       readySites,
@@ -168,7 +155,7 @@ async function platformEmailPayload() {
       verifiedDomains: domains.filter((domain) => domain.status === "verified").length
     },
     sites: siteRows,
-    note: "一个 Resend API Key 可统一检测当前账号下多个 Domains；每个站点要用自己的域名发信时，该域名仍必须在 Resend 完成 DNS 验证。"
+    note: "当前列表为快照状态；发送测试或手动域名检测时才会请求 Resend，避免打开模块和刷新配置时长时间等待。"
   };
 }
 
@@ -193,17 +180,17 @@ export async function PUT(request: NextRequest) {
     isDefault?: boolean;
     siteEmailConfigAssignments?: SiteEmailConfigAssignment[];
   };
-  const overview = await getPlatformOverviewRelational();
+  const snapshot = await getPlatformEmailOverviewRelational();
   if (body.action === "bind_site") {
     const configId = body.resendConfigId ?? body.configId;
-    if (!body.siteId || !overview.sites.some((site) => site.id === body.siteId)) {
+    if (!body.siteId || !snapshot.sites.some((site) => site.id === body.siteId)) {
       return NextResponse.json({ error: "site_not_found" }, { status: 404 });
     }
-    if (!configId || !overview.platformEmailConfigs.some((config) => config.id === configId)) {
+    if (!configId || !(snapshot.platformEmailConfigs ?? []).some((config) => config.id === configId)) {
       return NextResponse.json({ error: "email_config_not_found" }, { status: 404 });
     }
     const nextAssignments = [
-      ...overview.siteEmailConfigAssignments.filter((assignment) => assignment.siteId !== body.siteId),
+      ...(snapshot.siteEmailConfigAssignments ?? []).filter((assignment) => assignment.siteId !== body.siteId),
       { siteId: body.siteId, configId }
     ];
     await updatePlatformEmailSettingsRelational({
@@ -238,30 +225,51 @@ export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => ({}))) as { to?: string; siteId?: string; configId?: string; resendConfigId?: string };
   const to = body.to?.trim().toLowerCase();
   if (!to || !to.includes("@")) return NextResponse.json({ error: "invalid_email" }, { status: 400 });
-  const overview = await getPlatformOverviewRelational();
+  const snapshot = await getPlatformEmailOverviewRelational();
   const state = {
-    sites: overview.sites,
-    siteDomains: overview.siteDomains,
-    platformEmailSettings: overview.platformEmailSettings,
-    platformEmailConfigs: overview.platformEmailConfigs,
+    sites: snapshot.sites,
+    siteDomains: snapshot.siteDomains,
+    platformEmailSettings: snapshot.platformEmailSettings,
+    platformEmailConfigs: snapshot.platformEmailConfigs ?? [],
     siteEmailConfigAssignments: (body.resendConfigId ?? body.configId) && body.siteId
       ? [{ siteId: body.siteId, configId: body.resendConfigId ?? body.configId ?? "" }]
-      : overview.siteEmailConfigAssignments
+      : snapshot.siteEmailConfigAssignments ?? []
   };
   const site = state.sites.find((item) => item.id === body.siteId) ?? state.sites[0];
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+  const selectedSettings = resolveResendSettingsForSite(state, site.id);
   try {
     const result = await sendEmailProviderTest({ to, site, settingsContext: state });
+    await writePlatformEmailTestResultRelational(site.id, {
+      state: "passed",
+      to,
+      messageId: result.messageId,
+      configId: selectedSettings.id,
+      configLabel: selectedSettings.label,
+      testedAt: new Date().toISOString(),
+      testedBy: permission.current.platformAdmin.id
+    });
     return NextResponse.json({ ok: true, messageId: result.messageId, siteId: site.id });
   } catch (error) {
     const details = providerErrorDetails(error);
+    await writePlatformEmailTestResultRelational(site.id, {
+      state: "failed",
+      to,
+      configId: selectedSettings.id,
+      configLabel: selectedSettings.label,
+      testedAt: new Date().toISOString(),
+      testedBy: permission.current.platformAdmin.id,
+      error: details.error,
+      providerStatus: details.providerStatus,
+      providerMessage: details.providerMessage
+    });
     console.error("[platform-email-test] send failed", {
       code: details.error,
       providerStatus: details.providerStatus,
       providerMessage: details.providerMessage,
       siteId: site.id,
       toDomain: domainFromEmail(to),
-      fromDomain: domainFromEmail(resolveResendSettingsForSite(state, site.id).fromEmail ?? "")
+      fromDomain: domainFromEmail(selectedSettings.fromEmail ?? "")
     });
     return NextResponse.json(details, { status: 502 });
   }

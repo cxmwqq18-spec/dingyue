@@ -14,6 +14,7 @@ type AdminModuleRailLinkProps = {
   isActive: boolean;
   moduleCode: AdminModuleCode;
   moduleHref: string;
+  navigationMode?: "soft" | "document";
   siteSlug?: string;
 };
 
@@ -26,6 +27,7 @@ export function AdminModuleRailLink({
   isActive,
   moduleCode,
   moduleHref,
+  navigationMode = "soft",
   siteSlug
 }: AdminModuleRailLinkProps) {
   const pendingHref = useAdminNavigationSnapshot().href;
@@ -35,7 +37,8 @@ export function AdminModuleRailLink({
     <AdminInstantLink
       className={`${baseClassName} ${active ? activeClassName : inactiveClassName}`}
       href={href}
-      prefetch={false}
+      navigationMode={navigationMode}
+      prefetch
     >
       {children}
     </AdminInstantLink>

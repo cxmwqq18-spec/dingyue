@@ -1,6 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
-import type { MediaAsset, Product, SectionInstance, Site, SiteAiApp, ThemePage, ThemeSettingValue } from "@/lib/types";
+import type { SectionInstance, Site, ThemePage, ThemeSettingValue } from "@/lib/types";
 
 export type PublishPreflightSeverity = "pass" | "warn" | "block";
 
@@ -21,6 +21,23 @@ export type PublishPreflightResult = {
     warnings: number;
     passes: number;
   };
+};
+
+export type PublishPreflightProduct = {
+  id: string;
+  status: "active" | "draft";
+  type: "subscription" | "credit_pack";
+  prices: Array<{ stripePriceId: string | null; amountCents: number }>;
+};
+
+export type PublishPreflightSiteAiApp = {
+  id: string;
+  enabled: boolean;
+  aiApp: { id: string; slug: string };
+};
+
+export type PublishPreflightMediaAsset = {
+  id: string;
 };
 
 const mediaKeys = new Set([
@@ -52,7 +69,7 @@ function sectionEntries(page: ThemePage): Array<{ id: string; section?: SectionI
   return page.draftJson.sectionsOrder.map((id) => ({ id, section: page.draftJson.sections[id] }));
 }
 
-function allSections(site: Site): Array<{ page: ThemePage; sectionId: string; section: SectionInstance }> {
+function allSections(site: Pick<Site, "pages">): Array<{ page: ThemePage; sectionId: string; section: SectionInstance }> {
   return site.pages.flatMap((page) =>
     sectionEntries(page)
       .filter((entry): entry is { id: string; section: SectionInstance } => Boolean(entry.section))
@@ -64,17 +81,17 @@ function setting(section: SectionInstance, key: string): string {
   return themeValueToString(section.settings[key], "").trim();
 }
 
-function productPriceCount(products: Product[]): number {
+function productPriceCount(products: PublishPreflightProduct[]): number {
   return products.reduce((sum, product) => sum + product.prices.filter((price) => price.stripePriceId && price.amountCents > 0).length, 0);
 }
 
-function activeProductsForFilter(products: Product[], filter: string): Product[] {
+function activeProductsForFilter(products: PublishPreflightProduct[], filter: string): PublishPreflightProduct[] {
   return products
     .filter((product) => product.status === "active")
     .filter((product) => (filter === "subscription" || filter === "credit_pack" ? product.type === filter : true));
 }
 
-function aiAppMatches(siteAiApps: SiteAiApp[], value: string): boolean {
+function aiAppMatches(siteAiApps: PublishPreflightSiteAiApp[], value: string): boolean {
   if (!value) return false;
   return siteAiApps.some((app) => app.enabled && (app.id === value || app.aiApp.id === value || app.aiApp.slug === value));
 }
@@ -102,9 +119,9 @@ function mediaReference(value: ThemeSettingValue | undefined): string {
   return stringValue;
 }
 
-function collectMediaReferences(site: Site): string[] {
+function collectMediaReferencesFromSections(sections: Array<{ section: SectionInstance }>): string[] {
   const refs = new Set<string>();
-  for (const { section } of allSections(site)) {
+  for (const { section } of sections) {
     for (const [key, value] of Object.entries(section.settings)) {
       if (mediaKeys.has(key)) {
         const ref = mediaReference(value);
@@ -123,16 +140,22 @@ function collectMediaReferences(site: Site): string[] {
   return [...refs];
 }
 
+export function collectThemePublishMediaReferences(site: Pick<Site, "pages">): string[] {
+  return collectMediaReferencesFromSections(allSections(site));
+}
+
 export function runThemePublishPreflight({
   site,
   products,
   siteAiApps,
-  mediaAssets
+  mediaAssets,
+  dirtyPageIds
 }: {
   site: Site;
-  products: Product[];
-  siteAiApps: SiteAiApp[];
-  mediaAssets: MediaAsset[];
+  products: PublishPreflightProduct[];
+  siteAiApps: PublishPreflightSiteAiApp[];
+  mediaAssets: PublishPreflightMediaAsset[];
+  dirtyPageIds?: string[] | Set<string>;
 }): PublishPreflightResult {
   const checks: PublishPreflightCheck[] = [];
   const sections = allSections(site);
@@ -142,7 +165,10 @@ export function runThemePublishPreflight({
       .map((entry) => `${page.title}:${entry.id}`)
   );
   const emptyPages = site.pages.filter((page) => page.draftJson.sectionsOrder.length === 0);
-  const dirtyPages = site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
+  const dirtyPageIdSet = dirtyPageIds ? new Set(dirtyPageIds) : undefined;
+  const dirtyPages = dirtyPageIdSet
+    ? site.pages.filter((page) => dirtyPageIdSet.has(page.id))
+    : site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
   const pricingSections = sections.filter((entry) => entry.section.type === "pricing_table");
   const aiBusinessSections = sections.filter((entry) =>
     ["ai_tool_grid", "ai_tool_entry", "generation_form", "upload_panel", "job_progress", "album_gallery"].includes(entry.section.type)
@@ -157,7 +183,7 @@ export function runThemePublishPreflight({
   const seo = normalizeThemeSeo(site, site.themeSettings.draftJson);
   const brokenLinks = [...headerLinks, ...footerLinks].filter((link) => !link.label.trim() || hasBrokenLink(link.href));
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
-  const missingMediaRefs = collectMediaReferences(site).filter((ref) => !mediaIds.has(ref));
+  const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
   const pagesMissingSeoTitle = site.pages.filter((page) => !seo.pages[page.id]?.title.trim());
   const pagesMissingSeoDescription = site.pages.filter((page) => !seo.pages[page.id]?.description.trim());
   const pagesWithShortSeoDescription = site.pages.filter((page) => {

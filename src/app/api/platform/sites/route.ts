@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { createSiteRelational } from "@/lib/stores/site-store";
-import { StoreError } from "@/lib/server-store";
 import { getPlatformSitesRelational } from "@/lib/stores/platform-store";
+import { StoreError } from "@/lib/server-store";
 
 async function requirePlatformAdmin() {
   return getCurrentPlatformAdmin();
@@ -11,9 +11,10 @@ async function requirePlatformAdmin() {
 export async function GET() {
   const current = await requirePlatformAdmin();
   if (!current) return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
+  const sites = await getPlatformSitesRelational();
   return NextResponse.json({
     ok: true,
-    sites: await getPlatformSitesRelational()
+    sites
   });
 }
 

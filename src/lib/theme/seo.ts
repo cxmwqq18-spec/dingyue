@@ -75,6 +75,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
         {
           title,
           description,
+          keywords: cleanText(existing?.keywords, current?.siteKeywords),
           ogImage: cleanText(existing?.ogImage),
           canonicalPath: normalizeCanonicalPath(existing?.canonicalPath, page.slug),
           index: existing?.index ?? current?.robots?.index ?? true,
@@ -87,6 +88,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
   return {
     siteTitle: cleanText(current?.siteTitle, site.branding.logoText || site.name),
     siteDescription: cleanText(current?.siteDescription, site.branding.description),
+    siteKeywords: cleanText(current?.siteKeywords),
     titleTemplate: cleanText(current?.titleTemplate, defaultTitleTemplate(site)),
     defaultOgImage: cleanText(current?.defaultOgImage),
     robots: {
@@ -119,12 +121,14 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const pageSeo: PageSeo = seo.pages[page.id] ?? {
     title: pageFallbackTitle(site, page),
     description: pageFallbackDescription(site, page),
+    keywords: seo.siteKeywords,
     canonicalPath: page.slug,
     index: seo.robots.index,
     follow: seo.robots.follow
   };
   const title = applyTitleTemplate(pageSeo.title || seo.siteTitle, seo.titleTemplate, site);
   const description = cleanText(pageSeo.description, seo.siteDescription);
+  const keywords = cleanText(pageSeo.keywords, seo.siteKeywords);
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
@@ -132,6 +136,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   return {
     title,
     description,
+    keywords: keywords ? keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean) : undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: pageSeo.index ?? seo.robots.index,

@@ -59,6 +59,7 @@ export type ThemePackageSiteSettings = {
     seo?: {
       siteTitle?: string;
       siteDescription?: string;
+      siteKeywords?: string;
       titleTemplate?: string;
       defaultOgImage?: string;
     };

@@ -24,7 +24,7 @@ export async function POST(
       customer: result.customer,
       customerBalance: result.customer.balance,
       ledgerAction: result.ledger,
-      workerPayload: buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl }),
+      workerPayload: await buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl }),
       note: "Persisted rerun job and reserved credits before worker dispatch."
     });
   } catch (error) {

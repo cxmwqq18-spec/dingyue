@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { AdminPagination, adminPageSizeOptions, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
-import type { Order, PaymentEvent, PublicCustomer, Subscription } from "@/lib/types";
+import type { Order, PaymentEvent, Subscription } from "@/lib/types";
+
+type CustomerLookup = { id: string; email: string };
 
 function formatMoney(amountCents: number, currency: string) {
   return new Intl.NumberFormat("zh-CN", {
@@ -44,13 +46,15 @@ export function OrdersWorkbenchClient({
   customers,
   orders,
   subscriptions,
-  paymentEvents
+  paymentEvents,
+  mode = "both"
 }: {
   siteId: string;
-  customers: PublicCustomer[];
+  customers: CustomerLookup[];
   orders: Order[];
   subscriptions: Subscription[];
   paymentEvents: PaymentEvent[];
+  mode?: "orders" | "subscriptions" | "both";
 }) {
   const [orderStatus, setOrderStatus] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
@@ -59,15 +63,15 @@ export function OrdersWorkbenchClient({
   const [orderPageSize, setOrderPageSize] = useState<number>(adminPageSizeOptions[0]);
   const [subscriptionPage, setSubscriptionPage] = useState(1);
   const [subscriptionPageSize, setSubscriptionPageSize] = useState<number>(adminPageSizeOptions[0]);
+  const customerEmailById = useMemo(() => new Map(customers.map((customer) => [customer.id, customer.email])), [customers]);
 
   const filteredOrders = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return orders.filter((order) => {
       if (orderStatus && order.status !== orderStatus) return false;
       if (!normalized) return true;
-      const customer = customers.find((item) => item.id === order.customerId);
       return [
-        customer?.email ?? "",
+        customerEmailById.get(order.customerId) ?? "",
         order.customerId,
         order.sourceId,
         order.status,
@@ -77,16 +81,15 @@ export function OrdersWorkbenchClient({
         .toLowerCase()
         .includes(normalized);
     });
-  }, [customers, orderStatus, orders, query]);
+  }, [customerEmailById, orderStatus, orders, query]);
 
   const filteredSubscriptions = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return subscriptions.filter((subscription) => {
       if (subscriptionStatus && subscription.status !== subscriptionStatus) return false;
       if (!normalized) return true;
-      const customer = customers.find((item) => item.id === subscription.customerId);
       return [
-        customer?.email ?? "",
+        customerEmailById.get(subscription.customerId) ?? "",
         subscription.customerId,
         subscription.stripeSubscriptionId,
         subscription.status
@@ -95,7 +98,7 @@ export function OrdersWorkbenchClient({
         .toLowerCase()
         .includes(normalized);
     });
-  }, [customers, query, subscriptionStatus, subscriptions]);
+  }, [customerEmailById, query, subscriptionStatus, subscriptions]);
 
   const currentOrderPage = clampPage(orderPage, filteredOrders.length, orderPageSize);
   const visibleOrders = useMemo(() => pageItems(filteredOrders, currentOrderPage, orderPageSize), [currentOrderPage, filteredOrders, orderPageSize]);
@@ -125,10 +128,9 @@ export function OrdersWorkbenchClient({
     downloadCsv(
       `${siteId}-orders.csv`,
       filteredOrders.map((order) => {
-        const customer = customers.find((item) => item.id === order.customerId);
         return {
           orderId: order.id,
-          customerEmail: customer?.email ?? order.customerId,
+          customerEmail: customerEmailById.get(order.customerId) ?? order.customerId,
           status: order.status,
           amountCents: order.amountCents,
           currency: order.currency,
@@ -145,10 +147,9 @@ export function OrdersWorkbenchClient({
     downloadCsv(
       `${siteId}-subscriptions.csv`,
       filteredSubscriptions.map((subscription) => {
-        const customer = customers.find((item) => item.id === subscription.customerId);
         return {
           subscriptionId: subscription.id,
-          customerEmail: customer?.email ?? subscription.customerId,
+          customerEmail: customerEmailById.get(subscription.customerId) ?? subscription.customerId,
           status: subscription.status,
           productId: subscription.productId,
           priceId: subscription.priceId,
@@ -172,6 +173,7 @@ export function OrdersWorkbenchClient({
 
   return (
     <div className="grid gap-5">
+      {mode === "orders" || mode === "both" ? (
       <div className="right_box border border-[#eee] bg-white p-4">
         <div className="search border border-[#f1f1f1] bg-[#fafafa] px-3 py-2">
           <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
@@ -220,11 +222,11 @@ export function OrdersWorkbenchClient({
             <span>状态</span>
           </div>
           {visibleOrders.map((order) => {
-            const customer = customers.find((item) => item.id === order.customerId);
+            const customerEmail = customerEmailById.get(order.customerId);
             return (
               <div className="grid gap-3 border-b border-slate-100 px-4 py-4 text-sm last:border-b-0 md:grid-cols-[1fr_0.42fr_0.42fr_0.4fr]" key={order.id}>
                 <span>
-                  <span className="block font-medium text-slate-900">{customer?.email ?? order.customerId}</span>
+                  <span className="block font-medium text-slate-900">{customerEmail ?? order.customerId}</span>
                   <span className="font-mono text-xs text-slate-500">{order.sourceId}</span>
                 </span>
                 <span className="font-mono text-slate-900">{formatMoney(order.amountCents, order.currency)}</span>
@@ -246,7 +248,9 @@ export function OrdersWorkbenchClient({
           total={filteredOrders.length}
         />
       </div>
+      ) : null}
 
+      {mode === "subscriptions" || mode === "both" ? (
       <div className="right_box border border-[#eee] bg-white p-4">
         <div className="search border border-[#f1f1f1] bg-[#fafafa] px-3 py-2">
           <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
@@ -285,7 +289,7 @@ export function OrdersWorkbenchClient({
             <div className="grid gap-3 border-b border-slate-100 px-4 py-4 text-sm last:border-b-0 md:grid-cols-[1fr_0.7fr_0.42fr]" key={subscription.id}>
               <span>
                 <span className="block font-medium text-slate-900">
-                  {customers.find((item) => item.id === subscription.customerId)?.email ?? subscription.customerId}
+                  {customerEmailById.get(subscription.customerId) ?? subscription.customerId}
                 </span>
                 <span className="font-mono text-xs text-slate-500">{subscription.stripeSubscriptionId}</span>
               </span>
@@ -306,6 +310,7 @@ export function OrdersWorkbenchClient({
           total={filteredSubscriptions.length}
         />
       </div>
+      ) : null}
     </div>
   );
 }

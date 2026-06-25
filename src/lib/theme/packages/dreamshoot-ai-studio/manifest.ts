@@ -1,9 +1,9 @@
 import type { ThemePackageManifest, ThemePackageTemplateKey } from "../types";
-import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplateLabels, dreamshootAiStudioTemplates, type DreamShootAiStudioTemplateKey } from "./templates";
+import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplateLabels, dreamshootAiStudioTemplates, type MydreamShootsAiStudioTemplateKey } from "./templates";
 
 export const dreamshootAiStudioPackage: ThemePackageManifest = {
   key: "dreamshoot-ai-studio",
-  name: "DreamShootAI Studio",
+  name: "MydreamShoots Studio",
   description: "AI photo subscription storefront package with conversion, pricing, packages, upload, generation, progress, album, policy, help, and content templates.",
   audience: "AI photo packages, headshots, creator portraits, style previews, seasonal cards, AI video, and private album subscription stores.",
   accent: "#2f6fed",
@@ -36,4 +36,4 @@ export const dreamshootAiStudioPackage: ThemePackageManifest = {
   ) satisfies ThemePackageManifest["templates"]
 };
 
-export type { DreamShootAiStudioTemplateKey };
+export type { MydreamShootsAiStudioTemplateKey };

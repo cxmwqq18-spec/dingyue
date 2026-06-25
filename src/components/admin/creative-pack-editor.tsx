@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Download, Pencil, Plus, Search, Save, Trash2, X } from "lucide-react";
+import { Download, ImageIcon, Pencil, Plus, Search, Save, Trash2, X } from "lucide-react";
 import { AdminPagination } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
+import { defaultCreativePackCoverByCategory, suggestedCreativePackCover, suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
 import type { CreativePack, SiteAiApp } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
 
@@ -75,16 +76,21 @@ type CreativePackQueryResult = {
 };
 
 function createDraftPack(siteAiApps: SiteAiApp[]): Omit<CreativePack, "id" | "siteId" | "generationCount" | "conversionRate" | "createdAt"> {
-  return {
+  const draft = {
     name: "新拍摄包",
     headline: "新拍摄主题",
     description: "描述这个拍摄包面向的人群、生成内容和客户会收到的成片类型。",
-    category: "headshots",
+    category: "headshots" as const,
     aiAppSlug: siteAiApps[0]?.aiApp.slug ?? "image_generator",
-    status: "draft",
+    status: "draft" as const,
     creditCost: 12,
     outputCount: 8,
-    trainingRequired: false
+    trainingRequired: false,
+    imageUrl: defaultCreativePackCoverByCategory.headshots
+  };
+  return {
+    ...draft,
+    prompt: suggestedCreativePackPrompt(draft)
   };
 }
 
@@ -205,7 +211,13 @@ export function CreativePackEditor({
   }
 
   function updateDraft<K extends keyof typeof draftPack>(key: K, value: (typeof draftPack)[K]) {
-    setDraftPack((current) => ({ ...current, [key]: value }));
+    setDraftPack((current) => {
+      const next = { ...current, [key]: value };
+      if ((key === "name" || key === "headline" || key === "description" || key === "category" || key === "outputCount" || key === "trainingRequired") && !current.prompt?.trim()) {
+        return { ...next, prompt: suggestedCreativePackPrompt(next) };
+      }
+      return next;
+    });
   }
 
   async function createPack() {
@@ -272,9 +284,11 @@ export function CreativePackEditor({
         packId: pack.id,
         name: pack.name,
         headline: pack.headline,
+        prompt: pack.prompt ?? "",
         category: pack.category,
         status: pack.status,
         aiAppSlug: pack.aiAppSlug,
+        imageUrl: pack.imageUrl ?? "",
         trainingRequired: pack.trainingRequired,
         creditCost: pack.creditCost,
         outputCount: pack.outputCount,
@@ -286,9 +300,11 @@ export function CreativePackEditor({
         "packId",
         "name",
         "headline",
+        "prompt",
         "category",
         "status",
         "aiAppSlug",
+        "imageUrl",
         "trainingRequired",
         "creditCost",
         "outputCount",
@@ -312,6 +328,13 @@ export function CreativePackEditor({
     setStatusFilter(nextStatus);
     setPage(1);
     void queryPacks({ page: 1, statusFilter: nextStatus });
+  }
+
+  function beginEditing(pack: CreativePack) {
+    if (!pack.prompt?.trim()) {
+      update(pack.id, "prompt", suggestedCreativePackPrompt(pack));
+    }
+    setEditingPackId(pack.id);
   }
 
   function updateCategoryFilter(nextCategory: CreativePack["category"] | "") {
@@ -340,6 +363,9 @@ export function CreativePackEditor({
         </button>
       </div>
       <div className="mt-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
+        <div className="mb-4 rounded-[12px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-800">
+          前台绑定检查：拍摄包保存后打开前台工具入口，客户看到的主题名称、Credits、输出数量和上下架状态，都应与下方列表一致。
+        </div>
         <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
           <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5">共 {counts.all} 个</span>
           <span className="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{counts.active} 个已上架</span>
@@ -413,6 +439,53 @@ export function CreativePackEditor({
             描述
             <textarea className="min-h-24 rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => updateDraft("description", event.target.value)} value={draftPack.description} />
           </label>
+          <label className="grid gap-2 text-sm md:col-span-2">
+            <span className="flex flex-wrap items-center justify-between gap-2">
+              <span>AI 主题提示词</span>
+              <button
+                className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-1.5 text-xs active:scale-[0.98]"
+                onClick={() => updateDraft("prompt", suggestedCreativePackPrompt(draftPack))}
+                type="button"
+              >
+                生成主题提示词
+              </button>
+            </span>
+            <textarea
+              className="min-h-32 rounded-xl border border-black/10 bg-white px-3 py-2 font-mono text-xs leading-5"
+              onChange={(event) => updateDraft("prompt", event.target.value)}
+              placeholder="客户选择该主题后，后端会把这里的提示词合并进生成任务 prompt。"
+              value={draftPack.prompt ?? ""}
+            />
+            <span className="text-xs leading-5 text-zinc-500">建议写成英文专业提示词，包含身份保留、摄影风格、光线、构图和安全约束。</span>
+          </label>
+          <label className="grid gap-2 text-sm md:col-span-2">
+            <span className="flex flex-wrap items-center justify-between gap-2">
+              <span>主题封面图</span>
+              <span className="flex flex-wrap gap-2">
+                <button
+                  className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-1.5 text-xs active:scale-[0.98]"
+                  onClick={() => updateDraft("imageUrl", suggestedCreativePackCover(draftPack))}
+                  type="button"
+                >
+                  使用建议图
+                </button>
+                <button
+                  className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-red-100 px-3 py-1.5 text-xs text-red-600 active:scale-[0.98]"
+                  onClick={() => updateDraft("imageUrl", "")}
+                  type="button"
+                >
+                  删除图片
+                </button>
+              </span>
+            </span>
+            <input
+              className="rounded-xl border border-black/10 bg-white px-3 py-2"
+              onChange={(event) => updateDraft("imageUrl", event.target.value)}
+              placeholder="/assets/dreamshoot/generated/packs/example.png"
+              value={draftPack.imageUrl ?? ""}
+            />
+            <span className="text-xs leading-5 text-zinc-500">用于前台工具目录和拍摄包卡片；支持 /assets 路径、media id 或完整 URL。清空后前台会显示无图占位。</span>
+          </label>
           <label className="grid gap-2 text-sm">
             状态
             <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => updateDraft("status", event.target.value as CreativePack["status"])} value={draftPack.status}>
@@ -467,11 +540,21 @@ export function CreativePackEditor({
       <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {items.map((pack) => (
           <button
-            className="group min-h-[188px] rounded-[12px] border border-zinc-200 bg-white p-4 text-left transition hover:border-blue-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="group overflow-hidden rounded-[12px] border border-zinc-200 bg-white text-left transition hover:border-blue-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
             key={pack.id}
-            onClick={() => setEditingPackId(pack.id)}
+            onClick={() => beginEditing(pack)}
             type="button"
           >
+            <div className="aspect-[16/9] overflow-hidden border-b border-zinc-100 bg-zinc-100">
+              {pack.imageUrl ? (
+                <img className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" src={pack.imageUrl} alt={pack.name} />
+              ) : (
+                <div className="flex h-full items-center justify-center text-zinc-400">
+                  <ImageIcon className="h-6 w-6" strokeWidth={1.8} />
+                </div>
+              )}
+            </div>
+            <div className="min-h-[188px] p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="line-clamp-1 text-[15px] font-semibold text-slate-900">{pack.name}</p>
@@ -480,6 +563,9 @@ export function CreativePackEditor({
               <StatusPill label={statusLabels[pack.status]} tone={tone(pack.status)} />
             </div>
             <p className="mt-4 line-clamp-2 min-h-[40px] text-sm leading-5 text-zinc-600">{pack.headline}</p>
+            <p className={`mt-3 inline-flex rounded-full px-2.5 py-1 text-[11px] font-medium ${pack.prompt?.trim() ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+              {pack.prompt?.trim() ? "已配置提示词" : "未配置提示词"}
+            </p>
             <div className="mt-4 grid grid-cols-3 gap-2 text-[12px] text-zinc-500">
               <span>
                 <strong className="block font-mono text-slate-900">{pack.creditCost}</strong>
@@ -500,6 +586,7 @@ export function CreativePackEditor({
                 <Pencil className="h-3.5 w-3.5" strokeWidth={1.8} />
                 编辑
               </span>
+            </div>
             </div>
           </button>
         ))}
@@ -540,6 +627,67 @@ export function CreativePackEditor({
                     value={editingPack.description}
                   />
                 </label>
+                <label className="grid gap-2 text-sm md:col-span-2">
+                  <span className="flex flex-wrap items-center justify-between gap-2">
+                    <span>AI 主题提示词</span>
+                    <span className="flex flex-wrap gap-2">
+                      <button
+                        className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-1.5 text-xs active:scale-[0.98]"
+                        onClick={() => update(editingPack.id, "prompt", suggestedCreativePackPrompt(editingPack))}
+                        type="button"
+                      >
+                        生成/覆盖提示词
+                      </button>
+                      <button
+                        className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-red-100 px-3 py-1.5 text-xs text-red-600 active:scale-[0.98]"
+                        onClick={() => update(editingPack.id, "prompt", "")}
+                        type="button"
+                      >
+                        清空提示词
+                      </button>
+                    </span>
+                  </span>
+                  <textarea
+                    className="min-h-40 rounded-xl border border-black/10 bg-white px-3 py-2 font-mono text-xs leading-5"
+                    onChange={(event) => update(editingPack.id, "prompt", event.target.value)}
+                    placeholder="客户选择该主题后，后端会把这里的提示词合并进生成任务 prompt。"
+                    value={editingPack.prompt ?? ""}
+                  />
+                  <span className="text-xs leading-5 text-zinc-500">这里维护主题的专业摄影/生成术语；客户只选择主题，不能篡改最终 prompt。</span>
+                </label>
+                <label className="grid gap-2 text-sm md:col-span-2">
+                  <span className="flex flex-wrap items-center justify-between gap-2">
+                    <span>主题封面图</span>
+                    <span className="flex flex-wrap gap-2">
+                      <button
+                        className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-1.5 text-xs active:scale-[0.98]"
+                        onClick={() => update(editingPack.id, "imageUrl", suggestedCreativePackCover(editingPack))}
+                        type="button"
+                      >
+                        使用建议图
+                      </button>
+                      <button
+                        className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-red-100 px-3 py-1.5 text-xs text-red-600 active:scale-[0.98]"
+                        onClick={() => update(editingPack.id, "imageUrl", "")}
+                        type="button"
+                      >
+                        删除图片
+                      </button>
+                    </span>
+                  </span>
+                  <input
+                    className="rounded-xl border border-black/10 bg-white px-3 py-2"
+                    onChange={(event) => update(editingPack.id, "imageUrl", event.target.value)}
+                    placeholder="/assets/dreamshoot/generated/packs/example.png"
+                    value={editingPack.imageUrl ?? ""}
+                  />
+                  <span className="text-xs leading-5 text-zinc-500">保存后前台 Tools 目录、拍摄包墙和搜索结果会读取这张图。删除图片会清空数据库 imageUrl，不会删除 public/assets 里的原始文件。</span>
+                </label>
+                {editingPack.imageUrl ? (
+                  <div className="md:col-span-2 overflow-hidden rounded-[14px] border border-zinc-200 bg-zinc-50">
+                    <img className="max-h-[260px] w-full object-cover" src={editingPack.imageUrl} alt={`${editingPack.name} preview`} />
+                  </div>
+                ) : null}
                 <label className="grid gap-2 text-sm">
                   状态
                   <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => update(editingPack.id, "status", event.target.value as CreativePack["status"])} value={editingPack.status}>

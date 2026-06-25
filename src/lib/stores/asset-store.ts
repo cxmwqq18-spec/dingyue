@@ -111,16 +111,18 @@ export async function deleteAssetUploadRelational(
 }
 
 export async function getCustomerAssetsRelational(
-  params: { siteId: string; customerId: string; includeDeleted?: boolean },
+  params: { siteId: string; customerId: string; includeDeleted?: boolean; take?: number },
   client: DbClient = prisma
 ): Promise<{ assets: AssetUpload[] }> {
+  const take = params.take === undefined ? undefined : Math.min(Math.max(Math.trunc(params.take), 1), 500);
   const assets = await client.assetUpload.findMany({
     where: compactObject({
       siteId: params.siteId,
       customerId: params.customerId,
       deletedAt: params.includeDeleted ? undefined : null
     }),
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }]
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take
   });
   return { assets: assets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) };
 }
@@ -202,6 +204,43 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     reviewStatus: asset.reviewStatus,
     createdAt: asset.createdAt
   };
+}
+
+export async function listSiteCustomerModelsRelational(
+  siteId: string,
+  client: DbClient = prisma
+): Promise<{ models: CustomerModel[] }> {
+  await requireModelFields(client, "CustomerModel", ["id", "siteId", "customerId", "label", "status"]);
+  const models = await client.customerModel.findMany({
+    where: { siteId },
+    orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+  });
+  return { models: models.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>)) };
+}
+
+export async function listSiteAlbumsRelational(siteId: string, client: DbClient = prisma): Promise<{ albums: Album[] }> {
+  await requireModelFields(client, "Album", ["id", "siteId", "customerId", "title", "status"]);
+  const albums = await client.album.findMany({
+    where: { siteId },
+    orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+  });
+  return { albums: albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>)) };
+}
+
+export async function listSiteCustomerAssetsRelational(
+  params: { siteId: string; includeDeleted?: boolean; take?: number },
+  client: DbClient = prisma
+): Promise<{ assets: AssetUpload[] }> {
+  await requireModelFields(client, "AssetUpload", requiredAssetMetadataFields);
+  const assets = await client.assetUpload.findMany({
+    where: compactObject({
+      siteId: params.siteId,
+      deletedAt: params.includeDeleted ? undefined : null
+    }),
+    orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+    take: params.take
+  });
+  return { assets: assets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) };
 }
 
 export async function updateCustomerModelRelational(

@@ -2,14 +2,29 @@ import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import type { CreditLedgerEntry, Customer, GenerationJob, SiteAiApp } from "@/lib/types";
+import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationJob, SiteAiApp } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
 
 type Tx = Prisma.TransactionClient;
+const jobStoreTimeoutMs = Math.max(1000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "8000") || 8000);
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
+}
+
+async function withJobStoreTimeout<T>(operation: Promise<T>, message: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      operation,
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new StoreError(message, 504)), jobStoreTimeoutMs);
+      })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }
 
 function toPrismaJson(value: Record<string, unknown>): Prisma.InputJsonValue {
@@ -21,6 +36,125 @@ function cleanRerunRequest(value: Prisma.JsonValue): Record<string, unknown> {
   delete request.lastWorkerStatus;
   delete request.lastWorkerStage;
   return request;
+}
+
+function jsonObject<T>(value: Prisma.JsonValue | null | undefined): T | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function defaultWorkflowConfig(siteAiApp: { aiApp: { name: string; description: string; parameterSchema: Prisma.JsonValue } }): AiWorkflowConfig {
+  const parameterSchema = Array.isArray(siteAiApp.aiApp.parameterSchema)
+    ? siteAiApp.aiApp.parameterSchema as Array<{ id: string; label: string; type: "text" | "select"; options?: string[] }>
+    : [];
+  const fields: AiWorkflowField[] = parameterSchema.map((field) => field.type === "select"
+    ? {
+        id: field.id,
+        label: field.label,
+        type: "select",
+        required: true,
+        options: (field.options ?? []).map((option) => ({ label: option, value: option })),
+        default: field.options?.[0] ?? ""
+      }
+    : {
+        id: field.id,
+        label: field.label,
+        type: "text",
+        required: true,
+        default: ""
+      });
+  return {
+    version: 1,
+    flowName: siteAiApp.aiApp.name,
+    description: siteAiApp.aiApp.description,
+    submitLabel: "Start generation",
+    promptTemplate: "Create a private image generation for {{flowName}} using {{fields}} and the selected source photos.",
+    steps: [
+      { id: "source_photos", title: "Select source photos", kind: "asset_select", assetRules: { min: 1, max: 4, roles: ["input"], accept: ["image/*"], required: true } },
+      { id: "generation_options", title: "Set generation options", kind: "fields", fields },
+      { id: "review_request", title: "Review request", kind: "review" }
+    ]
+  };
+}
+
+function workflowFields(workflow: AiWorkflowConfig): AiWorkflowField[] {
+  return workflow.steps.flatMap((step) => step.kind === "fields" ? step.fields ?? [] : []);
+}
+
+function assetRules(workflow: AiWorkflowConfig) {
+  return workflow.steps.find((step) => step.kind === "asset_select")?.assetRules ?? { min: 1, max: 4 };
+}
+
+function normalizePromptInputs(requestJson?: Record<string, unknown>): Record<string, string | number | boolean> {
+  const fields = requestJson?.fields;
+  if (fields && typeof fields === "object" && !Array.isArray(fields)) {
+    return Object.fromEntries(
+      Object.entries(fields as Record<string, unknown>).filter((entry): entry is [string, string | number | boolean] =>
+        typeof entry[1] === "string" || typeof entry[1] === "number" || typeof entry[1] === "boolean"
+      )
+    );
+  }
+  return Object.fromEntries(
+    Object.entries(requestJson ?? {}).filter((entry): entry is [string, string | number | boolean] =>
+      typeof entry[1] === "string" || typeof entry[1] === "number" || typeof entry[1] === "boolean"
+    )
+  );
+}
+
+type GenerationCreativePack = Pick<Prisma.CreativePackGetPayload<object>, "id" | "name" | "headline" | "category" | "aiAppSlug" | "prompt" | "creditCost" | "outputCount">;
+
+function renderPrompt(template: string | undefined, context: { flowName: string; fields: Record<string, string | number | boolean>; assetCount: number; themeName?: string; themePrompt?: string }): string {
+  const fieldText = Object.entries(context.fields).map(([key, value]) => `${key}: ${String(value)}`).join("; ");
+  const source = template?.trim() || "Create {{flowName}} using {{fields}} with {{assetCount}} selected source photos.";
+  return source
+    .replaceAll("{{flowName}}", context.flowName)
+    .replaceAll("{{fields}}", fieldText)
+    .replaceAll("{{assetCount}}", String(context.assetCount))
+    .replaceAll("{{themeName}}", context.themeName ?? "")
+    .replaceAll("{{themePrompt}}", context.themePrompt ?? "");
+}
+
+function resolveGenerationRequest(params: {
+  requestJson?: Record<string, unknown>;
+  siteAiApp: Prisma.SiteAiAppGetPayload<{ include: { aiApp: true } }>;
+  requestedAssetIds: string[];
+  creativePack?: GenerationCreativePack | null;
+}) {
+  const workflow = jsonObject<AiWorkflowConfig>(params.siteAiApp.workflowConfig) ?? defaultWorkflowConfig(params.siteAiApp);
+  const provider = jsonObject<AiProviderConfig>(params.siteAiApp.providerConfig) ?? { mode: "platform_fallback", fallbackEnabled: true };
+  const fields = normalizePromptInputs(params.requestJson);
+  const missingField = workflowFields(workflow).find((field) => field.required && (fields[field.id] === undefined || fields[field.id] === ""));
+  if (missingField) throw new StoreError("missing_required_prompt_input", 400);
+  const rules = assetRules(workflow);
+  const minAssets = rules.min ?? 1;
+  const maxAssets = rules.max ?? 4;
+  if (params.requestedAssetIds.length < minAssets) throw new StoreError("not_enough_source_assets", 400);
+  if (params.requestedAssetIds.length > maxAssets) throw new StoreError("too_many_source_assets", 400);
+  const flowName = workflow.flowName ?? params.siteAiApp.aiApp.name;
+  const themePrompt = params.creativePack?.prompt?.trim() ?? "";
+  const basePrompt = renderPrompt(workflow.promptTemplate, {
+    flowName,
+    fields,
+    assetCount: params.requestedAssetIds.length,
+    themeName: params.creativePack?.name,
+    themePrompt
+  });
+  const renderedPrompt = themePrompt
+    ? `${basePrompt}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
+    : basePrompt;
+  return {
+    fields,
+    workflow,
+    provider,
+    prompt: {
+      template: workflow.promptTemplate ?? "",
+      inputs: fields,
+      rendered: renderedPrompt,
+      negativePrompt: workflow.negativePrompt ?? "",
+      themeName: params.creativePack?.name ?? "",
+      themePrompt
+    }
+  };
 }
 
 async function readCustomerForUpdate(tx: Tx, siteId: string, customerId: string) {
@@ -71,11 +205,32 @@ async function createGenerationJobInTx(tx: Tx, params: {
     include: { aiApp: true }
   });
   if (!siteAiApp) throw new StoreError("ai_app_not_enabled_for_site", 404);
-  if ((customer.balance?.balance ?? 0) < siteAiApp.creditCost) throw new StoreError("insufficient_credits", 402);
+
+  const creativePackId = typeof params.requestJson?.creativePackId === "string" ? params.requestJson.creativePackId : undefined;
+  const creativePack = creativePackId
+    ? await tx.creativePack.findFirst({
+        where: { id: creativePackId, siteId: params.siteId, status: "active" },
+        select: {
+          id: true,
+          name: true,
+          headline: true,
+          category: true,
+          aiAppSlug: true,
+          prompt: true,
+          creditCost: true,
+          outputCount: true
+        }
+      })
+    : null;
+  if (creativePackId && !creativePack) throw new StoreError("creative_pack_not_found_for_site", 404);
+  if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
+  const creditsReserved = creativePack?.creditCost ?? siteAiApp.creditCost;
+  if ((customer.balance?.balance ?? 0) < creditsReserved) throw new StoreError("insufficient_credits", 402);
 
   const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
     ? params.requestJson.assetIds.filter((item): item is string => typeof item === "string")
     : [];
+  const resolvedRequest = resolveGenerationRequest({ requestJson: params.requestJson, siteAiApp, requestedAssetIds, creativePack });
   if (requestedAssetIds.length) {
     const validAssets = await tx.assetUpload.findMany({
       where: { id: { in: requestedAssetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null },
@@ -93,8 +248,34 @@ async function createGenerationJobInTx(tx: Tx, params: {
       customerId: params.customerId,
       aiAppId: siteAiApp.aiApp.id,
       status: "queued",
-      creditsReserved: siteAiApp.creditCost,
-      requestJson: toPrismaJson({ ...(params.requestJson ?? {}), worker: siteAiApp.routeKey })
+      creditsReserved,
+      requestJson: toPrismaJson({
+        ...(params.requestJson ?? {}),
+        fields: resolvedRequest.fields,
+        worker: siteAiApp.routeKey,
+        flow: {
+          version: resolvedRequest.workflow.version,
+          flowName: resolvedRequest.workflow.flowName ?? siteAiApp.aiApp.name,
+          aiAppSlug: params.aiAppSlug,
+          siteAiAppId: siteAiApp.id,
+          routeKey: siteAiApp.routeKey
+        },
+        flowSnapshot: resolvedRequest.workflow,
+        creativePack: creativePack
+          ? {
+              id: creativePack.id,
+              name: creativePack.name,
+              headline: creativePack.headline,
+              category: creativePack.category,
+              aiAppSlug: creativePack.aiAppSlug,
+              prompt: creativePack.prompt ?? "",
+              creditCost: creativePack.creditCost,
+              outputCount: creativePack.outputCount
+            }
+          : undefined,
+        prompt: resolvedRequest.prompt,
+        providerSelection: resolvedRequest.provider
+      })
     }
   });
   const ledger = await reserveCreditsForJob(tx, job);
@@ -108,7 +289,7 @@ export async function createGenerationJobRelational(params: {
   aiAppSlug: string;
   requestJson?: Record<string, unknown>;
 }): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger: CreditLedgerEntry; customer: Customer }> {
-  return prisma.$transaction(async (tx) => {
+  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const result = await createGenerationJobInTx(tx, params);
     return {
       job: mapGenerationJob(result.job),
@@ -116,7 +297,7 @@ export async function createGenerationJobRelational(params: {
       ledger: mapCreditLedger(result.ledger),
       customer: mapCustomer(result.customer)
     };
-  });
+  }), "job_create_timeout");
 }
 
 export async function updateGenerationJobStatusRelational(params: {
@@ -126,7 +307,7 @@ export async function updateGenerationJobStatusRelational(params: {
   status: string;
   stage?: string;
 }): Promise<{ job: GenerationJob; alreadyFinal: boolean }> {
-  return prisma.$transaction(async (tx) => {
+  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const alreadyFinal = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
@@ -144,7 +325,7 @@ export async function updateGenerationJobStatusRelational(params: {
       }
     });
     return { job: mapGenerationJob(updatedJob), alreadyFinal };
-  });
+  }), "job_status_update_timeout");
 }
 
 export async function settleGenerationJobRelational(params: {
@@ -157,7 +338,7 @@ export async function settleGenerationJobRelational(params: {
   costTrace?: { estimatedCostUsd?: number };
   error?: string;
 }): Promise<{ job: GenerationJob; ledger?: CreditLedgerEntry; alreadyProcessed: boolean; customer: Customer }> {
-  return prisma.$transaction(async (tx) => {
+  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
@@ -209,7 +390,7 @@ export async function settleGenerationJobRelational(params: {
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: job.customerId, siteId: job.siteId }, include: { balance: true } });
     return { job: mapGenerationJob(updatedJob), ledger: mapCreditLedger(ledger), alreadyProcessed: false, customer: mapCustomer(updatedCustomer) };
-  });
+  }), "job_result_update_timeout");
 }
 
 async function upsertAlbumForSettledJob(
@@ -277,7 +458,7 @@ export async function rerunGenerationJobRelational(params: {
   jobId: string;
   actor?: string;
 }): Promise<{ sourceJob: GenerationJob; job: GenerationJob; siteAiApp: SiteAiApp; ledger: CreditLedgerEntry; customer: Customer }> {
-  return prisma.$transaction(async (tx) => {
+  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const sourceJob = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!sourceJob) throw new StoreError("job_not_found", 404);
     if (sourceJob.status !== "failed" && sourceJob.status !== "refunded") {
@@ -302,5 +483,5 @@ export async function rerunGenerationJobRelational(params: {
       ledger: mapCreditLedger(rerun.ledger),
       customer: mapCustomer(rerun.customer)
     };
-  });
+  }), "job_rerun_timeout");
 }
