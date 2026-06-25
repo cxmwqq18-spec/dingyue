@@ -1,5 +1,7 @@
 import "server-only";
 
+import { createAdminPerfTracker, isAdminPerfEnabled } from "@/lib/admin-perf";
+
 const defaultDbConcurrency = Number(process.env.ADMIN_DB_QUERY_CONCURRENCY ?? 4);
 
 const globalForDbConcurrency = globalThis as unknown as {
@@ -31,6 +33,7 @@ export async function runDbTasks<T extends readonly unknown[]>(
   tasks: { [K in keyof T]: () => Promise<T[K]> },
   concurrency = defaultDbConcurrency
 ): Promise<T> {
+  const perf = createAdminPerfTracker("runDbTasks", { taskCount: tasks.length, concurrency });
   const limit = Math.max(1, Math.floor(concurrency));
   const results: unknown[] = new Array(tasks.length);
   let nextIndex = 0;
@@ -39,11 +42,16 @@ export async function runDbTasks<T extends readonly unknown[]>(
     while (nextIndex < tasks.length) {
       const currentIndex = nextIndex;
       nextIndex += 1;
-      results[currentIndex] = await withGlobalDbSlot(tasks[currentIndex], concurrency);
+      const queuedAt = isAdminPerfEnabled() ? performance.now() : 0;
+      results[currentIndex] = await withGlobalDbSlot(async () => {
+        if (perf.enabled) perf.mark("queue", performance.now() - queuedAt, { taskIndex: currentIndex });
+        return perf.measure("task", tasks[currentIndex], { taskIndex: currentIndex });
+      }, concurrency);
     }
   }
 
   const workers = Array.from({ length: Math.min(limit, tasks.length) }, () => worker());
-  await Promise.all(workers);
+  await perf.measure("db", () => Promise.all(workers), { taskCount: tasks.length, concurrency });
+  perf.finish();
   return results as unknown as T;
 }

@@ -327,6 +327,7 @@ async function loadStorefrontPublicRuntimeState(where: Prisma.SiteWhereUniqueInp
     needs.creativePacks
       ? prisma.creativePack.findMany({
           where: { siteId, status: { in: ["active", "draft"] } },
+          include: { categoryRecord: { include: { parent: true } } },
           orderBy: [{ status: "asc" }, { createdAt: "asc" }],
           take: 60
         })
@@ -462,7 +463,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
       ? prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }], take: limits.siteAiApps })
       : Promise.resolve([]),
     limits.creativePacks
-      ? prisma.creativePack.findMany({ where: { siteId }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.creativePacks })
+      ? prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.creativePacks })
       : Promise.resolve([]),
     limits.mediaAssets
       ? prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }], take: limits.mediaAssets })
@@ -530,7 +531,7 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     prisma.siteDomain.findMany({ where: { siteId }, orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] }),
     prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
     prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }] }),
-    prisma.creativePack.findMany({ where: { siteId }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
+    prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
     prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }] }),
     prisma.customer.findMany({ where: { siteId }, include: { balance: true }, orderBy: [{ createdAt: "asc" }], take: fullSiteRuntimeLimits.customers }),
     prisma.customerSession.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.customerSessions }),
@@ -578,9 +579,9 @@ export const getStorefrontRuntimeStateBySlug = cache(async (slug: string): Promi
   return siteId ? getStorefrontRuntimeStateForSite(siteId) : undefined;
 });
 
-export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined): Promise<PlatformState | undefined> => {
+export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined, pageSlug?: string): Promise<PlatformState | undefined> => {
   const site = await getStorefrontSiteByHostRelational(host);
-  return site ? getStorefrontPublicRuntimeStateForSite(site.id) : undefined;
+  return site ? getStorefrontPublicRuntimeStateForSite(site.id, pageSlug) : undefined;
 });
 
 export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, pageSlug?: string): Promise<PlatformState | undefined> => {
@@ -2470,13 +2471,15 @@ export async function upsertCreativePackRelational(params: {
   headline: string;
   description: string;
   prompt?: string;
-  category: CreativePack["category"];
+  category: string;
+  categoryId?: string;
   aiAppSlug: string;
   status: CreativePack["status"];
   creditCost: number;
   outputCount: number;
   trainingRequired: boolean;
   imageUrl?: string;
+  galleryImages?: string[];
 }): Promise<{ pack: CreativePack; created: boolean }> {
   const site = await prisma.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
   if (!site) throw new RelationalStoreError("site_not_found", 404);
@@ -2492,13 +2495,19 @@ export async function upsertCreativePackRelational(params: {
     outputCount: params.outputCount,
     trainingRequired: params.trainingRequired
   });
-  const imageUrl = params.imageUrl?.trim() || null;
+  const galleryImages = Array.isArray(params.galleryImages) ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 24) : [];
+  const imageUrl = params.imageUrl?.trim() || galleryImages[0] || null;
   if (description.length < 8) throw new RelationalStoreError("creative_pack_description_required", 400);
   if (prompt && prompt.length > 6000) throw new RelationalStoreError("creative_pack_prompt_too_long", 400);
   const aiApp = await prisma.aiApp.findUnique({ where: { slug: params.aiAppSlug }, select: { id: true } });
   if (!aiApp) throw new RelationalStoreError("ai_app_not_found", 404);
   if (!Number.isInteger(params.creditCost) || params.creditCost < 0) throw new RelationalStoreError("invalid_credit_cost", 400);
   if (!Number.isInteger(params.outputCount) || params.outputCount < 1) throw new RelationalStoreError("invalid_output_count", 400);
+  const categoryRecord = params.categoryId
+    ? await prisma.creativePackCategory.findFirst({ where: { id: params.categoryId, siteId: params.siteId }, select: { id: true, slug: true } })
+    : null;
+  if (params.categoryId && !categoryRecord) throw new RelationalStoreError("creative_pack_category_not_found", 404);
+  const category = categoryRecord?.slug ?? (params.category.trim() || "headshots");
 
   const existing = params.packId
     ? await prisma.creativePack.findFirst({ where: { siteId: params.siteId, id: params.packId } })
@@ -2506,21 +2515,25 @@ export async function upsertCreativePackRelational(params: {
   const pack = existing
     ? await prisma.creativePack.update({
         where: { id: existing.id },
+        include: { categoryRecord: { include: { parent: true } } },
         data: {
           name,
           headline,
           description,
           prompt,
-          category: params.category,
+          category,
+          categoryId: categoryRecord?.id ?? null,
           aiAppSlug: params.aiAppSlug,
           status: params.status,
           creditCost: params.creditCost,
           outputCount: params.outputCount,
           trainingRequired: params.trainingRequired,
-          imageUrl
+          imageUrl,
+          galleryImages
         }
       })
     : await prisma.creativePack.create({
+        include: { categoryRecord: { include: { parent: true } } },
         data: {
           id: params.packId ?? uid("pack"),
           siteId: params.siteId,
@@ -2528,13 +2541,15 @@ export async function upsertCreativePackRelational(params: {
           headline,
           description,
           prompt,
-          category: params.category,
+          category,
+          categoryId: categoryRecord?.id ?? null,
           aiAppSlug: params.aiAppSlug,
           status: params.status,
           creditCost: params.creditCost,
           outputCount: params.outputCount,
           trainingRequired: params.trainingRequired,
           imageUrl,
+          galleryImages,
           generationCount: 0,
           conversionRate: 0
         }

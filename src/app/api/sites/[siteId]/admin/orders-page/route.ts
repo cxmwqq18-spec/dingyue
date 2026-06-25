@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
@@ -36,6 +36,15 @@ function normalizeTake(value: string | null): number {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return adminListTake;
   return Math.min(200, Math.max(10, Math.floor(parsed)));
+}
+
+function normalizeCursor(value: string | null): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed || undefined;
+}
+
+function nextCursor<T extends { id: string }>(items: T[], take: number): string | undefined {
+  return items.length >= take ? items[items.length - 1]?.id : undefined;
 }
 
 function mapOrderForAdmin(row: {
@@ -163,22 +172,24 @@ async function customerLookups(siteId: string, customerIds: Iterable<string>, le
 
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  const tab = normalizeOrdersTab(new URL(request.url).searchParams.get("tab"));
+  const url = new URL(request.url);
+  const take = normalizeTake(url.searchParams.get("take"));
+  const cursor = normalizeCursor(url.searchParams.get("cursor"));
+  const perf = createAdminPerfTracker("admin-orders-page", { siteId, tab, take, cursor: cursor ?? "" });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  const tab = normalizeOrdersTab(new URL(request.url).searchParams.get("tab"));
-  const take = normalizeTake(new URL(request.url).searchParams.get("take"));
-
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
-    const legacyState = readPlatformState();
+    const legacyState = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const collections = legacyCollections(legacyState, siteId, tab, take);
-    const customers = await customerLookups(
+    const customers = await perf.measure("db", () => customerLookups(
       siteId,
       [...collections.orders, ...collections.subscriptions, ...collections.ledger].map((item) => item.customerId),
       legacyState
-    );
-    return NextResponse.json({ ok: true, tab, customers, ...collections });
+    ), { phase: "customerLookups" });
+    return adminPerfJson(perf, { ok: true, tab, customers, ...collections });
   }
 
   const includeOrders = tab === "orders" || tab === "ledger" || tab === "overview";
@@ -187,8 +198,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const includeJobs = tab === "ledger";
   const includePaymentEvents = tab === "events" || tab === "overview";
 
-  const payload = await ordersPageCache.get(`${tab}:${siteId}:${take}`, async () => {
-    const [orders, subscriptions, ledger, jobs, paymentEvents] = await runDbTasks([
+  const payload = await perf.measure("cache", () => ordersPageCache.get(`${tab}:${siteId}:${take}:${cursor ?? "first"}`, async () => {
+    const [orders, subscriptions, ledger, jobs, paymentEvents] = await perf.measure("db", () => runDbTasks([
       includeOrders
         ? () => prisma.order.findMany({
             where: { siteId },
@@ -204,6 +215,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               createdAt: true
             },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+            ...(cursor && tab === "orders" ? { cursor: { id: cursor }, skip: 1 } : {}),
             take
           })
         : () => Promise.resolve([]),
@@ -223,6 +235,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               createdAt: true
             },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+            ...(cursor && tab === "subscriptions" ? { cursor: { id: cursor }, skip: 1 } : {}),
             take
           })
         : () => Promise.resolve([]),
@@ -230,6 +243,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         ? () => prisma.creditLedger.findMany({
             where: { siteId },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+            ...(cursor && tab === "ledger" ? { cursor: { id: cursor }, skip: 1 } : {}),
             take
           })
         : () => Promise.resolve([]),
@@ -262,18 +276,19 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               processedAt: true
             },
             orderBy: [{ processedAt: "desc" }, { id: "asc" }],
+            ...(cursor && tab === "events" ? { cursor: { id: cursor }, skip: 1 } : {}),
             take
           })
         : () => Promise.resolve([])
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency), { phase: "collections" });
 
     const mappedOrders = orders.map(mapOrderForAdmin);
     const mappedSubscriptions = subscriptions.map(mapSubscriptionForAdmin);
     const mappedLedger = ledger.map(mapCreditLedger);
-    const customers = await customerLookups(
+    const customers = await perf.measure("db", () => customerLookups(
       siteId,
       [...mappedOrders, ...mappedSubscriptions, ...mappedLedger].map((item) => item.customerId)
-    );
+    ), { phase: "customerLookups" });
 
     return {
       ok: true,
@@ -283,13 +298,20 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       subscriptions: mappedSubscriptions,
       ledger: mappedLedger,
       jobs: jobs.map(mapLightGenerationJobForAdmin),
-      paymentEvents: paymentEvents.map(mapLightPaymentEventForAdmin)
+      paymentEvents: paymentEvents.map(mapLightPaymentEventForAdmin),
+      pageInfo: {
+        take,
+        nextOrderCursor: nextCursor(mappedOrders, take),
+        nextSubscriptionCursor: nextCursor(mappedSubscriptions, take),
+        nextLedgerCursor: nextCursor(mappedLedger, take),
+        nextPaymentEventCursor: nextCursor(paymentEvents, take)
+      }
     };
-  });
+  }));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_admin_data_unavailable" }, { status: 503 });
+    return adminPerfJson(perf, { error: "site_admin_data_unavailable" }, { status: 503 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { canPublishPaidProducts } from "@/lib/billing";
 import { runDbTasks } from "@/lib/db-concurrency";
@@ -30,12 +30,13 @@ function toIso(value: Date | string): string {
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  const perf = createAdminPerfTracker("admin-products-page", { siteId });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  const payload = await productsPageCache.get(siteId, async () => {
-    const [site, products, packs, siteAiApps] = await runDbTasks([
+  const payload = await perf.measure("cache", () => productsPageCache.get(siteId, async () => {
+    const [site, products, packs, siteAiApps] = await perf.measure("db", () => runDbTasks([
       () => prisma.site.findUnique({
         where: { id: siteId },
         select: {
@@ -89,6 +90,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           generationCount: true,
           conversionRate: true,
           imageUrl: true,
+          galleryImages: true,
+          categoryId: true,
+          categoryRecord: {
+            include: { parent: true }
+          },
           createdAt: true
         },
         orderBy: [{ status: "asc" }, { createdAt: "asc" }],
@@ -115,7 +121,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         orderBy: [{ enabled: "desc" }, { routeKey: "asc" }],
         take: adminAiAppListTake
       })
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency));
 
     if (!site) return undefined;
     const mappedProducts: Product[] = products.map((product) => ({
@@ -161,7 +167,36 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           headline: pack.headline,
           description: pack.description,
           prompt: pack.prompt ?? undefined,
-          category: pack.category as CreativePack["category"],
+          category: pack.category,
+          categoryId: pack.categoryId ?? undefined,
+          categoryRecord: pack.categoryRecord ? {
+            id: pack.categoryRecord.id,
+            siteId: pack.categoryRecord.siteId,
+            parentId: pack.categoryRecord.parentId ?? undefined,
+            parent: pack.categoryRecord.parent ? {
+              id: pack.categoryRecord.parent.id,
+              siteId: pack.categoryRecord.parent.siteId,
+              parentId: pack.categoryRecord.parent.parentId ?? undefined,
+              slug: pack.categoryRecord.parent.slug,
+              label: pack.categoryRecord.parent.label,
+              description: pack.categoryRecord.parent.description ?? undefined,
+              heroTitle: pack.categoryRecord.parent.heroTitle ?? undefined,
+              heroSubtitle: pack.categoryRecord.parent.heroSubtitle ?? undefined,
+              imageUrl: pack.categoryRecord.parent.imageUrl ?? undefined,
+              sortOrder: pack.categoryRecord.parent.sortOrder,
+              status: pack.categoryRecord.parent.status as CreativePack["status"],
+              createdAt: toIso(pack.categoryRecord.parent.createdAt)
+            } : undefined,
+            slug: pack.categoryRecord.slug,
+            label: pack.categoryRecord.label,
+            description: pack.categoryRecord.description ?? undefined,
+            heroTitle: pack.categoryRecord.heroTitle ?? undefined,
+            heroSubtitle: pack.categoryRecord.heroSubtitle ?? undefined,
+            imageUrl: pack.categoryRecord.imageUrl ?? undefined,
+            sortOrder: pack.categoryRecord.sortOrder,
+            status: pack.categoryRecord.status as CreativePack["status"],
+            createdAt: toIso(pack.categoryRecord.createdAt)
+          } : undefined,
           aiAppSlug: pack.aiAppSlug,
           status: pack.status as CreativePack["status"],
           creditCost: pack.creditCost,
@@ -170,7 +205,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           generationCount: pack.generationCount,
           conversionRate: pack.conversionRate,
           createdAt: toIso(pack.createdAt),
-          imageUrl: pack.imageUrl ?? undefined
+          imageUrl: pack.imageUrl ?? undefined,
+          galleryImages: Array.isArray(pack.galleryImages) ? pack.galleryImages.filter((item): item is string => typeof item === "string") : undefined
         })
       ),
       siteAiApps: siteAiApps.map(
@@ -192,11 +228,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
       ),
       publishState: canPublishPaidProducts(Boolean(site.connect?.chargesEnabled), publishProducts)
     };
-  });
+  }));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

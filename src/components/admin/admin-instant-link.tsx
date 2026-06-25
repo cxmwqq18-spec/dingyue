@@ -3,6 +3,7 @@
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { type AnchorHTMLAttributes, type MouseEvent, type ReactNode } from "react";
+import { canPrefetchAdminRoute } from "@/components/admin/admin-route-prefetch-policy";
 
 type AdminInstantLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick"> & {
   children: ReactNode;
@@ -35,17 +36,19 @@ export function AdminInstantLink({
   onFocus,
   onIntent,
   onMouseEnter,
-  prefetch = true,
+  prefetch = false,
   replace,
   scroll,
   target,
   ...props
 }: AdminInstantLinkProps) {
   const router = useRouter();
+  const resolvedPrefetch =
+    prefetch !== false && typeof href === "string" && !canPrefetchAdminRoute(href) ? false : prefetch;
 
   function handleIntent() {
     onIntent?.();
-    if (prefetch !== false && typeof href === "string" && !href.startsWith("#")) {
+    if (resolvedPrefetch !== false && typeof href === "string" && canPrefetchAdminRoute(href)) {
       router.prefetch(href);
     }
   }
@@ -80,7 +83,7 @@ export function AdminInstantLink({
         onMouseEnter?.(event);
         handleIntent();
       }}
-      prefetch={prefetch}
+      prefetch={resolvedPrefetch}
       replace={replace}
       scroll={scroll}
       target={target}

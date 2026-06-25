@@ -20,48 +20,6 @@ function normalizeOrdersTab(value?: string): OrdersTab {
   return "overview";
 }
 
-function OrdersModuleTabs({
-  active,
-  baseHref,
-  items
-}: {
-  active: OrdersTab;
-  baseHref: string;
-  items: Array<{ key: OrdersTab; label: string; badge: string; hint: string }>;
-}) {
-  return (
-    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-2 shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)]">
-      <div className="flex gap-2 overflow-x-auto" role="tablist" aria-label="订单工作台栏目">
-        {items.map((item) => {
-          const selected = item.key === active;
-          const href = item.key === "overview" ? baseHref : `${baseHref}?tab=${item.key}`;
-          return (
-            <Link
-              aria-selected={selected}
-              className={`inline-flex min-h-[38px] shrink-0 items-center gap-2 rounded-[8px] border px-3 text-[12px] font-medium transition ${
-                selected
-                  ? "border-[var(--admin-accent)] bg-[var(--admin-accent)] text-white shadow-[0_14px_24px_-18px_rgba(27,119,243,0.42)]"
-                  : "border-[var(--admin-border-soft)] bg-white text-[var(--admin-muted)] hover:border-[var(--admin-accent-soft)] hover:text-[var(--admin-accent)]"
-              }`}
-              href={href}
-              key={item.key}
-              prefetch={false}
-              role="tab"
-              scroll={false}
-            >
-              <span>{item.label}</span>
-              <span className={`rounded-full border px-1.5 py-0.5 font-mono text-[10px] ${selected ? "border-white/20 bg-white/15 text-white" : "border-[var(--admin-border-soft)] bg-[var(--admin-panel)] text-[#8a94a6]"}`}>
-                {item.badge}
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-      <p className="mt-2 px-1 text-[12px] leading-5 text-[#667085]">{items.find((item) => item.key === active)?.hint}</p>
-    </div>
-  );
-}
-
 export default async function OrdersPage({
   params,
   searchParams
@@ -156,7 +114,6 @@ export default async function OrdersPage({
       }
     >
       <div className="grid gap-5">
-        <OrdersModuleTabs active={activeTab} baseHref={baseHref} items={tabItems} />
         <OrdersPageClient
           activeTab={activeTab}
           currency={data.site.currency}
@@ -173,6 +130,7 @@ export default async function OrdersPage({
           }}
           pricingHref={pricingHref}
           siteId={data.site.id}
+          tabItems={tabItems}
         />
       </div>
     </AdminShell>

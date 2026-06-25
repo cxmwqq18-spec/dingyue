@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
@@ -28,14 +28,15 @@ const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  const perf = createAdminPerfTracker("admin-customers-page", { siteId });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
-    const state = readPlatformState();
+    const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const customerAssets = state.assetUploads.filter((asset) => asset.siteId === siteId && !asset.deletedAt).slice(0, adminCustomerAssetTake);
-    return NextResponse.json({
+    return adminPerfJson(perf, {
       ok: true,
       customers: getSiteCustomersFromState(state, siteId).map(toPublicCustomer),
       customerModels: getSiteCustomerModelsFromState(state, siteId),
@@ -47,8 +48,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     });
   }
 
-  const payload = await customersPageCache.get(siteId, async () => {
-    const [site, customers, customerModels, albums, packs, customerAssets, siteAdmins] = await runDbTasks([
+  const payload = await perf.measure("cache", () => customersPageCache.get(siteId, async () => {
+    const [site, customers, customerModels, albums, packs, customerAssets, siteAdmins] = await perf.measure("db", () => runDbTasks([
       () => prisma.site.findUnique({ where: { id: siteId }, select: { id: true, signupCreditGrant: true } }),
       () => prisma.customer.findMany({
         where: { siteId },
@@ -152,7 +153,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         orderBy: [{ createdAt: "asc" }, { email: "asc" }],
         take: adminSiteAdminListTake
       })
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency));
 
     if (!site) return undefined;
     return {
@@ -165,11 +166,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
       siteAdmins: siteAdmins.map(toSiteAdmin),
       signupCreditGrant: site.signupCreditGrant
     };
-  });
+  }));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

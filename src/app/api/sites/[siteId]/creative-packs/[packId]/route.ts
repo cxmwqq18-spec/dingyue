@@ -27,7 +27,9 @@ export async function PUT(
       creditCost: Number(body.creditCost),
       outputCount: Number(body.outputCount),
       trainingRequired: Boolean(body.trainingRequired),
-      imageUrl: body.imageUrl
+      imageUrl: body.imageUrl,
+      categoryId: body.categoryId,
+      galleryImages: body.galleryImages
     });
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });
   } catch (error) {

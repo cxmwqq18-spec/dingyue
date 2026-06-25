@@ -513,28 +513,12 @@ export interface Order {
 export interface CreativePack {
   id: string;
   siteId: string;
+  categoryId?: string;
   name: string;
   headline: string;
   description: string;
   prompt?: string;
-  category:
-    | "headshots"
-    | "dating"
-    | "fashion"
-    | "travel"
-    | "seasonal"
-    | "copy"
-    | "wedding"
-    | "couple"
-    | "beauty"
-    | "creative"
-    | "sports"
-    | "creator"
-    | "avatar"
-    | "video"
-    | "utility"
-    | "boudoir"
-    | "cultural";
+  category: string;
   aiAppSlug: string;
   status: "active" | "draft" | "paused";
   creditCost: number;
@@ -544,6 +528,24 @@ export interface CreativePack {
   conversionRate: number;
   createdAt: string;
   imageUrl?: string;
+  galleryImages?: string[];
+  categoryRecord?: CreativePackCategory;
+}
+
+export interface CreativePackCategory {
+  id: string;
+  siteId: string;
+  parentId?: string;
+  parent?: CreativePackCategory;
+  slug: string;
+  label: string;
+  description?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  imageUrl?: string;
+  sortOrder: number;
+  status: "active" | "draft" | "paused";
+  createdAt: string;
 }
 
 export interface MediaAsset {
@@ -570,6 +572,9 @@ export interface ThemePublication {
     themeSettings: ThemeSettings;
     saasTheme?: unknown;
   };
+  pageCount?: number;
+  sectionCount?: number;
+  snapshotBytes?: number;
   publishedBy: string;
   publishedAt: string;
 }

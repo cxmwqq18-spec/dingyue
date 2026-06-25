@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
@@ -95,18 +95,19 @@ function lightSite(record: {
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const editor = wantsEditor(request);
+  const perf = createAdminPerfTracker("admin-content-page", { siteId, editor });
 
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
-    const state = readPlatformState();
+    const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const site = state.sites.find((item) => item.id === siteId);
     if (!site) {
-      return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+      return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
     }
-    return NextResponse.json({
+    return adminPerfJson(perf, {
       ok: true,
       site: editor
         ? { ...site, pages: site.pages.slice(0, adminContentPageTake) }
@@ -128,7 +129,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   }
 
   const load = async () => {
-    const [siteRecord, publicationCount, packs, media, products, apps] = await runDbTasks([
+    const [siteRecord, publicationCount, packs, media, products, apps] = await perf.measure("db", () => runDbTasks([
       () => prisma.site.findUnique({
         where: { id: siteId },
         select: {
@@ -237,7 +238,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
             take: adminAiAppListTake
           })
         : () => Promise.resolve([])
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency));
 
     if (!siteRecord) return undefined;
 
@@ -253,13 +254,15 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     };
   };
 
-  const payload = editor
-    ? await contentPageCache.get(`editor:${siteId}`, load)
-    : await contentPageCache.get(`summary:${siteId}`, load);
+  const payload = await perf.measure("cache", () => (
+    editor
+      ? contentPageCache.get(`editor:${siteId}`, load)
+      : contentPageCache.get(`summary:${siteId}`, load)
+  ));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

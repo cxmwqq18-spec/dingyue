@@ -2,8 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { canBulkPrefetchAdminRoute, type AdminRoutePrefetchMatcher } from "@/components/admin/admin-route-prefetch-policy";
 
 type AdminRoutePrefetcherProps = {
+  allow?: AdminRoutePrefetchMatcher[];
+  deny?: AdminRoutePrefetchMatcher[];
   hrefs: string[];
 };
 
@@ -14,13 +17,17 @@ type IdleWindow = Window & {
 
 const prefetchedHrefs = new Set<string>();
 
-function uniqueHrefs(hrefs: string[]) {
-  return [...new Set(hrefs.filter((href) => href && !href.startsWith("#") && !prefetchedHrefs.has(href)))];
+function uniqueHrefs(hrefs: string[], policy: Pick<AdminRoutePrefetcherProps, "allow" | "deny">) {
+  return [
+    ...new Set(
+      hrefs.filter((href) => canBulkPrefetchAdminRoute(href, policy) && !prefetchedHrefs.has(href))
+    )
+  ];
 }
 
-export function AdminRoutePrefetcher({ hrefs }: AdminRoutePrefetcherProps) {
+export function AdminRoutePrefetcher({ allow, deny, hrefs }: AdminRoutePrefetcherProps) {
   const router = useRouter();
-  const normalized = uniqueHrefs(hrefs).join("\n");
+  const normalized = uniqueHrefs(hrefs, { allow, deny }).join("\n");
 
   useEffect(() => {
     const targets = normalized.split("\n").filter(Boolean);

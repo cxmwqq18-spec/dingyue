@@ -25,6 +25,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { LogoutActionButton } from "@/components/auth/logout-action-button";
+import { type AdminPerfTracker, createAdminPerfTracker } from "@/lib/admin-perf";
 import { siteAdminModuleLinks, type SiteAdminModuleCode } from "@/lib/admin-menu";
 import {
   getSiteAlbumsFromState,
@@ -114,6 +115,10 @@ type SiteAdminDataOptions = {
   include?: SiteAdminDataInclude[];
   summary?: boolean | "light" | "full";
   take?: number;
+};
+
+type SiteAdminDataPerfOptions = SiteAdminDataOptions & {
+  perf?: AdminPerfTracker;
 };
 
 type SiteCustomerAdminCollections = {
@@ -649,6 +654,7 @@ async function getSiteCreativePacksForAdmin(state: PlatformState, siteId: string
   try {
     const packs = await prisma.creativePack.findMany({
       where: { siteId },
+      include: { categoryRecord: { include: { parent: true } } },
       orderBy: [{ status: "asc" }, { createdAt: "asc" }]
     });
     return packs.map(toCreativePack);
@@ -744,7 +750,12 @@ export function ModuleLinkCard({
   );
 }
 
-async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataOptions = {}) {
+async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataPerfOptions = {}) {
+  const perf = options.perf;
+  const measure = <T,>(name: string, work: () => Promise<T>, detail?: Record<string, string | number | boolean | undefined>) =>
+    perf ? perf.measure(name, work, detail) : work();
+  const measureSync = <T,>(name: string, work: () => T, detail?: Record<string, string | number | boolean | undefined>) =>
+    perf ? perf.measureSync(name, work, detail) : work();
   const include = new Set<SiteAdminDataInclude>(options.include ?? [
     "state",
     "customers",
@@ -766,7 +777,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
   const overviewRequest = include.has("overview") || (include.size === 2 && include.has("orders") && include.has("ai"));
   const overviewOnly = overviewRequest;
   const listTake = options.take ?? adminListTake;
-  const legacyState = usePostgres ? undefined : readPlatformState();
+  const legacyState = usePostgres ? undefined : measureSync("context", () => readPlatformState(), { source: "state" });
   const needsFullSitePages = wants("themes", "themePages");
   const needsContentSitePages = !needsFullSitePages && wants("content");
   const sitePromise = usePostgres
@@ -776,10 +787,10 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
       ? getSiteContentBySlugForAdmin(siteSlug)
       : getSiteShellBySlugForAdmin(siteSlug)
     : Promise.resolve(legacyState?.sites.find((item) => item.slug === siteSlug));
-  const site = await sitePromise;
+  const site = await measure("context", () => sitePromise, { source: usePostgres ? "postgres" : "state" });
   if (!site) notFound();
 
-  const current = await getCurrentSiteAdmin(site.id);
+  const current = await measure("auth", () => getCurrentSiteAdmin(site.id));
   if (!current) redirect(`/site/${site.slug}/admin/login`);
 
   const needsFullCustomerCollections = wants("customers");
@@ -828,11 +839,11 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
         paymentEvents: wants("paymentEvents", "billing")
       })
     : Promise.resolve(undefined);
-  const [relationalState, customerAdminCollections, ordersAdminCollections] = await Promise.all([
+  const [relationalState, customerAdminCollections, ordersAdminCollections] = await measure("db", () => Promise.all([
     relationalStatePromise,
     customerAdminCollectionsPromise,
     ordersAdminCollectionsPromise
-  ]);
+  ]), { phase: "primary" });
   const summary = relationalState.summary;
   const rawCustomers = needsFullCustomerCollections
     ? customerAdminCollections.rawCustomers
@@ -856,20 +867,21 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
   const subscriptions = ordersAdminCollections?.subscriptions ?? (wants("subscriptions", "billing") ? (legacyState ? getSiteSubscriptionsFromState(legacyState, site.id) : []) : []);
   const paymentEvents = ordersAdminCollections?.paymentEvents ?? (wants("paymentEvents", "billing") && legacyState ? legacyState.paymentEvents.filter((event) => event.siteId === site.id) : []);
   const customerLookups = wants("customerLookups")
-    ? await getCustomerLookupsForAdmin(
-        legacyState ?? emptyPlatformState(),
-        site.id,
-        [
-          ...orders.map((order) => order.customerId),
-          ...subscriptions.map((subscription) => subscription.customerId),
-          ...ledger.map((entry) => entry.customerId)
-        ]
+    ? await measure(
+        "db",
+        () =>
+          getCustomerLookupsForAdmin(legacyState ?? emptyPlatformState(), site.id, [
+            ...orders.map((order) => order.customerId),
+            ...subscriptions.map((subscription) => subscription.customerId),
+            ...ledger.map((entry) => entry.customerId)
+          ]),
+        { phase: "customerLookups" }
       )
     : customers.map((customer) => ({ id: customer.id, email: customer.email }));
   const packs = needsFullCustomerCollections
     ? customerAdminCollections.packs
     : useLiveAdminReads && wants("products", "themePages")
-    ? await getSiteCreativePacksForAdmin(legacyState ?? emptyPlatformState(), site.id)
+    ? await measure("db", () => getSiteCreativePacksForAdmin(legacyState ?? emptyPlatformState(), site.id), { phase: "creativePacks" })
     : wants("products", "themePages") && legacyState
     ? getSiteCreativePacksFromState(legacyState, site.id)
     : [];
@@ -884,9 +896,9 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
   const shellGateways = gateways;
   const gateway = gateways[0] ?? shellGateways[0] ?? summary?.gateway;
 
-  const generatedAssets = [];
-  const inputAssets = [];
-  const customerAssets = [];
+  const generatedAssets: AssetUpload[] = [];
+  const inputAssets: AssetUpload[] = [];
+  const customerAssets: AssetUpload[] = [];
   if (wants("customers")) {
     for (const asset of customerAdminCollections.customerAssets) {
       customerAssets.push(asset);
@@ -963,7 +975,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
   const latestPublication = shellPublications.at(-1);
   const feed = wants("settings") ? latestActivity(auditLogs, jobs, orders, 8) : [];
   const emailState = wants("email") && usePostgres
-    ? await getSiteEmailStateForAdmin(site.id)
+    ? await measure("db", () => getSiteEmailStateForAdmin(site.id), { phase: "email" })
     : wants("email") && legacyState
     ? {
         platformEmailSettings: legacyState.platformEmailSettings,
@@ -978,7 +990,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
     ? relationalState.siteAdmins ?? (legacyState ? legacyState.siteAdmins.filter((admin) => admin.siteId === site.id) : [])
     : [];
   const platformAiApps = !overviewOnly && wants("ai") && usePostgres
-    ? await getPlatformAiAppsForAdmin()
+    ? await measure("db", () => getPlatformAiAppsForAdmin(), { phase: "platformAiApps" })
     : wants("ai") && legacyState
     ? legacyState.aiApps
     : [];
@@ -992,7 +1004,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
     siteEmailConfigAssignments: emailState?.siteEmailConfigAssignments
   });
 
-  const result = {
+  const result = measureSync("transform", () => ({
     state: include.has("state") && legacyState ? (legacyState as PlatformState) : scopedState,
     site,
     current,
@@ -1056,38 +1068,55 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataO
     reservedCredits: summary?.reservedCredits ?? siteReservedCredits(rawCustomers),
     statusTone,
     rate
-  };
+  }));
 
   return result;
 }
 
 export async function getSiteAdminData(siteSlug: string, options: SiteAdminDataOptions = {}) {
+  const perf = createAdminPerfTracker("getSiteAdminData", {
+    siteSlug,
+    include: [...(options.include ?? [])].sort().join(",") || "default",
+    summary: typeof options.summary === "string" ? options.summary : options.summary === false ? "false" : "true",
+    take: options.take
+  });
   const includeKey = [...(options.include ?? [])].sort().join(",");
   const canUseShellCache = process.env.PERSISTENCE_BACKEND === "postgres"
     && options.summary === false
     && options.take === 0
     && includeKey === "";
 
-  if (!canUseShellCache) {
-    return computeSiteAdminDataRaw(siteSlug, options);
-  }
+  try {
+    if (!canUseShellCache) {
+      const data = await computeSiteAdminDataRaw(siteSlug, { ...options, perf });
+      perf.finish({ cache: false });
+      return data;
+    }
 
-  const cookieStore = await cookies();
-  const sessionSignature = cookieStore
-    .getAll()
-    .filter((cookie) => cookie.name.startsWith("site_admin_session_"))
-    .map((cookie) => `${cookie.name}:${cookie.value}`)
-    .sort()
-    .join("|") || "anonymous";
-  const cacheKey = `${siteSlug}:${sessionSignature}:shell`;
-  const cached = siteAdminShellCache.get(cacheKey);
-  if (cached && Date.now() - cached.cachedAt < siteAdminShellCacheTtlMs) {
-    return cached.data;
-  }
+    const cookieStore = await perf.measure("auth_context", () => cookies());
+    const sessionSignature = cookieStore
+      .getAll()
+      .filter((cookie) => cookie.name.startsWith("site_admin_session_"))
+      .map((cookie) => `${cookie.name}:${cookie.value}`)
+      .sort()
+      .join("|") || "anonymous";
+    const cacheKey = `${siteSlug}:${sessionSignature}:shell`;
+    const cached = siteAdminShellCache.get(cacheKey);
+    if (cached && Date.now() - cached.cachedAt < siteAdminShellCacheTtlMs) {
+      perf.mark("cache", 0, { hit: true });
+      perf.finish({ cache: true });
+      return cached.data;
+    }
 
-  const data = await computeSiteAdminDataRaw(siteSlug, options);
-  siteAdminShellCache.set(cacheKey, { cachedAt: Date.now(), data });
-  return data;
+    perf.mark("cache", 0, { hit: false });
+    const data = await computeSiteAdminDataRaw(siteSlug, { ...options, perf });
+    siteAdminShellCache.set(cacheKey, { cachedAt: Date.now(), data });
+    perf.finish({ cache: false });
+    return data;
+  } catch (error) {
+    perf.finish({ error: error instanceof Error ? error.message : "unknown" });
+    throw error;
+  }
 }
 
 function assertSiteAdminOverviewData(data: SiteAdminData): asserts data is SiteAdminOverviewData {

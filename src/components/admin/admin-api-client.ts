@@ -37,35 +37,29 @@ export async function fetchAdminJson<T>(url: string, options: FetchAdminJsonOpti
   const { init, ttlMs = defaultTtlMs } = options;
   const method = (init?.method ?? "GET").toUpperCase();
   const key = cacheKey(url, init);
+  const isGet = method === "GET";
+  const hasAbortSignal = Boolean(init?.signal);
 
-  if (method === "GET" && key) {
+  if (isGet && key) {
     const cached = jsonCache.get(key);
     if (cached && cached.expiresAt > Date.now()) {
       return cached.response as CachedJsonResponse<T>;
     }
 
-    const inflight = inflightJsonRequests.get(key);
+    const inflight = hasAbortSignal ? undefined : inflightJsonRequests.get(key);
     if (inflight) {
       return inflight as Promise<CachedJsonResponse<T>>;
     }
   }
 
-  const requestInit =
-    method === "GET" && key
-      ? (() => {
-          const { signal: _signal, ...cacheableInit } = init ?? {};
-          return cacheableInit;
-        })()
-      : init;
-
   const request = fetch(url, {
     credentials: "same-origin",
     cache: "no-store",
-    ...requestInit,
+    ...init,
     method
   }).then((response) => readJsonResponse<T>(response));
 
-  if (method !== "GET") {
+  if (!isGet) {
     const response = await request;
     if (response.ok) invalidateAdminJson(siteAdminCachePrefixFromUrl(url));
     return response;
@@ -73,7 +67,9 @@ export async function fetchAdminJson<T>(url: string, options: FetchAdminJsonOpti
 
   if (!key) return request;
 
-  inflightJsonRequests.set(key, request as Promise<CachedJsonResponse<unknown>>);
+  if (!hasAbortSignal) {
+    inflightJsonRequests.set(key, request as Promise<CachedJsonResponse<unknown>>);
+  }
   try {
     const response = await request;
     jsonCache.set(key, {
@@ -82,7 +78,7 @@ export async function fetchAdminJson<T>(url: string, options: FetchAdminJsonOpti
     });
     return response;
   } finally {
-    inflightJsonRequests.delete(key);
+    if (!hasAbortSignal) inflightJsonRequests.delete(key);
   }
 }
 

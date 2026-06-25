@@ -28,7 +28,9 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteIdBySlugRelational } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
-import type { CustomerSession, PlatformState, PublicCustomer, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
+import { withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
+import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 
@@ -258,6 +260,140 @@ function normalizeToolLookup(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
+function sectionSetting(page: ThemePageJson, sectionId: string, key: string, fallback = ""): string {
+  const value = page.sections[sectionId]?.settings?.[key];
+  return typeof value === "string" ? value : fallback;
+}
+
+function blockString(block: SectionBlockInstance, key: string, fallback = ""): string {
+  const value = block.settings[key];
+  return typeof value === "string" ? value : fallback;
+}
+
+function clonePageJson(page: ThemePageJson): ThemePageJson {
+  return JSON.parse(JSON.stringify(page)) as ThemePageJson;
+}
+
+function toolBlocksFromTheme(site: Site): SectionBlockInstance[] {
+  const headerBlocks = site.themeSettings.publishedJson.globalSections?.header?.blocks?.filter((block) => block.type === "tool_card") ?? [];
+  const toolPage = site.pages.find((page) => page.slug === "/tools" || page.pageType === "tools");
+  const toolPageBlocks = toolPage
+    ? Object.values(toolPage.publishedJson.sections).flatMap((section) => section.blocks ?? []).filter((block) => block.type === "tool_card")
+    : [];
+  const blocks = [...headerBlocks, ...toolPageBlocks];
+  return Array.from(new Map(blocks.map((block) => [block.id, block])).values());
+}
+
+function toolSlugFromBlock(block: SectionBlockInstance): string {
+  const href = blockString(block, "href", "");
+  const path = href.split("?")[0]?.split("#")[0] ?? "";
+  return normalizeToolLookup(path.replace(/^\/tools\//, "") || block.id || blockString(block, "title"));
+}
+
+function appSlugForToolCategory(category: string, siteAiApps: ReturnType<typeof getSiteAppsFromState>): string {
+  const normalized = category.toLowerCase();
+  const preferred = normalized.includes("video") ? "video_generator" : "image_generator";
+  return siteAiApps.find((app) => app.aiApp.slug === preferred)?.aiApp.slug ?? siteAiApps[0]?.aiApp.slug ?? preferred;
+}
+
+function titleFromToolSlug(toolSlug: string): string {
+  const explicit: Record<string, string> = {
+    "background-changer": "Background Changer Free",
+    "background-remover": "Image Background Remover Free",
+    "magic-eraser": "Magic Eraser Free",
+    "photo-enhancer": "Photo Enhancer Free",
+    "unblur-image": "Unblur Image Free",
+    "color-correction": "Color Correction Free",
+    "old-photo-restoration": "Old Photo Restoration Free",
+    "edit-by-prompt": "Photo Edit by Prompt",
+    "headshot-generator": "Headshot Photo Generator Free",
+    "wedding-portraits": "Wedding Portraits",
+    "image-to-video": "Image to Video Concept"
+  };
+  return explicit[toolSlug] ?? toolSlug.split("-").filter(Boolean).map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
+}
+
+function categoryForToolSlug(toolSlug: string): string {
+  if (toolSlug.includes("video") || toolSlug.includes("clip") || toolSlug.includes("motion")) return "Video AI";
+  if (toolSlug.includes("background") || toolSlug.includes("eraser") || toolSlug.includes("enhancer") || toolSlug.includes("unblur") || toolSlug.includes("correction") || toolSlug.includes("restoration") || toolSlug.includes("prompt")) {
+    return "AI Photo Edit";
+  }
+  return "Photo AI";
+}
+
+function fallbackToolBlockForSlug(toolSlug: string): SectionBlockInstance | undefined {
+  if (!dreamshootImageStudioToolAliases.has(toolSlug)) return undefined;
+  const title = titleFromToolSlug(toolSlug);
+  return {
+    id: `fallback_tool_${toolSlug}`,
+    type: "tool_card",
+    settings: {
+      title,
+      category: categoryForToolSlug(toolSlug),
+      href: `/tools/${toolSlug}`,
+      description: `${title} opens a dedicated photo workflow with the selected tool preset ready for private generation.`
+    }
+  };
+}
+
+function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
+  const existingToolPage = page ?? site.pages.find((item) => item.pageType === "ai_tool") ?? site.pages.find((item) => item.slug === "/tools/image-studio");
+  if (existingToolPage) return existingToolPage;
+  const template = clonePageJson(dreamshootAiStudioTemplates["tool-detail"]);
+  return {
+    id: `${site.id}_synthetic_tool_detail`,
+    siteId: site.id,
+    pageType: "ai_tool",
+    templateKey: "tool-detail",
+    slug: "/tools/image-studio",
+    title: "AI tool",
+    draftJson: template,
+    publishedJson: template
+  };
+}
+
+function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockInstance, toolSlug: string, appSlug: string): ThemePageJson {
+  const page = clonePageJson(basePage);
+  const title = blockString(tool, "title", sectionSetting(page, "entry_1", "title", "AI photo tool"));
+  const description = blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", "Upload a photo, choose the tool preset, and continue in the private studio."));
+  const category = blockString(tool, "category", "AI Photo");
+  const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
+  const dashboardHref = `/dashboard?tool_id=${encodeURIComponent(toolSlug)}`;
+  if (page.sections.tool_banner_1) {
+    page.sections.tool_banner_1.settings = {
+      ...page.sections.tool_banner_1.settings,
+      eyebrow: category,
+      title,
+      subtitle: description,
+      imageUrl
+    };
+  }
+  if (page.sections.entry_1) {
+    page.sections.entry_1.settings = {
+      ...page.sections.entry_1.settings,
+      aiAppSlug: appSlug,
+      eyebrow: category,
+      title,
+      subtitle: description,
+      ctaLabel: "Open editor",
+      ctaHref: dashboardHref,
+      imageUrl,
+      toolSlug
+    };
+  }
+  if (page.sections.form_1) {
+    page.sections.form_1.settings = {
+      ...page.sections.form_1.settings,
+      aiAppSlug: appSlug,
+      eyebrow: category,
+      title: `${title} editor`,
+      helper: "This editor opens with the selected tool preset locked for the current request.",
+      toolSlug
+    };
+  }
+  return page;
+}
+
 const dreamshootImageStudioToolAliases = new Set([
   "headshot-generator",
   "headshot-maker",
@@ -351,8 +487,11 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const resolvedSlug = aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
   const page = site.pages.find((item) => item.slug === resolvedSlug);
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
-  const matched = Boolean(page || directApp || legacyImageApp || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
-  return { siteAiApps, page: page ?? getPage(site, "/tools/image-studio"), app, matched, resolvedSlug };
+  const toolBlock = toolBlocksFromTheme(site).find((block) => toolSlugFromBlock(block) === normalizedToolSlug) ?? fallbackToolBlockForSlug(normalizedToolSlug);
+  const basePage = baseToolDetailPageForSite(site, page);
+  const synthesizedPage = toolBlock ? synthesizeToolDetailPage(basePage.publishedJson, toolBlock, normalizedToolSlug, appSlugForToolCategory(blockString(toolBlock, "category", "AI Photo"), siteAiApps)) : undefined;
+  const matched = Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
+  return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
 
 function renderThemePage({
@@ -414,7 +553,11 @@ export async function renderStorefrontPage({
   const page = directPage.slug === slug ? directPage : currentSite.pages.find((item) => item.slug === "/404") ?? directPage;
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const pageJson = slug === "/account" ? withAccountDashboardPage(page.publishedJson) : page.publishedJson;
+  const pageJson = slug === "/account"
+    ? withAccountDashboardPage(page.publishedJson)
+    : slug === "/collections" && typeof query.category === "string" && query.category
+    ? withSeoDirectorySection(page.publishedJson, "collection", query.category)
+    : page.publishedJson;
   const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
     ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
     : await getLightCustomerRuntime(state, currentSite.id, sessionId);
@@ -636,9 +779,10 @@ export async function renderToolPage({
   const runtime = sessionId && pageNeedsFullCustomerRuntime(page.publishedJson, page.slug)
     ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
     : await getLightCustomerRuntime(state, currentSite.id, sessionId);
+  const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug);
   return renderThemePage({
     currentSite,
-    page: page.publishedJson,
+    page: pageJson,
     pagePath: page.slug,
     query,
     renderData,

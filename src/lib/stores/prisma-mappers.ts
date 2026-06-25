@@ -6,6 +6,7 @@ import type {
   AssetUpload,
   CreditLedgerEntry,
   CreativePack,
+  CreativePackCategory,
   Customer,
   CustomerModel,
   CustomerSession,
@@ -537,6 +538,7 @@ export function toSiteAdmin(record: {
 export function toCreativePack(record: {
   id: string;
   siteId: string;
+  categoryId?: string | null;
   name: string;
   headline: string;
   description: string;
@@ -550,16 +552,46 @@ export function toCreativePack(record: {
   generationCount: number;
   conversionRate: number;
   imageUrl?: string | null;
+  galleryImages?: unknown;
+  categoryRecord?: {
+    id: string;
+    siteId: string;
+    parentId?: string | null;
+    parent?: {
+      id: string;
+      siteId: string;
+      parentId?: string | null;
+      slug: string;
+      label: string;
+      description?: string | null;
+      heroTitle?: string | null;
+      heroSubtitle?: string | null;
+      imageUrl?: string | null;
+      sortOrder: number;
+      status: string;
+      createdAt?: Date | string;
+    } | null;
+    slug: string;
+    label: string;
+    description?: string | null;
+    heroTitle?: string | null;
+    heroSubtitle?: string | null;
+    imageUrl?: string | null;
+    sortOrder: number;
+    status: string;
+    createdAt?: Date | string;
+  } | null;
   createdAt?: Date | string;
 }): CreativePack {
   return {
     id: record.id,
     siteId: record.siteId,
+    categoryId: record.categoryId ?? undefined,
     name: record.name,
     headline: record.headline,
     description: record.description,
     prompt: record.prompt ?? undefined,
-    category: record.category as CreativePack["category"],
+    category: record.category,
     aiAppSlug: record.aiAppSlug,
     status: record.status as CreativePack["status"],
     creditCost: record.creditCost,
@@ -568,7 +600,54 @@ export function toCreativePack(record: {
     generationCount: record.generationCount,
     conversionRate: record.conversionRate,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
-    imageUrl: record.imageUrl ?? undefined
+    imageUrl: record.imageUrl ?? undefined,
+    galleryImages: Array.isArray(record.galleryImages) ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : undefined,
+    categoryRecord: record.categoryRecord ? toCreativePackCategory(record.categoryRecord) : undefined
+  };
+}
+
+export function toCreativePackCategory(record: {
+  id: string;
+  siteId: string;
+  parentId?: string | null;
+  parent?: {
+    id: string;
+    siteId: string;
+    parentId?: string | null;
+    slug: string;
+    label: string;
+    description?: string | null;
+    heroTitle?: string | null;
+    heroSubtitle?: string | null;
+    imageUrl?: string | null;
+    sortOrder: number;
+    status: string;
+    createdAt?: Date | string;
+  } | null;
+  slug: string;
+  label: string;
+  description?: string | null;
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
+  imageUrl?: string | null;
+  sortOrder: number;
+  status: string;
+  createdAt?: Date | string;
+}): CreativePackCategory {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    parentId: record.parentId ?? undefined,
+    parent: record.parent ? toCreativePackCategory(record.parent) : undefined,
+    slug: record.slug,
+    label: record.label,
+    description: record.description ?? undefined,
+    heroTitle: record.heroTitle ?? undefined,
+    heroSubtitle: record.heroSubtitle ?? undefined,
+    imageUrl: record.imageUrl ?? undefined,
+    sortOrder: record.sortOrder,
+    status: record.status as CreativePackCategory["status"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
   };
 }
 
@@ -646,14 +725,26 @@ export function toThemePublication(record: {
   siteId: string;
   version: number;
   snapshot: unknown;
+  pageCount?: number | null;
+  sectionCount?: number | null;
+  snapshotBytes?: number | null;
   publishedBy: string;
   publishedAt: Date | string;
 }): import("@/lib/types").ThemePublication {
+  const snapshot = cloneJson(record.snapshot) as import("@/lib/types").ThemePublication["snapshot"];
+  const pageCount = record.pageCount ?? snapshot.pages.length;
+  const sectionCount =
+    record.sectionCount ??
+    snapshot.pages.reduce((sum, page) => sum + (page.publishedJson.sectionsOrder?.length ?? 0), 0);
+  const snapshotBytes = record.snapshotBytes ?? Buffer.byteLength(JSON.stringify(snapshot), "utf8");
   return {
     id: record.id,
     siteId: record.siteId,
     version: record.version,
-    snapshot: cloneJson(record.snapshot) as import("@/lib/types").ThemePublication["snapshot"],
+    snapshot,
+    pageCount,
+    sectionCount,
+    snapshotBytes,
     publishedBy: record.publishedBy,
     publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString()
   };

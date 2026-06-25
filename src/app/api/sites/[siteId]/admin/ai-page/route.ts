@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
@@ -89,16 +89,18 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const { siteId } = await params;
   const url = new URL(request.url);
   const detail = url.searchParams.get("detail") ?? "summary";
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  const perf = createAdminPerfTracker("admin-ai-page", { siteId, detail });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
-    return NextResponse.json(legacyPayload(readPlatformState(), siteId));
+    const payload = perf.measureSync("context", () => legacyPayload(readPlatformState(), siteId), { source: "state" });
+    return adminPerfJson(perf, payload);
   }
 
-  const payload = await aiPageCache.get(`${detail}:${siteId}`, async () => {
-    const [apps, jobCounts, gateway, jobs, customers, platformAiApps] = await runDbTasks([
+  const payload = await perf.measure("cache", () => aiPageCache.get(`${detail}:${siteId}`, async () => {
+    const [apps, jobCounts, gateway, jobs, customers, platformAiApps] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteAiApp.findMany({
         where: { siteId },
         select: {
@@ -168,7 +170,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       detail === "jobs"
         ? () => prisma.aiApp.findMany({ orderBy: [{ appType: "asc" }, { name: "asc" }], take: adminAiAppListTake })
         : () => Promise.resolve([])
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency));
 
     const mappedJobs = jobs.map(mapJobListItemForAdmin);
     const failedJobs = jobCounts
@@ -193,11 +195,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       openJobs,
       completedJobs
     };
-  });
+  }));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_admin_data_unavailable" }, { status: 503 });
+    return adminPerfJson(perf, { error: "site_admin_data_unavailable" }, { status: 503 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

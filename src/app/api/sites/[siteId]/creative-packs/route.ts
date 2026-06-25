@@ -38,13 +38,15 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           { headline: { contains: query, mode: "insensitive" } },
           { description: { contains: query, mode: "insensitive" } },
           { aiAppSlug: { contains: query, mode: "insensitive" } },
-          { category: { contains: query, mode: "insensitive" } }
+          { category: { contains: query, mode: "insensitive" } },
+          { categoryRecord: { label: { contains: query, mode: "insensitive" } } }
         ]
       : undefined
   };
   const [packs, total, activeCount, draftCount, pausedCount] = await prisma.$transaction([
     prisma.creativePack.findMany({
       where,
+      include: { categoryRecord: { include: { parent: true } } },
       orderBy: { createdAt: "desc" },
       skip: admin ? (page - 1) * pageSize : undefined,
       take: admin ? pageSize : undefined
@@ -108,7 +110,9 @@ export async function POST(
       creditCost: Number(body.creditCost),
       outputCount: Number(body.outputCount),
       trainingRequired: Boolean(body.trainingRequired),
-      imageUrl: body.imageUrl
+      imageUrl: body.imageUrl,
+      categoryId: body.categoryId,
+      galleryImages: body.galleryImages
     });
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });
   } catch (error) {

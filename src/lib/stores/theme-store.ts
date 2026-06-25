@@ -148,6 +148,13 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme): ThemePubli
   };
 }
 
+function buildPublicationSnapshotStats(snapshot: ThemePublication["snapshot"]) {
+  const pageCount = snapshot.pages.length;
+  const sectionCount = snapshot.pages.reduce((sum, page) => sum + (page.publishedJson.sectionsOrder?.length ?? 0), 0);
+  const snapshotBytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
+  return { pageCount, sectionCount, snapshotBytes };
+}
+
 function activeThemeFromDraft(siteId: string, draftTheme: SiteTheme | undefined, actor: string): SiteTheme {
   const now = new Date().toISOString();
   return {
@@ -870,6 +877,7 @@ export type SiteThemePublicationMeta = {
   publishedBy: string;
   pageCount: number;
   sectionCount: number;
+  snapshotBytes: number;
 };
 
 export async function getSiteThemePublicationMetaRelational(siteId: string): Promise<SiteThemePublicationMeta[]> {
@@ -881,6 +889,7 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
       publishedBy: string;
       pageCount: bigint | number | string | null;
       sectionCount: bigint | number | string | null;
+      snapshotBytes: bigint | number | string | null;
     };
     const rows = await prisma.$queryRaw<PublicationMetaRow[]>`
       SELECT
@@ -888,11 +897,12 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
         "version",
         "publishedAt",
         "publishedBy",
-        COALESCE(jsonb_array_length("snapshot"::jsonb -> 'pages'), 0) AS "pageCount",
-        COALESCE((
+        COALESCE("pageCount", jsonb_array_length("snapshot"::jsonb -> 'pages'), 0) AS "pageCount",
+        COALESCE("sectionCount", (
           SELECT SUM(jsonb_array_length(COALESCE(page -> 'publishedJson' -> 'sectionsOrder', '[]'::jsonb)))
           FROM jsonb_array_elements(COALESCE("snapshot"::jsonb -> 'pages', '[]'::jsonb)) AS page
-        ), 0) AS "sectionCount"
+        ), 0) AS "sectionCount",
+        COALESCE("snapshotBytes", octet_length("snapshot"::text), 0) AS "snapshotBytes"
       FROM "ThemePublication"
       WHERE "siteId" = ${siteId}
       ORDER BY "version" DESC, "publishedAt" DESC
@@ -903,7 +913,8 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
       publishedAt: row.publishedAt instanceof Date ? row.publishedAt.toISOString() : String(row.publishedAt),
       publishedBy: row.publishedBy,
       pageCount: typeof row.pageCount === "bigint" ? Number(row.pageCount) : Number(row.pageCount ?? 0),
-      sectionCount: typeof row.sectionCount === "bigint" ? Number(row.sectionCount) : Number(row.sectionCount ?? 0)
+      sectionCount: typeof row.sectionCount === "bigint" ? Number(row.sectionCount) : Number(row.sectionCount ?? 0),
+      snapshotBytes: typeof row.snapshotBytes === "bigint" ? Number(row.snapshotBytes) : Number(row.snapshotBytes ?? 0)
     }));
   });
 }
@@ -1128,14 +1139,19 @@ export async function publishDraftPageRelational(
         });
     const activeTheme = toSiteTheme(activeThemeRecord);
 
+    const snapshot = buildPublicationSnapshot(site, activeTheme);
+    const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {
         id: `pub_${siteId}_${Date.now().toString(36)}`,
         siteId,
         version: publishedVersion,
-        snapshot: buildPublicationSnapshot(site, activeTheme) as unknown as Prisma.InputJsonValue,
+        snapshot: snapshot as unknown as Prisma.InputJsonValue,
+        pageCount: snapshotStats.pageCount,
+        sectionCount: snapshotStats.sectionCount,
+        snapshotBytes: snapshotStats.snapshotBytes,
         publishedBy: actor
-      }
+      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
     });
     const publication = toThemePublication(publicationRecord);
     await addAuditLogRelational(tx, {
@@ -1346,14 +1362,19 @@ export async function activateSiteThemeRelational(params: {
     });
     site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
     const activeTheme = toSiteTheme(activeThemeRecord);
+    const snapshot = buildPublicationSnapshot(site, activeTheme);
+    const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {
         id: `pub_${params.siteId}_${Date.now().toString(36)}`,
         siteId: params.siteId,
         version,
-        snapshot: buildPublicationSnapshot(site, activeTheme) as unknown as Prisma.InputJsonValue,
+        snapshot: snapshot as unknown as Prisma.InputJsonValue,
+        pageCount: snapshotStats.pageCount,
+        sectionCount: snapshotStats.sectionCount,
+        snapshotBytes: snapshotStats.snapshotBytes,
         publishedBy: params.actor ?? "site_admin_demo"
-      }
+      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
     });
     await addAuditLogRelational(tx, {
       siteId: params.siteId,

@@ -6,10 +6,10 @@ import { Download, ImageIcon, Pencil, Plus, Search, Save, Trash2, X } from "luci
 import { AdminPagination } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { defaultCreativePackCoverByCategory, suggestedCreativePackCover, suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
-import type { CreativePack, SiteAiApp } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, SiteAiApp } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
 
-const categoryLabels: Record<CreativePack["category"], string> = {
+const fallbackCategoryLabels: Record<string, string> = {
   headshots: "职业头像",
   couple: "情侣写真",
   wedding: "婚礼跟拍",
@@ -29,7 +29,7 @@ const categoryLabels: Record<CreativePack["category"], string> = {
   cultural: "文化主题"
 };
 
-const categoryOptions: CreativePack["category"][] = [
+const fallbackCategoryOptions = [
   "headshots",
   "couple",
   "wedding",
@@ -47,7 +47,32 @@ const categoryOptions: CreativePack["category"][] = [
   "boudoir",
   "cultural",
   "copy"
-];
+] as const;
+
+function labelFromSlug(slug: string) {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function packCategoryLabel(pack: CreativePack, categories: CreativePackCategory[]) {
+  return pack.categoryRecord?.label ?? categories.find((category) => category.id === pack.categoryId || category.slug === pack.category)?.label ?? fallbackCategoryLabels[pack.category] ?? labelFromSlug(pack.category);
+}
+
+function galleryText(images?: string[]) {
+  return (images ?? []).join("\n");
+}
+
+function parseGalleryText(value: string) {
+  return value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+}
+
+type CategoryQueryResult = {
+  categories?: CreativePackCategory[];
+  error?: string;
+};
 
 const statusLabels: Record<CreativePack["status"], string> = {
   active: "已上架",
@@ -107,8 +132,10 @@ export function CreativePackEditor({
   const [items, setItems] = useState(packs);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<CreativePack["status"] | "">("");
-  const [categoryFilter, setCategoryFilter] = useState<CreativePack["category"] | "">("");
+  const [categoryFilter, setCategoryFilter] = useState("");
   const [appFilter, setAppFilter] = useState("");
+  const [categories, setCategories] = useState<CreativePackCategory[]>([]);
+  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", parentId: "", status: "active" as CreativePackCategory["status"] });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(packs.length);
@@ -126,6 +153,20 @@ export function CreativePackEditor({
   const [draftPack, setDraftPack] = useState(() => createDraftPack(siteAiApps));
   const [message, setMessage] = useState("拍摄包会持久化并驱动前台商品入口。");
 
+  const parentCategories = useMemo(() => categories.filter((category) => !category.parentId), [categories]);
+  const categoryOptions = useMemo<CreativePackCategory[]>(() => {
+    if (categories.length) return categories;
+    return fallbackCategoryOptions.map((slug, index) => ({
+      id: slug,
+      siteId,
+      slug,
+      label: fallbackCategoryLabels[slug] ?? labelFromSlug(slug),
+      sortOrder: index,
+      status: "active" as const,
+      createdAt: new Date(0).toISOString()
+    }));
+  }, [categories, siteId]);
+
   useEffect(() => {
     setItems(packs);
     setTotal(packs.length);
@@ -141,9 +182,24 @@ export function CreativePackEditor({
     setDraftPack(createDraftPack(siteAiApps));
   }, [siteAiApps]);
 
+  useEffect(() => {
+    let active = true;
+    async function loadCategories() {
+      const response = await fetch(`/api/sites/${siteId}/creative-pack-categories`, { method: "GET" });
+      const result = (await response.json().catch(() => ({}))) as CategoryQueryResult;
+      if (active && response.ok && result.categories) {
+        setCategories(result.categories);
+      }
+    }
+    void loadCategories();
+    return () => {
+      active = false;
+    };
+  }, [siteId]);
+
   const editingPack = useMemo(() => items.find((pack) => pack.id === editingPackId) ?? null, [editingPackId, items]);
 
-  async function queryPacks(next: Partial<{ page: number; pageSize: number; query: string; statusFilter: CreativePack["status"] | ""; categoryFilter: CreativePack["category"] | ""; appFilter: string }> = {}) {
+  async function queryPacks(next: Partial<{ page: number; pageSize: number; query: string; statusFilter: CreativePack["status"] | ""; categoryFilter: string; appFilter: string }> = {}) {
     const nextPage = next.page ?? page;
     const nextPageSize = next.pageSize ?? pageSize;
     const nextQuery = next.query ?? query;
@@ -337,7 +393,7 @@ export function CreativePackEditor({
     setEditingPackId(pack.id);
   }
 
-  function updateCategoryFilter(nextCategory: CreativePack["category"] | "") {
+  function updateCategoryFilter(nextCategory: string) {
     setCategoryFilter(nextCategory);
     setPage(1);
     void queryPacks({ page: 1, categoryFilter: nextCategory });
@@ -347,6 +403,55 @@ export function CreativePackEditor({
     setAppFilter(nextApp);
     setPage(1);
     void queryPacks({ page: 1, appFilter: nextApp });
+  }
+
+  async function createCategory() {
+    const response = await fetch(`/api/sites/${siteId}/creative-pack-categories`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryDraft)
+    });
+    const result = (await response.json().catch(() => ({}))) as { category?: CreativePackCategory; error?: string };
+    if (response.ok && result.category) {
+      setCategories((current) => [...current, result.category!]);
+      setCategoryDraft({ label: "", slug: "", parentId: "", status: "active" });
+      setMessage(`${result.category.label} 分类已创建。`);
+      return;
+    }
+    setMessage(result.error ?? "分类创建失败。");
+  }
+
+  async function saveCategory(category: CreativePackCategory) {
+    const response = await fetch(`/api/sites/${siteId}/creative-pack-categories/${category.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(category)
+    });
+    const result = (await response.json().catch(() => ({}))) as { category?: CreativePackCategory; error?: string };
+    if (response.ok && result.category) {
+      setCategories((current) => current.map((item) => (item.id === result.category!.id ? result.category! : item)));
+      setItems((current) => current.map((pack) => (pack.categoryId === result.category!.id ? { ...pack, category: result.category!.slug, categoryRecord: result.category } : pack)));
+      setMessage(`${result.category.label} 分类已保存。`);
+      return;
+    }
+    setMessage(result.error ?? "分类保存失败。");
+  }
+
+  function updateCategory(categoryId: string, patch: Partial<CreativePackCategory>) {
+    setCategories((current) => current.map((category) => (category.id === categoryId ? { ...category, ...patch } : category)));
+  }
+
+  function applyCategoryToDraft(categoryId: string) {
+    const category = categoryOptions.find((item) => item.id === categoryId);
+    updateDraft("categoryId", category?.id);
+    updateDraft("category", category?.slug ?? "headshots");
+  }
+
+  function applyCategoryToPack(packId: string, categoryId: string) {
+    const category = categoryOptions.find((item) => item.id === categoryId);
+    update(packId, "categoryId", category?.id);
+    update(packId, "category", category?.slug ?? "headshots");
+    update(packId, "categoryRecord", category);
   }
 
   return (
@@ -388,11 +493,11 @@ export function CreativePackEditor({
             <option value="draft">草稿</option>
             <option value="paused">已暂停</option>
           </select>
-          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategoryFilter(event.target.value as CreativePack["category"] | "")} value={categoryFilter}>
+          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategoryFilter(event.target.value)} value={categoryFilter}>
             <option value="">全部分类</option>
             {categoryOptions.map((category) => (
-              <option key={category} value={category}>
-                {categoryLabels[category]}
+              <option key={category.id} value={category.slug}>
+                {category.parent ? `${category.parent.label} / ${category.label}` : category.label}
               </option>
             ))}
           </select>
@@ -414,6 +519,50 @@ export function CreativePackEditor({
         </div>
         <AdminPagination onPageChange={updatePage} onPageSizeChange={updatePageSize} page={page} pageSize={pageSize} total={total} />
       </div>
+      <details className="mt-5 rounded-[12px] border border-zinc-200 bg-white p-5">
+        <summary className="flex cursor-pointer list-none flex-wrap items-start justify-between gap-4">
+          <span>
+            <span className="block font-mono text-xs uppercase tracking-[0.2em] text-clay">分类维护</span>
+            <span className="mt-2 block text-lg font-semibold">一级/二级主题分类</span>
+            <span className="mt-1 block text-sm leading-6 text-zinc-500">前台 Photo Packages 下拉菜单会读取这里的分类和主题包绑定。</span>
+          </span>
+          <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-4 py-2 text-sm">
+            <Plus className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
+            维护分类
+          </span>
+        </summary>
+        <div className="mt-4 grid gap-3 rounded-[12px] border border-zinc-100 bg-zinc-50 p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)_auto]">
+          <input className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setCategoryDraft((current) => ({ ...current, label: event.target.value }))} placeholder="分类名称，如 Wedding & Romance" value={categoryDraft.label} />
+          <input className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setCategoryDraft((current) => ({ ...current, slug: event.target.value }))} placeholder="URL slug，可留空自动生成" value={categoryDraft.slug} />
+          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setCategoryDraft((current) => ({ ...current, parentId: event.target.value }))} value={categoryDraft.parentId}>
+            <option value="">作为一级分类</option>
+            {parentCategories.map((category) => (
+              <option key={category.id} value={category.id}>{category.label}</option>
+            ))}
+          </select>
+          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-zinc-950 px-4 py-2 text-sm text-white active:scale-[0.98]" onClick={createCategory} type="button">
+            新增分类
+          </button>
+        </div>
+        <div className="mt-4 grid gap-3">
+          {categories.map((category) => (
+            <div className="grid gap-2 rounded-[12px] border border-zinc-100 bg-white p-3 md:grid-cols-[minmax(0,0.9fr)_minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,1.1fr)_auto]" key={category.id}>
+              <input className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategory(category.id, { label: event.target.value })} value={category.label} />
+              <input className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategory(category.id, { slug: event.target.value })} value={category.slug} />
+              <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategory(category.id, { parentId: event.target.value || undefined })} value={category.parentId ?? ""}>
+                <option value="">一级分类</option>
+                {parentCategories.filter((parent) => parent.id !== category.id).map((parent) => (
+                  <option key={parent.id} value={parent.id}>{parent.label}</option>
+                ))}
+              </select>
+              <input className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => updateCategory(category.id, { imageUrl: event.target.value })} placeholder="分类封面图" value={category.imageUrl ?? ""} />
+              <button className="whitespace-nowrap rounded-xl border border-black/10 px-4 py-2 text-sm active:scale-[0.98]" onClick={() => saveCategory(category)} type="button">
+                保存
+              </button>
+            </div>
+          ))}
+        </div>
+      </details>
       <details className="mt-5 rounded-[12px] border border-dashed border-zinc-300 bg-white p-5" open={createOpen} onToggle={(event) => setCreateOpen(event.currentTarget.open)}>
         <summary className="flex cursor-pointer list-none flex-wrap items-start justify-between gap-4">
           <div>
@@ -486,6 +635,10 @@ export function CreativePackEditor({
             />
             <span className="text-xs leading-5 text-zinc-500">用于前台工具目录和拍摄包卡片；支持 /assets 路径、media id 或完整 URL。清空后前台会显示无图占位。</span>
           </label>
+          <label className="grid gap-2 text-sm md:col-span-2">
+            主题详情多图
+            <textarea className="min-h-24 rounded-xl border border-black/10 bg-white px-3 py-2 font-mono text-xs leading-5" onChange={(event) => updateDraft("galleryImages", parseGalleryText(event.target.value))} placeholder="每行一张图片 URL。首张可作为封面兜底。" value={galleryText(draftPack.galleryImages)} />
+          </label>
           <label className="grid gap-2 text-sm">
             状态
             <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => updateDraft("status", event.target.value as CreativePack["status"])} value={draftPack.status}>
@@ -496,10 +649,10 @@ export function CreativePackEditor({
           </label>
           <label className="grid gap-2 text-sm">
             分类
-            <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => updateDraft("category", event.target.value as CreativePack["category"])} value={draftPack.category}>
+            <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => applyCategoryToDraft(event.target.value)} value={draftPack.categoryId ?? categoryOptions.find((category) => category.slug === draftPack.category)?.id ?? ""}>
               {categoryOptions.map((category) => (
-                <option key={category} value={category}>
-                  {categoryLabels[category]}
+                <option key={category.id} value={category.id}>
+                  {category.parent ? `${category.parent.label} / ${category.label}` : category.label}
                 </option>
               ))}
             </select>
@@ -558,7 +711,7 @@ export function CreativePackEditor({
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="line-clamp-1 text-[15px] font-semibold text-slate-900">{pack.name}</p>
-                <p className="mt-1 text-[12px] text-slate-500">{categoryLabels[pack.category]}</p>
+                <p className="mt-1 text-[12px] text-slate-500">{packCategoryLabel(pack, categories)}</p>
               </div>
               <StatusPill label={statusLabels[pack.status]} tone={tone(pack.status)} />
             </div>
@@ -603,7 +756,7 @@ export function CreativePackEditor({
               <div className="min-w-0">
                 <p className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">编辑拍摄包</p>
                 <h3 className="mt-1 truncate text-xl font-semibold text-zinc-950">{editingPack.name}</h3>
-                <p className="mt-1 text-sm text-zinc-500">{categoryLabels[editingPack.category]} / {statusLabels[editingPack.status]}</p>
+                <p className="mt-1 text-sm text-zinc-500">{packCategoryLabel(editingPack, categories)} / {statusLabels[editingPack.status]}</p>
               </div>
               <button className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-50" onClick={() => setEditingPackId(null)} type="button" aria-label="关闭编辑弹窗">
                 <X className="h-4 w-4" strokeWidth={1.8} />
@@ -688,6 +841,15 @@ export function CreativePackEditor({
                     <img className="max-h-[260px] w-full object-cover" src={editingPack.imageUrl} alt={`${editingPack.name} preview`} />
                   </div>
                 ) : null}
+                <label className="grid gap-2 text-sm md:col-span-2">
+                  主题详情多图
+                  <textarea
+                    className="min-h-28 rounded-xl border border-black/10 bg-white px-3 py-2 font-mono text-xs leading-5"
+                    onChange={(event) => update(editingPack.id, "galleryImages", parseGalleryText(event.target.value))}
+                    placeholder="每行一张图片 URL。首张可作为封面兜底，其他图片展示在主题详情页。"
+                    value={galleryText(editingPack.galleryImages)}
+                  />
+                </label>
                 <label className="grid gap-2 text-sm">
                   状态
                   <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => update(editingPack.id, "status", event.target.value as CreativePack["status"])} value={editingPack.status}>
@@ -698,10 +860,10 @@ export function CreativePackEditor({
                 </label>
                 <label className="grid gap-2 text-sm">
                   分类
-                  <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => update(editingPack.id, "category", event.target.value as CreativePack["category"])} value={editingPack.category}>
+                  <select className="rounded-xl border border-black/10 bg-white px-3 py-2" onChange={(event) => applyCategoryToPack(editingPack.id, event.target.value)} value={editingPack.categoryId ?? categoryOptions.find((category) => category.slug === editingPack.category)?.id ?? ""}>
                     {categoryOptions.map((category) => (
-                      <option key={category} value={category}>
-                        {categoryLabels[category]}
+                      <option key={category.id} value={category.id}>
+                        {category.parent ? `${category.parent.label} / ${category.label}` : category.label}
                       </option>
                     ))}
                   </select>

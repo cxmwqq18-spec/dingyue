@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
 
 async function resolveToolPage(siteSlug: string, toolSlug: string) {
-  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`);
+  const state =
+    await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`) ??
+    await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/tools") ??
+    await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/");
   const site = state?.sites[0];
   if (!state || !site) return { state, site, siteAiApps: [], page: undefined, app: undefined, matched: false };
   return { state, site, ...resolveToolPageForSite(state, site, toolSlug) };
@@ -16,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const { siteSlug, toolSlug } = await params;
   const { site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!site || !page || !matched) return {};
-  return metadataForThemePage(site, page);
+  return metadataForSeoDirectory(site, "tool", toolSlug);
 }
 
 export default async function ToolPage({

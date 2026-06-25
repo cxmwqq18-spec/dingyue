@@ -221,6 +221,16 @@ type DreamShootCatalogCard = {
   href: string;
 };
 
+type PhotoPackageMegaGroup = {
+  label: string;
+  slug: string;
+  items: Array<{
+    label: string;
+    slug: string;
+    href: string;
+  }>;
+};
+
 function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, _pagePath: string, _site: Site): Array<[string, SectionInstance]> {
   return entries;
 }
@@ -284,7 +294,7 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
   const toolMegaBlocks = getDreamshootToolBlocks(header?.blocks);
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
-  const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && pagePath.startsWith("/tools") && toolMegaBlocks.length > 0;
+  const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && toolMegaBlocks.length > 0;
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
@@ -371,14 +381,23 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
                 ? "inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-[0.94rem] font-medium text-[#171514] transition hover:text-[#b07b47] 2xl:text-[0.98rem]"
                 : "inline-flex shrink-0 whitespace-nowrap transition hover:text-[var(--site-fg)]";
             const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
-            const linkNode = (
+            const linkNode = isToolsLink ? (
+              <button
+                aria-expanded="false"
+                className={navClass}
+                type="button"
+                {...xfcartBlockAttrs(link.block, index, "header_nav")}
+              >
+                {link.label}
+                <ChevronRight className="h-3.5 w-3.5 rotate-90 text-white/72" strokeWidth={2} />
+              </button>
+            ) : (
               <HeaderLink
                 className={navClass}
                 href={hrefFor(site, link.href)}
                 {...xfcartBlockAttrs(link.block, index, "header_nav")}
               >
                 {link.label}
-                {isToolsLink ? <ChevronRight className="h-3.5 w-3.5 rotate-90 text-white/72" strokeWidth={2} /> : null}
               </HeaderLink>
             );
             if (!isToolsLink) {
@@ -390,7 +409,7 @@ export function ThemeGlobalHeader({ runtime, site, settings, pagePath = "/" }: {
                 <div className={`invisible pointer-events-none fixed left-1/2 z-50 w-[min(92vw,1180px)] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 ease-out group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}>
                   <DreamShootMegaToolsPanel
                     ctaHref="/tools"
-                    ctaLabel="Explore all tools"
+                    ctaLabel="View all tools"
                     site={site}
                     tools={toolMegaBlocks}
                     variant="popover"
@@ -1159,6 +1178,15 @@ function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackT
   return hrefFor(site, rebuilt);
 }
 
+function toolStudioHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
+  const toolPath = toolActionHref(site, href, fallbackToolId, fallbackToolTitle);
+  const slug =
+    toolPath.split("?")[0]?.split("#")[0]?.split("/tools/")[1] ||
+    dreamshootToolLookupKey(fallbackToolTitle || fallbackToolId) ||
+    "image-studio";
+  return hrefFor(site, `/dashboard?tool_id=${encodeURIComponent(slug)}`);
+}
+
 function customerAccountStatusLabel(status: string): string {
   if (status === "active") return "Active";
   if (status === "past_due") return "Payment attention";
@@ -1618,10 +1646,15 @@ function DreamShootMegaToolsPanel({
       <div className="grid gap-3 sm:grid-cols-3">
         {groupedCategories.map((group) => {
           const Icon = group.meta.icon;
+          const featuredTool = group.items[0];
           return (
             <Link
               className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"
-              href={hrefFor(site, `/tools#${slugify(group.category)}`)}
+              href={
+                featuredTool
+                  ? toolActionHref(site, blockValue(featuredTool, "href", "/tools/image-studio"), featuredTool.id)
+                  : hrefFor(site, `/tools?category=${encodeURIComponent(slugify(group.category))}`)
+              }
               key={`mega_card_${group.category}`}
             >
               <span
@@ -4591,6 +4624,72 @@ function SectionView({
     );
   }
 
+  if (section.type === "seo_directory_content") {
+    const h3List = listLines(setting(section, "h3List", ""));
+    const details = listLines(setting(section, "detailList", ""));
+    const useCases = listLines(setting(section, "useCases", ""));
+    const workflow = listLines(setting(section, "workflow", ""));
+    const kind = setting(section, "kind", "collection");
+    return (
+      <section className="bg-[#f8f3ea] px-5 py-14 text-[#14161a]" id={sectionAnchor(section, setting(section, "anchor", "directory-guide"))}>
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.62fr)_minmax(320px,0.38fr)] lg:items-start">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">{kind === "tool" ? "AI tool guide" : "Photo package directory"}</p>
+              <h2 className="mt-4 text-[clamp(2.15rem,4.8vw,4.4rem)] font-bold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "photo package")}
+              </h2>
+              <p className="mt-5 max-w-4xl text-[1.05rem] leading-8 text-[#555f6d]">{setting(section, "subtitle", site.branding.description)}</p>
+              {details.length ? (
+                <div className="mt-8 grid gap-4">
+                  {details.map((detail, index) => (
+                    <article className="rounded-[18px] border border-[#e6d8c4] bg-white p-5 shadow-[0_24px_70px_-62px_rgba(20,22,26,0.28)]" key={`${detail}_${index}`}>
+                      <h3 className="text-lg font-bold tracking-tight">{h3List[index] ?? h3List[0] ?? "Directory details"}</h3>
+                      <p className="mt-2 text-sm leading-7 text-[#5d6572]">{detail}</p>
+                    </article>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+            <aside className="rounded-[24px] border border-[#e0ceb6] bg-white p-6 shadow-[0_28px_90px_-68px_rgba(20,22,26,0.38)] lg:sticky lg:top-28">
+              <h3 className="text-xl font-bold tracking-tight">{setting(section, "label", "Directory")} structure</h3>
+              {useCases.length ? (
+                <div className="mt-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">Use cases</p>
+                  <ul className="mt-3 grid gap-2">
+                    {useCases.map((item) => (
+                      <li className="flex gap-2 text-sm leading-6 text-[#525b68]" key={item}>
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#e4561b]" strokeWidth={2} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {workflow.length ? (
+                <div className="mt-6">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">Workflow</p>
+                  <ol className="mt-3 grid gap-2">
+                    {workflow.map((item, index) => (
+                      <li className="grid grid-cols-[28px_1fr] gap-2 text-sm leading-6 text-[#525b68]" key={item}>
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-[#fff0df] text-xs font-bold text-[#e4561b]">{index + 1}</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : null}
+              <Link className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
+                {setting(section, "ctaLabel", "Start creating")}
+                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+              </Link>
+            </aside>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (section.type === "dreamshoot_visual_proof") {
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
@@ -5180,93 +5279,89 @@ function SectionView({
       );
     }
     return (
-      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#fffaf3] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, "free-tools")}>
+      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#fff7ee] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, "free-tools")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className="grid gap-7 lg:grid-cols-[minmax(0,0.54fr)_minmax(0,0.46fr)] lg:items-end">
-            <div>
-              <p className={dark ? "text-[11px] font-medium uppercase tracking-[0.14em] text-white/48" : "text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]"}>
-                {setting(section, "eyebrow", "Free AI tools")}
-              </p>
-              <h2 className="mt-4 max-w-4xl text-[clamp(2rem,4vw,4.15rem)] font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "Free AI tools that lead into private photo packs.")}
-              </h2>
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className={dark ? "text-[clamp(2.4rem,5vw,4.45rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]" : "text-[clamp(2.4rem,5vw,4.45rem)] font-bold leading-[1.02] tracking-tight text-[#f05a12] [font-family:var(--site-title-font)]"}>
+              {setting(section, "title", "Free AI Tools Collection")}
+            </h2>
+            <p className={dark ? "mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/68" : "mx-auto mt-5 max-w-3xl text-lg leading-8 text-[#4f5663]"}>
+              {setting(section, "subtitle", "Discover free AI tools for photo creation, background edits, restoration, video concepts, and private album workflows.")}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
+                {tools.length}+ free tools
+              </span>
+              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
+                Instant preview
+              </span>
+              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
+                Studio ready
+              </span>
             </div>
-            <div>
-              <p className={dark ? "max-w-2xl text-sm leading-7 text-white/62" : "max-w-2xl text-sm leading-7 text-[#63666d]"}>
-                {setting(section, "subtitle")}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <a
-                    className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-xs text-white/72 transition hover:bg-white/[0.1]" : "rounded-full border border-[#ded5ca] bg-white px-3 py-1.5 text-xs text-[#5f6269] transition hover:border-[#14161a]/20 hover:text-[#14161a]"}
-                    href={`#${sectionAnchor(section, "free-tools")}-${slugify(category)}`}
-                    key={category}
-                  >
-                    {category}
-                  </a>
-                ))}
-              </div>
+            <div className="mt-9 flex flex-wrap justify-center gap-3">
+              <a className={dark ? "rounded-[16px] bg-white px-6 py-3 text-sm font-bold text-[#101114]" : "rounded-[16px] bg-[#ff4f32] px-6 py-3 text-sm font-bold text-white shadow-[0_20px_42px_-28px_rgba(240,90,18,0.75)]"} href={`#${sectionAnchor(section, "free-tools")}`}>
+                All tools
+              </a>
+              {categories.map((category) => (
+                <a
+                  className={dark ? "rounded-[16px] border border-white/16 bg-white/[0.04] px-6 py-3 text-sm font-bold text-white/78 transition hover:bg-white/[0.08]" : "rounded-[16px] border border-[#d5dbe4] bg-white px-6 py-3 text-sm font-bold text-[#3b4350] transition hover:border-[#ffb36d] hover:text-[#f05a12]"}
+                  href={`#${sectionAnchor(section, "free-tools")}-${slugify(category)}`}
+                  key={category}
+                >
+                  {category}
+                </a>
+              ))}
             </div>
           </div>
-          <div className="mt-10 grid gap-7">
+          <div className="mt-14 grid gap-10">
             {categories.map((category) => {
               const grouped = tools.filter((tool) => blockValue(tool, "category", "AI Photo") === category);
               if (!grouped.length) return null;
               return (
-                <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-4 sm:p-5" : "rounded-[28px] border border-[#e2d8cc] bg-white/72 p-4 shadow-[0_28px_80px_-62px_rgba(20,22,26,0.2)] sm:p-5"} id={`${sectionAnchor(section, "free-tools")}-${slugify(category)}`} key={category}>
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <h3 className="text-[1.08rem] font-semibold tracking-tight">{category}</h3>
-                    <span className={dark ? "rounded-full bg-white/[0.08] px-2.5 py-1 text-xs text-white/52" : "rounded-full bg-[#f5eee5] px-2.5 py-1 text-xs text-[#7a6d60]"}>
-                      {grouped.length} tools
-                    </span>
+                <div id={`${sectionAnchor(section, "free-tools")}-${slugify(category)}`} key={category}>
+                  <div className="mb-6 text-center">
+                    <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#14161a] sm:text-3xl"}>{category}</h3>
+                    <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#6a7280]"}>{grouped.length} tools with independent pages and fixed editor presets.</p>
                   </div>
-                  <div className={layout === "compact" ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3" : "grid gap-4 md:grid-cols-2 xl:grid-cols-3"}>
-                    {grouped.map((tool, index) => {
-                      const image = mediaAssetUrl(site, blockValue(tool, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
-                      return (
-                        <Link
-                          className={dark ? "group overflow-hidden rounded-[22px] border border-white/10 bg-black/24 text-white transition hover:-translate-y-1 hover:bg-black/32" : "group overflow-hidden rounded-[22px] border border-[#e5dbce] bg-[#fbfaf7] text-[#14161a] transition hover:-translate-y-1 hover:bg-white"}
-                          href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
-                          key={instanceKey(tool, index, "dreamshoot_tool")}
-                          {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
-                        >
-                          <div className="grid grid-cols-[104px_1fr] gap-0 sm:grid-cols-[128px_1fr]">
-                            <div className="relative h-full min-h-[148px] overflow-hidden bg-zinc-900">
-                              <StorefrontImage
-                                alt={blockValue(tool, "title", "AI tool")}
-                                className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                                sizes="(max-width: 640px) 104px, 128px"
-                                src={image}
-                              />
-                            </div>
-                            <div className="flex min-w-0 flex-col p-4">
-                              <div className="flex items-center justify-between gap-2">
-                                <span className={dark ? "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] text-white/58" : "rounded-full bg-[#f3eadf] px-2.5 py-1 text-[11px] text-[#78695b]"}>
-                                  {blockValue(tool, "badge", "Free")}
-                                </span>
-                                <ArrowRight className={dark ? "h-4 w-4 text-white/42 transition group-hover:translate-x-1" : "h-4 w-4 text-[#858077] transition group-hover:translate-x-1"} strokeWidth={1.8} />
-                              </div>
-                              <h4 className="mt-4 text-[1.05rem] font-semibold leading-tight tracking-tight">{blockValue(tool, "title", "AI photo tool")}</h4>
-                              <p className={dark ? "mt-2 line-clamp-3 text-sm leading-6 text-white/58" : "mt-2 line-clamp-3 text-sm leading-6 text-[#63666d]"}>
-                                {blockValue(tool, "description")}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
+                  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                    {grouped.map((tool, index) => (
+                      <Link
+                        className={dark ? "group flex min-h-[260px] flex-col rounded-[24px] border border-white/10 bg-white/[0.04] p-6 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[260px] flex-col rounded-[24px] border border-[#ffc98f] bg-white p-6 text-[#14161a] shadow-[0_26px_72px_-62px_rgba(240,90,18,0.45)] transition hover:-translate-y-1 hover:border-[#ff9845] hover:shadow-[0_32px_90px_-62px_rgba(240,90,18,0.7)]"}
+                        href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, blockValue(tool, "title", ""))}
+                        key={instanceKey(tool, index, "dreamshoot_tool")}
+                        {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
+                      >
+                        <div className="flex flex-wrap gap-2">
+                          <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#ffd2a3] bg-[#fff1df] px-2.5 py-1 text-xs font-semibold text-[#ee5d18]"}>
+                            AI-powered precision
+                          </span>
+                          <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#ffd2a3] bg-[#fff1df] px-2.5 py-1 text-xs font-semibold text-[#ee5d18]"}>
+                            One-click processing
+                          </span>
+                        </div>
+                        <h4 className="mt-7 text-[1.35rem] font-bold leading-tight tracking-tight">{blockValue(tool, "title", "AI photo tool")}</h4>
+                        <p className={dark ? "mt-4 line-clamp-4 text-base leading-7 text-white/64" : "mt-4 line-clamp-4 text-base leading-7 text-[#4f5663]"}>
+                          {blockValue(tool, "description")}
+                        </p>
+                        <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-7 text-base font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-7 text-base font-bold text-[#f05a12]"}>
+                          Try now
+                          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                        </span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
               {setting(section, "primaryCta", "Start private studio")}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-              {setting(section, "secondaryCta", "View packs")}
+              {setting(section, "secondaryCta", "View photo packages")}
               <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -5733,7 +5828,7 @@ function SectionView({
       siteAiApps.find((app) => app.enabled) ??
       siteAiApps[0];
     const customerSignedIn = Boolean(runtime?.customer) && !runtime?.isPreview;
-    const actionHref = hrefFor(site, customerSignedIn ? "/app" : "/login");
+    const actionHref = hrefFor(site, customerSignedIn ? setting(section, "ctaHref", "/app") : "/login");
     const actionLabel = customerSignedIn ? setting(section, "ctaLabel", "Open workspace") : "Sign in to start";
     const heroImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.entry));
     return (
@@ -6731,6 +6826,7 @@ function SectionView({
                   siteAiApps={formApps}
                   creativePacks={creativePacks.map((pack) => ({ ...pack, prompt: undefined }))}
                   initialCreativePackId={queryValue(renderContext.query.pack)}
+                  initialToolId={queryValue(renderContext.query.tool_id) || setting(section, "toolSlug", "")}
                 />
               </div>
             </div>

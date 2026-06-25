@@ -166,6 +166,7 @@ model Site {
   connect            StripeConnectAccount?
   aiApps             SiteAiApp[]
   gatewayGroups      AiGatewayGroup[]
+  creativePackCategories CreativePackCategory[]
   creativePacks      CreativePack[]
   mediaAssets        MediaAsset[]
   customerModels     CustomerModel[]
@@ -519,13 +520,16 @@ model ThemeSettings {
 }
 
 model ThemePublication {
-  id          String   @id
-  siteId      String
-  version     Int
-  snapshot    Json
-  publishedBy String
-  publishedAt DateTime @default(now())
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  id            String   @id
+  siteId        String
+  version       Int
+  snapshot      Json
+  pageCount     Int?
+  sectionCount  Int?
+  snapshotBytes Int?
+  publishedBy   String
+  publishedAt   DateTime @default(now())
+  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, version])
   @@index([siteId, publishedAt])
@@ -603,6 +607,7 @@ model MediaAsset {
 model CreativePack {
   id               String   @id
   siteId           String
+  categoryId       String?
   name             String
   headline         String
   description      String
@@ -616,15 +621,42 @@ model CreativePack {
   generationCount  Int      @default(0)
   conversionRate   Float    @default(0)
   imageUrl         String?
+  galleryImages    Json?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  categoryRecord   CreativePackCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   albums           Album[]
 
   @@index([siteId, status])
   @@index([siteId, category])
+  @@index([siteId, categoryId])
   @@index([siteId, aiAppSlug])
   @@index([siteId, status, createdAt])
+}
+
+model CreativePackCategory {
+  id          String   @id
+  siteId      String
+  parentId    String?
+  slug        String
+  label       String
+  description String?
+  heroTitle   String?
+  heroSubtitle String?
+  imageUrl    String?
+  sortOrder   Int      @default(0)
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent      CreativePackCategory? @relation("CreativePackCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children    CreativePackCategory[] @relation("CreativePackCategoryChildren")
+  packs       CreativePack[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, parentId, sortOrder])
+  @@index([siteId, status])
 }
 
 model CustomerModel {

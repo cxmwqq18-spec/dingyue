@@ -192,7 +192,7 @@ const homeSections: ThemePageJson["sections"] = {
       label: "Visual proof gallery",
       title: "See what your selfies can become.",
       subtitle: "Show finished outcomes first: sports posters, clean headshots, cinematic portraits, style previews, and seasonal albums.",
-      tabs: "All|Sports|Headshots|Beauty|Creative|Wedding|Seasonal|Video",
+      tabs: "All|Sports|Headshots|Beauty|Creative|Travel|Seasonal|Video",
       badges: "Private model|Album-ready|Full package catalog",
       primaryCta: "Start this pack",
       primaryHref: "/login"
@@ -202,7 +202,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Clean founder, LinkedIn, resume, and team-ready portraits.", category: "Headshots", badge: "Business", imageUrl: assets.proofBusinessFounder, href: "/collections/headshots" }),
       block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.proofBeautyHair, href: "/collections/beauty" }),
       block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.proofCinematicWorlds, href: "/collections/creative" }),
-      block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: assets.proofCoupleEngagement, href: "/collections/couple" })
+      block("proof_travel", "proof_card", { title: "Travel-style portraits", description: "Destination-inspired profile photos, vacation scenes, and cinematic outdoor looks.", category: "Travel", badge: "Travel", imageUrl: assets.proofCoupleEngagement, href: "/collections/travel" })
     ]
   ),
   featured_pack_1: section(
@@ -246,7 +246,7 @@ const homeSections: ThemePageJson["sections"] = {
       label: "Photo package catalog",
       title: "Choose a photo package first.",
       subtitle: "Each package has a clear result, photo count, credit cost, and one next action. The full directory is powered by active creative packs.",
-      tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility",
+      tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Travel|Cultural|Seasonal|Video|Utility",
       steps: "Pick pack|See credit cost|Generate album",
       source: "creative_packs",
       featuredCount: 5
@@ -257,7 +257,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: toolHref("cyberpunk-portrait") }),
       block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview hair directions, colors, and beauty styling before choosing a full image package.", category: "Beauty", meta: "20 photos", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: toolHref("hairstyle-preview") }),
       block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out photos with editorial lighting and red-carpet energy.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: toolHref("gala-photo") }),
-      block("catalog_wedding", "catalog_pack", { title: "Wedding portraits", description: "Wedding-style albums, couple portraits, and announcement-ready scenes.", category: "Wedding", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: toolHref("wedding-portraits") })
+      block("catalog_travel", "catalog_pack", { title: "Travel portrait pack", description: "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", category: "Travel", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: toolHref("travel-portraits") })
     ]
   ),
   flow_bridge_1: section(
@@ -287,8 +287,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "package-taxonomy",
       eyebrow: "Photo package library",
-      title: "Sell recognizable photo outcomes first.",
-      subtitle: "Headshots, hairstyles, World Cup fan photos, cyberpunk, nature, gala, style previews, creator portraits, and video add-ons all stay editable as package blocks.",
+      title: "Choose a photo outcome before you spend credits.",
+      subtitle: "Browse AI headshots, hairstyle previews, World Cup fan photos, cyberpunk portraits, nature scenes, gala looks, creator portraits, and video add-ons by the result you want.",
       layout: "editorial"
     },
     [
@@ -321,8 +321,8 @@ const homeSections: ThemePageJson["sections"] = {
   packages_1: section("photo_package_wall", {
     anchor: "packages",
     eyebrow: "AI photo packages",
-    title: "Photo packages are the product catalogue.",
-    subtitle: "Every package card stays tied to live creative packs, credit cost, training requirement, and checkout rules while the visual merchandising remains editable.",
+    title: "AI photo packages for every profile, post, and private album.",
+    subtitle: "Compare credit costs, source-photo requirements, private model needs, and delivery expectations before starting a headshot, sports, beauty, creator, travel, or cinematic portrait pack.",
     source: "creative_packs",
     layout: "editorial",
     maxCount: "32"
@@ -330,14 +330,14 @@ const homeSections: ThemePageJson["sections"] = {
   packages_strip_1: section("feature_grid", {
     anchor: "package-path",
     eyebrow: "Why customers buy",
-    title: "Make the path from upload to gallery obvious.",
-    subtitle: "Free tools preview the idea. Plans unlock credits. Packages deliver private albums.",
+    title: "A clear path from upload to finished gallery.",
+    subtitle: "Try utility tools first, choose a plan when you need premium generation, then receive finished images in a private MydreamShoots album.",
     source: "blocks",
     layout: "steps"
   }, [
-    block("pkg_path_upload", "card", { title: "Upload", text: "Collect source portraits and style references in one site-scoped workspace.", meta: "Step 01", imageUrl: assets.upload }),
+    block("pkg_path_upload", "card", { title: "Upload", text: "Add clear selfies, portraits, and style references to your private MydreamShoots workspace.", meta: "Step 01", imageUrl: assets.upload }),
     block("pkg_path_preview", "card", { title: "Preview", text: "Use free tools to preview the look before paying for the full package.", meta: "Step 02", imageUrl: assets.hairstyle }),
-    block("pkg_path_pay", "card", { title: "Pay", text: "Choose a monthly plan or add-on credits from the live catalog.", meta: "Step 03", imageUrl: assets.socialCard }),
+    block("pkg_path_pay", "card", { title: "Generate", text: "Use credits for the package you selected, with the cost shown before the request starts.", meta: "Step 03", imageUrl: assets.socialCard }),
     block("pkg_path_deliver", "card", { title: "Deliver", text: "Finished outputs return to the private album and stay tied to the account.", meta: "Step 04", imageUrl: assets.avatarPortrait })
   ]),
   feature_tabs_1: section(
@@ -378,8 +378,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "free-tools",
       eyebrow: "Free AI tools",
-      title: "AI tools that lead into private photo packs.",
-      subtitle: "Let visitors try focused tools first, then route serious work into login, credits, model training, and private album delivery.",
+      title: "Free AI photo tools for better source images.",
+      subtitle: "Try background changes, image enhancement, portrait cleanup, upscaling, and video previews before moving into paid AI photo packages and private albums.",
       categories: "Photo AI|AI Photo Edit|Video AI",
       primaryCta: "Start private studio",
       primaryHref: "/login",
@@ -479,12 +479,12 @@ const homeSections: ThemePageJson["sections"] = {
     "testimonial_wall",
     {
       anchor: "reviews",
-      title: "Reviews should prove buyer intent.",
-      subtitle: "Each review ties a normal customer identity to the package result they ordered.",
+      title: "Customer stories from AI photo package buyers.",
+      subtitle: "Creators, job seekers, sports fans, and solo buyers use MydreamShoots to turn everyday photos into polished private albums.",
       summaryTitle: "Loved by creators, job seekers, and solo buyers",
       summaryBody: "The strongest proof is simple: ordinary input photos, believable output sets, clear credits, and no studio booking.",
       summaryRating: "4.9/5",
-      summaryMeta: "Demo review wall aligned to the MydreamShoots direction"
+      summaryMeta: "Realistic customer stories for AI photo package buyers"
     },
     [
       block("review_ava", "testimonial", {
@@ -574,7 +574,7 @@ const homeSections: ThemePageJson["sections"] = {
       }),
       block("faq_private", "faq_item", {
         question: "Are my uploads private?",
-        answer: "Yes. Uploads, jobs, albums, orders, and credits are scoped to the current site and the current customer account."
+        answer: "Yes. Source photos, generation jobs, albums, orders, and credits stay connected to your signed-in MydreamShoots account and are not public by default."
       }),
       block("faq_refunds", "faq_item", {
         question: "What is the refund policy?",
@@ -618,14 +618,14 @@ const templateSections = {
   pricing_intro_1: section("rich_text", {
     eyebrow: "Pricing",
     title: "Monthly credits for photo packs, AI video, and virtual try-on.",
-    body: "Starter, Pro, and Premium map to real product prices, credits, and checkout records.",
+    body: "Choose a plan based on how often you need AI headshots, creator portraits, fan photos, image cleanup, video previews, and private gallery delivery.",
     headingLevel: "h1"
   }),
   package_hero_1: section("media_banner", {
     anchor: "package",
     eyebrow: "Photo package",
-    title: "Choose a themed photo pack and make the result obvious before checkout.",
-    subtitle: "This page should explain the outcome, show visual proof, and keep the live pack tied to the real billing catalog.",
+    title: "Choose a themed photo pack with a clear result before checkout.",
+    subtitle: "See the style, source-photo needs, credit cost, and private album delivery flow before starting generation.",
     imageUrl: assets.headshotLifestyle,
     ctaLabel: "Browse packages",
     ctaHref: "/collections"
@@ -634,8 +634,8 @@ const templateSections = {
     "before_after_gallery",
     {
       anchor: "results",
-      title: "Show the transformation before the customer buys.",
-      subtitle: "Use a normal input portrait, then show the premium generated result side by side."
+      title: "Preview the transformation before spending credits.",
+      subtitle: "Compare everyday source photos with the polished AI portraits, profile images, and campaign-ready scenes each package can produce."
     },
     [
       block("package_before_after_1", "before_after", {
@@ -656,7 +656,7 @@ const templateSections = {
     anchor: "tool",
     eyebrow: "AI Image Studio",
     title: "Create polished AI photo sets from everyday uploads.",
-    subtitle: "Customers should understand that this is one guided workflow: upload, hold credits, generate scenes, and receive a private gallery.",
+    subtitle: "Upload source photos, choose a style, confirm credits, generate AI portraits, and collect the final set in your private gallery.",
     imageUrl: assets.gala,
     ctaLabel: "Open workspace",
     ctaHref: "/app"
@@ -664,13 +664,13 @@ const templateSections = {
   job_intro_1: section("rich_text", {
     eyebrow: "Job status",
     title: "Track every generation request from queue to delivery.",
-    body: "The status page should explain what the platform is doing, how credits are held, and when the finished album becomes available."
+    body: "Follow each AI photo job as it moves through upload review, credit reservation, generation, quality checks, and private album delivery."
   }),
   album_intro_1: section("media_banner", {
     anchor: "album",
     eyebrow: "Private gallery",
     title: "Delivered images stay inside a customer-only album.",
-    subtitle: "A finished job should appear here automatically with download actions and site-scoped privacy.",
+    subtitle: "Open finished AI headshots, creator portraits, fan photos, and style packs in one signed-in gallery with download access.",
     imageUrl: assets.headshotLifestyle,
     ctaLabel: "Go to workspace",
     ctaHref: "/app"
@@ -678,12 +678,12 @@ const templateSections = {
   billing_intro_1: section("rich_text", {
     eyebrow: "Account and billing",
     title: "Manage credits, plans, and one-time top-ups from one place.",
-    body: "Billing should stay simple: active plan, credit history, live product prices, and clear refill options."
+    body: "Review your active plan, remaining credits, top-up options, checkout history, and package usage before starting the next AI photo set."
   }),
   blog_intro_1: section("rich_text", {
     eyebrow: "Guides",
-    title: "Planning content that supports the subscription funnel.",
-    body: "Use content to answer upload, styling, privacy, and pricing questions so customers arrive at the pack wall with less friction."
+    title: "AI photo guides for better source photos and stronger results.",
+    body: "Learn how to prepare selfies, choose lighting, compare photo packages, manage credits, protect private albums, and get cleaner AI portraits from each generation."
   }),
   blog_detail_1: section("rich_text", {
     eyebrow: "Guide",
@@ -762,11 +762,11 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     ["tool_banner_1", "entry_1", "upload_1", "form_1", "progress_1", "album_1", "trust_1", "faq_1"],
     {
       tool_banner_1: templateSections.tool_banner_1,
-      entry_1: section("ai_tool_entry", { aiAppSlug: "image_generator", title: "AI image studio for scenes, looks, and polished final sets", subtitle: "Open the site-enabled tool, upload source photos, hold credits, and receive your result in the private album.", ctaLabel: "Open workspace", imageUrl: assets.gala }),
-      upload_1: section("upload_panel", { title: "Private upload intake", helper: "Uploads are scoped to the current customer and this site only.", imageUrl: assets.upload }),
-      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Generate a scene pack", helper: "Choose an enabled pack, reserve credits, and send a signed worker job." }),
-      progress_1: section("job_progress", { title: "Visible job state" }),
-      album_1: section("album_gallery", { title: "Customer album", showDownloads: true }),
+      entry_1: section("ai_tool_entry", { aiAppSlug: "image_generator", title: "AI image studio for scenes, looks, and polished final sets", subtitle: "Upload source photos, choose a scene style, confirm credits, and receive finished AI portraits in a private album.", ctaLabel: "Open workspace", imageUrl: assets.gala }),
+      upload_1: section("upload_panel", { title: "Private source photo upload", helper: "Upload clear portraits, selfies, and references that belong to you before starting an AI photo package.", imageUrl: assets.upload }),
+      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Generate a scene pack", helper: "Choose the style, confirm the credit cost, and start a private generation request." }),
+      progress_1: section("job_progress", { title: "Generation progress" }),
+      album_1: section("album_gallery", { title: "Private AI photo album", showDownloads: true }),
       trust_1: homeSections.trust_1,
       faq_1: homeSections.faq_1
     },
@@ -808,8 +808,8 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       launcher_1: section("ai_feature_launcher", {
         anchor: "features",
         eyebrow: "Studio features",
-        title: "A real customer workspace, not just a landing page.",
-        subtitle: "Customers can upload, generate, track progress, view albums, and manage credits from one signed-in area.",
+        title: "Your private AI photo workspace.",
+        subtitle: "Upload source photos, start AI headshot and portrait packages, track progress, manage credits, and download private albums from one signed-in area.",
         ctaLabel: "Choose a tool",
         ctaHref: "/app#create"
       }, [
@@ -818,7 +818,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
         block("feature_progress", "feature", { title: "Track progress", description: "Show queued, creating, delivered, review-needed, and returned-credit states.", meta: "Live progress", href: "/app#progress_1" }),
         block("feature_album", "feature", { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/app#album_1" })
       ]),
-      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Choose a photo tool", helper: "Pick one backend-enabled tool first. Then upload the source photos it asks for and start a private request." }),
+      form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Choose a photo tool", helper: "Pick a headshot, creator, fan photo, retouch, or scene workflow, then upload the source photos it needs." }),
       upload_1: section("upload_panel", { title: "Upload source photos", helper: "Upload only the source photos needed for the selected tool.", imageUrl: assets.upload }),
       progress_1: section("job_progress", { title: "Recent generation status" }),
       album_1: section("album_gallery", { title: "Generated albums", showDownloads: true })
@@ -844,7 +844,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       job_detail_1: section("job_detail", {
         eyebrow: "Generation job",
         title: "Review one private generation request.",
-        subtitle: "This page shows the selected customer job, worker payload, output assets, and the related credit ledger inside the current site runtime.",
+        subtitle: "Review the selected AI photo job, generation status, delivered images, and related credit activity from your private account.",
         showRequestJson: true,
         showLedger: true,
         showAssets: true
@@ -881,7 +881,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     "help",
     ["intro_1", "faq_1", "plan_rules_1"],
     {
-      intro_1: section("rich_text", { eyebrow: "Help", title: "Help center", body: "Use this page for upload guidance, billing questions, privacy answers, and how scene packs actually work." }),
+      intro_1: section("rich_text", { eyebrow: "Help", title: "Help center", body: "Find practical answers about photo uploads, AI package selection, credits, billing, refunds, privacy, cookies, and private album delivery." }),
       faq_1: homeSections.faq_1,
       plan_rules_1: homeSections.plan_rules_1
     },
@@ -891,7 +891,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     "policy",
     ["policy_1"],
     {
-      policy_1: section("policy_content", { title: "Policy page", body: "<p>Replace this draft policy with your site-specific privacy, refund, content, or terms copy.</p>" })
+      policy_1: section("policy_content", { title: "Policy page", body: "<p>MydreamShoots policy pages explain privacy, cookies, refunds, content rules, account access, credit usage, and private album delivery for AI photo customers.</p>" })
     },
     1
   ),
@@ -913,7 +913,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       blog_detail_1: templateSections.blog_detail_1,
       packages_1: homeSections.packages_1,
       packages_strip_1: homeSections.packages_strip_1,
-      blog_list_1: section("blog_list", { title: "Related guides", body: "Keep readers moving from educational content into real packages and pricing.", guideType: "AI photo guide" }),
+      blog_list_1: section("blog_list", { title: "Related guides", body: "Read more about source photos, private models, credit usage, photo package planning, and album delivery.", guideType: "AI photo guide" }),
       conversion_1: homeSections.conversion_1
     },
     1
@@ -925,11 +925,11 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       search_intro_1: section("rich_text", {
         eyebrow: "Search",
         title: "Search tools, packs, pricing, and policies.",
-        body: "Search is part of the same theme package, so the copy stays editable while results stay bound to live site data."
+        body: "Find AI headshots, creator portraits, World Cup fan photos, background changer tools, credit plans, privacy details, refund information, and upload guidance."
       }),
       search_1: section("search_results", {
         eyebrow: "Site search",
-        title: "Search this AI photo storefront",
+        title: "Search MydreamShoots AI photo tools and packages",
         emptyTitle: "No matching content yet.",
         emptyBody: "Try starter, pro, video, try-on, gala, privacy, uploads, or refunds.",
         resultLimit: 12
@@ -947,12 +947,12 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       cart_intro_1: section("rich_text", {
         eyebrow: "Cart",
         title: "Confirm the plan before checkout.",
-        body: "The cart stays editable through the same theme system, while line items and prices are still read from live products."
+        body: "Review your selected subscription or credit pack, confirm the included credits, and continue to checkout before starting premium AI photo generation."
       }),
       cart_1: section("cart_summary", {
         eyebrow: "Checkout summary",
         title: "Your selected MydreamShoots plan",
-        subtitle: "Products, prices, credits, and checkout state are site-scoped. Credits are granted only after fulfilment.",
+        subtitle: "Your selected plan, credit amount, and checkout status stay connected to your MydreamShoots account. Credits are added after payment confirmation.",
         emptyTitle: "Choose a plan first",
         emptyBody: "Open pricing to select a subscription or one-time credit pack.",
         returnLabel: "Back to pricing",
@@ -971,7 +971,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       not_found_1: section("not_found", {
         eyebrow: "404",
         title: "This page is not available.",
-        subtitle: "Send customers back to the pack wall, pricing, login, or the private workspace.",
+        subtitle: "Return to AI photo packages, pricing, sign-in, or your private MydreamShoots workspace.",
         primaryCta: "Return home",
         primaryHref: "/",
         secondaryCta: "View packages",
@@ -1038,6 +1038,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       ],
       footerLinks: [
         { label: "Privacy", href: "/policies/privacy", group: "support" },
+        { label: "Terms", href: "/policies/terms", group: "support" },
+        { label: "Cookie Policy", href: "/cookie-policy", group: "support" },
         { label: "Refunds", href: "/policies/refunds", group: "support" },
         { label: "Content policy", href: "/policies/content", group: "support" },
         { label: "Help center", href: "/help", group: "support" },
@@ -1085,6 +1087,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Image studio", href: toolHref("ai-image-studio"), group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "Help center", href: "/help", group: "support" } },
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy", href: "/policies/privacy", group: "support" } },
+          { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms", href: "/policies/terms", group: "support" } },
+          { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookie-policy", group: "support" } },
           { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/policies/refunds", group: "support" } },
           { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Guides", href: "/blog", group: "company" } }
         ]

@@ -19,6 +19,13 @@ type OrdersPagePayload = {
   ledger: CreditLedgerEntry[];
   jobs: GenerationJob[];
   paymentEvents: PaymentEvent[];
+  pageInfo?: {
+    take: number;
+    nextOrderCursor?: string;
+    nextSubscriptionCursor?: string;
+    nextLedgerCursor?: string;
+    nextPaymentEventCursor?: string;
+  };
   error?: string;
 };
 
@@ -38,6 +45,7 @@ type OrdersPageClientProps = {
   };
   pricingHref: string;
   siteId: string;
+  tabItems: Array<{ key: OrdersTab; label: string; badge: string; hint: string }>;
 };
 
 function OrdersPageSkeleton() {
@@ -65,16 +73,22 @@ export function OrdersPageClient({
   currency,
   initialCounts,
   pricingHref,
-  siteId
+  siteId,
+  tabItems
 }: OrdersPageClientProps) {
+  const [selectedTab, setSelectedTab] = useState<OrdersTab>(activeTab);
   const [payload, setPayload] = useState<OrdersPagePayload | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelectedTab(activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
     async function loadOrdersPage() {
-      if (activeTab === "overview") {
+      if (selectedTab === "overview") {
         setError(null);
         setPayload({
           customers: [],
@@ -89,7 +103,7 @@ export function OrdersPageClient({
       try {
         setError(null);
         setPayload(null);
-        const response = await fetchAdminJson<OrdersPagePayload>(`/api/sites/${siteId}/admin/orders-page?tab=${activeTab}`, { init: { signal: controller.signal } });
+        const response = await fetchAdminJson<OrdersPagePayload>(`/api/sites/${siteId}/admin/orders-page?tab=${selectedTab}`, { init: { signal: controller.signal } });
         const result = response.data;
         if (!active) return;
         if (!response.ok) {
@@ -107,7 +121,7 @@ export function OrdersPageClient({
       active = false;
       controller.abort();
     };
-  }, [activeTab, siteId]);
+  }, [selectedTab, siteId]);
 
   const derived = useMemo(() => {
     const orders = payload?.orders ?? [];
@@ -115,13 +129,13 @@ export function OrdersPageClient({
     return {
       activeSubscriptions: payload ? subscriptions.filter((subscription) => subscription.status === "active" || subscription.status === "trialing").length : initialCounts.activeSubscriptions,
       ledgerCount: payload?.ledger.length ?? initialCounts.ledgerCount,
-      orderCount: activeTab === "overview" ? initialCounts.orderCount : payload?.orders.length ?? initialCounts.orderCount,
+      orderCount: selectedTab === "overview" ? initialCounts.orderCount : payload?.orders.length ?? initialCounts.orderCount,
       paymentEventCount: payload?.paymentEvents.length ?? initialCounts.paymentEventCount,
       refundedOrders: orders.filter((order) => order.status === "refunded").length,
-      subscriptionsCount: activeTab === "overview" ? initialCounts.subscriptionCount : payload?.subscriptions.length ?? initialCounts.subscriptionCount,
+      subscriptionsCount: selectedTab === "overview" ? initialCounts.subscriptionCount : payload?.subscriptions.length ?? initialCounts.subscriptionCount,
       unsettledOrders: orders.filter((order) => order.status === "created" || order.status === "checkout_started")
     };
-  }, [activeTab, initialCounts, payload]);
+  }, [initialCounts, payload, selectedTab]);
 
   if (error) {
     return (
@@ -137,7 +151,35 @@ export function OrdersPageClient({
 
   return (
     <div className="grid gap-5">
-      {activeTab === "overview" ? (
+      <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-2 shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)]">
+        <div className="flex gap-2 overflow-x-auto" role="tablist" aria-label="订单工作台栏目">
+          {tabItems.map((item) => {
+            const selected = item.key === selectedTab;
+            return (
+              <button
+                aria-selected={selected}
+                className={`inline-flex min-h-[38px] shrink-0 items-center gap-2 rounded-[8px] border px-3 text-[12px] font-medium transition ${
+                  selected
+                    ? "border-[var(--admin-accent)] bg-[var(--admin-accent)] text-white shadow-[0_14px_24px_-18px_rgba(27,119,243,0.42)]"
+                    : "border-[var(--admin-border-soft)] bg-white text-[var(--admin-muted)] hover:border-[var(--admin-accent-soft)] hover:text-[var(--admin-accent)]"
+                }`}
+                key={item.key}
+                onClick={() => setSelectedTab(item.key)}
+                role="tab"
+                type="button"
+              >
+                <span>{item.label}</span>
+                <span className={`rounded-full border px-1.5 py-0.5 font-mono text-[10px] ${selected ? "border-white/20 bg-white/15 text-white" : "border-[var(--admin-border-soft)] bg-[var(--admin-panel)] text-[#8a94a6]"}`}>
+                  {item.badge}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <p className="mt-2 px-1 text-[12px] leading-5 text-[#667085]">{tabItems.find((item) => item.key === selectedTab)?.hint}</p>
+      </div>
+
+      {selectedTab === "overview" ? (
         <div className="grid gap-5">
           <ErpStatGrid
             items={[
@@ -173,7 +215,7 @@ export function OrdersPageClient({
         </div>
       ) : null}
 
-      {activeTab === "orders" ? (
+      {selectedTab === "orders" ? (
         <ErpSection
           action={<ErpToolbarAction href={pricingHref} label="查看前台定价" />}
           description="Checkout 订单、一次性额度包和支付状态统一在这里查看。"
@@ -200,7 +242,7 @@ export function OrdersPageClient({
         </ErpSection>
       ) : null}
 
-      {activeTab === "subscriptions" ? (
+      {selectedTab === "subscriptions" ? (
         <ErpSection
           action={<ErpToolbarAction href={pricingHref} label="查看套餐定价" />}
           description="订阅是顾客持续套餐权益，和单次支付事件不是同一种记录。这里重点看套餐、Stripe 订阅号、周期结束和生效状态。"
@@ -227,7 +269,7 @@ export function OrdersPageClient({
         </ErpSection>
       ) : null}
 
-      {activeTab === "ledger" ? (
+      {selectedTab === "ledger" ? (
         <ErpSection
           description="额度账本是不可以随意覆盖的积分流水。每一条都应该能说明为什么余额增加、预扣、扣减或释放。"
           eyebrow="额度流水"
@@ -251,7 +293,7 @@ export function OrdersPageClient({
         </ErpSection>
       ) : null}
 
-      {activeTab === "events" ? (
+      {selectedTab === "events" ? (
         <ErpSection
           description="支付事件是 Stripe webhook 的入站证据。它用于确认事件是否到达、是否重复、是否已经驱动订单和额度账本更新。"
           eyebrow="支付回调"

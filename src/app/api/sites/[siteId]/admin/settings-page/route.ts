@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
@@ -26,14 +26,15 @@ const adminSiteAdminListTake = envInt("SITE_ADMIN_SITE_ADMIN_LIST_TAKE", 50);
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
+  const perf = createAdminPerfTracker("admin-settings-page", { siteId });
+  if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
+    return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
-    const state = readPlatformState();
+    const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const auditLogs = getSiteAuditLogsFromState(state, siteId);
-    return NextResponse.json({
+    return adminPerfJson(perf, {
       ok: true,
       domains: getSiteDomainsFromState(state, siteId).slice(0, adminDomainListTake),
       siteAdmins: state.siteAdmins.filter((admin) => admin.siteId === siteId).slice(0, adminSiteAdminListTake).map(toPublicSiteAdmin),
@@ -43,8 +44,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     });
   }
 
-  const payload = await settingsPageCache.get(siteId, async () => {
-    const [domains, siteAdmins, auditLogs, auditLogCount, gateway] = await runDbTasks([
+  const payload = await perf.measure("cache", () => settingsPageCache.get(siteId, async () => {
+    const [domains, siteAdmins, auditLogs, auditLogCount, gateway] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteDomain.findMany({
         where: { siteId },
         orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
@@ -67,7 +68,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         where: { siteId },
         orderBy: [{ status: "asc" }, { name: "asc" }]
       })
-    ], siteAdminReadConcurrency);
+    ], siteAdminReadConcurrency));
 
     return {
       ok: true,
@@ -82,11 +83,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
       auditLogCount,
       gateway: gateway ? toGatewayGroup(gateway) : undefined
     };
-  });
+  }));
 
   if (!payload) {
-    return NextResponse.json({ error: "site_admin_data_unavailable" }, { status: 503 });
+    return adminPerfJson(perf, { error: "site_admin_data_unavailable" }, { status: 503 });
   }
 
-  return NextResponse.json(payload);
+  return adminPerfJson(perf, payload);
 }

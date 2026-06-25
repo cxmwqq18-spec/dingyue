@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { AdminModuleDefinition, AdminModuleLink } from "@/lib/admin-menu";
 import { AdminInstantLink } from "@/components/admin/admin-instant-link";
 import { AdminModuleRailLink } from "@/components/admin/admin-module-rail-link";
+import { canPrefetchAdminRoute } from "@/components/admin/admin-route-prefetch-policy";
 import { StatusPill } from "@/components/ui";
 import type { AdminNavItem, AdminWorkspaceSummary } from "./admin-types";
 
@@ -184,22 +185,25 @@ export function AdminModuleRail({
             <div className="mt-4 border-t border-white/10 pt-3">
               <p className="px-5 pb-2 text-[11px] uppercase tracking-[0.16em] text-white/28">当前模块</p>
               <div>
-                {activeModuleNav.map((item) => (
-                  <AdminInstantLink
-                    className="mx-2 grid min-h-[32px] grid-cols-[16px_1fr_auto] items-center gap-2 rounded-[8px] px-3 py-1.5 text-[12px] text-white/58 transition hover:bg-white/[0.05] hover:text-white"
-                    href={scopedAdminHref(item.href, siteSlug)}
-                    key={`${activeModule.code}:${item.href}:${item.label}`}
-                    prefetch={false}
-                  >
-                    <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
-                    <span className="truncate">{item.label}</span>
-                    {item.badge ? (
-                      <span className="rounded-[4px] bg-white/[0.06] px-1.5 py-0.5 text-[10px] text-white/35">
-                        {item.badge}
-                      </span>
-                    ) : null}
-                  </AdminInstantLink>
-                ))}
+                {activeModuleNav.map((item) => {
+                  const href = scopedAdminHref(item.href, siteSlug);
+                  return (
+                    <AdminInstantLink
+                      className="mx-2 grid min-h-[32px] grid-cols-[16px_1fr_auto] items-center gap-2 rounded-[8px] px-3 py-1.5 text-[12px] text-white/58 transition hover:bg-white/[0.05] hover:text-white"
+                      href={href}
+                      key={`${activeModule.code}:${item.href}:${item.label}`}
+                      prefetch={canPrefetchAdminRoute(href)}
+                    >
+                      <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      <span className="truncate">{item.label}</span>
+                      {item.badge ? (
+                        <span className="rounded-[4px] bg-white/[0.06] px-1.5 py-0.5 text-[10px] text-white/35">
+                          {item.badge}
+                        </span>
+                      ) : null}
+                    </AdminInstantLink>
+                  );
+                })}
               </div>
             </div>
           ) : null}

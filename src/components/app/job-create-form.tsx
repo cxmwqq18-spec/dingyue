@@ -121,6 +121,7 @@ export function JobCreateForm({
   siteAiApps,
   creativePacks = [],
   initialCreativePackId,
+  initialToolId,
   assets = [],
   emptyTitle = "No enabled album experience.",
   emptyBody = "Enable an album experience for this site before publishing this form."
@@ -131,13 +132,19 @@ export function JobCreateForm({
   siteAiApps: SiteAiApp[];
   creativePacks?: CreativePack[];
   initialCreativePackId?: string;
+  initialToolId?: string;
   assets?: ThemeRuntimeAsset[];
   emptyTitle?: string;
   emptyBody?: string;
 }) {
   const router = useRouter();
-  const initialPack = creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId);
-  const initialApp = initialPack ? siteAiApps.find((app) => app.aiApp.slug === initialPack.aiAppSlug) ?? siteAiApps[0] : siteAiApps[0];
+  const normalizedInitialToolId = (initialToolId ?? "").replace(/-/g, "_");
+  const initialPack =
+    creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId) ??
+    creativePacks.find((pack) => pack.status === "active" && (pack.aiAppSlug === normalizedInitialToolId || pack.id === initialToolId));
+  const initialApp =
+    (initialToolId ? siteAiApps.find((app) => app.aiApp.slug === normalizedInitialToolId || app.aiApp.slug === initialToolId) : undefined) ??
+    (initialPack ? siteAiApps.find((app) => app.aiApp.slug === initialPack.aiAppSlug) ?? siteAiApps[0] : siteAiApps[0]);
   const [aiAppSlug, setAiAppSlug] = useState(initialApp?.aiApp.slug ?? "");
   const [creativePackId, setCreativePackId] = useState(() => initialPack?.id ?? packsForApp(creativePacks, initialApp?.aiApp.slug ?? "")[0]?.id ?? "");
   const [formValues, setFormValues] = useState<Record<string, string | number | boolean>>(() => valuesFor(initialApp));
