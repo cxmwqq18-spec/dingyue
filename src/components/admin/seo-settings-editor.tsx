@@ -48,8 +48,9 @@ function cleanPath(value: string, fallback: string) {
 
 function pageScore(page: PageSeo) {
   let score = 0;
-  if (page.title.trim().length >= 12 && page.title.trim().length <= 68) score += 34;
-  if (page.description.trim().length >= 70 && page.description.trim().length <= 170) score += 34;
+  if (page.title.trim().length >= 12 && page.title.trim().length <= 68) score += 30;
+  if (page.description.trim().length >= 70 && page.description.trim().length <= 170) score += 30;
+  if (page.keywords?.trim()) score += 8;
   if (page.canonicalPath?.trim()) score += 18;
   if (page.ogImage?.trim()) score += 14;
   return score;
@@ -102,6 +103,7 @@ export function SeoSettingsEditor({
   const dirty = seoDiffers(seo, normalizedPublished);
   const missingTitleCount = pages.filter((page) => !seo.pages[page.id]?.title.trim()).length;
   const missingDescriptionCount = pages.filter((page) => !seo.pages[page.id]?.description.trim()).length;
+  const missingKeywordCount = pages.filter((page) => !seo.pages[page.id]?.keywords?.trim() && !seo.siteKeywords?.trim()).length;
   const noIndexCount = pages.filter((page) => seo.pages[page.id]?.index === false).length;
   const averageScore = pages.length
     ? Math.round(
@@ -111,6 +113,7 @@ export function SeoSettingsEditor({
   const warningsCount =
     missingTitleCount +
     missingDescriptionCount +
+    missingKeywordCount +
     (seo.defaultOgImage ? 0 : 1) +
     noIndexCount;
   const draftSettings = useMemo<ThemeSettings>(() => ({ ...initialSettings, seo }), [initialSettings, seo]);
@@ -132,12 +135,13 @@ export function SeoSettingsEditor({
           pageType: page.pageType,
           seoTitle: pageSeo.title,
           seoDescription: pageSeo.description,
+          seoKeywords: pageSeo.keywords ?? seo.siteKeywords ?? "",
           canonicalPath: pageSeo.canonicalPath ?? "",
           index: pageSeo.index,
           ogImage: pageSeo.ogImage ?? ""
         };
       }),
-      ["pageId", "title", "slug", "pageType", "seoTitle", "seoDescription", "canonicalPath", "index", "ogImage"]
+      ["pageId", "title", "slug", "pageType", "seoTitle", "seoDescription", "seoKeywords", "canonicalPath", "index", "ogImage"]
     );
   }
 
@@ -209,6 +213,12 @@ export function SeoSettingsEditor({
                   <span className="text-[#667085]">描述 (Meta Description)</span>
                   <span className="text-[#18212f]">
                     {missingDescriptionCount === 0 ? "全部已设置" : `${missingDescriptionCount} 待补`}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[#667085]">关键词 (Keywords)</span>
+                  <span className="text-[#18212f]">
+                    {missingKeywordCount === 0 ? "全部已覆盖" : `${missingKeywordCount} 待补`}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
@@ -300,9 +310,9 @@ export function SeoSettingsEditor({
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#98a2b3]">seo settings</div>
-                <h3 className="mt-1 text-[28px] font-semibold tracking-[-0.03em] text-[#18212f]">Search metadata workspace</h3>
+                <h3 className="mt-1 text-[28px] font-semibold tracking-[-0.03em] text-[#18212f]">TDK metadata workspace</h3>
                 <p className="mt-2 text-[13px] leading-6 text-[#667085]">
-                  管理站点 SEO 基础信息、默认规则、页面级 metadata 和搜索预览。
+                  统一维护 Title、Description、Keywords、canonical、robots 和搜索预览。
                 </p>
               </div>
               <div className="shrink-0">
@@ -325,11 +335,11 @@ export function SeoSettingsEditor({
               </div>
               <div className="grid gap-5 px-5 py-5 xl:grid-cols-[220px_minmax(0,1fr)]">
                 <div className="text-[13px] leading-6 text-[#667085]">
-                  站点默认标题、描述和分享图会落到首页以及未单独覆盖的页面。
+                  站点默认 TDK 会落到首页以及未单独覆盖的页面。
                 </div>
                 <div className="grid gap-5">
                   <label className="grid gap-2">
-                    <span className="text-[14px] font-medium text-[#344054]">网站标题 (Site Title)</span>
+                    <span className="text-[14px] font-medium text-[#344054]">默认 Title (网站标题)</span>
                     <input
                       className="h-[44px] rounded-[12px] border border-[#d8e0ea] px-4 text-[14px] text-[#18212f] outline-none"
                       onChange={(event) => updateGlobal({ siteTitle: event.target.value })}
@@ -339,13 +349,24 @@ export function SeoSettingsEditor({
                   </label>
 
                   <label className="grid gap-2">
-                    <span className="text-[14px] font-medium text-[#344054]">网站描述 (Meta Description)</span>
+                    <span className="text-[14px] font-medium text-[#344054]">默认 Description (Meta 描述)</span>
                     <textarea
                       className="min-h-[96px] rounded-[12px] border border-[#d8e0ea] px-4 py-3 text-[14px] leading-6 text-[#18212f] outline-none"
                       onChange={(event) => updateGlobal({ siteDescription: event.target.value })}
                       value={seo.siteDescription}
                     />
                     <span className="text-right text-[12px] text-[#98a2b3]">{seo.siteDescription.trim().length}/160</span>
+                  </label>
+
+                  <label className="grid gap-2">
+                    <span className="text-[14px] font-medium text-[#344054]">默认 Keywords (关键词)</span>
+                    <input
+                      className="h-[44px] rounded-[12px] border border-[#d8e0ea] px-4 text-[14px] text-[#18212f] outline-none"
+                      onChange={(event) => updateGlobal({ siteKeywords: event.target.value })}
+                      placeholder="AI headshots, photo packages, creator portraits"
+                      value={seo.siteKeywords ?? ""}
+                    />
+                    <span className="text-[12px] leading-5 text-[#98a2b3]">用英文逗号分隔。页面没有单独设置 Keywords 时会继承这里。</span>
                   </label>
 
                   <div className="grid gap-5 xl:grid-cols-[1fr_1fr]">
@@ -452,11 +473,11 @@ export function SeoSettingsEditor({
               {selectedPage && selectedSeo ? (
                 <div className="grid gap-5 px-5 py-5 xl:grid-cols-[220px_minmax(0,1fr)]">
                   <div className="text-[13px] leading-6 text-[#667085]">
-                    当前页面可覆盖默认 title、description、canonical 和索引策略。
+                    当前页面可覆盖默认 TDK、canonical、分享图和索引策略。
                   </div>
                   <div className="grid gap-5">
                     <label className="grid gap-2">
-                      <span className="text-[14px] font-medium text-[#344054]">页面标题</span>
+                      <span className="text-[14px] font-medium text-[#344054]">页面 Title</span>
                       <input
                         className="h-[44px] rounded-[12px] border border-[#d8e0ea] px-4 text-[14px] text-[#18212f] outline-none"
                         onChange={(event) => updatePage(selectedPage.id, { title: event.target.value })}
@@ -465,12 +486,25 @@ export function SeoSettingsEditor({
                     </label>
 
                     <label className="grid gap-2">
-                      <span className="text-[14px] font-medium text-[#344054]">Meta 描述</span>
+                      <span className="text-[14px] font-medium text-[#344054]">页面 Description</span>
                       <textarea
                         className="min-h-[96px] rounded-[12px] border border-[#d8e0ea] px-4 py-3 text-[14px] leading-6 text-[#18212f] outline-none"
                         onChange={(event) => updatePage(selectedPage.id, { description: event.target.value })}
                         value={selectedSeo.description}
                       />
+                    </label>
+
+                    <label className="grid gap-2">
+                      <span className="text-[14px] font-medium text-[#344054]">页面 Keywords</span>
+                      <input
+                        className="h-[44px] rounded-[12px] border border-[#d8e0ea] px-4 text-[14px] text-[#18212f] outline-none"
+                        onChange={(event) => updatePage(selectedPage.id, { keywords: event.target.value })}
+                        placeholder={seo.siteKeywords || "AI headshots, portrait generator, photo packages"}
+                        value={selectedSeo.keywords ?? ""}
+                      />
+                      <span className="text-[12px] leading-5 text-[#98a2b3]">
+                        留空时使用站点默认 Keywords；保存后会进入页面 metadata 的 keywords 字段。
+                      </span>
                     </label>
 
                     <label className="grid gap-2">
@@ -485,6 +519,24 @@ export function SeoSettingsEditor({
                         onChange={(event) => updatePage(selectedPage.id, { canonicalPath: event.target.value })}
                         value={selectedSeo.canonicalPath ?? selectedPage.slug}
                       />
+                    </label>
+
+                    <label className="grid gap-2">
+                      <span className="text-[14px] font-medium text-[#344054]">页面 OG / 分享图</span>
+                      <div className="grid gap-3 xl:grid-cols-[1fr_120px]">
+                        <input
+                          className="h-[44px] rounded-[12px] border border-[#d8e0ea] px-4 text-[14px] text-[#18212f] outline-none"
+                          onChange={(event) => updatePage(selectedPage.id, { ogImage: event.target.value })}
+                          placeholder={seo.defaultOgImage || "/assets/site/share-image.png"}
+                          value={selectedSeo.ogImage ?? ""}
+                        />
+                        <div className="flex items-center justify-center rounded-[12px] border border-[#d8e0ea] bg-[#f8fafc] text-[#667085]">
+                          <ImageIcon className="h-5 w-5" strokeWidth={1.8} />
+                        </div>
+                      </div>
+                      <span className="text-[12px] leading-5 text-[#98a2b3]">
+                        留空时使用默认分享图；支持 media id、/assets 路径或完整 URL。
+                      </span>
                     </label>
 
                     <div className="flex flex-wrap items-center gap-4">
