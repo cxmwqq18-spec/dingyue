@@ -7,9 +7,14 @@ import { customerSessionCookie } from "@/lib/session";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { metadataForThemePage } from "@/lib/theme/seo";
 
-export async function generateMetadata(): Promise<Metadata> {
-  return { title: "Sign in" };
+export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
+  const { siteSlug } = await params;
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/login");
+  const site = state?.sites[0];
+  const page = site?.pages.find((item) => item.slug === "/login");
+  return site && page ? metadataForThemePage(site, page) : { title: "Sign in" };
 }
 
 export default async function SiteLoginPage({

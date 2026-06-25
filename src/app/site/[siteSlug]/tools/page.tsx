@@ -3,9 +3,14 @@ import { notFound } from "next/navigation";
 import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { metadataForThemePage } from "@/lib/theme/seo";
 
-export async function generateMetadata(): Promise<Metadata> {
-  return { title: "Tools" };
+export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
+  const { siteSlug } = await params;
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/tools");
+  const site = state?.sites[0];
+  const page = site?.pages.find((item) => item.slug === "/tools");
+  return site && page ? metadataForThemePage(site, page) : { title: "Tools" };
 }
 
 export default async function SiteToolsPage({
