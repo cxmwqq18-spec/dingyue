@@ -221,16 +221,8 @@ type DreamShootCatalogCard = {
   href: string;
 };
 
-function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, site: Site): Array<[string, SectionInstance]> {
-  const isDreamShoot = /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
-  if (!isDreamShoot || pagePath !== "/") return entries;
-  const deferredHomeSectionIds = new Set([
-    "featured_pack_1",
-    "package_catalog_1",
-    "proof_1",
-    "trust_1"
-  ]);
-  return entries.filter(([id]) => !deferredHomeSectionIds.has(id));
+function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, _pagePath: string, _site: Site): Array<[string, SectionInstance]> {
+  return entries;
 }
 
 export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
