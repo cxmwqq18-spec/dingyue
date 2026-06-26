@@ -5,6 +5,7 @@ export type SeoDirectoryKind = "collection" | "tool";
 
 export type SeoDirectoryContent = {
   slug: string;
+  explicit: boolean;
   label: string;
   title: string;
   description: string;
@@ -20,7 +21,7 @@ export type SeoDirectoryContent = {
   ctaHref: string;
 };
 
-type SeoDirectorySeed = Omit<SeoDirectoryContent, "slug" | "canonicalPath">;
+type SeoDirectorySeed = Omit<SeoDirectoryContent, "slug" | "explicit" | "canonicalPath">;
 
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
@@ -291,6 +292,21 @@ function normalizeDirectorySlug(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
+export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string): boolean {
+  const slug = normalizeDirectorySlug(rawSlug);
+  return kind === "collection" ? Boolean(collectionDirectory[slug]) : Boolean(toolDirectory[slug]);
+}
+
+function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
+  const value = imagePath.trim();
+  if (!value) return "";
+  if (value.startsWith("http://") || value.startsWith("https://")) return value;
+  const domain = site.primaryDomain?.trim();
+  if (!domain || domain.includes("localhost")) return value;
+  const base = domain.startsWith("http://") || domain.startsWith("https://") ? domain.replace(/\/$/, "") : `https://${domain}`;
+  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
 function titleCase(slug: string): string {
   return slug.split("-").filter(Boolean).map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`).join(" ") || "AI Photo";
 }
@@ -343,11 +359,13 @@ function fallbackTool(slug: string): SeoDirectorySeed {
 
 export function getSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   const slug = normalizeDirectorySlug(rawSlug);
+  const explicit = isExplicitSeoDirectoryContent(kind, slug);
   const source = kind === "collection" ? collectionDirectory[slug] ?? fallbackCollection(slug) : toolDirectory[slug] ?? fallbackTool(slug);
   const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${slug}`;
   return {
     ...source,
     slug,
+    explicit,
     canonicalPath,
     ctaHref: kind === "collection" ? `/app/create?tool_id=${slug}` : source.ctaHref
   };
@@ -357,25 +375,28 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
   const item = getSeoDirectoryContent(kind, rawSlug);
   const base = site.primaryDomain && !site.primaryDomain.includes("localhost") ? `https://${site.primaryDomain}` : "";
   const canonical = base ? `${base}${item.canonicalPath}` : item.canonicalPath;
+  const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
   return {
     title: item.title,
     description: item.description,
     keywords: item.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean),
     alternates: { canonical },
     robots: {
-      index: true,
+      index: item.explicit,
       follow: true
     },
     openGraph: {
       title: item.title,
       description: item.description,
       url: canonical,
-      siteName: site.branding.logoText || site.name
+      siteName: site.branding.logoText || site.name,
+      ...(ogImage ? { images: [ogImage] } : {})
     },
     twitter: {
-      card: "summary",
+      card: ogImage ? "summary_large_image" : "summary",
       title: item.title,
-      description: item.description
+      description: item.description,
+      ...(ogImage ? { images: [ogImage] } : {})
     }
   };
 }

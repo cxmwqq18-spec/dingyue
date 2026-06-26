@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: "Upload photos" };
+  return { title: "Upload photos", robots: { index: false, follow: false } };
 }
 
 export default async function CustomerWorkspaceUploadPage({

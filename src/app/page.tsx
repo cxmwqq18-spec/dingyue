@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
 import {
   readStorefrontAccessSummaryFromDatabase,
@@ -20,20 +20,31 @@ import type { PlatformState, Site } from "@/lib/types";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const noindexMetadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false
+  }
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const headerStore = await headers();
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   if (!shouldResolveHostSite(hostCandidates)) return {};
   const hostSite = await getHostSiteWithFallback(hostCandidates);
-  if (!hostSite) return {};
+  if (!hostSite) return noindexMetadata;
   return metadataForSingleThemePage(hostSite, getPage(hostSite, "/"));
 }
 
 function shouldResolveHostSite(hosts: Array<string | null>): boolean {
   return hosts.some((host) => {
     const value = cleanHost(host);
-    return Boolean(value && !isPlatformHost(value) && value !== "localhost" && value !== "127.0.0.1");
+    return Boolean(value && !isPlatformHost(value) && !isLocalDevelopmentHost(value));
   });
+}
+
+function isLocalDevelopmentHost(host: string): boolean {
+  return host === "localhost" || host === "127.0.0.1" || host.endsWith(".localhost");
 }
 
 async function getHostSiteWithFallback(hosts: Array<string | null>): Promise<Site | undefined> {
@@ -104,6 +115,7 @@ export default async function HomePage({
     const query = searchParams ? await searchParams : {};
     return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: hostRuntimeState });
   }
+  if (process.env.NODE_ENV === "production" && shouldResolveHostSite(hostCandidates)) notFound();
   const accessSummary = await getAccessSummaryWithFallback();
   const totalSites = accessSummary.totalSites;
   const activeSites = accessSummary.activeSites;

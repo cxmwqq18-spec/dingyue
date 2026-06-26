@@ -6,7 +6,7 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational } from "@/lib/stores/site-store";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: "Account" };
+  return { title: "Account", robots: { index: false, follow: false } };
 }
 
 export default async function CustomerAccountPage({

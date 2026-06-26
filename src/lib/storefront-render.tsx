@@ -30,7 +30,7 @@ import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellR
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
-import { buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
+import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
@@ -929,7 +929,12 @@ export async function renderStorefrontPage({
     runtime: runtimeWithAuth,
     settings,
     jsonLd: isFocusedCollectionPage
-      ? []
+      ? buildCollectionDirectoryJsonLd({
+          site: currentSite,
+          collectionSlug: collectionCategory,
+          routeMode,
+          creativePacks: pageRenderData.creativePacks
+        })
       : buildStorefrontJsonLd({
           site: currentSite,
           page,

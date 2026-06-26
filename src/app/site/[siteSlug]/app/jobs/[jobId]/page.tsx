@@ -20,7 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const page =
     site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ??
     site?.pages.find((item) => item.slug === "/app/jobs/progress");
-  return site && page ? metadataForSingleThemePage(site, page) : {};
+  return {
+    ...(site && page ? metadataForSingleThemePage(site, page) : {}),
+    robots: { index: false, follow: false }
+  };
 }
 
 export default async function JobDetailPage({

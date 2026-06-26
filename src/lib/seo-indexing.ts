@@ -1,4 +1,5 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
+import { isExplicitSeoDirectoryContent } from "@/lib/dreamshoot-seo-content";
 import { MYDREAMSHOOTS_POLICY_SEO_BY_PATH, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -81,7 +82,7 @@ function isIndexablePage(page: ThemePage): boolean {
 
 function isIndexableToolPath(path: string): boolean {
   const normalized = normalizePath(path);
-  return normalized.startsWith("/tools/") && !NON_INDEXABLE_TOOL_PATHS.has(normalized);
+  return normalized.startsWith("/tools/") && !NON_INDEXABLE_TOOL_PATHS.has(normalized) && isExplicitSeoDirectoryContent("tool", normalized);
 }
 
 function addToolPath(paths: Set<string>, path: string): void {
@@ -93,13 +94,18 @@ function collectionPathForPack(pack: CreativePack): string {
   return pathFromSlug("/collections", pack.categoryRecord?.slug || pack.category || pack.name);
 }
 
+function addCollectionPath(paths: Set<string>, path: string): void {
+  const normalized = normalizePath(path);
+  if (normalized.startsWith("/collections/") && isExplicitSeoDirectoryContent("collection", normalized)) paths.add(normalized);
+}
+
 function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[] {
   const paths = new Set<string>();
   const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
 
   for (const pack of activePacks) {
     const collectionPath = collectionPathForPack(pack);
-    if (collectionPath) paths.add(collectionPath);
+    if (collectionPath) addCollectionPath(paths, collectionPath);
     addToolPath(paths, pathFromSlug("/tools", pack.aiAppSlug));
   }
 

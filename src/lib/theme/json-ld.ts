@@ -280,3 +280,71 @@ export function buildToolDirectoryJsonLd({
 
   return [{ "@context": "https://schema.org", "@graph": graph, url }];
 }
+
+export function buildCollectionDirectoryJsonLd({
+  site,
+  collectionSlug,
+  routeMode,
+  creativePacks = []
+}: {
+  site: Site;
+  collectionSlug: string;
+  routeMode: "host" | "path";
+  creativePacks?: CreativePack[];
+}): JsonLdNode[] {
+  const item = getSeoDirectoryContent("collection", collectionSlug);
+  const pagePath = item.canonicalPath;
+  const path = schemaPagePath(site, routeMode, pagePath);
+  const url = absoluteUrl(site, routeMode, path);
+  const siteName = site.branding.logoText || site.name;
+  const matchingPacks = creativePacks
+    .filter((pack) => pack.status === "active")
+    .filter((pack) => {
+      const candidates = [pack.categoryRecord?.slug, pack.category, pack.name]
+        .map((value) => cleanText(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""))
+        .filter(Boolean);
+      return candidates.includes(item.slug);
+    })
+    .slice(0, 12);
+  const itemListElement = (matchingPacks.length ? matchingPacks : item.useCases.map((useCase, index) => ({
+    id: `${item.slug}_${index}`,
+    name: useCase,
+    description: item.description,
+    imageUrl: ""
+  }))).map((entry, index) => {
+    const pack = entry as CreativePack;
+    const name = cleanText(pack.name, item.useCases[index] ?? item.label);
+    const image = cleanText(pack.imageUrl);
+    return {
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": matchingPacks.length ? "Product" : "Service",
+        name,
+        description: cleanText(pack.description, item.description),
+        url,
+        ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
+      }
+    };
+  });
+  const graph: JsonLdNode[] = [
+    breadcrumbs(site, routeMode, pagePath, item.label),
+    {
+      "@type": "CollectionPage",
+      name: item.title,
+      description: item.description,
+      url,
+      isPartOf: { "@id": `${siteBaseUrl(site, routeMode)}#website` },
+      publisher: { "@type": "Organization", name: siteName, url: siteBaseUrl(site, routeMode) }
+    },
+    {
+      "@type": "ItemList",
+      name: `${item.label} photo options`,
+      description: item.intro,
+      url,
+      itemListElement
+    }
+  ];
+
+  return [{ "@context": "https://schema.org", "@graph": graph, url }];
+}

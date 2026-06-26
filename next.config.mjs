@@ -21,6 +21,10 @@ const nextConfig = {
         value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
       }
     ];
+    const noindexPrivateHeaders = [
+      ...securityHeaders,
+      { key: "X-Robots-Tag", value: "noindex, nofollow" }
+    ];
 
     return [
       {
@@ -29,6 +33,38 @@ const nextConfig = {
           ...securityHeaders,
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" }
         ]
+      },
+      {
+        source: "/api/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/platform",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/platform/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/admin/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/admin",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/app/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/app",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/account",
+        headers: noindexPrivateHeaders
       },
       {
         source: "/:path*",

@@ -16,7 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/app/jobs/progress");
-  return site && page ? metadataForSingleThemePage(site, page) : {};
+  return {
+    ...(site && page ? metadataForSingleThemePage(site, page) : {}),
+    robots: { index: false, follow: false }
+  };
 }
 
 export default async function CustomerJobProgressPage({ params }: { params: Promise<{ siteSlug: string }> }) {
