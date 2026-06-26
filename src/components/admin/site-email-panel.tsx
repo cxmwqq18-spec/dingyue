@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MailCheck, Save, Send } from "lucide-react";
 import { ErpField, ErpFormGrid, ErpInput, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
@@ -88,9 +88,11 @@ export function SiteEmailPanel({
   const [message, setMessage] = useState("本站后台只维护当前站点的一套 Resend 参数；发送测试邮件成功即视为通过。");
   const [testState, setTestState] = useState<TestState>("idle");
   const [busy, setBusy] = useState(false);
+  const [dnsLoading, setDnsLoading] = useState(false);
+  const [dnsError, setDnsError] = useState<string | null>(null);
 
-  async function request(method: "GET" | "PUT" | "POST", body?: Record<string, unknown>) {
-    const response = await fetch(`/api/sites/${siteId}/email`, {
+  const request = useCallback(async (method: "GET" | "PUT" | "POST", body?: Record<string, unknown>, signal?: AbortSignal, suffix = "") => {
+    const response = await fetch(`/api/sites/${siteId}/email${suffix}`, {
       method,
       credentials: "same-origin",
       headers: method === "GET" ? undefined : {
@@ -98,21 +100,52 @@ export function SiteEmailPanel({
         "x-csrf-token": csrfTokenFromCookie(siteId)
       },
       body: body ? JSON.stringify(body) : undefined,
-      cache: "no-store"
+      cache: "no-store",
+      signal
     });
     const result = (await response.json().catch(() => ({}))) as SiteEmailStatus & { error?: string; messageId?: string };
     if (!response.ok) throw new Error(result.error ?? "email_request_failed");
     return result;
-  }
+  }, [siteId]);
+
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    async function loadDnsStatus() {
+      setDnsLoading(true);
+      setDnsError(null);
+      try {
+        const result = await request("GET", undefined, controller.signal, "?section=dns");
+        if (!active) return;
+        setStatus(result);
+      } catch (error) {
+        if (!active || controller.signal.aborted) return;
+        setDnsError(reasonLabel(error instanceof Error ? error.message : "network_error"));
+      } finally {
+        if (active) setDnsLoading(false);
+      }
+    }
+    void loadDnsStatus();
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [request]);
 
   async function refreshStatus() {
     setBusy(true);
     try {
-      const result = await request("GET");
+      const result = await request("GET", undefined, undefined, "?section=core");
       setStatus(result);
       setFromEmail(result.config.fromEmail);
       setReplyTo(result.config.replyTo);
       setMessage("配置已刷新。请发送测试邮件到目标邮箱，发送成功即视为通过。");
+      setDnsLoading(true);
+      setDnsError(null);
+      request("GET", undefined, undefined, "?section=dns")
+        .then((dnsResult) => setStatus(dnsResult))
+        .catch((error) => setDnsError(reasonLabel(error instanceof Error ? error.message : "network_error")))
+        .finally(() => setDnsLoading(false));
     } catch (error) {
       setMessage(`刷新失败：${reasonLabel(error instanceof Error ? error.message : "network_error")}`);
     } finally {
@@ -219,6 +252,12 @@ export function SiteEmailPanel({
             <div className="flex flex-wrap items-center gap-2">
               <StatusPill label={testStateLabel(testState)} tone={testStateTone(testState)} />
               <span className="min-w-0 break-words [overflow-wrap:anywhere]">这里以真实邮件发送为准。测试按钮能把邮件发到目标邮箱，就当作测试通过。</span>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <StatusPill label={dnsLoading ? "DNS 检查中" : status.domainStatus} tone={status.readyForProduction ? "good" : dnsError ? "bad" : "warn"} />
+              <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+                {dnsError ? `DNS 状态加载失败：${dnsError}` : "Resend 域名状态会在配置表单加载后异步补齐。"}
+              </span>
             </div>
           </div>
         </div>

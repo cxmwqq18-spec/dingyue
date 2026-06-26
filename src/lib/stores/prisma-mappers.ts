@@ -566,6 +566,7 @@ export function toCreativePack(record: {
       description?: string | null;
       heroTitle?: string | null;
       heroSubtitle?: string | null;
+      icon?: string | null;
       imageUrl?: string | null;
       sortOrder: number;
       status: string;
@@ -629,6 +630,7 @@ export function toCreativePackCategory(record: {
   description?: string | null;
   heroTitle?: string | null;
   heroSubtitle?: string | null;
+  icon?: string | null;
   imageUrl?: string | null;
   sortOrder: number;
   status: string;
@@ -644,6 +646,8 @@ export function toCreativePackCategory(record: {
     description: record.description ?? undefined,
     heroTitle: record.heroTitle ?? undefined,
     heroSubtitle: record.heroSubtitle ?? undefined,
+    icon: record.icon ?? undefined,
+    iconName: record.icon ?? undefined,
     imageUrl: record.imageUrl ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as CreativePackCategory["status"],

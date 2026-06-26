@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, ArrowRight, Bot, CheckCircle2, CreditCard, FileImage, Route, Settings2 } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { AiBindableToolsList } from "@/components/admin/ai-bindable-tools-list";
@@ -27,6 +27,9 @@ type AiToolsPagePayload = {
   customers: CustomerOption[];
   platformAiApps: AiApp[];
   gateway?: Gateway;
+  pageInfo?: {
+    nextJobCursor?: string | null;
+  };
   jobCount?: number;
   failedJobs: number;
   openJobs: number;
@@ -84,7 +87,7 @@ export function AiToolsPageClient({
   initialAppCount,
   initialOpenJobs,
   initialFailedJobs,
-  initialReservedCredits
+  initialReservedCredits: _initialReservedCredits
 }: {
   siteId: string;
   siteSlug: string;
@@ -98,6 +101,7 @@ export function AiToolsPageClient({
   const [jobsPayload, setJobsPayload] = useState<AiToolsPagePayload | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [jobsLoading, setJobsLoading] = useState(false);
+  const jobsControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -123,21 +127,42 @@ export function AiToolsPageClient({
     };
   }, [siteId]);
 
-  async function loadJobs() {
+  useEffect(() => {
+    return () => {
+      jobsControllerRef.current?.abort();
+    };
+  }, []);
+
+  async function loadJobs(cursor?: string | null) {
+    jobsControllerRef.current?.abort();
+    const controller = new AbortController();
+    jobsControllerRef.current = controller;
     setJobsLoading(true);
     try {
-      const response = await fetchAdminJson<AiToolsPagePayload>(`/api/sites/${siteId}/admin/ai-page?detail=jobs`);
+      const params = new URLSearchParams({ detail: "jobs", take: "30" });
+      if (cursor) params.set("cursor", cursor);
+      const response = await fetchAdminJson<AiToolsPagePayload>(`/api/sites/${siteId}/admin/ai-page?${params.toString()}`, { init: { signal: controller.signal } });
       const result = response.data;
+      if (controller.signal.aborted) return;
       if (!response.ok) {
         setError(result.error ?? "AI 任务数据加载失败。");
         return;
       }
-      setJobsPayload(result);
+      setJobsPayload((current) => {
+        if (!current || !cursor) return result;
+        return {
+          ...result,
+          jobs: [...current.jobs, ...result.jobs],
+          customers: mergeById(current.customers, result.customers),
+          platformAiApps: mergeById(current.platformAiApps, result.platformAiApps)
+        };
+      });
       setPayload((current) => current ? { ...current, ...result, apps: current.apps, gateway: current.gateway ?? result.gateway } : result);
     } catch {
-      setError("AI 任务数据加载失败。");
+      if (!controller.signal.aborted) setError("AI 任务数据加载失败。");
     } finally {
-      setJobsLoading(false);
+      if (!controller.signal.aborted) setJobsLoading(false);
+      if (jobsControllerRef.current === controller) jobsControllerRef.current = null;
     }
   }
 
@@ -147,7 +172,6 @@ export function AiToolsPageClient({
   const failedJobs = payload?.failedJobs ?? initialFailedJobs;
   const completedJobs = payload?.completedJobs ?? 0;
   const jobCount = jobsPayload?.jobs.length ?? payload?.jobCount ?? openJobs + failedJobs + completedJobs;
-  const reservedCredits = initialReservedCredits;
   const gateway = payload?.gateway ?? null;
   const gatewayUsage = gateway ? Math.round((gateway.usedQuota / Math.max(gateway.monthlyQuota, 1)) * 100) : 0;
   const enabledApps = payload?.apps.filter((app) => app.enabled) ?? [];
@@ -343,12 +367,20 @@ export function AiToolsPageClient({
           </ErpToolbar>
           <div className="mt-5">
             {jobsPayload ? (
-              <JobsAdminPanel aiApps={jobsPayload.platformAiApps} customers={jobsPayload.customers} jobs={jobsPayload.jobs} siteId={siteId} />
+              <JobsAdminPanel
+                aiApps={jobsPayload.platformAiApps}
+                customers={jobsPayload.customers}
+                hasMore={Boolean(jobsPayload.pageInfo?.nextJobCursor)}
+                jobs={jobsPayload.jobs}
+                loadingMore={jobsLoading}
+                onLoadMore={() => loadJobs(jobsPayload.pageInfo?.nextJobCursor)}
+                siteId={siteId}
+              />
             ) : (
               <div className="rounded-[8px] border border-dashed border-[var(--admin-border-soft)] bg-white px-4 py-6 text-[13px] leading-6 text-[#667085]">
                 任务明细按需加载。只有需要查失败原因、确认顾客任务状态或重跑任务时才需要打开。
                 <div className="mt-4">
-                  <button className="admin_btn inline-flex h-[34px] items-center justify-center whitespace-nowrap px-3 disabled:opacity-55" disabled={jobsLoading} onClick={loadJobs} type="button">
+                  <button className="admin_btn inline-flex h-[34px] items-center justify-center whitespace-nowrap px-3 disabled:opacity-55" disabled={jobsLoading} onClick={() => loadJobs()} type="button">
                     {jobsLoading ? "加载中..." : "加载任务明细"}
                   </button>
                 </div>
@@ -367,4 +399,11 @@ export function AiToolsPageClient({
       </ErpSection>
     </div>
   );
+}
+
+function mergeById<T extends { id: string }>(current: T[], next: T[]): T[] {
+  const items = new Map<string, T>();
+  for (const item of current) items.set(item.id, item);
+  for (const item of next) items.set(item.id, item);
+  return Array.from(items.values());
 }

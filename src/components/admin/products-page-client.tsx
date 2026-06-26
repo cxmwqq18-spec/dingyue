@@ -4,16 +4,22 @@ import { useEffect, useMemo, useState } from "react";
 import { Boxes, CreditCard, FileText, PackageCheck, Palette, ShoppingBag } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { CreativePackEditor } from "@/components/admin/creative-pack-editor";
-import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
+import { ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { PricingEditor } from "@/components/admin/pricing-editor";
-import { OpsCard, StatusPill } from "@/components/ui";
 import { money } from "@/lib/ops";
 import type { CreativePack, Product, SiteAiApp } from "@/lib/types";
 
 type ProductsPagePayload = {
   currency: string;
   products: Product[];
-  packs: CreativePack[];
+  packs?: CreativePack[];
+  packCounts?: {
+    all: number;
+    active: number;
+    draft: number;
+    paused: number;
+  };
+  packTotal?: number;
   siteAiApps: SiteAiApp[];
   publishState: { ok: boolean; reason?: string };
   error?: string;
@@ -106,7 +112,7 @@ export function ProductsPageClient({ siteId, siteSlug }: ProductsPageClientProps
     const creditPacks = products.filter((product) => product.type === "credit_pack");
     const lowestPrice = products.flatMap((product) => product.prices).sort((left, right) => left.amountCents - right.amountCents)[0];
     return {
-      activePacks: packs.filter((pack) => pack.status === "active").length,
+      activePacks: payload?.packCounts?.active ?? packs.filter((pack) => pack.status === "active").length,
       activeProducts: products.filter((product) => product.status === "active").length,
       creditPacks,
       lowestPrice,
@@ -114,6 +120,8 @@ export function ProductsPageClient({ siteId, siteSlug }: ProductsPageClientProps
       totalPrices: products.reduce((sum, product) => sum + product.prices.length, 0)
     };
   }, [payload]);
+
+  const packTotal = payload?.packTotal ?? payload?.packs?.length ?? 0;
 
   if (error) {
     return (
@@ -134,7 +142,7 @@ export function ProductsPageClient({ siteId, siteSlug }: ProductsPageClientProps
           { label: "收款商品", value: `${derived.activeProducts}/${payload.products.length}`, detail: `${derived.totalPrices} 个真实价格`, icon: ShoppingBag, tone: derived.activeProducts ? "good" : "warn" },
           { label: "订阅套餐", value: String(derived.subscriptionProducts.length), detail: "按月收费的收款商品", icon: CreditCard, tone: derived.subscriptionProducts.length ? "good" : "neutral" },
           { label: "Credit 包", value: String(derived.creditPacks.length), detail: "一次性充值积分包", icon: PackageCheck, tone: derived.creditPacks.length ? "good" : "neutral" },
-          { label: "AI 拍摄主题", value: `${derived.activePacks}/${payload.packs.length}`, detail: derived.lowestPrice ? `由 Credits 消耗，入口价 ${money(derived.lowestPrice.amountCents, derived.lowestPrice.currency)}` : "未配置价格", icon: Boxes, tone: derived.activePacks ? "good" : "warn" }
+          { label: "AI 拍摄主题", value: `${derived.activePacks}/${packTotal}`, detail: derived.lowestPrice ? `由 Credits 消耗，入口价 ${money(derived.lowestPrice.amountCents, derived.lowestPrice.currency)}` : "未配置价格", icon: Boxes, tone: derived.activePacks ? "good" : "warn" }
         ]}
       />
 
@@ -182,7 +190,7 @@ export function ProductsPageClient({ siteId, siteSlug }: ProductsPageClientProps
       <div className="scroll-mt-24" id="pricing-center">
         <ErpSection
           action={<ErpToolbarAction href={modulePath(siteSlug, "/pricing")} label="打开定价页" primary />}
-          description={`这里维护的是 ${payload.products.length} 个收款商品，不是下方 ${payload.packs.length} 个 AI 拍摄主题。订阅、Credit 包、金额、周期、额度和主推标记会影响结账页和充值到账数据。`}
+          description={`这里维护的是 ${payload.products.length} 个收款商品，不是下方 ${packTotal} 个 AI 拍摄主题。订阅、Credit 包、金额、周期、额度和主推标记会影响结账页和充值到账数据。`}
           eyebrow="价格套餐"
           title="价格套餐"
         >
@@ -210,9 +218,9 @@ export function ProductsPageClient({ siteId, siteSlug }: ProductsPageClientProps
           title="拍摄包入口"
         >
           <div className="mb-4 rounded-[12px] border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-            操作提示：拍摄主题不是收款商品。上方 {payload.products.length} 个商品负责收款和充值，下方 {payload.packs.length} 个主题负责前台可选的生成入口、每次消耗和前台绑定检查。
+            操作提示：拍摄主题不是收款商品。上方 {payload.products.length} 个商品负责收款和充值，下方 {packTotal} 个主题负责前台可选的生成入口、每次消耗和前台绑定检查。
           </div>
-          <CreativePackEditor packs={payload.packs} siteAiApps={payload.siteAiApps} siteId={siteId} />
+          <CreativePackEditor initialCounts={payload.packCounts} initialTotal={payload.packTotal} packs={payload.packs ?? []} siteAiApps={payload.siteAiApps} siteId={siteId} />
         </ErpSection>
       </div>
     </div>

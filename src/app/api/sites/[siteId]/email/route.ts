@@ -17,6 +17,7 @@ import { getPlatformEmailOverviewRelational, getSiteEmailOverviewRelational, upd
 
 type ResendDomain = { id?: string; name?: string; status?: string; region?: string; created_at?: string };
 type ResendSettingsForCache = Parameters<typeof listResendDomains>[0] & { id?: string };
+type SiteEmailOverview = Awaited<ReturnType<typeof getSiteEmailOverviewRelational>>;
 const resendDomainCache = new Map<string, { domains: ResendDomain[]; expiresAt: number }>();
 const resendDomainCacheTtlMs = 60_000;
 
@@ -64,8 +65,8 @@ function rememberResendDomains(selected: ResendSettingsForCache, domains: Resend
   resendDomainCache.set(cacheKey, { domains, expiresAt: Date.now() + resendDomainCacheTtlMs });
 }
 
-async function buildPayload(siteId: string, domainOverride?: ResendDomain[], dnsRecords?: Array<{ type?: string; name?: string; content?: string }>) {
-  const overview = await getSiteEmailOverviewRelational(siteId);
+async function buildPayload(siteId: string, domainOverride?: ResendDomain[], dnsRecords?: Array<{ type?: string; name?: string; content?: string }>, overviewOverride?: SiteEmailOverview) {
+  const overview = overviewOverride ?? await getSiteEmailOverviewRelational(siteId);
   const site = overview.site;
   if (!site) return { error: "site_not_found" as const, status: 404 as const };
   const state = {
@@ -110,12 +111,41 @@ async function buildPayload(siteId: string, domainOverride?: ResendDomain[], dns
   };
 }
 
-export async function GET(_request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
+function readSection(request: NextRequest) {
+  return request.nextUrl.searchParams.get("section") ?? "core";
+}
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   if (!(await getCurrentSiteAdmin(siteId))) {
     return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
   }
-  const payload = await buildPayload(siteId);
+  if (readSection(request) === "dns") {
+    const overview = await getSiteEmailOverviewRelational(siteId);
+    const site = overview.site;
+    if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    const selected = resolveResendSettingsForSite({
+      platformEmailSettings: overview.platformEmailSettings,
+      platformEmailConfigs: overview.platformEmailConfigs,
+      siteEmailConfigAssignments: overview.siteEmailConfigAssignments
+    }, site.id);
+    let domains: ResendDomain[] = [];
+    if (resendEmailConfigStatusForSettings(selected).apiKeyConfigured) {
+      domains = getCachedResendDomains(selected);
+      if (!domains.length) {
+        try {
+          domains = await listResendDomains(selected);
+          rememberResendDomains(selected, domains);
+        } catch (error) {
+          return NextResponse.json({ error: providerErrorCode(error) }, { status: 502 });
+        }
+      }
+    }
+    const payload = await buildPayload(siteId, domains, undefined, overview);
+    if ("error" in payload) return NextResponse.json({ error: payload.error }, { status: payload.status });
+    return NextResponse.json(payload);
+  }
+  const payload = await buildPayload(siteId, []);
   if ("error" in payload) return NextResponse.json({ error: payload.error }, { status: payload.status });
   return NextResponse.json(payload);
 }

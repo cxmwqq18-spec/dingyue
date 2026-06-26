@@ -3,6 +3,10 @@ import { readStorefrontPlatformStateJsonFallback, readStorefrontPlatformStateRel
 import {
   getStorefrontAccessSummaryRelational,
   getStorefrontPublicRuntimeStateByHost,
+  getStorefrontPublicCollectionDetailStateBySlug,
+  getStorefrontPublicCollectionMetadataStateBySlug,
+  getStorefrontPublicMetadataStateBySlug,
+  getStorefrontPublicPageMetadataStateBySlug,
   getStorefrontPublicRuntimeStateBySlug,
   getStorefrontPublicRuntimeStateForSite,
   getStorefrontCustomerRuntimeStateForSite,
@@ -17,6 +21,10 @@ export const readStorefrontPlatformStateFromDatabase = cache(() => readStorefron
 export const readStorefrontPlatformStateFromLegacyJson = cache(() => readStorefrontPlatformStateJsonFallback());
 export const readStorefrontSiteByHostFromDatabase = getStorefrontSiteByHostRelational;
 export const readStorefrontPublicRuntimeStateByHostFromDatabase = getStorefrontPublicRuntimeStateByHost;
+export const readStorefrontPublicCollectionDetailStateBySlugFromDatabase = getStorefrontPublicCollectionDetailStateBySlug;
+export const readStorefrontPublicCollectionMetadataStateBySlugFromDatabase = getStorefrontPublicCollectionMetadataStateBySlug;
+export const readStorefrontPublicMetadataStateBySlugFromDatabase = getStorefrontPublicMetadataStateBySlug;
+export const readStorefrontPublicPageMetadataStateBySlugFromDatabase = getStorefrontPublicPageMetadataStateBySlug;
 export const readStorefrontPublicRuntimeStateBySlugFromDatabase = getStorefrontPublicRuntimeStateBySlug;
 export const readStorefrontPublicRuntimeStateForSiteFromDatabase = getStorefrontPublicRuntimeStateForSite;
 export const readStorefrontCustomerRuntimeStateForSiteFromDatabase = getStorefrontCustomerRuntimeStateForSite;

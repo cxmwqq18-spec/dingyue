@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import {
+  clearPublicCreativePackCategoriesCache,
+  clearPublicCreativePacksCache,
+  publicCreativePackCategoriesCache
+} from "@/lib/creative-pack-api-cache";
+import { normalizeCreativePackIconName, uniqueCreativePackIconName } from "@/lib/creative-pack-icons";
 import { prisma } from "@/lib/prisma";
 import { toCreativePackCategory, uid } from "@/lib/stores/prisma-mappers";
 
@@ -23,13 +29,18 @@ function titleFromSlug(slug: string) {
 
 async function ensureDefaultCreativePackCategories(siteId: string) {
   const existing = await prisma.creativePackCategory.count({ where: { siteId } });
-  if (existing > 0) return;
+  if (existing > 0) {
+    await backfillCreativePackCategoryIcons(siteId);
+    return;
+  }
   const packs = await prisma.creativePack.findMany({
     where: { siteId },
     select: { id: true, category: true, name: true },
     orderBy: [{ status: "asc" }, { createdAt: "asc" }]
   });
   const parentBySlug = new Map<string, string>();
+  const usedIconsByParent = new Map<string, Set<string>>();
+  const rootUsedIcons = new Set<string>();
   for (const pack of packs) {
     const parentSlug = slugifyCategory(pack.category || "photo-packages") || "photo-packages";
     const childSlug = slugifyCategory(pack.name) || `${parentSlug}-${pack.id}`;
@@ -42,6 +53,7 @@ async function ensureDefaultCreativePackCategories(siteId: string) {
           siteId,
           slug: parentSlug,
           label: titleFromSlug(parentSlug),
+          icon: uniqueCreativePackIconName(parentSlug, rootUsedIcons),
           description: `${titleFromSlug(parentSlug)} photo package group.`,
           sortOrder: parentBySlug.size
         },
@@ -50,6 +62,8 @@ async function ensureDefaultCreativePackCategories(siteId: string) {
       parentId = parent.id;
       parentBySlug.set(parentSlug, parentId);
     }
+    const usedIcons = usedIconsByParent.get(parentId) ?? new Set<string>();
+    usedIconsByParent.set(parentId, usedIcons);
     const child = await prisma.creativePackCategory.upsert({
       where: { siteId_slug: { siteId, slug: childSlug } },
       create: {
@@ -58,12 +72,41 @@ async function ensureDefaultCreativePackCategories(siteId: string) {
         parentId,
         slug: childSlug,
         label: pack.name,
+        icon: uniqueCreativePackIconName(`${pack.name} ${childSlug}`, usedIcons),
         description: `${pack.name} package page.`,
         sortOrder: 0
       },
       update: {}
     });
     await prisma.creativePack.update({ where: { id: pack.id }, data: { categoryId: child.id, category: child.slug } });
+  }
+}
+
+async function backfillCreativePackCategoryIcons(siteId: string) {
+  const categories = await prisma.creativePackCategory.findMany({
+    where: { siteId },
+    select: { id: true, parentId: true, slug: true, label: true, icon: true },
+    orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
+  });
+  const byParent = new Map<string, typeof categories>();
+  for (const category of categories) {
+    const key = category.parentId ?? "root";
+    byParent.set(key, [...(byParent.get(key) ?? []), category]);
+  }
+  for (const group of byParent.values()) {
+    const used = new Set<string>();
+    for (const category of group) {
+      const normalized = category.icon ? normalizeCreativePackIconName(category.icon) : "";
+      if (normalized && !used.has(normalized)) {
+        used.add(normalized);
+        if (category.icon !== normalized) {
+          await prisma.creativePackCategory.update({ where: { id: category.id }, data: { icon: normalized } });
+        }
+        continue;
+      }
+      const icon = uniqueCreativePackIconName(`${category.label} ${category.slug}`, used);
+      await prisma.creativePackCategory.update({ where: { id: category.id }, data: { icon } });
+    }
   }
 }
 
@@ -79,6 +122,7 @@ function categoryBody(body: Record<string, unknown>) {
     description: typeof body.description === "string" ? body.description.trim() || null : null,
     heroTitle: typeof body.heroTitle === "string" ? body.heroTitle.trim() || null : null,
     heroSubtitle: typeof body.heroSubtitle === "string" ? body.heroSubtitle.trim() || null : null,
+    icon: typeof body.icon === "string" ? body.icon.trim() || null : typeof body.iconName === "string" ? body.iconName.trim() || null : null,
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl.trim() || null : null,
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0,
     status
@@ -87,9 +131,25 @@ function categoryBody(body: Record<string, unknown>) {
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
+  const admin = await hasSiteAdminSession(siteId);
+  if (!admin) {
+    const payload = await publicCreativePackCategoriesCache.get(siteId, async () => {
+      const [site, categories] = await Promise.all([
+        prisma.site.findUnique({ where: { id: siteId }, select: { id: true } }),
+        prisma.creativePackCategory.findMany({
+          where: { siteId, status: "active" },
+          include: { parent: true },
+          orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
+        })
+      ]);
+      if (!site) return { ok: false as const, error: "site_not_found" };
+      return { ok: true as const, categories: categories.map(toCreativePackCategory) };
+    });
+    if (!payload.ok) return NextResponse.json({ error: payload.error }, { status: 404 });
+    return NextResponse.json(payload);
+  }
   const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
-  const admin = await hasSiteAdminSession(siteId);
   if (admin) await ensureDefaultCreativePackCategories(siteId);
   const categories = await prisma.creativePackCategory.findMany({
     where: { siteId, status: admin ? undefined : "active" },
@@ -113,6 +173,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       data: { id: uid("pack_cat"), siteId, ...body },
       include: { parent: true }
     });
+    clearPublicCreativePackCategoriesCache(siteId);
+    clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, category: toCreativePackCategory(category) });
   } catch {
     return NextResponse.json({ error: "category_slug_exists" }, { status: 409 });

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { clearPublicCreativePacksCache } from "@/lib/creative-pack-api-cache";
 import { StoreError } from "@/lib/server-store";
 import { deleteCreativePackRelational, upsertCreativePackRelational } from "@/lib/stores/site-store";
 import type { CreativePack } from "@/lib/types";
@@ -31,6 +32,7 @@ export async function PUT(
       categoryId: body.categoryId,
       galleryImages: body.galleryImages
     });
+    clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -48,6 +50,7 @@ export async function DELETE(
   }
   try {
     const result = await deleteCreativePackRelational({ siteId, packId });
+    clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, deletedPack: result.deletedPack });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

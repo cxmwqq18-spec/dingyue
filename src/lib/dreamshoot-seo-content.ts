@@ -48,7 +48,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     keywords: "AI Valentine Photo Maker, AI couple photos, Valentine photo generator, romantic AI portraits, MydreamShoots Valentine",
     h2: "valentine",
     h3: ["AI Valentine couple portraits", "Romantic gift-ready albums", "Private seasonal photo delivery"],
-    intro: "The Valentine directory focuses on romantic images customers can use as gifts, keepsakes, profile updates, and seasonal posts. Instead of generic prompt text, the page organizes the experience around couple identity, mood, delivery, and private album review.",
+    intro: "The Valentine directory focuses on romantic images customers can use as gifts, keepsakes, profile updates, and seasonal posts. Instead of a one-off text request, the page organizes the experience around couple identity, mood, delivery, and private album review.",
     details: [
       "Use Valentine for warm couple portraits, proposal-style images, anniversary looks, greeting-card crops, and cinematic date-night scenes.",
       "The copy is written for MydreamShoots customers: upload source portraits, select the relationship moment, then review a private set before downloading.",
@@ -113,6 +113,78 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create Cinematic Photos",
     ctaHref: "/tools/cyberpunk-portrait"
   },
+  hairstyle: {
+    label: "Hairstyle",
+    title: "AI Hairstyle Photo Maker - preview polished hair and beauty looks",
+    description: "Preview AI hairstyle photos with MydreamShoots: color direction, length ideas, salon-ready portraits, beauty crops, and private package delivery from everyday uploads.",
+    keywords: "AI Hairstyle Photo Maker, hairstyle preview AI, hair color photo generator, beauty hair portraits, MydreamShoots hairstyle",
+    h2: "hairstyle",
+    h3: ["Hairstyle preview structure", "Color and cut planning", "Private beauty album delivery"],
+    intro: "The Hairstyle package focuses on hair direction before a full portrait set. Customers can compare length, color, styling, lighting, and beauty crops without mixing in unrelated package categories.",
+    details: [
+      "Use this page for salon inspiration, creator refreshes, soft glam portraits, and hairstyle planning before a paid package.",
+      "The best inputs are clear face photos with visible hair shape, varied angles, and simple lighting.",
+      "Outputs should emphasize hairstyle differences while keeping identity, face shape, and private album delivery consistent."
+    ],
+    useCases: ["Hair color previews", "Salon consultation ideas", "Creator beauty refreshes", "Profile portraits with new styling"],
+    workflow: ["Upload clear portraits with visible hair.", "Choose the hairstyle direction.", "Generate a private preview album.", "Save favorites before ordering a full package."],
+    ctaLabel: "Create Hairstyle Photos",
+    ctaHref: "/tools/virtual-try-on"
+  },
+  mafia: {
+    label: "Mafia",
+    title: "AI Mafia Photo Maker - cinematic noir character portraits",
+    description: "Create AI mafia photos with MydreamShoots: noir portraits, tailored character scenes, moody lighting, vintage interiors, and private cinematic albums from customer uploads.",
+    keywords: "AI Mafia Photo Maker, noir portrait generator, cinematic character photos, mafia AI portraits, MydreamShoots mafia",
+    h2: "mafia",
+    h3: ["Noir character structure", "Cinematic scene planning", "Private themed album delivery"],
+    intro: "The Mafia package is a character-driven photo direction for customers who want polished noir styling, tailored wardrobe cues, dramatic interiors, and cinematic social images.",
+    details: [
+      "This page should stay focused on mafia and noir outcomes instead of showing broad public catalog content.",
+      "The package works best with expressive portraits, clean face visibility, and customer approval of a dramatic character direction.",
+      "Finished images can be used for private albums, campaign visuals, profile concepts, or story-led creator content."
+    ],
+    useCases: ["Noir character portraits", "Cinematic social posts", "Creator campaign images", "Private themed albums"],
+    workflow: ["Upload source portraits with clear facial detail.", "Select the noir or mafia direction.", "Generate a private character album.", "Download final images for the chosen channel."],
+    ctaLabel: "Create Mafia Photos",
+    ctaHref: "/tools/noir-portrait"
+  },
+  "black-party": {
+    label: "Black Party",
+    title: "AI Black Party Photo Maker - refined event and nightlife portraits",
+    description: "Create AI black party photos with MydreamShoots: refined event portraits, evening wardrobe concepts, cinematic interiors, social-ready crops, and private album delivery.",
+    keywords: "AI Black Party Photo Maker, event portrait AI, nightlife photo generator, black party portraits, MydreamShoots event photos",
+    h2: "black party",
+    h3: ["Event portrait structure", "Evening wardrobe and lighting", "Private nightlife album delivery"],
+    intro: "The Black Party package gives evening-event imagery its own workflow. Customers can preview refined wardrobe, moody light, polished poses, and private album outputs without seeing unrelated categories.",
+    details: [
+      "Use this package for formal nightlife portraits, private event concepts, creator party campaigns, and elegant social images.",
+      "Recommended inputs include clear portraits, one full-body reference if available, and notes about wardrobe or mood.",
+      "The page can explain lighting, styling, image count, and delivery expectations for this specific theme."
+    ],
+    useCases: ["Formal event portraits", "Nightlife profile images", "Creator party campaigns", "Private album concepts"],
+    workflow: ["Upload clear portraits and wardrobe references.", "Choose the black party direction.", "Generate polished evening images.", "Download favorites for social or private use."],
+    ctaLabel: "Create Black Party Photos",
+    ctaHref: "/tools/noir-portrait"
+  },
+  cyberpunk: {
+    label: "Cyberpunk",
+    title: "AI Cyberpunk Photo Maker - neon city portraits from selfies",
+    description: "Generate AI cyberpunk portraits with MydreamShoots: neon city lighting, futuristic wardrobe, cinematic street scenes, and private album delivery.",
+    keywords: "AI Cyberpunk Photo Maker, cyberpunk portrait generator, neon AI photos, futuristic portrait AI, MydreamShoots cyberpunk",
+    h2: "cyberpunk",
+    h3: ["Neon portrait structure", "Futuristic scene direction", "Private cyberpunk album delivery"],
+    intro: "The Cyberpunk package is for customers who want high-impact neon portraits, dramatic street scenes, and futuristic styling from private uploads.",
+    details: [
+      "This page should describe neon lighting, wardrobe mood, portrait crop, and album outputs specific to cyberpunk results.",
+      "The strongest inputs are expressive face photos with enough detail for identity preservation.",
+      "Finished images work for profile campaigns, music-style visuals, gaming avatars, and creator launches."
+    ],
+    useCases: ["Neon profile portraits", "Gaming and creator avatars", "Music campaign images", "Futuristic social posts"],
+    workflow: ["Upload clean source portraits.", "Choose neon city styling.", "Generate a private cyberpunk album.", "Download favorites for profile or campaign use."],
+    ctaLabel: "Create Cyberpunk Photos",
+    ctaHref: "/tools/cyberpunk-portrait"
+  },
   travel: {
     label: "Travel",
     title: "AI Travel Photo Maker - destination portraits without a studio trip",
@@ -141,12 +213,40 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     keywords: "AI Headshot Maker, professional headshot AI, LinkedIn headshot generator, MydreamShoots headshot",
     h2: "headshot",
     h3: ["Professional headshot input guide", "Business portrait outputs", "Private profile photo delivery"],
-    intro: "This tool page is focused on professional portraits. It explains what to upload, what the headshot generator creates, and how the result moves into a private customer album.",
-    details: ["Best inputs include clear face photos, varied angles, and simple lighting.", "Outputs can include clean studio portraits, founder-style images, and social profile crops.", "The page is unique to the headshot workflow rather than a copy of the tools directory."],
+    intro: "Upload clear selfies or casual portraits and turn them into polished headshots for LinkedIn, resumes, founder pages, team bios, and creator profiles.",
+    details: ["Best inputs include face-forward photos with varied angles, simple lighting, and natural expressions.", "Finished results include clean studio portraits, founder-style images, resume-ready crops, and team profile options.", "Start here when you need a professional portrait set, then continue to the editor to review credits and create your private album."],
     useCases: ["LinkedIn and resume portraits", "Founder pages", "Consultant bios", "Team profile images"],
     workflow: ["Upload source portraits.", "Choose professional styling.", "Generate headshot options.", "Download final profile-ready images."],
-    ctaLabel: "Open Headshot Maker",
-    ctaHref: "/dashboard?tool_id=headshot"
+    ctaLabel: "Create Profile Headshots",
+    ctaHref: "/app/create?tool_id=headshot"
+  },
+  "background-changer": {
+    label: "Background Changer",
+    title: "AI Background Changer - replace photo backgrounds with MydreamShoots",
+    description: "Use the MydreamShoots AI Background Changer to replace distracting photo backgrounds with cleaner studio, lifestyle, travel, or brand-ready scenes.",
+    keywords: "AI Background Changer, replace photo background AI, background editor, MydreamShoots background changer",
+    h2: "background changer",
+    h3: ["Background changer input guide", "Clean background outputs", "Next steps for edited images"],
+    intro: "Upload a clear subject photo and replace the setting behind it with a cleaner background for portraits, product shots, listings, and social images.",
+    details: ["Best inputs have a visible person, product, or object with enough contrast from the background.", "Finished results can move a subject from cluttered rooms into studio, lifestyle, travel, or brand-friendly scenes.", "Use the edited image as a final asset or as stronger source material before creating a full photo package."],
+    useCases: ["Cleaner profile photos", "Product and listing images", "Creator post drafts", "Source-photo repair before a package"],
+    workflow: ["Upload a clear subject photo.", "Choose the new background direction.", "Generate the edited image.", "Save or continue with a larger photo set."],
+    ctaLabel: "Change a Background",
+    ctaHref: "/app/create?tool_id=background-changer"
+  },
+  "image-to-video": {
+    label: "Image to Video",
+    title: "AI Image to Video - create short clips from still images with MydreamShoots",
+    description: "Turn a still image into a short AI video clip with MydreamShoots: add motion, camera movement, mood, and private video output for social or campaign use.",
+    keywords: "AI Image to Video, image to video AI, short video clip generator, photo animation AI, MydreamShoots video",
+    h2: "image to video",
+    h3: ["Image to video input guide", "Motion and short clip outputs", "Private video delivery"],
+    intro: "Upload one strong still image and turn it into a short video output with motion for creator intros, product teasers, social clips, and campaign previews.",
+    details: ["Best inputs are sharp portraits, product shots, or finished scene images with a clear subject and strong composition.", "Finished results add motion such as gentle camera movement, atmosphere, pacing, and short-form video direction instead of creating another still image.", "Review the private clip, use it as a social-ready video draft, or continue with a larger motion package when the direction works."],
+    useCases: ["Creator intro clips", "Product teaser videos", "Social motion posts", "Campaign video previews"],
+    workflow: ["Upload one finished image.", "Choose the motion idea and clip use case.", "Generate a private short video draft.", "Download or use the result to plan the next video package."],
+    ctaLabel: "Create a Short Video",
+    ctaHref: "/app/create?tool_id=image-to-video"
   },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
@@ -155,12 +255,12 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     keywords: "AI World Cup Fan Photo Maker, World Cup fan photos, stadium portrait AI, match-day poster generator",
     h2: "world cup fan photos",
     h3: ["Stadium fan photo inputs", "Match-day poster outputs", "Private sports image delivery"],
-    intro: "This tool page focuses on match-day images: stadium scenes, fan posters, avatars, banners, and friend-group concepts that feel personal without needing official marks.",
+    intro: "Upload fan portraits and create match-day images with stadium scenes, fan posters, avatars, banners, and friend-group concepts that feel personal without needing official marks.",
     details: ["Use it for tournament campaigns, profile updates, and sports creator content.", "The tool can create square avatars, poster-like compositions, and wide social banners.", "Customers stay inside the MydreamShoots private upload and album flow."],
     useCases: ["Football fan avatars", "Tournament posters", "Match-day social posts", "Friend fan-photo concepts"],
     workflow: ["Upload fan portraits.", "Choose stadium, poster, or avatar direction.", "Generate private sports images.", "Download social-ready crops."],
-    ctaLabel: "Open Fan Photo Maker",
-    ctaHref: "/dashboard?tool_id=world-cup-fan-photos"
+    ctaLabel: "Create Fan Photos",
+    ctaHref: "/app/create?tool_id=world-cup-fan-photos"
   },
   "virtual-try-on": {
     label: "Virtual Try-On",
@@ -173,8 +273,8 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     details: ["It is useful for outfit planning, creator looks, beauty profiles, and editorial social images.", "The page explains how source portraits become try-on concepts and private album options.", "Static URL structure keeps the tool shareable at /tools/virtual-try-on."],
     useCases: ["Outfit previews", "Hairstyle concepts", "Beauty profile refreshes", "Fashion editorial tests"],
     workflow: ["Upload clear source portraits.", "Choose outfit, hairstyle, or fashion direction.", "Generate try-on images.", "Save favorites for a full package."],
-    ctaLabel: "Open Outfit Generator",
-    ctaHref: "/dashboard?tool_id=virtual-try-on"
+    ctaLabel: "Try Outfit Looks",
+    ctaHref: "/app/create?tool_id=virtual-try-on"
   }
 };
 
@@ -224,30 +324,32 @@ function fallbackTool(slug: string): SeoDirectorySeed {
   return {
     label,
     title: `AI ${label} - Create detailed photos with MydreamShoots`,
-    description: `Use the MydreamShoots AI ${label} tool to create private, detailed, share-ready images from everyday uploads with a clear editor workflow.`,
+    description: `Use the MydreamShoots AI ${label} tool to turn everyday uploads into private, share-ready images with clear guidance before you create.`,
     keywords: `AI ${label}, ${label} generator, MydreamShoots ${lower}, private AI photo editor`,
     h2: lower,
     h3: [`${label} input guide`, `${label} output ideas`, `Private ${label} delivery`],
-    intro: `This tool page explains the ${label} workflow with unique copy, source-photo guidance, and output expectations.`,
+    intro: `Upload clear source material and use ${label} to create a private result that matches your next photo or video goal.`,
     details: [
-      "Customers should know what to upload, what the tool changes, and where finished images appear after generation.",
-      "The copy is specific to this tool URL, so it does not duplicate the general tools directory or homepage.",
-      "The static path can be shared directly while the editor receives the matching tool identifier."
+      "Start with source photos or references that clearly show the subject, style, and use case you want.",
+      "The finished result appears in your private account for review, download, and follow-up edits.",
+      "Use this page to compare the expected output, check the input guidance, and continue when the tool fits your goal."
     ],
     useCases: [`${label} profile photos`, `${label} social images`, `${label} album concepts`, `${label} creator visuals`],
-    workflow: ["Open the selected tool.", "Upload source photos.", "Choose the preset direction.", "Generate and download the private result."],
-    ctaLabel: `Open ${label}`,
-    ctaHref: `/dashboard?tool_id=${slug}`
+    workflow: ["Review the result this tool is best for.", "Upload clear source photos.", "Choose the look or use case you need.", "Create and download the private result."],
+    ctaLabel: `Start ${label}`,
+    ctaHref: `/app/create?tool_id=${slug}`
   };
 }
 
 export function getSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   const slug = normalizeDirectorySlug(rawSlug);
   const source = kind === "collection" ? collectionDirectory[slug] ?? fallbackCollection(slug) : toolDirectory[slug] ?? fallbackTool(slug);
+  const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${slug}`;
   return {
     ...source,
     slug,
-    canonicalPath: `/${kind === "collection" ? "collections" : "tools"}/${slug}`
+    canonicalPath,
+    ctaHref: kind === "collection" ? `/app/create?tool_id=${slug}` : source.ctaHref
   };
 }
 
@@ -260,6 +362,10 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
     description: item.description,
     keywords: item.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean),
     alternates: { canonical },
+    robots: {
+      index: true,
+      follow: true
+    },
     openGraph: {
       title: item.title,
       description: item.description,
@@ -274,10 +380,9 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
   };
 }
 
-export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string): ThemePageJson {
+export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean } = {}): ThemePageJson {
   const item = getSeoDirectoryContent(kind, rawSlug);
   const sectionId = `seo_${kind}_${item.slug}`;
-  if (pageJson.sections[sectionId]) return pageJson;
   const seoSection: SectionInstance = {
     type: "seo_directory_content",
     settings: {
@@ -296,12 +401,31 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     blocks: []
   };
   const [firstSection, ...rest] = pageJson.sectionsOrder;
-  const sectionsOrder = firstSection ? [firstSection, sectionId, ...rest] : [sectionId];
+  const sectionsOrder = options.focused
+    ? (firstSection ? [firstSection, sectionId] : [sectionId])
+    : (firstSection ? [firstSection, sectionId, ...rest.filter((id) => id !== sectionId)] : [sectionId]);
+  const focusedFirstSection = firstSection && pageJson.sections[firstSection]
+    ? {
+        ...pageJson.sections[firstSection],
+        blocks: [],
+        settings: {
+          anchor: pageJson.sections[firstSection].settings.anchor,
+          eyebrow: pageJson.sections[firstSection].settings.eyebrow,
+          headingLevel: pageJson.sections[firstSection].settings.headingLevel,
+          layout: pageJson.sections[firstSection].settings.layout,
+          subtitle: pageJson.sections[firstSection].settings.subtitle,
+          title: pageJson.sections[firstSection].settings.title
+        }
+      }
+    : undefined;
+  const existingSections = options.focused && firstSection
+    ? { [firstSection]: focusedFirstSection ?? pageJson.sections[firstSection] }
+    : pageJson.sections;
   return {
     ...pageJson,
     sectionsOrder,
     sections: {
-      ...pageJson.sections,
+      ...existingSections,
       [sectionId]: seoSection
     }
   };

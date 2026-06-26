@@ -5,9 +5,12 @@ import { useEffect } from "react";
 
 export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
   const router = useRouter();
+  const pathKey = paths.filter(Boolean).join("|");
 
   useEffect(() => {
-    const uniquePaths = Array.from(new Set(paths.filter(Boolean)));
+    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 2);
+    const uniquePaths = Array.from(new Set(pathKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 4);
     if (!uniquePaths.length) return;
     let cancelled = false;
     let staggerTimer: number | undefined;
@@ -24,7 +27,7 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
 
     const idleId = typeof window.requestIdleCallback === "function"
       ? window.requestIdleCallback(prefetch, { timeout: 1800 })
-      : window.setTimeout(prefetch, 600);
+      : window.setTimeout(prefetch, 900);
 
     return () => {
       cancelled = true;
@@ -35,7 +38,7 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
       }
       window.cancelIdleCallback?.(idleId);
     };
-  }, [paths, router]);
+  }, [pathKey, router]);
 
   return null;
 }

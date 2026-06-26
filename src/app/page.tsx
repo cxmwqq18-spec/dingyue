@@ -10,9 +10,10 @@ import {
   readStorefrontSiteByHostFromDatabase
 } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
+import { AccessRoutePrefetcher } from "@/components/platform/access-route-prefetcher";
 import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { getPage } from "@/lib/data";
 import type { PlatformState, Site } from "@/lib/types";
 
@@ -25,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!shouldResolveHostSite(hostCandidates)) return {};
   const hostSite = await getHostSiteWithFallback(hostCandidates);
   if (!hostSite) return {};
-  return metadataForThemePage(hostSite, getPage(hostSite, "/"));
+  return metadataForSingleThemePage(hostSite, getPage(hostSite, "/"));
 }
 
 function shouldResolveHostSite(hosts: Array<string | null>): boolean {
@@ -139,9 +140,17 @@ export default async function HomePage({
       }
     ])
   ];
+  const accessPrefetchPaths = Array.from(new Set([
+    "/platform",
+    "/platform/login",
+    ...platformRoutes.map((route) => route.href),
+    ...accessEntries.map((entry) => entry.href),
+    ...listedSites.slice(0, 3).map((site) => `/site/${site.slug}/admin/design`)
+  ]));
 
   return (
     <Shell>
+      <AccessRoutePrefetcher paths={accessPrefetchPaths} />
       <TopBar
         brand="DreamOps"
         links={[

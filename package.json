@@ -28,6 +28,7 @@
     "design:images": "node scripts/generate-image-redesigns.mjs",
     "image:batch": "node scripts/generate-gpt-image-batch.mjs",
     "smoke:core": "node scripts/smoke-core.mjs",
+    "warmup:storefront-tools": "node scripts/warmup-storefront-tools.mjs",
     "smoke:api-latency": "node scripts/smoke-api-latency.mjs",
     "smoke:api-crud-latency": "node scripts/smoke-api-crud-latency.mjs",
     "ops:prod-diagnose": "node scripts/ops-production-diagnose.mjs",

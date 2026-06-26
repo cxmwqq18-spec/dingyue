@@ -1,0 +1,282 @@
+import { normalizeThemeSeo } from "@/lib/theme/seo";
+import { getSeoDirectoryContent } from "@/lib/dreamshoot-seo-content";
+import type { CreativePack, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+
+export type JsonLdNode = Record<string, unknown>;
+
+type JsonLdInput = {
+  site: Site;
+  page: Pick<ThemePage, "id" | "slug" | "title" | "pageType">;
+  pageJson: ThemePageJson;
+  pagePath: string;
+  routeMode: "host" | "path";
+  creativePacks?: CreativePack[];
+};
+
+function cleanText(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value.replace(/\s+/g, " ").trim() || fallback : fallback;
+}
+
+function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
+  return cleanText(value, fallback)
+    .replace(/\bFree AI Tools Collection\b/g, "AI Tools Collection")
+    .replace(/\b[Ff]ree utility tools\b/g, "paid studio tools")
+    .replace(/\b[Ff]ree AI photo tools\b/g, "AI photo tools")
+    .replace(/\b[Ff]ree AI tools\b/g, "AI tools")
+    .replace(/\b[Ff]ree tools\b/g, "studio tools")
+    .replace(/\b[Ff]ree tool\b/g, "studio tool")
+    .replace(/\b[Ff]ree\b/g, "paid")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function listText(value: ThemeSettingValue | undefined): string[] {
+  if (typeof value === "string") {
+    return value
+      .split(/\n|\|/)
+      .map((item) => cleanText(item))
+      .filter(Boolean);
+  }
+  if (Array.isArray(value)) return value.map((item) => cleanText(item)).filter(Boolean);
+  return [];
+}
+
+function sectionValue(pageJson: ThemePageJson, key: string): string {
+  for (const sectionId of pageJson.sectionsOrder) {
+    const value = pageJson.sections[sectionId]?.settings?.[key];
+    const text = cleanText(value);
+    if (text) return text;
+  }
+  return "";
+}
+
+function blockValue(block: SectionBlockInstance, key: string, fallback = ""): string {
+  return cleanText(block.settings[key], fallback);
+}
+
+function siteOriginUrl(site: Site, routeMode: "host" | "path"): string {
+  const domain = cleanText(site.primaryDomain);
+  if (routeMode === "path" || !domain) return "http://localhost:3000";
+  if (domain.includes("localhost")) return `http://${domain}`;
+  if (domain.startsWith("http://") || domain.startsWith("https://")) return domain.replace(/\/$/, "");
+  return `https://${domain}`;
+}
+
+function siteBaseUrl(site: Site, routeMode: "host" | "path"): string {
+  const origin = siteOriginUrl(site, routeMode);
+  return routeMode === "host" ? origin : `${origin}/site/${site.slug}`;
+}
+
+function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
+  const value = cleanText(pathOrUrl, "/");
+  if (value.startsWith("http://") || value.startsWith("https://")) return value;
+  const base = siteOriginUrl(site, routeMode).replace(/\/$/, "");
+  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+function schemaPagePath(site: Site, routeMode: "host" | "path", pagePath: string): string {
+  const cleanPath = pagePath === "/404" ? "/" : pagePath || "/";
+  if (routeMode === "host") return cleanPath;
+  return `/site/${site.slug}${cleanPath === "/" ? "" : cleanPath}`;
+}
+
+function pageTitle(site: Site, page: Pick<ThemePage, "id" | "slug" | "title" | "pageType">): string {
+  const seo = normalizeThemeSeo(site, site.themeSettings.publishedJson);
+  return cleanPaidStorefrontText(seo.pages[page.id]?.title, page.title || site.branding.logoText || site.name);
+}
+
+function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">): string {
+  const seo = normalizeThemeSeo(site, site.themeSettings.publishedJson);
+  return cleanPaidStorefrontText(seo.pages[page.id]?.description, site.branding.description || page.title);
+}
+
+function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string): JsonLdNode {
+  const parts = pagePath.split("/").filter(Boolean);
+  const items = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/"))
+    }
+  ];
+  let current = "";
+  parts.forEach((part, index) => {
+    current += `/${part}`;
+    items.push({
+      "@type": "ListItem",
+      position: index + 2,
+      name: index === parts.length - 1 ? title : part.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
+      item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
+    });
+  });
+  return { "@type": "BreadcrumbList", itemListElement: items };
+}
+
+function faqSchema(pageJson: ThemePageJson): JsonLdNode | undefined {
+  const questions = pageJson.sectionsOrder.flatMap((sectionId) => {
+    const section = pageJson.sections[sectionId];
+    if (section?.type !== "faq") return [];
+    const blocks = section.blocks?.length
+      ? section.blocks
+      : listText(section.settings.items).map((item, index) => {
+          const [question = "", answer = ""] = item.split("::");
+          return { id: `faq_${index}`, type: "faq_item", settings: { question, answer } };
+        });
+    return blocks
+      .map((block) => ({
+        "@type": "Question",
+        name: blockValue(block, "question", blockValue(block, "title")),
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: blockValue(block, "answer", blockValue(block, "description"))
+        }
+      }))
+      .filter((item) => cleanText(item.name) && cleanText((item.acceptedAnswer as { text: string }).text));
+  });
+  return questions.length ? { "@type": "FAQPage", mainEntity: questions } : undefined;
+}
+
+function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson): JsonLdNode | undefined {
+  const isArticle = pagePath.startsWith("/blog/") || /^(article|post)$/i.test(pageJson.pageType);
+  if (!isArticle) return undefined;
+  const image = sectionValue(pageJson, "imageUrl") || sectionValue(pageJson, "backgroundImage");
+  return {
+    "@type": "Article",
+    headline: title,
+    description,
+    author: { "@type": "Organization", name: site.branding.logoText || site.name },
+    publisher: { "@type": "Organization", name: site.branding.logoText || site.name },
+    mainEntityOfPage: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath)),
+    ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
+  };
+}
+
+function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  const path = input.pagePath;
+  if (path.startsWith("/tools/")) {
+    return {
+      "@type": "Service",
+      name: title,
+      description,
+      provider: { "@type": "Organization", name: input.site.branding.logoText || input.site.name },
+      serviceType: "AI photo editing tool",
+      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path))
+    };
+  }
+  if (path.startsWith("/collections") || path.startsWith("/pricing")) {
+    const pack = input.creativePacks?.find((item) => item.status === "active" && title.toLowerCase().includes(item.name.toLowerCase()));
+    return {
+      "@type": "Product",
+      name: pack?.name || title,
+      description: pack?.description || description,
+      brand: { "@type": "Brand", name: input.site.branding.logoText || input.site.name },
+      ...(pack ? { image: pack.imageUrl ? absoluteUrl(input.site, input.routeMode, pack.imageUrl) : undefined } : {})
+    };
+  }
+  return undefined;
+}
+
+export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
+  const title = pageTitle(input.site, input.page);
+  const description = pageDescription(input.site, input.page);
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const url = absoluteUrl(input.site, input.routeMode, path);
+  const siteName = input.site.branding.logoText || input.site.name;
+  const graph: Array<JsonLdNode | undefined> = [
+    {
+      "@type": "Organization",
+      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
+      name: siteName,
+      url: siteBaseUrl(input.site, input.routeMode),
+      description: cleanPaidStorefrontText(input.site.branding.description)
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteBaseUrl(input.site, input.routeMode)}#website`,
+      name: siteName,
+      url: siteBaseUrl(input.site, input.routeMode),
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteBaseUrl(input.site, input.routeMode)}/search?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    },
+    breadcrumbs(input.site, input.routeMode, input.pagePath, title),
+    faqSchema(input.pageJson),
+    articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
+    serviceOrProductSchema(input, title, description)
+  ];
+
+  return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean), url }];
+}
+
+export function buildToolDirectoryJsonLd({
+  site,
+  toolSlug,
+  routeMode
+}: {
+  site: Site;
+  toolSlug: string;
+  routeMode: "host" | "path";
+}): JsonLdNode[] {
+  const item = getSeoDirectoryContent("tool", toolSlug);
+  const pagePath = item.canonicalPath;
+  const path = schemaPagePath(site, routeMode, pagePath);
+  const url = absoluteUrl(site, routeMode, path);
+  const siteName = site.branding.logoText || site.name;
+  const graph: JsonLdNode[] = [
+    {
+      "@type": "Organization",
+      "@id": `${siteBaseUrl(site, routeMode)}#organization`,
+      name: siteName,
+      url: siteBaseUrl(site, routeMode),
+      description: cleanPaidStorefrontText(site.branding.description)
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteBaseUrl(site, routeMode)}#website`,
+      name: siteName,
+      url: siteBaseUrl(site, routeMode),
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${siteBaseUrl(site, routeMode)}/search?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    },
+    breadcrumbs(site, routeMode, pagePath, item.label),
+    {
+      "@type": "SoftwareApplication",
+      name: item.title,
+      description: item.description,
+      applicationCategory: pagePath.includes("video") ? "MultimediaApplication" : "PhotographyApplication",
+      operatingSystem: "Web",
+      url,
+      provider: {
+        "@type": "Organization",
+        name: siteName,
+        url: siteBaseUrl(site, routeMode)
+      },
+      offers: {
+        "@type": "Offer",
+        availability: "https://schema.org/InStock",
+        category: "AI photo tool",
+        url
+      }
+    },
+    {
+      "@type": "Service",
+      name: item.label,
+      description: item.description,
+      serviceType: pagePath.includes("video") ? "AI image to video concept tool" : "AI photo generation and editing tool",
+      provider: {
+        "@type": "Organization",
+        name: siteName,
+        url: siteBaseUrl(site, routeMode)
+      },
+      url
+    }
+  ];
+
+  return [{ "@context": "https://schema.org", "@graph": graph, url }];
+}

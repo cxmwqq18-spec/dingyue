@@ -2,6 +2,7 @@
 
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 import { type ComponentProps, type FocusEvent, type MouseEvent, type PointerEvent, type ReactNode } from "react";
 
 export type StorefrontInstantLinkProps = Omit<ComponentProps<typeof Link>, "href" | "onClick" | "children"> & {
@@ -9,22 +10,36 @@ export type StorefrontInstantLinkProps = Omit<ComponentProps<typeof Link>, "href
   href: LinkProps["href"];
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   onFocus?: (event: FocusEvent<HTMLAnchorElement>) => void;
+  onPointerDown?: (event: PointerEvent<HTMLAnchorElement>) => void;
   onPointerEnter?: (event: PointerEvent<HTMLAnchorElement>) => void;
 };
-
-function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
-  return event.metaKey || event.altKey || event.ctrlKey || event.shiftKey || event.button !== 0;
-}
 
 function hrefFromUrl(targetUrl: URL) {
   return `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`;
 }
 
+const prefetchedHrefs = new Set<string>();
+const storefrontPublicPathPrefixes = [
+  "/account",
+  "/album",
+  "/app",
+  "/cart",
+  "/checkout",
+  "/collections",
+  "/help",
+  "/login",
+  "/policies",
+  "/pricing",
+  "/tools"
+];
+
 function internalStorefrontHref(href: LinkProps["href"], target?: string) {
   if (typeof href !== "string" || href.startsWith("#") || (target && target !== "_self")) return null;
   const targetUrl = new URL(href, window.location.href);
   if (targetUrl.origin !== window.location.origin) return null;
-  if (!targetUrl.pathname.startsWith("/site/")) return null;
+  const isPathMode = targetUrl.pathname.startsWith("/site/");
+  const isHostMode = storefrontPublicPathPrefixes.some((prefix) => targetUrl.pathname === prefix || targetUrl.pathname.startsWith(`${prefix}/`));
+  if (!isPathMode && !isHostMode) return null;
   return targetUrl;
 }
 
@@ -33,31 +48,29 @@ export function StorefrontInstantLink({
   href,
   onClick,
   onFocus,
+  onPointerDown,
   onPointerEnter,
+  prefetch,
   target,
   ...props
 }: StorefrontInstantLinkProps) {
   const router = useRouter();
+  const hoverPrefetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const shouldUseLinkPrefetch = prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH !== "0";
 
   function prefetchTarget() {
+    if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH === "0") return;
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
     if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;
-    router.prefetch(hrefFromUrl(targetUrl));
+    const nextHref = hrefFromUrl(targetUrl);
+    if (prefetchedHrefs.has(nextHref)) return;
+    prefetchedHrefs.add(nextHref);
+    router.prefetch(nextHref);
   }
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
-    if (event.defaultPrevented || isModifiedClick(event) || (target && target !== "_self")) return;
-
-    const targetUrl = internalStorefrontHref(href, target);
-    if (!targetUrl) return;
-    if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;
-
-    event.preventDefault();
-    const nextHref = hrefFromUrl(targetUrl);
-    window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href: nextHref } }));
-    router.push(nextHref);
   }
 
   function handleFocus(event: FocusEvent<HTMLAnchorElement>) {
@@ -67,6 +80,13 @@ export function StorefrontInstantLink({
 
   function handlePointerEnter(event: PointerEvent<HTMLAnchorElement>) {
     onPointerEnter?.(event);
+    if (event.defaultPrevented || event.pointerType === "touch") return;
+    if (hoverPrefetchTimer.current) clearTimeout(hoverPrefetchTimer.current);
+    hoverPrefetchTimer.current = setTimeout(prefetchTarget, 80);
+  }
+
+  function handlePointerDown(event: PointerEvent<HTMLAnchorElement>) {
+    onPointerDown?.(event);
     if (!event.defaultPrevented) prefetchTarget();
   }
 
@@ -75,7 +95,9 @@ export function StorefrontInstantLink({
       href={href}
       onClick={handleClick}
       onFocus={handleFocus}
+      onPointerDown={handlePointerDown}
       onPointerEnter={handlePointerEnter}
+      prefetch={shouldUseLinkPrefetch}
       target={target}
       {...props}
     >

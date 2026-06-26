@@ -8,6 +8,7 @@ import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/
 
 type Tx = Prisma.TransactionClient;
 const jobStoreTimeoutMs = Math.max(1000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "8000") || 8000);
+const DEFAULT_MAX_SOURCE_ASSETS = 24;
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
@@ -85,6 +86,11 @@ function assetRules(workflow: AiWorkflowConfig) {
   return workflow.steps.find((step) => step.kind === "asset_select")?.assetRules ?? { min: 1, max: 4 };
 }
 
+function maxAssetsForWorkflow(workflow: AiWorkflowConfig): number {
+  const configuredMax = assetRules(workflow).max;
+  return configuredMax && configuredMax > 0 ? Math.max(configuredMax, DEFAULT_MAX_SOURCE_ASSETS) : DEFAULT_MAX_SOURCE_ASSETS;
+}
+
 function normalizePromptInputs(requestJson?: Record<string, unknown>): Record<string, string | number | boolean> {
   const fields = requestJson?.fields;
   if (fields && typeof fields === "object" && !Array.isArray(fields)) {
@@ -127,7 +133,7 @@ function resolveGenerationRequest(params: {
   if (missingField) throw new StoreError("missing_required_prompt_input", 400);
   const rules = assetRules(workflow);
   const minAssets = rules.min ?? 1;
-  const maxAssets = rules.max ?? 4;
+  const maxAssets = maxAssetsForWorkflow(workflow);
   if (params.requestedAssetIds.length < minAssets) throw new StoreError("not_enough_source_assets", 400);
   if (params.requestedAssetIds.length > maxAssets) throw new StoreError("too_many_source_assets", 400);
   const flowName = workflow.flowName ?? params.siteAiApp.aiApp.name;

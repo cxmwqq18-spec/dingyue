@@ -644,6 +644,7 @@ model CreativePackCategory {
   description String?
   heroTitle   String?
   heroSubtitle String?
+  icon        String?
   imageUrl    String?
   sortOrder   Int      @default(0)
   status      String   @default("active")

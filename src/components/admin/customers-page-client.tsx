@@ -11,12 +11,12 @@ import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import type { Album, AssetUpload, CreativePack, CustomerModel, PublicCustomer, SiteAdmin } from "@/lib/types";
 
 type CustomersPagePayload = {
-  customers: PublicCustomer[];
-  customerModels: CustomerModel[];
-  albums: Album[];
-  packs: CreativePack[];
-  customerAssets: AssetUpload[];
-  siteAdmins: SiteAdmin[];
+  customers?: PublicCustomer[];
+  customerModels?: CustomerModel[];
+  albums?: Album[];
+  packs?: CreativePack[];
+  customerAssets?: AssetUpload[];
+  siteAdmins?: SiteAdmin[];
   signupCreditGrant: number;
   error?: string;
 };
@@ -59,6 +59,31 @@ function CustomersDetailsSkeleton() {
   );
 }
 
+function LoadingSection({ title }: { title: string }) {
+  return (
+    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-5" aria-busy="true">
+      <div className="h-5 w-32 animate-pulse rounded bg-[#e8edf5]" />
+      <div className="mt-2 text-[12px] text-[#98a2b3]">{title}加载中...</div>
+      <div className="mt-5 grid gap-3">
+        <div className="h-12 w-full animate-pulse rounded bg-[#eef2f7]" />
+        <div className="h-12 w-5/6 animate-pulse rounded bg-[#eef2f7]" />
+      </div>
+    </div>
+  );
+}
+
+function mergePayload(current: CustomersPagePayload | null, next: CustomersPagePayload): CustomersPagePayload {
+  return {
+    signupCreditGrant: next.signupCreditGrant ?? current?.signupCreditGrant ?? 0,
+    customers: next.customers ?? current?.customers,
+    customerModels: next.customerModels ?? current?.customerModels,
+    albums: next.albums ?? current?.albums,
+    packs: next.packs ?? current?.packs,
+    customerAssets: next.customerAssets ?? current?.customerAssets,
+    siteAdmins: next.siteAdmins ?? current?.siteAdmins
+  };
+}
+
 export function CustomersPageClient({
   siteId,
   initialCustomerCount,
@@ -76,27 +101,45 @@ export function CustomersPageClient({
 
   useEffect(() => {
     let active = true;
-    const controller = new AbortController();
+    const controllers = new Set<AbortController>();
+    function nextController() {
+      const controller = new AbortController();
+      controllers.add(controller);
+      return controller;
+    }
+    async function loadDetail(detail: "customers" | "models" | "delivery") {
+      const controller = nextController();
+      try {
+        const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, { init: { signal: controller.signal } });
+        const result = response.data;
+        if (!response.ok) throw new Error(result.error ?? "顾客数据加载失败。");
+        if (active) setPayload((current) => mergePayload(current, result));
+      } finally {
+        controllers.delete(controller);
+      }
+    }
+
     async function loadCustomersPage() {
       try {
         setError(null);
-        const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page`, { init: { signal: controller.signal } });
-        const result = response.data;
-        if (!active) return;
-        if (!response.ok) {
-          setError(result.error ?? "顾客数据加载失败。");
-          return;
-        }
-        setPayload(result);
+        await loadDetail("customers");
+        window.setTimeout(() => {
+          if (!active) return;
+          void Promise.all([loadDetail("models"), loadDetail("delivery")]).catch((error) => {
+            if (!active) return;
+            setError(error instanceof Error ? error.message : "顾客明细加载失败。");
+          });
+        }, 0);
       } catch (error) {
-        if (!active || controller.signal.aborted) return;
+        if (!active) return;
         setError(error instanceof Error ? error.message : "顾客数据加载失败。");
       }
     }
     void loadCustomersPage();
     return () => {
       active = false;
-      controller.abort();
+      for (const controller of controllers) controller.abort();
+      controllers.clear();
     };
   }, [siteId]);
 
@@ -122,8 +165,8 @@ export function CustomersPageClient({
         items={[
           { label: "顾客", value: String(derived.customerCount), detail: `${derived.pastDueCustomers} 个逾期 / ${derived.blockedCustomers} 个封禁`, icon: Users, tone: derived.blockedCustomers ? "bad" : derived.pastDueCustomers ? "warn" : "good" },
           { label: "额度", value: String(initialAvailableCredits), detail: `${initialAvailableCredits} 可用 / ${initialReservedCredits} 预扣`, icon: UploadCloud, tone: initialReservedCredits ? "warn" : "good" },
-          { label: "模型", value: `${derived.readyModels}/${payload?.customerModels.length || initialModelCount}`, detail: "已就绪客户模型", icon: Sparkles, tone: derived.readyModels ? "good" : "warn" },
-          { label: "相册", value: `${derived.readyAlbums}/${payload?.albums.length || initialAlbumCount}`, detail: `${derived.generatedAssets.length || initialGeneratedAssetCount} 个生成输出`, icon: GalleryVerticalEnd, tone: derived.readyAlbums ? "good" : "warn" }
+          { label: "模型", value: `${derived.readyModels}/${payload?.customerModels?.length || initialModelCount}`, detail: "已就绪客户模型", icon: Sparkles, tone: derived.readyModels ? "good" : "warn" },
+          { label: "相册", value: `${derived.readyAlbums}/${payload?.albums?.length || initialAlbumCount}`, detail: `${derived.generatedAssets.length || initialGeneratedAssetCount} 个生成输出`, icon: GalleryVerticalEnd, tone: derived.readyAlbums ? "good" : "warn" }
         ]}
       />
 
@@ -142,9 +185,9 @@ export function CustomersPageClient({
       >
         <div className="mt-5">
           <CustomerAdminPanel
-            customers={payload.customers}
+            customers={payload.customers ?? []}
             signupCreditGrant={payload.signupCreditGrant ?? initialSignupCreditGrant}
-            siteAdmins={payload.siteAdmins}
+            siteAdmins={payload.siteAdmins ?? []}
             siteId={siteId}
           />
         </div>
@@ -152,10 +195,18 @@ export function CustomersPageClient({
 
       <div className="grid gap-5">
         <ErpSection description="模型训练进度、素材要求和训练就绪状态按顾客单独管理。" eyebrow="模型训练" title="客户模型">
-          <ModelTrainingPanel customers={payload.customers} models={payload.customerModels} siteId={siteId} />
+          {payload.customerModels ? (
+            <ModelTrainingPanel customers={payload.customers ?? []} models={payload.customerModels} siteId={siteId} />
+          ) : (
+            <LoadingSection title="客户模型" />
+          )}
         </ErpSection>
         <ErpSection description="相册和输出素材只属于当前站点和当前顾客，不允许跨站读取。" eyebrow="相册交付" title="相册交付">
-          <AlbumDeliveryPanel albums={payload.albums} assets={derived.generatedAssets} customers={payload.customers} packs={payload.packs} siteId={siteId} />
+          {payload.albums && payload.packs && payload.customerAssets ? (
+            <AlbumDeliveryPanel albums={payload.albums} assets={derived.generatedAssets} customers={payload.customers ?? []} packs={payload.packs} siteId={siteId} />
+          ) : (
+            <LoadingSection title="相册交付" />
+          )}
         </ErpSection>
       </div>
 
@@ -164,12 +215,16 @@ export function CustomersPageClient({
         eyebrow="客户素材"
         title="客户素材表格"
       >
-        <CustomerAssetReviewPanel
-          assets={payload.customerAssets}
-          customers={payload.customers}
-          models={payload.customerModels}
-          siteId={siteId}
-        />
+        {payload.customerAssets && payload.customerModels ? (
+          <CustomerAssetReviewPanel
+            assets={payload.customerAssets}
+            customers={payload.customers ?? []}
+            models={payload.customerModels}
+            siteId={siteId}
+          />
+        ) : (
+          <LoadingSection title="客户素材" />
+        )}
       </ErpSection>
         </>
       )}

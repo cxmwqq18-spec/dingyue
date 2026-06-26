@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { cache } from "react";
+import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
@@ -20,17 +22,17 @@ import { customerSessionCookie } from "@/lib/session";
 import {
   readStorefrontCustomerRuntimeStateForSiteFromDatabase,
   readStorefrontPlatformState,
-  readStorefrontPublicRuntimeStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateForSiteFromDatabase,
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
-import { getSiteIdBySlugRelational } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
+import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 
@@ -47,6 +49,83 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     mediaAssets: getSiteMediaAssetsFromState(state, siteId),
     products: getSiteProductsFromState(state, siteId),
     siteAiApps: getSiteAppsFromState(state, siteId)
+  };
+}
+
+function emptySiteRenderData(): SiteRenderData {
+  return {
+    creativePacks: [],
+    mediaAssets: [],
+    products: [],
+    siteAiApps: []
+  };
+}
+
+function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
+  return {
+    creativePacks: renderData.creativePacks.slice(0, 12).map((pack) => ({
+      ...pack,
+      prompt: undefined,
+      galleryImages: []
+    })),
+    mediaAssets: [],
+    products: [],
+    siteAiApps: renderData.siteAiApps.slice(0, 8).map((siteApp) => ({
+      ...siteApp,
+      providerConfig: undefined,
+      workflowConfig: undefined,
+      aiApp: {
+        ...siteApp.aiApp,
+        parameterSchema: []
+      }
+    }))
+  };
+}
+
+const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
+const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "generation_form", "search_results"]);
+const creativePackSectionTypes = new Set(["collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
+
+function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
+  return new Set(pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId]?.type).filter((type): type is string => Boolean(type)));
+}
+
+function trimCreativePacksForStorefront(renderData: SiteRenderData, limit: number): SiteRenderData["creativePacks"] {
+  return renderData.creativePacks.slice(0, limit).map((pack) => ({
+    ...pack,
+    prompt: undefined,
+    galleryImages: []
+  }));
+}
+
+function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = 12): SiteRenderData["siteAiApps"] {
+  return renderData.siteAiApps.slice(0, limit).map((siteApp) => ({
+    ...siteApp,
+    providerConfig: undefined,
+    workflowConfig: undefined,
+    aiApp: {
+      ...siteApp.aiApp,
+      parameterSchema: []
+    }
+  }));
+}
+
+function trimProductsForStorefront(renderData: SiteRenderData, limit = 8): SiteRenderData["products"] {
+  const active = renderData.products.filter((product) => product.status === "active");
+  return (active.length ? active : renderData.products).slice(0, limit);
+}
+
+function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
+  const sectionTypes = pageSectionTypes(pageJson);
+  const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
+  const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
+  const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
+  const packLimit = slug === "/" ? 24 : slug === "/collections" ? 48 : 18;
+  return {
+    creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
+    mediaAssets: renderData.mediaAssets,
+    products: needsProducts ? trimProductsForStorefront(renderData, slug === "/pricing" || slug === "/cart" ? 12 : 6) : [],
+    siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : []
   };
 }
 
@@ -131,9 +210,7 @@ async function getLightCustomerRuntime(state: PlatformState, siteId: string, ses
   if (!sessionId) return runtimeWithEmptyCollections();
   const current = await getCurrentCustomerSession(state, siteId, sessionId);
   if (current) return getCustomerRuntimeFromState(state, siteId, current.customer, false);
-  return runtimeWithEmptyCollections({
-    customer: getCustomerBySessionFromState(state, siteId, sessionId)?.customer
-  });
+  return runtimeWithEmptyCollections();
 }
 
 async function getFullCustomerRuntime(state: PlatformState, siteId: string, sessionId?: string): Promise<ThemeRuntimeData> {
@@ -160,13 +237,13 @@ function withAccountDashboardPage(pageJson: ReturnType<typeof getPage>["publishe
       title: "Your personal center for credits, orders, albums, and AI progress.",
       subtitle: "Review profile information, plan status, order history, private albums, active jobs, and credit activity from one signed-in account page.",
       surface: "account",
-      ctaLabel: "Open workspace",
-      ctaHref: "/app#upload_1",
+      ctaLabel: "Upload photos",
+      ctaHref: "/app/upload",
       chipList: "Profile|Plan and credits|Orders|Albums and progress"
     },
     blocks: [
-      { id: "account_uploads", type: "feature" as const, settings: { title: "Upload photos", description: "Add source portraits and style references before requesting images.", meta: "Assets", href: "/app#upload_1" } },
-      { id: "account_create", type: "feature" as const, settings: { title: "Create AI images", description: "Choose prompts and reserve credits for a private generation request.", meta: "Generate", href: "/app#create" } },
+      { id: "account_uploads", type: "feature" as const, settings: { title: "Upload photos", description: "Add source portraits and style references before requesting images.", meta: "Assets", href: "/app/upload" } },
+      { id: "account_create", type: "feature" as const, settings: { title: "Create AI images", description: "Choose prompts and reserve credits for a private generation request.", meta: "Generate", href: "/app/create" } },
       { id: "account_progress", type: "feature" as const, settings: { title: "AI generation progress", description: "Open queued, running, delivered, and review-needed requests.", meta: "Progress", href: "/app/jobs/progress" } },
       { id: "account_albums", type: "feature" as const, settings: { title: "Personal albums", description: "Review delivered images and private gallery downloads.", meta: "Gallery", href: "/album" } }
     ]
@@ -189,13 +266,13 @@ function withCustomerWorkspaceFlowPage(pageJson: ThemePageJson): ThemePageJson {
       settings: {
         ...(pageJson.sections.launcher_1?.settings ?? {}),
         ctaLabel: pageJson.sections.launcher_1?.settings?.ctaLabel ?? "Choose a tool",
-        ctaHref: pageJson.sections.launcher_1?.settings?.ctaHref ?? "/app#create"
+        ctaHref: pageJson.sections.launcher_1?.settings?.ctaHref ?? "/app/create"
       },
       blocks: [
-        { id: "feature_prepare", type: "feature", settings: { title: "Choose a tool", description: "Pick the photo workflow first, then attach the source photos it needs.", meta: "Tool first", href: "/app#create" } },
-        { id: "feature_upload", type: "feature", settings: { title: "Upload photos", description: "Add private source portraits and references for this account.", meta: "Private intake", href: "/app#upload_1" } },
-        { id: "feature_progress", type: "feature", settings: { title: "Track progress", description: "Review queued, running, delivered, and review-needed requests.", meta: "Live progress", href: "/app#progress_1" } },
-        { id: "feature_album", type: "feature", settings: { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/app#album_1" } }
+        { id: "feature_prepare", type: "feature", settings: { title: "Choose a tool", description: "Pick the photo workflow first, then attach the source photos it needs.", meta: "Tool first", href: "/app/create" } },
+        { id: "feature_upload", type: "feature", settings: { title: "Upload photos", description: "Add private source portraits and references for this account.", meta: "Private intake", href: "/app/upload" } },
+        { id: "feature_progress", type: "feature", settings: { title: "Track progress", description: "Review queued, running, delivered, and review-needed requests.", meta: "Live progress", href: "/app/jobs/progress" } },
+        { id: "feature_album", type: "feature", settings: { title: "Download albums", description: "Open delivered images and private gallery downloads for this account.", meta: "Private delivery", href: "/album" } }
       ]
     },
     form_1: pageJson.sections.form_1 ?? {
@@ -298,15 +375,15 @@ function appSlugForToolCategory(category: string, siteAiApps: ReturnType<typeof 
 
 function titleFromToolSlug(toolSlug: string): string {
   const explicit: Record<string, string> = {
-    "background-changer": "Background Changer Free",
-    "background-remover": "Image Background Remover Free",
-    "magic-eraser": "Magic Eraser Free",
-    "photo-enhancer": "Photo Enhancer Free",
-    "unblur-image": "Unblur Image Free",
-    "color-correction": "Color Correction Free",
-    "old-photo-restoration": "Old Photo Restoration Free",
+    "background-changer": "Background Changer",
+    "background-remover": "Image Background Remover",
+    "magic-eraser": "Magic Eraser",
+    "photo-enhancer": "Photo Enhancer",
+    "unblur-image": "Unblur Image",
+    "color-correction": "Color Correction",
+    "old-photo-restoration": "Old Photo Restoration",
     "edit-by-prompt": "Photo Edit by Prompt",
-    "headshot-generator": "Headshot Photo Generator Free",
+    "headshot-generator": "Headshot Photo Generator",
     "wedding-portraits": "Wedding Portraits",
     "image-to-video": "Image to Video Concept"
   };
@@ -331,7 +408,239 @@ function fallbackToolBlockForSlug(toolSlug: string): SectionBlockInstance | unde
       title,
       category: categoryForToolSlug(toolSlug),
       href: `/tools/${toolSlug}`,
-      description: `${title} opens a dedicated photo workflow with the selected tool preset ready for private generation.`
+      description: customerToolIntro(toolSlug, title)
+    }
+  };
+}
+
+const workspaceOnlyToolSectionTypes = new Set(["upload_panel", "generation_form", "job_progress", "album_gallery"]);
+
+function safeSectionId(page: ThemePageJson, preferredId: string): string {
+  if (!page.sections[preferredId]) return preferredId;
+  let next = 2;
+  while (page.sections[`${preferredId}_${next}`]) next += 1;
+  return `${preferredId}_${next}`;
+}
+
+type CustomerToolCopy = {
+  intro: string;
+  primaryCta: string;
+  guideTitle: string;
+  guideBody: string;
+  inputTitle: string;
+  inputDescription: string;
+  styleTitle: string;
+  styleDescription: string;
+  outputTitle: string;
+  outputDescription: string;
+  useCaseOneTitle: string;
+  useCaseOneDescription: string;
+  useCaseTwoTitle: string;
+  useCaseTwoDescription: string;
+  detailBody: string;
+};
+
+function customerToolIntro(toolSlug: string, title: string): string {
+  const copy = customerToolCopy(toolSlug, title, categoryForToolSlug(toolSlug));
+  return copy.intro;
+}
+
+function customerToolCopy(toolSlug: string, title: string, category: string): CustomerToolCopy {
+  const fallback: CustomerToolCopy = {
+    intro: `Use ${title} to turn your own uploads into a private, ready-to-download photo set with clear guidance before you start.`,
+    primaryCta: "Start this photo set",
+    guideTitle: `Plan your ${title.toLowerCase()} set`,
+    guideBody: `Start with the right upload, choose the result you want, then review the private output before your next edit or download.`,
+    inputTitle: "Upload the right source photos",
+    inputDescription: `Choose clear portraits, product photos, or references that match the ${category.toLowerCase()} result you want.`,
+    styleTitle: "Choose the result you need",
+    styleDescription: "Pick the look, use case, or visual direction before you continue, so the editor starts with the right intent.",
+    outputTitle: "Download a private result",
+    outputDescription: "Your finished images stay in your account, where you can review, download, and keep the best options.",
+    useCaseOneTitle: "Profile and creator updates",
+    useCaseOneDescription: `${title} helps refresh profile photos, creator visuals, campaign images, and social-ready assets from everyday uploads.`,
+    useCaseTwoTitle: "Clear next step",
+    useCaseTwoDescription: "Start with your source photos, review the credit cost, then create the photo set when you are ready.",
+    detailBody: `Use ${title} when you already know the outcome you want. Upload clear source material, choose the visual direction, and continue with the finished result in your private account.`
+  };
+  const overrides: Record<string, Partial<CustomerToolCopy>> = {
+    headshot: {
+      intro: "Upload selfies or casual portraits and create a profile-ready headshot set for LinkedIn, resumes, founder pages, and team bios.",
+      primaryCta: "Create profile headshots",
+      guideTitle: "Create headshots from everyday selfies",
+      guideBody: "Upload varied face photos, choose a professional look, then review polished headshot options before downloading your favorites.",
+      inputTitle: "Upload varied face photos",
+      inputDescription: "Use clear selfies with different angles, simple lighting, and natural expressions for more realistic business portraits.",
+      styleTitle: "Choose a professional look",
+      styleDescription: "Aim for clean studio lighting, founder portraits, resume photos, or team-page images before you create.",
+      outputTitle: "Download profile-ready options",
+      outputDescription: "Review several polished headshots in your private account and choose the best images for professional channels.",
+      useCaseOneTitle: "LinkedIn, resumes, and bios",
+      useCaseOneDescription: "Create a trustworthy profile image without booking a studio session.",
+      useCaseTwoTitle: "Team-ready portraits",
+      useCaseTwoDescription: "Upload each person's best source photos, generate consistent options, and choose matching portraits for the team page.",
+      detailBody: "The headshot maker turns everyday uploads into a private set of professional portraits. Use it when the next step is a LinkedIn update, resume refresh, founder bio, or team directory."
+    },
+    "headshot-generator": {
+      primaryCta: "Create profile headshots"
+    },
+    "background-changer": {
+      intro: "Replace a distracting background with a cleaner setting before you order portraits, product shots, or social images.",
+      primaryCta: "Change my background",
+      guideTitle: "Clean up the scene behind your subject",
+      guideBody: "Upload a clear subject photo, choose a cleaner setting, then save the edited image or use it as better source material for a larger set.",
+      inputTitle: "Upload a clear subject photo",
+      inputDescription: "Use an image where the person, product, or object is easy to see and separated from the background.",
+      styleTitle: "Choose the new setting",
+      styleDescription: "Move from cluttered rooms to clean studio, lifestyle, travel, or brand-friendly backgrounds.",
+      outputTitle: "Save a cleaner image",
+      outputDescription: "Use the edited image for profiles, listings, campaign drafts, or as stronger source material for a full photo set.",
+      useCaseOneTitle: "Better portraits and listings",
+      useCaseOneDescription: "Remove visual noise before creating a profile image, product visual, or creator post.",
+      useCaseTwoTitle: "Fast source-photo repair",
+      useCaseTwoDescription: "Fix the background first when the subject is good but the setting is not.",
+      detailBody: "Background changer is for photos where the subject works but the scene gets in the way. Upload the image, replace the setting, then continue with a cleaner asset for profiles, listings, posts, or photo packages."
+    },
+    "image-to-video": {
+      intro: "Turn a strong still image into a short video concept for creator intros, product teasers, social clips, and campaign previews.",
+      primaryCta: "Create a video concept",
+      guideTitle: "Plan motion from a still image",
+      guideBody: "Upload one finished image, choose the motion idea, then review a private short clip before downloading or planning the next video package.",
+      inputTitle: "Upload one strong image",
+      inputDescription: "Start with a sharp portrait, product shot, or scene that already has the look you want to animate.",
+      styleTitle: "Choose the motion idea",
+      styleDescription: "Think about camera movement, mood, pacing, and where the short video clip will be used before creating.",
+      outputTitle: "Review a private video draft",
+      outputDescription: "Use the video output as a social clip, intro concept, product teaser, or creative direction for a larger motion set.",
+      useCaseOneTitle: "Social and creator clips",
+      useCaseOneDescription: "Give a finished image enough movement for short-form posts and profile intros.",
+      useCaseTwoTitle: "Campaign previews",
+      useCaseTwoDescription: "Test motion, pacing, and mood before investing in a larger video package.",
+      detailBody: "Image to video starts with a still image and returns a private short clip with motion. Use it when the next step is video output for a post, profile intro, teaser, or campaign preview."
+    },
+    "background-remover": {
+      primaryCta: "Remove my background",
+      intro: "Cut out a subject from a busy image and prepare a cleaner asset for profile photos, product visuals, and creative edits."
+    },
+    "photo-enhancer": {
+      primaryCta: "Enhance my photo",
+      intro: "Improve dark, soft, or low-detail source photos before using them for portraits, packages, or social-ready images."
+    },
+    "anime-avatar": {
+      primaryCta: "Create an anime avatar",
+      intro: "Turn source portraits into anime-inspired avatars for profiles, creator identities, and playful social images."
+    },
+    "cyberpunk-portrait": {
+      primaryCta: "Create a neon portrait",
+      intro: "Transform a clean portrait into a cinematic neon city image for avatars, campaigns, and high-impact social posts."
+    }
+  };
+  return { ...fallback, ...(overrides[toolSlug] ?? {}) };
+}
+
+function toolDetailGuideBlocks(copy: CustomerToolCopy): SectionBlockInstance[] {
+  return [
+    {
+      id: "tool_detail_input",
+      type: "rich_text_card",
+      settings: {
+        meta: "01",
+        title: copy.inputTitle,
+        description: copy.inputDescription
+      }
+    },
+    {
+      id: "tool_detail_preset",
+      type: "rich_text_card",
+      settings: {
+        meta: "02",
+        title: copy.styleTitle,
+        description: copy.styleDescription
+      }
+    },
+    {
+      id: "tool_detail_delivery",
+      type: "rich_text_card",
+      settings: {
+        meta: "03",
+        title: copy.outputTitle,
+        description: copy.outputDescription
+      }
+    }
+  ];
+}
+
+function toolDetailUseCaseBlocks(copy: CustomerToolCopy): SectionBlockInstance[] {
+  return [
+    {
+      id: "tool_detail_use_case_1",
+      type: "rich_text_card",
+      settings: {
+        meta: "Best for",
+        title: copy.useCaseOneTitle,
+        description: copy.useCaseOneDescription
+      }
+    },
+    {
+      id: "tool_detail_use_case_2",
+      type: "rich_text_card",
+      settings: {
+        meta: "Next step",
+        title: copy.useCaseTwoTitle,
+        description: copy.useCaseTwoDescription
+      }
+    }
+  ];
+}
+
+const dreamshootToolDirectorySlugs = [
+  "background-changer",
+  "background-remover",
+  "magic-eraser",
+  "photo-enhancer",
+  "unblur-image",
+  "color-correction",
+  "old-photo-restoration",
+  "edit-by-prompt",
+  "headshot-generator",
+  "wedding-portraits",
+  "anime-avatar",
+  "gala-photo",
+  "cyberpunk-portrait",
+  "image-to-video",
+  "profile-clip",
+  "creator-intro-video"
+];
+
+const fallbackToolDirectoryBlocks = cache((): SectionBlockInstance[] =>
+  dreamshootToolDirectorySlugs.map((slug) => fallbackToolBlockForSlug(slug)).filter((block): block is SectionBlockInstance => Boolean(block))
+);
+
+function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
+  const blocks = toolBlocksFromTheme(site);
+  const toolsBySlug = new Map<string, SectionBlockInstance>();
+  for (const block of fallbackToolDirectoryBlocks()) {
+    toolsBySlug.set(toolSlugFromBlock(block), block);
+  }
+  for (const block of blocks) {
+    toolsBySlug.set(toolSlugFromBlock(block), block);
+  }
+  const tools = Array.from(toolsBySlug.values());
+  return {
+    ...pageJson,
+    sectionsOrder: ["tools_directory_1"],
+    sections: {
+      tools_directory_1: {
+        type: "dreamshoot_tool_collection",
+        settings: {
+          anchor: "tools",
+          title: "AI Tools Collection",
+          subtitle: "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
+          categories: "Photo AI|AI Photo Edit|Video AI",
+          layout: "directory"
+        },
+        blocks: tools
+      }
     }
   };
 }
@@ -355,10 +664,21 @@ function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Si
 function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockInstance, toolSlug: string, appSlug: string): ThemePageJson {
   const page = clonePageJson(basePage);
   const title = blockString(tool, "title", sectionSetting(page, "entry_1", "title", "AI photo tool"));
-  const description = blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", "Upload a photo, choose the tool preset, and continue in the private studio."));
   const category = blockString(tool, "category", "AI Photo");
+  const copy = customerToolCopy(toolSlug, title, category);
+  const description = blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro));
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
-  const dashboardHref = `/dashboard?tool_id=${encodeURIComponent(toolSlug)}`;
+  const appCreateHref = `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
+  const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
+    const type = page.sections[sectionId]?.type;
+    return type && !workspaceOnlyToolSectionTypes.has(type);
+  });
+  page.sectionsOrder = keptSectionIds;
+  for (const [sectionId, section] of Object.entries(page.sections)) {
+    if (workspaceOnlyToolSectionTypes.has(section.type)) {
+      delete page.sections[sectionId];
+    }
+  }
   if (page.sections.tool_banner_1) {
     page.sections.tool_banner_1.settings = {
       ...page.sections.tool_banner_1.settings,
@@ -375,22 +695,41 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       eyebrow: category,
       title,
       subtitle: description,
-      ctaLabel: "Open editor",
-      ctaHref: dashboardHref,
+      ctaLabel: copy.primaryCta,
+      ctaHref: appCreateHref,
       imageUrl,
       toolSlug
     };
   }
-  if (page.sections.form_1) {
-    page.sections.form_1.settings = {
-      ...page.sections.form_1.settings,
-      aiAppSlug: appSlug,
+  const guideSectionId = safeSectionId(page, "tool_detail_guide_1");
+  const useCaseSectionId = safeSectionId(page, "tool_detail_use_cases_1");
+  page.sections[guideSectionId] = {
+    type: "rich_text",
+    settings: {
       eyebrow: category,
-      title: `${title} editor`,
-      helper: "This editor opens with the selected tool preset locked for the current request.",
-      toolSlug
-    };
-  }
+      title: copy.guideTitle,
+      body: copy.guideBody,
+      primaryCta: copy.primaryCta,
+      primaryHref: appCreateHref,
+      secondaryCta: "Choose a plan",
+      secondaryHref: "/pricing",
+      layout: "compact"
+    },
+    blocks: toolDetailGuideBlocks(copy)
+  };
+  page.sections[useCaseSectionId] = {
+    type: "rich_text",
+    settings: {
+      eyebrow: "Tool details",
+      title: `What ${title} is used for`,
+      body: copy.detailBody,
+      layout: "compact",
+      tone: "dark"
+    },
+    blocks: toolDetailUseCaseBlocks(copy)
+  };
+  const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
+  page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);
   return page;
 }
 
@@ -502,7 +841,9 @@ function renderThemePage({
   renderData,
   routeMode,
   runtime,
-  settings
+  settings,
+  jsonLd,
+  lightweightChrome = false
 }: {
   currentSite: Site;
   page: ThemePageJson;
@@ -512,6 +853,8 @@ function renderThemePage({
   routeMode: "host" | "path";
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
+  jsonLd?: JsonLdNode[];
+  lightweightChrome?: boolean;
 }) {
   return (
     <div style={themeStyleVars(settings)}>
@@ -526,6 +869,8 @@ function renderThemePage({
         settings={settings}
         site={currentSite}
         siteAiApps={renderData.siteAiApps}
+        jsonLd={jsonLd}
+        lightweightChrome={lightweightChrome}
       />
     </div>
   );
@@ -547,17 +892,25 @@ export async function renderStorefrontPage({
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
+  const collectionCategory = typeof query.category === "string" ? query.category : "";
+  const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = getPage(currentSite, slug);
   const page = directPage.slug === slug ? directPage : currentSite.pages.find((item) => item.slug === "/404") ?? directPage;
+  if (isFocusedCollectionPage) {
+    currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
+  }
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
-    : slug === "/collections" && typeof query.category === "string" && query.category
-    ? withSeoDirectorySection(page.publishedJson, "collection", query.category)
+    : slug === "/tools" && /dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`)
+    ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
+    : isFocusedCollectionPage
+    ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true })
     : page.publishedJson;
+  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
   const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
     ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
     : await getLightCustomerRuntime(state, currentSite.id, sessionId);
@@ -571,10 +924,53 @@ export async function renderStorefrontPage({
     page: pageJson,
     pagePath: directPage.slug === slug ? slug : "/404",
     query,
-    renderData,
+    renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
-    settings
+    settings,
+    jsonLd: isFocusedCollectionPage
+      ? []
+      : buildStorefrontJsonLd({
+          site: currentSite,
+          page,
+          pageJson,
+          pagePath: directPage.slug === slug ? slug : "/404",
+          routeMode,
+          creativePacks: pageRenderData.creativePacks
+        }),
+    lightweightChrome: false
+  });
+}
+
+export async function renderStorefrontLoginPage({
+  site,
+  query = {},
+  routeMode = "path",
+  state: providedState
+}: {
+  site: Site;
+  query?: Record<string, string | string[] | undefined>;
+  routeMode?: "host" | "path";
+  state?: PlatformState;
+}) {
+  const state = await getStateForStorefrontRender(site, routeMode, providedState);
+  const currentSite = state.sites.find((item) => item.id === site.id);
+  if (!currentSite) notFound();
+  const page = getPage(currentSite, "/login");
+  currentSite.mediaAssets = [];
+
+  return renderThemePage({
+    currentSite,
+    page: page.publishedJson,
+    pagePath: "/login",
+    query,
+    renderData: emptySiteRenderData(),
+    routeMode,
+    runtime: runtimeWithEmptyCollections({
+      auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined)
+    }),
+    settings: currentSite.themeSettings.publishedJson,
+    lightweightChrome: false
   });
 }
 
@@ -610,13 +1006,14 @@ export async function renderCustomerWorkspacePage({
     : slug === "/app"
     ? withCustomerWorkspaceFlowPage(page.publishedJson)
     : page.publishedJson;
+  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
 
   return renderThemePage({
     currentSite,
     page: pageJson,
     pagePath: slug,
     query,
-    renderData,
+    renderData: pageRenderData,
     routeMode,
     runtime,
     settings
@@ -636,49 +1033,64 @@ export async function renderCustomerWorkspacePageBySlug({
 }) {
   const canonicalSlug = canonicalSiteSlug(siteSlug);
   const routeSlug = publicSiteSlug(canonicalSlug);
-  if (slug === "/account" || slug === "/app") {
-    const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(canonicalSlug, slug) ?? await readStorefrontPlatformState();
-    const currentSite = state.sites.find((item) => item.slug === canonicalSlug);
-    if (!currentSite) notFound();
-    const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-    if (!sessionId) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
-    const current = await getCustomerBySessionRelational({ siteId: currentSite.id, sessionId });
-    if (!current) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+  const loginPath = routeMode === "host" ? "/login" : `/site/${routeSlug}/login`;
+  const workspacePath = routeMode === "host" ? slug : `/site/${routeSlug}${slug}`;
+  const queryString = new URLSearchParams(
+    Object.entries(query).flatMap(([key, value]) => {
+      if (typeof value === "string") return [[key, value]];
+      if (Array.isArray(value)) return value.map((item) => [key, item]);
+      return [];
+    })
+  ).toString();
+  const loginPathWithNext = `${loginPath}?next=${encodeURIComponent(`${workspacePath}${queryString ? `?${queryString}` : ""}`)}`;
+  const isWorkspaceRoute = slug === "/app" || slug.startsWith("/app/");
+  const initialWorkspacePanel = slug === "/app/upload" ? "upload" : "create";
+  if (slug === "/account") {
+    const siteId = await getSiteIdBySlugRelational(canonicalSlug);
+    if (!siteId) notFound();
+    const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+    if (!sessionId) redirect(loginPathWithNext);
+    const [current, site] = await Promise.all([
+      getCustomerBySessionRelational({ siteId, sessionId }),
+      getCustomerWorkspaceSiteShellRelational(canonicalSlug)
+    ]);
+    if (!current || !site) redirect(loginPathWithNext);
+    return <CustomerAccountClientPage initialCustomer={current.customer} initialSite={site} siteSlug={routeSlug} />;
+  }
 
-    const renderData = getSiteRenderData(state, currentSite.id);
-    currentSite.mediaAssets = renderData.mediaAssets;
-    const page = getPage(currentSite, slug);
-    const settings = currentSite.themeSettings.publishedJson;
-    const runtime = runtimeWithEmptyCollections({ customer: current.customer });
-
-    const pageJson = slug === "/account"
-      ? withAccountDashboardPage(page.publishedJson)
-      : withCustomerWorkspaceFlowPage(page.publishedJson);
-
-    return renderThemePage({
-      currentSite,
-      page: pageJson,
-      pagePath: slug,
-      query,
-      renderData,
-      routeMode,
-      runtime,
-      settings
-    });
+  if (isWorkspaceRoute) {
+    const siteId = await getSiteIdBySlugRelational(canonicalSlug);
+    if (!siteId) notFound();
+    const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+    if (!sessionId) redirect(loginPathWithNext);
+    const [current, bootstrap] = await Promise.all([
+      getCustomerBySessionRelational({ siteId, sessionId }),
+      getCustomerWorkspaceBootstrapRelational(canonicalSlug)
+    ]);
+    if (!current || !bootstrap) redirect(loginPathWithNext);
+    return (
+      <CustomerWorkspaceClientPage
+        initialBootstrap={{ ...bootstrap, customer: current.customer }}
+        initialCreativePackId={typeof query.pack === "string" ? query.pack : undefined}
+        initialPanel={initialWorkspacePanel}
+        initialToolId={typeof query.tool_id === "string" ? query.tool_id : undefined}
+        siteSlug={routeSlug}
+      />
+    );
   }
 
   const siteId = await getSiteIdBySlugRelational(canonicalSlug);
   if (!siteId) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
-  if (!sessionId) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+  if (!sessionId) redirect(loginPathWithNext);
 
   const profile = slug === "/account" ? "account" : slug === "/app" ? "workspace" : "full";
   const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({ siteId, sessionId, profile });
-  if (!state) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+  if (!state) redirect(loginPathWithNext);
   const currentSite = state.sites.find((item) => item.id === siteId);
   if (!currentSite) notFound();
   const current = await getCurrentCustomerSession(state, currentSite.id, sessionId);
-  if (!current) redirect(routeMode === "host" ? "/login" : `/site/${routeSlug}/login`);
+  if (!current) redirect(loginPathWithNext);
 
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
@@ -691,13 +1103,14 @@ export async function renderCustomerWorkspacePageBySlug({
     : slug === "/app"
     ? withCustomerWorkspaceFlowPage(page.publishedJson)
     : page.publishedJson;
+  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
 
   return renderThemePage({
     currentSite,
     page: pageJson,
     pagePath: slug,
     query,
-    renderData,
+    renderData: pageRenderData,
     routeMode,
     runtime,
     settings
@@ -747,7 +1160,7 @@ export async function renderCustomerJobDetailPage({
     page: page.publishedJson,
     pagePath: `/app/jobs/${job.id}`,
     query,
-    renderData,
+    renderData: trimRenderDataForPage(renderData, page.publishedJson, `/app/jobs/${job.id}`),
     routeMode,
     runtime,
     settings
@@ -759,35 +1172,43 @@ export async function renderToolPage({
   toolSlug,
   query = {},
   routeMode = "path",
-  state: providedState
+  state: providedState,
+  resolvedPage
 }: {
   site: Site;
   toolSlug: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
   state?: PlatformState;
+  resolvedPage?: ThemePage;
 }) {
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const renderData = getSiteRenderData(state, currentSite.id);
-  currentSite.mediaAssets = renderData.mediaAssets;
-  const { page, matched } = resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
+  const resolved = resolvedPage
+    ? { page: resolvedPage, matched: true }
+    : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
+  const { page, matched } = resolved;
   if (!matched) notFound();
+  const toolRenderData = trimToolDetailRenderData(renderData);
+  currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
-  const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
-  const runtime = sessionId && pageNeedsFullCustomerRuntime(page.publishedJson, page.slug)
-    ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
-    : await getLightCustomerRuntime(state, currentSite.id, sessionId);
   const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug);
+  const pageRenderData = trimRenderDataForPage(toolRenderData, pageJson, page.slug);
   return renderThemePage({
     currentSite,
     page: pageJson,
     pagePath: page.slug,
     query,
-    renderData,
+    renderData: pageRenderData,
     routeMode,
-    runtime,
-    settings
+    runtime: runtimeWithEmptyCollections(),
+    settings,
+    jsonLd: buildToolDirectoryJsonLd({
+      site: currentSite,
+      toolSlug,
+      routeMode
+    })
   });
 }

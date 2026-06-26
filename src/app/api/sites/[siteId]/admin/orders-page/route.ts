@@ -16,6 +16,7 @@ import type { GenerationJob, Order, PaymentEvent, PlatformState, Subscription } 
 
 type CustomerLookup = { id: string; email: string };
 type OrdersTab = "overview" | "orders" | "subscriptions" | "ledger" | "events";
+type OrdersDataTab = Exclude<OrdersTab, "overview">;
 
 const ordersPageCache = createServerTtlCache("site-admin-orders-page", Number(process.env.SITE_ADMIN_ORDERS_PAGE_CACHE_TTL_MS ?? 15_000));
 
@@ -43,8 +44,12 @@ function normalizeCursor(value: string | null): string | undefined {
   return trimmed || undefined;
 }
 
-function nextCursor<T extends { id: string }>(items: T[], take: number): string | undefined {
-  return items.length >= take ? items[items.length - 1]?.id : undefined;
+function pageSlice<T extends { id: string }>(items: T[], take: number) {
+  const pageItems = items.slice(0, take);
+  return {
+    items: pageItems,
+    nextCursor: items.length > take ? pageItems[pageItems.length - 1]?.id : undefined
+  };
 }
 
 function mapOrderForAdmin(row: {
@@ -140,18 +145,50 @@ function mapLightPaymentEventForAdmin(row: {
   };
 }
 
-function legacyCollections(state: PlatformState, siteId: string, tab: OrdersTab, take: number) {
-  const includeOrders = tab === "orders" || tab === "ledger" || tab === "overview";
-  const includeSubscriptions = tab === "subscriptions" || tab === "overview";
-  const includeLedger = tab === "ledger" || tab === "overview";
+function legacyPage<T extends { id: string }>(items: T[], cursor: string | undefined, take: number) {
+  const startIndex = cursor ? items.findIndex((item) => item.id === cursor) + 1 : 0;
+  return pageSlice(items.slice(Math.max(0, startIndex), Math.max(0, startIndex) + take + 1), take);
+}
+
+function legacyCollections(state: PlatformState, siteId: string, tab: OrdersTab, take: number, cursor?: string) {
+  if (tab === "overview") {
+    return {
+      orders: [],
+      subscriptions: [],
+      ledger: [],
+      jobs: [],
+      paymentEvents: [],
+      pageInfo: {
+        take: 0,
+        nextOrderCursor: undefined,
+        nextSubscriptionCursor: undefined,
+        nextLedgerCursor: undefined,
+        nextPaymentEventCursor: undefined
+      }
+    };
+  }
+  const includeOrders = tab === "orders" || tab === "ledger";
+  const includeSubscriptions = tab === "subscriptions";
+  const includeLedger = tab === "ledger";
   const includeJobs = tab === "ledger";
-  const includePaymentEvents = tab === "events" || tab === "overview";
+  const includePaymentEvents = tab === "events";
+  const ordersPage = includeOrders ? legacyPage(getSiteOrdersFromState(state, siteId), tab === "orders" ? cursor : undefined, take) : { items: [], nextCursor: undefined };
+  const subscriptionsPage = includeSubscriptions ? legacyPage(getSiteSubscriptionsFromState(state, siteId), tab === "subscriptions" ? cursor : undefined, take) : { items: [], nextCursor: undefined };
+  const ledgerPage = includeLedger ? legacyPage(getSiteLedgerFromState(state, siteId), tab === "ledger" ? cursor : undefined, take) : { items: [], nextCursor: undefined };
+  const eventsPage = includePaymentEvents ? legacyPage(state.paymentEvents.filter((event) => event.siteId === siteId), tab === "events" ? cursor : undefined, take) : { items: [], nextCursor: undefined };
   return {
-    orders: includeOrders ? getSiteOrdersFromState(state, siteId).slice(0, take) : [],
-    subscriptions: includeSubscriptions ? getSiteSubscriptionsFromState(state, siteId).slice(0, take) : [],
-    ledger: includeLedger ? getSiteLedgerFromState(state, siteId).slice(0, take) : [],
+    orders: ordersPage.items,
+    subscriptions: subscriptionsPage.items,
+    ledger: ledgerPage.items,
     jobs: includeJobs ? getSiteJobsFromState(state, siteId).slice(0, take) : [],
-    paymentEvents: includePaymentEvents ? state.paymentEvents.filter((event) => event.siteId === siteId).slice(0, take) : []
+    paymentEvents: eventsPage.items,
+    pageInfo: {
+      take,
+      nextOrderCursor: ordersPage.nextCursor,
+      nextSubscriptionCursor: subscriptionsPage.nextCursor,
+      nextLedgerCursor: ledgerPage.nextCursor,
+      nextPaymentEventCursor: eventsPage.nextCursor
+    }
   };
 }
 
@@ -183,7 +220,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
 
   if (process.env.PERSISTENCE_BACKEND !== "postgres") {
     const legacyState = perf.measureSync("context", () => readPlatformState(), { source: "state" });
-    const collections = legacyCollections(legacyState, siteId, tab, take);
+    const collections = legacyCollections(legacyState, siteId, tab, take, cursor);
     const customers = await perf.measure("db", () => customerLookups(
       siteId,
       [...collections.orders, ...collections.subscriptions, ...collections.ledger].map((item) => item.customerId),
@@ -192,13 +229,35 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { ok: true, tab, customers, ...collections });
   }
 
-  const includeOrders = tab === "orders" || tab === "ledger" || tab === "overview";
-  const includeSubscriptions = tab === "subscriptions" || tab === "overview";
-  const includeLedger = tab === "ledger" || tab === "overview";
-  const includeJobs = tab === "ledger";
-  const includePaymentEvents = tab === "events" || tab === "overview";
+  if (tab === "overview") {
+    return adminPerfJson(perf, {
+      ok: true,
+      tab,
+      customers: [],
+      orders: [],
+      subscriptions: [],
+      ledger: [],
+      jobs: [],
+      paymentEvents: [],
+      pageInfo: {
+        take: 0,
+        nextOrderCursor: undefined,
+        nextSubscriptionCursor: undefined,
+        nextLedgerCursor: undefined,
+        nextPaymentEventCursor: undefined
+      }
+    }, undefined, { mode: "overview_empty" });
+  }
 
-  const payload = await perf.measure("cache", () => ordersPageCache.get(`${tab}:${siteId}:${take}:${cursor ?? "first"}`, async () => {
+  const dataTab: OrdersDataTab = tab;
+  const includeOrders = dataTab === "orders" || dataTab === "ledger";
+  const includeSubscriptions = dataTab === "subscriptions";
+  const includeLedger = dataTab === "ledger";
+  const includeJobs = dataTab === "ledger";
+  const includePaymentEvents = dataTab === "events";
+
+  const payload = await perf.measure("cache", () => ordersPageCache.get(`${dataTab}:${siteId}:${take}:${cursor ?? "first"}`, async () => {
+    const pageTake = take + 1;
     const [orders, subscriptions, ledger, jobs, paymentEvents] = await perf.measure("db", () => runDbTasks([
       includeOrders
         ? () => prisma.order.findMany({
@@ -215,8 +274,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               createdAt: true
             },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-            ...(cursor && tab === "orders" ? { cursor: { id: cursor }, skip: 1 } : {}),
-            take
+            ...(cursor && dataTab === "orders" ? { cursor: { id: cursor }, skip: 1 } : {}),
+            take: dataTab === "orders" ? pageTake : take
           })
         : () => Promise.resolve([]),
       includeSubscriptions
@@ -235,16 +294,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               createdAt: true
             },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-            ...(cursor && tab === "subscriptions" ? { cursor: { id: cursor }, skip: 1 } : {}),
-            take
+            ...(cursor && dataTab === "subscriptions" ? { cursor: { id: cursor }, skip: 1 } : {}),
+            take: dataTab === "subscriptions" ? pageTake : take
           })
         : () => Promise.resolve([]),
       includeLedger
         ? () => prisma.creditLedger.findMany({
             where: { siteId },
             orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-            ...(cursor && tab === "ledger" ? { cursor: { id: cursor }, skip: 1 } : {}),
-            take
+            ...(cursor && dataTab === "ledger" ? { cursor: { id: cursor }, skip: 1 } : {}),
+            take: dataTab === "ledger" ? pageTake : take
           })
         : () => Promise.resolve([]),
       includeJobs
@@ -276,35 +335,36 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               processedAt: true
             },
             orderBy: [{ processedAt: "desc" }, { id: "asc" }],
-            ...(cursor && tab === "events" ? { cursor: { id: cursor }, skip: 1 } : {}),
-            take
+            ...(cursor && dataTab === "events" ? { cursor: { id: cursor }, skip: 1 } : {}),
+            take: dataTab === "events" ? pageTake : take
           })
         : () => Promise.resolve([])
     ], siteAdminReadConcurrency), { phase: "collections" });
 
-    const mappedOrders = orders.map(mapOrderForAdmin);
-    const mappedSubscriptions = subscriptions.map(mapSubscriptionForAdmin);
-    const mappedLedger = ledger.map(mapCreditLedger);
+    const ordersPage = pageSlice(orders.map(mapOrderForAdmin), take);
+    const subscriptionsPage = pageSlice(subscriptions.map(mapSubscriptionForAdmin), take);
+    const ledgerPage = pageSlice(ledger.map(mapCreditLedger), take);
+    const paymentEventsPage = pageSlice(paymentEvents.map(mapLightPaymentEventForAdmin), take);
     const customers = await perf.measure("db", () => customerLookups(
       siteId,
-      [...mappedOrders, ...mappedSubscriptions, ...mappedLedger].map((item) => item.customerId)
+      [...ordersPage.items, ...subscriptionsPage.items, ...ledgerPage.items].map((item) => item.customerId)
     ), { phase: "customerLookups" });
 
     return {
       ok: true,
-      tab,
+      tab: dataTab,
       customers,
-      orders: mappedOrders,
-      subscriptions: mappedSubscriptions,
-      ledger: mappedLedger,
+      orders: ordersPage.items,
+      subscriptions: subscriptionsPage.items,
+      ledger: ledgerPage.items,
       jobs: jobs.map(mapLightGenerationJobForAdmin),
-      paymentEvents: paymentEvents.map(mapLightPaymentEventForAdmin),
+      paymentEvents: paymentEventsPage.items,
       pageInfo: {
         take,
-        nextOrderCursor: nextCursor(mappedOrders, take),
-        nextSubscriptionCursor: nextCursor(mappedSubscriptions, take),
-        nextLedgerCursor: nextCursor(mappedLedger, take),
-        nextPaymentEventCursor: nextCursor(paymentEvents, take)
+        nextOrderCursor: ordersPage.nextCursor,
+        nextSubscriptionCursor: subscriptionsPage.nextCursor,
+        nextLedgerCursor: ledgerPage.nextCursor,
+        nextPaymentEventCursor: paymentEventsPage.nextCursor
       }
     };
   }));

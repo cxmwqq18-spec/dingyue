@@ -272,7 +272,7 @@ export function PlatformSiteSettingsPanel({
               ]}
             />
             <div className="rounded-[12px] border border-[var(--admin-border-soft)] bg-white px-4 py-4 text-[12px] leading-5 text-[#667085]">
-              平台改这里，站点后台的收款设置页会同步反映。当前未接真实 Stripe webhook 发号，不对外宣称支付已完工。
+              平台改这里，站点后台的收款设置页会同步反映。当前未接真实支付确认发号，不对外宣称支付已完工。
             </div>
           </div>
         </div>

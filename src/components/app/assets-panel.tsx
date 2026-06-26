@@ -12,21 +12,24 @@ export function AssetsPanel({
   siteId,
   customer,
   assets,
+  createHref = "#create",
   emptyTitle = "No private uploads yet.",
   emptyBody = "Add private source photos before creating an album request."
 }: {
   siteId: string;
   customer: PublicCustomer;
   assets: ThemeRuntimeAsset[];
+  createHref?: string;
   emptyTitle?: string;
   emptyBody?: string;
 }) {
   const [items, setItems] = useState(assets);
   const [label, setLabel] = useState("reference portrait");
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [message, setMessage] = useState("Uploads stay private to this account.");
   const [pending, setPending] = useState(false);
   const [page, setPage] = useState(1);
+  const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
   const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
   const pageStart = (safePage - 1) * PAGE_SIZE;
@@ -38,11 +41,17 @@ export function AssetsPanel({
 
   useEffect(() => {
     let cancelled = false;
+    setLoadingAssets(true);
     loadCustomerAssets(siteId, customer.id)
       .then((result) => {
-        if (!cancelled) setItems(result);
+        if (!cancelled) {
+          setItems(result);
+          setLoadingAssets(false);
+        }
       })
-      .catch(() => undefined);
+      .catch(() => {
+        if (!cancelled) setLoadingAssets(false);
+      });
     return () => {
       cancelled = true;
     };
@@ -54,34 +63,38 @@ export function AssetsPanel({
 
   async function createAsset(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!file) {
-      setMessage("Choose an image file before uploading.");
+    if (!files.length) {
+      setMessage("Choose one or more image files before uploading.");
       return;
     }
     setPending(true);
-    setMessage("Uploading the private source photo...");
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("label", label || file.name.replace(/\.[^.]+$/, ""));
-    formData.append("role", "input");
-    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
-      method: "POST",
-      headers: csrfHeader(`customer_csrf_${siteId}`),
-      body: formData
-    });
-    const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
-    const createdAsset = result.asset;
-    if (response.ok && createdAsset) {
-      invalidateCustomerAssets(siteId, customer.id);
-      setItems((current) => [createdAsset, ...current]);
-      setPage(1);
-      setLabel("reference portrait");
-      setFile(null);
-      setMessage(`${createdAsset.label} uploaded. Continue to tool setup when your source photos are ready.`);
-      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-    } else {
-      setMessage(result.error ?? "Asset create failed.");
+    setMessage(files.length === 1 ? "Uploading the private source photo..." : `Uploading ${files.length} private source photos...`);
+    const createdAssets: ThemeRuntimeAsset[] = [];
+    for (const [index, currentFile] of files.entries()) {
+      const formData = new FormData();
+      formData.append("file", currentFile);
+      formData.append("label", files.length === 1 ? label || currentFile.name.replace(/\.[^.]+$/, "") : currentFile.name.replace(/\.[^.]+$/, "") || `source photo ${index + 1}`);
+      formData.append("role", "input");
+      const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+        method: "POST",
+        headers: csrfHeader(`customer_csrf_${siteId}`),
+        body: formData
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+      if (!response.ok || !result.asset) {
+        setMessage(result.error ?? `Upload failed for ${currentFile.name}.`);
+        setPending(false);
+        return;
+      }
+      createdAssets.push(result.asset);
     }
+    invalidateCustomerAssets(siteId, customer.id);
+    setItems((current) => [...createdAssets.reverse(), ...current]);
+    setPage(1);
+    setLabel("reference portrait");
+    setFiles([]);
+    setMessage(`${createdAssets.length} source photo${createdAssets.length === 1 ? "" : "s"} uploaded. Continue to tool setup when your source photos are ready.`);
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
     setPending(false);
   }
 
@@ -124,7 +137,8 @@ export function AssetsPanel({
             <input
               accept="image/*"
               className="rounded-[18px] border border-dashed border-[#cdbfae] bg-white px-4 py-3 text-sm text-[#171514] file:mr-4 file:rounded-full file:border-0 file:bg-[#171514] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
-              onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              multiple
+              onChange={(event) => setFiles(Array.from(event.target.files ?? []))}
               type="file"
             />
           </label>
@@ -133,19 +147,20 @@ export function AssetsPanel({
             <input
               className="rounded-[18px] border border-[#ded5ca] bg-white px-4 py-3 text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
               onChange={(event) => setLabel(event.target.value)}
-              placeholder={file?.name.replace(/\.[^.]+$/, "") || "reference portrait"}
+              placeholder={files[0]?.name.replace(/\.[^.]+$/, "") || "reference portrait"}
               value={label}
             />
+            {files.length > 1 ? <span className="text-xs leading-5 text-[#6d665f]">Multiple uploads use each file name as its label.</span> : null}
           </label>
         </div>
-        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !file}>
+        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !files.length}>
           <UploadCloud className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
-          {pending ? "Uploading" : "Upload photo"}
+          {pending ? "Uploading" : files.length > 1 ? "Upload photos" : "Upload photo"}
         </button>
       </form>
       <div className="mt-4 flex flex-wrap items-center gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] px-4 py-3 text-sm text-[#625d56]">
         <span>After uploading the needed photos, return to the selected tool and start the private request.</span>
-        <a className="inline-flex rounded-full bg-[#171514] px-4 py-2 text-xs font-semibold text-white" href="#create">
+        <a className="inline-flex rounded-full bg-[#171514] px-4 py-2 text-xs font-semibold text-white" href={createHref}>
           Continue to tool setup
         </a>
       </div>
@@ -174,6 +189,24 @@ export function AssetsPanel({
               </span>
             </div>
           ))
+        ) : loadingAssets ? (
+          <div className="grid gap-3" aria-busy="true" aria-label="Loading private uploads">
+            {[0, 1, 2].map((item) => (
+              <div className="grid gap-3 rounded-[20px] border border-[#e4dace] bg-white p-4 md:grid-cols-[92px_1fr_0.32fr_0.4fr]" key={item}>
+                <div className="aspect-[4/5] rounded-[16px] bg-[#efe6d9]" />
+                <div className="grid content-start gap-3">
+                  <div className="h-4 w-40 rounded-full bg-[#efe6d9]" />
+                  <div className="h-6 w-28 rounded-full bg-[#fbf7f0]" />
+                  <div className="h-3 w-36 rounded-full bg-[#efe6d9]" />
+                </div>
+                <div className="h-4 w-24 rounded-full bg-[#efe6d9]" />
+                <div className="flex gap-2 md:justify-end">
+                  <div className="h-9 w-10 rounded-[14px] bg-[#fbf7f0]" />
+                  <div className="h-9 w-10 rounded-[14px] bg-[#fbf7f0]" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="rounded-[20px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-5 text-sm text-[#6d665f]">
             <p className="font-semibold text-[#171514]">{emptyTitle}</p>

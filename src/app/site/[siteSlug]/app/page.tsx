@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
+import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: "Workspace" };
@@ -14,5 +14,5 @@ export default async function CustomerWorkspacePage({
 }) {
   const { siteSlug } = await params;
   const query = searchParams ? await searchParams : {};
-  return <CustomerWorkspaceClientPage initialCreativePackId={typeof query.pack === "string" ? query.pack : undefined} siteSlug={siteSlug} />;
+  return renderCustomerWorkspacePageBySlug({ siteSlug, slug: "/app", query, routeMode: "path" });
 }

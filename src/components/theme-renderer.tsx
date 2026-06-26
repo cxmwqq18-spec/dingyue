@@ -1,11 +1,14 @@
 import NextImage from "next/image";
+import type { CSSProperties } from "react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
 import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
 import { CustomerBootstrapPrefetch } from "@/components/storefront/customer-bootstrap-client";
+import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
+import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
@@ -41,7 +44,8 @@ import {
   UploadCloud,
   UserRound,
   Users,
-  Youtube
+  Youtube,
+  type LucideIcon
 } from "lucide-react";
 
 function Link(props: StorefrontInstantLinkProps) {
@@ -50,8 +54,10 @@ function Link(props: StorefrontInstantLinkProps) {
 import { getSectionSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
 import { formatCurrency } from "@/lib/data";
+import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
+import type { JsonLdNode } from "@/lib/theme/json-ld";
 import type {
   CreativePack,
   SectionBlockInstance,
@@ -82,6 +88,8 @@ export function ThemeRenderer({
   pagePath,
   query = {},
   routeMode = "path",
+  jsonLd = [],
+  lightweightChrome = false,
   previewSelection
 }: {
   site: Site;
@@ -95,16 +103,19 @@ export function ThemeRenderer({
   pagePath?: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: StorefrontRouteMode;
+  jsonLd?: JsonLdNode[];
+  lightweightChrome?: boolean;
   previewSelection?: {
     sectionId?: string;
     blockId?: string;
   };
 }) {
-  const normalizedPath = pagePath ?? sitePathFromPage(site, page.pageType);
-  const entries = visibleSectionEntriesForRoute(getSectionEntries(page), normalizedPath, site);
+  const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
+  const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
+  const entries = visibleSectionEntriesForRoute(getSectionEntries(page), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
   const routedSite: RoutedSite = {
-    ...site,
+    ...displaySite,
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
   const customerPrefetchPaths = runtime?.customer && mode === "published"
@@ -115,15 +126,36 @@ export function ThemeRenderer({
         hrefFor(routedSite, "/tools")
       ]
     : [];
+  const publicPrefetchPaths = mode === "published"
+    ? [
+        hrefFor(routedSite, "/tools"),
+        hrefFor(routedSite, "/tools/background-changer")
+      ]
+    : [];
+  const storefrontPrefetchPaths = Array.from(new Set([...publicPrefetchPaths, ...customerPrefetchPaths]));
   const renderContext = {
     pagePath: normalizedPath,
     query,
-    pages: site.pages
+    page,
+    pages: displaySite.pages
   };
   return (
-    <div className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]">
-      {customerPrefetchPaths.length ? <CustomerRoutePrefetch paths={customerPrefetchPaths} /> : null}
-      {runtime?.customer && mode === "published" ? <CustomerBootstrapPrefetch siteSlug={publicSlug} /> : null}
+    <div
+      className="notranslate bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
+      translate={mode === "published" ? "no" : undefined}
+      suppressHydrationWarning={mode === "published"}
+    >
+      {mode === "published"
+        ? jsonLd.map((node, index) => (
+            <script
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(node).replace(/</g, "\\u003c") }}
+              key={`json_ld_${index}`}
+              type="application/ld+json"
+            />
+          ))
+        : null}
+      {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
+      {runtime?.customer && mode === "published" ? <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} /> : null}
       <StorefrontNavigationFeedback />
       <div
         className="xfcart-section"
@@ -133,14 +165,15 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader creativePacks={creativePacks} runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
+        <ThemeGlobalHeader creativePacks={creativePacks} lightweight={lightweightChrome} runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
       </div>
       <main data-theme-sections-root="">
-        {entries.map(([id, section]) => (
+        {entries.map(([id, section], index) => (
           <ThemeSectionFrame
             creativePacks={creativePacks}
             id={id}
             key={id}
+            lazyRender={mode === "published" && index > 1}
             mode={mode}
             previewSelection={previewSelection}
             products={products}
@@ -160,7 +193,7 @@ export function ThemeRenderer({
         id="xfcart-section-footer_plus"
         {...previewSelectedAttrs(previewSelection, "footer_plus")}
       >
-        <ThemeGlobalFooter site={routedSite} settings={settings} />
+        <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} />
       </div>
     </div>
   );
@@ -174,6 +207,7 @@ type ThemeSectionFrameProps = {
   siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
   creativePacks: CreativePack[];
   runtime?: ThemeRuntimeData;
+  lazyRender?: boolean;
   mode: "published" | "preview";
   renderContext: RenderContext;
   previewSelection?: {
@@ -185,6 +219,7 @@ type ThemeSectionFrameProps = {
 type RenderContext = {
   pagePath: string;
   query: Record<string, string | string[] | undefined>;
+  page: ThemePageJson;
   pages: Site["pages"];
 };
 
@@ -224,10 +259,13 @@ type DreamShootCatalogCard = {
 type PhotoPackageMegaGroup = {
   label: string;
   slug: string;
+  description?: string;
+  icon?: string;
   items: Array<{
     label: string;
     slug: string;
     href: string;
+    icon?: string;
   }>;
 };
 
@@ -235,7 +273,72 @@ function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>
   return entries;
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+const sectionTypesUsingProducts = new Set([
+  "cart_summary",
+  "pricing_table",
+  "product_detail",
+  "products",
+  "products_plus",
+  "search_results"
+]);
+
+const sectionTypesUsingSiteAiApps = new Set([
+  "ai_tool_entry",
+  "ai_tool_grid",
+  "generation_form",
+  "search_results"
+]);
+
+const sectionTypesUsingCreativePacks = new Set([
+  "collection_list_plus",
+  "dreamshoot_package_catalog",
+  "dreamshoot_package_taxonomy",
+  "photo_package_wall",
+  "products",
+  "products_plus",
+  "search_results"
+]);
+
+const sectionTypesUsingCustomerRuntime = new Set([
+  "album_gallery",
+  "cart_summary",
+  "generation_form",
+  "job_detail",
+  "job_progress",
+  "login_method_panel",
+  "upload_panel"
+]);
+
+function runtimeForSection(section: SectionInstance, runtime: ThemeRuntimeData | undefined): ThemeRuntimeData | undefined {
+  if (!runtime) return undefined;
+  if (sectionTypesUsingCustomerRuntime.has(section.type)) return runtime;
+  return runtime.customer || runtime.auth || runtime.isPreview
+    ? runtimeWithOnlyShellState(runtime)
+    : undefined;
+}
+
+function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData {
+  return {
+    customer: runtime.customer,
+    jobs: [],
+    assets: [],
+    albums: [],
+    ledger: [],
+    subscriptions: [],
+    orders: [],
+    customerModels: [],
+    auth: runtime.auth,
+    isPreview: runtime.isPreview
+  };
+}
+
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+  const lazyStyle: CSSProperties | undefined = lazyRender
+    ? {
+        contentVisibility: "auto",
+        containIntrinsicSize: "1px 760px"
+      }
+    : undefined;
   return (
     <div
       className="xfcart-section"
@@ -243,18 +346,19 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, cre
       data-section-style=""
       data-section-type={section.type}
       id={`xfcart-section-${id}`}
+      style={lazyStyle}
       {...previewSelectedAttrs(previewSelection, id)}
     >
       <SectionView
-        creativePacks={creativePacks}
+        creativePacks={sectionTypesUsingCreativePacks.has(section.type) ? creativePacks : []}
         id={id}
         mode={mode}
-        products={products}
+        products={sectionTypesUsingProducts.has(section.type) ? products : []}
         renderContext={renderContext}
-        runtime={runtime}
+        runtime={runtimeForSection(section, runtime)}
         section={section}
         site={site}
-        siteAiApps={siteAiApps}
+        siteAiApps={sectionTypesUsingSiteAiApps.has(section.type) ? siteAiApps : []}
       />
     </div>
   );
@@ -268,7 +372,7 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings, pagePath = "/" }: { creativePacks?: CreativePack[]; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
+export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, runtime, site, settings, pagePath = "/" }: { creativePacks?: CreativePack[]; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -291,20 +395,35 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
           ...link,
           block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
         }));
-  const toolMegaBlocks = getDreamshootToolBlocks(header?.blocks);
+  const toolMegaBlocks = mergeDreamshootToolBlocks(getDreamshootToolBlocks(header?.blocks));
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
-  const showDreamShootToolsMega = dark && /dreamshoot/i.test(title) && toolMegaBlocks.length > 0;
-  const photoPackageMegaGroups = getPhotoPackageMegaGroups(creativePacks);
-  const showPhotoPackageMega = dark && /dreamshoot/i.test(title) && photoPackageMegaGroups.length > 0;
+  const dreamShootIdentity = `${site.slug} ${site.name} ${site.branding.logoText} ${title}`;
+  const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
+  const showDreamShootToolsMega = !lightweight && isDreamShoot && toolMegaBlocks.length > 0;
+  const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks);
+  const photoPackageMegaGroups = dynamicPhotoPackageMegaGroups.length || lightweight ? dynamicPhotoPackageMegaGroups : dreamshootFallbackPhotoPackageGroups;
+  const showPhotoPackageMega = !lightweight && isDreamShoot;
+  const photoPackageMegaPrefetchPaths = photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href))).slice(0, 10);
+  const toolsMegaPrefetchPaths = showDreamShootToolsMega
+    ? [hrefFor(site, "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", "/tools")))]
+    : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
   const mobileLabel = header ? setting(header, "mobileLabel", "Menu") : "Menu";
   const logoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
-  const logoAlt = header ? setting(header, "logoAlt", title) : title;
-  const isDreamShoot = /dreamshoot/i.test(title);
-  const brandMark = brandInitials(title);
+  const readableBrandTitle = isDreamShoot ? "MydreamShoots" : title;
+  const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : readableBrandTitle;
+  const brandDescription = isDreamShoot
+    ? "MydreamShoots home, AI photo packages and private albums"
+    : `${readableBrandTitle} home`;
+  const logoAlt = isDreamShoot
+    ? "MydreamShoots heart camera logo for AI photo packages and private albums"
+    : header
+      ? setting(header, "logoAlt", `${readableBrandTitle} logo`)
+      : `${readableBrandTitle} logo`;
+  const brandMark = brandInitials(readableBrandTitle);
   const customer = runtime?.customer;
   return (
     <header
@@ -327,6 +446,8 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
       <div className={lightCommerce ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
         <HeaderLink
           href={hrefFor(site, "/")}
+          aria-label={brandDescription}
+          title={brandDescription}
           className={
             dark
               ? isDreamShoot
@@ -367,11 +488,12 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
                 </span>
               )}
               <span className="min-w-0">
-                <span className={lightCommerce ? "block max-w-[9rem] truncate text-[1.72rem] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)] sm:max-w-[12rem] sm:text-[2.15rem]" : isDreamShoot && dark ? "block text-[1.52rem] font-semibold leading-none tracking-[-0.035em] text-white sm:text-[1.66rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"}>{title}</span>
+                <span className={lightCommerce ? "block max-w-[9rem] truncate text-[1.72rem] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)] sm:max-w-[12rem] sm:text-[2.15rem]" : isDreamShoot && dark ? "block text-[1.52rem] font-semibold leading-none text-white sm:text-[1.66rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot ? "true" : undefined}>{visualBrandTitle}</span>
+                {isDreamShoot ? <span className="sr-only">MydreamShoots AI photo packages and private albums</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
             </>
-          ) : title}
+          ) : visualBrandTitle}
         </HeaderLink>
         <nav className={dark ? "hidden min-w-0 items-center justify-center gap-2 lg:flex xl:gap-3" : lightCommerce ? "hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7" : "hidden min-w-0 items-center justify-center gap-5 text-sm text-[var(--site-body)] md:flex"}>
           {links.map((link, index) => {
@@ -385,20 +507,10 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
             const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
             const isPackagesLink = showPhotoPackageMega && /photo packages|packages/i.test(link.label);
             const isMegaLink = isToolsLink || isPackagesLink;
-            const linkNode = isMegaLink ? (
-              <button
-                aria-expanded="false"
-                className={navClass}
-                type="button"
-                {...xfcartBlockAttrs(link.block, index, "header_nav")}
-              >
-                {link.label}
-                <ChevronRight className="h-3.5 w-3.5 rotate-90 text-white/72" strokeWidth={2} />
-              </button>
-            ) : (
-              <HeaderLink
-                className={navClass}
-                href={hrefFor(site, link.href)}
+	            const linkNode = isMegaLink ? null : (
+	              <HeaderLink
+	                className={navClass}
+	                href={hrefFor(site, link.href)}
                 {...xfcartBlockAttrs(link.block, index, "header_nav")}
               >
                 {link.label}
@@ -407,24 +519,28 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
             if (!isMegaLink) {
               return <span key={`${link.label}_${link.href}`}>{linkNode}</span>;
             }
-            return (
-              <div className="group relative" key={`${link.label}_${link.href}`}>
-                {linkNode}
-                <div className={`invisible pointer-events-none fixed left-1/2 z-50 w-[min(92vw,1180px)] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 ease-out group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}>
-                  {isPackagesLink ? (
-                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} />
-                  ) : (
+	            return (
+	              <ClickMegaMenu
+	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
+	                buttonClassName={navClass}
+	                key={`${link.label}_${link.href}`}
+	                label={link.label}
+                  panelClassName={`fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}
+	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
+	              >
+	                  {isPackagesLink ? (
+	                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} />
+	                  ) : (
                     <DreamShootMegaToolsPanel
                       ctaHref="/tools"
                       ctaLabel="View all tools"
                       site={site}
                       tools={toolMegaBlocks}
-                      variant="popover"
-                    />
-                  )}
-                </div>
-              </div>
-            );
+	                      variant="popover"
+	                    />
+	                  )}
+	              </ClickMegaMenu>
+	            );
           })}
         </nav>
         <div className="flex items-center justify-end gap-3">
@@ -482,34 +598,58 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
                 aria-hidden="true"
                 className={
                   isDreamShoot && dark
-                    ? "fixed inset-0 z-[72] bg-[#02030A]/82 backdrop-blur-[3px] lg:hidden"
-                    : "fixed inset-0 z-[72] bg-black/58 backdrop-blur-[2px] lg:hidden"
+                    ? "pointer-events-none fixed inset-0 z-[72] hidden bg-[#02030A]/82 backdrop-blur-[3px] group-open:block lg:hidden"
+                    : "pointer-events-none fixed inset-0 z-[72] hidden bg-black/58 backdrop-blur-[2px] group-open:block lg:hidden"
                 }
               />
               <div
+                data-storefront-mobile-menu-panel=""
                 className={
                   dark
                     ? isDreamShoot
-                      ? "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(22rem,calc(100vw-2rem))] rounded-[24px] border border-white/18 bg-[#070911]/[0.99] p-3 shadow-[0_38px_110px_-54px_rgba(0,0,0,0.96)] ring-1 ring-[#16DCF0]/20 backdrop-blur-xl"
-                      : "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-white/14 bg-[#101114]/[0.99] p-3 shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur"
-                    : "absolute right-0 top-[calc(100%+12px)] z-[86] w-[min(18rem,calc(100vw-2rem))] rounded-[24px] border border-[#e2d7ca] bg-[#fffaf3] p-3 shadow-[0_34px_88px_-52px_rgba(20,22,26,0.32)] backdrop-blur"
+                      ? "absolute right-0 top-[calc(100%+12px)] z-[86] hidden max-h-[calc(100dvh-7rem)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-[24px] border border-white/18 bg-[#070911]/[0.99] p-3 shadow-[0_38px_110px_-54px_rgba(0,0,0,0.96)] ring-1 ring-[#16DCF0]/20 backdrop-blur-xl group-open:block"
+                      : "absolute right-0 top-[calc(100%+12px)] z-[86] hidden max-h-[calc(100dvh-7rem)] w-[min(18rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-[24px] border border-white/14 bg-[#101114]/[0.99] p-3 shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur group-open:block"
+                    : "absolute right-0 top-[calc(100%+12px)] z-[86] hidden max-h-[calc(100dvh-7rem)] w-[min(18rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-[24px] border border-[#e2d7ca] bg-[#fffaf3] p-3 shadow-[0_34px_88px_-52px_rgba(20,22,26,0.32)] backdrop-blur group-open:block"
                 }
               >
                 <div className="grid gap-1">
-                  {links.map((link, index) => (
-                    <HeaderLink
-                      className={
-                        dark
-                          ? "rounded-[16px] px-4 py-3 text-sm font-medium text-white/76 transition hover:bg-white/[0.08] hover:text-white"
-                          : "rounded-[16px] px-4 py-3 text-sm font-medium text-[#4f4944] transition hover:bg-white hover:text-[#171514]"
-                      }
-                      href={hrefFor(site, link.href)}
-                      key={`mobile_${link.label}_${link.href}`}
-                      {...xfcartBlockAttrs(link.block, index, "header_nav_mobile")}
-                    >
-                      {link.label}
-                    </HeaderLink>
-                  ))}
+                  {links.map((link, index) => {
+                    const mobileLinkClass = dark
+                      ? "rounded-[16px] px-4 py-3 text-sm font-medium text-white/76 transition hover:bg-white/[0.08] hover:text-white"
+                      : "rounded-[16px] px-4 py-3 text-sm font-medium text-[#4f4944] transition hover:bg-white hover:text-[#171514]";
+                    const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
+                    const isPackagesLink = showPhotoPackageMega && /photo packages|packages/i.test(link.label);
+                    if (isPackagesLink) {
+                      return (
+                        <MobilePhotoPackagesMenu
+                          dark={dark}
+                          groups={photoPackageMegaGroups}
+                          key={`mobile_${link.label}_${link.href}`}
+                          site={site}
+                        />
+                      );
+                    }
+                    if (isToolsLink) {
+                      return (
+                        <MobileToolsMenu
+                          dark={dark}
+                          key={`mobile_${link.label}_${link.href}`}
+                          site={site}
+                          tools={toolMegaBlocks}
+                        />
+                      );
+                    }
+                    return (
+                      <HeaderLink
+                        className={mobileLinkClass}
+                        href={hrefFor(site, link.href)}
+                        key={`mobile_${link.label}_${link.href}`}
+                        {...xfcartBlockAttrs(link.block, index, "header_nav_mobile")}
+                      >
+                        {link.label}
+                      </HeaderLink>
+                    );
+                  })}
                 </div>
                 {customer ? (
                   <div className={dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]"}>
@@ -550,14 +690,17 @@ export function ThemeGlobalHeader({ creativePacks = [], runtime, site, settings,
   );
 }
 
-export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: ThemeSettings }) {
+export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lightweight?: boolean; site: Site; settings: ThemeSettings }) {
   const footer = settings.globalSections?.footer;
   const saasFooter = saasGlobalSection(settings, "footer_plus");
   const title = footer ? setting(footer, "title", site.branding.logoText) : site.branding.logoText;
-  const tagline = footer ? setting(footer, "tagline", site.branding.market) : site.branding.market;
-  const body = footer ? setting(footer, "body", site.branding.description) : site.branding.description;
+  const isDreamShootFooter = /dreamshoot/i.test(title);
+  const readableFooterTitle = isDreamShootFooter ? "MydreamShoots" : title;
+  const visualFooterTitle = readableFooterTitle;
+  const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
+  const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
   const logoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
-  const logoAlt = footer ? setting(footer, "logoAlt", title) : title;
+  const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
   const footerBg = footer
     ? setting(footer, "backgroundColor", themeValueToString(saasFooter?.settings?.footer_bg_color, "var(--site-bg)"))
     : themeValueToString(saasFooter?.settings?.footer_bg_color, "var(--site-bg)");
@@ -565,6 +708,31 @@ export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: Th
     ? setting(footer, "textColor", themeValueToString(saasFooter?.settings?.footer_text_color, "var(--site-body)"))
     : themeValueToString(saasFooter?.settings?.footer_text_color, "var(--site-body)");
   const dark = isDarkColor(footerBg) || isDarkColor(themeValueToString(settings.saasSettingsCurrent?.skin_bg, settings.colors.background));
+  if (lightweight) {
+    const quickLinks = [
+      { label: "Photo Packages", href: "/collections" },
+      { label: "Tools", href: "/tools" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "FAQ", href: "/faq" }
+    ];
+    return (
+      <footer className={dark ? "border-t border-white/8 px-5 py-8" : "border-t border-[#e7dccf] px-5 py-8"} style={{ background: footerBg, color: footerTextColor }}>
+        <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight [font-family:var(--site-title-font)]">{title}</h2>
+            <p className={dark ? "mt-1 text-sm text-white/54" : "mt-1 text-sm text-[#625d56]"}>{tagline}</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {quickLinks.map((link) => (
+              <Link className={dark ? "rounded-full border border-white/10 px-3 py-2 text-sm font-semibold text-white/68 transition hover:text-white" : "rounded-full border border-[#ddd2c5] px-3 py-2 text-sm font-semibold text-[#625d56] transition hover:text-[#171514]"} href={hrefFor(site, link.href)} key={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </footer>
+    );
+  }
   const blocks = footer?.blocks?.filter((block) => block.type === "menu_link") ?? [];
   const links = blocks.length
     ? blocks.map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
@@ -621,14 +789,20 @@ export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: Th
     { heading: footer ? setting(footer, "companyHeading", "Company") : "Company", items: companyLinks },
     { heading: footer ? setting(footer, "supportHeading", "Support") : "Support", items: supportLinks }
   ].filter((column) => column.items.length);
+  const footerLinkLabel = (label: string, href: string) => {
+    if (href === "/policies/privacy" || href === "/privacy-policy") return "Privacy Policy";
+    if (href === "/policies/terms" || href === "/terms-of-service") return "Terms of Service";
+    if (href === "/policies/cookies" || href === "/cookie-policy") return "Cookie Policy";
+    return label;
+  };
   const brandMark =
-    title
+    readableFooterTitle
       .split(/\s+/)
       .filter(Boolean)
       .slice(0, 2)
       .map((part) => part.slice(0, 1))
       .join("")
-      .toUpperCase() || title.slice(0, 2).toUpperCase();
+      .toUpperCase() || readableFooterTitle.slice(0, 2).toUpperCase();
   return (
     <footer className={dark ? "border-t border-white/8 px-5 pb-6 pt-10" : "border-t border-[#e7dccf] px-5 pb-6 pt-10"} style={{ background: footerBg, color: footerTextColor }}>
       <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -643,7 +817,10 @@ export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: Th
                 </span>
               )}
               <div>
-                <h2 className="text-[1.85rem] font-semibold leading-none tracking-tight [font-family:var(--site-title-font)]">{title}</h2>
+                <h2 className="text-[1.85rem] font-semibold leading-none [font-family:var(--site-title-font)]">
+                  <span aria-hidden={isDreamShootFooter ? "true" : undefined}>{visualFooterTitle}</span>
+                  {isDreamShootFooter ? <span className="sr-only">MydreamShoots AI photo packages and private albums</span> : null}
+                </h2>
                 <p className={dark ? "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-white/44" : "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8f7d6d]"}>
                   {tagline}
                 </p>
@@ -681,7 +858,7 @@ export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: Th
                       key={`${link.label}_${link.href}_${column.heading}`}
                       {...xfcartBlockAttrs(link.block, index, `footer_nav_${slugify(column.heading)}`)}
                     >
-                      {link.label}
+                      {footerLinkLabel(link.label, link.href)}
                     </Link>
                   ))}
                 </div>
@@ -699,7 +876,7 @@ export function ThemeGlobalFooter({ site, settings }: { site: Site; settings: Th
         </div>
         <div className={dark ? "mt-5 flex flex-col gap-2 text-[11px] text-white/42 sm:flex-row sm:items-center sm:justify-between" : "mt-5 flex flex-col gap-2 text-[11px] text-[#8c7f72] sm:flex-row sm:items-center sm:justify-between"}>
           <p>{footer ? setting(footer, "copyright", "All rights reserved.") : "All rights reserved."}</p>
-          <p>{footer ? setting(footer, "bottomLine", "Monthly credits, one-time top-ups, and site-scoped galleries in one storefront.") : "Monthly credits, one-time top-ups, and site-scoped galleries in one storefront."}</p>
+          <p>{footer ? setting(footer, "bottomLine", "Monthly credits, one-time top-ups, and private galleries in one photo workspace.") : "Monthly credits, one-time top-ups, and private galleries in one photo workspace."}</p>
         </div>
       </div>
     </footer>
@@ -728,6 +905,18 @@ function listSetting(section: SectionInstance, key: string, fallback: string[] =
 function blockValue(block: SectionBlockInstance, key: string, fallback = ""): string {
   const value = themeValueToString(block.settings[key], "");
   return value.trim() ? value : fallback;
+}
+
+function headingSetting(section: SectionInstance, key: string, fallback: string): string {
+  return setting(section, key, fallback).trim() || fallback;
+}
+
+function headingBlockValue(block: SectionBlockInstance, key: string, fallback: string): string {
+  return blockValue(block, key, fallback).trim() || fallback;
+}
+
+function sectionHeading(section: SectionInstance, fallback: string): string {
+  return headingSetting(section, "title", headingSetting(section, "name", fallback));
 }
 
 function instanceKey(item: { id?: string; type?: string }, index: number, prefix: string): string {
@@ -846,7 +1035,7 @@ function preferDreamshootOptimizedImage(src: string): string {
 
 type StorefrontImageProps = {
   src: string;
-  alt: string;
+  alt?: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -856,6 +1045,16 @@ type StorefrontImageProps = {
 
 function canUseNextImage(src: string): boolean {
   return src.startsWith("/") && /\.(png|jpe?g|webp|avif)(\?|$)/i.test(src);
+}
+
+function fallbackAltFromImageSrc(src: string): string {
+  const cleanPath = src.split("?")[0]?.split("#")[0] ?? "";
+  const filename = cleanPath.split("/").filter(Boolean).pop() ?? "";
+  return filename
+    .replace(/\.(png|jpe?g|webp|avif|svg)$/i, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+    .trim() || "Site image";
 }
 
 function StorefrontImage({
@@ -870,10 +1069,11 @@ function StorefrontImage({
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
   const isOptimizedDreamShootAsset = src.startsWith("/assets/dreamshoot/") && /\.(webp|avif)(\?|$)/i.test(src);
+  const resolvedAlt = alt?.trim() || fallbackAltFromImageSrc(src);
   if (isOptimizedDreamShootAsset || !canUseNextImage(src)) {
     return (
       <img
-        alt={alt}
+        alt={resolvedAlt}
         className={className}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
@@ -884,7 +1084,7 @@ function StorefrontImage({
   }
   return (
     <NextImage
-      alt={alt}
+      alt={resolvedAlt}
       className={className}
       decoding={priority ? "sync" : "async"}
       fetchPriority={resolvedFetchPriority}
@@ -1003,7 +1203,11 @@ function hrefFor(site: Site, href: string): string {
   if (href === "javascript:void(0);") return "#";
   if (href === "#workflow") return routedSitePath(site, "/#workflow");
   if (href === "#faq") return routedSitePath(site, "/help");
-  if (href.startsWith("/app#")) return `${routedSitePath(site, "/app")}${href.slice("/app".length)}`;
+  if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
+  if (href === "/app#create") return routedSitePath(site, "/app/create");
+  if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");
+  if (href === "/app#progress_1") return routedSitePath(site, "/app/jobs/progress");
+  if (href === "/app#album_1") return routedSitePath(site, "/album");
   if (href === "/privacy-policy") return routedSitePath(site, "/policies/privacy");
   if (href === "/terms-of-service") return routedSitePath(site, "/policies/terms");
   if (href.startsWith("#") || href.startsWith("http")) return href;
@@ -1028,6 +1232,26 @@ function collectionHref(category: string): string {
 
 function creativePackCollectionHref(pack: CreativePack): string {
   return collectionHref(pack.categoryRecord?.slug || pack.name);
+}
+
+function creativePackCreateHref(pack: CreativePack): string {
+  const params = new URLSearchParams();
+  params.set("pack", pack.id);
+  if (pack.aiAppSlug) params.set("tool_id", pack.aiAppSlug);
+  return `/app/create?${params.toString()}`;
+}
+
+function activeCreativePackForCollectionSlug(creativePacks: CreativePack[], slug: string): CreativePack | undefined {
+  const selectedSlug = dreamshootCategorySlug(slug);
+  if (!selectedSlug) return undefined;
+  return creativePacks.find((pack) => {
+    if (pack.status !== "active") return false;
+    const tokens = [
+      pack.categoryRecord?.slug,
+      pack.name
+    ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+    return tokens.includes(selectedSlug);
+  });
 }
 
 const dreamshootStaticToolSlugByKey: Record<string, string> = {
@@ -1169,6 +1393,265 @@ function dreamshootStaticToolPath(fallbackToolId = "", fallbackToolTitle = ""): 
   return slug ? `/tools/${slug}` : "/tools";
 }
 
+function dreamshootDefaultToolTitle(slug: string): string {
+  const explicit: Record<string, string> = {
+    "background-changer": "Background Changer",
+    "background-remover": "Image Background Remover",
+    "magic-eraser": "Magic Eraser",
+    "photo-enhancer": "Photo Enhancer",
+    "unblur-image": "Unblur Image",
+    "color-correction": "Color Correction",
+    "old-photo-restoration": "Old Photo Restoration",
+    "edit-by-prompt": "Photo Edit by Prompt",
+    "headshot-generator": "Headshot Photo Generator",
+    "wedding-portraits": "Wedding Portraits",
+    "anime-avatar": "Anime Avatar Builder",
+    "gala-photo": "Gala Photo Maker",
+    "cyberpunk-portrait": "Cyberpunk Portrait Maker",
+    "image-to-video": "Image to Video",
+    "profile-clip": "Profile Clip Maker",
+    "creator-intro-video": "Creator Intro Video"
+  };
+  return explicit[slug] ?? slug.split("-").map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
+}
+
+function dreamshootDefaultToolCategory(slug: string): string {
+  if (slug.includes("video") || slug.includes("clip")) return "Video AI";
+  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "AI Photo Edit";
+  return "Photo AI";
+}
+
+function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description: string; tags: [string, string]; action: string } {
+  const slug = toolBlockSlug(block);
+  const title = storefrontPaidToolBlockValue(block, "title", dreamshootDefaultToolTitle(slug));
+  const category = blockValue(block, "category", dreamshootDefaultToolCategory(slug));
+  const fallbackDescription = storefrontPaidToolBlockValue(block, "description", "");
+  const bySlug: Record<string, { description: string; tags: [string, string]; action: string }> = {
+    "headshot": {
+      description: "Upload everyday selfies and start a headshot set for LinkedIn, resumes, founder pages, or team profiles. Your finished portraits stay in a private MydreamShoots gallery.",
+      tags: ["Profile ready", "Private gallery"],
+      action: "Create headshots"
+    },
+    "headshot-generator": {
+      description: "Turn casual phone photos into polished headshots for work, hiring profiles, speaker bios, and team pages without booking a studio session.",
+      tags: ["Work profiles", "Credit backed"],
+      action: "Start headshots"
+    },
+    "creator-portrait": {
+      description: "Build creator-ready profile photos, campaign portraits, and channel visuals from one private source-photo set.",
+      tags: ["Creator profiles", "Campaign ready"],
+      action: "Plan creator photos"
+    },
+    "world-cup-fan-photos": {
+      description: "Create stadium portraits, fan posters, and match-day profile images you can share before a tournament, watch party, or team event.",
+      tags: ["Sports scenes", "Poster output"],
+      action: "Make fan photos"
+    },
+    "cyberpunk-portrait": {
+      description: "Use your source photos to create neon city portraits and cinematic future looks, then save the strongest results to your private album.",
+      tags: ["Cinematic style", "Album delivery"],
+      action: "Try cyberpunk"
+    },
+    "gala-photo": {
+      description: "Preview formal night-out portraits with red-carpet lighting, polished outfits, and social-ready crops before ordering a full set.",
+      tags: ["Formal looks", "Social crops"],
+      action: "Create gala photos"
+    },
+    "noir-portrait": {
+      description: "Create moody detective, vintage city, or character-style portraits from your own photos while keeping the final set inside your account.",
+      tags: ["Character scenes", "Private account"],
+      action: "Build noir looks"
+    },
+    "anime-avatar": {
+      description: "Convert a clear selfie into stylized avatar concepts for profiles, social handles, and playful campaign images.",
+      tags: ["Avatar concepts", "Profile use"],
+      action: "Make an avatar"
+    },
+    "nature-adventure": {
+      description: "Place yourself in outdoor, hiking, and travel-inspired scenes when you want adventure photos without a location shoot.",
+      tags: ["Travel scenes", "Outdoor style"],
+      action: "Explore outdoor looks"
+    },
+    "fashion-editorial": {
+      description: "Create magazine-style personal-brand images with stronger outfit direction, lighting, and editorial framing.",
+      tags: ["Editorial looks", "Style preview"],
+      action: "Style a set"
+    },
+    "product-lifestyle": {
+      description: "Preview lifestyle-style product or creator commerce shots before deciding which images belong in a campaign package.",
+      tags: ["Commerce shots", "Campaign preview"],
+      action: "Preview product shots"
+    },
+    "background-changer": {
+      description: "Replace busy or plain portrait backgrounds before you spend credits on a larger package, so your source image matches the look you want.",
+      tags: ["Clean backdrop", "Before checkout"],
+      action: "Change background"
+    },
+    "background-remover": {
+      description: "Cut out distracting backgrounds from portraits or product photos and prepare cleaner source images for profile, package, or gallery use.",
+      tags: ["Cleaner source", "Portrait ready"],
+      action: "Remove background"
+    },
+    "magic-eraser": {
+      description: "Remove small distractions, unwanted objects, or messy edges from a photo before it becomes part of a paid generation workflow.",
+      tags: ["Remove clutter", "Source cleanup"],
+      action: "Clean a photo"
+    },
+    "photo-enhancer": {
+      description: "Improve dark, soft, or low-contrast uploads before using them for a headshot, creator portrait, or private model package.",
+      tags: ["Better uploads", "Model ready"],
+      action: "Enhance a photo"
+    },
+    "portrait-retouch": {
+      description: "Tidy skin, flyaways, lighting, and small portrait issues while keeping the person recognizable and natural.",
+      tags: ["Natural retouch", "Portrait polish"],
+      action: "Retouch portrait"
+    },
+    "unblur-image": {
+      description: "Rescue soft phone shots when they are almost good enough for a package but need sharper details first.",
+      tags: ["Sharper input", "Phone photos"],
+      action: "Sharpen image"
+    },
+    "color-correction": {
+      description: "Balance color, warmth, and exposure so profile photos, posters, and package previews feel consistent before delivery.",
+      tags: ["Better color", "Consistent set"],
+      action: "Fix color"
+    },
+    "old-photo-restoration": {
+      description: "Repair faded family photos, scratches, or worn scans and keep restored results in your private album workspace.",
+      tags: ["Restore scans", "Private album"],
+      action: "Restore photo"
+    },
+    "edit-by-prompt": {
+      description: "Describe one focused change, preview the result, and decide whether the image is ready for a larger credit-backed package.",
+      tags: ["Text edit", "Preview first"],
+      action: "Describe an edit"
+    },
+    "magic-upscaler": {
+      description: "Prepare higher-resolution versions of finished portraits, profile images, or package favorites before downloading and sharing.",
+      tags: ["Higher detail", "Download ready"],
+      action: "Upscale image"
+    },
+    "image-to-video": {
+      description: "Turn a favorite generated photo into a short motion concept for social posts, creator campaigns, or album highlights.",
+      tags: ["Motion preview", "Social ready"],
+      action: "Make a video"
+    },
+    "profile-clip": {
+      description: "Use headshots or creator portraits to create a short profile motion idea for intros, bios, and social updates.",
+      tags: ["Profile motion", "Short clip"],
+      action: "Create profile clip"
+    },
+    "fan-poster-motion": {
+      description: "Animate fan posters and match-day images so a static sports package can become a shareable short clip.",
+      tags: ["Fan content", "Animated poster"],
+      action: "Animate poster"
+    },
+    "creator-intro-video": {
+      description: "Turn creator portraits into a simple intro clip for channels, reels, media kits, and launch posts.",
+      tags: ["Creator intro", "Reel idea"],
+      action: "Create intro"
+    },
+    "product-teaser-clip": {
+      description: "Make a quick motion concept from product-style package images before choosing final campaign assets.",
+      tags: ["Product motion", "Campaign test"],
+      action: "Make teaser"
+    },
+    "animated-avatar": {
+      description: "Preview avatar-style motion for profile campaigns, community announcements, or playful account updates.",
+      tags: ["Avatar motion", "Profile update"],
+      action: "Animate avatar"
+    },
+    "fashion-reel": {
+      description: "Turn editorial portraits, outfit previews, or try-on results into a short reel concept for social sharing.",
+      tags: ["Fashion motion", "Reel concept"],
+      action: "Build fashion reel"
+    },
+    "album-story-video": {
+      description: "Collect favorite generated images into a compact album story for sharing a finished MydreamShoots set.",
+      tags: ["Album story", "Shareable set"],
+      action: "Create album story"
+    },
+    "package-preview": {
+      description: "Preview the look and direction of a package before you commit credits to a full private photo set.",
+      tags: ["Preview first", "Credit planning"],
+      action: "Preview package"
+    },
+    "wedding-portraits": {
+      description: "Create polished couple, ceremony, and celebration portrait concepts from private source photos before building a full album.",
+      tags: ["Couple photos", "Album ready"],
+      action: "Plan wedding photos"
+    }
+  };
+  if (bySlug[slug]) return bySlug[slug];
+
+  const needsRewrite =
+    !fallbackDescription ||
+    /dedicated workflow|selected editor preset|one-click|ai-powered precision/i.test(fallbackDescription);
+  return {
+    description: needsRewrite
+      ? `${title} helps you prepare a stronger ${category.toLowerCase()} result before spending credits on a private MydreamShoots gallery.`
+      : fallbackDescription,
+    tags: category === "Video AI" ? ["Motion concept", "Private output"] : category === "AI Photo Edit" ? ["Source cleanup", "Credit planning"] : ["Photo package", "Private gallery"],
+    action: category === "Video AI" ? "Preview motion" : category === "AI Photo Edit" ? "Prepare photo" : "Start this set"
+  };
+}
+
+function dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
+  return [
+    "headshot-generator",
+    "anime-avatar",
+    "wedding-portraits",
+    "cyberpunk-portrait",
+    "gala-photo",
+    "background-changer",
+    "background-remover",
+    "magic-eraser",
+    "photo-enhancer",
+    "unblur-image",
+    "color-correction",
+    "old-photo-restoration",
+    "edit-by-prompt",
+    "image-to-video",
+    "profile-clip",
+    "creator-intro-video"
+  ].map((slug) => ({
+    id: `default_tool_${slug}`,
+    type: "tool_card",
+    settings: {
+      title: dreamshootDefaultToolTitle(slug),
+      category: dreamshootDefaultToolCategory(slug),
+      href: `/tools/${slug}`,
+      description: dreamshootToolDirectoryCopy({
+        id: `default_tool_${slug}`,
+        type: "tool_card",
+        settings: {
+          title: dreamshootDefaultToolTitle(slug),
+          category: dreamshootDefaultToolCategory(slug),
+          href: `/tools/${slug}`
+        }
+      }).description
+    }
+  }));
+}
+
+function toolBlockSlug(block: SectionBlockInstance): string {
+  const href = blockValue(block, "href", "");
+  const pathSlug = href.split("?")[0]?.split("#")[0]?.split("/tools/")[1] ?? "";
+  return dreamshootToolLookupKey(pathSlug || block.id || blockValue(block, "title", ""));
+}
+
+function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[]): SectionBlockInstance[] {
+  const merged = new Map<string, SectionBlockInstance>();
+  for (const block of dreamshootDefaultToolBlocks()) {
+    merged.set(toolBlockSlug(block), block);
+  }
+  for (const block of blocks) {
+    merged.set(toolBlockSlug(block), block);
+  }
+  return Array.from(merged.values());
+}
+
 function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
   const normalizedHref = href || "/tools/image-studio";
   if (normalizedHref.startsWith("#") || normalizedHref.startsWith("http")) return hrefFor(site, normalizedHref);
@@ -1196,7 +1679,7 @@ function toolStudioHref(site: Site, href: string, fallbackToolId = "", fallbackT
     toolPath.split("?")[0]?.split("#")[0]?.split("/tools/")[1] ||
     dreamshootToolLookupKey(fallbackToolTitle || fallbackToolId) ||
     "image-studio";
-  return hrefFor(site, `/dashboard?tool_id=${encodeURIComponent(slug)}`);
+  return hrefFor(site, `/app/create?tool_id=${encodeURIComponent(slug)}`);
 }
 
 function customerAccountStatusLabel(status: string): string {
@@ -1442,11 +1925,17 @@ function collectionPageCards(
   creativePacks: CreativePack[],
   query: Record<string, string | string[] | undefined>
 ): CollectionPageCard[] {
-  const selectedCategory = queryValue(query.category).toLowerCase();
+  const selectedCategory = dreamshootCategorySlug(queryValue(query.category));
   const selectedAiApp = queryValue(query.app).toLowerCase();
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
   const filteredPacks = activePacks.filter((pack) => {
-    if (selectedCategory && pack.category.toLowerCase() !== selectedCategory) return false;
+    const tokens = [
+      pack.category,
+      pack.categoryRecord?.slug,
+      pack.categoryRecord?.parent?.slug,
+      pack.name
+    ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+    if (selectedCategory && !tokens.includes(selectedCategory)) return false;
     if (selectedAiApp && pack.aiAppSlug.toLowerCase() !== selectedAiApp) return false;
     return true;
   });
@@ -1457,7 +1946,7 @@ function collectionPageCards(
     meta: `${pack.outputCount} images`,
     credits: `${pack.creditCost} credits`,
     imageUrl: packImage(site, pack),
-    href: `/tools/${pack.aiAppSlug}`
+    href: creativePackCollectionHref(pack)
   }));
 }
 
@@ -1532,7 +2021,7 @@ function dreamshootToolBlock(
   category: string,
   imageUrl: string,
   href = "/tools/image-studio",
-  badge = "Free"
+  badge = "Studio"
 ): SectionBlockInstance {
   return {
     id,
@@ -1546,6 +2035,36 @@ function dreamshootToolBlock(
       href: href.includes("?") || !href.startsWith("/tools/image-studio") ? href : dreamshootStaticToolPath(id, title)
     }
   };
+}
+
+function storefrontPaidToolText(value: string): string {
+  const freeWord = String.fromCharCode(70, 114, 101, 101);
+  const freeWordInsensitive = `[${freeWord[0]}${freeWord[0].toLowerCase()}]${freeWord.slice(1)}`;
+  return value
+    .replace(new RegExp(`\\b${freeWord} AI Tools Collection\\b`, "g"), "AI Tools Collection")
+    .replace(new RegExp(`\\b${freeWordInsensitive} AI photo tools\\b`, "g"), "AI photo tools")
+    .replace(new RegExp(`\\b${freeWordInsensitive} AI tools\\b`, "g"), "AI tools")
+    .replace(new RegExp(`\\b${freeWordInsensitive} tools\\b`, "g"), "Studio tools")
+    .replace(new RegExp(`\\b${freeWordInsensitive} tool\\b`, "g"), "Studio tool")
+    .replace(new RegExp(`\\b${freeWordInsensitive} enhancer\\b`, "g"), "photo enhancer")
+    .replace(new RegExp(`\\b${freeWordInsensitive} entry\\b`, "g"), "studio entry")
+    .replace(new RegExp(`\\b${freeWordInsensitive}\\b`, "g"), "paid")
+    .trim();
+}
+
+function storefrontPaidSiteCopy(site: Site): Site {
+  return {
+    ...site,
+    branding: {
+      ...site.branding,
+      market: storefrontPaidToolText(site.branding.market || ""),
+      description: storefrontPaidToolText(site.branding.description || "")
+    }
+  };
+}
+
+function storefrontPaidToolBlockValue(block: SectionBlockInstance, key: string, fallback = ""): string {
+  return storefrontPaidToolText(blockValue(block, key, fallback));
 }
 
 function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
@@ -1594,11 +2113,11 @@ function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageM
       const parent = pack.categoryRecord?.parent;
       const groupLabel = parent?.label || dreamshootCategoryLabel(pack.categoryRecord?.slug || pack.category);
       const groupSlug = parent?.slug || dreamshootCategorySlug(groupLabel);
-      const group = groups.get(groupSlug) ?? { label: groupLabel, slug: groupSlug, items: [] };
+      const group = groups.get(groupSlug) ?? { label: groupLabel, slug: groupSlug, description: parent?.description ?? undefined, icon: parent?.icon ?? parent?.iconName, items: [] };
       const itemLabel = pack.categoryRecord?.label || pack.name;
       const itemSlug = pack.categoryRecord?.slug || dreamshootCategorySlug(pack.name);
       if (!group.items.some((item) => item.slug === itemSlug)) {
-        group.items.push({ label: itemLabel, slug: itemSlug, href: creativePackCollectionHref(pack) });
+        group.items.push({ label: itemLabel, slug: itemSlug, href: creativePackCollectionHref(pack), icon: pack.categoryRecord?.icon ?? pack.categoryRecord?.iconName });
       }
       groups.set(groupSlug, group);
     });
@@ -1608,37 +2127,153 @@ function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageM
       items: group.items.sort((a, b) => a.label.localeCompare(b.label))
     }))
     .filter((group) => group.items.length > 0)
-    .sort((a, b) => a.label.localeCompare(b.label))
-    .slice(0, 6);
+    .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
+  {
+    label: "Avatar",
+    slug: "avatar",
+    icon: "Image",
+    items: [
+      { label: "Anime Avatar", slug: "anime-avatar", href: "/collections/anime-avatar" }
+    ]
+  },
+  {
+    label: "Beauty",
+    slug: "beauty",
+    icon: "Sparkles",
+    items: [
+      { label: "Hairstyle", slug: "hairstyle", href: "/collections/hairstyle" },
+      { label: "Virtual Try-On", slug: "virtual-try-on", href: "/collections/virtual-try-on" }
+    ]
+  },
+  {
+    label: "Creative",
+    slug: "creative",
+    icon: "Camera",
+    items: [
+      { label: "Cyberpunk", slug: "cyberpunk", href: "/collections/cyberpunk" },
+      { label: "Gala Photos", slug: "gala-photos", href: "/collections/gala-photos" },
+      { label: "Mafia", slug: "mafia", href: "/collections/mafia" },
+      { label: "Nature", slug: "nature", href: "/collections/nature" }
+    ]
+  },
+  {
+    label: "Creator",
+    slug: "creator",
+    icon: "Users",
+    items: [
+      { label: "Creator Portraits", slug: "creator-portraits", href: "/collections/creator-portraits" },
+      { label: "Fashion Editorial", slug: "fashion-editorial", href: "/collections/fashion-editorial" },
+      { label: "Product Style", slug: "product-style", href: "/collections/product-style" }
+    ]
+  },
+  {
+    label: "Couple",
+    slug: "couple",
+    icon: "Heart",
+    items: [
+      { label: "Christmas Couple", slug: "christmas-couple", href: "/collections/christmas-couple" },
+      { label: "Engagement", slug: "engagement", href: "/collections/engagement" },
+      { label: "Wedding Portraits", slug: "wedding-portraits", href: "/collections/wedding-portraits" }
+    ]
+  },
+  {
+    label: "Sports",
+    slug: "sports",
+    icon: "PlayCircle",
+    items: [
+      { label: "World Cup Fan Photos", slug: "world-cup-fan-photos", href: "/collections/world-cup-fan-photos" }
+    ]
+  }
+];
+
+const photoPackageAccentPalette = ["#c958f2", "#ff7b2f", "#38a8ff", "#36d399", "#f4c542", "#ff5f8f"];
+
+function photoPackageIcon(icon: string | undefined, fallbackSeed: string): LucideIcon {
+  return creativePackIconByName(icon || suggestedCreativePackIconName(fallbackSeed)).icon;
+}
+
+function photoPackageGroupAccent(group: PhotoPackageMegaGroup, index: number): string {
+  const seed = `${group.slug} ${group.label}`.toLowerCase();
+  if (seed.includes("beauty") || seed.includes("creative")) return "#ff7b2f";
+  if (seed.includes("creator") || seed.includes("headshot")) return "#38a8ff";
+  if (seed.includes("couple") || seed.includes("wedding") || seed.includes("boudoir")) return "#ff5f8f";
+  if (seed.includes("cultural") || seed.includes("travel") || seed.includes("nature")) return "#36d399";
+  if (seed.includes("season") || seed.includes("sport")) return "#f4c542";
+  return photoPackageAccentPalette[index % photoPackageAccentPalette.length];
+}
+
+function photoPackageHighlightHref(site: Site, groups: PhotoPackageMegaGroup[], keywords: string[]): string {
+  const match = groups.find((group) => keywords.some((keyword) => `${group.slug} ${group.label}`.toLowerCase().includes(keyword)));
+  return hrefFor(site, match?.items[0]?.href || "/collections");
+}
+
+function photoPackageMegaColumns(groups: PhotoPackageMegaGroup[]): PhotoPackageMegaGroup[][] {
+  const columns: PhotoPackageMegaGroup[][] = [[], [], []];
+  groups.forEach((group, index) => {
+    columns[index % columns.length].push(group);
+  });
+  return columns;
 }
 
 function PhotoPackageMegaPanel({ groups, site }: { groups: PhotoPackageMegaGroup[]; site: Site }) {
+  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const columns = photoPackageMegaColumns(groups);
   return (
-    <div className="rounded-[20px] border border-white/10 bg-[#05070E]/96 p-6 text-white shadow-[0_26px_90px_-42px_rgba(0,0,0,0.95)] backdrop-blur-xl">
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div className="max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
+      <div className="mb-4 flex items-center justify-center gap-3 text-center">
+        <span className="h-px w-16 bg-white/10" />
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">AI Photo Packages</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-[-0.035em]">Browse package themes</h2>
+          <h2 className="text-[1.02rem] font-semibold tracking-tight text-white">Photo package studios</h2>
+          <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{groups.length} categories · {totalItems} themes</p>
         </div>
-        <Link className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
-          View all packages
-          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-        </Link>
+        <span className="h-px w-16 bg-white/10" />
       </div>
-      <div className="grid gap-5 md:grid-cols-3">
-        {groups.map((group) => (
-          <div key={group.slug}>
-            <p className="border-b border-white/12 pb-3 text-sm font-semibold text-white/88">{group.label}</p>
-            <div className="mt-3 grid gap-2">
-              {group.items.slice(0, 7).map((item) => (
-                <Link className="flex items-center justify-between gap-3 rounded-[12px] px-2 py-1.5 text-sm font-medium text-white/72 transition hover:bg-white/[0.07] hover:text-white" href={hrefFor(site, item.href)} key={item.slug}>
-                  <span className="truncate">{item.label}</span>
-                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white/38" strokeWidth={2} />
-                </Link>
-              ))}
-            </div>
+      <div className="mt-4 grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
+        {columns.map((column, columnIndex) => (
+          <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
+            {column.map((group, groupIndex) => {
+              const accent = photoPackageGroupAccent(group, columnIndex + groupIndex);
+              const GroupIcon = photoPackageIcon(group.icon, `${group.slug} ${group.label}`);
+              return (
+                <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.slug} open>
+                  <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2" style={{ color: accent }}>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]" style={{ color: accent }}>
+                      <GroupIcon className="h-4 w-4" strokeWidth={1.9} />
+                    </span>
+                    <span className="min-w-0 truncate">{group.label}</span>
+                    <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
+                    <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
+                  </summary>
+                  <div className="mt-3 grid gap-2">
+                    {group.items.map((item) => {
+                      const ItemIcon = photoPackageIcon(item.icon, `${item.slug} ${item.label} ${group.slug}`);
+                      return (
+                        <Link
+                          className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"
+                          href={hrefFor(site, item.href)}
+                          key={item.slug}
+                        >
+                          <ItemIcon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/package:text-white" strokeWidth={1.8} />
+                          <span>{item.label}</span>
+                          <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </details>
+              );
+            })}
           </div>
         ))}
+      </div>
+      <div className="mt-5 border-t border-[#263247] pt-3 text-center">
+        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={hrefFor(site, "/collections")}>
+          View all packages
+          <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
+        </Link>
       </div>
     </div>
   );
@@ -1719,6 +2354,7 @@ function DreamShootMegaToolsPanel({
           const featuredTool = group.items[0];
           return (
             <Link
+              aria-label={cardLinkLabel("Browse", group.meta.title, "this tool category")}
               className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"
               href={
                 featuredTool
@@ -1748,18 +2384,19 @@ function DreamShootMegaToolsPanel({
               <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: group.meta.accent }}>
                 {group.meta.panelTitle}
               </h3>
-              <div className={categoryIndex === 0 ? "grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:gap-y-3" : "grid gap-3"}>
+              <div className="grid gap-3">
                 {group.items.map((tool, index) => {
                   const Icon = dreamshootToolIcon(index, group.category);
                   return (
                     <Link
+                      aria-label={cardLinkLabel("Open tool", storefrontPaidToolBlockValue(tool, "title", "AI photo tool"), "this tool")}
                       className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"
                       href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
                       key={instanceKey(tool, index, "dreamshoot_mega_tool")}
                       {...xfcartBlockAttrs(tool, index, "dreamshoot_mega_tool")}
                     >
                       <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white" strokeWidth={1.8} />
-                      <span>{blockValue(tool, "title", "AI photo tool")}</span>
+                  <span>{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
                     </Link>
                   );
                 })}
@@ -1775,6 +2412,111 @@ function DreamShootMegaToolsPanel({
         </Link>
       </div>
     </div>
+  );
+}
+
+function mobileMenuSummaryClass(dark: boolean) {
+  return dark
+    ? "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-white marker:hidden transition hover:bg-white/[0.08]"
+    : "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-[#171514] marker:hidden transition hover:bg-white";
+}
+
+function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups: PhotoPackageMegaGroup[]; site: Site }) {
+  const visibleGroups = groups.slice(0, 8);
+  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
+  return (
+    <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
+      <summary className={mobileMenuSummaryClass(dark)}>
+        <span className="min-w-0 flex-1">Photo Packages</span>
+        <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
+        <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
+      </summary>
+      <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
+        <div className="grid gap-2">
+          {visibleGroups.map((group, index) => {
+            const accent = photoPackageGroupAccent(group, index);
+            const GroupIcon = photoPackageIcon(group.icon, `${group.slug} ${group.label}`);
+            return (
+              <details className={dark ? "group/mobile-category rounded-[12px] bg-black/16 px-2 py-1 open:bg-black/22" : "group/mobile-category rounded-[12px] bg-[#f8f2eb] px-2 py-1 open:bg-[#f3eadf]"} key={group.slug}>
+                <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-sm font-semibold marker:hidden" style={{ color: accent }}>
+                  <span className={dark ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.07]" : "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white"}>
+                    <GroupIcon className="h-3.5 w-3.5" strokeWidth={1.9} />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate">{group.label}</span>
+                  <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.items.length}</span>
+                  <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-category:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-category:-rotate-90"} strokeWidth={2} />
+                </summary>
+                <div className="grid gap-1 pb-1 pl-8 pt-1">
+                  {group.items.slice(0, 6).map((item) => (
+                    <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={hrefFor(site, item.href)} key={item.slug}>
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, "/collections")}>
+          View all packages
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </Link>
+      </div>
+    </details>
+  );
+}
+
+function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; tools: SectionBlockInstance[] }) {
+  const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
+  const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
+  const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))].slice(0, 3);
+  const groupedCategories = displayCategories.map((category) => ({
+    category,
+    items: tools.filter((tool) => blockValue(tool, "category", "Photo AI") === category),
+    meta: dreamshootMegaCategoryMeta(category)
+  }));
+  const totalItems = groupedCategories.reduce((sum, group) => sum + group.items.length, 0);
+  return (
+    <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
+      <summary className={mobileMenuSummaryClass(dark)}>
+        <span className="min-w-0 flex-1">Tools</span>
+        <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
+        <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
+      </summary>
+      <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
+        <div className="grid gap-2">
+          {groupedCategories.map((group) => {
+            const Icon = group.meta.icon;
+            return (
+              <details className={dark ? "group/mobile-tool rounded-[12px] bg-black/16 px-2 py-1 open:bg-black/22" : "group/mobile-tool rounded-[12px] bg-[#f8f2eb] px-2 py-1 open:bg-[#f3eadf]"} key={group.category}>
+                <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-sm font-semibold marker:hidden" style={{ color: group.meta.accent }}>
+                  <span className={dark ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.07]" : "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white"}>
+                    <Icon className="h-3.5 w-3.5" strokeWidth={1.9} />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate">{group.meta.panelTitle}</span>
+                  <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.items.length}</span>
+                  <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-tool:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-tool:-rotate-90"} strokeWidth={2} />
+                </summary>
+                <div className="grid gap-1 pb-1 pl-8 pt-1">
+                  {group.items.slice(0, 8).map((tool, index) => {
+                    const title = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
+                    return (
+                      <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, title)} key={instanceKey(tool, index, "mobile_tool")}>
+                        {title}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, "/tools")}>
+          View all tools
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </Link>
+      </div>
+    </details>
   );
 }
 
@@ -1818,6 +2560,17 @@ function imageHeightClass(value: string): string {
 
 function stripHtml(value: string): string {
   return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function shortAccessibleText(value: string, fallback: string): string {
+  const text = stripHtml(value).replace(/\s+/g, " ").trim();
+  return text || fallback;
+}
+
+function cardLinkLabel(action: string, title: string, fallbackTitle = "this item"): string {
+  const cleanAction = shortAccessibleText(action, "Open");
+  const cleanTitle = shortAccessibleText(title, fallbackTitle);
+  return `${cleanAction} ${cleanTitle}`;
 }
 
 function richTextHtml(section: SectionInstance, key: string, fallback: string): { __html: string } {
@@ -1905,6 +2658,19 @@ function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamSho
   };
 }
 
+function packCategoryLabelForStorefront(pack: CreativePack): string {
+  return pack.categoryRecord?.parent?.label || pack.categoryRecord?.label || dreamshootCategoryLabel(pack.category);
+}
+
+function dreamshootPackageThemeIntro(pack: CreativePack): string {
+  const categoryDescription = pack.categoryRecord?.description?.trim() || "";
+  const packDescription = pack.description?.trim() || pack.headline?.trim() || "";
+  const looksPlaceholder = /package (page|group)\.?$/i.test(categoryDescription) || categoryDescription.length < 32;
+  if (categoryDescription && !looksPlaceholder) return categoryDescription;
+  if (packDescription) return packDescription;
+  return `${pack.name} creates a focused private album with a consistent visual direction and download-ready images.`;
+}
+
 function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance): DreamShootCatalogCard {
   const title = blockValue(block, "title", "Photo package");
   return {
@@ -1915,10 +2681,31 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
     meta: blockValue(block, "meta", "20 photos"),
     credits: blockValue(block, "credits", "20 credits"),
     imageUrl: mediaAssetUrl(site, blockValue(block, "imageUrl", packImages.creator)),
-    href: blockValue(block, "href", "/tools/image-studio") === "/tools/image-studio"
-      ? dreamshootStaticToolPath(block.id, title)
-      : blockValue(block, "href", "/tools/image-studio")
+    href: blockValue(block, "href", collectionHref(title))
   };
+}
+
+function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
+  const card = (id: string, title: string, category: string, description: string, meta: string, credits: string, imageUrl: string, href: string) =>
+    dreamshootCatalogCardFromBlock(site, { id, type: "catalog_pack", settings: { title, category, description, meta, credits, imageUrl, href } });
+  return [
+    card("catalog_worldcup", "World Cup fan photos", "Sports", "Match-day portraits, fan posters, and stadium-inspired profile images.", "40 photos", "26 credits", packImages.sports, "/collections/world-cup-fan-photos"),
+    card("catalog_headshot", "Professional Headshots", "Headshots", "LinkedIn, founder, resume, and team-ready portraits.", "20 photos", "20 credits", packImages.headshots, "/collections/headshots"),
+    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Neon city portraits and future-fashion scenes.", "20 photos", "26 credits", packImages.creative, "/collections/cyberpunk"),
+    card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview hair directions, colors, and beauty styling before choosing a full package.", "20 photos", "18 credits", packImages.beauty, "/collections/hairstyle"),
+    card("catalog_gala", "Gala Photos", "Creative", "Formal night-out photos with editorial lighting and red-carpet energy.", "20 photos", "24 credits", packImages.gala, "/collections/gala-photos"),
+    card("catalog_travel", "Travel portrait pack", "Travel", "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", "24 photos", "24 credits", packImages.travel, "/collections/travel"),
+    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, couple portraits, and announcement-ready scenes.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
+    card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Traditional wedding looks with lehenga, saree, sherwani, jewelry, and album-ready portraits.", "20 photos", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
+    card("catalog_christmas", "Christmas Photos", "Seasonal", "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", "20 photos", "20 credits", "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", "/collections/christmas-photos"),
+    card("catalog_creator", "Creator Portraits", "Creator", "Personal-brand portraits for bios, newsletters, founder pages, and social profiles.", "20 photos", "24 credits", packImages.creator, "/collections/creator-portraits"),
+    card("catalog_avatar", "Anime Avatar", "Avatar", "Stylized avatar concepts for profiles, fan communities, and playful identity updates.", "20 photos", "24 credits", packImages.avatar, "/collections/anime-avatar"),
+    card("catalog_fashion", "Fashion Editorial", "Beauty", "Editorial-style outfit, beauty, and posing directions for polished visual sets.", "20 photos", "24 credits", packImages.fashion, "/collections/fashion-editorial"),
+    card("catalog_nature", "Nature adventure", "Travel", "Outdoor portrait scenes with mountains, forests, coastlines, and natural light.", "20 photos", "18 credits", packImages.travel, "/collections/nature"),
+    card("catalog_mafia", "Noir portraits", "Creative", "Dramatic noir styling, moody interiors, tailored outfits, and cinematic contrast.", "20 photos", "22 credits", packImages.gala, "/collections/mafia"),
+    card("catalog_profile", "Profile Cards", "Creator", "Social profile cards, avatar crops, and clean personal introduction visuals.", "20 photos", "20 credits", packImages.headshots, "/collections/profile-cards"),
+    card("catalog_product", "Product lifestyle", "Utility", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "20 photos", "22 credits", packImages.copy, "/collections/product-style")
+  ];
 }
 
 function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
@@ -2117,7 +2904,7 @@ function renderLegacySaasSection({
 
   if (type === "products" || type === "products_plus") {
     const maxCount = Number(setting(section, "max_count", "")) || numberSetting(section, "grid", 4) * numberSetting(section, "line_number", 1);
-    const title = setting(section, "title", setting(section, "name", "Featured collection"));
+    const title = sectionHeading(section, "Featured collection");
     const productItems = activeProducts(products).slice(0, maxCount || 4);
     const cards = productItems.length
       ? productItems.map((product, index) => {
@@ -2219,7 +3006,7 @@ function renderLegacySaasSection({
   }
 
   if (type === "collection_detail" || type === "collection_list" || type === "collection_list_plus" || type === "collection_slider" || type === "vertical_showcase_slider") {
-    const title = setting(section, "name", setting(section, "title", type === "collection_detail" ? "Collection" : "Collection list"));
+    const title = sectionHeading(section, type === "collection_detail" ? "Collection" : "Collection list");
     const filters = sectionBlocks(section).filter((block) => block.type.includes("filter"));
     const cards = selectedPackCards(site, section, creativePacks, Number(setting(section, "limit", "8")) || 8);
     if (type === "vertical_showcase_slider") {
@@ -2305,21 +3092,23 @@ function renderLegacySaasSection({
       siteSearchCards(site, products, siteAiApps, creativePacks, renderContext.pages),
       searchTerm
     );
+    const searchTitle = searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", "Search plans, packs, tools, and photo guides");
     return (
       <section className="px-5 py-14" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white p-5">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Storefront search</p>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{searchTitle}</h1>
             <div className="mt-4 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `Results for "${searchTerm}"` : "Search plans, packs, tools, and photo guides"}
+                {searchTerm ? `${cards.length} matching results` : "Search plans, packs, tools, and photo guides"}
               </span>
             </div>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
             <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{cards.length} results</span>
-            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">private storefront</span>
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">private account</span>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.slice(0, 12).map((card) => (
@@ -2363,7 +3152,7 @@ function renderLegacySaasSection({
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Checkout summary</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? "Your selected plan" : "Choose a plan first"}</h2>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? "Your selected plan" : "Choose a plan first"}</h1>
               <p className="mt-2 text-sm leading-6 text-zinc-500">
                 Review your selected collection, credit grant, and checkout amount before the private album workflow begins.
               </p>
@@ -2465,7 +3254,7 @@ function renderLegacySaasSection({
   if (type === "overlay_image") {
     const image = mediaAssetUrl(site, setting(section, "image_src", fallbackHeroImages[0]));
     const opacity = Math.max(0, Math.min(100, numberSetting(section, "opacity", 25)));
-    const title = setting(section, "title", site.branding.logoText);
+    const title = sectionHeading(section, site.branding.logoText);
     const text = stripHtml(setting(section, "text", site.branding.description));
     const button = setting(section, "button_label");
     const content = (
@@ -2504,7 +3293,7 @@ function renderLegacySaasSection({
     const copyNode = (
       <div>
         <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Photo story</p>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", "Heading")}</h2>
+        <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Photo story")}</h2>
         <p className="mt-5 max-w-xl text-sm leading-7 text-zinc-600">{text}</p>
         {setting(section, "button_label") ? (
           <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={hrefFor(site, setting(section, "button_link", setting(section, "link_to_url", "/login")))}>
@@ -2544,7 +3333,7 @@ function renderLegacySaasSection({
   }
 
   if (type === "feature_columns" || type === "reviews" || type === "slogan") {
-    const title = setting(section, "title", type === "reviews" ? "Reviews" : "");
+    const title = headingSetting(section, "title", type === "reviews" ? "Reviews" : storefrontSectionLabel(type));
     const blocks = sectionBlocks(section);
     return (
       <section className="px-5 py-16" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
@@ -2558,11 +3347,11 @@ function renderLegacySaasSection({
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(block, index, "feature_column")}>
                   {saasBool(block.settings.enable_image, true) ? (
                     <div className="aspect-[16/11] bg-zinc-200">
-                      <img className="h-full w-full object-cover" src={image} alt={blockValue(block, "title", block.type)} />
+                      <img className="h-full w-full object-cover" src={image} alt={headingBlockValue(block, "title", storefrontSectionLabel(block.type))} />
                     </div>
                   ) : null}
                   <div className="p-5">
-                    <h3 className="text-lg font-semibold">{blockValue(block, "title", blockValue(block, "name", block.type))}</h3>
+                    <h3 className="text-lg font-semibold">{headingBlockValue(block, "title", headingBlockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
                     <p className="mt-2 text-sm leading-6 text-zinc-600">{stripHtml(blockValue(block, "text", blockValue(block, "content", "Add guidance, proof, or collection details for the photo pack experience.")))}</p>
                   </div>
                 </article>
@@ -2598,7 +3387,7 @@ function renderLegacySaasSection({
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 rounded-[1.6rem] border border-black/10 bg-white p-8 shadow-diffusion md:grid-cols-[0.75fr_1fr] md:items-center">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Studio updates</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", "Join our list")}</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Join our list")}</h2>
             <p className="mt-4 text-sm leading-7 text-zinc-600">{setting(section, "sub_title", "Subscribe for updates.")}</p>
           </div>
           <div className="flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 p-2">
@@ -2617,7 +3406,7 @@ function renderLegacySaasSection({
       <section className="px-5 py-16" data-saas-section-renderer={type} id={sectionAnchor(section, id)} style={{ background: type === "instagram_plus" ? setting(section, "ins_bg", "var(--site-muted)") : undefined }}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
-          <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", type === "instagram_plus" ? "Find us on Instagram" : "Gallery")}</h2>
+          <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, type === "instagram_plus" ? "Find us on Instagram" : "Gallery")}</h2>
           <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
             {(blocks.length ? blocks : Array.from({ length: 4 }, (_, index) => ({ id: `gallery_${index}`, type: "banner", settings: { src: "", title: "" } }))).slice(0, 8).map((block, index) => {
               const image = mediaAssetUrl(site, blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`)));
@@ -2672,7 +3461,7 @@ function renderLegacySaasSection({
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", product?.name ?? "Featured product")}</h2>
-            <p className="mt-5 text-sm leading-7 text-zinc-600">{setting(section, "desc", "Featured product content is bound to the current site data.")}</p>
+            <p className="mt-5 text-sm leading-7 text-zinc-600">{setting(section, "desc", "Featured product content uses the active catalog customers can buy from.")}</p>
             <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={product ? productHref(site, product) : hrefFor(site, "/pricing")}>
               Open item
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
@@ -2940,8 +3729,8 @@ function SectionView({
                   <StorefrontImage
                     alt=""
                     className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-                    fetchPriority={index < 3 ? "auto" : "low"}
-                    loading={index < 3 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "auto" : "low"}
+                    loading={index === 0 ? "eager" : "lazy"}
                     sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
                     src={gridImages[index % gridImages.length] ?? primaryImage}
                   />
@@ -3058,7 +3847,7 @@ function SectionView({
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", "4.9/5 from photo-package subscribers")}</p>
-                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, photo packages, private albums, and checkout stay tied to this storefront.</p>
+                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, photo packages, private albums, and checkout stay inside your account.</p>
                 </div>
                 </div>
               </div>
@@ -3134,7 +3923,7 @@ function SectionView({
                 <span className="h-2.5 w-2.5 rounded-full bg-moss" />
                 Private model training
               </div>
-              <p className="mt-1 font-mono text-xs text-zinc-500">{mode === "preview" ? "Preview" : "Live storefront"}</p>
+              <p className="mt-1 font-mono text-xs text-zinc-500">{mode === "preview" ? "Preview" : "Live photo workspace"}</p>
             </div>
             <div className="grid h-full grid-cols-[0.9fr_1.1fr] gap-4">
               <div className="flex flex-col justify-end gap-4 pt-20">
@@ -3265,7 +4054,7 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] items-start gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-10">
           <div>
             <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em]" : "font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]"} style={dark ? { color: accentBlue } : undefined}>{setting(section, "eyebrow", "Featured story")}</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Photo collections")}</h2>
             <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/72" : "mt-5 max-w-xl text-sm leading-7 text-zinc-600"}>{setting(section, "subtitle")}</p>
             {lead ? (
               <div className="mt-8 overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] shadow-[0_28px_90px_-56px_rgba(0,0,0,0.8)]">
@@ -3478,7 +4267,7 @@ function SectionView({
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="mx-auto max-w-3xl text-center">
             <p className="font-mono text-xs uppercase tracking-[0.22em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Photo tools")}</h2>
             <p className="mt-4 text-sm leading-7 text-white/72">{setting(section, "subtitle")}</p>
           </div>
           <div className="mt-8 overflow-hidden rounded-[26px] p-[3px] shadow-[0_28px_90px_-52px_rgba(47,111,237,0.24)]" style={{ borderColor: "rgba(47,111,237,0.3)", background: `linear-gradient(180deg, ${accentBlueSoft}, ${accentBlue})` }}>
@@ -3610,13 +4399,14 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-12 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-12 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <Link
+            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this photo package"))}
             className={dark ? "group grid overflow-hidden rounded-[32px] border border-white/10 bg-[#15171c] shadow-[0_34px_100px_-68px_rgba(0,0,0,0.86)] md:grid-cols-[0.92fr_1.08fr]" : "group grid overflow-hidden rounded-[32px] border border-[#ded5ca] bg-[#fffdf8]/90 shadow-[0_34px_100px_-76px_rgba(20,22,26,0.32)] md:grid-cols-[0.9fr_1.1fr]"}
             href={hrefFor(site, setting(section, "ctaHref", "#packages"))}
           >
             <div className={dark ? "flex min-h-[380px] flex-col justify-between p-7 text-white md:p-10" : "flex min-h-[380px] flex-col justify-between p-7 text-[#14161a] md:p-10"}>
               <div>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/58" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{setting(section, "eyebrow")}</p>
-                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{setting(section, "title")}</h2>
+                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private photo packages")}</h2>
                 <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/70" : "mt-5 max-w-xl text-sm leading-7 text-[#625d56]"}>{setting(section, "subtitle")}</p>
                 <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
                   {displayStats.slice(0, 3).map((stat, index) => (
@@ -3638,7 +4428,7 @@ function SectionView({
               <div className={dark ? "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/14 bg-black/48 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.72)] backdrop-blur-md" : "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/24 bg-[#111114]/72 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.64)] backdrop-blur-md"}>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/62">featured collection</p>
                 <p className="mt-2 text-xl font-semibold leading-tight">{setting(section, "imageCaption", "Private photo pack workflow")}</p>
-                <p className="mt-2 text-sm leading-6 text-white/74">{setting(section, "imageMeta", "Upload, hold credits, create, and receive your private photo pack from one account.")}</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">{setting(section, "imageMeta", "Upload, reserve credits, create, and receive your private photo pack from one account.")}</p>
               </div>
             </div>
           </Link>
@@ -3654,7 +4444,7 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 rounded-[1.8rem] border border-white/10 bg-[#101014] p-6 shadow-[0_28px_90px_-56px_rgba(0,0,0,0.92)] md:grid-cols-[0.95fr_1.05fr] md:p-8">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Start your AI shoot")}</p>
-            <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+            <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Private photo workflow")}</h2>
             <p className="mt-4 max-w-xl text-sm leading-7 text-white/68">{setting(section, "subtitle")}</p>
           </div>
           <div className="rounded-[1.4rem] border border-white/10 bg-[#141419] p-5">
@@ -3695,20 +4485,21 @@ function SectionView({
     const featureLabel = setting(section, "imageBadge", "Private customer access");
     const featureCaption = setting(section, "imageCaption", "Magazine-grade photo delivery begins with a private sign-in.");
     const featureMeta = setting(section, "imageMeta", "Keep uploads, scene packs, and delivery requests inside one elegant client workspace.");
+    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/login" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     return (
       <section className="bg-[#090a0e] px-4 py-6 text-white sm:px-5 md:py-10" id={sectionAnchor(section, "start")}>
         <div className="mx-auto grid min-w-0 max-w-[var(--site-content-width)] gap-6 rounded-[32px] border border-white/10 bg-[#0f1117] p-4 shadow-[0_40px_120px_-84px_rgba(0,0,0,0.88)] sm:p-5 md:p-6 lg:grid-cols-[0.44fr_0.56fr] lg:items-start">
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-white/[0.03] p-5 md:p-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/46">{setting(section, "eyebrow", "Customer login")}</p>
-            <h2 className="mt-4 max-w-full text-[clamp(2.3rem,5.4vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance text-white [font-family:var(--site-title-font)]">
+            <HeadingTag className="mt-4 max-w-full text-[clamp(2.3rem,5.4vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance text-white [font-family:var(--site-title-font)]">
               {setting(section, "title")}
-            </h2>
+            </HeadingTag>
             <p className="mt-4 max-w-xl text-sm leading-7 text-white/64">{setting(section, "subtitle")}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {[
-                ["Continue with Google", "Available as a brand entry, but the real login flow uses email in this build."],
-                ["Email login", "The customer account, credits, uploads, and albums stay scoped to this site."],
-                ["Private delivery", "Signed-in customers return to a site-specific workspace and gallery."]
+                ["Continue with Google", "Use a familiar sign-in option when it is available for your account."],
+                ["Email login", "Your credits, uploads, requests, and albums stay inside your private account."],
+                ["Private delivery", "Return anytime to track progress and download finished photo sets."]
               ].map(([label, detail]) => (
                 <div className="flex items-start gap-3 rounded-[18px] border border-white/10 bg-[#12141b] px-4 py-3" key={label}>
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8ae0b5]" strokeWidth={1.8} />
@@ -3742,14 +4533,15 @@ function SectionView({
               </div>
               <div className="p-3 md:p-4">
                 {showRealLoginForm ? (
-                  <LoginForm
-                    defaultEmail={auth?.defaultEmail}
-                    defaultName={auth?.defaultName}
-                    initialMessage={auth?.initialMessage}
-                    siteId={site.id}
-                    storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
-                    siteSlug={site.slug}
-                  />
+	                  <LoginForm
+	                    defaultEmail={auth?.defaultEmail}
+	                    defaultName={auth?.defaultName}
+	                    initialMessage={auth?.initialMessage}
+	                    returnTo={queryValue(renderContext.query.next)}
+	                    siteId={site.id}
+	                    storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
+	                    siteSlug={site.slug}
+	                  />
                 ) : (
                   <>
                     <div className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-3 py-2">
@@ -3761,7 +4553,7 @@ function SectionView({
                     </div>
                     <div className="mt-4 grid gap-2">
                       {(methods.length ? methods : [
-                        { id: "google", type: "login_method", settings: { label: "Continue with Google", helper: "OAuth-ready entry.", kind: "google", href: "/login" } },
+                        { id: "google", type: "login_method", settings: { label: "Continue with Google", helper: "Fast sign-in for returning customers.", kind: "google", href: "/login" } },
                         { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
                       ]).map((method, index) => (
                         <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
@@ -3870,7 +4662,7 @@ function SectionView({
   if (section.type === "dreamshoot_feature_tabs") {
     const tabs = sectionBlocks(section, "feature_tab");
     const items = tabs.length ? tabs : [
-      { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a known package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk instead of a blank prompt.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/tools/headshot" } },
+      { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a known package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk instead of a blank prompt.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/collections" } },
       { id: "tab_tryon", type: "feature_tab", settings: { label: "Try-on and style", title: "Preview themed looks", description: "Simulate wardrobe, hairstyle, beauty, or gala directions before full-package generation.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/virtual-try-on" } },
       { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
     ];
@@ -3881,7 +4673,7 @@ function SectionView({
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.56fr)_minmax(0,0.44fr)] lg:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "AI photo tools")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Photo package categories")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-zinc-600 lg:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -3924,9 +4716,9 @@ function SectionView({
       section,
       "items",
       [
-        `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/tools/creator-portrait`,
-        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/tools/world-cup-fan-photos`,
-        `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/tools/headshot`
+        `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/collections/creator`,
+        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/collections/world-cup-fan-photos`,
+        `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/collections/headshots`
       ],
       (item, index) => {
         const [title, description, tag, imageUrl, href] = item.split("|");
@@ -3939,7 +4731,7 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.72fr_1fr] md:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Photo occasions")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Featured photo results")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -3980,10 +4772,10 @@ function SectionView({
       section,
       "items",
       [
-        "Choose a tool|Pick the photo workflow first, then attach the source photos it needs.|Tool first|/app#create",
-        "Upload photos|Collect selfies and source images inside a private customer workspace.|Private intake|/app#upload_1",
-        "Track progress|Show waiting, creating, delivered, review-needed, and returned-credit states.|Live progress|/app#progress_1",
-        "Download albums|Deliver finished images to private customer galleries.|Private delivery|/app#album_1"
+        "Choose a tool|Pick the photo workflow first, then attach the source photos it needs.|Tool first|/app/create",
+        "Upload photos|Collect selfies and source images inside a private customer workspace.|Private intake|/app/upload",
+        "Track progress|Show waiting, creating, delivered, review-needed, and returned-credit states.|Live progress|/app/jobs/progress",
+        "Download albums|Deliver finished images to private customer galleries.|Private delivery|/album"
       ],
       (item, index) => {
         const [title, description, meta, href] = item.split("|");
@@ -3994,8 +4786,6 @@ function SectionView({
     const leadFeature = features[0];
     const workspaceImage = runtimeCollectionImage(site, section, undefined, `${site.slug}-${id}-workspace`);
     const workspaceChips = listSetting(section, "chipList", ["Private customer account", "Album-ready workflow", "Live credits and delivery"]);
-    const ctaLabel = setting(section, "ctaLabel", "Open workspace");
-    const ctaHref = hrefFor(site, setting(section, "ctaHref", "/app"));
     const launcherSurface = sectionSurface(
       section,
       renderContext.pagePath === "/account"
@@ -4004,6 +4794,8 @@ function SectionView({
         ? "workspace"
         : "showcase"
     );
+    const ctaLabel = setting(section, "ctaLabel", launcherSurface === "account" ? "Upload photos" : "Start a photo set");
+    const ctaHref = hrefFor(site, setting(section, "ctaHref", "/app"));
     const customer = runtime?.customer;
     const workspaceSummary = [
       {
@@ -4111,9 +4903,9 @@ function SectionView({
                 <div className="mt-4 grid gap-4 md:grid-cols-2">
                   {features.slice(0, 4).map((feature, index) => {
                     const Icon = icons[index % icons.length];
-                    const fallbackHrefs = ["/app#create", "/app#upload_1", "/app#progress_1", "/app#album_1"];
-                    const rawHref = blockValue(feature, "href", fallbackHrefs[index] ?? "/app#create");
-                    const featureHref = rawHref === "/album" ? "/app#album_1" : rawHref;
+                    const fallbackHrefs = ["/app/create", "/app/upload", "/app/jobs/progress", "/album"];
+                    const rawHref = blockValue(feature, "href", fallbackHrefs[index] ?? "/app/create");
+                    const featureHref = rawHref === "/app#create" ? "/app/create" : rawHref === "/app#upload_1" ? "/app/upload" : rawHref === "/app#progress_1" ? "/app/jobs/progress" : rawHref === "/app#album_1" ? "/album" : rawHref;
                     return (
                       <Link
                         className="group flex min-h-[150px] flex-col rounded-[18px] border border-[#e6dacb] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#d0bdab] hover:bg-[#fffdf9]"
@@ -4154,7 +4946,7 @@ function SectionView({
     if (launcherSurface === "account") {
       const accountChipAnchors = ["account-profile", "account-plan", "account-orders", "account-albums"];
       const accountFeatureHref = (feature: SectionBlockInstance, index: number) => {
-        const fallbackHrefs = ["/app#upload_1", "/app#create", "/app/jobs/progress", "/album"];
+        const fallbackHrefs = ["/app/upload", "/app/create", "/app/jobs/progress", "/album"];
         return blockValue(feature, "href", fallbackHrefs[index] ?? "#account-profile");
       };
       return (
@@ -4267,6 +5059,7 @@ function SectionView({
                     const Icon = icons[(index + 1) % icons.length];
                     return (
                       <Link
+                        aria-label={cardLinkLabel("Open step", blockValue(feature, "title", "photo workspace step"))}
                         className="group rounded-[18px] border border-[#efe5d8] bg-[#fffaf4] px-4 py-4 transition hover:-translate-y-0.5 hover:border-[#ddcebc]"
                         href={hrefFor(site, blockValue(feature, "href", "/app"))}
                         key={`launcher_overview_${instanceKey(feature, index + 1, "launcher")}`}
@@ -4299,6 +5092,7 @@ function SectionView({
               <div className="mt-7 grid gap-4 md:grid-cols-[1.08fr_0.92fr]">
                 {leadFeature ? (
                   <Link
+                    aria-label={cardLinkLabel("Open step", blockValue(leadFeature, "title", "source photo upload"))}
                     className="group relative min-h-[420px] overflow-hidden rounded-[30px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_28px_72px_-58px_rgba(20,22,26,0.18)]"
                     href={hrefFor(site, blockValue(leadFeature, "href", "/app"))}
                     {...xfcartBlockAttrs(leadFeature, 0, "launcher_lead")}
@@ -4352,6 +5146,7 @@ function SectionView({
                 const Icon = icons[index % icons.length];
                 return (
                   <Link
+                    aria-label={cardLinkLabel("Open step", blockValue(feature, "title", "photo workspace step"))}
                     className="group rounded-[26px] border border-[#ded3c4] bg-[#fffaf3]/92 p-6 shadow-[0_22px_62px_-54px_rgba(20,22,26,0.16)] transition hover:-translate-y-0.5"
                     href={hrefFor(site, blockValue(feature, "href", "/app"))}
                     key={`launcher_panel_${instanceKey(feature, index, "panel")}`}
@@ -4403,7 +5198,7 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.62fr_1fr] md:items-end">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]">{setting(section, "eyebrow", "section")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Photo packages and tools")}</h2>
             </div>
             <div className="max-w-2xl md:justify-self-end">
               <p className="text-sm leading-7 text-zinc-600">{setting(section, "subtitle")}</p>
@@ -4423,7 +5218,7 @@ function SectionView({
                   className={`group overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 ${
                     index === 0 ? "md:col-span-1 md:row-span-2" : ""
                   }`}
-                  href={hrefFor(site, `/tools/${pack.aiAppSlug}`)}
+                  href={hrefFor(site, creativePackCollectionHref(pack))}
                   key={pack.id}
                 >
                   <div className={index === 0 ? "aspect-[4/5] overflow-hidden" : "aspect-[16/10] overflow-hidden"}>
@@ -4478,10 +5273,16 @@ function SectionView({
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualItems = sectionBlocks(section, "package");
     const packItems = creativePacks.filter((pack) => pack.status === "active");
-    const selectedCategory = queryValue(renderContext.query.category).toLowerCase();
+    const selectedCategory = dreamshootCategorySlug(queryValue(renderContext.query.category));
     const selectedAiApp = queryValue(renderContext.query.app).toLowerCase();
     const filteredPackItems = packItems.filter((pack) => {
-      if (selectedCategory && pack.category.toLowerCase() !== selectedCategory) return false;
+      const tokens = [
+        pack.category,
+        pack.categoryRecord?.slug,
+        pack.categoryRecord?.parent?.slug,
+        pack.name
+      ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+      if (selectedCategory && !tokens.includes(selectedCategory)) return false;
       if (selectedAiApp && pack.aiAppSlug.toLowerCase() !== selectedAiApp) return false;
       return true;
     });
@@ -4492,8 +5293,10 @@ function SectionView({
           description: pack.description || pack.headline,
           meta: `${pack.outputCount} photos`,
           credits: `${pack.creditCost} credits`,
+          category: packCategoryLabelForStorefront(pack),
+          trainingLabel: pack.trainingRequired ? "Private model" : "Ready workflow",
           imageUrl: packImage(site, pack),
-          href: dreamshootStaticToolPath(pack.id, pack.name)
+          href: creativePackCollectionHref(pack)
         }))
       : manualItems.map((item) => ({
           id: item.id,
@@ -4501,9 +5304,15 @@ function SectionView({
           description: blockValue(item, "description"),
           meta: blockValue(item, "meta"),
           credits: blockValue(item, "credits"),
+          category: blockValue(item, "category", "Photo package"),
+          trainingLabel: blockValue(item, "trainingLabel", "Ready workflow"),
           imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.creator)),
           href: blockValue(item, "href", "/tools")
         }));
+    const selectedPack = selectedCategory && filteredPackItems.length === 1 ? filteredPackItems[0] : undefined;
+    const selectedPackGallery = selectedPack
+      ? Array.from(new Set([packImage(site, selectedPack), ...(selectedPack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image))])).slice(0, 12)
+      : [];
     const fallbackCards = [
       {
         id: "fallback_creator",
@@ -4511,6 +5320,8 @@ function SectionView({
         description: "AI portraits for profile updates, gifts, creator posts, and private albums.",
         meta: "40 photos",
         credits: "24 credits",
+        category: "Creator",
+        trainingLabel: "Ready workflow",
         imageUrl: packImages.creator,
         href: "/tools"
       }
@@ -4518,59 +5329,107 @@ function SectionView({
     const allCards = cards.length
       ? cards
       : fallbackCards;
-    const defaultMaxCount = renderContext.pagePath === "/" ? 8 : 12;
-    const maxCount = Math.max(1, Number(setting(section, "maxCount", String(defaultMaxCount))) || defaultMaxCount);
-    const displayCards = allCards.slice(0, maxCount);
+    const defaultMaxCount = renderContext.pagePath === "/" ? "all" : "12";
+    const maxCountSetting = setting(section, "maxCount", defaultMaxCount).trim().toLowerCase();
+    const maxCount = maxCountSetting === "all"
+      ? allCards.length
+      : Math.max(1, Number(maxCountSetting) || Number(defaultMaxCount) || allCards.length);
+    const displayCards = allCards.slice(0, Math.min(allCards.length, maxCount));
+    const categoryLinks = Array.from(new Map(packItems.map((pack) => [dreamshootCategorySlug(pack.category), pack.category])).values());
     return (
-      <section className="relative overflow-hidden bg-[var(--site-bg)] px-5 py-16" id={sectionAnchor(section, "packages")}>
-        <div className="mx-auto max-w-[var(--site-content-width)]">
+      <section className="relative overflow-hidden bg-[#04070d] px-5 py-16 text-white" id={sectionAnchor(section, "packages")}>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0)_32%),radial-gradient(circle_at_12%_8%,rgba(201,88,242,0.16),transparent_34%),radial-gradient(circle_at_86%_28%,rgba(22,220,240,0.12),transparent_30%)]" />
+        <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.56fr)_minmax(0,0.44fr)] lg:items-end">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]">{setting(section, "eyebrow", "Photo packages")}</p>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/54">{setting(section, "eyebrow", "Photo packages")}</p>
+              <h2 className="mt-4 max-w-[58rem] text-[clamp(2.55rem,5.8vw,5.35rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">{selectedPack ? selectedPack.name : sectionHeading(section, "Photo package details")}</h2>
             </div>
-            <p className="max-w-2xl text-sm leading-7 text-zinc-600 lg:justify-self-end">{setting(section, "subtitle")}</p>
+            <p className="max-w-2xl text-[clamp(1rem,1.45vw,1.22rem)] leading-8 text-white/62 lg:justify-self-end">{selectedPack ? selectedPack.description || selectedPack.headline : setting(section, "subtitle")}</p>
           </div>
+          {selectedPack ? (
+            <div className="mt-10 overflow-hidden rounded-[18px] border border-white/14 bg-white/[0.055] shadow-[0_30px_70px_-52px_rgba(0,0,0,0.86)]">
+              <div className="grid gap-0 lg:grid-cols-[minmax(0,0.46fr)_minmax(0,0.54fr)]">
+                <div className="p-6 sm:p-8 lg:p-10">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/52">{packCategoryLabelForStorefront(selectedPack)}</p>
+                  <h3 className="mt-4 text-[clamp(2rem,4vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white">{selectedPack.headline || selectedPack.name}</h3>
+                  <p className="mt-5 text-sm leading-7 text-white/62">{selectedPack.description}</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.outputCount} photos</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.creditCost} credits</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.trainingRequired ? "Private model" : "Ready workflow"}</span>
+                  </div>
+                  <Link className="mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, creativePackCreateHref(selectedPack))} style={{ background: dreamshootBrandGradient }}>
+                    Start this package
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                </div>
+                <div className="grid min-h-[420px] grid-cols-2 gap-2 bg-[#0a0c12] p-2">
+                  {(selectedPackGallery.length ? selectedPackGallery : [packImage(site, selectedPack)]).slice(0, 4).map((image, index) => (
+                    <div className={`overflow-hidden rounded-[1.4rem] bg-white/5 ${index === 0 ? "col-span-2" : ""}`} key={`${selectedPack.id}_gallery_${index}`}>
+                      <StorefrontImage className="h-full w-full object-cover" src={image} alt={`${selectedPack.name} example ${index + 1}`} sizes="(max-width: 1024px) 100vw, 45vw" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : null}
           {usePacks ? (
-            <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-              <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{displayCards.length} visible packs</span>
-              <Link className="rounded-full border border-black/10 bg-white px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900" href={hrefFor(site, "/collections")}>
+            <div className="mt-7 flex flex-wrap items-center gap-2 text-xs text-white/62">
+              <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-white/76">{displayCards.length} visible packs</span>
+              <Link className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
                 All
               </Link>
-              {Array.from(new Set(packItems.map((pack) => pack.category))).map((category) => (
+              {categoryLinks.map((category) => (
                 <Link
-                  className={`rounded-full border px-3 py-1.5 transition hover:border-zinc-950/20 hover:text-zinc-900 ${selectedCategory === category ? "border-zinc-950 bg-zinc-950 text-white" : "border-black/10 bg-white"}`}
+                  className={`rounded-full border px-3 py-1.5 transition hover:border-white/28 hover:text-white ${selectedCategory === dreamshootCategorySlug(category) ? "border-transparent text-white" : "border-white/14 bg-white/[0.08]"}`}
                   href={hrefFor(site, collectionHref(category))}
                   key={category}
+                  style={selectedCategory === dreamshootCategorySlug(category) ? { background: dreamshootBrandGradient } : undefined}
                 >
                   {category}
                 </Link>
               ))}
             </div>
           ) : null}
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {displayCards.map((card, index) => (
               <Link
-                className={`group flex h-full flex-col overflow-hidden rounded-[1.45rem] border border-[#ddd7cb] bg-[#fbfaf7] text-[#14161a] shadow-[0_28px_75px_-58px_rgba(20,22,26,0.24)] transition hover:-translate-y-1 ${
-                  index === 0 ? "sm:col-span-2 xl:col-span-2" : ""
+                aria-label={cardLinkLabel("Open package", card.title)}
+                className={`group relative flex min-h-[360px] overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.04] text-white shadow-[0_28px_70px_-58px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24 ${
+                  index === 0 && renderContext.pagePath === "/" ? "sm:col-span-2 xl:col-span-2" : ""
                 }`}
                 href={hrefFor(site, card.href)}
                 key={card.id}
               >
-                <div className={index === 0 ? "aspect-[16/10] overflow-hidden bg-zinc-200 xl:aspect-[16/9]" : "aspect-[4/5] overflow-hidden bg-zinc-200 sm:aspect-[6/7]"}>
-                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={card.imageUrl} alt={card.title} />
-                </div>
-                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="rounded-full border border-black/8 bg-white px-2.5 py-1 text-xs font-medium text-[#5f6269]">{card.meta}</span>
-                    <span className="font-mono text-xs text-[#6b6e76]">{card.credits}</span>
+                <StorefrontImage
+                  alt={card.title}
+                  className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                  fetchPriority={index === 0 && renderContext.pagePath === "/" ? "auto" : "low"}
+                  loading={index === 0 && renderContext.pagePath === "/" ? "eager" : "lazy"}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+                  src={card.imageUrl}
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,5,11,0.18)_0%,rgba(2,5,11,0.58)_42%,rgba(2,5,11,0.92)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(201,88,242,0.18),rgba(22,220,240,0)_44%)] opacity-0 transition group-hover:opacity-100" />
+                <div className="relative flex min-h-[360px] w-full flex-col p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="max-w-[72%] rounded-full border border-white/18 bg-black/32 px-3 py-1.5 text-xs font-semibold text-white/86 backdrop-blur">{card.category}</span>
+                    <ArrowRight className="h-5 w-5 shrink-0 text-white/74 transition group-hover:translate-x-1 group-hover:text-white" strokeWidth={1.8} />
                   </div>
-                  <h3 className="mt-4 text-xl font-semibold tracking-tight sm:text-[1.35rem]">{card.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#63666d]">{card.description}</p>
-                  <p className="mt-5 flex items-center gap-2 text-sm font-medium text-[#14161a]">
-                    Open package
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
-                  </p>
+                  <div className="mt-auto">
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.meta}</span>
+                      <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.credits}</span>
+                      <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.trainingLabel}</span>
+                    </div>
+                    <h3 className="text-[clamp(1.35rem,2.1vw,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-balance text-white">{card.title}</h3>
+                    <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-white/74">{card.description}</p>
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                      Open package
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -4632,8 +5491,79 @@ function SectionView({
       }
     ];
     const cards = blocks.length ? blocks : fallbackCards;
+    const activePackageThemeCards = creativePacks
+      .filter((pack) => pack.status === "active")
+      .map((pack) => ({
+        id: pack.id,
+        title: pack.categoryRecord?.label || pack.name,
+        description: dreamshootPackageThemeIntro(pack),
+        meta: packCategoryLabelForStorefront(pack),
+        keywords: [
+          pack.categoryRecord?.parent?.label,
+          pack.categoryRecord?.slug,
+          pack.aiAppSlug ? dreamshootDefaultToolTitle(pack.aiAppSlug) : ""
+        ].filter((value): value is string => Boolean(value)),
+        imageUrl: packImage(site, pack),
+        href: creativePackCollectionHref(pack),
+        block: undefined as SectionBlockInstance | undefined
+      }));
+    const taxonomyCards = renderContext.pagePath === "/collections" && activePackageThemeCards.length
+      ? activePackageThemeCards
+      : cards.map((card) => ({
+          id: card.id,
+          title: blockValue(card, "title", "Photo package"),
+          description: blockValue(card, "description"),
+          meta: blockValue(card, "meta", "Package"),
+          keywords: listLines(blockValue(card, "keywords", "")),
+          imageUrl: mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[0])),
+          href: blockValue(card, "href", "/collections"),
+          block: card
+        }));
+    const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
+      const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
+      return {
+        id: card.id,
+        title: card.title,
+        description: card.description,
+        meta: card.meta,
+        keywords: card.keywords.filter((keyword): keyword is string => Boolean(keyword)),
+        imageUrl: card.imageUrl,
+        href: hrefFor(site, card.href),
+        appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack)) : hrefFor(site, "/app/create"),
+        chips: matchingPack
+          ? [
+              `${matchingPack.outputCount || 20} photos`,
+              `${matchingPack.creditCost || 20} credits`,
+              dreamshootDefaultToolTitle(matchingPack.aiAppSlug || "image-studio"),
+              matchingPack.trainingRequired ? "Training required" : "Ready workflow"
+            ]
+          : []
+      };
+    });
     const editorial = setting(section, "layout", "seo_grid") === "editorial";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" ? "h1" : "h2") === "h1" ? "h1" : "h2";
+    const rawCollectionCategory = queryValue(renderContext.query.category);
+    const selectedCollectionSlug = renderContext.pagePath === "/collections" && rawCollectionCategory ? dreamshootCategorySlug(rawCollectionCategory) : "";
+    const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
+    const selectedCategory = selectedPack?.categoryRecord;
+    const fallbackCollectionLabel = selectedCollectionSlug ? dreamshootCategoryLabel(selectedCollectionSlug) : "";
+    const dynamicTitle = selectedPack?.name || selectedCategory?.heroTitle || selectedCategory?.label || fallbackCollectionLabel;
+    const dynamicSubtitle = selectedPack?.description || selectedPack?.headline || selectedCategory?.heroSubtitle || selectedCategory?.description;
+    const isCollectionDetail = Boolean(selectedCollectionSlug && dynamicTitle);
+    const selectedGalleryImages = selectedPack
+      ? Array.from(new Set([
+          packImage(site, selectedPack),
+          ...(selectedPack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image))
+        ].filter(Boolean))).slice(0, 4)
+      : [];
+    const detailChips = selectedPack
+      ? [
+          `${selectedPack.outputCount || 20} photos`,
+          `${selectedPack.creditCost || 20} credits`,
+          dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio"),
+          selectedPack.trainingRequired ? "Training required" : "Ready workflow"
+        ]
+      : [];
     return (
       <section className="relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white" id={sectionAnchor(section, "package-taxonomy")}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(47,111,237,0.22),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(215,163,107,0.16),transparent_24%)]" />
@@ -4642,53 +5572,67 @@ function SectionView({
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/52">{setting(section, "eyebrow", "Photo package library")}</p>
               <HeadingTag className="mt-4 max-w-3xl text-[clamp(2.1rem,4.4vw,4.65rem)] font-semibold leading-[0.98] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "Package categories customers already understand.")}
+                {dynamicTitle || setting(section, "title", "Package categories customers already understand.")}
               </HeadingTag>
             </div>
-            <p className="max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end">{setting(section, "subtitle")}</p>
+            <p className="max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end">{dynamicSubtitle || setting(section, "subtitle")}</p>
           </div>
-          <div className={`mt-10 grid gap-4 ${editorial ? "lg:grid-cols-[1.18fr_0.82fr]" : "sm:grid-cols-2 xl:grid-cols-3"}`}>
-            {cards.map((card, index) => {
-              const image = mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
-              const keywords = listLines(blockValue(card, "keywords", ""));
-              return (
-                <Link
-                  className={`group overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.07] text-white shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] backdrop-blur transition hover:-translate-y-1 hover:bg-white/[0.1] ${
-                    editorial && index === 0 ? "lg:row-span-2" : ""
-                  }`}
-                  href={hrefFor(site, blockValue(card, "href", "/collections"))}
-                  key={instanceKey(card, index, "dreamshoot_taxonomy")}
-                  {...xfcartBlockAttrs(card, index, "dreamshoot_taxonomy")}
-                >
-                  <div className={editorial && index === 0 ? "relative aspect-[16/11] overflow-hidden bg-zinc-900 lg:aspect-[16/12]" : "relative aspect-[16/10] overflow-hidden bg-zinc-900"}>
+          {isCollectionDetail ? (
+            <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+              <div className="rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/44">Selected package</p>
+                <h3 className="mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]">
+                  {dynamicTitle}
+                </h3>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/66">
+                  {dynamicSubtitle || "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request."}
+                </p>
+                {detailChips.length ? (
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {detailChips.map((chip) => (
+                      <span className="rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68" key={chip}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+                <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90" href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
+                  Start this package
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                </Link>
+              </div>
+              {selectedGalleryImages.length ? (
+                <div className="grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 sm:grid-cols-2">
+                  {selectedGalleryImages.map((image, index) => (
+                    <div className={`relative overflow-hidden rounded-[18px] bg-zinc-900 ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
                       <StorefrontImage
-                        alt={blockValue(card, "title", "Package category")}
-                        className="h-full w-full object-cover opacity-92 transition duration-500 group-hover:scale-[1.04]"
-                        sizes={editorial && index === 0 ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1280px) 50vw, 33vw"}
+                        alt={`${dynamicTitle} preview ${index + 1}`}
+                        className="h-full min-h-[170px] w-full object-cover"
+                        sizes="(max-width: 1024px) 50vw, 25vw"
                         src={image}
                       />
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full border border-white/12 bg-white/[0.08] px-3 py-1 text-xs font-medium text-white/68">{blockValue(card, "meta", "Package")}</span>
-                      <ArrowRight className="h-4 w-4 text-white/52 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </div>
-                    <h3 className="mt-5 text-[1.28rem] font-semibold leading-tight tracking-tight sm:text-[1.55rem]">{blockValue(card, "title", "Photo package")}</h3>
-                    <p className="mt-3 text-sm leading-6 text-white/64">{blockValue(card, "description")}</p>
-                    {keywords.length ? (
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {keywords.slice(0, 4).map((keyword) => (
-                          <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] text-white/62" key={keyword}>
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                    ) : null}
+                  ))}
+                </div>
+              ) : (
+                <div className="flex min-h-[360px] flex-col justify-between rounded-[24px] border border-white/12 bg-white/[0.06] p-6">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/44">Package guide</p>
+                    <h3 className="mt-4 text-2xl font-semibold tracking-tight">What to expect from {dynamicTitle}</h3>
+                    <p className="mt-3 text-sm leading-7 text-white/62">
+                      This theme is ready for unique copy, workflow notes, image count, and dedicated examples from the package editor.
+                    </p>
                   </div>
-                </Link>
-              );
-            })}
-          </div>
+                  <Link className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
+                    Browse all packages
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                </div>
+              )}
+            </div>
+          ) : (
+            <PackageTaxonomyClient cards={taxonomyClientCards} initialSlug={selectedCollectionSlug} />
+          )}
         </div>
       </section>
     );
@@ -4722,7 +5666,7 @@ function SectionView({
               ) : null}
             </div>
             <aside className="rounded-[24px] border border-[#e0ceb6] bg-white p-6 shadow-[0_28px_90px_-68px_rgba(20,22,26,0.38)] lg:sticky lg:top-28">
-              <h3 className="text-xl font-bold tracking-tight">{setting(section, "label", "Directory")} structure</h3>
+              <h3 className="text-xl font-bold tracking-tight">{setting(section, "label", "Directory")} guide</h3>
               {useCases.length ? (
                 <div className="mt-5">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">Use cases</p>
@@ -5025,14 +5969,34 @@ function SectionView({
   if (section.type === "dreamshoot_package_catalog") {
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
-    const packItems = creativePacks.filter((pack) => pack.status === "active").map((pack) => dreamshootCatalogCardFromPack(site, pack));
-    const cards = usePacks && packItems.length ? packItems : manualCards;
+    const selectedCategory = dreamshootCategorySlug(queryValue(renderContext.query.category));
+    const packItems = creativePacks
+      .filter((pack) => {
+        if (pack.status !== "active") return false;
+        if (!selectedCategory) return true;
+        const tokens = [pack.category, pack.categoryRecord?.slug, pack.categoryRecord?.parent?.slug, pack.name].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+        return tokens.includes(selectedCategory);
+      })
+      .map((pack) => dreamshootCatalogCardFromPack(site, pack));
+    const packCards = usePacks ? packItems : [];
     const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/world-cup-fan-photos" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/tools/headshot" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/tools/cyberpunk-portrait" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/tools/gala-photo" } })
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/collections/headshots" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/collections/cyberpunk" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" } })
     ];
+    const defaultCatalogCards = defaultDreamshootCatalogCards(site);
+    const seededCards = [
+      ...manualCards,
+      ...defaultCatalogCards.filter((card) => !manualCards.some((manualCard) => dreamshootCategorySlug(manualCard.title) === dreamshootCategorySlug(card.title)))
+    ];
+    const baseCards = seededCards.length ? seededCards : fallbackCards;
+    const cards = usePacks
+      ? [
+          ...packCards,
+          ...baseCards.filter((card) => !packCards.some((packCard) => dreamshootCategorySlug(packCard.title) === dreamshootCategorySlug(card.title)))
+        ]
+      : baseCards;
     const displayCards = cards.length ? cards : fallbackCards;
     const featuredCount = Math.max(3, Math.min(6, numberSetting(section, "featuredCount", 5)));
     const featured = [...displayCards]
@@ -5103,6 +6067,7 @@ function SectionView({
           <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
             {featured.map((card, index) => (
               <Link
+                aria-label={cardLinkLabel("Choose package", card.title)}
                 className="group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"
                 href={hrefFor(site, card.href)}
                 key={card.id}
@@ -5111,6 +6076,8 @@ function SectionView({
                   <StorefrontImage
                     alt={card.title}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                    fetchPriority={index === 0 ? "auto" : "low"}
+                    loading={index === 0 ? "eager" : "lazy"}
                     sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 20vw"
                     src={card.imageUrl}
                   />
@@ -5144,6 +6111,7 @@ function SectionView({
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 {rest.map((card, index) => (
                   <Link
+                    aria-label={cardLinkLabel("Choose package", card.title)}
                     className="group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"
                     href={hrefFor(site, card.href)}
                     key={`rest_${card.id}`}
@@ -5152,6 +6120,8 @@ function SectionView({
                       <StorefrontImage
                         alt={card.title}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]"
+                        fetchPriority="low"
+                        loading="lazy"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                         src={card.imageUrl}
                       />
@@ -5245,7 +6215,7 @@ function SectionView({
               </div>
               <div className="rounded-[28px] border border-[#11131B] bg-[#0D0F18] p-6 text-white shadow-[0_24px_78px_-62px_rgba(10,10,12,0.55)]">
                 <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">Private album workspace</h3>
-                <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-white/68">One signed-in place for uploads, credit ledger, finished albums, and add-ons.</p>
+                <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-white/68">One signed-in place for uploads, credit history, finished albums, and add-ons.</p>
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   {albumImages.map((image, index) => (
                     <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white/[0.06]" key={image}>
@@ -5283,7 +6253,7 @@ function SectionView({
           title: "Background changer",
           description: "Swap a plain portrait background before creating a full scene pack.",
           category: "AI Photo Edit",
-          badge: "Free",
+          badge: "Studio",
           imageUrl: dreamshootToolSceneDefaults.entry,
           href: "/tools/background-changer"
         }
@@ -5318,9 +6288,10 @@ function SectionView({
     const categories = configuredCategories.length ? configuredCategories : Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "AI Photo"))));
     const layout = setting(section, "layout", "directory");
     const dark = layout === "dark";
+    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     if (layout === "mega_menu") {
       return (
-        <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "free-tools")}>
+        <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "tools")}>
           <div className="absolute inset-0 -z-10 opacity-46">
             <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 blur-[0.2px] sm:grid-cols-4 lg:grid-cols-6">
               {tools.slice(0, 12).map((tool, index) => (
@@ -5337,6 +6308,14 @@ function SectionView({
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,10,0.97)_0%,rgba(8,8,10,0.84)_48%,rgba(8,8,10,0.96)_100%)]" />
           </div>
           <div className="mx-auto max-w-[1180px]">
+            <div className="mx-auto mb-6 max-w-4xl text-center">
+              <HeadingTag className="text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]">
+                {storefrontPaidToolText(setting(section, "title", "AI Tools Collection"))}
+              </HeadingTag>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64">
+                {storefrontPaidToolText(setting(section, "subtitle", "Discover paid AI tools for photo creation, background edits, restoration, video concepts, and private album workflows."))}
+              </p>
+            </div>
             <DreamShootMegaToolsPanel
               ctaHref={setting(section, "secondaryHref", "/tools")}
               ctaLabel={setting(section, "secondaryCta", "View all tools")}
@@ -5349,77 +6328,94 @@ function SectionView({
       );
     }
     return (
-      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#fff7ee] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, "free-tools")}>
+      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#eef4f2] px-5 py-14 text-[#151a24]"} id={sectionAnchor(section, "tools")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className={dark ? "text-[clamp(2.4rem,5vw,4.45rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]" : "text-[clamp(2.4rem,5vw,4.45rem)] font-bold leading-[1.02] tracking-tight text-[#f05a12] [font-family:var(--site-title-font)]"}>
-              {setting(section, "title", "Free AI Tools Collection")}
-            </h2>
-            <p className={dark ? "mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/68" : "mx-auto mt-5 max-w-3xl text-lg leading-8 text-[#4f5663]"}>
-              {setting(section, "subtitle", "Discover free AI tools for photo creation, background edits, restoration, video concepts, and private album workflows.")}
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
-                {tools.length}+ free tools
+          <div className={dark ? "grid gap-8 rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_30px_90px_-68px_rgba(255,255,255,0.45)] lg:grid-cols-[1.15fr_0.85fr] lg:p-9" : "grid gap-8 rounded-[28px] border border-[#d7e4df] bg-[#fbfdfb] p-6 shadow-[0_28px_90px_-72px_rgba(23,74,67,0.55)] lg:grid-cols-[1.15fr_0.85fr] lg:p-9"}>
+            <div>
+              <span className={dark ? "text-xs font-bold uppercase tracking-[0.28em] text-white/46" : "text-xs font-bold uppercase tracking-[0.28em] text-[#2f8074]"}>
+                Studio tool index
               </span>
-              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
-                Instant preview
-              </span>
-              <span className={dark ? "rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/78" : "rounded-full border border-[#ffb36d] bg-[#fff1df] px-4 py-2 text-sm font-semibold text-[#d75b14]"}>
-                Studio ready
-              </span>
+              <HeadingTag className={dark ? "mt-4 max-w-3xl text-[clamp(2.1rem,4.7vw,4rem)] font-bold leading-[1.03] text-white [font-family:var(--site-title-font)]" : "mt-4 max-w-3xl text-[clamp(2.1rem,4.7vw,4rem)] font-bold leading-[1.03] text-[#18202d] [font-family:var(--site-title-font)]"}>
+                {storefrontPaidToolText(setting(section, "title", "AI Tools Collection"))}
+              </HeadingTag>
+              <p className={dark ? "mt-5 max-w-3xl text-base leading-8 text-white/66 sm:text-lg" : "mt-5 max-w-3xl text-base leading-8 text-[#55606d] sm:text-lg"}>
+                {storefrontPaidToolText(setting(section, "subtitle", "Discover paid AI tools for photo creation, background edits, video concepts, and private album workflows."))}
+              </p>
             </div>
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <a className={dark ? "rounded-[16px] bg-white px-6 py-3 text-sm font-bold text-[#101114]" : "rounded-[16px] bg-[#ff4f32] px-6 py-3 text-sm font-bold text-white shadow-[0_20px_42px_-28px_rgba(240,90,18,0.75)]"} href={`#${sectionAnchor(section, "free-tools")}`}>
-                All tools
-              </a>
-              {categories.map((category) => (
-                <a
-                  className={dark ? "rounded-[16px] border border-white/16 bg-white/[0.04] px-6 py-3 text-sm font-bold text-white/78 transition hover:bg-white/[0.08]" : "rounded-[16px] border border-[#d5dbe4] bg-white px-6 py-3 text-sm font-bold text-[#3b4350] transition hover:border-[#ffb36d] hover:text-[#f05a12]"}
-                  href={`#${sectionAnchor(section, "free-tools")}-${slugify(category)}`}
-                  key={category}
-                >
-                  {category}
+            <div className="grid content-between gap-4">
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  [`${tools.length}+`, "paid tools"],
+                  ["live", "preview flow"],
+                  ["studio", "ready pages"]
+                ].map(([value, label]) => (
+                  <div className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#dbe8e4] bg-white p-4"} key={label}>
+                    <div className={dark ? "text-xl font-bold text-white" : "text-xl font-bold text-[#183c39]"}>{value}</div>
+                    <div className={dark ? "mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/42" : "mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#6d7c82]"}>{label}</div>
+                  </div>
+                ))}
+              </div>
+              <div className={dark ? "grid grid-cols-2 gap-2 rounded-[20px] border border-white/10 bg-black/18 p-2 sm:grid-cols-4" : "grid grid-cols-2 gap-2 rounded-[20px] border border-[#d8e5e1] bg-[#eef4f2] p-2 sm:grid-cols-4"}>
+                <a className={dark ? "rounded-[14px] bg-white px-4 py-3 text-center text-sm font-bold text-[#101114]" : "rounded-[14px] bg-[#183c39] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_18px_34px_-28px_rgba(24,60,57,0.9)]"} href={`#${sectionAnchor(section, "tools")}`}>
+                  All tools
                 </a>
-              ))}
+                {categories.map((category) => (
+                  <a
+                    className={dark ? "rounded-[14px] px-4 py-3 text-center text-sm font-bold text-white/70 transition hover:bg-white/[0.08] hover:text-white" : "rounded-[14px] px-4 py-3 text-center text-sm font-bold text-[#34434a] transition hover:bg-white hover:text-[#236f64]"}
+                    href={`#${sectionAnchor(section, "tools")}-${slugify(category)}`}
+                    key={category}
+                  >
+                    {category}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="mt-14 grid gap-10">
+          <div className="mt-10 grid gap-12">
             {categories.map((category) => {
               const grouped = tools.filter((tool) => blockValue(tool, "category", "AI Photo") === category);
               if (!grouped.length) return null;
               return (
-                <div id={`${sectionAnchor(section, "free-tools")}-${slugify(category)}`} key={category}>
-                  <div className="mb-6 text-center">
-                    <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#14161a] sm:text-3xl"}>{category}</h3>
-                    <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#6a7280]"}>{grouped.length} tools with independent pages and fixed editor presets.</p>
+                <div id={`${sectionAnchor(section, "tools")}-${slugify(category)}`} key={category}>
+                  <div className={dark ? "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/10 pb-4" : "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-[#d3e0dc] pb-4"}>
+                    <div>
+                      <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</h3>
+                      <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>{grouped.length} tools with clear pages and guided next steps.</p>
+                    </div>
+                    <span className={dark ? "rounded-full border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-white/50" : "rounded-full border border-[#c6d8d3] bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#57706a]"}>
+                      {grouped.length} entries
+                    </span>
                   </div>
-                  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                    {grouped.map((tool, index) => (
-                      <Link
-                        className={dark ? "group flex min-h-[260px] flex-col rounded-[24px] border border-white/10 bg-white/[0.04] p-6 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[260px] flex-col rounded-[24px] border border-[#ffc98f] bg-white p-6 text-[#14161a] shadow-[0_26px_72px_-62px_rgba(240,90,18,0.45)] transition hover:-translate-y-1 hover:border-[#ff9845] hover:shadow-[0_32px_90px_-62px_rgba(240,90,18,0.7)]"}
-                        href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, blockValue(tool, "title", ""))}
-                        key={instanceKey(tool, index, "dreamshoot_tool")}
-                        {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
-                      >
-                        <div className="flex flex-wrap gap-2">
-                          <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#ffd2a3] bg-[#fff1df] px-2.5 py-1 text-xs font-semibold text-[#ee5d18]"}>
-                            AI-powered precision
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {grouped.map((tool, index) => {
+                      const directoryCopy = dreamshootToolDirectoryCopy(tool);
+                      const toolTitle = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
+                      return (
+                        <Link
+                          aria-label={cardLinkLabel(directoryCopy.action, toolTitle, "this tool")}
+                          className={dark ? "group flex min-h-[240px] flex-col rounded-[18px] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[240px] flex-col rounded-[18px] border border-[#d9e5e1] bg-white p-5 text-[#151a24] shadow-[0_20px_60px_-56px_rgba(23,74,67,0.48)] transition hover:-translate-y-1 hover:border-[#88bdb2] hover:shadow-[0_26px_76px_-58px_rgba(23,74,67,0.65)]"}
+                          href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, storefrontPaidToolBlockValue(tool, "title", ""))}
+                          key={instanceKey(tool, index, "dreamshoot_tool")}
+                          {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
+                        >
+                          <div className="flex flex-wrap gap-2">
+                            {directoryCopy.tags.map((tag) => (
+                              <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#cfe1dc] bg-[#eff7f4] px-2.5 py-1 text-xs font-semibold text-[#287066]"} key={tag}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <h4 className="mt-6 text-[1.18rem] font-bold leading-tight">{toolTitle}</h4>
+                          <p className={dark ? "mt-4 line-clamp-4 text-sm leading-6 text-white/64" : "mt-4 line-clamp-4 text-sm leading-6 text-[#56636b]"}>
+                            {directoryCopy.description}
+                          </p>
+                          <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#1d6f64]"}>
+                            {directoryCopy.action}
+                            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
                           </span>
-                          <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#ffd2a3] bg-[#fff1df] px-2.5 py-1 text-xs font-semibold text-[#ee5d18]"}>
-                            One-click processing
-                          </span>
-                        </div>
-                        <h4 className="mt-7 text-[1.35rem] font-bold leading-tight tracking-tight">{blockValue(tool, "title", "AI photo tool")}</h4>
-                        <p className={dark ? "mt-4 line-clamp-4 text-base leading-7 text-white/64" : "mt-4 line-clamp-4 text-base leading-7 text-[#4f5663]"}>
-                          {blockValue(tool, "description")}
-                        </p>
-                        <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-7 text-base font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-7 text-base font-bold text-[#f05a12]"}>
-                          Try now
-                          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
-                        </span>
-                      </Link>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               );
@@ -5427,7 +6423,7 @@ function SectionView({
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
-              {setting(section, "primaryCta", "Start private studio")}
+              {setting(section, "primaryCta", "Start a photo set")}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
@@ -5452,7 +6448,7 @@ function SectionView({
           meta: `${pack.outputCount} photos`,
           credits: `${pack.creditCost} credits`,
           imageUrl: packImage(site, pack),
-          href: `/tools/${pack.aiAppSlug}`
+          href: creativePackCollectionHref(pack)
         }))
       : manualItems.map((item) => ({
           id: item.id,
@@ -5464,9 +6460,9 @@ function SectionView({
           href: blockValue(item, "href", "/tools")
         }));
     const fallbackCards = [
-      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/tools/world-cup-fan-photos" },
-      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/tools/creator-portrait" },
-      { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/tools/gala-photo" }
+      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
+      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
+      { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -5475,7 +6471,7 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.72fr_1fr] md:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Popular packs")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Customer photo stories")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -5483,7 +6479,7 @@ function SectionView({
         <div className="mt-9 flex gap-4 overflow-hidden">
           <div className="flex min-w-max gap-4 animate-[sample-drift_42s_linear_infinite]">
             {displayCards.map((card, index) => (
-              <Link className="group w-[280px] shrink-0 overflow-hidden rounded-[1.35rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 md:w-[360px]" href={hrefFor(site, card.href)} key={`${card.id}_${index}`}>
+              <Link aria-label={cardLinkLabel("View package", card.title)} className="group w-[280px] shrink-0 overflow-hidden rounded-[1.35rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 md:w-[360px]" href={hrefFor(site, card.href)} key={`${card.id}_${index}`}>
                 <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={card.imageUrl} alt={card.title} />
                 </div>
@@ -5562,7 +6558,7 @@ function SectionView({
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.56fr)_minmax(0,0.44fr)] lg:items-end">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]">{setting(section, "eyebrow", "Generated looks")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Creative photo sets")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-zinc-600 lg:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -5636,7 +6632,7 @@ function SectionView({
           <div className="mx-auto max-w-3xl text-center">
             <div className="flex items-center justify-center gap-5">
               <div className="hidden h-px w-20 bg-[#d8cab9] sm:block" />
-              <h2 className="text-4xl font-semibold leading-[1.01] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{setting(section, "title")}</h2>
+              <h2 className="text-4xl font-semibold leading-[1.01] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private photo delivery")}</h2>
               <div className="hidden h-px w-20 bg-[#d8cab9] sm:block" />
             </div>
             <p className="mt-5 text-sm leading-7 text-[#6d665f]">{setting(section, "subtitle")}</p>
@@ -5674,7 +6670,7 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] overflow-hidden rounded-[1.7rem] border border-[#ddd7cb] bg-[#fbfaf7] shadow-[0_28px_75px_-52px_rgba(20,22,26,0.24)] md:grid-cols-[1fr_0.78fr]">
           <div className="p-8 text-[#14161a] md:p-12">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]">{setting(section, "eyebrow", "Start creating")}</p>
-            <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{setting(section, "title")}</h2>
+            <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "AI photo tools")}</h2>
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[#64686f]">{setting(section, "subtitle")}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link className="inline-flex items-center gap-2 rounded-full bg-[#14161a] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
@@ -5682,7 +6678,7 @@ function SectionView({
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
               <Link className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "secondaryHref", "/pricing"))}>
-                {setting(section, "secondaryCta", "View pricing")}
+                {setting(section, "secondaryCta", "Choose a plan")}
                 <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -5860,13 +6856,14 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.7fr_1fr] md:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]">installed AI apps</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{setting(section, "title")}</h2>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, "Plan your photo package")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-[#625d56] md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
           <div className="mt-9 grid gap-4 md:grid-cols-[1fr_1.25fr]">
             {apps.map((app, index) => (
               <Link
+                aria-label={cardLinkLabel("Open tool", app.aiApp.name, "this tool")}
                 href={hrefFor(site, `/tools/${app.aiApp.slug}`)}
                 key={app.id}
                 className={`group rounded-[26px] border border-[#ded5ca] bg-[#f7f3ec] p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.24)] transition hover:-translate-y-1 hover:bg-white ${
@@ -5898,8 +6895,9 @@ function SectionView({
       siteAiApps.find((app) => app.enabled) ??
       siteAiApps[0];
     const customerSignedIn = Boolean(runtime?.customer) && !runtime?.isPreview;
-    const actionHref = hrefFor(site, customerSignedIn ? setting(section, "ctaHref", "/app") : "/login");
-    const actionLabel = customerSignedIn ? setting(section, "ctaLabel", "Open workspace") : "Sign in to start";
+    const isToolLanding = renderContext.pagePath.startsWith("/tools/");
+    const actionHref = hrefFor(site, isToolLanding ? setting(section, "ctaHref", "/dashboard") : customerSignedIn ? setting(section, "ctaHref", "/app") : "/login");
+    const actionLabel = isToolLanding ? setting(section, "ctaLabel", "Start this photo set") : customerSignedIn ? setting(section, "ctaLabel", "Upload photos") : "Sign in to start";
     const heroImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.entry));
     return (
       <section className="grid-paper overflow-hidden bg-[#fffaf3] px-5 py-18 text-[#14161a]">
@@ -5911,9 +6909,9 @@ function SectionView({
             <div className="mt-7 rounded-[30px] border border-[#e2d7ca] bg-white/88 p-5 shadow-[0_24px_72px_-56px_rgba(20,22,26,0.14)]">
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["Upload", "private intake"],
-                  ["Hold", `${boundApp?.creditCost ?? 0} credits`],
-                  ["Deliver", "album gallery"]
+                  ["Upload", "source photos"],
+                  ["Create", `${boundApp?.creditCost ?? 0} credits`],
+                  ["Review", "private gallery"]
                 ].map(([label, detail]) => (
                   <div className="rounded-[20px] border border-[#ece2d7] bg-[#fcf8f2] px-4 py-4" key={label}>
                     <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">{label}</p>
@@ -5923,17 +6921,17 @@ function SectionView({
               </div>
               <div className="mt-4 grid gap-3 lg:grid-cols-[0.54fr_0.46fr]">
                 <div className="rounded-[22px] border border-[#ece2d7] bg-[#fbf6ef] px-4 py-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">why this converts</p>
-                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">The tool page reads like one guided customer journey: intake, credit hold, private progress, then finished gallery delivery.</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">what to prepare</p>
+                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">Bring clear source photos and a simple goal, such as a profile update, cleaner background, or short video concept.</p>
                 </div>
                 <div className="rounded-[22px] border border-[#ece2d7] bg-white px-4 py-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">album promise</p>
-                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">Scene styling, private delivery, and finished galleries stay tied to the same customer account.</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">what you get</p>
+                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">Finished images stay in your private account so you can compare options and download the best results.</p>
                 </div>
               </div>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={actionHref}>
+              <Link aria-label={cardLinkLabel(actionLabel, setting(section, "title", "AI tool"), "this photo tool")} className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={actionHref}>
                 {actionLabel}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
@@ -5955,16 +6953,16 @@ function SectionView({
               </div>
               <div className="absolute bottom-5 left-5 right-5 grid gap-4 rounded-[24px] border border-white/18 bg-black/34 p-5 text-white backdrop-blur lg:grid-cols-[0.62fr_0.38fr] lg:items-end">
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/56">guided workflow</p>
-                  <p className="mt-2 text-xl font-semibold">Source images, album progress, and delivered galleries stay in one private customer journey.</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/56">your next step</p>
+                  <p className="mt-2 text-xl font-semibold">Upload source images, choose the result you want, then review finished options privately.</p>
                   <p className="mt-3 max-w-xl text-sm leading-6 text-white/74">
-                    Start with source photos, follow progress, and receive the finished gallery in the same private account.
+                    Use this page to decide whether the tool fits your goal before you start creating with credits.
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/12 bg-white/[0.08] p-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/46">request path</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/46">how it works</p>
                   <div className="mt-3 grid gap-2">
-                    {["Private intake", "Credits held", "Album delivered"].map((item) => (
+                    {["Upload photos", "Create with credits", "Download favorites"].map((item) => (
                       <div className="flex items-center justify-between gap-3 text-sm" key={item}>
                         <span className="text-white/76">{item}</span>
                         <ArrowRight className="h-3.5 w-3.5 text-white/44" strokeWidth={1.8} />
@@ -6123,7 +7121,7 @@ function SectionView({
     const journeySurface = !customer && guestSurface === "journey";
     const journeySteps = [
       { type: "upload_panel", label: "Upload", detail: "Private intake" },
-      { type: "generation_form", label: "Configure", detail: "Hold credits" },
+      { type: "generation_form", label: "Configure", detail: "Reserve credits" },
       { type: "job_progress", label: "Track", detail: "Live requests" },
       { type: "album_gallery", label: "Deliver", detail: "Private album" }
     ] as const;
@@ -6167,7 +7165,7 @@ function SectionView({
                   {sectionSubtitle || "Review how this private photo workspace step will feel before it goes live."}
                 </p>
                 <p className={`mt-4 max-w-xl text-sm leading-6 ${sectionBody}`}>
-                  Sample activity shows spacing, cards, and account flow. Live storefronts show each customer&apos;s own credits, uploads, and album requests.
+                  Sample activity shows spacing, cards, and account flow. Live pages show each customer&apos;s own credits, uploads, and album requests.
                 </p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {summaryCards.map((card) => (
@@ -6241,7 +7239,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6307,7 +7305,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6350,12 +7348,12 @@ function SectionView({
                   <h2 className={`mt-3 max-w-2xl text-3xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
                   <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
-                    {setting(section, "helper", "Sign in first to hold credits and start a private album request.")}
+                    {setting(section, "helper", "Sign in first to reserve credits and start a private album request.")}
                   </p>
                   <div className="mt-6 grid gap-3">
                     {[
                       ["Choose style", "Destination and visual direction stay clear before creation."],
-                      ["Hold credits", "Credits reserve before the request begins, not after."],
+                      ["Reserve credits", "Credits reserve before the request begins, not after."],
                       ["Deliver privately", "Finished images return to the same signed-in account."]
                     ].map(([label, detail]) => (
                       <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-4" key={label}>
@@ -6370,7 +7368,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6384,7 +7382,7 @@ function SectionView({
                       </div>
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="text-[1.8rem] font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                          Configure the collection, then hold credits before creation.
+                          Configure the collection, then reserve credits before creation.
                         </p>
                       </div>
                     </div>
@@ -6437,12 +7435,12 @@ function SectionView({
                   <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
                   <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
-                    {setting(section, "helper", "Sign in first to hold credits and start a private album request.")}
+                    {setting(section, "helper", "Sign in first to reserve credits and start a private album request.")}
                   </p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-3">
                     {[
                       ["Choose style", "Destination and visual direction stay clear before creation."],
-                      ["Hold credits", "Credits reserve before the request begins, not after."],
+                      ["Reserve credits", "Credits reserve before the request begins, not after."],
                       ["Deliver privately", "Finished images return to the same signed-in account."]
                     ].map(([label, detail]) => (
                       <div className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4" key={label}>
@@ -6457,7 +7455,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6468,7 +7466,7 @@ function SectionView({
                       <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/18 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
-                        <p className="mt-2 text-lg font-semibold">Configure the collection, then hold credits before creation.</p>
+                        <p className="mt-2 text-lg font-semibold">Configure the collection, then reserve credits before creation.</p>
                       </div>
                     </div>
                     <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
@@ -6529,7 +7527,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6589,7 +7587,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6658,7 +7656,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6737,7 +7735,7 @@ function SectionView({
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      View pricing
+                      Choose a plan
                     </Link>
                   </div>
                 </div>
@@ -6796,7 +7794,7 @@ function SectionView({
                   {section.type === "upload_panel"
                     ? setting(section, "helper", "Sign in first to upload private source photos for this customer account.")
                     : section.type === "generation_form"
-                    ? setting(section, "helper", "Sign in first to hold credits and start a private album request.")
+                    ? setting(section, "helper", "Sign in first to reserve credits and start a private album request.")
                     : section.type === "job_progress"
                     ? "Sign in to view waiting, creating, delivered, and review-needed album requests for this account only."
                     : "Sign in to view private gallery images and delivered albums for this account only."}
@@ -6807,7 +7805,7 @@ function SectionView({
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
                   <Link className={`inline-flex items-center gap-2 rounded-[16px] border px-5 py-3 text-sm font-semibold ${darkSection ? "border-white/12 bg-white/[0.05] text-white" : "border-[#ded5ca] bg-white/58 text-[#14161a]"}`} href={hrefFor(site, "/pricing")}>
-                    View pricing
+                    Choose a plan
                   </Link>
                 </div>
               </div>
@@ -6862,7 +7860,7 @@ function SectionView({
               <div className="border-b border-white/8 p-6 lg:border-b-0 lg:border-r lg:border-r-white/8 xl:p-8">
                 <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                 <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || setting(section, "helper", "Hold credits and begin the current customer's private album request.")}</p>
+                <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || setting(section, "helper", "Reserve credits and begin the customer's private album request.")}</p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {summaryCards.map((card) => (
                     <div className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4" key={card.label}>
@@ -6877,14 +7875,14 @@ function SectionView({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
-                    <p className="mt-2 text-lg font-semibold">Configure the collection, then hold credits before creation.</p>
+                    <p className="mt-2 text-lg font-semibold">Configure the collection, then reserve credits before creation.</p>
                   </div>
                 </div>
               </div>
               <div className="p-6 xl:p-8">
                 <div className="mb-5">
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/56">album request form</p>
-                  <p className="mt-2 text-sm leading-6 text-white/68">{setting(section, "helper", "Hold credits and begin the current customer's private album request.")}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/68">{setting(section, "helper", "Reserve credits and begin the customer's private album request.")}</p>
                 </div>
                 <JobCreateForm
                   assets={assets}
@@ -7040,7 +8038,7 @@ function SectionView({
                       {[
                         ["Waiting", "The request is queued and holding credits safely until rendering starts."],
                         ["Creating", "The photo pack is generating and remains visible inside the private account."],
-                        ["Delivered", "Finished images move into the gallery without leaving the storefront workflow."]
+                        ["Delivered", "Finished images move into the gallery without leaving your photo workspace."]
                       ].map(([label, detail]) => (
                         <div className="rounded-[18px] border border-[#e4dace] bg-[#fffaf3] px-4 py-3" key={label}>
                           <p className="text-sm font-semibold text-[#171514]">{label}</p>
@@ -7194,7 +8192,7 @@ function SectionView({
                     {[
                       ["Private review", "Only the signed-in account can open, review, and download the delivered album."],
                       ["Download-ready files", "Albums stay grouped by pack so lifestyle, portrait, and editorial sets remain easy to download."],
-                      ["Brand consistency", "The gallery stays inside the same luxury storefront language as pricing, login, and account pages."]
+                      ["Consistent experience", "The gallery keeps the same polished style as pricing, login, and account pages."]
                     ].map(([label, detail]) => (
                       <div className="rounded-[18px] border border-white/10 bg-black/16 px-4 py-3" key={label}>
                         <p className="text-sm font-semibold text-white">{label}</p>
@@ -7209,7 +8207,7 @@ function SectionView({
               <div className="mb-5 flex items-end justify-between gap-4">
                 <div>
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/56">private album gallery</p>
-                  <p className="mt-2 text-sm leading-6 text-white/68">Albums and gallery images stay private to this account, while still feeling like part of the photo storefront.</p>
+                  <p className="mt-2 text-sm leading-6 text-white/68">Albums and gallery images stay private to this account and remain easy to revisit.</p>
                 </div>
                 <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-xs font-semibold text-white/74">
                   {albums.length} albums
@@ -7306,19 +8304,20 @@ function SectionView({
       siteSearchCards(site, products, siteAiApps, creativePacks, renderContext.pages),
       searchTerm
     ).slice(0, resultLimit);
+    const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
     return (
       <section className="px-5 py-14" data-saas-section-renderer="search_results" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white p-5 shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Site search")}</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-              {searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", "Search this storefront")}
-            </h2>
+            <HeadingTag className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
+              {searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", "Search MydreamShoots")}
+            </HeadingTag>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Search products, packs, tools, and content for this site.")}</p>
             <div className="mt-5 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `${cards.length} storefront results` : "Use ?q= to search products, packs, tools, and content"}
+                {searchTerm ? `${cards.length} matching results` : "Search photo packages, tools, pricing, and help guides."}
               </span>
             </div>
           </div>
@@ -7328,7 +8327,7 @@ function SectionView({
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
-              <Link className="rounded-[1.1rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, card.href)} key={`${card.kind}_${card.id}`}>
+              <Link aria-label={cardLinkLabel("Open result", card.title)} className="rounded-[1.1rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, card.href)} key={`${card.kind}_${card.id}`}>
                 <img className="aspect-[4/3] w-full rounded-[0.8rem] object-cover" src={card.imageUrl} alt={card.title} />
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <h3 className="font-semibold">{card.title}</h3>
@@ -7370,15 +8369,16 @@ function SectionView({
     const selectedLinePrice = selectedPrice ?? (selectedProduct ? productPrice(selectedProduct) : productsForCart[0] ? productPrice(productsForCart[0]) : undefined);
     const customer = runtime?.customer;
     const loginHref = hrefFor(site, `/login?next=${encodeURIComponent(`/cart?product=${selectedProduct?.id ?? ""}&price=${selectedLinePrice?.id ?? ""}`)}`);
+    const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
     return (
       <section className="px-5 py-14" data-saas-section-renderer="cart_summary" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[1fr_360px]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Checkout summary")}</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? setting(section, "title", "Your selected plan") : setting(section, "emptyTitle", "Choose a plan first")}</h2>
+              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? setting(section, "title", "Your selected plan") : setting(section, "emptyTitle", "Choose a plan first")}</HeadingTag>
               <p className="mt-2 text-sm leading-6 text-zinc-500">
-                {productsForCart.length ? setting(section, "subtitle", "Products, prices, credits, and checkout state stay tied to this storefront.") : setting(section, "emptyBody", "Open pricing to select a subscription or credit pack.")}
+                {productsForCart.length ? setting(section, "subtitle", "Products, prices, credits, and checkout details stay connected to your account.") : setting(section, "emptyBody", "Open pricing to select a subscription or credit pack.")}
               </p>
             </div>
             <div className="divide-y divide-black/10">
@@ -7567,8 +8567,8 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-center">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">before and after</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title")}</h2>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle")}</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Before and after photo examples")}</h2>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Compare source photos with finished MydreamShoots-style results.")}</p>
           </div>
           <div className="grid gap-4">
             {items.map((item, index) => {
@@ -7614,7 +8614,7 @@ function SectionView({
             <div className="pt-2">
               <div className="h-px w-14 bg-[#b98a57]" />
               <h2 className="mt-4 max-w-[12ch] text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "summaryTitle", setting(section, "title"))}
+                {headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
               </h2>
               <p className="mt-5 max-w-[17rem] text-[0.94rem] leading-7 text-[#6d665f]">{setting(section, "summaryBody", setting(section, "subtitle"))}</p>
               <div className="mt-8 flex items-center gap-2 text-[#d59a4b]">
@@ -7708,11 +8708,11 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 md:grid-cols-[0.56fr_0.44fr]">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8f7d6d]">{setting(section, "eyebrow", "Questions before upload")}</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] md:text-5xl">{setting(section, "title", "FAQ")}</h2>
+            <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "FAQ")}</h2>
             <p className="mt-4 max-w-xl text-sm leading-7 text-[#6d665f]">{setting(section, "subtitle", "Answer the objections customers have before they upload private images or subscribe.")}</p>
             <div className="mt-7 grid gap-0 overflow-hidden rounded-[18px] border border-[#e6dccf] bg-white shadow-[0_22px_62px_-50px_rgba(24,24,27,0.12)]">
               {list.map((item, index) => {
-                const question = blockValue(item, "question");
+                const question = headingBlockValue(item, "question", `Question ${index + 1}`);
                 const answer = blockValue(item, "answer");
                 return (
                   <details className="group overflow-hidden bg-white data-[separated=true]:border-t data-[separated=true]:border-[#f0e6da]" data-separated={index > 0 ? "true" : "false"} key={instanceKey(item, index, "faq")} {...xfcartBlockAttrs(item, index, "faq")}>
@@ -7730,7 +8730,7 @@ function SectionView({
           </div>
           <div className="border-l border-[#eadfce] bg-[#fffaf3] px-4 py-2 lg:px-8">
             <h3 className="max-w-[14ch] text-[1.75rem] font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] lg:text-[2.05rem]">
-              {setting(section, "journeyTitle", "Your photo flow")}
+              {headingSetting(section, "journeyTitle", "Your photo flow")}
             </h3>
             <div className="mt-7 grid grid-cols-2 items-start gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-1">
               {journeyTitles.slice(0, 4).map((title, index) => {
@@ -7764,7 +8764,10 @@ function SectionView({
     const secondaryHref = setting(section, "secondaryHref", "");
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
-    const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
+    const semanticH1Paths = new Set(["/help", "/search", "/cart"]);
+    const isPrimaryRichText = renderContext.page.sectionsOrder.find((sectionId: string) => renderContext.page.sections[sectionId]?.type === "rich_text") === id;
+    const fallbackHeadingLevel = (semanticH1Paths.has(renderContext.pagePath) || renderContext.page.pageType === "article") && isPrimaryRichText ? "h1" : "h2";
+    const HeadingTag = setting(section, "headingLevel", fallbackHeadingLevel) === "h1" ? "h1" : "h2";
     const dark = tone === "dark";
     const compact = layout === "compact";
     return (
@@ -7774,7 +8777,7 @@ function SectionView({
             <div>
               {eyebrow ? <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{eyebrow}</p> : null}
               <HeadingTag className={`${compact ? "mt-4 max-w-3xl text-3xl md:text-5xl" : "mt-4 max-w-4xl text-4xl md:text-6xl"} font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]`}>
-                {setting(section, "title", id)}
+                {sectionHeading(section, storefrontSectionLabel(section.type))}
               </HeadingTag>
               <p className={dark ? "mt-5 max-w-3xl text-base leading-8 text-white/68" : "mt-5 max-w-3xl text-base leading-8 text-[#625d56]"}>{body}</p>
               {primaryCta || secondaryCta ? (
@@ -7798,7 +8801,7 @@ function SectionView({
                   {cards.slice(0, 4).map((card, index) => (
                     <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(card, index, "rich_text_card")}>
                       <p className={dark ? "font-mono text-[10px] uppercase tracking-[0.16em] text-white/46" : "font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
-                      <h3 className="mt-3 text-lg font-semibold tracking-tight">{blockValue(card, "title", blockValue(card, "label", "Editable item"))}</h3>
+                      <h3 className="mt-3 text-lg font-semibold tracking-tight">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
                       <p className={dark ? "mt-2 text-sm leading-6 text-white/62" : "mt-2 text-sm leading-6 text-[#625d56]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
                     </article>
                   ))}
@@ -7850,7 +8853,7 @@ function SectionView({
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 via-zinc-950/30 to-transparent" />
         <div className="relative mx-auto flex min-h-[620px] max-w-[var(--site-content-width)] items-center">
           <div className="max-w-2xl py-20">
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-white/58">Featured storefront hero</p>
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-white/58">Featured photo experience</p>
             <h1 className="mt-5 text-4xl font-semibold leading-none tracking-tight md:text-6xl">{title}</h1>
             <p className="mt-5 max-w-xl text-base leading-8 text-white/72">{subtitle}</p>
             <Link className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-zinc-950" href={hrefFor(site, "/login")}>
@@ -7864,7 +8867,7 @@ function SectionView({
   }
 
   if (section.type === "collection_list_plus" || section.type === "products_plus") {
-    const title = setting(section, "title", setting(section, "name", section.type === "products_plus" ? "Featured collection" : "Collection list"));
+    const title = sectionHeading(section, section.type === "products_plus" ? "Featured collection" : "Collection list");
     const packs = creativePacks.filter((pack) => pack.status === "active");
     return (
       <section className="px-5 py-16" id={sectionAnchor(section, id)}>
@@ -7878,7 +8881,7 @@ function SectionView({
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-4">
             {(packs.length ? packs : creativePacks).slice(0, Number(setting(section, "max_count", "4")) || 4).map((pack) => (
-              <Link className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, `/tools/${pack.aiAppSlug}`)} key={pack.id}>
+              <Link aria-label={cardLinkLabel("View collection", pack.name, "this collection")} className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, creativePackCollectionHref(pack))} key={pack.id}>
                 <div className="aspect-[4/5] overflow-hidden rounded-[0.9rem] bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={packImages[pack.category] ?? packImages.fashion} alt={pack.name} />
                 </div>
@@ -7893,7 +8896,7 @@ function SectionView({
   }
 
   if (section.type === "feature_columns" || section.type === "image_text" || section.type === "two_images" || section.type === "three_images" || section.type === "four_images") {
-    const title = setting(section, "title", storefrontSectionLabel(section.type));
+    const title = sectionHeading(section, storefrontSectionLabel(section.type));
     const blocks = sectionBlocks(section);
     return (
       <section className="px-5 py-16">
@@ -7906,10 +8909,10 @@ function SectionView({
               return (
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(block, index, "visual_block")}>
                   <div className="aspect-[16/11] bg-zinc-200">
-                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockValue(block, "title", storefrontSectionLabel(block.type))} />
+                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={headingBlockValue(block, "title", storefrontSectionLabel(block.type))} />
                   </div>
                   <div className="p-5">
-                    <h3 className="text-lg font-semibold">{blockValue(block, "title", blockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
+                    <h3 className="text-lg font-semibold">{headingBlockValue(block, "title", headingBlockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
                     <p className="mt-2 text-sm leading-6 text-zinc-600">{blockValue(block, "text", "Add a focused photo guide, story, or collection detail for this page.")}</p>
                   </div>
                 </article>
@@ -7926,12 +8929,12 @@ function SectionView({
     return (
       <section className="border-y border-black/10 bg-white px-5 py-12">
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Photo storefront</p>
-          <h2 className="mt-3 text-2xl font-semibold">{setting(section, "title", setting(section, "name", storefrontSectionLabel(section.type)))}</h2>
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Photo workspace</p>
+          <h2 className="mt-3 text-2xl font-semibold">{sectionHeading(section, storefrontSectionLabel(section.type))}</h2>
           <div className="mt-6 flex flex-wrap gap-3">
             {(blocks.length ? blocks : [{ id: "fallback", type: "item", settings: { title: storefrontSectionLabel(section.type) } }]).map((block, index) => (
               <div className="rounded-full border border-black/10 bg-zinc-50 px-4 py-2 text-sm text-zinc-600" key={instanceKey(block, index, "simple_block")} {...xfcartBlockAttrs(block, index, "simple_block")}>
-                {blockValue(block, "title", blockValue(block, "name", `${storefrontSectionLabel(section.type)} ${index + 1}`))}
+                {headingBlockValue(block, "title", headingBlockValue(block, "name", `${storefrontSectionLabel(section.type)} ${index + 1}`))}
               </div>
             ))}
           </div>
@@ -7949,14 +8952,15 @@ function SectionView({
     const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
     const contactEmail = setting(section, "contactEmail", "support@mydreamshoots.com");
     const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
+    const HeadingTag = setting(section, "headingLevel", "h1") === "h2" ? "h2" : "h1";
     return (
       <section className="bg-[#f6f5f1] px-4 py-8 text-[#16181d] sm:px-5 md:py-12" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="max-w-4xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#7a746b]">{setting(section, "eyebrow", "Policy")}</p>
-            <h2 className="mt-4 text-[clamp(2.1rem,5vw,4.3rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
+            <HeadingTag className="mt-4 text-[clamp(2.1rem,5vw,4.3rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {title}
-            </h2>
+            </HeadingTag>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#6f685f]">
               <span>Last updated: {lastUpdated}</span>
               <span>
@@ -7980,6 +8984,9 @@ function SectionView({
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/terms")}>
               Terms of Service
             </Link>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/cookies")}>
+              Cookie Policy
+            </Link>
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/help")}>
               Help center
             </Link>
@@ -7991,10 +8998,12 @@ function SectionView({
 
   if (section.type === "blog_list") {
     const guideType = setting(section, "guideType", "AI photo guide");
+    const defaultHeadingLevel = renderContext.page.pageType === "article" ? "h2" : "h1";
+    const HeadingTag = setting(section, "headingLevel", defaultHeadingLevel) === "h2" ? "h2" : "h1";
     return (
       <section className="px-5 py-10">
         <div className="mx-auto max-w-[var(--site-content-width)] rounded-[1.4rem] border border-black/10 bg-white p-6">
-          <h2 className="text-2xl font-semibold">{setting(section, "title", "Guides")}</h2>
+          <HeadingTag className="text-2xl font-semibold">{setting(section, "title", "Guides")}</HeadingTag>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"].map((title) => (
               <article className="rounded-xl border border-black/10 p-4" key={title}>
@@ -8020,13 +9029,13 @@ function SectionView({
         ) : null}
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">{importedThemeBadge(schema)}</p>
-          <h2 className="mt-3 text-2xl font-semibold">{setting(section, "title", setting(section, "name", schema.label))}</h2>
+          <h2 className="mt-3 text-2xl font-semibold">{sectionHeading(section, schema.label)}</h2>
           <p className="mt-2 text-zinc-600">{setting(section, "body", setting(section, "text", schema.description))}</p>
           {sectionBlocks(section).length ? (
             <div className="mt-4 grid gap-2">
               {sectionBlocks(section).slice(0, 6).map((block, index) => (
                 <div className="rounded-lg bg-zinc-50 px-3 py-2 text-xs text-zinc-600" key={instanceKey(block, index, "fallback_block")} {...xfcartBlockAttrs(block, index, "fallback_block")}>
-                  {block.type}: {blockValue(block, "title", blockValue(block, "label", blockValue(block, "name", "Editable block")))}
+                  {block.type}: {headingBlockValue(block, "title", headingBlockValue(block, "label", headingBlockValue(block, "name", "Editable block")))}
                 </div>
               ))}
             </div>

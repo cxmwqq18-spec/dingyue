@@ -1,6 +1,6 @@
 "use client";
 
-import { type DragEvent, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type DragEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PreviewFrame } from "@/components/designer/preview-frame";
 import {
   type DesignerDragToken,
@@ -88,11 +88,12 @@ import {
   type GlobalLocalField,
   type Selection
 } from "@/components/designer/designer-types";
+import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import {
   groupFieldsByIds
 } from "@/components/designer/designer-types";
 import { parseFieldValue } from "@/components/designer/field-editor-registry";
-import type { FieldOptions } from "@/components/designer/field-editor-types";
+import type { DesignerResourceKind, DesignerResourceStatus, FieldOptions } from "@/components/designer/field-editor-types";
 import type { DesignerToolbarMenuOption } from "@/components/designer/designer-toolbar-primitives";
 import { aiSubscriptionSectionSchemas, defaultBlock, defaultSection, getSectionSchema, sectionSchemas } from "@/lib/section-schema";
 import { buildSaasThemeDraft } from "@/lib/theme/saas-theme-model";
@@ -178,11 +179,11 @@ function specializeTemplateForPage(page: ThemePage, pageJson: ThemePageJson, pac
   const weddingProfiles: Record<string, { title: string; body: string }> = {
     privacy: {
       title: "Privacy policy",
-      body: "<p>Couple uploads, wedding source files, generation jobs, generated albums, orders, subscriptions, and credit ledger entries remain scoped to this storefront and customer account.</p>"
+      body: "<p>Couple uploads, wedding source files, generation jobs, generated albums, orders, subscriptions, and credit history entries remain scoped to this storefront and customer account.</p>"
     },
     refunds: {
       title: "Refunds policy",
-      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit ledger adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
+      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit history adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
     },
     content: {
       title: "Content policy",
@@ -192,11 +193,11 @@ function specializeTemplateForPage(page: ThemePage, pageJson: ThemePageJson, pac
   const genericProfiles: Record<string, { title: string; body: string }> = {
     privacy: {
       title: "Privacy policy",
-      body: "<p>Customer uploads, source files, AI jobs, generated albums, orders, subscriptions, and credit ledger entries remain scoped to this storefront and customer account.</p>"
+      body: "<p>Customer uploads, source files, AI jobs, generated albums, orders, subscriptions, and credit history entries remain scoped to this storefront and customer account.</p>"
     },
     refunds: {
       title: "Refunds policy",
-      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit ledger adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
+      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit history adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
     },
     content: {
       title: "Content policy",
@@ -206,11 +207,11 @@ function specializeTemplateForPage(page: ThemePage, pageJson: ThemePageJson, pac
   const dreamshootProfiles: Record<string, { title: string; body: string }> = {
     privacy: {
       title: "Privacy policy",
-      body: "<p>Uploads, source files, AI jobs, generated albums, orders, subscriptions, and credit ledger entries remain scoped to this storefront and customer account.</p>"
+      body: "<p>Uploads, source files, AI jobs, generated albums, orders, subscriptions, and credit history entries remain scoped to this storefront and customer account.</p>"
     },
     refunds: {
       title: "Refunds policy",
-      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit ledger adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
+      body: "<p>Refunds and billing reversals are recorded as site-scoped payment events and credit history adjustments. Checkout completion never grants credits before the webhook is fulfilled.</p>"
     },
     content: {
       title: "Content policy",
@@ -308,10 +309,10 @@ function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSetti
 export type DesignerClientProps = {
   site: Site;
   pages: ThemePage[];
-  products: Product[];
-  siteAiApps: SiteAiApp[];
-  creativePacks: CreativePack[];
-  mediaAssets: MediaAsset[];
+  products?: Product[];
+  siteAiApps?: SiteAiApp[];
+  creativePacks?: CreativePack[];
+  mediaAssets?: MediaAsset[];
   previewToken: string;
   publicationCount?: number;
   initialPageId?: string;
@@ -324,13 +325,22 @@ export type DesignerClientProps = {
   toolbarTrailing?: ReactNode;
 };
 
+type DesignerResourcePayload = {
+  kind?: DesignerResourceKind;
+  products?: Product[];
+  siteAiApps?: SiteAiApp[];
+  creativePacks?: CreativePack[];
+  mediaAssets?: MediaAsset[];
+  error?: string;
+};
+
 export function DesignerClient({
   site,
   pages,
-  products,
-  siteAiApps,
-  creativePacks,
-  mediaAssets,
+  products: initialProducts = [],
+  siteAiApps: initialSiteAiApps = [],
+  creativePacks: initialCreativePacks = [],
+  mediaAssets: initialMediaAssets = [],
   previewToken,
   publicationCount = 0,
   initialPageId,
@@ -381,11 +391,66 @@ export function DesignerClient({
   const [publishedThemeSettings, setPublishedThemeSettings] = useState<ThemeSettings>(() =>
     normalizeGlobalSections(cloneSettings(site.themeSettings.publishedJson))
   );
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [siteAiApps, setSiteAiApps] = useState<SiteAiApp[]>(initialSiteAiApps);
+  const [creativePacks, setCreativePacks] = useState<CreativePack[]>(initialCreativePacks);
+  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>(initialMediaAssets);
+  const [resourceStatus, setResourceStatus] = useState<Record<DesignerResourceKind, DesignerResourceStatus>>({
+    products: initialProducts.length ? "ready" : "idle",
+    siteAiApps: initialSiteAiApps.length ? "ready" : "idle",
+    creativePacks: initialCreativePacks.length ? "ready" : "idle",
+    mediaAssets: initialMediaAssets.length ? "ready" : "idle"
+  });
+  const resourceStatusRef = useRef(resourceStatus);
+  const inflightResourceRef = useRef<Partial<Record<DesignerResourceKind, boolean>>>({});
+  useEffect(() => {
+    resourceStatusRef.current = resourceStatus;
+  }, [resourceStatus]);
   const activePage = pages.find((page) => page.id === selectedPageId) ?? pages[0];
   const draft = drafts[selectedPageId];
   const livePage = publishedPages[selectedPageId] ?? activePage.publishedJson;
 
-  const fieldOptions = useMemo<FieldOptions>(() => ({ pages, products, siteAiApps, mediaAssets, creativePacks }), [pages, products, siteAiApps, mediaAssets, creativePacks]);
+  const loadDesignerResource = useCallback(async (kind: DesignerResourceKind, options?: { signal?: AbortSignal }) => {
+    const currentStatus = resourceStatusRef.current[kind];
+    if (currentStatus === "ready" || currentStatus === "loading" || inflightResourceRef.current[kind]) return;
+    inflightResourceRef.current[kind] = true;
+    setResourceStatus((current) => current[kind] === "ready" || current[kind] === "loading" ? current : { ...current, [kind]: "loading" });
+    try {
+      const response = await fetchAdminJson<DesignerResourcePayload>(`/api/sites/${site.id}/admin/design-resources?kind=${kind}`, {
+        init: { signal: options?.signal },
+        ttlMs: 15_000
+      });
+      if (!response.ok) {
+        setResourceStatus((current) => ({ ...current, [kind]: "error" }));
+        setLastAction(response.data.error ?? "装修器资源加载失败，编辑器已先载入页面草稿。");
+        return;
+      }
+      if (kind === "products") setProducts(response.data.products ?? []);
+      if (kind === "siteAiApps") setSiteAiApps(response.data.siteAiApps ?? []);
+      if (kind === "creativePacks") setCreativePacks(response.data.creativePacks ?? []);
+      if (kind === "mediaAssets") setMediaAssets(response.data.mediaAssets ?? []);
+      setResourceStatus((current) => ({ ...current, [kind]: "ready" }));
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setResourceStatus((current) => current[kind] === "loading" ? { ...current, [kind]: "idle" } : current);
+        return;
+      }
+      setResourceStatus((current) => ({ ...current, [kind]: "error" }));
+      setLastAction(error instanceof Error ? error.message : "装修器资源加载失败，编辑器已先载入页面草稿。");
+    } finally {
+      inflightResourceRef.current[kind] = false;
+    }
+  }, [site.id]);
+
+  const fieldOptions = useMemo<FieldOptions>(() => ({
+    pages,
+    products,
+    siteAiApps,
+    mediaAssets,
+    creativePacks,
+    requestResource: loadDesignerResource,
+    resourceStatus
+  }), [pages, products, siteAiApps, mediaAssets, creativePacks, loadDesignerResource, resourceStatus]);
   const saasSettingsGroups = useMemo(() => getImportedSaasSettingsGroupsForTheme(selectedSaasThemeKey), [selectedSaasThemeKey]);
   const flattenedSaasFields = useMemo(() => saasSettingsGroups.flatMap((group) => group.fields), [saasSettingsGroups]);
   const globalNodes = useMemo(() => {

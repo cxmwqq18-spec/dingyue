@@ -14,11 +14,33 @@ type ContentPagePayload = {
   site: Site;
   publicationCount?: number;
   publications: ThemePublication[];
+  packs?: CreativePack[];
+  media?: MediaAsset[];
+  products?: Product[];
+  apps?: SiteAiApp[];
+  error?: string;
+};
+
+type ContentEditorResources = {
+  ok?: boolean;
   packs: CreativePack[];
   media: MediaAsset[];
   products: Product[];
   apps: SiteAiApp[];
   error?: string;
+};
+
+type ContentPublicationSummary = {
+  ok?: boolean;
+  publicationCount?: number;
+  publications?: ThemePublication[];
+  error?: string;
+};
+
+type SectionState<T> = {
+  data: T | null;
+  error: string | null;
+  loading: boolean;
 };
 
 type ContentPageClientProps = {
@@ -97,6 +119,10 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
   const editorEnabled = searchParams.get("editor") === "1" || searchParams.get("editor") === "true";
   const requestedContentPage = readPage(searchParams.get("contentPage"));
   const [payload, setPayload] = useState<ContentPagePayload | null>(null);
+  const [editorResources, setEditorResources] = useState<ContentEditorResources | null>(null);
+  const [editorResourcesLoading, setEditorResourcesLoading] = useState(false);
+  const [editorResourcesError, setEditorResourcesError] = useState<string | null>(null);
+  const [publicationSection, setPublicationSection] = useState<SectionState<ContentPublicationSummary>>({ data: null, error: null, loading: false });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -106,7 +132,7 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
       try {
         setError(null);
         setPayload(null);
-        const suffix = editorEnabled ? "?editor=1" : "";
+        const suffix = editorEnabled ? "?section=core&editor=1" : "?section=core";
         const response = await fetchAdminJson<ContentPagePayload>(`/api/sites/${siteId}/admin/content-page${suffix}`, { init: { signal: controller.signal } });
         const result = response.data;
         if (!active) return;
@@ -121,6 +147,68 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
       }
     }
     void loadContentPage();
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [editorEnabled, siteId]);
+
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    async function loadPublicationSummary() {
+      setPublicationSection({ data: null, error: null, loading: true });
+      try {
+        const response = await fetchAdminJson<ContentPublicationSummary>(`/api/sites/${siteId}/admin/content-page?section=publication`, { init: { signal: controller.signal } });
+        const result = response.data;
+        if (!active) return;
+        if (!response.ok) {
+          setPublicationSection({ data: null, error: result.error ?? "发布摘要加载失败。", loading: false });
+          return;
+        }
+        setPublicationSection({ data: result, error: null, loading: false });
+      } catch (error) {
+        if (!active || controller.signal.aborted) return;
+        setPublicationSection({ data: null, error: error instanceof Error ? error.message : "发布摘要加载失败。", loading: false });
+      }
+    }
+    void loadPublicationSummary();
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [siteId]);
+
+  useEffect(() => {
+    if (!editorEnabled) {
+      setEditorResources(null);
+      setEditorResourcesError(null);
+      setEditorResourcesLoading(false);
+      return;
+    }
+    let active = true;
+    const controller = new AbortController();
+    async function loadEditorResources() {
+      try {
+        setEditorResourcesLoading(true);
+        setEditorResourcesError(null);
+        setEditorResources(null);
+        const response = await fetchAdminJson<ContentEditorResources>(`/api/sites/${siteId}/admin/content-page?section=editor`, { init: { signal: controller.signal } });
+        const result = response.data;
+        if (!active) return;
+        if (!response.ok) {
+          setEditorResourcesError(result.error ?? "编辑器资源加载失败。");
+          return;
+        }
+        setEditorResources(result);
+      } catch (error) {
+        if (!active || controller.signal.aborted) return;
+        setEditorResourcesError(error instanceof Error ? error.message : "编辑器资源加载失败。");
+      } finally {
+        if (active) setEditorResourcesLoading(false);
+      }
+    }
+    void loadEditorResources();
     return () => {
       active = false;
       controller.abort();
@@ -191,7 +279,8 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
   if (!payload) {
     return <ContentPageSkeleton />;
   }
-  const publicationCount = payload.publicationCount ?? payload.publications.length;
+  const publicationCount = publicationSection.data?.publicationCount ?? payload.publicationCount ?? payload.publications.length;
+  const publicationCountValue = publicationSection.loading && !publicationSection.data ? "加载中" : String(publicationCount);
 
   return (
     <div className="grid gap-5">
@@ -202,7 +291,7 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
           { label: "政策页", value: String(derived.policyPages.length), detail: "隐私、退款和内容政策页", icon: HelpCircle, tone: derived.policyPages.length ? "good" : "warn" },
           { label: "帮助页", value: String(derived.helpPages.length), detail: "FAQ 与帮助中心模板", icon: Megaphone, tone: derived.helpPages.length ? "good" : "warn" },
           { label: "待发布草稿", value: String(derived.dirtyContentPages.length), detail: "尚未发布上线的内容草稿", icon: Palette, tone: derived.dirtyContentPages.length ? "warn" : "good" },
-          { label: "发布快照", value: String(publicationCount), detail: "可用于回滚的已发布版本", icon: Send, tone: publicationCount ? "good" : "warn" },
+          { label: "发布快照", value: publicationCountValue, detail: publicationSection.error ? "发布摘要加载失败" : "可用于回滚的已发布版本", icon: Send, tone: publicationCount ? "good" : publicationSection.error ? "warn" : "neutral" },
           { label: "内容模块", value: String(contentModules.length), detail: "编辑器中可用的内容区块", icon: BookOpenCheck, tone: "good" }
         ]}
       />
@@ -337,15 +426,23 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
               已先加载内容运营概览和页面树。需要编辑区块草稿时再打开编辑器，系统会在当前页面内加载商品、媒体和 AI 工具选项。
             </div>
           ) : (
-            <ContentDraftEditorLazy
-              creativePacks={payload.packs}
-              allPages={payload.site.pages}
-              editablePages={derived.contentEditablePages}
-              mediaAssets={payload.media}
-              products={payload.products}
-              site={payload.site}
-              siteAiApps={payload.apps}
-            />
+            editorResourcesError ? (
+              <div className="rounded-[8px] border border-red-200 bg-red-50 p-4 text-sm text-red-700">{editorResourcesError}</div>
+            ) : !editorResources || editorResourcesLoading ? (
+              <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-4 text-[13px] text-[#667085]">
+                正在加载媒体、商品、AI 工具和创意包，概览与页面树已可先查看。
+              </div>
+            ) : (
+              <ContentDraftEditorLazy
+                creativePacks={editorResources.packs}
+                allPages={payload.site.pages}
+                editablePages={derived.contentEditablePages}
+                mediaAssets={editorResources.media}
+                products={editorResources.products}
+                site={payload.site}
+                siteAiApps={editorResources.apps}
+              />
+            )
           )}
         </div>
       </ErpSection>
@@ -386,7 +483,7 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
         {[
           { title: "政策页", detail: "隐私政策、退款政策、内容政策必须可由站点后台编辑和发布。", count: derived.policyPages.length },
           { title: "帮助中心", detail: "FAQ、教程和上传要求适合用富文本、问答和媒体横幅区块维护。", count: derived.helpPages.length },
-          { title: "营销运营", detail: "DreamShoot 风格活动条、套餐墙、信任条和案例区块由装修器控制。", count: payload.packs.length }
+          { title: "营销运营", detail: "DreamShoot 风格活动条、套餐墙、信任条和案例区块由装修器控制。", count: editorResources?.packs.length ?? 0 }
         ].map((item) => (
           <ErpSection className="h-full" description={item.detail} eyebrow="运营范围" key={item.title} title={item.title}>
             <div className="flex items-end justify-between gap-3">

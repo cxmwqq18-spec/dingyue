@@ -27,6 +27,12 @@ const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
 
 type JobCountRow = { status: string; _count?: true | { _all?: number } };
 
+function boundedTake(value: string | null, fallback: number, max: number): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) return fallback;
+  return Math.min(Math.floor(parsed), max);
+}
+
 function summarizeJobs(jobs: GenerationJob[]) {
   let failedJobs = 0;
   let openJobs = 0;
@@ -89,6 +95,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const { siteId } = await params;
   const url = new URL(request.url);
   const detail = url.searchParams.get("detail") ?? "summary";
+  const jobTake = boundedTake(url.searchParams.get("take"), Math.min(adminListTake, adminActivityTake), Math.min(adminListTake, adminActivityTake));
+  const jobCursor = url.searchParams.get("cursor") || undefined;
   const perf = createAdminPerfTracker("admin-ai-page", { siteId, detail });
   if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
@@ -99,7 +107,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, payload);
   }
 
-  const payload = await perf.measure("cache", () => aiPageCache.get(`${detail}:${siteId}`, async () => {
+  const payload = await perf.measure("cache", () => aiPageCache.get(`${detail}:${siteId}:${jobTake}:${jobCursor ?? "first"}`, async () => {
     const [apps, jobCounts, gateway, jobs, customers, platformAiApps] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteAiApp.findMany({
         where: { siteId },
@@ -156,7 +164,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               updatedAt: true
             },
             orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
-            take: Math.min(adminListTake, adminActivityTake)
+            take: jobTake + 1,
+            ...(jobCursor ? { cursor: { id: jobCursor }, skip: 1 } : {})
           })
         : () => Promise.resolve([]),
       detail === "jobs"
@@ -172,7 +181,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         : () => Promise.resolve([])
     ], siteAdminReadConcurrency));
 
-    const mappedJobs = jobs.map(mapJobListItemForAdmin);
+    const visibleJobs = detail === "jobs" ? jobs.slice(0, jobTake) : jobs;
+    const mappedJobs = visibleJobs.map(mapJobListItemForAdmin);
     const failedJobs = jobCounts
       .filter((row) => row.status === "failed" || row.status === "refunded")
       .reduce((sum, row) => sum + countGroupedJobs(row), 0);
@@ -190,6 +200,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       customers,
       platformAiApps: platformAiApps.map(mapAiApp),
       gateway,
+      pageInfo: {
+        nextJobCursor: detail === "jobs" && jobs.length > jobTake ? jobs[jobTake]?.id ?? null : null
+      },
       jobCount,
       failedJobs,
       openJobs,

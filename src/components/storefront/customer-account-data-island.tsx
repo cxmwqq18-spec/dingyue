@@ -75,10 +75,14 @@ function LoadingCard({ title }: { title: string }) {
   );
 }
 
-export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string; siteSlug: string }) {
-  const [state, setState] = useState<LoadState>({ status: "loading" });
+export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: { initialRuntime?: ThemeRuntimeData; siteId: string; siteSlug: string }) {
+  const [state, setState] = useState<LoadState>(() => initialRuntime ? { status: "ready", runtime: initialRuntime } : { status: "loading" });
 
   useEffect(() => {
+    if (initialRuntime) {
+      setState({ status: "ready", runtime: initialRuntime });
+      return;
+    }
     const controller = new AbortController();
     setState({ status: "loading" });
     fetch(`/api/sites/${siteId}/customer/runtime?profile=account`, {
@@ -97,7 +101,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
         setState({ status: "error", error: error instanceof Error ? error.message : "account_data_unavailable" });
       });
     return () => controller.abort();
-  }, [siteId]);
+  }, [initialRuntime, siteId]);
 
   const content = useMemo(() => {
     if (state.status !== "ready") return undefined;
@@ -113,7 +117,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
 
   if (state.status === "loading") {
     return (
-      <div className="mt-6 grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-4 xl:grid-cols-2">
         <LoadingCard title="Plan" />
         <LoadingCard title="Orders" />
         <LoadingCard title="Generation progress" />
@@ -124,7 +128,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
 
   if (state.status === "error" || !content) {
     return (
-      <div className="mt-6 rounded-[24px] border border-dashed border-[#d8cab9] bg-white p-5 text-sm text-[#706961]">
+      <div className="rounded-[18px] border border-dashed border-[#d8cab9] bg-white p-5 text-sm text-[#706961]">
         Account activity could not load. Refresh the page or sign in again.
       </div>
     );
@@ -135,8 +139,8 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
   const reserved = runtime.customer?.balance.reserved ?? 0;
 
   return (
-    <div className="mt-6 grid gap-4 xl:grid-cols-2">
-      <div className="scroll-mt-28 rounded-[24px] border border-[#dfd3c4] bg-white p-5" id="account-plan">
+    <div className="grid gap-4 xl:grid-cols-2">
+      <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-plan">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Plan</p>
@@ -162,7 +166,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
         </div>
       </div>
 
-      <div className="scroll-mt-28 rounded-[24px] border border-[#dfd3c4] bg-white p-5" id="account-orders">
+      <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-orders">
         <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Orders</p>
         <div className="mt-4 grid gap-3">
           {orders.length ? orders.slice(0, 4).map((order) => (
@@ -179,7 +183,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
         </div>
       </div>
 
-      <div className="scroll-mt-28 rounded-[24px] border border-[#dfd3c4] bg-white p-5" id="account-progress">
+      <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-progress">
         <div className="flex items-center justify-between gap-3">
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Generation progress</p>
           <StorefrontInstantLink className="inline-flex items-center gap-1 text-xs font-semibold text-[#171514]" href={`/site/${siteSlug}/app/jobs/progress`}>
@@ -199,7 +203,7 @@ export function CustomerAccountDataIsland({ siteId, siteSlug }: { siteId: string
         </div>
       </div>
 
-      <div className="scroll-mt-28 rounded-[24px] border border-[#dfd3c4] bg-white p-5" id="account-albums">
+      <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-albums">
         <div className="flex items-center justify-between gap-3">
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Albums and ledger</p>
           <StorefrontInstantLink className="inline-flex items-center gap-1 text-xs font-semibold text-[#171514]" href={`/site/${siteSlug}/album`}>

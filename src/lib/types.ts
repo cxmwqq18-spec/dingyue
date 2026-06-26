@@ -70,6 +70,20 @@ export interface ThemePageJson {
   version: number;
   sectionsOrder: string[];
   sections: Record<string, SectionInstance>;
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string;
+    ogImage?: string;
+    canonical?: string;
+    canonicalPath?: string;
+    robots?: {
+      index?: boolean;
+      follow?: boolean;
+    };
+    index?: boolean;
+    follow?: boolean;
+  };
 }
 
 export interface ThemeDraftMeta {
@@ -542,6 +556,8 @@ export interface CreativePackCategory {
   description?: string;
   heroTitle?: string;
   heroSubtitle?: string;
+  icon?: string;
+  iconName?: string;
   imageUrl?: string;
   sortOrder: number;
   status: "active" | "draft" | "paused";

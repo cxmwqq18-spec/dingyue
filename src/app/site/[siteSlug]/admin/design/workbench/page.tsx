@@ -16,8 +16,8 @@ export default async function DesignPage({
 }) {
   const { siteSlug } = await params;
   const query = searchParams ? await searchParams : {};
-  const data = await getSiteAdminData(siteSlug, { include: ["products", "media", "themePages"], take: 40, summary: false });
-  const { site, current, products, apps: siteAiApps, packs: creativePacks, media: mediaAssets } = data;
+  const data = await getSiteAdminData(siteSlug, { include: ["themePages"], take: 0, summary: false });
+  const { site, current } = data;
   if (!site) notFound();
   if (!current) redirect(`/site/${site.slug}/admin/login`);
   const previewToken = createDesignerPreviewToken({
@@ -44,18 +44,18 @@ export default async function DesignPage({
         <DesignerClient
           activeThemeName={activeThemeName}
           activeThemeKey={activeThemeKey}
-          creativePacks={creativePacks}
           draftThemeKey={draftThemeKey}
           draftThemeName={draftThemeName}
           initialPageId={query.pageId}
           initialThemeKey={draftThemeKey}
-          mediaAssets={mediaAssets}
+          creativePacks={data.packs}
+          mediaAssets={data.media}
           pages={site.pages}
           previewToken={previewToken}
+          products={data.products}
           publicationCount={publicationCount}
-          products={products}
           site={site}
-          siteAiApps={siteAiApps}
+          siteAiApps={data.apps}
           toolbarLeading={
             <div className="flex min-w-0 items-center gap-3 pl-3">
               <Link

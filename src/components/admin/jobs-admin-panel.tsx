@@ -27,12 +27,18 @@ export function JobsAdminPanel({
   siteId,
   jobs,
   customers,
-  aiApps
+  aiApps,
+  hasMore = false,
+  loadingMore = false,
+  onLoadMore
 }: {
   siteId: string;
   jobs: GenerationJob[];
   customers: Array<Pick<PublicCustomer, "id" | "email">>;
   aiApps: AiApp[];
+  hasMore?: boolean;
+  loadingMore?: boolean;
+  onLoadMore?: () => void;
 }) {
   const router = useRouter();
   const [items, setItems] = useState(jobs);
@@ -133,6 +139,13 @@ export function JobsAdminPanel({
           setPage(1);
         }}
       />
+      {hasMore && onLoadMore ? (
+        <div className="mt-3 flex justify-center">
+          <button className="admin_btn inline-flex h-[34px] items-center justify-center px-3 disabled:opacity-55" disabled={loadingMore} onClick={onLoadMore} type="button">
+            {loadingMore ? "加载中..." : "加载更多任务"}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

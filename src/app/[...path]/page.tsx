@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
 import { getPage } from "@/lib/data";
 import {
@@ -16,11 +16,27 @@ import {
   resolveToolPageForSite
 } from "@/lib/storefront-render";
 import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
+  "ai-image-studio": "/tools",
+  "image-studio": "/tools",
+  "travel-portraits": "/tools/nature-adventure"
+};
+
+function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
+  return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
+  if (!isMydreamshootsSite(site)) return;
+  const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
+  if (redirectPath) permanentRedirect(redirectPath);
+}
 
 async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
   return getHostRuntimeStateForModeWithFallback(hosts, "private");
@@ -49,6 +65,11 @@ async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
   const [resolvedParams, headerStore] = await Promise.all([params, headers()]);
   const { path } = resolvedParams;
+  const firstSegment = path[0] ?? "";
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
+    return {};
+  }
   const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
@@ -57,6 +78,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!site) return {};
   const slug = `/${path.join("/")}`;
   if (path[0] === "tools" && path[1]) {
+    redirectMydreamshootsLegacyTool(site, path[1]);
     const { matched } = resolveToolPageForSite(state, site, path[1]);
     if (!matched) return {};
     return metadataForSeoDirectory(site, "tool", path[1]);
@@ -65,7 +87,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const page = getPage(site, slug);
   const resolvedPage = page.slug === slug ? page : site.pages.find((item) => item.slug === "/404") ?? page;
   if (path[0] === "dashboard") return { title: "Workspace" };
-  return metadataForThemePage(site, resolvedPage);
+  return metadataForSingleThemePage(site, resolvedPage);
 }
 
 export default async function HostStorefrontCatchAllPage({
@@ -83,6 +105,16 @@ export default async function HostStorefrontCatchAllPage({
 
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
+  const slug = `/${path.join("/")}`;
+  if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
+    const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
+    if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "collections") {
+      redirect(`/site/${defaultSiteSlug}${slug}`);
+    }
+  }
+  if (slug === "/privacy-policy") redirect("/policies/privacy");
+  if (slug === "/terms-of-service") redirect("/policies/terms");
+  if (slug === "/cookie-policy") redirect("/policies/cookies");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : `/${path.join("/")}`;
@@ -103,6 +135,7 @@ export default async function HostStorefrontCatchAllPage({
     return renderCustomerWorkspacePage({ site, slug: "/app", query, routeMode: "host", state });
   }
   if (firstSegment === "tools" && path[1]) {
+    redirectMydreamshootsLegacyTool(site, path[1]);
     return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";

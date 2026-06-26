@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import {
+  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { renderCustomerJobDetailPage } from "@/lib/storefront-render";
 import { customerSessionCookie } from "@/lib/session";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
 
@@ -14,12 +15,12 @@ const jobDetailSlug = "/app/jobs/detail";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; jobId: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, jobDetailSlug);
+  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, jobDetailSlug);
   const site = state?.sites[0];
   const page =
     site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ??
     site?.pages.find((item) => item.slug === "/app/jobs/progress");
-  return site && page ? metadataForThemePage(site, page) : {};
+  return site && page ? metadataForSingleThemePage(site, page) : {};
 }
 
 export default async function JobDetailPage({

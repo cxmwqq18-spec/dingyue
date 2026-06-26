@@ -26,9 +26,26 @@ const adminPackListTake = envInt("SITE_ADMIN_PACK_LIST_TAKE", 100);
 const adminSiteAdminListTake = envInt("SITE_ADMIN_SITE_ADMIN_LIST_TAKE", 50);
 const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
 
-export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+type CustomersPageDetail = "all" | "customers" | "models" | "delivery" | "assets";
+
+function normalizeDetail(value: string | null): CustomersPageDetail {
+  if (value === "customers" || value === "models" || value === "delivery" || value === "assets") return value;
+  return value === "all" ? "all" : "customers";
+}
+
+function includeDetail(detail: CustomersPageDetail, target: CustomersPageDetail): boolean {
+  return detail === "all" || detail === target;
+}
+
+function includeCustomers(detail: CustomersPageDetail): boolean {
+  return detail === "all" || detail === "customers" || detail === "assets";
+}
+
+export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const perf = createAdminPerfTracker("admin-customers-page", { siteId });
+  const url = new URL(request.url);
+  const detail = normalizeDetail(url.searchParams.get("detail"));
+  const perf = createAdminPerfTracker("admin-customers-page", { siteId, detail });
   if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
@@ -48,10 +65,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     });
   }
 
-  const payload = await perf.measure("cache", () => customersPageCache.get(siteId, async () => {
+  const payload = await perf.measure("cache", () => customersPageCache.get(`${siteId}:${detail}`, async () => {
     const [site, customers, customerModels, albums, packs, customerAssets, siteAdmins] = await perf.measure("db", () => runDbTasks([
-      () => prisma.site.findUnique({ where: { id: siteId }, select: { id: true, signupCreditGrant: true } }),
-      () => prisma.customer.findMany({
+      includeDetail(detail, "customers")
+        ? () => prisma.site.findUnique({ where: { id: siteId }, select: { id: true, signupCreditGrant: true } })
+        : () => Promise.resolve({ id: siteId, signupCreditGrant: 0 }),
+      includeCustomers(detail)
+        ? () => prisma.customer.findMany({
         where: { siteId },
         select: {
           id: true,
@@ -63,8 +83,10 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         },
         orderBy: [{ createdAt: "asc" }, { email: "asc" }],
         take: adminCustomerListTake
-      }),
-      () => prisma.customerModel.findMany({
+      })
+        : () => Promise.resolve([]),
+      includeDetail(detail, "models") || includeDetail(detail, "assets")
+        ? () => prisma.customerModel.findMany({
         where: { siteId },
         select: {
           id: true,
@@ -83,8 +105,10 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         },
         orderBy: [{ createdAt: "desc" }, { id: "asc" }],
         take: adminCustomerListTake
-      }),
-      () => prisma.album.findMany({
+      })
+        : () => Promise.resolve([]),
+      includeDetail(detail, "delivery")
+        ? () => prisma.album.findMany({
         where: { siteId },
         select: {
           id: true,
@@ -101,8 +125,10 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         },
         orderBy: [{ createdAt: "desc" }, { id: "asc" }],
         take: adminCustomerListTake
-      }),
-      () => prisma.creativePack.findMany({
+      })
+        : () => Promise.resolve([]),
+      includeDetail(detail, "delivery")
+        ? () => prisma.creativePack.findMany({
         where: { siteId },
         select: {
           id: true,
@@ -123,8 +149,10 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         },
         orderBy: [{ status: "asc" }, { createdAt: "asc" }],
         take: adminPackListTake
-      }),
-      () => prisma.assetUpload.findMany({
+      })
+        : () => Promise.resolve([]),
+      includeDetail(detail, "delivery") || includeDetail(detail, "assets")
+        ? () => prisma.assetUpload.findMany({
         where: { siteId, deletedAt: null },
         select: {
           id: true,
@@ -146,13 +174,16 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         },
         orderBy: [{ createdAt: "desc" }, { id: "asc" }],
         take: adminCustomerAssetTake
-      }),
-      () => prisma.siteAdmin.findMany({
+      })
+        : () => Promise.resolve([]),
+      includeDetail(detail, "customers")
+        ? () => prisma.siteAdmin.findMany({
         where: { siteId },
         select: { id: true, siteId: true, email: true, displayName: true, role: true, createdAt: true },
         orderBy: [{ createdAt: "asc" }, { email: "asc" }],
         take: adminSiteAdminListTake
       })
+        : () => Promise.resolve([])
     ], siteAdminReadConcurrency));
 
     if (!site) return undefined;

@@ -282,7 +282,7 @@ const dreamshootToolBlock: ThemeBlockSchema = {
     text("title", "Title", "Background changer"),
     textarea("description", "Description", "Edit one photo with a focused AI tool before upgrading to private packs."),
     text("category", "Category", "AI Photo Edit"),
-    text("badge", "Badge", "Free"),
+    text("badge", "Badge", "Studio"),
     image("imageUrl", "Image URL"),
     url("href", "Link", "/tools/background-changer")
   ],
@@ -292,7 +292,7 @@ const dreamshootToolBlock: ThemeBlockSchema = {
       title: "Background changer",
       description: "Edit one photo with a focused AI tool before upgrading to private packs.",
       category: "AI Photo Edit",
-      badge: "Free",
+      badge: "Studio",
       imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
       href: "/tools/background-changer"
     }
@@ -1299,14 +1299,14 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_tool_collection: {
     type: "dreamshoot_tool_collection",
-    label: "Free Tool Collection",
+    label: "Paid Tool Collection",
     category: "AI business",
-    description: "MydreamShoots-style free tools directory that turns utility traffic into subscriptions.",
+    description: "MydreamShoots-style paid tools directory that turns utility traffic into subscriptions.",
     maxBlocks: 36,
     settings: [
-      text("anchor", "Anchor", "free-tools"),
-      text("eyebrow", "Eyebrow", "Free AI tools"),
-      text("title", "Title", "Free AI tools that lead into private photo packs."),
+      text("anchor", "Anchor", "tools"),
+      text("eyebrow", "Eyebrow", "AI tools"),
+      text("title", "Title", "Paid AI tools that lead into private photo packs."),
       textarea("subtitle", "Subtitle", "Offer quick single-purpose tools, then route serious customers into login, credits, and premium scene packs."),
       textarea("categories", "Categories", "Photo AI|AI Photo Edit|Video AI", "Use | to separate category tabs."),
       text("primaryCta", "Primary CTA", "Start private studio"),
@@ -1328,11 +1328,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [dreamshootToolBlock],
     presets: [
       {
-        label: "MydreamShoots free tools directory",
+        label: "MydreamShoots paid tools directory",
         settings: {
-          anchor: "free-tools",
-          eyebrow: "Free AI tools",
-          title: "A free tool wall that feeds the paid studio.",
+          anchor: "tools",
+          eyebrow: "AI tools",
+          title: "A paid tool wall that feeds the studio.",
           subtitle: "Reference-style utility categories help customers try simple edits first, then move into private photo packs, credits, and album delivery.",
           categories: "Photo AI|AI Photo Edit|Video AI",
           primaryCta: "Start private studio",
@@ -1344,8 +1344,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         blocks: [
           block("tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Create clean profile portraits for resumes, teams, and founder pages.", category: "Photo AI", badge: "Profile", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" }),
           block("tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and match-day profile images.", category: "Photo AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", href: "/tools/world-cup-fan-photos" }),
-          block("tool_bg_changer", "tool_card", { title: "Background changer", description: "Replace a plain selfie background before ordering a full photo package.", category: "AI Photo Edit", badge: "Free", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/background-changer" }),
-          block("tool_photo_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Free", imageUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png", href: "/tools/photo-enhancer" }),
+          block("tool_bg_changer", "tool_card", { title: "Background changer", description: "Replace a plain selfie background before ordering a full photo package.", category: "AI Photo Edit", badge: "Studio", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/background-changer" }),
+          block("tool_photo_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Studio", imageUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png", href: "/tools/photo-enhancer" }),
           block("tool_image_to_video", "tool_card", { title: "Image to video concept", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/image-to-video" }),
           block("tool_fan_motion", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", href: "/tools/fan-poster-motion" })
         ]
@@ -1606,7 +1606,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     maxBlocks: 4,
     settings: [
       text("anchor", "Anchor", "start"),
-      text("eyebrow", "Eyebrow", "Start free"),
+      text("eyebrow", "Eyebrow", "Start studio"),
       text("title", "Title", "Generate your first private album from a secure account."),
       textarea("subtitle", "Subtitle", "Mirrors MydreamShoots's quick login pattern while routing into the site customer system."),
       text("emailPlaceholder", "Email placeholder", "you@example.com"),
@@ -1624,7 +1624,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         label: "Email plus login methods",
         settings: {
           anchor: "start",
-          eyebrow: "Start free",
+          eyebrow: "Start studio",
           title: "Upload selfies after a secure customer login.",
           subtitle: "Each site owns its customer system, credits, and private albums.",
           emailPlaceholder: "you@example.com",
@@ -1695,7 +1695,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "packs",
           eyebrow: "Popular packs",
-          title: "Sell outcomes, not generic image prompts.",
+          title: "Sell outcomes, not one-off text requests.",
           subtitle: "Photo, creator, travel, gala, sports, headshot, beauty, and editorial packs become clear shoppable outcomes.",
           source: "creative_packs"
         },
@@ -1777,7 +1777,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "pricing_table",
     label: "Pricing Table",
     category: "Commerce",
-    description: "Stripe-backed pricing section. Prices are read from products, not typed manually.",
+    description: "Secure checkout pricing section. Prices are read from products, not typed manually.",
     settings: [
       text("anchor", "Anchor", "plans"),
       text("eyebrow", "Eyebrow", "Transparent pricing"),
@@ -1961,6 +1961,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("eyebrow", "Eyebrow", "Site search"),
       text("title", "Title", "Search this storefront"),
       textarea("subtitle", "Subtitle", "Search collections, pricing, tools, policies, and photo planning guides."),
+      select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h1"),
       text("emptyTitle", "Empty title", "No matching content yet."),
       textarea("emptyBody", "Empty body", "Try pricing, credits, album, help, or privacy."),
       range("resultLimit", "Result limit", 12, 4, 24, 1)
@@ -1975,6 +1976,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("eyebrow", "Eyebrow", "Checkout summary"),
       text("title", "Title", "Your selected plan"),
       textarea("subtitle", "Subtitle", "Products, prices, credits, and checkout state stay tied to this storefront."),
+      select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h1"),
       text("emptyTitle", "Empty title", "Choose a plan first"),
       textarea("emptyBody", "Empty body", "Open pricing to select a subscription or credit pack."),
       text("returnLabel", "Return button label", "Back to pricing"),
@@ -2107,6 +2109,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     description: "Per-site policy body.",
     settings: [
       text("title", "Title", "Policy page"),
+      select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h1"),
       text("lastUpdated", "Last updated", "June 25, 2024"),
       text("contactEmail", "Contact email", "support@mydreamshoots.com"),
       richtext("body", "Body")
@@ -2117,7 +2120,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     label: "Blog List",
     category: "Content",
     description: "Photo planning article list with configurable intro copy.",
-    settings: [text("title", "Title", "Guides"), textarea("body", "Intro copy")]
+    settings: [text("title", "Title", "Guides"), select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h1"), textarea("body", "Intro copy")]
   },
   rich_text: {
     type: "rich_text",
@@ -2128,6 +2131,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     settings: [
       text("eyebrow", "Eyebrow", "Page content"),
       text("title", "Title", "Story text section"),
+      select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h2"),
       richtext("body", "Body"),
       media("imageUrl", "Image / media asset"),
       select(

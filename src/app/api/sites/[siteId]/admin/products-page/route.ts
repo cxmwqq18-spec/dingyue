@@ -4,7 +4,7 @@ import { canPublishPaidProducts } from "@/lib/billing";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
-import type { AiApp, CreativePack, Price, Product, SiteAiApp } from "@/lib/types";
+import type { AiApp, Price, Product, SiteAiApp } from "@/lib/types";
 
 const productsPageCache = createServerTtlCache("site-admin-products-page", Number(process.env.SITE_ADMIN_PRODUCTS_PAGE_CACHE_TTL_MS ?? 15_000));
 
@@ -15,7 +15,6 @@ function envInt(name: string, fallback: number): number {
 
 const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
 const adminProductListTake = envInt("SITE_ADMIN_PRODUCT_LIST_TAKE", 100);
-const adminPackListTake = envInt("SITE_ADMIN_PACK_LIST_TAKE", 100);
 const adminAiAppListTake = envInt("SITE_ADMIN_AI_APP_LIST_TAKE", 100);
 const adminPriceListTake = envInt("SITE_ADMIN_PRICE_LIST_TAKE", 100);
 
@@ -24,8 +23,11 @@ function jsonRecord(value: unknown): Record<string, string | number | boolean> |
   return value as Record<string, string | number | boolean>;
 }
 
-function toIso(value: Date | string): string {
-  return value instanceof Date ? value.toISOString() : value;
+function countGroupRow(row: { _count?: unknown }): number {
+  const count = row._count;
+  if (!count || typeof count !== "object") return 0;
+  const all = (count as { _all?: unknown })._all;
+  return typeof all === "number" ? all : 0;
 }
 
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string }> }) {
@@ -36,7 +38,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
   }
 
   const payload = await perf.measure("cache", () => productsPageCache.get(siteId, async () => {
-    const [site, products, packs, siteAiApps] = await perf.measure("db", () => runDbTasks([
+    const [site, products, packCounts, siteAiApps] = await perf.measure("db", () => runDbTasks([
       () => prisma.site.findUnique({
         where: { id: siteId },
         select: {
@@ -72,33 +74,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         orderBy: [{ status: "asc" }, { createdAt: "asc" }],
         take: adminProductListTake
       }),
-      () => prisma.creativePack.findMany({
+      () => prisma.creativePack.groupBy({
+        by: ["status"],
         where: { siteId },
-        select: {
-          id: true,
-          siteId: true,
-          name: true,
-          headline: true,
-          description: true,
-          prompt: true,
-          category: true,
-          aiAppSlug: true,
-          status: true,
-          creditCost: true,
-          outputCount: true,
-          trainingRequired: true,
-          generationCount: true,
-          conversionRate: true,
-          imageUrl: true,
-          galleryImages: true,
-          categoryId: true,
-          categoryRecord: {
-            include: { parent: true }
-          },
-          createdAt: true
-        },
-        orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-        take: adminPackListTake
+        _count: { _all: true },
+        orderBy: { status: "asc" }
       }),
       () => prisma.siteAiApp.findMany({
         where: { siteId },
@@ -155,60 +135,22 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         prices: []
       })
     );
+    const packStatusCounts = packCounts.reduce(
+      (memo, row) => {
+        const status = row.status as "active" | "draft" | "paused";
+        const count = countGroupRow(row);
+        if (status === "active" || status === "draft" || status === "paused") memo[status] = count;
+        memo.all += count;
+        return memo;
+      },
+      { all: 0, active: 0, draft: 0, paused: 0 }
+    );
     return {
       ok: true,
       currency: site.currency,
       products: mappedProducts,
-      packs: packs.map(
-        (pack): CreativePack => ({
-          id: pack.id,
-          siteId: pack.siteId,
-          name: pack.name,
-          headline: pack.headline,
-          description: pack.description,
-          prompt: pack.prompt ?? undefined,
-          category: pack.category,
-          categoryId: pack.categoryId ?? undefined,
-          categoryRecord: pack.categoryRecord ? {
-            id: pack.categoryRecord.id,
-            siteId: pack.categoryRecord.siteId,
-            parentId: pack.categoryRecord.parentId ?? undefined,
-            parent: pack.categoryRecord.parent ? {
-              id: pack.categoryRecord.parent.id,
-              siteId: pack.categoryRecord.parent.siteId,
-              parentId: pack.categoryRecord.parent.parentId ?? undefined,
-              slug: pack.categoryRecord.parent.slug,
-              label: pack.categoryRecord.parent.label,
-              description: pack.categoryRecord.parent.description ?? undefined,
-              heroTitle: pack.categoryRecord.parent.heroTitle ?? undefined,
-              heroSubtitle: pack.categoryRecord.parent.heroSubtitle ?? undefined,
-              imageUrl: pack.categoryRecord.parent.imageUrl ?? undefined,
-              sortOrder: pack.categoryRecord.parent.sortOrder,
-              status: pack.categoryRecord.parent.status as CreativePack["status"],
-              createdAt: toIso(pack.categoryRecord.parent.createdAt)
-            } : undefined,
-            slug: pack.categoryRecord.slug,
-            label: pack.categoryRecord.label,
-            description: pack.categoryRecord.description ?? undefined,
-            heroTitle: pack.categoryRecord.heroTitle ?? undefined,
-            heroSubtitle: pack.categoryRecord.heroSubtitle ?? undefined,
-            imageUrl: pack.categoryRecord.imageUrl ?? undefined,
-            sortOrder: pack.categoryRecord.sortOrder,
-            status: pack.categoryRecord.status as CreativePack["status"],
-            createdAt: toIso(pack.categoryRecord.createdAt)
-          } : undefined,
-          aiAppSlug: pack.aiAppSlug,
-          status: pack.status as CreativePack["status"],
-          creditCost: pack.creditCost,
-          outputCount: pack.outputCount,
-          trainingRequired: pack.trainingRequired,
-          generationCount: pack.generationCount,
-          conversionRate: pack.conversionRate,
-          createdAt: toIso(pack.createdAt),
-          imageUrl: pack.imageUrl ?? undefined,
-          galleryImages: Array.isArray(pack.galleryImages) ? pack.galleryImages.filter((item): item is string => typeof item === "string") : undefined
-        })
-      ),
+      packCounts: packStatusCounts,
+      packTotal: packStatusCounts.all,
       siteAiApps: siteAiApps.map(
         (siteAiApp): SiteAiApp => ({
           id: siteAiApp.id,

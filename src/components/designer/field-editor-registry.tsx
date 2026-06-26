@@ -1,12 +1,12 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { fieldDisplayLabel, optionDisplayLabel } from "@/components/designer/designer-metadata";
 import { saasFontFamily, saasFontOptions, saasFontValue, saasFontVariantKey } from "@/lib/theme/saas-fonts";
 import { themeValueToString } from "@/lib/theme-values";
 import type { Site, ThemeFieldSchema, ThemeSettingValue } from "@/lib/types";
-import type { FieldOptions } from "@/components/designer/field-editor-types";
+import type { DesignerResourceKind, FieldOptions } from "@/components/designer/field-editor-types";
 import {
   collectionSelector,
   pageSelector,
@@ -99,6 +99,23 @@ function navMenuLines(options: FieldOptions, menuId: string): string[] {
   if (menuId === "footer") return ["Privacy|/policies/privacy", "Refunds|/policies/refunds", "Content policy|/policies/content"];
   if (menuId === "ai-tools") return options.siteAiApps.filter((app) => app.enabled).map((app) => `${app.aiApp.name}|/tools/${app.aiApp.slug}`);
   return options.pages.map((page) => `${page.title}|${page.slug}`);
+}
+
+function resourceKindsForField(field: ThemeFieldSchema): DesignerResourceKind[] {
+  const kinds: DesignerResourceKind[] = [];
+  const add = (kind: DesignerResourceKind) => {
+    if (!kinds.includes(kind)) kinds.push(kind);
+  };
+  if (field.type === "product" || field.type === "price" || field.source === "products" || field.source === "prices") add("products");
+  if (field.type === "ai_app" || field.source === "site_ai_apps") add("siteAiApps");
+  if (field.type === "media_asset" || field.type === "image_picker" || field.source === "media_assets") add("mediaAssets");
+  if (field.type === "collection" || field.source === "creative_packs") add("creativePacks");
+  if (field.type === "url") {
+    add("products");
+    add("creativePacks");
+  }
+  if (field.type === "link_list" || field.type === "menu") add("siteAiApps");
+  return kinds;
 }
 
 function SaasFieldShell({
@@ -255,6 +272,24 @@ export function FieldEditor({
   const mode = fieldInputMode(field);
   const valueString = stringifyValue(value ?? field.default ?? "");
   const choices = runtimeOptions(field, options);
+  const requestResourceRef = useRef(options.requestResource);
+  const resourceStatusRef = useRef(options.resourceStatus);
+
+  useEffect(() => {
+    requestResourceRef.current = options.requestResource;
+    resourceStatusRef.current = options.resourceStatus;
+  }, [options.requestResource, options.resourceStatus]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    for (const kind of resourceKindsForField(field)) {
+      const status = resourceStatusRef.current?.[kind] ?? "idle";
+      if (status === "idle" || status === "error") {
+        void requestResourceRef.current?.(kind, { signal: controller.signal });
+      }
+    }
+    return () => controller.abort();
+  }, [field]);
 
   if (mode === "notice") return <SaasNoticeField field={field} />;
 
@@ -502,6 +537,21 @@ function SaasUrlSelector({
   const productId = selectedType === "product" ? selected.id : "";
   const pageId = selectedType === "pages" ? selected.id : "";
   const collectionId = selectedType === "category" ? selected.id : "";
+  const requestResourceRef = useRef(options.requestResource);
+  const resourceStatusRef = useRef(options.resourceStatus);
+  useEffect(() => {
+    requestResourceRef.current = options.requestResource;
+    resourceStatusRef.current = options.resourceStatus;
+  }, [options.requestResource, options.resourceStatus]);
+  useEffect(() => {
+    const controller = new AbortController();
+    const resourceKind = selectedType === "product" ? "products" : selectedType === "category" ? "creativePacks" : undefined;
+    if (resourceKind) {
+      const status = resourceStatusRef.current?.[resourceKind] ?? "idle";
+      if (status === "idle" || status === "error") void requestResourceRef.current?.(resourceKind, { signal: controller.signal });
+    }
+    return () => controller.abort();
+  }, [selectedType]);
   const applyType = (type: string) => {
     if (type === "none" || type === "index") {
       onChange(selectorJson(staticUrlSelector(type)));

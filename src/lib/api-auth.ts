@@ -13,74 +13,180 @@ export type CurrentSiteAdmin = { siteAdmin: SiteAdmin; session: SiteAdminSession
 export type CurrentCustomer = { customer: PublicCustomer; session: CustomerSession; sessionId: string };
 
 const platformSessionCacheTtlMs = 30_000;
-const platformSessionCache = new Map<string, { current: CurrentPlatformAdmin; cachedAt: number }>();
+const platformSessionCache = new Map<string, SessionCacheEntry<CurrentPlatformAdmin>>();
 const scopedSessionCacheTtlMs = 30_000;
-const siteAdminSessionCache = new Map<string, { current: CurrentSiteAdmin; cachedAt: number }>();
-const customerSessionCache = new Map<string, { current: CurrentCustomer; cachedAt: number }>();
+const siteAdminSessionCache = new Map<string, SessionCacheEntry<CurrentSiteAdmin>>();
+const customerSessionCache = new Map<string, SessionCacheEntry<CurrentCustomer>>();
+const maxSessionCacheEntries = 500;
+const platformSessionInflight = new Map<string, Promise<CurrentPlatformAdmin | undefined>>();
+const siteAdminSessionInflight = new Map<string, Promise<CurrentSiteAdmin | undefined>>();
+const customerSessionInflight = new Map<string, Promise<CurrentCustomer | undefined>>();
+const platformSessionVersions = createSessionVersionState();
+const siteAdminSessionVersions = createSessionVersionState();
+const customerSessionVersions = createSessionVersionState();
+
+type SessionCacheEntry<T> = {
+  current: T;
+  cachedAt: number;
+  expiresAt: number;
+};
 
 export function clearPlatformSessionAuthCache(sessionId?: string): void {
   if (sessionId) {
+    bumpSessionVersion(platformSessionVersions, sessionId);
     platformSessionCache.delete(sessionId);
+    platformSessionInflight.delete(sessionId);
     return;
   }
+  bumpAllSessionVersions(platformSessionVersions);
   platformSessionCache.clear();
+  platformSessionInflight.clear();
 }
 
 export function clearSiteAdminSessionAuthCache(siteId?: string, sessionId?: string): void {
   if (siteId && sessionId) {
-    siteAdminSessionCache.delete(scopedSessionKey(siteId, sessionId));
+    const cacheKey = scopedSessionKey(siteId, sessionId);
+    bumpSessionVersion(siteAdminSessionVersions, cacheKey);
+    siteAdminSessionCache.delete(cacheKey);
+    siteAdminSessionInflight.delete(cacheKey);
     return;
   }
+  bumpAllSessionVersions(siteAdminSessionVersions);
   siteAdminSessionCache.clear();
+  siteAdminSessionInflight.clear();
 }
 
 export function primeSiteAdminSessionAuthCache(current: CurrentSiteAdmin): void {
-  siteAdminSessionCache.set(scopedSessionKey(current.session.siteId, current.sessionId), { current, cachedAt: Date.now() });
+  setSessionCache(siteAdminSessionCache, scopedSessionKey(current.session.siteId, current.sessionId), current, scopedSessionCacheTtlMs);
 }
 
 export function clearCustomerSessionAuthCache(siteId?: string, customerId?: string, sessionId?: string): void {
   if (siteId && customerId && sessionId) {
-    customerSessionCache.delete(scopedSessionKey(siteId, sessionId, customerId));
+    const cacheKey = scopedSessionKey(siteId, sessionId, customerId);
+    bumpSessionVersion(customerSessionVersions, cacheKey);
+    customerSessionCache.delete(cacheKey);
+    customerSessionInflight.delete(cacheKey);
     return;
   }
   if (siteId && sessionId) {
     const prefix = `${siteId}:${sessionId}:`;
     for (const key of customerSessionCache.keys()) {
-      if (key.startsWith(prefix)) customerSessionCache.delete(key);
+      if (key.startsWith(prefix)) {
+        bumpSessionVersion(customerSessionVersions, key);
+        customerSessionCache.delete(key);
+      }
+    }
+    for (const key of customerSessionInflight.keys()) {
+      if (key.startsWith(prefix)) {
+        bumpSessionVersion(customerSessionVersions, key);
+        customerSessionInflight.delete(key);
+      }
     }
     return;
   }
+  bumpAllSessionVersions(customerSessionVersions);
   customerSessionCache.clear();
+  customerSessionInflight.clear();
 }
 
 function scopedSessionKey(siteId: string, sessionId: string, extra?: string): string {
   return extra ? `${siteId}:${sessionId}:${extra}` : `${siteId}:${sessionId}`;
 }
 
-function isFresh(cachedAt: number, ttlMs: number): boolean {
-  return Date.now() - cachedAt < ttlMs;
+function sessionExpiresAt(session: PlatformSession | SiteAdminSession | CustomerSession): number {
+  const expiresAt = Date.parse(session.expiresAt);
+  return Number.isFinite(expiresAt) ? expiresAt : 0;
+}
+
+type SessionVersionState = {
+  global: number;
+  keys: Map<string, number>;
+};
+
+function createSessionVersionState(): SessionVersionState {
+  return { global: 0, keys: new Map() };
+}
+
+function readSessionVersion(state: SessionVersionState, key: string) {
+  return { global: state.global, key: state.keys.get(key) ?? 0 };
+}
+
+function isSessionVersionCurrent(state: SessionVersionState, key: string, version: ReturnType<typeof readSessionVersion>): boolean {
+  return state.global === version.global && (state.keys.get(key) ?? 0) === version.key;
+}
+
+function bumpSessionVersion(state: SessionVersionState, key: string): void {
+  state.keys.set(key, (state.keys.get(key) ?? 0) + 1);
+}
+
+function bumpAllSessionVersions(state: SessionVersionState): void {
+  state.global += 1;
+  state.keys.clear();
+}
+
+function isFresh<T>(cached: SessionCacheEntry<T> | undefined, ttlMs: number): cached is SessionCacheEntry<T> {
+  if (!cached) return false;
+  const now = Date.now();
+  return now < cached.expiresAt && now - cached.cachedAt < ttlMs;
+}
+
+function pruneSessionCache<T>(store: Map<string, SessionCacheEntry<T>>, now = Date.now()): void {
+  for (const [key, entry] of store) {
+    if (entry.expiresAt <= now) store.delete(key);
+  }
+  while (store.size > maxSessionCacheEntries) {
+    const first = store.keys().next().value;
+    if (!first) break;
+    store.delete(first);
+  }
+}
+
+function setSessionCache<T extends { session: PlatformSession | SiteAdminSession | CustomerSession }>(
+  store: Map<string, SessionCacheEntry<T>>,
+  key: string,
+  current: T,
+  ttlMs: number
+): void {
+  const now = Date.now();
+  const expiresAt = Math.min(sessionExpiresAt(current.session), now + ttlMs);
+  if (expiresAt <= now) return;
+  store.set(key, { current, cachedAt: now, expiresAt });
+  pruneSessionCache(store, now);
+}
+
+function reuseInflight<T>(store: Map<string, Promise<T>>, key: string, loader: () => Promise<T>): Promise<T> {
+  const inflight = store.get(key);
+  if (inflight) return inflight;
+  const promise = loader().finally(() => {
+    if (store.get(key) === promise) store.delete(key);
+  });
+  store.set(key, promise);
+  return promise;
 }
 
 export async function hasPlatformSession(): Promise<boolean> {
-  const sessionId = (await cookies()).get(platformSessionCookie())?.value;
-  if (!sessionId) return false;
-  const cached = platformSessionCache.get(sessionId);
-  if (cached && Date.now() - cached.cachedAt < platformSessionCacheTtlMs) return true;
-  return Boolean(await getPlatformAdminBySessionRelational(sessionId));
+  return Boolean(await getCurrentPlatformAdmin());
 }
 
 export async function getCurrentPlatformAdmin(): Promise<CurrentPlatformAdmin | undefined> {
   const sessionId = (await cookies()).get(platformSessionCookie())?.value;
   if (!sessionId) return undefined;
   const cached = platformSessionCache.get(sessionId);
-  if (cached && Date.now() - cached.cachedAt < platformSessionCacheTtlMs) return cached.current;
-  const relational = await getPlatformAdminBySessionRelational(sessionId);
-  if (relational) {
-    const current = { platformAdmin: relational.platformAdmin, session: relational.session, sessionId: relational.session.id };
-    platformSessionCache.set(sessionId, { current, cachedAt: Date.now() });
-    return current;
-  }
-  return undefined;
+  if (isFresh(cached, platformSessionCacheTtlMs)) return cached.current;
+  return reuseInflight(platformSessionInflight, sessionId, async () => {
+    const version = readSessionVersion(platformSessionVersions, sessionId);
+    const freshCached = platformSessionCache.get(sessionId);
+    if (isFresh(freshCached, platformSessionCacheTtlMs)) return freshCached.current;
+    const relational = await getPlatformAdminBySessionRelational(sessionId);
+    if (relational) {
+      const current = { platformAdmin: relational.platformAdmin, session: relational.session, sessionId: relational.session.id };
+      if (isSessionVersionCurrent(platformSessionVersions, sessionId, version)) {
+        setSessionCache(platformSessionCache, sessionId, current, platformSessionCacheTtlMs);
+      }
+      return current;
+    }
+    return undefined;
+  });
 }
 
 export async function getCurrentSiteAdmin(siteId: string): Promise<CurrentSiteAdmin | undefined> {
@@ -88,14 +194,21 @@ export async function getCurrentSiteAdmin(siteId: string): Promise<CurrentSiteAd
   if (!sessionId) return undefined;
   const cacheKey = scopedSessionKey(siteId, sessionId);
   const cached = siteAdminSessionCache.get(cacheKey);
-  if (cached && isFresh(cached.cachedAt, scopedSessionCacheTtlMs)) return cached.current;
-  const relational = await getSiteAdminBySessionRelational({ siteId, sessionId });
-  if (relational) {
-    const current = { siteAdmin: relational.siteAdmin, session: relational.session, sessionId: relational.session.id };
-    siteAdminSessionCache.set(cacheKey, { current, cachedAt: Date.now() });
-    return current;
-  }
-  return undefined;
+  if (isFresh(cached, scopedSessionCacheTtlMs)) return cached.current;
+  return reuseInflight(siteAdminSessionInflight, cacheKey, async () => {
+    const version = readSessionVersion(siteAdminSessionVersions, cacheKey);
+    const freshCached = siteAdminSessionCache.get(cacheKey);
+    if (isFresh(freshCached, scopedSessionCacheTtlMs)) return freshCached.current;
+    const relational = await getSiteAdminBySessionRelational({ siteId, sessionId });
+    if (relational) {
+      const current = { siteAdmin: relational.siteAdmin, session: relational.session, sessionId: relational.session.id };
+      if (isSessionVersionCurrent(siteAdminSessionVersions, cacheKey, version)) {
+        setSessionCache(siteAdminSessionCache, cacheKey, current, scopedSessionCacheTtlMs);
+      }
+      return current;
+    }
+    return undefined;
+  });
 }
 
 export async function getCurrentCustomer(siteId: string, customerId: string): Promise<CurrentCustomer | undefined> {
@@ -103,14 +216,21 @@ export async function getCurrentCustomer(siteId: string, customerId: string): Pr
   if (!sessionId) return undefined;
   const cacheKey = scopedSessionKey(siteId, sessionId, customerId);
   const cached = customerSessionCache.get(cacheKey);
-  if (cached && isFresh(cached.cachedAt, scopedSessionCacheTtlMs)) return cached.current;
-  const relational = await getCustomerBySessionRelational({ siteId, sessionId });
-  if (relational?.customer.id === customerId) {
-    const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
-    customerSessionCache.set(cacheKey, { current, cachedAt: Date.now() });
-    return current;
-  }
-  return undefined;
+  if (isFresh(cached, scopedSessionCacheTtlMs)) return cached.current;
+  return reuseInflight(customerSessionInflight, cacheKey, async () => {
+    const version = readSessionVersion(customerSessionVersions, cacheKey);
+    const freshCached = customerSessionCache.get(cacheKey);
+    if (isFresh(freshCached, scopedSessionCacheTtlMs)) return freshCached.current;
+    const relational = await getCustomerBySessionRelational({ siteId, sessionId });
+    if (relational?.customer.id === customerId) {
+      const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
+      if (isSessionVersionCurrent(customerSessionVersions, cacheKey, version)) {
+        setSessionCache(customerSessionCache, cacheKey, current, scopedSessionCacheTtlMs);
+      }
+      return current;
+    }
+    return undefined;
+  });
 }
 
 export async function getCurrentCustomerForSite(siteId: string): Promise<CurrentCustomer | undefined> {
@@ -118,15 +238,27 @@ export async function getCurrentCustomerForSite(siteId: string): Promise<Current
   if (!sessionId) return undefined;
   const cacheKey = scopedSessionKey(siteId, sessionId, "current");
   const cached = customerSessionCache.get(cacheKey);
-  if (cached && isFresh(cached.cachedAt, scopedSessionCacheTtlMs)) return cached.current;
-  const relational = await getCustomerBySessionRelational({ siteId, sessionId });
-  if (relational) {
-    const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
-    customerSessionCache.set(cacheKey, { current, cachedAt: Date.now() });
-    customerSessionCache.set(scopedSessionKey(siteId, sessionId, relational.customer.id), { current, cachedAt: Date.now() });
-    return current;
-  }
-  return undefined;
+  if (isFresh(cached, scopedSessionCacheTtlMs)) return cached.current;
+  return reuseInflight(customerSessionInflight, cacheKey, async () => {
+    const version = readSessionVersion(customerSessionVersions, cacheKey);
+    const customerSpecificVersion = (customerId: string) => readSessionVersion(customerSessionVersions, scopedSessionKey(siteId, sessionId, customerId));
+    const freshCached = customerSessionCache.get(cacheKey);
+    if (isFresh(freshCached, scopedSessionCacheTtlMs)) return freshCached.current;
+    const relational = await getCustomerBySessionRelational({ siteId, sessionId });
+    if (relational) {
+      const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
+      const customerCacheKey = scopedSessionKey(siteId, sessionId, relational.customer.id);
+      const specificVersion = customerSpecificVersion(relational.customer.id);
+      if (isSessionVersionCurrent(customerSessionVersions, cacheKey, version)) {
+        setSessionCache(customerSessionCache, cacheKey, current, scopedSessionCacheTtlMs);
+      }
+      if (isSessionVersionCurrent(customerSessionVersions, customerCacheKey, specificVersion)) {
+        setSessionCache(customerSessionCache, customerCacheKey, current, scopedSessionCacheTtlMs);
+      }
+      return current;
+    }
+    return undefined;
+  });
 }
 
 export async function hasSiteAdminSession(siteId: string): Promise<boolean> {

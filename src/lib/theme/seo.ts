@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
+import { getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
+type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
 
 function cleanText(value: string | undefined, fallback = ""): string {
   return (value ?? fallback).replace(/\s+/g, " ").trim();
+}
+
+function pickText(...values: Array<string | undefined>): string {
+  for (const value of values) {
+    const text = cleanText(value);
+    if (text) return text;
+  }
+  return "";
 }
 
 function stripHomeSlug(slug: string): string {
@@ -42,6 +52,14 @@ function normalizeCanonicalPath(value: string | undefined, fallbackSlug: string)
   return `/${trimmed}`;
 }
 
+function defaultRobotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
+  const slug = page.slug || "/";
+  const blockedTypes = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
+  const blockedPrefixes = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
+  const blocked = blockedTypes.has(page.pageType) || blockedPrefixes.some((prefix) => slug === prefix || slug.startsWith(`${prefix}/`));
+  return { index: !blocked, follow: true };
+}
+
 function siteBaseUrl(site: Site): string {
   const domain = site.primaryDomain.trim();
   if (!domain) return `http://localhost:3000/site/${site.slug}`;
@@ -68,18 +86,21 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
   const pages = Object.fromEntries(
     site.pages.map((page) => {
       const existing = current?.pages?.[page.id] ?? current?.pages?.[page.slug];
-      const title = cleanText(existing?.title, pageFallbackTitle(site, page));
-      const description = cleanText(existing?.description, pageFallbackDescription(site, page));
+      const policySeo = getMydreamshootsPolicySeo(page.slug);
+      const jsonSeo = page.publishedJson.seo;
+      const defaultRobots = defaultRobotsForPage(page);
+      const title = pickText(jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page));
+      const description = pickText(jsonSeo?.description, policySeo?.description, existing?.description, pageFallbackDescription(site, page));
       return [
         page.id,
         {
           title,
           description,
-          keywords: cleanText(existing?.keywords, current?.siteKeywords),
-          ogImage: cleanText(existing?.ogImage),
-          canonicalPath: normalizeCanonicalPath(existing?.canonicalPath, page.slug),
-          index: existing?.index ?? current?.robots?.index ?? true,
-          follow: existing?.follow ?? current?.robots?.follow ?? true
+          keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, existing?.keywords, current?.siteKeywords),
+          ogImage: pickText(jsonSeo?.ogImage, existing?.ogImage),
+          canonicalPath: normalizeCanonicalPath(pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, existing?.canonicalPath), page.slug),
+          index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? existing?.index ?? (current?.robots?.index === false ? false : defaultRobots.index),
+          follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? existing?.follow ?? current?.robots?.follow ?? defaultRobots.follow
         }
       ];
     })
@@ -118,14 +139,27 @@ export function applyTitleTemplate(title: string, template: string, site: Site):
 export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const settings = site.themeSettings.publishedJson;
   const seo = normalizeThemeSeo(site, settings);
-  const pageSeo: PageSeo = seo.pages[page.id] ?? {
+  const settingsPageSeo = seo.pages[page.id] ?? seo.pages[page.slug];
+  const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
+  const policySeo = getMydreamshootsPolicySeo(page.slug);
+  const fallbackPageSeo: PageSeo = settingsPageSeo ?? {
     title: pageFallbackTitle(site, page),
     description: pageFallbackDescription(site, page),
     keywords: seo.siteKeywords,
     canonicalPath: page.slug,
-    index: seo.robots.index,
-    follow: seo.robots.follow
+    index: defaultRobotsForPage(page).index,
+    follow: defaultRobotsForPage(page).follow
   };
+  const pageSeo: PageSeo = {
+    title: pickText(jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
+    description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
+    keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, seo.siteKeywords),
+    ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, seo.defaultOgImage),
+    canonicalPath: pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? seo.robots.index,
+    follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? seo.robots.follow
+  };
+  const defaultRobots = defaultRobotsForPage(page);
   const title = applyTitleTemplate(pageSeo.title || seo.siteTitle, seo.titleTemplate, site);
   const description = cleanText(pageSeo.description, seo.siteDescription);
   const keywords = cleanText(pageSeo.keywords, seo.siteKeywords);
@@ -139,7 +173,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
     keywords: keywords ? keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean) : undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
-      index: pageSeo.index ?? seo.robots.index,
+      index: defaultRobots.index ? pageSeo.index ?? seo.robots.index : false,
       follow: pageSeo.follow ?? seo.robots.follow
     },
     openGraph: {
@@ -147,6 +181,67 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
       description,
       url: canonical,
       siteName: seo.siteTitle,
+      images: ogImage ? [{ url: ogImage }] : undefined
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined
+    }
+  };
+}
+
+export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadata {
+  const settings = site.themeSettings.publishedJson;
+  const currentSeo = settings.seo;
+  const settingsPageSeo = currentSeo?.pages?.[page.id] ?? currentSeo?.pages?.[page.slug];
+  const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
+  const policySeo = getMydreamshootsPolicySeo(page.slug);
+  const defaultRobots = defaultRobotsForPage(page);
+  const siteTitle = cleanText(currentSeo?.siteTitle, site.branding.logoText || site.name);
+  const siteDescription = cleanText(currentSeo?.siteDescription, site.branding.description);
+  const siteKeywords = cleanText(currentSeo?.siteKeywords);
+  const titleTemplate = cleanText(currentSeo?.titleTemplate, defaultTitleTemplate(site));
+  const defaultOgImage = cleanText(currentSeo?.defaultOgImage);
+  const fallbackPageSeo: PageSeo = settingsPageSeo ?? {
+    title: pageFallbackTitle(site, page),
+    description: pageFallbackDescription(site, page),
+    keywords: siteKeywords,
+    canonicalPath: page.slug,
+    index: defaultRobots.index,
+    follow: defaultRobots.follow
+  };
+  const pageSeo: PageSeo = {
+    title: pickText(jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
+    description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
+    keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, siteKeywords),
+    ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, defaultOgImage),
+    canonicalPath: pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? currentSeo?.robots?.index ?? true,
+    follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? currentSeo?.robots?.follow ?? true
+  };
+  const title = applyTitleTemplate(pageSeo.title || siteTitle, titleTemplate, site);
+  const description = cleanText(pageSeo.description, siteDescription);
+  const keywords = cleanText(pageSeo.keywords, siteKeywords);
+  const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
+  const canonical = absoluteUrl(site, canonicalPath);
+  const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
+
+  return {
+    title,
+    description,
+    keywords: keywords ? keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean) : undefined,
+    alternates: canonical ? { canonical } : undefined,
+    robots: {
+      index: defaultRobots.index ? pageSeo.index ?? currentSeo?.robots?.index ?? true : false,
+      follow: pageSeo.follow ?? currentSeo?.robots?.follow ?? true
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: siteTitle,
       images: ogImage ? [{ url: ogImage }] : undefined
     },
     twitter: {

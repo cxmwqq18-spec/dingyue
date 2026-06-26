@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { clearPublicCreativePackCategoriesCache, clearPublicCreativePacksCache } from "@/lib/creative-pack-api-cache";
 import { prisma } from "@/lib/prisma";
 import { toCreativePackCategory } from "@/lib/stores/prisma-mappers";
 
@@ -25,6 +26,7 @@ function categoryBody(body: Record<string, unknown>) {
     description: typeof body.description === "string" ? body.description.trim() || null : null,
     heroTitle: typeof body.heroTitle === "string" ? body.heroTitle.trim() || null : null,
     heroSubtitle: typeof body.heroSubtitle === "string" ? body.heroSubtitle.trim() || null : null,
+    icon: typeof body.icon === "string" ? body.icon.trim() || null : typeof body.iconName === "string" ? body.iconName.trim() || null : null,
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl.trim() || null : null,
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0,
     status
@@ -53,6 +55,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
         description: body.description,
         heroTitle: body.heroTitle,
         heroSubtitle: body.heroSubtitle,
+        icon: body.icon,
         imageUrl: body.imageUrl,
         sortOrder: body.sortOrder,
         status: body.status
@@ -60,6 +63,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       include: { parent: true }
     });
     await prisma.creativePack.updateMany({ where: { siteId, categoryId }, data: { category: category.slug } });
+    clearPublicCreativePackCategoriesCache(siteId);
+    clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, category: toCreativePackCategory(category) });
   } catch {
     return NextResponse.json({ error: "category_slug_exists" }, { status: 409 });
@@ -72,5 +77,7 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   const existing = await prisma.creativePackCategory.findFirst({ where: { id: categoryId, siteId }, select: { id: true } });
   if (!existing) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
   await prisma.creativePackCategory.delete({ where: { id: categoryId } });
+  clearPublicCreativePackCategoriesCache(siteId);
+  clearPublicCreativePacksCache();
   return NextResponse.json({ ok: true, deletedCategoryId: categoryId });
 }

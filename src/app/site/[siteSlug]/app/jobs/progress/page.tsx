@@ -2,20 +2,21 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import {
+  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { renderCustomerWorkspacePage } from "@/lib/storefront-render";
 import { customerSessionCookie } from "@/lib/session";
-import { metadataForThemePage } from "@/lib/theme/seo";
+import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
+  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/app/jobs/progress");
-  return site && page ? metadataForThemePage(site, page) : {};
+  return site && page ? metadataForSingleThemePage(site, page) : {};
 }
 
 export default async function CustomerJobProgressPage({ params }: { params: Promise<{ siteSlug: string }> }) {

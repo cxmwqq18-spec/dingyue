@@ -30,7 +30,6 @@ export default async function OrdersPage({
   const { siteSlug } = await params;
   const activeTab = normalizeOrdersTab((await searchParams)?.tab);
   const data = await getSiteAdminData(siteSlug, { include: [], summary: false, take: 0 });
-  const baseHref = modulePath(data.site, "/admin/orders");
   const pricingHref = modulePath(data.site, "/pricing");
   const tabItems: Array<{ key: OrdersTab; label: string; badge: string; hint: string }> = [
     {
@@ -61,7 +60,7 @@ export default async function OrdersPage({
       key: "events",
       label: "支付事件",
       badge: String(data.paymentEventCount),
-      hint: "支付事件是 Stripe webhook 的幂等记录，用来核对支付、退款、订阅变更是否已经被系统处理。"
+      hint: "支付事件是支付确认的幂等记录，用来核对支付、退款、订阅变更是否已经被系统处理。"
     }
   ];
 
@@ -80,7 +79,7 @@ export default async function OrdersPage({
       nav={siteAdminNav(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
-      subtitle="订单、订阅、Stripe webhook 入账和额度账本按站点隔离查看。Checkout 跳回不提前发放额度，只以 webhook/账本为准。"
+      subtitle="订单、订阅、支付确认入账和额度记录按站点隔离查看。Checkout 跳回不提前发放额度，只以支付确认/记录为准。"
       title="订单与订阅"
       titleBadge={String(data.orderCount)}
       workspace={siteAdminWorkspace(data, "订单工作台")}

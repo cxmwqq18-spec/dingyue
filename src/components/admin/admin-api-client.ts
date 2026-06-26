@@ -1,6 +1,6 @@
 "use client";
 
-type CachedJsonResponse<T> = {
+export type CachedJsonResponse<T> = {
   data: T;
   ok: boolean;
   status: number;

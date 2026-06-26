@@ -49,7 +49,8 @@ export function LoginForm({
   storefrontBasePath,
   defaultEmail,
   defaultName = "Mara Voss",
-  initialMessage
+  initialMessage,
+  returnTo
 }: {
   siteId: string;
   siteSlug: string;
@@ -57,6 +58,7 @@ export function LoginForm({
   defaultEmail?: string;
   defaultName?: string;
   initialMessage?: string;
+  returnTo?: string;
 }) {
   const router = useRouter();
   const sitePath = (path = "/") => {
@@ -115,7 +117,7 @@ export function LoginForm({
   }
 
   function openCustomerWorkspace() {
-    const href = sitePath("/app");
+    const href = returnTo && returnTo.startsWith(sitePath("/")) ? returnTo : sitePath("/app");
     window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
     router.replace(href);
   }

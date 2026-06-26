@@ -10,7 +10,10 @@ type StorefrontNavigationSnapshot = {
 
 const idleSnapshot: StorefrontNavigationSnapshot = { pending: false };
 let snapshot: StorefrontNavigationSnapshot = idleSnapshot;
+let pendingDelayTimeout: number | undefined;
 let fallbackTimeout: number | undefined;
+let lastPendingHref = "";
+let lastPendingAt = 0;
 const subscribers = new Set<() => void>();
 
 function emitSnapshot(next: StorefrontNavigationSnapshot) {
@@ -36,13 +39,26 @@ function hrefFromUrl(targetUrl: URL) {
 }
 
 function showPending(href?: string) {
-  emitSnapshot({ href, pending: true });
+  const now = Date.now();
+  if (href && href === lastPendingHref && now - lastPendingAt < 650) return;
+  lastPendingHref = href ?? "";
+  lastPendingAt = now;
+  if (pendingDelayTimeout) window.clearTimeout(pendingDelayTimeout);
   if (fallbackTimeout) window.clearTimeout(fallbackTimeout);
-  fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
+  pendingDelayTimeout = window.setTimeout(() => {
+    pendingDelayTimeout = undefined;
+    emitSnapshot({ href, pending: true });
+    fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
+  }, 180);
 }
 
 function clearPending() {
+  if (pendingDelayTimeout) window.clearTimeout(pendingDelayTimeout);
   if (fallbackTimeout) window.clearTimeout(fallbackTimeout);
+  pendingDelayTimeout = undefined;
+  fallbackTimeout = undefined;
+  lastPendingHref = "";
+  lastPendingAt = 0;
   if (!snapshot.pending) return;
   emitSnapshot(idleSnapshot);
 }
@@ -86,6 +102,7 @@ export function StorefrontNavigationFeedback() {
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       if (event.defaultPrevented || isModifiedClick(event)) return;
+      if (event instanceof PointerEvent && event.pointerType === "mouse") return;
       const target = event.target instanceof Element ? event.target : null;
       const anchor = target?.closest<HTMLAnchorElement>("a[href]");
       if (!anchor) return;

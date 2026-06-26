@@ -1,11 +1,17 @@
 import type { CreativePack, MediaAsset, Product, SiteAiApp, ThemePage } from "@/lib/types";
 
+export type DesignerResourceKind = "products" | "siteAiApps" | "creativePacks" | "mediaAssets";
+
+export type DesignerResourceStatus = "idle" | "loading" | "ready" | "error";
+
 export type FieldOptions = {
   pages: ThemePage[];
   products: Product[];
   siteAiApps: SiteAiApp[];
   mediaAssets: MediaAsset[];
   creativePacks: CreativePack[];
+  requestResource?: (kind: DesignerResourceKind, options?: { signal?: AbortSignal }) => Promise<void>;
+  resourceStatus?: Partial<Record<DesignerResourceKind, DesignerResourceStatus>>;
 };
 
 export type ResourceSelectorKind = "media" | "collection" | "product" | "page" | "url";

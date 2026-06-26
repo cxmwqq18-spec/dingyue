@@ -17,12 +17,18 @@ type AuditFeedItem = {
 };
 
 type SettingsPagePayload = {
-  domains: SiteDomain[];
-  siteAdmins: PublicSiteAdmin[];
-  feed: AuditFeedItem[];
-  auditLogCount: number;
+  domains?: SiteDomain[];
+  siteAdmins?: PublicSiteAdmin[];
+  feed?: AuditFeedItem[];
+  auditLogCount?: number;
   gateway?: AiGatewayGroup;
   error?: string;
+};
+
+type SectionState<T> = {
+  data: T | null;
+  error: string | null;
+  loading: boolean;
 };
 
 function connectStatusLabel(status: string) {
@@ -60,6 +66,10 @@ function modulePath(siteSlug: string, path: string) {
 
 export function SettingsPageClient({ site }: { site: Site }) {
   const [payload, setPayload] = useState<SettingsPagePayload | null>(null);
+  const [auditSection, setAuditSection] = useState<SectionState<Pick<SettingsPagePayload, "feed" | "auditLogCount">>>({ data: null, error: null, loading: false });
+  const [domainsSection, setDomainsSection] = useState<SectionState<Pick<SettingsPagePayload, "domains">>>({ data: null, error: null, loading: false });
+  const [adminsSection, setAdminsSection] = useState<SectionState<Pick<SettingsPagePayload, "siteAdmins">>>({ data: null, error: null, loading: false });
+  const [gatewaySection, setGatewaySection] = useState<SectionState<Pick<SettingsPagePayload, "gateway">>>({ data: null, error: null, loading: false });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,7 +78,7 @@ export function SettingsPageClient({ site }: { site: Site }) {
     async function loadSettingsPage() {
       try {
         setError(null);
-        const response = await fetchAdminJson<SettingsPagePayload>(`/api/sites/${site.id}/admin/settings-page`, { init: { signal: controller.signal } });
+        const response = await fetchAdminJson<SettingsPagePayload>(`/api/sites/${site.id}/admin/settings-page?section=core`, { init: { signal: controller.signal } });
         const result = response.data;
         if (!active) return;
         if (!response.ok) {
@@ -88,6 +98,47 @@ export function SettingsPageClient({ site }: { site: Site }) {
     };
   }, [site.id]);
 
+  useEffect(() => {
+    let active = true;
+    const auditController = new AbortController();
+    const domainsController = new AbortController();
+    const adminsController = new AbortController();
+    const gatewayController = new AbortController();
+
+    async function loadSection<T>(
+      section: "audit" | "domains" | "admins" | "gateway",
+      controller: AbortController,
+      setState: (value: SectionState<T>) => void
+    ) {
+      setState({ data: null, error: null, loading: true });
+      try {
+        const response = await fetchAdminJson<T & { error?: string }>(`/api/sites/${site.id}/admin/settings-page?section=${section}`, { init: { signal: controller.signal } });
+        const result = response.data;
+        if (!active) return;
+        if (!response.ok) {
+          setState({ data: null, error: result.error ?? "分段数据加载失败。", loading: false });
+          return;
+        }
+        setState({ data: result, error: null, loading: false });
+      } catch (error) {
+        if (!active || controller.signal.aborted) return;
+        setState({ data: null, error: error instanceof Error ? error.message : "分段数据加载失败。", loading: false });
+      }
+    }
+
+    void loadSection("audit", auditController, setAuditSection);
+    void loadSection("domains", domainsController, setDomainsSection);
+    void loadSection("admins", adminsController, setAdminsSection);
+    void loadSection("gateway", gatewayController, setGatewaySection);
+    return () => {
+      active = false;
+      auditController.abort();
+      domainsController.abort();
+      adminsController.abort();
+      gatewayController.abort();
+    };
+  }, [site.id]);
+
   if (error) {
     return (
       <div className="rounded-[8px] border border-red-200 bg-red-50 p-4 text-sm text-red-700">
@@ -100,14 +151,22 @@ export function SettingsPageClient({ site }: { site: Site }) {
     return <SettingsPageSkeleton />;
   }
 
+  const domains = domainsSection.data?.domains ?? payload.domains ?? [];
+  const siteAdmins = adminsSection.data?.siteAdmins ?? payload.siteAdmins ?? [];
+  const auditFeed = auditSection.data?.feed ?? payload.feed ?? [];
+  const auditLogCount = auditSection.data?.auditLogCount ?? payload.auditLogCount ?? 0;
+  const gateway = gatewaySection.data?.gateway ?? payload.gateway;
+  const domainValue = domainsSection.loading && !domainsSection.data ? "加载中" : String(domains.length);
+  const adminValue = adminsSection.loading && !adminsSection.data ? "加载中" : String(siteAdmins.length);
+
   return (
     <div className="grid gap-5">
       <ErpStatGrid
         items={[
-          { label: "域名", value: String(payload.domains.length), detail: `${payload.domains.filter((domain) => domain.status === "active").length} 个已生效域名`, icon: Globe2, tone: payload.domains.length ? "good" : "warn" },
+          { label: "域名", value: domainValue, detail: domainsSection.error ? "域名列表加载失败" : `${domains.filter((domain) => domain.status === "active").length} 个已生效域名`, icon: Globe2, tone: domains.length ? "good" : domainsSection.error ? "warn" : "neutral" },
           { label: "收款", value: connectStatusLabel(site.connect.status), detail: site.connect.stripeAccountId, icon: CreditCard, tone: site.connect.chargesEnabled ? "good" : "warn" },
-          { label: "管理员", value: String(payload.siteAdmins.length), detail: "本站后台账号", icon: Users, tone: payload.siteAdmins.length ? "good" : "warn" },
-          { label: "审计", value: String(payload.auditLogCount), detail: "敏感操作记录", icon: ShieldCheck, tone: payload.auditLogCount ? "good" : "neutral" }
+          { label: "管理员", value: adminValue, detail: adminsSection.error ? "后台账号加载失败" : "本站后台账号", icon: Users, tone: siteAdmins.length ? "good" : adminsSection.error ? "warn" : "neutral" },
+          { label: "审计", value: auditSection.loading ? "加载中" : String(auditLogCount), detail: "敏感操作记录", icon: ShieldCheck, tone: auditLogCount ? "good" : "neutral" }
         ]}
       />
 
@@ -130,7 +189,15 @@ export function SettingsPageClient({ site }: { site: Site }) {
           </div>
         </ErpToolbar>
         <div className="mt-5">
-          <SiteSettingsEditor domains={payload.domains} site={site} />
+          <SiteSettingsEditor domains={domains} site={site} />
+          {domainsSection.loading && !domainsSection.data ? (
+            <div className="mt-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-3 text-[12px] text-[#667085]">域名列表正在异步加载，基础信息与收款设置已可先编辑。</div>
+          ) : domainsSection.error ? (
+            <div className="mt-3 rounded-[8px] border border-red-200 bg-red-50 p-3 text-[12px] text-red-700">{domainsSection.error}</div>
+          ) : null}
+        </div>
+        <div className="mt-3 text-[12px] text-[#667085]">
+          AI 网关：{gatewaySection.loading ? "加载中" : gateway ? gateway.name : "未配置"}
         </div>
       </ErpSection>
 
@@ -140,7 +207,13 @@ export function SettingsPageClient({ site }: { site: Site }) {
           eyebrow="admins"
           title="后台账号"
         >
-          <SiteAdminsPanel admins={payload.siteAdmins} siteId={site.id} />
+          {adminsSection.error ? (
+            <div className="rounded-[8px] border border-red-200 bg-red-50 p-4 text-sm text-red-700">{adminsSection.error}</div>
+          ) : adminsSection.loading && !adminsSection.data ? (
+            <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-4 text-[13px] text-[#667085]">后台账号正在异步加载，站点设置已可先操作。</div>
+          ) : (
+            <SiteAdminsPanel admins={siteAdmins} siteId={site.id} />
+          )}
         </ErpSection>
 
         <ErpSection
@@ -149,7 +222,13 @@ export function SettingsPageClient({ site }: { site: Site }) {
           eyebrow="audit trail"
           title="敏感操作"
         >
-          <AuditFeedPanel items={payload.feed} />
+          {auditSection.error ? (
+            <div className="rounded-[8px] border border-red-200 bg-red-50 p-4 text-sm text-red-700">{auditSection.error}</div>
+          ) : auditSection.loading ? (
+            <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-4 text-[13px] text-[#667085]">审计记录正在异步加载，设置与管理员已可先操作。</div>
+          ) : (
+            <AuditFeedPanel items={auditFeed} />
+          )}
         </ErpSection>
       </div>
     </div>

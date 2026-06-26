@@ -285,7 +285,7 @@ const pageRecipes = {
     template: "ui-screenshot-system",
     prompt: [
       "Redesign this orders and subscriptions admin page for an AI subscription store.",
-      "Keep the same modules recognizable: orders, subscriptions, payment events, and credit ledger.",
+      "Keep the same modules recognizable: orders, subscriptions, payment events, and credit history.",
       "Increase ERP-grade clarity, table rhythm, financial trust, and settlement visibility."
     ].join(" ")
   },

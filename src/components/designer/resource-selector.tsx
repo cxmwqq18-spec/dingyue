@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Box, FileText, ImageIcon, Link2, ShoppingBag } from "lucide-react";
 import {
   DesignerResourceCard,
@@ -15,7 +15,7 @@ import {
 } from "@/components/designer/designer-resource-primitives";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import type { CreativePack, Product, Site, ThemePage, ThemeSettingValue } from "@/lib/types";
-import type { FieldOptions, ResourceSelectorKind, ResourceSelectorOption, SaasSelectorValue } from "@/components/designer/field-editor-types";
+import type { DesignerResourceKind, FieldOptions, ResourceSelectorKind, ResourceSelectorOption, SaasSelectorValue } from "@/components/designer/field-editor-types";
 
 function stringifyValue(value: ThemeSettingValue | undefined): string {
   if (value === undefined || value === null) return "";
@@ -231,6 +231,14 @@ function resourceOptions(kind: ResourceSelectorKind, options: FieldOptions, site
   ];
 }
 
+function resourceKindsForSelector(kind: ResourceSelectorKind): DesignerResourceKind[] {
+  if (kind === "media") return ["mediaAssets"];
+  if (kind === "collection") return ["creativePacks"];
+  if (kind === "product") return ["products"];
+  if (kind === "url") return ["creativePacks", "products"];
+  return [];
+}
+
 export function ResourceSelector({
   kind,
   title,
@@ -250,6 +258,18 @@ export function ResourceSelector({
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const resourceKinds = useMemo(() => resourceKindsForSelector(kind), [kind]);
+  const requestResourceRef = useRef(options.requestResource);
+  const resourceStatusRef = useRef(options.resourceStatus);
+  const resourceStatus = resourceKinds.some((item) => options.resourceStatus?.[item] === "loading")
+    ? "loading"
+    : resourceKinds.some((item) => options.resourceStatus?.[item] === "error")
+    ? "error"
+    : resourceKinds.every((item) => options.resourceStatus?.[item] === "ready")
+    ? "ready"
+    : resourceKinds.length
+    ? "idle"
+    : "ready";
   const items = resourceOptions(kind, options, site);
   const filtered = items.filter((item) => {
     const haystack = `${item.title} ${item.subtitle} ${item.detail} ${item.meta?.join(" ") ?? ""}`.toLowerCase();
@@ -269,6 +289,25 @@ export function ResourceSelector({
     if (!open) setQuery("");
   }, [open]);
 
+  useEffect(() => {
+    requestResourceRef.current = options.requestResource;
+    resourceStatusRef.current = options.resourceStatus;
+  }, [options.requestResource, options.resourceStatus]);
+
+  useEffect(() => {
+    const currentStatus = resourceKinds.some((item) => resourceStatusRef.current?.[item] === "loading")
+      ? "loading"
+      : resourceKinds.every((item) => resourceStatusRef.current?.[item] === "ready")
+      ? "ready"
+      : "idle";
+    if (!open || currentStatus === "loading" || currentStatus === "ready") return;
+    const controller = new AbortController();
+    for (const resourceKind of resourceKinds) {
+      void requestResourceRef.current?.(resourceKind, { signal: controller.signal });
+    }
+    return () => controller.abort();
+  }, [open, resourceKinds]);
+
   return (
     <div className="grid gap-2" data-designer-selector={`saas-${kind}-resource-selector`}>
       <DesignerResourceTrigger
@@ -283,7 +322,7 @@ export function ResourceSelector({
       />
       <DesignerResourceInlineSummary
         data-designer-modal={open ? "saas-resource-selector-open" : "saas-resource-selector"}
-        description={`${modalLabel}，共 ${items.length} 项。`}
+        description={resourceStatus === "loading" ? `${modalLabel}加载中...` : resourceStatus === "error" ? `${modalLabel}加载失败，可重新打开重试。` : `${modalLabel}，共 ${items.length} 项。`}
         title="资源选择器"
       />
       {open ? (
@@ -331,7 +370,7 @@ export function ResourceSelector({
                     );
                   }) : (
                     <DesignerResourceEmptyState className="md:col-span-2">
-                      没有匹配到可用资源。
+                      {resourceStatus === "loading" ? "资源加载中..." : resourceStatus === "error" ? "资源加载失败，请关闭后重试。" : "没有匹配到可用资源。"}
                     </DesignerResourceEmptyState>
                   )}
                 </div>

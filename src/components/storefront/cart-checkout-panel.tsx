@@ -131,7 +131,7 @@ export function CartCheckoutPanel({
         Back to pricing
       </Link>
       <p className="text-xs leading-5 text-white/48">
-        Demo admin customers can complete checkout without live payment while still writing real orders, subscriptions, and credit ledger entries. Regular customers will not receive credits until live payments are connected.
+        Complete checkout securely to add credits after payment confirmation. Your order, subscription, and credit history stay available in your account.
       </p>
     </div>
   );

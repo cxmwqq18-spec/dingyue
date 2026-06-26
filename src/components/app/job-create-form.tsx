@@ -1,11 +1,183 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, Play, Sparkles, UploadCloud } from "lucide-react";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset } from "@/lib/types";
-import { customerJsonHeaders } from "@/lib/client-csrf";
+import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
+
+type CreateMode = "theme" | "tool";
+
+const DEFAULT_THEME_OUTPUT_COUNT = 5;
+const DEFAULT_MAX_SOURCE_ASSETS = 24;
+const TOOL_PROMPT_FIELD_ID = "prompt";
+const TOOL_PROMPT_BLOCKLIST = [
+  "child sexual",
+  "csam",
+  "exploit minor",
+  "explicit minor",
+  "nude child",
+  "underage nude",
+  "rape",
+  "sexual assault",
+  "non-consensual",
+  "gore",
+  "beheading",
+  "terrorist",
+  "bomb making",
+  "kill yourself"
+];
+
+type ToolPreset = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  creditCost?: number;
+  backendSlug?: string;
+  prompt: string;
+};
+
+const TOOL_PRESET_LIBRARY: ToolPreset[] = [
+  {
+    id: "headshot-generator",
+    title: "Headshot Photo Generator",
+    description: "Create polished work profiles, team portraits, and founder photos from clear source images.",
+    category: "Portrait makers",
+    prompt: "Create a polished professional headshot with natural lighting, clean background, and a confident expression."
+  },
+  {
+    id: "anime-avatar",
+    title: "Anime Avatar Builder",
+    description: "Convert a clear selfie into stylized avatar concepts for profiles, social handles, and campaigns.",
+    category: "Portrait makers",
+    prompt: "Create a stylized anime avatar inspired by the uploaded portrait while preserving recognizable facial features."
+  },
+  {
+    id: "wedding-portraits",
+    title: "Wedding Portraits",
+    description: "Create elegant couple, ceremony, and celebration portrait concepts before building a full album.",
+    category: "Portrait makers",
+    prompt: "Create refined wedding portrait concepts with romantic lighting, elegant styling, and album-ready composition."
+  },
+  {
+    id: "gala-photo",
+    title: "Gala Photo Maker",
+    description: "Preview formal night-out portraits with red-carpet lighting, polished outfits, and social-ready crops.",
+    category: "Portrait makers",
+    prompt: "Create a formal gala portrait with evening lighting, polished attire, and editorial composition."
+  },
+  {
+    id: "nature-adventure",
+    title: "Nature Adventure Photos",
+    description: "Place the customer in scenic outdoor, hiking, and travel-inspired portrait scenes.",
+    category: "Portrait makers",
+    prompt: "Create an outdoor adventure portrait in a scenic natural landscape with cinematic but realistic lighting."
+  },
+  {
+    id: "edit-by-prompt",
+    title: "Edit by Prompt",
+    description: "Describe a focused image edit and preview it before spending package credits.",
+    category: "Cleanup tools",
+    prompt: ""
+  },
+  {
+    id: "background-changer",
+    title: "Background Changer",
+    description: "Replace a plain selfie background before ordering a full photo package.",
+    category: "Cleanup tools",
+    prompt: "Replace the background with a clean studio setting while keeping the subject natural and realistic."
+  },
+  {
+    id: "background-remover",
+    title: "Background Remover",
+    description: "Cut out product or portrait backgrounds for cleaner source images.",
+    category: "Cleanup tools",
+    prompt: "Remove the background cleanly and preserve the subject edges for a transparent or neutral-background result."
+  },
+  {
+    id: "magic-eraser",
+    title: "Magic Eraser",
+    description: "Remove small distractions from portraits, cards, and generated scenes.",
+    category: "Cleanup tools",
+    prompt: "Remove distracting objects while keeping the surrounding image realistic and seamless."
+  },
+  {
+    id: "photo-enhancer",
+    title: "Photo Enhancer",
+    description: "Improve low-light uploads before using them for private model training.",
+    category: "Cleanup tools",
+    prompt: "Enhance sharpness, exposure, and color balance while preserving a realistic photo look."
+  },
+  {
+    id: "portrait-retouch",
+    title: "Portrait Retouch",
+    description: "Clean skin, flyaways, and lighting without changing the customer's identity.",
+    category: "Cleanup tools",
+    prompt: "Retouch the portrait lightly with natural skin texture, balanced lighting, and no identity change."
+  },
+  {
+    id: "unblur-image",
+    title: "Unblur Image",
+    description: "Rescue soft phone shots before they enter a paid generation workflow.",
+    category: "Cleanup tools",
+    prompt: "Improve clarity and reduce blur while keeping the image realistic."
+  },
+  {
+    id: "color-correction",
+    title: "Color Correction",
+    description: "Balance tones for profile photos, posters, and package previews.",
+    category: "Cleanup tools",
+    prompt: "Correct the color balance, exposure, and contrast for a clean natural result."
+  },
+  {
+    id: "old-photo-restoration",
+    title: "Old Photo Restoration",
+    description: "Repair faded photos and prepare them for private album delivery.",
+    category: "Cleanup tools",
+    prompt: "Restore the old photo by reducing scratches, improving contrast, and preserving the original identity."
+  },
+  {
+    id: "image-to-video",
+    title: "Image to Video Concept",
+    description: "Turn a finished photo package image into a short motion concept.",
+    category: "Motion builders",
+    prompt: "Create a short motion concept from the uploaded image with subtle camera movement and natural animation."
+  },
+  {
+    id: "profile-clip",
+    title: "Profile Clip Maker",
+    description: "Create social profile motion from headshots or creator portraits.",
+    category: "Motion builders",
+    prompt: "Create a short social profile clip using the uploaded portrait with subtle motion and polished framing."
+  },
+  {
+    id: "creator-intro-video",
+    title: "Creator Intro Video",
+    description: "Turn creator portraits into short intro clips for profiles and reels.",
+    category: "Motion builders",
+    prompt: "Create a compact creator intro motion concept with polished pacing and profile-ready framing."
+  },
+  {
+    id: "fan-poster-motion",
+    title: "Fan Poster Motion",
+    description: "Animate fan posters and match-day profile scenes.",
+    category: "Motion builders",
+    prompt: "Create a short sports fan poster motion concept with energetic but realistic movement."
+  },
+  {
+    id: "product-teaser-clip",
+    title: "Product Teaser Clip",
+    description: "Create simple motion ideas for product-style package outputs.",
+    category: "Motion builders",
+    prompt: "Create a short product teaser motion concept with clean framing and subtle commercial-style movement."
+  }
+];
+
+function normalizeToolId(value: string | undefined): string {
+  return (value ?? "").trim().toLowerCase().replace(/_/g, "-");
+}
 
 function fieldValueDefault(field: AiWorkflowField): string | number | boolean {
   if ("default" in field && field.default !== undefined) return field.default;
@@ -96,6 +268,11 @@ function assetRules(workflow?: AiWorkflowConfig) {
   return workflow?.steps.find((step) => step.kind === "asset_select")?.assetRules ?? { min: 1, max: 4, roles: ["input"] };
 }
 
+function maxAssetsForWorkflow(workflow?: AiWorkflowConfig): number {
+  const configuredMax = assetRules(workflow).max;
+  return configuredMax && configuredMax > 0 ? Math.max(configuredMax, DEFAULT_MAX_SOURCE_ASSETS) : DEFAULT_MAX_SOURCE_ASSETS;
+}
+
 function valuesFor(app?: SiteAiApp): Record<string, string | number | boolean> {
   return Object.fromEntries(workflowFields(workflowFor(app)).map((field) => [field.id, fieldValueDefault(field)]));
 }
@@ -106,12 +283,93 @@ function assetsForRules(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig
 }
 
 function initialSelectedAssets(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig): string[] {
-  const maxAssets = assetRules(workflow).max ?? 4;
+  const maxAssets = maxAssetsForWorkflow(workflow);
   return assetsForRules(assets, workflow).slice(0, maxAssets).map((asset) => asset.id);
 }
 
 function packsForApp(packs: CreativePack[], aiAppSlug: string): CreativePack[] {
   return packs.filter((pack) => pack.status === "active" && pack.aiAppSlug === aiAppSlug);
+}
+
+function modeForInitialState(initialCreativePackId: string | undefined, initialToolId: string | undefined, initialPack: CreativePack | undefined, creativePacks: CreativePack[]): CreateMode {
+  if (initialCreativePackId) return "theme";
+  if (initialToolId && !initialCreativePackId) return "tool";
+  if (initialPack?.id) return "theme";
+  return creativePacks.some((pack) => pack.status === "active") ? "theme" : "tool";
+}
+
+function fieldsForMode(fields: AiWorkflowField[], mode: CreateMode): AiWorkflowField[] {
+  const filteredFields = fields.filter((field) => {
+    const id = field.id.toLowerCase();
+    const label = field.label.toLowerCase();
+    return !["style", "prompt", "outputcount", "output_count"].includes(id) && !label.includes("style");
+  });
+  if (mode === "theme") return filteredFields;
+  const hasPrompt = filteredFields.some((field) => field.id === TOOL_PROMPT_FIELD_ID);
+  return hasPrompt
+    ? filteredFields
+    : [
+        {
+          id: TOOL_PROMPT_FIELD_ID,
+          label: "Prompt",
+          type: "textarea",
+          required: true,
+          placeholder: "Describe the exact edit or image direction you want.",
+          default: "",
+          helpText: "Keep it specific, lawful, and safe for private generation."
+        },
+        ...filteredFields
+      ];
+}
+
+function valuesForMode(app: SiteAiApp | undefined, mode: CreateMode): Record<string, string | number | boolean> {
+  const baseValues = valuesFor(app);
+  delete baseValues.style;
+  delete baseValues.outputCount;
+  delete baseValues.output_count;
+  if (mode === "theme") {
+    const cleanValues = { ...baseValues };
+    delete cleanValues.prompt;
+    cleanValues.outputCount = DEFAULT_THEME_OUTPUT_COUNT;
+    return cleanValues;
+  }
+  return { [TOOL_PROMPT_FIELD_ID]: "", ...baseValues };
+}
+
+function blockedPromptTerm(prompt: string): string | undefined {
+  const normalized = prompt.toLowerCase().replace(/\s+/g, " ").trim();
+  return TOOL_PROMPT_BLOCKLIST.find((term) => normalized.includes(term));
+}
+
+function uploadLabelForFile(file: File, index: number, total: number): string {
+  const base = file.name.replace(/\.[^.]+$/, "").trim() || "source photo";
+  return total > 1 ? `${base} ${index + 1}` : base;
+}
+
+function displayMaterialRule(rule: string): string {
+  return rule
+    .replace(/Attach\s+1[-–]4\s+private uploads before starting the request\./i, "Attach the private source uploads you want to use before starting the request.")
+    .replace(/1[-–]4\s+private upload files/i, "one or more private upload files")
+    .replace(/1\s*[-–]\s*4\s+uploaded images/i, "one or more uploaded images");
+}
+
+function buildToolPresets(siteAiApps: SiteAiApp[]): ToolPreset[] {
+  const firstBackendSlug = siteAiApps[0]?.aiApp.slug;
+  const realTools = siteAiApps.map((app) => ({
+    id: normalizeToolId(app.aiApp.slug),
+    title: app.aiApp.name,
+    description: app.aiApp.description,
+    category: "Enabled tools",
+    creditCost: app.creditCost,
+    backendSlug: app.aiApp.slug,
+    prompt: ""
+  }));
+  const library = TOOL_PRESET_LIBRARY.map((preset) => ({
+    ...preset,
+    backendSlug: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.aiApp.slug ?? firstBackendSlug,
+    creditCost: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.creditCost ?? siteAiApps[0]?.creditCost
+  })).filter((preset) => Boolean(preset.backendSlug));
+  return Array.from(new Map([...realTools, ...library].map((preset) => [preset.id, preset])).values());
 }
 
 export function JobCreateForm({
@@ -138,30 +396,48 @@ export function JobCreateForm({
   emptyBody?: string;
 }) {
   const router = useRouter();
-  const normalizedInitialToolId = (initialToolId ?? "").replace(/-/g, "_");
+  const normalizedInitialToolId = normalizeToolId(initialToolId);
+  const toolPresets = useMemo(() => buildToolPresets(siteAiApps), [siteAiApps]);
   const initialPack =
     creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId) ??
-    creativePacks.find((pack) => pack.status === "active" && (pack.aiAppSlug === normalizedInitialToolId || pack.id === initialToolId));
+    creativePacks.find((pack) => pack.status === "active" && (normalizeToolId(pack.aiAppSlug) === normalizedInitialToolId || pack.id === initialToolId));
+  const initialToolPreset = toolPresets.find((preset) => preset.id === normalizedInitialToolId) ?? toolPresets[0];
   const initialApp =
-    (initialToolId ? siteAiApps.find((app) => app.aiApp.slug === normalizedInitialToolId || app.aiApp.slug === initialToolId) : undefined) ??
+    (initialToolPreset?.backendSlug ? siteAiApps.find((app) => app.aiApp.slug === initialToolPreset.backendSlug) : undefined) ??
+    (initialToolId ? siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === normalizedInitialToolId || app.aiApp.slug === initialToolId) : undefined) ??
     (initialPack ? siteAiApps.find((app) => app.aiApp.slug === initialPack.aiAppSlug) ?? siteAiApps[0] : siteAiApps[0]);
+  const initialMode = modeForInitialState(initialCreativePackId, initialToolId, initialPack, creativePacks);
   const [aiAppSlug, setAiAppSlug] = useState(initialApp?.aiApp.slug ?? "");
+  const [selectedToolId, setSelectedToolId] = useState(() => initialToolPreset?.id ?? normalizeToolId(initialApp?.aiApp.slug));
   const [creativePackId, setCreativePackId] = useState(() => initialPack?.id ?? packsForApp(creativePacks, initialApp?.aiApp.slug ?? "")[0]?.id ?? "");
-  const [formValues, setFormValues] = useState<Record<string, string | number | boolean>>(() => valuesFor(initialApp));
+  const [createMode, setCreateMode] = useState<CreateMode>(initialMode);
+  const [themeCategory, setThemeCategory] = useState("all");
+  const [formValues, setFormValues] = useState<Record<string, string | number | boolean>>(() => valuesForMode(initialApp, initialMode));
+  const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
   const [availableAssets, setAvailableAssets] = useState(assets);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => initialSelectedAssets(assets, workflowFor(initialApp)));
   const [message, setMessage] = useState("Choose a theme, confirm material rules, then start a private request.");
   const [pending, setPending] = useState(false);
+  const [uploadingSources, setUploadingSources] = useState(false);
+  const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
+  const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
+  const themeCategories = Array.from(new Set(activeCreativePacks.map((pack) => pack.categoryRecord?.label || pack.category).filter(Boolean)));
+  const visibleCreativePacks = themeCategory === "all"
+    ? activeCreativePacks
+    : activeCreativePacks.filter((pack) => (pack.categoryRecord?.label || pack.category) === themeCategory);
   const appPacks = packsForApp(creativePacks, selectedApp?.aiApp.slug ?? "");
-  const selectedPack = appPacks.find((pack) => pack.id === creativePackId) ?? appPacks[0];
+  const selectedPack = (createMode === "theme" ? activeCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? activeCreativePacks[0] : appPacks[0]);
   const selectedWorkflow = workflowFor(selectedApp);
   const sourceAssets = assetsForRules(availableAssets, selectedWorkflow);
   const selectedFields = workflowFields(selectedWorkflow);
   const selectedAssetRules = assetRules(selectedWorkflow);
   const minAssets = selectedAssetRules.min ?? 1;
-  const maxAssets = selectedAssetRules.max ?? 4;
+  const effectiveMaxAssets = maxAssetsForWorkflow(selectedWorkflow);
   const materialRules = selectedWorkflow?.materialRules?.length ? selectedWorkflow.materialRules : selectedApp ? defaultWorkflow(selectedApp).materialRules ?? [] : [];
+  const modeFields = fieldsForMode(selectedFields, createMode);
+  const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool request";
+  const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
 
   useEffect(() => {
     setAvailableAssets(assets);
@@ -171,14 +447,18 @@ export function JobCreateForm({
     let cancelled = false;
     const loadAssets = (refresh = false) => {
       if (refresh) invalidateCustomerAssets(siteId, customer.id);
+      setLoadingAssets(true);
       loadCustomerAssets(siteId, customer.id)
         .then((result) => {
           if (!cancelled) {
             setAvailableAssets(result);
             setSelectedAssetIds((current) => current.filter((id) => result.some((asset) => asset.id === id)));
+            setLoadingAssets(false);
           }
         })
-        .catch(() => undefined);
+        .catch(() => {
+          if (!cancelled) setLoadingAssets(false);
+        });
     };
     const handleAssetsUpdated = () => loadAssets(true);
     loadAssets();
@@ -193,24 +473,26 @@ export function JobCreateForm({
     setSelectedAssetIds((current) =>
       current.includes(assetId)
         ? current.filter((id) => id !== assetId)
-        : current.length >= maxAssets
+        : current.length >= effectiveMaxAssets
           ? current
           : [...current, assetId]
     );
   }
 
-  function updateAiApp(nextSlug: string) {
+  function updateAiApp(nextSlug: string, nextMode: CreateMode = createMode) {
     setAiAppSlug(nextSlug);
     const nextApp = siteAiApps.find((app) => app.aiApp.slug === nextSlug);
     setCreativePackId(packsForApp(creativePacks, nextSlug)[0]?.id ?? "");
-    setFormValues(valuesFor(nextApp));
+    setFormValues(valuesForMode(nextApp, nextMode));
     setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)));
   }
 
   function updateCreativePack(pack: CreativePack) {
+    setCreateMode("theme");
+    setThemeCategory(pack.categoryRecord?.label || pack.category || "all");
     setCreativePackId(pack.id);
     if (pack.aiAppSlug !== aiAppSlug) {
-      updateAiApp(pack.aiAppSlug);
+      updateAiApp(pack.aiAppSlug, "theme");
       setCreativePackId(pack.id);
     }
   }
@@ -219,8 +501,96 @@ export function JobCreateForm({
     setFormValues((current) => ({ ...current, [id]: value }));
   }
 
+  function updateCreateMode(nextMode: CreateMode) {
+    setCreateMode(nextMode);
+    setMessage(nextMode === "theme" ? "Choose a theme, confirm material rules, then start a private request." : "Describe the tool result you want, attach source photos, then start a private request.");
+    setFormValues((current) => {
+      if (nextMode === "theme") {
+        const next: Record<string, string | number | boolean> = { ...current, outputCount: themeOutputCount };
+        delete next.prompt;
+        delete next.style;
+        delete next.output_count;
+        return next;
+      }
+      return {
+        ...current,
+        [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || toolPresets.find((preset) => preset.id === selectedToolId)?.prompt || "")
+      };
+    });
+    if (nextMode === "theme" && !creativePackId) {
+      setCreativePackId(appPacks[0]?.id ?? creativePacks.find((pack) => pack.status === "active")?.id ?? "");
+    }
+  }
+
+  function updateToolPreset(preset: ToolPreset) {
+    if (!preset.backendSlug) return;
+    setCreateMode("tool");
+    setSelectedToolId(preset.id);
+    if (preset.backendSlug !== aiAppSlug) {
+      setAiAppSlug(preset.backendSlug);
+      const nextApp = siteAiApps.find((app) => app.aiApp.slug === preset.backendSlug);
+      setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)));
+    }
+    setFormValues((current) => ({
+      ...valuesForMode(siteAiApps.find((app) => app.aiApp.slug === preset.backendSlug), "tool"),
+      ...current,
+      [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || preset.prompt)
+    }));
+    setMessage("Describe the tool result you want, attach source photos, then start a private request.");
+  }
+
+  function updateThemeCategory(nextCategory: string) {
+    setThemeCategory(nextCategory);
+    const nextPacks = nextCategory === "all"
+      ? activeCreativePacks
+      : activeCreativePacks.filter((pack) => (pack.categoryRecord?.label || pack.category) === nextCategory);
+    if (nextPacks.length && !nextPacks.some((pack) => pack.id === creativePackId)) {
+      updateCreativePack(nextPacks[0]);
+      setThemeCategory(nextCategory);
+    }
+  }
+
+  async function uploadSourceFiles(files: FileList | null) {
+    const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
+    if (!imageFiles.length) {
+      setMessage("Choose one or more image files before uploading.");
+      return;
+    }
+    setUploadingSources(true);
+    setMessage(`Uploading ${imageFiles.length} source photo${imageFiles.length === 1 ? "" : "s"}...`);
+    const createdAssets: ThemeRuntimeAsset[] = [];
+    for (const [index, file] of imageFiles.entries()) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("label", uploadLabelForFile(file, index, imageFiles.length));
+      formData.append("role", "input");
+      const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+        method: "POST",
+        headers: csrfHeader(`customer_csrf_${siteId}`),
+        body: formData
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+      if (!response.ok || !result.asset) {
+        setMessage(result.error ?? "Source photo upload failed.");
+        setUploadingSources(false);
+        return;
+      }
+      createdAssets.push(result.asset);
+    }
+    invalidateCustomerAssets(siteId, customer.id);
+    setAvailableAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
+    setSelectedAssetIds((current) => [...createdAssets.map((asset) => asset.id), ...current].slice(0, effectiveMaxAssets));
+    setMessage(`${createdAssets.length} source photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the ones you want to use for this request.`);
+    setUploadingSources(false);
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
   async function createJob(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (createMode === "theme" && !selectedPack) {
+      setMessage("Choose a photo package before starting this request.");
+      return;
+    }
     if (!sourceAssets.length) {
       setMessage("Upload at least one source photo before starting an album request.");
       return;
@@ -229,10 +599,27 @@ export function JobCreateForm({
       setMessage(`Select at least ${minAssets} source photo${minAssets === 1 ? "" : "s"} for this request.`);
       return;
     }
-    const missingField = selectedFields.find((field) => field.required && (formValues[field.id] === "" || formValues[field.id] === undefined || formValues[field.id] === null));
+    const missingField = modeFields.find((field) => field.required && (formValues[field.id] === "" || formValues[field.id] === undefined || formValues[field.id] === null));
     if (missingField) {
       setMessage(`Complete ${missingField.label} before starting this request.`);
       return;
+    }
+    if (createMode === "tool") {
+      const prompt = String(formValues[TOOL_PROMPT_FIELD_ID] ?? "").trim();
+      const blockedTerm = blockedPromptTerm(prompt);
+      if (blockedTerm) {
+        setMessage("This prompt includes unsafe or disallowed content. Please revise it before starting the request.");
+        return;
+      }
+    }
+    const requestFields = Object.fromEntries(modeFields.map((field) => [field.id, formValues[field.id] ?? fieldValueDefault(field)]));
+    if (createMode === "theme") {
+      requestFields.outputCount = themeOutputCount;
+      delete requestFields.style;
+      delete requestFields.prompt;
+    } else {
+      requestFields.toolPresetId = selectedToolId;
+      requestFields.toolPresetTitle = toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? "";
     }
     setPending(true);
     setMessage("Starting your album request and holding credits...");
@@ -243,8 +630,9 @@ export function JobCreateForm({
         customerId: customer.id,
         aiAppSlug,
         params: {
-          creativePackId: selectedPack?.id,
-          fields: formValues,
+          mode: createMode,
+          creativePackId: createMode === "theme" ? selectedPack?.id : undefined,
+          fields: requestFields,
           workflowVersion: selectedWorkflow?.version ?? 1,
           assetIds: selectedAssetIds
         }
@@ -272,61 +660,101 @@ export function JobCreateForm({
 
   return (
     <form className="grid gap-5" onSubmit={createJob}>
-      <div className="rounded-[20px] border border-white/10 bg-white/[0.04] p-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Workflow</p>
-        <h3 className="mt-2 text-xl font-semibold text-white">{selectedWorkflow?.flowName ?? selectedApp?.aiApp.name ?? "Private generation"}</h3>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-white/62">{selectedWorkflow?.description ?? selectedApp?.aiApp.description}</p>
-        <div className="mt-4 grid gap-2 sm:grid-cols-3">
-          {(selectedWorkflow?.steps ?? []).map((step, index) => (
-            <div className="rounded-[16px] border border-white/10 bg-black/15 px-3 py-2" key={step.id}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/42">Step {String(index + 1).padStart(2, "0")}</p>
-              <p className="mt-1 truncate text-sm font-semibold text-white">{step.title}</p>
-            </div>
-          ))}
-        </div>
-      </div>
       <div className="grid gap-3">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Step 01</p>
-          <h3 className="mt-2 text-xl font-semibold text-white">{creativePacks.length ? "Choose a creative theme" : "Choose a backend-enabled tool"}</h3>
+          <h3 className="mt-2 text-xl font-semibold text-white">{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
           <p className="mt-2 text-sm leading-6 text-white/62">
-            {creativePacks.length
-              ? "Each theme carries the generation direction saved by the studio team."
-              : "Tools shown here come from the site AI tool configuration. Updating backend tools changes this workspace."}
+            {createMode === "theme"
+              ? "Photo packages lock the theme direction, preview look, output target, and source photo rules."
+              : "Tools let you describe the result with a prompt while using the site's enabled AI workflow."}
           </p>
         </div>
-        <div className="grid gap-3 lg:grid-cols-2">
-          {appPacks.length ? appPacks.map((pack) => {
+        <div className="inline-flex w-fit max-w-full rounded-full border border-white/10 bg-white/[0.04] p-1 text-xs font-semibold">
+          {[
+            { mode: "theme" as const, label: "Photo packages" },
+            { mode: "tool" as const, label: "Tools" }
+          ].map((item) => {
+            const active = createMode === item.mode;
+            return (
+              <button
+                className={`rounded-full px-4 py-2 transition ${
+                  active ? "bg-white text-[#14161a]" : "text-white/64 hover:bg-white/[0.06] hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                }`}
+                disabled={item.mode === "theme" ? !activeCreativePacks.length : !toolPresets.length}
+                key={item.mode}
+                onClick={() => {
+                  if (item.mode === "theme") {
+                    const nextPack = activeCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? activeCreativePacks[0];
+                    updateCreateMode("theme");
+                    if (nextPack) updateCreativePack(nextPack);
+                    return;
+                  }
+                  updateCreateMode("tool");
+                  const nextPreset = toolPresets.find((preset) => preset.id === selectedToolId) ?? toolPresets[0];
+                  if (nextPreset) updateToolPreset(nextPreset);
+                }}
+                type="button"
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+        {createMode === "theme" && themeCategories.length > 1 ? (
+          <div className="flex flex-wrap gap-2">
+            {["all", ...themeCategories].map((category) => {
+              const active = themeCategory === category;
+              return (
+                <button
+                  className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${
+                    active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white"
+                  }`}
+                  key={category}
+                  onClick={() => updateThemeCategory(category)}
+                  type="button"
+                >
+                  {category === "all" ? "All packages" : category}
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
+        <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-4" : "grid gap-3 lg:grid-cols-2"}>
+          {createMode === "theme" ? visibleCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
             return (
               <button
-                className={`grid min-h-[156px] grid-cols-[88px_1fr] gap-4 rounded-[20px] border p-3 text-left transition hover:-translate-y-0.5 ${
+                className={`grid min-h-[292px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
                   active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white"
                 }`}
                 key={pack.id}
                 onClick={() => updateCreativePack(pack)}
                 type="button"
               >
-                <span className="overflow-hidden rounded-[16px] bg-white/[0.08]">
+                <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
                   {pack.imageUrl ? (
-                    <img className="h-full min-h-[132px] w-full object-cover" src={pack.imageUrl} alt={pack.name} />
+                    <img className="aspect-[4/3] w-full object-cover" src={pack.imageUrl} alt={pack.name} />
                   ) : (
-                    <span className="flex h-full min-h-[132px] items-center justify-center">
+                    <span className="flex aspect-[4/3] items-center justify-center">
                       <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
                     </span>
                   )}
                 </span>
                 <span className="min-w-0">
-                  <span className="flex items-start justify-between gap-3">
+                  <span className="flex items-start justify-between gap-2">
                     <span className="min-w-0">
-                      <span className="block truncate text-base font-semibold">{pack.name}</span>
-                      <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : "mt-2 line-clamp-2 block text-sm leading-6 text-white/62"}>
-                        {pack.headline || pack.description}
+                      <span className="block text-base font-semibold leading-5">{pack.name}</span>
+                      <span className={active ? "mt-2 line-clamp-2 block text-sm leading-5 text-[#5f5a54]" : "mt-2 line-clamp-2 block text-sm leading-5 text-white/62"}>
+                        {pack.headline}
+                      </span>
+                      <span className={active ? "mt-2 line-clamp-3 block text-xs leading-5 text-[#6b655f]" : "mt-2 line-clamp-3 block text-xs leading-5 text-white/54"}>
+                        {pack.description}
                       </span>
                     </span>
                     {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                   </span>
-                  <span className="mt-4 flex flex-wrap gap-2">
+                  <span className="mt-3 flex flex-wrap gap-2">
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? "bg-[#14161a] text-white" : "bg-white/[0.08] text-white/74"}`}>
                       {pack.creditCost} credits
                     </span>
@@ -337,47 +765,70 @@ export function JobCreateForm({
                 </span>
               </button>
             );
-          }) : siteAiApps.map((app) => {
-            const active = app.aiApp.slug === aiAppSlug;
+          }) : toolPresets.map((preset) => {
+            const active = preset.id === selectedToolId;
             return (
               <button
-                className={`min-h-[140px] rounded-[20px] border p-4 text-left transition hover:-translate-y-0.5 ${
+                className={`min-h-[120px] rounded-[16px] border p-4 text-left transition hover:-translate-y-0.5 ${
                   active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white"
                 }`}
-                key={app.id}
-                onClick={() => updateAiApp(app.aiApp.slug)}
+                key={preset.id}
+                onClick={() => updateToolPreset(preset)}
                 type="button"
               >
                 <span className="flex items-start justify-between gap-3">
                   <span className="min-w-0">
-                    <span className="block truncate text-base font-semibold">{app.aiApp.name}</span>
+                    <span className="block truncate text-base font-semibold">{preset.title}</span>
                     <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : "mt-2 line-clamp-2 block text-sm leading-6 text-white/62"}>
-                      {app.aiApp.description}
+                      {preset.description}
+                    </span>
+                    <span className={active ? "mt-3 inline-flex rounded-full bg-[#14161a]/10 px-3 py-1 text-xs font-semibold text-[#14161a]" : "mt-3 inline-flex rounded-full bg-white/[0.08] px-3 py-1 text-xs font-semibold text-white/70"}>
+                      {preset.category}
                     </span>
                   </span>
                   {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                 </span>
                 <span className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? "bg-[#14161a] text-white" : "bg-white/[0.08] text-white/74"}`}>
-                  {app.creditCost} credits
+                  {preset.creditCost ?? selectedApp?.creditCost ?? 0} credits
                 </span>
               </button>
             );
           })}
         </div>
       </div>
-      <div className="rounded-[20px] border border-white/10 bg-white/[0.04] p-4">
+      <div className="rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
         <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Material rules</p>
+        {createMode === "theme" && selectedPack ? (
+          <div className="mt-3 rounded-[12px] border border-white/10 bg-black/16 p-3">
+            <p className="text-sm font-semibold text-white">{selectedPack.name}</p>
+            <p className="mt-1 text-sm leading-6 text-white/62">{selectedPack.description || selectedPack.headline}</p>
+          </div>
+        ) : null}
         <div className="mt-3 grid gap-2">
           {materialRules.map((rule) => (
             <div className="flex gap-2 text-sm leading-6 text-white/68" key={rule}>
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#75d89a]" strokeWidth={1.8} />
-              <span>{rule}</span>
+              <span>{displayMaterialRule(rule)}</span>
             </div>
           ))}
         </div>
       </div>
+      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
+        <label className="grid gap-2 text-sm font-medium text-white sm:max-w-xs">
+          Estimated outputs
+          <input
+            className="rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white placeholder:text-white/35"
+            min={1}
+            onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
+            type="number"
+            value={themeOutputCount}
+          />
+        </label>
+        <p className="text-xs leading-5 text-white/52">Default is 5 images. Edit this number when the request should record a different estimated delivery count.</p>
+      </div>
+      {createMode === "tool" ? (
       <div className="grid gap-4 md:grid-cols-2">
-        {selectedFields.map((field) => (
+        {modeFields.map((field) => (
           <label className="grid gap-2 text-sm font-medium text-white" key={field.id}>
             {field.label}
             {field.type === "select" || field.type === "radio" ? (
@@ -426,53 +877,74 @@ export function JobCreateForm({
           </label>
         ))}
       </div>
-      <div className="grid gap-3 rounded-[20px] border border-white/10 bg-white/[0.04] p-4">
+      ) : null}
+      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Source photos</p>
           <p className="mt-2 text-sm leading-6 text-white/68">
-            Select {minAssets}-{maxAssets} uploaded image{maxAssets === 1 ? "" : "s"} for this generation request.
+            Select at least {minAssets} uploaded image{minAssets === 1 ? "" : "s"} for this generation request. You can keep more source photos in the workspace and choose the set for each request here.
           </p>
+          <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] bg-white px-4 py-2 text-xs font-semibold text-[#14161a] active:scale-[0.98] ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
+            <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
+            {uploadingSources ? "Uploading photos" : "Upload source photos"}
+            <input
+              accept="image/*"
+              className="sr-only"
+              multiple
+              onChange={(event) => {
+                void uploadSourceFiles(event.target.files);
+                event.target.value = "";
+              }}
+              type="file"
+            />
+          </label>
         </div>
         {sourceAssets.length ? (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {sourceAssets.slice(0, 8).map((asset) => {
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+            {sourceAssets.map((asset) => {
               const checked = selectedAssetIds.includes(asset.id);
               return (
-                <label className={`grid cursor-pointer grid-cols-[72px_1fr] gap-3 rounded-[18px] border p-3 transition ${checked ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-black/18 text-white"}`} key={asset.id}>
-                  <img className="h-[88px] w-[72px] rounded-[14px] object-cover" src={asset.previewUrl} alt={asset.label} />
-                  <span className="min-w-0">
-                    <span className="flex items-start gap-2">
-                      <input checked={checked} className="mt-1" onChange={() => toggleAsset(asset.id)} type="checkbox" />
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm font-semibold">{asset.label}</span>
-                        <span className={checked ? "mt-1 block text-xs text-[#5f5a54]" : "mt-1 block text-xs text-white/58"}>{asset.mimeType}</span>
-                      </span>
-                    </span>
+                <label className={`group relative cursor-pointer overflow-hidden rounded-[14px] border transition ${checked ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-black/18 text-white"}`} key={asset.id}>
+                  <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
+                    <span className="block truncate text-xs font-semibold">{asset.label}</span>
                   </span>
+                  <input checked={checked} className="absolute right-2 top-2 h-4 w-4" onChange={() => toggleAsset(asset.id)} type="checkbox" />
                 </label>
               );
             })}
           </div>
+        ) : loadingAssets ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" aria-busy="true" aria-label="Loading source photos">
+            {[0, 1, 2, 3].map((item) => (
+              <div className="overflow-hidden rounded-[14px] border border-white/10 bg-black/18" key={item}>
+                <div className="aspect-[4/5] animate-pulse bg-white/[0.07]" />
+                <div className="p-2">
+                  <div className="h-3 w-20 rounded-full bg-white/[0.08]" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="rounded-[18px] border border-dashed border-white/12 bg-black/16 p-4 text-sm leading-6 text-white/68">
-            <p>No source photos yet. Upload private photos before creating an AI image request.</p>
-            <a className="mt-3 inline-flex items-center gap-2 rounded-[14px] bg-white px-4 py-2 text-xs font-semibold text-[#14161a]" href="#upload_1">
+            <p>No source photos yet. Upload private photos here, or open the full upload manager.</p>
+            <a className="mt-3 inline-flex items-center gap-2 rounded-[14px] border border-white/10 bg-white/[0.08] px-4 py-2 text-xs font-semibold text-white" href={`/site/${siteSlug}/app/upload`}>
               <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
-              Upload source photos
+              Open upload manager
             </a>
           </div>
         )}
       </div>
-      <div className="grid gap-3 rounded-[20px] border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-3">
+      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-3">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Credits</p>
-          <p className="mt-3 text-2xl font-semibold text-white">{selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0}</p>
+          <p className="mt-3 text-2xl font-semibold text-white">{createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedApp?.creditCost ?? 0}</p>
           <p className="mt-1 text-xs leading-5 text-white/62">Held while your request is being created</p>
         </div>
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Theme</p>
-          <p className="mt-3 text-sm font-semibold text-white">{selectedPack?.name ?? "Private gallery"}</p>
-          <p className="mt-1 text-xs leading-5 text-white/62">{selectedPack ? `${selectedPack.outputCount} outputs` : "Created for this account only"}</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">{createMode === "theme" ? "Package" : "Tool"}</p>
+          <p className="mt-3 text-sm font-semibold text-white">{createMode === "theme" ? selectedPack?.name ?? "Photo package" : toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? selectedApp?.aiApp.name ?? "AI tool"}</p>
+          <p className="mt-1 text-xs leading-5 text-white/62">{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided private request"}</p>
         </div>
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Balance</p>
@@ -483,11 +955,11 @@ export function JobCreateForm({
       <div className="flex flex-wrap gap-2">
         <button className="rounded-[18px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !aiAppSlug || !sourceAssets.length || selectedAssetIds.length < minAssets}>
           <Play className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
-          {pending ? "Starting" : selectedWorkflow?.submitLabel ?? "Start generation"}
+          {pending ? "Starting" : modeSubmitLabel}
         </button>
         <div className="inline-flex items-center gap-2 rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-medium text-white/70">
           <Sparkles className="h-4 w-4" strokeWidth={1.8} />
-          Private request form
+          {createMode === "theme" ? "Photo package mode" : "Tool mode"}
         </div>
       </div>
       <p className="text-sm leading-6 text-white/68">{message}</p>

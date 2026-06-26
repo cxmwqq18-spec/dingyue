@@ -34,6 +34,10 @@ function wantsEditor(request: Request) {
   return new URL(request.url).searchParams.get("editor") === "1";
 }
 
+function readSection(request: Request) {
+  return new URL(request.url).searchParams.get("section") ?? "core";
+}
+
 function pageSummaryJson(value: unknown): ThemePageJson {
   const json = value && typeof value === "object" ? value as Partial<ThemePageJson> & { draftMeta?: unknown } : {};
   return {
@@ -94,8 +98,9 @@ function lightSite(record: {
 
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const editor = wantsEditor(request);
-  const perf = createAdminPerfTracker("admin-content-page", { siteId, editor });
+  const section = readSection(request);
+  const editor = section === "editor" || wantsEditor(request);
+  const perf = createAdminPerfTracker("admin-content-page", { siteId, editor, section });
 
   if (!(await perf.measure("auth", () => hasSiteAdminSession(siteId)))) {
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
@@ -107,7 +112,23 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     if (!site) {
       return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
     }
-    return adminPerfJson(perf, {
+    if (section === "editor") {
+      return adminPerfJson(perf, {
+        ok: true,
+        packs: getSiteCreativePacksFromState(state, siteId).slice(0, adminPackListTake),
+        media: getSiteMediaAssetsFromState(state, siteId).slice(0, adminMediaListTake),
+        products: getSiteProductsFromState(state, siteId).slice(0, adminProductListTake),
+        apps: getSiteAppsFromState(state, siteId).slice(0, adminAiAppListTake)
+      });
+    }
+    if (section === "publication") {
+      return adminPerfJson(perf, {
+        ok: true,
+        publicationCount: getSiteThemePublicationsFromState(state, siteId).length,
+        publications: []
+      });
+    }
+    const corePayload = {
       ok: true,
       site: editor
         ? { ...site, pages: site.pages.slice(0, adminContentPageTake) }
@@ -119,18 +140,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               publishedJson: pageSummaryJson(page.publishedJson)
             }))
           },
-      publicationCount: getSiteThemePublicationsFromState(state, siteId).length,
-      publications: [],
-      packs: editor ? getSiteCreativePacksFromState(state, siteId).slice(0, adminPackListTake) : [],
-      media: editor ? getSiteMediaAssetsFromState(state, siteId).slice(0, adminMediaListTake) : [],
-      products: editor ? getSiteProductsFromState(state, siteId).slice(0, adminProductListTake) : [],
-      apps: editor ? getSiteAppsFromState(state, siteId).slice(0, adminAiAppListTake) : []
-    });
+      publications: []
+    };
+    return adminPerfJson(perf, corePayload);
   }
 
-  const load = async () => {
-    const [siteRecord, publicationCount, packs, media, products, apps] = await perf.measure("db", () => runDbTasks([
-      () => prisma.site.findUnique({
+  const loadCore = async () => {
+    const siteRecord = await perf.measure("db", () =>
+      prisma.site.findUnique({
         where: { id: siteId },
         select: {
           id: true,
@@ -162,91 +179,99 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           },
           ...(editor ? { settings: { select: { draftJson: true, publishedJson: true } } } : {})
         }
-      }),
-      () => prisma.themePublication.count({ where: { siteId } }),
-      editor
-        ? () => prisma.creativePack.findMany({
-            where: { siteId },
-            orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-            take: adminPackListTake
-          })
-        : () => Promise.resolve([]),
-      editor
-        ? () => prisma.mediaAsset.findMany({
-            where: { siteId },
-            orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-            take: adminMediaListTake
-          })
-        : () => Promise.resolve([]),
-      editor
-        ? () => prisma.product.findMany({
-            where: { siteId },
-            select: {
-              id: true,
-              siteId: true,
-              name: true,
-              type: true,
-              status: true,
-              createdAt: true,
-              updatedAt: true,
-              prices: {
-                select: {
-                  id: true,
-                  siteId: true,
-                  productId: true,
-                  amountCents: true,
-                  currency: true,
-                  interval: true,
-                  creditsGranted: true,
-                  stripePriceId: true,
-                  label: true,
-                  metadata: true,
-                  createdAt: true,
-                  updatedAt: true
-                },
-                orderBy: [{ createdAt: "asc" }, { id: "asc" }],
-                take: adminPriceListTake
-              }
-            },
-            orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-            take: adminProductListTake
-          })
-        : () => Promise.resolve([]),
-      editor
-        ? () => prisma.siteAiApp.findMany({
-            where: { siteId },
-            select: {
-              id: true,
-              siteId: true,
-              enabled: true,
-              creditCost: true,
-              routeKey: true,
-              workflowConfig: true,
-              providerConfig: true,
-              aiApp: {
-                select: {
-                  id: true,
-                  slug: true,
-                  name: true,
-                  description: true,
-                  appType: true,
-                  parameterSchema: true
-                }
-              }
-            },
-            orderBy: [{ enabled: "desc" }, { routeKey: "asc" }],
-            take: adminAiAppListTake
-          })
-        : () => Promise.resolve([])
-    ], siteAdminReadConcurrency));
+      })
+    );
 
     if (!siteRecord) return undefined;
 
     return {
       ok: true,
       site: editor ? toSite(siteRecord) : lightSite(siteRecord),
+      publications: []
+    };
+  };
+
+  const loadPublicationSummary = async () => {
+    const publicationCount = await perf.measure("db", () => prisma.themePublication.count({ where: { siteId } }));
+    return {
+      ok: true,
       publicationCount,
-      publications: [],
+      publications: []
+    };
+  };
+
+  const loadEditorResources = async () => {
+    const [packs, media, products, apps] = await perf.measure("db", () => runDbTasks([
+      () => prisma.creativePack.findMany({
+        where: { siteId },
+        orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+        take: adminPackListTake
+      }),
+      () => prisma.mediaAsset.findMany({
+        where: { siteId },
+        orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+        take: adminMediaListTake
+      }),
+      () => prisma.product.findMany({
+        where: { siteId },
+        select: {
+          id: true,
+          siteId: true,
+          name: true,
+          type: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+          prices: {
+            select: {
+              id: true,
+              siteId: true,
+              productId: true,
+              amountCents: true,
+              currency: true,
+              interval: true,
+              creditsGranted: true,
+              stripePriceId: true,
+              label: true,
+              metadata: true,
+              createdAt: true,
+              updatedAt: true
+            },
+            orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+            take: adminPriceListTake
+          }
+        },
+        orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+        take: adminProductListTake
+      }),
+      () => prisma.siteAiApp.findMany({
+        where: { siteId },
+        select: {
+          id: true,
+          siteId: true,
+          enabled: true,
+          creditCost: true,
+          routeKey: true,
+          workflowConfig: true,
+          providerConfig: true,
+          aiApp: {
+            select: {
+              id: true,
+              slug: true,
+              name: true,
+              description: true,
+              appType: true,
+              parameterSchema: true
+            }
+          }
+        },
+        orderBy: [{ enabled: "desc" }, { routeKey: "asc" }],
+        take: adminAiAppListTake
+      })
+    ], siteAdminReadConcurrency));
+
+    return {
+      ok: true,
       packs: packs.map(toCreativePack),
       media: media.map(toMediaAsset),
       products: products.map(mapProduct),
@@ -254,11 +279,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     };
   };
 
-  const payload = await perf.measure("cache", () => (
-    editor
-      ? contentPageCache.get(`editor:${siteId}`, load)
-      : contentPageCache.get(`summary:${siteId}`, load)
-  ));
+  const payload = section === "editor"
+    ? await perf.measure("cache", () => contentPageCache.get(`editor-resources:${siteId}`, async () => loadEditorResources()))
+    : section === "publication"
+      ? await perf.measure("cache", () => contentPageCache.get(`publication:${siteId}`, async () => loadPublicationSummary()))
+      : await perf.measure("cache", () => contentPageCache.get(`${editor ? "editor-core" : "summary"}:${siteId}`, async () => loadCore()));
 
   if (!payload) {
     return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });
