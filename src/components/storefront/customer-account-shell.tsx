@@ -18,7 +18,7 @@ export function CustomerAccountShell({ site, customer, initialRuntime }: { site:
     <div className="min-h-screen bg-[#f6f1e8] text-[#171514]">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader customer={customer} site={site} />
+      <CustomerShellHeader customer={customer} site={site} tone="light" />
 
       <main className="mx-auto grid max-w-6xl gap-5 px-5 py-7">
         <section className="rounded-[20px] border border-[#eadfce] bg-[#fffaf3] p-5 shadow-[0_14px_36px_-30px_rgba(20,22,26,0.45)] md:p-6">
