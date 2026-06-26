@@ -57,6 +57,8 @@ const toolGroups = [
   }
 ];
 
+const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
+
 function PackageMegaPanel({ basePath }: { basePath: string }) {
   return (
     <div className="max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
@@ -159,7 +161,6 @@ export function CustomerShellHeader({
 }) {
   const basePath = `/site/${site.slug}`;
   const logoText = "MydreamShoots";
-  const visualLogoText = "ʍʏƉʀɛǟʍֆhoots";
   const dark = tone === "dark";
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
@@ -173,11 +174,11 @@ export function CustomerShellHeader({
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${logoText} home`} className="flex min-w-0 items-center gap-3" href={basePath} title={`${logoText} home`}>
-            <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border ${dark ? "border-white/10 bg-[#0b0d16] text-[#ec4bdd] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)]" : "border-[#7a4cff]/55 bg-[#0b0d16] text-[#ec4bdd] shadow-[0_0_0_1px_rgba(122,76,255,0.42),0_16px_46px_-26px_rgba(122,76,255,0.7),0_0_30px_-14px_rgba(22,220,240,0.7)]"}`}>
-              <Heart className="h-5 w-5" strokeWidth={1.9} />
+            <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
+              <img className="h-9 w-9 object-contain" src={dreamshootLogoSrc} alt="" aria-hidden="true" />
             </span>
             <span className="min-w-0">
-              <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{visualLogoText}</span>
+              <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>
               <span className="sr-only">{logoText}</span>
             </span>
           </StorefrontInstantLink>
