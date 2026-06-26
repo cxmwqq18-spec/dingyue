@@ -11,6 +11,7 @@ import {
 import {
   renderCustomerJobDetailPage,
   renderCustomerWorkspacePage,
+  renderCustomerWorkspacePageBySlug,
   renderStorefrontPage,
   renderToolPage,
   resolveToolPageForSite
@@ -128,6 +129,9 @@ export default async function HostStorefrontCatchAllPage({
   if (firstSegment === "app") {
     if (path[1] === "jobs" && path[2] && path[2] !== "progress") {
       return renderCustomerJobDetailPage({ site, jobId: path[2], query, routeMode: "host", state });
+    }
+    if (path[1] === "create" || path[1] === "upload") {
+      return renderCustomerWorkspacePageBySlug({ siteSlug: site.slug, slug: `/${path.join("/")}`, query, routeMode: "host" });
     }
     return renderCustomerWorkspacePage({ site, slug: `/${path.join("/")}`, query, routeMode: "host", state });
   }
