@@ -894,7 +894,10 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     "policy",
     ["policy_1"],
     {
-      policy_1: section("policy_content", { title: "Policy page", body: "<p>MydreamShoots policy pages explain privacy, cookies, refunds, content rules, account access, credit usage, and private album delivery for AI photo customers.</p>" })
+      policy_1: section("policy_content", {
+        title: "MydreamShoots policy details",
+        body: "<p>MydreamShoots policy pages cover customer account access, photo upload rights, private album delivery, credit usage, checkout records, refund review, content moderation, cookies, and privacy controls for AI photo customers.</p><p>Use the dedicated refund, content, privacy, terms, and cookie pages to review the rules that apply before uploading source photos, starting a generation job, buying credits, or downloading finished portraits.</p>"
+      })
     },
     1
   ),

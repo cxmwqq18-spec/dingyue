@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { getPage } from "@/lib/data";
+import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPublicCollectionMetadataStateBySlugFromDatabase,
@@ -24,9 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const site = state?.sites[0];
   if (!site) return {};
   if (collectionCategory) return metadataForSeoDirectory(site, "collection", collectionCategory);
-  const page = getPage(site, slug);
-  const resolvedPage = page.slug === slug ? page : site.pages.find((item) => item.slug === "/404") ?? page;
-  return metadataForSingleThemePage(site, resolvedPage);
+  const page = findPage(site, slug);
+  return page ? metadataForSingleThemePage(site, page) : {};
 }
 
 export default async function SiteCatchAllPage({
@@ -66,5 +65,6 @@ export default async function SiteCatchAllPage({
     : await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
+  if (!collectionCategory && !findPage(publicSite, pageSlug)) notFound();
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state });
 }

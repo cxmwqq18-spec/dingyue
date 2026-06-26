@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
+import { publicSiteUrlFromParts } from "@/lib/domain-routing";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -22,6 +23,45 @@ export type SeoDirectoryContent = {
 };
 
 type SeoDirectorySeed = Omit<SeoDirectoryContent, "slug" | "explicit" | "canonicalPath">;
+
+type DreamshootRouteMetadataSeed = {
+  title: string;
+  description: string;
+  keywords: string;
+  canonicalPath: string;
+  index: boolean;
+  follow: boolean;
+};
+
+const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/login": {
+    title: "Sign in to MydreamShoots - private AI photo workspace",
+    description:
+      "Sign in to MydreamShoots to manage private uploads, AI photo package requests, credits, checkout history, generated albums, and customer-only gallery downloads.",
+    keywords: "MydreamShoots login, AI photo account, private AI photo workspace, customer gallery sign in",
+    canonicalPath: "/login",
+    index: false,
+    follow: true
+  },
+  "/pricing": {
+    title: "MydreamShoots Pricing - AI photo credits, plans, and top-ups",
+    description:
+      "Compare MydreamShoots plans, monthly AI photo credits, one-time top-ups, private model access, package generation, secure checkout, and gallery delivery before you create.",
+    keywords: "MydreamShoots pricing, AI photo credits, AI portrait subscription, private photo package plans",
+    canonicalPath: "/pricing",
+    index: true,
+    follow: true
+  },
+  "/tools": {
+    title: "MydreamShoots AI Photo Tools - headshots, edits, video, and try-on",
+    description:
+      "Explore MydreamShoots AI photo tools for headshots, background edits, image-to-video clips, virtual try-on previews, private uploads, credits, and album-ready results.",
+    keywords: "MydreamShoots tools, AI photo tools, AI headshot tool, background changer, image to video AI, virtual try-on",
+    canonicalPath: "/tools",
+    index: true,
+    follow: true
+  }
+};
 
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
@@ -354,6 +394,58 @@ function fallbackTool(slug: string): SeoDirectorySeed {
     workflow: ["Review the result this tool is best for.", "Upload clear source photos.", "Choose the look or use case you need.", "Create and download the private result."],
     ctaLabel: `Start ${label}`,
     ctaHref: `/app/create?tool_id=${slug}`
+  };
+}
+
+function normalizeRouteMetadataPath(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === "/") return "/";
+  return `/${trimmed.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+}
+
+function dreamshootFallbackMetadataCanonical(siteSlug: string, primaryDomain: string | undefined, canonicalPath: string): string {
+  return publicSiteUrlFromParts({ slug: siteSlug, primaryDomain: primaryDomain ?? "" }, canonicalPath);
+}
+
+export function metadataForDreamshootFallbackRoute(
+  siteSlug: string,
+  path: string,
+  options: { primaryDomain?: string; ogImage?: string; siteName?: string } = {}
+): Metadata {
+  const normalizedPath = normalizeRouteMetadataPath(path);
+  const seed = dreamshootFallbackRouteMetadata[normalizedPath] ?? {
+    title: "MydreamShoots",
+    description: "MydreamShoots is a private AI photo workspace for uploads, credits, photo packages, AI tools, and customer-only galleries.",
+    keywords: "MydreamShoots, AI photo workspace, AI photo packages, private photo gallery",
+    canonicalPath: normalizedPath,
+    index: false,
+    follow: true
+  };
+  const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
+  const keywords = seed.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
+  const ogImage = options.ogImage?.trim();
+  return {
+    title: seed.title,
+    description: seed.description,
+    keywords,
+    alternates: { canonical },
+    robots: {
+      index: seed.index,
+      follow: seed.follow
+    },
+    openGraph: {
+      title: seed.title,
+      description: seed.description,
+      url: canonical,
+      siteName: options.siteName?.trim() || "MydreamShoots",
+      ...(ogImage ? { images: [{ url: ogImage }] } : {})
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title: seed.title,
+      description: seed.description,
+      ...(ogImage ? { images: [ogImage] } : {})
+    }
   };
 }
 

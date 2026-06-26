@@ -6747,10 +6747,10 @@ function SectionView({
                   price,
                   "planSubtitle",
                   product.name === "Starter"
-                    ? "For your first private AI shoot"
-                    : product.name === "Popular"
-                      ? "Balanced credits for more styles"
-                      : "Maximum credits for premium packs"
+                    ? "Start with one focused headshot, beauty, or profile set"
+                    : product.name === "Pro" || product.name === "Popular"
+                      ? "Compare several package styles with room for reruns"
+                      : "More monthly credits for premium packs, video add-ons, and repeat campaigns"
                 );
                 const editingLabel = priceMetaString(
                   price,

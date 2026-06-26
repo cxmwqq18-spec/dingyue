@@ -10,6 +10,7 @@ import { customerSessionCookie } from "@/lib/session";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
@@ -17,7 +18,13 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, "/login");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/login");
-  return site && page ? metadataForSingleThemePage(site, page) : { title: "Sign in" };
+  return site && page
+    ? metadataForSingleThemePage(site, page)
+    : metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), "/login", {
+        primaryDomain: site?.primaryDomain,
+        ogImage: site?.themeSettings.publishedJson.seo?.defaultOgImage,
+        siteName: site?.branding.logoText || site?.name
+      });
 }
 
 export default async function SiteLoginPage({

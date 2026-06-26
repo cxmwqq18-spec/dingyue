@@ -54,29 +54,35 @@ function blockValue(block: SectionBlockInstance, key: string, fallback = ""): st
   return cleanText(block.settings[key], fallback);
 }
 
-function siteOriginUrl(site: Site, routeMode: "host" | "path"): string {
+function siteOriginUrl(site: Site): string {
   const domain = cleanText(site.primaryDomain);
-  if (routeMode === "path" || !domain) return "http://localhost:3000";
+  if (!domain) return "http://localhost:3000";
   if (domain.includes("localhost")) return `http://${domain}`;
   if (domain.startsWith("http://") || domain.startsWith("https://")) return domain.replace(/\/$/, "");
   return `https://${domain}`;
 }
 
 function siteBaseUrl(site: Site, routeMode: "host" | "path"): string {
-  const origin = siteOriginUrl(site, routeMode);
-  return routeMode === "host" ? origin : `${origin}/site/${site.slug}`;
+  const origin = siteOriginUrl(site);
+  if (routeMode === "host") return origin;
+  const domain = cleanText(site.primaryDomain);
+  const hasCanonicalDomain = Boolean(domain && !domain.includes("localhost"));
+  return hasCanonicalDomain ? origin : `${origin}/site/${site.slug}`;
 }
 
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
   const value = cleanText(pathOrUrl, "/");
   if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  const base = siteOriginUrl(site, routeMode).replace(/\/$/, "");
+  const base = siteOriginUrl(site).replace(/\/$/, "");
   return `${base}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
 function schemaPagePath(site: Site, routeMode: "host" | "path", pagePath: string): string {
   const cleanPath = pagePath === "/404" ? "/" : pagePath || "/";
   if (routeMode === "host") return cleanPath;
+  const domain = cleanText(site.primaryDomain);
+  const hasCanonicalDomain = Boolean(domain && !domain.includes("localhost"));
+  if (hasCanonicalDomain) return cleanPath;
   return `/site/${site.slug}${cleanPath === "/" ? "" : cleanPath}`;
 }
 

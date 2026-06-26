@@ -2355,6 +2355,10 @@ export function getPage(site: Site, slug: string): ThemePage {
   return site.pages.find((page) => page.slug === slug) ?? site.pages[0];
 }
 
+export function findPage(site: Site, slug: string): ThemePage | undefined {
+  return site.pages.find((page) => page.slug === slug);
+}
+
 export function formatCurrency(amountCents: number, currency = "usd"): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",

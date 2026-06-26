@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
 import { ThemeRenderer } from "@/components/theme-renderer";
-import { getPage } from "@/lib/data";
+import { findPage, getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
 import {
   getCustomerBySessionFromState,
@@ -896,8 +896,9 @@ export async function renderStorefrontPage({
   const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const directPage = getPage(currentSite, slug);
-  const page = directPage.slug === slug ? directPage : currentSite.pages.find((item) => item.slug === "/404") ?? directPage;
+  const directPage = findPage(currentSite, slug);
+  if (!directPage) notFound();
+  const page = directPage;
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
   }
@@ -922,7 +923,7 @@ export async function renderStorefrontPage({
   return renderThemePage({
     currentSite,
     page: pageJson,
-    pagePath: directPage.slug === slug ? slug : "/404",
+    pagePath: slug,
     query,
     renderData: pageRenderData,
     routeMode,
@@ -939,7 +940,7 @@ export async function renderStorefrontPage({
           site: currentSite,
           page,
           pageJson,
-          pagePath: directPage.slug === slug ? slug : "/404",
+          pagePath: slug,
           routeMode,
           creativePacks: pageRenderData.creativePacks
         }),

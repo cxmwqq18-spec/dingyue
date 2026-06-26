@@ -70,6 +70,66 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     canonicalPath: "/policies/cookies",
     index: true,
     follow: true
+  },
+  "/policies/refunds": {
+    title: "Refund Policy for MydreamShoots Credits, Plans, and Failed Jobs",
+    description:
+      "Review how MydreamShoots handles refund eligibility, unused AI photo credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots refund policy",
+      "AI photo credit refund",
+      "subscription credit refund",
+      "failed AI job refund"
+    ].join(", "),
+    canonicalPath: "/policies/refunds",
+    index: true,
+    follow: true
+  },
+  "/refund-policy": {
+    title: "Refund Policy for MydreamShoots Credits, Plans, and Failed Jobs",
+    description:
+      "Review how MydreamShoots handles refund eligibility, unused AI photo credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots refund policy",
+      "AI photo credit refund",
+      "subscription credit refund",
+      "failed AI job refund"
+    ].join(", "),
+    canonicalPath: "/policies/refunds",
+    index: true,
+    follow: true
+  },
+  "/policies/content": {
+    title: "Content Policy for MydreamShoots Uploads and AI Photo Outputs",
+    description:
+      "Read the MydreamShoots content policy for permitted source photos, upload rights, identity consent, private AI albums, moderation review, blocked requests, and responsible output use.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots content policy",
+      "AI photo upload rules",
+      "AI portrait consent",
+      "private AI output policy"
+    ].join(", "),
+    canonicalPath: "/policies/content",
+    index: true,
+    follow: true
+  },
+  "/content-policy": {
+    title: "Content Policy for MydreamShoots Uploads and AI Photo Outputs",
+    description:
+      "Read the MydreamShoots content policy for permitted source photos, upload rights, identity consent, private AI albums, moderation review, blocked requests, and responsible output use.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots content policy",
+      "AI photo upload rules",
+      "AI portrait consent",
+      "private AI output policy"
+    ].join(", "),
+    canonicalPath: "/policies/content",
+    index: true,
+    follow: true
   }
 };
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
-import { getPage } from "@/lib/data";
+import { findPage } from "@/lib/data";
 import {
   readStorefrontPlatformStateFromDatabase,
   readStorefrontPublicRuntimeStateByHostFromDatabase,
@@ -85,10 +85,9 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     return metadataForSeoDirectory(site, "tool", path[1]);
   }
   if (path[0] === "collections" && path[1]) return metadataForSeoDirectory(site, "collection", path[1]);
-  const page = getPage(site, slug);
-  const resolvedPage = page.slug === slug ? page : site.pages.find((item) => item.slug === "/404") ?? page;
   if (path[0] === "dashboard") return { title: "Workspace" };
-  return metadataForSingleThemePage(site, resolvedPage);
+  const page = findPage(site, slug);
+  return page ? metadataForSingleThemePage(site, page) : {};
 }
 
 export default async function HostStorefrontCatchAllPage({
@@ -125,6 +124,11 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  const hasKnownPublicRoute =
+    firstSegment === "tools" && Boolean(path[1]) ||
+    firstSegment === "collections" && Boolean(path[1]) ||
+    Boolean(findPage(site, publicPageSlug));
+  if (!needsPrivateRuntime && !hasKnownPublicRoute) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {
     if (path[1] === "jobs" && path[2] && path[2] !== "progress") {
@@ -143,10 +147,12 @@ export default async function HostStorefrontCatchAllPage({
     return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
+  const pageSlug = collectionCategory ? "/collections" : `/${path.join("/")}`;
+  if (!collectionCategory && !findPage(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,
-    slug: collectionCategory ? "/collections" : `/${path.join("/")}`,
+    slug: pageSlug,
     query: storefrontQuery,
     routeMode: "host",
     state

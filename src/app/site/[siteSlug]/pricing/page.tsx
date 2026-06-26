@@ -6,6 +6,8 @@ import {
 } from "@/lib/storefront-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { publicSiteSlug } from "@/lib/domain-routing";
+import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
@@ -13,7 +15,13 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, "/pricing");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/pricing");
-  return site && page ? metadataForSingleThemePage(site, page) : { title: "Pricing" };
+  return site && page
+    ? metadataForSingleThemePage(site, page)
+    : metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), "/pricing", {
+        primaryDomain: site?.primaryDomain,
+        ogImage: site?.themeSettings.publishedJson.seo?.defaultOgImage,
+        siteName: site?.branding.logoText || site?.name
+      });
 }
 
 export default async function PricingPage({
