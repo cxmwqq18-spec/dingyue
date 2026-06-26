@@ -87,10 +87,10 @@ export function CustomerWorkspaceShell({
   const showUpload = initialPanel === "overview" || initialPanel === "upload";
 
   return (
-    <div className="min-h-screen bg-[#f6f1e8] text-[#171514]">
+    <div className="min-h-screen bg-[#f7f2e9] font-sans text-[#171514]">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader customer={customer} site={site} />
+      <CustomerShellHeader customer={customer} site={site} tone="light" />
 
       <main className="mx-auto grid max-w-6xl gap-5 px-5 py-7">
         <section className="rounded-[20px] border border-[#eadfce] bg-[#fffaf3] p-5 shadow-[0_14px_36px_-30px_rgba(20,22,26,0.45)] md:p-6">
@@ -115,7 +115,7 @@ export function CustomerWorkspaceShell({
                 <StorefrontInstantLink
                   className={`group grid min-h-[96px] gap-3 rounded-[18px] border p-4 transition ${
                     active
-                      ? "border-[#171514] bg-[#171514] text-white shadow-[0_18px_50px_-36px_rgba(20,22,26,0.65)]"
+                      ? "border-[#ff8a5c]/55 bg-[linear-gradient(135deg,#fff1e7_0%,#fff8ef_58%,#edfaff_100%)] text-[#171514] shadow-[0_18px_50px_-36px_rgba(224,105,63,0.48)]"
                       : complete
                       ? "border-[#d8cab9] bg-white text-[#171514]"
                       : "border-[#eadfce] bg-[#fffaf3] text-[#706961]"
@@ -124,14 +124,14 @@ export function CustomerWorkspaceShell({
                   key={step.title}
                 >
                   <span className="flex items-center justify-between gap-3">
-                    <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${active ? "text-white/62" : "text-[#9b6b42]"}`}>
+                    <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${active ? "text-[#c65f32]" : "text-[#9b6b42]"}`}>
                       Step {String(index + 1).padStart(2, "0")}
                     </span>
-                    {complete ? <CheckCircle2 className="h-4 w-4 text-[#4a9f68]" strokeWidth={1.8} /> : <span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-white" : "bg-[#d8cab9]"}`} />}
+                    {complete ? <CheckCircle2 className="h-4 w-4 text-[#4a9f68]" strokeWidth={1.8} /> : <span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-[#16c7d4]" : "bg-[#d8cab9]"}`} />}
                   </span>
                   <span>
                     <span className="block text-sm font-semibold">{step.title}</span>
-                    <span className={`mt-1 block text-xs leading-5 ${active ? "text-white/62" : "text-[#706961]"}`}>{step.detail}</span>
+                    <span className={`mt-1 block text-xs leading-5 ${active ? "text-[#6b5d52]" : "text-[#706961]"}`}>{step.detail}</span>
                   </span>
                 </StorefrontInstantLink>
               );
@@ -140,7 +140,7 @@ export function CustomerWorkspaceShell({
         </section>
 
         {showCreate ? (
-          <section className="scroll-mt-28 rounded-[20px] border border-[#eadfce] bg-[#101114] p-5 text-white shadow-[0_18px_54px_-42px_rgba(20,22,26,0.6)] md:p-6" id="create">
+          <section className="scroll-mt-28 rounded-[20px] border border-[#e4d7c6] bg-[#fffaf3] p-5 text-[#171514] shadow-[0_18px_54px_-42px_rgba(224,105,63,0.28)] md:p-6" id="create">
             <JobCreateForm
               assets={hydratedAssets}
               creativePacks={creativePacks.map((pack) => ({ ...pack, prompt: undefined }))}
@@ -150,6 +150,7 @@ export function CustomerWorkspaceShell({
               siteAiApps={siteAiApps}
               siteId={site.id}
               siteSlug={site.slug}
+              tone="light"
             />
           </section>
         ) : null}

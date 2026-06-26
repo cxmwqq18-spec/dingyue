@@ -16,14 +16,13 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
-  const toolsStatePromise = readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/tools");
   const detailState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`, toolSlug);
   const detailSite = detailState?.sites[0];
   if (detailState && detailSite) {
     const resolved = resolveToolPageForSite(detailState, detailSite, toolSlug);
     if (resolved.matched) return { state: detailState, site: detailSite, ...resolved };
   }
-  const toolsState = await toolsStatePromise;
+  const toolsState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/tools");
   const toolsSite = toolsState?.sites[0];
   if (toolsState && toolsSite) {
     const resolved = resolveToolPageForSite(toolsState, toolsSite, toolSlug);
@@ -40,7 +39,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug);
+  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`);
   const site = state?.sites[0];
   if (!site) return {};
   return metadataForSeoDirectory(site, "tool", toolSlug);

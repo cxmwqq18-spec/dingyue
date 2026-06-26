@@ -646,7 +646,6 @@ export const getStorefrontSiteByHostRelational = cache(async (host: string | nul
 function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   if (!slug) return undefined;
   const normalized = slug === "/" ? "/" : slug.startsWith("/") ? slug : `/${slug}`;
-  if (normalized.startsWith("/tools/")) return Array.from(new Set([normalized, "/tools/image-studio", "/404"]));
   return Array.from(new Set([normalized, "/404"]));
 }
 
@@ -656,14 +655,15 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isHome = primary === "/";
   const isPricing = primary === "/pricing";
   const isTools = primary === "/tools" || primary.startsWith("/tools/");
+  const isToolDetail = primary.startsWith("/tools/") && Boolean(contextSlug);
   const isCollections = primary === "/collections" || primary.startsWith("/collections/");
   const isCollectionDetail = isCollections && Boolean(contextSlug);
   const isWorkspace = primary === "/app";
   return {
     profile: isHome ? "home" : isPricing ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isCollections ? "collections" : isWorkspace ? "workspace" : "page",
     products: isHome || isPricing,
-    siteAiApps: isHome || isTools || isWorkspace,
-    creativePacks: isHome || isTools || isCollections || isWorkspace,
+    siteAiApps: isHome || (isTools && !isToolDetail) || isWorkspace,
+    creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
@@ -810,18 +810,44 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
   return state;
 }
 
-async function loadStorefrontPublicRuntimeState(where: Prisma.SiteWhereUniqueInput, pageSlugs?: string[], contextSlug?: string): Promise<PlatformState | undefined> {
+type PublicRuntimeSiteLookup =
+  | { id: string }
+  | { slugCandidates: string[] };
+
+async function getPublicRuntimeSiteLookupByHost(host: string | null | undefined): Promise<PublicRuntimeSiteLookup | undefined> {
+  const value = cleanHost(host);
+  if (!value || isPlatformHost(value) || value === "localhost" || value === "127.0.0.1") return undefined;
+
+  const domain = await prisma.siteDomain.findFirst({
+    where: { domain: value },
+    orderBy: [{ status: "asc" }, { isPrimary: "desc" }],
+    select: { siteId: true }
+  });
+  if (domain?.siteId) return { id: domain.siteId };
+
+  const site = await prisma.site.findFirst({
+    where: { primaryDomain: value },
+    select: { id: true }
+  });
+  return site ? { id: site.id } : undefined;
+}
+
+async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup, pageSlugs?: string[], contextSlug?: string): Promise<PlatformState | undefined> {
   const startedAt = Date.now();
   const needs = publicRuntimeNeeds(pageSlugs, contextSlug);
-  const site = await prisma.site.findUnique({
-    where,
-    select: {
+  const select = {
       ...publicRuntimeSiteSelect,
       pages: pageSlugs
         ? { ...publicRuntimeSiteSelect.pages, where: { slug: { in: pageSlugs } } }
         : publicRuntimeSiteSelect.pages
-    }
-  });
+    } satisfies Prisma.SiteSelect;
+  const site = "id" in lookup
+    ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
+    : await prisma.site.findFirst({
+        where: { slug: { in: lookup.slugCandidates } },
+        orderBy: { updatedAt: "desc" },
+        select
+      });
   if (!site) return undefined;
   storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
   const siteId = site.id;
@@ -1122,8 +1148,18 @@ export const getStorefrontRuntimeStateBySlug = cache(async (slug: string): Promi
 });
 
 export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
-  const site = await getStorefrontSiteByHostRelational(host);
-  return site ? getStorefrontPublicRuntimeStateForSite(site.id, pageSlug, contextSlug) : undefined;
+  const key = cleanHost(host) || "empty";
+  const pageSlugs = publicRuntimePageSlugs(pageSlug);
+  const pageKey = pageSlugs?.join("|") ?? "all";
+  const contextKey = contextSlug ? slugify(contextSlug) : "none";
+  return siteReadCache.get(
+    `public-runtime-host:${key}:${pageKey}:${contextKey}`,
+    async () => {
+      const lookup = await getPublicRuntimeSiteLookupByHost(host);
+      return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
 });
 
 export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
@@ -1133,10 +1169,7 @@ export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, 
   const contextKey = contextSlug ? slugify(contextSlug) : "none";
   return siteReadCache.get(
     `public-runtime-slug:${canonicalSlug}:${pageKey}:${contextKey}`,
-    async () => {
-      const siteId = await getSiteIdBySlugRelational(slug);
-      return siteId ? loadStorefrontPublicRuntimeState({ id: siteId }, pageSlugs, contextSlug) : undefined;
-    },
+    () => loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug),
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
 });

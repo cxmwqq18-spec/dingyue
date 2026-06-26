@@ -163,21 +163,21 @@ export function CustomerShellHeader({
   const dark = tone === "dark";
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
-    : "inline-flex items-center gap-2 whitespace-nowrap border-[#dfd3c4] bg-white text-[#171514] hover:border-[#bcae9b]";
+    : "inline-flex items-center gap-2 whitespace-nowrap border-[#d6cadc] bg-white/92 text-[#171514] shadow-[0_10px_30px_-24px_rgba(52,39,88,0.4)] hover:border-[#9f8bd7] hover:bg-white";
 
   return (
-    <header className={`sticky top-0 z-50 border-b backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/94 text-white" : "border-[#eadfce] bg-[#fffaf3]/96 text-[#171514]"}`}>
+    <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className="mx-auto grid max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
           Create realistic AI photo packages from everyday uploads.
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${logoText} home`} className="flex min-w-0 items-center gap-3" href={basePath} title={`${logoText} home`}>
-            <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border ${dark ? "border-white/10 bg-[#0b0d16] text-[#ec4bdd] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)]" : "border-[#d8cab9] bg-white text-[#7a4dff]"}`}>
+            <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border ${dark ? "border-white/10 bg-[#0b0d16] text-[#ec4bdd] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)]" : "border-[#7a4cff]/55 bg-[#0b0d16] text-[#ec4bdd] shadow-[0_0_0_1px_rgba(122,76,255,0.42),0_16px_46px_-26px_rgba(122,76,255,0.7),0_0_30px_-14px_rgba(22,220,240,0.7)]"}`}>
               <Heart className="h-5 w-5" strokeWidth={1.9} />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em]" aria-hidden="true">{dark ? visualLogoText : logoText}</span>
+              <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{visualLogoText}</span>
               <span className="sr-only">{logoText}</span>
             </span>
           </StorefrontInstantLink>

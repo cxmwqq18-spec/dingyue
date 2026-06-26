@@ -382,7 +382,8 @@ export function JobCreateForm({
   initialToolId,
   assets = [],
   emptyTitle = "No enabled album experience.",
-  emptyBody = "Enable an album experience for this site before publishing this form."
+  emptyBody = "Enable an album experience for this site before publishing this form.",
+  tone = "dark"
 }: {
   siteId: string;
   siteSlug: string;
@@ -394,6 +395,7 @@ export function JobCreateForm({
   assets?: ThemeRuntimeAsset[];
   emptyTitle?: string;
   emptyBody?: string;
+  tone?: "dark" | "light";
 }) {
   const router = useRouter();
   const normalizedInitialToolId = normalizeToolId(initialToolId);
@@ -438,6 +440,23 @@ export function JobCreateForm({
   const modeFields = fieldsForMode(selectedFields, createMode);
   const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool request";
   const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
+  const light = tone === "light";
+  const textClass = light ? "text-[#171514]" : "text-white";
+  const mutedClass = light ? "text-[#6f675e]" : "text-white/62";
+  const eyebrowClass = light ? "text-[#9b6b42]" : "text-white/48";
+  const panelClass = light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-white/[0.04] text-white";
+  const subtlePanelClass = light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/16";
+  const fieldClass = light
+    ? "border-[#dfd3c4] bg-white text-[#171514] placeholder:text-[#9d9388]"
+    : "border-white/10 bg-white/[0.05] text-white placeholder:text-white/35";
+  const primaryButtonClass = light
+    ? "bg-[linear-gradient(135deg,#ff8a5c_0%,#ec4bdd_52%,#16dcf0_100%)] text-white shadow-[0_14px_34px_-24px_rgba(236,75,221,0.75)] hover:brightness-105"
+    : "bg-white text-[#14161a]";
+  const selectedCardClass = light ? "border-[#ff8a5c]/55 bg-[linear-gradient(135deg,#fff1e7_0%,#fff8ef_58%,#edfaff_100%)] text-[#171514] shadow-[0_16px_42px_-34px_rgba(224,105,63,0.5)]" : "border-white bg-white text-[#14161a]";
+  const neutralCardClass = light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-white/[0.04] text-white";
+  const selectedPillClass = light ? "bg-[#132329] text-white" : "bg-[#14161a] text-white";
+  const selectedSoftPillClass = light ? "bg-white text-[#c65f32] ring-1 ring-[#ffd0b8]" : "bg-[#14161a]/10 text-[#14161a]";
+  const neutralPillClass = light ? "bg-[#f1eadf] text-[#5f574f]" : "bg-white/[0.08] text-white/74";
 
   useEffect(() => {
     setAvailableAssets(assets);
@@ -651,8 +670,8 @@ export function JobCreateForm({
 
   if (!siteAiApps.length) {
     return (
-      <div className="rounded-[20px] border border-dashed border-white/12 bg-white/[0.03] p-5 text-sm text-white/68">
-        <p className="font-semibold text-white">{emptyTitle}</p>
+      <div className={`rounded-[20px] border border-dashed p-5 text-sm ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-white/[0.03] text-white/68"}`}>
+        <p className={`font-semibold ${textClass}`}>{emptyTitle}</p>
         <p className="mt-2 leading-6">{emptyBody}</p>
       </div>
     );
@@ -662,15 +681,15 @@ export function JobCreateForm({
     <form className="grid gap-5" onSubmit={createJob}>
       <div className="grid gap-3">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Step 01</p>
-          <h3 className="mt-2 text-xl font-semibold text-white">{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
-          <p className="mt-2 text-sm leading-6 text-white/62">
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 01</p>
+          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
+          <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
             {createMode === "theme"
               ? "Photo packages lock the theme direction, preview look, output target, and source photo rules."
               : "Tools let you describe the result with a prompt while using the site's enabled AI workflow."}
           </p>
         </div>
-        <div className="inline-flex w-fit max-w-full rounded-full border border-white/10 bg-white/[0.04] p-1 text-xs font-semibold">
+        <div className={`inline-flex w-fit max-w-full rounded-full border p-1 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#f8f1e6]" : "border-white/10 bg-white/[0.04]"}`}>
           {[
             { mode: "theme" as const, label: "Photo packages" },
             { mode: "tool" as const, label: "Tools" }
@@ -679,7 +698,7 @@ export function JobCreateForm({
             return (
               <button
                 className={`rounded-full px-4 py-2 transition ${
-                  active ? "bg-white text-[#14161a]" : "text-white/64 hover:bg-white/[0.06] hover:text-white disabled:pointer-events-none disabled:opacity-40"
+                  active ? (light ? "bg-[linear-gradient(135deg,#ff8a5c_0%,#ec4bdd_55%,#16dcf0_100%)] text-white shadow-[0_10px_26px_-20px_rgba(236,75,221,0.75)]" : "bg-white text-[#14161a]") : (light ? "text-[#706961] hover:bg-white hover:text-[#171514] disabled:pointer-events-none disabled:opacity-40" : "text-white/64 hover:bg-white/[0.06] hover:text-white disabled:pointer-events-none disabled:opacity-40")
                 }`}
                 disabled={item.mode === "theme" ? !activeCreativePacks.length : !toolPresets.length}
                 key={item.mode}
@@ -708,7 +727,7 @@ export function JobCreateForm({
               return (
                 <button
                   className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${
-                    active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white"
+                    active ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#b9542d] shadow-[0_10px_28px_-22px_rgba(255,138,92,0.8)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white")
                   }`}
                   key={category}
                   onClick={() => updateThemeCategory(category)}
@@ -726,7 +745,7 @@ export function JobCreateForm({
             return (
               <button
                 className={`grid min-h-[292px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
-                  active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white"
+                  active ? selectedCardClass : neutralCardClass
                 }`}
                 key={pack.id}
                 onClick={() => updateCreativePack(pack)}
@@ -745,20 +764,20 @@ export function JobCreateForm({
                   <span className="flex items-start justify-between gap-2">
                     <span className="min-w-0">
                       <span className="block text-base font-semibold leading-5">{pack.name}</span>
-                      <span className={active ? "mt-2 line-clamp-2 block text-sm leading-5 text-[#5f5a54]" : "mt-2 line-clamp-2 block text-sm leading-5 text-white/62"}>
+                      <span className={active ? "mt-2 line-clamp-2 block text-sm leading-5 text-[#5f5a54]" : `mt-2 line-clamp-2 block text-sm leading-5 ${mutedClass}`}>
                         {pack.headline}
                       </span>
-                      <span className={active ? "mt-2 line-clamp-3 block text-xs leading-5 text-[#6b655f]" : "mt-2 line-clamp-3 block text-xs leading-5 text-white/54"}>
+                      <span className={active ? "mt-2 line-clamp-3 block text-xs leading-5 text-[#6b655f]" : `mt-2 line-clamp-3 block text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/54"}`}>
                         {pack.description}
                       </span>
                     </span>
                     {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                   </span>
                   <span className="mt-3 flex flex-wrap gap-2">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? "bg-[#14161a] text-white" : "bg-white/[0.08] text-white/74"}`}>
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
                       {pack.creditCost} credits
                     </span>
-                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? "bg-[#14161a]/10 text-[#14161a]" : "bg-white/[0.08] text-white/74"}`}>
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
                       {pack.outputCount} outputs
                     </span>
                   </span>
@@ -770,7 +789,7 @@ export function JobCreateForm({
             return (
               <button
                 className={`min-h-[120px] rounded-[16px] border p-4 text-left transition hover:-translate-y-0.5 ${
-                  active ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-white/[0.04] text-white"
+                  active ? selectedCardClass : neutralCardClass
                 }`}
                 key={preset.id}
                 onClick={() => updateToolPreset(preset)}
@@ -779,16 +798,16 @@ export function JobCreateForm({
                 <span className="flex items-start justify-between gap-3">
                   <span className="min-w-0">
                     <span className="block truncate text-base font-semibold">{preset.title}</span>
-                    <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : "mt-2 line-clamp-2 block text-sm leading-6 text-white/62"}>
+                    <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : `mt-2 line-clamp-2 block text-sm leading-6 ${mutedClass}`}>
                       {preset.description}
                     </span>
-                    <span className={active ? "mt-3 inline-flex rounded-full bg-[#14161a]/10 px-3 py-1 text-xs font-semibold text-[#14161a]" : "mt-3 inline-flex rounded-full bg-white/[0.08] px-3 py-1 text-xs font-semibold text-white/70"}>
+                    <span className={active ? `mt-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${selectedSoftPillClass}` : `mt-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>
                       {preset.category}
                     </span>
                   </span>
                   {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                 </span>
-                <span className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? "bg-[#14161a] text-white" : "bg-white/[0.08] text-white/74"}`}>
+                <span className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
                   {preset.creditCost ?? selectedApp?.creditCost ?? 0} credits
                 </span>
               </button>
@@ -796,44 +815,44 @@ export function JobCreateForm({
           })}
         </div>
       </div>
-      <div className="rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Material rules</p>
+      <div className={`rounded-[16px] border p-4 ${panelClass}`}>
+        <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Material rules</p>
         {createMode === "theme" && selectedPack ? (
-          <div className="mt-3 rounded-[12px] border border-white/10 bg-black/16 p-3">
-            <p className="text-sm font-semibold text-white">{selectedPack.name}</p>
-            <p className="mt-1 text-sm leading-6 text-white/62">{selectedPack.description || selectedPack.headline}</p>
+          <div className={`mt-3 rounded-[12px] border p-3 ${subtlePanelClass}`}>
+            <p className={`text-sm font-semibold ${textClass}`}>{selectedPack.name}</p>
+            <p className={`mt-1 text-sm leading-6 ${mutedClass}`}>{selectedPack.description || selectedPack.headline}</p>
           </div>
         ) : null}
         <div className="mt-3 grid gap-2">
           {materialRules.map((rule) => (
-            <div className="flex gap-2 text-sm leading-6 text-white/68" key={rule}>
+            <div className={`flex gap-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`} key={rule}>
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#75d89a]" strokeWidth={1.8} />
               <span>{displayMaterialRule(rule)}</span>
             </div>
           ))}
         </div>
       </div>
-      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
-        <label className="grid gap-2 text-sm font-medium text-white sm:max-w-xs">
+      <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
+        <label className={`grid gap-2 text-sm font-medium ${textClass} sm:max-w-xs`}>
           Estimated outputs
           <input
-            className="rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white placeholder:text-white/35"
+            className={`rounded-[18px] border px-4 py-3 ${fieldClass}`}
             min={1}
             onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
             type="number"
             value={themeOutputCount}
           />
         </label>
-        <p className="text-xs leading-5 text-white/52">Default is 5 images. Edit this number when the request should record a different estimated delivery count.</p>
+        <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>Default is 5 images. Edit this number when the request should record a different estimated delivery count.</p>
       </div>
       {createMode === "tool" ? (
       <div className="grid gap-4 md:grid-cols-2">
         {modeFields.map((field) => (
-          <label className="grid gap-2 text-sm font-medium text-white" key={field.id}>
+          <label className={`grid gap-2 text-sm font-medium ${textClass}`} key={field.id}>
             {field.label}
             {field.type === "select" || field.type === "radio" ? (
               <select
-                className="rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white"
+                className={`rounded-[18px] border px-4 py-3 ${fieldClass}`}
                 onChange={(event) => updateField(field.id, event.target.value)}
                 value={String(formValues[field.id] ?? field.options[0]?.value ?? "")}
               >
@@ -845,14 +864,14 @@ export function JobCreateForm({
               </select>
             ) : field.type === "textarea" ? (
               <textarea
-                className="min-h-[104px] rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white placeholder:text-white/35"
+                className={`min-h-[104px] rounded-[18px] border px-4 py-3 ${fieldClass}`}
                 onChange={(event) => updateField(field.id, event.target.value)}
                 placeholder={field.placeholder ?? field.label}
                 value={String(formValues[field.id] ?? "")}
               />
             ) : field.type === "number" ? (
               <input
-                className="rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white placeholder:text-white/35"
+                className={`rounded-[18px] border px-4 py-3 ${fieldClass}`}
                 max={field.max}
                 min={field.min}
                 onChange={(event) => updateField(field.id, Number(event.target.value))}
@@ -861,30 +880,30 @@ export function JobCreateForm({
                 value={Number(formValues[field.id] ?? field.min ?? 0)}
               />
             ) : field.type === "boolean" ? (
-              <span className="inline-flex items-center gap-2 rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white">
+              <span className={`inline-flex items-center gap-2 rounded-[18px] border px-4 py-3 ${fieldClass}`}>
                 <input checked={Boolean(formValues[field.id])} onChange={(event) => updateField(field.id, event.target.checked)} type="checkbox" />
                 <span>{field.helpText ?? "Enabled"}</span>
               </span>
             ) : field.type === "text" ? (
               <input
-                className="rounded-[18px] border border-white/10 bg-white/[0.05] px-4 py-3 text-white placeholder:text-white/35"
+                className={`rounded-[18px] border px-4 py-3 ${fieldClass}`}
                 onChange={(event) => updateField(field.id, event.target.value)}
                 placeholder={field.placeholder ?? field.label}
                 value={String(formValues[field.id] ?? "")}
               />
             ) : null}
-            {field.helpText ? <span className="text-xs leading-5 text-white/52">{field.helpText}</span> : null}
+            {field.helpText ? <span className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>{field.helpText}</span> : null}
           </label>
         ))}
       </div>
       ) : null}
-      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4">
+      <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Source photos</p>
-          <p className="mt-2 text-sm leading-6 text-white/68">
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Source photos</p>
+          <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
             Select at least {minAssets} uploaded image{minAssets === 1 ? "" : "s"} for this generation request. You can keep more source photos in the workspace and choose the set for each request here.
           </p>
-          <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] bg-white px-4 py-2 text-xs font-semibold text-[#14161a] active:scale-[0.98] ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
+          <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] px-4 py-2 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass} ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
             <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
             {uploadingSources ? "Uploading photos" : "Upload source photos"}
             <input
@@ -904,7 +923,7 @@ export function JobCreateForm({
             {sourceAssets.map((asset) => {
               const checked = selectedAssetIds.includes(asset.id);
               return (
-                <label className={`group relative cursor-pointer overflow-hidden rounded-[14px] border transition ${checked ? "border-white bg-white text-[#14161a]" : "border-white/10 bg-black/18 text-white"}`} key={asset.id}>
+                <label className={`group relative cursor-pointer overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")}`} key={asset.id}>
                   <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
                   <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
                     <span className="block truncate text-xs font-semibold">{asset.label}</span>
@@ -917,52 +936,52 @@ export function JobCreateForm({
         ) : loadingAssets ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" aria-busy="true" aria-label="Loading source photos">
             {[0, 1, 2, 3].map((item) => (
-              <div className="overflow-hidden rounded-[14px] border border-white/10 bg-black/18" key={item}>
-                <div className="aspect-[4/5] animate-pulse bg-white/[0.07]" />
+              <div className={`overflow-hidden rounded-[14px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/18"}`} key={item}>
+                <div className={`aspect-[4/5] animate-pulse ${light ? "bg-[#f1eadf]" : "bg-white/[0.07]"}`} />
                 <div className="p-2">
-                  <div className="h-3 w-20 rounded-full bg-white/[0.08]" />
+                  <div className={`h-3 w-20 rounded-full ${light ? "bg-[#eadfce]" : "bg-white/[0.08]"}`} />
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="rounded-[18px] border border-dashed border-white/12 bg-black/16 p-4 text-sm leading-6 text-white/68">
+          <div className={`rounded-[18px] border border-dashed p-4 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/16 text-white/68"}`}>
             <p>No source photos yet. Upload private photos here, or open the full upload manager.</p>
-            <a className="mt-3 inline-flex items-center gap-2 rounded-[14px] border border-white/10 bg-white/[0.08] px-4 py-2 text-xs font-semibold text-white" href={`/site/${siteSlug}/app/upload`}>
+            <a className={`mt-3 inline-flex items-center gap-2 rounded-[14px] border px-4 py-2 text-xs font-semibold ${light ? "border-[#171514] bg-[#171514] text-white" : "border-white/10 bg-white/[0.08] text-white"}`} href={`/site/${siteSlug}/app/upload`}>
               <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
               Open upload manager
             </a>
           </div>
         )}
       </div>
-      <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-3">
+      <div className={`grid gap-3 rounded-[16px] border p-4 sm:grid-cols-3 ${panelClass}`}>
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Credits</p>
-          <p className="mt-3 text-2xl font-semibold text-white">{createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedApp?.creditCost ?? 0}</p>
-          <p className="mt-1 text-xs leading-5 text-white/62">Held while your request is being created</p>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Credits</p>
+          <p className={`mt-3 text-2xl font-semibold ${textClass}`}>{createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedApp?.creditCost ?? 0}</p>
+          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>Held while your request is being created</p>
         </div>
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">{createMode === "theme" ? "Package" : "Tool"}</p>
-          <p className="mt-3 text-sm font-semibold text-white">{createMode === "theme" ? selectedPack?.name ?? "Photo package" : toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? selectedApp?.aiApp.name ?? "AI tool"}</p>
-          <p className="mt-1 text-xs leading-5 text-white/62">{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided private request"}</p>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? "Package" : "Tool"}</p>
+          <p className={`mt-3 text-sm font-semibold ${textClass}`}>{createMode === "theme" ? selectedPack?.name ?? "Photo package" : toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? selectedApp?.aiApp.name ?? "AI tool"}</p>
+          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided private request"}</p>
         </div>
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">Balance</p>
-          <p className="mt-3 text-2xl font-semibold text-white">{customer.balance.available}</p>
-          <p className="mt-1 text-xs leading-5 text-white/62">Available customer credits</p>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Balance</p>
+          <p className={`mt-3 text-2xl font-semibold ${textClass}`}>{customer.balance.available}</p>
+          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>Available customer credits</p>
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        <button className="rounded-[18px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !aiAppSlug || !sourceAssets.length || selectedAssetIds.length < minAssets}>
+        <button className={`rounded-[18px] px-5 py-3 text-sm font-semibold active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`} disabled={pending || !aiAppSlug || !sourceAssets.length || selectedAssetIds.length < minAssets}>
           <Play className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
           {pending ? "Starting" : modeSubmitLabel}
         </button>
-        <div className="inline-flex items-center gap-2 rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-medium text-white/70">
+        <div className={`inline-flex items-center gap-2 rounded-[18px] border px-4 py-3 text-xs font-medium ${light ? "border-[#dfd3c4] bg-white text-[#706961]" : "border-white/10 bg-white/[0.04] text-white/70"}`}>
           <Sparkles className="h-4 w-4" strokeWidth={1.8} />
           {createMode === "theme" ? "Photo package mode" : "Tool mode"}
         </div>
       </div>
-      <p className="text-sm leading-6 text-white/68">{message}</p>
+      <p className={`text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>{message}</p>
     </form>
   );
 }
