@@ -5,6 +5,8 @@ import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
+export const AIDREAMCAPES_ORIGIN = "https://www.aidreamcapes.com";
+export const AIDREAMCAPES_SITEMAP_URL = `${AIDREAMCAPES_ORIGIN}/sitemap.xml`;
 
 const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
@@ -48,6 +50,14 @@ function siteOrigin(site: Site): string {
   return `https://${domain}`;
 }
 
+function originHost(origin: string): string {
+  try {
+    return new URL(origin).host.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
 function sitemapUrl(site: Site, path: string): string {
   const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
   return path === "/" ? origin : `${origin}${path}`;
@@ -80,6 +90,21 @@ function isDreamshootSite(site: Site): boolean {
 
 function isAidreamcapesSite(site: Site): boolean {
   return site.id === AIDREAMCAPES_SITE_ID || AIDREAMCAPES_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.aidreamcapes.com";
+}
+
+function isHostForSite(site: Site, host: string): boolean {
+  const normalizedHost = host.trim().toLowerCase().split(":")[0];
+  if (!normalizedHost) return false;
+  return normalizedHost === site.primaryDomain.trim().toLowerCase() ||
+    normalizedHost === originHost(siteOrigin(site)) ||
+    (normalizedHost === "www.mydreamshoots.com" && isDreamshootSite(site)) ||
+    (normalizedHost === "mydreamshoots.com" && isDreamshootSite(site)) ||
+    (normalizedHost === "www.aidreamcapes.com" && isAidreamcapesSite(site)) ||
+    (normalizedHost === "aidreamcapes.com" && isAidreamcapesSite(site));
+}
+
+function mydreamshootsPolicySeoForSite(site: Site, slug: string) {
+  return isDreamshootSite(site) ? getMydreamshootsPolicySeo(slug) : undefined;
 }
 
 function findIndexableSites(state: PlatformState): Site[] {
@@ -164,10 +189,18 @@ export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
   return getSitemapUrlsForSite(runtime.state, site);
 }
 
+export async function getAidreamcapesSitemapUrls(): Promise<string[]> {
+  const fallback = FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? AIDREAMCAPES_ORIGIN : `${AIDREAMCAPES_ORIGIN}${path}`));
+  const runtime = await readIndexableStateAndSites();
+  if (!runtime) return fallback;
+  const site = runtime.sites.find(isAidreamcapesSite);
+  return site ? getSitemapUrlsForSite(runtime.state, site) : fallback;
+}
+
 function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
   const paths = site?.pages.map((page) => {
     const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id];
-    const policySeo = getMydreamshootsPolicySeo(page.slug);
+    const policySeo = mydreamshootsPolicySeoForSite(site, page.slug);
     const canonicalPath = normalizePath(policySeo?.canonicalPath ?? pageSeo?.canonicalPath ?? page.slug);
     const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
     return isIndexablePage(page) && !isLegacyDuplicate && pageSeo?.index !== false && policySeo?.index !== false ? canonicalPath : "";
@@ -181,7 +214,7 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
 
   for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
     const policySeo = MYDREAMSHOOTS_POLICY_SEO_BY_PATH[path];
-    if (policySeo?.index !== false) paths.push(policySeo.canonicalPath);
+    if (isDreamshootSite(site) && policySeo?.index !== false) paths.push(policySeo.canonicalPath);
   }
 
   return Array.from(new Set(paths.map((path) => sitemapUrl(site, path)))).sort((a, b) => {
@@ -196,4 +229,38 @@ export async function getStorefrontSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
   return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
+}
+
+function normalizeHostCandidate(host: string | null | undefined): string {
+  return String(host ?? "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
+}
+
+function normalizeFirstHost(hosts: string | null | undefined | Array<string | null | undefined>): string {
+  return normalizeHostCandidates(hosts)[0] ?? "";
+}
+
+function normalizeHostCandidates(hosts: string | null | undefined | Array<string | null | undefined>): string[] {
+  const candidates = Array.isArray(hosts) ? hosts : [hosts];
+  return candidates.map(normalizeHostCandidate).filter(Boolean);
+}
+
+export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
+  const normalizedHosts = normalizeHostCandidates(hosts);
+  const normalizedHost = normalizedHosts[0] ?? "";
+  if (!normalizedHost) return getMydreamshootsSitemapUrls();
+  const runtime = await readIndexableStateAndSites();
+  if (!runtime) {
+    if (normalizedHosts.some((host) => host === "www.aidreamcapes.com" || host === "aidreamcapes.com")) return getAidreamcapesSitemapUrls();
+    return getMydreamshootsSitemapUrls();
+  }
+  const site = runtime.sites.find((item) => normalizedHosts.some((host) => isHostForSite(item, host)));
+  if (site) return getSitemapUrlsForSite(runtime.state, site);
+  if (normalizedHosts.some((host) => host === "www.aidreamcapes.com" || host === "aidreamcapes.com")) return getAidreamcapesSitemapUrls();
+  return getMydreamshootsSitemapUrls();
+}
+
+export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string {
+  const normalizedHost = normalizeFirstHost(hosts);
+  if (normalizedHost === "www.aidreamcapes.com" || normalizedHost === "aidreamcapes.com") return AIDREAMCAPES_SITEMAP_URL;
+  return MYDREAMSHOOTS_SITEMAP_URL;
 }

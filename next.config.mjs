@@ -70,6 +70,30 @@ const nextConfig = {
         headers: publicStorefrontHeaders
       },
       {
+        source: "/policies/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/help",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/blog",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/blog/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/creators-circle",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/partner-registration",
+        headers: publicStorefrontHeaders
+      },
+      {
         source: "/platform",
         headers: noindexPrivateHeaders
       },
@@ -139,6 +163,30 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/pricing",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/policies/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/help",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/blog",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/blog/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/creators-circle",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/partner-registration",
         headers: publicStorefrontHeaders
       },
       {

@@ -1,5 +1,5 @@
 import { permanentRedirect, redirect } from "next/navigation";
-import { cleanHost, isPlatformHost, publicSiteSlug } from "@/lib/domain-routing";
+import { canonicalSiteSlug, cleanHost, isPlatformHost, publicSiteSlug } from "@/lib/domain-routing";
 
 function isCanonicalPublicHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
@@ -27,10 +27,18 @@ export function redirectPublicSitePathToCanonicalHost({
   const publicSlug = redirectLegacySiteSlug(siteSlug, pathname);
   if (isCanonicalPublicHost(host)) {
     const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+    const normalizedSiteSlug = canonicalSiteSlug(publicSlug);
+    const sitePrefix = `/site/${publicSlug}`;
+    const canonicalSitePrefix = `/site/${normalizedSiteSlug}`;
+    if (requestedPath === sitePrefix || requestedPath === `${sitePrefix}/` || requestedPath === canonicalSitePrefix || requestedPath === `${canonicalSitePrefix}/`) {
+      permanentRedirect("/");
+    }
     const normalizedPath =
       requestedPath === "/privacy-policy" ? "/policies/privacy" :
       requestedPath === "/terms-of-service" ? "/policies/terms" :
       requestedPath === "/cookie-policy" ? "/policies/cookies" :
+      requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
+      requestedPath === "/content-policy" ? "/policies/content" :
       requestedPath;
     permanentRedirect(normalizedPath);
   }

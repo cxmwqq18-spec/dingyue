@@ -71,6 +71,29 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
   }
 };
 
+export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/creators-circle": {
+    title: "MydreamShoots Creators Circle - affiliate and creator AI photo program",
+    description:
+      "Join the MydreamShoots Creators Circle for AI photo package campaigns, creator-ready assets, private galleries, credit-based workflows, and partner collaboration opportunities.",
+    keywords: "MydreamShoots creators circle, AI photo creator program, creator AI photo campaign, AI portrait affiliate program",
+    canonicalPath: "/creators-circle",
+    index: true,
+    follow: true
+  },
+  "/partner-registration": {
+    title: "MydreamShoots Partner Registration - apply for creator collaborations",
+    description:
+      "Apply to partner with MydreamShoots and share your audience, publishing channels, creator campaign fit, and AI photo package collaboration goals.",
+    keywords: "MydreamShoots partner registration, AI photo partner application, creator collaboration application, AI portrait campaign partner",
+    canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
+  }
+};
+
+export const dreamshootPublicSeoPagePaths = Object.keys(dreamshootPublicSeoPageMetadata);
+
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
     label: "Beauty",
@@ -723,7 +746,7 @@ export function metadataForDreamshootFallbackRoute(
   options: { primaryDomain?: string; ogImage?: string; siteName?: string } = {}
 ): Metadata {
   const normalizedPath = normalizeRouteMetadataPath(path);
-  const seed = dreamshootFallbackRouteMetadata[normalizedPath] ?? {
+  const seed = dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
     title: "MydreamShoots",
     description: "MydreamShoots is a private AI photo workspace for uploads, credits, photo packages, AI tools, and customer-only galleries.",
     keywords: "MydreamShoots, AI photo workspace, AI photo packages, private photo gallery",

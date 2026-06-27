@@ -68,6 +68,12 @@ function siteBaseUrl(site: Site): string {
   return `https://${domain}`;
 }
 
+function policySeoForSite(site: Site, slug: string) {
+  const siteToken = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name}`.toLowerCase();
+  if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot")) return undefined;
+  return getMydreamshootsPolicySeo(slug);
+}
+
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
   const value = cleanText(pathOrUrl);
   if (!value) return undefined;
@@ -86,7 +92,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
   const pages = Object.fromEntries(
     site.pages.map((page) => {
       const existing = current?.pages?.[page.id] ?? current?.pages?.[page.slug];
-      const policySeo = getMydreamshootsPolicySeo(page.slug);
+      const policySeo = policySeoForSite(site, page.slug);
       const jsonSeo = page.publishedJson.seo;
       const defaultRobots = defaultRobotsForPage(page);
       const title = pickText(jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page));
@@ -141,7 +147,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const seo = normalizeThemeSeo(site, settings);
   const settingsPageSeo = seo.pages[page.id] ?? seo.pages[page.slug];
   const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
-  const policySeo = getMydreamshootsPolicySeo(page.slug);
+  const policySeo = policySeoForSite(site, page.slug);
   const fallbackPageSeo: PageSeo = settingsPageSeo ?? {
     title: pageFallbackTitle(site, page),
     description: pageFallbackDescription(site, page),
@@ -197,7 +203,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const currentSeo = settings.seo;
   const settingsPageSeo = currentSeo?.pages?.[page.id] ?? currentSeo?.pages?.[page.slug];
   const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
-  const policySeo = getMydreamshootsPolicySeo(page.slug);
+  const policySeo = policySeoForSite(site, page.slug);
   const defaultRobots = defaultRobotsForPage(page);
   const siteTitle = cleanText(currentSeo?.siteTitle, site.branding.logoText || site.name);
   const siteDescription = cleanText(currentSeo?.siteDescription, site.branding.description);

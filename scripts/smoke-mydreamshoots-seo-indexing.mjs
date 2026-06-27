@@ -41,14 +41,17 @@ function walk(value, visit, pathSegments = []) {
 }
 
 const seoIndexing = readText("src/lib/seo-indexing.ts");
+const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
 const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
 const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
+const aidreamcapesSite = platformState.sites.find((site) => site.id === "site_aidreamcapes");
 
 assert(mydreamshootsSite, "MydreamShoots site must exist in platform state");
+assert(aidreamcapesSite, "AIDreamCapes site must exist in platform state");
 
 const slugRows = mydreamshootsSite.pages.map((page) => ({
   id: page.id,
@@ -107,6 +110,36 @@ assert(
   "sitemap URL expansion must dedupe canonical paths after static, dynamic, and required paths are merged"
 );
 assert(
+  sitemapRoute.includes('export const dynamic = "force-dynamic"') &&
+    sitemapRoute.includes('request.headers.get("x-forwarded-host")') &&
+    sitemapRoute.includes('request.headers.get("host")') &&
+    sitemapRoute.includes("getStorefrontSitemapUrlsForHost"),
+  "sitemap route must select URLs using the request host"
+);
+assert(
+  seoIndexing.includes("getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>") &&
+    seoIndexing.includes("normalizedHosts.some((host) => isHostForSite(item, host))") &&
+    seoIndexing.includes("getAidreamcapesSitemapUrls"),
+  "sitemap indexing must expose a host-aware single-site URL selector"
+);
+
+const sitemapDomains = [
+  { site: mydreamshootsSite, ownHost: "www.mydreamshoots.com", forbiddenHost: "www.aidreamcapes.com" },
+  { site: aidreamcapesSite, ownHost: "www.aidreamcapes.com", forbiddenHost: "www.mydreamshoots.com" }
+];
+for (const { site, ownHost, forbiddenHost } of sitemapDomains) {
+  assert(
+    site.primaryDomain === ownHost,
+    "sitemap site primary domain must match the expected production host",
+    { siteId: site.id, primaryDomain: site.primaryDomain, ownHost }
+  );
+  assert(
+    !(platformState.siteDomains ?? []).some((domain) => domain.siteId === site.id && domain.domain === forbiddenHost),
+    "sitemap site domain bindings must not include the other production host",
+    { siteId: site.id, forbiddenHost }
+  );
+}
+assert(
   siteToolPage.includes("permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`)") &&
     hostCatchAllPage.includes("permanentRedirect(redirectPath)") &&
     siteToolPage.includes('"ai-image-studio": "/tools"') &&
@@ -129,5 +162,9 @@ console.log(JSON.stringify({
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
   syntheticRoutes: ["/creators-circle", "/partner-registration"],
-  sitemapStrategy: "dedupe merged static, dynamic, required, and policy canonical URLs"
+  sitemapStrategy: "dedupe merged static, dynamic, required, and policy canonical URLs per request host",
+  hostAwareSitemaps: {
+    mydreamshoots: "www.mydreamshoots.com only",
+    aidreamcapes: "www.aidreamcapes.com only"
+  }
 }, null, 2));

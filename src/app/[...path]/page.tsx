@@ -16,7 +16,7 @@ import {
   renderToolPage,
   resolveToolPageForSite
 } from "@/lib/storefront-render";
-import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import type { PlatformState } from "@/lib/types";
 
@@ -91,6 +91,13 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   }
   if (path[0] === "collections" && path[1]) return metadataForSeoDirectory(site, "collection", path[1]);
   if (path[0] === "dashboard") return { title: "Workspace" };
+  if (canUseMydreamshootsSyntheticPage(site, slug)) {
+    return metadataForDreamshootFallbackRoute(site.slug, slug, {
+      primaryDomain: site.primaryDomain,
+      ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
+      siteName: site.branding.logoText || site.name
+    });
+  }
   const page = findPage(site, slug);
   return page ? metadataForSingleThemePage(site, page) : {};
 }
@@ -120,6 +127,8 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/privacy-policy") redirect("/policies/privacy");
   if (slug === "/terms-of-service") redirect("/policies/terms");
   if (slug === "/cookie-policy") redirect("/policies/cookies");
+  if (slug === "/refund-policy" || slug === "/policies/refund") redirect("/policies/refunds");
+  if (slug === "/content-policy") redirect("/policies/content");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : `/${path.join("/")}`;

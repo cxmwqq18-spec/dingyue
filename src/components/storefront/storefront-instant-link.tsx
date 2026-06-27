@@ -43,6 +43,10 @@ function internalStorefrontHref(href: LinkProps["href"], target?: string) {
   return targetUrl;
 }
 
+function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
+  return event.metaKey || event.altKey || event.ctrlKey || event.shiftKey || event.button !== 0;
+}
+
 export function StorefrontInstantLink({
   children,
   href,
@@ -71,6 +75,13 @@ export function StorefrontInstantLink({
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
+    if (event.defaultPrevented || isModifiedClick(event)) return;
+    const targetUrl = internalStorefrontHref(href, target);
+    if (!targetUrl) return;
+    event.preventDefault();
+    const nextHref = hrefFromUrl(targetUrl);
+    window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href: nextHref } }));
+    router.push(nextHref);
   }
 
   function handleFocus(event: FocusEvent<HTMLAnchorElement>) {

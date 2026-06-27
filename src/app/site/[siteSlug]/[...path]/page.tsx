@@ -10,8 +10,9 @@ import {
 } from "@/lib/storefront-state";
 import { renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { publicSiteSlug } from "@/lib/domain-routing";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration"]);
 
@@ -27,6 +28,13 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const site = state?.sites[0];
   if (!site) return {};
   if (collectionCategory) return metadataForSeoDirectory(site, "collection", collectionCategory);
+  if (dreamshootPartnerTemplateSlugs.has(slug) && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+    return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), slug, {
+      primaryDomain: site.primaryDomain,
+      ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
+      siteName: site.branding.logoText || site.name
+    });
+  }
   const page = findPage(site, slug);
   return page ? metadataForSingleThemePage(site, page) : {};
 }
@@ -49,6 +57,8 @@ export default async function SiteCatchAllPage({
   if (slug === "/privacy-policy") redirect(`/site/${publicSlug}/policies/privacy`);
   if (slug === "/terms-of-service") redirect(`/site/${publicSlug}/policies/terms`);
   if (slug === "/cookie-policy") redirect(`/site/${publicSlug}/policies/cookies`);
+  if (slug === "/refund-policy" || slug === "/policies/refund") redirect(`/site/${publicSlug}/policies/refunds`);
+  if (slug === "/content-policy") redirect(`/site/${publicSlug}/policies/content`);
   if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
   if (slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};

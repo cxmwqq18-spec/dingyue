@@ -6005,12 +6005,7 @@ function SectionView({
     const featured = [...displayCards]
       .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
       .slice(0, featuredCount);
-    const featuredIds = new Set(featured.map((card) => card.id));
-    const directory = [
-      ...featured,
-      ...displayCards.filter((card) => !featuredIds.has(card.id))
-    ];
-    const rest = directory.slice(featured.length);
+    const directory = displayCards;
     const tabs = listLines(setting(section, "tabs", "All|Headshots|Beauty|Creative|Sports|Wedding|Cultural|Couple|Seasonal|Video"));
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
     const directoryCount = directory.length;
@@ -6099,7 +6094,7 @@ function SectionView({
               </Link>
             ))}
           </div>
-          {rest.length ? (
+          {directory.length ? (
             <div className="mt-9">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
@@ -6112,7 +6107,7 @@ function SectionView({
                 </Link>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {rest.map((card, index) => (
+                {directory.map((card, index) => (
                   <Link
                     aria-label={cardLinkLabel("Choose package", card.title)}
                     className="group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"

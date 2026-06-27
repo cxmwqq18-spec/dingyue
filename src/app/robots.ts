@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
-import { MYDREAMSHOOTS_SITEMAP_URL } from "@/lib/seo-indexing";
+import { headers } from "next/headers";
+import { storefrontSitemapUrlForHost } from "@/lib/seo-indexing";
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const requestHeaders = await headers();
   return {
     rules: {
       userAgent: "*",
@@ -32,6 +34,9 @@ export default function robots(): MetadataRoute.Robots {
         "/site/*/search"
       ]
     },
-    sitemap: MYDREAMSHOOTS_SITEMAP_URL
+    sitemap: storefrontSitemapUrlForHost([
+      requestHeaders.get("x-forwarded-host"),
+      requestHeaders.get("host")
+    ])
   };
 }

@@ -1,4 +1,5 @@
 import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+import { dreamshootPublicSeoPageMetadata } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
 export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration";
@@ -15,12 +16,27 @@ function toolHref(slug: string) {
   return `/tools/${slug}`;
 }
 
-function page(pageType: string, sectionsOrder: string[], sections: ThemePageJson["sections"], version: number): ThemePageJson {
+function page(pageType: string, sectionsOrder: string[], sections: ThemePageJson["sections"], version: number, seo?: ThemePageJson["seo"]): ThemePageJson {
   return {
     pageType,
     version,
     sectionsOrder,
-    sections
+    sections,
+    ...(seo ? { seo } : {})
+  };
+}
+
+function seoForPublicPage(path: keyof typeof dreamshootPublicSeoPageMetadata): ThemePageJson["seo"] {
+  const metadata = dreamshootPublicSeoPageMetadata[path];
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords,
+    canonicalPath: metadata.canonicalPath,
+    robots: {
+      index: metadata.index,
+      follow: metadata.follow
+    }
   };
 }
 
@@ -257,7 +273,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/collections/cyberpunk" }),
       block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview hair directions, colors, and beauty styling before choosing a full image package.", category: "Beauty", meta: "20 photos", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/collections/hairstyle" }),
       block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Formal night-out photos with editorial lighting and red-carpet energy.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/collections/gala-photos" }),
-      block("catalog_travel", "catalog_pack", { title: "Travel portrait pack", description: "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", category: "Travel", meta: "24 photos", credits: "24 credits", imageUrl: assets.weddingTrip, href: "/collections/travel" })
+      block("catalog_travel", "catalog_pack", { title: "Travel portrait pack", description: "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", category: "Travel", meta: "24 photos", credits: "24 credits", imageUrl: assets.holidayTravelPack, href: "/collections/travel" })
     ]
   ),
   flow_bridge_1: section(
@@ -1009,7 +1025,8 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       pricing_1: homeSections.pricing_1,
       conversion_1: homeSections.conversion_1
     },
-    1
+    1,
+    seoForPublicPage("/creators-circle")
   ),
   "partner-registration": page(
     "content",
@@ -1020,7 +1037,8 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       trust_1: homeSections.trust_1,
       conversion_1: homeSections.conversion_1
     },
-    1
+    1,
+    seoForPublicPage("/partner-registration")
   ),
   search: page(
     "search",
