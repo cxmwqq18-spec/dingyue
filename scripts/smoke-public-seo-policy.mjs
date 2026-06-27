@@ -17,6 +17,11 @@ async function assertHeaders() {
   const headers = await nextConfig.headers();
   const bySource = new Map(headers.map((entry) => [entry.source, entry.headers]));
   for (const source of [
+    "/collections",
+    "/collections/:path*",
+    "/tools",
+    "/tools/:path*",
+    "/pricing",
     "/policies/:path*",
     "/help",
     "/blog",
@@ -24,6 +29,11 @@ async function assertHeaders() {
     "/creators-circle",
     "/partner-registration",
     "/site/:siteSlug/policies/:path*",
+    "/site/:siteSlug/collections",
+    "/site/:siteSlug/collections/:path*",
+    "/site/:siteSlug/tools",
+    "/site/:siteSlug/tools/:path*",
+    "/site/:siteSlug/pricing",
     "/site/:siteSlug/help",
     "/site/:siteSlug/blog",
     "/site/:siteSlug/blog/:path*",
@@ -53,6 +63,26 @@ assertRedirectSource(hostCatchAll, "/refund-policy", "/policies/refunds");
 assertRedirectSource(hostCatchAll, "/content-policy", "/policies/content");
 assertRedirectSource(siteCatchAll, "/refund-policy", "/policies/refunds");
 assertRedirectSource(siteCatchAll, "/content-policy", "/policies/content");
+assert.match(
+  hostCatchAll,
+  /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools"\]\)/,
+  "host catch-all should treat /collections and /tools roots as public directory pages"
+);
+assert.match(
+  hostCatchAll,
+  /PUBLIC_DIRECTORY_PAGE_SLUGS\.has\(publicPageSlug\)[\s\S]*firstSegment === "tools" && Boolean\(path\[1\]\)[\s\S]*firstSegment === "collections" && Boolean\(path\[1\]\)/,
+  "host catch-all should allow /collections and /tools roots without falling back to default site redirects"
+);
+assert.match(
+  hostCatchAll,
+  /isPlatformHost\(host\)\) redirect\(`\/platform\/\$\{path\.join\("\/"\)\}`\);[\s\S]*if \(host\?\.startsWith\("localhost"\) \|\| host\?\.startsWith\("127\.0\.0\.1"\)\)/,
+  "default /site/mydreamshoots redirect should stay limited to localhost after platform-host handling"
+);
+assert.doesNotMatch(
+  siteRouteCanonical,
+  /mydreamshoots/,
+  "canonical host redirects must not hard-code mydreamshoots for other public hosts"
+);
 assert.ok(
   siteRouteCanonical.includes("requestedPath === `${sitePrefix}/`") &&
     siteRouteCanonical.includes("requestedPath === `${canonicalSitePrefix}/`") &&

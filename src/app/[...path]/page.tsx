@@ -28,6 +28,7 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "image-studio": "/tools",
   "travel-portraits": "/tools/nature-adventure"
 };
+const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration"]);
 
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
@@ -139,6 +140,7 @@ export default async function HostStorefrontCatchAllPage({
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
   const hasKnownPublicRoute =
+    PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
     firstSegment === "tools" && Boolean(path[1]) ||
     firstSegment === "collections" && Boolean(path[1]) ||
     Boolean(findPage(site, publicPageSlug)) ||
