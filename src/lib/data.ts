@@ -35,6 +35,7 @@ import {
   weddingStoryHouseTemplates
 } from "./theme/packages/wedding-story-house";
 import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplates } from "./theme/packages/dreamshoot-ai-studio";
+import type { MydreamShootsAiStudioTemplateKey } from "./theme/packages/dreamshoot-ai-studio/templates";
 import { canonicalSiteSlug, legacySiteSlugCandidates } from "./domain-routing";
 import { getMydreamshootsPolicySeo } from "./theme/policy-seo";
 import type { ThemePackageTemplateKey } from "./theme/packages/types";
@@ -1276,7 +1277,7 @@ const sharedPages = (siteId: string): ThemePage[] => [
 
 type WeddingPageMapping = {
   idSuffix: string;
-  packageTemplate: ThemePackageTemplateKey;
+  packageTemplate: MydreamShootsAiStudioTemplateKey;
   templateKey: string;
   slug: string;
   title: string;
@@ -1306,6 +1307,8 @@ const weddingPageMappings: WeddingPageMapping[] = [
   { idSuffix: "help", packageTemplate: "help", templateKey: "help", slug: "/help", title: "Help center", pageType: "help" },
   { idSuffix: "blog", packageTemplate: "blog-list", templateKey: "blog", slug: "/blog", title: "Wedding journal", pageType: "blog" },
   { idSuffix: "blog_detail", packageTemplate: "blog-detail", templateKey: "blog-detail", slug: "/blog/preparing-source-photos", title: "Preparing source photos", pageType: "article" },
+  { idSuffix: "creators_circle", packageTemplate: "creators-circle", templateKey: "creators-circle", slug: "/creators-circle", title: "Creators Circle", pageType: "content" },
+  { idSuffix: "partner_registration", packageTemplate: "partner-registration", templateKey: "partner-registration", slug: "/partner-registration", title: "Partner Registration", pageType: "content" },
   { idSuffix: "search", packageTemplate: "search", templateKey: "search", slug: "/search", title: "Search", pageType: "search" },
   { idSuffix: "cart", packageTemplate: "cart", templateKey: "cart", slug: "/cart", title: "Cart", pageType: "cart" },
   { idSuffix: "404", packageTemplate: "404", templateKey: "404", slug: "/404", title: "404", pageType: "404" }
@@ -1368,7 +1371,10 @@ function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: str
 
 const weddingPages = (siteId: string): ThemePage[] =>
   weddingPageMappings.map((mapping) => {
-    const pageJson = weddingPageJson(mapping.packageTemplate, mapping.pageType, mapping.templateKey);
+    const pageJson =
+      mapping.packageTemplate === "creators-circle" || mapping.packageTemplate === "partner-registration"
+        ? cloneSeed(dreamshootAiStudioTemplates[mapping.packageTemplate])
+        : weddingPageJson(mapping.packageTemplate, mapping.pageType, mapping.templateKey);
     return {
       id: `${siteId}_${mapping.idSuffix}`,
       siteId,

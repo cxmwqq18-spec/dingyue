@@ -1,5 +1,5 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
-import { isExplicitSeoDirectoryContent } from "@/lib/dreamshoot-seo-content";
+import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { MYDREAMSHOOTS_POLICY_SEO_BY_PATH, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -8,6 +8,8 @@ export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
 
 const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
+const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
+const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
 const FALLBACK_INDEXABLE_PATHS = [
   "/",
   "/pricing",
@@ -39,8 +41,16 @@ function normalizePath(slug: string): string {
   return `/${value.replace(/^\/+/, "").replace(/\/+$/, "")}`;
 }
 
-function sitemapUrl(path: string): string {
-  return path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`;
+function siteOrigin(site: Site): string {
+  const domain = site.primaryDomain.trim();
+  if (!domain || domain.includes("localhost")) return "";
+  if (domain.startsWith("http://") || domain.startsWith("https://")) return domain.replace(/\/$/, "");
+  return `https://${domain}`;
+}
+
+function sitemapUrl(site: Site, path: string): string {
+  const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
+  return path === "/" ? origin : `${origin}${path}`;
 }
 
 function slugifySegment(value: string): string {
@@ -68,8 +78,14 @@ function isDreamshootSite(site: Site): boolean {
   return site.id === DREAMSHOOT_SITE_ID || DREAMSHOOT_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.mydreamshoots.com";
 }
 
-function findDreamshootSite(state: PlatformState): Site | undefined {
-  return state.sites.find((site) => site.status === "active" && isDreamshootSite(site)) ?? state.sites.find(isDreamshootSite);
+function isAidreamcapesSite(site: Site): boolean {
+  return site.id === AIDREAMCAPES_SITE_ID || AIDREAMCAPES_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.aidreamcapes.com";
+}
+
+function findIndexableSites(state: PlatformState): Site[] {
+  const candidates = state.sites.filter((site) => isDreamshootSite(site) || isAidreamcapesSite(site));
+  const activeFirst = [...candidates].sort((a, b) => Number(b.status === "active") - Number(a.status === "active"));
+  return Array.from(new Map(activeFirst.map((site) => [site.id, site])).values());
 }
 
 function isIndexablePage(page: ThemePage): boolean {
@@ -80,23 +96,23 @@ function isIndexablePage(page: ThemePage): boolean {
   return !BLOCKED_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
 }
 
-function isIndexableToolPath(path: string): boolean {
+function isIndexableToolPath(site: Site, path: string): boolean {
   const normalized = normalizePath(path);
-  return normalized.startsWith("/tools/") && !NON_INDEXABLE_TOOL_PATHS.has(normalized) && isExplicitSeoDirectoryContent("tool", normalized);
+  return normalized.startsWith("/tools/") && !NON_INDEXABLE_TOOL_PATHS.has(normalized) && isExplicitSeoDirectoryContentForSite(site, "tool", normalized);
 }
 
-function addToolPath(paths: Set<string>, path: string): void {
+function addToolPath(site: Site, paths: Set<string>, path: string): void {
   const normalized = normalizePath(path);
-  if (isIndexableToolPath(normalized)) paths.add(normalized);
+  if (isIndexableToolPath(site, normalized)) paths.add(normalized);
 }
 
 function collectionPathForPack(pack: CreativePack): string {
   return pathFromSlug("/collections", pack.categoryRecord?.slug || pack.category || pack.name);
 }
 
-function addCollectionPath(paths: Set<string>, path: string): void {
+function addCollectionPath(site: Site, paths: Set<string>, path: string): void {
   const normalized = normalizePath(path);
-  if (normalized.startsWith("/collections/") && isExplicitSeoDirectoryContent("collection", normalized)) paths.add(normalized);
+  if (normalized.startsWith("/collections/") && isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) paths.add(normalized);
 }
 
 function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[] {
@@ -105,44 +121,50 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
 
   for (const pack of activePacks) {
     const collectionPath = collectionPathForPack(pack);
-    if (collectionPath) addCollectionPath(paths, collectionPath);
-    addToolPath(paths, pathFromSlug("/tools", pack.aiAppSlug));
+    if (collectionPath) addCollectionPath(site, paths, collectionPath);
+    addToolPath(site, paths, pathFromSlug("/tools", pack.aiAppSlug));
   }
 
   for (const siteApp of state.siteAiApps.filter((app) => app.siteId === site.id && app.enabled)) {
-    addToolPath(paths, pathFromSlug("/tools", siteApp.aiApp.slug));
+    addToolPath(site, paths, pathFromSlug("/tools", siteApp.aiApp.slug));
   }
 
   const toolBlocks = site.pages.flatMap((page) => blocksFromPage(page.publishedJson, new Set(["tool_card", "catalog_pack", "feature_tab", "occasion", "package"])));
   for (const block of toolBlocks) {
     const href = blockHref(block);
-    if (href.startsWith("/tools/")) addToolPath(paths, href);
+    if (href.startsWith("/tools/")) addToolPath(site, paths, href);
   }
 
   return Array.from(paths);
 }
 
-async function readDreamshootStateAndSite(): Promise<{ state: PlatformState; site: Site } | undefined> {
+async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
   try {
     const state = await readStorefrontPlatformStateFromDatabase();
-    const site = findDreamshootSite(state);
-    if (site) return { state, site };
+    const sites = findIndexableSites(state);
+    if (sites.length) return { state, sites };
   } catch {
     // Fall through to the legacy JSON state so robots/sitemap stay available during data migrations.
   }
 
   try {
     const state = await readStorefrontPlatformStateFromLegacyJson();
-    const site = findDreamshootSite(state);
-    return site ? { state, site } : undefined;
+    const sites = findIndexableSites(state);
+    return sites.length ? { state, sites } : undefined;
   } catch {
     return undefined;
   }
 }
 
 export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
-  const runtime = await readDreamshootStateAndSite();
-  const site = runtime?.site;
+  const runtime = await readIndexableStateAndSites();
+  if (!runtime) return FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
+  const site = runtime?.sites.find(isDreamshootSite);
+  if (!site) return FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
+  return getSitemapUrlsForSite(runtime.state, site);
+}
+
+function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
   const paths = site?.pages.map((page) => {
     const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id];
     const policySeo = getMydreamshootsPolicySeo(page.slug);
@@ -151,12 +173,10 @@ export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
     return isIndexablePage(page) && !isLegacyDuplicate && pageSeo?.index !== false && policySeo?.index !== false ? canonicalPath : "";
   }).filter(Boolean) ?? FALLBACK_INDEXABLE_PATHS;
 
-  if (runtime) {
-    paths.push(...collectDynamicIndexablePaths(runtime.state, runtime.site));
-  }
+  paths.push(...collectDynamicIndexablePaths(state, site));
 
   for (const path of REQUIRED_INDEXABLE_TOOL_PATHS) {
-    paths.push(path);
+    if (isExplicitSeoDirectoryContentForSite(site, "tool", path)) paths.push(path);
   }
 
   for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
@@ -164,9 +184,16 @@ export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
     if (policySeo?.index !== false) paths.push(policySeo.canonicalPath);
   }
 
-  return Array.from(new Set(paths.map(sitemapUrl))).sort((a, b) => {
-    if (a === MYDREAMSHOOTS_ORIGIN) return -1;
-    if (b === MYDREAMSHOOTS_ORIGIN) return 1;
+  return Array.from(new Set(paths.map((path) => sitemapUrl(site, path)))).sort((a, b) => {
+    const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
+    if (a === origin) return -1;
+    if (b === origin) return 1;
     return a.localeCompare(b);
   });
+}
+
+export async function getStorefrontSitemapUrls(): Promise<string[]> {
+  const runtime = await readIndexableStateAndSites();
+  if (!runtime) return FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
+  return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
 }

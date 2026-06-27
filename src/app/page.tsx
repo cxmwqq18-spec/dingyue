@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, L
 import {
   readStorefrontAccessSummaryFromDatabase,
   readStorefrontPlatformStateFromDatabase,
+  readStorefrontPlatformStateFromLegacyJson,
   readStorefrontPublicRuntimeStateByHostFromDatabase,
   readStorefrontSiteByHostFromDatabase
 } from "@/lib/storefront-state";
@@ -80,7 +81,7 @@ async function getAccessSummaryWithFallback() {
   try {
     return await readStorefrontAccessSummaryFromDatabase();
   } catch {
-    const platformState = await readStorefrontPlatformStateFromDatabase();
+    const platformState = await readStorefrontPlatformStateFromLegacyJson();
     return {
       sites: platformState.sites.slice(0, 4).map((site) => ({
         id: site.id,

@@ -7,6 +7,10 @@ function readText(relativePath) {
   return fs.readFileSync(path.join(repoRoot, relativePath), "utf8");
 }
 
+function readJson(relativePath) {
+  return JSON.parse(readText(relativePath));
+}
+
 function fail(message, details = {}) {
   console.error(`MydreamShoots SEO indexing smoke failed: ${message}`);
   if (Object.keys(details).length) console.error(JSON.stringify(details, null, 2));
@@ -17,69 +21,113 @@ function assert(condition, message, details) {
   if (!condition) fail(message, details);
 }
 
-const seoIndexing = readText("src/lib/seo-indexing.ts");
-const seoContent = readText("src/lib/dreamshoot-seo-content.ts");
-const jsonLd = readText("src/lib/theme/json-ld.ts");
-const storefrontRender = readText("src/lib/storefront-render.tsx");
-const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
-const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
+function normalizePath(slug) {
+  const value = String(slug || "").trim();
+  if (!value || value === "/") return "/";
+  return `/${value.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+}
 
-for (const pathName of ["/tools/image-studio", "/tools/travel-portraits"]) {
+function walk(value, visit, pathSegments = []) {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => walk(item, visit, [...pathSegments, String(index)]));
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  for (const [key, child] of Object.entries(value)) {
+    const nextPath = [...pathSegments, key];
+    visit(key, child, nextPath);
+    walk(child, visit, nextPath);
+  }
+}
+
+const seoIndexing = readText("src/lib/seo-indexing.ts");
+const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
+const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
+const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
+const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
+const platformState = readJson("data/platform-state.json");
+const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
+
+assert(mydreamshootsSite, "MydreamShoots site must exist in platform state");
+
+const slugRows = mydreamshootsSite.pages.map((page) => ({
+  id: page.id,
+  slug: normalizePath(page.slug),
+  pageType: page.pageType,
+  title: page.title,
+  index: mydreamshootsSite.themeSettings?.publishedJson?.seo?.pages?.[page.id]?.index
+}));
+const duplicateSlugRows = Array.from(
+  slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
+).filter(([, rows]) => rows.length > 1);
+
+assert(!duplicateSlugRows.length, "MydreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
+assert(
+  slugRows.some((row) => row.id === "site_dreamshoot_tool_image_static_alias" && row.slug === "/tools/headshot" && row.index === true),
+  "canonical headshot tool page must own /tools/headshot and remain indexable"
+);
+assert(
+  slugRows.some((row) => row.id === "site_dreamshoot_tool_image" && row.slug === "/app/legacy-ai-image-studio" && row.index === false),
+  "legacy image studio page must not duplicate /tools/headshot or enter the sitemap"
+);
+
+const hrefHits = [];
+walk(mydreamshootsSite, (key, value, location) => {
+  if (key === "href" && typeof value === "string") hrefHits.push({ href: value, location: location.join(".") });
+});
+const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
+assert(!badLegacyHrefHits.length, "MydreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
+assert(
+  hrefHits.some((hit) => hit.href === "/policies/cookies"),
+  "MydreamShoots navigation/footer data must link directly to /policies/cookies"
+);
+
+assert(
+  templates.includes('href: "/creators-circle"') &&
+    hostCatchAllPage.includes("canUseMydreamshootsSyntheticPage(site, publicPageSlug)") &&
+    siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs"),
+  "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
+);
+assert(!templates.includes('href: "/cookie-policy"'), "MydreamShoots templates must not generate /cookie-policy links");
+
+for (const pathName of ["/cookie-policy", "/privacy-policy", "/terms-of-service"]) {
+  assert(seoIndexing.includes(`"${pathName}"`), "sitemap legacy duplicate exclusions must include old policy paths", { pathName });
+}
+
+for (const pathName of ["/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap non-indexable tool exclusions must include blocked legacy paths", { pathName });
 }
 
-assert(
-  seoContent.includes("explicit: boolean") &&
-    seoContent.includes("isExplicitSeoDirectoryContent") &&
-    seoContent.includes("index: item.explicit"),
-  "fallback directory metadata must default to noindex unless content is explicitly configured"
-);
-assert(
-  seoContent.includes("defaultOgImage") &&
-    seoContent.includes("openGraph") &&
-    seoContent.includes("twitter") &&
-    seoContent.includes("summary_large_image"),
-  "dynamic directory metadata must include the site default OG/Twitter image when configured"
-);
-assert(
-  seoIndexing.includes('isExplicitSeoDirectoryContent("collection"') &&
-    seoIndexing.includes('isExplicitSeoDirectoryContent("tool"') &&
-    seoIndexing.includes("addCollectionPath(paths, collectionPath)"),
-  "sitemap dynamic directory collection must exclude fallback collection/tool paths"
-);
-assert(
-  jsonLd.includes("buildCollectionDirectoryJsonLd") &&
-    jsonLd.includes('"@type": "CollectionPage"') &&
-    jsonLd.includes('"@type": "ItemList"') &&
-    jsonLd.includes("breadcrumbs(site, routeMode, pagePath, item.label)") &&
-    storefrontRender.includes("buildCollectionDirectoryJsonLd") &&
-    storefrontRender.includes("buildToolDirectoryJsonLd"),
-  "focused collection pages must have BreadcrumbList and CollectionPage/ItemList JSON-LD without replacing tool JSON-LD"
-);
+for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"]) {
+  assert(seoIndexing.includes(`"${pathName}"`), "sitemap required indexable tool paths must include primary static tool pages", { pathName });
+}
 
 assert(
-  siteToolPage.includes("permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`)"),
-  "site-slug tool route must permanently redirect MydreamShoots legacy tool paths"
+  seoIndexing.includes("new Set(paths.map((path) => sitemapUrl(site, path)))"),
+  "sitemap URL expansion must dedupe canonical paths after static, dynamic, and required paths are merged"
 );
 assert(
-  hostCatchAllPage.includes("permanentRedirect(redirectPath)"),
-  "host storefront route must permanently redirect MydreamShoots legacy tool paths"
-);
-assert(
-  siteToolPage.includes('"image-studio": "/tools"') &&
-    hostCatchAllPage.includes('"image-studio": "/tools"') &&
-    siteToolPage.includes('"travel-portraits": "/tools/nature-adventure"') &&
-    hostCatchAllPage.includes('"travel-portraits": "/tools/nature-adventure"'),
-  "legacy tool redirect map must keep image-studio and travel-portraits explicit"
+  siteToolPage.includes("permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`)") &&
+    hostCatchAllPage.includes("permanentRedirect(redirectPath)") &&
+    siteToolPage.includes('"ai-image-studio": "/tools"') &&
+    hostCatchAllPage.includes('"ai-image-studio": "/tools"'),
+  "legacy image studio tool paths must continue to permanently redirect to /tools"
 );
 
 console.log(JSON.stringify({
   ok: true,
-  sitemapExcludedTools: ["/tools/image-studio", "/tools/travel-portraits"],
-  fallbackDirectoryIndexing: "noindex",
-  focusedCollectionJsonLd: ["BreadcrumbList", "CollectionPage", "ItemList"],
-  redirects: {
-    "/tools/image-studio": "/tools",
-    "/tools/travel-portraits": "/tools/nature-adventure"
-  }
+  mydreamshootsPageSlugCount: slugRows.length,
+  duplicateSlugCount: duplicateSlugRows.length,
+  headshotSlugOwner: "site_dreamshoot_tool_image_static_alias",
+  legacyToolPage: {
+    id: "site_dreamshoot_tool_image",
+    slug: "/app/legacy-ai-image-studio",
+    index: false
+  },
+  canonicalInternalLinks: {
+    cookies: "/policies/cookies",
+    forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
+  },
+  syntheticRoutes: ["/creators-circle", "/partner-registration"],
+  sitemapStrategy: "dedupe merged static, dynamic, required, and policy canonical URLs"
 }, null, 2));

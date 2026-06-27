@@ -153,6 +153,7 @@ function summaryCounts(state) {
     aiApps: asArray(state.aiApps).length,
     siteAiApps: asArray(state.siteAiApps).length,
     gatewayGroups: asArray(state.aiGatewayGroups).length,
+    creativePackCategories: asArray(state.creativePackCategories).length,
     creativePacks: asArray(state.creativePacks).length,
     mediaAssets: asArray(state.mediaAssets).length,
     themePages: sitePages(state).length,
@@ -392,6 +393,26 @@ const specs = [
     })
   },
   {
+    key: "creativePackCategories",
+    model: "creativePackCategory",
+    items: (state) => asArray(state.creativePackCategories),
+    data: (category) => ({
+      id: category.id,
+      siteId: category.siteId,
+      parentId: category.parentId,
+      slug: category.slug,
+      label: category.label,
+      description: category.description,
+      heroTitle: category.heroTitle,
+      heroSubtitle: category.heroSubtitle,
+      icon: category.icon ?? category.iconName,
+      imageUrl: category.imageUrl,
+      sortOrder: category.sortOrder ?? 0,
+      status: category.status ?? "active",
+      createdAt: toDate(category.createdAt)
+    })
+  },
+  {
     key: "creativePacks",
     model: "creativePack",
     items: (state) => asArray(state.creativePacks),
@@ -401,7 +422,9 @@ const specs = [
       name: pack.name,
       headline: pack.headline,
       description: pack.description,
+      prompt: pack.prompt,
       category: pack.category,
+      categoryId: pack.categoryId,
       aiAppSlug: pack.aiAppSlug,
       status: pack.status,
       creditCost: pack.creditCost ?? 0,
@@ -409,6 +432,8 @@ const specs = [
       trainingRequired: Boolean(pack.trainingRequired),
       generationCount: pack.generationCount ?? 0,
       conversionRate: pack.conversionRate ?? 0,
+      imageUrl: pack.imageUrl,
+      galleryImages: json(pack.galleryImages, undefined),
       createdAt: toDate(pack.createdAt)
     })
   },

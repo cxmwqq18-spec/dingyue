@@ -28,9 +28,14 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "image-studio": "/tools",
   "travel-portraits": "/tools/nature-adventure"
 };
+const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration"]);
 
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function canUseMydreamshootsSyntheticPage(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
+  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && isMydreamshootsSite(site);
 }
 
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
@@ -127,7 +132,8 @@ export default async function HostStorefrontCatchAllPage({
   const hasKnownPublicRoute =
     firstSegment === "tools" && Boolean(path[1]) ||
     firstSegment === "collections" && Boolean(path[1]) ||
-    Boolean(findPage(site, publicPageSlug));
+    Boolean(findPage(site, publicPageSlug)) ||
+    canUseMydreamshootsSyntheticPage(site, publicPageSlug);
   if (!needsPrivateRuntime && !hasKnownPublicRoute) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {

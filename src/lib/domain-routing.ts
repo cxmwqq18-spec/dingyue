@@ -1,6 +1,8 @@
 import type { PlatformState, Site } from "@/lib/types";
 
-const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz"]);
+type SiteRoutingIdentity = Pick<Site, "slug" | "primaryDomain">;
+
+const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz", "aidreamcapes.xyz.com"]);
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
   dreamshoot: "mydreamshoots"
 };
@@ -52,7 +54,7 @@ export function getSiteByHostCandidatesFromState(state: PlatformState, hosts: Ar
   return undefined;
 }
 
-export function hostAwareSitePath(site: Site, path = "/"): string {
+export function hostAwareSitePath(site: SiteRoutingIdentity, path = "/"): string {
   const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
   const primaryHost = cleanHost(site.primaryDomain);
   const hasProductionDomain = Boolean(primaryHost && primaryHost !== "localhost" && primaryHost !== "127.0.0.1" && !primaryHost.endsWith(".localhost"));
@@ -62,7 +64,7 @@ export function hostAwareSitePath(site: Site, path = "/"): string {
   return `/site/${slug}${normalizedPath}`;
 }
 
-export function publicSiteUrl(site: Site, path = "/"): string {
+export function publicSiteUrl(site: SiteRoutingIdentity, path = "/"): string {
   return publicSiteUrlFromParts({ slug: publicSiteSlug(site.slug), primaryDomain: site.primaryDomain }, path);
 }
 

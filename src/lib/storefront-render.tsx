@@ -26,7 +26,7 @@ import {
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
-import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
@@ -35,6 +35,7 @@ import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-
 import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
+const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration"]);
 
 type SiteRenderData = {
   creativePacks: ReturnType<typeof getSiteCreativePacksFromState>;
@@ -120,7 +121,7 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
-  const packLimit = slug === "/" ? 24 : slug === "/collections" ? 48 : 18;
+  const packLimit = slug === "/" || slug === "/collections" ? 48 : 18;
   return {
     creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
     mediaAssets: renderData.mediaAssets,
@@ -896,7 +897,7 @@ export async function renderStorefrontPage({
   const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const directPage = findPage(currentSite, slug);
+  const directPage = findPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
   if (!directPage) notFound();
   const page = directPage;
   if (isFocusedCollectionPage) {
@@ -909,9 +910,19 @@ export async function renderStorefrontPage({
     : slug === "/tools" && /dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`)
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
-    ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true })
+    ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
     : page.publishedJson;
-  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  let pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  if ((slug === "/" || slug === "/collections") && !pageRenderData.creativePacks.length) {
+    pageRenderData = {
+      ...pageRenderData,
+      creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, 48)).map((pack) => ({
+        ...pack,
+        prompt: undefined,
+        galleryImages: []
+      }))
+    };
+  }
   const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
     ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
     : await getLightCustomerRuntime(state, currentSite.id, sessionId);
@@ -946,6 +957,23 @@ export async function renderStorefrontPage({
         }),
     lightweightChrome: false
   });
+}
+
+function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | undefined {
+  if (!dreamshootPartnerTemplateSlugs.has(slug)) return undefined;
+  if (!/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) return undefined;
+  const templateKey = slug === "/partner-registration" ? "partner-registration" : "creators-circle";
+  const pageJson = dreamshootAiStudioTemplates[templateKey];
+  return {
+    id: `${site.id}_${templateKey}_synthetic`,
+    siteId: site.id,
+    pageType: pageJson.pageType,
+    templateKey,
+    slug,
+    title: templateKey === "partner-registration" ? "Partner Registration" : "Creators Circle",
+    draftJson: pageJson,
+    publishedJson: pageJson
+  };
 }
 
 export async function renderStorefrontLoginPage({
@@ -1200,7 +1228,7 @@ export async function renderToolPage({
   const toolRenderData = trimToolDetailRenderData(renderData);
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
-  const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug);
+  const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = trimRenderDataForPage(toolRenderData, pageJson, page.slug);
   return renderThemePage({
     currentSite,

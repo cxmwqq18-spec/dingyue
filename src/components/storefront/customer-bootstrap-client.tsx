@@ -5,7 +5,7 @@ import { CustomerAccountShell } from "@/components/storefront/customer-account-s
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData } from "@/lib/types";
 
-type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding">;
+type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {
   site: CustomerBootstrapSite;
   customer: PublicCustomer;

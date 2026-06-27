@@ -673,7 +673,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
   return {
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 8 : profile === "home" ? 6 : 12,
-    creativePacks: profile === "collection-detail" ? 4 : profile === "collections" ? 24 : profile === "tools" ? 18 : profile === "home" ? 24 : 12,
+    creativePacks: profile === "collection-detail" ? 4 : profile === "collections" ? 48 : profile === "tools" ? 18 : profile === "home" ? 48 : 12,
     mediaAssets: profile === "home" ? 24 : profile === "workspace" ? 40 : 0
   };
 }
@@ -715,6 +715,16 @@ export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: strin
     () => loadStorefrontPublicRuntimeState({ id: siteId }, pageSlugs, contextSlug),
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
+});
+
+export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: string, take = 48) => {
+  const rows = await prisma.creativePack.findMany({
+    where: { siteId, status: "active" },
+    select: publicRuntimeCreativePackSelect,
+    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+    take
+  });
+  return rows.map(toCreativePack);
 });
 
 export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug: string, collectionSlug: string): Promise<PlatformState | undefined> => {
@@ -1427,14 +1437,14 @@ export async function getSiteIdBySlugRelational(slug: string): Promise<string | 
 }
 
 export type CustomerWorkspaceBootstrapRelational = {
-  site: Pick<Site, "id" | "name" | "slug" | "branding">;
+  site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain">;
   siteAiApps: SiteAiApp[];
   creativePacks: CreativePack[];
 };
 
 export async function getCustomerWorkspaceSiteShellRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational["site"] | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
-  return siteReadCache.get(`workspace-site-shell:${canonicalSlug}`, async () => {
+  return siteReadCache.get<CustomerWorkspaceBootstrapRelational["site"] | undefined>(`workspace-site-shell:${canonicalSlug}`, async () => {
     const site = await prisma.site.findFirst({
       where: { slug: { in: legacySiteSlugCandidates(slug) } },
       orderBy: { updatedAt: "desc" },
@@ -1442,6 +1452,7 @@ export async function getCustomerWorkspaceSiteShellRelational(slug: string): Pro
         id: true,
         name: true,
         slug: true,
+        primaryDomain: true,
         branding: true
       }
     });
@@ -1450,6 +1461,7 @@ export async function getCustomerWorkspaceSiteShellRelational(slug: string): Pro
           id: site.id,
           name: site.name,
           slug: site.slug,
+          primaryDomain: site.primaryDomain,
           branding: cloneJson(site.branding) as Site["branding"]
         }
       : undefined;
@@ -1458,7 +1470,7 @@ export async function getCustomerWorkspaceSiteShellRelational(slug: string): Pro
 
 export async function getCustomerWorkspaceBootstrapRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
-  return siteReadCache.get(`workspace-bootstrap:${canonicalSlug}`, async () => {
+  return siteReadCache.get<CustomerWorkspaceBootstrapRelational | undefined>(`workspace-bootstrap:${canonicalSlug}`, async () => {
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
@@ -1481,6 +1493,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         id: site.id,
         name: site.name,
         slug: site.slug,
+        primaryDomain: site.primaryDomain,
         branding: site.branding
       },
       siteAiApps: siteAiApps.map(toSiteAiApp),

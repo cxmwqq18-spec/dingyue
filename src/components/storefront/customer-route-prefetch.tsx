@@ -8,8 +8,8 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
   const pathKey = paths.filter(Boolean).join("|");
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 2);
+    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH !== "1") return;
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 1);
     const uniquePaths = Array.from(new Set(pathKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 4);
     if (!uniquePaths.length) return;
     let cancelled = false;

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronRight, X } from "lucide-react";
 
@@ -18,19 +18,21 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const prefetchedRef = useRef(false);
+  const prefetchTimerRef = useRef<number | undefined>(undefined);
   const panelId = useId();
   const prefetchKey = prefetchPaths.filter(Boolean).join("|");
 
-  function prefetchMenuPaths() {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
+  const prefetchMenuPaths = useCallback(() => {
+    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH !== "1") return;
     if (prefetchedRef.current) return;
     prefetchedRef.current = true;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 2);
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 1);
     const uniquePaths = Array.from(new Set(prefetchKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 6);
-    for (const path of uniquePaths) {
-      router.prefetch(path);
-    }
-  }
+    if (!uniquePaths.length) return;
+    prefetchTimerRef.current = window.setTimeout(() => {
+      for (const path of uniquePaths) router.prefetch(path);
+    }, 250);
+  }, [prefetchKey, router]);
 
   useEffect(() => {
     if (!open) return;
@@ -50,9 +52,12 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, [open]);
 
   useEffect(() => {
-    if (!open || process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
+    if (!open || process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH !== "1") return;
     prefetchMenuPaths();
-  }, [open, prefetchKey, router]);
+    return () => {
+      if (prefetchTimerRef.current) window.clearTimeout(prefetchTimerRef.current);
+    };
+  }, [open, prefetchMenuPaths]);
 
   return (
     <div

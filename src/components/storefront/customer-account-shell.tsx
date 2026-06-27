@@ -6,12 +6,13 @@ import { CustomerShellHeader } from "@/components/storefront/customer-shell-head
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { PublicCustomer, Site, ThemeRuntimeData } from "@/lib/types";
 
-type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding">;
+type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 
 export function CustomerAccountShell({ site, customer, initialRuntime }: { site: CustomerAccountSite; customer: PublicCustomer; initialRuntime?: ThemeRuntimeData }) {
-  const basePath = `/site/${site.slug}`;
+  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [`${basePath}/app`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
 
   return (

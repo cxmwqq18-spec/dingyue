@@ -8,9 +8,10 @@ import { CustomerShellHeader } from "@/components/storefront/customer-shell-head
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData } from "@/lib/types";
 
-type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding">;
+type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerWorkspacePanel = "overview" | "create" | "upload";
 type WorkspaceRuntimeState =
   | { status: "loading"; runtime?: undefined; error?: undefined }
@@ -78,7 +79,7 @@ export function CustomerWorkspaceShell({
   initialToolId?: string;
   initialPanel?: CustomerWorkspacePanel;
 }) {
-  const basePath = `/site/${site.slug}`;
+  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [`${basePath}/account`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
   const runtimeState = useWorkspaceRuntime(site.id);
   const hydratedAssets = runtimeState.status === "ready" ? runtimeState.runtime.assets ?? [] : assets;

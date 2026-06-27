@@ -1,7 +1,7 @@
 import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
-export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools";
+export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -691,7 +691,82 @@ const templateSections = {
     title: "How to prepare your best source photos for AI scenes",
     body: "Explain lighting, angles, expressions, clothing variety, privacy expectations, and how stronger source photos produce cleaner final packs.",
     headingLevel: "h1"
-  })
+  }),
+  creators_intro_1: section("rich_text", {
+    eyebrow: "Creator channel",
+    title: "Earn with AI photo stories your audience can actually try.",
+    body: "MydreamShoots partners with creators, community builders, photographers, coaches, and niche publishers who can introduce private AI photo packages in a useful, trustworthy way. Share themed photo packs, prompt ideas, before-and-after stories, and seasonal campaign links while your audience keeps their uploads and albums inside their own account.",
+    headingLevel: "h1",
+    tone: "dark",
+    imageUrl: assets.heroGridSocial,
+    primaryCta: "Apply as a partner",
+    primaryHref: "/partner-registration",
+    secondaryCta: "Explore photo packages",
+    secondaryHref: "/collections"
+  }, [
+    block("creator_intro_commission", "rich_text_card", { meta: "Channel", title: "Creator-ready campaigns", description: "Launch content around headshots, fan photos, gala portraits, avatars, and seasonal photo packs without building a photo product yourself." }),
+    block("creator_intro_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside MydreamShoots, so you promote the experience without handling personal photos." }),
+    block("creator_intro_assets", "rich_text_card", { meta: "Assets", title: "Content angles included", description: "Use ready-made page links, package themes, talking points, and social story ideas that match our visual catalog." }),
+    block("creator_intro_measurement", "rich_text_card", { meta: "Growth", title: "Room for paid channels", description: "We can reserve specific partner routes for influencers, newsletter operators, paid media tests, and community collaborations." })
+  ]),
+  creators_fit_1: section("rich_text", {
+    eyebrow: "Who fits",
+    title: "Built for creators who explain style, identity, and transformation.",
+    body: "The strongest partners show real use cases: a founder updating a profile photo, a fan making match-day images, a creator testing avatar styles, or a small team refreshing campaign visuals. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
+    imageUrl: assets.proofBusinessFounder,
+    primaryCta: "Start the application",
+    primaryHref: "/partner-registration",
+    secondaryCta: "View pricing",
+    secondaryHref: "/pricing"
+  }, [
+    block("creator_fit_social", "rich_text_card", { meta: "Social", title: "Short-form creators", description: "Reels, TikTok, Shorts, and carousel creators who can demonstrate package ideas clearly." }),
+    block("creator_fit_newsletter", "rich_text_card", { meta: "Community", title: "Newsletter and group owners", description: "Operators with engaged audiences around careers, sports fandom, personal branding, or creative tools." }),
+    block("creator_fit_photo", "rich_text_card", { meta: "Studio", title: "Photographers and consultants", description: "Professionals who want an AI add-on for profile refreshes, mood boards, and campaign concepts." }),
+    block("creator_fit_paid", "rich_text_card", { meta: "Media", title: "Performance partners", description: "Paid media, SEO, and affiliate teams that can test a dedicated channel with clean attribution." })
+  ]),
+  creators_steps_1: section("rich_text", {
+    eyebrow: "How it works",
+    title: "A simple path from application to live campaign.",
+    body: "Tell us about your audience, preferred channels, publishing cadence, and the photo package angles you want to test. Approved partners receive a dedicated route, campaign notes, and a way to coordinate launch timing with the MydreamShoots team.",
+    tone: "warm"
+  }, [
+    block("creator_step_apply", "rich_text_card", { meta: "01", title: "Apply", description: "Submit your creator profile, social links, audience notes, and the kind of campaign you want to run." }),
+    block("creator_step_match", "rich_text_card", { meta: "02", title: "Match", description: "We review fit, confirm the channel, and suggest photo packages that make sense for your audience." }),
+    block("creator_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner route that sends customers to MydreamShoots packages, pricing, or a specific offer." }),
+    block("creator_step_learn", "rich_text_card", { meta: "04", title: "Learn", description: "Track what resonates, refine the story, and plan follow-up drops around seasonal or niche photo themes." })
+  ]),
+  partner_form_1: section("rich_text", {
+    eyebrow: "Partner application",
+    title: "Apply for a reserved MydreamShoots promotion channel.",
+    body: "Use this application to tell us who you reach, how you publish, and which MydreamShoots photo experiences would fit your audience. This page is prepared as the partner-registration destination so campaigns can route applicants directly here.",
+    headingLevel: "h1",
+    layout: "application_form",
+    tone: "dark",
+    imageUrl: assets.proofCinematicWorlds,
+    primaryCta: "Email partnership details",
+    primaryHref: "mailto:partners@mydreamshoots.com?subject=MydreamShoots%20partner%20application",
+    secondaryCta: "Back to Creators Circle",
+    secondaryHref: "/creators-circle"
+  }, [
+    block("partner_field_name", "form_field", { label: "Full name", placeholder: "Your name", fieldType: "text", required: true }),
+    block("partner_field_email", "form_field", { label: "Email address", placeholder: "you@example.com", fieldType: "email", required: true }),
+    block("partner_field_channels", "form_field", { label: "Primary channel links", placeholder: "Instagram, TikTok, YouTube, newsletter, website, or community links", fieldType: "textarea", required: true }),
+    block("partner_field_audience", "form_field", { label: "Audience and niche", placeholder: "Tell us who follows you and why AI photo packages fit them.", fieldType: "textarea", required: true }),
+    block("partner_field_cadence", "form_field", { label: "Publishing cadence", placeholder: "Weekly videos, newsletter drops, paid campaigns, community posts...", fieldType: "text", required: false }),
+    block("partner_field_ideas", "form_field", { label: "Campaign ideas", placeholder: "Which packages, stories, or seasonal angles would you promote first?", fieldType: "textarea", required: false }),
+    block("partner_field_terms", "form_field", { label: "I confirm that my promotions will respect privacy, platform rules, and truthful AI disclosure.", fieldType: "checkbox", required: true })
+  ]),
+  partner_expectations_1: section("rich_text", {
+    eyebrow: "Before you submit",
+    title: "What we look for in partner channels.",
+    body: "Great applications are specific. Include real channel links, the audience problem you solve, the content format you prefer, and how you would explain private AI photo generation without overstating results.",
+    imageUrl: assets.catalogHeadshotCard
+  }, [
+    block("partner_expectation_fit", "rich_text_card", { meta: "Audience", title: "Clear audience fit", description: "Career, creator, sports, fashion, beauty, event, or personal-brand communities usually map well to our package catalog." }),
+    block("partner_expectation_quality", "rich_text_card", { meta: "Quality", title: "Helpful creative framing", description: "We prefer educational demos, honest results, and practical package examples over hype-only promotions." }),
+    block("partner_expectation_compliance", "rich_text_card", { meta: "Rules", title: "Privacy and disclosure", description: "Partners should disclose AI use where appropriate and avoid collecting customer uploads outside MydreamShoots." }),
+    block("partner_expectation_launch", "rich_text_card", { meta: "Launch", title: "A testable plan", description: "Share when you can publish, what format you will use, and which route or offer would make the campaign easy to measure." })
+  ])
 };
 
 export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
@@ -924,6 +999,29 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     },
     1
   ),
+  "creators-circle": page(
+    "content",
+    ["creators_intro_1", "creators_fit_1", "creators_steps_1", "pricing_1", "conversion_1"],
+    {
+      creators_intro_1: templateSections.creators_intro_1,
+      creators_fit_1: templateSections.creators_fit_1,
+      creators_steps_1: templateSections.creators_steps_1,
+      pricing_1: homeSections.pricing_1,
+      conversion_1: homeSections.conversion_1
+    },
+    1
+  ),
+  "partner-registration": page(
+    "content",
+    ["partner_form_1", "partner_expectations_1", "trust_1", "conversion_1"],
+    {
+      partner_form_1: templateSections.partner_form_1,
+      partner_expectations_1: templateSections.partner_expectations_1,
+      trust_1: homeSections.trust_1,
+      conversion_1: homeSections.conversion_1
+    },
+    1
+  ),
   search: page(
     "search",
     ["search_intro_1", "search_1", "packages_1", "packages_strip_1", "conversion_1"],
@@ -1010,6 +1108,8 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   policy: "Policy",
   "blog-list": "Blog List",
   "blog-detail": "Blog Detail",
+  "creators-circle": "Creators Circle",
+  "partner-registration": "Partner Registration",
   search: "Search",
   cart: "Cart",
   "404": "404"
@@ -1051,6 +1151,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Refunds", href: "/policies/refunds", group: "support" },
         { label: "Content policy", href: "/policies/content", group: "support" },
         { label: "Help center", href: "/help", group: "support" },
+        { label: "Creators Circle", href: "/creators-circle", group: "company" },
         { label: "Guides", href: "/blog", group: "company" }
       ]
     },
@@ -1098,6 +1199,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms", href: "/policies/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/policies/cookies", group: "support" } },
           { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/policies/refunds", group: "support" } },
+          { id: "dreamshoot_footer_creators", type: "menu_link", settings: { label: "Creators Circle", href: "/creators-circle", group: "company" } },
           { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Guides", href: "/blog", group: "company" } }
         ]
       }

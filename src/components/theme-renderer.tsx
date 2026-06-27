@@ -734,12 +734,22 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     );
   }
   const blocks = footer?.blocks?.filter((block) => block.type === "menu_link") ?? [];
-  const links = blocks.length
+  const baseLinks = blocks.length
     ? blocks.map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
     : settings.navigation.footerLinks.map((link, index) => ({
         ...link,
         block: { id: `footer_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
       }));
+  const links = isDreamShootFooter && !baseLinks.some((item) => item.href === "/creators-circle")
+    ? [
+        ...baseLinks,
+        {
+          label: "Creators Circle",
+          href: "/creators-circle",
+          block: { id: "dreamshoot_footer_creators_runtime", type: "menu_link", settings: { label: "Creators Circle", href: "/creators-circle", group: "company" } } as SectionBlockInstance
+        }
+      ]
+    : baseLinks;
   const headerLinksAsFooter = settings.navigation.headerLinks.map((link, index) => ({
     ...link,
     block: { id: `footer_header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href, group: "product" } } as SectionBlockInstance
@@ -3568,7 +3578,8 @@ function SectionView({
   mode: "published" | "preview";
   renderContext: RenderContext;
 }) {
-  const legacySaasSection = renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
+  const usesNativeDreamShootRenderer = section.type === "dreamshoot_package_catalog";
+  const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
   if (section.type === "hero") {
@@ -5986,17 +5997,9 @@ function SectionView({
       dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" } })
     ];
     const defaultCatalogCards = defaultDreamshootCatalogCards(site);
-    const seededCards = [
-      ...manualCards,
-      ...defaultCatalogCards.filter((card) => !manualCards.some((manualCard) => dreamshootCategorySlug(manualCard.title) === dreamshootCategorySlug(card.title)))
-    ];
+    const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
     const baseCards = seededCards.length ? seededCards : fallbackCards;
-    const cards = usePacks
-      ? [
-          ...packCards,
-          ...baseCards.filter((card) => !packCards.some((packCard) => dreamshootCategorySlug(packCard.title) === dreamshootCategorySlug(card.title)))
-        ]
-      : baseCards;
+    const cards = usePacks && packCards.length ? packCards : baseCards;
     const displayCards = cards.length ? cards : fallbackCards;
     const featuredCount = Math.max(3, Math.min(6, numberSetting(section, "featuredCount", 5)));
     const featured = [...displayCards]
@@ -8758,12 +8761,15 @@ function SectionView({
     const body = stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey."));
     const image = mediaAssetUrl(site, setting(section, "imageUrl", firstImage(section)));
     const cards = sectionBlocks(section);
+    const formFields = sectionBlocks(section, "form_field");
+    const richCards = cards.filter((card) => card.type !== "form_field");
     const primaryCta = setting(section, "primaryCta", "");
     const primaryHref = setting(section, "primaryHref", "");
     const secondaryCta = setting(section, "secondaryCta", "");
     const secondaryHref = setting(section, "secondaryHref", "");
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
+    const applicationForm = layout === "application_form";
     const semanticH1Paths = new Set(["/help", "/search", "/cart"]);
     const isPrimaryRichText = renderContext.page.sectionsOrder.find((sectionId: string) => renderContext.page.sections[sectionId]?.type === "rich_text") === id;
     const fallbackHeadingLevel = (semanticH1Paths.has(renderContext.pagePath) || renderContext.page.pageType === "article") && isPrimaryRichText ? "h1" : "h2";
@@ -8796,9 +8802,9 @@ function SectionView({
                   ) : null}
                 </div>
               ) : null}
-              {cards.length ? (
+              {richCards.length ? (
                 <div className={dark ? "mt-8 grid gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
-                  {cards.slice(0, 4).map((card, index) => (
+                  {richCards.slice(0, 4).map((card, index) => (
                     <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(card, index, "rich_text_card")}>
                       <p className={dark ? "font-mono text-[10px] uppercase tracking-[0.16em] text-white/46" : "font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
                       <h3 className="mt-3 text-lg font-semibold tracking-tight">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
@@ -8808,7 +8814,45 @@ function SectionView({
                 </div>
               ) : null}
             </div>
-            {image ? (
+            {applicationForm && formFields.length ? (
+              <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
+                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" src={image} alt={setting(section, "title", id)} /> : null}
+                <div className="grid gap-4">
+                  {formFields.map((field, index) => {
+                    const fieldType = blockValue(field, "fieldType", "text");
+                    const label = blockValue(field, "label", `Field ${index + 1}`);
+                    const required = Boolean(field.settings.required);
+                    const placeholder = blockValue(field, "placeholder", "");
+                    const fieldClass = dark
+                      ? "w-full rounded-[16px] border border-white/12 bg-black/20 px-4 py-3 text-sm text-white outline-none placeholder:text-white/34 focus:border-white/36"
+                      : "w-full rounded-[16px] border border-[#ded5ca] bg-white/82 px-4 py-3 text-sm text-[#14161a] outline-none placeholder:text-[#9a8f84] focus:border-[#14161a]/40";
+                    return (
+                      <label className={dark ? "grid gap-2 text-sm font-semibold text-white/86" : "grid gap-2 text-sm font-semibold text-[#14161a]"} key={instanceKey(field, index, "partner_form_field")} {...xfcartBlockAttrs(field, index, "form_field")}>
+                        {fieldType === "checkbox" ? (
+                          <span className={dark ? "flex items-start gap-3 rounded-[16px] border border-white/12 bg-black/18 p-4 text-sm leading-6 text-white/72" : "flex items-start gap-3 rounded-[16px] border border-[#ded5ca] bg-white/70 p-4 text-sm leading-6 text-[#625d56]"}>
+                            <input className="mt-1 h-4 w-4 shrink-0 accent-[#ec4bdd]" type="checkbox" required={required} aria-label={label} />
+                            <span>{label}{required ? " *" : ""}</span>
+                          </span>
+                        ) : (
+                          <>
+                            <span>{label}{required ? " *" : ""}</span>
+                            {fieldType === "textarea" ? (
+                              <textarea className={`${fieldClass} min-h-[112px] resize-y`} placeholder={placeholder} required={required} />
+                            ) : (
+                              <input className={fieldClass} placeholder={placeholder} required={required} type={fieldType === "email" ? "email" : "text"} />
+                            )}
+                          </>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+                <button className={dark ? "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} type="button">
+                  Submit application
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                </button>
+              </div>
+            ) : image ? (
               <div className={dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
                 <img className="aspect-[16/11] h-full w-full object-cover" src={image} alt={setting(section, "title", id)} />
               </div>
@@ -8816,8 +8860,8 @@ function SectionView({
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"}>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.18em] text-white/44" : "font-mono text-xs uppercase tracking-[0.18em] text-[#8a7a6d]"}>photo journey</p>
                 <div className="mt-5 grid gap-3">
-                  {(cards.length
-                    ? cards.slice(0, 4).map((card, index) => [
+                  {(richCards.length
+                    ? richCards.slice(0, 4).map((card, index) => [
                         blockValue(card, "title", blockValue(card, "label", `Step ${index + 1}`)),
                         blockValue(card, "description", blockValue(card, "text", "A clear step in the private photo pack journey."))
                       ])

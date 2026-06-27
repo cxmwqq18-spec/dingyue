@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { getMydreamshootsSitemapUrls } from "@/lib/seo-indexing";
+import { getStorefrontSitemapUrls } from "@/lib/seo-indexing";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const urls = await getMydreamshootsSitemapUrls();
+  const urls = await getStorefrontSitemapUrls();
 
   return urls.map((url) => ({
     url,

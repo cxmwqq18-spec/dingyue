@@ -3,9 +3,10 @@
 import { ArrowRight, BadgeCheck, Camera, ChevronRight, Heart, ImageIcon, PlayCircle, Scissors, Sparkles, UserCircle, Users } from "lucide-react";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { PublicCustomer, Site } from "@/lib/types";
 
-type CustomerShellHeaderSite = Pick<Site, "slug" | "name" | "branding">;
+type CustomerShellHeaderSite = Pick<Site, "slug" | "name" | "branding" | "primaryDomain">;
 
 const packageGroups = [
   { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
@@ -159,7 +160,7 @@ export function CustomerShellHeader({
   customer: PublicCustomer;
   tone?: "light" | "dark";
 }) {
-  const basePath = `/site/${site.slug}`;
+  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const logoText = "MydreamShoots";
   const dark = tone === "dark";
   const navClass = dark
@@ -188,7 +189,7 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label="Photo Packages"
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={packageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 10)}
+              prefetchPaths={packageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
             >
               <PackageMegaPanel basePath={basePath} />
             </ClickMegaMenu>
@@ -196,7 +197,7 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label="Tools"
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={toolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 10)}
+              prefetchPaths={toolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
             >
               <ToolsMegaPanel basePath={basePath} />
             </ClickMegaMenu>

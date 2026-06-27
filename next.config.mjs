@@ -11,6 +11,8 @@ const nextConfig = {
     ]
   },
   async headers() {
+    const publicStorefrontCache = { key: "Cache-Control", value: "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" };
+    const privateStorefrontCache = { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" };
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -23,7 +25,12 @@ const nextConfig = {
     ];
     const noindexPrivateHeaders = [
       ...securityHeaders,
+      privateStorefrontCache,
       { key: "X-Robots-Tag", value: "noindex, nofollow" }
+    ];
+    const publicStorefrontHeaders = [
+      ...securityHeaders,
+      publicStorefrontCache
     ];
 
     return [
@@ -37,6 +44,30 @@ const nextConfig = {
       {
         source: "/api/:path*",
         headers: noindexPrivateHeaders
+      },
+      {
+        source: "/",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/collections",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/collections/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/tools",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/tools/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/pricing",
+        headers: publicStorefrontHeaders
       },
       {
         source: "/platform",
@@ -64,6 +95,82 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/account",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/cart/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/cart",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/checkout/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/checkout",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/login",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/collections",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/collections/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/tools",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/tools/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/pricing",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/account",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/app/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/app",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/cart/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/cart",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/checkout/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/checkout",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/login",
         headers: noindexPrivateHeaders
       },
       {

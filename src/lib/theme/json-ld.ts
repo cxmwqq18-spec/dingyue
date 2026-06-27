@@ -1,5 +1,5 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
-import { getSeoDirectoryContent } from "@/lib/dreamshoot-seo-content";
+import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import type { CreativePack, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -226,7 +226,7 @@ export function buildToolDirectoryJsonLd({
   toolSlug: string;
   routeMode: "host" | "path";
 }): JsonLdNode[] {
-  const item = getSeoDirectoryContent("tool", toolSlug);
+  const item = getSeoDirectoryContentForSite(site, "tool", toolSlug);
   const pagePath = item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
@@ -298,7 +298,7 @@ export function buildCollectionDirectoryJsonLd({
   routeMode: "host" | "path";
   creativePacks?: CreativePack[];
 }): JsonLdNode[] {
-  const item = getSeoDirectoryContent("collection", collectionSlug);
+  const item = getSeoDirectoryContentForSite(site, "collection", collectionSlug);
   const pagePath = item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
