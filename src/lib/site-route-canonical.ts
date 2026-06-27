@@ -26,7 +26,12 @@ export function redirectPublicSitePathToCanonicalHost({
 }): string {
   const publicSlug = redirectLegacySiteSlug(siteSlug, pathname);
   if (isCanonicalPublicHost(host)) {
-    const normalizedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+    const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+    const normalizedPath =
+      requestedPath === "/privacy-policy" ? "/policies/privacy" :
+      requestedPath === "/terms-of-service" ? "/policies/terms" :
+      requestedPath === "/cookie-policy" ? "/policies/cookies" :
+      requestedPath;
     permanentRedirect(normalizedPath);
   }
   return publicSlug;

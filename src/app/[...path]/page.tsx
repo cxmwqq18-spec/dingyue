@@ -154,7 +154,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   const pageSlug = collectionCategory ? "/collections" : `/${path.join("/")}`;
-  if (!collectionCategory && !findPage(site, pageSlug)) notFound();
+  if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,
