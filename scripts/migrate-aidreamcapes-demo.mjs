@@ -70,7 +70,7 @@ function repairSharedAssetPaths(value) {
     { from: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", to: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png" },
     { from: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", to: "/assets/dreamshoot/frames/story-beauty-portrait.png" },
     { from: "/assets/dreamshoot/generated/20260619/storybook-storybook shadow-single-v1.png", to: "/assets/dreamshoot/frames/story-beauty-portrait.png" },
-    { from: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-storybook shadow.png", to: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png" },
+    { from: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-storybook shadow.png", to: "/assets/dreamshoot/frames/story-beauty-portrait.png" },
     { from: "/assets/dreamshoot/generated/20260619/editorial getaway-solo-city-v1.png", to: "/assets/dreamshoot/editorial-headshot-gpt2.png" },
     { from: "/assets/dreamshoot/frames/sample-cyberpunk.png", to: "/assets/dreamshoot/frames/story-beauty-portrait.png" },
     { from: "标准斜体", to: "standard italic" }
