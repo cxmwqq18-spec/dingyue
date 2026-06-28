@@ -187,6 +187,66 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     canonicalPath: "/content",
     index: true,
     follow: true
+  },
+  "/policies/shipping": {
+    title: "Shipping and Digital Delivery Policy for AI Photo Orders",
+    description:
+      "Review how AI photo packages, credits, generated images, and private galleries are delivered digitally without physical shipping, carrier tracking, customs fees, or mailed products.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "digital delivery policy",
+      "AI photo delivery",
+      "no physical shipping",
+      "private gallery delivery"
+    ].join(", "),
+    canonicalPath: "/shipping",
+    index: true,
+    follow: true
+  },
+  "/shipping": {
+    title: "Shipping and Digital Delivery Policy for AI Photo Orders",
+    description:
+      "Review how AI photo packages, credits, generated images, and private galleries are delivered digitally without physical shipping, carrier tracking, customs fees, or mailed products.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "digital delivery policy",
+      "AI photo delivery",
+      "no physical shipping",
+      "private gallery delivery"
+    ].join(", "),
+    canonicalPath: "/shipping",
+    index: true,
+    follow: true
+  },
+  "/shipping-policy": {
+    title: "Shipping and Digital Delivery Policy for AI Photo Orders",
+    description:
+      "Review how AI photo packages, credits, generated images, and private galleries are delivered digitally without physical shipping, carrier tracking, customs fees, or mailed products.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "digital delivery policy",
+      "AI photo delivery",
+      "no physical shipping",
+      "private gallery delivery"
+    ].join(", "),
+    canonicalPath: "/shipping",
+    index: true,
+    follow: true
+  },
+  "/delivery-policy": {
+    title: "Shipping and Digital Delivery Policy for AI Photo Orders",
+    description:
+      "Review how AI photo packages, credits, generated images, and private galleries are delivered digitally without physical shipping, carrier tracking, customs fees, or mailed products.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "digital delivery policy",
+      "AI photo delivery",
+      "no physical shipping",
+      "private gallery delivery"
+    ].join(", "),
+    canonicalPath: "/shipping",
+    index: true,
+    follow: true
   }
 };
 

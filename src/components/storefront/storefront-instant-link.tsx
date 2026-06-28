@@ -26,10 +26,17 @@ const storefrontPublicPathPrefixes = [
   "/cart",
   "/checkout",
   "/collections",
+  "/contact-us",
+  "/content",
+  "/cookies",
   "/help",
   "/login",
+  "/privacy",
   "/policies",
   "/pricing",
+  "/refunds",
+  "/shipping",
+  "/terms",
   "/tools"
 ];
 
@@ -63,7 +70,7 @@ export function StorefrontInstantLink({
   const shouldUseLinkPrefetch = prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH === "1";
 
   function prefetchTarget() {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH !== "1") return;
+    if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH === "0") return;
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
     if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;

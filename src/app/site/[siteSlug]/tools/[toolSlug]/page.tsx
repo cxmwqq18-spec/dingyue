@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
-import {
-  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
-  readStorefrontPublicRuntimeStateBySlugFromDatabase
-} from "@/lib/storefront-state";
+import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
 import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
@@ -39,9 +36,8 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`);
-  const site = state?.sites[0];
-  if (!site) return {};
+  const { site, matched } = await resolveToolPage(siteSlug, toolSlug);
+  if (!site || !matched) return {};
   return metadataForSeoDirectory(site, "tool", toolSlug);
 }
 

@@ -738,6 +738,7 @@ export function toToolMenuItem(record: {
   icon?: string | null;
   imageUrl?: string | null;
   href: string;
+  detailJson?: unknown;
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
@@ -754,6 +755,7 @@ export function toToolMenuItem(record: {
     icon: record.icon ?? undefined,
     imageUrl: record.imageUrl ?? undefined,
     href: record.href,
+    detailJson: jsonObject<ToolMenuItem["detailJson"]>(record.detailJson as Prisma.JsonValue | null | undefined),
     sortOrder: record.sortOrder,
     status: record.status as ToolMenuItem["status"],
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()

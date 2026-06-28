@@ -23,6 +23,7 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/policies/privacy",
   "/policies/terms",
   "/policies/refunds",
+  "/policies/shipping",
   "/policies/content",
   "/policies/cookies",
   "/help",
@@ -37,6 +38,7 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/policies/privacy",
   "/policies/terms",
   "/policies/refunds",
+  "/policies/shipping",
   "/policies/content",
   "/policies/cookies",
   "/help"
@@ -44,10 +46,10 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
 
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
-const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service"]);
+const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_TOOL_PATHS = ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"];
-const REQUIRED_INDEXABLE_POLICY_PATHS = ["/policies/privacy", "/policies/terms", "/policies/cookies"];
+const REQUIRED_INDEXABLE_POLICY_PATHS = ["/policies/privacy", "/policies/terms", "/policies/cookies", "/policies/shipping"];
 
 function normalizePath(slug: string): string {
   const value = slug.trim();
@@ -226,7 +228,7 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
 
   for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
     const policySeo = MYDREAMSHOOTS_POLICY_SEO_BY_PATH[path];
-    if (isDreamshootSite(site) && policySeo?.index !== false) paths.push(policySeo.canonicalPath);
+    if ((isDreamshootSite(site) || isAidreamcapesSite(site)) && policySeo?.index !== false) paths.push(policySeo.canonicalPath);
   }
 
   return Array.from(new Set(paths.map((path) => sitemapUrl(site, path)))).sort((a, b) => {

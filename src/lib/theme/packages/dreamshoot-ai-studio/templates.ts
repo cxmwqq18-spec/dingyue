@@ -1048,7 +1048,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       about_intro_1: section("rich_text", {
         eyebrow: "About MyDreamShoots",
         title: "Private AI photo packages with clear credits and real customer delivery.",
-        body: "MyDreamShoots helps customers turn everyday selfies into themed AI photo packages, professional headshots, fan photos, creator portraits, beauty edits, travel scenes, and private albums without booking a studio session. The service is built around signed-in accounts, transparent credit use, secure checkout, and customer-only gallery access.",
+        body: "MyDreamShoots helps customers turn everyday selfies into themed AI photo packages, professional headshots, creator portraits, beauty edits, travel scenes, and private albums without booking a studio session. Every order is built around a signed-in account, visible credit use, secure checkout, and customer-only gallery access.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.heroPackageWall,
@@ -1064,7 +1064,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       about_values_1: section("rich_text", {
         eyebrow: "How we work",
         title: "A practical photo workspace for customers who want control.",
-        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. We focus on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
+        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. MyDreamShoots focuses on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
         imageUrl: assets.flowPrivateAlbumWorkspace,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
@@ -1088,7 +1088,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
         title: "Contact MyDreamShoots support or sales.",
-        body: "Use this page for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+        body: "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
@@ -1210,9 +1210,9 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
 
 export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
-    logoText: "MydreamShoots",
+    logoText: "MyDreamShoots",
     market: "AI photo packages, personal AI models, paid tools, credits, AI video, and private albums",
-    description: "MydreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid utility tools, AI video-ready outputs, and private gallery delivery."
+    description: "MyDreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid utility tools, AI video-ready outputs, and private gallery delivery."
   },
   themeSettings: {
     colors: {
@@ -1253,14 +1253,14 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     globalSections: {
       header: {
         settings: {
-          title: "MydreamShoots",
+          title: "MyDreamShoots",
           sticky: true,
           ctaLabel: "Start a photo set",
           ctaHref: "/login",
           style: "dark_pills",
           mobileLabel: "Menu",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
-          logoAlt: "MydreamShoots heart camera logo"
+          logoAlt: "MyDreamShoots heart camera logo"
         },
         blocks: [
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photo Packages", href: "/collections" } },
@@ -1273,7 +1273,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       },
       footer: {
         settings: {
-          title: "MydreamShoots",
+          title: "MyDreamShoots",
           tagline: "AI photo packages, personal models, paid tools, credits, and private gallery delivery",
           body: "Transform everyday selfies into themed photo packages, headshots, World Cup fan photos, cyberpunk portraits, gala scenes, AI motion ideas, and virtual try-on previews from one subscription.",
           productHeading: "Explore",
@@ -1306,10 +1306,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       }
     },
     seo: {
-      siteTitle: "MydreamShoots",
+      siteTitle: "MyDreamShoots",
       siteDescription: "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-      siteKeywords: "MydreamShoots, AI photo packages, AI portraits, personal AI model, private photo gallery, AI photo subscription",
-      titleTemplate: "%s | MydreamShoots",
+      siteKeywords: "MyDreamShoots, AI photo packages, AI portraits, personal AI model, private photo gallery, AI photo subscription",
+      titleTemplate: "%s | MyDreamShoots",
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {

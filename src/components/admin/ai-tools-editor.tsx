@@ -111,6 +111,25 @@ function preferredProvider(providers: PlatformAiProviderOption[]) {
   return providers.find((provider) => provider.preferred) ?? providers[0];
 }
 
+function updateToolDetailJson(tool: ToolMenuItem, field: keyof NonNullable<ToolMenuItem["detailJson"]>, value: string): ToolMenuItem {
+  const listFields = new Set(["useCases", "workflow"]);
+  const nextValue = listFields.has(field)
+    ? value.split("\n").map((line) => line.trim()).filter(Boolean)
+    : value;
+  return {
+    ...tool,
+    detailJson: {
+      ...(tool.detailJson ?? {}),
+      [field]: nextValue
+    }
+  };
+}
+
+function detailFieldValue(tool: ToolMenuItem, field: keyof NonNullable<ToolMenuItem["detailJson"]>): string {
+  const value = tool.detailJson?.[field];
+  return Array.isArray(value) ? value.join("\n") : typeof value === "string" ? value : "";
+}
+
 export function AiToolsEditor({
   siteId,
   apps,
@@ -201,6 +220,10 @@ export function AiToolsEditor({
 
   function updateMenuItem(id: string, field: keyof ToolMenuItem, value: string | number) {
     setMenuItems((current) => current.map((item) => (item.id === id ? { ...item, [field]: field === "sortOrder" ? Number(value) : value } : item)));
+  }
+
+  function updateMenuDetail(id: string, field: keyof NonNullable<ToolMenuItem["detailJson"]>, value: string) {
+    setMenuItems((current) => current.map((item) => (item.id === id ? updateToolDetailJson(item, field, value) : item)));
   }
 
   async function createCategory() {
@@ -438,7 +461,7 @@ export function AiToolsEditor({
           </table>
         </div>
         <div className="overflow-x-auto">
-          <table className="list min-w-[1120px]">
+          <table className="list min-w-[1480px]">
             <thead>
               <tr>
                 <th className="bgtt aleft">工具菜单项</th>
@@ -446,6 +469,7 @@ export function AiToolsEditor({
                 <th className="bgtt">排序</th>
                 <th className="bgtt">状态</th>
                 <th className="bgtt aleft">前台链接</th>
+                <th className="bgtt aleft">详情页文案</th>
                 <th className="bgtt">保存</th>
               </tr>
             </thead>
@@ -477,6 +501,19 @@ export function AiToolsEditor({
                   <td className="aleft">
                     <input className="inputtext input100 font-mono text-[11px]" onChange={(event) => updateMenuItem(tool.id, "href", event.target.value)} value={tool.href} />
                     <input className="inputtext input100 mt-2 font-mono text-[11px]" onChange={(event) => updateMenuItem(tool.id, "imageUrl", event.target.value)} placeholder="imageUrl" value={tool.imageUrl ?? ""} />
+                  </td>
+                  <td className="aleft min-w-[360px]">
+                    <input className="inputtext input100" onChange={(event) => updateMenuDetail(tool.id, "title", event.target.value)} placeholder="详情页标题，留空用菜单标题" value={detailFieldValue(tool, "title")} />
+                    <input className="inputtext input100 mt-2" onChange={(event) => updateMenuDetail(tool.id, "subtitle", event.target.value)} placeholder="详情页首屏说明" value={detailFieldValue(tool, "subtitle")} />
+                    <input className="inputtext input100 mt-2" onChange={(event) => updateMenuDetail(tool.id, "ctaLabel", event.target.value)} placeholder="CTA 文案" value={detailFieldValue(tool, "ctaLabel")} />
+                    <div className="mt-2 grid gap-2 md:grid-cols-2">
+                      <textarea className="inputtext min-h-[72px] resize-y text-[12px] leading-5" onChange={(event) => updateMenuDetail(tool.id, "guideBody", event.target.value)} placeholder="Guide 正文" value={detailFieldValue(tool, "guideBody")} />
+                      <textarea className="inputtext min-h-[72px] resize-y text-[12px] leading-5" onChange={(event) => updateMenuDetail(tool.id, "detailBody", event.target.value)} placeholder="详情说明正文" value={detailFieldValue(tool, "detailBody")} />
+                    </div>
+                    <div className="mt-2 grid gap-2 md:grid-cols-2">
+                      <textarea className="inputtext min-h-[80px] resize-y text-[12px] leading-5" onChange={(event) => updateMenuDetail(tool.id, "workflow", event.target.value)} placeholder="Workflow，每行一条" value={detailFieldValue(tool, "workflow")} />
+                      <textarea className="inputtext min-h-[80px] resize-y text-[12px] leading-5" onChange={(event) => updateMenuDetail(tool.id, "useCases", event.target.value)} placeholder="Use cases，每行一条" value={detailFieldValue(tool, "useCases")} />
+                    </div>
                   </td>
                   <td>
                     <button className="input_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => saveMenuItem(tool)} type="button">

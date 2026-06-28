@@ -45,6 +45,28 @@ function toolSlugFromHref(href: string, title: string) {
   return slugifyToolTaxonomy(last || title) || slugifyToolTaxonomy(title) || "tool";
 }
 
+function toolDetailJsonFromBlock(block: SectionBlockInstance, title: string, categoryLabel: string) {
+  const detailJson = block.settings?.detailJson;
+  if (detailJson && typeof detailJson === "object" && !Array.isArray(detailJson)) return detailJson;
+  const description = blockString(block, "description", `${title} for private AI photo packages.`);
+  const ctaLabel = categoryLabel.toLowerCase().includes("video") ? "Preview motion" : "Start a photo set";
+  return {
+    title,
+    subtitle: description,
+    ctaLabel,
+    guideTitle: `${title} guide`,
+    guideBody: `${description} Use clear source photos, review the credit cost, and keep finished outputs in your private account gallery.`,
+    detailTitle: `What ${title} is used for`,
+    detailBody: `Use ${title} when you want a focused ${categoryLabel.toLowerCase()} workflow before committing to a larger private photo package.`,
+    useCases: ["Cleaner profile photos", "Private gallery delivery", "Credit-aware package planning"],
+    workflow: [
+      "Upload clear source photos or choose finished gallery images.",
+      "Review the style direction, credit cost, and private delivery settings.",
+      "Generate, compare outputs, and keep favorites in your account gallery."
+    ]
+  };
+}
+
 function siteToolBlocks(site: {
   themeSettings?: {
     publishedJson?: {
@@ -79,11 +101,7 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
     if (isMissingToolMenuTableError(error)) return;
     throw error;
   }
-  if (existing > 0) {
-    await backfillToolCategoryIcons(siteId);
-    preparedDefaultToolTaxonomySites.add(siteId);
-    return;
-  }
+  if (existing > 0) await backfillToolCategoryIcons(siteId);
   const site = await prisma.site.findUnique({
     where: { id: siteId },
     select: {
@@ -100,6 +118,10 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
     themeSettings,
     pages: site.pages as Parameters<typeof siteToolBlocks>[0]["pages"]
   });
+  if (!blocks.length) {
+    preparedDefaultToolTaxonomySites.add(siteId);
+    return;
+  }
   const usedRootIcons = new Set<string>();
   const usedChildIcons = new Map<string, Set<string>>();
   const parentBySlug = new Map<string, string>();
@@ -144,6 +166,7 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
     });
     const title = blockString(block, "title", "AI photo tool");
     const href = blockString(block, "href", "/tools");
+    const detailJson = toolDetailJsonFromBlock(block, title, categoryLabel);
     await prisma.toolMenuItem.upsert({
       where: { siteId_slug: { siteId, slug: toolSlugFromHref(href, title) } },
       create: {
@@ -157,6 +180,7 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
         icon: child.icon,
         imageUrl: blockString(block, "imageUrl") || null,
         href,
+        detailJson,
         sortOrder: index
       },
       update: {}

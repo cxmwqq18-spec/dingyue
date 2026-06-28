@@ -156,9 +156,12 @@ const pageMappings = [
   { idSuffix: "privacy", packageTemplate: "policy", templateKey: "privacy", slug: "/policies/privacy", title: "Privacy policy", pageType: "policy" },
   { idSuffix: "privacy_policy", packageTemplate: "policy", templateKey: "privacy", slug: "/privacy-policy", title: "Privacy policy", pageType: "policy" },
   { idSuffix: "refunds", packageTemplate: "policy", templateKey: "refunds", slug: "/policies/refunds", title: "Refund policy", pageType: "policy" },
+  { idSuffix: "shipping", packageTemplate: "policy", templateKey: "shipping", slug: "/policies/shipping", title: "Shipping and Digital Delivery Policy", pageType: "policy" },
   { idSuffix: "terms_service", packageTemplate: "policy", templateKey: "terms", slug: "/terms-of-service", title: "Terms of Service", pageType: "policy" },
   { idSuffix: "content", packageTemplate: "policy", templateKey: "content", slug: "/policies/content", title: "Content policy", pageType: "policy" },
   { idSuffix: "help", packageTemplate: "help", templateKey: "help", slug: "/help", title: "Help center", pageType: "help" },
+  { idSuffix: "about_us", packageTemplate: "about-us", templateKey: "about-us", slug: "/about-us", title: "About Us", pageType: "content" },
+  { idSuffix: "contact_us", packageTemplate: "contact-us", templateKey: "contact-us", slug: "/contact-us", title: "Contact Us", pageType: "content" },
   { idSuffix: "blog", packageTemplate: "blog-list", templateKey: "blog", slug: "/blog", title: "Guides", pageType: "blog" },
   { idSuffix: "blog_detail", packageTemplate: "blog-detail", templateKey: "blog-detail", slug: "/blog/preparing-source-photos", title: "Preparing source photos", pageType: "article" },
   { idSuffix: "search", packageTemplate: "search", templateKey: "search", slug: "/search", title: "Search", pageType: "search" },
@@ -188,6 +191,23 @@ function pageJsonFor(mapping, version) {
       lastUpdated: "June 25, 2024",
       contactEmail: "support@mydreamshoots.com",
       body: "<h3>Refund eligibility</h3><p>You may request a refund for purchased credits if none of the credits from that purchase have been used. Once credits have been spent on a successful generation, that purchase becomes non-refundable.</p><h3>Refund window</h3><p>Refund requests should be submitted within 30 days of the purchase date with your account email and purchase details.</p><h3>Subscriptions</h3><p>If a subscription is canceled, the customer keeps access to purchased credits until they are used or expire according to the plan rules. Cancellation does not automatically refund credits already used.</p><h3>Technical failures</h3><p>If a technical failure on our side prevents credit use or delivery, support may release credits, rerun the job, or approve a refund after review.</p><h3>Credit history</h3><p>Refunds and billing reversals appear in the customer's credit history. Checkout completion never grants credits before payment confirmation, and every adjustment is recorded for account support.</p>"
+    };
+  }
+
+  if (mapping.templateKey === "shipping" && pageJson.sections.policy_1) {
+    pageJson.sections.policy_1.settings = {
+      ...pageJson.sections.policy_1.settings,
+      title: "Shipping and Digital Delivery Policy",
+      lastUpdated: "June 28, 2026",
+      contactEmail: "support@mydreamshoots.com",
+      body: "<h3>No physical shipping</h3><p>MyDreamShoots sells digital AI photo credits, generated image packages, downloads, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by MyDreamShoots.</p><h3>Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>"
+    };
+    pageJson.seo = {
+      title: "MyDreamShoots Shipping and Digital Delivery Policy",
+      description: "Review how MyDreamShoots delivers AI photo credits, generated images, downloads, and private galleries digitally without physical shipping.",
+      keywords: "MyDreamShoots shipping policy, MyDreamShoots digital delivery, AI photo delivery, private gallery delivery",
+      canonicalPath: "/shipping",
+      robots: { index: true, follow: true }
     };
   }
 

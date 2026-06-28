@@ -70,7 +70,7 @@ function siteBaseUrl(site: Site): string {
 
 function policySeoForSite(site: Site, slug: string) {
   const siteToken = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name}`.toLowerCase();
-  if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot")) return undefined;
+  if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot") && !siteToken.includes("aidreamcapes")) return undefined;
   return getMydreamshootsPolicySeo(slug);
 }
 

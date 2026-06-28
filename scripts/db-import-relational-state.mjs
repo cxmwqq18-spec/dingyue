@@ -426,6 +426,7 @@ const specs = [
       icon: item.icon,
       imageUrl: item.imageUrl,
       href: item.href,
+      detailJson: json(item.detailJson, undefined),
       sortOrder: item.sortOrder ?? 0,
       status: item.status ?? "active",
       createdAt: toDate(item.createdAt)

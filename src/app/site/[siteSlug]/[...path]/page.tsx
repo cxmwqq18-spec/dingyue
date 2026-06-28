@@ -8,7 +8,7 @@ import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
-import { renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
+import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { policyPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
@@ -23,11 +23,14 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const slug = collectionCategory ? "/collections" : requestedSlug === "/faq" ? "/help" : policyPageSlug(requestedSlug);
   if (slug === "/account") return { title: "Account" };
   const state = collectionCategory
-    ? await readStorefrontPublicCollectionMetadataStateBySlugFromDatabase(siteSlug)
+    ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory)
     : await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, slug);
   const site = state?.sites[0];
   if (!site) return {};
-  if (collectionCategory) return metadataForSeoDirectory(site, "collection", collectionCategory);
+  if (collectionCategory) {
+    if (!canResolveCollectionSlugForSite(state, site, collectionCategory)) return {};
+    return metadataForSeoDirectory(site, "collection", collectionCategory);
+  }
   if (dreamshootPartnerTemplateSlugs.has(slug) && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
     return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), slug, {
       primaryDomain: site.primaryDomain,
@@ -54,11 +57,14 @@ export default async function SiteCatchAllPage({
     pathname: slug,
     siteSlug
   });
+  if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
+  if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(`/site/${publicSlug}/refunds`);
   if (slug === "/content-policy" || slug === "/policies/content") redirect(`/site/${publicSlug}/content`);
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(`/site/${publicSlug}/shipping`);
   if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
   if (slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
@@ -83,6 +89,7 @@ export default async function SiteCatchAllPage({
     : await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
+  if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     /dreamshoot/i.test(`${publicSite.slug} ${publicSite.name} ${publicSite.branding.logoText}`);

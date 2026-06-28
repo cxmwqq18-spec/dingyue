@@ -525,6 +525,18 @@ export interface ToolMenuItem {
   icon?: string;
   imageUrl?: string;
   href: string;
+  detailJson?: {
+    eyebrow?: string;
+    title?: string;
+    subtitle?: string;
+    ctaLabel?: string;
+    guideTitle?: string;
+    guideBody?: string;
+    detailTitle?: string;
+    detailBody?: string;
+    useCases?: string[];
+    workflow?: string[];
+  };
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;

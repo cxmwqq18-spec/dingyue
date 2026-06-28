@@ -164,7 +164,7 @@ if (mydreamshootsSite) {
   const duplicates = visibleStringsForSite(aidreamcapesSite)
     .map((text) => ({ raw: text, normalized: normalizeForDupes(text) }))
     .filter((item) => item.normalized.length >= 24 && mydreamText.has(item.normalized))
-    .filter((item) => !/privacy|terms|cookie|refund|credits|checkout|account|gallery|upload|download|subscription|source photos|all rights reserved|plans start|customers|private|secure|help center|pricing/i.test(item.raw))
+    .filter((item) => !/privacy|terms|cookie|refund|credits|checkout|account|gallery|upload|download|subscription|source photos|all rights reserved|plans start|customers|private|secure|help center|pricing|company address|mailing address|business correspondence|8 THE GREEN|contact .*support|support or sales/i.test(item.raw))
     .slice(0, 30);
   if (duplicates.length) {
     failures.push(`visible_copy_duplicates:${duplicates.map((item) => item.raw).join(" || ")}`);

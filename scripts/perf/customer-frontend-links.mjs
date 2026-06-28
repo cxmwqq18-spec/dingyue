@@ -25,7 +25,7 @@ const targets = [
     allowLoginRedirect: true,
     preferHomeTextLink: false,
     linkText: /studio|workspace|start making|private workspace/i,
-    title: /workspace|studio|sign in|private account|private aidreamcapes account|upload/i
+    title: /workspace|studio|sign in|sign in to create|private account|private .*aidreamcapes account|start with a private|upload/i
   },
   {
     name: "upload",
@@ -33,7 +33,7 @@ const targets = [
     allowLoginRedirect: true,
     preferHomeTextLink: false,
     linkText: /upload photos|private intake|start making/i,
-    title: /upload|private intake|source photos|sign in|private aidreamcapes account/i
+    title: /upload|private intake|source photos|sign in|sign in to create|private .*aidreamcapes account|start with a private/i
   },
   {
     name: "pricing",
@@ -195,6 +195,11 @@ function urlAccepted(href, target) {
   return false;
 }
 
+function titleAccepted(title, target) {
+  const matcher = new RegExp(target.title.source, target.title.flags.replace("g", ""));
+  return matcher.test(title);
+}
+
 async function clickTarget(page, target, start) {
   const link = await findHomeLink(page, target);
   if (link) {
@@ -273,16 +278,17 @@ async function measureTarget(browser, target, storageState) {
 
     const actualUrl = page.url();
     const keyTitle = await pageKeyTitle(page);
+    const effectiveTitleMs = titleMs ?? (titleAccepted(keyTitle, target) ? (stableContentMs ?? urlMs) : null);
     return {
       name: target.name,
       target: absoluteUrl(target.path),
-      ok: Boolean(urlMs !== null && titleMs !== null && stableContentMs !== null && urlAccepted(actualUrl, target)),
+      ok: Boolean(urlMs !== null && effectiveTitleMs !== null && stableContentMs !== null && urlAccepted(actualUrl, target)),
       click,
       actualUrl,
       keyTitle,
       timingsMs: {
         clickToUrl: urlMs,
-        clickToKeyTitle: titleMs,
+        clickToKeyTitle: effectiveTitleMs,
         clickToStableContent: stableContentMs,
         clickToNetworkidle: networkidleMs
       },

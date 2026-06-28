@@ -19,6 +19,7 @@ function itemBody(body: Record<string, unknown>) {
     icon: typeof body.icon === "string" ? body.icon.trim() || null : null,
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl.trim() || null : null,
     href: typeof body.href === "string" && body.href.trim() ? body.href.trim() : "/tools",
+    detailJson: body.detailJson && typeof body.detailJson === "object" && !Array.isArray(body.detailJson) ? body.detailJson : undefined,
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0,
     status
   };
@@ -47,6 +48,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
         icon: body.icon,
         imageUrl: body.imageUrl,
         href: body.href,
+        detailJson: body.detailJson,
         sortOrder: body.sortOrder,
         status: body.status
       },

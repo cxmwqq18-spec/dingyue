@@ -504,6 +504,7 @@ model ToolMenuItem {
   icon        String?
   imageUrl    String?
   href        String
+  detailJson  Json?
   sortOrder   Int      @default(0)
   status      String   @default("active")
   createdAt   DateTime @default(now())

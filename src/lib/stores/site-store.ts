@@ -79,31 +79,47 @@ function isMissingToolMenuTableError(error: unknown): boolean {
 }
 
 async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
-  try {
-    return await prisma.toolCategory.findMany({
-      where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
-      include: { parent: true },
-      orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }],
-      ...(options.take ? { take: options.take } : {})
-    });
-  } catch (error) {
-    if (isMissingToolMenuTableError(error)) return [];
-    throw error;
-  }
+  const activeKey = options.activeOnly ? "active" : "all";
+  const takeKey = options.take ?? "all";
+  return siteReadCache.get(
+    `tool-categories:${siteId}:${activeKey}:${takeKey}`,
+    async () => {
+      try {
+        return await prisma.toolCategory.findMany({
+          where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
+          include: { parent: true },
+          orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }],
+          ...(options.take ? { take: options.take } : {})
+        });
+      } catch (error) {
+        if (isMissingToolMenuTableError(error)) return [];
+        throw error;
+      }
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
 }
 
 async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
-  try {
-    return await prisma.toolMenuItem.findMany({
-      where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
-      include: { category: { include: { parent: true } } },
-      orderBy: options.activeOnly ? [{ sortOrder: "asc" }, { title: "asc" }] : [{ status: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
-      ...(options.take ? { take: options.take } : {})
-    });
-  } catch (error) {
-    if (isMissingToolMenuTableError(error)) return [];
-    throw error;
-  }
+  const activeKey = options.activeOnly ? "active" : "all";
+  const takeKey = options.take ?? "all";
+  return siteReadCache.get(
+    `tool-menu-items:${siteId}:${activeKey}:${takeKey}`,
+    async () => {
+      try {
+        return await prisma.toolMenuItem.findMany({
+          where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
+          include: { category: { include: { parent: true } } },
+          orderBy: options.activeOnly ? [{ sortOrder: "asc" }, { title: "asc" }] : [{ status: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
+          ...(options.take ? { take: options.take } : {})
+        });
+      } catch (error) {
+        if (isMissingToolMenuTableError(error)) return [];
+        throw error;
+      }
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
 }
 const collectionDetailSiteSelect = {
   id: true,
@@ -707,6 +723,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
     siteAiApps: isHome || (isTools && !isToolDetail) || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
+    toolMenus: isHome || isPricing || isTools || isCollections || isWorkspace,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
 }
@@ -947,8 +964,12 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
           take: limits.mediaAssets
         })
       : Promise.resolve([]),
-    loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }),
-    loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 })
+    needs.toolMenus
+      ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 })
+      : Promise.resolve([]),
+    needs.toolMenus
+      ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 })
+      : Promise.resolve([])
   ]);
   storefrontPerfMark("collections", startedAt, {
     products: products.length,

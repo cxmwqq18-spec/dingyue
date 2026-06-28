@@ -22,6 +22,7 @@ export function shortPolicyPath(pathname: string): string {
     requestedPath === "/policies/cookies" || requestedPath === "/cookie-policy" ? "/cookies" :
     requestedPath === "/policies/refunds" || requestedPath === "/policies/refund" || requestedPath === "/refund-policy" ? "/refunds" :
     requestedPath === "/policies/content" || requestedPath === "/content-policy" ? "/content" :
+    requestedPath === "/policies/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/shipping" :
     requestedPath;
 }
 
@@ -32,6 +33,7 @@ export function policyPageSlug(pathname: string): string {
     requestedPath === "/cookies" || requestedPath === "/cookie-policy" ? "/policies/cookies" :
     requestedPath === "/refunds" || requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
     requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :
+    requestedPath === "/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/policies/shipping" :
     requestedPath;
 }
 

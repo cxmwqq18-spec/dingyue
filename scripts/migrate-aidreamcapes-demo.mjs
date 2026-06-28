@@ -17,7 +17,21 @@ const localDomain = "aidreamcapes.localhost";
 const supportEmail = "support@aidreamcapes.com";
 const salesEmail = "sales@aidreamcapes.com";
 const companyAddress = "8 THE GREEN STE B, DOVER, DE 19901";
-const logoImageUrl = "/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg?v=aidreamcapes-cream";
+const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg?v=20260628b";
+const visualSiteTitle = "ልiጋreamርapes";
+const aidreamcapesImageBase = "/assets/sites/site_aidreamcapes/creative-packs";
+const aidreamcapesPackImages = {
+  dreamscape: `${aidreamcapesImageBase}/dreamscape-portraits.png`,
+  coastal: `${aidreamcapesImageBase}/coastal-escapes.png`,
+  avatar: `${aidreamcapesImageBase}/fantasy-avatars.png`,
+  couple: `${aidreamcapesImageBase}/golden-hour-couples.png`,
+  headshot: `${aidreamcapesImageBase}/storybook-headshots.png`,
+  editorial: `${aidreamcapesImageBase}/editorial-getaways.png`,
+  glam: `${aidreamcapesImageBase}/soft-glam-studio.png`,
+  travel: `${aidreamcapesImageBase}/cinematic-travel.png`,
+  product: `${aidreamcapesImageBase}/product-reverie.png`,
+  social: `${aidreamcapesImageBase}/social-keepsakes.png`
+};
 const displayFontStack = "var(--font-display-ui), var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif";
 const bodyFontStack = "var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif";
 const stripeAccountId = process.env.AIDREAMCAPES_STRIPE_ACCOUNT_ID?.trim() || "acct_pending_aidreamcapes";
@@ -361,6 +375,14 @@ const aidreamcapesSeoPages = {
     index: true,
     follow: true
   },
+  shipping: {
+    title: "Aidreamcapes Shipping and Digital Delivery Policy",
+    description: "Review how Aidreamcapes delivers AI dreamscape portrait credits, generated images, downloads, and private galleries digitally without physical shipping.",
+    keywords: "Aidreamcapes shipping policy, Aidreamcapes digital delivery, AI portrait delivery, private gallery delivery",
+    canonicalPath: "/shipping",
+    index: true,
+    follow: true
+  },
   terms: {
     title: "Aidreamcapes Terms of Service - accounts, credits, and generated portraits",
     description: "Read Aidreamcapes terms for customer accounts, source photo rights, AI dreamscape credits, private gallery delivery, acceptable use, and support contact.",
@@ -396,16 +418,16 @@ const aidreamcapesSeoPages = {
 };
 
 const aidreamcapesTools = [
-  ["tool_dreamscape", "Dreamscape Generator", "Turn everyday portraits into cinematic imagined places with soft light, story-led atmosphere, and private gallery delivery.", "Dreamscape", "Core", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png", "/tools/dreamscape-generator"],
-  ["tool_coastal", "Coastal Portrait Composer", "Create beach, island, resort, and cliffside portraits with warm travel light and relaxed escape energy.", "Escape", "Coastal", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", "/tools/coastal-portrait"],
-  ["tool_avatar", "Fantasy Avatar Studio", "Build storybook avatars, ethereal profile crops, and soft fictional identity art from private uploads.", "Avatar", "Fantasy", "/assets/dreamshoot/frames/story-beauty-portrait.png", "/tools/fantasy-avatar"],
-  ["tool_couple", "Golden Hour Couple Maker", "Create romantic sunset, garden, city, and coastal couple scenes for gifts, announcements, and private albums.", "Couples", "Romance", "/assets/dreamshoot/frames/sample-engagement.png", "/tools/golden-hour-couple"],
-  ["tool_storybook", "Storybook Headshot Maker", "Make warm professional portraits for authors, creators, coaches, founders, and profile pages.", "Profile", "Warm", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", "/tools/storybook-headshot"],
-  ["tool_editorial", "Editorial Getaway Builder", "Shape magazine-style travel portraits with fashion-led settings, elegant crops, and cinematic polish.", "Editorial", "Travel", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png", "/tools/editorial-getaway"],
-  ["tool_glam", "Soft Glam Portrait Tool", "Create cream-light beauty portraits, gentle makeup moods, and polished profile-ready crops.", "Beauty", "Glam", "/assets/dreamshoot/beauty-portrait-gpt2.png", "/tools/soft-glam"],
-  ["tool_travel", "Cinematic Travel Scene Tool", "Explore old cities, coast roads, gardens, cafes, and scenic overlooks as private portrait scenes.", "Travel", "Scene", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png", "/tools/cinematic-travel"],
-  ["tool_product", "Product Reverie Tool", "Place small products into dreamy lifestyle scenes for creator launches, moodboards, and soft social visuals.", "Product", "Reverie", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", "/tools/product-reverie"],
-  ["tool_social", "Social Keepsake Maker", "Create dreamy announcement cards, memory posts, profile banners, and private gift visuals.", "Keepsake", "Social", "/assets/dreamshoot/holiday-card-gpt2.png", "/tools/social-keepsake"]
+  ["tool_dreamscape", "Dreamscape Generator", "Turn everyday portraits into cinematic imagined places with soft light, story-led atmosphere, and private gallery delivery.", "Dreamscape", "Core", aidreamcapesPackImages.dreamscape, "/tools/dreamscape-generator"],
+  ["tool_coastal", "Coastal Portrait Composer", "Create beach, island, resort, and cliffside portraits with warm travel light and relaxed escape energy.", "Escape", "Coastal", aidreamcapesPackImages.coastal, "/tools/coastal-portrait"],
+  ["tool_avatar", "Fantasy Avatar Studio", "Build storybook avatars, ethereal profile crops, and soft fictional identity art from private uploads.", "Avatar", "Fantasy", aidreamcapesPackImages.avatar, "/tools/fantasy-avatar"],
+  ["tool_couple", "Golden Hour Couple Maker", "Create romantic sunset, garden, city, and coastal couple scenes for gifts, announcements, and private albums.", "Couples", "Romance", aidreamcapesPackImages.couple, "/tools/golden-hour-couple"],
+  ["tool_storybook", "Storybook Headshot Maker", "Make warm professional portraits for authors, creators, coaches, founders, and profile pages.", "Profile", "Warm", aidreamcapesPackImages.headshot, "/tools/storybook-headshot"],
+  ["tool_editorial", "Editorial Getaway Builder", "Shape magazine-style travel portraits with fashion-led settings, elegant crops, and cinematic polish.", "Editorial", "Travel", aidreamcapesPackImages.editorial, "/tools/editorial-getaway"],
+  ["tool_glam", "Soft Glam Portrait Tool", "Create cream-light beauty portraits, gentle makeup moods, and polished profile-ready crops.", "Beauty", "Glam", aidreamcapesPackImages.glam, "/tools/soft-glam"],
+  ["tool_travel", "Cinematic Travel Scene Tool", "Explore old cities, coast roads, gardens, cafes, and scenic overlooks as private portrait scenes.", "Travel", "Scene", aidreamcapesPackImages.travel, "/tools/cinematic-travel"],
+  ["tool_product", "Product Reverie Tool", "Place small products into dreamy lifestyle scenes for creator launches, moodboards, and soft social visuals.", "Product", "Reverie", aidreamcapesPackImages.product, "/tools/product-reverie"],
+  ["tool_social", "Social Keepsake Maker", "Create dreamy announcement cards, memory posts, profile banners, and private gift visuals.", "Keepsake", "Social", aidreamcapesPackImages.social, "/tools/social-keepsake"]
 ].map(([id, title, description, category, badge, imageUrl, href]) => ({
   id,
   type: "tool_card",
@@ -413,12 +435,13 @@ const aidreamcapesTools = [
 }));
 
 const aidreamcapesTaxonomyBlocks = [
-  ["taxonomy_dreamscape", "Dreamscape Portraits", "Misty terraces, moon gardens, painterly rooms, and cinematic escape portraits.", "Core", "dreamscape|cinematic|escape", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png", "/collections/dreamscape-portraits"],
-  ["taxonomy_coastal", "Coastal Escapes", "Beach, island, resort, and cliffside portraits with warm travel light.", "Coastal", "beach|island|resort", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", "/collections/coastal-escapes"],
-  ["taxonomy_avatar", "Fantasy Avatars", "Storybook avatars, ethereal profile art, and fictional identity crops.", "Fantasy", "avatar|storybook|profile", "/assets/dreamshoot/frames/story-beauty-portrait.png", "/collections/fantasy-avatars"],
-  ["taxonomy_couple", "Golden Hour Couples", "Romantic sunset, garden, city, and seaside couple albums.", "Couples", "romantic|sunset|gift", "/assets/dreamshoot/frames/sample-engagement.png", "/collections/golden-hour-couples"],
-  ["taxonomy_editorial", "Editorial Getaways", "Magazine-style travel portraits with fashion-led locations and cinematic crops.", "Editorial", "fashion|travel|campaign", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png", "/collections/editorial-getaways"],
-  ["taxonomy_product", "Product Reverie", "Dreamy lifestyle concepts for small products, creator launches, and visual moodboards.", "Product", "product|moodboard|launch", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", "/collections/product-reverie"]
+  ["taxonomy_dreamscape", "Dreamscape Portraits", "Misty terraces, moon gardens, painterly rooms, and cinematic escape portraits.", "Core", "dreamscape|cinematic|escape", aidreamcapesPackImages.dreamscape, "/collections/dreamscape-portraits"],
+  ["taxonomy_coastal", "Coastal Escapes", "Beach, island, resort, and cliffside portraits with warm travel light.", "Coastal", "beach|island|resort", aidreamcapesPackImages.coastal, "/collections/coastal-escapes"],
+  ["taxonomy_avatar", "Fantasy Avatars", "Storybook avatars, ethereal profile art, and fictional identity crops.", "Fantasy", "avatar|storybook|profile", aidreamcapesPackImages.avatar, "/collections/fantasy-avatars"],
+  ["taxonomy_couple", "Golden Hour Couples", "Romantic sunset, garden, city, and seaside couple albums.", "Couples", "romantic|sunset|gift", aidreamcapesPackImages.couple, "/collections/golden-hour-couples"],
+  ["taxonomy_editorial", "Editorial Getaways", "Magazine-style travel portraits with fashion-led locations and cinematic crops.", "Editorial", "fashion|travel|campaign", aidreamcapesPackImages.editorial, "/collections/editorial-getaways"],
+  ["taxonomy_product", "Product Reverie", "Dreamy lifestyle concepts for small products, creator launches, and visual moodboards.", "Product", "product|moodboard|launch", aidreamcapesPackImages.product, "/collections/product-reverie"],
+  ["taxonomy_social", "Social Keepsakes", "Announcement cards, memory posts, and soft private keepsake visuals.", "Keepsake", "social|cards|memory", aidreamcapesPackImages.social, "/collections/social-keepsakes"]
 ].map(([id, title, description, meta, keywords, imageUrl, href]) => ({
   id,
   type: "taxonomy_card",
@@ -426,9 +449,9 @@ const aidreamcapesTaxonomyBlocks = [
 }));
 
 const aidreamcapesFeatureTabs = [
-  ["tab_dreamscape", "Dreamscape packages", "Choose a complete escape mood", "Start from Aidreamcapes packages such as coastal escapes, fantasy avatars, golden hour couples, editorial getaways, soft glam, and product reverie.", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png", "/collections"],
+  ["tab_dreamscape", "Dreamscape packages", "Choose a complete escape mood", "Start from Aidreamcapes packages such as coastal escapes, fantasy avatars, golden hour couples, editorial getaways, soft glam, and product reverie.", aidreamcapesPackImages.dreamscape, "/collections"],
   ["tab_source", "Source photo planning", "Guide the scene before generation", "Use clear portraits, outfit notes, and atmosphere references so each private gallery feels intentional.", "/assets/dreamshoot/frames/faq-intro-portrait.png", "/blog/planning-dreamscape-source-photos"],
-  ["tab_gallery", "Private galleries", "Review finished portraits in one place", "Credits, jobs, albums, and downloads remain connected to the signed-in Aidreamcapes account.", "/assets/dreamshoot/holiday-card-gpt2.png", "/app"]
+  ["tab_gallery", "Private galleries", "Review finished portraits in one place", "Credits, jobs, albums, and downloads remain connected to the signed-in Aidreamcapes account.", aidreamcapesPackImages.social, "/app"]
 ].map(([id, label, title, description, imageUrl, href]) => ({
   id,
   type: "feature_tab",
@@ -437,9 +460,9 @@ const aidreamcapesFeatureTabs = [
 
 const aidreamcapesFlowBlocks = [
   ["pkg_path_upload", "Upload", "Add clear portraits, outfit notes, and atmosphere references to your private Aidreamcapes workspace.", "Step 01", "/assets/dreamshoot/frames/faq-intro-portrait.png"],
-  ["pkg_path_mood", "Choose a mood", "Pick a dreamscape, coastal, fantasy, couple, editorial, glam, travel, product, or keepsake direction.", "Step 02", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png"],
-  ["pkg_path_generate", "Generate", "Spend credits only after the request is clear, with the cost shown before the private job starts.", "Step 03", "/assets/dreamshoot/frames/story-beauty-portrait.png"],
-  ["pkg_path_deliver", "Download", "Finished escape portraits return to the private album and stay tied to the customer account.", "Step 04", "/assets/dreamshoot/holiday-card-gpt2.png"]
+  ["pkg_path_mood", "Choose a mood", "Pick a dreamscape, coastal, fantasy, couple, editorial, glam, travel, product, or keepsake direction.", "Step 02", aidreamcapesPackImages.dreamscape],
+  ["pkg_path_generate", "Generate", "Spend credits only after the request is clear, with the cost shown before the private job starts.", "Step 03", aidreamcapesPackImages.avatar],
+  ["pkg_path_deliver", "Download", "Finished escape portraits return to the private album and stay tied to the customer account.", "Step 04", aidreamcapesPackImages.social]
 ].map(([id, title, text, meta, imageUrl]) => ({
   id,
   type: "card",
@@ -447,12 +470,12 @@ const aidreamcapesFlowBlocks = [
 }));
 
 const aidreamcapesSampleBlocks = [
-  ["sample_dreamscape", "Dreamscape", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png", "Cinematic escape"],
-  ["sample_coastal", "Coastal", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", "Warm seaside"],
-  ["sample_avatar", "Fantasy avatar", "/assets/dreamshoot/frames/story-beauty-portrait.png", "Storybook profile"],
-  ["sample_couple", "Golden hour", "/assets/dreamshoot/frames/sample-engagement.png", "Romantic keepsake"],
-  ["sample_editorial", "Editorial", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png", "Travel campaign"],
-  ["sample_glam", "Soft glam", "/assets/dreamshoot/beauty-portrait-gpt2.png", "Cream-light beauty"]
+  ["sample_dreamscape", "Dreamscape", aidreamcapesPackImages.dreamscape, "Cinematic escape"],
+  ["sample_coastal", "Coastal", aidreamcapesPackImages.coastal, "Warm seaside"],
+  ["sample_avatar", "Fantasy avatar", aidreamcapesPackImages.avatar, "Storybook profile"],
+  ["sample_couple", "Golden hour", aidreamcapesPackImages.couple, "Romantic keepsake"],
+  ["sample_editorial", "Editorial", aidreamcapesPackImages.editorial, "Travel campaign"],
+  ["sample_glam", "Soft glam", aidreamcapesPackImages.glam, "Cream-light beauty"]
 ].map(([id, label, imageUrl, meta]) => ({
   id,
   type: "sample",
@@ -551,9 +574,9 @@ function buildThemeSettings() {
   globalSections.header = normalizeGlobalSection("header", globalSections.header);
   globalSections.footer = normalizeGlobalSection("footer", globalSections.footer);
   globalSections.header.settings.logoImageUrl = logoImageUrl;
-  globalSections.header.settings.logoAlt = "Aidreamcapes heart compass logo";
+  globalSections.header.settings.logoAlt = "Aidreamcapes heart logo for cinematic dreamscape portraits and private galleries";
   globalSections.header.settings.style = "light_commerce";
-  globalSections.header.settings.title = siteName;
+  globalSections.header.settings.title = visualSiteTitle;
   globalSections.header.settings.announcement = "Create cinematic AI dreamscape portraits from everyday uploads.";
   globalSections.header.blocks = [
     { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Dreamscape Packages", href: "/collections" } },
@@ -564,7 +587,7 @@ function buildThemeSettings() {
     ...clone(aidreamcapesTools),
     ...clone(aidreamcapesTaxonomyBlocks.slice(0, 6))
   ];
-  globalSections.footer.settings.title = siteName;
+  globalSections.footer.settings.title = visualSiteTitle;
   globalSections.footer.settings.tagline = "Cinematic dreamscape portraits from everyday uploads.";
   globalSections.footer.settings.body = "Aidreamcapes helps customers plan source photos, choose a dreamscape package, generate private escape portraits, and download gallery-ready results from one account.";
   globalSections.footer.settings.bottomLine = "Private uploads, visible credits, and customer-only galleries.";
@@ -582,6 +605,7 @@ function buildThemeSettings() {
     { id: "aidreamcapes_footer_help", type: "menu_link", settings: { label: "Help Center", href: "/help", group: "support" } },
     { id: "aidreamcapes_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
     { id: "aidreamcapes_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/refunds", group: "support" } },
+    { id: "aidreamcapes_footer_shipping", type: "menu_link", settings: { label: "Shipping & Delivery", href: "/shipping", group: "support" } },
     { id: "aidreamcapes_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
     { id: "aidreamcapes_footer_content", type: "menu_link", settings: { label: "Content Policy", href: "/content", group: "support" } },
     { id: "aidreamcapes_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } }
@@ -636,7 +660,7 @@ function buildThemeSettings() {
         "Aidreamcapes is a private AI studio for cinematic dreamscape portraits, fantasy travel scenes, soft glam albums, and customer-only gallery delivery.",
       siteKeywords: "Aidreamcapes, AI dreamscape portraits, cinematic travel photos, fantasy avatar generator, private AI portrait gallery",
       titleTemplate: `%s | ${siteName}`,
-      defaultOgImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png",
+      defaultOgImage: aidreamcapesPackImages.dreamscape,
       robots: { index: true, follow: true },
       pages: {}
     },
@@ -711,6 +735,7 @@ const pageMappings = [
   { idSuffix: "account", packageTemplate: "account-billing", templateKey: "account-billing", slug: "/account", title: "Account and billing", pageType: "account" },
   { idSuffix: "privacy", packageTemplate: "policy", templateKey: "privacy", slug: "/policies/privacy", title: "Privacy policy", pageType: "policy", seoKey: "privacy" },
   { idSuffix: "refunds", packageTemplate: "policy", templateKey: "refunds", slug: "/policies/refunds", title: "Refund policy", pageType: "policy", seoKey: "refunds" },
+  { idSuffix: "shipping", packageTemplate: "policy", templateKey: "shipping", slug: "/policies/shipping", title: "Shipping and Digital Delivery Policy", pageType: "policy", seoKey: "shipping" },
   { idSuffix: "terms_service", packageTemplate: "policy", templateKey: "terms", slug: "/policies/terms", title: "Terms of Service", pageType: "policy", seoKey: "terms" },
   { idSuffix: "content", packageTemplate: "policy", templateKey: "content", slug: "/policies/content", title: "Content policy", pageType: "policy", seoKey: "content" },
   { idSuffix: "cookies", packageTemplate: "policy", templateKey: "cookies", slug: "/policies/cookies", title: "Cookie policy", pageType: "policy", seoKey: "cookies" },
@@ -770,6 +795,7 @@ const pageCopy = {
 const aidreamcapesPolicyBodies = {
   privacy: `<h3>1. Information we collect</h3><p>Aidreamcapes collects the information needed to operate a private AI portrait workspace: account email, authentication state, source photos, reference notes, package selections, prompts, generation settings, credit ledger events, checkout status, support messages, generated outputs, downloads, and basic device or request metadata used for security and reliability.</p><h3>2. How we use information</h3><p>We use this information to create requested dreamscape portraits, reserve and settle credits, deliver private galleries, keep account history accurate, provide support, prevent misuse, troubleshoot failed jobs, improve source-photo guidance, and show the right workspace pages after sign-in.</p><h3>3. Source photos and generated images</h3><p>Uploads and generated results stay tied to the current Aidreamcapes site and signed-in customer account. They are not sold as stock images, published in public galleries, or transferred to unrelated storefronts by default. Infrastructure and AI providers may process files only as needed to complete the service requested by the customer.</p><h3>4. Payments, credits, and retention</h3><p>Payments are handled by a connected payment provider. Aidreamcapes stores order IDs, checkout status, subscription state, credit purchases, reservations, reversals, and refund records; it does not store full card numbers on its own servers. Account records and generated assets are retained while needed for delivery, support, compliance, security, and customer access.</p><h3>5. Customer choices and contact</h3><p>Customers can contact support to ask about access, deletion, correction, privacy review, or account-specific delivery questions. Email <a href="mailto:${supportEmail}">${supportEmail}</a> and include the account email plus any relevant order, job, or gallery details so the request can be reviewed safely.</p>`,
   refunds: `<h3>1. Refund eligibility</h3><p>Refunds are reviewed based on credit use, checkout status, subscription state, and whether generation work has already been completed. Unused one-time credit purchases may be eligible for review within the stated support window, while credits already consumed by successful dreamscape generations are generally not refundable.</p><h3>2. Failed or interrupted jobs</h3><p>If a service-side technical failure prevents generation or private gallery delivery, Aidreamcapes may release reserved credits, rerun the request, provide troubleshooting, or review a refund. Support may ask for the account email, package name, job status, approximate request time, and any error message shown in the workspace.</p><h3>3. Subscriptions and renewals</h3><p>Canceling a subscription stops future renewals but does not automatically refund credits already granted or spent. Subscription refunds depend on payment status, usage, local requirements, and whether credits from the billing period have been applied to completed generations.</p><h3>4. Non-refundable cases</h3><p>Refunds are usually not available for dissatisfaction caused by unclear source photos, unsupported requests, changed creative preferences after generation, or outputs that were delivered according to the selected package. Customers should review source-photo guidance before starting a package run.</p><h3>5. How to request review</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> with the Aidreamcapes account email, checkout reference if available, package or job details, and a short explanation. Support will review the ledger and delivery records before deciding whether to release credits, rerun work, or refund eligible payments.</p>`,
+  shipping: `<h3>1. No physical shipping</h3><p>Aidreamcapes sells digital AI dreamscape portrait credits, generated image packages, downloads, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>2. Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>3. Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, Aidreamcapes may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy. Support may ask for the account email, package name, order details, and job status.</p><h3>4. No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by Aidreamcapes.</p><h3>5. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> with the Aidreamcapes account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>`,
   terms: `<h3>1. Acceptance</h3><p>By using Aidreamcapes, creating an account, purchasing credits, uploading source photos, starting a generation job, or opening a private gallery, you agree to these terms and the privacy policy that governs account data, uploads, payment status, and delivery records.</p><h3>2. Accounts and security</h3><p>Customers must provide accurate account information, keep sign-in credentials secure, and use the service only for lawful personal, creator, or business workflows. Each account is scoped to its site customer record and should not be shared in a way that bypasses billing, moderation, or privacy controls.</p><h3>3. Credits, packages, and delivery</h3><p>Credits are granted after confirmed payment, displayed before package creation, reserved when a job starts, consumed after successful delivery, and released when a request fails or times out. Delivery times, output counts, and creative results can vary based on source-photo quality, package settings, provider availability, and safety review.</p><h3>4. Uploaded content and rights</h3><p>You may only upload portraits, references, product images, or creative direction that you own or have permission to use. You remain responsible for the source material you submit and for how you use generated outputs. Aidreamcapes may reject, remove, or restrict requests that violate law, policy, platform safety rules, or third-party rights.</p><h3>5. Service limits and changes</h3><p>Aidreamcapes may update packages, pricing, credit rules, workflows, providers, delivery limits, or safety practices to keep the service reliable. We may pause or limit access when needed for security, abuse prevention, maintenance, payment issues, or policy enforcement.</p><h3>6. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account, billing, privacy, refund, policy, generation, or private gallery questions. Include the account email and relevant job or order details when requesting support.</p>`,
   content: `<h3>1. Allowed uploads</h3><p>Upload only portraits, product references, wardrobe notes, location inspiration, or creative direction that you own, created, licensed, or have permission to use. Source photos should be clear enough to support identity-safe dreamscape portraits and should not include people who have not consented to the intended use.</p><h3>2. Disallowed requests</h3><p>Do not use Aidreamcapes for impersonation, harassment, explicit exploitation, non-consensual imagery, illegal activity, stolen images, hateful or abusive content, deceptive identity use, attempts to bypass moderation, or requests involving protected marks or people in a misleading way.</p><h3>3. Generated outputs</h3><p>AI results may contain artifacts, inaccurate details, unexpected styling, or visual assumptions. Customers should review final images before using them publicly, commercially, or in identity-sensitive contexts. Generated results should not be presented as factual documentary evidence of events that did not happen.</p><h3>4. Review and enforcement</h3><p>Aidreamcapes may block prompts, reject uploads, pause jobs, remove outputs, release credits, or restrict accounts when content appears unsafe, unauthorized, abusive, unlawful, or outside supported package intent. Support may request more context when a request is ambiguous.</p><h3>5. Reporting concerns</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> to report content concerns, suspected misuse, account access issues, or generated output that needs review. Include the account email, job details, and a concise description of the concern.</p>`,
   cookies: `<h3>1. Essential cookies and local storage</h3><p>Aidreamcapes uses essential cookies and local storage to support sign-in, session security, checkout continuity, cart state, credit visibility, account preferences, private workspace routing, and customer-only gallery access. Some features may not work correctly if this storage is blocked or cleared.</p><h3>2. Security and reliability signals</h3><p>We may use limited operational signals such as request metadata, error state, device or browser type, and performance timing to detect failed requests, protect accounts, diagnose delivery issues, and improve site reliability. These signals are used to operate the service rather than to sell personal photos.</p><h3>3. Payment and third-party tools</h3><p>Checkout, email delivery, analytics, infrastructure, or AI processing providers may set or read cookies and related identifiers when they are necessary for payment status, fraud prevention, service delivery, security, or operational measurement. Their use is limited by the role they perform for the Aidreamcapes workflow.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings at any time. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require you to sign in again before accessing private albums, jobs, credit history, or downloads.</p><h3>5. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> if you have questions about cookies, account sessions, checkout continuity, or private gallery access on Aidreamcapes.</p>`
@@ -816,7 +842,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
       eyebrow: "AI dreamscape studio",
       imageBadge: "Aidreamcapes preview",
       imageCaption: "Private escape portraits, ready for download.",
-      heroVisualOverride: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png",
+      heroVisualOverride: aidreamcapesPackImages.dreamscape,
       socialProofLabel: "4.9/5 from dreamscape customers"
     };
   });
@@ -937,9 +963,9 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
       label: "Dreamscape workflow bridge",
       title: "From source photos to a private escape gallery.",
       subtitle: "Aidreamcapes turns upload planning, mood choice, credit spend, and gallery delivery into one clear customer journey.",
-      albumImageOne: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png",
-      albumImageTwo: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
-      albumImageThree: "/assets/dreamshoot/frames/story-beauty-portrait.png"
+      albumImageOne: aidreamcapesPackImages.dreamscape,
+      albumImageTwo: aidreamcapesPackImages.coastal,
+      albumImageThree: aidreamcapesPackImages.avatar
     };
     section.blocks = clone(aidreamcapesFlowBlocks);
   });
@@ -984,7 +1010,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
         eyebrow: "Plans and credits",
         title: "Plan the mood first. Spend credits when ready.",
         body: "Aidreamcapes uses visible credits for private dreamscape generation, with source photos, requests, albums, and downloads kept inside the signed-in account.",
-        imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png",
+        imageUrl: aidreamcapesPackImages.dreamscape,
         primaryCta: "Choose a plan",
         primaryHref: "/pricing",
         secondaryCta: "Browse dreamscape tools",
@@ -1060,7 +1086,8 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
       pageJson.sections.trust_1.settings = {
         eyebrow: "Customer trust",
         title: "Built for private portrait workflows, not public galleries.",
-        body: "Aidreamcapes keeps source photos, request history, credit ledger events, generated outputs, downloads, support details, and policy pages scoped to the storefront account."
+        contactEmail: supportEmail,
+        body: `Aidreamcapes keeps source photos, request history, credit ledger events, generated outputs, downloads, support details, and policy pages scoped to the storefront account. Email <a href="mailto:${supportEmail}">${supportEmail}</a> for privacy, account, billing, or private gallery questions.`
       };
     }
   }
@@ -1241,23 +1268,23 @@ products.push({
 });
 
 const parentCategoryRows = [
-  ["cat_aidreamcapes_parent_escape", "dreamscape-escapes", "Dreamscape Escapes", "Cinematic location-led portrait packages for imagined trips and atmospheric scenes.", "Dreamscape escape portraits", "Choose a cinematic world, then generate a private gallery around it.", "sparkles", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png"],
-  ["cat_aidreamcapes_parent_identity", "fantasy-identity", "Fantasy & Identity", "Profile-ready fantasy, storybook, and warm personal portrait directions.", "Fantasy identity portraits", "Create avatars, profile crops, and memorable personal portraits.", "wand", "/assets/dreamshoot/frames/story-beauty-portrait.png"],
-  ["cat_aidreamcapes_parent_romance", "romance-glam", "Romance & Glam", "Romantic couple scenes, soft glam looks, and polished beauty-led albums.", "Romance and glam portraits", "Build warm, polished portraits for keepsakes, profiles, and private albums.", "heart", "/assets/dreamshoot/frames/sample-engagement.png"],
-  ["cat_aidreamcapes_parent_creator", "creator-keepsakes", "Creator & Keepsakes", "Editorial, product, and social-ready visuals for creators and personal projects.", "Creator keepsake visuals", "Plan campaign concepts, product reveries, and share-ready memory cards.", "camera", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png"]
+  ["cat_aidreamcapes_parent_escape", "dreamscape-escapes", "Dreamscape Escapes", "Cinematic location-led portrait packages for imagined trips and atmospheric scenes.", "Dreamscape escape portraits", "Choose a cinematic world, then generate a private gallery around it.", "sparkles", aidreamcapesPackImages.dreamscape],
+  ["cat_aidreamcapes_parent_identity", "fantasy-identity", "Fantasy & Identity", "Profile-ready fantasy, storybook, and warm personal portrait directions.", "Fantasy identity portraits", "Create avatars, profile crops, and memorable personal portraits.", "wand", aidreamcapesPackImages.avatar],
+  ["cat_aidreamcapes_parent_romance", "romance-glam", "Romance & Glam", "Romantic couple scenes, soft glam looks, and polished beauty-led albums.", "Romance and glam portraits", "Build warm, polished portraits for keepsakes, profiles, and private albums.", "heart", aidreamcapesPackImages.couple],
+  ["cat_aidreamcapes_parent_creator", "creator-keepsakes", "Creator & Keepsakes", "Editorial, product, and social-ready visuals for creators and personal projects.", "Creator keepsake visuals", "Plan campaign concepts, product reveries, and share-ready memory cards.", "camera", aidreamcapesPackImages.editorial]
 ];
 
 const childCategoryRows = [
-  ["cat_aidreamcapes_dreamscape", "dreamscape-portraits", "Dreamscape Portraits", "Cinematic imagined places for personal portraits.", "Create cinematic dreamscape portraits", "Turn everyday uploads into soft, story-led escape scenes.", "sparkles", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png", "cat_aidreamcapes_parent_escape"],
-  ["cat_aidreamcapes_coastal", "coastal-escapes", "Coastal Escapes", "Beach, island, resort, and cliffside portrait moods.", "AI coastal escape portraits", "Warm seaside imagery without planning a destination shoot.", "waves", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", "cat_aidreamcapes_parent_escape"],
-  ["cat_aidreamcapes_travel", "cinematic-travel", "Cinematic Travel", "Destination-led portraits with scenic story energy.", "Cinematic travel photos", "Explore old cities, coast roads, gardens, and mountain overlooks.", "map", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png", "cat_aidreamcapes_parent_escape"],
-  ["cat_aidreamcapes_avatar", "fantasy-avatars", "Fantasy Avatars", "Storybook avatars and profile-ready fantasy portraits.", "Fantasy avatar maker", "Create ethereal profile art from private uploads.", "wand", "/assets/dreamshoot/frames/story-beauty-portrait.png", "cat_aidreamcapes_parent_identity"],
-  ["cat_aidreamcapes_headshot", "storybook-headshots", "Storybook Headshots", "Warm professional portraits for creators and founders.", "Warm storybook headshots", "Make profile photos feel polished, approachable, and memorable.", "user", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", "cat_aidreamcapes_parent_identity"],
-  ["cat_aidreamcapes_couple", "golden-hour-couples", "Golden Hour Couples", "Romantic sunset and travel-inspired couple albums.", "Golden hour couple portraits", "Create warm couple scenes for gifts and announcements.", "heart", "/assets/dreamshoot/frames/sample-engagement.png", "cat_aidreamcapes_parent_romance"],
-  ["cat_aidreamcapes_glam", "soft-glam-studio", "Soft Glam Studio", "Cream-light beauty portraits and private glam albums.", "Soft glam AI portraits", "Create polished beauty looks with gentle light.", "flower", "/assets/dreamshoot/beauty-portrait-gpt2.png", "cat_aidreamcapes_parent_romance"],
-  ["cat_aidreamcapes_editorial", "editorial-getaways", "Editorial Getaways", "Magazine-style travel portraits and campaign visuals.", "Editorial getaway portraits", "Pair fashion-led composition with imagined locations.", "camera", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png", "cat_aidreamcapes_parent_creator"],
-  ["cat_aidreamcapes_product", "product-reverie", "Product Reverie", "Dreamy lifestyle product concepts for creators.", "Dreamy product lifestyle visuals", "Place small products into soft, story-led scenes.", "package", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", "cat_aidreamcapes_parent_creator"],
-  ["cat_aidreamcapes_social", "social-keepsakes", "Social Keepsakes", "Dreamy cards, announcements, and personal visual keepsakes.", "Social keepsake maker", "Create gentle share-ready visuals for memorable moments.", "cards", "/assets/dreamshoot/holiday-card-gpt2.png", "cat_aidreamcapes_parent_creator"]
+  ["cat_aidreamcapes_dreamscape", "dreamscape-portraits", "Dreamscape Portraits", "Cinematic imagined places for personal portraits.", "Create cinematic dreamscape portraits", "Turn everyday uploads into soft, story-led escape scenes.", "sparkles", aidreamcapesPackImages.dreamscape, "cat_aidreamcapes_parent_escape"],
+  ["cat_aidreamcapes_coastal", "coastal-escapes", "Coastal Escapes", "Beach, island, resort, and cliffside portrait moods.", "AI coastal escape portraits", "Warm seaside imagery without planning a destination shoot.", "waves", aidreamcapesPackImages.coastal, "cat_aidreamcapes_parent_escape"],
+  ["cat_aidreamcapes_travel", "cinematic-travel", "Cinematic Travel", "Destination-led portraits with scenic story energy.", "Cinematic travel photos", "Explore old cities, coast roads, gardens, and mountain overlooks.", "map", aidreamcapesPackImages.travel, "cat_aidreamcapes_parent_escape"],
+  ["cat_aidreamcapes_avatar", "fantasy-avatars", "Fantasy Avatars", "Storybook avatars and profile-ready fantasy portraits.", "Fantasy avatar maker", "Create ethereal profile art from private uploads.", "wand", aidreamcapesPackImages.avatar, "cat_aidreamcapes_parent_identity"],
+  ["cat_aidreamcapes_headshot", "storybook-headshots", "Storybook Headshots", "Warm professional portraits for creators and founders.", "Warm storybook headshots", "Make profile photos feel polished, approachable, and memorable.", "user", aidreamcapesPackImages.headshot, "cat_aidreamcapes_parent_identity"],
+  ["cat_aidreamcapes_couple", "golden-hour-couples", "Golden Hour Couples", "Romantic sunset and travel-inspired couple albums.", "Golden hour couple portraits", "Create warm couple scenes for gifts and announcements.", "heart", aidreamcapesPackImages.couple, "cat_aidreamcapes_parent_romance"],
+  ["cat_aidreamcapes_glam", "soft-glam-studio", "Soft Glam Studio", "Cream-light beauty portraits and private glam albums.", "Soft glam AI portraits", "Create polished beauty looks with gentle light.", "flower", aidreamcapesPackImages.glam, "cat_aidreamcapes_parent_romance"],
+  ["cat_aidreamcapes_editorial", "editorial-getaways", "Editorial Getaways", "Magazine-style travel portraits and campaign visuals.", "Editorial getaway portraits", "Pair fashion-led composition with imagined locations.", "camera", aidreamcapesPackImages.editorial, "cat_aidreamcapes_parent_creator"],
+  ["cat_aidreamcapes_product", "product-reverie", "Product Reverie", "Dreamy lifestyle product concepts for creators.", "Dreamy product lifestyle visuals", "Place small products into soft, story-led scenes.", "package", aidreamcapesPackImages.product, "cat_aidreamcapes_parent_creator"],
+  ["cat_aidreamcapes_social", "social-keepsakes", "Social Keepsakes", "Dreamy cards, announcements, and personal visual keepsakes.", "Social keepsake maker", "Create gentle share-ready visuals for memorable moments.", "cards", aidreamcapesPackImages.social, "cat_aidreamcapes_parent_creator"]
 ];
 
 const categories = [...parentCategoryRows, ...childCategoryRows].map(([id, slug, label, description, heroTitle, heroSubtitle, icon, imageUrl, parentId], index) => ({
@@ -1277,16 +1304,16 @@ const categories = [...parentCategoryRows, ...childCategoryRows].map(([id, slug,
 }));
 
 const packRows = [
-  ["pack_aidreamcapes_dreamscape", "Dreamscape Portraits", "Cinematic imagined places, misty terraces, moon gardens, and soft escape portraits.", "dreamscape-portraits", 24, 24, "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png"],
-  ["pack_aidreamcapes_coastal", "Coastal Escapes", "Beach, island, resort, and cliffside portraits with warm travel light.", "coastal-escapes", 24, 22, "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
-  ["pack_aidreamcapes_avatar", "Fantasy Avatars", "Storybook avatars, ethereal profile art, and soft fictional identity crops.", "fantasy-avatars", 20, 20, "/assets/dreamshoot/frames/story-beauty-portrait.png"],
-  ["pack_aidreamcapes_couple", "Golden Hour Couples", "Romantic sunset scenes, garden walks, coastal evenings, and gift-ready albums.", "golden-hour-couples", 24, 24, "/assets/dreamshoot/frames/sample-engagement.png"],
-  ["pack_aidreamcapes_headshots", "Storybook Headshots", "Warm professional portraits for authors, creators, coaches, and founders.", "storybook-headshots", 20, 20, "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["pack_aidreamcapes_editorial", "Editorial Getaways", "Magazine-style travel portraits with fashion-led settings and cinematic crops.", "editorial-getaways", 28, 26, "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png"],
-  ["pack_aidreamcapes_glam", "Soft Glam Studio", "Cream-light beauty portraits, gentle makeup moods, and polished profile crops.", "soft-glam-studio", 20, 18, "/assets/dreamshoot/beauty-portrait-gpt2.png"],
-  ["pack_aidreamcapes_travel", "Cinematic Travel", "Old cities, coast roads, scenic overlooks, rainy cafes, and dream-trip visuals.", "cinematic-travel", 28, 24, "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png"],
-  ["pack_aidreamcapes_product", "Product Reverie", "Dreamy lifestyle product concepts for launches, moodboards, and soft social visuals.", "product-reverie", 16, 18, "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
-  ["pack_aidreamcapes_social", "Social Keepsakes", "Dreamy announcement cards, profile banners, memory posts, and private gift visuals.", "social-keepsakes", 20, 18, "/assets/dreamshoot/holiday-card-gpt2.png"]
+  ["pack_aidreamcapes_dreamscape", "Dreamscape Portraits", "Cinematic imagined places, misty terraces, moon gardens, and soft escape portraits.", "dreamscape-portraits", 24, 24, aidreamcapesPackImages.dreamscape],
+  ["pack_aidreamcapes_coastal", "Coastal Escapes", "Beach, island, resort, and cliffside portraits with warm travel light.", "coastal-escapes", 24, 22, aidreamcapesPackImages.coastal],
+  ["pack_aidreamcapes_avatar", "Fantasy Avatars", "Storybook avatars, ethereal profile art, and soft fictional identity crops.", "fantasy-avatars", 20, 20, aidreamcapesPackImages.avatar],
+  ["pack_aidreamcapes_couple", "Golden Hour Couples", "Romantic sunset scenes, garden walks, coastal evenings, and gift-ready albums.", "golden-hour-couples", 24, 24, aidreamcapesPackImages.couple],
+  ["pack_aidreamcapes_headshots", "Storybook Headshots", "Warm professional portraits for authors, creators, coaches, and founders.", "storybook-headshots", 20, 20, aidreamcapesPackImages.headshot],
+  ["pack_aidreamcapes_editorial", "Editorial Getaways", "Magazine-style travel portraits with fashion-led settings and cinematic crops.", "editorial-getaways", 28, 26, aidreamcapesPackImages.editorial],
+  ["pack_aidreamcapes_glam", "Soft Glam Studio", "Cream-light beauty portraits, gentle makeup moods, and polished profile crops.", "soft-glam-studio", 20, 18, aidreamcapesPackImages.glam],
+  ["pack_aidreamcapes_travel", "Cinematic Travel", "Old cities, coast roads, scenic overlooks, rainy cafes, and dream-trip visuals.", "cinematic-travel", 28, 24, aidreamcapesPackImages.travel],
+  ["pack_aidreamcapes_product", "Product Reverie", "Dreamy lifestyle product concepts for launches, moodboards, and soft social visuals.", "product-reverie", 16, 18, aidreamcapesPackImages.product],
+  ["pack_aidreamcapes_social", "Social Keepsakes", "Dreamy announcement cards, profile banners, memory posts, and private gift visuals.", "social-keepsakes", 20, 18, aidreamcapesPackImages.social]
 ];
 
 const categoryBySlug = new Map(categories.map((category) => [category.slug, category]));
@@ -1312,11 +1339,11 @@ const creativePacks = packRows.map(([id, name, description, categorySlug, output
 }));
 
 const mediaAssets = [
-  ["media_aidreamcapes_hero", "Aidreamcapes dreamscape hero", "sites/site_aidreamcapes/theme/hero-grid-travel.png", "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png"],
-  ["media_aidreamcapes_coastal", "Aidreamcapes coastal escape", "sites/site_aidreamcapes/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
-  ["media_aidreamcapes_avatar", "Aidreamcapes fantasy avatar", "sites/site_aidreamcapes/theme/story-beauty-portrait.png", "/assets/dreamshoot/frames/story-beauty-portrait.png"],
-  ["media_aidreamcapes_editorial", "Aidreamcapes editorial getaway", "sites/site_aidreamcapes/theme/proof-cinematic-worlds.png", "/assets/dreamshoot/generated/20260622-homepage-unique/proof-cinematic-worlds.png"],
-  ["media_aidreamcapes_glam", "Aidreamcapes soft glam", "sites/site_aidreamcapes/theme/beauty-portrait-gpt2.png", "/assets/dreamshoot/beauty-portrait-gpt2.png"]
+  ["media_aidreamcapes_hero", "Aidreamcapes cinematic dreamscape portrait hero", "sites/site_aidreamcapes/theme/dreamscape-portraits.png", aidreamcapesPackImages.dreamscape],
+  ["media_aidreamcapes_coastal", "Aidreamcapes coastal escape portrait cover", "sites/site_aidreamcapes/theme/coastal-escapes.png", aidreamcapesPackImages.coastal],
+  ["media_aidreamcapes_avatar", "Aidreamcapes fantasy avatar portrait cover", "sites/site_aidreamcapes/theme/fantasy-avatars.png", aidreamcapesPackImages.avatar],
+  ["media_aidreamcapes_editorial", "Aidreamcapes editorial getaway portrait cover", "sites/site_aidreamcapes/theme/editorial-getaways.png", aidreamcapesPackImages.editorial],
+  ["media_aidreamcapes_glam", "Aidreamcapes soft glam portrait cover", "sites/site_aidreamcapes/theme/soft-glam-studio.png", aidreamcapesPackImages.glam]
 ].map(([id, label, storageKey, previewUrl]) => ({
   id,
   siteId,
@@ -1347,7 +1374,7 @@ settings.seo.pages = Object.fromEntries(
     .map((page) => {
       const mapping = pageMappings.find((item) => `${siteId}_${item.idSuffix}` === page.id);
       const seo = mapping?.seoKey ? aidreamcapesSeoPages[mapping.seoKey] : undefined;
-      return seo ? [page.id, seo] : undefined;
+      return seo ? [page.id, { ...seo, ogImage: aidreamcapesPackImages.dreamscape }] : undefined;
     })
     .filter(Boolean)
 );
@@ -1445,6 +1472,15 @@ state.customers = replaceWhere(state.customers ?? [], (item) => item.siteId === 
     name: "Aria Vale",
     status: "active",
     balance: { available: 276, reserved: 24 }
+  },
+  {
+    id: "cust_aidreamcapes_test",
+    siteId,
+    email: `test@${localDomain}`,
+    passwordHash: hashPassword("test123456"),
+    name: "Aidreamcapes Test User",
+    status: "active",
+    balance: { available: 500, reserved: 0 }
   }
 ]);
 state.subscriptions = replaceWhere(state.subscriptions ?? [], (item) => item.siteId === siteId, [
@@ -1764,26 +1800,27 @@ async function syncAidreamcapesToDatabase() {
         }))
     });
 
-    const customer = state.customers.find((item) => item.siteId === siteId);
-    await prisma.customer.create({
-      data: {
-        id: customer.id,
-        siteId,
-        email: customer.email,
-        passwordHash: customer.passwordHash,
-        name: customer.name,
-        status: customer.status,
-        createdAt: toDate(customer.createdAt),
-        balance: {
-          create: {
-            id: `balance_${customer.id}`,
-            siteId,
-            balance: customer.balance.available,
-            reserved: customer.balance.reserved
+    for (const customer of state.customers.filter((item) => item.siteId === siteId)) {
+      await prisma.customer.create({
+        data: {
+          id: customer.id,
+          siteId,
+          email: customer.email,
+          passwordHash: customer.passwordHash,
+          name: customer.name,
+          status: customer.status,
+          createdAt: toDate(customer.createdAt),
+          balance: {
+            create: {
+              id: `balance_${customer.id}`,
+              siteId,
+              balance: customer.balance.available,
+              reserved: customer.balance.reserved
+            }
           }
         }
-      }
-    });
+      });
+    }
 
     await prisma.subscription.createMany({
       data: state.subscriptions

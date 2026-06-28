@@ -154,7 +154,7 @@ export const dreamshootPublicSeoPagePaths = Object.keys(dreamshootPublicSeoPageM
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
     label: "Beauty",
-    title: "AI Beauty Photo Maker - photos and videos with AI. Create stunning AI Beauty",
+    title: "AI Beauty Photo Packages - polished portraits and soft glam albums",
     description: "Create polished AI beauty photos with MydreamShoots: beauty portraits, skincare-ready profile images, soft glam looks, editorial crops, private albums, and optional video-ready outputs from everyday uploads.",
     keywords: "AI Beauty Photo Maker, AI beauty photos, beauty portrait generator, glam AI photos, MydreamShoots beauty",
     h2: "beauty",
@@ -810,43 +810,151 @@ function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
 }
 
 function titleCase(slug: string): string {
-  return slug.split("-").filter(Boolean).map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`).join(" ") || "AI Photo";
+  return slug.split("-").filter(Boolean).map((part) => {
+    const lower = part.toLowerCase();
+    if (lower === "ai") return "AI";
+    if (lower === "3d") return "3D";
+    if (lower === "vr") return "VR";
+    if (lower === "ugc") return "UGC";
+    return `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`;
+  }).join(" ") || "Photo";
+}
+
+function cleanDirectoryLabel(slug: string): string {
+  return titleCase(slug)
+    .replace(/\bAi\b/g, "AI")
+    .replace(/\bAI\s+AI\b/g, "AI")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^AI\s+/i, "");
+}
+
+function singularTopicLabel(label: string): string {
+  return label
+    .replace(/\bPhotos\b$/i, "Photo")
+    .replace(/\bImages\b$/i, "Image")
+    .replace(/\bHeadshots\b$/i, "Headshot")
+    .replace(/\bPortraits\b$/i, "Portrait")
+    .replace(/\bAvatars\b$/i, "Avatar")
+    .replace(/\bVideos\b$/i, "Video")
+    .replace(/\bGalleries\b$/i, "Gallery")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function lowerTopic(label: string): string {
+  return label.toLowerCase().replace(/\bai\b/g, "AI");
+}
+
+function stripTrailingMediaNoun(label: string): string {
+  return label
+    .replace(/\b(Photos?|Images?|Galleries?)$/i, "")
+    .replace(/\s+/g, " ")
+    .trim() || label;
+}
+
+function pluralTopicLabel(label: string): string {
+  if (/\bPhoto$/i.test(label)) return label.replace(/\bPhoto$/i, "Photos");
+  if (/\bImage$/i.test(label)) return label.replace(/\bImage$/i, "Images");
+  if (/\bHeadshot$/i.test(label)) return label.replace(/\bHeadshot$/i, "Headshots");
+  if (/\bPortrait$/i.test(label)) return label.replace(/\bPortrait$/i, "Portraits");
+  if (/\bAvatar$/i.test(label)) return label.replace(/\bAvatar$/i, "Avatars");
+  if (/\bVideo$/i.test(label)) return label.replace(/\bVideo$/i, "Videos");
+  if (/\bGallery$/i.test(label)) return label.replace(/\bGallery$/i, "Galleries");
+  return `${label} Photos`;
+}
+
+function collectionTitleTopic(label: string): string {
+  if (/\bVideo$/i.test(label)) return `${label} Packages`;
+  if (/\b(Headshot|Portrait)$/i.test(label)) return `${label} Packages`;
+  return `${stripTrailingMediaNoun(label)} Photo Packages`;
+}
+
+function isAidreamcapesBrand(brandName: string): boolean {
+  return brandName.toLowerCase().includes("aidreamcapes");
+}
+
+function brandPossessive(brandName: string): string {
+  return brandName.endsWith("s") ? `${brandName}'` : `${brandName}'s`;
 }
 
 function fallbackCollection(slug: string, brandName = "MydreamShoots"): SeoDirectorySeed {
-  const label = titleCase(slug);
-  const lower = label.toLowerCase();
+  const label = singularTopicLabel(cleanDirectoryLabel(slug));
+  const subject = stripTrailingMediaNoun(label);
+  const lower = lowerTopic(subject);
+  const pluralLabel = pluralTopicLabel(label);
+  const packageTopic = collectionTitleTopic(label);
+  if (isAidreamcapesBrand(brandName)) {
+    return {
+      label,
+      title: `AI ${subject} Dreamscape Gallery | ${brandName}`,
+      description: `Explore ${brandName} ${lower} galleries for private source-photo planning, coastal and fantasy-inspired scene directions, soft editorial crops, visible credits, and customer-only downloads.`,
+      keywords: `AI ${subject} dreamscape, ${lower} portrait gallery, ${brandName} ${lower}, private editorial AI gallery`,
+      h2: `${lower} dreamscape gallery`,
+      h3: [`${subject} scene direction`, `Source-photo planning`, `Private gallery delivery`],
+      intro: `This ${subject} gallery frames the style, mood, and source-photo guidance customers need before choosing an Aidreamcapes scene.`,
+      details: [
+        `Customers can compare ${lower} scene ideas, crop choices, and atmosphere before starting a private generation.`,
+        "The page keeps coastal, fantasy, and editorial directions separate from general photo-package copy.",
+        "Finished images stay in a private gallery so customers can review, download, and choose what to share."
+      ],
+      useCases: [`${subject} dreamscape portraits`, `${subject} soft-gallery images`, `${subject} editorial scenes`, `${subject} fantasy keepsakes`],
+      workflow: ["Choose a scene direction.", "Upload clear source photos.", "Review private gallery options.", "Download the final images you want to keep."],
+      ctaLabel: `Open ${subject} Gallery`,
+      ctaHref: "/tools/image-studio"
+    };
+  }
   return {
     label,
-    title: `AI ${label} Photo Maker - Create detailed ${label} photos with ${brandName}`,
-    description: `Create detailed AI ${lower} photos with ${brandName}. Explore private uploads, outcome-based photo packages, editable albums, credit-safe generation, and share-ready image directions.`,
-    keywords: `AI ${label} Photo Maker, ${label} AI photos, ${brandName} ${lower}, private AI photo package`,
-    h2: lower,
-    h3: [`AI ${lower} photo structure`, `${label} package workflow`, `Private ${lower} album delivery`],
-    intro: `The ${label} directory gives this product category its own search intent, page copy, and customer workflow instead of reusing the homepage.`,
+    title: `AI ${packageTopic} | ${brandName}`,
+    description: `Plan private ${subject} shoots with ${brandName}: upload source photos, choose a creator-ready package direction, review credit use, and download polished gallery images.`,
+    keywords: `AI ${subject} photo package, ${lower} AI photos, ${brandName} ${lower}, private creator photo gallery`,
+    h2: `${lower} photo packages`,
+    h3: [`${subject} package direction`, `Source-photo checklist`, `Private album delivery`],
+    intro: `This ${subject} collection helps customers choose the right photo-package direction before uploading source images and spending credits.`,
     details: [
-      `Customers can understand what a ${lower} package creates, which source photos work best, and how the final album is delivered.`,
-      "The page keeps navigation static and memorable while allowing the storefront to filter active packages behind the scenes.",
-      "Use this content area to describe styles, crops, delivery formats, and practical customer use cases in detail."
+      `Customers can see what a ${lower} package is best for, which source photos usually work well, and how the final album is delivered.`,
+      "The page keeps package navigation stable while active offers and creator-ready formats can change behind the scenes.",
+      "Use this section to compare styles, crops, delivery formats, and practical customer use cases without repeating the homepage."
     ],
-    useCases: [`${label} profile images`, `${label} social posts`, `${label} private albums`, `${label} campaign visuals`],
-    workflow: ["Upload clear source photos.", `Choose a ${lower} direction.`, "Generate a private album.", "Download final images for the intended channel."],
-    ctaLabel: `Create ${label} Photos`,
+    useCases: [`${subject} profile images`, `${subject} social posts`, `${subject} private albums`, `${subject} campaign visuals`],
+    workflow: ["Upload clear source photos.", `Choose a ${lower} package direction.`, "Review a private album.", "Download final images for the intended channel."],
+    ctaLabel: `Create ${pluralLabel}`,
     ctaHref: "/tools/image-studio"
   };
 }
 
 function fallbackTool(slug: string, brandName = "MydreamShoots"): SeoDirectorySeed {
-  const label = titleCase(slug);
-  const lower = label.toLowerCase();
+  const label = singularTopicLabel(cleanDirectoryLabel(slug));
+  const lower = lowerTopic(label);
+  if (isAidreamcapesBrand(brandName)) {
+    return {
+      label,
+      title: `AI ${label} Studio | ${brandName}`,
+      description: `Use ${brandPossessive(brandName)} ${label} studio to shape private dreamscape images with source-photo guidance, coastal or fantasy mood options, soft editorial framing, and gallery delivery.`,
+      keywords: `AI ${label} studio, ${lower} dreamscape tool, ${brandName} ${lower}, private fantasy portrait editor`,
+      h2: `${lower} studio`,
+      h3: [`${label} source guide`, `${label} scene options`, `Private gallery review`],
+      intro: `Use ${label} to turn source photos into private dreamscape images with a softer editorial feel and clear delivery expectations.`,
+      details: [
+        "Start with source photos or references that clearly show the subject, mood, and scene direction you want.",
+        "Aidreamcapes keeps the result private so customers can review images before downloading or sharing.",
+        "Use this page to compare scene fit, upload guidance, and the kind of gallery result the tool is meant to produce."
+      ],
+      useCases: [`${label} dream portraits`, `${label} coastal scenes`, `${label} fantasy editorials`, `${label} private keepsakes`],
+      workflow: ["Review the scene direction.", "Upload clear source photos.", "Choose the mood or use case.", "Generate and download from your private gallery."],
+      ctaLabel: `Start ${label}`,
+      ctaHref: `/app/create?tool_id=${slug}`
+    };
+  }
   return {
     label,
-    title: `AI ${label} - Create detailed photos with ${brandName}`,
-    description: `Use the ${brandName} AI ${label} tool to turn everyday uploads into private, share-ready images with clear guidance before you create.`,
-    keywords: `AI ${label}, ${label} generator, ${brandName} ${lower}, private AI photo editor`,
-    h2: lower,
+    title: `AI ${label} Tool | ${brandName}`,
+    description: `Use ${brandPossessive(brandName)} ${label} tool to turn everyday uploads into private creator visuals with clear input guidance, credit-aware generation, and gallery-ready downloads.`,
+    keywords: `AI ${label} tool, ${label} generator, ${brandName} ${lower}, private creator photo editor`,
+    h2: `${lower} tool`,
     h3: [`${label} input guide`, `${label} output ideas`, `Private ${label} delivery`],
-    intro: `Upload clear source material and use ${label} to create a private result that matches your next photo or video goal.`,
+    intro: `Upload clear source material and use ${label} for a private result that fits your next headshot, fan-photo, creator, or photo-package goal.`,
     details: [
       "Start with source photos or references that clearly show the subject, style, and use case you want.",
       "The finished result appears in your private account for review, download, and follow-up edits.",

@@ -20,6 +20,7 @@ function itemBody(body: Record<string, unknown>) {
     icon: typeof body.icon === "string" ? body.icon.trim() || null : null,
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl.trim() || null : null,
     href,
+    detailJson: body.detailJson && typeof body.detailJson === "object" && !Array.isArray(body.detailJson) ? body.detailJson : undefined,
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0,
     status
   };

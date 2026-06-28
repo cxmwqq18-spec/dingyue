@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const siteId = "site_aidreamcapes";
 const customerId = "cust_aidreamcapes_aria";
+const testCustomerId = "cust_aidreamcapes_test";
 const assetId = "asset_aidreamcapes_aria_out_001";
 const albumId = "album_aidreamcapes_aria_dreamscape";
 const jobId = "job_aidreamcapes_1001";
@@ -37,6 +38,10 @@ try {
   })));
   samples.push(await timed("customer", () => prisma.customer.findFirst({
     where: { id: customerId, siteId },
+    include: { balance: true }
+  })));
+  samples.push(await timed("testCustomer", () => prisma.customer.findFirst({
+    where: { id: testCustomerId, siteId },
     include: { balance: true }
   })));
   samples.push(await timed("counts", async () => ({
@@ -80,8 +85,11 @@ try {
   assert(byName.customer?.email === "aria@aidreamcapes.localhost", "missing_seed_customer");
   assert(byName.customer?.balance?.balance === 276, `unexpected_available_credits:${byName.customer?.balance?.balance}`);
   assert(byName.customer?.balance?.reserved === 24, `unexpected_reserved_credits:${byName.customer?.balance?.reserved}`);
-  assert(byName.counts.customers === 1, `unexpected_customer_count:${byName.counts.customers}`);
-  assert(byName.counts.activeCustomers === 1, `unexpected_active_customer_count:${byName.counts.activeCustomers}`);
+  assert(byName.testCustomer?.email === "test@aidreamcapes.localhost", "missing_test_customer");
+  assert(byName.testCustomer?.balance?.balance === 500, `unexpected_test_available_credits:${byName.testCustomer?.balance?.balance}`);
+  assert(byName.testCustomer?.balance?.reserved === 0, `unexpected_test_reserved_credits:${byName.testCustomer?.balance?.reserved}`);
+  assert(byName.counts.customers === 2, `unexpected_customer_count:${byName.counts.customers}`);
+  assert(byName.counts.activeCustomers === 2, `unexpected_active_customer_count:${byName.counts.activeCustomers}`);
   assert(byName.counts.subscriptions === 1, `unexpected_subscription_count:${byName.counts.subscriptions}`);
   assert(byName.counts.orders === 1, `unexpected_order_count:${byName.counts.orders}`);
   assert(byName.counts.jobs === 1, `unexpected_job_count:${byName.counts.jobs}`);

@@ -9,6 +9,7 @@ import {
   readStorefrontRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
 import {
+  canResolveCollectionSlugForSite,
   renderCustomerJobDetailPage,
   renderCustomerWorkspacePage,
   renderCustomerWorkspacePageBySlug,
@@ -91,7 +92,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     if (!matched) return {};
     return metadataForSeoDirectory(site, "tool", path[1]);
   }
-  if (path[0] === "collections" && path[1]) return metadataForSeoDirectory(site, "collection", path[1]);
+  if (path[0] === "collections" && path[1]) {
+    if (!canResolveCollectionSlugForSite(state, site, path[1])) return {};
+    return metadataForSeoDirectory(site, "collection", path[1]);
+  }
   if (path[0] === "dashboard") return { title: "Workspace" };
   if (canUseMydreamshootsSyntheticPage(site, slug)) {
     return metadataForDreamshootFallbackRoute(site.slug, slug, {
@@ -128,11 +132,14 @@ export default async function HostStorefrontCatchAllPage({
       redirect(`/site/${defaultSiteSlug}${slug}`);
     }
   }
+  if (slug === "/about") redirect("/about-us");
+  if (slug === "/contact") redirect("/contact-us");
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect("/privacy");
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect("/terms");
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect("/cookies");
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
@@ -170,6 +177,7 @@ export default async function HostStorefrontCatchAllPage({
     return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
+  if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionCategory ? "/collections" : policyPageSlug(`/${path.join("/")}`);
   if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
