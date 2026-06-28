@@ -47,11 +47,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
   const body = categoryBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
   if (body.label.length < 2 || !body.slug) return NextResponse.json({ error: "category_label_required" }, { status: 400 });
-  if (body.parentId) {
-    const parent = await prisma.toolCategory.findFirst({ where: { id: body.parentId, siteId }, select: { id: true } });
-    if (!parent) return NextResponse.json({ error: "parent_category_not_found" }, { status: 404 });
-  }
   try {
+    if (body.parentId) {
+      const parent = await prisma.toolCategory.findFirst({ where: { id: body.parentId, siteId }, select: { id: true } });
+      if (!parent) return NextResponse.json({ error: "parent_category_not_found" }, { status: 404 });
+    }
     const category = await prisma.toolCategory.create({
       data: { id: uid("tool_cat"), siteId, ...body },
       include: { parent: true }

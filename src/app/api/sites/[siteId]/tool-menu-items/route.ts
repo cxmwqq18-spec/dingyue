@@ -50,11 +50,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
   const body = itemBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
   if (body.title.length < 2 || !body.slug) return NextResponse.json({ error: "tool_title_required" }, { status: 400 });
-  if (body.categoryId) {
-    const category = await prisma.toolCategory.findFirst({ where: { id: body.categoryId, siteId }, select: { id: true } });
-    if (!category) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
-  }
   try {
+    if (body.categoryId) {
+      const category = await prisma.toolCategory.findFirst({ where: { id: body.categoryId, siteId }, select: { id: true } });
+      if (!category) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
+    }
     const item = await prisma.toolMenuItem.create({
       data: { id: uid("tool_item"), siteId, ...body },
       include: { category: { include: { parent: true } } }
