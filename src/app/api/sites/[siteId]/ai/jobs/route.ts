@@ -3,7 +3,7 @@ import { requireCustomerMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { createGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload } from "@/lib/worker";
+import { buildWorkerPayload, dispatchWorkerPayload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -42,14 +42,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
       }
     });
+    const workerPayload = await buildWorkerPayload({ job, siteAiApp, baseUrl });
+    const workerDispatch = await dispatchWorkerPayload(workerPayload);
     return NextResponse.json({
       ok: true,
       job,
       customer,
       customerBalance: customer.balance,
       ledgerAction: ledger,
-      workerPayload: await buildWorkerPayload({ job, siteAiApp, baseUrl }),
-      note: "Persisted job and reserved credits before worker dispatch."
+      workerPayload,
+      workerDispatch,
+      note: workerDispatch.status === "skipped" ? "Persisted job and reserved credits. Worker dispatch is not configured." : "Persisted job, reserved credits, and attempted worker dispatch."
     });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

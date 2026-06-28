@@ -13,12 +13,15 @@ import type {
   GenerationJob,
   LedgerType,
   PaymentEvent,
+  PartnerApplication,
   Price,
   Product,
   PublicCustomer,
   PublicPlatformAdmin,
   PublicSiteAdmin,
-  SiteAiApp
+  SiteAiApp,
+  ToolCategory,
+  ToolMenuItem
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 
@@ -294,6 +297,34 @@ export function toAssetUploadRelational(asset: Record<string, unknown>): AssetUp
     validationReport: objectRecord(asset.validationReport),
     createdAt,
     deletedAt
+  };
+}
+
+export function toPartnerApplicationRelational(application: Record<string, unknown>): PartnerApplication {
+  const socialLinks = Array.isArray(application.socialLinks)
+    ? application.socialLinks.map((item) => String(item).trim()).filter(Boolean)
+    : [];
+  const status = optionalString(application.status);
+  return {
+    id: String(application.id),
+    siteId: String(application.siteId),
+    email: String(application.email),
+    name: String(application.name),
+    company: optionalString(application.company),
+    website: optionalString(application.website),
+    socialLinks,
+    audience: optionalString(application.audience),
+    cadence: optionalString(application.cadence),
+    campaignIdeas: optionalString(application.campaignIdeas),
+    message: optionalString(application.message),
+    status: (status === "approved" || status === "rejected" || status === "archived" ? status : "pending") as PartnerApplication["status"],
+    source: optionalString(application.source),
+    reviewedBy: optionalString(application.reviewedBy),
+    reviewedAt: toIsoString(application.reviewedAt as Date | string | undefined),
+    reviewNote: optionalString(application.reviewNote),
+    metadata: objectRecord(application.metadata),
+    createdAt: toIsoString(application.createdAt as Date | string | undefined) ?? new Date(0).toISOString(),
+    updatedAt: toIsoString(application.updatedAt as Date | string | undefined) ?? new Date(0).toISOString()
   };
 }
 
@@ -651,6 +682,80 @@ export function toCreativePackCategory(record: {
     imageUrl: record.imageUrl ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as CreativePackCategory["status"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toToolCategory(record: {
+  id: string;
+  siteId: string;
+  parentId?: string | null;
+  parent?: {
+    id: string;
+    siteId: string;
+    parentId?: string | null;
+    slug: string;
+    label: string;
+    description?: string | null;
+    icon?: string | null;
+    sortOrder: number;
+    status: string;
+    createdAt?: Date | string;
+  } | null;
+  slug: string;
+  label: string;
+  description?: string | null;
+  icon?: string | null;
+  sortOrder: number;
+  status: string;
+  createdAt?: Date | string;
+}): ToolCategory {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    parentId: record.parentId ?? undefined,
+    parent: record.parent ? toToolCategory(record.parent) : undefined,
+    slug: record.slug,
+    label: record.label,
+    description: record.description ?? undefined,
+    icon: record.icon ?? undefined,
+    iconName: record.icon ?? undefined,
+    sortOrder: record.sortOrder,
+    status: record.status as ToolCategory["status"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toToolMenuItem(record: {
+  id: string;
+  siteId: string;
+  categoryId?: string | null;
+  category?: Parameters<typeof toToolCategory>[0] | null;
+  slug: string;
+  title: string;
+  description?: string | null;
+  badge?: string | null;
+  icon?: string | null;
+  imageUrl?: string | null;
+  href: string;
+  sortOrder: number;
+  status: string;
+  createdAt?: Date | string;
+}): ToolMenuItem {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    categoryId: record.categoryId ?? undefined,
+    category: record.category ? toToolCategory(record.category) : undefined,
+    slug: record.slug,
+    title: record.title,
+    description: record.description ?? undefined,
+    badge: record.badge ?? undefined,
+    icon: record.icon ?? undefined,
+    imageUrl: record.imageUrl ?? undefined,
+    href: record.href,
+    sortOrder: record.sortOrder,
+    status: record.status as ToolMenuItem["status"],
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
   };
 }

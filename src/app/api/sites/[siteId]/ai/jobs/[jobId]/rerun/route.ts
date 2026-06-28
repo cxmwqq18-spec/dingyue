@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { rerunGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload } from "@/lib/worker";
+import { buildWorkerPayload, dispatchWorkerPayload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function POST(
@@ -17,6 +17,8 @@ export async function POST(
 
   try {
     const result = await rerunGenerationJobRelational({ siteId, jobId, actor: body.actor });
+    const workerPayload = await buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl });
+    const workerDispatch = await dispatchWorkerPayload(workerPayload);
     return NextResponse.json({
       ok: true,
       sourceJob: result.sourceJob,
@@ -24,8 +26,9 @@ export async function POST(
       customer: result.customer,
       customerBalance: result.customer.balance,
       ledgerAction: result.ledger,
-      workerPayload: await buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl }),
-      note: "Persisted rerun job and reserved credits before worker dispatch."
+      workerPayload,
+      workerDispatch,
+      note: workerDispatch.status === "skipped" ? "Persisted rerun job and reserved credits. Worker dispatch is not configured." : "Persisted rerun job, reserved credits, and attempted worker dispatch."
     });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

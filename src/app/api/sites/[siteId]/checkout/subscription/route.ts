@@ -6,6 +6,7 @@ import { completeAdminCheckoutRelational, startCustomerCheckoutRelational } from
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { mapProduct } from "@/lib/stores/prisma-mappers";
+import { createStripeCheckoutSession, stripeCheckoutReadiness } from "@/lib/stripe-checkout";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -99,11 +100,57 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: error instanceof Error ? error.message : "checkout_start_failed" }, { status });
   }
 
+  const stripeReady = stripeCheckoutReadiness({
+    stripeAccountId: site.connect?.stripeAccountId,
+    stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId
+  });
+  if (stripeReady.ok && site.connect?.stripeAccountId) {
+    try {
+      const origin = request.headers.get("origin") ?? new URL(request.url).origin;
+      const session = await createStripeCheckoutSession({
+        siteId,
+        siteSlug: site.slug,
+        customer: checkout.customer,
+        price: checkout.price,
+        order: checkout.order,
+        stripeAccountId: site.connect.stripeAccountId,
+        origin,
+        mode: price.interval === "month" ? "subscription" : "payment",
+        metadata: {
+          ...checkout.metadata,
+          stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId ?? ""
+        }
+      });
+      return NextResponse.json({
+        ok: true,
+        checkoutStatus: "payment_required",
+        checkoutUrl: session.url,
+        checkoutSessionId: session.id,
+        stripeAccount: site.connect.stripeAccountId,
+        mode: price.interval === "month" ? "subscription" : "payment",
+        price: checkout.price,
+        order: checkout.order,
+        metadata: {
+          ...checkout.metadata,
+          stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId
+        },
+        note: "Stripe Checkout Session created. Credits are granted by webhook after payment."
+      });
+    } catch (error) {
+      return NextResponse.json({
+        ok: false,
+        checkoutStatus: "payment_provider_error",
+        error: error instanceof Error ? error.message : "stripe_checkout_session_failed",
+        order: checkout.order
+      }, { status: 502 });
+    }
+  }
+
   return NextResponse.json({
     ok: false,
     checkoutStatus: "payment_required",
     error: "payment_provider_not_enabled_for_customer",
-    checkoutUrl: `https://checkout.stripe.com/c/demo_${checkout.order.id}`,
+    checkoutUrl: undefined,
     stripeAccount: site.connect?.stripeAccountId,
     mode: price.interval === "month" ? "subscription" : "payment",
     price: checkout.price,
@@ -112,6 +159,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       ...checkout.metadata,
       stripePriceId: price.stripePriceId ?? checkout.price.stripePriceId
     },
-    note: "Checkout is contract-shaped in dev. Credits are only granted by webhook, not by this response."
+    note: `${stripeReady.ok ? "Stripe checkout is ready." : stripeReady.reason} Credits are granted by webhook after payment.`
   });
 }

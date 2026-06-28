@@ -22,7 +22,16 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Read how MydreamShoots protects account data, uploaded source photos, generated AI portraits, credit activity, checkout records, cookies, and private album access on www.mydreamshoots.com.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/privacy",
+    canonicalPath: "/privacy",
+    index: true,
+    follow: true
+  },
+  "/privacy": {
+    title: "Privacy Policy for AI Photo Uploads, Credits, and Private Albums",
+    description:
+      "Read how MydreamShoots protects account data, uploaded source photos, generated AI portraits, credit activity, checkout records, cookies, and private album access on www.mydreamshoots.com.",
+    keywords: POLICY_KEYWORDS,
+    canonicalPath: "/privacy",
     index: true,
     follow: true
   },
@@ -31,7 +40,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Read how MydreamShoots protects account data, uploaded source photos, generated AI portraits, credit activity, checkout records, cookies, and private album access on www.mydreamshoots.com.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/privacy",
+    canonicalPath: "/privacy",
     index: true,
     follow: true
   },
@@ -40,7 +49,16 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Review the MydreamShoots terms for customer accounts, AI photo credits, subscriptions, Stripe checkout, upload rights, generated portraits, failed jobs, refunds, and private gallery access.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/terms",
+    canonicalPath: "/terms",
+    index: true,
+    follow: true
+  },
+  "/terms": {
+    title: "Terms of Service for MydreamShoots AI Photo Packages",
+    description:
+      "Review the MydreamShoots terms for customer accounts, AI photo credits, subscriptions, Stripe checkout, upload rights, generated portraits, failed jobs, refunds, and private gallery access.",
+    keywords: POLICY_KEYWORDS,
+    canonicalPath: "/terms",
     index: true,
     follow: true
   },
@@ -49,7 +67,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Review the MydreamShoots terms for customer accounts, AI photo credits, subscriptions, Stripe checkout, upload rights, generated portraits, failed jobs, refunds, and private gallery access.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/terms",
+    canonicalPath: "/terms",
     index: true,
     follow: true
   },
@@ -58,7 +76,16 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Learn how MydreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/cookies",
+    canonicalPath: "/cookies",
+    index: true,
+    follow: true
+  },
+  "/cookies": {
+    title: "Cookie Policy for MydreamShoots Sign-In, Checkout, and Albums",
+    description:
+      "Learn how MydreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
+    keywords: POLICY_KEYWORDS,
+    canonicalPath: "/cookies",
     index: true,
     follow: true
   },
@@ -67,7 +94,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     description:
       "Learn how MydreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
     keywords: POLICY_KEYWORDS,
-    canonicalPath: "/policies/cookies",
+    canonicalPath: "/cookies",
     index: true,
     follow: true
   },
@@ -82,7 +109,22 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
       "subscription credit refund",
       "failed AI job refund"
     ].join(", "),
-    canonicalPath: "/policies/refunds",
+    canonicalPath: "/refunds",
+    index: true,
+    follow: true
+  },
+  "/refunds": {
+    title: "Refund Policy for MydreamShoots Credits, Plans, and Failed Jobs",
+    description:
+      "Review how MydreamShoots handles refund eligibility, unused AI photo credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots refund policy",
+      "AI photo credit refund",
+      "subscription credit refund",
+      "failed AI job refund"
+    ].join(", "),
+    canonicalPath: "/refunds",
     index: true,
     follow: true
   },
@@ -97,7 +139,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
       "subscription credit refund",
       "failed AI job refund"
     ].join(", "),
-    canonicalPath: "/policies/refunds",
+    canonicalPath: "/refunds",
     index: true,
     follow: true
   },
@@ -112,7 +154,22 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
       "AI portrait consent",
       "private AI output policy"
     ].join(", "),
-    canonicalPath: "/policies/content",
+    canonicalPath: "/content",
+    index: true,
+    follow: true
+  },
+  "/content": {
+    title: "Content Policy for MydreamShoots Uploads and AI Photo Outputs",
+    description:
+      "Read the MydreamShoots content policy for permitted source photos, upload rights, identity consent, private AI albums, moderation review, blocked requests, and responsible output use.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "MydreamShoots content policy",
+      "AI photo upload rules",
+      "AI portrait consent",
+      "private AI output policy"
+    ].join(", "),
+    canonicalPath: "/content",
     index: true,
     follow: true
   },
@@ -127,7 +184,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
       "AI portrait consent",
       "private AI output policy"
     ].join(", "),
-    canonicalPath: "/policies/content",
+    canonicalPath: "/content",
     index: true,
     follow: true
   }

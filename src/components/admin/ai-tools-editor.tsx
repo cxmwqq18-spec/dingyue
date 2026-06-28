@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
-import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, SiteAiApp } from "@/lib/types";
+import type { PlatformAiProviderOption } from "@/components/admin/ai-tools-page-client";
+import { creativePackIconByName, creativePackIconOptions } from "@/lib/creative-pack-icons";
+import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, SiteAiApp, ToolCategory, ToolMenuItem } from "@/lib/types";
 
 const providerModes: Array<{ label: string; value: AiProviderConfig["mode"] }> = [
   { label: "平台默认通道", value: "platform_fallback" },
@@ -90,14 +93,55 @@ function assetStep(config: AiWorkflowConfig): AiWorkflowStep {
   return config.steps.find((step) => step.kind === "asset_select") ?? config.steps[0];
 }
 
-export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiApp[] }) {
+function configuredProviderLabel(provider?: PlatformAiProviderOption) {
+  if (!provider) return "未选择链路";
+  const tags = [
+    provider.modelType,
+    provider.preferred ? "平台优先" : `优先级 ${provider.priority}`,
+    provider.status.configured ? "已配置" : "未完整配置"
+  ].filter(Boolean);
+  return `${provider.label} · ${tags.join(" / ")}`;
+}
+
+function selectedProvider(providers: PlatformAiProviderOption[], providerId?: string) {
+  return providers.find((provider) => provider.id === providerId);
+}
+
+function preferredProvider(providers: PlatformAiProviderOption[]) {
+  return providers.find((provider) => provider.preferred) ?? providers[0];
+}
+
+export function AiToolsEditor({
+  siteId,
+  apps,
+  platformAiProviders,
+  toolCategories = [],
+  toolMenuItems = []
+}: {
+  siteId: string;
+  apps: SiteAiApp[];
+  platformAiProviders: PlatformAiProviderOption[];
+  toolCategories?: ToolCategory[];
+  toolMenuItems?: ToolMenuItem[];
+}) {
   const router = useRouter();
   const [items, setItems] = useState(apps);
+  const [categories, setCategories] = useState(toolCategories);
+  const [menuItems, setMenuItems] = useState(toolMenuItems);
+  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", parentId: "", icon: "sparkles", description: "", sortOrder: 0, status: "active" as ToolCategory["status"] });
   const [message, setMessage] = useState("维护当前站点的启用状态、顾客单次扣费和 worker routeKey。");
 
   useEffect(() => {
     setItems(apps);
   }, [apps]);
+
+  useEffect(() => {
+    setCategories(toolCategories);
+  }, [toolCategories]);
+
+  useEffect(() => {
+    setMenuItems(toolMenuItems);
+  }, [toolMenuItems]);
 
   function update(id: string, field: "enabled" | "creditCost" | "routeKey", value: string | boolean) {
     setItems((current) =>
@@ -118,6 +162,15 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
 
   function updateProvider(id: string, updater: (config: AiProviderConfig) => AiProviderConfig) {
     setItems((current) => current.map((item) => (item.id === id ? { ...item, providerConfig: updater(providerFor(item)) } : item)));
+  }
+
+  function updateProviderMode(id: string, mode: AiProviderConfig["mode"]) {
+    updateProvider(id, (config) => ({
+      ...config,
+      mode,
+      providerId: mode === "platform_fallback" ? undefined : config.providerId || preferredProvider(platformAiProviders)?.id,
+      fallbackEnabled: mode !== "fixed_provider"
+    }));
   }
 
   async function save(app: SiteAiApp) {
@@ -141,6 +194,69 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
     }
     setMessage(result.error ?? `${app.aiApp.name} 保存失败。`);
   }
+
+  function updateCategory(id: string, field: keyof ToolCategory, value: string | number) {
+    setCategories((current) => current.map((item) => (item.id === id ? { ...item, [field]: field === "sortOrder" ? Number(value) : value } : item)));
+  }
+
+  function updateMenuItem(id: string, field: keyof ToolMenuItem, value: string | number) {
+    setMenuItems((current) => current.map((item) => (item.id === id ? { ...item, [field]: field === "sortOrder" ? Number(value) : value } : item)));
+  }
+
+  async function createCategory() {
+    const response = await fetch(`/api/sites/${siteId}/tool-categories`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryDraft)
+    });
+    const result = (await response.json().catch(() => ({}))) as { category?: ToolCategory; error?: string };
+    if (response.ok && result.category) {
+      setCategories((current) => [...current, result.category!].sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label)));
+      setCategoryDraft({ label: "", slug: "", parentId: "", icon: "sparkles", description: "", sortOrder: 0, status: "active" });
+      setMessage("工具分类已新增，前台 Tools 下拉会读取这份数据。");
+      router.refresh();
+      return;
+    }
+    setMessage(result.error ?? "工具分类新增失败。");
+  }
+
+  async function saveCategory(category: ToolCategory) {
+    const response = await fetch(`/api/sites/${siteId}/tool-categories/${category.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(category)
+    });
+    const result = (await response.json().catch(() => ({}))) as { category?: ToolCategory; error?: string };
+    if (response.ok && result.category) {
+      setCategories((current) => current.map((item) => (item.id === result.category?.id ? result.category : item)));
+      setMessage(`${category.label} 分类已保存。`);
+      router.refresh();
+      return;
+    }
+    setMessage(result.error ?? `${category.label} 保存失败。`);
+  }
+
+  async function saveMenuItem(item: ToolMenuItem) {
+    const response = await fetch(`/api/sites/${siteId}/tool-menu-items/${item.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(item)
+    });
+    const result = (await response.json().catch(() => ({}))) as { item?: ToolMenuItem; error?: string };
+    if (response.ok && result.item) {
+      setMenuItems((current) => current.map((entry) => (entry.id === result.item?.id ? result.item : entry)));
+      setMessage(`${item.title} 的工具菜单配置已保存。`);
+      router.refresh();
+      return;
+    }
+    setMessage(result.error ?? `${item.title} 保存失败。`);
+  }
+
+  const rootCategories = categories.filter((category) => !category.parentId);
+  const categoryOptions = categories.map((category) => {
+    const parent = category.parentId ? categories.find((item) => item.id === category.parentId) : undefined;
+    return { id: category.id, label: parent ? `${parent.label} / ${category.label}` : category.label };
+  });
 
   return (
     <div>
@@ -228,10 +344,159 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
           </tbody>
         </table>
       </div>
+      <div className="mt-5 grid gap-4 rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-4">
+        <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+          <div>
+            <h3 className="text-[15px] font-semibold text-[var(--admin-text)]">Tools 下拉分类</h3>
+            <p className="mt-1 text-[12px] leading-5 text-[#667085]">维护一级/二级分类和 icon；前台 Tools 下拉会优先读取这些分类及工具菜单项。</p>
+          </div>
+          <span className="rounded-[6px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-2.5 py-1 text-[11px] text-[#667085]">
+            {categories.length} 个分类 / {menuItems.length} 个工具项
+          </span>
+        </div>
+        <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 lg:grid-cols-[1fr_1fr_0.8fr_0.7fr_auto]">
+          <input className="inputtext" onChange={(event) => setCategoryDraft((draft) => ({ ...draft, label: event.target.value }))} placeholder="分类名称" value={categoryDraft.label} />
+          <input className="inputtext" onChange={(event) => setCategoryDraft((draft) => ({ ...draft, slug: event.target.value }))} placeholder="slug，可留空自动生成" value={categoryDraft.slug} />
+          <select className="selectmini" onChange={(event) => setCategoryDraft((draft) => ({ ...draft, parentId: event.target.value }))} value={categoryDraft.parentId}>
+            <option value="">一级分类</option>
+            {rootCategories.map((category) => (
+              <option key={category.id} value={category.id}>{category.label}</option>
+            ))}
+          </select>
+          <select className="selectmini" onChange={(event) => setCategoryDraft((draft) => ({ ...draft, icon: event.target.value }))} value={categoryDraft.icon}>
+            {creativePackIconOptions.map((option) => (
+              <option key={option.name} value={option.name}>{option.label}</option>
+            ))}
+          </select>
+          <button className="input_btn h-[34px] whitespace-nowrap" onClick={createCategory} type="button">新增分类</button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="list min-w-[1120px]">
+            <thead>
+              <tr>
+                <th className="bgtt aleft">分类</th>
+                <th className="bgtt">层级</th>
+                <th className="bgtt">Icon</th>
+                <th className="bgtt">排序</th>
+                <th className="bgtt">状态</th>
+                <th className="bgtt aleft">说明</th>
+                <th className="bgtt">保存</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categories.map((category) => {
+                const Icon = creativePackIconByName(category.icon).icon;
+                return (
+                  <tr key={category.id}>
+                    <td className="aleft">
+                      <input className="inputtext input100" onChange={(event) => updateCategory(category.id, "label", event.target.value)} value={category.label} />
+                      <input className="inputtext input100 mt-2 font-mono text-[11px]" onChange={(event) => updateCategory(category.id, "slug", event.target.value)} value={category.slug} />
+                    </td>
+                    <td>
+                      <select className="selectmini input100" onChange={(event) => updateCategory(category.id, "parentId", event.target.value)} value={category.parentId ?? ""}>
+                        <option value="">一级分类</option>
+                        {rootCategories.filter((item) => item.id !== category.id).map((item) => (
+                          <option key={item.id} value={item.id}>{item.label}</option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="grid h-8 w-8 place-items-center rounded-[8px] border border-[var(--admin-border-soft)] bg-white">
+                          <Icon className="h-4 w-4" strokeWidth={1.8} />
+                        </span>
+                        <select className="selectmini max-w-[150px]" onChange={(event) => updateCategory(category.id, "icon", event.target.value)} value={category.icon ?? "camera"}>
+                          {creativePackIconOptions.map((option) => (
+                            <option key={option.name} value={option.name}>{option.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </td>
+                    <td>
+                      <input className="inputtext input100 text-center" onChange={(event) => updateCategory(category.id, "sortOrder", event.target.value)} type="number" value={category.sortOrder} />
+                    </td>
+                    <td>
+                      <select className="selectmini input100" onChange={(event) => updateCategory(category.id, "status", event.target.value)} value={category.status}>
+                        <option value="active">active</option>
+                        <option value="draft">draft</option>
+                        <option value="paused">paused</option>
+                      </select>
+                    </td>
+                    <td className="aleft">
+                      <input className="inputtext input100" onChange={(event) => updateCategory(category.id, "description", event.target.value)} value={category.description ?? ""} />
+                    </td>
+                    <td>
+                      <button className="input_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => saveCategory(category)} type="button">
+                        <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        保存
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="list min-w-[1120px]">
+            <thead>
+              <tr>
+                <th className="bgtt aleft">工具菜单项</th>
+                <th className="bgtt">归属分类</th>
+                <th className="bgtt">排序</th>
+                <th className="bgtt">状态</th>
+                <th className="bgtt aleft">前台链接</th>
+                <th className="bgtt">保存</th>
+              </tr>
+            </thead>
+            <tbody>
+              {menuItems.map((tool) => (
+                <tr key={tool.id}>
+                  <td className="aleft">
+                    <input className="inputtext input100" onChange={(event) => updateMenuItem(tool.id, "title", event.target.value)} value={tool.title} />
+                    <input className="inputtext input100 mt-2" onChange={(event) => updateMenuItem(tool.id, "description", event.target.value)} value={tool.description ?? ""} />
+                  </td>
+                  <td>
+                    <select className="selectmini input100" onChange={(event) => updateMenuItem(tool.id, "categoryId", event.target.value)} value={tool.categoryId ?? ""}>
+                      <option value="">未分类</option>
+                      {categoryOptions.map((option) => (
+                        <option key={option.id} value={option.id}>{option.label}</option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <input className="inputtext input100 text-center" onChange={(event) => updateMenuItem(tool.id, "sortOrder", event.target.value)} type="number" value={tool.sortOrder} />
+                  </td>
+                  <td>
+                    <select className="selectmini input100" onChange={(event) => updateMenuItem(tool.id, "status", event.target.value)} value={tool.status}>
+                      <option value="active">active</option>
+                      <option value="draft">draft</option>
+                      <option value="paused">paused</option>
+                    </select>
+                  </td>
+                  <td className="aleft">
+                    <input className="inputtext input100 font-mono text-[11px]" onChange={(event) => updateMenuItem(tool.id, "href", event.target.value)} value={tool.href} />
+                    <input className="inputtext input100 mt-2 font-mono text-[11px]" onChange={(event) => updateMenuItem(tool.id, "imageUrl", event.target.value)} placeholder="imageUrl" value={tool.imageUrl ?? ""} />
+                  </td>
+                  <td>
+                    <button className="input_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => saveMenuItem(tool)} type="button">
+                      <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      保存
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="mt-5 grid gap-4">
         {items.map((app) => {
           const workflow = workflowFor(app);
           const provider = providerFor(app);
+          const currentProvider = selectedProvider(platformAiProviders, provider.providerId);
+          const defaultProvider = preferredProvider(platformAiProviders);
+          const needsProvider = provider.mode === "preferred_provider" || provider.mode === "fixed_provider";
           const uploadStep = assetStep(workflow);
           const minAssets = uploadStep.assetRules?.min ?? 1;
           const maxAssets = uploadStep.assetRules?.max ?? 4;
@@ -299,12 +564,29 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
                     />
                   </label>
                 </div>
-                <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 sm:grid-cols-2">
+                <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 xl:col-span-2">
+                  <div className="flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
+                    <div>
+                      <p className="text-[12px] font-semibold text-[var(--admin-text)]">AI 中转链路</p>
+                      <p className="mt-1 text-[12px] leading-5 text-[#667085]">
+                        这里选择平台 AI 网关里维护的供应商链路；routeKey 只负责把任务送到 worker 流程。
+                      </p>
+                    </div>
+                    <Link className="inline-flex h-8 shrink-0 items-center justify-center rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-3 text-[12px] font-medium text-[#2f6fed] hover:border-[#bfd5fb]" href="/platform?module=gateway">
+                      去平台 AI 网关
+                    </Link>
+                  </div>
+                  {!platformAiProviders.length ? (
+                    <div className="rounded-[8px] border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] leading-5 text-amber-800">
+                      平台还没有可用 AI 中转链路。请先到平台后台 AI 网关添加供应商，再回到这里选择。
+                    </div>
+                  ) : null}
+                  <div className="grid gap-3 lg:grid-cols-[minmax(220px,0.85fr)_minmax(260px,1.15fr)]">
                   <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
                     AI 通道策略
                     <select
                       className="selectmini"
-                      onChange={(event) => updateProvider(app.id, (config) => ({ ...config, mode: event.target.value as AiProviderConfig["mode"] }))}
+                      onChange={(event) => updateProviderMode(app.id, event.target.value as AiProviderConfig["mode"])}
                       value={provider.mode}
                     >
                       {providerModes.map((mode) => (
@@ -312,15 +594,52 @@ export function AiToolsEditor({ siteId, apps }: { siteId: string; apps: SiteAiAp
                       ))}
                     </select>
                   </label>
-                  <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
-                    模型/通道标识
-                    <input
-                      className="inputtext"
-                      onChange={(event) => updateProvider(app.id, (config) => ({ ...config, modelType: event.target.value }))}
-                      placeholder="例如 gpt-image-2"
-                      value={provider.modelType ?? ""}
-                    />
-                  </label>
+                  {needsProvider ? (
+                    <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                      平台 AI 中转链路
+                      <select
+                        className="selectmini"
+                        disabled={!platformAiProviders.length}
+                        onChange={(event) => updateProvider(app.id, (config) => ({ ...config, providerId: event.target.value || undefined }))}
+                        value={provider.providerId ?? ""}
+                      >
+                        <option value="">请选择平台 AI URL</option>
+                        {platformAiProviders.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {item.label} · {item.modelType}{item.preferred ? " · 平台优先" : ""}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ) : (
+                    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-3 py-2 text-[12px] leading-5 text-[#667085]">
+                      <span className="block font-semibold text-[var(--admin-text)]">当前会使用平台默认链路</span>
+                      <span className="mt-1 block">{defaultProvider ? configuredProviderLabel(defaultProvider) : "平台 AI 网关尚未配置供应商。"}</span>
+                    </div>
+                  )}
+                  </div>
+                  <div className="grid gap-3 lg:grid-cols-[minmax(260px,1fr)_minmax(260px,1fr)]">
+                    <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-3 py-2 text-[12px] leading-5 text-[#667085]">
+                      <span className="block font-semibold text-[var(--admin-text)]">保存后实际链路</span>
+                      <span className="mt-1 block">
+                        {provider.mode === "platform_fallback"
+                          ? `平台默认：${defaultProvider ? configuredProviderLabel(defaultProvider) : "未配置"}`
+                          : configuredProviderLabel(currentProvider)}
+                      </span>
+                      {provider.mode === "preferred_provider" ? <span className="mt-1 block">该链路优先，失败时可继续走平台 fallback 队列。</span> : null}
+                      {provider.mode === "fixed_provider" ? <span className="mt-1 block">该工具将固定使用所选链路；请确认该供应商已配置并可用。</span> : null}
+                    </div>
+                    <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                      高级模型覆盖（可选）
+                      <input
+                        className="inputtext"
+                        onChange={(event) => updateProvider(app.id, (config) => ({ ...config, modelType: event.target.value }))}
+                        placeholder={currentProvider?.modelType ?? defaultProvider?.modelType ?? "留空则使用所选链路模型"}
+                        value={provider.modelType ?? ""}
+                      />
+                      <span className="text-[11px] leading-4 text-[#98a2b3]">这不是链路选择；仅用于 worker 需要覆盖模型类型时传递。</span>
+                    </label>
+                  </div>
                 </div>
                 <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
                   Material rules，每行一条，前台展示为素材要求

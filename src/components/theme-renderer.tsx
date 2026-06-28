@@ -9,9 +9,11 @@ import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
+import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
+import { shortPolicyPath } from "@/lib/site-route-canonical";
 import {
   AlertTriangle,
   ArrowRight,
@@ -68,7 +70,8 @@ import type {
   ThemePageJson,
   ThemeRuntimeData,
   ThemeSettings,
-  ThemeSettingValue
+  ThemeSettingValue,
+  ToolMenuItem
 } from "@/lib/types";
 
 type StorefrontRouteMode = "host" | "path";
@@ -83,6 +86,7 @@ export function ThemeRenderer({
   products = [],
   siteAiApps = [],
   creativePacks = [],
+  toolMenuItems = [],
   runtime,
   mode = "published",
   pagePath,
@@ -98,6 +102,7 @@ export function ThemeRenderer({
   products?: ReturnType<typeof import("@/lib/data").getSiteProducts>;
   siteAiApps?: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
   creativePacks?: CreativePack[];
+  toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
   pagePath?: string;
@@ -165,7 +170,7 @@ export function ThemeRenderer({
         id="xfcart-section-header_plus"
         {...previewSelectedAttrs(previewSelection, "header_plus")}
       >
-        <ThemeGlobalHeader creativePacks={creativePacks} lightweight={lightweightChrome} runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} />
+        <ThemeGlobalHeader creativePacks={creativePacks} lightweight={lightweightChrome} runtime={runtime} site={routedSite} settings={settings} pagePath={normalizedPath} toolMenuItems={toolMenuItems} />
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section], index) => (
@@ -182,6 +187,7 @@ export function ThemeRenderer({
             section={section}
             site={routedSite}
             siteAiApps={siteAiApps}
+            toolMenuItems={toolMenuItems}
           />
         ))}
       </main>
@@ -205,6 +211,7 @@ type ThemeSectionFrameProps = {
   site: Site;
   products: ReturnType<typeof import("@/lib/data").getSiteProducts>;
   siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
+  toolMenuItems: ToolMenuItem[];
   creativePacks: CreativePack[];
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
@@ -285,11 +292,14 @@ const sectionTypesUsingProducts = new Set([
 const sectionTypesUsingSiteAiApps = new Set([
   "ai_tool_entry",
   "ai_tool_grid",
+  "aidreamcapes_tool_collection",
   "generation_form",
   "search_results"
 ]);
 
 const sectionTypesUsingCreativePacks = new Set([
+  "aidreamcapes_package_catalog",
+  "aidreamcapes_package_taxonomy",
   "collection_list_plus",
   "dreamshoot_package_catalog",
   "dreamshoot_package_taxonomy",
@@ -332,7 +342,8 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, creativePacks, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePacks, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+  const sectionType = canonicalSectionType(section.type);
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
         contentVisibility: "auto",
@@ -350,15 +361,16 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, cre
       {...previewSelectedAttrs(previewSelection, id)}
     >
       <SectionView
-        creativePacks={sectionTypesUsingCreativePacks.has(section.type) ? creativePacks : []}
+        creativePacks={sectionTypesUsingCreativePacks.has(sectionType) ? creativePacks : []}
         id={id}
         mode={mode}
-        products={sectionTypesUsingProducts.has(section.type) ? products : []}
+        products={sectionTypesUsingProducts.has(sectionType) ? products : []}
         renderContext={renderContext}
         runtime={runtimeForSection(section, runtime)}
-        section={section}
+        section={sectionType === section.type ? section : { ...section, type: sectionType }}
         site={site}
-        siteAiApps={sectionTypesUsingSiteAiApps.has(section.type) ? siteAiApps : []}
+        siteAiApps={sectionTypesUsingSiteAiApps.has(sectionType) ? siteAiApps : []}
+        toolMenuItems={toolMenuItems}
       />
     </div>
   );
@@ -372,7 +384,7 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, runtime, site, settings, pagePath = "/" }: { creativePacks?: CreativePack[]; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string }) {
+export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [] }: { creativePacks?: CreativePack[]; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -395,15 +407,23 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
           ...link,
           block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
         }));
-  const toolMegaBlocks = mergeDreamshootToolBlocks(getDreamshootToolBlocks(header?.blocks));
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
-  const dreamShootIdentity = `${site.slug} ${site.name} ${site.branding.logoText} ${title}`;
+  const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
-  const showDreamShootToolsMega = !lightweight && isDreamShoot && toolMegaBlocks.length > 0;
+  const isAidreamcapes = isAidreamcapesSite(site);
+  const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
+  const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
+  const toolMegaBlocks = isAidreamcapes ? configuredToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const showDreamShootToolsMega = !lightweight && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks);
-  const photoPackageMegaGroups = dynamicPhotoPackageMegaGroups.length || lightweight ? dynamicPhotoPackageMegaGroups : dreamshootFallbackPhotoPackageGroups;
-  const showPhotoPackageMega = !lightweight && isDreamShoot;
+  const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
+  const photoPackageMegaGroups = dynamicPhotoPackageMegaGroups.length || lightweight
+    ? dynamicPhotoPackageMegaGroups
+    : configuredPhotoPackageMegaGroups.length
+      ? configuredPhotoPackageMegaGroups
+      : dreamshootFallbackPhotoPackageGroups;
+  const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
   const photoPackageMegaPrefetchPaths = photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href))).slice(0, 10);
   const toolsMegaPrefetchPaths = showDreamShootToolsMega
     ? [hrefFor(site, "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", "/tools")))]
@@ -412,7 +432,11 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
   const mobileLabel = header ? setting(header, "mobileLabel", "Menu") : "Menu";
-  const logoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
+  const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
+  const brandingLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
+  const logoImageUrl = isAidreamcapes
+    ? brandingLogoImageUrl || configuredLogoImageUrl
+    : configuredLogoImageUrl || brandingLogoImageUrl;
   const readableBrandTitle = isDreamShoot ? "MydreamShoots" : title;
   const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : readableBrandTitle;
   const brandDescription = isDreamShoot
@@ -475,7 +499,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                       isDreamShoot && dark
                         ? "h-8 w-8 object-contain"
                         : lightCommerce
-                          ? "h-full w-full rounded-full object-cover"
+                          ? "h-full w-full object-contain p-1"
                           : "h-full w-full rounded-full object-cover"
                     }
                     src={mediaAssetUrl(site, logoImageUrl)}
@@ -488,7 +512,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                 </span>
               )}
               <span className="min-w-0">
-                <span className={lightCommerce ? "block max-w-[9rem] truncate text-[1.72rem] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)] sm:max-w-[12rem] sm:text-[2.15rem]" : isDreamShoot && dark ? "block text-[1.52rem] font-semibold leading-none text-white sm:text-[1.66rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot ? "true" : undefined}>{visualBrandTitle}</span>
+                <span className={lightCommerce ? "block max-w-[min(42vw,18rem)] whitespace-nowrap text-[clamp(1.35rem,2.8vw,2.15rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot && dark ? "block text-[1.52rem] font-semibold leading-none text-white sm:text-[1.66rem]" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot ? "true" : undefined}>{visualBrandTitle}</span>
                 {isDreamShoot ? <span className="sr-only">MydreamShoots AI photo packages and private albums</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
@@ -529,13 +553,14 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
 	              >
 	                  {isPackagesLink ? (
-	                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} />
+	                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} variant={isAidreamcapes ? "warm" : "dark"} />
 	                  ) : (
                     <DreamShootMegaToolsPanel
                       ctaHref="/tools"
                       ctaLabel="View all tools"
                       site={site}
                       tools={toolMegaBlocks}
+	                      variantTone={isAidreamcapes ? "warm" : "dark"}
 	                      variant="popover"
 	                    />
 	                  )}
@@ -694,11 +719,24 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const footer = settings.globalSections?.footer;
   const saasFooter = saasGlobalSection(settings, "footer_plus");
   const title = footer ? setting(footer, "title", site.branding.logoText) : site.branding.logoText;
-  const isDreamShootFooter = /dreamshoot/i.test(title);
-  const readableFooterTitle = isDreamShootFooter ? "MydreamShoots" : title;
+  const footerIdentity = `${title} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
+  const isDreamShootFooter = /dreamshoot/i.test(footerIdentity);
+  const isAidreamcapesFooter = /aidreamcapes/i.test(footerIdentity);
+  const readableFooterTitle = isDreamShootFooter ? "MydreamShoots" : isAidreamcapesFooter ? "Aidreamcapes" : title;
   const visualFooterTitle = readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
+  const contactAddressFallback = isDreamShootFooter || isAidreamcapesFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
+  const contactEmailFallback = isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
+  const salesEmailFallback = isAidreamcapesFooter ? "sales@aidreamcapes.com" : isDreamShootFooter ? "sales@mydreamshoots.com" : "";
+  const contactAddress = footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
+  const contactEmail = footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
+  const salesEmail = footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
+  const contactItems = [
+    contactAddress ? { label: "Company address", value: contactAddress, href: "" } : null,
+    contactEmail ? { label: "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
+    salesEmail ? { label: "Sales", value: salesEmail, href: `mailto:${salesEmail}` } : null
+  ].filter(Boolean) as Array<{ label: string; value: string; href: string }>;
   const logoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
   const footerBg = footer
@@ -799,12 +837,21 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     { heading: footer ? setting(footer, "companyHeading", "Company") : "Company", items: companyLinks },
     { heading: footer ? setting(footer, "supportHeading", "Support") : "Support", items: supportLinks }
   ].filter((column) => column.items.length);
+  const isSupportLink = (link: { label: string; href: string; block: SectionBlockInstance }) => {
+    const group = blockValue(link.block, "group", "").toLowerCase();
+    return group.includes("support") || linkCategory(link) === "support";
+  };
   const footerLinkLabel = (label: string, href: string) => {
-    if (href === "/policies/privacy" || href === "/privacy-policy") return "Privacy Policy";
-    if (href === "/policies/terms" || href === "/terms-of-service") return "Terms of Service";
-    if (href === "/policies/cookies" || href === "/cookie-policy") return "Cookie Policy";
+    const normalizedHref = shortPolicyPath(href);
+    if (normalizedHref === "/privacy") return "Privacy Policy";
+    if (normalizedHref === "/terms") return "Terms of Service";
+    if (normalizedHref === "/cookies") return "Cookie Policy";
     return label;
   };
+  const rawCopyright = footer ? setting(footer, "copyright", "All rights reserved.") : "All rights reserved.";
+  const normalizedCopyright = isDreamShootFooter && /^(MydreamShoots(\sdemo)?\.\s*)?All rights reserved\.$/i.test(rawCopyright)
+    ? "© 2026 MyDreamShoots. All rights reserved."
+    : rawCopyright;
   const brandMark =
     readableFooterTitle
       .split(/\s+/)
@@ -839,6 +886,24 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             <p className={dark ? "mt-4 max-w-md text-[0.9rem] leading-6 text-white/64" : "mt-4 max-w-md text-[0.9rem] leading-6 text-[#625d56]"}>
               {body}
             </p>
+            {contactItems.length ? (
+              <dl className={dark ? "mt-5 grid gap-2 text-[0.82rem] leading-5 text-white/58" : "mt-5 grid gap-2 text-[0.82rem] leading-5 text-[#625d56]"}>
+                {contactItems.map((item) => (
+                  <div className="grid gap-0.5" key={item.label}>
+                    <dt className={dark ? "font-semibold text-white/74" : "font-semibold text-[#171514]"}>{item.label}</dt>
+                    <dd>
+                      {item.href ? (
+                        <Link className="transition hover:underline" href={item.href}>
+                          {item.value}
+                        </Link>
+                      ) : (
+                        item.value
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
             {socialLinks.length ? (
               <div className="mt-5 flex flex-wrap items-center gap-2.5">
                 {socialLinks.map((item) => {
@@ -866,6 +931,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
                       className={dark ? "flex min-h-10 items-center text-[0.9rem] text-white/62 transition hover:text-white" : "flex min-h-10 items-center text-[0.9rem] text-[#625d56] transition hover:text-[#171514]"}
                       href={hrefFor(site, link.href)}
                       key={`${link.label}_${link.href}_${column.heading}`}
+                      rel={isSupportLink(link) ? "nofollow" : undefined}
                       {...xfcartBlockAttrs(link.block, index, `footer_nav_${slugify(column.heading)}`)}
                     >
                       {footerLinkLabel(link.label, link.href)}
@@ -885,7 +951,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           </div>
         </div>
         <div className={dark ? "mt-5 flex flex-col gap-2 text-[11px] text-white/42 sm:flex-row sm:items-center sm:justify-between" : "mt-5 flex flex-col gap-2 text-[11px] text-[#8c7f72] sm:flex-row sm:items-center sm:justify-between"}>
-          <p>{footer ? setting(footer, "copyright", "All rights reserved.") : "All rights reserved."}</p>
+          <p>{normalizedCopyright}</p>
           <p>{footer ? setting(footer, "bottomLine", "Monthly credits, one-time top-ups, and private galleries in one photo workspace.") : "Monthly credits, one-time top-ups, and private galleries in one photo workspace."}</p>
         </div>
       </div>
@@ -1211,6 +1277,21 @@ function routedSitePath(site: Site, path = "/"): string {
 function hrefFor(site: Site, href: string): string {
   if (!href) return routedSitePath(site);
   if (href === "javascript:void(0);") return "#";
+  if (href.startsWith("http")) {
+    try {
+      const url = new URL(href);
+      const normalizedPolicyPath = shortPolicyPath(url.pathname);
+      if (normalizedPolicyPath !== url.pathname) {
+        url.pathname = normalizedPolicyPath;
+        return url.toString();
+      }
+    } catch {
+      return href;
+    }
+    return href;
+  }
+  const normalizedPolicyPath = shortPolicyPath(href);
+  if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);
   if (href === "#workflow") return routedSitePath(site, "/#workflow");
   if (href === "#faq") return routedSitePath(site, "/help");
   if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
@@ -1218,9 +1299,7 @@ function hrefFor(site: Site, href: string): string {
   if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");
   if (href === "/app#progress_1") return routedSitePath(site, "/app/jobs/progress");
   if (href === "/app#album_1") return routedSitePath(site, "/album");
-  if (href === "/privacy-policy") return routedSitePath(site, "/policies/privacy");
-  if (href === "/terms-of-service") return routedSitePath(site, "/policies/terms");
-  if (href.startsWith("#") || href.startsWith("http")) return href;
+  if (href.startsWith("#")) return href;
   const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
@@ -1979,12 +2058,27 @@ const dreamshootBg = "#05070E";
 const dreamshootSurface = "#10111A";
 const dreamshootGlass = "rgba(18, 18, 28, 0.86)";
 const dreamshootBrandGradient = `linear-gradient(90deg, ${dreamshootOrange} 0%, ${dreamshootMagenta} 38%, ${dreamshootPurple} 68%, ${dreamshootCyan} 100%)`;
+const aidreamcapesCream = "#FBF3E4";
+const aidreamcapesCreamSoft = "#FFF8ED";
+const aidreamcapesInk = "#1E1712";
+const aidreamcapesMutedInk = "#6F6257";
+const aidreamcapesCopper = "#B86E36";
+const aidreamcapesAccent = "#D88A4B";
 const googleIconPath = "/assets/brand/google-g.svg";
 const paperWarm = "#f4f1eb";
 const panelWarm = "#fbfaf7";
 const borderWarm = "#d8d2c7";
 const inkBase = "#14161a";
 const inkMuted = "#6f716f";
+
+function isAidreamcapesSite(site: Site): boolean {
+  return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+}
+
+function canonicalSectionType(type: string): string {
+  if (type.startsWith("aidreamcapes_")) return type.replace(/^aidreamcapes_/, "dreamshoot_");
+  return type;
+}
 
 function brandInitials(title: string): string {
   if (/dreamshoot/i.test(title)) return "DS";
@@ -2115,6 +2209,30 @@ function getDreamshootToolBlocks(blocks: SectionBlockInstance[] | undefined): Se
   return configured.length ? configured : dreamshootDefaultMegaToolBlocks();
 }
 
+function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockInstance[] {
+  return items
+    .filter((item) => item.status === "active")
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
+    .map((item) => {
+      const parent = item.category?.parent;
+      const category = parent?.label || item.category?.label || "AI Tools";
+      const badge = item.category?.parent ? item.category.label : item.badge || item.category?.label || "Tool";
+      return {
+        id: `tool_menu_${item.id}`,
+        type: "tool_card",
+        settings: {
+          title: item.title,
+          description: item.description ?? "",
+          category,
+          badge,
+          icon: item.icon || item.category?.icon || item.category?.iconName || parent?.icon || parent?.iconName || "",
+          imageUrl: item.imageUrl ?? "",
+          href: item.href || `/tools/${item.slug}`
+        }
+      } satisfies SectionBlockInstance;
+    });
+}
+
 function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageMegaGroup[] {
   const groups = new Map<string, PhotoPackageMegaGroup>();
   creativePacks
@@ -2138,6 +2256,28 @@ function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageM
     }))
     .filter((group) => group.items.length > 0)
     .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | undefined): PhotoPackageMegaGroup[] {
+  const taxonomyBlocks = (blocks ?? []).filter((block) => block.type === "taxonomy_card");
+  if (!taxonomyBlocks.length) return [];
+  return [
+    {
+      label: "Dreamscape Packages",
+      slug: "dreamscape-packages",
+      description: "Cinematic dreamscape directions for private portrait galleries.",
+      icon: "Sparkles",
+      items: taxonomyBlocks.map((block) => {
+        const title = blockValue(block, "title", "Dreamscape package");
+        return {
+          label: title,
+          slug: slugify(blockValue(block, "href", title)),
+          href: blockValue(block, "href", "/collections"),
+          icon: blockValue(block, "icon", "Sparkles")
+        };
+      })
+    }
+  ];
 }
 
 const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
@@ -2228,47 +2368,48 @@ function photoPackageMegaColumns(groups: PhotoPackageMegaGroup[]): PhotoPackageM
   return columns;
 }
 
-function PhotoPackageMegaPanel({ groups, site }: { groups: PhotoPackageMegaGroup[]; site: Site }) {
+function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: PhotoPackageMegaGroup[]; site: Site; variant?: "dark" | "warm" }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const columns = photoPackageMegaColumns(groups);
+  const warm = variant === "warm";
   return (
-    <div className="max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
+    <div className={warm ? "max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
-        <span className="h-px w-16 bg-white/10" />
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <h2 className="text-[1.02rem] font-semibold tracking-tight text-white">Photo package studios</h2>
-          <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{groups.length} categories · {totalItems} themes</p>
+          <h2 className={warm ? "text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "text-[1.02rem] font-semibold tracking-tight text-white"}>{warm ? "Dreamscape package studios" : "Photo package studios"}</h2>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{groups.length} categories · {totalItems} themes</p>
         </div>
-        <span className="h-px w-16 bg-white/10" />
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
-      <div className="mt-4 grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
+      <div className={warm ? "mt-4 grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#eadfce] pt-5 pr-1 lg:grid-cols-3" : "mt-4 grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3"}>
         {columns.map((column, columnIndex) => (
           <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
             {column.map((group, groupIndex) => {
               const accent = photoPackageGroupAccent(group, columnIndex + groupIndex);
               const GroupIcon = photoPackageIcon(group.icon, `${group.slug} ${group.label}`);
               return (
-                <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.slug} open>
-                  <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2" style={{ color: accent }}>
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]" style={{ color: accent }}>
+                <details className={warm ? "group/category rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
+                  <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-[#eadfce] group-open/category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2"} style={{ color: warm ? aidreamcapesCopper : accent }}>
+                    <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? aidreamcapesCopper : accent }}>
                       <GroupIcon className="h-4 w-4" strokeWidth={1.9} />
                     </span>
                     <span className="min-w-0 truncate">{group.label}</span>
-                    <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
+                    <span className={warm ? "ml-auto text-[11px] font-medium text-[#9b8877]" : "ml-auto text-[11px] font-medium text-white/36"}>{group.items.length}</span>
+                    <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#9b8877] transition group-open/category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90"} strokeWidth={2} />
                   </summary>
                   <div className="mt-3 grid gap-2">
                     {group.items.map((item) => {
                       const ItemIcon = photoPackageIcon(item.icon, `${item.slug} ${item.label} ${group.slug}`);
                       return (
                         <Link
-                          className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"
+                          className={warm ? "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                           href={hrefFor(site, item.href)}
                           key={item.slug}
                         >
-                          <ItemIcon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/package:text-white" strokeWidth={1.8} />
+                          <ItemIcon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/package:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/package:text-white"} strokeWidth={1.8} />
                           <span>{item.label}</span>
-                          <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
+                          <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                         </Link>
                       );
                     })}
@@ -2279,8 +2420,8 @@ function PhotoPackageMegaPanel({ groups, site }: { groups: PhotoPackageMegaGroup
           </div>
         ))}
       </div>
-      <div className="mt-5 border-t border-[#263247] pt-3 text-center">
-        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={hrefFor(site, "/collections")}>
+      <div className={warm ? "mt-5 border-t border-[#eadfce] pt-3 text-center" : "mt-5 border-t border-[#263247] pt-3 text-center"}>
+        <Link className={warm ? "inline-flex items-center gap-2 text-sm font-semibold text-[#b86e36] transition hover:text-[#8f5327]" : "inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]"} href={hrefFor(site, "/collections")}>
           View all packages
           <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </Link>
@@ -2330,14 +2471,17 @@ function DreamShootMegaToolsPanel({
   tools,
   ctaLabel,
   ctaHref,
-  variant = "section"
+  variant = "section",
+  variantTone = "dark"
 }: {
   site: Site;
   tools: SectionBlockInstance[];
   ctaLabel: string;
   ctaHref: string;
   variant?: "section" | "popover";
+  variantTone?: "dark" | "warm";
 }) {
+  const warm = variantTone === "warm";
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
   const extraCategories = categories.filter((category) => !orderedCategories.includes(category));
@@ -2350,12 +2494,14 @@ function DreamShootMegaToolsPanel({
   return (
     <div
       className={
-        variant === "popover"
+        warm
+          ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl"
+        : variant === "popover"
           ? "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"
           : "overflow-hidden rounded-[20px] border border-[#263247] bg-[#070708] p-4 text-white shadow-[0_34px_110px_-62px_rgba(0,0,0,0.88)] ring-1 ring-white/[0.04]"
       }
     >
-      <div className="mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]">
+      <div className={warm ? "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-[#1e1712] sm:text-[1.02rem]" : "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]"}>
         Studio tools
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
@@ -2365,7 +2511,7 @@ function DreamShootMegaToolsPanel({
           return (
             <Link
               aria-label={cardLinkLabel("Browse", group.meta.title, "this tool category")}
-              className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"
+              className={warm ? "group flex min-h-[110px] gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed]" : "group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"}
               href={
                 featuredTool
                   ? toolActionHref(site, blockValue(featuredTool, "href", "/tools/image-studio"), featuredTool.id)
@@ -2374,24 +2520,24 @@ function DreamShootMegaToolsPanel({
               key={`mega_card_${group.category}`}
             >
               <span
-                className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow-[0_18px_46px_-28px_rgba(0,0,0,0.9)]"
-                style={{ background: `linear-gradient(135deg, ${group.meta.accent}, #2f6fed)` }}
+                className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow-[0_18px_46px_-28px_rgba(114,82,48,0.58)]"
+                style={{ background: warm ? `linear-gradient(135deg, ${aidreamcapesAccent}, ${aidreamcapesCopper})` : `linear-gradient(135deg, ${group.meta.accent}, #2f6fed)` }}
               >
                 <Icon className="h-5.5 w-5.5" strokeWidth={2} />
               </span>
               <span className="min-w-0">
-                <span className="block text-[1.04rem] font-semibold leading-tight text-white">{group.meta.title}</span>
-                <span className="mt-2 block text-[0.92rem] leading-6 text-white/72">{group.meta.description}</span>
+                <span className={warm ? "block text-[1.04rem] font-semibold leading-tight text-[#1e1712]" : "block text-[1.04rem] font-semibold leading-tight text-white"}>{group.meta.title}</span>
+                <span className={warm ? "mt-2 block text-[0.92rem] leading-6 text-[#6f6257]" : "mt-2 block text-[0.92rem] leading-6 text-white/72"}>{group.meta.description}</span>
               </span>
             </Link>
           );
         })}
       </div>
-      <div className="mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]">
+      <div className={warm ? "mt-5 grid gap-6 border-t border-[#eadfce] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]" : "mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]"}>
         {groupedCategories.map((group, categoryIndex) => {
           return (
             <div key={`mega_group_${group.category}`} id={slugify(group.category)}>
-              <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: group.meta.accent }}>
+              <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: warm ? aidreamcapesCopper : group.meta.accent }}>
                 {group.meta.panelTitle}
               </h3>
               <div className="grid gap-3">
@@ -2400,12 +2546,12 @@ function DreamShootMegaToolsPanel({
                   return (
                     <Link
                       aria-label={cardLinkLabel("Open tool", storefrontPaidToolBlockValue(tool, "title", "AI photo tool"), "this tool")}
-                      className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"
+                      className={warm ? "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                       href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
                       key={instanceKey(tool, index, "dreamshoot_mega_tool")}
                       {...xfcartBlockAttrs(tool, index, "dreamshoot_mega_tool")}
                     >
-                      <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white" strokeWidth={1.8} />
+                      <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
                   <span>{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
                     </Link>
                   );
@@ -2415,8 +2561,8 @@ function DreamShootMegaToolsPanel({
           );
         })}
       </div>
-      <div className="mt-5 border-t border-[#263247] pt-3 text-center">
-        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={hrefFor(site, ctaHref)}>
+      <div className={warm ? "mt-5 border-t border-[#eadfce] pt-3 text-center" : "mt-5 border-t border-[#263247] pt-3 text-center"}>
+        <Link className={warm ? "inline-flex items-center gap-2 text-sm font-semibold text-[#b86e36] transition hover:text-[#8f5327]" : "inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]"} href={hrefFor(site, ctaHref)}>
           {ctaLabel}
           <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </Link>
@@ -3563,6 +3709,7 @@ function SectionView({
   site,
   products,
   siteAiApps,
+  toolMenuItems,
   creativePacks,
   runtime,
   mode,
@@ -3573,12 +3720,13 @@ function SectionView({
   site: Site;
   products: ReturnType<typeof import("@/lib/data").getSiteProducts>;
   siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
+  toolMenuItems: ToolMenuItem[];
   creativePacks: CreativePack[];
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
   renderContext: RenderContext;
 }) {
-  const usesNativeDreamShootRenderer = section.type === "dreamshoot_package_catalog";
+  const usesNativeDreamShootRenderer = section.type.startsWith("dreamshoot_");
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
@@ -5462,6 +5610,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_package_taxonomy") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const blocks = sectionBlocks(section, "taxonomy_card");
     const fallbackCards: SectionBlockInstance[] = [
       {
@@ -5575,47 +5724,68 @@ function SectionView({
           selectedPack.trainingRequired ? "Training required" : "Ready workflow"
         ]
       : [];
+    const taxonomySectionClass = aidreamcapes
+      ? "relative overflow-hidden border-y border-[#E6D8C3] bg-[#FBF3E4] px-5 py-16 text-[#1E1712]"
+      : "relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white";
+    const taxonomyGlowClass = aidreamcapes
+      ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(216,138,75,0.2),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(255,248,237,0.9),transparent_24%)]"
+      : "absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(47,111,237,0.22),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(215,163,107,0.16),transparent_24%)]";
+    const taxonomyEyebrowClass = aidreamcapes
+      ? "text-[11px] font-medium uppercase tracking-[0.14em] text-[#9B7A5D]"
+      : "text-[11px] font-medium uppercase tracking-[0.14em] text-white/52";
+    const taxonomySubtitleClass = aidreamcapes
+      ? "max-w-2xl text-sm leading-7 text-[#6F6257] lg:justify-self-end"
+      : "max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end";
+    const selectedPanelClass = aidreamcapes
+      ? "rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] sm:p-7"
+      : "rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7";
+    const selectedImageGridClass = aidreamcapes
+      ? "grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-3 sm:grid-cols-2"
+      : "grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 sm:grid-cols-2";
+    const selectedFallbackClass = aidreamcapes
+      ? "flex min-h-[360px] flex-col justify-between rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-6"
+      : "flex min-h-[360px] flex-col justify-between rounded-[24px] border border-white/12 bg-white/[0.06] p-6";
     return (
-      <section className="relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white" id={sectionAnchor(section, "package-taxonomy")}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(47,111,237,0.22),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(215,163,107,0.16),transparent_24%)]" />
+      <section className={taxonomySectionClass} id={sectionAnchor(section, "package-taxonomy")}>
+        <div className={taxonomyGlowClass} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="grid gap-7 lg:grid-cols-[minmax(0,0.5fr)_minmax(0,0.5fr)] lg:items-end">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/52">{setting(section, "eyebrow", "Photo package library")}</p>
+              <p className={taxonomyEyebrowClass}>{setting(section, "eyebrow", "Photo package library")}</p>
               <HeadingTag className="mt-4 max-w-3xl text-[clamp(2.1rem,4.4vw,4.65rem)] font-semibold leading-[0.98] tracking-tight text-balance [font-family:var(--site-title-font)]">
                 {dynamicTitle || setting(section, "title", "Package categories customers already understand.")}
               </HeadingTag>
             </div>
-            <p className="max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end">{dynamicSubtitle || setting(section, "subtitle")}</p>
+            <p className={taxonomySubtitleClass}>{dynamicSubtitle || setting(section, "subtitle")}</p>
           </div>
           {isCollectionDetail ? (
             <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-              <div className="rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/44">Selected package</p>
-                <h3 className="mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]">
+              <div className={selectedPanelClass}>
+                <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Selected package</p>
+                <h3 className={aidreamcapes ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
                   {dynamicTitle}
                 </h3>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/66">
+                <p className={aidreamcapes ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
                   {dynamicSubtitle || "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request."}
                 </p>
                 {detailChips.length ? (
                   <div className="mt-6 flex flex-wrap gap-2">
                     {detailChips.map((chip) => (
-                      <span className="rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68" key={chip}>
+                      <span className={aidreamcapes ? "rounded-full border border-[#E3D3BE] bg-white/70 px-3 py-1.5 text-xs font-semibold text-[#7B5C40]" : "rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68"} key={chip}>
                         {chip}
                       </span>
                     ))}
                   </div>
                 ) : null}
-                <Link className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90" href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
+                <Link className={aidreamcapes ? "mt-7 inline-flex items-center gap-2 rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
                   Start this package
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
               </div>
               {selectedGalleryImages.length ? (
-                <div className="grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 sm:grid-cols-2">
+                <div className={selectedImageGridClass}>
                   {selectedGalleryImages.map((image, index) => (
-                    <div className={`relative overflow-hidden rounded-[18px] bg-zinc-900 ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
+                    <div className={`relative overflow-hidden rounded-[18px] ${aidreamcapes ? "bg-[#EADFCF]" : "bg-zinc-900"} ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
                       <StorefrontImage
                         alt={`${dynamicTitle} preview ${index + 1}`}
                         className="h-full min-h-[170px] w-full object-cover"
@@ -5626,15 +5796,15 @@ function SectionView({
                   ))}
                 </div>
               ) : (
-                <div className="flex min-h-[360px] flex-col justify-between rounded-[24px] border border-white/12 bg-white/[0.06] p-6">
+                <div className={selectedFallbackClass}>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/44">Package guide</p>
+                    <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Package guide</p>
                     <h3 className="mt-4 text-2xl font-semibold tracking-tight">What to expect from {dynamicTitle}</h3>
-                    <p className="mt-3 text-sm leading-7 text-white/62">
+                    <p className={aidreamcapes ? "mt-3 text-sm leading-7 text-[#6F6257]" : "mt-3 text-sm leading-7 text-white/62"}>
                       This theme is ready for unique copy, workflow notes, image count, and dedicated examples from the package editor.
                     </p>
                   </div>
-                  <Link className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
+                  <Link className={aidreamcapes ? "inline-flex w-fit items-center gap-2 rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36]" : "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
                     Browse all packages
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
@@ -5642,7 +5812,7 @@ function SectionView({
               )}
             </div>
           ) : (
-            <PackageTaxonomyClient cards={taxonomyClientCards} initialSlug={selectedCollectionSlug} />
+            <PackageTaxonomyClient cards={taxonomyClientCards} initialSlug={selectedCollectionSlug} variant={aidreamcapes ? "cream" : "dark"} />
           )}
         </div>
       </section>
@@ -5716,6 +5886,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_visual_proof") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
       { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Sports", imageUrl: packImages.sports, href: "/collections/sports" } },
@@ -5729,25 +5900,25 @@ function SectionView({
     const tabs = listLines(setting(section, "tabs", "All|Couple|Seasonal|Headshots|Beauty|Creative|Video"));
     const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes"));
     return (
-      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "proof-gallery")}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]" />
-        <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]" />
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FBF3E4] px-5 py-16 text-[#1E1712] md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "proof-gallery")}>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(216,138,75,0.18),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(255,248,237,0.92),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(184,110,54,0.12),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]"} />
+        <div className={aidreamcapes ? "absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.22)_1px,transparent_1px)] [background-size:90px_90px]" : "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8D725C]" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
             <span>{setting(section, "label", "Visual proof gallery")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
             <div>
-              <h2 className="max-w-3xl text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
+              <h2 className="max-w-3xl text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] text-balance [font-family:var(--site-title-font)]">
                 {setting(section, "title", "See what your selfies can become.")}
               </h2>
               <div className="mt-10 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
                   <Link
-                    className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
+                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FFF8ED]" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
                     href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(tab))}
                     key={tab}
-                    style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                    style={index === 0 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
                     {tab}
                   </Link>
@@ -5755,15 +5926,15 @@ function SectionView({
               </div>
             </div>
             <div className="lg:pb-7">
-              <p className="max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72">
+              <p className={aidreamcapes ? "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-[#6F6257]" : "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72"}>
                 {setting(section, "subtitle", "Use the second screen to prove output quality immediately. Lead with finished albums by intent, not a long feature list.")}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 {badges.map((badge, index) => (
                   <span
-                    className="rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"
+                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FFF8ED] px-4 py-2 text-sm font-semibold text-[#6F4D32]" : "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"}
                     key={badge}
-                    style={index === 1 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                    style={index === 1 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
                     {badge}
                   </span>
@@ -5829,6 +6000,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_featured_pack") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const images = sectionBlocks(section, "seasonal_image");
     const fallbackImages: SectionBlockInstance[] = [
       { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", shape: "tall" } },
@@ -5866,43 +6038,43 @@ function SectionView({
       "col-span-12 row-span-2 md:col-span-4 md:row-span-3"
     ];
     return (
-      <section className="relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, "featured-pack")}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.22),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(255,166,68,0.2),transparent_36%)]" />
-        <div className="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:96px_96px]" />
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FBF3E4] px-5 py-14 text-[#1E1712] md:py-20" : "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20"} id={sectionAnchor(section, "featured-pack")}>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(216,138,75,0.18),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(255,248,237,0.92),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(184,110,54,0.12),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.22),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(255,166,68,0.2),transparent_36%)]"} />
+        <div className={aidreamcapes ? "absolute inset-0 opacity-36 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.2)_1px,transparent_1px)] [background-size:96px_96px]" : "absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:96px_96px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56">
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8D725C]" : "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56"}>
             <span>{setting(section, "label", "Featured seasonal pack")}</span>
           </div>
           <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
-            <div className="flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9">
-              <span className="inline-flex w-fit rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] text-white shadow-[0_20px_58px_-34px_rgba(255,166,68,0.86)]" style={{ background: "linear-gradient(90deg,#ff7a3d 0%,#ec4bdd 48%,#16dcf0 100%)" }}>
+            <div className={aidreamcapes ? "flex flex-col rounded-[28px] border border-[#E3D3BE] bg-[#FFF8ED] p-6 shadow-[0_36px_120px_-86px_rgba(70,46,24,0.38)] md:p-8 lg:p-9" : "flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9"}>
+              <span className="inline-flex w-fit rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] text-white shadow-[0_20px_58px_-34px_rgba(184,110,54,0.56)]" style={{ background: aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : "linear-gradient(90deg,#ff7a3d 0%,#ec4bdd 48%,#16dcf0 100%)" }}>
                 {setting(section, "badge", "Match-day pack")}
               </span>
-              <h2 className="mt-7 max-w-xl text-[clamp(2.15rem,3.85vw,3.75rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-balance [font-family:var(--site-title-font)]">
+              <h2 className="mt-7 max-w-xl text-[clamp(2.15rem,3.85vw,3.75rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
                 {setting(section, "title", "World Cup fan photos for match-day moments.")}
               </h2>
-              <p className="mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72">
+              <p className={aidreamcapes ? "mt-5 max-w-lg text-[1rem] leading-[1.48] text-[#6F6257]" : "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72"}>
                 {setting(section, "subtitle", "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.")}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                <Link className="inline-flex items-center gap-2 rounded-[18px] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: dreamshootBrandGradient }}>
+                <Link className="inline-flex items-center gap-2 rounded-[18px] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }}>
                   {setting(section, "primaryCta", "Create Fan Photos")}
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
-                <Link className="inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]" href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
+                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-[18px] border border-[#D8C4A9] bg-white px-6 py-3.5 text-sm font-semibold text-[#1E1712] transition hover:-translate-y-0.5 hover:border-[#B86E36] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
                   {setting(section, "secondaryCta", "View Sports Packs")}
                 </Link>
               </div>
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {metrics.map((metric) => (
-                  <div className="rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]" key={metric.value}>
-                    <p className="text-[1.28rem] font-semibold tracking-[-0.03em] text-white">{metric.value}</p>
-                    <p className="mt-1 text-xs leading-5 text-white/58">{metric.label}</p>
+                  <div className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white p-4" : "rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"} key={metric.value}>
+                    <p className={aidreamcapes ? "text-[1.28rem] font-semibold tracking-[-0.03em] text-[#1E1712]" : "text-[1.28rem] font-semibold tracking-[-0.03em] text-white"}>{metric.value}</p>
+                    <p className={aidreamcapes ? "mt-1 text-xs leading-5 text-[#6F6257]" : "mt-1 text-xs leading-5 text-white/58"}>{metric.label}</p>
                   </div>
                 ))}
               </div>
-              <div className="mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5">
-                <p className="text-sm font-semibold tracking-[-0.01em] text-white">{setting(section, "includedTitle", "Included outputs")}</p>
+              <div className={aidreamcapes ? "mt-5 rounded-[24px] border border-[#E3D3BE] bg-white p-5" : "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5"}>
+                <p className={aidreamcapes ? "text-sm font-semibold tracking-[-0.01em] text-[#1E1712]" : "text-sm font-semibold tracking-[-0.01em] text-white"}>{setting(section, "includedTitle", "Included outputs")}</p>
                 <div className="mt-4 grid gap-3">
                   {(includedOutputs.length ? includedOutputs : [
                     { title: "Fan posters", body: "Large portrait graphics for match day" },
@@ -5911,25 +6083,25 @@ function SectionView({
                     { title: "Social banners", body: "Wide cover images for sharing" }
                   ]).slice(0, 6).map((item) => (
                     <div className="grid grid-cols-[10px_1fr] gap-3" key={`${item.title}-${item.body}`}>
-                      <span className="mt-2 h-2 w-2 rounded-full" style={{ background: dreamshootBrandGradient }} />
+                      <span className="mt-2 h-2 w-2 rounded-full" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }} />
                       <div>
-                        <p className="text-sm font-semibold text-white/92">{item.title}</p>
-                        {item.body ? <p className="mt-0.5 text-xs leading-5 text-white/52">{item.body}</p> : null}
+                        <p className={aidreamcapes ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white/92"}>{item.title}</p>
+                        {item.body ? <p className={aidreamcapes ? "mt-0.5 text-xs leading-5 text-[#6F6257]" : "mt-0.5 text-xs leading-5 text-white/52"}>{item.body}</p> : null}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <p className="mt-5 text-xs leading-5 text-white/45">
+              <p className={aidreamcapes ? "mt-5 text-xs leading-5 text-[#8D725C]" : "mt-5 text-xs leading-5 text-white/45"}>
                 {setting(section, "safetyCopy", "Safe styling: no real player likenesses, official team logos, or protected marks required.")}
               </p>
             </div>
-            <div className="relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6">
+            <div className={aidreamcapes ? "relative overflow-hidden rounded-[28px] border border-[#E3D3BE] bg-[#FFF8ED] p-4 shadow-[0_36px_120px_-86px_rgba(70,46,24,0.38)] md:p-6" : "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6"}>
               <div className="grid h-[880px] grid-cols-12 grid-rows-[repeat(9,minmax(0,1fr))] gap-3 md:h-[690px] md:gap-4">
                 {collage.map((item, index) => {
                   return (
                     <div
-                      className={`group relative overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] ${collagePlacements[index] ?? "col-span-4 row-span-3"}`}
+                      className={`group relative overflow-hidden rounded-[22px] ${aidreamcapes ? "border border-[#E3D3BE] bg-[#EFE3D3]" : "border border-white/10 bg-white/[0.04]"} ${collagePlacements[index] ?? "col-span-4 row-span-3"}`}
                       key={instanceKey(item, index, "seasonal_image")}
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
@@ -5947,27 +6119,27 @@ function SectionView({
                   );
                 })}
               </div>
-              <div className="absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl">
-                <p className="text-sm font-semibold text-white/58">{setting(section, "overlayTitle", "World Cup Pack")}</p>
-                <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">{setting(section, "overlaySubtitle", "Match-day looks without a studio.")}</h3>
+              <div className={aidreamcapes ? "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-[#E3D3BE] bg-[#FFF8ED]/90 p-5 shadow-[0_28px_88px_-58px_rgba(70,46,24,0.48)] backdrop-blur-xl" : "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl"}>
+                <p className={aidreamcapes ? "text-sm font-semibold text-[#8D725C]" : "text-sm font-semibold text-white/58"}>{setting(section, "overlayTitle", "World Cup Pack")}</p>
+                <h3 className={aidreamcapes ? "mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#1E1712]" : "mt-2 text-2xl font-semibold tracking-[-0.04em] text-white"}>{setting(section, "overlaySubtitle", "Match-day looks without a studio.")}</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {overlayChips.map((chip, index) => (
-                    <span className="rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76" key={chip} style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
+                    <span className={aidreamcapes ? "rounded-full border border-[#E3D3BE] bg-white px-3 py-1.5 text-xs font-semibold text-[#7B5C40]" : "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76"} key={chip} style={index === 0 ? { background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
                       {chip}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
-                <p className="rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54">
+                <p className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white px-4 py-3 text-xs leading-5 text-[#6F6257]" : "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54"}>
                   {setting(section, "bottomNote", "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.")}
                 </p>
-                <div className="rounded-[18px] border border-white/10 bg-white/[0.055] p-3">
-                  <p className="text-xs font-semibold text-white">{setting(section, "campaignLabel", "Current campaign: World Cup Fan Photos")}</p>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
-                    <span className="block h-full w-[72%] rounded-full" style={{ background: dreamshootBrandGradient }} />
+                <div className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white p-3" : "rounded-[18px] border border-white/10 bg-white/[0.055] p-3"}>
+                  <p className={aidreamcapes ? "text-xs font-semibold text-[#1E1712]" : "text-xs font-semibold text-white"}>{setting(section, "campaignLabel", "Current campaign: World Cup Fan Photos")}</p>
+                  <div className={aidreamcapes ? "mt-2 h-1.5 overflow-hidden rounded-full bg-[#EADFCF]" : "mt-2 h-1.5 overflow-hidden rounded-full bg-white/10"}>
+                    <span className="block h-full w-[72%] rounded-full" style={{ background: aidreamcapes ? aidreamcapesAccent : dreamshootBrandGradient }} />
                   </div>
-                  <p className="mt-2 text-[11px] leading-4 text-white/48">{setting(section, "nextCampaignLabel", "Next: Valentine / Graduation Season")}</p>
+                  <p className={aidreamcapes ? "mt-2 text-[11px] leading-4 text-[#8D725C]" : "mt-2 text-[11px] leading-4 text-white/48"}>{setting(section, "nextCampaignLabel", "Next: Valentine / Graduation Season")}</p>
                 </div>
               </div>
             </div>
@@ -5978,6 +6150,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_package_catalog") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
     const selectedCategory = dreamshootCategorySlug(queryValue(renderContext.query.category));
@@ -6010,11 +6183,11 @@ function SectionView({
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
     const directoryCount = directory.length;
     return (
-      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionAnchor(section, "packages")} data-dreamshoot-catalog-count={directoryCount}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]" />
-        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" />
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712] md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "packages")} data-dreamshoot-catalog-count={directoryCount}>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(216,138,75,0.18),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(255,243,228,0.95),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(184,110,54,0.12),transparent_39%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]"} />
+        <div className={aidreamcapes ? "absolute inset-0 opacity-36 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.2)_1px,transparent_1px)] [background-size:94px_94px]" : "absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8D725C]" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
             <span>{setting(section, "label", "Photo package catalog")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
@@ -6025,10 +6198,10 @@ function SectionView({
               <div className="mt-10 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
                   <Link
-                    className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
+                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FBF3E4]" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
                     href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(dreamshootCategorySlug(tab)))}
                     key={tab}
-                    style={index === 0 ? { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
+                    style={index === 0 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
                     {tab}
                   </Link>
@@ -6036,26 +6209,26 @@ function SectionView({
               </div>
             </div>
             <div className="lg:pb-4">
-              <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72">
+              <p className={aidreamcapes ? "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-[#6F6257]" : "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72"}>
                 {setting(section, "subtitle", "This is where browsing turns into buying: each card has a clear outcome, credit cost, photo count, and one next action.")}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   {directoryCount} active packages
                 </span>
-                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   Reference breadth covered
                 </span>
-                <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
+                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   Editable in Products
                 </span>
               </div>
-              <div className="mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]">
+              <div className={aidreamcapes ? "mt-8 rounded-[26px] border border-[#EADFCF] bg-[#FBF3E4] p-4 shadow-[0_28px_90px_-70px_rgba(114,82,48,0.32)]" : "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]"}>
                 <div className="flex flex-wrap items-center gap-4">
                   {steps.map((step, index) => (
                     <div className="flex items-center gap-3" key={step}>
-                      <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-white" style={{ background: dreamshootBrandGradient }}>{index + 1}</span>
-                      <span className="text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white">{step}</span>
+                      <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-white" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }}>{index + 1}</span>
+                      <span className={aidreamcapes ? "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-[#1E1712]" : "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white"}>{step}</span>
                     </div>
                   ))}
                 </div>
@@ -6066,11 +6239,11 @@ function SectionView({
             {featured.map((card, index) => (
               <Link
                 aria-label={cardLinkLabel("Choose package", card.title)}
-                className="group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"
+                className={aidreamcapes ? "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-[#E3D3BE] bg-white shadow-[0_34px_105px_-76px_rgba(70,46,24,0.36)] transition hover:-translate-y-1 hover:border-[#B86E36]/45" : "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"}
                 href={hrefFor(site, card.href)}
                 key={card.id}
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.04]">
+                <div className={aidreamcapes ? "relative aspect-[4/3] overflow-hidden bg-[#EADFCF]" : "relative aspect-[4/3] overflow-hidden bg-white/[0.04]"}>
                   <StorefrontImage
                     alt={card.title}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
@@ -6080,15 +6253,15 @@ function SectionView({
                     src={card.imageUrl}
                   />
                   <span className="absolute left-4 top-4 rounded-full border border-white/18 bg-black/28 px-3 py-1.5 text-xs font-semibold text-white/88 backdrop-blur">{dreamshootCategoryLabel(card.category)}</span>
-                  {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: dreamshootBrandGradient }} /> : null}
+                  {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient }} /> : null}
                 </div>
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-white/62">{card.description}</p>
+                  <h3 className={aidreamcapes ? "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-[#1E1712]" : "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white"}>{card.title}</h3>
+                  <p className={aidreamcapes ? "mt-3 text-sm leading-6 text-[#6F6257]" : "mt-3 text-sm leading-6 text-white/62"}>{card.description}</p>
                   <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-                    <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.meta}</span>
-                    <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.credits}</span>
-                    <ArrowRight className="ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
+                    <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.meta}</span>
+                    <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.credits}</span>
+                    <ArrowRight className={aidreamcapes ? "ml-auto h-5 w-5 text-[#B86E36] transition group-hover:translate-x-1" : "ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1"} strokeWidth={1.8} />
                   </div>
                 </div>
               </Link>
@@ -6098,10 +6271,10 @@ function SectionView({
             <div className="mt-9">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">Full directory</p>
-                  <h3 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">All package outcomes, not a short demo list.</h3>
+                  <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#8D725C]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/42"}>Full directory</p>
+                  <h3 className={aidreamcapes ? "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-[#1E1712]" : "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white"}>All package outcomes, not a short demo list.</h3>
                 </div>
-                <Link className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
+                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FBF3E4]" : "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
                   Open collections
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
@@ -6110,11 +6283,11 @@ function SectionView({
                 {directory.map((card, index) => (
                   <Link
                     aria-label={cardLinkLabel("Choose package", card.title)}
-                    className="group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"
+                    className={aidreamcapes ? "group overflow-hidden rounded-[22px] border border-[#E3D3BE] bg-white shadow-[0_24px_74px_-66px_rgba(70,46,24,0.26)] transition hover:-translate-y-0.5 hover:border-[#B86E36]/45" : "group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"}
                     href={hrefFor(site, card.href)}
                     key={`rest_${card.id}`}
                   >
-                    <div className="relative aspect-[1.42] overflow-hidden bg-white/[0.04]">
+                    <div className={aidreamcapes ? "relative aspect-[1.42] overflow-hidden bg-[#EADFCF]" : "relative aspect-[1.42] overflow-hidden bg-white/[0.04]"}>
                       <StorefrontImage
                         alt={card.title}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]"
@@ -6129,14 +6302,14 @@ function SectionView({
                     <div className="p-4">
                       <div className="flex items-start gap-3">
                         <div className="min-w-0">
-                          <h3 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h3>
-                          <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56">{card.description}</p>
+                          <h3 className={aidreamcapes ? "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-[#1E1712]" : "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white"}>{card.title}</h3>
+                          <p className={aidreamcapes ? "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-[#6F6257]" : "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56"}>{card.description}</p>
                         </div>
-                        <ArrowRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" strokeWidth={1.8} />
+                        <ArrowRight className={aidreamcapes ? "mt-1 h-4.5 w-4.5 shrink-0 text-[#B86E36] transition group-hover:translate-x-1" : "mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82"} strokeWidth={1.8} />
                       </div>
                       <div className="mt-4 flex flex-wrap gap-2">
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.meta}</span>
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.credits}</span>
+                        <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-2.5 py-1 text-[11px] font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.meta}</span>
+                        <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-2.5 py-1 text-[11px] font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.credits}</span>
                       </div>
                     </div>
                   </Link>
@@ -6165,6 +6338,82 @@ function SectionView({
       setting(section, "albumImageTwo", packImages.headshots),
       setting(section, "albumImageThree", packImages.creative)
     ].map((image) => mediaAssetUrl(site, image));
+    if (isAidreamcapesSite(site)) {
+      return (
+        <section className="relative overflow-hidden bg-[#fbf3e4] text-[#1e1712]" id={sectionAnchor(section, "workflow")}>
+          <div className="absolute inset-x-0 top-0 h-[48%] bg-[radial-gradient(circle_at_74%_0%,rgba(216,138,75,0.24),transparent_34%),linear-gradient(180deg,#fff8ed_0%,#fbf3e4_100%)]" />
+          <div className="absolute inset-0 opacity-45 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.22)_1px,transparent_1px)] [background-size:96px_96px]" />
+          <div className="relative mx-auto max-w-[var(--site-content-width)] px-5 py-16 md:py-24">
+            <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8d725c]">
+              <span>{setting(section, "label", "How it works + proof bridge")}</span>
+            </div>
+            <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)]">
+              <h2 className="max-w-[45rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] text-balance [font-family:var(--site-title-font)]">
+                {setting(section, "title", "From upload to private album.")}
+              </h2>
+              <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-[#6f6257] lg:pt-4">
+                {setting(section, "subtitle", "After packages, reduce hesitation: explain the 4-step flow, show a before/after transformation, and make credits feel safe.")}
+              </p>
+            </div>
+          </div>
+          <div className="relative bg-[#fff8ed] px-5 py-12 text-[#1e1712] md:py-14">
+            <div className="mx-auto max-w-[var(--site-content-width)]">
+              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                {displaySteps.map((step, index) => (
+                  <article className="rounded-[26px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.32)]" key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(step, index, "flow_step")}>
+                    <div className="grid h-14 w-14 place-items-center rounded-full text-lg font-bold text-white" style={{ background: index === 1 ? aidreamcapesAccent : aidreamcapesCopper }}>
+                      {blockValue(step, "meta", `0${index + 1}`)}
+                    </div>
+                    <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight">{blockValue(step, "title", "Workflow step")}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#6f6257]">{blockValue(step, "text", blockValue(step, "description", ""))}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)]">
+                <div className="rounded-[28px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.28)]">
+                  <h3 className="text-[1.8rem] font-semibold leading-tight">Before / after proof</h3>
+                  <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">Show how a clear source upload becomes a finished dreamscape portrait.</p>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+                    <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
+                      <img className="h-full w-full object-cover" src={beforeImage} alt="Before upload" />
+                      <span className="absolute left-4 top-4 rounded-full bg-[#1e1712]/58 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
+                    </div>
+                    <div className="hidden h-[104px] w-px bg-[#dfd0bd] sm:block" />
+                    <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
+                      <img className="h-full w-full object-cover" src={afterImage} alt="After AI result" />
+                      <span className="absolute left-4 top-4 rounded-full bg-[#b86e36] px-3 py-1 text-xs font-semibold text-white">After</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-[28px] border border-[#eadfce] bg-[#fbf3e4] p-6 text-[#1e1712] shadow-[0_24px_78px_-64px_rgba(114,82,48,0.28)]">
+                  <h3 className="text-[1.8rem] font-semibold leading-tight">Private album workspace</h3>
+                  <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-[#6f6257]">One signed-in place for uploads, credit history, finished albums, and add-ons.</p>
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
+                    {albumImages.map((image, index) => (
+                      <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white" key={image}>
+                        <img className="h-full w-full object-cover" src={image} alt={`Album preview ${index + 1}`} />
+                      </div>
+                    ))}
+                    <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-[#eadfce] bg-white px-4 text-center">
+                      <div>
+                        <p className="text-2xl font-semibold">200</p>
+                        <p className="text-xs text-[#7b6a5b]">credits</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 flex justify-center">
+                <Link className="inline-flex w-full max-w-[560px] items-center justify-center gap-2 rounded-full bg-[#1e1712] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "bridgeHref", "/pricing"))}>
+                  {setting(section, "bridgeCta", "After this, show pricing with value already understood")}
+                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
     return (
       <section className="relative overflow-hidden bg-[#05070E] text-white" id={sectionAnchor(section, "workflow")}>
         <div className="absolute inset-x-0 top-0 h-[46%] bg-[radial-gradient(circle_at_74%_0%,rgba(122,76,255,0.32),transparent_32%),#05070E]" />
@@ -6242,6 +6491,8 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_tool_collection") {
+    const aidreamcapes = isAidreamcapesSite(site);
+    const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
     const blocks = sectionBlocks(section, "tool_card");
     const fallbackTools: SectionBlockInstance[] = [
       {
@@ -6281,19 +6532,19 @@ function SectionView({
         }
       }
     ];
-    const tools = blocks.length ? blocks : fallbackTools;
+    const tools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
     const configuredCategories = listLines(setting(section, "categories", "AI Photo Edit|AI Photo|AI Video"));
     const categories = configuredCategories.length ? configuredCategories : Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "AI Photo"))));
     const layout = setting(section, "layout", "directory");
-    const dark = layout === "dark";
+    const dark = layout === "dark" && !aidreamcapes;
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     if (layout === "mega_menu") {
       return (
-        <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "tools")}>
-          <div className="absolute inset-0 -z-10 opacity-46">
+        <section className={aidreamcapes ? "relative isolate overflow-hidden bg-[#FBF3E4] px-4 py-10 text-[#1E1712] sm:px-5 sm:py-14" : "relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14"} id={sectionAnchor(section, "tools")}>
+          <div className={aidreamcapes ? "absolute inset-0 -z-10 opacity-22" : "absolute inset-0 -z-10 opacity-46"}>
             <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 blur-[0.2px] sm:grid-cols-4 lg:grid-cols-6">
               {tools.slice(0, 12).map((tool, index) => (
-                <div className={`relative overflow-hidden rounded-[16px] bg-zinc-900 ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
+                <div className={`relative overflow-hidden rounded-[16px] ${aidreamcapes ? "bg-[#EADFCF]" : "bg-zinc-900"} ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
                   <StorefrontImage
                     alt=""
                     className="h-full min-h-[180px] w-full object-cover opacity-76"
@@ -6303,14 +6554,14 @@ function SectionView({
                 </div>
               ))}
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,10,0.97)_0%,rgba(8,8,10,0.84)_48%,rgba(8,8,10,0.96)_100%)]" />
+            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(251,243,228,0.98)_0%,rgba(255,248,237,0.9)_48%,rgba(251,243,228,0.98)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,10,0.97)_0%,rgba(8,8,10,0.84)_48%,rgba(8,8,10,0.96)_100%)]"} />
           </div>
           <div className="mx-auto max-w-[1180px]">
             <div className="mx-auto mb-6 max-w-4xl text-center">
-              <HeadingTag className="text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]">
+              <HeadingTag className={aidreamcapes ? "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]"}>
                 {storefrontPaidToolText(setting(section, "title", "AI Tools Collection"))}
               </HeadingTag>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64">
+              <p className={aidreamcapes ? "mx-auto mt-4 max-w-3xl text-base leading-8 text-[#6F6257]" : "mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64"}>
                 {storefrontPaidToolText(setting(section, "subtitle", "Discover paid AI tools for photo creation, background edits, restoration, video concepts, and private album workflows."))}
               </p>
             </div>
@@ -6319,6 +6570,7 @@ function SectionView({
               ctaLabel={setting(section, "secondaryCta", "View all tools")}
               site={site}
               tools={tools}
+              variantTone={aidreamcapes ? "warm" : "dark"}
               variant="section"
             />
           </div>
@@ -6699,6 +6951,7 @@ function SectionView({
   }
 
   if (section.type === "pricing_table") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
     const displayProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
     const creditPacks = products.filter((product) => product.type === "credit_pack" && product.status === "active");
@@ -6708,26 +6961,26 @@ function SectionView({
       displayProducts[0]?.id;
     const pricingImage = mediaAssetUrl(site, setting(section, "backgroundImage", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"));
     return (
-      <section className="relative overflow-hidden bg-[#111114] px-5 py-16 text-white" id={sectionAnchor(section, "plans")}>
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712]" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]" />
+          <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(216,138,75,0.18),transparent_20%),radial-gradient(circle_at_78%_8%,rgba(251,243,228,0.9),transparent_28%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]"} />
           <div className="absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block">
             <StorefrontImage
               alt={setting(section, "title", "Pricing background")}
-              className="h-full w-full object-cover object-center opacity-[0.9]"
+              className={aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
               sizes="52vw"
               src={pricingImage}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]" />
+            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,237,0.98)_0%,rgba(255,248,237,0.82)_42%,rgba(255,248,237,0.72)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]"} />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]" />
+          <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,237,0.98)_0%,rgba(251,243,228,0.95)_50%,rgba(255,248,237,0.78)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
         </div>
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="max-w-[48rem]">
             <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {setting(section, "title", "Simple, Transparent Pricing")}
             </h2>
-            <p className="mt-3 text-[0.98rem] leading-7 text-white/72">{setting(section, "subtitle", "Choose the right credit plan for private AI photo packages.")}</p>
+            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-[#6F6257]" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", "Choose the right credit plan for private AI photo packages.")}</p>
           </div>
           <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,0.72fr)_minmax(300px,0.28fr)]">
             <div className="grid gap-4 lg:grid-cols-3">
@@ -6756,7 +7009,7 @@ function SectionView({
                   product.name === "Premium" || product.name === "Deluxe" ? "Advanced editing" : "Basic editing"
                 );
                 return (
-                  <div className={`relative flex h-full flex-col rounded-[12px] border ${featured ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(0,0,0,0.28)]`} key={product.id}>
+                  <div className={`relative flex h-full flex-col rounded-[12px] border ${featured ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`} key={product.id}>
                     {featured ? (
                       <div className="absolute left-5 top-5 rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
                         {setting(section, "featuredBadgeLabel", "Most Popular")}
@@ -6790,13 +7043,13 @@ function SectionView({
               })}
             </div>
             <div className="relative hidden min-h-[430px] xl:block" aria-hidden="true">
-              <div className="absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur">
+              <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-[#E3D3BE] bg-[#FBF3E4] p-6 shadow-[0_28px_80px_-58px_rgba(70,46,24,0.28)]" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
                 <div>
-                  <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#d8a76a]">Why people subscribe</p>
+                  <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">Why people subscribe</p>
                   <h3 className="mt-3 max-w-[14ch] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
                     Credits stay predictable while packs stay flexible.
                   </h3>
-                  <p className="mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68">
+                  <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-[#6F6257]" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
                     Customers can start with a monthly plan, test multiple styles, and only top up when they need extra runs for a new occasion.
                   </p>
                 </div>
@@ -6806,9 +7059,9 @@ function SectionView({
                     ["Popular", "Balanced for buyers comparing several package looks."],
                     ["Premium", "Highest credit volume for repeat campaigns and add-ons."]
                   ].map(([label, detail]) => (
-                    <div className="rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" key={label}>
-                      <p className="text-sm font-semibold text-white">{label}</p>
-                      <p className="mt-1 text-sm leading-6 text-white/64">{detail}</p>
+                    <div className={aidreamcapes ? "rounded-[16px] border border-[#E3D3BE] bg-white px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
+                      <p className={aidreamcapes ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{label}</p>
+                      <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-[#6F6257]" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>
                     </div>
                   ))}
                 </div>
@@ -6816,12 +7069,12 @@ function SectionView({
             </div>
           </div>
           {creditPacks.length ? (
-            <div className="mt-5 rounded-[16px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur">
+            <div className={aidreamcapes ? "mt-5 rounded-[16px] border border-[#E3D3BE] bg-[#FBF3E4] p-4" : "mt-5 rounded-[16px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur"}>
               <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
                 <div>
-                  <p className="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[#d8a76a]">Add-on credits</p>
+                  <p className="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">Add-on credits</p>
                   <h3 className="mt-2 text-[1.35rem] font-semibold tracking-[-0.02em] [font-family:var(--site-title-font)]">Need more generations this month?</h3>
-                  <p className="mt-1 text-sm leading-6 text-white/66">One-time credit packs are sold separately from subscriptions and are still read from the same product catalog.</p>
+                  <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-[#6F6257]" : "mt-1 text-sm leading-6 text-white/66"}>One-time credit packs are sold separately from subscriptions and are still read from the same product catalog.</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                   {creditPacks.slice(0, 2).map((product) => {
@@ -8812,40 +9065,20 @@ function SectionView({
             {applicationForm && formFields.length ? (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
                 {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" src={image} alt={setting(section, "title", id)} /> : null}
-                <div className="grid gap-4">
-                  {formFields.map((field, index) => {
+                <PartnerApplicationForm
+                  dark={dark}
+                  siteId={site.id}
+                  fields={formFields.map((field, index) => {
                     const fieldType = blockValue(field, "fieldType", "text");
-                    const label = blockValue(field, "label", `Field ${index + 1}`);
-                    const required = Boolean(field.settings.required);
-                    const placeholder = blockValue(field, "placeholder", "");
-                    const fieldClass = dark
-                      ? "w-full rounded-[16px] border border-white/12 bg-black/20 px-4 py-3 text-sm text-white outline-none placeholder:text-white/34 focus:border-white/36"
-                      : "w-full rounded-[16px] border border-[#ded5ca] bg-white/82 px-4 py-3 text-sm text-[#14161a] outline-none placeholder:text-[#9a8f84] focus:border-[#14161a]/40";
-                    return (
-                      <label className={dark ? "grid gap-2 text-sm font-semibold text-white/86" : "grid gap-2 text-sm font-semibold text-[#14161a]"} key={instanceKey(field, index, "partner_form_field")} {...xfcartBlockAttrs(field, index, "form_field")}>
-                        {fieldType === "checkbox" ? (
-                          <span className={dark ? "flex items-start gap-3 rounded-[16px] border border-white/12 bg-black/18 p-4 text-sm leading-6 text-white/72" : "flex items-start gap-3 rounded-[16px] border border-[#ded5ca] bg-white/70 p-4 text-sm leading-6 text-[#625d56]"}>
-                            <input className="mt-1 h-4 w-4 shrink-0 accent-[#ec4bdd]" type="checkbox" required={required} aria-label={label} />
-                            <span>{label}{required ? " *" : ""}</span>
-                          </span>
-                        ) : (
-                          <>
-                            <span>{label}{required ? " *" : ""}</span>
-                            {fieldType === "textarea" ? (
-                              <textarea className={`${fieldClass} min-h-[112px] resize-y`} placeholder={placeholder} required={required} />
-                            ) : (
-                              <input className={fieldClass} placeholder={placeholder} required={required} type={fieldType === "email" ? "email" : "text"} />
-                            )}
-                          </>
-                        )}
-                      </label>
-                    );
+                    return {
+                      id: field.id || `partner_field_${index + 1}`,
+                      label: blockValue(field, "label", `Field ${index + 1}`),
+                      placeholder: blockValue(field, "placeholder", ""),
+                      fieldType: fieldType === "email" || fieldType === "textarea" || fieldType === "checkbox" ? fieldType : "text",
+                      required: Boolean(field.settings.required)
+                    } satisfies PartnerApplicationField;
                   })}
-                </div>
-                <button className={dark ? "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" : "mt-5 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} type="button">
-                  Submit application
-                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-                </button>
+                />
               </div>
             ) : image ? (
               <div className={dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>

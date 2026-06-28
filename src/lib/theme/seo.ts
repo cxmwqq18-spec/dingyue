@@ -104,7 +104,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
           description,
           keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, existing?.keywords, current?.siteKeywords),
           ogImage: pickText(jsonSeo?.ogImage, existing?.ogImage),
-          canonicalPath: normalizeCanonicalPath(pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, existing?.canonicalPath), page.slug),
+          canonicalPath: normalizeCanonicalPath(pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, existing?.canonicalPath), page.slug),
           index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? existing?.index ?? (current?.robots?.index === false ? false : defaultRobots.index),
           follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? existing?.follow ?? current?.robots?.follow ?? defaultRobots.follow
         }
@@ -161,7 +161,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
     description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
     keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, seo.siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, seo.defaultOgImage),
-    canonicalPath: pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    canonicalPath: pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? seo.robots.index,
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? seo.robots.follow
   };
@@ -223,7 +223,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
     description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
     keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, defaultOgImage),
-    canonicalPath: pickText(jsonSeo?.canonical, jsonSeo?.canonicalPath, policySeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    canonicalPath: pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? currentSeo?.robots?.index ?? true,
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? currentSeo?.robots?.follow ?? true
   };

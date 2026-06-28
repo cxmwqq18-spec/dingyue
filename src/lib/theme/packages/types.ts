@@ -77,7 +77,7 @@ export type ThemePackageManifest = {
   source?: "internal-theme-package";
   siteSettings?: ThemePackageSiteSettings;
   templates: Array<{
-    key: ThemePackageTemplateKey;
+    key: string;
     label: string;
     pageType: string;
     sectionCount: number;

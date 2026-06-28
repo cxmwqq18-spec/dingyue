@@ -1,7 +1,9 @@
 import { AdminShell } from "@/components/admin/admin-shell";
 import { DesignPagesWorkbench } from "@/components/admin/design-pages-workbench";
+import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { createDesignerPreviewToken } from "@/lib/designer-preview-auth";
 import { getThemePublishPreflightBundleRelational } from "@/lib/stores/site-store";
+import { getSiteThemePublicationCountRelational } from "@/lib/stores/theme-store";
 import { runThemePublishPreflight } from "@/lib/theme/publish-preflight";
 import type { ThemePage, ThemePageJson } from "@/lib/types";
 import {
@@ -34,7 +36,10 @@ function pageStatus(page: ThemePage, dirtyPageIds: Set<string>) {
 export default async function DesignPagesPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const data = await getSiteAdminData(siteSlug, { include: [], summary: false, take: 0 });
-  const preflightBundle = await getThemePublishPreflightBundleRelational(data.site.id);
+  const [preflightBundle, publicationCount] = await Promise.all([
+    getThemePublishPreflightBundleRelational(data.site.id),
+    getSiteThemePublicationCountRelational(data.site.id)
+  ]);
   const site = preflightBundle.site ?? data.site;
   const shellData = { ...data, site };
   const dirtyPageIds = new Set(preflightBundle.dirtyPageIds);
@@ -44,6 +49,7 @@ export default async function DesignPagesPage({ params }: { params: Promise<{ si
     siteSlug: site.slug
   });
   const pageStats = site.pages.map((page) => ({ page, ...pageStatus(page, dirtyPageIds) }));
+  const seoReady = Boolean(site.themeSettings.draftJson.seo?.siteTitle && site.themeSettings.draftJson.seo?.siteDescription);
   const preflight = runThemePublishPreflight({
     site,
     products: preflightBundle.products,
@@ -90,10 +96,20 @@ export default async function DesignPagesPage({ params }: { params: Promise<{ si
       titleBadge={String(site.pages.length)}
       workspace={siteAdminWorkspace(shellData, "design workspace")}
     >
-      <div className="sr-only" aria-hidden="true">
-        全站页面树
+      <div className="grid gap-4">
+        <DesignWorkspaceTabs
+          activePath="/admin/design/pages"
+          mediaCount={data.mediaCount}
+          pageCount={site.pages.length}
+          publicationCount={publicationCount}
+          seoReady={seoReady}
+          siteSlug={site.slug}
+        />
+        <div className="sr-only" aria-hidden="true">
+          全站页面树
+        </div>
+        <DesignPagesWorkbench pages={workbenchPages} publishBlockers={preflight.summary.blockers} />
       </div>
-      <DesignPagesWorkbench pages={workbenchPages} publishBlockers={preflight.summary.blockers} />
     </AdminShell>
   );
 }

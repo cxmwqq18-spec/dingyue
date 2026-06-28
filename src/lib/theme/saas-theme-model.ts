@@ -64,6 +64,53 @@ function globalSectionFromSaasSettings(
   return normalizeGlobalSection(type, fallback.globalSections?.[type]);
 }
 
+const fallbackThemeSettings: Pick<ThemeSettings, "colors" | "typography" | "radii" | "navigation"> = {
+  colors: {
+    background: "#ffffff",
+    foreground: "#171717",
+    accent: "#2563eb",
+    muted: "#f4f4f5"
+  },
+  typography: {
+    display: "Inter",
+    body: "Inter"
+  },
+  radii: {
+    section: 20,
+    control: 12
+  },
+  navigation: {
+    headerLinks: [],
+    footerLinks: []
+  }
+};
+
+function normalizeThemeSettingsInput(settings: ThemeSettings): ThemeSettings {
+  return {
+    ...settings,
+    colors: {
+      ...fallbackThemeSettings.colors,
+      ...(settings.colors ?? {})
+    },
+    typography: {
+      ...fallbackThemeSettings.typography,
+      ...(settings.typography ?? {})
+    },
+    radii: {
+      ...fallbackThemeSettings.radii,
+      ...(settings.radii ?? {})
+    },
+    navigation: {
+      headerLinks: settings.navigation?.headerLinks ?? [],
+      footerLinks: settings.navigation?.footerLinks ?? []
+    },
+    globalSections: {
+      header: normalizeGlobalSection("header", settings.globalSections?.header),
+      footer: normalizeGlobalSection("footer", settings.globalSections?.footer)
+    }
+  };
+}
+
 export interface SaasThemeRecord {
   name: string;
   themeId: string;
@@ -157,14 +204,15 @@ export function fromSaasTemplate(template: SaasThemeTemplate, pageType = "home",
 }
 
 export function toSaasSettings(settings: ThemeSettings, themeKey = "theme1"): SaasThemeSettingsRecord {
-  const normalizedCurrent = normalizeSaasSettingsCurrentForTheme(themeKey, settings.saasSettingsCurrent);
+  const safeSettings = normalizeThemeSettingsInput(settings);
+  const normalizedCurrent = normalizeSaasSettingsCurrentForTheme(themeKey, safeSettings.saasSettingsCurrent);
   const persistedThemeState: Record<string, ThemeSettingValue> = {
-    navigation: settings.navigation as unknown as ThemeSettingValue
+    navigation: safeSettings.navigation as unknown as ThemeSettingValue
   };
-  if (settings.seo) persistedThemeState.seo = settings.seo as unknown as ThemeSettingValue;
-  const header = normalizeGlobalSection("header", settings.globalSections?.header ?? {
+  if (safeSettings.seo) persistedThemeState.seo = safeSettings.seo as unknown as ThemeSettingValue;
+  const header = normalizeGlobalSection("header", safeSettings.globalSections?.header ?? {
     settings: { title: "Header", sticky: true },
-    blocks: settings.navigation.headerLinks.map((link, index) => ({
+    blocks: safeSettings.navigation.headerLinks.map((link, index) => ({
       id: `header_link_${index + 1}`,
       type: "menu_link",
       settings: {
@@ -174,9 +222,9 @@ export function toSaasSettings(settings: ThemeSettings, themeKey = "theme1"): Sa
       }
     }))
   });
-  const footer = normalizeGlobalSection("footer", settings.globalSections?.footer ?? {
+  const footer = normalizeGlobalSection("footer", safeSettings.globalSections?.footer ?? {
     settings: { title: "Footer" },
-    blocks: settings.navigation.footerLinks.map((link, index) => ({
+    blocks: safeSettings.navigation.footerLinks.map((link, index) => ({
       id: `footer_link_${index + 1}`,
       type: "menu_link",
       settings: {
@@ -193,15 +241,15 @@ export function toSaasSettings(settings: ThemeSettings, themeKey = "theme1"): Sa
         ...persistedThemeState,
         general_layout_width: normalizedCurrent.general_layout_width ?? 1280,
         general_layout_spacing: normalizedCurrent.general_layout_spacing ?? 56,
-        skin_bg: normalizedCurrent.skin_bg ?? settings.colors.background,
-        skin_title_color: normalizedCurrent.skin_title_color ?? settings.colors.foreground,
-        skin_text_color: normalizedCurrent.skin_text_color ?? settings.colors.foreground,
-        skin_primary_btn_bg_color: normalizedCurrent.skin_primary_btn_bg_color ?? settings.colors.foreground,
+        skin_bg: normalizedCurrent.skin_bg ?? safeSettings.colors.background,
+        skin_title_color: normalizedCurrent.skin_title_color ?? safeSettings.colors.foreground,
+        skin_text_color: normalizedCurrent.skin_text_color ?? safeSettings.colors.foreground,
+        skin_primary_btn_bg_color: normalizedCurrent.skin_primary_btn_bg_color ?? safeSettings.colors.foreground,
         skin_primary_btn_text_color: normalizedCurrent.skin_primary_btn_text_color ?? "#ffffff",
-        skin_accent_color: normalizedCurrent.skin_accent_color ?? settings.colors.accent,
-        skin_muted_color: normalizedCurrent.skin_muted_color ?? settings.colors.muted,
-        skin_title_font_family: normalizedCurrent.skin_title_font_family ?? settings.typography.display,
-        skin_text_font_family: normalizedCurrent.skin_text_font_family ?? settings.typography.body,
+        skin_accent_color: normalizedCurrent.skin_accent_color ?? safeSettings.colors.accent,
+        skin_muted_color: normalizedCurrent.skin_muted_color ?? safeSettings.colors.muted,
+        skin_title_font_family: normalizedCurrent.skin_title_font_family ?? safeSettings.typography.display,
+        skin_text_font_family: normalizedCurrent.skin_text_font_family ?? safeSettings.typography.body,
         sections: {
           ...((normalizedCurrent.sections as Record<string, ThemeSettingValue> | undefined) ?? {}),
           header_plus: {

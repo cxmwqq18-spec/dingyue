@@ -174,6 +174,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       paymentEvents: paymentEvents.map(mapPaymentEvent),
       aiApps: aiApps.map(mapAiApp),
       siteAiApps: siteAiApps.map(toSiteAiApp),
+      toolCategories: [],
+      toolMenuItems: [],
       aiGatewayGroups: aiGatewayGroups.map(toGatewayGroup),
       creativePacks: creativePacks.map(toCreativePack),
       mediaAssets: mappedMediaAssets,

@@ -89,6 +89,63 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
+  },
+  "/about-us": {
+    title: "About MyDreamShoots - private AI photo packages and albums",
+    description:
+      "Learn about MyDreamShoots, an AI photo package workspace for private uploads, personal AI models, clear credits, secure checkout, and customer-only gallery delivery.",
+    keywords: "About MyDreamShoots, AI photo packages, private AI photo albums, personal AI model, AI portrait workspace",
+    canonicalPath: "/about-us",
+    index: true,
+    follow: true
+  },
+  "/contact-us": {
+    title: "Contact MyDreamShoots - support, sales, and company address",
+    description:
+      "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information.",
+    keywords: "Contact MyDreamShoots, MyDreamShoots support, AI photo support, MyDreamShoots sales, private album help",
+    canonicalPath: "/contact-us",
+    index: true,
+    follow: true
+  }
+};
+
+const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/about-us": {
+    title: "About Aidreamcapes - private AI dreamscape portraits and galleries",
+    description:
+      "Learn about Aidreamcapes, a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
+    keywords: "About Aidreamcapes, AI dreamscape portraits, private AI portrait gallery, fantasy travel photos, cinematic portrait workspace",
+    canonicalPath: "/about-us",
+    index: true,
+    follow: true
+  },
+  "/contact-us": {
+    title: "Contact Aidreamcapes - support, sales, and company address",
+    description:
+      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI dreamscape support, Aidreamcapes sales, private gallery help",
+    canonicalPath: "/contact-us",
+    index: true,
+    follow: true
+  },
+  "/creators-circle": {
+    title: "Aidreamcapes Creators Circle - creator dreamscape portrait program",
+    description:
+      "Join the Aidreamcapes Creators Circle for AI dreamscape portrait campaigns, private galleries, visible credits, and creator collaboration opportunities.",
+    keywords: "Aidreamcapes creators circle, AI dreamscape creator program, creator portrait campaign, AI portrait affiliate program",
+    canonicalPath: "/creators-circle",
+    index: true,
+    follow: true
+  },
+  "/partner-registration": {
+    title: "Aidreamcapes Partner Registration - apply for creator collaborations",
+    description:
+      "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, and dreamscape portrait collaboration goals.",
+    keywords: "Aidreamcapes partner registration, AI dreamscape partner application, creator collaboration application, AI portrait campaign partner",
+    canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
   }
 };
 
@@ -588,6 +645,24 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Make Fantasy Avatars",
     ctaHref: "/app/create?tool_id=fantasy-avatar"
   },
+  "golden-hour-couple": {
+    label: "Golden Hour Couple",
+    title: "AI Golden Hour Couple Tool - romantic sunset portraits",
+    description: "Create warm AI couple portraits with Aidreamcapes using private uploads, golden-hour lighting, travel-inspired scenes, and private gallery delivery.",
+    keywords: "AI golden hour couple, romantic couple portrait AI, Aidreamcapes couple tool, sunset couple photo generator",
+    h2: "golden hour couple tool",
+    h3: ["Couple source-photo tips", "Romantic scene directions", "Private album delivery"],
+    intro: "Golden Hour Couple creates romantic sunset, garden, city, and coastal scenes for partners who want polished keepsake portraits without a full location shoot.",
+    details: [
+      "Best inputs show both people clearly, ideally with a few angle and expression options.",
+      "Customers can guide the mood toward seaside dusk, garden glow, city evening, or soft travel romance.",
+      "Finished couple images stay in the private account for review, download, and future generations."
+    ],
+    useCases: ["Anniversary portraits", "Engagement-style concepts", "Gift-ready couple albums", "Soft romantic social posts"],
+    workflow: ["Upload couple references.", "Choose a golden-hour scene.", "Generate private romantic options.", "Download the strongest keepsake portraits."],
+    ctaLabel: "Create Golden Hour Couples",
+    ctaHref: "/app/create?tool_id=golden-hour-couple"
+  },
   "storybook-headshot": {
     label: "Storybook Headshot",
     title: "AI Storybook Headshot Tool - warm professional portraits",
@@ -624,6 +699,42 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Editorial Getaways",
     ctaHref: "/app/create?tool_id=editorial-getaway"
   },
+  "soft-glam": {
+    label: "Soft Glam",
+    title: "AI Soft Glam Tool - cream-light beauty portraits",
+    description: "Create soft glam AI portraits with Aidreamcapes using private source photos, gentle beauty lighting, polished crops, and private gallery delivery.",
+    keywords: "AI soft glam tool, cream light portrait AI, Aidreamcapes beauty portrait, soft glam photo generator",
+    h2: "soft glam tool",
+    h3: ["Beauty portrait inputs", "Cream-light glam outputs", "Private profile-ready delivery"],
+    intro: "Soft Glam creates refined beauty portraits with creamy light, gentle styling, and clean crops for profiles, creator pages, and private albums.",
+    details: [
+      "Use clear portraits with natural expressions and avoid heavy filters when possible.",
+      "Customers can steer the result toward polished, romantic, editorial, or understated beauty moods.",
+      "The private gallery makes it easy to compare crops before downloading profile-ready favorites."
+    ],
+    useCases: ["Profile refreshes", "Creator beauty portraits", "Soft campaign visuals", "Private glam albums"],
+    workflow: ["Upload clear portraits.", "Choose a soft glam mood.", "Generate cream-light options.", "Download polished favorites."],
+    ctaLabel: "Create Soft Glam Photos",
+    ctaHref: "/app/create?tool_id=soft-glam"
+  },
+  "cinematic-travel": {
+    label: "Cinematic Travel",
+    title: "AI Cinematic Travel Tool - destination-style escape portraits",
+    description: "Generate cinematic travel portraits with Aidreamcapes from private uploads, scenic destination moods, story-led composition, and private gallery delivery.",
+    keywords: "AI cinematic travel tool, destination portrait AI, Aidreamcapes travel portraits, cinematic escape photo generator",
+    h2: "cinematic travel tool",
+    h3: ["Travel portrait input planning", "Destination scene outputs", "Private cinematic gallery"],
+    intro: "Cinematic Travel turns everyday portraits into destination-led images with movement, atmosphere, and a sense of story.",
+    details: [
+      "Customers can choose old-city streets, coastal roads, scenic overlooks, quiet cafes, or garden escapes.",
+      "Clear subject photos help preserve identity while the scene changes around the portrait.",
+      "Results are delivered privately for travel moodboards, social visuals, and personal albums."
+    ],
+    useCases: ["Travel-style profile photos", "Creator destination visuals", "Dream trip moodboards", "Private scenic albums"],
+    workflow: ["Upload source portraits.", "Pick a destination mood.", "Generate cinematic travel scenes.", "Download private favorites."],
+    ctaLabel: "Create Cinematic Travel Photos",
+    ctaHref: "/app/create?tool_id=cinematic-travel"
+  },
   "product-reverie": {
     label: "Product Reverie",
     title: "AI Product Reverie Tool - dreamy lifestyle product concepts",
@@ -641,6 +752,24 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     workflow: ["Upload product references.", "Pick a dreamy scene.", "Generate private concepts.", "Download planning favorites."],
     ctaLabel: "Create Product Reverie",
     ctaHref: "/app/create?tool_id=product-reverie"
+  },
+  "social-keepsake": {
+    label: "Social Keepsake",
+    title: "AI Social Keepsake Tool - dreamy cards and profile visuals",
+    description: "Create dreamy social keepsakes with Aidreamcapes for announcements, memory posts, profile banners, private gifts, and share-ready visual cards.",
+    keywords: "AI social keepsake tool, dreamy card generator, Aidreamcapes keepsake maker, social memory image AI",
+    h2: "social keepsake tool",
+    h3: ["Keepsake source guidance", "Share-ready card formats", "Private social delivery"],
+    intro: "Social Keepsake creates gentle, share-ready visuals for moments that need more atmosphere than a plain upload.",
+    details: [
+      "Customers can create birthday cards, trip memories, soft announcements, profile banners, and private gift visuals.",
+      "The tool keeps the look personal and dreamlike rather than template-heavy.",
+      "Finished keepsakes are delivered privately so customers decide what to share."
+    ],
+    useCases: ["Dreamy announcement cards", "Personal memory posts", "Profile banners", "Private gift visuals"],
+    workflow: ["Upload a portrait or reference.", "Choose a keepsake format.", "Generate private card options.", "Download the best share-ready image."],
+    ctaLabel: "Create Social Keepsakes",
+    ctaHref: "/app/create?tool_id=social-keepsake"
   }
 };
 
@@ -746,7 +875,9 @@ export function metadataForDreamshootFallbackRoute(
   options: { primaryDomain?: string; ogImage?: string; siteName?: string } = {}
 ): Metadata {
   const normalizedPath = normalizeRouteMetadataPath(path);
-  const seed = dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
+  const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
+  const publicMetadata = siteIdentity.includes("aidreamcapes") ? aidreamcapesPublicSeoPageMetadata : dreamshootPublicSeoPageMetadata;
+  const seed = publicMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
     title: "MydreamShoots",
     description: "MydreamShoots is a private AI photo workspace for uploads, credits, photo packages, AI tools, and customer-only galleries.",
     keywords: "MydreamShoots, AI photo workspace, AI photo packages, private photo gallery",

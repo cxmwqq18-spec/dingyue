@@ -283,6 +283,32 @@ export interface SiteAdmin {
 
 export type PublicSiteAdmin = Omit<SiteAdmin, "passwordHash">;
 
+export type PartnerApplicationStatus = "pending" | "approved" | "rejected" | "archived";
+
+export interface PartnerApplication {
+  id: string;
+  siteId: string;
+  email: string;
+  name: string;
+  company?: string;
+  website?: string;
+  socialLinks?: string[];
+  audience?: string;
+  cadence?: string;
+  campaignIdeas?: string;
+  message?: string;
+  status: PartnerApplicationStatus;
+  source?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  reviewNote?: string;
+  metadata?: Record<string, unknown>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type PublicPartnerApplicationReceipt = Pick<PartnerApplication, "id" | "status" | "createdAt">;
+
 export interface Customer {
   id: string;
   siteId: string;
@@ -470,6 +496,38 @@ export interface SiteAiApp {
   routeKey: string;
   workflowConfig?: AiWorkflowConfig;
   providerConfig?: AiProviderConfig;
+}
+
+export interface ToolCategory {
+  id: string;
+  siteId: string;
+  parentId?: string;
+  parent?: ToolCategory;
+  slug: string;
+  label: string;
+  description?: string;
+  icon?: string;
+  iconName?: string;
+  sortOrder: number;
+  status: "active" | "draft" | "paused";
+  createdAt: string;
+}
+
+export interface ToolMenuItem {
+  id: string;
+  siteId: string;
+  categoryId?: string;
+  category?: ToolCategory;
+  slug: string;
+  title: string;
+  description?: string;
+  badge?: string;
+  icon?: string;
+  imageUrl?: string;
+  href: string;
+  sortOrder: number;
+  status: "active" | "draft" | "paused";
+  createdAt: string;
 }
 
 export interface AiGatewayGroup {
@@ -821,6 +879,8 @@ export interface PlatformState {
   aiApps: AiApp[];
   siteAiApps: SiteAiApp[];
   aiGatewayGroups: AiGatewayGroup[];
+  toolCategories: ToolCategory[];
+  toolMenuItems: ToolMenuItem[];
   creativePacks: CreativePack[];
   mediaAssets: MediaAsset[];
   themePublications: ThemePublication[];

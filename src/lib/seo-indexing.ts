@@ -29,6 +29,18 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/blog",
   "/blog/preparing-source-photos"
 ];
+const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
+  "/",
+  "/pricing",
+  "/collections",
+  "/tools",
+  "/policies/privacy",
+  "/policies/terms",
+  "/policies/refunds",
+  "/policies/content",
+  "/policies/cookies",
+  "/help"
+];
 
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
@@ -190,7 +202,7 @@ export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
 }
 
 export async function getAidreamcapesSitemapUrls(): Promise<string[]> {
-  const fallback = FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? AIDREAMCAPES_ORIGIN : `${AIDREAMCAPES_ORIGIN}${path}`));
+  const fallback = AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? AIDREAMCAPES_ORIGIN : `${AIDREAMCAPES_ORIGIN}${path}`));
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return fallback;
   const site = runtime.sites.find(isAidreamcapesSite);

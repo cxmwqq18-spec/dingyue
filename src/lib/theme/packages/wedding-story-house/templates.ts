@@ -1,6 +1,8 @@
 import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
+type WeddingStoryHouseTemplateKey = ThemePackageTemplateKey | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
+
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
 }
@@ -542,7 +544,7 @@ const homeSections: ThemePageJson["sections"] = {
   )
 };
 
-const templates: Record<ThemePackageTemplateKey, ThemePageJson> = {
+const templates = {
   home: page(
     "home",
     [
@@ -920,6 +922,62 @@ const templates: Record<ThemePackageTemplateKey, ThemePageJson> = {
     }),
     conversion_1: homeSections.conversion_1
   }),
+  "creators-circle": page("content", ["creator_intro_1", "collections_1", "conversion_1"], {
+    creator_intro_1: section("rich_text", {
+      eyebrow: "Creators Circle",
+      title: "Wedding creators can introduce couples to private AI album planning.",
+      body: "Use this page for photographer, planner, venue, and creator partnerships that send couples toward wedding collections, pricing, and private album delivery.",
+      tone: "warm",
+      layout: "compact",
+      primaryCta: "View collections",
+      primaryHref: "/collections",
+      secondaryCta: "Contact us",
+      secondaryHref: "/contact-us"
+    }),
+    collections_1: homeSections.collections_1,
+    conversion_1: homeSections.conversion_1
+  }),
+  "partner-registration": page("content", ["partner_intro_1", "conversion_1"], {
+    partner_intro_1: section("rich_text", {
+      eyebrow: "Partner registration",
+      title: "Apply to partner with this wedding AI studio.",
+      body: "Share your channel, audience, and campaign ideas so the team can review whether wedding collections, destination visuals, and private album delivery fit your community.",
+      tone: "warm",
+      layout: "compact",
+      primaryCta: "Email partnerships",
+      primaryHref: "mailto:support@example.com",
+      secondaryCta: "View pricing",
+      secondaryHref: "/pricing"
+    }),
+    conversion_1: homeSections.conversion_1
+  }),
+  "about-us": page("content", ["about_intro_1", "collections_1", "trust_1", "conversion_1"], {
+    about_intro_1: section("rich_text", {
+      eyebrow: "About us",
+      title: "A private wedding image workspace for destination-style album planning.",
+      body: "This storefront helps couples organize source photos, choose collection styles, understand credits, and receive private wedding-inspired image galleries from one signed-in account.",
+      tone: "warm",
+      layout: "compact"
+    }),
+    collections_1: homeSections.collections_1,
+    trust_1: homeSections.trust_1,
+    conversion_1: homeSections.conversion_1
+  }),
+  "contact-us": page("content", ["contact_intro_1", "faq_1", "conversion_1"], {
+    contact_intro_1: section("rich_text", {
+      eyebrow: "Contact us",
+      title: "Contact the wedding AI studio team.",
+      body: "Use this page for collection questions, source photo guidance, billing review, privacy requests, partnership ideas, or private album delivery support.",
+      tone: "warm",
+      layout: "compact",
+      primaryCta: "Email support",
+      primaryHref: "mailto:support@example.com",
+      secondaryCta: "Help center",
+      secondaryHref: "/help"
+    }),
+    faq_1: homeSections.faq_1,
+    conversion_1: homeSections.conversion_1
+  }),
   search: page("search", ["search_intro_1", "search_1", "collections_1", "conversion_1"], {
     search_intro_1: section("rich_text", {
       eyebrow: "Search",
@@ -971,11 +1029,11 @@ const templates: Record<ThemePackageTemplateKey, ThemePageJson> = {
     collections_1: homeSections.collections_1,
     conversion_1: homeSections.conversion_1
   })
-};
+} satisfies Record<WeddingStoryHouseTemplateKey, ThemePageJson>;
 
-export const weddingStoryHouseTemplates: Record<ThemePackageTemplateKey, ThemePageJson> = templates;
+export const weddingStoryHouseTemplates: Record<WeddingStoryHouseTemplateKey, ThemePageJson> = templates;
 
-export const weddingStoryHouseTemplateLabels: Record<ThemePackageTemplateKey, string> = {
+export const weddingStoryHouseTemplateLabels: Record<WeddingStoryHouseTemplateKey, string> = {
   home: "Home",
   pricing: "Pricing",
   packages: "Wedding Collections",
@@ -992,6 +1050,10 @@ export const weddingStoryHouseTemplateLabels: Record<ThemePackageTemplateKey, st
   policy: "Policy",
   "blog-list": "Blog List",
   "blog-detail": "Blog Detail",
+  "creators-circle": "Creators Circle",
+  "partner-registration": "Partner Registration",
+  "about-us": "About Us",
+  "contact-us": "Contact Us",
   search: "Search",
   cart: "Cart",
   "404": "404"

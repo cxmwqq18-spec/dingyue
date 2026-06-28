@@ -47,6 +47,12 @@ const routeMeta: Record<SiteAdminModuleCode, PendingRouteMeta> = {
     title: "顾客管理",
     subtitle: "正在加载客户状态、余额、模型训练、私有相册和素材交付。"
   },
+  partners: {
+    code: "partners",
+    eyebrow: "推广合作",
+    title: "推广合作者",
+    subtitle: "正在加载推广合作者申请、渠道资料、审核状态和备注记录。"
+  },
   ai: {
     code: "ai",
     eyebrow: "AI 工厂运营",
@@ -75,6 +81,7 @@ function siteAdminCodeFromHref(href?: string): SiteAdminModuleCode | undefined {
   if (matchesAdminPath("/admin/products")) return "products";
   if (matchesAdminPath("/admin/orders")) return "orders";
   if (matchesAdminPath("/admin/customers")) return "customers";
+  if (matchesAdminPath("/admin/partners")) return "partners";
   if (matchesAdminPath("/admin/ai-tools")) return "ai";
   if (matchesAdminPath("/admin/content")) return "content";
   if (matchesAdminPath("/admin/email")) return "email";

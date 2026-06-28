@@ -8,7 +8,7 @@ import { AiToolsEditor } from "@/components/admin/ai-tools-editor";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { JobsAdminPanel } from "@/components/admin/jobs-admin-panel";
 import { OpsCard, StatusPill } from "@/components/ui";
-import type { AiApp, GenerationJob, PublicCustomer, SiteAiApp } from "@/lib/types";
+import type { AiApp, GenerationJob, PublicCustomer, SiteAiApp, ToolCategory, ToolMenuItem } from "@/lib/types";
 
 type CustomerOption = Pick<PublicCustomer, "id" | "email">;
 
@@ -21,11 +21,31 @@ type Gateway = {
   rateLimitPerMinute: number;
 } | null;
 
+export type PlatformAiProviderOption = {
+  id: string;
+  label: string;
+  aiUrl: string;
+  modelType: string;
+  priority: number;
+  preferred: boolean;
+  status: {
+    configured: boolean;
+    aiUrlConfigured: boolean;
+    apiKeyConfigured: boolean;
+    label: string;
+    aiUrl: string;
+    modelType: string;
+  };
+};
+
 type AiToolsPagePayload = {
   apps: SiteAiApp[];
   jobs: GenerationJob[];
   customers: CustomerOption[];
   platformAiApps: AiApp[];
+  platformAiProviders?: PlatformAiProviderOption[];
+  toolCategories?: ToolCategory[];
+  toolMenuItems?: ToolMenuItem[];
   gateway?: Gateway;
   pageInfo?: {
     nextJobCursor?: string | null;
@@ -157,7 +177,14 @@ export function AiToolsPageClient({
           platformAiApps: mergeById(current.platformAiApps, result.platformAiApps)
         };
       });
-      setPayload((current) => current ? { ...current, ...result, apps: current.apps, gateway: current.gateway ?? result.gateway } : result);
+      setPayload((current) => current ? {
+        ...current,
+        ...result,
+        apps: current.apps,
+        toolCategories: current.toolCategories ?? result.toolCategories,
+        toolMenuItems: current.toolMenuItems ?? result.toolMenuItems,
+        gateway: current.gateway ?? result.gateway
+      } : result);
     } catch {
       if (!controller.signal.aborted) setError("AI 任务数据加载失败。");
     } finally {
@@ -296,7 +323,7 @@ export function AiToolsPageClient({
             {[
               { label: "值从哪里来", detail: "Image Studio 的名称、说明和 slug 来自平台 AiApp 工具目录；表格里的启用、扣费和 routeKey 来自本站 SiteAiApp 配置。" },
               { label: "这些值做什么", detail: "顾客提交生成任务时，系统按扣费值预留积分，并把 routeKey 写入任务请求，交给 worker 或 n8n 执行。" },
-              { label: "在哪里维护", detail: "本站配置就在下方表格维护；平台工具目录目前不是本站后台字段，网关账号在平台后台的 AI 网关维护。" }
+            { label: "在哪里维护", detail: "本站配置就在下方表格维护；AI 中转链路来自平台后台 AI 网关，本站可选择默认、优先或固定使用某条链路。" }
             ].map((item) => (
               <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-3 py-3" key={item.label}>
                 <p className="text-[12px] font-semibold text-[var(--admin-text)]">{item.label}</p>
@@ -305,7 +332,7 @@ export function AiToolsPageClient({
             ))}
           </div>
           <div className="mt-5">
-            <AiToolsEditor apps={payload.apps} siteId={siteId} />
+            <AiToolsEditor apps={payload.apps} platformAiProviders={payload.platformAiProviders ?? []} siteId={siteId} toolCategories={payload.toolCategories ?? []} toolMenuItems={payload.toolMenuItems ?? []} />
           </div>
         </ErpSection>
 

@@ -25,6 +25,23 @@ export type SelectionMeta = {
   detail: string;
 };
 
+const fallbackThemeSettings = {
+  colors: {
+    background: "#ffffff",
+    foreground: "#171717",
+    accent: "#2563eb",
+    muted: "#f4f4f5"
+  },
+  typography: {
+    display: "Inter",
+    body: "Inter"
+  },
+  radii: {
+    section: 20,
+    control: 12
+  }
+};
+
 export function clonePage(page: ThemePageJson): ThemePageJson {
   return JSON.parse(JSON.stringify(page)) as ThemePageJson;
 }
@@ -58,7 +75,7 @@ export function instanceKey(item: { id?: string; type?: string }, index: number,
 }
 
 export function settingLinkString(links: ThemeSettings["navigation"]["headerLinks"]): string {
-  return links
+  return (links ?? [])
     .map((link) => {
       const base = `${link.label}|${link.href}`;
       return link.group?.trim() ? `${base}|${link.group.trim()}` : base;
@@ -99,6 +116,9 @@ export function navigationBlocks(
 
 function ensureGlobalSectionBlocks(settings: ThemeSettings, globalType: "header" | "footer") {
   settings.globalSections ??= {};
+  settings.navigation ??= { headerLinks: [], footerLinks: [] };
+  settings.navigation.headerLinks ??= [];
+  settings.navigation.footerLinks ??= [];
   const section = normalizeGlobalSection(globalType, settings.globalSections[globalType]);
   const menuBlocks = safeBlocks(section).filter((block) => block.type === "menu_link");
   if (!menuBlocks.length) {
@@ -119,6 +139,22 @@ export function globalTypeFromPreviewId(id: string): "header" | "footer" | undef
 export function normalizeGlobalSections(settings: ThemeSettings): ThemeSettings {
   const normalized = {
     ...settings,
+    colors: {
+      ...fallbackThemeSettings.colors,
+      ...(settings.colors ?? {})
+    },
+    typography: {
+      ...fallbackThemeSettings.typography,
+      ...(settings.typography ?? {})
+    },
+    radii: {
+      ...fallbackThemeSettings.radii,
+      ...(settings.radii ?? {})
+    },
+    navigation: {
+      headerLinks: settings.navigation?.headerLinks ?? [],
+      footerLinks: settings.navigation?.footerLinks ?? []
+    },
     globalSections: {
       header: normalizeGlobalSection("header", settings.globalSections?.header),
       footer: normalizeGlobalSection("footer", settings.globalSections?.footer)

@@ -1,5 +1,6 @@
 import { AdminShell } from "@/components/admin/admin-shell";
 import { DesignPublicationsWorkbench } from "@/components/admin/design-publications-workbench";
+import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { getSiteThemePublicationMetaRelational } from "@/lib/stores/theme-store";
 import {
   getSiteAdminData,
@@ -25,6 +26,7 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
   const firstPageId = data.site.pages[0]?.id;
   const latestPageCount = latest?.pageCount ?? 0;
   const latestSectionCount = latest?.sectionCount ?? 0;
+  const seoReady = Boolean(data.site.themeSettings.draftJson.seo?.siteTitle && data.site.themeSettings.draftJson.seo?.siteDescription);
 
   return (
     <AdminShell
@@ -47,32 +49,42 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
       titleBadge={String(publications.length)}
       workspace={siteAdminWorkspace(data, "design workspace")}
     >
-      <div className="sr-only" aria-hidden="true">
-        草稿发布与历史快照
+      <div className="grid gap-4">
+        <DesignWorkspaceTabs
+          activePath="/admin/design/publications"
+          mediaCount={data.mediaCount}
+          pageCount={data.site.pages.length}
+          publicationCount={publications.length}
+          seoReady={seoReady}
+          siteSlug={data.site.slug}
+        />
+        <div className="sr-only" aria-hidden="true">
+          草稿发布与历史快照
+        </div>
+        <DesignPublicationsWorkbench
+          canPublish={hasDirtyDraft}
+          dirtyPages={data.dirtyPages}
+          firstPageId={firstPageId}
+          hasDirtyDraft={hasDirtyDraft}
+          latestPageCount={latestPageCount}
+          latestPublishedAt={latest ? publicationDate(latest.publishedAt) : undefined}
+          latestSectionCount={latestSectionCount}
+          latestVersion={latest?.version}
+          preflightScore={hasDirtyDraft ? 70 : 100}
+          preflightStale
+          publications={publications.map((publication) => ({
+            id: publication.id,
+            version: publication.version,
+            isActive: latest?.id === publication.id,
+            pageCount: publication.pageCount,
+            sectionCount: publication.sectionCount,
+            publishedAt: publicationDate(publication.publishedAt),
+            publishedBy: publication.publishedBy
+          }))}
+          settingsDirty={settingsDirty}
+          siteId={data.site.id}
+        />
       </div>
-      <DesignPublicationsWorkbench
-        canPublish={hasDirtyDraft}
-        dirtyPages={data.dirtyPages}
-        firstPageId={firstPageId}
-        hasDirtyDraft={hasDirtyDraft}
-        latestPageCount={latestPageCount}
-        latestPublishedAt={latest ? publicationDate(latest.publishedAt) : undefined}
-        latestSectionCount={latestSectionCount}
-        latestVersion={latest?.version}
-        preflightScore={hasDirtyDraft ? 70 : 100}
-        preflightStale
-        publications={publications.map((publication) => ({
-          id: publication.id,
-          version: publication.version,
-          isActive: latest?.id === publication.id,
-          pageCount: publication.pageCount,
-          sectionCount: publication.sectionCount,
-          publishedAt: publicationDate(publication.publishedAt),
-          publishedBy: publication.publishedBy
-        }))}
-        settingsDirty={settingsDirty}
-        siteId={data.site.id}
-      />
     </AdminShell>
   );
 }

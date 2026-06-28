@@ -59,6 +59,8 @@ import {
   toCustomerSessionRelational,
   toSiteAiApp,
   toSiteDomain,
+  toToolCategory,
+  toToolMenuItem,
   uid,
   verifyRelationalPassword,
 } from "./prisma-mappers";
@@ -69,6 +71,40 @@ const siteRuntimeInclude = {
   settings: true,
   connect: true
 } satisfies Prisma.SiteInclude;
+
+function isMissingToolMenuTableError(error: unknown): boolean {
+  const code = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  return code === "P2021" || /ToolCategory|ToolMenuItem/.test(message) && /does not exist|findMany/i.test(message);
+}
+
+async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
+  try {
+    return await prisma.toolCategory.findMany({
+      where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
+      include: { parent: true },
+      orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }],
+      ...(options.take ? { take: options.take } : {})
+    });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return [];
+    throw error;
+  }
+}
+
+async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
+  try {
+    return await prisma.toolMenuItem.findMany({
+      where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
+      include: { category: { include: { parent: true } } },
+      orderBy: options.activeOnly ? [{ sortOrder: "asc" }, { title: "asc" }] : [{ status: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
+      ...(options.take ? { take: options.take } : {})
+    });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return [];
+    throw error;
+  }
+}
 const collectionDetailSiteSelect = {
   id: true,
   name: true,
@@ -103,11 +139,6 @@ const collectionDetailSiteSelect = {
       publishedJson: true
     }
   },
-  settings: {
-    select: {
-      publishedJson: true
-    }
-  },
   connect: {
     select: {
       stripeAccountId: true,
@@ -115,7 +146,13 @@ const collectionDetailSiteSelect = {
       chargesEnabled: true,
       payoutsEnabled: true
     }
-  }
+  },
+  settings: {
+    select: {
+      draftJson: true,
+      publishedJson: true
+    }
+  },
 } satisfies Prisma.SiteSelect;
 type CollectionDetailSiteRecord = Prisma.SiteGetPayload<{ select: typeof collectionDetailSiteSelect }>;
 const publicRuntimeSiteSelect = {
@@ -150,17 +187,18 @@ const publicRuntimeSiteSelect = {
       publishedJson: true
     }
   },
-  settings: {
-    select: {
-      publishedJson: true
-    }
-  },
   connect: {
     select: {
       stripeAccountId: true,
       onboardingStatus: true,
       chargesEnabled: true,
       payoutsEnabled: true
+    }
+  },
+  settings: {
+    select: {
+      draftJson: true,
+      publishedJson: true
     }
   }
 } satisfies Prisma.SiteSelect;
@@ -243,6 +281,12 @@ const adminLoginSiteSelect = {
       chargesEnabled: true,
       payoutsEnabled: true
     }
+  },
+  settings: {
+    select: {
+      draftJson: true,
+      publishedJson: true
+    }
   }
 } satisfies Prisma.SiteSelect;
 type AdminLoginSiteRecord = Prisma.SiteGetPayload<{ select: typeof adminLoginSiteSelect }>;
@@ -273,17 +317,18 @@ const publicMetadataSiteSelect = {
       publishedJson: true
     }
   },
-  settings: {
-    select: {
-      publishedJson: true
-    }
-  },
   connect: {
     select: {
       stripeAccountId: true,
       onboardingStatus: true,
       chargesEnabled: true,
       payoutsEnabled: true
+    }
+  },
+  settings: {
+    select: {
+      draftJson: true,
+      publishedJson: true
     }
   }
 } satisfies Prisma.SiteSelect;
@@ -521,6 +566,8 @@ function emptyPlatformState(overrides: Partial<PlatformState> = {}): PlatformSta
     paymentEvents: [],
     aiApps: [],
     siteAiApps: [],
+    toolCategories: [],
+    toolMenuItems: [],
     aiGatewayGroups: [],
     creativePacks: [],
     mediaAssets: [],
@@ -543,6 +590,7 @@ function toPublicSiteShell(
   mediaAssets: MediaAsset[] = []
 ): Site {
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
+  const settingsRecord = "settings" in record ? record.settings : undefined;
   return {
     id: record.id,
     name: record.name,
@@ -559,10 +607,7 @@ function toPublicSiteShell(
       chargesEnabled: Boolean(record.connect?.chargesEnabled),
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
-    themeSettings: {
-      draftJson: cloneJson(record.settings?.publishedJson ?? {}) as unknown as Site["themeSettings"]["draftJson"],
-      publishedJson: cloneJson(record.settings?.publishedJson ?? {}) as unknown as Site["themeSettings"]["publishedJson"]
-    },
+    themeSettings: toAdminShellThemeSettings(settingsRecord),
     pages: record.pages.map((page) => toThemePage({
       ...page,
       draftJson: page.publishedJson
@@ -588,10 +633,7 @@ function toAdminLoginSiteShell(record: AdminLoginSiteRecord): Site {
       chargesEnabled: Boolean(record.connect?.chargesEnabled),
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
-    themeSettings: {
-      draftJson: {},
-      publishedJson: {}
-    } as Site["themeSettings"],
+    themeSettings: toAdminShellThemeSettings(record.settings),
     pages: record.pages.map((page) => ({
       id: page.id,
       siteId: page.siteId,
@@ -863,7 +905,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
   const siteId = site.id;
   const limits = publicRuntimeLimits(needs.profile);
 
-  const [products, siteAiApps, creativePacks, mediaAssets] = await Promise.all([
+  const [products, siteAiApps, creativePacks, mediaAssets, toolCategories, toolMenuItems] = await Promise.all([
     needs.products
       ? prisma.product.findMany({
           where: { siteId, status: "active" },
@@ -904,13 +946,16 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
           orderBy: [{ createdAt: "desc" }, { id: "asc" }],
           take: limits.mediaAssets
         })
-      : Promise.resolve([])
+      : Promise.resolve([]),
+    loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }),
+    loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 })
   ]);
   storefrontPerfMark("collections", startedAt, {
     products: products.length,
     siteAiApps: siteAiApps.length,
     creativePacks: creativePacks.length,
-    mediaAssets: mediaAssets.length
+    mediaAssets: mediaAssets.length,
+    toolMenuItems: toolMenuItems.length
   });
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
@@ -921,6 +966,8 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     siteDomains: site.domains.map(toSiteDomain),
     products: products.map(mapProduct),
     siteAiApps: siteAiApps.map(toPublicRuntimeSiteAiApp),
+    toolCategories: toolCategories.map(toToolCategory),
+    toolMenuItems: toolMenuItems.map(toToolMenuItem),
     creativePacks: creativePacks.map(toCreativePack),
     mediaAssets: mappedMediaAssets
   });
@@ -1094,6 +1141,8 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     siteDomains,
     products,
     siteAiApps,
+    toolCategories,
+    toolMenuItems,
     creativePacks,
     mediaAssets,
     customers,
@@ -1109,6 +1158,8 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     prisma.siteDomain.findMany({ where: { siteId }, orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] }),
     prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
     prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }] }),
+    loadToolCategoriesForSite(siteId),
+    loadToolMenuItemsForSite(siteId),
     prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
     prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }] }),
     prisma.customer.findMany({ where: { siteId }, include: { balance: true }, orderBy: [{ createdAt: "asc" }], take: fullSiteRuntimeLimits.customers }),
@@ -1133,6 +1184,8 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     siteDomains: siteDomains.map(toSiteDomain),
     products: products.map(mapProduct),
     siteAiApps: siteAiApps.map(toSiteAiApp),
+    toolCategories: toolCategories.map(toToolCategory),
+    toolMenuItems: toolMenuItems.map(toToolMenuItem),
     creativePacks: creativePacks.map(toCreativePack),
     mediaAssets: mappedMediaAssets,
     customers: customers.map(mapCustomer),
@@ -1238,7 +1291,6 @@ export const getStorefrontAccessSummaryRelational = cache(async (): Promise<Stor
 async function loadStorefrontAccessSummaryRelational(): Promise<StorefrontAccessSummary> {
   const [sites, totalSites, activeSites, runningJobs, platformAdmin] = await Promise.all([
     prisma.site.findMany({
-      take: 4,
       orderBy: { createdAt: "asc" },
       select: {
         id: true,
@@ -1864,7 +1916,9 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
 
 export async function getSiteShellBySlugForAdmin(slug: string): Promise<Site | undefined> {
   try {
-    return await siteReadCache.get(`admin-shell-v2:${slug}`, async () => {
+    const canonicalSlug = canonicalSiteSlug(slug);
+    return await siteReadCache.get(`admin-shell-v2:${canonicalSlug}`, async () => {
+      const slugCandidates = legacySiteSlugCandidates(slug);
       type AdminShellSiteRow = {
         id: string;
         name: string;
@@ -1930,7 +1984,8 @@ export async function getSiteShellBySlugForAdmin(slug: string): Promise<Site | u
         FROM "Site" s
         LEFT JOIN "ThemeSettings" ts ON ts."siteId" = s."id"
         LEFT JOIN "StripeConnectAccount" sc ON sc."siteId" = s."id"
-        WHERE s."slug" = ${slug}
+        WHERE s."slug" = ANY(${slugCandidates})
+        ORDER BY s."updatedAt" DESC
         LIMIT 1
       `;
       const site = rows[0];

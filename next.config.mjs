@@ -3,6 +3,7 @@ const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   devIndicators: false,
   typedRoutes: false,
+  htmlLimitedBots: /.*/,
   images: {
     localPatterns: [
       { pathname: "/assets/site-media/**" },
@@ -67,6 +68,26 @@ const nextConfig = {
       },
       {
         source: "/pricing",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/privacy",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/terms",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/cookies",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/refunds",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/content",
         headers: publicStorefrontHeaders
       },
       {
@@ -163,6 +184,26 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/pricing",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/privacy",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/terms",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/cookies",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/refunds",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/content",
         headers: publicStorefrontHeaders
       },
       {

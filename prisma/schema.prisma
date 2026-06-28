@@ -166,6 +166,8 @@ model Site {
   connect            StripeConnectAccount?
   aiApps             SiteAiApp[]
   gatewayGroups      AiGatewayGroup[]
+  toolCategories     ToolCategory[]
+  toolMenuItems      ToolMenuItem[]
   creativePackCategories CreativePackCategory[]
   creativePacks      CreativePack[]
   mediaAssets        MediaAsset[]
@@ -174,6 +176,7 @@ model Site {
   jobs               GenerationJob[]
   uploads            AssetUpload[]
   auditLogs          AuditLog[]
+  partnerApplications PartnerApplication[]
   emailConfigAssignment SiteEmailConfigAssignment?
 
   @@index([status])
@@ -468,6 +471,51 @@ model SiteAiApp {
   @@index([siteId, enabled, routeKey])
 }
 
+model ToolCategory {
+  id          String   @id
+  siteId      String
+  parentId    String?
+  slug        String
+  label       String
+  description String?
+  icon        String?
+  sortOrder   Int      @default(0)
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent      ToolCategory? @relation("ToolCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children    ToolCategory[] @relation("ToolCategoryChildren")
+  menuItems   ToolMenuItem[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, parentId, sortOrder])
+  @@index([siteId, status])
+}
+
+model ToolMenuItem {
+  id          String   @id
+  siteId      String
+  categoryId  String?
+  slug        String
+  title       String
+  description String?
+  badge       String?
+  icon        String?
+  imageUrl    String?
+  href        String
+  sortOrder   Int      @default(0)
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  category    ToolCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@unique([siteId, slug])
+  @@index([siteId, categoryId, sortOrder])
+  @@index([siteId, status])
+}
+
 model AiGatewayGroup {
   id                 String   @id
   siteId             String
@@ -741,6 +789,34 @@ model AssetUpload {
   @@index([siteId, reviewStatus, createdAt])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, createdAt])
+}
+
+model PartnerApplication {
+  id          String   @id
+  siteId      String
+  email       String
+  name        String
+  company     String?
+  website     String?
+  socialLinks Json?
+  audience    String?
+  cadence     String?
+  campaignIdeas String?
+  message     String?
+  status      String   @default("pending")
+  source      String?
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  reviewNote  String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, status])
+  @@index([siteId, createdAt])
+  @@index([siteId, status, createdAt])
+  @@index([siteId, email])
 }
 
 model GenerationJob {

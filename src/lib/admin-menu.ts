@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   MailCheck,
   Palette,
+  Handshake,
   ReceiptText,
   Settings2,
   ShieldCheck,
@@ -24,6 +25,7 @@ export type SiteAdminModuleCode =
   | "products"
   | "orders"
   | "customers"
+  | "partners"
   | "ai"
   | "content"
   | "email"
@@ -130,6 +132,18 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     aiExtension: "同邮箱跨站隔离，素材和相册不能串站串人。",
     keywords: ["customers", "customer", "member", "crm", "顾客", "会员", "客户"],
     items: ["顾客中心", "余额账本", "私有素材", "生成相册"]
+  },
+  {
+    label: "推广合作者",
+    code: "partners",
+    icon: Handshake,
+    href: "/admin/partners",
+    metric: "申请",
+    tone: "warn",
+    description: "查看推广合作者申请、渠道资料、合作想法和审核状态。",
+    aiExtension: "合作者申请按站点隔离审核，批准后再进入后续运营流程。",
+    keywords: ["partners", "affiliate", "creator", "influencer", "collaboration", "推广", "合作者", "申请"],
+    items: ["申请列表", "渠道资料", "审核状态", "备注记录"]
   },
   {
     label: "AI 工厂",

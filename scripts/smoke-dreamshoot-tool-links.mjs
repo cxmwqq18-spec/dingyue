@@ -52,6 +52,15 @@ function countMatches(text, pattern) {
   return [...text.matchAll(pattern)].length;
 }
 
+function lowercaseBrandCopyHits(text) {
+  return [...text.matchAll(/\bmydreamshoots\b/g)].filter((match) => {
+    const index = match.index ?? 0;
+    const before = text.slice(Math.max(0, index - 1), index);
+    const after = text.slice(index + match[0].length, index + match[0].length + 2);
+    return before !== "@" && before !== "." && after !== ".";
+  });
+}
+
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const renderer = readText("src/components/theme-renderer.tsx");
 const schema = readText("src/lib/section-schema.ts");
@@ -120,7 +129,7 @@ function collectStaleRuntimeLinks(value, pathLabel = "$") {
 collectStaleRuntimeLinks(platformState);
 assert(!staleRuntimeLinks.length, "runtime state must not expose old tool paths or old site slug", { staleRuntimeLinks: staleRuntimeLinks.slice(0, 20) });
 assert(templates.includes("MydreamShoots"), "template package must use the MydreamShoots brand casing");
-assert(!templates.includes("mydreamshoots"), "template package customer copy must not use lowercase mydreamshoots");
+assert(!lowercaseBrandCopyHits(templates).length, "template package customer copy must not use lowercase mydreamshoots");
 assert(!schema.includes("DreamShootAI") && !schema.includes("DreamShoot") && !schema.includes("Mydreamshoots"), "section schema customer defaults must not expose old brand casing");
 assert(storefrontRender.includes('"ai-image-studio"'), "tool resolver must support the static image studio alias");
 assert(storefrontRender.includes('"virtual-try-on"'), "tool resolver must support the static virtual try-on alias");

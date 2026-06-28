@@ -10,8 +10,10 @@ import {
   getSiteJobsFromState,
   readPlatformState
 } from "@/lib/server-store";
-import { mapAiApp, toSiteAiApp } from "@/lib/stores/prisma-mappers";
-import type { GenerationJob, PlatformState } from "@/lib/types";
+import { aiProviderStatus } from "@/lib/ai-provider-config";
+import { mapAiApp, toPlatformAiProvider, toSiteAiApp, toToolCategory, toToolMenuItem } from "@/lib/stores/prisma-mappers";
+import { ensureDefaultToolMenuTaxonomy, isMissingToolMenuTableError } from "@/lib/tool-menu-taxonomy";
+import type { GenerationJob, PlatformAiProvider, PlatformState } from "@/lib/types";
 
 const aiPageCache = createServerTtlCache("site-admin-ai-page", Number(process.env.SITE_ADMIN_AI_PAGE_CACHE_TTL_MS ?? 15_000));
 
@@ -72,6 +74,55 @@ function countGroupedJobs(row: JobCountRow): number {
   return typeof row._count === "object" ? row._count._all ?? 0 : 0;
 }
 
+function publicAiProvider(provider: PlatformAiProvider) {
+  const status = aiProviderStatus(provider);
+  return {
+    id: provider.id,
+    label: provider.label,
+    aiUrl: provider.aiUrl,
+    modelType: provider.modelType,
+    priority: provider.priority,
+    preferred: provider.preferred,
+    createdAt: provider.createdAt,
+    updatedAt: provider.updatedAt,
+    updatedBy: provider.updatedBy,
+    status: {
+      configured: status.configured,
+      aiUrlConfigured: status.aiUrlConfigured,
+      apiKeyConfigured: status.apiKeyConfigured,
+      label: status.label,
+      aiUrl: status.aiUrl,
+      modelType: status.modelType
+    }
+  };
+}
+
+async function readToolCategories(siteId: string) {
+  try {
+    return await prisma.toolCategory.findMany({
+      where: { siteId },
+      include: { parent: true },
+      orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
+    });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return [];
+    throw error;
+  }
+}
+
+async function readToolMenuItems(siteId: string) {
+  try {
+    return await prisma.toolMenuItem.findMany({
+      where: { siteId },
+      include: { category: { include: { parent: true } } },
+      orderBy: [{ status: "asc" }, { sortOrder: "asc" }, { title: "asc" }]
+    });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return [];
+    throw error;
+  }
+}
+
 function legacyPayload(state: PlatformState, siteId: string) {
   const jobs = getSiteJobsFromState(state, siteId).slice(0, Math.min(adminListTake, adminActivityTake));
   const customers = getSiteCustomersFromState(state, siteId).map((customer) => ({
@@ -83,9 +134,12 @@ function legacyPayload(state: PlatformState, siteId: string) {
   return {
     ok: true,
     apps: getSiteAppsFromState(state, siteId).slice(0, adminAiAppListTake),
+    toolCategories: state.toolCategories.filter((item) => item.siteId === siteId),
+    toolMenuItems: state.toolMenuItems.filter((item) => item.siteId === siteId),
     jobs,
     customers,
     platformAiApps: state.aiApps.slice(0, adminAiAppListTake),
+    platformAiProviders: (state.platformAiProviders ?? []).map(publicAiProvider),
     gateway: getSiteGatewayGroupsFromState(state, siteId)[0],
     ...summarizeJobs(jobs)
   };
@@ -108,7 +162,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   }
 
   const payload = await perf.measure("cache", () => aiPageCache.get(`${detail}:${siteId}:${jobTake}:${jobCursor ?? "first"}`, async () => {
-    const [apps, jobCounts, gateway, jobs, customers, platformAiApps] = await perf.measure("db", () => runDbTasks([
+    await perf.measure("tool-taxonomy", () => ensureDefaultToolMenuTaxonomy(siteId));
+    const [apps, toolCategories, toolMenuItems, jobCounts, gateway, jobs, customers, platformAiApps, platformAiProviders] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteAiApp.findMany({
         where: { siteId },
         select: {
@@ -133,6 +188,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         orderBy: [{ enabled: "desc" }, { routeKey: "asc" }],
         take: adminAiAppListTake
       }),
+      () => readToolCategories(siteId),
+      () => readToolMenuItems(siteId),
       () => (
         prisma.generationJob.groupBy({ by: ["status"], where: { siteId }, _count: { _all: true }, orderBy: { status: "asc" } }) as unknown as Promise<JobCountRow[]>
       ),
@@ -178,7 +235,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         : () => Promise.resolve([]),
       detail === "jobs"
         ? () => prisma.aiApp.findMany({ orderBy: [{ appType: "asc" }, { name: "asc" }], take: adminAiAppListTake })
-        : () => Promise.resolve([])
+        : () => Promise.resolve([]),
+      () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
     ], siteAdminReadConcurrency));
 
     const visibleJobs = detail === "jobs" ? jobs.slice(0, jobTake) : jobs;
@@ -196,9 +254,12 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return {
       ok: true,
       apps: apps.map(toSiteAiApp),
+      toolCategories: toolCategories.map(toToolCategory),
+      toolMenuItems: toolMenuItems.map(toToolMenuItem),
       jobs: mappedJobs,
       customers,
       platformAiApps: platformAiApps.map(mapAiApp),
+      platformAiProviders: platformAiProviders.map(toPlatformAiProvider).map(publicAiProvider),
       gateway,
       pageInfo: {
         nextJobCursor: detail === "jobs" && jobs.length > jobTake ? jobs[jobTake]?.id ?? null : null

@@ -18,6 +18,7 @@ import {
 } from "@/lib/storefront-render";
 import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { policyPageSlug } from "@/lib/site-route-canonical";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -29,7 +30,7 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "travel-portraits": "/tools/nature-adventure"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
-const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration"]);
+const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
@@ -77,13 +78,13 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
     return {};
   }
-  const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : `/${path.join("/")}`;
+  const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
-  const slug = `/${path.join("/")}`;
+  const slug = policyPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
     redirectMydreamshootsLegacyTool(site, path[1]);
     const { matched } = resolveToolPageForSite(state, site, path[1]);
@@ -125,14 +126,14 @@ export default async function HostStorefrontCatchAllPage({
       redirect(`/site/${defaultSiteSlug}${slug}`);
     }
   }
-  if (slug === "/privacy-policy") redirect("/policies/privacy");
-  if (slug === "/terms-of-service") redirect("/policies/terms");
-  if (slug === "/cookie-policy") redirect("/policies/cookies");
-  if (slug === "/refund-policy" || slug === "/policies/refund") redirect("/policies/refunds");
-  if (slug === "/content-policy") redirect("/policies/content");
+  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect("/privacy");
+  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect("/terms");
+  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect("/cookies");
+  if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
+  if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "dashboard";
-  const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : `/${path.join("/")}`;
+  const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
@@ -164,7 +165,7 @@ export default async function HostStorefrontCatchAllPage({
     return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
-  const pageSlug = collectionCategory ? "/collections" : `/${path.join("/")}`;
+  const pageSlug = collectionCategory ? "/collections" : policyPageSlug(`/${path.join("/")}`);
   if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({

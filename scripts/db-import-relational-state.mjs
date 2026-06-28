@@ -153,6 +153,8 @@ function summaryCounts(state) {
     aiApps: asArray(state.aiApps).length,
     siteAiApps: asArray(state.siteAiApps).length,
     gatewayGroups: asArray(state.aiGatewayGroups).length,
+    toolCategories: asArray(state.toolCategories).length,
+    toolMenuItems: asArray(state.toolMenuItems).length,
     creativePackCategories: asArray(state.creativePackCategories).length,
     creativePacks: asArray(state.creativePacks).length,
     mediaAssets: asArray(state.mediaAssets).length,
@@ -390,6 +392,43 @@ const specs = [
       rateLimitPerMinute: group.rateLimitPerMinute ?? 0,
       accountPoolMode: group.accountPoolMode,
       unavailableReason: group.unavailableReason
+    })
+  },
+  {
+    key: "toolCategories",
+    model: "toolCategory",
+    items: (state) => asArray(state.toolCategories),
+    data: (category) => ({
+      id: category.id,
+      siteId: category.siteId,
+      parentId: category.parentId,
+      slug: category.slug,
+      label: category.label,
+      description: category.description,
+      icon: category.icon ?? category.iconName,
+      sortOrder: category.sortOrder ?? 0,
+      status: category.status ?? "active",
+      createdAt: toDate(category.createdAt)
+    })
+  },
+  {
+    key: "toolMenuItems",
+    model: "toolMenuItem",
+    items: (state) => asArray(state.toolMenuItems),
+    data: (item) => ({
+      id: item.id,
+      siteId: item.siteId,
+      categoryId: item.categoryId,
+      slug: item.slug,
+      title: item.title,
+      description: item.description,
+      badge: item.badge,
+      icon: item.icon,
+      imageUrl: item.imageUrl,
+      href: item.href,
+      sortOrder: item.sortOrder ?? 0,
+      status: item.status ?? "active",
+      createdAt: toDate(item.createdAt)
     })
   },
   {
@@ -661,6 +700,8 @@ const importOrder = [
   "aiApps",
   "siteAiApps",
   "gatewayGroups",
+  "toolCategories",
+  "toolMenuItems",
   "creativePacks",
   "mediaAssets",
   "themePages",

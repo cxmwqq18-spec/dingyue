@@ -122,11 +122,11 @@ export default async function HomePage({
   const activeSites = accessSummary.activeSites;
   const runningJobs = accessSummary.runningJobs;
   const primarySite = accessSummary.sites[0];
-  const platformRoutes = accessSummary.sites.slice(0, 3).flatMap((site) => [
+  const listedSites = accessSummary.sites;
+  const platformRoutes = listedSites.flatMap((site) => [
     { label: `${site.branding.logoText} 前台`, href: `/site/${site.slug}` },
     { label: `${site.branding.logoText} 后台`, href: `/site/${site.slug}/admin` }
   ]);
-  const listedSites = accessSummary.sites;
   const platformAdmin = accessSummary.platformAdmin;
   const accessEntries = [
     {
@@ -136,7 +136,7 @@ export default async function HomePage({
       account: platformAdmin ? `${platformAdmin.email} / platform123` : "platform@local.test / platform123",
       detail: "Cross-site control plane for tenants, domains, Connect state, gateway policy and global operations."
     },
-    ...listedSites.slice(0, 3).flatMap((site) => [
+    ...listedSites.flatMap((site) => [
       {
         label: `${site.branding.logoText} 前台`,
         href: `/site/${site.slug}`,
@@ -158,7 +158,7 @@ export default async function HomePage({
     "/platform/login",
     ...platformRoutes.map((route) => route.href),
     ...accessEntries.map((entry) => entry.href),
-    ...listedSites.slice(0, 3).map((site) => `/site/${site.slug}/admin/design`)
+    ...listedSites.map((site) => `/site/${site.slug}/admin/design`)
   ]));
 
   return (

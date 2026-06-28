@@ -1309,6 +1309,8 @@ const weddingPageMappings: WeddingPageMapping[] = [
   { idSuffix: "blog_detail", packageTemplate: "blog-detail", templateKey: "blog-detail", slug: "/blog/preparing-source-photos", title: "Preparing source photos", pageType: "article" },
   { idSuffix: "creators_circle", packageTemplate: "creators-circle", templateKey: "creators-circle", slug: "/creators-circle", title: "Creators Circle", pageType: "content" },
   { idSuffix: "partner_registration", packageTemplate: "partner-registration", templateKey: "partner-registration", slug: "/partner-registration", title: "Partner Registration", pageType: "content" },
+  { idSuffix: "about_us", packageTemplate: "about-us", templateKey: "about-us", slug: "/about-us", title: "About Us", pageType: "content" },
+  { idSuffix: "contact_us", packageTemplate: "contact-us", templateKey: "contact-us", slug: "/contact-us", title: "Contact Us", pageType: "content" },
   { idSuffix: "search", packageTemplate: "search", templateKey: "search", slug: "/search", title: "Search", pageType: "search" },
   { idSuffix: "cart", packageTemplate: "cart", templateKey: "cart", slug: "/cart", title: "Cart", pageType: "cart" },
   { idSuffix: "404", packageTemplate: "404", templateKey: "404", slug: "/404", title: "404", pageType: "404" }
@@ -1372,7 +1374,10 @@ function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: str
 const weddingPages = (siteId: string): ThemePage[] =>
   weddingPageMappings.map((mapping) => {
     const pageJson =
-      mapping.packageTemplate === "creators-circle" || mapping.packageTemplate === "partner-registration"
+      mapping.packageTemplate === "creators-circle" ||
+      mapping.packageTemplate === "partner-registration" ||
+      mapping.packageTemplate === "about-us" ||
+      mapping.packageTemplate === "contact-us"
         ? cloneSeed(dreamshootAiStudioTemplates[mapping.packageTemplate])
         : weddingPageJson(mapping.packageTemplate, mapping.pageType, mapping.templateKey);
     return {
@@ -1808,6 +1813,8 @@ export const platformState: PlatformState = {
     { id: "sai_lumen_avatar", siteId: "site_lumen", aiApp: {} as AiApp, enabled: false, creditCost: 8, routeKey: "n8n.avatar.v1" },
     { id: "sai_atlas_copy", siteId: "site_atlas", aiApp: {} as AiApp, enabled: true, creditCost: 3, routeKey: "n8n.copy.v1" }
   ],
+  toolCategories: [],
+  toolMenuItems: [],
   aiGatewayGroups: [
     {
       id: "gw_lumen_primary",

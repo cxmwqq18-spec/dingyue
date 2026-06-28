@@ -189,12 +189,12 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     if (!site) return undefined;
     return {
       ok: true,
-      customers: customers.map((customer) => toPublicCustomerRelational(customer as unknown as Record<string, unknown>)),
-      customerModels: customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>)),
-      albums: albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>)),
-      packs: packs.map(toCreativePack),
-      customerAssets: customerAssets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)),
-      siteAdmins: siteAdmins.map(toSiteAdmin),
+      ...(includeCustomers(detail) ? { customers: customers.map((customer) => toPublicCustomerRelational(customer as unknown as Record<string, unknown>)) } : {}),
+      ...(includeDetail(detail, "models") || includeDetail(detail, "assets") ? { customerModels: customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>)) } : {}),
+      ...(includeDetail(detail, "delivery") ? { albums: albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>)) } : {}),
+      ...(includeDetail(detail, "delivery") ? { packs: packs.map(toCreativePack) } : {}),
+      ...(includeDetail(detail, "delivery") || includeDetail(detail, "assets") ? { customerAssets: customerAssets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) } : {}),
+      ...(includeDetail(detail, "customers") ? { siteAdmins: siteAdmins.map(toSiteAdmin) } : {}),
       signupCreditGrant: site.signupCreditGrant
     };
   }));

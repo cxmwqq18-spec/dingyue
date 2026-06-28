@@ -1,5 +1,7 @@
 import { AdminShell } from "@/components/admin/admin-shell";
+import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { NavigationEditor } from "@/components/admin/navigation-editor";
+import { getSiteThemePublicationCountRelational } from "@/lib/stores/theme-store";
 import {
   getSiteAdminData,
   modulePath,
@@ -13,10 +15,12 @@ import {
 export default async function DesignNavigationPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const data = await getSiteAdminData(siteSlug, { include: ["themeSettings"], summary: false });
+  const publicationCount = await getSiteThemePublicationCountRelational(data.site.id);
   const draftSettings = data.site.themeSettings.draftJson;
   const publishedSettings = data.site.themeSettings.publishedJson;
   const headerCount = draftSettings.navigation.headerLinks.length;
   const footerCount = draftSettings.navigation.footerLinks.length;
+  const seoReady = Boolean(draftSettings.seo?.siteTitle && draftSettings.seo?.siteDescription);
 
   return (
     <AdminShell
@@ -39,16 +43,26 @@ export default async function DesignNavigationPage({ params }: { params: Promise
       titleBadge={String(headerCount + footerCount)}
       workspace={siteAdminWorkspace(data, "design workspace")}
     >
-      <div className="sr-only" aria-hidden="true">
-        站点导航
+      <div className="grid gap-4">
+        <DesignWorkspaceTabs
+          activePath="/admin/design/navigation"
+          mediaCount={data.mediaCount}
+          pageCount={data.site.pages.length}
+          publicationCount={publicationCount}
+          seoReady={seoReady}
+          siteSlug={data.site.slug}
+        />
+        <div className="sr-only" aria-hidden="true">
+          站点导航
+        </div>
+        <NavigationEditor
+          initialSettings={draftSettings}
+          liveHref={modulePath(data.site, "")}
+          publishHref={modulePath(data.site, "/admin/design/publications")}
+          publishedSettings={publishedSettings}
+          siteId={data.site.id}
+        />
       </div>
-      <NavigationEditor
-        initialSettings={draftSettings}
-        liveHref={modulePath(data.site, "")}
-        publishHref={modulePath(data.site, "/admin/design/publications")}
-        publishedSettings={publishedSettings}
-        siteId={data.site.id}
-      />
     </AdminShell>
   );
 }

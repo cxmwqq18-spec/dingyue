@@ -11,16 +11,16 @@ import {
 import { renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
-import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { policyPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 
-const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration"]);
+const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
   const requestedSlug = `/${path.join("/")}`;
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
-  const slug = collectionCategory ? "/collections" : requestedSlug === "/faq" ? "/help" : requestedSlug;
+  const slug = collectionCategory ? "/collections" : requestedSlug === "/faq" ? "/help" : policyPageSlug(requestedSlug);
   if (slug === "/account") return { title: "Account" };
   const state = collectionCategory
     ? await readStorefrontPublicCollectionMetadataStateBySlugFromDatabase(siteSlug)
@@ -54,11 +54,11 @@ export default async function SiteCatchAllPage({
     pathname: slug,
     siteSlug
   });
-  if (slug === "/privacy-policy") redirect(`/site/${publicSlug}/policies/privacy`);
-  if (slug === "/terms-of-service") redirect(`/site/${publicSlug}/policies/terms`);
-  if (slug === "/cookie-policy") redirect(`/site/${publicSlug}/policies/cookies`);
-  if (slug === "/refund-policy" || slug === "/policies/refund") redirect(`/site/${publicSlug}/policies/refunds`);
-  if (slug === "/content-policy") redirect(`/site/${publicSlug}/policies/content`);
+  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
+  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
+  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);
+  if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(`/site/${publicSlug}/refunds`);
+  if (slug === "/content-policy" || slug === "/policies/content") redirect(`/site/${publicSlug}/content`);
   if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
   if (slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
@@ -77,7 +77,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/account") {
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
   }
-  const pageSlug = collectionCategory ? "/collections" : slug === "/faq" ? "/help" : slug;
+  const pageSlug = collectionCategory ? "/collections" : slug === "/faq" ? "/help" : policyPageSlug(slug);
   const state = collectionCategory
     ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(publicSlug, collectionCategory)
     : await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, pageSlug);

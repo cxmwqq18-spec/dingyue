@@ -15,6 +15,26 @@ export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string 
   return publicSlug;
 }
 
+export function shortPolicyPath(pathname: string): string {
+  const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+  return requestedPath === "/policies/privacy" || requestedPath === "/privacy-policy" ? "/privacy" :
+    requestedPath === "/policies/terms" || requestedPath === "/terms-of-service" ? "/terms" :
+    requestedPath === "/policies/cookies" || requestedPath === "/cookie-policy" ? "/cookies" :
+    requestedPath === "/policies/refunds" || requestedPath === "/policies/refund" || requestedPath === "/refund-policy" ? "/refunds" :
+    requestedPath === "/policies/content" || requestedPath === "/content-policy" ? "/content" :
+    requestedPath;
+}
+
+export function policyPageSlug(pathname: string): string {
+  const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+  return requestedPath === "/privacy" || requestedPath === "/privacy-policy" ? "/policies/privacy" :
+    requestedPath === "/terms" || requestedPath === "/terms-of-service" ? "/policies/terms" :
+    requestedPath === "/cookies" || requestedPath === "/cookie-policy" ? "/policies/cookies" :
+    requestedPath === "/refunds" || requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
+    requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :
+    requestedPath;
+}
+
 export function redirectPublicSitePathToCanonicalHost({
   host,
   pathname,
@@ -33,13 +53,7 @@ export function redirectPublicSitePathToCanonicalHost({
     if (requestedPath === sitePrefix || requestedPath === `${sitePrefix}/` || requestedPath === canonicalSitePrefix || requestedPath === `${canonicalSitePrefix}/`) {
       permanentRedirect("/");
     }
-    const normalizedPath =
-      requestedPath === "/privacy-policy" ? "/policies/privacy" :
-      requestedPath === "/terms-of-service" ? "/policies/terms" :
-      requestedPath === "/cookie-policy" ? "/policies/cookies" :
-      requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
-      requestedPath === "/content-policy" ? "/policies/content" :
-      requestedPath;
+    const normalizedPath = shortPolicyPath(requestedPath);
     permanentRedirect(normalizedPath);
   }
   return publicSlug;

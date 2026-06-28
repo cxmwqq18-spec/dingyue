@@ -6,6 +6,7 @@ import {
   getCustomerAssetRelational,
   readCustomerAssetFileByStorageKey
 } from "@/lib/stores/asset-store";
+import { signWorkerAssetDownload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function POST(
@@ -29,12 +30,23 @@ export async function GET(
   { params }: { params: Promise<{ siteId: string; customerId: string; assetId: string }> }
 ) {
   const { siteId, customerId, assetId } = await params;
-  if (!(await hasCustomerSession(siteId, customerId))) {
+  const url = new URL(request.url);
+  const isWorkerDownload = url.searchParams.get("worker") === "1";
+  const expiresAt = url.searchParams.get("expiresAt") ?? "";
+  const signature = url.searchParams.get("signature") ?? "";
+  const workerSignatureValid = Boolean(
+    isWorkerDownload &&
+    expiresAt &&
+    signature &&
+    Date.parse(expiresAt) > Date.now() &&
+    signature === signWorkerAssetDownload({ siteId, customerId, assetId, expiresAt })
+  );
+  if (!workerSignatureValid && !(await hasCustomerSession(siteId, customerId))) {
     return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
   }
-  const token = new URL(request.url).searchParams.get("token");
+  const token = url.searchParams.get("token");
   try {
-    if (!token) {
+    if (!token && !workerSignatureValid) {
       return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
     }
     const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });

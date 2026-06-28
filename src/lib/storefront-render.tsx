@@ -29,7 +29,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
-import { withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { getSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData } from "@/lib/types";
@@ -42,6 +42,7 @@ type SiteRenderData = {
   mediaAssets: ReturnType<typeof getSiteMediaAssetsFromState>;
   products: ReturnType<typeof getSiteProductsFromState>;
   siteAiApps: ReturnType<typeof getSiteAppsFromState>;
+  toolMenuItems: PlatformState["toolMenuItems"];
 };
 
 function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData {
@@ -49,7 +50,8 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     creativePacks: getSiteCreativePacksFromState(state, siteId),
     mediaAssets: getSiteMediaAssetsFromState(state, siteId),
     products: getSiteProductsFromState(state, siteId),
-    siteAiApps: getSiteAppsFromState(state, siteId)
+    siteAiApps: getSiteAppsFromState(state, siteId),
+    toolMenuItems: state.toolMenuItems.filter((item) => item.siteId === siteId)
   };
 }
 
@@ -58,7 +60,8 @@ function emptySiteRenderData(): SiteRenderData {
     creativePacks: [],
     mediaAssets: [],
     products: [],
-    siteAiApps: []
+    siteAiApps: [],
+    toolMenuItems: []
   };
 }
 
@@ -79,13 +82,14 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
         ...siteApp.aiApp,
         parameterSchema: []
       }
-    }))
+    })),
+    toolMenuItems: renderData.toolMenuItems.slice(0, 24)
   };
 }
 
 const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
-const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "generation_form", "search_results"]);
-const creativePackSectionTypes = new Set(["collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
+const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
+const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
 
 function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
   return new Set(pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId]?.type).filter((type): type is string => Boolean(type)));
@@ -126,7 +130,8 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
     creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
     mediaAssets: renderData.mediaAssets,
     products: needsProducts ? trimProductsForStorefront(renderData, slug === "/pricing" || slug === "/cart" ? 12 : 6) : [],
-    siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : []
+    siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : [],
+    toolMenuItems: renderData.toolMenuItems.slice(0, 80)
   };
 }
 
@@ -662,11 +667,49 @@ function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Si
   };
 }
 
-function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockInstance, toolSlug: string, appSlug: string): ThemePageJson {
+function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
+  return `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
+}
+
+function aidreamcapesToolFaqBlocks(label: string, workflow: string[]): SectionBlockInstance[] {
+  return [
+    {
+      id: "faq_inputs",
+      type: "faq_item",
+      settings: {
+        question: `What should I upload for ${label}?`,
+        answer: workflow[1] ?? "Upload clear source portraits or references that match the dreamscape direction you want."
+      }
+    },
+    {
+      id: "faq_private",
+      type: "faq_item",
+      settings: {
+        question: "Are Aidreamcapes results private?",
+        answer: "Yes. Source photos, generation jobs, credit records, and finished galleries stay connected to the signed-in customer account."
+      }
+    },
+    {
+      id: "faq_credits",
+      type: "faq_item",
+      settings: {
+        question: "When are credits used?",
+        answer: "Credits are shown before a request starts, reserved for generation, consumed after successful delivery, and released when a request fails."
+      }
+    }
+  ];
+}
+
+function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockInstance, toolSlug: string, appSlug: string, site: Site): ThemePageJson {
   const page = clonePageJson(basePage);
   const title = blockString(tool, "title", sectionSetting(page, "entry_1", "title", "AI photo tool"));
   const category = blockString(tool, "category", "AI Photo");
   const copy = customerToolCopy(toolSlug, title, category);
+  const aidreamcapes = isAidreamcapesStorefront(site);
+  const directoryContent = getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const effectiveTitle = aidreamcapes ? directoryContent.label : title;
+  const effectiveDescription = aidreamcapes ? directoryContent.intro : blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro));
+  const effectiveCta = aidreamcapes ? directoryContent.ctaLabel : copy.primaryCta;
   const description = blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro));
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
   const appCreateHref = `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
@@ -684,8 +727,8 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
     page.sections.tool_banner_1.settings = {
       ...page.sections.tool_banner_1.settings,
       eyebrow: category,
-      title,
-      subtitle: description,
+      title: effectiveTitle,
+      subtitle: effectiveDescription,
       imageUrl
     };
   }
@@ -694,9 +737,9 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       ...page.sections.entry_1.settings,
       aiAppSlug: appSlug,
       eyebrow: category,
-      title,
-      subtitle: description,
-      ctaLabel: copy.primaryCta,
+      title: effectiveTitle,
+      subtitle: effectiveDescription,
+      ctaLabel: effectiveCta,
       ctaHref: appCreateHref,
       imageUrl,
       toolSlug
@@ -708,27 +751,48 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
     type: "rich_text",
     settings: {
       eyebrow: category,
-      title: copy.guideTitle,
-      body: copy.guideBody,
-      primaryCta: copy.primaryCta,
+      title: aidreamcapes ? directoryContent.h3[0] ?? copy.guideTitle : copy.guideTitle,
+      body: aidreamcapes ? directoryContent.workflow.join(" ") : copy.guideBody,
+      primaryCta: effectiveCta,
       primaryHref: appCreateHref,
       secondaryCta: "Choose a plan",
       secondaryHref: "/pricing",
       layout: "compact"
     },
-    blocks: toolDetailGuideBlocks(copy)
+    blocks: aidreamcapes
+      ? directoryContent.workflow.slice(0, 3).map((description, index) => ({
+          id: `tool_detail_step_${index + 1}`,
+          type: "rich_text_card",
+          settings: { meta: `0${index + 1}`, title: directoryContent.h3[index] ?? `Step ${index + 1}`, description }
+        }))
+      : toolDetailGuideBlocks(copy)
   };
   page.sections[useCaseSectionId] = {
     type: "rich_text",
     settings: {
       eyebrow: "Tool details",
-      title: `What ${title} is used for`,
-      body: copy.detailBody,
+      title: aidreamcapes ? `How ${directoryContent.label} fits Aidreamcapes` : `What ${title} is used for`,
+      body: aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody,
       layout: "compact",
       tone: "dark"
     },
-    blocks: toolDetailUseCaseBlocks(copy)
+    blocks: aidreamcapes
+      ? directoryContent.useCases.slice(0, 2).map((description, index) => ({
+          id: `tool_detail_use_case_${index + 1}`,
+          type: "rich_text_card",
+          settings: { meta: index === 0 ? "Best for" : "Next use", title: description, description }
+        }))
+      : toolDetailUseCaseBlocks(copy)
   };
+  if (aidreamcapes && page.sections.faq_1) {
+    page.sections.faq_1.settings = {
+      ...page.sections.faq_1.settings,
+      eyebrow: "Aidreamcapes tool questions",
+      title: `${directoryContent.label} FAQ`,
+      subtitle: "Answers about source photos, credits, private galleries, and delivery before you generate."
+    };
+    page.sections.faq_1.blocks = aidreamcapesToolFaqBlocks(directoryContent.label, directoryContent.workflow);
+  }
   const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
   page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);
   return page;
@@ -829,7 +893,15 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
   const toolBlock = toolBlocksFromTheme(site).find((block) => toolSlugFromBlock(block) === normalizedToolSlug) ?? fallbackToolBlockForSlug(normalizedToolSlug);
   const basePage = baseToolDetailPageForSite(site, page);
-  const synthesizedPage = toolBlock ? synthesizeToolDetailPage(basePage.publishedJson, toolBlock, normalizedToolSlug, appSlugForToolCategory(blockString(toolBlock, "category", "AI Photo"), siteAiApps)) : undefined;
+  const synthesizedPage = toolBlock
+    ? synthesizeToolDetailPage(
+        basePage.publishedJson,
+        toolBlock,
+        normalizedToolSlug,
+        appSlugForToolCategory(blockString(toolBlock, "category", "AI Photo"), siteAiApps),
+        site,
+      )
+    : undefined;
   const matched = Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
@@ -870,6 +942,7 @@ function renderThemePage({
         settings={settings}
         site={currentSite}
         siteAiApps={renderData.siteAiApps}
+        toolMenuItems={renderData.toolMenuItems}
         jsonLd={jsonLd}
         lightweightChrome={lightweightChrome}
       />

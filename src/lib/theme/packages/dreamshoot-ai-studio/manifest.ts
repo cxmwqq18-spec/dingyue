@@ -26,7 +26,7 @@ export const dreamshootAiStudioPackage: ThemePackageManifest = {
     "testimonial_wall",
     "faq"
   ],
-  templates: (Object.entries(dreamshootAiStudioTemplates).filter(([key]) => key !== "tools") as Array<[ThemePackageTemplateKey, typeof dreamshootAiStudioTemplates[ThemePackageTemplateKey]]>).map(
+  templates: (Object.entries(dreamshootAiStudioTemplates).filter(([key]) => !["tools", "creators-circle", "partner-registration", "about-us", "contact-us"].includes(key)) as Array<[ThemePackageTemplateKey, typeof dreamshootAiStudioTemplates[ThemePackageTemplateKey]]>).map(
     ([key, template]) => ({
       key,
       label: dreamshootAiStudioTemplateLabels[key],

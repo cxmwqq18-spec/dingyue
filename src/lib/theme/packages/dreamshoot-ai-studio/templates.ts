@@ -2,7 +2,7 @@ import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } f
 import { dreamshootPublicSeoPageMetadata } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
-export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration";
+export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -766,6 +766,7 @@ const templateSections = {
   }, [
     block("partner_field_name", "form_field", { label: "Full name", placeholder: "Your name", fieldType: "text", required: true }),
     block("partner_field_email", "form_field", { label: "Email address", placeholder: "you@example.com", fieldType: "email", required: true }),
+    block("partner_field_website", "form_field", { label: "Website", placeholder: "https://your-site.com", fieldType: "text", required: false }),
     block("partner_field_channels", "form_field", { label: "Primary channel links", placeholder: "Instagram, TikTok, YouTube, newsletter, website, or community links", fieldType: "textarea", required: true }),
     block("partner_field_audience", "form_field", { label: "Audience and niche", placeholder: "Tell us who follows you and why AI photo packages fit them.", fieldType: "textarea", required: true }),
     block("partner_field_cadence", "form_field", { label: "Publishing cadence", placeholder: "Weekly videos, newsletter drops, paid campaigns, community posts...", fieldType: "text", required: false }),
@@ -1040,6 +1041,78 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     1,
     seoForPublicPage("/partner-registration")
   ),
+  "about-us": page(
+    "content",
+    ["about_intro_1", "about_values_1", "trust_1", "conversion_1"],
+    {
+      about_intro_1: section("rich_text", {
+        eyebrow: "About MyDreamShoots",
+        title: "Private AI photo packages with clear credits and real customer delivery.",
+        body: "MyDreamShoots helps customers turn everyday selfies into themed AI photo packages, professional headshots, fan photos, creator portraits, beauty edits, travel scenes, and private albums without booking a studio session. The service is built around signed-in accounts, transparent credit use, secure checkout, and customer-only gallery access.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: assets.heroPackageWall,
+        primaryCta: "Explore photo packages",
+        primaryHref: "/collections",
+        secondaryCta: "Contact us",
+        secondaryHref: "/contact-us"
+      }, [
+        block("about_private", "rich_text_card", { meta: "Private", title: "Customer-only workspace", description: "Uploads, generations, credit history, and albums stay connected to the customer's signed-in account." }),
+        block("about_packages", "rich_text_card", { meta: "Packages", title: "Outcome-first catalog", description: "Customers choose a finished photo direction first, then see the credit cost before generation starts." }),
+        block("about_delivery", "rich_text_card", { meta: "Delivery", title: "Album-ready results", description: "Finished images return to a private gallery for review, download, and reuse." })
+      ]),
+      about_values_1: section("rich_text", {
+        eyebrow: "How we work",
+        title: "A practical photo workspace for customers who want control.",
+        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. We focus on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
+        imageUrl: assets.flowPrivateAlbumWorkspace,
+        primaryCta: "View pricing",
+        primaryHref: "/pricing",
+        secondaryCta: "Help center",
+        secondaryHref: "/help"
+      }, [
+        block("about_value_transparency", "rich_text_card", { meta: "01", title: "Clear credit use", description: "Credit reservations, successful generations, returned credits, and billing events are visible in the customer account." }),
+        block("about_value_support", "rich_text_card", { meta: "02", title: "Supportable workflow", description: "Customers can contact support for account, billing, privacy, upload, or album questions." }),
+        block("about_value_safety", "rich_text_card", { meta: "03", title: "Respect for source photos", description: "Source photos should belong to the customer or be used with permission, and policy pages explain the rules before upload." })
+      ]),
+      trust_1: homeSections.trust_1,
+      conversion_1: homeSections.conversion_1
+    },
+    1,
+    seoForPublicPage("/about-us")
+  ),
+  "contact-us": page(
+    "content",
+    ["contact_intro_1", "contact_details_1", "faq_1", "conversion_1"],
+    {
+      contact_intro_1: section("rich_text", {
+        eyebrow: "Contact us",
+        title: "Contact MyDreamShoots support or sales.",
+        body: "Use this page for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: assets.catalogHeadshotCard,
+        primaryCta: "Email support",
+        primaryHref: "mailto:support@mydreamshoots.com",
+        secondaryCta: "Email sales",
+        secondaryHref: "mailto:sales@mydreamshoots.com"
+      }, [
+        block("contact_support", "rich_text_card", { meta: "Support", title: "support@mydreamshoots.com", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
+        block("contact_sales", "rich_text_card", { meta: "Sales", title: "sales@mydreamshoots.com", description: "For plan questions, creator or team use cases, campaign planning, and business inquiries." }),
+        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B, DOVER, DE 19901", description: "Company mailing address for MyDreamShoots business correspondence." })
+      ]),
+      contact_details_1: section("policy_content", {
+        title: "Contact information",
+        lastUpdated: "June 28, 2026",
+        contactEmail: "support@mydreamshoots.com",
+        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+      }),
+      faq_1: homeSections.faq_1,
+      conversion_1: homeSections.conversion_1
+    },
+    1,
+    seoForPublicPage("/contact-us")
+  ),
   search: page(
     "search",
     ["search_intro_1", "search_1", "packages_1", "packages_strip_1", "conversion_1"],
@@ -1128,6 +1201,8 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   "blog-detail": "Blog Detail",
   "creators-circle": "Creators Circle",
   "partner-registration": "Partner Registration",
+  "about-us": "About Us",
+  "contact-us": "Contact Us",
   search: "Search",
   cart: "Cart",
   "404": "404"
@@ -1163,12 +1238,14 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "FAQ", href: "#faq" }
       ],
       footerLinks: [
-        { label: "Privacy", href: "/policies/privacy", group: "support" },
-        { label: "Terms", href: "/policies/terms", group: "support" },
-        { label: "Cookie Policy", href: "/policies/cookies", group: "support" },
-        { label: "Refunds", href: "/policies/refunds", group: "support" },
-        { label: "Content policy", href: "/policies/content", group: "support" },
+        { label: "Privacy Policy", href: "/privacy", group: "support" },
+        { label: "Terms of Service", href: "/terms", group: "support" },
+        { label: "Cookie Policy", href: "/cookies", group: "support" },
+        { label: "Refunds", href: "/refunds", group: "support" },
+        { label: "Content policy", href: "/content", group: "support" },
         { label: "Help center", href: "/help", group: "support" },
+        { label: "About us", href: "/about-us", group: "company" },
+        { label: "Contact us", href: "/contact-us", group: "company" },
         { label: "Creators Circle", href: "/creators-circle", group: "company" },
         { label: "Guides", href: "/blog", group: "company" }
       ]
@@ -1204,8 +1281,11 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           supportHeading: "Support",
           socialHeading: "Why it works",
           socialBody: "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
+          contactAddress: "8 THE GREEN STE B, DOVER, DE 19901",
+          contactEmail: "support@mydreamshoots.com",
+          salesEmail: "sales@mydreamshoots.com",
           bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
-          copyright: "MydreamShoots. All rights reserved."
+          copyright: "© 2026 MyDreamShoots. All rights reserved."
         },
         blocks: [
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
@@ -1213,10 +1293,13 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "Tools", href: "/tools", group: "product" } },
           { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Image studio", href: toolHref("ai-image-studio"), group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "Help center", href: "/help", group: "support" } },
-          { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy", href: "/policies/privacy", group: "support" } },
-          { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms", href: "/policies/terms", group: "support" } },
-          { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/policies/cookies", group: "support" } },
-          { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/policies/refunds", group: "support" } },
+          { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
+          { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
+          { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },
+          { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/refunds", group: "support" } },
+          { id: "dreamshoot_footer_content", type: "menu_link", settings: { label: "Content policy", href: "/content", group: "support" } },
+          { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },
+          { id: "dreamshoot_footer_contact", type: "menu_link", settings: { label: "Contact us", href: "/contact-us", group: "company" } },
           { id: "dreamshoot_footer_creators", type: "menu_link", settings: { label: "Creators Circle", href: "/creators-circle", group: "company" } },
           { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Guides", href: "/blog", group: "company" } }
         ]
