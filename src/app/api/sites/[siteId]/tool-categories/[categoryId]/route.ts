@@ -4,7 +4,7 @@ import { normalizeCreativePackIconName } from "@/lib/creative-pack-icons";
 import { prisma } from "@/lib/prisma";
 import { clearSiteReadCache } from "@/lib/stores/site-store";
 import { toToolCategory } from "@/lib/stores/prisma-mappers";
-import { slugifyToolTaxonomy } from "@/lib/tool-menu-taxonomy";
+import { isMissingToolMenuTableError, slugifyToolTaxonomy } from "@/lib/tool-menu-taxonomy";
 
 function categoryBody(body: Record<string, unknown>) {
   const label = typeof body.label === "string" ? body.label.trim() : "";
@@ -25,16 +25,16 @@ function categoryBody(body: Record<string, unknown>) {
 export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string; categoryId: string }> }) {
   const { siteId, categoryId } = await params;
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  const existing = await prisma.toolCategory.findFirst({ where: { id: categoryId, siteId }, select: { id: true } });
-  if (!existing) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
-  const body = categoryBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
-  if (body.label.length < 2) return NextResponse.json({ error: "category_label_required" }, { status: 400 });
-  if (body.parentId) {
-    if (body.parentId === categoryId) return NextResponse.json({ error: "category_parent_self_reference" }, { status: 400 });
-    const parent = await prisma.toolCategory.findFirst({ where: { id: body.parentId, siteId }, select: { id: true } });
-    if (!parent) return NextResponse.json({ error: "parent_category_not_found" }, { status: 404 });
-  }
   try {
+    const existing = await prisma.toolCategory.findFirst({ where: { id: categoryId, siteId }, select: { id: true } });
+    if (!existing) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
+    const body = categoryBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
+    if (body.label.length < 2) return NextResponse.json({ error: "category_label_required" }, { status: 400 });
+    if (body.parentId) {
+      if (body.parentId === categoryId) return NextResponse.json({ error: "category_parent_self_reference" }, { status: 400 });
+      const parent = await prisma.toolCategory.findFirst({ where: { id: body.parentId, siteId }, select: { id: true } });
+      if (!parent) return NextResponse.json({ error: "parent_category_not_found" }, { status: 404 });
+    }
     const category = await prisma.toolCategory.update({
       where: { id: categoryId },
       data: {
@@ -50,7 +50,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
     });
     clearSiteReadCache();
     return NextResponse.json({ ok: true, category: toToolCategory(category) });
-  } catch {
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return NextResponse.json({ error: "tool_menu_tables_not_ready" }, { status: 503 });
     return NextResponse.json({ error: "category_slug_exists" }, { status: 409 });
   }
 }
@@ -58,9 +59,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
 export async function DELETE(_request: Request, { params }: { params: Promise<{ siteId: string; categoryId: string }> }) {
   const { siteId, categoryId } = await params;
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  const existing = await prisma.toolCategory.findFirst({ where: { id: categoryId, siteId }, select: { id: true } });
-  if (!existing) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
-  await prisma.toolCategory.delete({ where: { id: categoryId } });
-  clearSiteReadCache();
-  return NextResponse.json({ ok: true, deletedCategoryId: categoryId });
+  try {
+    const existing = await prisma.toolCategory.findFirst({ where: { id: categoryId, siteId }, select: { id: true } });
+    if (!existing) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
+    await prisma.toolCategory.delete({ where: { id: categoryId } });
+    clearSiteReadCache();
+    return NextResponse.json({ ok: true, deletedCategoryId: categoryId });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return NextResponse.json({ error: "tool_menu_tables_not_ready" }, { status: 503 });
+    throw error;
+  }
 }
