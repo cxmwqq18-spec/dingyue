@@ -39,6 +39,12 @@ export function siteAdminPathForHost(host: string | null | undefined, path = "/a
   return `/site/${slug}${normalizedPath}`;
 }
 
+export function redirectMismatchedSiteAdminSlugForHost(host: string | null | undefined, siteSlug: string, path = "/admin"): string | undefined {
+  const hostSlug = siteAdminSlugForHost(host);
+  if (!hostSlug || hostSlug === canonicalSiteSlug(siteSlug)) return undefined;
+  return siteAdminPathForHost(host, path);
+}
+
 export function publicSiteSlug(slug: string): string {
   return PUBLIC_SITE_SLUG_ALIASES[slug] ?? slug;
 }
