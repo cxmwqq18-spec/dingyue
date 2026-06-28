@@ -801,6 +801,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
 const dreamshootImageStudioToolAliases = new Set([
   "headshot-generator",
   "headshot-maker",
+  "professional-headshot",
   "professional-headshot-maker",
   "headshot",
   "creator-portrait-studio",

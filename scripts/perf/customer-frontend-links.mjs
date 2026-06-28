@@ -17,7 +17,7 @@ const targets = [
     allowLoginRedirect: true,
     preferHomeTextLink: false,
     linkText: /account|start making|get started with email|continue with google/i,
-    title: /account|sign in|private dreamshootai account|customer account|personal center|credits, orders, albums/i
+    title: /account|sign in|private dreamshootai account|private aidreamcapes account|customer account|personal center|credits, orders, albums/i
   },
   {
     name: "app",
@@ -25,7 +25,7 @@ const targets = [
     allowLoginRedirect: true,
     preferHomeTextLink: false,
     linkText: /studio|workspace|start making|private workspace/i,
-    title: /workspace|studio|sign in|private account|upload/i
+    title: /workspace|studio|sign in|private account|private aidreamcapes account|upload/i
   },
   {
     name: "upload",
@@ -33,7 +33,7 @@ const targets = [
     allowLoginRedirect: true,
     preferHomeTextLink: false,
     linkText: /upload photos|private intake|start making/i,
-    title: /upload|private intake|source photos|sign in/i
+    title: /upload|private intake|source photos|sign in|private aidreamcapes account/i
   },
   {
     name: "pricing",
@@ -158,13 +158,22 @@ async function findHomeLink(page, target) {
     const href = await link.getAttribute("href").catch(() => "");
     if (!href) continue;
     const absoluteHref = new URL(href, `${baseUrl}${homePath}`).href.replace(/\/$/, "");
-    if (absoluteHref === expectedUrl) return link;
+    if (absoluteHref !== expectedUrl) continue;
+    const visible = await link.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
+      return rect.width > 0 && rect.height > 0 && style.visibility !== "hidden" && style.display !== "none";
+    }).catch(() => false);
+    if (visible) return link;
   }
 
   if (target.preferHomeTextLink === false) return null;
 
   const directLink = page.getByRole("link", { name: target.linkText }).first();
-  if (await directLink.count().catch(() => 0)) return directLink;
+  if (await directLink.count().catch(() => 0)) {
+    const visibleDirectLink = directLink.filter({ visible: true }).first();
+    if (await visibleDirectLink.count().catch(() => 0)) return visibleDirectLink;
+  }
 
   return null;
 }
