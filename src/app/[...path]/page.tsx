@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
+import { getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPlatformStateFromDatabase,
@@ -118,6 +118,8 @@ export default async function HostStorefrontCatchAllPage({
   }
 
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const siteAdminPath = siteAdminPathForHost(host);
+  if (siteAdminPath) redirect(siteAdminPath);
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
   const slug = `/${path.join("/")}`;
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {

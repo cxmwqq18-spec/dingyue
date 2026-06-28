@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   Bot,
@@ -29,6 +30,7 @@ import { SiteCreatePanel } from "@/components/platform/site-create-panel";
 import { StatusPill } from "@/components/ui";
 import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { platformAdminModules, type PlatformAdminModuleCode } from "@/lib/admin-menu";
+import { siteAdminPathForHost } from "@/lib/domain-routing";
 import { money } from "@/lib/ops";
 import { domainFromEmail, resendEmailConfigStatusForSettings, resendEmailConfigStatusForSite, resolveResendSettingsForSite } from "@/lib/resend-email";
 import {
@@ -552,10 +554,14 @@ export default async function PlatformPage({
 }: {
   searchParams?: PlatformPageSearchParams;
 }) {
-  const [current, query] = await Promise.all([
+  const [current, query, headerStore] = await Promise.all([
     getCurrentPlatformAdmin(),
-    searchParams ? searchParams : Promise.resolve(undefined)
+    searchParams ? searchParams : Promise.resolve(undefined),
+    headers()
   ]);
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const siteAdminPath = siteAdminPathForHost(host);
+  if (siteAdminPath) redirect(siteAdminPath);
   if (!current) redirect("/platform/login");
   const activeModule = resolvePlatformModule(query?.module);
 

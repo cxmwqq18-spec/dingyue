@@ -12,7 +12,7 @@ import {
 } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { AccessRoutePrefetcher } from "@/components/platform/access-route-prefetcher";
-import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost } from "@/lib/domain-routing";
+import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { getPage } from "@/lib/data";
@@ -108,6 +108,8 @@ export default async function HomePage({
 }) {
   const headerStore = await headers();
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const siteAdminPath = siteAdminPathForHost(host);
+  if (siteAdminPath) redirect(siteAdminPath);
   if (isPlatformHost(host)) redirect("/platform");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostRuntimeState = await getHostRuntimeStateWithFallback(hostCandidates);

@@ -75,8 +75,8 @@ assert.match(
 );
 assert.match(
   hostCatchAll,
-  /isPlatformHost\(host\)\) redirect\(`\/platform\/\$\{path\.join\("\/"\)\}`\);[\s\S]*if \(host\?\.startsWith\("localhost"\) \|\| host\?\.startsWith\("127\.0\.0\.1"\)\)/,
-  "default /site/mydreamshoots redirect should stay limited to localhost after platform-host handling"
+  /siteAdminPathForHost\(host\)[\s\S]*redirect\(siteAdminPath\)[\s\S]*isPlatformHost\(host\)\) redirect\(`\/platform\/\$\{path\.join\("\/"\)\}`\);[\s\S]*if \(host\?\.startsWith\("localhost"\) \|\| host\?\.startsWith\("127\.0\.0\.1"\)\)/,
+  "site admin hosts should redirect to their scoped admin before platform-host handling, and localhost defaults should stay local only"
 );
 assert.doesNotMatch(
   siteRouteCanonical,

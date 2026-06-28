@@ -3,6 +3,7 @@ import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
+import { cleanHost } from "@/lib/domain-routing";
 import { requireCsrfToken, setCsrfCookie } from "@/lib/security/csrf";
 import {
   createSiteAdminBridgeSessionRelational,
@@ -14,6 +15,12 @@ const adminBridgeTimeoutMs = 7000;
 const adminBridgeTimeoutCode = "site_admin_bridge_timeout";
 
 type AdminBridgeWorkResult = Awaited<ReturnType<typeof createAdminBridgeSession>>;
+
+const siteAdminHostsBySlug: Record<string, string> = {
+  mydreamshoots: "www.mydreamshoots.xyz",
+  dreamshoot: "www.mydreamshoots.xyz",
+  aidreamcapes: "www.aidreamcapes.xyz"
+};
 
 class AdminBridgeTimeoutError extends Error {
   constructor() {
@@ -27,6 +34,18 @@ function normalizeAdminPath(value?: string | null): string {
   if (!trimmed) return "/admin";
   if (!trimmed.startsWith("/admin")) return "/admin";
   return trimmed;
+}
+
+function isLocalAdminBridgeRequest(request: NextRequest): boolean {
+  const host = cleanHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host"));
+  return host === "localhost" || host === "127.0.0.1" || host.endsWith(".localhost");
+}
+
+function bridgeRedirectTo(request: NextRequest, siteSlug: string, redirectPath: string): string {
+  const localPath = `/site/${siteSlug}${redirectPath}`;
+  if (isLocalAdminBridgeRequest(request)) return localPath;
+  const adminHost = siteAdminHostsBySlug[siteSlug];
+  return adminHost ? `https://${adminHost}${localPath}` : localPath;
 }
 
 function bridgeErrorResponse(code: string, status: number, detail?: string) {
@@ -90,7 +109,7 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
       ? existingSession
       : await withBridgeTimeout(createAdminBridgeSession(siteId));
     const redirectPath = normalizeAdminPath(requestedPath);
-    const redirectTo = `/site/${site.slug}${redirectPath}`;
+    const redirectTo = bridgeRedirectTo(request, site.slug, redirectPath);
     const response = NextResponse.json({
       ok: true,
       siteSlug: site.slug,

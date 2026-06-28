@@ -1,8 +1,10 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { AdminLoginScreen } from "@/components/auth/admin-login-screen";
 import { PasswordLoginForm } from "@/components/auth/password-login-form";
 import { getCurrentPlatformAdmin } from "@/lib/api-auth";
 import { authMessageForCode } from "@/lib/auth-messages";
+import { siteAdminPathForHost } from "@/lib/domain-routing";
 import { getPlatformSitesRelational } from "@/lib/stores/platform-store";
 
 export default async function PlatformLoginPage({
@@ -10,10 +12,14 @@ export default async function PlatformLoginPage({
 }: {
   searchParams?: Promise<{ error?: string }>;
 }) {
-  const [current, sites] = await Promise.all([
+  const [current, sites, headerStore] = await Promise.all([
     getCurrentPlatformAdmin(),
-    getPlatformSitesRelational()
+    getPlatformSitesRelational(),
+    headers()
   ]);
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const siteAdminPath = siteAdminPathForHost(host);
+  if (siteAdminPath) redirect(siteAdminPath);
   if (current) redirect("/platform");
   const quickSites = sites.slice(0, 3);
   const errorCode = (await searchParams)?.error;

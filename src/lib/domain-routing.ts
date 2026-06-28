@@ -2,7 +2,13 @@ import type { PlatformState, Site } from "@/lib/types";
 
 type SiteRoutingIdentity = Pick<Site, "slug" | "primaryDomain">;
 
-const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz", "www.aidreamcapes.xyz", "aidreamcapes.xyz"]);
+const PLATFORM_DOMAINS = new Set<string>();
+const SITE_ADMIN_DOMAINS: Record<string, string> = {
+  "www.mydreamshoots.xyz": "mydreamshoots",
+  "mydreamshoots.xyz": "mydreamshoots",
+  "www.aidreamcapes.xyz": "aidreamcapes",
+  "aidreamcapes.xyz": "aidreamcapes"
+};
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
   dreamshoot: "mydreamshoots"
 };
@@ -18,6 +24,19 @@ export function cleanHost(host: string | null | undefined): string {
 export function isPlatformHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
   return PLATFORM_DOMAINS.has(value);
+}
+
+export function siteAdminSlugForHost(host: string | null | undefined): string | undefined {
+  const value = cleanHost(host);
+  const slug = SITE_ADMIN_DOMAINS[value];
+  return slug ? canonicalSiteSlug(slug) : undefined;
+}
+
+export function siteAdminPathForHost(host: string | null | undefined, path = "/admin"): string | undefined {
+  const slug = siteAdminSlugForHost(host);
+  if (!slug) return undefined;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `/site/${slug}${normalizedPath}`;
 }
 
 export function publicSiteSlug(slug: string): string {
