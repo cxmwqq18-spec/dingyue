@@ -113,10 +113,24 @@ async function main() {
     data: { email: "owner@mydreamshoots.localhost", displayName: `${brand} Owner` }
   });
 
-  await prisma.customer.updateMany({
+  const legacyCustomer = await prisma.customer.findFirst({
     where: { siteId, email: "nora@dreamshoot.localhost" },
-    data: { email: "nora@mydreamshoots.localhost" }
+    select: { id: true }
   });
+  if (legacyCustomer) {
+    const canonicalCustomer = await prisma.customer.findFirst({
+      where: { siteId, email: "nora@mydreamshoots.localhost" },
+      select: { id: true }
+    });
+    await prisma.customer.update({
+      where: { id: legacyCustomer.id },
+      data: {
+        email: canonicalCustomer && canonicalCustomer.id !== legacyCustomer.id
+          ? "nora.legacy@mydreamshoots.localhost"
+          : "nora@mydreamshoots.localhost"
+      }
+    });
+  }
 
   const settings = await prisma.themeSettings.findUnique({ where: { siteId } });
   if (settings) {

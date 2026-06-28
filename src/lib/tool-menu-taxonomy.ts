@@ -8,6 +8,8 @@ import type { SectionBlockInstance } from "@/lib/types";
 type SiteToolBlocksInput = Parameters<typeof siteToolBlocks>[0];
 type SiteToolBlocksThemeSettings = NonNullable<SiteToolBlocksInput["themeSettings"]>;
 
+const preparedDefaultToolTaxonomySites = new Set<string>();
+
 export function isMissingToolMenuTableError(error: unknown): boolean {
   const code = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
   const message = error instanceof Error ? error.message : String(error ?? "");
@@ -69,6 +71,7 @@ function siteToolBlocks(site: {
 }
 
 export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
+  if (preparedDefaultToolTaxonomySites.has(siteId)) return;
   let existing = 0;
   try {
     existing = await prisma.toolCategory.count({ where: { siteId } });
@@ -78,6 +81,7 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
   }
   if (existing > 0) {
     await backfillToolCategoryIcons(siteId);
+    preparedDefaultToolTaxonomySites.add(siteId);
     return;
   }
   const site = await prisma.site.findUnique({
@@ -158,6 +162,7 @@ export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
       update: {}
     });
   }
+  preparedDefaultToolTaxonomySites.add(siteId);
 }
 
 export async function backfillToolCategoryIcons(siteId: string) {
