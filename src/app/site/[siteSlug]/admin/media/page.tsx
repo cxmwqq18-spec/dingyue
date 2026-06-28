@@ -1,5 +1,6 @@
 import { ImageIcon, Layers3, Link2, Palette } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
+import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { ThemeMediaPanel } from "@/components/admin/theme-media-panel";
 import { OpsCard, StatusPill } from "@/components/ui";
@@ -22,6 +23,8 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
   const externalAssets = mediaSummary.sourceCounts.external_url ?? 0;
   const uploadAssets = mediaSummary.sourceCounts.site_upload ?? 0;
   const mediaTotal = mediaSummary.total;
+  const seoReady = Boolean(data.site.themeSettings.draftJson.seo?.siteTitle && data.site.themeSettings.draftJson.seo?.siteDescription);
+  const publicationCount = data.publicationCount;
 
   return (
     <AdminShell
@@ -84,6 +87,15 @@ export default async function SiteMediaPage({ params }: { params: Promise<{ site
       }
     >
       <div className="grid gap-5">
+        <DesignWorkspaceTabs
+          activePath="/admin/media"
+          mediaCount={mediaTotal}
+          pageCount={data.site.pages.length}
+          publicationCount={publicationCount}
+          seoReady={seoReady}
+          siteSlug={data.site.slug}
+        />
+
         <ErpStatGrid
           items={[
             { label: "assets", value: String(mediaTotal), detail: "site-scoped media records", icon: ImageIcon, tone: mediaTotal ? "good" : "warn" },

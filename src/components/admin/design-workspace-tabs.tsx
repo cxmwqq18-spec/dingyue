@@ -40,7 +40,7 @@ export function DesignWorkspaceTabs({
     { label: "素材", href: `/site/${siteSlug}/admin/media`, icon: ImageIcon, badge: String(mediaCount) },
     { label: "发布", href: `/site/${siteSlug}/admin/design/publications`, icon: FileClock, badge: String(publicationCount) },
     { label: "装修器", href: `/site/${siteSlug}/admin/design/workbench`, icon: Palette, badge: "edit" },
-    { label: "前台", href: `/site/${siteSlug}`, icon: ExternalLink, badge: "live" }
+    { label: "前台", href: `/site/${siteSlug}`, icon: ExternalLink, badge: "live", external: true }
   ];
 
   return (
@@ -52,6 +52,8 @@ export function DesignWorkspaceTabs({
             className={`inline-flex min-h-[34px] shrink-0 items-center gap-1 rounded-[10px] border px-3 text-xs font-medium transition active:scale-[0.98] ${tabClass(active, tone)}`}
             href={item.href}
             key={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
           >
             <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
             <span>{item.label}</span>

@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { DesignerClient } from "@/components/designer/designer-client";
+import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { LogoutActionButton } from "@/components/auth/logout-action-button";
 import Link from "next/link";
 import { ArrowLeft, Layers3 } from "lucide-react";
@@ -40,6 +41,17 @@ export default async function DesignPage({
       data-admin-layout="saas-fullscreen-theme-designer"
       data-designer-layout="saas-store-builder xfcart-fullscreen-section-editor saas-three-pane-builder"
     >
+      <div className="border-b border-white/10 bg-[#1f2530] px-3 py-2 shadow-[0_10px_20px_-18px_rgba(0,0,0,0.65)]">
+        <DesignWorkspaceTabs
+          activePath="/admin/design/workbench"
+          mediaCount={data.mediaCount}
+          pageCount={site.pages.length}
+          publicationCount={publicationCount}
+          seoReady={Boolean(site.themeSettings.draftJson.seo?.siteTitle && site.themeSettings.draftJson.seo?.siteDescription)}
+          siteSlug={site.slug}
+          tone="dark"
+        />
+      </div>
       <div className="min-h-0 flex-1 min-w-0" id="designer-workspace">
         <DesignerClient
           activeThemeName={activeThemeName}
@@ -60,8 +72,8 @@ export default async function DesignPage({
             <div className="flex min-w-0 items-center gap-3 pl-3">
               <Link
                 className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-white/10 bg-white/[0.04] text-white/88 transition hover:bg-white/[0.1]"
-                href={`/site/${site.slug}/admin`}
-                title="返回后台"
+                href={`/site/${site.slug}/admin/design`}
+                title="返回店铺装修"
               >
                 <ArrowLeft className="h-4 w-4" strokeWidth={1.8} />
               </Link>
@@ -88,6 +100,8 @@ export default async function DesignPage({
               <Link
                 className="inline-flex h-[56px] items-center border-l border-white/10 px-3 text-[13px] text-white/92 transition hover:bg-[#313747]"
                 href={`/site/${site.slug}`}
+                target="_blank"
+                rel="noreferrer"
               >
                 打开前台
               </Link>
