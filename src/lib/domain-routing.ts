@@ -2,7 +2,7 @@ import type { PlatformState, Site } from "@/lib/types";
 
 type SiteRoutingIdentity = Pick<Site, "slug" | "primaryDomain">;
 
-const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz", "aidreamcapes.xyz.com"]);
+const PLATFORM_DOMAINS = new Set(["www.mydreamshoots.xyz", "mydreamshoots.xyz", "www.aidreamcapes.xyz", "aidreamcapes.xyz"]);
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
   dreamshoot: "mydreamshoots"
 };

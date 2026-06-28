@@ -2,7 +2,9 @@ import fs from "fs";
 import path from "path";
 
 const statePath = path.join(process.cwd(), "data", "platform-state.json");
+const domainRoutingPath = path.join(process.cwd(), "src", "lib", "domain-routing.ts");
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const domainRoutingSource = fs.readFileSync(domainRoutingPath, "utf8");
 
 function fail(message) {
   console.error(`Domain routing audit failed: ${message}`);
@@ -32,13 +34,18 @@ for (const [domain, siteIds] of duplicateDomains) {
   assert(siteIds.length === 1, `${domain} is bound to multiple sites: ${siteIds.join(", ")}`);
 }
 
-assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.mydreamshoots.xyz" || domain.domain === "mydreamshoots.xyz"), "mydreamshoots.xyz must stay a platform host, not a site domain");
+const platformHosts = ["www.mydreamshoots.xyz", "mydreamshoots.xyz", "www.aidreamcapes.xyz", "aidreamcapes.xyz"];
+for (const host of platformHosts) {
+  assert(domainRoutingSource.includes(`"${host}"`), `${host} must be registered as a platform host`);
+  assert(!(state.siteDomains ?? []).some((domain) => domain.domain === host), `${host} must stay a platform host, not a site domain`);
+}
+assert(!domainRoutingSource.includes("aidreamcapes.xyz.com"), "aidreamcapes.xyz.com is a typo and must not be registered");
 assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.javawebshop.site"), "www.javawebshop.site is retired and must not be bound to a site");
 
 console.log(
   JSON.stringify(
     {
-      platformHost: "www.mydreamshoots.xyz",
+      platformHosts,
       dreamshootPrimaryDomain: dreamshoot.primaryDomain,
       dreamshootDomainCount: dreamshootDomains.length
     },
