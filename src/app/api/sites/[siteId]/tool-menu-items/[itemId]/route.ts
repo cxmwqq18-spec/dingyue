@@ -3,7 +3,7 @@ import { hasSiteAdminSession } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { clearSiteReadCache } from "@/lib/stores/site-store";
 import { toToolMenuItem } from "@/lib/stores/prisma-mappers";
-import { slugifyToolTaxonomy } from "@/lib/tool-menu-taxonomy";
+import { isMissingToolMenuTableError, slugifyToolTaxonomy } from "@/lib/tool-menu-taxonomy";
 
 function itemBody(body: Record<string, unknown>) {
   const title = typeof body.title === "string" ? body.title.trim() : "";
@@ -27,15 +27,15 @@ function itemBody(body: Record<string, unknown>) {
 export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string; itemId: string }> }) {
   const { siteId, itemId } = await params;
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  const existing = await prisma.toolMenuItem.findFirst({ where: { id: itemId, siteId }, select: { id: true } });
-  if (!existing) return NextResponse.json({ error: "tool_not_found" }, { status: 404 });
-  const body = itemBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
-  if (body.title.length < 2) return NextResponse.json({ error: "tool_title_required" }, { status: 400 });
-  if (body.categoryId) {
-    const category = await prisma.toolCategory.findFirst({ where: { id: body.categoryId, siteId }, select: { id: true } });
-    if (!category) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
-  }
   try {
+    const existing = await prisma.toolMenuItem.findFirst({ where: { id: itemId, siteId }, select: { id: true } });
+    if (!existing) return NextResponse.json({ error: "tool_not_found" }, { status: 404 });
+    const body = itemBody((await request.json().catch(() => ({}))) as Record<string, unknown>);
+    if (body.title.length < 2) return NextResponse.json({ error: "tool_title_required" }, { status: 400 });
+    if (body.categoryId) {
+      const category = await prisma.toolCategory.findFirst({ where: { id: body.categoryId, siteId }, select: { id: true } });
+      if (!category) return NextResponse.json({ error: "category_not_found" }, { status: 404 });
+    }
     const item = await prisma.toolMenuItem.update({
       where: { id: itemId },
       data: {
@@ -54,7 +54,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
     });
     clearSiteReadCache();
     return NextResponse.json({ ok: true, item: toToolMenuItem(item) });
-  } catch {
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return NextResponse.json({ error: "tool_menu_tables_not_ready" }, { status: 503 });
     return NextResponse.json({ error: "tool_slug_exists" }, { status: 409 });
   }
 }
@@ -62,9 +63,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
 export async function DELETE(_request: Request, { params }: { params: Promise<{ siteId: string; itemId: string }> }) {
   const { siteId, itemId } = await params;
   if (!(await hasSiteAdminSession(siteId))) return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  const existing = await prisma.toolMenuItem.findFirst({ where: { id: itemId, siteId }, select: { id: true } });
-  if (!existing) return NextResponse.json({ error: "tool_not_found" }, { status: 404 });
-  await prisma.toolMenuItem.delete({ where: { id: itemId } });
-  clearSiteReadCache();
-  return NextResponse.json({ ok: true, deletedItemId: itemId });
+  try {
+    const existing = await prisma.toolMenuItem.findFirst({ where: { id: itemId, siteId }, select: { id: true } });
+    if (!existing) return NextResponse.json({ error: "tool_not_found" }, { status: 404 });
+    await prisma.toolMenuItem.delete({ where: { id: itemId } });
+    clearSiteReadCache();
+    return NextResponse.json({ ok: true, deletedItemId: itemId });
+  } catch (error) {
+    if (isMissingToolMenuTableError(error)) return NextResponse.json({ error: "tool_menu_tables_not_ready" }, { status: 503 });
+    throw error;
+  }
 }

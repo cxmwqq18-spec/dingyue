@@ -132,7 +132,7 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
-  const needsPrivateRuntime = firstSegment === "app" || firstSegment === "dashboard";
+  const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
@@ -156,6 +156,9 @@ export default async function HostStorefrontCatchAllPage({
       return renderCustomerWorkspacePageBySlug({ siteSlug: site.slug, slug: `/${path.join("/")}`, query, routeMode: "host" });
     }
     return renderCustomerWorkspacePage({ site, slug: `/${path.join("/")}`, query, routeMode: "host", state });
+  }
+  if (firstSegment === "account") {
+    return renderCustomerWorkspacePage({ site, slug: "/account", query, routeMode: "host", state });
   }
   if (firstSegment === "dashboard") {
     return renderCustomerWorkspacePage({ site, slug: "/app", query, routeMode: "host", state });
