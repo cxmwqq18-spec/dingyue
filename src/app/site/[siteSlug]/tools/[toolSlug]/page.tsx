@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
 import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
-import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
 const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
@@ -56,7 +57,12 @@ export default async function ToolPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, toolSlug } = await params;
-  const publicSiteSlug = redirectLegacySiteSlug(siteSlug, `/tools/${toolSlug}`);
+  const headerStore = await headers();
+  const publicSiteSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: `/tools/${toolSlug}`,
+    siteSlug
+  });
   if (publicSiteSlug === "mydreamshoots") {
     const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
     if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
@@ -66,7 +72,7 @@ export default async function ToolPage({
     if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
   }
   const query = searchParams ? await searchParams : {};
-  const { state, site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
+  const { state, site, page, matched } = await resolveToolPage(publicSiteSlug, toolSlug);
   if (!site || !page) notFound();
   if (!matched) notFound();
   return renderToolPage({ site, toolSlug, query, routeMode: "path", state, resolvedPage: page });

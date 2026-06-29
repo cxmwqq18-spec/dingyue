@@ -192,7 +192,7 @@ const homeSections: ThemePageJson["sections"] = {
   ),
   brand_strip_1: section(
     "brand_logo_strip",
-    { anchor: "trusted", title: "Trusted funnel signals for creators, job seekers, sports fans, and social buyers", style: "dark" },
+    { anchor: "trusted", title: "Private photo packages for creators, job seekers, sports fans, and social buyers", style: "dark" },
     [
       block("logo_reviews", "logo", { name: "5-star reviews", imageUrl: "", badge: "Proof" }),
       block("logo_packages", "logo", { name: "Photo Packages", imageUrl: "", badge: "Catalog" }),
@@ -280,9 +280,9 @@ const homeSections: ThemePageJson["sections"] = {
     "dreamshoot_flow_bridge",
     {
       anchor: "workflow",
-      label: "How it works + proof bridge",
+      label: "Private album workflow",
       title: "From upload to private album.",
-      subtitle: "After customers see results and packages, explain upload safety, credit usage, generation status, and album delivery.",
+      subtitle: "Upload source photos, confirm the package and credits, then follow the request into a private gallery.",
       beforeImage: assets.flowBeforeUpload,
       afterImage: assets.hairstyle,
       albumImageOne: assets.flowPrivateAlbumWorkspace,
@@ -322,7 +322,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "samples",
       eyebrow: "Popular photo outcomes",
       title: "A visual catalogue with clear package intent.",
-      subtitle: "Each image points to a different buyer outcome, not a one-off text request gallery.",
+      subtitle: "Each image points to a finished album outcome with source-photo guidance, visible credits, and private delivery.",
       speed: "slow"
     },
     [
@@ -369,7 +369,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("tab_packages", "feature_tab", {
         label: "Photo packages",
         title: "Pick a finished outcome",
-        description: "Start from a known package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes instead of writing a blank prompt.",
+        description: "Start from a guided package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes with credits shown before generation.",
         imageUrl: assets.worldCupFan,
         href: "/collections"
       }),
@@ -456,7 +456,7 @@ const homeSections: ThemePageJson["sections"] = {
     [
       block("trust_private", "stat", { value: "Private", label: "source photos and albums stay inside the signed-in customer account" }),
       block("trust_credits", "stat", { value: "History", label: "credits are granted, reserved, used, or returned with visible history" }),
-      block("trust_model", "stat", { value: "Model", label: "premium packages use a private identity model instead of a one-off text request" }),
+      block("trust_model", "stat", { value: "Model", label: "premium packages use a private identity model for consistent results" }),
       block("trust_checkout", "stat", { value: "Checkout", label: "subscriptions and one-time credit packs use secure checkout" })
     ]
   ),
@@ -711,7 +711,7 @@ const templateSections = {
   creators_intro_1: section("rich_text", {
     eyebrow: "Creator channel",
     title: "Earn with AI photo stories your audience can actually try.",
-    body: "MydreamShoots partners with creators, community builders, photographers, coaches, and niche publishers who can introduce private AI photo packages in a useful, trustworthy way. Share themed photo packs, prompt ideas, before-and-after stories, and seasonal campaign links while your audience keeps their uploads and albums inside their own account.",
+    body: "MydreamShoots partners with creators, community builders, photographers, coaches, and niche publishers who can introduce private AI photo packages in a useful, trustworthy way. Share themed photo packs, source-photo tips, before-and-after stories, and seasonal campaign links while your audience keeps uploads, credits, and albums inside their own account.",
     headingLevel: "h1",
     tone: "dark",
     imageUrl: assets.heroGridSocial,
@@ -754,7 +754,7 @@ const templateSections = {
   partner_form_1: section("rich_text", {
     eyebrow: "Partner application",
     title: "Apply for a reserved MydreamShoots promotion channel.",
-    body: "Use this application to tell us who you reach, how you publish, and which MydreamShoots photo experiences would fit your audience. This page is prepared as the partner-registration destination so campaigns can route applicants directly here.",
+    body: "Tell us who you reach, how you publish, and which MydreamShoots photo experiences would fit your audience. Approved partners can send customers to packages, pricing, or a specific private album offer.",
     headingLevel: "h1",
     layout: "application_form",
     tone: "dark",
@@ -998,7 +998,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     ["blog_intro_1", "blog_list_1", "packages_strip_1", "conversion_1"],
     {
       blog_intro_1: templateSections.blog_intro_1,
-      blog_list_1: section("blog_list", { title: "AI photo guides", body: "Guides for uploads, package planning, credits, delivery, privacy, and making stronger prompts.", guideType: "AI photo guide" }),
+      blog_list_1: section("blog_list", { title: "AI photo guides", body: "Guides for source photos, package planning, credits, delivery, privacy, and getting better private album results.", guideType: "AI photo guide" }),
       packages_strip_1: homeSections.packages_strip_1,
       conversion_1: homeSections.conversion_1
     },
@@ -1242,7 +1242,6 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
         { label: "Cookie Policy", href: "/cookies", group: "support" },
-        { label: "Refunds", href: "/refunds", group: "support" },
         { label: "Content policy", href: "/content", group: "support" },
         { label: "Help center", href: "/help", group: "company" },
         { label: "About us", href: "/about-us", group: "company" },
@@ -1274,7 +1273,9 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       },
       footer: {
         settings: {
-          title: "MyDreamShoots",
+          title: "ʍʏƉʀɛǟʍֆhoots",
+          logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
+          logoAlt: "MyDreamShoots heart camera logo",
           tagline: "AI photo packages, personal models, paid tools, credits, and private gallery delivery",
           body: "Transform everyday selfies into themed photo packages, headshots, World Cup fan photos, cyberpunk portraits, gala scenes, AI motion ideas, and virtual try-on previews from one subscription.",
           productHeading: "Explore",
@@ -1297,7 +1298,6 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },
-          { id: "dreamshoot_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/refunds", group: "support" } },
           { id: "dreamshoot_footer_content", type: "menu_link", settings: { label: "Content policy", href: "/content", group: "support" } },
           { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },
           { id: "dreamshoot_footer_contact", type: "menu_link", settings: { label: "Contact us", href: "/contact-us", group: "company" } },

@@ -114,8 +114,8 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
   "/about-us": {
     title: "About Aidreamcapes",
     description:
-      "Learn about Aidreamcapes, a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
-    keywords: "About Aidreamcapes, AI dreamscape portraits, private AI portrait gallery, fantasy travel photos, cinematic portrait workspace",
+      "Learn about Aidreamcapes, a private AI travel portrait workspace for source photo planning, visible credits, destination scenes, and customer-only gallery delivery.",
+    keywords: "About Aidreamcapes, AI travel portraits, private AI destination gallery, cinematic travel photos, portrait workspace",
     canonicalPath: "/about-us",
     index: true,
     follow: true
@@ -123,17 +123,17 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
   "/contact-us": {
     title: "Contact Aidreamcapes",
     description:
-      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
-    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI dreamscape support, Aidreamcapes sales, private gallery help",
+      "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI travel portrait support, Aidreamcapes sales, private gallery help",
     canonicalPath: "/contact-us",
     index: true,
     follow: true
   },
   "/creators-circle": {
-    title: "Aidreamcapes Creators Circle - creator dreamscape portrait program",
+    title: "Aidreamcapes Creators Circle - creator travel portrait program",
     description:
-      "Join the Aidreamcapes Creators Circle for AI dreamscape portrait campaigns, private galleries, visible credits, and creator collaboration opportunities.",
-    keywords: "Aidreamcapes creators circle, AI dreamscape creator program, creator portrait campaign, AI portrait affiliate program",
+      "Join the Aidreamcapes Creators Circle for AI travel portrait campaigns, private galleries, visible credits, and creator collaboration opportunities.",
+    keywords: "Aidreamcapes creators circle, AI travel creator program, creator portrait campaign, AI portrait affiliate program",
     canonicalPath: "/creators-circle",
     index: true,
     follow: true
@@ -141,8 +141,8 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
   "/partner-registration": {
     title: "Aidreamcapes Partner Registration - apply for creator collaborations",
     description:
-      "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, and dreamscape portrait collaboration goals.",
-    keywords: "Aidreamcapes partner registration, AI dreamscape partner application, creator collaboration application, AI portrait campaign partner",
+      "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, and travel portrait collaboration goals.",
+    keywords: "Aidreamcapes partner registration, AI travel portrait partner application, creator collaboration application, AI portrait campaign partner",
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
@@ -155,8 +155,8 @@ const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataS
   "/tools": {
     title: "Aidreamcapes Studio Tools",
     description:
-      "Explore Aidreamcapes tools for dreamscape portraits, coastal scenes, fantasy avatars, warm profile images, and private gallery delivery.",
-    keywords: "Aidreamcapes tools, dreamscape portrait tools, fantasy avatar tool, cinematic portrait generator",
+      "Explore Aidreamcapes tools for destination portraits, coastal getaways, island resort scenes, old city walks, mountain trails, and private gallery delivery.",
+    keywords: "Aidreamcapes tools, AI travel portrait tools, destination portrait tool, cinematic travel portrait generator",
     canonicalPath: "/tools",
     index: true,
     follow: true
@@ -182,9 +182,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["AI beauty portrait styles", "Private beauty photo workflow", "Beauty photos and video-ready outputs"],
     intro: "The Beauty collection is built for customers who want refined portraits without copying a studio template. MydreamShoots turns ordinary selfies into soft glam, skincare-clean, editorial, and profile-ready images while keeping source uploads, credits, and final albums inside one private account.",
     details: [
-      "Use this directory when the customer wants face-forward results: clean lighting, graceful crops, natural retouching, hairstyle previews, profile portraits, and beauty campaign images.",
+      "Start with clear face-forward source photos for clean lighting, graceful crops, natural retouching, hairstyle previews, profile portraits, and beauty campaign images.",
       "Each package can support several visual directions, including minimal studio light, glossy editorial beauty, warm lifestyle portraits, and social-ready square crops.",
-      "The page is intentionally different from the homepage: it explains beauty-specific outcomes, the source-photo checklist, and the delivery formats customers should expect."
+      "Beauty packages include source-photo guidance, visible credit expectations, and delivery formats for private album review."
     ],
     useCases: ["Profile refreshes for creators and founders", "Beauty portfolio concepts before a real shoot", "Soft glam portraits for social posts", "Skincare, hairstyle, and makeup visual planning"],
     workflow: ["Upload clear selfies with natural expressions.", "Choose beauty, hairstyle, or editorial direction.", "Generate a private album with polished portrait options.", "Use favorites for profiles, campaigns, or video-ready motion ideas."],
@@ -198,11 +198,11 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     keywords: "AI Valentine Photo Maker, AI couple photos, Valentine photo generator, romantic AI portraits, MydreamShoots Valentine",
     h2: "valentine",
     h3: ["AI Valentine couple portraits", "Romantic gift-ready albums", "Private seasonal photo delivery"],
-    intro: "The Valentine directory focuses on romantic images customers can use as gifts, keepsakes, profile updates, and seasonal posts. Instead of a one-off text request, the page organizes the experience around couple identity, mood, delivery, and private album review.",
+    intro: "The Valentine collection focuses on romantic images customers can use as gifts, keepsakes, profile updates, and seasonal posts. The experience starts with source portraits, relationship mood, credit review, and private album delivery.",
     details: [
       "Use Valentine for warm couple portraits, proposal-style images, anniversary looks, greeting-card crops, and cinematic date-night scenes.",
-      "The copy is written for MydreamShoots customers: upload source portraits, select the relationship moment, then review a private set before downloading.",
-      "This directory can sit under /collections/valentine as a second-level product category and link into the matching tool or package."
+      "Upload source portraits, select the relationship moment, then review a private set before downloading.",
+      "Valentine packages connect romantic photo ideas with the matching tool or album workflow."
     ],
     useCases: ["Couple profile photos", "Valentine cards and private gifts", "Engagement announcement concepts", "Romantic social story images"],
     workflow: ["Upload individual or couple source photos.", "Pick romantic, cinematic, card, or casual date-night styling.", "Generate a private album with multiple crops.", "Download images for gifts, posts, or keepsakes."],
@@ -218,9 +218,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Professional AI headshots", "Business profile photo structure", "Private delivery for teams and founders"],
     intro: "The Headshots collection is for customers who need sharp, trustworthy portraits without booking a studio. It explains business-photo outcomes, source-photo quality, and how credits convert into private album options.",
     details: [
-      "Headshot pages should not repeat the homepage. They need clear business intent: LinkedIn, resumes, founder bios, consulting profiles, hiring pages, and team directories.",
+      "Headshot packages focus on clear business uses: LinkedIn, resumes, founder bios, consulting profiles, hiring pages, and team directories.",
       "MydreamShoots keeps the workflow simple: upload varied selfies, select a professional look, generate, then choose the best portrait from a private gallery.",
-      "The directory supports individual users and teams because the product structure is outcome-based rather than prompt-based."
+      "Individuals and teams can choose the finished business-photo outcome before spending credits."
     ],
     useCases: ["LinkedIn profile refresh", "Founder and operator bios", "Resume and job-search portraits", "Team page headshots"],
     workflow: ["Upload clear face photos with varied angles.", "Choose business, founder, or clean studio styling.", "Generate multiple realistic portrait options.", "Download final headshots for professional channels."],
@@ -238,7 +238,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     details: [
       "Sports pages need concrete outputs: fan posters, stadium portraits, square avatars, wide banners, friend-group scenes, and social story crops.",
       "The MydreamShoots workflow keeps the result personal: customers upload their own images, choose fan energy, then receive a private album.",
-      "This content makes /collections/sports distinct from /tools/world-cup-fan-photos while still linking customers to the matching tool."
+      "Sports packages pair match-day outcomes with the matching tool so customers can move from source photos to a private album."
     ],
     useCases: ["World Cup and football fan photos", "Match-day profile images", "Tournament posters", "Sports creator social content"],
     workflow: ["Upload one or more fan portraits.", "Choose stadium, poster, avatar, or friend-scene styling.", "Generate private match-day images.", "Download social-ready crops and banners."],
@@ -254,9 +254,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Cinematic AI photo themes", "Creator-ready image directions", "From selfie to private themed album"],
     intro: "The Creative collection is the place for customers who want a strong visual world. It groups cyberpunk, noir, gala, creator, fantasy, and editorial scenes into an outcome-driven product structure.",
     details: [
-      "This page intentionally goes beyond tool labels. It explains the creative promise: mood, setting, crop, persona, and album delivery.",
+      "Creative packages explain the finished mood, setting, crop, persona, and private album delivery.",
       "Customers can use it for profile campaigns, content launches, character portraits, and high-impact social visuals.",
-      "Each category links back into a static tool URL so the navigation remains clean and shareable."
+      "Each category connects to a matching creation flow with source-photo guidance and visible credit use."
     ],
     useCases: ["Cyberpunk and neon portraits", "Noir and character concepts", "Creator campaign visuals", "Editorial social images"],
     workflow: ["Upload strong source portraits.", "Select a cinematic or creator direction.", "Generate a private themed album.", "Choose final images for profile, campaign, or gallery use."],
@@ -272,9 +272,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Hairstyle preview structure", "Color and cut planning", "Private beauty album delivery"],
     intro: "The Hairstyle package focuses on hair direction before a full portrait set. Customers can compare length, color, styling, lighting, and beauty crops without mixing in unrelated package categories.",
     details: [
-      "Use this page for salon inspiration, creator refreshes, soft glam portraits, and hairstyle planning before a paid package.",
+      "Use hairstyle previews for salon inspiration, creator refreshes, soft glam portraits, and planning before a paid package.",
       "The best inputs are clear face photos with visible hair shape, varied angles, and simple lighting.",
-      "Outputs should emphasize hairstyle differences while keeping identity, face shape, and private album delivery consistent."
+      "Outputs emphasize hairstyle differences while keeping identity, face shape, and private album delivery consistent."
     ],
     useCases: ["Hair color previews", "Salon consultation ideas", "Creator beauty refreshes", "Profile portraits with new styling"],
     workflow: ["Upload clear portraits with visible hair.", "Choose the hairstyle direction.", "Generate a private preview album.", "Save favorites before ordering a full package."],
@@ -290,7 +290,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Noir character structure", "Cinematic scene planning", "Private themed album delivery"],
     intro: "The Mafia package is a character-driven photo direction for customers who want polished noir styling, tailored wardrobe cues, dramatic interiors, and cinematic social images.",
     details: [
-      "This page should stay focused on mafia and noir outcomes instead of showing broad public catalog content.",
+      "Mafia packages stay focused on noir outcomes, dramatic lighting, tailored styling, and private character albums.",
       "The package works best with expressive portraits, clean face visibility, and customer approval of a dramatic character direction.",
       "Finished images can be used for private albums, campaign visuals, profile concepts, or story-led creator content."
     ],
@@ -308,9 +308,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Event portrait structure", "Evening wardrobe and lighting", "Private nightlife album delivery"],
     intro: "The Black Party package gives evening-event imagery its own workflow. Customers can preview refined wardrobe, moody light, polished poses, and private album outputs without seeing unrelated categories.",
     details: [
-      "Use this package for formal nightlife portraits, private event concepts, creator party campaigns, and elegant social images.",
+      "Black Party packages support formal nightlife portraits, private event concepts, creator party campaigns, and elegant social images.",
       "Recommended inputs include clear portraits, one full-body reference if available, and notes about wardrobe or mood.",
-      "The page can explain lighting, styling, image count, and delivery expectations for this specific theme."
+      "Customers can review lighting, styling, image count, credit use, and delivery expectations for this theme."
     ],
     useCases: ["Formal event portraits", "Nightlife profile images", "Creator party campaigns", "Private album concepts"],
     workflow: ["Upload clear portraits and wardrobe references.", "Choose the black party direction.", "Generate polished evening images.", "Download favorites for social or private use."],
@@ -326,7 +326,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Neon portrait structure", "Futuristic scene direction", "Private cyberpunk album delivery"],
     intro: "The Cyberpunk package is for customers who want high-impact neon portraits, dramatic street scenes, and futuristic styling from private uploads.",
     details: [
-      "This page should describe neon lighting, wardrobe mood, portrait crop, and album outputs specific to cyberpunk results.",
+      "Cyberpunk packages highlight neon lighting, wardrobe mood, portrait crops, and private album outputs.",
       "The strongest inputs are expressive face photos with enough detail for identity preservation.",
       "Finished images work for profile campaigns, music-style visuals, gaming avatars, and creator launches."
     ],
@@ -344,7 +344,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     h3: ["Destination-style AI portraits", "Outdoor and vacation scene structure", "Travel albums from private uploads"],
     intro: "The Travel collection helps customers create destination-style photos even when they only have everyday source images. It is built around places, mood, lighting, and album-ready crops.",
     details: [
-      "Travel pages should show destination intent: beaches, mountains, city streets, outdoor adventures, and scenic portraits.",
+      "Travel packages focus on destination intent: beaches, mountains, city streets, outdoor adventures, and scenic portraits.",
       "MydreamShoots keeps the experience practical by asking for usable source photos first, then generating consistent destination looks.",
       "This category supports creators, dating profiles, travel memories, and campaign images."
     ],
@@ -364,7 +364,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     h2: "headshot",
     h3: ["Professional headshot input guide", "Business portrait outputs", "Private profile photo delivery"],
     intro: "Upload clear selfies or casual portraits and turn them into polished headshots for LinkedIn, resumes, founder pages, team bios, and creator profiles.",
-    details: ["Best inputs include face-forward photos with varied angles, simple lighting, and natural expressions.", "Finished results include clean studio portraits, founder-style images, resume-ready crops, and team profile options.", "Start here when you need a professional portrait set, then continue to the editor to review credits and create your private album."],
+    details: ["Best inputs include face-forward photos with varied angles, simple lighting, and natural expressions.", "Finished results include clean studio portraits, founder-style images, resume-ready crops, and team profile options.", "Start with a professional portrait set, review the credits, and create a private album from your selected source photos."],
     useCases: ["LinkedIn and resume portraits", "Founder pages", "Consultant bios", "Team profile images"],
     workflow: ["Upload source portraits.", "Choose professional styling.", "Generate headshot options.", "Download final profile-ready images."],
     ctaLabel: "Create Profile Headshots",
@@ -420,7 +420,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     h2: "virtual try-on",
     h3: ["Outfit and hairstyle previews", "Fashion portrait structure", "Private try-on workflow"],
     intro: "The virtual try-on tool helps customers preview wardrobe, hairstyle, and fashion directions before committing to a larger photo package.",
-    details: ["It is useful for outfit planning, creator looks, beauty profiles, and editorial social images.", "The page explains how source portraits become try-on concepts and private album options.", "Static URL structure keeps the tool shareable at /tools/virtual-try-on."],
+    details: ["It is useful for outfit planning, creator looks, beauty profiles, and editorial social images.", "Source portraits become try-on concepts and private album options.", "Customers can review the look, credit use, and next album step before starting."],
     useCases: ["Outfit previews", "Hairstyle concepts", "Beauty profile refreshes", "Fashion editorial tests"],
     workflow: ["Upload clear source portraits.", "Choose outfit, hairstyle, or fashion direction.", "Generate try-on images.", "Save favorites for a full package."],
     ctaLabel: "Try Outfit Looks",
@@ -429,23 +429,23 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
 };
 
 const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
-  "dreamscape-portraits": {
-    label: "Dreamscape Portraits",
-    title: "AI Dreamscape Portraits - cinematic escape photos with Aidreamcapes",
-    description: "Create cinematic AI dreamscape portraits with Aidreamcapes: surreal destinations, soft light, private source uploads, credit-based generation, and gallery-ready escape imagery.",
-    keywords: "Aidreamcapes dreamscape portraits, AI dream portraits, cinematic escape photos, fantasy travel portraits",
-    h2: "dreamscape portraits",
-    h3: ["Cinematic dream portrait styles", "Private escape-photo workflow", "Gallery-ready fantasy scenes"],
-    intro: "Dreamscape Portraits turn everyday uploads into imagined places: misty terraces, moonlit gardens, warm coastal roads, and painterly interiors that still feel personal.",
+  "destination-portrait-albums": {
+    label: "Destination Portrait Albums",
+    title: "AI Destination Portrait Albums - cinematic travel photos with Aidreamcapes",
+    description: "Create cinematic AI destination portraits with Aidreamcapes: coast roads, old city lanes, resort light, private source uploads, credit-based generation, and gallery-ready travel imagery.",
+    keywords: "Aidreamcapes destination portraits, AI travel portraits, cinematic escape photos, private travel portrait gallery",
+    h2: "destination portrait albums",
+    h3: ["Cinematic travel portrait styles", "Private escape-photo workflow", "Gallery-ready destination scenes"],
+    intro: "Destination Portrait Albums turn everyday uploads into travel stories: warm coastal roads, old city evenings, resort mornings, mountain lookouts, and itinerary-ready scenes that still feel personal.",
     details: [
       "Use this collection when the goal is atmosphere first: location, light, outfit mood, and story-led portraits rather than a standard studio look.",
       "Aidreamcapes keeps the workflow private, so source photos, credits, previews, and final downloads stay tied to the customer account.",
       "The page is written for searchers who want dreamy portrait outcomes, not generic AI photo packages."
     ],
-    useCases: ["Fantasy profile refreshes", "Dreamlike dating photos", "Creator campaign portraits", "Private cinematic keepsake albums"],
-    workflow: ["Upload clear portraits with natural expressions.", "Choose a dreamscape direction.", "Generate a private escape album.", "Download favorites for profiles, stories, or keepsakes."],
-    ctaLabel: "Create Dreamscape Portraits",
-    ctaHref: "/tools/dreamscape-generator"
+    useCases: ["Travel profile refreshes", "Destination album previews", "Creator trip portraits", "Private cinematic keepsake albums"],
+    workflow: ["Upload clear portraits with natural expressions.", "Choose a destination direction.", "Generate a private travel album.", "Download favorites for profiles, stories, or keepsakes."],
+    ctaLabel: "Create Destination Portraits",
+    ctaHref: "/tools/destination-portrait-engine"
   },
   "coastal-escapes": {
     label: "Coastal Escapes",
@@ -465,23 +465,23 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Coastal Photos",
     ctaHref: "/tools/coastal-portrait"
   },
-  "fantasy-avatars": {
-    label: "Fantasy Avatars",
-    title: "AI Fantasy Avatar Maker - storybook profile art with Aidreamcapes",
-    description: "Create AI fantasy avatars with Aidreamcapes for storybook profiles, character portraits, ethereal social images, and private avatar galleries.",
-    keywords: "AI fantasy avatar maker, storybook avatar generator, Aidreamcapes avatars, fantasy profile art",
-    h2: "fantasy avatars",
-    h3: ["Storybook avatar styles", "Character-safe profile outputs", "Private avatar gallery workflow"],
-    intro: "Fantasy Avatars give profile photos a softer fictional world: enchanted gardens, starry libraries, candlelit halls, and painterly travel scenes.",
+  "island-resort-scenes": {
+    label: "Island Resort Scenes",
+    title: "AI Island Resort Scenes - vacation portraits with Aidreamcapes",
+    description: "Create AI island resort scenes with Aidreamcapes for poolside portraits, white terrace light, soft vacation stories, and private travel galleries.",
+    keywords: "AI island resort portraits, vacation portrait generator, Aidreamcapes resort scenes, private travel gallery",
+    h2: "island resort scenes",
+    h3: ["Resort portrait styles", "Vacation-safe profile outputs", "Private resort gallery workflow"],
+    intro: "Island Resort Scenes give everyday photos a warm vacation setting: white terraces, quiet pools, linen textures, balcony mornings, and soft travel light.",
     details: [
       "This category is designed for expressive avatar art rather than realistic business portraits.",
       "Customers can generate several mood directions while keeping output review inside a private account.",
       "Use favorites for social profiles, creator banners, community avatars, or personal keepsakes."
     ],
-    useCases: ["Fantasy profile avatars", "Creator identity refreshes", "Community profile art", "Story-led social cards"],
-    workflow: ["Upload clear face references.", "Choose a fantasy avatar mood.", "Generate private avatar options.", "Download the strongest profile-ready crops."],
-    ctaLabel: "Make Fantasy Avatars",
-    ctaHref: "/tools/fantasy-avatar"
+    useCases: ["Vacation profile portraits", "Creator trip refreshes", "Resort campaign scenes", "Story-led social cards"],
+    workflow: ["Upload clear face references.", "Choose a resort mood.", "Generate private vacation options.", "Download the strongest profile-ready crops."],
+    ctaLabel: "Create Resort Scenes",
+    ctaHref: "/tools/island-resort-scenes"
   },
   "golden-hour-couples": {
     label: "Golden Hour Couples",
@@ -501,14 +501,14 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Couple Photos",
     ctaHref: "/tools/golden-hour-couple"
   },
-  "storybook-headshots": {
-    label: "Storybook Headshots",
-    title: "AI Storybook Headshots - warm professional portraits",
-    description: "Generate warm AI storybook headshots with Aidreamcapes for creators, founders, author bios, soft professional profiles, and private gallery delivery.",
-    keywords: "storybook headshots, warm AI headshot maker, Aidreamcapes professional portraits, creator headshots",
-    h2: "storybook headshots",
-    h3: ["Warm profile portrait styles", "Creator and author bio use cases", "Private headshot delivery"],
-    intro: "Storybook Headshots keep the trust of a professional portrait while adding gentle atmosphere, warm backgrounds, and a more memorable editorial feel.",
+  "celestial-profile-stories": {
+    label: "Celestial Profile Stories",
+    title: "AI Celestial Profile Stories - warm professional portraits",
+    description: "Generate warm AI celestial profile stories with Aidreamcapes for creators, founders, author bios, soft professional profiles, and private gallery delivery.",
+    keywords: "celestial profile stories, warm AI profile story maker, Aidreamcapes professional portraits, creator profile stories",
+    h2: "celestial profile stories",
+    h3: ["Warm profile portrait styles", "Creator and author bio use cases", "Private profile story delivery"],
+    intro: "Celestial Profile Stories keep the trust of a professional portrait while adding gentle atmosphere, warm backgrounds, and a more memorable editorial feel.",
     details: [
       "This is best for creators, coaches, authors, consultants, and founders who want approachable profile photos.",
       "The category avoids stiff studio repetition by pairing clean facial detail with soft narrative backgrounds.",
@@ -516,8 +516,8 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     ],
     useCases: ["Author bio portraits", "Creator profiles", "Founder pages", "Warm LinkedIn alternatives"],
     workflow: ["Upload clear face-forward photos.", "Choose a warm professional setting.", "Generate several polished portraits.", "Download profile-ready crops."],
-    ctaLabel: "Create Storybook Headshots",
-    ctaHref: "/tools/storybook-headshot"
+    ctaLabel: "Create Celestial Profile Stories",
+    ctaHref: "/tools/celestial-profile-story"
   },
   "editorial-getaways": {
     label: "Editorial Getaways",
@@ -612,23 +612,23 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
 };
 
 const aidreamcapesToolDirectory: SeoDirectoryMap = {
-  "dreamscape-generator": {
-    label: "Dreamscape Generator",
-    title: "AI Dreamscape Generator - create cinematic escape portraits",
-    description: "Use Aidreamcapes to generate cinematic dreamscape portraits from private uploads, with destination moods, soft lighting, credits, and private gallery delivery.",
-    keywords: "AI dreamscape generator, Aidreamcapes tool, cinematic portrait generator, dream portrait AI",
-    h2: "dreamscape generator",
-    h3: ["Dreamscape input guide", "Cinematic escape outputs", "Private generation workflow"],
-    intro: "The Dreamscape Generator helps turn a clear portrait into an imagined place while keeping the customer workflow private and credit-based.",
+  "destination-portrait-engine": {
+    label: "Destination Portrait Engine",
+    title: "AI Destination Portrait Engine - create cinematic travel portraits",
+    description: "Use Aidreamcapes to generate cinematic travel portraits from private uploads, with destination moods, natural lighting, credits, and private gallery delivery.",
+    keywords: "AI destination portrait engine, Aidreamcapes travel tool, cinematic travel portrait generator, private destination portrait AI",
+    h2: "destination portrait engine",
+    h3: ["Destination input guide", "Cinematic travel outputs", "Private generation workflow"],
+    intro: "The Destination Portrait Engine helps turn a clear portrait into a travel scene while keeping the customer workflow private and credit-based.",
     details: [
       "Start with portraits that show the subject clearly and avoid heavy filters.",
       "Choose an escape mood such as coastal dawn, old-city evening, moon garden, or soft editorial interior.",
       "Results stay in the customer workspace for review, download, and follow-up generations."
     ],
-    useCases: ["Dreamy profile photos", "Creator launch portraits", "Private fantasy albums", "Soft campaign visuals"],
-    workflow: ["Review the dreamscape mood.", "Upload source portraits.", "Choose the atmosphere.", "Generate and download private results."],
-    ctaLabel: "Start Dreamscape Generator",
-    ctaHref: "/app/create?tool_id=dreamscape-generator"
+    useCases: ["Travel profile photos", "Creator trip portraits", "Private destination albums", "Soft campaign visuals"],
+    workflow: ["Review the destination mood.", "Upload source portraits.", "Choose the atmosphere.", "Generate and download private results."],
+    ctaLabel: "Start Destination Portrait Engine",
+    ctaHref: "/app/create?tool_id=destination-portrait-engine"
   },
   "coastal-portrait": {
     label: "Coastal Portrait",
@@ -648,23 +648,23 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Coastal Portraits",
     ctaHref: "/app/create?tool_id=coastal-portrait"
   },
-  "fantasy-avatar": {
-    label: "Fantasy Avatar",
-    title: "AI Fantasy Avatar Tool - storybook profile art",
-    description: "Generate fantasy avatars with Aidreamcapes from private portraits, including storybook scenes, ethereal profile crops, and private downloadable galleries.",
-    keywords: "AI fantasy avatar, storybook avatar tool, Aidreamcapes avatar generator, fantasy profile image",
-    h2: "fantasy avatar tool",
-    h3: ["Avatar source guidance", "Storybook output ideas", "Private avatar delivery"],
-    intro: "Fantasy Avatar creates expressive profile art for customers who want a softer fictional identity without leaving the private workspace.",
+  "island-resort-scenes": {
+    label: "Island Resort Scene Studio",
+    title: "AI Island Resort Scene Studio - vacation portraits",
+    description: "Generate island resort portraits with Aidreamcapes from private uploads, including terrace light, poolside scenes, and downloadable travel galleries.",
+    keywords: "AI island resort portraits, Aidreamcapes resort tool, vacation portrait generator, private travel profile image",
+    h2: "island resort scene studio",
+    h3: ["Resort source guidance", "Vacation output ideas", "Private travel gallery delivery"],
+    intro: "Island Resort Scene Studio creates polished vacation portraits for customers who want resort atmosphere without leaving the private workspace.",
     details: [
       "Use clean face references and describe the mood rather than overloading the request with props.",
       "Outputs can be square avatars, banner crops, or soft portrait cards.",
       "Customers choose what to download after reviewing the private gallery."
     ],
-    useCases: ["Social avatars", "Creator identity art", "Community profile images", "Personal fantasy keepsakes"],
-    workflow: ["Upload face references.", "Choose the fantasy direction.", "Generate avatar options.", "Download profile-ready crops."],
-    ctaLabel: "Make Fantasy Avatars",
-    ctaHref: "/app/create?tool_id=fantasy-avatar"
+    useCases: ["Vacation profile images", "Creator trip visuals", "Resort social crops", "Personal travel keepsakes"],
+    workflow: ["Upload face references.", "Choose the resort direction.", "Generate vacation options.", "Download profile-ready crops."],
+    ctaLabel: "Create Resort Scenes",
+    ctaHref: "/app/create?tool_id=island-resort-scenes"
   },
   "golden-hour-couple": {
     label: "Golden Hour Couple",
@@ -684,23 +684,23 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Golden Hour Couples",
     ctaHref: "/app/create?tool_id=golden-hour-couple"
   },
-  "storybook-headshot": {
-    label: "Storybook Headshot",
-    title: "AI Storybook Headshot Tool - warm professional portraits",
-    description: "Create warm professional headshots with Aidreamcapes for author bios, creator profiles, founder pages, and private profile galleries.",
-    keywords: "AI storybook headshot, warm professional portrait, Aidreamcapes headshot tool, creator profile photo",
-    h2: "storybook headshot tool",
-    h3: ["Professional source-photo tips", "Warm portrait outputs", "Private headshot gallery"],
-    intro: "Storybook Headshot balances professional clarity with a softer, more memorable setting.",
+  "celestial-profile-story": {
+    label: "Celestial Profile Story",
+    title: "AI Celestial Profile Story Tool - warm professional portraits",
+    description: "Create warm profile stories with Aidreamcapes for author bios, creator profiles, founder pages, and private profile galleries.",
+    keywords: "AI celestial profile story, warm professional portrait, Aidreamcapes profile story tool, creator profile photo",
+    h2: "celestial profile story tool",
+    h3: ["Professional source-photo tips", "Warm portrait outputs", "Private profile story gallery"],
+    intro: "Celestial Profile Story balances professional clarity with a softer, more memorable setting.",
     details: [
       "Best inputs show the face clearly with natural expressions and varied angles.",
-      "The tool is useful when a strict corporate headshot feels too plain.",
+      "The tool is useful when a strict corporate profile feels too plain.",
       "Final images can support bios, newsletters, profile pages, and creator sites."
     ],
     useCases: ["Author bios", "Founder portraits", "Creator profiles", "Warm professional pages"],
-    workflow: ["Upload clear portraits.", "Select a warm professional mood.", "Generate headshot options.", "Download final crops."],
-    ctaLabel: "Create Storybook Headshots",
-    ctaHref: "/app/create?tool_id=storybook-headshot"
+    workflow: ["Upload clear portraits.", "Select a warm professional mood.", "Generate profile story options.", "Download final crops."],
+    ctaLabel: "Create Celestial Profile Stories",
+    ctaHref: "/app/create?tool_id=celestial-profile-story"
   },
   "editorial-getaway": {
     label: "Editorial Getaway",
@@ -915,18 +915,18 @@ function fallbackCollection(slug: string, brandName = "MydreamShoots"): SeoDirec
   if (isAidreamcapesBrand(brandName)) {
     return {
       label,
-      title: `AI ${subject} Dreamscape Gallery | ${brandName}`,
-      description: `Explore ${brandName} ${lower} galleries for private source-photo planning, coastal and fantasy-inspired scene directions, soft editorial crops, visible credits, and customer-only downloads.`,
-      keywords: `AI ${subject} dreamscape, ${lower} portrait gallery, ${brandName} ${lower}, private editorial AI gallery`,
-      h2: `${lower} dreamscape gallery`,
+      title: `AI ${subject} Travel Gallery | ${brandName}`,
+      description: `Explore ${brandName} ${lower} galleries for private source-photo planning, coastal and city scene directions, soft editorial crops, visible credits, and customer-only downloads.`,
+      keywords: `AI ${subject} travel gallery, ${lower} portrait gallery, ${brandName} ${lower}, private editorial AI gallery`,
+      h2: `${lower} travel gallery`,
       h3: [`${subject} scene direction`, `Source-photo planning`, `Private gallery delivery`],
       intro: `This ${subject} gallery frames the style, mood, and source-photo guidance customers need before choosing an Aidreamcapes scene.`,
       details: [
         `Customers can compare ${lower} scene ideas, crop choices, and atmosphere before starting a private generation.`,
-        "The page keeps coastal, fantasy, and editorial directions separate from general photo-package copy.",
+        "Coastal, city, resort, trail, and editorial directions stay focused so customers can choose the right private gallery style.",
         "Finished images stay in a private gallery so customers can review, download, and choose what to share."
       ],
-      useCases: [`${subject} dreamscape portraits`, `${subject} soft-gallery images`, `${subject} editorial scenes`, `${subject} fantasy keepsakes`],
+      useCases: [`${subject} travel portraits`, `${subject} soft-gallery images`, `${subject} editorial scenes`, `${subject} postcard keepsakes`],
       workflow: ["Choose a scene direction.", "Upload clear source photos.", "Review private gallery options.", "Download the final images you want to keep."],
       ctaLabel: `Open ${subject} Gallery`,
       ctaHref: "/tools/image-studio"
@@ -942,8 +942,8 @@ function fallbackCollection(slug: string, brandName = "MydreamShoots"): SeoDirec
     intro: `This ${subject} collection helps customers choose the right photo-package direction before uploading source images and spending credits.`,
     details: [
       `Customers can see what a ${lower} package is best for, which source photos usually work well, and how the final album is delivered.`,
-      "The page keeps package navigation stable while active offers and creator-ready formats can change behind the scenes.",
-      "Use this section to compare styles, crops, delivery formats, and practical customer use cases without repeating the homepage."
+      "Package navigation stays clear while active offers and creator-ready formats can change behind the scenes.",
+      "Customers can compare styles, crops, delivery formats, and practical use cases before spending credits."
     ],
     useCases: [`${subject} profile images`, `${subject} social posts`, `${subject} private albums`, `${subject} campaign visuals`],
     workflow: ["Upload clear source photos.", `Choose a ${lower} package direction.`, "Review a private album.", "Download final images for the intended channel."],
@@ -967,7 +967,7 @@ function fallbackTool(slug: string, brandName = "MydreamShoots"): SeoDirectorySe
       details: [
         "Start with source photos or references that clearly show the subject, mood, and scene direction you want.",
         "Aidreamcapes keeps the result private so customers can review images before downloading or sharing.",
-        "Use this page to compare scene fit, upload guidance, and the kind of gallery result the tool is meant to produce."
+        "Customers can compare scene fit, upload guidance, and the kind of private gallery result the tool is meant to produce."
       ],
       useCases: [`${label} dream portraits`, `${label} coastal scenes`, `${label} fantasy editorials`, `${label} private keepsakes`],
       workflow: ["Review the scene direction.", "Upload clear source photos.", "Choose the mood or use case.", "Generate and download from your private gallery."],
@@ -986,7 +986,7 @@ function fallbackTool(slug: string, brandName = "MydreamShoots"): SeoDirectorySe
     details: [
       "Start with source photos or references that clearly show the subject, style, and use case you want.",
       "The finished result appears in your private account for review, download, and follow-up edits.",
-      "Use this page to compare the expected output, check the input guidance, and continue when the tool fits your goal."
+      "Customers can compare the expected output, check the input guidance, and continue when the tool fits their goal."
     ],
     useCases: [`${label} profile photos`, `${label} social images`, `${label} album concepts`, `${label} creator visuals`],
     workflow: ["Review the result this tool is best for.", "Upload clear source photos.", "Choose the look or use case you need.", "Create and download the private result."],
@@ -1075,8 +1075,9 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 
 export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawSlug: string): Metadata {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
+  const canonicalPath = kind === "tool" && !item.explicit ? "/tools" : item.canonicalPath;
   const base = site.primaryDomain && !site.primaryDomain.includes("localhost") ? `https://${site.primaryDomain}` : "";
-  const canonical = base ? `${base}${item.canonicalPath}` : item.canonicalPath;
+  const canonical = base ? `${base}${canonicalPath}` : canonicalPath;
   const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
   return {
     title: item.title,

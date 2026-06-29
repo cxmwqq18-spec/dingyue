@@ -117,6 +117,14 @@ function isHostForSite(site: Site, host: string): boolean {
     (normalizedHost === "aidreamcapes.com" && isAidreamcapesSite(site));
 }
 
+function isMydreamshootsHost(host: string): boolean {
+  return host === "www.mydreamshoots.com" || host === "mydreamshoots.com";
+}
+
+function isAidreamcapesHost(host: string): boolean {
+  return host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
+}
+
 function mydreamshootsPolicySeoForSite(site: Site, slug: string) {
   return isDreamshootSite(site) ? getMydreamshootsPolicySeo(slug) : undefined;
 }
@@ -261,20 +269,23 @@ function normalizeHostCandidates(hosts: string | null | undefined | Array<string
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
-  if (!normalizedHost) return getMydreamshootsSitemapUrls();
+  if (!normalizedHost) return [];
   const runtime = await readIndexableStateAndSites();
   if (!runtime) {
-    if (normalizedHosts.some((host) => host === "www.aidreamcapes.com" || host === "aidreamcapes.com")) return getAidreamcapesSitemapUrls();
-    return getMydreamshootsSitemapUrls();
+    if (normalizedHosts.some(isAidreamcapesHost)) return getAidreamcapesSitemapUrls();
+    if (normalizedHosts.some(isMydreamshootsHost)) return getMydreamshootsSitemapUrls();
+    return [];
   }
   const site = runtime.sites.find((item) => normalizedHosts.some((host) => isHostForSite(item, host)));
   if (site) return getSitemapUrlsForSite(runtime.state, site);
-  if (normalizedHosts.some((host) => host === "www.aidreamcapes.com" || host === "aidreamcapes.com")) return getAidreamcapesSitemapUrls();
-  return getMydreamshootsSitemapUrls();
+  if (normalizedHosts.some(isAidreamcapesHost)) return getAidreamcapesSitemapUrls();
+  if (normalizedHosts.some(isMydreamshootsHost)) return getMydreamshootsSitemapUrls();
+  return [];
 }
 
-export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string {
+export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {
   const normalizedHost = normalizeFirstHost(hosts);
-  if (normalizedHost === "www.aidreamcapes.com" || normalizedHost === "aidreamcapes.com") return AIDREAMCAPES_SITEMAP_URL;
-  return MYDREAMSHOOTS_SITEMAP_URL;
+  if (isAidreamcapesHost(normalizedHost)) return AIDREAMCAPES_SITEMAP_URL;
+  if (isMydreamshootsHost(normalizedHost)) return MYDREAMSHOOTS_SITEMAP_URL;
+  return undefined;
 }

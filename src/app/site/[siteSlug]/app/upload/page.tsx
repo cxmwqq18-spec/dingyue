@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: "Upload photos", robots: { index: false, follow: false } };
@@ -13,6 +15,12 @@ export default async function CustomerWorkspaceUploadPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
+  const headerStore = await headers();
+  const publicSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: "/app/upload",
+    siteSlug
+  });
   const query = searchParams ? await searchParams : {};
-  return renderCustomerWorkspacePageBySlug({ siteSlug, slug: "/app/upload", query, routeMode: "path" });
+  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/upload", query, routeMode: "path" });
 }

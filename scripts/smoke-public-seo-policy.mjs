@@ -70,8 +70,13 @@ assert.match(
 );
 assert.match(
   hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\.has\(publicPageSlug\)[\s\S]*firstSegment === "tools" && Boolean\(path\[1\]\)[\s\S]*firstSegment === "collections" && Boolean\(path\[1\]\)/,
-  "host catch-all should allow /collections and /tools roots without falling back to default site redirects"
+  /const publicPageSlug = firstSegment === "collections" && path\[1\] \? "\/collections" : firstSegment === "tools" && path\[1\] \? `\/tools\/\$\{path\[1\]\}` : publicContentPageSlug\(`\/\$\{path\.join\("\/"\)\}`\);/,
+  "host catch-all should keep directory roots canonical while routing detail pages through their directory contexts"
+);
+assert.match(
+  hostCatchAll,
+  /PUBLIC_DIRECTORY_PAGE_SLUGS\.has\(publicPageSlug\)[\s\S]*Boolean\(resolvedToolPage\)[\s\S]*firstSegment === "collections" && Boolean\(path\[1\]\)/,
+  "host catch-all should allow /collections and /tools roots plus validated directory detail pages"
 );
 assert.match(
   hostCatchAll,

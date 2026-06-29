@@ -8,6 +8,9 @@ const brandProfiles = [
   {
     matcher: /mydreamshoots|dreamshoot/i,
     brand: "MyDreamShoots",
+    footerTitle: "ʍʏƉʀɛǟʍֆhoots",
+    footerLogoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
+    footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
     salesEmail: "sales@mydreamshoots.com",
     aboutTitle: "About MyDreamShoots",
@@ -23,6 +26,9 @@ const brandProfiles = [
   {
     matcher: /aidreamcapes/i,
     brand: "Aidreamcapes",
+    footerTitle: "Aidreamcapes",
+    footerLogoImageUrl: "/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg?v=aidreamcapes-cream",
+    footerLogoAlt: "Aidreamcapes heart logo for cinematic dreamscape portraits and private galleries",
     supportEmail: "support@aidreamcapes.com",
     salesEmail: "sales@aidreamcapes.com",
     aboutTitle: "About Aidreamcapes",
@@ -138,16 +144,27 @@ function normalizePolicyHref(href) {
   return map[href] ?? href;
 }
 
+function isVirtualGoodsFooterLinkToHide(label, href) {
+  const normalizedHref = normalizePolicyHref(href ?? "").toLowerCase();
+  const value = `${label ?? ""} ${normalizedHref}`.toLowerCase();
+  return (
+    normalizedHref === "/refunds" ||
+    normalizedHref === "/shipping" ||
+    /\brefunds?\b|shipping|delivery|credit review|digital delivery/.test(value)
+  );
+}
+
 function upsertFooterLinks(settings, profile) {
   const next = clone(settings ?? {});
   next.navigation = next.navigation ?? {};
   const existingLinks = Array.isArray(next.navigation.footerLinks) ? next.navigation.footerLinks : [];
   const requiredLinks = [
     link("About us", "/about-us", "company"),
-    link("Contact us", "/contact-us", "company"),
-    link("Shipping & delivery", "/shipping", "support")
+    link("Contact us", "/contact-us", "company")
   ];
-  const normalizedLinks = existingLinks.map((item) => ({ ...item, href: normalizePolicyHref(item.href) }));
+  const normalizedLinks = existingLinks
+    .map((item) => ({ ...item, href: normalizePolicyHref(item.href) }))
+    .filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href));
   for (const required of requiredLinks) {
     if (!normalizedLinks.some((item) => item.href === required.href)) normalizedLinks.push(required);
   }
@@ -157,6 +174,9 @@ function upsertFooterLinks(settings, profile) {
   next.globalSections.footer = next.globalSections.footer ?? { type: "footer", settings: {}, blocks: [] };
   next.globalSections.footer.settings = {
     ...(next.globalSections.footer.settings ?? {}),
+    title: profile.footerTitle,
+    logoImageUrl: profile.footerLogoImageUrl,
+    logoAlt: profile.footerLogoAlt,
     contactAddress: companyAddress,
     contactEmail: profile.supportEmail,
     salesEmail: profile.salesEmail,
@@ -166,12 +186,11 @@ function upsertFooterLinks(settings, profile) {
   const normalizedBlocks = blocks.map((item) => ({
     ...item,
     settings: { ...(item.settings ?? {}), href: normalizePolicyHref(item.settings?.href) }
-  }));
+  })).filter((item) => !isVirtualGoodsFooterLinkToHide(item.settings?.label, item.settings?.href));
   const blockPrefix = profile.brand.toLowerCase().replace(/[^a-z0-9]+/g, "_");
   const requiredBlocks = [
     block(`${blockPrefix}_footer_about`, "About us", "/about-us", "company"),
-    block(`${blockPrefix}_footer_contact`, "Contact us", "/contact-us", "company"),
-    block(`${blockPrefix}_footer_shipping`, "Shipping & delivery", "/shipping", "support")
+    block(`${blockPrefix}_footer_contact`, "Contact us", "/contact-us", "company")
   ];
   for (const required of requiredBlocks) {
     if (!normalizedBlocks.some((item) => item.settings?.href === required.settings.href)) normalizedBlocks.push(required);

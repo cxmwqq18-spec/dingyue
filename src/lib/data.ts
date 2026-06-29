@@ -301,7 +301,7 @@ const dreamShootHomeSections = {
     anchor: "features",
     eyebrow: "AI photo tools",
     title: "Choose the photo flow before signup.",
-    subtitle: "Expose multiple AI offers as clear storefront modules instead of a single one-off text request.",
+    subtitle: "Present each AI photo offer as a clear package, tool, or private album workflow.",
     layout: "split"
   }, [
     { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Professional headshot packs", description: "Create profile, founder, resume, and team portraits from everyday uploads.", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
@@ -345,7 +345,7 @@ const dreamShootHomeSections = {
   pack_marquee_1: section("shoot_pack_marquee", {
     anchor: "packs",
     eyebrow: "Popular packs",
-    title: "Sell outcomes, not generic image prompts.",
+    title: "Sell clear photo packages.",
     subtitle: "World Cup, gala, travel, headshot, beauty, try-on, creator, and editorial packs can be managed in the backend.",
     source: "creative_packs"
   }, [
@@ -424,7 +424,7 @@ const homeJson: ThemePageJson = {
     ]),
     brand_strip_1: section("brand_logo_strip", {
       anchor: "trusted",
-      title: "Trusted funnel signals for creators, job seekers, and sports fans",
+      title: "Trusted by customers creating headshots, fan photos, and private albums",
       style: "dark"
     }, [
       { id: "logo_reviews", type: "logo", settings: { name: "5-star reviews", imageUrl: "", badge: "Proof" } },
@@ -476,7 +476,7 @@ const homeJson: ThemePageJson = {
       eyebrow: "Professional AI Photo Packages",
       title: "Photo packs customers can understand immediately.",
       subtitle:
-        "Customers buy outcomes, not a blank prompt box. This section can bind to backend creative packs while still being fully reorderable in the designer.",
+        "Customers can compare finished photo directions before they choose a package.",
       source: "creative_packs",
       layout: "editorial"
     }),
@@ -527,7 +527,7 @@ const homeJson: ThemePageJson = {
       anchor: "tools",
       eyebrow: "Professional AI photo flows",
       title: "Choose the photo flow before signup.",
-      subtitle: "Expose multiple AI offers as storefront modules instead of a single one-off text request.",
+      subtitle: "Present each AI photo offer as a clear package, tool, or private album workflow.",
       layout: "split"
     }, [
       { id: "tab_creator", type: "feature_tab", settings: { label: "Creator photos", title: "AI creator portrait maker", description: "Profile, portfolio, social, and fan-poster image sets.", imageUrl: "media_lumen_hero", href: "/tools/creator-portrait" } },

@@ -259,3 +259,85 @@ export function normalizePolicyPath(path: string): string {
 export function getMydreamshootsPolicySeo(path: string): PolicySeoCopy | undefined {
   return MYDREAMSHOOTS_POLICY_SEO_BY_PATH[normalizePolicyPath(path)];
 }
+
+const AIDREAMCAPES_POLICY_KEYWORDS = [
+  "Aidreamcapes policy",
+  "AI starlight portrait privacy",
+  "private gallery delivery",
+  "source photo consent",
+  "digital portrait credits",
+  "celestial package terms"
+].join(", ");
+
+const AIDREAMCAPES_POLICY_SEO_BY_CANONICAL: Record<string, Omit<PolicySeoCopy, "canonicalPath" | "index" | "follow">> = {
+  "/privacy": {
+    title: "Aidreamcapes Privacy Promise for Source Photos and Private Galleries",
+    description:
+      "Read how Aidreamcapes handles account access, private source photos, starlight portrait requests, credit records, downloads, support messages, and deletion requests.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/terms": {
+    title: "Aidreamcapes Studio Terms for Credits, Uploads, and Generated Portraits",
+    description:
+      "Review Aidreamcapes terms for customer accounts, source photo rights, celestial package credits, AI generation limits, private gallery delivery, and acceptable use.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/cookies": {
+    title: "Aidreamcapes Cookie Notice for Sign-In, Checkout, and Studio Preferences",
+    description:
+      "Learn how Aidreamcapes uses essential cookies and local storage for secure sign-in, cart continuity, credit visibility, private albums, and site reliability.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/refunds": {
+    title: "Aidreamcapes Credit Review and Refund Policy",
+    description:
+      "See how Aidreamcapes reviews unused credits, failed starlight generation jobs, subscription changes, reruns, billing issues, and eligible refund requests.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/content": {
+    title: "Aidreamcapes Creative Safety Policy for Uploads and Portrait Requests",
+    description:
+      "Understand Aidreamcapes rules for source photo permission, identity consent, disallowed requests, moderation, AI artifacts, and responsible generated-image use.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/shipping": {
+    title: "Aidreamcapes Digital Delivery Policy for Private AI Portrait Galleries",
+    description:
+      "Review how Aidreamcapes delivers credits, generated portraits, downloads, and private galleries digitally without physical shipping, tracking numbers, or customs fees.",
+    keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  }
+};
+
+const AIDREAMCAPES_POLICY_ALIASES: Record<string, string> = {
+  "/privacy": "/privacy",
+  "/privacy-policy": "/privacy",
+  "/policies/privacy": "/privacy",
+  "/terms": "/terms",
+  "/terms-of-service": "/terms",
+  "/policies/terms": "/terms",
+  "/cookies": "/cookies",
+  "/cookie-policy": "/cookies",
+  "/policies/cookies": "/cookies",
+  "/refunds": "/refunds",
+  "/refund-policy": "/refunds",
+  "/policies/refunds": "/refunds",
+  "/content": "/content",
+  "/content-policy": "/content",
+  "/policies/content": "/content",
+  "/shipping": "/shipping",
+  "/shipping-policy": "/shipping",
+  "/delivery-policy": "/shipping",
+  "/policies/shipping": "/shipping"
+};
+
+export function getAidreamcapesPolicySeo(path: string): PolicySeoCopy | undefined {
+  const canonicalPath = AIDREAMCAPES_POLICY_ALIASES[normalizePolicyPath(path)];
+  const copy = canonicalPath ? AIDREAMCAPES_POLICY_SEO_BY_CANONICAL[canonicalPath] : undefined;
+  if (!copy) return undefined;
+  return {
+    ...copy,
+    canonicalPath,
+    index: true,
+    follow: true
+  };
+}

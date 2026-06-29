@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
@@ -9,7 +9,7 @@ import { renderStorefrontLoginPage } from "@/lib/storefront-render";
 import { customerSessionCookie } from "@/lib/session";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 
@@ -35,8 +35,13 @@ export default async function SiteLoginPage({
   searchParams?: Promise<{ error?: string; next?: string }>;
 }) {
   const { siteSlug } = await params;
-  redirectLegacySiteSlug(siteSlug, "/login");
-  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/login");
+  const headerStore = await headers();
+  const publicSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: "/login",
+    siteSlug
+  });
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, "/login");
   const site = state?.sites[0];
   if (!state || !site) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;

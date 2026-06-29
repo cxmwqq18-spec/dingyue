@@ -522,6 +522,7 @@ function toAdminShellThemeSettings(record?: { draftJson: unknown; publishedJson:
         headerLinks: settings.navigation?.headerLinks ?? [],
         footerLinks: settings.navigation?.footerLinks ?? []
       },
+      globalSections: settings.globalSections,
       seo: settings.seo
         ? {
             siteTitle: settings.seo.siteTitle ?? "",
@@ -531,7 +532,8 @@ function toAdminShellThemeSettings(record?: { draftJson: unknown; publishedJson:
             robots: settings.seo.robots ?? { index: true, follow: true },
             pages: {}
           }
-        : undefined
+        : undefined,
+      saasSettingsCurrent: settings.saasSettingsCurrent
     };
   };
   return {

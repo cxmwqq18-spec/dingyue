@@ -873,7 +873,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "occasions",
           eyebrow: "Photo occasions",
           title: "Choose the story your AI shoot should tell.",
-          subtitle: "Merchandise concrete outcomes instead of exposing a blank prompt field."
+          subtitle: "Show concrete photo outcomes instead of an empty prompt field."
         },
         blocks: [
           block("occasion_photo", "occasion", { title: "Photo", description: "Profile, scene, and editorial creator looks.", tag: "Creator", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/creator-portrait" }),
@@ -1362,7 +1362,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("anchor", "Anchor", "package-taxonomy"),
       text("eyebrow", "Eyebrow", "Photo package library"),
       text("title", "Title", "Package categories customers already understand."),
-      textarea("subtitle", "Subtitle", "Group the storefront by outcome, not by blank prompts. Each category can link to the pack wall, a tool page, or a search route."),
+      textarea("subtitle", "Subtitle", "Group the storefront by finished photo direction. Each category can link to the pack wall, a tool page, or search results."),
       select(
         "layout",
         "Layout",
@@ -1561,15 +1561,15 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     maxBlocks: 8,
     settings: [
       text("anchor", "Anchor", "workflow"),
-      text("label", "Small label", "How it works + proof bridge"),
+      text("label", "Small label", "Private album workflow"),
       text("title", "Title", "From upload to private album."),
-      textarea("subtitle", "Subtitle", "Explain the 4-step flow, show a before/after transformation, and make credits feel safe."),
+      textarea("subtitle", "Subtitle", "Follow a clear four-step flow from source photos to a private gallery with visible credit use."),
       image("beforeImage", "Before image"),
       image("afterImage", "After image"),
       image("albumImageOne", "Album image one"),
       image("albumImageTwo", "Album image two"),
       image("albumImageThree", "Album image three"),
-      text("bridgeCta", "Bridge CTA", "After this, show pricing with value already understood"),
+      text("bridgeCta", "Bridge CTA", "View plans and credits"),
       url("bridgeHref", "Bridge link", "/pricing")
     ],
     blocks: [cardBlock],
@@ -1578,21 +1578,21 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         label: "Upload to album bridge",
         settings: {
           anchor: "workflow",
-          label: "How it works + proof bridge",
+          label: "Private album workflow",
           title: "From upload to private album.",
-          subtitle: "Explain the 4-step flow, show a before/after transformation, and make credits feel safe.",
+          subtitle: "Follow a clear four-step flow from source photos to a private gallery with visible credit use.",
           beforeImage: "/assets/dreamshoot/frames/workflow-upload-source.png",
           afterImage: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
           albumImageOne: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
           albumImageTwo: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
           albumImageThree: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-          bridgeCta: "After this, show pricing with value already understood",
+          bridgeCta: "View plans and credits",
           bridgeHref: "/pricing"
         },
         blocks: [
           block("flow_upload", "card", { title: "Upload selfies", text: "Use 8-12 clear phone photos per person.", meta: "01" }),
           block("flow_model", "card", { title: "Build private model", text: "Keep identity consistent across packages.", meta: "02" }),
-          block("flow_pack", "card", { title: "Pick a package", text: "Choose the result, not a blank prompt.", meta: "03" }),
+          block("flow_pack", "card", { title: "Pick a package", text: "Choose the finished photo direction.", meta: "03" }),
           block("flow_album", "card", { title: "Generate album", text: "Review, download, upscale, or make video.", meta: "04" })
         ]
       }
@@ -1695,7 +1695,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "packs",
           eyebrow: "Popular packs",
-          title: "Sell outcomes, not one-off text requests.",
+          title: "Sell clear photo packages.",
           subtitle: "Photo, creator, travel, gala, sports, headshot, beauty, and editorial packs become clear shoppable outcomes.",
           source: "creative_packs"
         },

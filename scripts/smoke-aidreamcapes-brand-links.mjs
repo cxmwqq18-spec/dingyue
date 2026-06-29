@@ -34,26 +34,35 @@ const allowedAidreamcapesRoutes = new Set([
   "/pricing",
   "/collections",
   "/tools",
-  "/tools/dreamscape-generator",
+  "/tools/destination-portrait-engine",
   "/tools/coastal-portrait",
-  "/tools/fantasy-avatar",
+  "/tools/island-resort-scenes",
   "/tools/golden-hour-couple",
-  "/tools/storybook-headshot",
+  "/tools/celestial-profile-story",
+  "/tools/travel-profile-story",
   "/tools/editorial-getaway",
   "/tools/soft-glam",
   "/tools/cinematic-travel",
   "/tools/product-reverie",
   "/tools/social-keepsake",
-  "/collections/dreamscape-portraits",
   "/collections/coastal-escapes",
-  "/collections/fantasy-avatars",
   "/collections/golden-hour-couples",
-  "/collections/storybook-headshots",
+  "/collections/celestial-profile-stories",
   "/collections/editorial-getaways",
   "/collections/soft-glam-studio",
   "/collections/cinematic-travel",
   "/collections/product-reverie",
   "/collections/social-keepsakes",
+  "/collections/destination-portrait-albums",
+  "/collections/coastal-getaways",
+  "/collections/old-city-walks",
+  "/collections/island-resort-scenes",
+  "/collections/cafe-street-stories",
+  "/collections/scenic-overlooks",
+  "/collections/mountain-trails",
+  "/collections/road-trip-frames",
+  "/collections/itinerary-moodboards",
+  "/collections/postcard-social-sets",
   "/help",
   "/blog",
   "/blog/planning-dreamscape-source-photos",
@@ -99,7 +108,9 @@ function visibleStringsForSite(site) {
   ];
   const sitePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === site.id);
   const siteCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  parts.push(sitePacks, siteCategories);
+  const siteToolCategories = (state.toolCategories ?? []).filter((category) => category.siteId === site.id);
+  const siteToolMenuItems = (state.toolMenuItems ?? []).filter((item) => item.siteId === site.id);
+  parts.push(sitePacks, siteCategories, siteToolCategories, siteToolMenuItems);
   return collectText(parts)
     .map((text) => text.replace(/\s+/g, " ").trim())
     .filter((text) => text.length >= 12)
@@ -145,7 +156,9 @@ const failures = [];
 const aidreamcapesJson = stableStringify({
   site: aidreamcapesSite,
   packs: (state.creativePacks ?? []).filter((pack) => pack.siteId === aidreamcapesSite.id),
-  categories: (state.creativePackCategories ?? []).filter((category) => category.siteId === aidreamcapesSite.id)
+  categories: (state.creativePackCategories ?? []).filter((category) => category.siteId === aidreamcapesSite.id),
+  toolCategories: (state.toolCategories ?? []).filter((category) => category.siteId === aidreamcapesSite.id),
+  toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === aidreamcapesSite.id)
 });
 
 for (const pattern of forbiddenPatterns) {

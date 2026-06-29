@@ -418,7 +418,7 @@ export function JobCreateForm({
   const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
   const [availableAssets, setAvailableAssets] = useState(assets);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => initialSelectedAssets(assets, workflowFor(initialApp)));
-  const [message, setMessage] = useState("Choose a theme, confirm material rules, then start a private request.");
+  const [message, setMessage] = useState("Choose a package, select source photos, then start a private album request.");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
   const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
@@ -522,7 +522,7 @@ export function JobCreateForm({
 
   function updateCreateMode(nextMode: CreateMode) {
     setCreateMode(nextMode);
-    setMessage(nextMode === "theme" ? "Choose a theme, confirm material rules, then start a private request." : "Describe the tool result you want, attach source photos, then start a private request.");
+    setMessage(nextMode === "theme" ? "Choose a package, select source photos, then start a private album request." : "Describe the result you want, attach source photos, then start a private request.");
     setFormValues((current) => {
       if (nextMode === "theme") {
         const next: Record<string, string | number | boolean> = { ...current, outputCount: themeOutputCount };
@@ -555,7 +555,7 @@ export function JobCreateForm({
       ...current,
       [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || preset.prompt)
     }));
-    setMessage("Describe the tool result you want, attach source photos, then start a private request.");
+    setMessage("Describe the result you want, attach source photos, then start a private request.");
   }
 
   function updateThemeCategory(nextCategory: string) {
@@ -685,8 +685,8 @@ export function JobCreateForm({
           <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
           <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
             {createMode === "theme"
-              ? "Photo packages lock the theme direction, preview look, output target, and source photo rules."
-              : "Tools let you describe the result with a prompt while using the site's enabled AI workflow."}
+              ? "Photo packages set the style direction, estimated outputs, credit use, and source-photo needs."
+              : "Tools use your source photos and notes to create a focused private result."}
           </p>
         </div>
         <div className={`inline-flex w-fit max-w-full rounded-full border p-1 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#f8f1e6]" : "border-white/10 bg-white/[0.04]"}`}>
@@ -843,7 +843,7 @@ export function JobCreateForm({
             value={themeOutputCount}
           />
         </label>
-        <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>Default is 5 images. Edit this number when the request should record a different estimated delivery count.</p>
+        <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>Default is 5 images. Adjust this number if you want the request to estimate a different delivery count.</p>
       </div>
       {createMode === "tool" ? (
       <div className="grid gap-4 md:grid-cols-2">

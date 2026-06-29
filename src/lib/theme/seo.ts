@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
-import { getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
@@ -15,6 +15,10 @@ function pickText(...values: Array<string | undefined>): string {
     if (text) return text;
   }
   return "";
+}
+
+function pickSettingText(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
 }
 
 function stripHomeSlug(slug: string): string {
@@ -70,7 +74,8 @@ function siteBaseUrl(site: Site): string {
 
 function policySeoForSite(site: Site, slug: string) {
   const siteToken = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name}`.toLowerCase();
-  if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot") && !siteToken.includes("aidreamcapes")) return undefined;
+  if (siteToken.includes("aidreamcapes")) return getAidreamcapesPolicySeo(slug);
+  if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot")) return undefined;
   return getMydreamshootsPolicySeo(slug);
 }
 
@@ -126,6 +131,14 @@ function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefi
   if (optimizedValue.startsWith("http://") || optimizedValue.startsWith("https://")) return optimizedValue;
   const base = siteBaseUrl(site).replace(/\/$/, "");
   return `${base}${optimizedValue.startsWith("/") ? optimizedValue : `/${optimizedValue}`}`;
+}
+
+function siteIconUrl(site: Site): string | undefined {
+  const settings = site.themeSettings?.publishedJson;
+  const headerLogo = pickSettingText(settings?.globalSections?.header?.settings?.logoImageUrl);
+  const footerLogo = pickSettingText(settings?.globalSections?.footer?.settings?.logoImageUrl);
+  const brandingLogo = (site.branding as { logoImageUrl?: string }).logoImageUrl;
+  return absoluteUrl(site, pickText(headerLogo, brandingLogo, footerLogo));
 }
 
 function preferOptimizedShareImage(pathOrUrl: string): string {
@@ -219,6 +232,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
+  const icon = siteIconUrl(site);
 
   return {
     title,
@@ -241,7 +255,8 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
       title,
       description,
       images: ogImage ? [ogImage] : undefined
-    }
+    },
+    icons: icon ? { icon, shortcut: icon, apple: icon } : undefined
   };
 }
 
@@ -281,6 +296,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
+  const icon = siteIconUrl(site);
 
   return {
     title,
@@ -303,7 +319,8 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
       title,
       description,
       images: ogImage ? [ogImage] : undefined
-    }
+    },
+    icons: icon ? { icon, shortcut: icon, apple: icon } : undefined
   };
 }
 

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
@@ -32,9 +33,14 @@ export default async function PricingPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
-  redirectLegacySiteSlug(siteSlug, "/pricing");
+  const headerStore = await headers();
+  const publicSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: "/pricing",
+    siteSlug
+  });
   const query = searchParams ? await searchParams : {};
-  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/pricing");
+  const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, "/pricing");
   const site = state?.sites[0];
   if (!state) notFound();
   if (!site) notFound();

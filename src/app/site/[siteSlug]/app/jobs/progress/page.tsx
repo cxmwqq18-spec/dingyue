@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
@@ -9,7 +9,7 @@ import { renderCustomerWorkspacePage } from "@/lib/storefront-render";
 import { customerSessionCookie } from "@/lib/session";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -24,8 +24,13 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
 
 export default async function CustomerJobProgressPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  redirectLegacySiteSlug(siteSlug, "/app/jobs/progress");
-  const publicState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
+  const headerStore = await headers();
+  const publicSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: "/app/jobs/progress",
+    siteSlug
+  });
+  const publicState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, "/app/jobs/progress");
   const publicSite = publicState?.sites[0];
   if (!publicSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(publicSite.id))?.value;

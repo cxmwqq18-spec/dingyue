@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
@@ -9,7 +9,7 @@ import { renderCustomerJobDetailPage } from "@/lib/storefront-render";
 import { customerSessionCookie } from "@/lib/session";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { redirectLegacySiteSlug } from "@/lib/site-route-canonical";
+import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
 const jobDetailSlug = "/app/jobs/detail";
 
@@ -34,9 +34,14 @@ export default async function JobDetailPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, jobId } = await params;
-  redirectLegacySiteSlug(siteSlug, `/app/jobs/${jobId}`);
+  const headerStore = await headers();
+  const publicSlug = redirectPublicSitePathToCanonicalHost({
+    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+    pathname: `/app/jobs/${jobId}`,
+    siteSlug
+  });
   const query = searchParams ? await searchParams : {};
-  const publicState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, jobDetailSlug);
+  const publicState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, jobDetailSlug);
   const publicSite = publicState?.sites[0];
   if (!publicSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(publicSite.id))?.value;
