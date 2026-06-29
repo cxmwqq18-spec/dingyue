@@ -485,7 +485,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
   const isAidreamcapes = isAidreamcapesSite(site);
-  const darkHeaderControls = dark || (isDreamShoot && pagePath === "/login");
+  const darkHeaderControls = dark || isDreamShoot;
   const airyCommerceHeader = lightCommerce || isAidreamcapes;
   const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
