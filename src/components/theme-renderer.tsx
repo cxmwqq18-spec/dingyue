@@ -1349,6 +1349,15 @@ function priceMetaString(price: SiteProduct["prices"][number] | undefined, key: 
   return fallback;
 }
 
+function priceMetaLines(price: SiteProduct["prices"][number] | undefined, key: string): string[] {
+  const raw = price?.metadata?.[key];
+  if (typeof raw !== "string") return [];
+  return raw
+    .split(/\r?\n/g)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 function priceMetaBool(price: SiteProduct["prices"][number] | undefined, key: string, fallback: boolean): boolean {
   const raw = price?.metadata?.[key];
   if (typeof raw === "boolean") return raw;
@@ -7143,7 +7152,29 @@ function SectionView({
       displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
       displayProducts.find((product) => priceMetaBool(productPrice(product), "featured", false))?.id ??
       displayProducts[0]?.id;
+    const featuredProduct = displayProducts.find((product) => product.id === featuredProductId);
+    const featuredPrice = featuredProduct ? productPrice(featuredProduct) : undefined;
     const pricingImage = mediaAssetUrl(site, setting(section, "backgroundImage", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"));
+    const sidePanelEyebrow = priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe"));
+    const sidePanelTitle = priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."));
+    const sidePanelBody = priceMetaString(
+      featuredPrice,
+      "sidePanelBody",
+      setting(section, "sidePanelBody", "Customers can start with a monthly plan, test multiple styles, and only top up when they need extra runs for a new occasion.")
+    );
+    const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
+      .map((line) => {
+        const [label, ...detailParts] = line.split("|").map((part) => part.trim());
+        return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
+      })
+      .filter((item): item is readonly [string, string] => Boolean(item));
+    const sidePanelItems = configuredSideItems.length
+      ? configuredSideItems
+      : [
+          ["Starter", aidreamcapes ? "Best for one focused profile story, soft glam, or travel set." : "Best for one focused headshot, portrait, or travel set."],
+          ["Popular", "Balanced for buyers comparing several package looks."],
+          ["Premium", "Highest credit volume for repeat campaigns and add-ons."]
+        ];
     return (
       <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712]" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
         <div className="absolute inset-0">
@@ -7193,11 +7224,23 @@ function SectionView({
                   "editingLabel",
                   product.name === "Premium" || product.name === "Deluxe" ? "Advanced editing" : "Basic editing"
                 );
+                const defaultFeatures = [
+                  `${price.creditsGranted} credits included`,
+                  `${photos} AI-generated photos`,
+                  destinations >= 999 ? "Unlimited destinations / styles" : `${destinations} destinations / styles`,
+                  "High-resolution images",
+                  `${deliveryDays}-day delivery`,
+                  editingLabel
+                ];
+                const featureLines = priceMetaLines(price, "featuresText");
+                const features = featureLines.length ? featureLines : defaultFeatures;
+                const badgeLabel = priceMetaString(price, "badgeLabel", setting(section, "featuredBadgeLabel", "Most Popular"));
+                const buttonLabel = priceMetaString(price, "buttonLabel", "Select plan");
                 return (
                   <div className={`relative flex h-full flex-col rounded-[12px] border ${featured ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`} key={product.id}>
                     {featured ? (
                       <div className="absolute left-5 top-5 rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
-                        {setting(section, "featuredBadgeLabel", "Most Popular")}
+                        {badgeLabel}
                       </div>
                     ) : null}
                     <p className={`${featured ? "mt-12" : "mt-2"} text-[1.72rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)]`}>{product.name}</p>
@@ -7213,37 +7256,33 @@ function SectionView({
                       </div>
                     ) : null}
                     <div className="mt-6 grid gap-2.5 text-[0.88rem] text-[#4f4944]">
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>{price.creditsGranted} credits included</span></div>
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>{photos} AI-generated photos</span></div>
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>{destinations >= 999 ? "Unlimited destinations / styles" : `${destinations} destinations / styles`}</span></div>
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>High-resolution images</span></div>
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>{deliveryDays}-day delivery</span></div>
-                      <div className="flex items-start gap-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span>{editingLabel}</span></div>
+                      {features.map((feature, index) => (
+                        <div className="flex items-start gap-3" key={`${feature}_${index}`}>
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
                     </div>
                     <Link className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold transition hover:-translate-y-0.5 ${featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={hrefFor(site, `/cart?product=${product.id}&price=${price.id}`)}>
-                      Select plan
+                      {buttonLabel}
                     </Link>
                   </div>
                 );
               })}
             </div>
-            <div className="relative hidden min-h-[430px] xl:block" aria-hidden="true">
+            <div className="relative hidden min-h-[430px] xl:block">
               <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-[#E3D3BE] bg-[#FBF3E4] p-6 shadow-[0_28px_80px_-58px_rgba(70,46,24,0.28)]" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
                 <div>
-                  <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">Why people subscribe</p>
+                  <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">{sidePanelEyebrow}</p>
                   <h3 className="mt-3 max-w-[14ch] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
-                    Credits stay predictable while packs stay flexible.
+                    {sidePanelTitle}
                   </h3>
                   <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-[#6F6257]" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
-                    Customers can start with a monthly plan, test multiple styles, and only top up when they need extra runs for a new occasion.
+                    {sidePanelBody}
                   </p>
                 </div>
                 <div className="grid gap-3">
-                  {[
-                    ["Starter", "Best for one focused headshot, portrait, or travel set."],
-                    ["Popular", "Balanced for buyers comparing several package looks."],
-                    ["Premium", "Highest credit volume for repeat campaigns and add-ons."]
-                  ].map(([label, detail]) => (
+                  {sidePanelItems.map(([label, detail]) => (
                     <div className={aidreamcapes ? "rounded-[16px] border border-[#E3D3BE] bg-white px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
                       <p className={aidreamcapes ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{label}</p>
                       <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-[#6F6257]" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>

@@ -23,13 +23,54 @@ type ProductDraft = {
   price: PriceDraft;
 };
 
+const textMetadataFields = new Set([
+  "revisions",
+  "planSubtitle",
+  "featuresText",
+  "badgeLabel",
+  "editingLabel",
+  "buttonLabel",
+  "sidePanelEyebrow",
+  "sidePanelTitle",
+  "sidePanelBody",
+  "sidePanelItemsText"
+]);
+
 function normalizeMetadata(metadata?: Price["metadata"]): Record<string, string | number | boolean> {
   return {
     generatedPhotos: typeof metadata?.generatedPhotos === "number" ? metadata.generatedPhotos : 0,
     destinationCount: typeof metadata?.destinationCount === "number" ? metadata.destinationCount : 0,
     deliveryDays: typeof metadata?.deliveryDays === "number" ? metadata.deliveryDays : 0,
     revisions: typeof metadata?.revisions === "string" ? metadata.revisions : "",
+    planSubtitle: typeof metadata?.planSubtitle === "string" ? metadata.planSubtitle : "",
+    featuresText: typeof metadata?.featuresText === "string" ? metadata.featuresText : "",
+    badgeLabel: typeof metadata?.badgeLabel === "string" ? metadata.badgeLabel : "",
+    editingLabel: typeof metadata?.editingLabel === "string" ? metadata.editingLabel : "",
+    buttonLabel: typeof metadata?.buttonLabel === "string" ? metadata.buttonLabel : "",
+    sidePanelEyebrow: typeof metadata?.sidePanelEyebrow === "string" ? metadata.sidePanelEyebrow : "",
+    sidePanelTitle: typeof metadata?.sidePanelTitle === "string" ? metadata.sidePanelTitle : "",
+    sidePanelBody: typeof metadata?.sidePanelBody === "string" ? metadata.sidePanelBody : "",
+    sidePanelItemsText: typeof metadata?.sidePanelItemsText === "string" ? metadata.sidePanelItemsText : "",
     featured: typeof metadata?.featured === "boolean" ? metadata.featured : false
+  };
+}
+
+function defaultMetadata(): Record<string, string | number | boolean> {
+  return {
+    generatedPhotos: 0,
+    destinationCount: 0,
+    deliveryDays: 0,
+    revisions: "",
+    planSubtitle: "",
+    featuresText: "",
+    badgeLabel: "",
+    editingLabel: "",
+    buttonLabel: "",
+    sidePanelEyebrow: "",
+    sidePanelTitle: "",
+    sidePanelBody: "",
+    sidePanelItemsText: "",
+    featured: false
   };
 }
 
@@ -43,13 +84,7 @@ function createDraftPrice(product: Product): PriceDraft {
     interval,
     creditsGranted: 0,
     stripePriceId: "",
-    metadata: {
-      generatedPhotos: 0,
-      destinationCount: 0,
-      deliveryDays: 0,
-      revisions: "",
-      featured: false
-    }
+    metadata: defaultMetadata()
   };
 }
 
@@ -65,13 +100,7 @@ function createDraftProduct(): ProductDraft {
       interval: "month",
       creditsGranted: 0,
       stripePriceId: "",
-      metadata: {
-        generatedPhotos: 0,
-        destinationCount: 0,
-        deliveryDays: 0,
-        revisions: "",
-        featured: false
-      }
+      metadata: defaultMetadata()
     }
   };
 }
@@ -124,7 +153,7 @@ function updatePriceMetadata(price: Price, field: string, value: string | boolea
     ...price,
     metadata: {
       ...metadata,
-      [field]: typeof value === "boolean" ? value : field === "revisions" ? value : numberValue(value)
+      [field]: typeof value === "boolean" ? value : textMetadataFields.has(field) ? value : numberValue(value)
     }
   };
 }
@@ -134,7 +163,7 @@ function updateDraftMetadata(draft: PriceDraft, field: string, value: string | b
     ...draft,
     metadata: {
       ...draft.metadata,
-      [field]: typeof value === "boolean" ? value : field === "revisions" ? value : numberValue(value)
+      [field]: typeof value === "boolean" ? value : textMetadataFields.has(field) ? value : numberValue(value)
     }
   };
 }
@@ -383,6 +412,15 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           destinationCount: price.metadata?.destinationCount ?? 0,
           deliveryDays: price.metadata?.deliveryDays ?? 0,
           revisions: price.metadata?.revisions ?? "",
+          planSubtitle: price.metadata?.planSubtitle ?? "",
+          featuresText: price.metadata?.featuresText ?? "",
+          badgeLabel: price.metadata?.badgeLabel ?? "",
+          editingLabel: price.metadata?.editingLabel ?? "",
+          buttonLabel: price.metadata?.buttonLabel ?? "",
+          sidePanelEyebrow: price.metadata?.sidePanelEyebrow ?? "",
+          sidePanelTitle: price.metadata?.sidePanelTitle ?? "",
+          sidePanelBody: price.metadata?.sidePanelBody ?? "",
+          sidePanelItemsText: price.metadata?.sidePanelItemsText ?? "",
           featured: price.metadata?.featured ?? false
         }))
       ),
@@ -402,6 +440,15 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
         "destinationCount",
         "deliveryDays",
         "revisions",
+        "planSubtitle",
+        "featuresText",
+        "badgeLabel",
+        "editingLabel",
+        "buttonLabel",
+        "sidePanelEyebrow",
+        "sidePanelTitle",
+        "sidePanelBody",
+        "sidePanelItemsText",
         "featured"
       ]
     );
@@ -432,7 +479,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
         <div className="grid gap-3 text-[12px] leading-5 text-[#35507a] md:grid-cols-3">
           <div>
             <p className="font-semibold text-[#1d4ed8]">这个模块维护什么</p>
-            <p className="mt-1">前台价格卡、结账金额、购买后到账积分。</p>
+            <p className="mt-1">前台价格卡、套餐文案、结账金额、购买后到账积分。</p>
           </div>
           <div>
             <p className="font-semibold text-[#1d4ed8]">推荐操作顺序</p>
@@ -495,6 +542,14 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           <label className="block">
             {fieldLabel("可选目的地数")}
             <input className="inputtext w-full" onChange={(event) => updateProductDraftMeta("destinationCount", event.target.value)} value={String(productDraft.price.metadata.destinationCount ?? 0)} />
+          </label>
+          <label className="block md:col-span-2">
+            {fieldLabel("前台套餐描述")}
+            <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateProductDraftMeta("planSubtitle", event.target.value)} value={String(productDraft.price.metadata.planSubtitle ?? "")} />
+          </label>
+          <label className="block md:col-span-2">
+            {fieldLabel("前台卖点列表（每行一条，留空则使用系统默认卖点）")}
+            <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateProductDraftMeta("featuresText", event.target.value)} value={String(productDraft.price.metadata.featuresText ?? "")} />
           </label>
         </div>
         <div className="mt-4 flex justify-end border-t border-[#eef2f6] pt-4">
@@ -605,6 +660,47 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       {fieldLabel("修改/重修规则")}
                       <input className="inputtext w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "revisions", event.target.value)} value={String(price.metadata?.revisions ?? "")} />
                     </label>
+                    <label className="block">
+                      {fieldLabel("角标文案")}
+                      <input className="inputtext w-full" placeholder="例如 Most Popular" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "badgeLabel", event.target.value)} value={String(price.metadata?.badgeLabel ?? "")} />
+                    </label>
+                    <label className="block">
+                      {fieldLabel("按钮文案")}
+                      <input className="inputtext w-full" placeholder="例如 Select plan" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "buttonLabel", event.target.value)} value={String(price.metadata?.buttonLabel ?? "")} />
+                    </label>
+                    <label className="block">
+                      {fieldLabel("编辑权益文案")}
+                      <input className="inputtext w-full" placeholder="例如 Basic editing" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "editingLabel", event.target.value)} value={String(price.metadata?.editingLabel ?? "")} />
+                    </label>
+                    <label className="block md:col-span-2">
+                      {fieldLabel("前台套餐描述")}
+                      <textarea className="inputtext min-h-[74px] w-full" placeholder="显示在套餐标题下方的描述。" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "planSubtitle", event.target.value)} value={String(price.metadata?.planSubtitle ?? "")} />
+                    </label>
+                    <label className="block md:col-span-2">
+                      {fieldLabel("前台卖点列表（每行一条，留空则使用系统默认卖点）")}
+                      <textarea className="inputtext min-h-[120px] w-full" placeholder={"200 credits included\n15 AI-generated photos\nHigh-resolution images"} onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "featuresText", event.target.value)} value={String(price.metadata?.featuresText ?? "")} />
+                    </label>
+                    <div className="md:col-span-2 rounded-[12px] border border-[#e8eef7] bg-[#fbfdff] p-3">
+                      <p className="text-[12px] font-semibold text-[#344054]">右侧说明区文案（可选，通常填在主推套餐价格里）</p>
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                        <label className="block">
+                          {fieldLabel("说明区小标题")}
+                          <input className="inputtext w-full" placeholder="Why people subscribe" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelEyebrow", event.target.value)} value={String(price.metadata?.sidePanelEyebrow ?? "")} />
+                        </label>
+                        <label className="block">
+                          {fieldLabel("说明区标题")}
+                          <input className="inputtext w-full" placeholder="Credits stay predictable..." onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelTitle", event.target.value)} value={String(price.metadata?.sidePanelTitle ?? "")} />
+                        </label>
+                        <label className="block md:col-span-2">
+                          {fieldLabel("说明区正文")}
+                          <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelBody", event.target.value)} value={String(price.metadata?.sidePanelBody ?? "")} />
+                        </label>
+                        <label className="block md:col-span-2">
+                          {fieldLabel("说明区条目（每行：标题 | 描述）")}
+                          <textarea className="inputtext min-h-[96px] w-full" placeholder={"Starter | Best for one focused headshot.\nPopular | Balanced for comparing package looks."} onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelItemsText", event.target.value)} value={String(price.metadata?.sidePanelItemsText ?? "")} />
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-[#eef2f6] pt-4">
@@ -676,6 +772,26 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                   <label className="block">
                     {fieldLabel("修改/重修规则")}
                     <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "revisions", event.target.value)} value={String(activeDraft?.metadata.revisions ?? "")} />
+                  </label>
+                  <label className="block">
+                    {fieldLabel("角标文案")}
+                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "badgeLabel", event.target.value)} value={String(activeDraft?.metadata.badgeLabel ?? "")} />
+                  </label>
+                  <label className="block">
+                    {fieldLabel("按钮文案")}
+                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "buttonLabel", event.target.value)} value={String(activeDraft?.metadata.buttonLabel ?? "")} />
+                  </label>
+                  <label className="block">
+                    {fieldLabel("编辑权益文案")}
+                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "editingLabel", event.target.value)} value={String(activeDraft?.metadata.editingLabel ?? "")} />
+                  </label>
+                  <label className="block md:col-span-2">
+                    {fieldLabel("前台套餐描述")}
+                    <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "planSubtitle", event.target.value)} value={String(activeDraft?.metadata.planSubtitle ?? "")} />
+                  </label>
+                  <label className="block md:col-span-2">
+                    {fieldLabel("前台卖点列表（每行一条）")}
+                    <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "featuresText", event.target.value)} value={String(activeDraft?.metadata.featuresText ?? "")} />
                   </label>
                 </div>
 
