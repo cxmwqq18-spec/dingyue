@@ -2620,12 +2620,15 @@ function DreamShootMegaToolsPanel({
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
   const extraCategories = categories.filter((category) => !orderedCategories.includes(category));
-  const displayCategories = [...orderedCategories, ...extraCategories].slice(0, 3);
-  const groupedCategories = displayCategories.map((category) => ({
+  const allCategories = [...orderedCategories, ...extraCategories];
+  const summaryCategories = (variant === "popover" ? allCategories : allCategories.slice(0, 3)).slice(0, 3);
+  const groupedCategories = allCategories.map((category) => ({
     category,
     items: tools.filter((tool) => blockValue(tool, "category", "Photo AI") === category),
     meta: dreamshootMegaCategoryMeta(category)
   })).map((group) => ({ ...group, meta: dreamshootToolGroupMeta(group.category, group.items) }));
+  const summaryGroups = groupedCategories.filter((group) => summaryCategories.includes(group.category));
+  const detailGroups = variant === "section" ? groupedCategories : summaryGroups;
   return (
     <div
       className={
@@ -2640,7 +2643,7 @@ function DreamShootMegaToolsPanel({
         Studio tools
       </div>
       <div className="flex flex-wrap items-stretch gap-3">
-        {groupedCategories.map((group, index) => {
+        {summaryGroups.map((group, index) => {
           const Icon = group.meta.icon;
           const featuredTool = group.items[0];
           return (
@@ -2671,7 +2674,7 @@ function DreamShootMegaToolsPanel({
         })}
       </div>
       <div className={warm ? "mt-5 grid gap-6 border-t border-[#eadfce] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]" : "mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]"}>
-        {groupedCategories.map((group, categoryIndex) => {
+        {detailGroups.map((group, categoryIndex) => {
           return (
             <div key={`mega_group_${group.category}`} id={slugify(group.category)}>
               <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: warm ? aidreamcapesCopper : group.meta.accent }}>
@@ -6691,7 +6694,8 @@ function SectionView({
     ];
     const tools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
     const configuredCategories = listLines(setting(section, "categories", "AI Photo Edit|AI Photo|AI Video"));
-    const categories = configuredCategories.length ? configuredCategories : Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "AI Photo"))));
+    const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "AI Photo"))));
+    const categories = Array.from(new Set([...configuredCategories, ...toolCategories]));
     const layout = setting(section, "layout", "directory");
     const dark = layout === "dark" && !aidreamcapes;
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
