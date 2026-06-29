@@ -25,7 +25,7 @@ function envInt(name: string, fallback: number): number {
 const adminListTake = envInt("SITE_ADMIN_LIST_TAKE", 50);
 const adminActivityTake = envInt("SITE_ADMIN_ACTIVITY_TAKE", 80);
 const adminAiAppListTake = envInt("SITE_ADMIN_AI_APP_LIST_TAKE", 100);
-const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
+const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
 
 type JobCountRow = { status: string; _count?: true | { _all?: number } };
 
@@ -161,9 +161,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, payload);
   }
 
-  const payload = await perf.measure("cache", () => aiPageCache.get(`${detail}:${siteId}:${jobTake}:${jobCursor ?? "first"}`, async () => {
-    await perf.measure("tool-taxonomy", () => ensureDefaultToolMenuTaxonomy(siteId));
-    const [apps, toolCategories, toolMenuItems, jobCounts, gateway, jobs, customers, platformAiApps, platformAiProviders] = await perf.measure("db", () => runDbTasks([
+  const cacheKey = detail === "summary" ? `summary:${siteId}` : `${detail}:${siteId}:${jobTake}:${jobCursor ?? "first"}`;
+  const payload = await perf.measure("cache", () => aiPageCache.get(cacheKey, async () => {
+    const [apps, initialToolCategories, initialToolMenuItems, jobCounts, gateway, jobs, customers, platformAiApps, platformAiProviders] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteAiApp.findMany({
         where: { siteId },
         select: {
@@ -238,6 +238,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         : () => Promise.resolve([]),
       () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
     ], siteAdminReadConcurrency));
+
+    let toolCategories = initialToolCategories;
+    let toolMenuItems = initialToolMenuItems;
+    if (toolCategories.length === 0 || toolMenuItems.length === 0) {
+      await perf.measure("tool-taxonomy", () => ensureDefaultToolMenuTaxonomy(siteId));
+      [toolCategories, toolMenuItems] = await perf.measure("tool-taxonomy-read", () => runDbTasks([
+        () => readToolCategories(siteId),
+        () => readToolMenuItems(siteId)
+      ], 2));
+    }
 
     const visibleJobs = detail === "jobs" ? jobs.slice(0, jobTake) : jobs;
     const mappedJobs = visibleJobs.map(mapJobListItemForAdmin);

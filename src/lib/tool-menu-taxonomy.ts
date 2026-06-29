@@ -92,16 +92,32 @@ function siteToolBlocks(site: {
     });
 }
 
-export async function ensureDefaultToolMenuTaxonomy(siteId: string) {
-  if (preparedDefaultToolTaxonomySites.has(siteId)) return;
-  let existing = 0;
+type EnsureDefaultToolMenuTaxonomyOptions = {
+  backfillIcons?: boolean;
+  force?: boolean;
+};
+
+export async function ensureDefaultToolMenuTaxonomy(siteId: string, options: EnsureDefaultToolMenuTaxonomyOptions = {}) {
+  if (!options.force && preparedDefaultToolTaxonomySites.has(siteId)) return;
+  let existingCategories = 0;
+  let existingMenuItems = 0;
   try {
-    existing = await prisma.toolCategory.count({ where: { siteId } });
+    [existingCategories, existingMenuItems] = await Promise.all([
+      prisma.toolCategory.count({ where: { siteId } }),
+      prisma.toolMenuItem.count({ where: { siteId } })
+    ]);
   } catch (error) {
     if (isMissingToolMenuTableError(error)) return;
     throw error;
   }
-  if (existing > 0) await backfillToolCategoryIcons(siteId);
+
+  if (!options.force && (existingCategories > 0 || existingMenuItems > 0)) {
+    if (options.backfillIcons) await backfillToolCategoryIcons(siteId);
+    preparedDefaultToolTaxonomySites.add(siteId);
+    return;
+  }
+
+  if (options.force && options.backfillIcons && existingCategories > 0) await backfillToolCategoryIcons(siteId);
   const site = await prisma.site.findUnique({
     where: { id: siteId },
     select: {

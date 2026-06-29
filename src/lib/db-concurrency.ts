@@ -2,7 +2,7 @@ import "server-only";
 
 import { createAdminPerfTracker, isAdminPerfEnabled } from "@/lib/admin-perf";
 
-const defaultDbConcurrency = Number(process.env.ADMIN_DB_QUERY_CONCURRENCY ?? 4);
+const defaultDbConcurrency = Number(process.env.ADMIN_DB_QUERY_CONCURRENCY ?? 2);
 
 const globalForDbConcurrency = globalThis as unknown as {
   adminDbTaskQueue?: {

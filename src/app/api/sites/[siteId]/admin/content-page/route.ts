@@ -21,7 +21,7 @@ function envInt(name: string, fallback: number): number {
   return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
 }
 
-const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
+const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
 const adminContentPageTake = envInt("SITE_ADMIN_CONTENT_PAGE_TAKE", 100);
 const adminDomainListTake = envInt("SITE_ADMIN_DOMAIN_LIST_TAKE", 50);
 const adminPackListTake = envInt("SITE_ADMIN_PACK_LIST_TAKE", 100);

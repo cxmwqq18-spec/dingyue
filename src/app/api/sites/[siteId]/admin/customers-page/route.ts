@@ -24,7 +24,7 @@ const adminCustomerAssetTake = envInt("SITE_ADMIN_CUSTOMER_ASSET_TAKE", 80);
 const adminCustomerListTake = envInt("SITE_ADMIN_CUSTOMER_LIST_TAKE", 50);
 const adminPackListTake = envInt("SITE_ADMIN_PACK_LIST_TAKE", 100);
 const adminSiteAdminListTake = envInt("SITE_ADMIN_SITE_ADMIN_LIST_TAKE", 50);
-const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
+const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
 
 type CustomersPageDetail = "all" | "customers" | "models" | "delivery" | "assets";
 

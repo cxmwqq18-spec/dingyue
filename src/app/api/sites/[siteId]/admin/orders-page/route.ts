@@ -26,7 +26,7 @@ function envInt(name: string, fallback: number): number {
 }
 
 const adminListTake = envInt("SITE_ADMIN_LIST_TAKE", 50);
-const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 4);
+const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
 
 function normalizeOrdersTab(value: string | null): OrdersTab {
   if (value === "orders" || value === "subscriptions" || value === "ledger" || value === "events") return value;
