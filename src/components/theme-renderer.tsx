@@ -485,6 +485,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
   const isAidreamcapes = isAidreamcapesSite(site);
+  const darkHeaderControls = dark || (isDreamShoot && pagePath === "/login");
   const airyCommerceHeader = lightCommerce || isAidreamcapes;
   const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
@@ -657,7 +658,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	            );
           })}
         </nav>
-        <div className="flex items-center justify-end gap-3">
+        <div className={darkHeaderControls ? "flex items-center justify-end gap-1.5 rounded-full border border-white/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0" : "flex items-center justify-end gap-1.5 rounded-full border border-black/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0"}>
           {customer ? (
             <div className={dark ? "hidden shrink-0 items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex"}>
               <HeaderLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
@@ -679,34 +680,44 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               </form>
             </div>
           ) : (
-            <HeaderLink
-              className={
-                dark
-                  ? isDreamShoot
-                    ? "hidden rounded-[18px] border border-white/14 bg-white/[0.045] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.08] active:scale-[0.98] lg:inline-flex"
-                    : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
-                  : lightCommerce
-                    ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
-                    : "rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98]"
-              }
-              href={hrefFor(site, ctaHref)}
-              style={isDreamShoot && dark ? { background: dreamshootBrandGradient } : dark || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
-            >
-              {ctaLabel}
-            </HeaderLink>
+            <>
+              <HeaderLink
+                aria-label={ctaLabel}
+                className={darkHeaderControls ? "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/14 bg-transparent text-white transition hover:bg-white/[0.08] active:scale-[0.98] lg:hidden" : "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/10 bg-transparent text-[#171514] transition hover:bg-black/[0.04] active:scale-[0.98] lg:hidden"}
+                href={hrefFor(site, ctaHref)}
+                title={ctaLabel}
+              >
+                <UserRound className="h-5 w-5" strokeWidth={1.9} />
+              </HeaderLink>
+              <HeaderLink
+                className={
+                  darkHeaderControls
+                    ? isDreamShoot
+                      ? "hidden rounded-[18px] border border-white/80 bg-white px-5 py-2.5 text-sm font-semibold text-[#171514] shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white hover:bg-white/90 active:scale-[0.98] lg:inline-flex"
+                      : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
+                    : lightCommerce
+                      ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
+                      : "hidden rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98] lg:inline-flex"
+                }
+                href={hrefFor(site, ctaHref)}
+                style={isDreamShoot && darkHeaderControls ? undefined : darkHeaderControls || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
+              >
+                {ctaLabel}
+              </HeaderLink>
+            </>
           )}
           {links.length ? (
             <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
               <summary
                 aria-label={mobileLabel}
                 className={
-                  dark
-                    ? "relative z-[90] flex list-none items-center gap-2 rounded-[14px] border border-white/20 bg-white/[0.08] px-4 py-3 text-sm font-medium text-white shadow-[0_16px_44px_-34px_rgba(0,0,0,0.55)] backdrop-blur"
-                    : "relative z-[90] flex list-none items-center gap-2 rounded-[14px] border border-[#ddd0c2] bg-white px-4 py-3 text-sm font-medium text-[#171514] shadow-[0_16px_44px_-34px_rgba(20,22,26,0.28)]"
+                  darkHeaderControls
+                    ? "relative z-[90] grid h-11 w-11 list-none place-items-center rounded-full border border-white/14 bg-transparent text-white transition hover:bg-white/[0.08]"
+                    : "relative z-[90] grid h-11 w-11 list-none place-items-center rounded-full border border-black/10 bg-transparent text-[#171514] transition hover:bg-black/[0.04]"
                 }
+                title={mobileLabel}
               >
-                {mobileLabel}
-                <Menu className="h-4 w-4" strokeWidth={1.8} />
+                <Menu className="h-5 w-5" strokeWidth={1.9} />
               </summary>
               <div
                 aria-hidden="true"
