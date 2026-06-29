@@ -1005,7 +1005,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       )
     : undefined;
   const matched = isAidreamcapes
-    ? Boolean(menuTool || page || directApp || (aidreamcapesAliasTarget && (themeToolBlock || directApp || page)))
+    ? Boolean(menuTool || page || directApp || (!aidreamcapesAliasTarget && themeToolBlock))
     : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
