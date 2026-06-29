@@ -7160,7 +7160,7 @@ function SectionView({
     const sidePanelBody = priceMetaString(
       featuredPrice,
       "sidePanelBody",
-      setting(section, "sidePanelBody", "Customers can start with a monthly plan, test multiple styles, and only top up when they need extra runs for a new occasion.")
+      setting(section, "sidePanelBody", "Customers can generate private photo albums in minutes, keep credits predictable, and top up only when they need more runs.")
     );
     const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
       .map((line) => {
@@ -7171,9 +7171,9 @@ function SectionView({
     const sidePanelItems = configuredSideItems.length
       ? configuredSideItems
       : [
-          ["Starter", aidreamcapes ? "Best for one focused profile story, soft glam, or travel set." : "Best for one focused headshot, portrait, or travel set."],
-          ["Popular", "Balanced for buyers comparing several package looks."],
-          ["Premium", "Highest credit volume for repeat campaigns and add-ons."]
+          ["Starter", aidreamcapes ? "Best for quick profile stories, soft-glam edits, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
+          ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
+          ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
         ];
     return (
       <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712]" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
@@ -7203,9 +7203,7 @@ function SectionView({
               {displayProducts.slice(0, 3).map((product) => {
                 const price = productPrice(product);
                 if (!price) return null;
-                const deliveryDays = priceMetaNumber(price, "deliveryDays", product.name === "Deluxe" ? 1 : product.name === "Premium" ? 2 : 3);
                 const destinations = priceMetaNumber(price, "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
-                const photos = priceMetaNumber(price, "generatedPhotos", product.name === "Deluxe" ? 60 : product.name === "Premium" ? 30 : 15);
                 const featured = product.id === featuredProductId;
                 const pricePeriod = price.interval === "month" ? "/ month" : "one-time";
                 const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
@@ -7219,18 +7217,17 @@ function SectionView({
                       ? "Compare several package styles with room for reruns"
                       : "More monthly credits for premium packs, video add-ons, and repeat campaigns"
                 );
-                const editingLabel = priceMetaString(
-                  price,
-                  "editingLabel",
-                  product.name === "Premium" || product.name === "Deluxe" ? "Advanced editing" : "Basic editing"
-                );
                 const defaultFeatures = [
-                  `${price.creditsGranted} credits included`,
-                  `${photos} AI-generated photos`,
-                  destinations >= 999 ? "Unlimited destinations / styles" : `${destinations} destinations / styles`,
-                  "High-resolution images",
-                  `${deliveryDays}-day delivery`,
-                  editingLabel
+                  `${price.creditsGranted} AI photo credits`,
+                  "Create photo albums in minutes",
+                  "AI Photo Editor with prompts",
+                  "Special AI photo filters",
+                  "Create photos by writing prompts in seconds",
+                  "Create AI videos",
+                  "Magic Upscaler for high-res images",
+                  "No watermark",
+                  ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
+                  ...(destinations >= 999 ? ["Unlimited style directions"] : [])
                 ];
                 const featureLines = priceMetaLines(price, "featuresText");
                 const features = featureLines.length ? featureLines : defaultFeatures;
