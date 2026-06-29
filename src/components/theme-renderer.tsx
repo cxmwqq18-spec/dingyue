@@ -161,8 +161,7 @@ export function ThemeRenderer({
   };
   return (
     <div
-      className="notranslate bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
-      translate={mode === "published" ? "no" : undefined}
+      className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
       suppressHydrationWarning={mode === "published"}
     >
       {mode === "published"
