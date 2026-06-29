@@ -134,6 +134,7 @@ await app.prepare();
 
 createServer(async (request, response) => {
   try {
+    request.headers["accept-encoding"] = "identity";
     interceptHtmlResponse(response);
     await handle(request, response);
   } catch (error) {
