@@ -6,7 +6,7 @@
     "dev": "NEXT_DIST_DIR=.next-dev next dev",
     "dev:3002": "NEXT_DIST_DIR=.next-3002 next dev -p 3002",
     "build": "rm -rf .next-build && NEXT_DIST_DIR=.next-build NEXT_PRIVATE_BUILD_WORKER=1 next build; status=$?; node scripts/restore-next-env.mjs; exit $status",
-    "start": "NEXT_DIST_DIR=.next-build next start",
+    "start": "NEXT_DIST_DIR=.next-build node server.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
     "audit:ai-wedding": "node scripts/audit-ai-wedding-goal.mjs",
