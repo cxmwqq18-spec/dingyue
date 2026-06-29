@@ -11,7 +11,7 @@ import {
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
-import { policyPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { publicContentPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const { siteSlug, path } = await params;
   const requestedSlug = `/${path.join("/")}`;
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
-  const slug = collectionCategory ? "/collections" : requestedSlug === "/faq" ? "/help" : policyPageSlug(requestedSlug);
+  const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
   if (slug === "/account") return { title: "Account" };
   const state = collectionCategory
     ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory)
@@ -83,7 +83,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/account") {
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
   }
-  const pageSlug = collectionCategory ? "/collections" : slug === "/faq" ? "/help" : policyPageSlug(slug);
+  const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(slug);
   const state = collectionCategory
     ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(publicSlug, collectionCategory)
     : await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, pageSlug);

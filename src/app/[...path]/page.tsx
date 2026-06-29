@@ -19,7 +19,7 @@ import {
 } from "@/lib/storefront-render";
 import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import { policyPageSlug } from "@/lib/site-route-canonical";
+import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -79,13 +79,13 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
     return {};
   }
-  const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
+  const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
-  const slug = policyPageSlug(`/${path.join("/")}`);
+  const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
     redirectMydreamshootsLegacyTool(site, path[1]);
     const { matched } = resolveToolPageForSite(state, site, path[1]);
@@ -142,7 +142,7 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
-  const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : policyPageSlug(`/${path.join("/")}`);
+  const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
@@ -178,7 +178,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
-  const pageSlug = collectionCategory ? "/collections" : policyPageSlug(`/${path.join("/")}`);
+  const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(`/${path.join("/")}`);
   if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({

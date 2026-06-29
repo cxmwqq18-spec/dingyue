@@ -17,6 +17,7 @@ export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string 
 
 export function shortPolicyPath(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+  if (requestedPath === "/faq") return "/help";
   return requestedPath === "/policies/privacy" || requestedPath === "/privacy-policy" ? "/privacy" :
     requestedPath === "/policies/terms" || requestedPath === "/terms-of-service" ? "/terms" :
     requestedPath === "/policies/cookies" || requestedPath === "/cookie-policy" ? "/cookies" :
@@ -35,6 +36,12 @@ export function policyPageSlug(pathname: string): string {
     requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :
     requestedPath === "/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/policies/shipping" :
     requestedPath;
+}
+
+export function publicContentPageSlug(pathname: string): string {
+  const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+  if (requestedPath === "/faq") return "/help";
+  return policyPageSlug(requestedPath);
 }
 
 export function redirectPublicSitePathToCanonicalHost({

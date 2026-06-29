@@ -1,4 +1,5 @@
 import NextImage from "next/image";
+import { Fragment } from "react";
 import type { CSSProperties } from "react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
@@ -292,6 +293,65 @@ type PhotoPackageMegaGroup = {
 
 function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, _pagePath: string, _site: Site): Array<[string, SectionInstance]> {
   return entries;
+}
+
+function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h2" {
+  return value === "h1" || value === "h2" ? value : fallback;
+}
+
+function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
+  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/help", "/search", "/cart"]);
+  const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
+  return (semanticH1Paths.has(pagePath) || page.pageType === "article") && firstRichTextId === sectionId ? "h1" : "h2";
+}
+
+function sectionRendersMainHeading(sectionId: string, section: SectionInstance, renderContext: RenderContext): boolean {
+  const sectionType = canonicalSectionType(section.type);
+  if (sectionType === "rich_text") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(sectionId, renderContext.page, renderContext.pagePath)) === "h1";
+  }
+  if (sectionType === "policy_content") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), "h1") === "h1";
+  }
+  if (sectionType === "blog_list") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.page.pageType === "article" ? "h2" : "h1") === "h1";
+  }
+  if (sectionType === "search_results") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), "h2") === "h1";
+  }
+  if (sectionType === "cart_summary") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), "h2") === "h1";
+  }
+  if (sectionType === "login_method_panel") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/login" ? "h1" : "h2") === "h1";
+  }
+  if (sectionType === "dreamshoot_package_taxonomy" || sectionType === "aidreamcapes_package_taxonomy") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/collections" ? "h1" : "h2") === "h1";
+  }
+  if (sectionType === "dreamshoot_tool_collection" || sectionType === "aidreamcapes_tool_collection") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1";
+  }
+  return [
+    "ai_tool_entry",
+    "cart",
+    "collection_detail",
+    "collection_list",
+    "job_detail",
+    "not_found",
+    "page",
+    "product_detail",
+    "search",
+    "slide_plus"
+  ].includes(sectionType);
+}
+
+function pageHasMainHeadingBefore(sectionId: string, renderContext: RenderContext): boolean {
+  for (const candidateId of renderContext.page.sectionsOrder) {
+    if (candidateId === sectionId) return false;
+    const candidate = renderContext.page.sections[candidateId];
+    if (candidate && sectionRendersMainHeading(candidateId, candidate, renderContext)) return true;
+  }
+  return false;
 }
 
 const sectionTypesUsingProducts = new Set([
@@ -6700,18 +6760,20 @@ function SectionView({
                   </div>
                 ))}
               </div>
-              <div className={dark ? "grid grid-cols-2 gap-2 rounded-[20px] border border-white/10 bg-black/18 p-2 sm:grid-cols-4" : "grid grid-cols-2 gap-2 rounded-[20px] border border-[#d8e5e1] bg-[#eef4f2] p-2 sm:grid-cols-4"}>
-                <a className={dark ? "rounded-[14px] bg-white px-4 py-3 text-center text-sm font-bold text-[#101114]" : "rounded-[14px] bg-[#183c39] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_18px_34px_-28px_rgba(24,60,57,0.9)]"} href={`#${sectionAnchor(section, "tools")}`}>
+              <div className={dark ? "flex flex-wrap items-center gap-2 rounded-[20px] border border-white/10 bg-black/18 p-2" : "flex flex-wrap items-center gap-2 rounded-[20px] border border-[#d8e5e1] bg-[#eef4f2] p-2"}>
+                <a className={dark ? "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-white px-4 py-3 text-center text-sm font-bold text-[#101114]" : "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-[#183c39] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_18px_34px_-28px_rgba(24,60,57,0.9)]"} href={`#${sectionAnchor(section, "tools")}`}>
                   All tools
                 </a>
                 {categories.map((category) => (
-                  <a
-                    className={dark ? "rounded-[14px] px-4 py-3 text-center text-sm font-bold text-white/70 transition hover:bg-white/[0.08] hover:text-white" : "rounded-[14px] px-4 py-3 text-center text-sm font-bold text-[#34434a] transition hover:bg-white hover:text-[#236f64]"}
-                    href={`#${sectionAnchor(section, "tools")}-${slugify(category)}`}
-                    key={category}
-                  >
-                    {category}
-                  </a>
+                  <Fragment key={category}>
+                    <span className={dark ? "text-sm font-bold text-white/30" : "text-sm font-bold text-[#7d918d]"}>/</span>
+                    <a
+                      className={dark ? "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] px-4 py-3 text-center text-sm font-bold text-white/70 transition hover:bg-white/[0.08] hover:text-white" : "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] px-4 py-3 text-center text-sm font-bold text-[#34434a] transition hover:bg-white hover:text-[#236f64]"}
+                      href={`#${sectionAnchor(section, "tools")}-${slugify(category)}`}
+                    >
+                      {category}
+                    </a>
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -9114,10 +9176,7 @@ function SectionView({
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
     const applicationForm = layout === "application_form";
-    const semanticH1Paths = new Set(["/help", "/search", "/cart"]);
-    const isPrimaryRichText = renderContext.page.sectionsOrder.find((sectionId: string) => renderContext.page.sections[sectionId]?.type === "rich_text") === id;
-    const fallbackHeadingLevel = (semanticH1Paths.has(renderContext.pagePath) || renderContext.page.pageType === "article") && isPrimaryRichText ? "h1" : "h2";
-    const HeadingTag = setting(section, "headingLevel", fallbackHeadingLevel) === "h1" ? "h1" : "h2";
+    const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath)) === "h1" ? "h1" : "h2";
     const dark = tone === "dark";
     const compact = layout === "compact";
     return (
@@ -9320,7 +9379,8 @@ function SectionView({
     const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
     const contactEmail = setting(section, "contactEmail", "support@mydreamshoots.com");
     const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
-    const HeadingTag = setting(section, "headingLevel", "h1") === "h2" ? "h2" : "h1";
+    const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
+    const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
     return (
       <section className="bg-[#f6f5f1] px-4 py-8 text-[#16181d] sm:px-5 md:py-12" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
