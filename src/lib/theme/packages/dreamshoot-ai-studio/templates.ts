@@ -1103,6 +1103,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       ]),
       contact_details_1: section("policy_content", {
         title: "Contact information",
+        headingLevel: "h2",
         lastUpdated: "June 28, 2026",
         contactEmail: "support@mydreamshoots.com",
         body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"

@@ -2639,32 +2639,34 @@ function DreamShootMegaToolsPanel({
       <div className={warm ? "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-[#1e1712] sm:text-[1.02rem]" : "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]"}>
         Studio tools
       </div>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {groupedCategories.map((group) => {
+      <div className="flex flex-wrap items-stretch gap-3">
+        {groupedCategories.map((group, index) => {
           const Icon = group.meta.icon;
           const featuredTool = group.items[0];
           return (
-            <Link
-              aria-label={cardLinkLabel("Browse", group.meta.title, "this tool category")}
-              className={warm ? "group flex min-h-[110px] gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed]" : "group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"}
-              href={
-                featuredTool
-                  ? toolActionHref(site, blockValue(featuredTool, "href", "/tools/image-studio"), featuredTool.id)
-                  : hrefFor(site, `/tools?category=${encodeURIComponent(slugify(group.category))}`)
-              }
-              key={`mega_card_${group.category}`}
-            >
-              <span
-                className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow-[0_18px_46px_-28px_rgba(114,82,48,0.58)]"
-                style={{ background: warm ? `linear-gradient(135deg, ${aidreamcapesAccent}, ${aidreamcapesCopper})` : `linear-gradient(135deg, ${group.meta.accent}, #2f6fed)` }}
+            <Fragment key={`mega_card_${group.category}`}>
+              {index > 0 && <span className={warm ? "self-center text-sm font-bold text-[#a79078]" : "self-center text-sm font-bold text-white/28"}>/</span>}
+              <Link
+                aria-label={cardLinkLabel("Browse", group.meta.title, "this tool category")}
+                className={warm ? "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed]" : "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"}
+                href={
+                  featuredTool
+                    ? toolActionHref(site, blockValue(featuredTool, "href", "/tools/image-studio"), featuredTool.id)
+                    : hrefFor(site, `/tools?category=${encodeURIComponent(slugify(group.category))}`)
+                }
               >
-                <Icon className="h-5.5 w-5.5" strokeWidth={2} />
-              </span>
-              <span className="min-w-0">
-                <span className={warm ? "block text-[1.04rem] font-semibold leading-tight text-[#1e1712]" : "block text-[1.04rem] font-semibold leading-tight text-white"}>{group.meta.title}</span>
-                <span className={warm ? "mt-2 block text-[0.92rem] leading-6 text-[#6f6257]" : "mt-2 block text-[0.92rem] leading-6 text-white/72"}>{group.meta.description}</span>
-              </span>
-            </Link>
+                <span
+                  className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow-[0_18px_46px_-28px_rgba(114,82,48,0.58)]"
+                  style={{ background: warm ? `linear-gradient(135deg, ${aidreamcapesAccent}, ${aidreamcapesCopper})` : `linear-gradient(135deg, ${group.meta.accent}, #2f6fed)` }}
+                >
+                  <Icon className="h-5.5 w-5.5" strokeWidth={2} />
+                </span>
+                <span className="min-w-0">
+                  <span className={warm ? "block text-[1.04rem] font-semibold leading-tight text-[#1e1712]" : "block text-[1.04rem] font-semibold leading-tight text-white"}>{group.meta.title}</span>
+                  <span className={warm ? "mt-2 block text-[0.92rem] leading-6 text-[#6f6257]" : "mt-2 block text-[0.92rem] leading-6 text-white/72"}>{group.meta.description}</span>
+                </span>
+              </Link>
+            </Fragment>
           );
         })}
       </div>
