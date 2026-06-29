@@ -29,7 +29,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
-import { getSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
@@ -454,6 +454,26 @@ function fallbackToolBlockForSlug(toolSlug: string): SectionBlockInstance | unde
   };
 }
 
+function aidreamcapesToolBlockForSlug(site: Site, toolSlug: string): SectionBlockInstance {
+  const content = getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const category = toolSlug.includes("avatar") ? "Fantasy Portrait Tools" :
+    toolSlug.includes("product") || toolSlug.includes("social") ? "Creator Story Tools" :
+    "Dreamscape Portrait Tools";
+  return {
+    id: `aidreamcapes_tool_${toolSlug}`,
+    type: "tool_card",
+    settings: {
+      title: content.label,
+      description: content.intro,
+      category,
+      categoryTitle: category,
+      categoryDescription: "Site-maintained Aidreamcapes tools for private portrait galleries.",
+      badge: "Aidreamcapes",
+      href: `/tools/${toolSlug}`
+    }
+  };
+}
+
 function creativePackCollectionSlugs(pack: PlatformState["creativePacks"][number]): string[] {
   return [
     pack.categoryRecord?.slug,
@@ -675,11 +695,21 @@ const fallbackToolDirectoryBlocks = cache((): SectionBlockInstance[] =>
 function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
   const blocks = toolBlocksFromTheme(site);
   const toolsBySlug = new Map<string, SectionBlockInstance>();
-  for (const block of fallbackToolDirectoryBlocks()) {
-    toolsBySlug.set(toolSlugFromBlock(block), block);
+  const isAidreamcapes = isAidreamcapesStorefront(site);
+  if (isAidreamcapes) {
+    for (const slug of getExplicitSeoDirectorySlugsForSite(site, "tool")) {
+      toolsBySlug.set(slug, aidreamcapesToolBlockForSlug(site, slug));
+    }
+  } else {
+    for (const block of fallbackToolDirectoryBlocks()) {
+      toolsBySlug.set(toolSlugFromBlock(block), block);
+    }
   }
   for (const block of blocks) {
-    toolsBySlug.set(toolSlugFromBlock(block), block);
+    const slug = toolSlugFromBlock(block);
+    if (!isAidreamcapes || getExplicitSeoDirectorySlugsForSite(site, "tool").includes(slug)) {
+      toolsBySlug.set(slug, block);
+    }
   }
   const tools = Array.from(toolsBySlug.values());
   return {
@@ -690,9 +720,11 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
         type: "dreamshoot_tool_collection",
         settings: {
           anchor: "tools",
-          title: "AI Tools Collection",
-          subtitle: "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
-          categories: "Photo AI|AI Photo Edit|Video AI",
+          title: isAidreamcapes ? "Aidreamcapes studio tools" : "AI Tools Collection",
+          subtitle: isAidreamcapes
+            ? "Choose a maintained Aidreamcapes tool for dreamscape portraits, fantasy avatars, creator scenes, and private gallery delivery."
+            : "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
+          categories: isAidreamcapes ? "Dreamscape Portrait Tools|Fantasy Portrait Tools|Creator Story Tools" : "Photo AI|AI Photo Edit|Video AI",
           layout: "directory"
         },
         blocks: tools
@@ -922,11 +954,6 @@ const dreamshootImageStudioToolAliases = new Set([
 ]);
 
 const aidreamcapesToolAliases = new Map<string, string>([
-  ["professional-headshot", "storybook-headshot"],
-  ["professional-headshot-maker", "storybook-headshot"],
-  ["headshot", "storybook-headshot"],
-  ["headshot-generator", "storybook-headshot"],
-  ["headshot-maker", "storybook-headshot"],
   ["portrait-generator", "dreamscape-portraits"],
   ["portrait-maker", "dreamscape-portraits"],
   ["image-studio", "dreamscape-generator"],
@@ -1005,7 +1032,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       )
     : undefined;
   const matched = isAidreamcapes
-    ? Boolean(menuTool || page || directApp || (!aidreamcapesAliasTarget && themeToolBlock))
+    ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock)
     : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }

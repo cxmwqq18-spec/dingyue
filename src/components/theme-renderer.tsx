@@ -148,7 +148,7 @@ export function ThemeRenderer({
         ...footerPrefetchPaths,
         hrefFor(routedSite, "/collections"),
         hrefFor(routedSite, "/tools"),
-        hrefFor(routedSite, "/tools/background-changer"),
+        hrefFor(routedSite, isAidreamcapesSite(routedSite) ? "/tools/dreamscape-generator" : "/tools/background-changer"),
         hrefFor(routedSite, "/pricing")
       ]
     : [];
@@ -488,7 +488,10 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const airyCommerceHeader = lightCommerce || isAidreamcapes;
   const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
-  const toolMegaBlocks = dynamicToolBlocks.length || isAidreamcapes ? configuredToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const aidreamcapesToolBlocks = isAidreamcapes
+    ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar", "image-to-video"].includes(toolBlockSlug(tool)))
+    : configuredToolBlocks;
+  const toolMegaBlocks = dynamicToolBlocks.length || isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
   const showDreamShootToolsMega = !lightweight && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks);
   const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
@@ -692,7 +695,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               {ctaLabel}
             </HeaderLink>
           )}
-          {dark || lightCommerce ? (
+          {dark || airyCommerceHeader ? (
             <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
               <summary
                 aria-label={mobileLabel}
@@ -880,17 +883,22 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   }));
   const linkCategory = (item: { label: string; href: string }) => {
     const value = `${item.label} ${item.href}`.toLowerCase();
-    if (/(privacy|refund|content|policy|help|support|faq)/.test(value)) return "support";
-    if (/(journal|blog|about|company|story)/.test(value)) return "company";
+    if (/(help|guide|about|contact|journal|blog|company|story)/.test(value)) return "company";
+    if (/(privacy|refund|content|policy|support|faq|terms|cookie|shipping|delivery)/.test(value)) return "support";
     if (/(pricing|package|collection|style|example|work|tool|album)/.test(value)) return "product";
     return "";
   };
+  const normalizedFooterGroup = (item: { label: string; href: string; block: SectionBlockInstance }) => {
+    const semantic = linkCategory(item);
+    const configured = blockValue(item.block, "group", "").toLowerCase();
+    return semantic || configured;
+  };
   const hasGroupedFooterLinks = links.some((item) => blockValue(item.block, "group", "").trim());
   const groupedLinks = {
-    product: links.filter((item) => blockValue(item.block, "group", "").toLowerCase().includes("product")),
-    company: links.filter((item) => blockValue(item.block, "group", "").toLowerCase().includes("company")),
+    product: links.filter((item) => normalizedFooterGroup(item).includes("product")),
+    company: links.filter((item) => normalizedFooterGroup(item).includes("company")),
     support: links.filter((item) => {
-      const group = blockValue(item.block, "group", "").toLowerCase();
+      const group = normalizedFooterGroup(item);
       return group.includes("support") || (hasGroupedFooterLinks && !group);
     })
   };
@@ -924,7 +932,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     { heading: footer ? setting(footer, "supportHeading", "Support") : "Support", items: supportLinks }
   ].filter((column) => column.items.length);
   const isSupportLink = (link: { label: string; href: string; block: SectionBlockInstance }) => {
-    const group = blockValue(link.block, "group", "").toLowerCase();
+    const group = normalizedFooterGroup(link);
     return group.includes("support") || linkCategory(link) === "support";
   };
   const footerLinkLabel = (label: string, href: string) => {
@@ -2267,6 +2275,9 @@ function storefrontPaidToolText(value: string): string {
     .replace(new RegExp(`\\b${freeWordInsensitive} enhancer\\b`, "g"), "photo enhancer")
     .replace(new RegExp(`\\b${freeWordInsensitive} entry\\b`, "g"), "studio entry")
     .replace(new RegExp(`\\b${freeWordInsensitive}\\b`, "g"), "paid")
+    .replace(/\bPaid plans unlock\b/g, "Paid plans include")
+    .replace(/\bpaid plans unlock\b/g, "paid plans include")
+    .replace(/\bunlock private model creation\b/g, "include private model creation")
     .trim();
 }
 
@@ -9169,7 +9180,7 @@ function SectionView({
 
   if (section.type === "rich_text") {
     const eyebrow = setting(section, "eyebrow", "");
-    const body = stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey."));
+    const body = storefrontPaidToolText(stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.")));
     const image = mediaAssetUrl(site, setting(section, "imageUrl", firstImage(section)));
     const cards = sectionBlocks(section);
     const formFields = sectionBlocks(section, "form_field");

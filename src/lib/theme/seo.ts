@@ -74,6 +74,51 @@ function policySeoForSite(site: Site, slug: string) {
   return getMydreamshootsPolicySeo(slug);
 }
 
+function isAidreamcapesSeoSite(site: Site): boolean {
+  return `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
+}
+
+function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> | undefined {
+  const aidreamcapes = isAidreamcapesSeoSite(site);
+  if (aidreamcapes) {
+    const overrides: Record<string, Partial<PageSeo>> = {
+      "/about-us": {
+        title: "About Aidreamcapes",
+        description: "Learn how Aidreamcapes turns private uploads into cinematic portraits, visible credit workflows, and customer-only galleries."
+      },
+      "/tools": {
+        title: "Aidreamcapes Studio Tools",
+        description: "Explore Aidreamcapes tools for dreamscape portraits, coastal scenes, fantasy avatars, warm profile images, and private gallery delivery."
+      },
+      "/terms": {
+        title: "Aidreamcapes Terms of Service",
+        description: "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms."
+      },
+      "/policies/terms": {
+        title: "Aidreamcapes Terms of Service",
+        description: "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms.",
+        canonicalPath: "/terms"
+      }
+    };
+    return overrides[slug];
+  }
+  const overrides: Record<string, Partial<PageSeo>> = {
+    "/collections": {
+      title: "MyDreamShoots Photo Packages",
+      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty, travel, gala, and cinematic scenes."
+    },
+    "/tools": {
+      title: "MyDreamShoots Photo Tools",
+      description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and albums."
+    },
+    "/help": {
+      title: "MyDreamShoots Help Center",
+      description: "Get help with source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery."
+    }
+  };
+  return overrides[slug];
+}
+
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
   const value = cleanText(pathOrUrl);
   if (!value) return undefined;
@@ -93,10 +138,11 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
     site.pages.map((page) => {
       const existing = current?.pages?.[page.id] ?? current?.pages?.[page.slug];
       const policySeo = policySeoForSite(site, page.slug);
+      const knownSeo = knownStorefrontSeoOverride(site, page.slug);
       const jsonSeo = page.publishedJson.seo;
       const defaultRobots = defaultRobotsForPage(page);
-      const title = pickText(jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page));
-      const description = pickText(jsonSeo?.description, policySeo?.description, existing?.description, pageFallbackDescription(site, page));
+      const title = pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page));
+      const description = pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, existing?.description, pageFallbackDescription(site, page));
       return [
         page.id,
         {
@@ -104,7 +150,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
           description,
           keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, existing?.keywords, current?.siteKeywords),
           ogImage: pickText(jsonSeo?.ogImage, existing?.ogImage),
-          canonicalPath: normalizeCanonicalPath(pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, existing?.canonicalPath), page.slug),
+          canonicalPath: normalizeCanonicalPath(pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, existing?.canonicalPath), page.slug),
           index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? existing?.index ?? (current?.robots?.index === false ? false : defaultRobots.index),
           follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? existing?.follow ?? current?.robots?.follow ?? defaultRobots.follow
         }
@@ -148,6 +194,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const settingsPageSeo = seo.pages[page.id] ?? seo.pages[page.slug];
   const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
   const policySeo = policySeoForSite(site, page.slug);
+  const knownSeo = knownStorefrontSeoOverride(site, page.slug);
   const fallbackPageSeo: PageSeo = settingsPageSeo ?? {
     title: pageFallbackTitle(site, page),
     description: pageFallbackDescription(site, page),
@@ -157,11 +204,11 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
     follow: defaultRobotsForPage(page).follow
   };
   const pageSeo: PageSeo = {
-    title: pickText(jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
-    description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
+    title: pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
+    description: pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
     keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, seo.siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, seo.defaultOgImage),
-    canonicalPath: pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    canonicalPath: pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? seo.robots.index,
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? seo.robots.follow
   };
@@ -204,6 +251,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const settingsPageSeo = currentSeo?.pages?.[page.id] ?? currentSeo?.pages?.[page.slug];
   const jsonSeo: PageJsonSeo | undefined = page.publishedJson.seo;
   const policySeo = policySeoForSite(site, page.slug);
+  const knownSeo = knownStorefrontSeoOverride(site, page.slug);
   const defaultRobots = defaultRobotsForPage(page);
   const siteTitle = cleanText(currentSeo?.siteTitle, site.branding.logoText || site.name);
   const siteDescription = cleanText(currentSeo?.siteDescription, site.branding.description);
@@ -219,11 +267,11 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
     follow: defaultRobots.follow
   };
   const pageSeo: PageSeo = {
-    title: pickText(jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
-    description: pickText(jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
+    title: pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
+    description: pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
     keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, defaultOgImage),
-    canonicalPath: pickText(policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
+    canonicalPath: pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? currentSeo?.robots?.index ?? true,
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? currentSeo?.robots?.follow ?? true
   };

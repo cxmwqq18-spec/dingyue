@@ -18,8 +18,8 @@ export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string 
 export function shortPolicyPath(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
   if (requestedPath === "/faq") return "/help";
-  return requestedPath === "/policies/privacy" || requestedPath === "/privacy-policy" ? "/privacy" :
-    requestedPath === "/policies/terms" || requestedPath === "/terms-of-service" ? "/terms" :
+  return requestedPath === "/policies/privacy" || requestedPath === "/policies/privacy-policy" || requestedPath === "/privacy-policy" ? "/privacy" :
+    requestedPath === "/policies/terms" || requestedPath === "/policies/terms-of-service" || requestedPath === "/terms-of-service" ? "/terms" :
     requestedPath === "/policies/cookies" || requestedPath === "/cookie-policy" ? "/cookies" :
     requestedPath === "/policies/refunds" || requestedPath === "/policies/refund" || requestedPath === "/refund-policy" ? "/refunds" :
     requestedPath === "/policies/content" || requestedPath === "/content-policy" ? "/content" :
@@ -29,8 +29,8 @@ export function shortPolicyPath(pathname: string): string {
 
 export function policyPageSlug(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
-  return requestedPath === "/privacy" || requestedPath === "/privacy-policy" ? "/policies/privacy" :
-    requestedPath === "/terms" || requestedPath === "/terms-of-service" ? "/policies/terms" :
+  return requestedPath === "/privacy" || requestedPath === "/privacy-policy" || requestedPath === "/policies/privacy-policy" ? "/policies/privacy" :
+    requestedPath === "/terms" || requestedPath === "/terms-of-service" || requestedPath === "/policies/terms-of-service" ? "/policies/terms" :
     requestedPath === "/cookies" || requestedPath === "/cookie-policy" ? "/policies/cookies" :
     requestedPath === "/refunds" || requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
     requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :

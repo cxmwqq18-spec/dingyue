@@ -55,11 +55,15 @@ async function getHostPublicRuntimeStateWithFallback(hosts: Array<string | null>
   return getHostRuntimeStateForModeWithFallback(hosts, "public", pageSlug);
 }
 
-async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null>, mode: "public" | "private", pageSlug?: string): Promise<PlatformState | undefined> {
+async function getHostPublicToolRuntimeStateWithFallback(hosts: Array<string | null>, pageSlug: string, toolSlug: string): Promise<PlatformState | undefined> {
+  return getHostRuntimeStateForModeWithFallback(hosts, "public", pageSlug, toolSlug);
+}
+
+async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null>, mode: "public" | "private", pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> {
   try {
     for (const host of hosts) {
       const state = mode === "public"
-        ? await readStorefrontPublicRuntimeStateByHostFromDatabase(host, pageSlug)
+        ? await readStorefrontPublicRuntimeStateByHostFromDatabase(host, pageSlug, contextSlug)
         : await readStorefrontRuntimeStateByHostFromDatabase(host);
       if (state) return state;
     }
@@ -69,6 +73,26 @@ async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null
   const state = await readStorefrontPlatformStateFromDatabase();
   const site = getSiteByHostCandidatesFromState(state, hosts);
   return site ? state : undefined;
+}
+
+function resolveHostToolPage(state: PlatformState | undefined, hosts: Array<string | null>, toolSlug: string) {
+  const site = state ? getSiteByHostCandidatesFromState(state, hosts) ?? state.sites[0] : undefined;
+  if (!state || !site) return undefined;
+  const resolved = resolveToolPageForSite(state, site, toolSlug);
+  return resolved.matched ? { state, site, ...resolved } : undefined;
+}
+
+async function resolveHostToolPageWithFallback(hosts: Array<string | null>, toolSlug: string) {
+  const detailState = await getHostPublicToolRuntimeStateWithFallback(hosts, `/tools/${toolSlug}`, toolSlug);
+  const detailResolved = resolveHostToolPage(detailState, hosts, toolSlug);
+  if (detailResolved) return detailResolved;
+
+  const toolsState = await getHostPublicRuntimeStateWithFallback(hosts, "/tools");
+  const toolsResolved = resolveHostToolPage(toolsState, hosts, toolSlug);
+  if (toolsResolved) return toolsResolved;
+
+  const homeState = await getHostPublicRuntimeStateWithFallback(hosts, "/");
+  return resolveHostToolPage(homeState, hosts, toolSlug);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
@@ -87,10 +111,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!site) return {};
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
-    redirectMydreamshootsLegacyTool(site, path[1]);
-    const { matched } = resolveToolPageForSite(state, site, path[1]);
-    if (!matched) return {};
-    return metadataForSeoDirectory(site, "tool", path[1]);
+    const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
+    if (!resolved) return {};
+    redirectMydreamshootsLegacyTool(resolved.site, path[1]);
+    return metadataForSeoDirectory(resolved.site, "tool", path[1]);
   }
   if (path[0] === "collections" && path[1]) {
     if (!canResolveCollectionSlugForSite(state, site, path[1])) return {};
@@ -149,9 +173,12 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  const resolvedToolPage = firstSegment === "tools" && path[1]
+    ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
+    : undefined;
   const hasKnownPublicRoute =
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
-    firstSegment === "tools" && Boolean(path[1]) ||
+    Boolean(resolvedToolPage) ||
     firstSegment === "collections" && Boolean(path[1]) ||
     Boolean(findPage(site, publicPageSlug)) ||
     canUseMydreamshootsSyntheticPage(site, publicPageSlug);
@@ -173,8 +200,9 @@ export default async function HostStorefrontCatchAllPage({
     return renderCustomerWorkspacePage({ site, slug: "/app", query, routeMode: "host", state });
   }
   if (firstSegment === "tools" && path[1]) {
-    redirectMydreamshootsLegacyTool(site, path[1]);
-    return renderToolPage({ site, toolSlug: path[1], query, routeMode: "host", state });
+    if (!resolvedToolPage) notFound();
+    redirectMydreamshootsLegacyTool(resolvedToolPage.site, path[1]);
+    return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();

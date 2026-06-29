@@ -348,8 +348,8 @@ function navLinkIdentity(link: ThemeNavLink): string {
 
 function inferFooterGroup(link: ThemeNavLink): string | undefined {
   const value = `${link.label} ${link.href}`.toLowerCase();
-  if (/(privacy|refund|content|policy|help|support|faq)/.test(value)) return "support";
-  if (/(journal|blog|about|company|story)/.test(value)) return "company";
+  if (/(help|guide|about|contact|journal|blog|company|story)/.test(value)) return "company";
+  if (/(privacy|refund|content|policy|support|faq|terms|cookie|shipping|delivery)/.test(value)) return "support";
   if (/(pricing|package|collection|style|example|work|tool|album|how it works)/.test(value)) return "product";
   return undefined;
 }

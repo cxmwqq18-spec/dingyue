@@ -61,9 +61,9 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
     follow: true
   },
   "/tools": {
-    title: "MydreamShoots AI Photo Tools - headshots, edits, video, and try-on",
+    title: "MydreamShoots AI Photo Tools",
     description:
-      "Explore MydreamShoots AI photo tools for headshots, background edits, image-to-video clips, virtual try-on previews, private uploads, credits, and album-ready results.",
+      "Explore MydreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and album-ready results.",
     keywords: "MydreamShoots tools, AI photo tools, AI headshot tool, background changer, image to video AI, virtual try-on",
     canonicalPath: "/tools",
     index: true,
@@ -91,7 +91,7 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     follow: true
   },
   "/about-us": {
-    title: "About MyDreamShoots - private AI photo packages and albums",
+    title: "About MyDreamShoots",
     description:
       "Learn about MyDreamShoots, an AI photo package workspace for private uploads, personal AI models, clear credits, secure checkout, and customer-only gallery delivery.",
     keywords: "About MyDreamShoots, AI photo packages, private AI photo albums, personal AI model, AI portrait workspace",
@@ -112,7 +112,7 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
 
 const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/about-us": {
-    title: "About Aidreamcapes - private AI dreamscape portraits and galleries",
+    title: "About Aidreamcapes",
     description:
       "Learn about Aidreamcapes, a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
     keywords: "About Aidreamcapes, AI dreamscape portraits, private AI portrait gallery, fantasy travel photos, cinematic portrait workspace",
@@ -121,7 +121,7 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
     follow: true
   },
   "/contact-us": {
-    title: "Contact Aidreamcapes - support, sales, and company address",
+    title: "Contact Aidreamcapes",
     description:
       "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
     keywords: "Contact Aidreamcapes, Aidreamcapes support, AI dreamscape support, Aidreamcapes sales, private gallery help",
@@ -150,6 +150,27 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
 };
 
 export const dreamshootPublicSeoPagePaths = Object.keys(dreamshootPublicSeoPageMetadata);
+
+const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/tools": {
+    title: "Aidreamcapes Studio Tools",
+    description:
+      "Explore Aidreamcapes tools for dreamscape portraits, coastal scenes, fantasy avatars, warm profile images, and private gallery delivery.",
+    keywords: "Aidreamcapes tools, dreamscape portrait tools, fantasy avatar tool, cinematic portrait generator",
+    canonicalPath: "/tools",
+    index: true,
+    follow: true
+  },
+  "/terms": {
+    title: "Aidreamcapes Terms of Service",
+    description:
+      "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms before creating portraits.",
+    keywords: "Aidreamcapes terms, AI portrait terms, private gallery terms, AI credit policy",
+    canonicalPath: "/terms",
+    index: true,
+    follow: true
+  }
+};
 
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
@@ -799,6 +820,13 @@ export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kin
   return isExplicitSeoDirectoryContent(kind, slug);
 }
 
+export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind: SeoDirectoryKind): string[] {
+  if (isAidreamcapesSite(site)) {
+    return Object.keys(kind === "collection" ? aidreamcapesCollectionDirectory : aidreamcapesToolDirectory);
+  }
+  return Object.keys(kind === "collection" ? collectionDirectory : toolDirectory);
+}
+
 function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
   const value = imagePath.trim();
   if (!value) return "";
@@ -984,8 +1012,10 @@ export function metadataForDreamshootFallbackRoute(
 ): Metadata {
   const normalizedPath = normalizeRouteMetadataPath(path);
   const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
-  const publicMetadata = siteIdentity.includes("aidreamcapes") ? aidreamcapesPublicSeoPageMetadata : dreamshootPublicSeoPageMetadata;
-  const seed = publicMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
+  const aidreamcapes = siteIdentity.includes("aidreamcapes");
+  const publicMetadata = aidreamcapes ? aidreamcapesPublicSeoPageMetadata : dreamshootPublicSeoPageMetadata;
+  const fallbackMetadata = aidreamcapes ? aidreamcapesFallbackRouteMetadata : dreamshootFallbackRouteMetadata;
+  const seed = publicMetadata[normalizedPath] ?? fallbackMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
     title: "MydreamShoots",
     description: "MydreamShoots is a private AI photo workspace for uploads, credits, photo packages, AI tools, and customer-only galleries.",
     keywords: "MydreamShoots, AI photo workspace, AI photo packages, private photo gallery",
