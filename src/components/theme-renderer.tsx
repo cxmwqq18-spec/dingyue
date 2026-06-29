@@ -1144,7 +1144,11 @@ function preferAidreamcapesPhotoAsset(src: string): string {
     return "/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg?v=20260628b";
   }
   if (!src.startsWith("/assets/sites/site_aidreamcapes/creative-packs/")) return src;
-  return src.replace(/\.svg(\?.*)?$/i, (_match, query = "") => `.png${query}`);
+  const versionedSrc = src.replace(/\.svg(\?.*)?$/i, ".png");
+  const [path, query = ""] = versionedSrc.split("?");
+  const params = new URLSearchParams(query);
+  params.set("v", "20260629a");
+  return `${path}?${params.toString()}`;
 }
 
 type StorefrontImageProps = {
