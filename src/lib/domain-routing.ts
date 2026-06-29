@@ -2,10 +2,11 @@ import type { PlatformState, Site } from "@/lib/types";
 
 type SiteRoutingIdentity = Pick<Site, "slug" | "primaryDomain">;
 
-const PLATFORM_DOMAINS = new Set<string>();
+const PLATFORM_DOMAINS = new Set<string>([
+  "www.mydreamshoots.xyz",
+  "mydreamshoots.xyz"
+]);
 const SITE_ADMIN_DOMAINS: Record<string, string> = {
-  "www.mydreamshoots.xyz": "mydreamshoots",
-  "mydreamshoots.xyz": "mydreamshoots",
   "www.aidreamcapes.xyz": "aidreamcapes",
   "aidreamcapes.xyz": "aidreamcapes"
 };

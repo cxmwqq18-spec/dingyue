@@ -12,6 +12,13 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "travel-portraits": "/tools/nature-adventure"
 };
 
+const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
+  "background-changer": "/tools/dreamscape-generator",
+  "background-remover": "/tools/dreamscape-generator",
+  "image-to-video": "/tools/dreamscape-generator",
+  headshot: "/tools/storybook-headshot"
+};
+
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
   const detailState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`, toolSlug);
   const detailSite = detailState?.sites[0];
@@ -52,6 +59,10 @@ export default async function ToolPage({
   const publicSiteSlug = redirectLegacySiteSlug(siteSlug, `/tools/${toolSlug}`);
   if (publicSiteSlug === "mydreamshoots") {
     const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
+    if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
+  }
+  if (publicSiteSlug === "aidreamcapes") {
+    const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
     if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
   }
   const query = searchParams ? await searchParams : {};

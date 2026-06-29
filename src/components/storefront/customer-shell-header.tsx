@@ -58,6 +58,40 @@ const toolGroups = [
   }
 ];
 
+const aidreamcapesToolGroups = [
+  {
+    label: "Dreamscape makers",
+    accent: "#c58a4a",
+    icon: Camera,
+    items: [
+      { label: "Dreamscape generator", href: "/tools/dreamscape-generator" },
+      { label: "Coastal portrait", href: "/tools/coastal-portrait" },
+      { label: "Fantasy avatar", href: "/tools/fantasy-avatar" },
+      { label: "Golden hour couple", href: "/tools/golden-hour-couple" }
+    ]
+  },
+  {
+    label: "Portrait polish",
+    accent: "#b56f45",
+    icon: Sparkles,
+    items: [
+      { label: "Storybook headshot", href: "/tools/storybook-headshot" },
+      { label: "Editorial getaway", href: "/tools/editorial-getaway" },
+      { label: "Soft glam", href: "/tools/soft-glam" }
+    ]
+  },
+  {
+    label: "Creative planning",
+    accent: "#8a6f52",
+    icon: PlayCircle,
+    items: [
+      { label: "Cinematic travel", href: "/tools/cinematic-travel" },
+      { label: "Product reverie", href: "/tools/product-reverie" },
+      { label: "Social keepsake", href: "/tools/social-keepsake" }
+    ]
+  }
+];
+
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
 
 function PackageMegaPanel({ basePath }: { basePath: string }) {
@@ -102,13 +136,13 @@ function PackageMegaPanel({ basePath }: { basePath: string }) {
   );
 }
 
-function ToolsMegaPanel({ basePath }: { basePath: string }) {
+function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: typeof toolGroups }) {
   const icons = [Camera, ImageIcon, Heart, Users, Scissors, BadgeCheck];
   return (
     <div className="overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
       <div className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</div>
       <div className="grid gap-3 sm:grid-cols-3">
-        {toolGroups.map((group) => {
+        {groups.map((group) => {
           const Icon = group.icon;
           return (
             <StorefrontInstantLink className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]" href={`${basePath}${group.items[0]?.href ?? "/tools"}`} key={group.label}>
@@ -162,6 +196,8 @@ export function CustomerShellHeader({
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const logoText = "MydreamShoots";
+  const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
   const dark = tone === "dark";
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
@@ -197,9 +233,9 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label="Tools"
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={toolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
+              prefetchPaths={activeToolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
             >
-              <ToolsMegaPanel basePath={basePath} />
+              <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/how-it-works`}>
               How it works

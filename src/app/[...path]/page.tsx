@@ -30,6 +30,12 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "image-studio": "/tools",
   "travel-portraits": "/tools/nature-adventure"
 };
+const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
+  "background-changer": "/tools/dreamscape-generator",
+  "background-remover": "/tools/dreamscape-generator",
+  "image-to-video": "/tools/dreamscape-generator",
+  headshot: "/tools/storybook-headshot"
+};
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
@@ -44,6 +50,12 @@ function canUseMydreamshootsSyntheticPage(site: { slug: string; name: string; br
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
   if (!isMydreamshootsSite(site)) return;
   const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
+  if (redirectPath) permanentRedirect(redirectPath);
+}
+
+function redirectAidreamcapesLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
+  if (!/aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) return;
+  const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
   if (redirectPath) permanentRedirect(redirectPath);
 }
 
@@ -176,6 +188,11 @@ export default async function HostStorefrontCatchAllPage({
   const resolvedToolPage = firstSegment === "tools" && path[1]
     ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
     : undefined;
+  if (firstSegment === "tools" && path[1]) {
+    const toolSite = resolvedToolPage?.site ?? site;
+    redirectMydreamshootsLegacyTool(toolSite, path[1]);
+    redirectAidreamcapesLegacyTool(toolSite, path[1]);
+  }
   const hasKnownPublicRoute =
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
     Boolean(resolvedToolPage) ||
@@ -201,7 +218,6 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (firstSegment === "tools" && path[1]) {
     if (!resolvedToolPage) notFound();
-    redirectMydreamshootsLegacyTool(resolvedToolPage.site, path[1]);
     return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";

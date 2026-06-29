@@ -34,7 +34,13 @@ for (const [domain, siteIds] of duplicateDomains) {
   assert(siteIds.length === 1, `${domain} is bound to multiple sites: ${siteIds.join(", ")}`);
 }
 
-const siteAdminHosts = ["www.mydreamshoots.xyz", "mydreamshoots.xyz", "www.aidreamcapes.xyz", "aidreamcapes.xyz"];
+const platformHosts = ["www.mydreamshoots.xyz", "mydreamshoots.xyz"];
+for (const host of platformHosts) {
+  assert(domainRoutingSource.includes(`"${host}"`), `${host} must be registered as a platform host`);
+  assert(!(state.siteDomains ?? []).some((domain) => domain.domain === host), `${host} must stay a platform host, not a public storefront domain`);
+}
+
+const siteAdminHosts = ["www.aidreamcapes.xyz", "aidreamcapes.xyz"];
 for (const host of siteAdminHosts) {
   assert(domainRoutingSource.includes(`"${host}"`), `${host} must be registered as a site admin host`);
   assert(!(state.siteDomains ?? []).some((domain) => domain.domain === host), `${host} must stay a site admin host, not a public storefront domain`);
@@ -45,6 +51,7 @@ assert(!(state.siteDomains ?? []).some((domain) => domain.domain === "www.javawe
 console.log(
   JSON.stringify(
     {
+      platformHosts,
       siteAdminHosts,
       dreamshootPrimaryDomain: dreamshoot.primaryDomain,
       dreamshootDomainCount: dreamshootDomains.length
