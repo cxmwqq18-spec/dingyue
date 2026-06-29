@@ -1182,10 +1182,9 @@ function StorefrontImage({
 }: StorefrontImageProps) {
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
-  const isOptimizedDreamShootAsset = src.startsWith("/assets/dreamshoot/") && /\.(webp|avif)(\?|$)/i.test(src);
-  const isSiteScopedAsset = src.startsWith("/assets/sites/");
+  const isLocalPublicAsset = src.startsWith("/assets/");
   const resolvedAlt = alt?.trim() || fallbackAltFromImageSrc(src);
-  if (isOptimizedDreamShootAsset || isSiteScopedAsset || !canUseNextImage(src)) {
+  if (isLocalPublicAsset || !canUseNextImage(src)) {
     return (
       <img
         alt={resolvedAlt}
