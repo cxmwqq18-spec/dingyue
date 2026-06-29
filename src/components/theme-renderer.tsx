@@ -695,7 +695,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               {ctaLabel}
             </HeaderLink>
           )}
-          {dark || airyCommerceHeader ? (
+          {links.length ? (
             <details className="group relative z-[70] lg:hidden" data-storefront-mobile-menu>
               <summary
                 aria-label={mobileLabel}
