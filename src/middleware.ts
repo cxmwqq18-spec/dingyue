@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)((aidreamcapes|mydreamshoots)\.com)$/i;
-const INTERNAL_PATH_RE = /^\/(?:api|_next\/static|_next\/image|favicon\.ico|robots\.txt|sitemap\.xml)(?:\/|$)/i;
+const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|favicon\.ico|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)\/(?:admin|app|account|login|register|reset-password|checkout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
@@ -152,5 +152,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
+  matcher: ["/((?!api|assets|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
 };
