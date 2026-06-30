@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)((aidreamcapes|mydreamshoots)\.com)$/i;
-const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|favicon\.ico|robots\.txt|sitemap\.xml)(?:\/|$)/i;
+const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
+const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
 const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)\/(?:admin|app|account|login|register|reset-password|checkout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
@@ -157,7 +158,38 @@ function sameServerUrl(request: NextRequest): URL {
   return upstreamUrl;
 }
 
+async function storefrontIconResponse(request: NextRequest): Promise<Response | undefined> {
+  if (request.method !== "GET" || !BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return undefined;
+
+  const iconHref = siteIconForRequest(request);
+  if (!iconHref) return undefined;
+
+  const upstreamUrl = sameServerUrl(request);
+  upstreamUrl.pathname = iconHref.split("?")[0] ?? iconHref;
+  upstreamUrl.search = "";
+
+  const upstreamResponse = await fetch(upstreamUrl, {
+    headers: { [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }
+  });
+  if (!upstreamResponse.ok) return undefined;
+
+  const headers = new Headers(upstreamResponse.headers);
+  headers.delete("content-length");
+  headers.set("content-type", "image/svg+xml; charset=utf-8");
+  headers.set("cache-control", "no-store, max-age=0");
+  headers.set("x-storefront-icon-source", iconHref);
+
+  return new Response(upstreamResponse.body, {
+    status: upstreamResponse.status,
+    statusText: upstreamResponse.statusText,
+    headers
+  });
+}
+
 export async function middleware(request: NextRequest) {
+  const iconResponse = await storefrontIconResponse(request);
+  if (iconResponse) return iconResponse;
+
   const redirectResponse = aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return redirectResponse;
   if (!shouldReorderStorefrontHead(request)) return nextWithPathname(request);
@@ -178,6 +210,7 @@ export async function middleware(request: NextRequest) {
   const rewrittenHtml = withInlineAidreamcapesLogo(withStorefrontIcons(moveSeoTagsBeforeResources(html), siteIconForRequest(request)), request);
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
+  headers.set("cache-control", "no-store, max-age=0");
   headers.set("x-storefront-head-seo-reordered", "1");
 
   return new Response(rewrittenHtml, {
@@ -188,5 +221,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|assets|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
+  matcher: ["/((?!api|assets|_next/static|_next/image|robots.txt|sitemap.xml).*)"]
 };
