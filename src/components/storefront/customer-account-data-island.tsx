@@ -121,7 +121,7 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
         <LoadingCard title="Plan" />
         <LoadingCard title="Orders" />
         <LoadingCard title="Generation progress" />
-        <LoadingCard title="Albums and ledger" />
+        <LoadingCard title="Albums and credit history" />
       </div>
     );
   }
@@ -198,14 +198,14 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
               <p className="mt-1 text-xs text-[#7d7064]">{jobStatusLabel(job.status)} · {job.creditsReserved} credits held</p>
             </StorefrontInstantLink>
           )) : (
-            <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No generation jobs yet.</p>
+            <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No album requests yet.</p>
           )}
         </div>
       </div>
 
       <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-albums">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Albums and ledger</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Albums and credit history</p>
           <StorefrontInstantLink className="inline-flex items-center gap-1 text-xs font-semibold text-[#171514]" href={`/site/${siteSlug}/album`}>
             Gallery
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
@@ -223,7 +223,7 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
               <p className="mt-1 text-xs text-[#7d7064]">{entry.amount} credits · {dateLabel(entry.createdAt)}</p>
             </div>
           )) : (
-            <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Albums and ledger activity will appear here after the first request.</p>
+            <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Albums and credit activity will appear here after your first photo set.</p>
           )}
         </div>
       </div>

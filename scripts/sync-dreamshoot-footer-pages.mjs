@@ -21,7 +21,22 @@ const brandProfiles = [
       "Learn about MyDreamShoots, an AI photo package workspace for private uploads, personal AI models, clear credits, secure checkout, and customer-only gallery delivery.",
     contactSeoTitle: "Contact MyDreamShoots - support, sales, and company address",
     contactDescription:
-      "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information."
+      "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information.",
+    footerLinks: [
+      ["Photo Packages", "/collections", "product"],
+      ["Tools", "/tools", "product"],
+      ["How it works", "/#workflow", "product"],
+      ["Pricing", "/pricing", "product"],
+      ["Help center", "/help", "company"],
+      ["Guides", "/blog", "company"],
+      ["About us", "/about-us", "company"],
+      ["Contact us", "/contact-us", "company"],
+      ["Creators Circle", "/creators-circle", "company"],
+      ["Privacy Policy", "/privacy", "support"],
+      ["Content policy", "/content", "support"],
+      ["Terms of Service", "/terms", "support"],
+      ["Cookie Policy", "/cookies", "support"]
+    ]
   },
   {
     matcher: /aidreamcapes/i,
@@ -39,7 +54,22 @@ const brandProfiles = [
       "Learn about Aidreamcapes, a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
     contactSeoTitle: "Contact Aidreamcapes - support, sales, and company address",
     contactDescription:
-      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information."
+      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+    footerLinks: [
+      ["Travel Packages", "/collections", "product"],
+      ["Tools", "/tools", "product"],
+      ["How it works", "/#workflow", "product"],
+      ["Pricing", "/pricing", "product"],
+      ["Help Center", "/help", "company"],
+      ["Field Notes", "/blog", "company"],
+      ["About the Studio", "/about-us", "company"],
+      ["Contact the Studio", "/contact-us", "company"],
+      ["Creators Circle", "/creators-circle", "company"],
+      ["Privacy Policy", "/privacy", "support"],
+      ["Creative Safety", "/content", "support"],
+      ["Terms of Service", "/terms", "support"],
+      ["Cookie Policy", "/cookies", "support"]
+    ]
   }
 ];
 
@@ -158,17 +188,11 @@ function upsertFooterLinks(settings, profile) {
   const next = clone(settings ?? {});
   next.navigation = next.navigation ?? {};
   const existingLinks = Array.isArray(next.navigation.footerLinks) ? next.navigation.footerLinks : [];
-  const requiredLinks = [
-    link("About us", "/about-us", "company"),
-    link("Contact us", "/contact-us", "company")
-  ];
-  const normalizedLinks = existingLinks
+  const preservedExternalLinks = existingLinks
     .map((item) => ({ ...item, href: normalizePolicyHref(item.href) }))
-    .filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href));
-  for (const required of requiredLinks) {
-    if (!normalizedLinks.some((item) => item.href === required.href)) normalizedLinks.push(required);
-  }
-  next.navigation.footerLinks = normalizedLinks;
+    .filter((item) => /^https?:\/\//i.test(item.href));
+  const standardLinks = profile.footerLinks.map(([label, href, group]) => link(label, href, group));
+  next.navigation.footerLinks = [...standardLinks, ...preservedExternalLinks];
 
   next.globalSections = next.globalSections ?? {};
   next.globalSections.footer = next.globalSections.footer ?? { type: "footer", settings: {}, blocks: [] };
@@ -183,19 +207,15 @@ function upsertFooterLinks(settings, profile) {
     copyright: `© 2026 ${profile.brand}. All rights reserved.`
   };
   const blocks = Array.isArray(next.globalSections.footer.blocks) ? next.globalSections.footer.blocks : [];
-  const normalizedBlocks = blocks.map((item) => ({
+  const preservedExternalBlocks = blocks.map((item) => ({
     ...item,
     settings: { ...(item.settings ?? {}), href: normalizePolicyHref(item.settings?.href) }
-  })).filter((item) => !isVirtualGoodsFooterLinkToHide(item.settings?.label, item.settings?.href));
+  })).filter((item) => /^https?:\/\//i.test(item.settings?.href ?? ""));
   const blockPrefix = profile.brand.toLowerCase().replace(/[^a-z0-9]+/g, "_");
-  const requiredBlocks = [
-    block(`${blockPrefix}_footer_about`, "About us", "/about-us", "company"),
-    block(`${blockPrefix}_footer_contact`, "Contact us", "/contact-us", "company")
+  next.globalSections.footer.blocks = [
+    ...profile.footerLinks.map(([label, href, group], index) => block(`${blockPrefix}_footer_${group}_${index + 1}`, label, href, group)),
+    ...preservedExternalBlocks
   ];
-  for (const required of requiredBlocks) {
-    if (!normalizedBlocks.some((item) => item.settings?.href === required.settings.href)) normalizedBlocks.push(required);
-  }
-  next.globalSections.footer.blocks = normalizedBlocks;
   return next;
 }
 

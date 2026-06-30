@@ -183,6 +183,15 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
   return undefined;
 }
 
+function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
+  return {
+    "@type": "WebSite",
+    "@id": `${siteBaseUrl(site, routeMode)}#website`,
+    name: site.branding.logoText || site.name,
+    url: siteBaseUrl(site, routeMode)
+  };
+}
+
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const title = pageTitle(input.site, input.page);
   const description = pageDescription(input.site, input.page);
@@ -197,17 +206,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
       url: siteBaseUrl(input.site, input.routeMode),
       description: cleanPaidStorefrontText(input.site.branding.description)
     },
-    {
-      "@type": "WebSite",
-      "@id": `${siteBaseUrl(input.site, input.routeMode)}#website`,
-      name: siteName,
-      url: siteBaseUrl(input.site, input.routeMode),
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${siteBaseUrl(input.site, input.routeMode)}/search?q={search_term_string}`,
-        "query-input": "required name=search_term_string"
-      }
-    },
+    websiteSchema(input.site, input.routeMode),
     breadcrumbs(input.site, input.routeMode, input.pagePath, title),
     faqSchema(input.pageJson),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
@@ -239,17 +238,7 @@ export function buildToolDirectoryJsonLd({
       url: siteBaseUrl(site, routeMode),
       description: cleanPaidStorefrontText(site.branding.description)
     },
-    {
-      "@type": "WebSite",
-      "@id": `${siteBaseUrl(site, routeMode)}#website`,
-      name: siteName,
-      url: siteBaseUrl(site, routeMode),
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${siteBaseUrl(site, routeMode)}/search?q={search_term_string}`,
-        "query-input": "required name=search_term_string"
-      }
-    },
+    websiteSchema(site, routeMode),
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
       "@type": "SoftwareApplication",

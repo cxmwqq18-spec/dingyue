@@ -92,8 +92,8 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
         description: "Learn how Aidreamcapes turns private uploads into cinematic portraits, visible credit workflows, and customer-only galleries."
       },
       "/tools": {
-        title: "Aidreamcapes Studio Tools",
-        description: "Explore Aidreamcapes tools for dreamscape portraits, coastal scenes, fantasy avatars, warm profile images, and private gallery delivery."
+        title: "Aidreamcapes AI Tools - route portraits and scenic travel builders",
+        description: "Explore Aidreamcapes tools for route portraits, coastal light scenes, alpine trail frames, old quarter walks, route moodboards, and private travel gallery delivery."
       },
       "/terms": {
         title: "Aidreamcapes Terms of Service",
@@ -133,12 +133,34 @@ function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefi
   return `${base}${optimizedValue.startsWith("/") ? optimizedValue : `/${optimizedValue}`}`;
 }
 
+function localAssetUrl(pathOrUrl: string | undefined): string | undefined {
+  const value = cleanText(pathOrUrl);
+  if (!value) return undefined;
+  let normalized = value;
+  try {
+    if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
+      const url = new URL(normalized);
+      normalized = `${url.pathname}${url.search}`;
+    }
+  } catch {
+    return undefined;
+  }
+  if (normalized.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  }
+  if (normalized.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  }
+  if (!normalized.startsWith("/")) normalized = `/${normalized}`;
+  return normalized;
+}
+
 function siteIconUrl(site: Site): string | undefined {
   const settings = site.themeSettings?.publishedJson;
   const headerLogo = pickSettingText(settings?.globalSections?.header?.settings?.logoImageUrl);
   const footerLogo = pickSettingText(settings?.globalSections?.footer?.settings?.logoImageUrl);
   const brandingLogo = (site.branding as { logoImageUrl?: string }).logoImageUrl;
-  return absoluteUrl(site, pickText(headerLogo, brandingLogo, footerLogo));
+  return localAssetUrl(pickText(headerLogo, brandingLogo, footerLogo));
 }
 
 function preferOptimizedShareImage(pathOrUrl: string): string {

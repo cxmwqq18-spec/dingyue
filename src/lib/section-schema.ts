@@ -305,7 +305,7 @@ const dreamshootTaxonomyBlock: ThemeBlockSchema = {
   maxBlocks: 20,
   settings: [
     text("title", "Title", "Photo package studio"),
-    textarea("description", "Description", "Headshot, gala, travel, sports, beauty, and creator scenes."),
+    textarea("description", "Description", "Headshot, gala, lifestyle, sports, beauty, and creator scenes."),
     text("meta", "Meta", "Core package"),
     text("keywords", "Keywords", "headshots|gala photos|creator portraits"),
     image("imageUrl", "Image URL"),
@@ -315,7 +315,7 @@ const dreamshootTaxonomyBlock: ThemeBlockSchema = {
     label: "Package category",
     settings: {
       title: "Photo package studio",
-      description: "Headshot, gala, travel, sports, beauty, and creator scenes.",
+      description: "Headshot, gala, lifestyle, sports, beauty, and creator scenes.",
       meta: "Core package",
       keywords: "headshots|gala photos|creator portraits",
       imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
@@ -1151,7 +1151,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "samples",
           eyebrow: "Generated looks",
-          title: "One upload set can become photo, travel, headshot, and fashion photos.",
+          title: "One upload set can become photo, lifestyle, headshot, and fashion photos.",
           subtitle: "A visual shelf gives customers confidence before they register or subscribe.",
           cardBadgeLabel: "Generated style",
           footerBody: "",
@@ -1195,7 +1195,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         blocks: [
           block("step_upload", "card", { title: "Upload selfies", text: "Customers add clear photos for each person. Uploads stay private inside their photo account.", meta: "01", imageUrl: "" }),
           block("step_train", "card", { title: "Prepare your look", text: "A private creator profile helps keep faces, styling, and scene details consistent.", meta: "02", imageUrl: "" }),
-          block("step_choose", "card", { title: "Choose a collection", text: "Pick the photo destination, output count, and credit level that fits the story.", meta: "03", imageUrl: "" }),
+          block("step_choose", "card", { title: "Choose a collection", text: "Pick the photo style, output count, and credit level that fits the story.", meta: "03", imageUrl: "" }),
           block("step_deliver", "card", { title: "Deliver album", text: "Finished results arrive in a private gallery with credits settled automatically.", meta: "04", imageUrl: "" })
         ]
       }
@@ -1356,7 +1356,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "dreamshoot_package_taxonomy",
     label: "MydreamShoots Package Taxonomy",
     category: "Storefront",
-    description: "Reference-style package taxonomy for headshot, style, travel, gala, creator, sports, and video directions.",
+    description: "Reference-style package taxonomy for headshot, style, lifestyle, gala, creator, sports, and video directions.",
     maxBlocks: 20,
     settings: [
       text("anchor", "Anchor", "package-taxonomy"),
@@ -1386,10 +1386,10 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           layout: "seo_grid"
         },
         blocks: [
-          block("taxonomy_core", "taxonomy_card", { title: "Photo package studio", description: "Headshot, gala, travel, sports, beauty, and creator scenes.", meta: "Core", keywords: "headshots|gala photos|creator portraits", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections/creative" }),
+          block("taxonomy_core", "taxonomy_card", { title: "Photo package studio", description: "Headshot, gala, sports, beauty, lifestyle, and creator scenes.", meta: "Core", keywords: "headshots|gala photos|creator portraits", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections/creative" }),
           block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|profile|linkedin", imageUrl: "/assets/dreamshoot/editorial-headshot-gpt2.png", href: "/collections/headshots" }),
           block("taxonomy_gala", "taxonomy_card", { title: "Gala and night-out", description: "Formal looks, evening styling, and red-carpet style portraits.", meta: "Style", keywords: "gala|formal|night out", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/collections/gala" }),
-          block("taxonomy_travel", "taxonomy_card", { title: "Travel scenes", description: "Destination-style portraits without booking a photographer.", meta: "Lifestyle", keywords: "travel|destination|vacation", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", href: "/collections/travel" }),
+          block("taxonomy_travel", "taxonomy_card", { title: "Lifestyle scenes", description: "Outdoor profile portraits and creator looks without booking a photographer.", meta: "Lifestyle", keywords: "lifestyle|outdoor|creator", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", href: "/collections/travel" }),
           block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup|football fan|match day avatar", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", href: "/collections/sports" }),
           block("taxonomy_tryon", "taxonomy_card", { title: "Virtual try-on", description: "Preview wardrobe, styling, and creator outfits before generation.", meta: "Try-on", keywords: "try on|outfit|style", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/tools/virtual-try-on" })
         ]
@@ -1514,7 +1514,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("label", "Small label", "Photo package catalog"),
       text("title", "Title", "Choose a photo package first."),
       textarea("subtitle", "Subtitle", "Each card has a clear outcome, credit cost, photo count, and next action."),
-      textarea("tabs", "Tabs", "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility"),
+      textarea("tabs", "Tabs", "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Lifestyle|Video|Utility"),
       textarea("steps", "Buyer steps", "Pick pack|See credit cost|Generate album"),
       select(
         "source",
@@ -1536,7 +1536,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           label: "Photo package catalog",
           title: "Choose a photo package first.",
           subtitle: "Each card has a clear outcome, credit cost, photo count, and next action.",
-          tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Travel|Video|Utility",
+          tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Wedding|Cultural|Couple|Boudoir|Seasonal|Lifestyle|Video|Utility",
           steps: "Pick pack|See credit cost|Generate album",
           source: "creative_packs",
           featuredCount: 5
@@ -1647,13 +1647,13 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "shoot_pack_marquee",
     label: "Shoot Pack Marquee",
     category: "Storefront",
-    description: "MydreamShoots-style pack strip for photo, travel, creator, portrait, gala, and sports offers.",
+    description: "MydreamShoots-style pack strip for photo, lifestyle, creator, portrait, gala, and sports offers.",
     maxBlocks: 16,
     settings: [
       text("anchor", "Anchor", "packs"),
       text("eyebrow", "Eyebrow", "Popular packs"),
       text("title", "Title", "Photo packs customers can understand immediately."),
-      textarea("subtitle", "Subtitle", "Highlight the headshot, creator, travel, gala, sports, beauty, and editorial looks customers already search for."),
+      textarea("subtitle", "Subtitle", "Highlight the headshot, creator, lifestyle, gala, sports, beauty, and editorial looks customers already search for."),
       select(
         "source",
         "Content source",
@@ -1696,7 +1696,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "packs",
           eyebrow: "Popular packs",
           title: "Sell clear photo packages.",
-          subtitle: "Photo, creator, travel, gala, sports, headshot, beauty, and editorial packs become clear shoppable outcomes.",
+          subtitle: "Photo, creator, lifestyle, gala, sports, headshot, beauty, and editorial packs become clear shoppable outcomes.",
           source: "creative_packs"
         },
         blocks: [

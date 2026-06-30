@@ -82,7 +82,7 @@ export function AssetsPanel({
       });
       const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
       if (!response.ok || !result.asset) {
-        setMessage(result.error ?? `Upload failed for ${currentFile.name}.`);
+        setMessage(`We could not upload ${currentFile.name}. Please check the file and try again.`);
         setPending(false);
         return;
       }
@@ -107,7 +107,7 @@ export function AssetsPanel({
       setMessage("Upload deleted from this private account.");
       window.dispatchEvent(new CustomEvent("customer-assets:updated"));
     } else {
-      setMessage(result.error ?? "Asset delete failed.");
+      setMessage("We could not delete this upload. Please try again.");
     }
   }
 
@@ -118,7 +118,7 @@ export function AssetsPanel({
       setMessage(`Download link ready until ${result.expiresAt}.`);
       window.open(result.downloadUrl, "_blank");
     } else {
-      setMessage(result.error ?? "Download link failed.");
+      setMessage("We could not prepare this download link. Please try again.");
     }
   }
 

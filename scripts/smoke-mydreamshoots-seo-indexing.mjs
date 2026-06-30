@@ -41,6 +41,8 @@ function walk(value, visit, pathSegments = []) {
 }
 
 const seoIndexing = readText("src/lib/seo-indexing.ts");
+const jsonLd = readText("src/lib/theme/json-ld.ts");
+const robots = readText("src/app/robots.ts");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
 const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
@@ -81,8 +83,8 @@ walk(mydreamshootsSite, (key, value, location) => {
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
 assert(!badLegacyHrefHits.length, "MydreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
 assert(
-  hrefHits.some((hit) => hit.href === "/policies/cookies"),
-  "MydreamShoots navigation/footer data must link directly to /policies/cookies"
+  hrefHits.some((hit) => hit.href === "/cookies"),
+  "MydreamShoots navigation/footer data must link directly to /cookies"
 );
 
 assert(
@@ -103,6 +105,19 @@ for (const pathName of ["/tools/image-studio", "/tools/ai-image-studio", "/tools
 
 for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap required indexable tool paths must include primary static tool pages", { pathName });
+}
+
+assert(
+  robots.includes('"/search"') && robots.includes('"/site/*/search"') && !jsonLd.includes('"SearchAction"'),
+  "JSON-LD must not emit WebSite.SearchAction while /search is blocked and no indexable search page exists"
+);
+
+for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"]) {
+  assert(seoIndexing.includes(`"${pathName}"`), "fallback and required policy sitemap paths must use canonical short paths", { pathName });
+}
+
+for (const pathName of ["/policies/privacy", "/policies/terms", "/policies/refunds", "/policies/shipping", "/policies/content", "/policies/cookies"]) {
+  assert(!seoIndexing.includes(`  "${pathName}",`), "fallback and required policy sitemap paths must not use long policy paths", { pathName });
 }
 
 assert(
@@ -158,7 +173,7 @@ console.log(JSON.stringify({
     index: false
   },
   canonicalInternalLinks: {
-    cookies: "/policies/cookies",
+    cookies: "/cookies",
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
   syntheticRoutes: ["/creators-circle", "/partner-registration"],

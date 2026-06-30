@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowRight, BadgeCheck, Camera, ChevronRight, Heart, ImageIcon, PlayCircle, Scissors, Sparkles, UserCircle, Users } from "lucide-react";
+import { ArrowRight, BadgeCheck, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map, Mountain, PlayCircle, Route, Scissors, Sparkles, Sun, UserCircle, Users, Waves } from "lucide-react";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { PublicCustomer, Site } from "@/lib/types";
 
 type CustomerShellHeaderSite = Pick<Site, "slug" | "name" | "branding" | "primaryDomain">;
+type MenuGroup = typeof packageGroups;
 
 const packageGroups = [
   { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
@@ -15,6 +16,40 @@ const packageGroups = [
   { label: "Creator", accent: "#36d399", icon: Users, items: [{ label: "Creator Portraits", href: "/collections/creator-portraits" }, { label: "Fashion Editorial", href: "/collections/fashion-editorial" }, { label: "Product Style", href: "/collections/product-style" }] },
   { label: "Couple", accent: "#ff5f8f", icon: Heart, items: [{ label: "Christmas Couple", href: "/collections/christmas-couple" }, { label: "Engagement", href: "/collections/engagement" }, { label: "Wedding Portraits", href: "/collections/wedding-portraits" }] },
   { label: "Sports", accent: "#f4c542", icon: PlayCircle, items: [{ label: "World Cup Fan Photos", href: "/collections/world-cup-fan-photos" }] }
+];
+
+const aidreamcapesPackageGroups = [
+  {
+    label: "Scene Atlases",
+    accent: "#38bdf8",
+    icon: Map,
+    items: [
+      { label: "Route Portrait Albums", href: "/collections/route-portrait-albums" },
+      { label: "Coastal Light Sets", href: "/collections/coastal-getaways" },
+      { label: "Old Quarter Walks", href: "/collections/old-city-walks" },
+      { label: "Island Balcony Scenes", href: "/collections/island-resort-scenes" }
+    ]
+  },
+  {
+    label: "Open-Air Routes",
+    accent: "#c084fc",
+    icon: Mountain,
+    items: [
+      { label: "Alpine Trail Frames", href: "/collections/mountain-trails" },
+      { label: "Roadside Escape Frames", href: "/collections/road-trip-frames" },
+      { label: "Scenic Outlooks", href: "/collections/scenic-overlooks" }
+    ]
+  },
+  {
+    label: "Journal Sets",
+    accent: "#34d399",
+    icon: Coffee,
+    items: [
+      { label: "Cafe & Street Stories", href: "/collections/cafe-street-stories" },
+      { label: "Route Moodboards", href: "/collections/itinerary-moodboards" },
+      { label: "Postcard Story Sets", href: "/collections/postcard-social-sets" }
+    ]
+  }
 ];
 
 const toolGroups = [
@@ -60,49 +95,49 @@ const toolGroups = [
 
 const aidreamcapesToolGroups = [
   {
-    label: "Dreamscape makers",
-    accent: "#c58a4a",
-    icon: Camera,
+    label: "Route Builders",
+    accent: "#38bdf8",
+    icon: Map,
     items: [
-      { label: "Dreamscape generator", href: "/tools/dreamscape-generator" },
-      { label: "Coastal portrait", href: "/tools/coastal-portrait" },
-      { label: "Fantasy avatar", href: "/tools/fantasy-avatar" },
-      { label: "Golden hour couple", href: "/tools/golden-hour-couple" }
+      { label: "Route Portrait Engine", href: "/tools/route-portrait-engine" },
+      { label: "Coastal Light Composer", href: "/tools/coastal-portrait" },
+      { label: "Island Resort Scene Studio", href: "/tools/island-resort-scenes" }
     ]
   },
   {
-    label: "Portrait polish",
-    accent: "#b56f45",
-    icon: Sparkles,
+    label: "Scene Notes",
+    accent: "#c084fc",
+    icon: Route,
     items: [
-      { label: "Storybook headshot", href: "/tools/storybook-headshot" },
-      { label: "Editorial getaway", href: "/tools/editorial-getaway" },
-      { label: "Soft glam", href: "/tools/soft-glam" }
+      { label: "Scenic Overlook Story Maker", href: "/tools/scenic-overlook-story" },
+      { label: "Alpine Trail Frame Scene Tool", href: "/tools/cinematic-travel" },
+      { label: "Old Quarter Walk Portrait Tool", href: "/tools/travel-profile-story" }
     ]
   },
   {
-    label: "Creative planning",
-    accent: "#8a6f52",
-    icon: PlayCircle,
+    label: "Travel Keepsakes",
+    accent: "#34d399",
+    icon: Waves,
     items: [
-      { label: "Cinematic travel", href: "/tools/cinematic-travel" },
-      { label: "Product reverie", href: "/tools/product-reverie" },
-      { label: "Social keepsake", href: "/tools/social-keepsake" }
+      { label: "Cafe Corner Story Tool", href: "/tools/cafe-street-story" },
+      { label: "Route Moodboard Tool", href: "/tools/route-moodboard" },
+      { label: "Postcard Story Set Maker", href: "/tools/social-keepsake" }
     ]
   }
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
 
-function PackageMegaPanel({ basePath }: { basePath: string }) {
+function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo package studios" }: { basePath: string; groups?: MenuGroup; title?: string }) {
+  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   return (
     <div className="max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
       <div className="mb-4 text-center">
-        <h2 className="text-[1.02rem] font-semibold tracking-tight">Photo package studios</h2>
-        <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{packageGroups.length} categories</p>
+        <h2 className="text-[1.02rem] font-semibold tracking-tight">{title}</h2>
+        <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{groups.length} categories · {totalItems} themes</p>
       </div>
       <div className="grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
-        {packageGroups.map((group) => {
+        {groups.map((group) => {
           const Icon = group.icon;
           return (
             <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.label} open>
@@ -137,7 +172,7 @@ function PackageMegaPanel({ basePath }: { basePath: string }) {
 }
 
 function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: typeof toolGroups }) {
-  const icons = [Camera, ImageIcon, Heart, Users, Scissors, BadgeCheck];
+  const icons = [Camera, ImageIcon, Sparkles, Users, Scissors, BadgeCheck, Sun, Map];
   return (
     <div className="overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
       <div className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</div>
@@ -158,7 +193,7 @@ function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; g
         })}
       </div>
       <div className="mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-3">
-        {toolGroups.map((group, groupIndex) => (
+        {groups.map((group, groupIndex) => (
           <div key={group.label}>
             <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: group.accent }}>{group.label}</h3>
             <div className="grid gap-3">
@@ -195,8 +230,10 @@ export function CustomerShellHeader({
   tone?: "light" | "dark";
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
-  const logoText = "MydreamShoots";
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const logoText = site.branding.logoText || site.name || (isAidreamcapes ? "Aidreamcapes" : "MyDreamShoots");
+  const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || dreamshootLogoSrc;
+  const activePackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
   const dark = tone === "dark";
   const navClass = dark
@@ -207,12 +244,12 @@ export function CustomerShellHeader({
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className="mx-auto grid max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
-          Create realistic AI photo packages from everyday uploads.
+          {isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create realistic AI photo packages from everyday uploads."}
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${logoText} home`} className="flex min-w-0 items-center gap-3" href={basePath} title={`${logoText} home`}>
             <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
-              <img className="h-9 w-9 object-contain" src={dreamshootLogoSrc} alt="" aria-hidden="true" />
+              <img className="h-9 w-9 object-contain" src={logoSrc} alt="" aria-hidden="true" />
             </span>
             <span className="min-w-0">
               <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>
@@ -223,11 +260,11 @@ export function CustomerShellHeader({
           <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label="Photo Packages"
+              label={isAidreamcapes ? "Travel Packages" : "Photo Packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={packageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
+              prefetchPaths={activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
             >
-              <PackageMegaPanel basePath={basePath} />
+              <PackageMegaPanel basePath={basePath} groups={activePackageGroups} title={isAidreamcapes ? "Travel route studios" : "Photo package studios"} />
             </ClickMegaMenu>
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}

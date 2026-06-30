@@ -14,10 +14,16 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
-  "background-changer": "/tools/dreamscape-generator",
-  "background-remover": "/tools/dreamscape-generator",
-  "image-to-video": "/tools/dreamscape-generator",
-  headshot: "/tools/storybook-headshot"
+  "background-changer": "/tools/route-portrait-engine",
+  "background-remover": "/tools/route-portrait-engine",
+  "dreamscape-generator": "/tools/route-portrait-engine",
+  "image-to-video": "/tools/route-portrait-engine",
+  "portrait-generator": "/tools/route-portrait-engine",
+  "portrait-maker": "/tools/route-portrait-engine",
+  "product-reverie": "/tools/route-moodboard",
+  "soft-glam": "/tools/cafe-street-story",
+  "couple-escape-album": "/tools/shared-route-album",
+  headshot: "/tools/route-portrait-engine"
 };
 
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
@@ -44,6 +50,14 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
+  if (siteSlug === "mydreamshoots") {
+    const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
+    if (redirectPath) permanentRedirect(`/site/${siteSlug}${redirectPath}`);
+  }
+  if (siteSlug === "aidreamcapes") {
+    const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
+    if (redirectPath) permanentRedirect(`/site/${siteSlug}${redirectPath}`);
+  }
   const { site, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!site || !matched) return {};
   return metadataForSeoDirectory(site, "tool", toolSlug);

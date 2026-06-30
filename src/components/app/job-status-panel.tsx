@@ -33,6 +33,18 @@ function helperCopy(job: GenerationJob) {
   return "Credits were returned for this request.";
 }
 
+function updateLabel(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(date);
+}
+
 export function JobStatusPanel({ job }: { job: GenerationJob }) {
   return (
     <div className="grid gap-4">
@@ -59,7 +71,7 @@ export function JobStatusPanel({ job }: { job: GenerationJob }) {
             <AlertCircle className="h-4 w-4" strokeWidth={1.8} />
             Last update
           </div>
-          <div className="mt-2 text-sm font-medium text-zinc-950">{new Date(job.updatedAt).toLocaleString("zh-CN", { hour12: false })}</div>
+          <div className="mt-2 text-sm font-medium text-zinc-950">{updateLabel(job.updatedAt)}</div>
         </div>
       </div>
 

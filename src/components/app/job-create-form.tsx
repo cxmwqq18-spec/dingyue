@@ -418,7 +418,7 @@ export function JobCreateForm({
   const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
   const [availableAssets, setAvailableAssets] = useState(assets);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => initialSelectedAssets(assets, workflowFor(initialApp)));
-  const [message, setMessage] = useState("Choose a package, select source photos, then start a private album request.");
+  const [message, setMessage] = useState("Choose a package, select source photos, then start your private photo set.");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
   const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
@@ -438,7 +438,7 @@ export function JobCreateForm({
   const effectiveMaxAssets = maxAssetsForWorkflow(selectedWorkflow);
   const materialRules = selectedWorkflow?.materialRules?.length ? selectedWorkflow.materialRules : selectedApp ? defaultWorkflow(selectedApp).materialRules ?? [] : [];
   const modeFields = fieldsForMode(selectedFields, createMode);
-  const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool request";
+  const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool";
   const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
   const light = tone === "light";
   const textClass = light ? "text-[#171514]" : "text-white";
@@ -522,7 +522,7 @@ export function JobCreateForm({
 
   function updateCreateMode(nextMode: CreateMode) {
     setCreateMode(nextMode);
-    setMessage(nextMode === "theme" ? "Choose a package, select source photos, then start a private album request." : "Describe the result you want, attach source photos, then start a private request.");
+    setMessage(nextMode === "theme" ? "Choose a package, select source photos, then start your private photo set." : "Describe the result you want, attach source photos, then start this tool.");
     setFormValues((current) => {
       if (nextMode === "theme") {
         const next: Record<string, string | number | boolean> = { ...current, outputCount: themeOutputCount };
@@ -555,7 +555,7 @@ export function JobCreateForm({
       ...current,
       [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || preset.prompt)
     }));
-    setMessage("Describe the result you want, attach source photos, then start a private request.");
+    setMessage("Describe the result you want, attach source photos, then start this tool.");
   }
 
   function updateThemeCategory(nextCategory: string) {
@@ -590,7 +590,7 @@ export function JobCreateForm({
       });
       const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
       if (!response.ok || !result.asset) {
-        setMessage(result.error ?? "Source photo upload failed.");
+        setMessage(`We could not upload ${file.name}. Please check the file and try again.`);
         setUploadingSources(false);
         return;
       }
@@ -599,7 +599,7 @@ export function JobCreateForm({
     invalidateCustomerAssets(siteId, customer.id);
     setAvailableAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
     setSelectedAssetIds((current) => [...createdAssets.map((asset) => asset.id), ...current].slice(0, effectiveMaxAssets));
-    setMessage(`${createdAssets.length} source photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the ones you want to use for this request.`);
+    setMessage(`${createdAssets.length} source photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the ones you want to use.`);
     setUploadingSources(false);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
@@ -607,27 +607,27 @@ export function JobCreateForm({
   async function createJob(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (createMode === "theme" && !selectedPack) {
-      setMessage("Choose a photo package before starting this request.");
+      setMessage("Choose a photo package before starting.");
       return;
     }
     if (!sourceAssets.length) {
-      setMessage("Upload at least one source photo before starting an album request.");
+      setMessage("Upload at least one source photo before starting a photo set.");
       return;
     }
     if (selectedAssetIds.length < minAssets) {
-      setMessage(`Select at least ${minAssets} source photo${minAssets === 1 ? "" : "s"} for this request.`);
+      setMessage(`Select at least ${minAssets} source photo${minAssets === 1 ? "" : "s"} for this photo set.`);
       return;
     }
     const missingField = modeFields.find((field) => field.required && (formValues[field.id] === "" || formValues[field.id] === undefined || formValues[field.id] === null));
     if (missingField) {
-      setMessage(`Complete ${missingField.label} before starting this request.`);
+      setMessage(`Complete ${missingField.label} before starting.`);
       return;
     }
     if (createMode === "tool") {
       const prompt = String(formValues[TOOL_PROMPT_FIELD_ID] ?? "").trim();
       const blockedTerm = blockedPromptTerm(prompt);
       if (blockedTerm) {
-        setMessage("This prompt includes unsafe or disallowed content. Please revise it before starting the request.");
+        setMessage("This prompt includes unsafe or disallowed content. Please revise it before starting.");
         return;
       }
     }
@@ -641,7 +641,7 @@ export function JobCreateForm({
       requestFields.toolPresetTitle = toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? "";
     }
     setPending(true);
-    setMessage("Starting your album request and holding credits...");
+    setMessage("Starting your photo set and holding credits...");
     const response = await fetch(`/api/sites/${siteId}/ai/jobs`, {
       method: "POST",
       headers: customerJsonHeaders(siteId),
@@ -660,7 +660,7 @@ export function JobCreateForm({
     const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string } };
     if (!response.ok || !result.job) {
       setPending(false);
-      setMessage(result.error ?? "Album request failed.");
+      setMessage("We could not start this photo set. Please check your credits and try again.");
       return;
     }
     const href = `/site/${siteSlug}/app/jobs/${result.job.id}`;
@@ -963,7 +963,7 @@ export function JobCreateForm({
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? "Package" : "Tool"}</p>
           <p className={`mt-3 text-sm font-semibold ${textClass}`}>{createMode === "theme" ? selectedPack?.name ?? "Photo package" : toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? selectedApp?.aiApp.name ?? "AI tool"}</p>
-          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided private request"}</p>
+          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided tool result"}</p>
         </div>
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Balance</p>

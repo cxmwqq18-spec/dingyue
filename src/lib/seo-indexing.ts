@@ -20,12 +20,12 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/tools/headshot",
   "/tools/background-changer",
   "/tools/image-to-video",
-  "/policies/privacy",
-  "/policies/terms",
-  "/policies/refunds",
-  "/policies/shipping",
-  "/policies/content",
-  "/policies/cookies",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/refunds",
+  "/content",
+  "/shipping",
   "/help",
   "/blog",
   "/blog/preparing-source-photos"
@@ -35,12 +35,12 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/pricing",
   "/collections",
   "/tools",
-  "/policies/privacy",
-  "/policies/terms",
-  "/policies/refunds",
-  "/policies/shipping",
-  "/policies/content",
-  "/policies/cookies",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/refunds",
+  "/content",
+  "/shipping",
   "/help"
 ];
 
@@ -49,7 +49,7 @@ const BLOCKED_PATH_PREFIXES = ["/account", "/admin", "/api", "/app", "/cart", "/
 const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_TOOL_PATHS = ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"];
-const REQUIRED_INDEXABLE_POLICY_PATHS = ["/policies/privacy", "/policies/terms", "/policies/cookies", "/policies/shipping"];
+const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"];
 
 function normalizePath(slug: string): string {
   const value = slug.trim();

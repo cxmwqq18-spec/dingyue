@@ -98,7 +98,7 @@ export function CustomerWorkspaceShell({
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9b6b42]">Private workspace</p>
-              <h1 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.02em] md:text-4xl">Create a private photo request.</h1>
+              <h1 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.02em] md:text-4xl">Create your private photo set.</h1>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-[#625d56]">
                 Follow the steps in order: choose the package or tool, upload source photos, then review and start the request.
               </p>

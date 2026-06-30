@@ -346,11 +346,11 @@ export function LoginForm({
       {mode !== "login" ? (
         <p className="text-center text-xs leading-5 text-gray-400">
           By registering, you agree to our{" "}
-          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/terms")}>
+          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/terms")}>
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/policies/privacy")}>
+          <Link className="text-white underline decoration-white/38 underline-offset-4 hover:text-gray-200" href={sitePath("/privacy")}>
             Privacy Policy
           </Link>
           .

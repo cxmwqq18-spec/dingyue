@@ -3,18 +3,68 @@ import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
+  readStorefrontPlatformState,
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
-  readStorefrontPublicCollectionMetadataStateBySlugFromDatabase,
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { canonicalAidreamcapesCollectionPath, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { publicContentPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
+import type { PlatformState } from "@/lib/types";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+
+function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
+  return /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
+  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function stateWithSiteFirst(state: PlatformState, siteSlug: string): PlatformState | undefined {
+  const canonicalSlug = publicSiteSlug(siteSlug);
+  const site = state.sites.find((item) => publicSiteSlug(item.slug) === canonicalSlug || item.slug === siteSlug);
+  if (!site) return undefined;
+  return {
+    ...state,
+    sites: [site, ...state.sites.filter((item) => item.id !== site.id)]
+  };
+}
+
+async function readPublicRuntimeStateBySlugWithFallback(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
+  try {
+    const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug);
+    if (state?.sites[0]) return state;
+  } catch {
+    // Local development can exhaust the relational pool; legacy state keeps public routes renderable.
+  }
+  return stateWithSiteFirst(await readStorefrontPlatformState(), siteSlug);
+}
+
+async function readPublicPageMetadataStateBySlugWithFallback(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
+  try {
+    const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, pageSlug);
+    if (state?.sites[0]) return state;
+  } catch {
+    // Fall back to the JSON state used by local storefront previews.
+  }
+  return stateWithSiteFirst(await readStorefrontPlatformState(), siteSlug);
+}
+
+async function readCollectionRouteState(siteSlug: string, collectionCategory: string) {
+  try {
+    const detailState = await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory);
+    const detailSite = detailState?.sites[0];
+    if (detailState && detailSite && canResolveCollectionSlugForSite(detailState, detailSite, collectionCategory)) return detailState;
+  } catch {
+    // Continue to the broader collections state or local JSON fallback.
+  }
+  return readPublicRuntimeStateBySlugWithFallback(siteSlug, "/collections");
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
@@ -23,15 +73,15 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
   if (slug === "/account") return { title: "Account" };
   const state = collectionCategory
-    ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory)
-    : await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, slug);
+    ? await readCollectionRouteState(siteSlug, collectionCategory)
+    : await readPublicPageMetadataStateBySlugWithFallback(siteSlug, slug);
   const site = state?.sites[0];
   if (!site) return {};
   if (collectionCategory) {
     if (!canResolveCollectionSlugForSite(state, site, collectionCategory)) return {};
     return metadataForSeoDirectory(site, "collection", collectionCategory);
   }
-  if (dreamshootPartnerTemplateSlugs.has(slug) && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+  if (dreamshootPartnerTemplateSlugs.has(slug) && isDreamshootPartnerTemplateSite(site)) {
     return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), slug, {
       primaryDomain: site.primaryDomain,
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
@@ -59,6 +109,7 @@ export default async function SiteCatchAllPage({
   });
   if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
   if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
+  if (slug === "/how-it-works") redirect(`/site/${publicSlug}`);
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);
@@ -85,14 +136,18 @@ export default async function SiteCatchAllPage({
   }
   const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(slug);
   const state = collectionCategory
-    ? await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(publicSlug, collectionCategory)
-    : await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, pageSlug);
+    ? await readCollectionRouteState(publicSlug, collectionCategory)
+    : await readPublicRuntimeStateBySlugWithFallback(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
+  if (collectionCategory && isAidreamcapesSite(publicSite)) {
+    const canonicalCollectionPath = canonicalAidreamcapesCollectionPath(collectionCategory);
+    if (canonicalCollectionPath !== `/collections/${collectionCategory}`) redirect(`/site/${publicSlug}${canonicalCollectionPath}`);
+  }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
-    /dreamshoot/i.test(`${publicSite.slug} ${publicSite.name} ${publicSite.branding.logoText}`);
+    isDreamshootPartnerTemplateSite(publicSite);
   if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state });
 }

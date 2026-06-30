@@ -17,7 +17,7 @@ import {
   renderToolPage,
   resolveToolPageForSite
 } from "@/lib/storefront-render";
-import { metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { canonicalAidreamcapesCollectionPath, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import type { PlatformState } from "@/lib/types";
@@ -31,16 +31,26 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "travel-portraits": "/tools/nature-adventure"
 };
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
-  "background-changer": "/tools/dreamscape-generator",
-  "background-remover": "/tools/dreamscape-generator",
-  "image-to-video": "/tools/dreamscape-generator",
-  headshot: "/tools/storybook-headshot"
+  "background-changer": "/tools/route-portrait-engine",
+  "background-remover": "/tools/route-portrait-engine",
+  "dreamscape-generator": "/tools/route-portrait-engine",
+  "image-to-video": "/tools/route-portrait-engine",
+  "portrait-generator": "/tools/route-portrait-engine",
+  "portrait-maker": "/tools/route-portrait-engine",
+  "product-reverie": "/tools/route-moodboard",
+  "soft-glam": "/tools/cafe-street-story",
+  "couple-escape-album": "/tools/shared-route-album",
+  headshot: "/tools/route-portrait-engine"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
+  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
 function canUseMydreamshootsSyntheticPage(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
@@ -123,9 +133,11 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!site) return {};
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
+    redirectAidreamcapesLegacyTool(site, path[1]);
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
     if (!resolved) return {};
     redirectMydreamshootsLegacyTool(resolved.site, path[1]);
+    redirectAidreamcapesLegacyTool(resolved.site, path[1]);
     return metadataForSeoDirectory(resolved.site, "tool", path[1]);
   }
   if (path[0] === "collections" && path[1]) {
@@ -221,6 +233,10 @@ export default async function HostStorefrontCatchAllPage({
     return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
+  if (collectionCategory && isAidreamcapesSite(site)) {
+    const canonicalCollectionPath = canonicalAidreamcapesCollectionPath(collectionCategory);
+    if (canonicalCollectionPath !== `/collections/${collectionCategory}`) permanentRedirect(canonicalCollectionPath);
+  }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(`/${path.join("/")}`);
   if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();

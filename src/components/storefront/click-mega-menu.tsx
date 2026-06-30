@@ -87,7 +87,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         {...blockAttrs}
       >
         {label}
-        <ChevronRight className={`h-3.5 w-3.5 text-white/72 transition ${open ? "-rotate-90" : "rotate-90"}`} strokeWidth={2} />
+        <ChevronRight className={`h-3.5 w-3.5 text-white/72 transition ${open ? "-rotate-90" : "rotate-90"}`} data-mega-toggle="" strokeWidth={2} />
       </button>
       <div
         aria-hidden={!open}

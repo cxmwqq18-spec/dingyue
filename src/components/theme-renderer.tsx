@@ -148,7 +148,7 @@ export function ThemeRenderer({
         ...footerPrefetchPaths,
         hrefFor(routedSite, "/collections"),
         hrefFor(routedSite, "/tools"),
-        hrefFor(routedSite, isAidreamcapesSite(routedSite) ? "/tools/destination-portrait-engine" : "/tools/background-changer"),
+        hrefFor(routedSite, isAidreamcapesSite(routedSite) ? "/tools/route-portrait-engine" : "/tools/background-changer"),
         hrefFor(routedSite, "/pricing")
       ]
     : [];
@@ -485,8 +485,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
   const isAidreamcapes = isAidreamcapesSite(site);
-  const darkHeaderControls = dark || isDreamShoot;
-  const airyCommerceHeader = lightCommerce || isAidreamcapes;
+  const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
+  const airyCommerceHeader = lightCommerce && !isAidreamcapes;
   const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
   const aidreamcapesToolBlocks = isAidreamcapes
@@ -518,15 +518,15 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
     : isDreamShoot
       ? configuredLogoImageUrl || brandingLogoImageUrl || dreamshootDefaultLogoImageUrl
       : configuredLogoImageUrl || brandingLogoImageUrl;
-  const readableBrandTitle = isDreamShoot ? "MydreamShoots" : isAidreamcapes ? "Aidreamcapes" : title;
-  const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : isAidreamcapes ? "Aidreamcapes" : readableBrandTitle;
+  const readableBrandTitle = isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : title;
+  const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : isAidreamcapes ? "ልiጋreamርapes" : readableBrandTitle;
   const brandDescription = isDreamShoot
-    ? "MydreamShoots home, AI photo packages and private albums"
+    ? "MyDreamShoots home, AI route portrait packages and private albums"
     : isAidreamcapes
       ? "Aidreamcapes home, AI travel portraits and private galleries"
       : `${readableBrandTitle} home`;
   const logoAlt = isDreamShoot
-    ? "MydreamShoots heart camera logo for AI photo packages and private albums"
+    ? "MyDreamShoots heart camera logo for AI route portrait packages and private albums"
     : isAidreamcapes
       ? header ? setting(header, "logoAlt", "Aidreamcapes logo for AI travel portraits and private destination galleries") : "Aidreamcapes logo for AI travel portraits and private destination galleries"
       : header
@@ -562,7 +562,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	              ? isDreamShoot
 	                ? "inline-flex items-center gap-3 rounded-[18px] px-0 py-0 text-white"
 	                : isAidreamcapes
-	                  ? "inline-flex items-center gap-3 px-0 py-0 text-white"
+	                  ? "inline-flex items-center gap-2 px-0 py-0 text-white sm:gap-3"
 	                  : "inline-flex items-center gap-3 rounded-[16px] border border-white/10 bg-white px-3 py-2 text-zinc-950 shadow-[0_22px_60px_-38px_rgba(0,0,0,0.75)]"
               : airyCommerceHeader
                 ? isAidreamcapes
@@ -579,7 +579,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 		                    isDreamShoot
 		                      ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border border-white/10 bg-[#0b0d16] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)] before:absolute before:inset-[-1px] before:-z-10 before:rounded-[16px] before:bg-[linear-gradient(135deg,#7A4CFF_0%,#EC4BDD_48%,#16DCF0_100%)]"
 		                      : isAidreamcapes && dark
-		                        ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_42%_38%,rgba(255,122,89,0.96)_0%,rgba(236,75,221,0.72)_34%,rgba(139,92,246,0.82)_58%,rgba(9,11,24,0.95)_72%)] p-[2px] shadow-[0_0_0_1px_rgba(139,92,246,0.55),0_0_36px_-10px_rgba(139,92,246,0.9),0_0_42px_-16px_rgba(255,122,89,0.74)] before:absolute before:inset-[7px] before:rounded-full before:bg-[#05070E]"
+		                        ? "relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-11 sm:w-11"
 		                        : lightCommerce || isAidreamcapes
 	                        ? isAidreamcapes
 	                          ? "flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"
@@ -592,7 +592,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 		                      isDreamShoot
 		                        ? "h-8 w-8 object-contain"
 		                        : isAidreamcapes && dark
-		                          ? "relative z-[1] h-7 w-7 rounded-full object-contain"
+		                          ? "h-full w-full object-contain"
 		                          : lightCommerce || isAidreamcapes
 	                          ? isAidreamcapes
 	                            ? "h-full w-full object-contain"
@@ -609,9 +609,9 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	                  {brandMark}
 	                </span>
 	              )}
-	              <span className="min-w-0 shrink" title={isDreamShoot ? "MydreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>
-	                <span className={isAidreamcapes && dark ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot ? "block max-w-[min(42vw,17rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.05rem,2vw,1.66rem)] font-semibold leading-none text-white" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot || isAidreamcapes ? "true" : undefined} title={isDreamShoot ? "MydreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>{visualBrandTitle}</span>
-                {isDreamShoot ? <span className="sr-only">MydreamShoots AI photo packages and private albums</span> : null}
+              <span className="min-w-0 shrink" title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>
+                <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot ? "block max-w-[min(42vw,17rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.05rem,2vw,1.66rem)] font-semibold leading-none text-white" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot || isAidreamcapes ? "true" : undefined} title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "ልiጋreamርapes" : undefined}>{visualBrandTitle}</span>
+                {isDreamShoot ? <span className="sr-only">MyDreamShoots AI route portrait packages and private albums</span> : null}
 	                {isAidreamcapes ? <span className="sr-only">Aidreamcapes AI travel portraits and private galleries</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
@@ -628,7 +628,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                 ? "inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-[0.94rem] font-medium text-[#171514] transition hover:text-[#b07b47] 2xl:text-[0.98rem]"
                 : "inline-flex shrink-0 whitespace-nowrap transition hover:text-[var(--site-fg)]";
             const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
-            const isPackagesLink = showPhotoPackageMega && /photo packages|packages/i.test(link.label);
+            const isPackagesLink = showPhotoPackageMega && /route portrait packages|packages/i.test(link.label);
             const isMegaLink = isToolsLink || isPackagesLink;
 	            const linkNode = isMegaLink ? null : (
 	              <HeaderLink
@@ -652,14 +652,14 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
 	              >
 	                  {isPackagesLink ? (
-	                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} variant={isAidreamcapes ? "warm" : "dark"} />
+	                    <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} variant="dark" />
 	                  ) : (
                     <DreamShootMegaToolsPanel
                       ctaHref="/tools"
                       ctaLabel="View all tools"
                       site={site}
                       tools={toolMegaBlocks}
-	                      variantTone={isAidreamcapes ? "warm" : "dark"}
+	                      variantTone="dark"
 	                      variant="popover"
 	                    />
 	                  )}
@@ -754,7 +754,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                       ? "rounded-[16px] px-4 py-3 text-sm font-medium text-white/76 transition hover:bg-white/[0.08] hover:text-white"
                       : "rounded-[16px] px-4 py-3 text-sm font-medium text-[#4f4944] transition hover:bg-white hover:text-[#171514]";
                     const isToolsLink = showDreamShootToolsMega && /tools/i.test(link.label);
-                    const isPackagesLink = showPhotoPackageMega && /photo packages|packages/i.test(link.label);
+                    const isPackagesLink = showPhotoPackageMega && /route portrait packages|packages/i.test(link.label);
                     if (isPackagesLink) {
                       return (
                         <MobilePhotoPackagesMenu
@@ -833,8 +833,12 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const footerIdentity = `${title} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
   const isDreamShootFooter = /dreamshoot/i.test(footerIdentity);
   const isAidreamcapesFooter = /aidreamcapes/i.test(footerIdentity);
-  const readableFooterTitle = isDreamShootFooter ? "MydreamShoots" : isAidreamcapesFooter ? "Aidreamcapes" : title;
-  const visualFooterTitle = isDreamShootFooter && /^mydreamshoots$/i.test(title.trim()) ? "ʍʏƉʀɛǟʍֆhoots" : title || readableFooterTitle;
+  const readableFooterTitle = isDreamShootFooter ? "MyDreamShoots" : isAidreamcapesFooter ? "Aidreamcapes" : title;
+  const visualFooterTitle = isDreamShootFooter && /^mydreamshoots$/i.test(title.trim())
+    ? "ʍʏƉʀɛǟʍֆhoots"
+    : isAidreamcapesFooter
+      ? "ልiጋreamርapes"
+      : title || readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
   const contactAddressFallback = isDreamShootFooter || isAidreamcapesFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
@@ -851,7 +855,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
-  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg?v=aidreamcapes-cream" : "";
+  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a" : "";
   const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
   const footerBg = footer
@@ -863,7 +867,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const dark = isDarkColor(footerBg) || isDarkColor(themeValueToString(settings.saasSettingsCurrent?.skin_bg, settings.colors.background));
   if (lightweight) {
     const quickLinks = [
-      { label: "Photo Packages", href: "/collections" },
+      { label: "Travel Packages", href: "/collections" },
       { label: "Tools", href: "/tools" },
       { label: "Pricing", href: "/pricing" },
       { label: "FAQ", href: "/faq" }
@@ -896,16 +900,44 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const visibleBaseLinks = (isDreamShootFooter || isAidreamcapesFooter)
     ? baseLinks.filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href))
     : baseLinks;
-  const links = isDreamShootFooter && !visibleBaseLinks.some((item) => item.href === "/creators-circle")
-    ? [
-        ...visibleBaseLinks,
-        {
-          label: "Creators Circle",
-          href: "/creators-circle",
-          block: { id: "dreamshoot_footer_creators_runtime", type: "menu_link", settings: { label: "Creators Circle", href: "/creators-circle", group: "company" } } as SectionBlockInstance
-        }
-      ]
-    : visibleBaseLinks;
+  const pairedStoreFooterLinks = isDreamShootFooter || isAidreamcapesFooter
+    ? (isAidreamcapesFooter
+        ? [
+            ["Travel Packages", "/collections", "product"],
+            ["Tools", "/tools", "product"],
+            ["How it works", "/#workflow", "product"],
+            ["Pricing", "/pricing", "product"],
+            ["Help Center", "/help", "company"],
+            ["Field Notes", "/blog", "company"],
+            ["About the Studio", "/about-us", "company"],
+            ["Contact the Studio", "/contact-us", "company"],
+            ["Creators Circle", "/creators-circle", "company"],
+            ["Privacy Policy", "/privacy", "support"],
+            ["Creative Safety", "/content", "support"],
+            ["Terms of Service", "/terms", "support"],
+            ["Cookie Policy", "/cookies", "support"]
+          ]
+        : [
+            ["Photo Packages", "/collections", "product"],
+            ["Tools", "/tools", "product"],
+            ["How it works", "/#workflow", "product"],
+            ["Pricing", "/pricing", "product"],
+            ["Help center", "/help", "company"],
+            ["Guides", "/blog", "company"],
+            ["About us", "/about-us", "company"],
+            ["Contact us", "/contact-us", "company"],
+            ["Creators Circle", "/creators-circle", "company"],
+            ["Privacy Policy", "/privacy", "support"],
+            ["Content policy", "/content", "support"],
+            ["Terms of Service", "/terms", "support"],
+            ["Cookie Policy", "/cookies", "support"]
+          ]).map(([label, href, group], index) => ({
+            label,
+            href,
+            block: { id: `${isAidreamcapesFooter ? "aidreamcapes" : "dreamshoot"}_footer_${group}_${index + 1}`, type: "menu_link", settings: { label, href, group } } as SectionBlockInstance
+          }))
+    : [];
+  const links = pairedStoreFooterLinks.length ? pairedStoreFooterLinks : visibleBaseLinks;
   const headerLinksAsFooter = settings.navigation.headerLinks.map((link, index) => ({
     ...link,
     block: { id: `footer_header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href, group: "product" } } as SectionBlockInstance
@@ -987,7 +1019,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           <div className="max-w-[24rem]">
             <div className="flex items-center gap-3.5">
               {logoImageUrl ? (
-                <img className="h-12 w-12 shrink-0 rounded-[15px] object-contain" src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} />
+                <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} />
               ) : (
                 <span className={dark ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white text-[10px] font-semibold tracking-[0.18em] text-[#14161a]" : "inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.18em] text-white"}>
                   {brandMark}
@@ -996,7 +1028,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
               <div>
                 <h2 className="text-[1.85rem] font-semibold leading-none [font-family:var(--site-title-font)]">
                   <span aria-hidden={isDreamShootFooter ? "true" : undefined}>{visualFooterTitle}</span>
-                  {isDreamShootFooter ? <span className="sr-only">MydreamShoots AI photo packages and private albums</span> : null}
+                  {isDreamShootFooter ? <span className="sr-only">MyDreamShoots AI route portrait packages and private albums</span> : null}
                 </h2>
                 <p className={dark ? "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-white/44" : "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8f7d6d]"}>
                   {tagline}
@@ -1180,6 +1212,19 @@ function customerStatusNarrative(status: ThemeRuntimeData["jobs"][number]["statu
   return "Held credits were returned to the customer balance.";
 }
 
+function customerDateTimeLabel(value: string | undefined): string {
+  if (!value) return "Not started";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(date);
+}
+
 function customerRequestTitle(job: ThemeRuntimeData["jobs"][number], index = 0): string {
   const suffix = job.id.split("_").filter(Boolean).at(-1);
   return `Album request ${suffix ? suffix.toUpperCase() : String(index + 1).padStart(2, "0")}`;
@@ -1234,8 +1279,30 @@ function preferDreamshootOptimizedImage(src: string): string {
 }
 
 function preferAidreamcapesPhotoAsset(src: string): string {
+  const bareAidreamcapesPackMatch = src.match(/^\/([a-z0-9-]+\.png)(\?.*)?$/i);
+  if (bareAidreamcapesPackMatch) {
+    return `/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`;
+  }
   if (src.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg?v=20260628b";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  }
+  if (src.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  }
+  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png?v=20260629a";
+  }
+  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/storybook-headshots.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png?v=20260629a";
+  }
+  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png?v=20260630a";
+  }
+  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/coastal-light-sets.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png?v=20260630a";
+  }
+  if (src.startsWith("/assets/aidreamcapes/")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png?v=20260630a";
   }
   if (!src.startsWith("/assets/sites/site_aidreamcapes/creative-packs/")) return src;
   const versionedSrc = src.replace(/\.svg(\?.*)?$/i, ".png");
@@ -1262,6 +1329,18 @@ function canUseNextImage(src: string): boolean {
 function fallbackAltFromImageSrc(src: string): string {
   const cleanPath = src.split("?")[0]?.split("#")[0] ?? "";
   const filename = cleanPath.split("/").filter(Boolean).pop() ?? "";
+  if (cleanPath.includes("/site_aidreamcapes/creative-packs/")) {
+    const aidreamcapesAltByFilename: Record<string, string> = {
+      "coastal-getaways-v2.png": "Coastal Light Sets",
+      "scenic-overlooks-v2.png": "Scenic Outlooks",
+      "road-trip-frames-v2.png": "Roadside Escape Frames",
+      "itinerary-moodboards-v2.png": "Route Moodboards",
+      "postcard-social-sets-v2.png": "Postcard Story Sets",
+      "island-resort-scenes-v2.png": "Island Balcony Scenes"
+    };
+    const mappedAlt = aidreamcapesAltByFilename[filename];
+    if (mappedAlt) return mappedAlt;
+  }
   return filename
     .replace(/\.(png|jpe?g|webp|avif|svg)$/i, "")
     .replace(/[-_]+/g, " ")
@@ -1278,11 +1357,12 @@ function StorefrontImage({
   loading,
   fetchPriority
 }: StorefrontImageProps) {
+  const resolvedSrc = preferAidreamcapesPhotoAsset(src);
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
-  const isLocalPublicAsset = src.startsWith("/assets/");
-  const resolvedAlt = alt?.trim() || fallbackAltFromImageSrc(src);
-  if (isLocalPublicAsset || !canUseNextImage(src)) {
+  const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
+  const resolvedAlt = alt?.trim() || fallbackAltFromImageSrc(resolvedSrc);
+  if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
     return (
       <img
         alt={resolvedAlt}
@@ -1290,7 +1370,7 @@ function StorefrontImage({
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
         loading={resolvedLoading}
-        src={src}
+        src={resolvedSrc}
       />
     );
   }
@@ -1304,7 +1384,7 @@ function StorefrontImage({
       loading={priority ? undefined : resolvedLoading}
       priority={priority}
       sizes={sizes}
-      src={src}
+      src={resolvedSrc}
     />
   );
 }
@@ -1597,7 +1677,7 @@ const dreamshootStaticToolSlugByKey: Record<string, string> = {
   "christmas-photos": "christmas-photos",
   holiday: "christmas-photos",
   "pack-dreamshoot-holiday": "christmas-photos",
-  "christmas-couple": "christmas-photos",
+  "christmas-shared route": "christmas-photos",
   "pack-dreamshoot-christmas-couple": "christmas-photos",
   "pack-dreamshoot-christmas": "christmas-photos",
   taxonomy_tryon: "virtual-try-on",
@@ -1664,7 +1744,7 @@ function dreamshootDefaultToolTitle(slug: string): string {
 
 function dreamshootDefaultToolCategory(slug: string): string {
   if (slug.includes("video") || slug.includes("clip")) return "Video AI";
-  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "AI Photo Edit";
+  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "Route Portrait Edit";
   return "Photo AI";
 }
 
@@ -1675,7 +1755,7 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description
   const fallbackDescription = storefrontPaidToolBlockValue(block, "description", "");
   const bySlug: Record<string, { description: string; tags: [string, string]; action: string }> = {
     "headshot": {
-      description: "Upload everyday selfies and start a headshot set for LinkedIn, resumes, founder pages, or team profiles. Your finished portraits stay in a private MydreamShoots gallery.",
+      description: "Upload everyday selfies and start a headshot set for LinkedIn, resumes, founder pages, or team profiles. Your finished portraits stay in a private MyDreamShoots gallery.",
       tags: ["Profile ready", "Private gallery"],
       action: "Create headshots"
     },
@@ -1815,7 +1895,7 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description
       action: "Build fashion reel"
     },
     "album-story-video": {
-      description: "Collect favorite generated images into a compact album story for sharing a finished MydreamShoots set.",
+      description: "Collect favorite generated images into a compact album story for sharing a finished MyDreamShoots set.",
       tags: ["Album story", "Shareable set"],
       action: "Create album story"
     },
@@ -1837,10 +1917,10 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description
     /dedicated workflow|selected editor preset|one-click|ai-powered precision/i.test(fallbackDescription);
   return {
     description: needsRewrite
-      ? `${title} helps you prepare a stronger ${category.toLowerCase()} result before spending credits on a private MydreamShoots gallery.`
+      ? `${title} helps you prepare a stronger ${category.toLowerCase()} result before spending credits on a private MyDreamShoots gallery.`
       : fallbackDescription,
-    tags: category === "Video AI" ? ["Motion concept", "Private output"] : category === "AI Photo Edit" ? ["Source cleanup", "Credit planning"] : ["Photo package", "Private gallery"],
-    action: category === "Video AI" ? "Preview motion" : category === "AI Photo Edit" ? "Prepare photo" : "Start this set"
+    tags: category === "Video AI" ? ["Motion concept", "Private output"] : category === "Route Portrait Edit" ? ["Source cleanup", "Credit planning"] : ["Photo package", "Private gallery"],
+    action: category === "Video AI" ? "Preview motion" : category === "Route Portrait Edit" ? "Prepare photo" : "Start this set"
   };
 }
 
@@ -2203,17 +2283,38 @@ const fallbackHeroImages = [
   "/assets/dreamshoot/beauty-portrait-gpt2.png"
 ];
 
+const aidreamcapesFallbackHeroImages = [
+  "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png",
+  "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png",
+  "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png"
+];
+
 const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; category: string; description: string; meta: string; credits: string; imageUrl: string; href: string }> = [
-  { id: "aidream_fallback_destination", title: "Destination Portrait Albums", category: "Destination", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/destination-story.png", href: "/collections/destination-portrait-albums" },
-  { id: "aidream_fallback_coastal", title: "Coastal Getaways", category: "Coastal", description: "Beach, island, resort, and cliffside portraits with warm travel light.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-escapes.png", href: "/collections/coastal-getaways" },
-  { id: "aidream_fallback_city", title: "Old City Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.png", href: "/collections/old-city-walks" },
-  { id: "aidream_fallback_sunset", title: "Sunset Travel Stories", category: "Sunset", description: "Golden-hour beach walks, hilltop overlooks, and shared trip scenes for private albums.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/golden-hour-couples.png", href: "/collections/sunset-travel-stories" },
-  { id: "aidream_fallback_profile", title: "Travel Profile Stories", category: "Profile", description: "Warm travel portraits for creators, solo trips, writers, and personal journey pages.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.png", href: "/collections/travel-profile-stories" },
+  { id: "aidream_fallback_destination", title: "Route Portrait Albums", category: "Route", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png", href: "/collections/route-portrait-albums" },
+  { id: "aidream_fallback_coastal", title: "Coastal Light Sets", category: "Coastal", description: "Sea-view, island, resort, and cliffside portraits with warm travel light.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/coastal-getaways" },
+  { id: "aidream_fallback_city", title: "Old Quarter Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/old-city-walks" },
+  { id: "aidream_fallback_sunset", title: "Scenic Outlooks", category: "Outlook", description: "Golden-hour terraces, ridge paths, sea cliffs, and panoramic private albums.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png", href: "/collections/scenic-overlooks" },
+  { id: "aidream_fallback_profile", title: "Solo Traveler Profiles", category: "Profile", description: "Warm travel portraits for creators, solo trips, writers, and personal journey pages.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/solo-traveler-profiles" },
   { id: "aidream_fallback_editorial", title: "Editorial Getaways", category: "Editorial", description: "Magazine-style travel portraits with fashion-led settings and cinematic crops.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/editorial-getaways" },
-  { id: "aidream_fallback_cafe", title: "Cafe Street Journals", category: "Street", description: "Cream-light cafe portraits, balcony mornings, crosswalk moments, and quiet city details.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/soft-glam-studio.png", href: "/collections/cafe-street-journals" },
-  { id: "aidream_fallback_travel", title: "Cinematic Travel", category: "Travel", description: "Old cities, coast roads, scenic overlooks, rainy cafes, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cinematic-travel.png", href: "/collections/cinematic-travel" },
-  { id: "aidream_fallback_itinerary", title: "Itinerary Moodboards", category: "Itinerary", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/product-reverie.png", href: "/collections/itinerary-moodboards" },
-  { id: "aidream_fallback_postcard", title: "Postcard Social Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-journey.png", href: "/collections/postcard-social-sets" }
+  { id: "aidream_fallback_cafe", title: "Cafe & Street Stories", category: "Street", description: "Cafe portraits, balcony mornings, crosswalk moments, and quiet city details for travel journals.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.png", href: "/collections/cafe-street-stories" },
+  { id: "aidream_fallback_travel", title: "Roadside Escape Frames", category: "Route", description: "Open roads, coast roads, motel glow, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.png", href: "/collections/road-trip-frames" },
+  { id: "aidream_fallback_itinerary", title: "Route Moodboards", category: "Moodboard", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.png", href: "/collections/itinerary-moodboards" },
+  { id: "aidream_fallback_postcard", title: "Postcard Story Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/postcard-social-sets" },
+  { id: "aidream_fallback_lagoon", title: "Lagoon Route Studies", category: "Coastal", description: "Clear-water coves, boat decks, pale resort blues, and easy seaside portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/lagoon-route-studies" },
+  { id: "aidream_fallback_villa", title: "Private Villa Stays", category: "Resort", description: "Courtyard villas, pool gardens, sunlit rooms, and quiet luxury travel portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/island-resort-scenes-v2.png", href: "/collections/private-villa-stays" },
+  { id: "aidream_fallback_rooftop", title: "Rooftop City Nights", category: "City", description: "Blue-hour rooftop scenes, terrace dinners, skyline portraits, and city-break crops.", meta: "22 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/rooftop-city-nights" },
+  { id: "aidream_fallback_market", title: "Market Morning Walks", category: "City", description: "Flower markets, local stalls, linen outfits, and morning portraits for city travel albums.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.png", href: "/collections/market-morning-walks" },
+  { id: "aidream_fallback_rain", title: "Rainy City Breaks", category: "City", description: "Umbrella walks, wet-street reflections, museum days, and moody hotel awnings.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/rainy-city-breaks" },
+  { id: "aidream_fallback_desert", title: "Desert Road Stories", category: "Route", description: "Open roads, sunset dust, vintage motel color, and warm route portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.png", href: "/collections/desert-road-stories" },
+  { id: "aidream_fallback_lake", title: "Lake House Weekends", category: "Open Air", description: "Dock portraits, canoe moments, pine roads, and calm weekend escape scenes.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png", href: "/collections/lake-house-weekends" },
+  { id: "aidream_fallback_snow", title: "Snow Lodge Escapes", category: "Open Air", description: "Alpine villages, lodge interiors, fireplaces, and soft winter trail portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png", href: "/collections/snow-lodge-escapes" },
+  { id: "aidream_fallback_rail", title: "Rail Journey Portraits", category: "Route", description: "Train windows, platforms, overnight route mood, and slow-travel portrait frames.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.png", href: "/collections/rail-journey-portraits" },
+  { id: "aidream_fallback_cover", title: "Travel Journal Covers", category: "Creator", description: "Editorial cover crops, title-space portraits, and story opener images.", meta: "16 photos", credits: "16 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/travel-journal-covers" },
+  { id: "aidream_fallback_solo", title: "Solo Traveler Profiles", category: "Creator", description: "Confident destination profile portraits for journals, creator bios, and private albums.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/solo-traveler-profiles" },
+  { id: "aidream_fallback_shared", title: "Shared Route Albums", category: "Moments", description: "Paired travel portraits for coasts, city dinners, balconies, and scenic overlooks.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png", href: "/collections/shared-route-albums" },
+  { id: "aidream_fallback_family", title: "Family Travel Keepsakes", category: "Moments", description: "Gentle group portraits for resorts, old towns, outlooks, and share-ready memory cards.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/family-travel-keepsakes" },
+  { id: "aidream_fallback_honeymoon", title: "Honeymoon Itinerary Scenes", category: "Moments", description: "Romantic suites, coastal dinners, city strolls, and golden-hour shared route portraits.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/honeymoon-itinerary-scenes" },
+  { id: "aidream_fallback_retreat", title: "Wellness Retreat Scenes", category: "Resort", description: "Spa decks, yoga mornings, mineral pools, and calm restorative travel portraits.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/island-resort-scenes-v2.png", href: "/collections/wellness-retreat-scenes" }
 ];
 
 const accentBlue = "#2f6fed";
@@ -2367,17 +2468,17 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
     dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in scenic outdoor, hiking, and travel-inspired scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
     dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images.", "Photo AI", packImages.fashion, "/tools/fashion-editorial", "Editorial"),
     dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/product-lifestyle", "Commerce"),
-    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full photo package.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
-    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "AI Photo Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
-    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "AI Photo Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
-    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "AI Photo Edit", packImages.headshots, "/tools/photo-enhancer"),
-    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "AI Photo Edit", packImages.beauty, "/tools/portrait-retouch"),
-    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "AI Photo Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
-    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "AI Photo Edit", packImages.fashion, "/tools/color-correction"),
-    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "AI Photo Edit", packImages.copy, "/tools/old-photo-restoration"),
-    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
-    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "AI Photo Edit", packImages.copy, "/tools/magic-upscaler"),
-    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished photo package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
+    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full route portrait package.", "Route Portrait Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
+    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "Route Portrait Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
+    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "Route Portrait Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
+    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "Route Portrait Edit", packImages.headshots, "/tools/photo-enhancer"),
+    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "Route Portrait Edit", packImages.beauty, "/tools/portrait-retouch"),
+    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "Route Portrait Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
+    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "Route Portrait Edit", packImages.fashion, "/tools/color-correction"),
+    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "Route Portrait Edit", packImages.copy, "/tools/old-photo-restoration"),
+    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "Route Portrait Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
+    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "Route Portrait Edit", packImages.copy, "/tools/magic-upscaler"),
+    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished route portrait package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
     dreamshootToolBlock("mega_video_profile", "Profile clip maker", "Create social profile motion from headshots or creator portraits.", "Video AI", packImages.headshots, "/tools/profile-clip", "Social"),
     dreamshootToolBlock("mega_video_fan", "Fan poster motion", "Animate World Cup fan posters and match-day profile scenes.", "Video AI", packImages.sports, "/tools/fan-poster-motion", "Sports"),
     dreamshootToolBlock("mega_video_intro", "Creator intro video", "Turn creator portraits into short intro clips for profiles and reels.", "Video AI", packImages.creator, "/tools/creator-intro-video", "Creator"),
@@ -2561,12 +2662,14 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const columns = photoPackageMegaColumns(groups);
   const warm = variant === "warm";
+  const aidreamcapes = isAidreamcapesSite(site);
+  const panelTitle = aidreamcapes ? "Travel route studios" : warm ? "Travel package studios" : "Route portrait studios";
   return (
     <div className={warm ? "max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <h2 className={warm ? "text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "text-[1.02rem] font-semibold tracking-tight text-white"}>{warm ? "Travel package studios" : "Photo package studios"}</h2>
+          <h2 className={warm ? "text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "text-[1.02rem] font-semibold tracking-tight text-white"}>{panelTitle}</h2>
           <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{groups.length} categories · {totalItems} themes</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
@@ -2687,7 +2790,7 @@ function DreamShootMegaToolsPanel({
 }) {
   const warm = variantTone === "warm";
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
-  const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
+  const orderedCategories = ["Photo AI", "Route Portrait Edit", "Video AI"].filter((category) => categories.includes(category));
   const extraCategories = categories.filter((category) => !orderedCategories.includes(category));
   const allCategories = [...orderedCategories, ...extraCategories];
   const summaryCategories = (variant === "popover" ? allCategories : allCategories.slice(0, 3)).slice(0, 3);
@@ -2792,7 +2895,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">Photo Packages</span>
+        <span className="min-w-0 flex-1">Travel Packages</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>
@@ -2833,7 +2936,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
 
 function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; tools: SectionBlockInstance[] }) {
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
-  const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
+  const orderedCategories = ["Photo AI", "Route Portrait Edit", "Video AI"].filter((category) => categories.includes(category));
   const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))].slice(0, 3);
   const groupedCategories = displayCategories.map((category) => ({
     category,
@@ -3041,7 +3144,7 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
   return {
     id: block.id,
     title,
-    description: blockValue(block, "description", "A private AI photo package with album-ready outputs."),
+    description: blockValue(block, "description", "A private AI route portrait package with album-ready outputs."),
     category: blockValue(block, "category", "Package"),
     meta: blockValue(block, "meta", "20 photos"),
     credits: blockValue(block, "credits", "20 credits"),
@@ -3060,7 +3163,7 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
     card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview hair directions, colors, and beauty styling before choosing a full package.", "20 photos", "18 credits", packImages.beauty, "/collections/hairstyle"),
     card("catalog_gala", "Gala Photos", "Creative", "Formal night-out photos with editorial lighting and red-carpet energy.", "20 photos", "24 credits", packImages.gala, "/collections/gala-photos"),
     card("catalog_travel", "Travel portrait pack", "Travel", "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", "24 photos", "24 credits", packImages.travel, "/collections/travel"),
-    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, couple portraits, and announcement-ready scenes.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
+    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, shared route portraits, and announcement-ready scenes.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
     card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Traditional wedding looks with lehenga, saree, sherwani, jewelry, and album-ready portraits.", "20 photos", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
     card("catalog_christmas", "Christmas Photos", "Seasonal", "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", "20 photos", "20 credits", "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", "/collections/christmas-photos"),
     card("catalog_creator", "Creator Portraits", "Creator", "Personal-brand portraits for bios, newsletters, founder pages, and social profiles.", "20 photos", "24 credits", packImages.creator, "/collections/creator-portraits"),
@@ -3399,7 +3502,7 @@ function renderLegacySaasSection({
             <div className="lg:sticky lg:top-28">
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Photo collections</p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">{title}</h2>
-              <p className="mt-5 text-sm leading-7 text-zinc-600">A vertical product and collection showcase bound to this site&apos;s active creative packs.</p>
+              <p className="mt-5 text-sm leading-7 text-zinc-600">Explore the available packages and collections customers can start from this storefront.</p>
               <Link className="mt-7 inline-flex rounded-full bg-zinc-950 px-5 py-3 text-sm font-medium text-white" href={hrefFor(site, "/pricing")}>
                 {setting(section, "button_label", "View all")}
               </Link>
@@ -3916,7 +4019,7 @@ function renderLegacySaasSection({
           </div>
           <div>
             <h3 className="font-semibold">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "title", setting(section, "special_title", "Newsletter"))}</h3>
-            <p className="mt-3 text-sm leading-6 text-zinc-600">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "describe", setting(section, "special_desc", "Get new AI photoshoot drops and product updates."))}</p>
+            <p className="mt-3 text-sm leading-6 text-zinc-600">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "describe", setting(section, "special_desc", "Get new route portraitshoot drops and product updates."))}</p>
             <div className="mt-4 flex overflow-hidden rounded-full border border-black/10 bg-white">
               <input className="min-w-0 flex-1 px-4 py-3 text-sm outline-none" placeholder="Email address" />
               <button className="bg-zinc-950 px-4 text-sm font-medium text-white">Join</button>
@@ -4013,7 +4116,7 @@ function SectionView({
                 className="mt-6 max-w-[15.4ch] text-[clamp(3.15rem,5.35vw,5.7rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#171514] text-balance [font-family:var(--site-title-font)]"
                 data-headline-text={setting(section, "headline")}
               >
-                {setting(section, "headline", "AI photos that look like a real shoot")}
+                {setting(section, "headline", "route portraits that look like a real shoot")}
               </h1>
               <p className="mt-5 max-w-[32rem] text-[1.03rem] leading-[1.86] text-[#665f58]">
                 {setting(section, "subheadline", "Turn everyday uploads into polished creator, portrait, travel, seasonal, and editorial photo packs.")}
@@ -4233,7 +4336,7 @@ function SectionView({
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", "4.9/5 from photo-package subscribers")}</p>
-                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, photo packages, private albums, and checkout stay inside your account.</p>
+                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, route portrait packages, private albums, and checkout stay inside your account.</p>
                 </div>
                 </div>
               </div>
@@ -4448,7 +4551,7 @@ function SectionView({
               </div>
             ) : null}
             <Link className="mt-8 inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5" style={{ background: `linear-gradient(90deg, ${accentCopper}, ${accentBlue})` }} href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
-              {setting(section, "ctaLabel", "Create my AI photos")}
+              {setting(section, "ctaLabel", "Create my route portraits")}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -4785,14 +4888,14 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-12 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-12 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <Link
-            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this photo package"))}
+            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this route portrait package"))}
             className={dark ? "group grid overflow-hidden rounded-[32px] border border-white/10 bg-[#15171c] shadow-[0_34px_100px_-68px_rgba(0,0,0,0.86)] md:grid-cols-[0.92fr_1.08fr]" : "group grid overflow-hidden rounded-[32px] border border-[#ded5ca] bg-[#fffdf8]/90 shadow-[0_34px_100px_-76px_rgba(20,22,26,0.32)] md:grid-cols-[0.9fr_1.1fr]"}
             href={hrefFor(site, setting(section, "ctaHref", "#packages"))}
           >
             <div className={dark ? "flex min-h-[380px] flex-col justify-between p-7 text-white md:p-10" : "flex min-h-[380px] flex-col justify-between p-7 text-[#14161a] md:p-10"}>
               <div>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/58" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{setting(section, "eyebrow")}</p>
-                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private photo packages")}</h2>
+                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private route portrait packages")}</h2>
                 <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/70" : "mt-5 max-w-xl text-sm leading-7 text-[#625d56]"}>{setting(section, "subtitle")}</p>
                 <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
                   {displayStats.slice(0, 3).map((stat, index) => (
@@ -5025,7 +5128,7 @@ function SectionView({
               {setting(section, "title", "Your Love Story, Anywhere.")}
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-[0.95rem] leading-7 text-[#6d665f] lg:mx-0">
-              {setting(section, "subtitle", "Create premium AI photos with a plan customers can understand.")}
+              {setting(section, "subtitle", "Create premium route portraits with a plan customers can understand.")}
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-end">
@@ -5692,7 +5795,7 @@ function SectionView({
           credits: blockValue(item, "credits"),
           category: blockValue(item, "category", "Photo package"),
           trainingLabel: blockValue(item, "trainingLabel", "Ready workflow"),
-          imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.creator)),
+        imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", isAidreamcapesSite(site) ? aidreamcapesFallbackHeroImages[0] : packImages.creator)),
           href: blockValue(item, "href", "/tools")
         }));
     const selectedPack = selectedCategory && filteredPackItems.length === 1 ? filteredPackItems[0] : undefined;
@@ -5700,7 +5803,17 @@ function SectionView({
       ? Array.from(new Set([packImage(site, selectedPack), ...(selectedPack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image))])).slice(0, 12)
       : [];
     const fallbackCards = [
-      {
+      isAidreamcapesSite(site) ? {
+        id: "fallback_route_story",
+        title: "Route Story Kit",
+        description: "Route portraits, travel journal crops, postcard sets, and private gallery albums.",
+        meta: "24 photos",
+        credits: "22 credits",
+        category: "Route",
+        trainingLabel: "Ready workflow",
+        imageUrl: aidreamcapesFallbackHeroImages[0],
+        href: "/collections"
+      } : {
         id: "fallback_creator",
         title: "Creator Studio Pack",
         description: "AI portraits for profile updates, gifts, creator posts, and private albums.",
@@ -5826,7 +5939,7 @@ function SectionView({
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5"
                 href={hrefFor(site, "/collections")}
               >
-                Explore all photo packages
+                Explore all route portrait packages
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -5952,25 +6065,25 @@ function SectionView({
         ]
       : [];
     const taxonomySectionClass = aidreamcapes
-      ? "relative overflow-hidden border-y border-[#E6D8C3] bg-[#FBF3E4] px-5 py-16 text-[#1E1712]"
+      ? "relative overflow-hidden border-y border-white/10 bg-[#05070E] px-5 py-16 text-white"
       : "relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white";
     const taxonomyGlowClass = aidreamcapes
-      ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(216,138,75,0.2),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(255,248,237,0.9),transparent_24%)]"
+      ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(122,76,255,0.3),transparent_28%),radial-gradient(circle_at_82%_16%,rgba(22,220,240,0.16),transparent_28%),radial-gradient(circle_at_62%_92%,rgba(255,122,61,0.18),transparent_38%)]"
       : "absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(47,111,237,0.22),transparent_26%),radial-gradient(circle_at_88%_36%,rgba(215,163,107,0.16),transparent_24%)]";
     const taxonomyEyebrowClass = aidreamcapes
-      ? "text-[11px] font-medium uppercase tracking-[0.14em] text-[#9B7A5D]"
+      ? "text-[11px] font-medium uppercase tracking-[0.14em] text-white/52"
       : "text-[11px] font-medium uppercase tracking-[0.14em] text-white/52";
     const taxonomySubtitleClass = aidreamcapes
-      ? "max-w-2xl text-sm leading-7 text-[#6F6257] lg:justify-self-end"
+      ? "max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end"
       : "max-w-2xl text-sm leading-7 text-white/64 lg:justify-self-end";
     const selectedPanelClass = aidreamcapes
-      ? "rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] sm:p-7"
+      ? "rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7"
       : "rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7";
     const selectedImageGridClass = aidreamcapes
-      ? "grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-3 sm:grid-cols-2"
+      ? "grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 sm:grid-cols-2"
       : "grid min-h-[360px] gap-3 overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 sm:grid-cols-2";
     const selectedFallbackClass = aidreamcapes
-      ? "flex min-h-[360px] flex-col justify-between rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-6"
+      ? "flex min-h-[360px] flex-col justify-between rounded-[24px] border border-white/12 bg-white/[0.06] p-6"
       : "flex min-h-[360px] flex-col justify-between rounded-[24px] border border-white/12 bg-white/[0.06] p-6";
     return (
       <section className={taxonomySectionClass} id={sectionAnchor(section, "package-taxonomy")}>
@@ -5988,23 +6101,23 @@ function SectionView({
           {isCollectionDetail ? (
             <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
               <div className={selectedPanelClass}>
-                <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Selected package</p>
-                <h3 className={aidreamcapes ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
+                <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Selected package</p>
+                <h3 className={aidreamcapes ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
                   {dynamicTitle}
                 </h3>
-                <p className={aidreamcapes ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
+                <p className={aidreamcapes ? "mt-4 max-w-2xl text-sm leading-7 text-white/66" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
                   {dynamicSubtitle || "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request."}
                 </p>
                 {detailChips.length ? (
                   <div className="mt-6 flex flex-wrap gap-2">
                     {detailChips.map((chip) => (
-                      <span className={aidreamcapes ? "rounded-full border border-[#E3D3BE] bg-white/70 px-3 py-1.5 text-xs font-semibold text-[#7B5C40]" : "rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68"} key={chip}>
+                      <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68" : "rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68"} key={chip}>
                         {chip}
                       </span>
                     ))}
                   </div>
                 ) : null}
-                <Link className={aidreamcapes ? "mt-7 inline-flex items-center gap-2 rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
+                <Link className={aidreamcapes ? "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
                   Start this package
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
@@ -6012,7 +6125,7 @@ function SectionView({
               {selectedGalleryImages.length ? (
                 <div className={selectedImageGridClass}>
                   {selectedGalleryImages.map((image, index) => (
-                    <div className={`relative overflow-hidden rounded-[18px] ${aidreamcapes ? "bg-[#EADFCF]" : "bg-zinc-900"} ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
+                    <div className={`relative overflow-hidden rounded-[18px] ${aidreamcapes ? "bg-zinc-900" : "bg-zinc-900"} ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
                       <StorefrontImage
                         alt={`${dynamicTitle} preview ${index + 1}`}
                         className="h-full min-h-[170px] w-full object-cover"
@@ -6025,13 +6138,13 @@ function SectionView({
               ) : (
                 <div className={selectedFallbackClass}>
                   <div>
-                    <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Package guide</p>
+                    <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Package guide</p>
                     <h3 className="mt-4 text-2xl font-semibold tracking-tight">What to expect from {dynamicTitle}</h3>
-                    <p className={aidreamcapes ? "mt-3 text-sm leading-7 text-[#6F6257]" : "mt-3 text-sm leading-7 text-white/62"}>
+                    <p className={aidreamcapes ? "mt-3 text-sm leading-7 text-white/62" : "mt-3 text-sm leading-7 text-white/62"}>
                       Review the source-photo guidance, expected credits, image count, and private gallery delivery before starting this package.
                     </p>
                   </div>
-                  <Link className={aidreamcapes ? "inline-flex w-fit items-center gap-2 rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36]" : "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
+                  <Link className={aidreamcapes ? "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" : "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
                     Browse all packages
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
@@ -6039,7 +6152,7 @@ function SectionView({
               )}
             </div>
           ) : (
-            <PackageTaxonomyClient cards={taxonomyClientCards} initialSlug={selectedCollectionSlug} variant={aidreamcapes ? "cream" : "dark"} />
+            <PackageTaxonomyClient cards={taxonomyClientCards} initialSlug={selectedCollectionSlug} variant="dark" />
           )}
         </div>
       </section>
@@ -6059,7 +6172,7 @@ function SectionView({
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">{kind === "tool" ? "AI tool guide" : "Photo package directory"}</p>
               <h2 className="mt-4 text-[clamp(2.15rem,4.8vw,4.4rem)] font-bold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "photo package")}
+                {setting(section, "title", "route portrait package")}
               </h2>
               <p className="mt-5 max-w-4xl text-[1.05rem] leading-8 text-[#555f6d]">{setting(section, "subtitle", site.branding.description)}</p>
               {details.length ? (
@@ -6127,11 +6240,11 @@ function SectionView({
     const tabs = listLines(setting(section, "tabs", "All|Couple|Seasonal|Headshots|Beauty|Creative|Video"));
     const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes"));
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FBF3E4] px-5 py-16 text-[#1E1712] md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "proof-gallery")}>
-        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(216,138,75,0.18),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(255,248,237,0.92),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(184,110,54,0.12),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]"} />
-        <div className={aidreamcapes ? "absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.22)_1px,transparent_1px)] [background-size:90px_90px]" : "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]"} />
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "proof-gallery")}>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]"} />
+        <div className={aidreamcapes ? "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]" : "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8D725C]" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
             <span>{setting(section, "label", "Visual proof gallery")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
@@ -6142,7 +6255,7 @@ function SectionView({
               <div className="mt-10 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
                   <Link
-                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FFF8ED]" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
+                    className={aidreamcapes ? "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
                     href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(tab))}
                     key={tab}
                     style={index === 0 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
@@ -6153,13 +6266,13 @@ function SectionView({
               </div>
             </div>
             <div className="lg:pb-7">
-              <p className={aidreamcapes ? "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-[#6F6257]" : "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72"}>
+              <p className={aidreamcapes ? "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72" : "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72"}>
                 {setting(section, "subtitle", "Explore finished private albums by purpose, from source portraits to polished headshots, scene packs, style previews, and seasonal keepsakes.")}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 {badges.map((badge, index) => (
                   <span
-                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FFF8ED] px-4 py-2 text-sm font-semibold text-[#6F4D32]" : "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"}
+                    className={aidreamcapes ? "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76" : "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"}
                     key={badge}
                     style={index === 1 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
@@ -6176,7 +6289,7 @@ function SectionView({
               {...xfcartBlockAttrs(lead, 0, "visual_proof")}
             >
               <StorefrontImage
-                alt={blockValue(lead, "title", "Featured photo package")}
+                alt={blockValue(lead, "title", "Featured route portrait package")}
                 className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                 sizes="(max-width: 1024px) 100vw, 49vw"
                 src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))}
@@ -6265,22 +6378,22 @@ function SectionView({
       "col-span-12 row-span-2 md:col-span-4 md:row-span-3"
     ];
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FBF3E4] px-5 py-14 text-[#1E1712] md:py-20" : "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20"} id={sectionAnchor(section, "featured-pack")}>
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20" : "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-20"} id={sectionAnchor(section, "featured-pack")}>
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(216,138,75,0.18),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(255,248,237,0.92),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(184,110,54,0.12),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(122,76,255,0.22),transparent_34%),radial-gradient(circle_at_84%_12%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_54%_96%,rgba(255,166,68,0.2),transparent_36%)]"} />
         <div className={aidreamcapes ? "absolute inset-0 opacity-36 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.2)_1px,transparent_1px)] [background-size:96px_96px]" : "absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:96px_96px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className={aidreamcapes ? "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8D725C]" : "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56"}>
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56" : "flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/56"}>
             <span>{setting(section, "label", "Featured seasonal pack")}</span>
           </div>
           <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-start">
-            <div className={aidreamcapes ? "flex flex-col rounded-[28px] border border-[#E3D3BE] bg-[#FFF8ED] p-6 shadow-[0_36px_120px_-86px_rgba(70,46,24,0.38)] md:p-8 lg:p-9" : "flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9"}>
+            <div className={aidreamcapes ? "flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9" : "flex flex-col rounded-[34px] border border-white/14 bg-[#070911]/88 p-6 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-8 lg:p-9"}>
               <span className="inline-flex w-fit rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-[0.08em] text-white shadow-[0_20px_58px_-34px_rgba(184,110,54,0.56)]" style={{ background: aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : "linear-gradient(90deg,#ff7a3d 0%,#ec4bdd 48%,#16dcf0 100%)" }}>
                 {setting(section, "badge", "Match-day pack")}
               </span>
               <h2 className="mt-7 max-w-xl text-[clamp(2.15rem,3.85vw,3.75rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
                 {setting(section, "title", "World Cup fan photos for match-day moments.")}
               </h2>
-              <p className={aidreamcapes ? "mt-5 max-w-lg text-[1rem] leading-[1.48] text-[#6F6257]" : "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72"}>
+              <p className={aidreamcapes ? "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72" : "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72"}>
                 {setting(section, "subtitle", "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.")}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
@@ -6288,20 +6401,20 @@ function SectionView({
                   {setting(section, "primaryCta", "Create Fan Photos")}
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
-                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-[18px] border border-[#D8C4A9] bg-white px-6 py-3.5 text-sm font-semibold text-[#1E1712] transition hover:-translate-y-0.5 hover:border-[#B86E36] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
+                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[18px] border border-white/16 bg-white/[0.05] px-6 py-3.5 text-sm font-semibold text-white/86 transition hover:-translate-y-0.5 hover:bg-white/[0.08] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
                   {setting(section, "secondaryCta", "View Sports Packs")}
                 </Link>
               </div>
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {metrics.map((metric) => (
-                  <div className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white p-4" : "rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"} key={metric.value}>
-                    <p className={aidreamcapes ? "text-[1.28rem] font-semibold tracking-[-0.03em] text-[#1E1712]" : "text-[1.28rem] font-semibold tracking-[-0.03em] text-white"}>{metric.value}</p>
-                    <p className={aidreamcapes ? "mt-1 text-xs leading-5 text-[#6F6257]" : "mt-1 text-xs leading-5 text-white/58"}>{metric.label}</p>
+                  <div className={aidreamcapes ? "rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]" : "rounded-[18px] border border-white/12 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"} key={metric.value}>
+                    <p className={aidreamcapes ? "text-[1.28rem] font-semibold tracking-[-0.03em] text-white" : "text-[1.28rem] font-semibold tracking-[-0.03em] text-white"}>{metric.value}</p>
+                    <p className={aidreamcapes ? "mt-1 text-xs leading-5 text-white/58" : "mt-1 text-xs leading-5 text-white/58"}>{metric.label}</p>
                   </div>
                 ))}
               </div>
-              <div className={aidreamcapes ? "mt-5 rounded-[24px] border border-[#E3D3BE] bg-white p-5" : "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5"}>
-                <p className={aidreamcapes ? "text-sm font-semibold tracking-[-0.01em] text-[#1E1712]" : "text-sm font-semibold tracking-[-0.01em] text-white"}>{setting(section, "includedTitle", "Included outputs")}</p>
+              <div className={aidreamcapes ? "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5" : "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5"}>
+                <p className={aidreamcapes ? "text-sm font-semibold tracking-[-0.01em] text-white" : "text-sm font-semibold tracking-[-0.01em] text-white"}>{setting(section, "includedTitle", "Included outputs")}</p>
                 <div className="mt-4 grid gap-3">
                   {(includedOutputs.length ? includedOutputs : [
                     { title: "Fan posters", body: "Large portrait graphics for match day" },
@@ -6312,23 +6425,23 @@ function SectionView({
                     <div className="grid grid-cols-[10px_1fr] gap-3" key={`${item.title}-${item.body}`}>
                       <span className="mt-2 h-2 w-2 rounded-full" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }} />
                       <div>
-                        <p className={aidreamcapes ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white/92"}>{item.title}</p>
-                        {item.body ? <p className={aidreamcapes ? "mt-0.5 text-xs leading-5 text-[#6F6257]" : "mt-0.5 text-xs leading-5 text-white/52"}>{item.body}</p> : null}
+                        <p className={aidreamcapes ? "text-sm font-semibold text-white/92" : "text-sm font-semibold text-white/92"}>{item.title}</p>
+                        {item.body ? <p className={aidreamcapes ? "mt-0.5 text-xs leading-5 text-white/52" : "mt-0.5 text-xs leading-5 text-white/52"}>{item.body}</p> : null}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <p className={aidreamcapes ? "mt-5 text-xs leading-5 text-[#8D725C]" : "mt-5 text-xs leading-5 text-white/45"}>
+              <p className={aidreamcapes ? "mt-5 text-xs leading-5 text-white/45" : "mt-5 text-xs leading-5 text-white/45"}>
                 {setting(section, "safetyCopy", "Safe styling: no real player likenesses, official team logos, or protected marks required.")}
               </p>
             </div>
-            <div className={aidreamcapes ? "relative overflow-hidden rounded-[28px] border border-[#E3D3BE] bg-[#FFF8ED] p-4 shadow-[0_36px_120px_-86px_rgba(70,46,24,0.38)] md:p-6" : "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6"}>
+            <div className={aidreamcapes ? "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6" : "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6"}>
               <div className="grid h-[880px] grid-cols-12 grid-rows-[repeat(9,minmax(0,1fr))] gap-3 md:h-[690px] md:gap-4">
                 {collage.map((item, index) => {
                   return (
                     <div
-                      className={`group relative overflow-hidden rounded-[22px] ${aidreamcapes ? "border border-[#E3D3BE] bg-[#EFE3D3]" : "border border-white/10 bg-white/[0.04]"} ${collagePlacements[index] ?? "col-span-4 row-span-3"}`}
+                      className={`group relative overflow-hidden rounded-[22px] ${aidreamcapes ? "border border-white/10 bg-white/[0.04]" : "border border-white/10 bg-white/[0.04]"} ${collagePlacements[index] ?? "col-span-4 row-span-3"}`}
                       key={instanceKey(item, index, "seasonal_image")}
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
@@ -6346,27 +6459,27 @@ function SectionView({
                   );
                 })}
               </div>
-              <div className={aidreamcapes ? "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-[#E3D3BE] bg-[#FFF8ED]/90 p-5 shadow-[0_28px_88px_-58px_rgba(70,46,24,0.48)] backdrop-blur-xl" : "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl"}>
-                <p className={aidreamcapes ? "text-sm font-semibold text-[#8D725C]" : "text-sm font-semibold text-white/58"}>{setting(section, "overlayTitle", "World Cup Pack")}</p>
-                <h3 className={aidreamcapes ? "mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#1E1712]" : "mt-2 text-2xl font-semibold tracking-[-0.04em] text-white"}>{setting(section, "overlaySubtitle", "Match-day looks without a studio.")}</h3>
+              <div className={aidreamcapes ? "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl" : "absolute left-1/2 top-[47%] w-[min(86%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-[24px] border border-white/14 bg-[#11121C]/88 p-5 shadow-[0_28px_88px_-52px_rgba(0,0,0,0.98)] backdrop-blur-xl"}>
+                <p className={aidreamcapes ? "text-sm font-semibold text-white/58" : "text-sm font-semibold text-white/58"}>{setting(section, "overlayTitle", aidreamcapes ? "Route Atlas" : "World Cup Pack")}</p>
+                <h3 className={aidreamcapes ? "mt-2 text-2xl font-semibold tracking-[-0.04em] text-white" : "mt-2 text-2xl font-semibold tracking-[-0.04em] text-white"}>{setting(section, "overlaySubtitle", aidreamcapes ? "Route portraits from private uploads." : "Match-day looks without a studio.")}</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {overlayChips.map((chip, index) => (
-                    <span className={aidreamcapes ? "rounded-full border border-[#E3D3BE] bg-white px-3 py-1.5 text-xs font-semibold text-[#7B5C40]" : "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76"} key={chip} style={index === 0 ? { background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
+                    <span className={aidreamcapes ? "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76" : "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76"} key={chip} style={index === 0 ? { background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
                       {chip}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
-                <p className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white px-4 py-3 text-xs leading-5 text-[#6F6257]" : "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54"}>
-                  {setting(section, "bottomNote", "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.")}
+                <p className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54" : "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54"}>
+                  {setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.")}
                 </p>
-                <div className={aidreamcapes ? "rounded-[18px] border border-[#E3D3BE] bg-white p-3" : "rounded-[18px] border border-white/10 bg-white/[0.055] p-3"}>
-                  <p className={aidreamcapes ? "text-xs font-semibold text-[#1E1712]" : "text-xs font-semibold text-white"}>{setting(section, "campaignLabel", "Current campaign: World Cup Fan Photos")}</p>
-                  <div className={aidreamcapes ? "mt-2 h-1.5 overflow-hidden rounded-full bg-[#EADFCF]" : "mt-2 h-1.5 overflow-hidden rounded-full bg-white/10"}>
+                <div className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.055] p-3" : "rounded-[18px] border border-white/10 bg-white/[0.055] p-3"}>
+                  <p className={aidreamcapes ? "text-xs font-semibold text-white" : "text-xs font-semibold text-white"}>{setting(section, "campaignLabel", aidreamcapes ? "Current route: Coastal portrait sets" : "Current campaign: World Cup Fan Photos")}</p>
+                  <div className={aidreamcapes ? "mt-2 h-1.5 overflow-hidden rounded-full bg-white/10" : "mt-2 h-1.5 overflow-hidden rounded-full bg-white/10"}>
                     <span className="block h-full w-[72%] rounded-full" style={{ background: aidreamcapes ? aidreamcapesAccent : dreamshootBrandGradient }} />
                   </div>
-                  <p className={aidreamcapes ? "mt-2 text-[11px] leading-4 text-[#8D725C]" : "mt-2 text-[11px] leading-4 text-white/48"}>{setting(section, "nextCampaignLabel", "Next: Valentine / Graduation Season")}</p>
+                  <p className={aidreamcapes ? "mt-2 text-[11px] leading-4 text-white/48" : "mt-2 text-[11px] leading-4 text-white/48"}>{setting(section, "nextCampaignLabel", aidreamcapes ? "Next: Old quarter walks / alpine trail frames" : "Next: Valentine / Graduation Season")}</p>
                 </div>
               </div>
             </div>
@@ -6376,7 +6489,7 @@ function SectionView({
     );
   }
 
-  if (section.type === "dreamshoot_package_catalog") {
+  if (section.type === "dreamshoot_package_catalog" || section.type === "aidreamcapes_package_catalog") {
     const aidreamcapes = isAidreamcapesSite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
@@ -6398,8 +6511,14 @@ function SectionView({
     ];
     const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site) : defaultDreamshootCatalogCards(site);
     const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
-    const baseCards = seededCards.length ? seededCards : fallbackCards;
-    const cards = usePacks && packCards.length ? packCards : baseCards;
+    const baseCards = aidreamcapes && defaultCatalogCards.length > seededCards.length
+      ? defaultCatalogCards
+      : seededCards.length ? seededCards : fallbackCards;
+    const cards = usePacks && packCards.length
+      ? aidreamcapes && defaultCatalogCards.length > packCards.length
+        ? defaultCatalogCards
+        : packCards
+      : baseCards;
     const displayCards = cards.length ? cards : fallbackCards;
     const featuredCountDefault = aidreamcapes ? Math.min(10, displayCards.length || 10) : 5;
     const featuredCountMax = aidreamcapes ? 10 : 6;
@@ -6412,22 +6531,22 @@ function SectionView({
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
     const directoryCount = directory.length;
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712] md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "packages")} data-dreamshoot-catalog-count={directoryCount}>
-        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(216,138,75,0.18),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(255,243,228,0.95),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(184,110,54,0.12),transparent_39%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]"} />
-        <div className={aidreamcapes ? "absolute inset-0 opacity-36 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.2)_1px,transparent_1px)] [background-size:94px_94px]" : "absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]"} />
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "packages")} data-dreamshoot-catalog-count={directoryCount}>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]"} />
+        <div className={aidreamcapes ? "absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" : "absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8D725C]" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
+          <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
             <span>{setting(section, "label", "Photo package catalog")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
             <div>
               <h2 className="max-w-[46rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "Choose a photo package first.")}
+                {setting(section, "title", "Choose a route portrait package first.")}
               </h2>
               <div className="mt-10 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
                   <Link
-                    className={aidreamcapes ? "rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FBF3E4]" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
+                    className={aidreamcapes ? "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
                     href={hrefFor(site, tab === "All" ? "/collections" : collectionHref(dreamshootCategorySlug(tab)))}
                     key={tab}
                     style={index === 0 ? aidreamcapes ? { background: "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)", borderColor: "transparent", color: "white" } : { background: dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}
@@ -6438,26 +6557,26 @@ function SectionView({
               </div>
             </div>
             <div className="lg:pb-4">
-              <p className={aidreamcapes ? "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-[#6F6257]" : "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72"}>
+              <p className={aidreamcapes ? "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72" : "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72"}>
                 {setting(section, "subtitle", "This is where browsing turns into buying: each card has a clear outcome, credit cost, photo count, and one next action.")}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
+                <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   {directoryCount} active packages
                 </span>
-                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
+                <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   Reference breadth covered
                 </span>
-                <span className={aidreamcapes ? "rounded-full border border-[#D8C4A9] bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
+                <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   Editable in Products
                 </span>
               </div>
-              <div className={aidreamcapes ? "mt-8 rounded-[26px] border border-[#EADFCF] bg-[#FBF3E4] p-4 shadow-[0_28px_90px_-70px_rgba(114,82,48,0.32)]" : "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]"}>
+              <div className={aidreamcapes ? "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]" : "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]"}>
                 <div className="flex flex-wrap items-center gap-4">
                   {steps.map((step, index) => (
                     <div className="flex items-center gap-3" key={step}>
                       <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-white" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }}>{index + 1}</span>
-                      <span className={aidreamcapes ? "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-[#1E1712]" : "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white"}>{step}</span>
+                      <span className={aidreamcapes ? "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white" : "text-[clamp(1rem,1.45vw,1.35rem)] font-semibold text-white"}>{step}</span>
                     </div>
                   ))}
                 </div>
@@ -6468,11 +6587,11 @@ function SectionView({
             {featured.map((card, index) => (
               <Link
                 aria-label={cardLinkLabel("Choose package", card.title)}
-                className={aidreamcapes ? "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-[#E3D3BE] bg-white shadow-[0_34px_105px_-76px_rgba(70,46,24,0.36)] transition hover:-translate-y-1 hover:border-[#B86E36]/45" : "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"}
+                className={aidreamcapes ? "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24" : "group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"}
                 href={hrefFor(site, card.href)}
                 key={card.id}
               >
-                <div className={aidreamcapes ? "relative aspect-[4/3] overflow-hidden bg-[#EADFCF]" : "relative aspect-[4/3] overflow-hidden bg-white/[0.04]"}>
+                <div className={aidreamcapes ? "relative aspect-[4/3] overflow-hidden bg-white/[0.04]" : "relative aspect-[4/3] overflow-hidden bg-white/[0.04]"}>
                   <StorefrontImage
                     alt={card.title}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
@@ -6485,12 +6604,12 @@ function SectionView({
                   {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient }} /> : null}
                 </div>
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className={aidreamcapes ? "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-[#1E1712]" : "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white"}>{card.title}</h3>
-                  <p className={aidreamcapes ? "mt-3 text-sm leading-6 text-[#6F6257]" : "mt-3 text-sm leading-6 text-white/62"}>{card.description}</p>
+                  <h3 className={aidreamcapes ? "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white" : "text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white"}>{card.title}</h3>
+                  <p className={aidreamcapes ? "mt-3 text-sm leading-6 text-white/62" : "mt-3 text-sm leading-6 text-white/62"}>{card.description}</p>
                   <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-                    <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.meta}</span>
-                    <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-3 py-1.5 text-xs font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.credits}</span>
-                    <ArrowRight className={aidreamcapes ? "ml-auto h-5 w-5 text-[#B86E36] transition group-hover:translate-x-1" : "ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1"} strokeWidth={1.8} />
+                    <span className={aidreamcapes ? "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.meta}</span>
+                    <span className={aidreamcapes ? "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82" : "rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82"}>{card.credits}</span>
+                    <ArrowRight className={aidreamcapes ? "ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1" : "ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1"} strokeWidth={1.8} />
                   </div>
                 </div>
               </Link>
@@ -6500,10 +6619,10 @@ function SectionView({
             <div className="mt-9">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                  <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#8D725C]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/42"}>Full directory</p>
-                  <h3 className={aidreamcapes ? "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-[#1E1712]" : "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white"}>All package outcomes, not a short demo list.</h3>
+                  <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/42" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/42"}>Full directory</p>
+                  <h3 className={aidreamcapes ? "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white" : "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white"}>All package outcomes, not a short demo list.</h3>
                 </div>
-                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-full border border-[#D8C4A9] px-4 py-2 text-sm font-semibold text-[#1E1712] transition hover:border-[#B86E36] hover:bg-[#FBF3E4]" : "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
+                <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" : "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
                   Open collections
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
@@ -6512,11 +6631,11 @@ function SectionView({
                 {directory.map((card, index) => (
                   <Link
                     aria-label={cardLinkLabel("Choose package", card.title)}
-                    className={aidreamcapes ? "group overflow-hidden rounded-[22px] border border-[#E3D3BE] bg-white shadow-[0_24px_74px_-66px_rgba(70,46,24,0.26)] transition hover:-translate-y-0.5 hover:border-[#B86E36]/45" : "group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"}
+                    className={aidreamcapes ? "group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]" : "group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"}
                     href={hrefFor(site, card.href)}
                     key={`rest_${card.id}`}
                   >
-                    <div className={aidreamcapes ? "relative aspect-[1.42] overflow-hidden bg-[#EADFCF]" : "relative aspect-[1.42] overflow-hidden bg-white/[0.04]"}>
+                    <div className={aidreamcapes ? "relative aspect-[1.42] overflow-hidden bg-white/[0.04]" : "relative aspect-[1.42] overflow-hidden bg-white/[0.04]"}>
                       <StorefrontImage
                         alt={card.title}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]"
@@ -6531,14 +6650,14 @@ function SectionView({
                     <div className="p-4">
                       <div className="flex items-start gap-3">
                         <div className="min-w-0">
-                          <h3 className={aidreamcapes ? "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-[#1E1712]" : "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white"}>{card.title}</h3>
-                          <p className={aidreamcapes ? "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-[#6F6257]" : "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56"}>{card.description}</p>
+                          <h3 className={aidreamcapes ? "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white" : "line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white"}>{card.title}</h3>
+                          <p className={aidreamcapes ? "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56" : "mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56"}>{card.description}</p>
                         </div>
-                        <ArrowRight className={aidreamcapes ? "mt-1 h-4.5 w-4.5 shrink-0 text-[#B86E36] transition group-hover:translate-x-1" : "mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82"} strokeWidth={1.8} />
+                        <ArrowRight className={aidreamcapes ? "mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" : "mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82"} strokeWidth={1.8} />
                       </div>
                       <div className="mt-4 flex flex-wrap gap-2">
-                        <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-2.5 py-1 text-[11px] font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.meta}</span>
-                        <span className={aidreamcapes ? "rounded-full bg-[#FBF3E4] px-2.5 py-1 text-[11px] font-semibold text-[#6F4D32]" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.credits}</span>
+                        <span className={aidreamcapes ? "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.meta}</span>
+                        <span className={aidreamcapes ? "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76" : "rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76"}>{card.credits}</span>
                       </div>
                     </div>
                   </Link>
@@ -6601,7 +6720,7 @@ function SectionView({
               <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)]">
                 <div className="rounded-[28px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.28)]">
                   <h3 className="text-[1.8rem] font-semibold leading-tight">Before / after proof</h3>
-                  <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">Show how a clear source upload becomes a finished destination portrait.</p>
+                  <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">Show how a clear source upload becomes a finished route portrait.</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
                       <img className="h-full w-full object-cover" src={beforeImage} alt="Before upload" />
@@ -6719,7 +6838,7 @@ function SectionView({
     );
   }
 
-  if (section.type === "dreamshoot_tool_collection") {
+  if (section.type === "dreamshoot_tool_collection" || section.type === "aidreamcapes_tool_collection") {
     const aidreamcapes = isAidreamcapesSite(site);
     const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
     const blocks = sectionBlocks(section, "tool_card");
@@ -6730,7 +6849,7 @@ function SectionView({
         settings: {
           title: "Background changer",
           description: "Swap a plain portrait background before creating a full scene pack.",
-          category: "AI Photo Edit",
+          category: "Route Portrait Edit",
           badge: "Studio",
           imageUrl: dreamshootToolSceneDefaults.entry,
           href: "/tools/background-changer"
@@ -6742,7 +6861,7 @@ function SectionView({
         settings: {
           title: "Package preview",
           description: "Try a guided package preview before subscribing to full private packs.",
-          category: "AI Photo",
+          category: "Route Portrait",
           badge: "Popular",
           imageUrl: fallbackHeroImages[0],
           href: "/tools/package-preview"
@@ -6762,19 +6881,19 @@ function SectionView({
       }
     ];
     const tools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
-    const configuredCategories = listLines(setting(section, "categories", "AI Photo Edit|AI Photo|AI Video"));
-    const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "AI Photo"))));
+    const configuredCategories = listLines(setting(section, "categories", "Route Portrait Edit|Route Portrait|AI Video"));
+    const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Route Portrait"))));
     const categories = Array.from(new Set([...configuredCategories, ...toolCategories]));
     const layout = setting(section, "layout", "directory");
-    const dark = layout === "dark" && !aidreamcapes;
+    const dark = layout === "dark";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     if (layout === "mega_menu") {
       return (
-        <section className={aidreamcapes ? "relative isolate overflow-hidden bg-[#FBF3E4] px-4 py-10 text-[#1E1712] sm:px-5 sm:py-14" : "relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14"} id={sectionAnchor(section, "tools")}>
-          <div className={aidreamcapes ? "absolute inset-0 -z-10 opacity-22" : "absolute inset-0 -z-10 opacity-46"}>
+        <section className={aidreamcapes ? "relative isolate overflow-hidden bg-[#05070E] px-4 py-10 text-white sm:px-5 sm:py-14" : "relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14"} id={sectionAnchor(section, "tools")}>
+          <div className={aidreamcapes ? "absolute inset-0 -z-10 opacity-46" : "absolute inset-0 -z-10 opacity-46"}>
             <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 blur-[0.2px] sm:grid-cols-4 lg:grid-cols-6">
               {tools.slice(0, 12).map((tool, index) => (
-                <div className={`relative overflow-hidden rounded-[16px] ${aidreamcapes ? "bg-[#EADFCF]" : "bg-zinc-900"} ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
+                <div className={`relative overflow-hidden rounded-[16px] ${aidreamcapes ? "bg-zinc-900" : "bg-zinc-900"} ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
                   <StorefrontImage
                     alt=""
                     className="h-full min-h-[180px] w-full object-cover opacity-76"
@@ -6784,14 +6903,14 @@ function SectionView({
                 </div>
               ))}
             </div>
-            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(251,243,228,0.98)_0%,rgba(255,248,237,0.9)_48%,rgba(251,243,228,0.98)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,10,0.97)_0%,rgba(8,8,10,0.84)_48%,rgba(8,8,10,0.96)_100%)]"} />
+            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.97)_0%,rgba(5,7,14,0.84)_48%,rgba(5,7,14,0.96)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,10,0.97)_0%,rgba(8,8,10,0.84)_48%,rgba(8,8,10,0.96)_100%)]"} />
           </div>
           <div className="mx-auto max-w-[1180px]">
             <div className="mx-auto mb-6 max-w-4xl text-center">
-              <HeadingTag className={aidreamcapes ? "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]"}>
+              <HeadingTag className={aidreamcapes ? "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]"}>
                 {storefrontPaidToolText(setting(section, "title", "AI Tools Collection"))}
               </HeadingTag>
-              <p className={aidreamcapes ? "mx-auto mt-4 max-w-3xl text-base leading-8 text-[#6F6257]" : "mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64"}>
+              <p className={aidreamcapes ? "mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64" : "mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64"}>
                 {storefrontPaidToolText(setting(section, "subtitle", "Discover paid AI tools for photo creation, background edits, restoration, video concepts, and private album workflows."))}
               </p>
             </div>
@@ -6800,7 +6919,7 @@ function SectionView({
               ctaLabel={setting(section, "secondaryCta", "View all tools")}
               site={site}
               tools={tools}
-              variantTone={aidreamcapes ? "warm" : "dark"}
+              variantTone="dark"
               variant="section"
             />
           </div>
@@ -6855,7 +6974,7 @@ function SectionView({
           </div>
           <div className="mt-10 grid gap-12">
             {categories.map((category) => {
-              const grouped = tools.filter((tool) => blockValue(tool, "category", "AI Photo") === category);
+              const grouped = tools.filter((tool) => blockValue(tool, "category", "Route Portrait") === category);
               if (!grouped.length) return null;
               return (
                 <div id={`${sectionAnchor(section, "tools")}-${slugify(category)}`} key={category}>
@@ -6909,7 +7028,7 @@ function SectionView({
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-              {setting(section, "secondaryCta", "View photo packages")}
+              {setting(section, "secondaryCta", "View route portrait packages")}
               <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -7193,7 +7312,16 @@ function SectionView({
       displayProducts[0]?.id;
     const featuredProduct = displayProducts.find((product) => product.id === featuredProductId);
     const featuredPrice = featuredProduct ? productPrice(featuredProduct) : undefined;
-    const pricingImage = mediaAssetUrl(site, setting(section, "backgroundImage", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"));
+    const pricingImage = mediaAssetUrl(
+      site,
+      setting(
+        section,
+        "backgroundImage",
+        aidreamcapes
+          ? "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png"
+          : "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+      )
+    );
     const sidePanelEyebrow = priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe"));
     const sidePanelTitle = priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."));
     const sidePanelBody = priceMetaString(
@@ -7210,32 +7338,32 @@ function SectionView({
     const sidePanelItems = configuredSideItems.length
       ? configuredSideItems
       : [
-          ["Starter", aidreamcapes ? "Best for quick profile stories, soft-glam edits, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
+          ["Starter", aidreamcapes ? "Best for quick route stories, cafe scenes, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
           ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
           ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
         ];
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#FFF8ED] px-5 py-16 text-[#1E1712]" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
         <div className="absolute inset-0">
           <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(216,138,75,0.18),transparent_20%),radial-gradient(circle_at_78%_8%,rgba(251,243,228,0.9),transparent_28%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]"} />
           <div className="absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block">
             <StorefrontImage
               alt={setting(section, "title", "Pricing background")}
               className={aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
-              priority={aidreamcapes}
+              fetchPriority="low"
               sizes="52vw"
               src={pricingImage}
             />
-            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,237,0.98)_0%,rgba(255,248,237,0.82)_42%,rgba(255,248,237,0.72)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]"} />
+            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.92)_0%,rgba(5,7,14,0.62)_42%,rgba(5,7,14,0.32)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]"} />
           </div>
-          <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,237,0.98)_0%,rgba(251,243,228,0.95)_50%,rgba(255,248,237,0.78)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
+          <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.98)_0%,rgba(5,7,14,0.96)_42%,rgba(5,7,14,0.68)_60%,rgba(5,7,14,0.18)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
         </div>
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className="max-w-[48rem]">
             <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {setting(section, "title", "Simple, Transparent Pricing")}
             </h2>
-            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-[#6F6257]" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", "Choose the right credit plan for private AI photo packages.")}</p>
+            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", "Choose the right credit plan for private AI route portrait packages.")}</p>
           </div>
           <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,0.72fr)_minmax(300px,0.28fr)]">
             <div className="grid gap-4 lg:grid-cols-3">
@@ -7259,7 +7387,7 @@ function SectionView({
                 const defaultFeatures = [
                   `${price.creditsGranted} AI photo credits`,
                   "Create photo albums in minutes",
-                  "AI Photo Editor with prompts",
+                  "Route Portrait Editor with prompts",
                   "Special AI photo filters",
                   "Create photos by writing prompts in seconds",
                   "Create AI videos",
@@ -7307,21 +7435,21 @@ function SectionView({
               })}
             </div>
             <div className="relative hidden min-h-[430px] xl:block">
-              <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-[#E3D3BE] bg-[#FBF3E4] p-6 shadow-[0_28px_80px_-58px_rgba(70,46,24,0.28)]" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
+              <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
                 <div>
                   <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">{sidePanelEyebrow}</p>
                   <h3 className="mt-3 max-w-[14ch] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
                     {sidePanelTitle}
                   </h3>
-                  <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-[#6F6257]" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
+                  <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
                     {sidePanelBody}
                   </p>
                 </div>
                 <div className="grid gap-3">
                   {sidePanelItems.map(([label, detail]) => (
-                    <div className={aidreamcapes ? "rounded-[16px] border border-[#E3D3BE] bg-white px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
-                      <p className={aidreamcapes ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{label}</p>
-                      <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-[#6F6257]" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>
+                    <div className={aidreamcapes ? "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
+                      <p className={aidreamcapes ? "text-sm font-semibold text-white" : "text-sm font-semibold text-white"}>{label}</p>
+                      <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-white/64" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>
                     </div>
                   ))}
                 </div>
@@ -7329,12 +7457,12 @@ function SectionView({
             </div>
           </div>
           {creditPacks.length ? (
-            <div className={aidreamcapes ? "mt-5 rounded-[16px] border border-[#E3D3BE] bg-[#FBF3E4] p-4" : "mt-5 rounded-[16px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur"}>
+            <div className={aidreamcapes ? "mt-5 rounded-[16px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur" : "mt-5 rounded-[16px] border border-white/10 bg-white/[0.06] p-4 backdrop-blur"}>
               <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
                 <div>
                   <p className="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">Add-on credits</p>
                   <h3 className="mt-2 text-[1.35rem] font-semibold tracking-[-0.02em] [font-family:var(--site-title-font)]">Need more generations this month?</h3>
-                  <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-[#6F6257]" : "mt-1 text-sm leading-6 text-white/66"}>One-time credit packs are sold separately from subscriptions and are still read from the same product catalog.</p>
+                  <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-white/66" : "mt-1 text-sm leading-6 text-white/66"}>Need extra credits? Add a one-time pack without changing your subscription.</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                   {creditPacks.slice(0, 2).map((product) => {
@@ -7367,7 +7495,7 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.7fr_1fr] md:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]">installed AI apps</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, "Plan your photo package")}</h2>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, "Plan your route portrait package")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-[#625d56] md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -8493,7 +8621,7 @@ function SectionView({
                             </span>
                           </div>
                           <p className="mt-2 text-sm leading-6 text-[#625d56]">{customerStatusNarrative(job.status)}</p>
-                          <p className="mt-2 text-xs text-[#706961]">{new Date(job.updatedAt).toLocaleString("zh-CN", { hour12: false })}</p>
+                          <p className="mt-2 text-xs text-[#706961]">{customerDateTimeLabel(job.updatedAt)}</p>
                         </div>
                         <div className="flex flex-col items-start gap-2 text-sm text-[#625d56] md:items-end">
                           <span>{job.creditsReserved} credits held</span>
@@ -8563,7 +8691,7 @@ function SectionView({
               <div className="p-6 xl:p-8">
                 <div className="mb-5 flex items-end justify-between gap-4">
                   <div>
-                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#8a7a6d]">private request timeline</p>
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#8a7a6d]">photo set timeline</p>
                     <p className="mt-2 text-sm leading-6 text-[#625d56]">Waiting, creating, delivered, and review states are shown from this account only.</p>
                   </div>
                   <span className="rounded-full border border-[#ded5ca] bg-[#f8f4ed] px-3 py-1 text-xs font-semibold text-[#706961]">
@@ -8593,7 +8721,7 @@ function SectionView({
                       </div>
                       <div className="mt-5 grid gap-3 sm:grid-cols-3">
                         {[
-                          ["Updated", new Date(latestJob.updatedAt).toLocaleString("zh-CN", { hour12: false })],
+                          ["Updated", customerDateTimeLabel(latestJob.updatedAt)],
                           ["Credits held", `${latestJob.creditsReserved}`],
                           ["Delivery path", latestJob.status === "succeeded" ? "Gallery ready" : "In private workflow"]
                         ].map(([label, value]) => (
@@ -8638,7 +8766,7 @@ function SectionView({
                               </span>
                             </div>
                             <p className="mt-2 text-sm leading-6 text-[#625d56]">{customerStatusNarrative(job.status)}</p>
-                            <p className="mt-2 text-xs text-[#706961]">{new Date(job.updatedAt).toLocaleString("zh-CN", { hour12: false })}</p>
+                            <p className="mt-2 text-xs text-[#706961]">{customerDateTimeLabel(job.updatedAt)}</p>
                           </div>
                           <div className="flex flex-col items-start gap-2 text-sm text-[#625d56] md:items-end">
                             <span>{job.creditsReserved} credits held</span>
@@ -8822,13 +8950,13 @@ function SectionView({
           <div className="rounded-[1.4rem] border border-black/10 bg-white p-5 shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Site search")}</p>
             <HeadingTag className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-              {searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", "Search MydreamShoots")}
+              {searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", isAidreamcapesSite(site) ? "Search Aidreamcapes" : "Search MyDreamShoots")}
             </HeadingTag>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Search products, packs, tools, and content for this site.")}</p>
             <div className="mt-5 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `${cards.length} matching results` : "Search photo packages, tools, pricing, and help guides."}
+                {searchTerm ? `${cards.length} matching results` : "Search route portrait packages, tools, pricing, and help guides."}
               </span>
             </div>
           </div>
@@ -8995,11 +9123,11 @@ function SectionView({
                   <div className="mt-5 grid gap-3 text-sm">
                     <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
                       <span className="text-zinc-500">Created</span>
-                      <span className="font-mono">{new Date(job.createdAt).toLocaleString("zh-CN", { hour12: false })}</span>
+                      <span className="font-mono">{customerDateTimeLabel(job.createdAt)}</span>
                     </div>
                     <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
                       <span className="text-zinc-500">Updated</span>
-                      <span className="font-mono">{new Date(job.updatedAt).toLocaleString("zh-CN", { hour12: false })}</span>
+                      <span className="font-mono">{customerDateTimeLabel(job.updatedAt)}</span>
                     </div>
                     <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
                       <span className="text-zinc-500">Delivered files</span>
@@ -9079,7 +9207,7 @@ function SectionView({
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">before and after</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Before and after photo examples")}</h2>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Compare source photos with finished MydreamShoots-style results.")}</p>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Compare source photos with finished private album results.")}</p>
           </div>
           <div className="grid gap-4">
             {items.map((item, index) => {
@@ -9479,7 +9607,7 @@ function SectionView({
   if (section.type === "policy_content") {
     const title = setting(section, "title", "Policy");
     const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
-    const contactEmail = setting(section, "contactEmail", "support@mydreamshoots.com");
+    const contactEmail = setting(section, "contactEmail", isAidreamcapesSite(site) ? "support@aidreamcapes.com" : "support@mydreamshoots.com");
     const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
     const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
     const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
@@ -9508,13 +9636,13 @@ function SectionView({
             />
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/privacy")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy")}>
               Privacy Policy
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/terms")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms")}>
               Terms of Service
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/policies/cookies")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/cookies")}>
               Cookie Policy
             </Link>
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/help")}>

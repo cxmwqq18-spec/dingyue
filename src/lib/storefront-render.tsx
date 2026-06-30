@@ -29,7 +29,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
-import { getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { canonicalAidreamcapesDirectorySlug, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
@@ -101,6 +101,40 @@ function trimCreativePacksForStorefront(renderData: SiteRenderData, limit: numbe
     prompt: undefined,
     galleryImages: []
   }));
+}
+
+async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit: number): Promise<SiteRenderData["creativePacks"]> {
+  const sanitizedExisting = existing.map((pack) => ({
+    ...pack,
+    prompt: undefined,
+    galleryImages: []
+  }));
+  try {
+    const fullState = await readStorefrontPlatformState();
+    const canonicalSlug = publicSiteSlug(site.slug);
+    const siteIdentity = `${site.slug} ${site.name} ${site.branding.logoText}`.toLowerCase();
+    const fullSite = fullState.sites.find((item) => {
+      const itemIdentity = `${item.slug} ${item.name} ${item.branding.logoText}`.toLowerCase();
+      return (
+        item.id === site.id ||
+        publicSiteSlug(item.slug) === canonicalSlug ||
+        (siteIdentity.includes("aidreamcapes") && itemIdentity.includes("aidreamcapes")) ||
+        (siteIdentity.includes("mydreamshoots") && itemIdentity.includes("mydreamshoots"))
+      );
+    });
+    if (!fullSite) return sanitizedExisting;
+    const fullPacks = getSiteCreativePacksFromState(fullState, fullSite.id)
+      .filter((pack) => pack.status === "active")
+      .slice(0, limit)
+      .map((pack) => ({
+        ...pack,
+        prompt: undefined,
+        galleryImages: []
+      }));
+    return fullPacks.length > sanitizedExisting.length ? fullPacks : sanitizedExisting;
+  } catch {
+    return sanitizedExisting;
+  }
 }
 
 function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = 12): SiteRenderData["siteAiApps"] {
@@ -286,7 +320,7 @@ function withCustomerWorkspaceFlowPage(pageJson: ThemePageJson): ThemePageJson {
       settings: {
         aiAppSlug: "image_generator",
         title: "Choose a photo tool",
-        helper: "Pick one backend-enabled tool first. Then upload the source photos it asks for and start a private request.",
+        helper: "Pick a photo tool first. Then upload the source photos it asks for and start your private result.",
         surface: "workspace"
       },
       blocks: []
@@ -344,7 +378,14 @@ function normalizeToolLookup(value: string): string {
 }
 
 function normalizePublicSlug(value: string): string {
-  return value
+  const decoded = (() => {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  })();
+  return decoded
     .trim()
     .toLowerCase()
     .replace(/^\/?(collections|tools)\//, "")
@@ -486,7 +527,9 @@ function creativePackCollectionSlugs(pack: PlatformState["creativePacks"][number
 export function canResolveCollectionSlugForSite(state: PlatformState, site: Site, collectionSlug: string): boolean {
   const normalized = normalizePublicSlug(collectionSlug);
   if (!normalized) return false;
-  return state.creativePacks.some((pack) => pack.siteId === site.id && pack.status === "active" && creativePackCollectionSlugs(pack).includes(normalized));
+  if (isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) return true;
+  const canonicalSlug = canonicalAidreamcapesDirectorySlug("collection", normalized);
+  return state.creativePacks.some((pack) => pack.siteId === site.id && pack.status === "active" && creativePackCollectionSlugs(pack).includes(canonicalSlug));
 }
 
 const workspaceOnlyToolSectionTypes = new Set(["upload_panel", "generation_form", "job_progress", "album_gallery"]);
@@ -707,9 +750,7 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   }
   for (const block of blocks) {
     const slug = toolSlugFromBlock(block);
-    if (!isAidreamcapes || getExplicitSeoDirectorySlugsForSite(site, "tool").includes(slug)) {
-      toolsBySlug.set(slug, block);
-    }
+    toolsBySlug.set(slug, block);
   }
   const tools = Array.from(toolsBySlug.values());
   return {
@@ -722,9 +763,9 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
           anchor: "tools",
           title: isAidreamcapes ? "Aidreamcapes studio tools" : "AI Tools Collection",
           subtitle: isAidreamcapes
-            ? "Choose a maintained Aidreamcapes tool for dreamscape portraits, fantasy avatars, creator scenes, and private gallery delivery."
+            ? "Choose a focused Aidreamcapes tool for destination portraits, city breaks, coastal light, adventure routes, private travel albums, and postcard-ready story sets."
             : "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
-          categories: isAidreamcapes ? "Dreamscape Portrait Tools|Fantasy Portrait Tools|Creator Story Tools" : "Photo AI|AI Photo Edit|Video AI",
+          categories: isAidreamcapes ? "Destination Tools|Travel Moment Tools|Adventure Tools|Creator Travel Tools" : "Photo AI|AI Photo Edit|Video AI",
           layout: "directory"
         },
         blocks: tools
@@ -768,7 +809,7 @@ function aidreamcapesToolFaqBlocks(label: string, workflow: string[]): SectionBl
       type: "faq_item",
       settings: {
         question: "Are Aidreamcapes results private?",
-        answer: "Yes. Source photos, generation jobs, credit records, and finished galleries stay connected to the signed-in customer account."
+        answer: "Yes. Source photos, photo sets, credit records, and finished galleries stay connected to the signed-in customer account."
       }
     },
     {
@@ -954,10 +995,13 @@ const dreamshootImageStudioToolAliases = new Set([
 ]);
 
 const aidreamcapesToolAliases = new Map<string, string>([
-  ["portrait-generator", "dreamscape-portraits"],
-  ["portrait-maker", "dreamscape-portraits"],
-  ["image-studio", "dreamscape-generator"],
-  ["image-generator", "dreamscape-generator"]
+  ["portrait-generator", "route-portrait-engine"],
+  ["portrait-maker", "route-portrait-engine"],
+  ["dreamscape-generator", "route-portrait-engine"],
+  ["image-studio", "route-portrait-engine"],
+  ["image-generator", "route-portrait-engine"],
+  ["headshot", "route-portrait-engine"],
+  ["couple-escape-album", "shared-route-album"]
 ]);
 
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
@@ -1002,6 +1046,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       aliasMap.set(normalizeToolLookup(alias), `/tools/${target}`);
     }
   }
+  const explicitAidreamcapesToolSlug = isAidreamcapes && getExplicitSeoDirectorySlugsForSite(site, "tool").includes(canonicalToolSlug);
 
   const directApp = siteAiApps.find((siteApp) => normalizeToolLookup(siteApp.aiApp.slug) === canonicalToolSlug);
   const legacyImageApp = canonicalToolSlug === "image-studio" || canonicalToolSlug === "image-generator"
@@ -1020,7 +1065,9 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     const blockSlug = toolSlugFromBlock(block);
     return blockSlug === normalizedToolSlug || blockSlug === canonicalToolSlug;
   });
-  const toolBlock = menuTool ? toolBlockFromMenuItem(menuTool) : themeToolBlock ?? (isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
+  const toolBlock = menuTool
+    ? toolBlockFromMenuItem(menuTool)
+    : themeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
   const basePage = baseToolDetailPageForSite(site, page);
   const synthesizedPage = toolBlock
     ? synthesizeToolDetailPage(
@@ -1032,7 +1079,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       )
     : undefined;
   const matched = isAidreamcapes
-    ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock)
+    ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
     : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
@@ -1109,14 +1156,23 @@ export async function renderStorefrontPage({
   }
   const settings = currentSite.themeSettings.publishedJson;
   const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
+  const usesDreamShootToolsDirectory =
+    slug === "/tools" &&
+    (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
-    : slug === "/tools" && /dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`)
+    : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
     ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
     : page.publishedJson;
   let pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  if (slug === "/" || slug === "/collections") {
+    pageRenderData = {
+      ...pageRenderData,
+      creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, 48)
+    };
+  }
   if ((slug === "/" || slug === "/collections") && !pageRenderData.creativePacks.length) {
     pageRenderData = {
       ...pageRenderData,
@@ -1165,7 +1221,7 @@ export async function renderStorefrontPage({
 
 function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | undefined {
   if (!dreamshootPartnerTemplateSlugs.has(slug)) return undefined;
-  if (!/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) return undefined;
+  if (!(/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`) || isAidreamcapesStorefront(site))) return undefined;
   const templateKey =
     slug === "/partner-registration" ? "partner-registration" :
     slug === "/about-us" ? "about-us" :
