@@ -113,6 +113,14 @@ function nextWithPathname(request: NextRequest) {
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
+function sameServerUrl(request: NextRequest): URL {
+  const upstreamUrl = request.nextUrl.clone();
+  upstreamUrl.protocol = "http:";
+  upstreamUrl.hostname = "127.0.0.1";
+  upstreamUrl.port = process.env.PORT || "3000";
+  return upstreamUrl;
+}
+
 export async function middleware(request: NextRequest) {
   const redirectResponse = aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return redirectResponse;
@@ -122,7 +130,7 @@ export async function middleware(request: NextRequest) {
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
   upstreamHeaders.set("x-pathname", request.nextUrl.pathname || "/");
 
-  const upstreamResponse = await fetch(request.nextUrl, {
+  const upstreamResponse = await fetch(sameServerUrl(request), {
     headers: upstreamHeaders,
     redirect: "manual"
   });
