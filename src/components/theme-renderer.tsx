@@ -457,6 +457,26 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
+function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries">
+      <defs>
+        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="92" y1="76" x2="420" y2="430" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#A855F7" />
+          <stop offset="0.48" stopColor="#F65BA8" />
+          <stop offset="1" stopColor="#52C7D8" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M256 388c-56-49-126-91-126-174 0-52 41-84 85-70 19 6 32 20 41 38 9-18 22-32 41-38 44-14 85 18 85 70 0 83-70 125-126 174Z" />
+        <path d="M256 176l42 78-42 86-42-86 42-78Z" />
+        <path d="M192 254h128" />
+      </g>
+      <circle cx="256" cy="254" r="18" fill="transparent" stroke="#F65BA8" strokeWidth="12" />
+    </svg>
+  );
+}
+
 export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [] }: { creativePacks?: CreativePack[]; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
@@ -573,7 +593,17 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
         >
           {dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
             <>
-              {logoImageUrl ? (
+              {isAidreamcapes ? (
+                <span
+                  className={
+                    isAidreamcapes && dark
+                      ? "relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-11 sm:w-11"
+                      : "flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"
+                  }
+                >
+                  <AidreamcapesLogoMark className="h-full w-full object-contain" />
+                </span>
+              ) : logoImageUrl ? (
                 <span
                   className={
 		                    isDreamShoot
@@ -1018,7 +1048,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         <div className={dark ? "grid gap-8 border-b border-white/8 pb-8 lg:grid-cols-[0.3fr_0.7fr]" : "grid gap-8 border-b border-[#e8ddd0] pb-8 lg:grid-cols-[0.3fr_0.7fr]"}>
           <div className="max-w-[24rem]">
             <div className="flex items-center gap-3.5">
-              {logoImageUrl ? (
+              {isAidreamcapesFooter ? (
+                <AidreamcapesLogoMark className="h-10 w-10 shrink-0 object-contain" />
+              ) : logoImageUrl ? (
                 <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} />
               ) : (
                 <span className={dark ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white text-[10px] font-semibold tracking-[0.18em] text-[#14161a]" : "inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.18em] text-white"}>

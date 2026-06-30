@@ -32,7 +32,7 @@ const SEO_HEAD_TAG_RE =
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
 const AIDREAMCAPES_LOGO_IMG_RE =
   /<img\b(?=[^>]*src=["']\/assets\/sites\/site_aidreamcapes\/brand\/aidreamcapesai-logo-refined\.svg[^"']*["'])(?=[^>]*alt=["'][^"']*Aidreamcapes[^"']*["'])([^>]*)\/?>/gi;
-const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701logo";
 const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
 const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries"><defs><linearGradient id="aidreamcapes-header-logo" x1="92" y1="76" x2="420" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#A855F7"/><stop offset="0.48" stop-color="#F65BA8"/><stop offset="1" stop-color="#52C7D8"/></linearGradient></defs><g fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M256 388c-56-49-126-91-126-174 0-52 41-84 85-70 19 6 32 20 41 38 9-18 22-32 41-38 44-14 85 18 85 70 0 83-70 125-126 174Z"/><path d="M256 176l42 78-42 86-42-86 42-78Z"/><path d="M192 254h128"/></g><circle cx="256" cy="254" r="18" fill="transparent" stroke="#F65BA8" stroke-width="12"/></svg>`;
 
