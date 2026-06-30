@@ -1268,9 +1268,13 @@ function storefrontSectionLabel(type: string): string {
 }
 
 function mediaAssetUrl(site: Site, value: string): string {
-  const resolved = resolveMediaAssetUrl(site, value);
+  const resolved = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value));
   if (isAidreamcapesSite(site)) return preferAidreamcapesPhotoAsset(resolved);
   return preferDreamshootOptimizedImage(resolved);
+}
+
+function cleanStorefrontImageSrc(src: string): string {
+  return src.trim().replace(/&amp;/g, "&").replace(/\\+$/g, "");
 }
 
 function preferDreamshootOptimizedImage(src: string): string {
@@ -1279,36 +1283,37 @@ function preferDreamshootOptimizedImage(src: string): string {
 }
 
 function preferAidreamcapesPhotoAsset(src: string): string {
-  const bareAidreamcapesPackMatch = src.match(/^\/([a-z0-9-]+\.png)(\?.*)?$/i);
+  const cleanSrc = cleanStorefrontImageSrc(src);
+  const bareAidreamcapesPackMatch = cleanSrc.match(/^\/([a-z0-9-]+\.(?:png|webp|svg))(\?.*)?$/i);
   if (bareAidreamcapesPackMatch) {
-    return `/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`;
+    return preferAidreamcapesPhotoAsset(`/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`);
   }
-  if (src.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  if (cleanSrc.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701img";
   }
-  if (src.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701img";
   }
-  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png?v=20260629a";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260701img";
   }
-  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/storybook-headshots.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png?v=20260629a";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/storybook-headshots.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260701img";
   }
-  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png?v=20260630a";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260701img";
   }
-  if (src.includes("/assets/sites/site_aidreamcapes/creative-packs/coastal-light-sets.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png?v=20260630a";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/coastal-light-sets.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260701img";
   }
-  if (src.startsWith("/assets/aidreamcapes/")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png?v=20260630a";
+  if (cleanSrc.startsWith("/assets/aidreamcapes/")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260701img";
   }
-  if (!src.startsWith("/assets/sites/site_aidreamcapes/creative-packs/")) return src;
-  const versionedSrc = src.replace(/\.svg(\?.*)?$/i, ".png");
+  if (!cleanSrc.startsWith("/assets/sites/site_aidreamcapes/creative-packs/")) return cleanSrc;
+  const versionedSrc = cleanSrc.replace(/\.(?:png|jpe?g|svg)(\?.*)?$/i, ".webp$1");
   const [path, query = ""] = versionedSrc.split("?");
   const params = new URLSearchParams(query);
-  params.set("v", "20260629a");
+  params.set("v", "20260701img");
   return `${path}?${params.toString()}`;
 }
 
