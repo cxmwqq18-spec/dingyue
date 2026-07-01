@@ -38,7 +38,7 @@ export function ErpSection({
 }) {
   return (
     <section
-      className={`right_box rounded-[8px] border border-[var(--admin-border-soft)] bg-white shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)] ${className}`}
+      className={`right_box min-w-0 max-w-full rounded-[8px] border border-[var(--admin-border-soft)] bg-white shadow-[0_12px_24px_-30px_rgba(15,23,42,0.14)] ${className}`}
       {...props}
     >
       <div className="px-4 pt-4">
@@ -50,7 +50,7 @@ export function ErpSection({
         </div>
         {description ? <p className="mt-1.5 text-[12px] leading-5 text-[#8a94a6]">{description}</p> : null}
       </div>
-      <div className="px-4 pb-4 pt-3">{children}</div>
+      <div className="min-w-0 px-4 pb-4 pt-3">{children}</div>
     </section>
   );
 }
@@ -63,7 +63,7 @@ export function ErpToolbar({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)]/92 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${className}`}>
+    <div className={`min-w-0 max-w-full rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)]/92 px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${className}`}>
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">{children}</div>
     </div>
   );
@@ -131,16 +131,16 @@ export function ErpStatGrid({
   const gridClass =
     columns === 2
       ? "md:grid-cols-2"
-      : columns === 3
+    : columns === 3
       ? "md:grid-cols-2 xl:grid-cols-3"
-      : columns === 5
-      ? "md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5"
-      : columns === 6
-      ? "md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6"
-      : "md:grid-cols-2 xl:grid-cols-4";
+    : columns === 5
+      ? "md:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-5"
+    : columns === 6
+      ? "md:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-6"
+      : "md:grid-cols-2 min-[1800px]:grid-cols-4";
 
   return (
-    <div className={`grid gap-3 ${gridClass}`}>
+    <div className={`grid w-full min-w-0 max-w-full gap-3 ${gridClass}`}>
       {items.map((item) => (
         <ErpStatCard key={item.label} {...item} />
       ))}
@@ -164,7 +164,7 @@ export function ErpStatCard({
   href?: string;
 }) {
   const card = (
-    <div className="h-full rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-4 py-3.5 shadow-[0_14px_24px_-30px_rgba(15,23,42,0.14)] transition hover:border-[var(--admin-accent-soft)] hover:shadow-[0_18px_34px_-30px_rgba(15,23,42,0.28)]">
+    <div className="h-full min-w-0 rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-4 py-3.5 shadow-[0_14px_24px_-30px_rgba(15,23,42,0.14)] transition hover:border-[var(--admin-accent-soft)] hover:shadow-[0_18px_34px_-30px_rgba(15,23,42,0.28)]">
       <div className="flex items-start justify-between gap-3">
         <span className="min-w-0">
           <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#98a2b3]">{label}</span>

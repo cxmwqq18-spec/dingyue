@@ -22,6 +22,13 @@ export function cleanHost(host: string | null | undefined): string {
     .toLowerCase();
 }
 
+export function hostDomainCandidates(host: string | null | undefined): string[] {
+  const value = cleanHost(host);
+  if (!value) return [];
+  const counterpart = value.startsWith("www.") ? value.slice(4) : `www.${value}`;
+  return Array.from(new Set([value, counterpart]));
+}
+
 export function isPlatformHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
   return PLATFORM_DOMAINS.has(value);
@@ -62,14 +69,15 @@ export function legacySiteSlugCandidates(slug: string): string[] {
 export function getSiteByHostFromState(state: PlatformState, host: string | null | undefined): Site | undefined {
   const value = cleanHost(host);
   if (!value || isPlatformHost(value) || value === "localhost" || value === "127.0.0.1") return undefined;
+  const candidates = hostDomainCandidates(value);
 
-  const activeDomain = state.siteDomains.find((domain) => domain.status === "active" && cleanHost(domain.domain) === value);
+  const activeDomain = state.siteDomains.find((domain) => domain.status === "active" && candidates.includes(cleanHost(domain.domain)));
   if (activeDomain) return state.sites.find((site) => site.id === activeDomain.siteId);
 
-  const anyDomain = state.siteDomains.find((domain) => cleanHost(domain.domain) === value);
+  const anyDomain = state.siteDomains.find((domain) => candidates.includes(cleanHost(domain.domain)));
   if (anyDomain) return state.sites.find((site) => site.id === anyDomain.siteId);
 
-  return state.sites.find((site) => cleanHost(site.primaryDomain) === value);
+  return state.sites.find((site) => candidates.includes(cleanHost(site.primaryDomain)));
 }
 
 export function getSiteByHostCandidatesFromState(state: PlatformState, hosts: Array<string | null | undefined>): Site | undefined {

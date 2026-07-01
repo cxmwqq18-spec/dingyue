@@ -4,8 +4,9 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { readStorefrontPublicRuntimeStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
-import { metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
 
 const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
@@ -25,6 +26,14 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "couple-escape-album": "/tools/shared-route-album",
   headshot: "/tools/route-portrait-engine"
 };
+
+function legacyToolRedirectPath(siteSlug: string, toolSlug: string): string | undefined {
+  const publicSlug = normalizePublicSiteSlug(siteSlug);
+  const normalizedToolSlug = toolSlug.trim().toLowerCase();
+  if (publicSlug === "mydreamshoots") return DREAMSHOOT_LEGACY_TOOL_REDIRECTS[normalizedToolSlug];
+  if (publicSlug === "aidreamcapes") return AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[normalizedToolSlug];
+  return undefined;
+}
 
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
   const detailState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, `/tools/${toolSlug}`, toolSlug);
@@ -50,14 +59,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  if (siteSlug === "mydreamshoots") {
-    const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
-    if (redirectPath) permanentRedirect(`/site/${siteSlug}${redirectPath}`);
-  }
-  if (siteSlug === "aidreamcapes") {
-    const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
-    if (redirectPath) permanentRedirect(`/site/${siteSlug}${redirectPath}`);
-  }
+  if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
   const { site, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!site || !matched) return {};
   return metadataForSeoDirectory(site, "tool", toolSlug);
@@ -77,17 +79,13 @@ export default async function ToolPage({
     pathname: `/tools/${toolSlug}`,
     siteSlug
   });
-  if (publicSiteSlug === "mydreamshoots") {
-    const redirectPath = DREAMSHOOT_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
-    if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
-  }
-  if (publicSiteSlug === "aidreamcapes") {
-    const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
-    if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
-  }
+  const redirectPath = legacyToolRedirectPath(publicSiteSlug, toolSlug);
+  if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
   const query = searchParams ? await searchParams : {};
   const { state, site, page, matched } = await resolveToolPage(publicSiteSlug, toolSlug);
   if (!site || !page) notFound();
   if (!matched) notFound();
+  const canonicalToolPath = canonicalSeoDirectoryPathForSite(site, "tool", toolSlug);
+  if (canonicalToolPath !== `/tools/${toolSlug}`) permanentRedirect(`/site/${publicSiteSlug}${canonicalToolPath}`);
   return renderToolPage({ site, toolSlug, query, routeMode: "path", state, resolvedPage: page });
 }

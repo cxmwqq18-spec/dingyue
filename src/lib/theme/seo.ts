@@ -29,12 +29,27 @@ function normalizeTitleToken(value: string): string {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain" | "branding">): string {
+  const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText ?? ""}`.toLowerCase();
+  if (token.includes("aidreamcapes")) return "Aidreamcapes";
+  if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return "MyDreamShoots";
+  return site.branding.logoText || site.name;
+}
+
+function normalizeStorefrontBrandText(site: Site, value: string | undefined, fallback = ""): string {
+  const brandName = storefrontSeoBrandName(site);
+  return cleanText(value, fallback)
+    .replace(/\bMydreamShoots\b/g, "MyDreamShoots")
+    .replace(/\bMydreamshoots\b/g, "MyDreamShoots")
+    .replace(/\bDreamShootAI\b/g, brandName);
+}
+
 function defaultTitleTemplate(site: Site): string {
-  return `%s | ${site.branding.logoText || site.name}`;
+  return `%s | ${storefrontSeoBrandName(site)}`;
 }
 
 function pageFallbackTitle(site: Site, page: Pick<ThemePage, "title" | "pageType" | "slug">): string {
-  if (page.slug === "/") return site.branding.logoText || site.name;
+  if (page.slug === "/") return storefrontSeoBrandName(site);
   if (page.title) return page.title;
   return page.pageType
     .split(/[_-]+/)
@@ -45,7 +60,7 @@ function pageFallbackTitle(site: Site, page: Pick<ThemePage, "title" | "pageType
 
 function pageFallbackDescription(site: Site, page: Pick<ThemePage, "title" | "slug">): string {
   if (page.slug === "/") return site.branding.description;
-  return `${page.title || site.branding.logoText} on ${site.branding.logoText || site.name}.`;
+  return `${page.title || storefrontSeoBrandName(site)} on ${storefrontSeoBrandName(site)}.`;
 }
 
 function normalizeCanonicalPath(value: string | undefined, fallbackSlug: string): string {
@@ -110,7 +125,7 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   const overrides: Record<string, Partial<PageSeo>> = {
     "/collections": {
       title: "MyDreamShoots Photo Packages",
-      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty, travel, gala, and cinematic scenes."
+      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums."
     },
     "/tools": {
       title: "MyDreamShoots Photo Tools",
@@ -127,8 +142,16 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
   const value = cleanText(pathOrUrl);
   if (!value) return undefined;
-  const optimizedValue = preferOptimizedShareImage(value);
-  if (optimizedValue.startsWith("http://") || optimizedValue.startsWith("https://")) return optimizedValue;
+  let optimizedValue = preferOptimizedShareImage(value);
+  if (optimizedValue.startsWith("http://") || optimizedValue.startsWith("https://")) {
+    try {
+      const url = new URL(optimizedValue);
+      if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return optimizedValue;
+      optimizedValue = `${url.pathname}${url.search}`;
+    } catch {
+      return optimizedValue;
+    }
+  }
   const base = siteBaseUrl(site).replace(/\/$/, "");
   return `${base}${optimizedValue.startsWith("/") ? optimizedValue : `/${optimizedValue}`}`;
 }
@@ -176,8 +199,8 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
       const knownSeo = knownStorefrontSeoOverride(site, page.slug);
       const jsonSeo = page.publishedJson.seo;
       const defaultRobots = defaultRobotsForPage(page);
-      const title = pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page));
-      const description = pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, existing?.description, pageFallbackDescription(site, page));
+      const title = normalizeStorefrontBrandText(site, pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, existing?.title, pageFallbackTitle(site, page)));
+      const description = normalizeStorefrontBrandText(site, pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, existing?.description, pageFallbackDescription(site, page)));
       return [
         page.id,
         {
@@ -194,10 +217,10 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
   );
 
   return {
-    siteTitle: cleanText(current?.siteTitle, site.branding.logoText || site.name),
-    siteDescription: cleanText(current?.siteDescription, site.branding.description),
+    siteTitle: normalizeStorefrontBrandText(site, current?.siteTitle, storefrontSeoBrandName(site)),
+    siteDescription: normalizeStorefrontBrandText(site, current?.siteDescription, site.branding.description),
     siteKeywords: cleanText(current?.siteKeywords),
-    titleTemplate: cleanText(current?.titleTemplate, defaultTitleTemplate(site)),
+    titleTemplate: normalizeStorefrontBrandText(site, current?.titleTemplate, defaultTitleTemplate(site)),
     defaultOgImage: cleanText(current?.defaultOgImage),
     robots: {
       index: current?.robots?.index ?? true,
@@ -215,8 +238,8 @@ export function withNormalizedSeo(site: Site, settings: ThemeSettings): ThemeSet
 }
 
 export function applyTitleTemplate(title: string, template: string, site: Site): string {
-  const cleanTitle = cleanText(title, site.branding.logoText || site.name);
-  const cleanTemplate = cleanText(template, defaultTitleTemplate(site));
+  const cleanTitle = cleanText(title, storefrontSeoBrandName(site));
+  const cleanTemplate = normalizeStorefrontBrandText(site, template, defaultTitleTemplate(site));
   const suffix = cleanTemplate.replace("%s", "").replace(/^[\s|:–-]+|[\s|:–-]+$/g, "");
   if (normalizeTitleToken(cleanTitle) === normalizeTitleToken(suffix)) return cleanTitle;
   if (cleanTemplate.includes("%s")) return cleanTemplate.replace("%s", cleanTitle);
@@ -248,8 +271,8 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? seo.robots.follow
   };
   const defaultRobots = defaultRobotsForPage(page);
-  const title = applyTitleTemplate(pageSeo.title || seo.siteTitle, seo.titleTemplate, site);
-  const description = cleanText(pageSeo.description, seo.siteDescription);
+  const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || seo.siteTitle), seo.titleTemplate, site);
+  const description = normalizeStorefrontBrandText(site, pageSeo.description, seo.siteDescription);
   const keywords = cleanText(pageSeo.keywords, seo.siteKeywords);
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
@@ -290,10 +313,10 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const policySeo = policySeoForSite(site, page.slug);
   const knownSeo = knownStorefrontSeoOverride(site, page.slug);
   const defaultRobots = defaultRobotsForPage(page);
-  const siteTitle = cleanText(currentSeo?.siteTitle, site.branding.logoText || site.name);
-  const siteDescription = cleanText(currentSeo?.siteDescription, site.branding.description);
+  const siteTitle = normalizeStorefrontBrandText(site, currentSeo?.siteTitle, storefrontSeoBrandName(site));
+  const siteDescription = normalizeStorefrontBrandText(site, currentSeo?.siteDescription, site.branding.description);
   const siteKeywords = cleanText(currentSeo?.siteKeywords);
-  const titleTemplate = cleanText(currentSeo?.titleTemplate, defaultTitleTemplate(site));
+  const titleTemplate = normalizeStorefrontBrandText(site, currentSeo?.titleTemplate, defaultTitleTemplate(site));
   const defaultOgImage = cleanText(currentSeo?.defaultOgImage);
   const fallbackPageSeo: PageSeo = settingsPageSeo ?? {
     title: pageFallbackTitle(site, page),
@@ -312,8 +335,8 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? currentSeo?.robots?.index ?? true,
     follow: jsonSeo?.robots?.follow ?? jsonSeo?.follow ?? policySeo?.follow ?? fallbackPageSeo.follow ?? currentSeo?.robots?.follow ?? true
   };
-  const title = applyTitleTemplate(pageSeo.title || siteTitle, titleTemplate, site);
-  const description = cleanText(pageSeo.description, siteDescription);
+  const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || siteTitle), titleTemplate, site);
+  const description = normalizeStorefrontBrandText(site, pageSeo.description, siteDescription);
   const keywords = cleanText(pageSeo.keywords, siteKeywords);
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);

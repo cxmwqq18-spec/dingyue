@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Play, Sparkles, UploadCloud } from "lucide-react";
+import { CheckCircle2, Play, Sparkles, Trash2, UploadCloud } from "lucide-react";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
@@ -270,7 +270,7 @@ function assetRules(workflow?: AiWorkflowConfig) {
 
 function maxAssetsForWorkflow(workflow?: AiWorkflowConfig): number {
   const configuredMax = assetRules(workflow).max;
-  return configuredMax && configuredMax > 0 ? Math.max(configuredMax, DEFAULT_MAX_SOURCE_ASSETS) : DEFAULT_MAX_SOURCE_ASSETS;
+  return configuredMax && configuredMax > 0 ? configuredMax : DEFAULT_MAX_SOURCE_ASSETS;
 }
 
 function valuesFor(app?: SiteAiApp): Record<string, string | number | boolean> {
@@ -285,6 +285,11 @@ function assetsForRules(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig
 function initialSelectedAssets(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig): string[] {
   const maxAssets = maxAssetsForWorkflow(workflow);
   return assetsForRules(assets, workflow).slice(0, maxAssets).map((asset) => asset.id);
+}
+
+function mergeAssetLists(primary: ThemeRuntimeAsset[], secondary: ThemeRuntimeAsset[]): ThemeRuntimeAsset[] {
+  const seen = new Set(primary.map((asset) => asset.id));
+  return [...primary, ...secondary.filter((asset) => !seen.has(asset.id))];
 }
 
 function packsForApp(packs: CreativePack[], aiAppSlug: string): CreativePack[] {
@@ -344,6 +349,46 @@ function blockedPromptTerm(prompt: string): string | undefined {
 function uploadLabelForFile(file: File, index: number, total: number): string {
   const base = file.name.replace(/\.[^.]+$/, "").trim() || "source photo";
   return total > 1 ? `${base} ${index + 1}` : base;
+}
+
+function jobErrorMessage(error?: string, status?: number): string {
+  if (status === 401 || error === "customer_login_required") {
+    return "Please sign in again before starting this photo set.";
+  }
+  if (status === 403 || error?.includes("csrf")) {
+    return "Your secure session expired. Refresh the page, then try again.";
+  }
+  if (error === "asset_not_found_for_customer") {
+    return "One selected source photo is no longer available in this account. Reselect your photos and try again.";
+  }
+  if (error === "not_enough_source_assets") {
+    return "Select the required source photos before starting this request.";
+  }
+  if (error === "too_many_source_assets") {
+    return "Too many source photos are selected for this package. Reduce the selection and try again.";
+  }
+  if (error === "missing_required_prompt_input") {
+    return "This tool is missing a required setting. Reopen the tool or choose a photo package and try again.";
+  }
+  if (error === "insufficient_credits") {
+    return "You do not have enough credits for this request. Please add credits or choose a smaller package.";
+  }
+  if (error === "customer_past_due") {
+    return "Your account needs billing attention before starting a new request.";
+  }
+  if (error === "customer_blocked") {
+    return "This account cannot start new requests right now. Contact support for help.";
+  }
+  if (error === "site_ai_app_not_found" || error === "ai_app_not_found" || error === "ai_app_not_enabled_for_site") {
+    return "This AI tool is no longer available. Choose another tool and try again.";
+  }
+  if (error === "creative_pack_not_found_for_site" || error === "creative_pack_tool_mismatch") {
+    return "This photo package is no longer available for the selected tool. Choose the package again and retry.";
+  }
+  if (error === "job_create_timeout") {
+    return "The job service timed out while creating this request. Please try again in a moment.";
+  }
+  return "We could not start this photo set. Please check your selection and try again.";
 }
 
 function displayMaterialRule(rule: string): string {
@@ -421,7 +466,9 @@ export function JobCreateForm({
   const [message, setMessage] = useState("Choose a package, select source photos, then start your private photo set.");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
+  const [deletingAssetIds, setDeletingAssetIds] = useState<string[]>([]);
   const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
+  const localAssetMutationRef = useRef(0);
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
   const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
   const themeCategories = Array.from(new Set(activeCreativePacks.map((pack) => pack.categoryRecord?.label || pack.category).filter(Boolean)));
@@ -459,19 +506,24 @@ export function JobCreateForm({
   const neutralPillClass = light ? "bg-[#f1eadf] text-[#5f574f]" : "bg-white/[0.08] text-white/74";
 
   useEffect(() => {
-    setAvailableAssets(assets);
+    setAvailableAssets((current) => mergeAssetLists(current, assets));
   }, [assets]);
 
   useEffect(() => {
     let cancelled = false;
     const loadAssets = (refresh = false) => {
       if (refresh) invalidateCustomerAssets(siteId, customer.id);
+      const mutationVersion = localAssetMutationRef.current;
       setLoadingAssets(true);
       loadCustomerAssets(siteId, customer.id)
         .then((result) => {
           if (!cancelled) {
-            setAvailableAssets(result);
-            setSelectedAssetIds((current) => current.filter((id) => result.some((asset) => asset.id === id)));
+            let nextAssets = result;
+            setAvailableAssets((current) => {
+              nextAssets = mutationVersion === localAssetMutationRef.current ? result : mergeAssetLists(current, result);
+              return nextAssets;
+            });
+            setSelectedAssetIds((current) => current.filter((id) => nextAssets.some((asset) => asset.id === id)));
             setLoadingAssets(false);
           }
         })
@@ -597,11 +649,34 @@ export function JobCreateForm({
       createdAssets.push(result.asset);
     }
     invalidateCustomerAssets(siteId, customer.id);
+    localAssetMutationRef.current += 1;
     setAvailableAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
     setSelectedAssetIds((current) => [...createdAssets.map((asset) => asset.id), ...current].slice(0, effectiveMaxAssets));
     setMessage(`${createdAssets.length} source photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the ones you want to use.`);
     setUploadingSources(false);
-    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  async function deleteSourceAsset(asset: ThemeRuntimeAsset) {
+    if (deletingAssetIds.includes(asset.id)) return;
+    const confirmed = window.confirm(`Delete "${asset.label}" from your source photos?`);
+    if (!confirmed) return;
+    setDeletingAssetIds((current) => [...current, asset.id]);
+    setMessage("Deleting source photo...");
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${asset.id}`, {
+      method: "DELETE",
+      headers: csrfHeader(`customer_csrf_${siteId}`)
+    });
+    const result = (await response.json().catch(() => ({}))) as { error?: string };
+    setDeletingAssetIds((current) => current.filter((id) => id !== asset.id));
+    if (!response.ok) {
+      setMessage(result.error?.includes("csrf") ? "Your secure session expired. Refresh the page, then try again." : "We could not delete this source photo. Please try again.");
+      return;
+    }
+    invalidateCustomerAssets(siteId, customer.id);
+    localAssetMutationRef.current += 1;
+    setAvailableAssets((current) => current.filter((item) => item.id !== asset.id));
+    setSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
+    setMessage("Source photo deleted.");
   }
 
   async function createJob(event: React.FormEvent<HTMLFormElement>) {
@@ -660,7 +735,7 @@ export function JobCreateForm({
     const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string } };
     if (!response.ok || !result.job) {
       setPending(false);
-      setMessage("We could not start this photo set. Please check your credits and try again.");
+      setMessage(jobErrorMessage(result.error, response.status));
       return;
     }
     const href = `/site/${siteSlug}/app/jobs/${result.job.id}`;
@@ -901,7 +976,7 @@ export function JobCreateForm({
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Source photos</p>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
-            Select at least {minAssets} uploaded image{minAssets === 1 ? "" : "s"} for this generation request. You can keep more source photos in the workspace and choose the set for each request here.
+            Source photos are the private images you upload for the AI to reference. Select {minAssets === 1 ? "at least one" : `at least ${minAssets}`} and up to {effectiveMaxAssets} for this request; keep the rest in your workspace for later.
           </p>
           <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] px-4 py-2 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass} ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
             <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
@@ -922,14 +997,38 @@ export function JobCreateForm({
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
             {sourceAssets.map((asset) => {
               const checked = selectedAssetIds.includes(asset.id);
+              const deleting = deletingAssetIds.includes(asset.id);
               return (
-                <label className={`group relative cursor-pointer overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")}`} key={asset.id}>
+                <div className={`group relative overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")} ${deleting ? "opacity-55" : ""}`} key={asset.id}>
                   <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
+                  <button
+                    aria-label={`Delete ${asset.label}`}
+                    className="absolute left-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/62 text-white opacity-90 shadow-sm transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-45"
+                    disabled={deleting}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      void deleteSourceAsset(asset);
+                    }}
+                    title="Delete source photo"
+                    type="button"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" strokeWidth={2} />
+                  </button>
+                  <button
+                    aria-pressed={checked}
+                    className="absolute inset-0 cursor-pointer"
+                    disabled={deleting}
+                    onClick={() => toggleAsset(asset.id)}
+                    type="button"
+                  >
+                    <span className="sr-only">{checked ? "Deselect" : "Select"} {asset.label}</span>
+                  </button>
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
                     <span className="block truncate text-xs font-semibold">{asset.label}</span>
                   </span>
-                  <input checked={checked} className="absolute right-2 top-2 h-4 w-4" onChange={() => toggleAsset(asset.id)} type="checkbox" />
-                </label>
+                  <input aria-label={`Use ${asset.label}`} checked={checked} className="absolute right-2 top-2 z-10 h-4 w-4" disabled={deleting} onChange={() => toggleAsset(asset.id)} type="checkbox" />
+                </div>
               );
             })}
           </div>

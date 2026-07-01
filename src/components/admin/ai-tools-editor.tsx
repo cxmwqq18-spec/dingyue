@@ -465,7 +465,7 @@ export function AiToolsEditor({
                     value={workflow.description ?? app.aiApp.description}
                   />
                 </label>
-                <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 sm:grid-cols-2">
+                <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 sm:grid-cols-2 xl:col-span-2">
                   <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
                     最少上传图片
                     <input
@@ -517,7 +517,7 @@ export function AiToolsEditor({
                     />
                   </label>
                 </div>
-                <div className="grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-3 xl:col-span-2">
+                <div className="grid gap-4 rounded-[8px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] p-4 xl:col-span-2">
                   <div className="flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
                     <div>
                       <p className="text-[12px] font-semibold text-[var(--admin-text)]">
@@ -541,7 +541,7 @@ export function AiToolsEditor({
                       网关添加供应商，再回到这里选择。
                     </div>
                   ) : null}
-                  <div className="grid gap-3 lg:grid-cols-[minmax(220px,0.85fr)_minmax(260px,1.15fr)]">
+                  <div className="grid items-start gap-3 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
                     <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
                       AI 通道策略
                       <select
@@ -597,7 +597,7 @@ export function AiToolsEditor({
                       </div>
                     )}
                   </div>
-                  <div className="grid gap-3 lg:grid-cols-[minmax(260px,1fr)_minmax(260px,1fr)]">
+                  <div className="grid items-start gap-3 lg:grid-cols-[minmax(260px,0.9fr)_minmax(0,1.1fr)]">
                     <div className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white px-3 py-2 text-[12px] leading-5 text-[#667085]">
                       <span className="block font-semibold text-[var(--admin-text)]">
                         保存后实际链路
@@ -641,10 +641,10 @@ export function AiToolsEditor({
                     </label>
                   </div>
                 </div>
-                <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                <label className="grid gap-1 rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-3 text-[12px] font-medium text-[#475467]">
                   Material rules，每行一条，前台展示为素材要求
                   <textarea
-                    className="inputtext min-h-[116px] resize-y leading-5"
+                    className="inputtext min-h-[132px] resize-y leading-5"
                     onChange={(event) =>
                       updateWorkflow(app.id, (config) => ({
                         ...config,
@@ -657,10 +657,10 @@ export function AiToolsEditor({
                     value={(workflow.materialRules ?? []).join("\n")}
                   />
                 </label>
-                <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                <label className="grid gap-1 rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-3 text-[12px] font-medium text-[#475467]">
                   Prompt 模板，后端会按用户选择拼接并保存快照
                   <textarea
-                    className="inputtext min-h-[116px] resize-y font-mono text-[12px] leading-5"
+                    className="inputtext min-h-[132px] resize-y font-mono text-[12px] leading-5"
                     onChange={(event) =>
                       updateWorkflow(app.id, (config) => ({
                         ...config,

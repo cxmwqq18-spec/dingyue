@@ -868,6 +868,7 @@ export interface ThemeRuntimeData {
     initialMessage?: string;
   };
   isPreview?: boolean;
+  clientBootstrapCustomer?: boolean;
 }
 
 export interface PlatformState {

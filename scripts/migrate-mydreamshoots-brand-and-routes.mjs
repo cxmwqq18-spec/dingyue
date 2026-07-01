@@ -4,7 +4,7 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const brand = "MydreamShoots";
+const brand = "MyDreamShoots";
 const slug = "mydreamshoots";
 const siteId = "site_dreamshoot";
 const oldToolPaths = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image_generator"]);

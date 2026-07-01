@@ -7,7 +7,7 @@ export type JsonLdNode = Record<string, unknown>;
 type JsonLdInput = {
   site: Site;
   page: Pick<ThemePage, "id" | "slug" | "title" | "pageType">;
-  pageJson: ThemePageJson;
+  pageJson?: ThemePageJson;
   pagePath: string;
   routeMode: "host" | "path";
   creativePacks?: CreativePack[];
@@ -30,6 +30,52 @@ function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
     .trim();
 }
 
+function siteBrandName(site: Site): string {
+  const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  if (token.includes("aidreamcapes")) return "Aidreamcapes";
+  if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return "MyDreamShoots";
+  return cleanText(site.branding.logoText, site.name);
+}
+
+function isAidreamcapesSite(site: Site): boolean {
+  return siteBrandName(site) === "Aidreamcapes";
+}
+
+function schemaServiceType(site: Site, pagePath: string): string {
+  if (isAidreamcapesSite(site)) {
+    if (pagePath.includes("moodboard")) return "AI travel moodboard planning service";
+    if (pagePath.includes("postcard") || pagePath.includes("journal")) return "AI travel album and postcard portrait service";
+    return "AI travel portrait generation service";
+  }
+  if (pagePath.includes("video")) return "AI image to video concept tool";
+  if (pagePath.includes("headshot")) return "AI headshot and profile portrait tool";
+  return "AI photo generation and editing tool";
+}
+
+function itemListName(site: Site, title: string): string {
+  if (isAidreamcapesSite(site)) return `${title} travel album options`;
+  return `${title} package options`;
+}
+
+function cleanSchemaText(site: Site, value: unknown, fallback = ""): string {
+  const brandName = siteBrandName(site);
+  return cleanPaidStorefrontText(value, fallback)
+    .replace(/\bMydreamShoots\b/g, "MyDreamShoots")
+    .replace(/\bMydreamshoots\b/g, "MyDreamShoots")
+    .replace(/\bDreamShootAI\b/g, brandName)
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function slugifySchemaPart(value: string): string {
+  return cleanText(value)
+    .toLowerCase()
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 function listText(value: ThemeSettingValue | undefined): string[] {
   if (typeof value === "string") {
     return value
@@ -41,7 +87,12 @@ function listText(value: ThemeSettingValue | undefined): string[] {
   return [];
 }
 
-function sectionValue(pageJson: ThemePageJson, key: string): string {
+function hasPageSections(pageJson: ThemePageJson | undefined): pageJson is ThemePageJson {
+  return Boolean(pageJson?.sections && Array.isArray(pageJson.sectionsOrder));
+}
+
+function sectionValue(pageJson: ThemePageJson | undefined, key: string): string {
+  if (!hasPageSections(pageJson)) return "";
   for (const sectionId of pageJson.sectionsOrder) {
     const value = pageJson.sections[sectionId]?.settings?.[key];
     const text = cleanText(value);
@@ -88,12 +139,12 @@ function schemaPagePath(site: Site, routeMode: "host" | "path", pagePath: string
 
 function pageTitle(site: Site, page: Pick<ThemePage, "id" | "slug" | "title" | "pageType">): string {
   const seo = normalizeThemeSeo(site, site.themeSettings.publishedJson);
-  return cleanPaidStorefrontText(seo.pages[page.id]?.title, page.title || site.branding.logoText || site.name);
+  return cleanSchemaText(site, seo.pages[page.id]?.title, page.title || siteBrandName(site));
 }
 
 function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">): string {
   const seo = normalizeThemeSeo(site, site.themeSettings.publishedJson);
-  return cleanPaidStorefrontText(seo.pages[page.id]?.description, site.branding.description || page.title);
+  return cleanSchemaText(site, seo.pages[page.id]?.description, site.branding.description || page.title);
 }
 
 function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string): JsonLdNode {
@@ -119,7 +170,8 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
   return { "@type": "BreadcrumbList", itemListElement: items };
 }
 
-function faqSchema(pageJson: ThemePageJson): JsonLdNode | undefined {
+function faqSchema(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
+  if (!hasPageSections(pageJson)) return undefined;
   const questions = pageJson.sectionsOrder.flatMap((sectionId) => {
     const section = pageJson.sections[sectionId];
     if (section?.type !== "faq") return [];
@@ -131,28 +183,28 @@ function faqSchema(pageJson: ThemePageJson): JsonLdNode | undefined {
         });
     return blocks
       .map((block) => ({
-        "@type": "Question",
-        name: blockValue(block, "question", blockValue(block, "title")),
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: blockValue(block, "answer", blockValue(block, "description"))
-        }
-      }))
+	        "@type": "Question",
+	        name: cleanSchemaText(site, blockValue(block, "question", blockValue(block, "title"))),
+	        acceptedAnswer: {
+	          "@type": "Answer",
+	          text: cleanSchemaText(site, blockValue(block, "answer", blockValue(block, "description")))
+	        }
+	      }))
       .filter((item) => cleanText(item.name) && cleanText((item.acceptedAnswer as { text: string }).text));
   });
   return questions.length ? { "@type": "FAQPage", mainEntity: questions } : undefined;
 }
 
-function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson): JsonLdNode | undefined {
-  const isArticle = pagePath.startsWith("/blog/") || /^(article|post)$/i.test(pageJson.pageType);
+function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
+  const isArticle = pagePath.startsWith("/blog/") || /^(article|post)$/i.test(pageJson?.pageType ?? "");
   if (!isArticle) return undefined;
   const image = sectionValue(pageJson, "imageUrl") || sectionValue(pageJson, "backgroundImage");
   return {
     "@type": "Article",
     headline: title,
     description,
-    author: { "@type": "Organization", name: site.branding.logoText || site.name },
-    publisher: { "@type": "Organization", name: site.branding.logoText || site.name },
+    author: { "@type": "Organization", name: siteBrandName(site) },
+    publisher: { "@type": "Organization", name: siteBrandName(site) },
     mainEntityOfPage: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath)),
     ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
   };
@@ -165,29 +217,68 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
       "@type": "Service",
       name: title,
       description,
-      provider: { "@type": "Organization", name: input.site.branding.logoText || input.site.name },
-      serviceType: "AI photo editing tool",
+      provider: { "@type": "Organization", name: siteBrandName(input.site) },
+      serviceType: schemaServiceType(input.site, path),
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path))
     };
   }
-  if (path.startsWith("/collections") || path.startsWith("/pricing")) {
+  if (path.startsWith("/pricing")) {
     const pack = input.creativePacks?.find((item) => item.status === "active" && title.toLowerCase().includes(item.name.toLowerCase()));
     return {
       "@type": "Product",
       name: pack?.name || title,
       description: pack?.description || description,
-      brand: { "@type": "Brand", name: input.site.branding.logoText || input.site.name },
+      brand: { "@type": "Brand", name: siteBrandName(input.site) },
       ...(pack ? { image: pack.imageUrl ? absoluteUrl(input.site, input.routeMode, pack.imageUrl) : undefined } : {})
     };
   }
   return undefined;
 }
 
+function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
+  if (!input.pagePath.startsWith("/collections")) return [];
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const url = absoluteUrl(input.site, input.routeMode, path);
+  const activePacks = (input.creativePacks ?? []).filter((pack) => pack.status === "active").slice(0, 24);
+  const itemListElement = activePacks.map((pack, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Service",
+	      name: cleanSchemaText(input.site, pack.name, title),
+	      description: cleanSchemaText(input.site, pack.description, description),
+      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, `/collections/${slugifySchemaPart(pack.categoryRecord?.slug || pack.category || pack.name)}`)),
+      ...(pack.imageUrl ? { image: absoluteUrl(input.site, input.routeMode, pack.imageUrl) } : {})
+    }
+  }));
+  return [
+    {
+      "@type": "CollectionPage",
+      name: title,
+      description,
+      url,
+      isPartOf: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: {
+        "@type": "Organization",
+        name: siteBrandName(input.site),
+        url: siteBaseUrl(input.site, input.routeMode)
+      }
+    },
+    {
+      "@type": "ItemList",
+      name: itemListName(input.site, title),
+      description,
+      url,
+      itemListElement
+    }
+  ];
+}
+
 function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
   return {
     "@type": "WebSite",
     "@id": `${siteBaseUrl(site, routeMode)}#website`,
-    name: site.branding.logoText || site.name,
+    name: siteBrandName(site),
     url: siteBaseUrl(site, routeMode)
   };
 }
@@ -197,19 +288,20 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const description = pageDescription(input.site, input.page);
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
-  const siteName = input.site.branding.logoText || input.site.name;
+  const siteName = siteBrandName(input.site);
   const graph: Array<JsonLdNode | undefined> = [
     {
-      "@type": "Organization",
-      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
-      name: siteName,
-      url: siteBaseUrl(input.site, input.routeMode),
-      description: cleanPaidStorefrontText(input.site.branding.description)
-    },
-    websiteSchema(input.site, input.routeMode),
-    breadcrumbs(input.site, input.routeMode, input.pagePath, title),
-    faqSchema(input.pageJson),
+	      "@type": "Organization",
+	      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
+	      name: siteName,
+	      url: siteBaseUrl(input.site, input.routeMode),
+	      description: cleanSchemaText(input.site, input.site.branding.description)
+	    },
+	    websiteSchema(input.site, input.routeMode),
+	    breadcrumbs(input.site, input.routeMode, input.pagePath, title),
+	    faqSchema(input.site, input.pageJson),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
+    ...collectionPageSchema(input, title, description),
     serviceOrProductSchema(input, title, description)
   ];
 
@@ -229,15 +321,15 @@ export function buildToolDirectoryJsonLd({
   const pagePath = item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
-  const siteName = site.branding.logoText || site.name;
+  const siteName = siteBrandName(site);
   const graph: JsonLdNode[] = [
     {
-      "@type": "Organization",
-      "@id": `${siteBaseUrl(site, routeMode)}#organization`,
-      name: siteName,
-      url: siteBaseUrl(site, routeMode),
-      description: cleanPaidStorefrontText(site.branding.description)
-    },
+	      "@type": "Organization",
+	      "@id": `${siteBaseUrl(site, routeMode)}#organization`,
+	      name: siteName,
+	      url: siteBaseUrl(site, routeMode),
+	      description: cleanSchemaText(site, site.branding.description)
+	    },
     websiteSchema(site, routeMode),
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
@@ -255,7 +347,7 @@ export function buildToolDirectoryJsonLd({
       offers: {
         "@type": "Offer",
         availability: "https://schema.org/InStock",
-        category: "AI photo tool",
+        category: isAidreamcapesSite(site) ? "AI travel portrait tool" : "AI photo tool",
         url
       }
     },
@@ -263,7 +355,7 @@ export function buildToolDirectoryJsonLd({
       "@type": "Service",
       name: item.label,
       description: item.description,
-      serviceType: pagePath.includes("video") ? "AI image to video concept tool" : "AI photo generation and editing tool",
+      serviceType: schemaServiceType(site, pagePath),
       provider: {
         "@type": "Organization",
         name: siteName,
@@ -291,7 +383,7 @@ export function buildCollectionDirectoryJsonLd({
   const pagePath = item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
-  const siteName = site.branding.logoText || site.name;
+  const siteName = siteBrandName(site);
   const matchingPacks = creativePacks
     .filter((pack) => pack.status === "active")
     .filter((pack) => {
@@ -314,7 +406,7 @@ export function buildCollectionDirectoryJsonLd({
       "@type": "ListItem",
       position: index + 1,
       item: {
-        "@type": matchingPacks.length ? "Product" : "Service",
+        "@type": "Service",
         name,
         description: cleanText(pack.description, item.description),
         url,

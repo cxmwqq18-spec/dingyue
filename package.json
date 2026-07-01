@@ -18,6 +18,8 @@
     "smoke:designer-ui": "node scripts/smoke-designer-ui.mjs",
     "smoke:dreamshoot-tool-links": "node scripts/smoke-dreamshoot-tool-links.mjs",
     "smoke:aidreamcapes-brand-links": "node scripts/smoke-aidreamcapes-brand-links.mjs",
+    "smoke:storefront-image-isolation": "node scripts/smoke-storefront-image-isolation.mjs",
+    "smoke:storefront-seo-fingerprint": "node scripts/smoke-storefront-seo-fingerprint.mjs",
     "smoke:aidreamcapes-backend": "node scripts/smoke-aidreamcapes-backend-isolation.mjs",
     "smoke:site-admin-nav-instant": "node scripts/smoke-site-admin-nav-instant.mjs",
     "smoke:site-admin-module-latency": "node scripts/smoke-site-admin-module-latency.mjs",

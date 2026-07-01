@@ -188,9 +188,9 @@ export function AdminShell({
             </div>
           </header>
 
-          <main className="px-[16px] pb-8 pt-4 lg:px-[22px] lg:pt-[80px]">
-            <div className="right mx-auto w-full max-w-[1700px]">
-              <div className="admin-shell-surface relative" data-admin-layout="saas-command-workspace-surface">
+          <main className="min-w-0 overflow-x-clip px-[16px] pb-8 pt-4 lg:px-[22px] lg:pt-[80px]">
+            <div className="right mx-auto w-full max-w-[1700px] min-w-0">
+              <div className="admin-shell-surface relative min-w-0" data-admin-layout="saas-command-workspace-surface">
               <AdminRoutePendingPreview />
               <div className="mb-3 flex flex-col gap-2 xl:flex-row xl:items-end xl:justify-between">
                 <div className="min-w-0">
@@ -229,7 +229,7 @@ export function AdminShell({
                 <div className="clear" />
               </div>
 
-              <div className="right_main">
+              <div className="right_main min-w-0 max-w-full overflow-x-clip">
                 {subtitle ? <div className="tixing">{subtitle}</div> : null}
                 {workspace && showWorkspaceSummary ? (
                   <div className="mb-4 grid gap-3 rounded-[8px] border border-[var(--admin-border-soft)] bg-[linear-gradient(180deg,#ffffff_0%,#fbfcfe_100%)] px-4 py-3 text-[12px] text-[var(--admin-muted)] shadow-[0_12px_24px_-26px_rgba(15,23,42,0.18)] xl:grid-cols-[1.45fr_1fr_1fr_auto]">

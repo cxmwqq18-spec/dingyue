@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
@@ -22,7 +21,6 @@ import { customerSessionCookie } from "@/lib/session";
 import {
   readStorefrontCustomerRuntimeStateForSiteFromDatabase,
   readStorefrontPlatformState,
-  readStorefrontPublicRuntimeStateForSiteFromDatabase,
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
@@ -44,6 +42,27 @@ type SiteRenderData = {
   siteAiApps: ReturnType<typeof getSiteAppsFromState>;
   toolMenuItems: PlatformState["toolMenuItems"];
 };
+
+const storefrontMediaReferenceKeys = new Set([
+  "avatarUrl",
+  "backgroundImage",
+  "beforeImage",
+  "bg_image",
+  "galleryImages",
+  "image",
+  "imageUrl",
+  "leadImageUrl",
+  "logoImageUrl",
+  "mediaAssetId",
+  "mobile_src",
+  "resultImageUrl",
+  "secondaryImageUrl",
+  "src"
+]);
+
+function isStorefrontMediaReferenceKey(key: string): boolean {
+  return storefrontMediaReferenceKeys.has(key) || /^image\d*$/i.test(key) || /^src\d*$/i.test(key);
+}
 
 function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData {
   return {
@@ -90,6 +109,8 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
 const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
 const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
+const publicHomePackLimit = 48;
+const publicDirectoryPackLimit = 48;
 
 function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
   return new Set(pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId]?.type).filter((type): type is string => Boolean(type)));
@@ -109,32 +130,13 @@ async function completePublicCreativePacksForSite(site: Site, existing: SiteRend
     prompt: undefined,
     galleryImages: []
   }));
-  try {
-    const fullState = await readStorefrontPlatformState();
-    const canonicalSlug = publicSiteSlug(site.slug);
-    const siteIdentity = `${site.slug} ${site.name} ${site.branding.logoText}`.toLowerCase();
-    const fullSite = fullState.sites.find((item) => {
-      const itemIdentity = `${item.slug} ${item.name} ${item.branding.logoText}`.toLowerCase();
-      return (
-        item.id === site.id ||
-        publicSiteSlug(item.slug) === canonicalSlug ||
-        (siteIdentity.includes("aidreamcapes") && itemIdentity.includes("aidreamcapes")) ||
-        (siteIdentity.includes("mydreamshoots") && itemIdentity.includes("mydreamshoots"))
-      );
-    });
-    if (!fullSite) return sanitizedExisting;
-    const fullPacks = getSiteCreativePacksFromState(fullState, fullSite.id)
-      .filter((pack) => pack.status === "active")
-      .slice(0, limit)
-      .map((pack) => ({
-        ...pack,
-        prompt: undefined,
-        galleryImages: []
-      }));
-    return fullPacks.length > sanitizedExisting.length ? fullPacks : sanitizedExisting;
-  } catch {
-    return sanitizedExisting;
-  }
+  if (sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
+  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map((pack) => ({
+    ...pack,
+    prompt: undefined,
+    galleryImages: []
+  }));
+  return fullPacks.length > sanitizedExisting.length ? fullPacks : sanitizedExisting;
 }
 
 function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = 12): SiteRenderData["siteAiApps"] {
@@ -154,18 +156,101 @@ function trimProductsForStorefront(renderData: SiteRenderData, limit = 8): SiteR
   return (active.length ? active : renderData.products).slice(0, limit);
 }
 
+function collectStorefrontMediaReferences(value: unknown, refs: Set<string>, parentKey = ""): void {
+  if (!value) return;
+  if (typeof value === "string") {
+    if (isStorefrontMediaReferenceKey(parentKey)) refs.add(value);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStorefrontMediaReferences(item, refs, parentKey));
+    return;
+  }
+  if (typeof value !== "object") return;
+  Object.entries(value as Record<string, unknown>).forEach(([key, child]) => {
+    collectStorefrontMediaReferences(child, refs, key);
+  });
+}
+
+function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: Site["themeSettings"]["publishedJson"], renderData: SiteRenderData): SiteRenderData["mediaAssets"] {
+  if (!renderData.mediaAssets.length) return [];
+  const refs = new Set<string>();
+  collectStorefrontMediaReferences(site.branding, refs);
+  collectStorefrontMediaReferences(settings.globalSections, refs);
+  collectStorefrontMediaReferences(pageJson, refs);
+  collectStorefrontMediaReferences(renderData.creativePacks, refs);
+  collectStorefrontMediaReferences(renderData.products, refs);
+  collectStorefrontMediaReferences(renderData.toolMenuItems, refs);
+  if (!refs.size) return [];
+  return renderData.mediaAssets.filter((asset) =>
+    refs.has(asset.id) ||
+    refs.has(asset.storageKey) ||
+    Boolean(asset.previewUrl && refs.has(asset.previewUrl)) ||
+    Boolean(asset.originUrl && refs.has(asset.originUrl))
+  );
+}
+
 function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
   const sectionTypes = pageSectionTypes(pageJson);
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
-  const packLimit = slug === "/" || slug === "/collections" ? 48 : 18;
+  const packLimit = slug === "/" ? publicHomePackLimit : slug === "/collections" ? publicDirectoryPackLimit : 18;
   return {
     creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
     mediaAssets: renderData.mediaAssets,
     products: needsProducts ? trimProductsForStorefront(renderData, slug === "/pricing" || slug === "/cart" ? 12 : 6) : [],
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : [],
     toolMenuItems: renderData.toolMenuItems.slice(0, 80)
+  };
+}
+
+function withPageMediaAssets(site: Site, pageJson: ThemePageJson, settings: Site["themeSettings"]["publishedJson"], renderData: SiteRenderData): SiteRenderData {
+  return {
+    ...renderData,
+    mediaAssets: trimMediaAssetsForPage(site, pageJson, settings, renderData)
+  };
+}
+
+function pageNeedsSearchEntries(pageJson: ThemePageJson): boolean {
+  return pageJson.sectionsOrder.some((sectionId) => {
+    const type = pageJson.sections[sectionId]?.type;
+    return type === "search" || type === "search_results";
+  });
+}
+
+const emptyClientPageJson: ThemePageJson = {
+  pageType: "content",
+  version: 1,
+  sectionsOrder: [],
+  sections: {}
+};
+
+function lightweightPageForClient(page: ThemePage, includeContent = false): ThemePage {
+  const pageJson = includeContent ? page.publishedJson : { ...emptyClientPageJson, pageType: page.publishedJson.pageType };
+  return {
+    ...page,
+    draftJson: pageJson,
+    publishedJson: pageJson
+  };
+}
+
+function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePath: string): Site {
+  const pageMap = new Map<string, ThemePage>();
+  const includeSearchEntries = pageNeedsSearchEntries(activePage);
+  for (const page of site.pages) {
+    if (
+      page.slug === pagePath ||
+      page.slug === "/" ||
+      page.slug === "/404" ||
+      (includeSearchEntries && (["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/")))
+    ) {
+      pageMap.set(page.id, lightweightPageForClient(page, includeSearchEntries));
+    }
+  }
+  return {
+    ...site,
+    pages: Array.from(pageMap.values())
   };
 }
 
@@ -209,6 +294,15 @@ function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): T
     customerModels: [],
     ...runtime
   };
+}
+
+function publicCustomerBootstrapEnabled(): boolean {
+  return process.env.STOREFRONT_PUBLIC_CLIENT_CUSTOMER_BOOTSTRAP !== "0";
+}
+
+async function readCustomerSessionId(siteId: string): Promise<string | undefined> {
+  const { cookies } = await import("next/headers");
+  return (await cookies()).get(customerSessionCookie(siteId))?.value;
 }
 
 async function getCurrentCustomerSession(
@@ -852,7 +946,6 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   const detailBody = detailText(detail, "detailBody", aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody);
   const workflowItems = detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
   const useCaseItems = detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
-  const description = blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro));
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
   const appCreateHref = `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
@@ -1118,7 +1211,7 @@ function renderThemePage({
         routeMode={routeMode}
         runtime={runtime}
         settings={settings}
-        site={currentSite}
+        site={clientSiteForThemeRender(currentSite, page, pagePath)}
         siteAiApps={renderData.siteAiApps}
         toolMenuItems={renderData.toolMenuItems}
         jsonLd={jsonLd}
@@ -1133,14 +1226,17 @@ export async function renderStorefrontPage({
   slug,
   query = {},
   routeMode = "path",
-  state: providedState
+  state: providedState,
+  deferCustomerRuntime = false
 }: {
   site: Site;
   slug: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
   state?: PlatformState;
+  deferCustomerRuntime?: boolean;
 }) {
+  const shouldDeferCustomerRuntime = deferCustomerRuntime && publicCustomerBootstrapEnabled();
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
@@ -1155,7 +1251,7 @@ export async function renderStorefrontPage({
     currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
   }
   const settings = currentSite.themeSettings.publishedJson;
-  const sessionId = (await cookies()).get(customerSessionCookie(currentSite.id))?.value;
+  const sessionId = shouldDeferCustomerRuntime ? undefined : await readCustomerSessionId(currentSite.id);
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
@@ -1166,28 +1262,38 @@ export async function renderStorefrontPage({
     : isFocusedCollectionPage
     ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
     : page.publishedJson;
-  let pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  let pageRenderData = withPageMediaAssets(
+    currentSite,
+    pageJson,
+    settings,
+    trimRenderDataForPage(renderData, pageJson, slug)
+  );
   if (slug === "/" || slug === "/collections") {
+    const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
     pageRenderData = {
       ...pageRenderData,
-      creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, 48)
+      creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
     };
   }
   if ((slug === "/" || slug === "/collections") && !pageRenderData.creativePacks.length) {
+    const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
     pageRenderData = {
       ...pageRenderData,
-      creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, 48)).map((pack) => ({
+      creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, directoryPackLimit)).map((pack) => ({
         ...pack,
         prompt: undefined,
         galleryImages: []
       }))
     };
   }
+  pageRenderData = withPageMediaAssets(currentSite, pageJson, settings, pageRenderData);
+  currentSite.mediaAssets = pageRenderData.mediaAssets;
   const runtime = sessionId && pageNeedsFullCustomerRuntime(pageJson, slug)
     ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
     : await getLightCustomerRuntime(state, currentSite.id, sessionId);
   const runtimeWithAuth = {
     ...runtime,
+    ...(shouldDeferCustomerRuntime ? { clientBootstrapCustomer: true } : {}),
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
   };
 
@@ -1289,7 +1395,7 @@ export async function renderCustomerWorkspacePage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  const sessionId = await readCustomerSessionId(site.id);
   const profile = slug === "/account" ? "account" : slug === "/app" ? "workspace" : "full";
   const state = (await getStateForCustomerRuntimeRender(site, sessionId, providedState, profile)) ?? await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
@@ -1350,7 +1456,7 @@ export async function renderCustomerWorkspacePageBySlug({
   if (slug === "/account") {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
     if (!siteId) notFound();
-    const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+    const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const [current, site] = await Promise.all([
       getCustomerBySessionRelational({ siteId, sessionId }),
@@ -1363,7 +1469,7 @@ export async function renderCustomerWorkspacePageBySlug({
   if (isWorkspaceRoute) {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
     if (!siteId) notFound();
-    const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+    const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const [current, bootstrap] = await Promise.all([
       getCustomerBySessionRelational({ siteId, sessionId }),
@@ -1383,7 +1489,7 @@ export async function renderCustomerWorkspacePageBySlug({
 
   const siteId = await getSiteIdBySlugRelational(canonicalSlug);
   if (!siteId) notFound();
-  const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
+  const sessionId = await readCustomerSessionId(siteId);
   if (!sessionId) redirect(loginPathWithNext);
 
   const profile = slug === "/account" ? "account" : slug === "/app" ? "workspace" : "full";
@@ -1432,7 +1538,7 @@ export async function renderCustomerJobDetailPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  const sessionId = await readCustomerSessionId(site.id);
   const state = (await getStateForCustomerRuntimeRender(site, sessionId, providedState)) ?? await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
@@ -1497,7 +1603,13 @@ export async function renderToolPage({
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
   const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug, { site: currentSite });
-  const pageRenderData = trimRenderDataForPage(toolRenderData, pageJson, page.slug);
+  const pageRenderData = withPageMediaAssets(
+    currentSite,
+    pageJson,
+    settings,
+    trimRenderDataForPage(toolRenderData, pageJson, page.slug)
+  );
+  currentSite.mediaAssets = pageRenderData.mediaAssets;
   return renderThemePage({
     currentSite,
     page: pageJson,

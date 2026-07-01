@@ -88,7 +88,17 @@ function assetRules(workflow: AiWorkflowConfig) {
 
 function maxAssetsForWorkflow(workflow: AiWorkflowConfig): number {
   const configuredMax = assetRules(workflow).max;
-  return configuredMax && configuredMax > 0 ? Math.max(configuredMax, DEFAULT_MAX_SOURCE_ASSETS) : DEFAULT_MAX_SOURCE_ASSETS;
+  return configuredMax && configuredMax > 0 ? configuredMax : DEFAULT_MAX_SOURCE_ASSETS;
+}
+
+function isThemeModeRequest(requestJson?: Record<string, unknown>): boolean {
+  return requestJson?.mode === "theme" || typeof requestJson?.creativePackId === "string";
+}
+
+function isThemeManagedField(field: AiWorkflowField): boolean {
+  const id = field.id.toLowerCase().replace(/[_-]/g, "");
+  const label = field.label.toLowerCase();
+  return id === "style" || id === "prompt" || id === "outputcount" || label.includes("style");
 }
 
 function normalizePromptInputs(requestJson?: Record<string, unknown>): Record<string, string | number | boolean> {
@@ -128,8 +138,13 @@ function resolveGenerationRequest(params: {
 }) {
   const workflow = jsonObject<AiWorkflowConfig>(params.siteAiApp.workflowConfig) ?? defaultWorkflowConfig(params.siteAiApp);
   const provider = jsonObject<AiProviderConfig>(params.siteAiApp.providerConfig) ?? { mode: "platform_fallback", fallbackEnabled: true };
+  const themeMode = isThemeModeRequest(params.requestJson);
   const fields = normalizePromptInputs(params.requestJson);
-  const missingField = workflowFields(workflow).find((field) => field.required && (fields[field.id] === undefined || fields[field.id] === ""));
+  const missingField = workflowFields(workflow).find((field) =>
+    field.required &&
+    !(themeMode && isThemeManagedField(field)) &&
+    (fields[field.id] === undefined || fields[field.id] === "")
+  );
   if (missingField) throw new StoreError("missing_required_prompt_input", 400);
   const rules = assetRules(workflow);
   const minAssets = rules.min ?? 1;

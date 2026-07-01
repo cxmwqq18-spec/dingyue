@@ -3,14 +3,16 @@ import path from "path";
 
 const workspaceRoot = process.cwd();
 const statePath = path.join(workspaceRoot, "data", "platform-state.json");
+const themeRendererPath = path.join(workspaceRoot, "src", "components", "theme-renderer.tsx");
 const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+const themeRendererSource = await fs.readFile(themeRendererPath, "utf8");
 
 const aidreamcapesSite = (state.sites ?? []).find((site) => site.id === "site_aidreamcapes" || site.slug === "aidreamcapes");
 const mydreamshootsSite = (state.sites ?? []).find((site) => site.id === "site_dreamshoot" || site.slug === "mydreamshoots");
 if (!aidreamcapesSite) throw new Error("missing_site_aidreamcapes");
 
 const forbiddenPatterns = [
-  /MydreamShoots/i,
+  /MyDreamShoots/i,
   /mydreamshoots/i,
   /support@mydreamshoots\.com/i,
   /World Cup/i,
@@ -26,7 +28,26 @@ const forbiddenPatterns = [
   /\/tools\/cyberpunk-portrait/i,
   /\/tools\/background-changer/i,
   /\/tools\/gala-photo/i,
-  /\/tools\/noir-portrait/i
+  /\/tools\/noir-portrait/i,
+  /honeymoon/i,
+  /wedding/i,
+  /marriage/i,
+  /bridal/i,
+  /bride/i,
+  /groom/i,
+  /engagement/i,
+  /valentine/i,
+  /romantic/i
+];
+
+const forbiddenAidreamcapesImageNames = [
+  "cinematic-travel",
+  "coastal-escapes",
+  "desi-wedding",
+  "golden-hour-couples",
+  "honeymoon-itinerary-scenes",
+  "proof-couple-engagement",
+  "social-keepsakes"
 ];
 
 const allowedAidreamcapesRoutes = new Set([
@@ -61,7 +82,6 @@ const allowedAidreamcapesRoutes = new Set([
   "/tools/lake-house-weekend",
   "/tools/shared-route-album",
   "/tools/family-travel-keepsakes",
-  "/tools/honeymoon-itinerary-portraits",
   "/tools/solo-traveler-profile-set",
   "/tools/travel-journal-cover-maker",
   "/tools/private-album-curator",
@@ -112,6 +132,20 @@ const allowedAidreamcapesRoutes = new Set([
   "/tools/couple-escape-album",
   "/collections/destination-portrait-albums"
 ]);
+
+function normalizeImageUrl(url) {
+  return String(url ?? "").trim().split("?")[0];
+}
+
+function duplicateGroups(items, keyFn) {
+  const groups = new Map();
+  for (const item of items) {
+    const key = keyFn(item);
+    if (!key) continue;
+    groups.set(key, [...(groups.get(key) ?? []), item]);
+  }
+  return [...groups.entries()].filter(([, group]) => group.length > 1);
+}
 
 function stableStringify(value) {
   return JSON.stringify(value, null, 2);
@@ -187,6 +221,24 @@ function extractHrefs(value, out = []) {
   return out;
 }
 
+function collectCollectionImageCards(value, out = []) {
+  if (Array.isArray(value)) {
+    for (const item of value) collectCollectionImageCards(item, out);
+    return out;
+  }
+  if (!value || typeof value !== "object") return out;
+
+  const href = typeof value.href === "string" ? value.href.split("#")[0].split("?")[0] : "";
+  const imageUrl = typeof value.imageUrl === "string" ? value.imageUrl : "";
+  const title = typeof value.title === "string" ? value.title : typeof value.label === "string" ? value.label : href;
+  if (href.startsWith("/collections/") && imageUrl) {
+    out.push({ href, imageUrl, title });
+  }
+
+  for (const entry of Object.values(value)) collectCollectionImageCards(entry, out);
+  return out;
+}
+
 const failures = [];
 const aidreamcapesJson = stableStringify({
   site: aidreamcapesSite,
@@ -198,6 +250,64 @@ const aidreamcapesJson = stableStringify({
 
 for (const pattern of forbiddenPatterns) {
   if (pattern.test(aidreamcapesJson)) failures.push(`forbidden_content:${pattern}`);
+}
+
+const aidreamcapesPacks = (state.creativePacks ?? []).filter(
+  (pack) => pack.siteId === aidreamcapesSite.id && pack.status === "active"
+);
+const missingPackImages = aidreamcapesPacks.filter((pack) => !normalizeImageUrl(pack.imageUrl));
+if (missingPackImages.length) {
+  failures.push(`missing_pack_images:${missingPackImages.map((pack) => pack.name).join(" | ")}`);
+}
+for (const [imageUrl, packs] of duplicateGroups(aidreamcapesPacks, (pack) => normalizeImageUrl(pack.imageUrl))) {
+  failures.push(`duplicate_pack_image:${imageUrl}:${packs.map((pack) => pack.name).join(" | ")}`);
+}
+
+const collectionImageCards = [];
+for (const page of aidreamcapesSite.pages ?? []) {
+  collectCollectionImageCards(page.publishedJson, collectionImageCards);
+}
+const uniqueCollectionCards = [...collectionImageCards.reduce((map, card) => {
+  if (!map.has(card.href)) map.set(card.href, card);
+  return map;
+}, new Map()).values()];
+for (const [imageUrl, cards] of duplicateGroups(uniqueCollectionCards, (card) => normalizeImageUrl(card.imageUrl))) {
+  failures.push(`duplicate_collection_card_image:${imageUrl}:${cards.map((card) => `${card.title}(${card.href})`).join(" | ")}`);
+}
+for (const card of uniqueCollectionCards) {
+  const normalizedImage = normalizeImageUrl(card.imageUrl).toLowerCase();
+  for (const forbiddenName of forbiddenAidreamcapesImageNames) {
+    if (normalizedImage.includes(forbiddenName)) {
+      failures.push(`forbidden_collection_image:${card.title}(${card.href}):${normalizedImage}`);
+    }
+  }
+}
+
+const aidreamcapesToolMenuItems = (state.toolMenuItems ?? []).filter(
+  (item) => item.siteId === aidreamcapesSite.id && item.status === "active"
+);
+for (const [imageUrl, items] of duplicateGroups(aidreamcapesToolMenuItems, (item) => normalizeImageUrl(item.imageUrl))) {
+  failures.push(`duplicate_tool_menu_image:${imageUrl}:${items.map((item) => `${item.title}(${item.href})`).join(" | ")}`);
+}
+
+const fallbackSeedMatch = themeRendererSource.match(/const aidreamcapesFallbackCatalogCardsSeed:[\s\S]*?\n\];/);
+if (!fallbackSeedMatch) {
+  failures.push("missing_aidreamcapes_fallback_catalog_seed");
+} else {
+  const fallbackSeedSource = fallbackSeedMatch[0];
+  for (const pattern of forbiddenPatterns) {
+    if (pattern.test(fallbackSeedSource)) failures.push(`forbidden_fallback_content:${pattern}`);
+  }
+
+  const fallbackCards = [...fallbackSeedSource.matchAll(/title:\s*"([^"]+)"[\s\S]*?imageUrl:\s*"([^"]+)"/g)]
+    .map((match) => ({ title: match[1], imageUrl: match[2] }));
+  const missingFallbackImages = fallbackCards.filter((card) => !normalizeImageUrl(card.imageUrl));
+  if (missingFallbackImages.length) {
+    failures.push(`missing_fallback_images:${missingFallbackImages.map((card) => card.title).join(" | ")}`);
+  }
+  for (const [imageUrl, cards] of duplicateGroups(fallbackCards, (card) => normalizeImageUrl(card.imageUrl))) {
+    failures.push(`duplicate_fallback_image:${imageUrl}:${cards.map((card) => card.title).join(" | ")}`);
+  }
 }
 
 const hrefs = [...new Set(extractHrefs(aidreamcapesSite).map((href) => href.split("#")[0].split("?")[0]).filter((href) => href.startsWith("/")))];

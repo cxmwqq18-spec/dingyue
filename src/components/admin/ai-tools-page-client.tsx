@@ -112,6 +112,21 @@ function tone(status: string): "good" | "warn" | "bad" | "neutral" {
   return "neutral";
 }
 
+function aiToolsLoadError(error?: unknown, status?: number) {
+  if (status === 401) return "后台登录已过期，请重新登录后再打开 AI 工具。";
+  if (status === 403) return "当前账号没有访问 AI 工具配置的权限。";
+  if (typeof error === "string" && error.trim()) {
+    return `AI 工具数据加载失败：${error}`;
+  }
+  if (error instanceof DOMException && error.name === "AbortError") {
+    return "AI 工具数据加载超时，请重试。";
+  }
+  if (error instanceof Error && error.message) {
+    return `AI 工具数据加载失败：${error.message}`;
+  }
+  return "AI 工具数据加载失败，请重试。";
+}
+
 function modulePath(siteSlug: string, path: string): string {
   return `/site/${siteSlug}${path}`;
 }
@@ -166,6 +181,7 @@ export function AiToolsPageClient({
     null,
   );
   const [error, setError] = useState<string | null>(null);
+  const [summaryReloadKey, setSummaryReloadKey] = useState(0);
   const [jobsLoading, setJobsLoading] = useState(false);
   const jobsControllerRef = useRef<AbortController | null>(null);
 
@@ -173,21 +189,23 @@ export function AiToolsPageClient({
     let cancelled = false;
     const controller = new AbortController();
     async function load() {
+      setError(null);
       try {
         const response = await fetchAdminJson<AiToolsPagePayload>(
-          `/api/sites/${siteId}/admin/ai-page?detail=summary`,
-          { init: { signal: controller.signal } },
+          `/api/sites/${siteId}/admin/ai-page?detail=summary&reload=${summaryReloadKey}`,
+          { init: { signal: controller.signal }, ttlMs: 0 },
         );
         const result = response.data;
         if (cancelled) return;
         if (!response.ok) {
-          setError(result.error ?? "AI 工具数据加载失败。");
+          setError(aiToolsLoadError(result.error, response.status));
           return;
         }
+        setError(null);
         setPayload(result);
-      } catch {
+      } catch (loadError) {
         if (!cancelled && !controller.signal.aborted)
-          setError("AI 工具数据加载失败。");
+          setError(aiToolsLoadError(loadError));
       }
     }
     void load();
@@ -195,7 +213,7 @@ export function AiToolsPageClient({
       cancelled = true;
       controller.abort();
     };
-  }, [siteId]);
+  }, [siteId, summaryReloadKey]);
 
   useEffect(() => {
     return () => {
@@ -299,8 +317,19 @@ export function AiToolsPageClient({
 
   if (error) {
     return (
-      <div className="rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-        {error}
+      <div className="flex flex-col gap-3 rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 sm:flex-row sm:items-center sm:justify-between">
+        <span>{error}</span>
+        <button
+          type="button"
+          className="inline-flex h-9 items-center justify-center rounded-[8px] border border-rose-200 bg-white px-3 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
+          onClick={() => {
+            setPayload(null);
+            setError(null);
+            setSummaryReloadKey((key) => key + 1);
+          }}
+        >
+          重试加载
+        </button>
       </div>
     );
   }

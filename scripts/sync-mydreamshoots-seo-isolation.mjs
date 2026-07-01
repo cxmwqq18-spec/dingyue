@@ -16,7 +16,17 @@ const replacements = new Map([
   ["Each sample shows a clear use case, from headshots and fan photos to travel looks and private albums.", "Each sample shows a clear use case, from headshots and fan photos to lifestyle looks and private albums."],
   ["Place the customer in scenic outdoor, hiking, and travel-inspired scenes.", "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes."],
   ["MydreamShoots travel scene", "MydreamShoots lifestyle scene"],
-  ["destination-travel", "creator-lifestyle"]
+  ["destination-travel", "creator-lifestyle"],
+  ["MyDreamShoots packages for headshots, fan photos, creator portraits, beauty, travel, gala, and cinematic scenes.", "MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums."],
+  ["MyDreamShoots AI route portrait packages and private albums", "MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums"],
+  ["AI route portrait packages and private albums", "AI shoot packages, creator portraits, headshots, fan photos, and private albums"],
+  ["Credits, route portrait packages, private albums, and checkout stay inside your account.", "Credits, AI shoot packages, private albums, and checkout stay inside your account."],
+  ["Explore all route portrait packages", "Explore all photo packages"],
+  ["Private route portrait packages", "Private AI shoot packages"],
+  ["Choose a route portrait package first.", "Choose an AI shoot package first."],
+  ["Search route portrait packages, tools, pricing, and help guides.", "Search photo packages, AI tools, pricing, and help guides."],
+  ["MydreamShoots", "MyDreamShoots"],
+  ["Mydreamshoots", "MyDreamShoots"]
 ]);
 
 let changeCount = 0;

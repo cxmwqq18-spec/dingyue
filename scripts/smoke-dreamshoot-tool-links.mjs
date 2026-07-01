@@ -35,7 +35,7 @@ const expectedTools = [
 ];
 
 function fail(message, details = {}) {
-  console.error(`MydreamShoots tool-link smoke failed: ${message}`);
+  console.error(`MyDreamShoots tool-link smoke failed: ${message}`);
   if (Object.keys(details).length) console.error(JSON.stringify(details, null, 2));
   process.exit(1);
 }
@@ -100,7 +100,7 @@ assert(countMatches(templates, /href: toolHref\("/g) >= expectedTools.length, "t
 assert(new Set(expectedTools.map((item) => item[1])).size === expectedTools.length, "expected tool slugs must be unique");
 assert(!missingTemplateLinks.length, "template package is missing expected semantic tool links", { missingTemplateLinks });
 assert(!missingSchemaLinks.length, "section schema preset is missing expected semantic links", { missingSchemaLinks });
-assert(!missingAliases.length, "tool resolver is missing MydreamShoots semantic aliases", { missingAliases });
+assert(!missingAliases.length, "tool resolver is missing MyDreamShoots semantic aliases", { missingAliases });
 assert(renderer.includes("function toolActionHref"), "renderer must route tool links through toolActionHref");
 assert(!renderer.includes("?tool="), "renderer must not generate query-param tool URLs");
 assert(!renderer.includes("?pack="), "renderer must not generate query-param pack URLs");
@@ -128,15 +128,15 @@ function collectStaleRuntimeLinks(value, pathLabel = "$") {
 }
 collectStaleRuntimeLinks(platformState);
 assert(!staleRuntimeLinks.length, "runtime state must not expose old tool paths or old site slug", { staleRuntimeLinks: staleRuntimeLinks.slice(0, 20) });
-assert(templates.includes("MydreamShoots"), "template package must use the MydreamShoots brand casing");
+assert(templates.includes("MyDreamShoots"), "template package must use the MyDreamShoots brand casing");
 assert(!lowercaseBrandCopyHits(templates).length, "template package customer copy must not use lowercase mydreamshoots");
-assert(!schema.includes("DreamShootAI") && !schema.includes("DreamShoot") && !schema.includes("Mydreamshoots"), "section schema customer defaults must not expose old brand casing");
+assert(!schema.includes("DreamShootAI") && !schema.includes("Mydreamshoots") && !schema.includes("MydreamShoots"), "section schema customer defaults must not expose old brand casing");
 assert(storefrontRender.includes('"ai-image-studio"'), "tool resolver must support the static image studio alias");
 assert(storefrontRender.includes('"virtual-try-on"'), "tool resolver must support the static virtual try-on alias");
 assert(renderer.includes("focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"), "mega tool links must keep a visible keyboard focus style");
 assert(storefrontRender.includes("normalizeToolLookup"), "tool resolver must normalize incoming tool slugs");
 assert(storefrontRender.includes("image-studio") && storefrontRender.includes("image_generator"), "legacy image-studio and image_generator slugs must remain compatible");
-assert(storefrontRender.includes("/dreamshoot/i.test"), "MydreamShoots semantic aliases must stay scoped to MydreamShoots sites");
+assert(storefrontRender.includes("/dreamshoot/i.test"), "MyDreamShoots semantic aliases must stay scoped to MyDreamShoots sites");
 
 console.log(JSON.stringify({
   ok: true,

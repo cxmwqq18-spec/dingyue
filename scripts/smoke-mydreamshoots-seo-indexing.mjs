@@ -12,7 +12,7 @@ function readJson(relativePath) {
 }
 
 function fail(message, details = {}) {
-  console.error(`MydreamShoots SEO indexing smoke failed: ${message}`);
+  console.error(`MyDreamShoots SEO indexing smoke failed: ${message}`);
   if (Object.keys(details).length) console.error(JSON.stringify(details, null, 2));
   process.exit(1);
 }
@@ -52,7 +52,7 @@ const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
 const aidreamcapesSite = platformState.sites.find((site) => site.id === "site_aidreamcapes");
 
-assert(mydreamshootsSite, "MydreamShoots site must exist in platform state");
+assert(mydreamshootsSite, "MyDreamShoots site must exist in platform state");
 assert(aidreamcapesSite, "AIDreamCapes site must exist in platform state");
 
 const slugRows = mydreamshootsSite.pages.map((page) => ({
@@ -66,7 +66,7 @@ const duplicateSlugRows = Array.from(
   slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
 ).filter(([, rows]) => rows.length > 1);
 
-assert(!duplicateSlugRows.length, "MydreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
+assert(!duplicateSlugRows.length, "MyDreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
 assert(
   slugRows.some((row) => row.id === "site_dreamshoot_tool_image_static_alias" && row.slug === "/tools/headshot" && row.index === true),
   "canonical headshot tool page must own /tools/headshot and remain indexable"
@@ -81,10 +81,10 @@ walk(mydreamshootsSite, (key, value, location) => {
   if (key === "href" && typeof value === "string") hrefHits.push({ href: value, location: location.join(".") });
 });
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
-assert(!badLegacyHrefHits.length, "MydreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
+assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
 assert(
   hrefHits.some((hit) => hit.href === "/cookies"),
-  "MydreamShoots navigation/footer data must link directly to /cookies"
+  "MyDreamShoots navigation/footer data must link directly to /cookies"
 );
 
 assert(
@@ -93,7 +93,7 @@ assert(
     siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs"),
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
-assert(!templates.includes('href: "/cookie-policy"'), "MydreamShoots templates must not generate /cookie-policy links");
+assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
 
 for (const pathName of ["/cookie-policy", "/privacy-policy", "/terms-of-service"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap legacy duplicate exclusions must include old policy paths", { pathName });

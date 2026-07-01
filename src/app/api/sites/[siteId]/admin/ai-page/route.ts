@@ -163,6 +163,80 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
 
   const cacheKey = detail === "summary" ? `summary:${siteId}` : `${detail}:${siteId}:${jobTake}:${jobCursor ?? "first"}`;
   const payload = await perf.measure("cache", () => aiPageCache.get(cacheKey, async () => {
+    if (detail === "summary") {
+      const [apps, jobCounts, gateway, platformAiProviders] = await perf.measure("db-summary", () => runDbTasks([
+        () => prisma.siteAiApp.findMany({
+          where: { siteId },
+          select: {
+            id: true,
+            siteId: true,
+            enabled: true,
+            creditCost: true,
+            routeKey: true,
+            workflowConfig: true,
+            providerConfig: true,
+            aiApp: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+                description: true,
+                appType: true,
+                parameterSchema: true
+              }
+            }
+          },
+          orderBy: [{ enabled: "desc" }, { routeKey: "asc" }],
+          take: adminAiAppListTake
+        }),
+        () => (
+          prisma.generationJob.groupBy({ by: ["status"], where: { siteId }, _count: { _all: true }, orderBy: { status: "asc" } }) as unknown as Promise<JobCountRow[]>
+        ),
+        () => prisma.aiGatewayGroup.findFirst({
+          where: { siteId },
+          select: {
+            id: true,
+            siteId: true,
+            name: true,
+            status: true,
+            accountPoolMode: true,
+            rateLimitPerMinute: true,
+            monthlyQuota: true,
+            usedQuota: true
+          },
+          orderBy: [{ status: "asc" }, { name: "asc" }]
+        }),
+        () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+      ], siteAdminReadConcurrency));
+
+      const failedJobs = jobCounts
+        .filter((row) => row.status === "failed" || row.status === "refunded")
+        .reduce((sum, row) => sum + countGroupedJobs(row), 0);
+      const openJobs = jobCounts
+        .filter((row) => row.status === "running" || row.status === "queued")
+        .reduce((sum, row) => sum + countGroupedJobs(row), 0);
+      const completedJobs = jobCounts
+        .filter((row) => row.status === "succeeded")
+        .reduce((sum, row) => sum + countGroupedJobs(row), 0);
+      const jobCount = jobCounts.reduce((sum, row) => sum + countGroupedJobs(row), 0);
+      return {
+        ok: true,
+        apps: apps.map(toSiteAiApp),
+        toolCategories: [],
+        toolMenuItems: [],
+        jobs: [],
+        customers: [],
+        platformAiApps: [],
+        platformAiProviders: platformAiProviders.map(toPlatformAiProvider).map(publicAiProvider),
+        gateway,
+        pageInfo: { nextJobCursor: null },
+        jobCount,
+        failedJobs,
+        openJobs,
+        completedJobs
+      };
+    }
+
     const [apps, initialToolCategories, initialToolMenuItems, jobCounts, gateway, jobs, customers, platformAiApps, platformAiProviders] = await perf.measure("db", () => runDbTasks([
       () => prisma.siteAiApp.findMany({
         where: { siteId },

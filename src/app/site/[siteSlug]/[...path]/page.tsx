@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
@@ -10,8 +9,8 @@ import {
 } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import { canonicalAidreamcapesCollectionPath, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
-import { publicContentPageSlug, redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import type { PlatformState } from "@/lib/types";
 
@@ -19,10 +18,6 @@ const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-re
 
 function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
-}
-
-function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
-  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
 function stateWithSiteFirst(state: PlatformState, siteSlug: string): PlatformState | undefined {
@@ -101,12 +96,7 @@ export default async function SiteCatchAllPage({
 }) {
   const { siteSlug, path } = await params;
   const slug = `/${path.join("/")}`;
-  const headerStore = await headers();
-  const publicSlug = redirectPublicSitePathToCanonicalHost({
-    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
-    pathname: slug,
-    siteSlug
-  });
+  const publicSlug = publicSiteSlug(siteSlug);
   if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
   if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
   if (slug === "/how-it-works") redirect(`/site/${publicSlug}`);
@@ -140,8 +130,8 @@ export default async function SiteCatchAllPage({
     : await readPublicRuntimeStateBySlugWithFallback(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
-  if (collectionCategory && isAidreamcapesSite(publicSite)) {
-    const canonicalCollectionPath = canonicalAidreamcapesCollectionPath(collectionCategory);
+  if (collectionCategory) {
+    const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(publicSite, "collection", collectionCategory);
     if (canonicalCollectionPath !== `/collections/${collectionCategory}`) redirect(`/site/${publicSlug}${canonicalCollectionPath}`);
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
@@ -149,5 +139,5 @@ export default async function SiteCatchAllPage({
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     isDreamshootPartnerTemplateSite(publicSite);
   if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
-  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state });
+  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state, deferCustomerRuntime: true });
 }

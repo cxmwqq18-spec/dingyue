@@ -46,7 +46,7 @@ type ProductsPageClientProps = {
 
 function ProductsPageSkeleton() {
   return (
-    <div className="grid gap-5">
+    <div className="grid min-w-0 max-w-full gap-5 overflow-x-clip">
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }).map((_, index) => (
           <div
@@ -269,7 +269,7 @@ export function ProductsPageClient({
         </div>
       </ErpSection>
 
-      <div className="scroll-mt-24" id="pricing-center">
+      <div className="min-w-0 max-w-full scroll-mt-24" id="pricing-center">
         <ErpSection
           action={
             <ErpToolbarAction
@@ -310,7 +310,7 @@ export function ProductsPageClient({
         </ErpSection>
       </div>
 
-      <div className="scroll-mt-24" id="creative-packs">
+      <div className="min-w-0 max-w-full scroll-mt-24" id="creative-packs">
         <ErpSection
           action={
             <ErpToolbarAction

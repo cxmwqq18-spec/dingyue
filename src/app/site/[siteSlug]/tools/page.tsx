@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
@@ -33,15 +31,10 @@ export default async function SiteToolsPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
-  const headerStore = await headers();
-  const publicSlug = redirectPublicSitePathToCanonicalHost({
-    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
-    pathname: "/tools",
-    siteSlug
-  });
+  const publicSlug = publicSiteSlug(siteSlug);
   const query = searchParams ? await searchParams : {};
   const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, "/tools");
   const site = state?.sites[0];
   if (!state || !site) notFound();
-  return renderStorefrontPage({ site, slug: "/tools", query, routeMode: "path", state });
+  return renderStorefrontPage({ site, slug: "/tools", query, routeMode: "path", state, deferCustomerRuntime: true });
 }

@@ -43,28 +43,28 @@ function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryD
 
 const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/login": {
-    title: "Sign in to MydreamShoots - private AI photo workspace",
+    title: "Sign in to MyDreamShoots - private AI photo workspace",
     description:
-      "Sign in to MydreamShoots to manage private uploads, AI photo package requests, credits, checkout history, generated albums, and customer-only gallery downloads.",
-    keywords: "MydreamShoots login, AI photo account, private AI photo workspace, customer gallery sign in",
+      "Sign in to MyDreamShoots to manage private uploads, AI photo package requests, credits, checkout history, generated albums, and customer-only gallery downloads.",
+    keywords: "MyDreamShoots login, AI photo account, private AI photo workspace, customer gallery sign in",
     canonicalPath: "/login",
     index: false,
     follow: true
   },
   "/pricing": {
-    title: "MydreamShoots Pricing - AI photo credits, plans, and top-ups",
+    title: "MyDreamShoots Pricing - AI photo credits, plans, and top-ups",
     description:
-      "Compare MydreamShoots plans, monthly AI photo credits, one-time top-ups, private model access, package generation, secure checkout, and gallery delivery before you create.",
-    keywords: "MydreamShoots pricing, AI photo credits, AI portrait subscription, private photo package plans",
+      "Compare MyDreamShoots plans, monthly AI photo credits, one-time top-ups, private model access, package generation, secure checkout, and gallery delivery before you create.",
+    keywords: "MyDreamShoots pricing, AI photo credits, AI portrait subscription, private photo package plans",
     canonicalPath: "/pricing",
     index: true,
     follow: true
   },
   "/tools": {
-    title: "MydreamShoots AI Photo Tools",
+    title: "MyDreamShoots AI Photo Tools",
     description:
-      "Explore MydreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and album-ready results.",
-    keywords: "MydreamShoots tools, AI photo tools, AI headshot tool, background changer, image to video AI, virtual try-on",
+      "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and album-ready results.",
+    keywords: "MyDreamShoots tools, AI photo tools, AI headshot tool, background changer, image to video AI, virtual try-on",
     canonicalPath: "/tools",
     index: true,
     follow: true
@@ -73,19 +73,19 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
 
 export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/creators-circle": {
-    title: "MydreamShoots Creators Circle - affiliate and creator AI photo program",
+    title: "MyDreamShoots Creators Circle - affiliate and creator AI photo program",
     description:
-      "Join the MydreamShoots Creators Circle for AI photo package campaigns, creator-ready assets, private galleries, credit-based workflows, and partner collaboration opportunities.",
-    keywords: "MydreamShoots creators circle, AI photo creator program, creator AI photo campaign, AI portrait affiliate program",
+      "Join the MyDreamShoots Creators Circle for AI photo package campaigns, creator-ready assets, private galleries, credit-based workflows, and partner collaboration opportunities.",
+    keywords: "MyDreamShoots creators circle, AI photo creator program, creator AI photo campaign, AI portrait affiliate program",
     canonicalPath: "/creators-circle",
     index: true,
     follow: true
   },
   "/partner-registration": {
-    title: "MydreamShoots Partner Registration - apply for creator collaborations",
+    title: "MyDreamShoots Partner Registration - apply for creator collaborations",
     description:
-      "Apply to partner with MydreamShoots and share your audience, publishing channels, creator campaign fit, and AI photo package collaboration goals.",
-    keywords: "MydreamShoots partner registration, AI photo partner application, creator collaboration application, AI portrait campaign partner",
+      "Apply to partner with MyDreamShoots and share your audience, publishing channels, creator campaign fit, and AI photo package collaboration goals.",
+    keywords: "MyDreamShoots partner registration, AI photo partner application, creator collaboration application, AI portrait campaign partner",
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
@@ -176,11 +176,11 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
     label: "Beauty",
     title: "AI Beauty Photo Packages - polished portraits and soft glam albums",
-    description: "Create polished AI beauty photos with MydreamShoots: beauty portraits, skincare-ready profile images, soft glam looks, editorial crops, private albums, and optional video-ready outputs from everyday uploads.",
-    keywords: "AI Beauty Photo Maker, AI beauty photos, beauty portrait generator, glam AI photos, MydreamShoots beauty",
+    description: "Create polished AI beauty photos with MyDreamShoots: beauty portraits, skincare-ready profile images, soft glam looks, editorial crops, private albums, and optional video-ready outputs from everyday uploads.",
+    keywords: "AI Beauty Photo Maker, AI beauty photos, beauty portrait generator, glam AI photos, MyDreamShoots beauty",
     h2: "beauty",
     h3: ["AI beauty portrait styles", "Private beauty photo workflow", "Beauty photos and video-ready outputs"],
-    intro: "The Beauty collection is built for customers who want refined portraits without copying a studio template. MydreamShoots turns ordinary selfies into soft glam, skincare-clean, editorial, and profile-ready images while keeping source uploads, credits, and final albums inside one private account.",
+    intro: "The Beauty collection is built for customers who want refined portraits without copying a studio template. MyDreamShoots turns ordinary selfies into soft glam, skincare-clean, editorial, and profile-ready images while keeping source uploads, credits, and final albums inside one private account.",
     details: [
       "Start with clear face-forward source photos for clean lighting, graceful crops, natural retouching, hairstyle previews, profile portraits, and beauty campaign images.",
       "Each package can support several visual directions, including minimal studio light, glossy editorial beauty, warm lifestyle portraits, and social-ready square crops.",
@@ -194,8 +194,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   valentine: {
     label: "Valentine",
     title: "AI Valentine Photo Maker - romantic couple photos from private uploads",
-    description: "Create Valentine AI photos for couples, proposals, gifts, and romantic albums with MydreamShoots. Build private couple portraits, greeting-card looks, and seasonal images from everyday uploads.",
-    keywords: "AI Valentine Photo Maker, AI couple photos, Valentine photo generator, romantic AI portraits, MydreamShoots Valentine",
+    description: "Create Valentine AI photos for couples, proposals, gifts, and romantic albums with MyDreamShoots. Build private couple portraits, greeting-card looks, and seasonal images from everyday uploads.",
+    keywords: "AI Valentine Photo Maker, AI couple photos, Valentine photo generator, romantic AI portraits, MyDreamShoots Valentine",
     h2: "valentine",
     h3: ["AI Valentine couple portraits", "Romantic gift-ready albums", "Private seasonal photo delivery"],
     intro: "The Valentine collection focuses on romantic images customers can use as gifts, keepsakes, profile updates, and seasonal posts. The experience starts with source portraits, relationship mood, credit review, and private album delivery.",
@@ -212,14 +212,14 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   headshots: {
     label: "Headshots",
     title: "AI Headshot Maker - professional profile photos from selfies",
-    description: "Generate professional AI headshots for LinkedIn, resumes, founder profiles, teams, and creator pages with private MydreamShoots uploads and album delivery.",
-    keywords: "AI Headshot Maker, professional AI headshots, LinkedIn photo generator, business portrait AI, MydreamShoots headshots",
+    description: "Generate professional AI headshots for LinkedIn, resumes, founder profiles, teams, and creator pages with private MyDreamShoots uploads and album delivery.",
+    keywords: "AI Headshot Maker, professional AI headshots, LinkedIn photo generator, business portrait AI, MyDreamShoots headshots",
     h2: "headshots",
     h3: ["Professional AI headshots", "Business profile photo structure", "Private delivery for teams and founders"],
     intro: "The Headshots collection is for customers who need sharp, trustworthy portraits without booking a studio. It explains business-photo outcomes, source-photo quality, and how credits convert into private album options.",
     details: [
       "Headshot packages focus on clear business uses: LinkedIn, resumes, founder bios, consulting profiles, hiring pages, and team directories.",
-      "MydreamShoots keeps the workflow simple: upload varied selfies, select a professional look, generate, then choose the best portrait from a private gallery.",
+      "MyDreamShoots keeps the workflow simple: upload varied selfies, select a professional look, generate, then choose the best portrait from a private gallery.",
       "Individuals and teams can choose the finished business-photo outcome before spending credits."
     ],
     useCases: ["LinkedIn profile refresh", "Founder and operator bios", "Resume and job-search portraits", "Team page headshots"],
@@ -230,14 +230,14 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   sports: {
     label: "Sports",
     title: "AI Sports Fan Photo Maker - stadium portraits and fan posters",
-    description: "Create AI sports fan photos, stadium portraits, fan posters, match-day avatars, and social banners with MydreamShoots private uploads.",
+    description: "Create AI sports fan photos, stadium portraits, fan posters, match-day avatars, and social banners with MyDreamShoots private uploads.",
     keywords: "AI Sports Fan Photo Maker, World Cup fan photos, stadium portrait generator, fan poster AI, sports avatar maker",
     h2: "sports",
     h3: ["Sports fan photo categories", "Match-day avatar and poster outputs", "Private sports album workflow"],
     intro: "The Sports collection turns fan moments into stadium-style images, posters, avatars, and banners. It is built for match days, tournaments, and seasonal campaigns without relying on official logos or protected marks.",
     details: [
       "Sports pages need concrete outputs: fan posters, stadium portraits, square avatars, wide banners, friend-group scenes, and social story crops.",
-      "The MydreamShoots workflow keeps the result personal: customers upload their own images, choose fan energy, then receive a private album.",
+      "The MyDreamShoots workflow keeps the result personal: customers upload their own images, choose fan energy, then receive a private album.",
       "Sports packages pair match-day outcomes with the matching tool so customers can move from source photos to a private album."
     ],
     useCases: ["World Cup and football fan photos", "Match-day profile images", "Tournament posters", "Sports creator social content"],
@@ -248,8 +248,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   creative: {
     label: "Creative",
     title: "AI Creative Photo Maker - cinematic portraits and themed scenes",
-    description: "Build cinematic AI photos with MydreamShoots: cyberpunk portraits, noir characters, gala scenes, creator images, and dramatic private albums from everyday uploads.",
-    keywords: "AI Creative Photo Maker, cinematic AI portraits, cyberpunk portrait generator, themed AI photos, MydreamShoots creative",
+    description: "Build cinematic AI photos with MyDreamShoots: cyberpunk portraits, noir characters, gala scenes, creator images, and dramatic private albums from everyday uploads.",
+    keywords: "AI Creative Photo Maker, cinematic AI portraits, cyberpunk portrait generator, themed AI photos, MyDreamShoots creative",
     h2: "creative",
     h3: ["Cinematic AI photo themes", "Creator-ready image directions", "From selfie to private themed album"],
     intro: "The Creative collection is the place for customers who want a strong visual world. It groups cyberpunk, noir, gala, creator, fantasy, and editorial scenes into an outcome-driven product structure.",
@@ -266,8 +266,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   hairstyle: {
     label: "Hairstyle",
     title: "AI Hairstyle Photo Maker - preview polished hair and beauty looks",
-    description: "Preview AI hairstyle photos with MydreamShoots: color direction, length ideas, salon-ready portraits, beauty crops, and private package delivery from everyday uploads.",
-    keywords: "AI Hairstyle Photo Maker, hairstyle preview AI, hair color photo generator, beauty hair portraits, MydreamShoots hairstyle",
+    description: "Preview AI hairstyle photos with MyDreamShoots: color direction, length ideas, salon-ready portraits, beauty crops, and private package delivery from everyday uploads.",
+    keywords: "AI Hairstyle Photo Maker, hairstyle preview AI, hair color photo generator, beauty hair portraits, MyDreamShoots hairstyle",
     h2: "hairstyle",
     h3: ["Hairstyle preview structure", "Color and cut planning", "Private beauty album delivery"],
     intro: "The Hairstyle package focuses on hair direction before a full portrait set. Customers can compare length, color, styling, lighting, and beauty crops without mixing in unrelated package categories.",
@@ -284,8 +284,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   mafia: {
     label: "Mafia",
     title: "AI Mafia Photo Maker - cinematic noir character portraits",
-    description: "Create AI mafia photos with MydreamShoots: noir portraits, tailored character scenes, moody lighting, vintage interiors, and private cinematic albums from customer uploads.",
-    keywords: "AI Mafia Photo Maker, noir portrait generator, cinematic character photos, mafia AI portraits, MydreamShoots mafia",
+    description: "Create AI mafia photos with MyDreamShoots: noir portraits, tailored character scenes, moody lighting, vintage interiors, and private cinematic albums from customer uploads.",
+    keywords: "AI Mafia Photo Maker, noir portrait generator, cinematic character photos, mafia AI portraits, MyDreamShoots mafia",
     h2: "mafia",
     h3: ["Noir character structure", "Cinematic scene planning", "Private themed album delivery"],
     intro: "The Mafia package is a character-driven photo direction for customers who want polished noir styling, tailored wardrobe cues, dramatic interiors, and cinematic social images.",
@@ -302,8 +302,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   "black-party": {
     label: "Black Party",
     title: "AI Black Party Photo Maker - refined event and nightlife portraits",
-    description: "Create AI black party photos with MydreamShoots: refined event portraits, evening wardrobe concepts, cinematic interiors, social-ready crops, and private album delivery.",
-    keywords: "AI Black Party Photo Maker, event portrait AI, nightlife photo generator, black party portraits, MydreamShoots event photos",
+    description: "Create AI black party photos with MyDreamShoots: refined event portraits, evening wardrobe concepts, cinematic interiors, social-ready crops, and private album delivery.",
+    keywords: "AI Black Party Photo Maker, event portrait AI, nightlife photo generator, black party portraits, MyDreamShoots event photos",
     h2: "black party",
     h3: ["Event portrait structure", "Evening wardrobe and lighting", "Private nightlife album delivery"],
     intro: "The Black Party package gives evening-event imagery its own workflow. Customers can preview refined wardrobe, moody light, polished poses, and private album outputs without seeing unrelated categories.",
@@ -320,8 +320,8 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   cyberpunk: {
     label: "Cyberpunk",
     title: "AI Cyberpunk Photo Maker - neon city portraits from selfies",
-    description: "Generate AI cyberpunk portraits with MydreamShoots: neon city lighting, futuristic wardrobe, cinematic street scenes, and private album delivery.",
-    keywords: "AI Cyberpunk Photo Maker, cyberpunk portrait generator, neon AI photos, futuristic portrait AI, MydreamShoots cyberpunk",
+    description: "Generate AI cyberpunk portraits with MyDreamShoots: neon city lighting, futuristic wardrobe, cinematic street scenes, and private album delivery.",
+    keywords: "AI Cyberpunk Photo Maker, cyberpunk portrait generator, neon AI photos, futuristic portrait AI, MyDreamShoots cyberpunk",
     h2: "cyberpunk",
     h3: ["Neon portrait structure", "Futuristic scene direction", "Private cyberpunk album delivery"],
     intro: "The Cyberpunk package is for customers who want high-impact neon portraits, dramatic street scenes, and futuristic styling from private uploads.",
@@ -358,9 +358,9 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
 const toolDirectory: Record<string, SeoDirectorySeed> = {
   headshot: {
     label: "Headshot",
-    title: "AI Headshot Maker - Create professional profile photos with MydreamShoots",
-    description: "Use the MydreamShoots AI Headshot Maker to create realistic LinkedIn, resume, founder, and team portraits from private source photos.",
-    keywords: "AI Headshot Maker, professional headshot AI, LinkedIn headshot generator, MydreamShoots headshot",
+    title: "AI Headshot Maker - Create professional profile photos with MyDreamShoots",
+    description: "Use the MyDreamShoots AI Headshot Maker to create realistic LinkedIn, resume, founder, and team portraits from private source photos.",
+    keywords: "AI Headshot Maker, professional headshot AI, LinkedIn headshot generator, MyDreamShoots headshot",
     h2: "headshot",
     h3: ["Professional headshot input guide", "Business portrait outputs", "Private profile photo delivery"],
     intro: "Upload clear selfies or casual portraits and turn them into polished headshots for LinkedIn, resumes, founder pages, team bios, and creator profiles.",
@@ -372,9 +372,9 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   },
   "background-changer": {
     label: "Background Changer",
-    title: "AI Background Changer - replace photo backgrounds with MydreamShoots",
-    description: "Use the MydreamShoots AI Background Changer to replace distracting photo backgrounds with cleaner studio, lifestyle, creator, or brand-ready scenes.",
-    keywords: "AI Background Changer, replace photo background AI, background editor, MydreamShoots background changer",
+    title: "AI Background Changer - replace photo backgrounds with MyDreamShoots",
+    description: "Use the MyDreamShoots AI Background Changer to replace distracting photo backgrounds with cleaner studio, lifestyle, creator, or brand-ready scenes.",
+    keywords: "AI Background Changer, replace photo background AI, background editor, MyDreamShoots background changer",
     h2: "background changer",
     h3: ["Background changer input guide", "Clean background outputs", "Next steps for edited images"],
     intro: "Upload a clear subject photo and replace the setting behind it with a cleaner background for portraits, product shots, listings, and social images.",
@@ -386,9 +386,9 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   },
   "image-to-video": {
     label: "Image to Video",
-    title: "AI Image to Video - create short clips from still images with MydreamShoots",
-    description: "Turn a still image into a short AI video clip with MydreamShoots: add motion, camera movement, mood, and private video output for social or campaign use.",
-    keywords: "AI Image to Video, image to video AI, short video clip generator, photo animation AI, MydreamShoots video",
+    title: "AI Image to Video - create short clips from still images with MyDreamShoots",
+    description: "Turn a still image into a short AI video clip with MyDreamShoots: add motion, camera movement, mood, and private video output for social or campaign use.",
+    keywords: "AI Image to Video, image to video AI, short video clip generator, photo animation AI, MyDreamShoots video",
     h2: "image to video",
     h3: ["Image to video input guide", "Motion and short clip outputs", "Private video delivery"],
     intro: "Upload one strong still image and turn it into a short video output with motion for creator intros, product teasers, social clips, and campaign previews.",
@@ -401,12 +401,12 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
-    description: "Create World Cup fan photos, stadium portraits, match-day posters, avatars, and social banners with MydreamShoots private AI generation.",
+    description: "Create World Cup fan photos, stadium portraits, match-day posters, avatars, and social banners with MyDreamShoots private AI generation.",
     keywords: "AI World Cup Fan Photo Maker, World Cup fan photos, stadium portrait AI, match-day poster generator",
     h2: "world cup fan photos",
     h3: ["Stadium fan photo inputs", "Match-day poster outputs", "Private sports image delivery"],
     intro: "Upload fan portraits and create match-day images with stadium scenes, fan posters, avatars, banners, and friend-group concepts that feel personal without needing official marks.",
-    details: ["Use it for tournament campaigns, profile updates, and sports creator content.", "The tool can create square avatars, poster-like compositions, and wide social banners.", "Customers stay inside the MydreamShoots private upload and album flow."],
+    details: ["Use it for tournament campaigns, profile updates, and sports creator content.", "The tool can create square avatars, poster-like compositions, and wide social banners.", "Customers stay inside the MyDreamShoots private upload and album flow."],
     useCases: ["Football fan avatars", "Tournament posters", "Match-day social posts", "Friend fan-photo concepts"],
     workflow: ["Upload fan portraits.", "Choose stadium, poster, or avatar direction.", "Generate private sports images.", "Download social-ready crops."],
     ctaLabel: "Create Fan Photos",
@@ -414,9 +414,9 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   },
   "virtual-try-on": {
     label: "Virtual Try-On",
-    title: "AI Outfit Generator - virtual try-on photos with MydreamShoots",
-    description: "Create virtual try-on photos, outfit previews, hairstyle ideas, and fashion-ready portraits with MydreamShoots private AI tools.",
-    keywords: "AI Outfit Generator, virtual try-on AI, outfit photo maker, hairstyle preview AI, MydreamShoots fashion",
+    title: "AI Outfit Generator - virtual try-on photos with MyDreamShoots",
+    description: "Create virtual try-on photos, outfit previews, hairstyle ideas, and fashion-ready portraits with MyDreamShoots private AI tools.",
+    keywords: "AI Outfit Generator, virtual try-on AI, outfit photo maker, hairstyle preview AI, MyDreamShoots fashion",
     h2: "virtual try-on",
     h3: ["Outfit and hairstyle previews", "Fashion portrait structure", "Private try-on workflow"],
     intro: "The virtual try-on tool helps customers preview wardrobe, hairstyle, and fashion directions before committing to a larger photo package.",
@@ -485,20 +485,20 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
   },
   "golden-hour-route-stories": {
     label: "Golden Hour Route Stories",
-    title: "AI Golden Hour Shared Route Photos - romantic escape portraits",
-    description: "Create romantic AI golden hour shared route photos with Aidreamcapes: soft sunset scenes, travel-style portraits, announcement images, and private shared albums.",
-    keywords: "AI shared route photos, golden hour portrait generator, Aidreamcapes shared route portraits, romantic route portraits",
+    title: "AI Golden Hour Route Photos - warm travel portraits",
+    description: "Create AI golden hour route photos with Aidreamcapes: soft sunset paths, travel-style portraits, scenic overlook images, and private route albums.",
+    keywords: "AI route photos, golden hour portrait generator, Aidreamcapes route portraits, sunset travel portraits",
     h2: "golden hour route stories",
-    h3: ["Romantic sunset portraits", "Shared route source-photo planning", "Private shared album delivery"],
-    intro: "Golden Hour Route Stories focuses on warm, romantic scenes for partners who want dreamy portraits without coordinating a full location shoot.",
+    h3: ["Warm sunset portraits", "Route source-photo planning", "Private route album delivery"],
+    intro: "Golden Hour Route Stories focuses on warm scenic light for travelers who want dreamy route portraits without coordinating a full location shoot.",
     details: [
-      "Use this collection for engagement-style imagery, anniversary concepts, vacation shared route portraits, and gift-ready albums.",
-      "Individual portraits can work, but shared route references help preserve composition, height relationship, and natural interaction.",
+      "Use this collection for overlook paths, sunset streets, quiet terraces, vacation route portraits, and gallery-ready albums.",
+      "Individual portraits work best when paired with simple outfit notes and destination mood references.",
       "Outputs are delivered in a private gallery so customers can review, choose, and download at their own pace."
     ],
-    useCases: ["Anniversary images", "Engagement concepts", "Romantic travel portraits", "Private gift albums"],
-    workflow: ["Upload shared or individual source photos.", "Choose sunset, garden, coast, or city mood.", "Generate a private shared album.", "Download favorites for gifts or posts."],
-    ctaLabel: "Create Shared Route Photos",
+    useCases: ["Sunset route portraits", "Scenic overlook albums", "Travel profile refreshes", "Private route galleries"],
+    workflow: ["Upload clear source photos.", "Choose sunset, garden, coast, or city mood.", "Generate a private route album.", "Download favorites for profiles or albums."],
+    ctaLabel: "Create Route Photos",
     ctaHref: "/tools/golden-hour-route-story"
   },
   "celestial-profile-stories": {
@@ -636,6 +636,28 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
   return aidreamcapesCollectionAliases[slug] ?? slug;
 }
 
+const dreamshootCollectionAliases: Record<string, string> = {
+  "professional-headshots": "headshots"
+};
+
+const dreamshootToolAliases: Record<string, string> = {
+  "headshot-generator": "headshot"
+};
+
+export function canonicalDreamshootDirectorySlug(kind: SeoDirectoryKind, slug: string): string {
+  return kind === "collection" ? dreamshootCollectionAliases[slug] ?? slug : dreamshootToolAliases[slug] ?? slug;
+}
+
+export function canonicalSeoDirectorySlugForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
+  const slug = normalizeDirectorySlug(rawSlug);
+  return isAidreamcapesSite(site) ? canonicalAidreamcapesDirectorySlug(kind, slug) : canonicalDreamshootDirectorySlug(kind, slug);
+}
+
+export function canonicalSeoDirectoryPathForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
+  return `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
+}
+
 export function canonicalAidreamcapesCollectionPath(rawSlug: string): string {
   const normalized = normalizeDirectorySlug(rawSlug);
   const canonicalSlug = canonicalAidreamcapesDirectorySlug("collection", normalized);
@@ -699,19 +721,19 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
   },
   "golden-hour-route-story": {
     label: "Golden Hour Route Story",
-    title: "AI Golden Hour Route Story Tool - romantic sunset portraits",
-    description: "Create warm AI shared route portraits with Aidreamcapes using private uploads, golden-hour lighting, travel-inspired scenes, and private gallery delivery.",
+    title: "AI Golden Hour Route Story Tool - warm sunset travel portraits",
+    description: "Create warm AI route portraits with Aidreamcapes using private uploads, golden-hour lighting, travel-inspired scenes, and private gallery delivery.",
     keywords: "AI golden hour route story, shared route portrait AI, Aidreamcapes route story tool, sunset travel portrait generator",
     h2: "golden hour route story tool",
     h3: ["Shared route source-photo tips", "Romantic scene directions", "Private album delivery"],
-    intro: "Golden Hour Route Story creates romantic sunset, garden, city, and coastal scenes for partners who want polished keepsake portraits without a full location shoot.",
+    intro: "Golden Hour Route Story creates sunset, garden, city, and coastal scenes for travelers who want polished route portraits without a full location shoot.",
     details: [
       "Best inputs show both people clearly, ideally with a few angle and expression options.",
       "Customers can guide the mood toward seaside dusk, garden glow, city evening, or soft travel romance.",
       "Finished shared route images stay in the private account for review, download, and future generations."
     ],
-    useCases: ["Anniversary portraits", "Engagement-style concepts", "Gift-ready shared albums", "Soft romantic social posts"],
-    workflow: ["Upload shared route references.", "Choose a golden-hour scene.", "Generate private romantic options.", "Download the strongest keepsake portraits."],
+    useCases: ["Sunset travel portraits", "Scenic route concepts", "Private route albums", "Soft golden-hour profile posts"],
+    workflow: ["Upload route references.", "Choose a golden-hour scene.", "Generate private warm-light options.", "Download the strongest travel portraits."],
     ctaLabel: "Create Golden Hour Route Stories",
     ctaHref: "/app/create?tool_id=golden-hour-route-story"
   },
@@ -851,10 +873,9 @@ export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: s
 }
 
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
-  const slug = normalizeDirectorySlug(rawSlug);
+  const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
   if (isAidreamcapesSite(site)) {
-    const canonicalSlug = canonicalAidreamcapesDirectorySlug(kind, slug);
-    return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[canonicalSlug]) : Boolean(aidreamcapesToolDirectory[canonicalSlug]);
+    return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
   }
   return isExplicitSeoDirectoryContent(kind, slug);
 }
@@ -867,10 +888,36 @@ export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind
 }
 
 function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
-  const value = imagePath.trim();
+  let value = imagePath.trim();
   if (!value) return "";
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    try {
+      const url = new URL(value);
+      if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return value;
+      value = `${url.pathname}${url.search}`;
+    } catch {
+      return value;
+    }
+  }
   const domain = site.primaryDomain?.trim();
+  if (!domain || domain.includes("localhost")) return value;
+  const base = domain.startsWith("http://") || domain.startsWith("https://") ? domain.replace(/\/$/, "") : `https://${domain}`;
+  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+function absoluteRouteSeoImageUrl(options: { primaryDomain?: string; ogImage?: string }): string {
+  let value = (options.ogImage ?? "").trim();
+  if (!value) return "";
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    try {
+      const url = new URL(value);
+      if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return value;
+      value = `${url.pathname}${url.search}`;
+    } catch {
+      return value;
+    }
+  }
+  const domain = options.primaryDomain?.trim();
   if (!domain || domain.includes("localhost")) return value;
   const base = domain.startsWith("http://") || domain.startsWith("https://") ? domain.replace(/\/$/, "") : `https://${domain}`;
   return `${base}${value.startsWith("/") ? value : `/${value}`}`;
@@ -1044,6 +1091,13 @@ function dreamshootFallbackMetadataCanonical(siteSlug: string, primaryDomain: st
   return publicSiteUrlFromParts({ slug: siteSlug, primaryDomain: primaryDomain ?? "" }, canonicalPath);
 }
 
+function fallbackRouteSiteName(siteSlug: string, options: { primaryDomain?: string; siteName?: string }): string {
+  const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
+  if (siteIdentity.includes("aidreamcapes")) return "Aidreamcapes";
+  if (siteIdentity.includes("mydreamshoots") || siteIdentity.includes("dreamshoot")) return "MyDreamShoots";
+  return options.siteName?.trim() || "MyDreamShoots";
+}
+
 export function metadataForDreamshootFallbackRoute(
   siteSlug: string,
   path: string,
@@ -1064,7 +1118,8 @@ export function metadataForDreamshootFallbackRoute(
   };
   const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
   const keywords = seed.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
-  const ogImage = options.ogImage?.trim();
+  const ogImage = absoluteRouteSeoImageUrl(options);
+  const siteName = fallbackRouteSiteName(siteSlug, options);
   return {
     title: seed.title,
     description: seed.description,
@@ -1078,7 +1133,7 @@ export function metadataForDreamshootFallbackRoute(
       title: seed.title,
       description: seed.description,
       url: canonical,
-      siteName: options.siteName?.trim() || "MyDreamShoots",
+      siteName,
       ...(ogImage ? { images: [{ url: ogImage }] } : {})
     },
     twitter: {
@@ -1100,16 +1155,16 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const collectionSource = aidreamcapes ? aidreamcapesCollectionDirectory : collectionDirectory;
   const toolSource = aidreamcapes ? aidreamcapesToolDirectory : toolDirectory;
   const brandName = aidreamcapes ? "Aidreamcapes" : "MyDreamShoots";
-  const canonicalSlug = aidreamcapes ? canonicalAidreamcapesDirectorySlug(kind, slug) : slug;
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
   const explicit = kind === "collection" ? Boolean(collectionSource[canonicalSlug]) : Boolean(toolSource[canonicalSlug]);
   const source = kind === "collection" ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName) : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
   const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
   return {
     ...source,
-    slug,
+    slug: canonicalSlug,
     explicit,
     canonicalPath,
-    ctaHref: kind === "collection" ? `/app/create?tool_id=${slug}` : source.ctaHref
+    ctaHref: kind === "collection" ? `/app/create?tool_id=${canonicalSlug}` : source.ctaHref
   };
 }
 
@@ -1119,6 +1174,7 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
   const base = site.primaryDomain && !site.primaryDomain.includes("localhost") ? `https://${site.primaryDomain}` : "";
   const canonical = base ? `${base}${canonicalPath}` : canonicalPath;
   const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
+  const siteName = fallbackRouteSiteName(site.slug, { primaryDomain: site.primaryDomain, siteName: site.branding.logoText || site.name });
   return {
     title: item.title,
     description: item.description,
@@ -1128,13 +1184,13 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
       index: item.explicit,
       follow: true
     },
-    openGraph: {
-      title: item.title,
-      description: item.description,
-      url: canonical,
-      siteName: site.branding.logoText || site.name,
-      ...(ogImage ? { images: [ogImage] } : {})
-    },
+	    openGraph: {
+	      title: item.title,
+	      description: item.description,
+	      url: canonical,
+	      siteName,
+	      ...(ogImage ? { images: [ogImage] } : {})
+	    },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
       title: item.title,

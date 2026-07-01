@@ -26,6 +26,46 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   "travel-profile-stories": "solo-traveler-profiles",
   "lagoon-route-studys": "lagoon-route-studies"
 };
+const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
+  "professional-headshots": "headshots"
+};
+const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
+  "ai-image-studio": "",
+  "headshot-generator": "headshot",
+  "image-studio": "",
+  "travel-portraits": "nature-adventure"
+};
+const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
+  "background-changer": "route-portrait-engine",
+  "background-remover": "route-portrait-engine",
+  "couple-escape-album": "shared-route-album",
+  "dreamscape-generator": "route-portrait-engine",
+  headshot: "route-portrait-engine",
+  "image-to-video": "route-portrait-engine",
+  "portrait-generator": "route-portrait-engine",
+  "portrait-maker": "route-portrait-engine",
+  "product-reverie": "route-moodboard",
+  "soft-glam": "cafe-street-story"
+};
+const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
+  "/about": "/about-us",
+  "/contact": "/contact-us",
+  "/content-policy": "/content",
+  "/cookie-policy": "/cookies",
+  "/delivery-policy": "/shipping",
+  "/policies/content": "/content",
+  "/policies/cookies": "/cookies",
+  "/policies/privacy": "/privacy",
+  "/policies/refund": "/refunds",
+  "/policies/refunds": "/refunds",
+  "/policies/shipping": "/shipping",
+  "/policies/terms": "/terms",
+  "/privacy-policy": "/privacy",
+  "/refund-policy": "/refunds",
+  "/shipping-policy": "/shipping",
+  "/terms-of-service": "/terms",
+  "/tool": "/tools"
+};
 
 const SEO_HEAD_TAG_RE =
   /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/gi;
@@ -72,7 +112,73 @@ function aidreamcapesCollectionRedirect(request: NextRequest): NextResponse | un
   return NextResponse.redirect(nextUrl, 308);
 }
 
+function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefined {
+  const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+
+  const pathMatch = pathname.match(/^\/site\/(aidreamcapes|mydreamshoots)\/(collections|tools)\/([^/]+)(\/)?$/i);
+  const hostMatch = TARGET_HOST_RE.test(host)
+    ? pathname.match(/^\/(collections|tools)\/([^/]+)(\/)?$/i)
+    : undefined;
+  if (!pathMatch && !hostMatch) return undefined;
+
+  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (host.toLowerCase().includes("aidreamcapes") ? "aidreamcapes" : "mydreamshoots");
+  const kind = (pathMatch?.[2] ?? hostMatch?.[1] ?? "").toLowerCase();
+  const currentSlug = normalizePathSlug(pathMatch?.[3] ?? hostMatch?.[2] ?? "");
+  const redirectMap =
+    siteSlug === "aidreamcapes" && kind === "collections"
+      ? AIDREAMCAPES_COLLECTION_REDIRECTS
+      : siteSlug === "mydreamshoots" && kind === "collections"
+        ? MYDREAMSHOOTS_COLLECTION_REDIRECTS
+        : siteSlug === "mydreamshoots" && kind === "tools"
+          ? MYDREAMSHOOTS_TOOL_REDIRECTS
+          : siteSlug === "aidreamcapes" && kind === "tools"
+            ? AIDREAMCAPES_TOOL_REDIRECTS
+          : undefined;
+  const canonicalSlug = redirectMap?.[currentSlug];
+  if (canonicalSlug === undefined) return undefined;
+
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.pathname = canonicalSlug
+    ? pathMatch
+      ? `/site/${siteSlug}/${kind}/${canonicalSlug}`
+      : `/${kind}/${canonicalSlug}`
+    : pathMatch
+      ? `/site/${siteSlug}/${kind}`
+      : `/${kind}`;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
+function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefined {
+  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const pathMatch = pathname.match(/^\/site\/(aidreamcapes|mydreamshoots)(\/.*)$/i);
+  const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
+  const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
+  const targetPath = LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
+  if (!targetPath) return undefined;
+
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.pathname = pathMatch ? `/site/${pathMatch[1].toLowerCase()}${targetPath}` : targetPath;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
+function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse | undefined {
+  const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (!TARGET_HOST_RE.test(host)) return undefined;
+  const match = pathname.match(/^\/site\/(aidreamcapes|mydreamshoots)(\/.*)?$/i);
+  if (!match) return undefined;
+  const siteSlug = match[1]?.toLowerCase() ?? "";
+  if (!host.toLowerCase().includes(siteSlug)) return undefined;
+  const scopedPath = match[2] || "/";
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.pathname = scopedPath === "/" ? "/" : scopedPath;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
 function shouldReorderStorefrontHead(request: NextRequest): boolean {
+  if (process.env.STOREFRONT_EDGE_HTML_REWRITE !== "1") return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
@@ -190,7 +296,7 @@ export async function middleware(request: NextRequest) {
   const iconResponse = await storefrontIconResponse(request);
   if (iconResponse) return iconResponse;
 
-  const redirectResponse = aidreamcapesCollectionRedirect(request);
+  const redirectResponse = canonicalPublicHostSitePathRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return redirectResponse;
   if (!shouldReorderStorefrontHead(request)) return nextWithPathname(request);
 

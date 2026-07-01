@@ -5,7 +5,7 @@ import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
 import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
-import { CustomerBootstrapPrefetch } from "@/components/storefront/customer-bootstrap-client";
+import { CustomerBootstrapPrefetch, CustomerHeaderBootstrapControls } from "@/components/storefront/customer-bootstrap-client";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
@@ -79,6 +79,13 @@ type StorefrontRouteMode = "host" | "path";
 type RoutedSite = Site & {
   __storefrontBasePath?: string;
 };
+type SearchPageEntry = Pick<ThemePageJson, "pageType"> & {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+};
 
 export function ThemeRenderer({
   site,
@@ -117,47 +124,27 @@ export function ThemeRenderer({
   };
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
+  const displayPage = mode === "published" ? storefrontBrandPageCopy(displaySite, page) : page;
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
-  const entries = visibleSectionEntriesForRoute(getSectionEntries(page), normalizedPath, displaySite);
+  const entries = visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
   const routedSite: RoutedSite = {
     ...displaySite,
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
-  const footerBlocks = settings.globalSections?.footer?.blocks?.filter((block) => block.type === "menu_link") ?? [];
-  const footerPrefetchPaths = footerBlocks
-    .map((block) => blockValue(block, "href", ""))
-    .filter((href) => href && !href.startsWith("#") && !href.startsWith("mailto:") && !href.startsWith("http"))
-    .map((href) => hrefFor(routedSite, shortPolicyPath(href)));
-  if (
-    /dreamshoot/i.test(`${displaySite.slug} ${displaySite.name} ${displaySite.branding.logoText}`) &&
-    !footerPrefetchPaths.some((href) => href.endsWith("/creators-circle"))
-  ) {
-    footerPrefetchPaths.push(hrefFor(routedSite, "/creators-circle"));
-  }
   const customerPrefetchPaths = runtime?.customer && mode === "published"
     ? [
         hrefFor(routedSite, "/account"),
         hrefFor(routedSite, "/app"),
-        hrefFor(routedSite, "/pricing"),
-        hrefFor(routedSite, "/tools")
-      ]
-    : [];
-  const publicPrefetchPaths = mode === "published"
-    ? [
-        ...footerPrefetchPaths,
-        hrefFor(routedSite, "/collections"),
-        hrefFor(routedSite, "/tools"),
-        hrefFor(routedSite, isAidreamcapesSite(routedSite) ? "/tools/route-portrait-engine" : "/tools/background-changer"),
         hrefFor(routedSite, "/pricing")
       ]
     : [];
-  const storefrontPrefetchPaths = Array.from(new Set([...publicPrefetchPaths, ...customerPrefetchPaths]));
+  const storefrontPrefetchPaths = Array.from(new Set(customerPrefetchPaths)).slice(0, 3);
   const renderContext = {
     pagePath: normalizedPath,
     query,
-    page,
-    pages: displaySite.pages
+    page: displayPage,
+    pages: pageNeedsSearchEntries(displayPage) ? searchPageEntriesForSite(displaySite) : []
   };
   return (
     <div
@@ -241,7 +228,7 @@ type RenderContext = {
   pagePath: string;
   query: Record<string, string | string[] | undefined>;
   page: ThemePageJson;
-  pages: Site["pages"];
+  pages: SearchPageEntry[];
 };
 
 type SiteProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
@@ -541,12 +528,12 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const readableBrandTitle = isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : title;
   const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : isAidreamcapes ? "ልiጋreamርapes" : readableBrandTitle;
   const brandDescription = isDreamShoot
-    ? "MyDreamShoots home, AI route portrait packages and private albums"
+    ? "MyDreamShoots home, AI shoot packages, creator portraits, headshots, fan photos, and private albums"
     : isAidreamcapes
       ? "Aidreamcapes home, AI travel portraits and private galleries"
       : `${readableBrandTitle} home`;
   const logoAlt = isDreamShoot
-    ? "MyDreamShoots heart camera logo for AI route portrait packages and private albums"
+    ? "MyDreamShoots heart camera logo for AI shoot packages, creator portraits, headshots, fan photos, and private albums"
     : isAidreamcapes
       ? header ? setting(header, "logoAlt", "Aidreamcapes logo for AI travel portraits and private destination galleries") : "Aidreamcapes logo for AI travel portraits and private destination galleries"
       : header
@@ -554,6 +541,11 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
         : `${readableBrandTitle} logo`;
   const brandMark = brandInitials(readableBrandTitle);
   const customer = runtime?.customer;
+  const shouldClientBootstrapCustomer = runtime?.clientBootstrapCustomer === true && !customer;
+  const signedInClassName = dark ? "hidden shrink-0 items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex";
+  const signOutClassName = dark ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]";
+  const mobileSignedInClassName = dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]";
+  const mobileSignOutClassName = dark ? "inline-flex w-full justify-center rounded-[14px] border border-white/14 px-4 py-3 text-sm font-semibold text-white" : "inline-flex w-full justify-center rounded-[14px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white";
   return (
     <header
       className={
@@ -606,8 +598,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               ) : logoImageUrl ? (
                 <span
                   className={
-		                    isDreamShoot
-		                      ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border border-white/10 bg-[#0b0d16] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)] before:absolute before:inset-[-1px] before:-z-10 before:rounded-[16px] before:bg-[linear-gradient(135deg,#7A4CFF_0%,#EC4BDD_48%,#16DCF0_100%)]"
+			                    isDreamShoot
+			                      ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border border-white/10 bg-[#0b0d16] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)] before:absolute before:inset-[-1px] before:-z-10 before:rounded-[16px] before:bg-[linear-gradient(135deg,#7A4CFF_0%,#EC4BDD_48%,#16DCF0_100%)]"
 		                      : isAidreamcapes && dark
 		                        ? "relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-11 sm:w-11"
 		                        : lightCommerce || isAidreamcapes
@@ -641,7 +633,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	              )}
               <span className="min-w-0 shrink" title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>
                 <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot ? "block max-w-[min(42vw,17rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.05rem,2vw,1.66rem)] font-semibold leading-none text-white" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot || isAidreamcapes ? "true" : undefined} title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "ልiጋreamርapes" : undefined}>{visualBrandTitle}</span>
-                {isDreamShoot ? <span className="sr-only">MyDreamShoots AI route portrait packages and private albums</span> : null}
+                {isDreamShoot ? <span className="sr-only">MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums</span> : null}
 	                {isAidreamcapes ? <span className="sr-only">Aidreamcapes AI travel portraits and private galleries</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
@@ -699,7 +691,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
         </nav>
         <div className={darkHeaderControls ? "flex items-center justify-end gap-1.5 rounded-full border border-white/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0" : "flex items-center justify-end gap-1.5 rounded-full border border-black/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0"}>
           {customer ? (
-            <div className={dark ? "hidden shrink-0 items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex"}>
+            <div className={signedInClassName}>
               <HeaderLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
                 <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
                   <UserRound className="h-4 w-4" strokeWidth={1.8} />
@@ -713,13 +705,21 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               </HeaderLink>
               <form action={hrefFor(site, "/logout")} method="post">
                 <input name="siteId" type="hidden" value={site.id} />
-                <button className={dark ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]"} type="submit">
+                <button className={signOutClassName} type="submit">
                   Sign out
                 </button>
               </form>
             </div>
-          ) : (
-            <>
+          ) : shouldClientBootstrapCustomer ? (
+            <CustomerHeaderBootstrapControls
+              accountHref={hrefFor(site, "/account")}
+              dark={dark}
+              logoutHref={hrefFor(site, "/logout")}
+              signedInClassName={signedInClassName}
+              signOutClassName={signOutClassName}
+              siteId={site.id}
+              siteSlug={publicSiteSlug(site.slug)}
+            >
               <HeaderLink
                 aria-label={ctaLabel}
                 className={darkHeaderControls ? "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/14 bg-transparent text-white transition hover:bg-white/[0.08] active:scale-[0.98] lg:hidden" : "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/10 bg-transparent text-[#171514] transition hover:bg-black/[0.04] active:scale-[0.98] lg:hidden"}
@@ -742,6 +742,34 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                 }
                 href={hrefFor(site, ctaHref)}
 	                style={(isDreamShoot || isAidreamcapes) && darkHeaderControls ? undefined : darkHeaderControls || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
+              >
+              {ctaLabel}
+              </HeaderLink>
+            </CustomerHeaderBootstrapControls>
+          ) : (
+            <>
+              <HeaderLink
+                aria-label={ctaLabel}
+                className={darkHeaderControls ? "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/14 bg-transparent text-white transition hover:bg-white/[0.08] active:scale-[0.98] lg:hidden" : "inline-grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/10 bg-transparent text-[#171514] transition hover:bg-black/[0.04] active:scale-[0.98] lg:hidden"}
+                href={hrefFor(site, ctaHref)}
+                title={ctaLabel}
+              >
+                <UserRound className="h-5 w-5" strokeWidth={1.9} />
+              </HeaderLink>
+              <HeaderLink
+                className={
+                  darkHeaderControls
+                    ? isDreamShoot
+                      ? "hidden rounded-[18px] border border-white/80 bg-white px-5 py-2.5 text-sm font-semibold text-[#171514] shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white hover:bg-white/90 active:scale-[0.98] lg:inline-flex"
+                      : isAidreamcapes
+                        ? "hidden rounded-full border border-transparent bg-[linear-gradient(90deg,#6D3DFF_0%,#D85AEF_48%,#FF7A59_100%)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_18px_52px_-28px_rgba(139,92,246,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
+                        : "hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] lg:inline-flex"
+                    : lightCommerce
+                      ? "hidden rounded-[10px] bg-[#171514] px-6 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] lg:inline-flex"
+                      : "hidden rounded-full px-4 py-2 text-sm font-medium transition active:scale-[0.98] lg:inline-flex"
+                }
+                href={hrefFor(site, ctaHref)}
+                style={(isDreamShoot || isAidreamcapes) && darkHeaderControls ? undefined : darkHeaderControls || lightCommerce ? undefined : { background: "var(--site-primary-button)", color: "var(--site-primary-button-text)" }}
               >
                 {ctaLabel}
               </HeaderLink>
@@ -818,7 +846,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                   })}
                 </div>
                 {customer ? (
-                  <div className={dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]"}>
+                  <div className={mobileSignedInClassName}>
                     <p className="truncate text-sm font-semibold">{customer.name}</p>
                     <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
                     <div className="mt-3 grid gap-2">
@@ -828,11 +856,34 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     </div>
                     <form action={hrefFor(site, "/logout")} className="mt-3" method="post">
                       <input name="siteId" type="hidden" value={site.id} />
-                      <button className={dark ? "inline-flex w-full justify-center rounded-[14px] border border-white/14 px-4 py-3 text-sm font-semibold text-white" : "inline-flex w-full justify-center rounded-[14px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white"} type="submit">
+                      <button className={mobileSignOutClassName} type="submit">
                         Sign out
                       </button>
                     </form>
                   </div>
+                ) : shouldClientBootstrapCustomer ? (
+                  <CustomerHeaderBootstrapControls
+                    accountHref={hrefFor(site, "/account")}
+                    dark={dark}
+                    logoutHref={hrefFor(site, "/logout")}
+                    signOutClassName={mobileSignOutClassName}
+                    signedInClassName={mobileSignedInClassName}
+                    siteId={site.id}
+                    siteSlug={publicSiteSlug(site.slug)}
+                    variant="mobile"
+                  >
+                    <HeaderLink
+                      className={
+                        dark
+                          ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-white px-4 py-3 text-sm font-semibold text-[#101114]"
+                          : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white"
+                      }
+                      href={hrefFor(site, ctaHref)}
+                    >
+                      {ctaLabel}
+                      <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                    </HeaderLink>
+                  </CustomerHeaderBootstrapControls>
                 ) : (
                   <HeaderLink
                     className={
@@ -1060,7 +1111,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
               <div>
                 <h2 className="text-[1.85rem] font-semibold leading-none [font-family:var(--site-title-font)]">
                   <span aria-hidden={isDreamShootFooter ? "true" : undefined}>{visualFooterTitle}</span>
-                  {isDreamShootFooter ? <span className="sr-only">MyDreamShoots AI route portrait packages and private albums</span> : null}
+                  {isDreamShootFooter ? <span className="sr-only">MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums</span> : null}
                 </h2>
                 <p className={dark ? "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-white/44" : "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8f7d6d]"}>
                   {tagline}
@@ -1332,11 +1383,11 @@ function preferAidreamcapesPhotoAsset(src: string): string {
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/storybook-headshots.")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260701img";
   }
-  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260701img";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/honeymoon-itinerary-scenes.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/lagoon-route-studies-cover.webp?v=20260701img";
   }
-  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/coastal-light-sets.")) {
-    return "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260701img";
+  if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/golden-hour-couples.")) {
+    return "/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories-cover.webp?v=20260701img";
   }
   if (cleanSrc.startsWith("/assets/aidreamcapes/")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260701img";
@@ -1781,7 +1832,7 @@ function dreamshootDefaultToolTitle(slug: string): string {
 
 function dreamshootDefaultToolCategory(slug: string): string {
   if (slug.includes("video") || slug.includes("clip")) return "Video AI";
-  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "Route Portrait Edit";
+  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "Photo Package Edit";
   return "Photo AI";
 }
 
@@ -1956,8 +2007,8 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description
     description: needsRewrite
       ? `${title} helps you prepare a stronger ${category.toLowerCase()} result before spending credits on a private MyDreamShoots gallery.`
       : fallbackDescription,
-    tags: category === "Video AI" ? ["Motion concept", "Private output"] : category === "Route Portrait Edit" ? ["Source cleanup", "Credit planning"] : ["Photo package", "Private gallery"],
-    action: category === "Video AI" ? "Preview motion" : category === "Route Portrait Edit" ? "Prepare photo" : "Start this set"
+    tags: category === "Video AI" ? ["Motion concept", "Private output"] : category === "Photo Package Edit" ? ["Source cleanup", "Credit planning"] : ["Photo package", "Private gallery"],
+    action: category === "Video AI" ? "Preview motion" : category === "Photo Package Edit" ? "Prepare photo" : "Start this set"
   };
 }
 
@@ -2183,6 +2234,14 @@ function slugify(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+function pageSummaryText(page: Site["pages"][number]): string {
+  return (
+    Object.values(page.publishedJson.sections)
+      .map((section) => setting(section, "subtitle") || setting(section, "body") || setting(section, "text"))
+      .find(Boolean) || `${page.title} page`
+  );
+}
+
 function pageHeroImage(site: Site, page: Site["pages"][number], fallback: string): string {
   const image =
     Object.values(page.publishedJson.sections)
@@ -2191,12 +2250,33 @@ function pageHeroImage(site: Site, page: Site["pages"][number], fallback: string
   return mediaAssetUrl(site, image);
 }
 
+function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
+  return site.pages
+    .filter((page) => ["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/"))
+    .slice(0, 16)
+    .map((page, index) => ({
+      id: page.id,
+      slug: page.slug,
+      title: page.title,
+      pageType: page.publishedJson.pageType,
+      description: pageSummaryText(page),
+      imageUrl: pageHeroImage(site, page, fallbackImageForSeed(`${site.slug}-${slugify(page.slug)}-${index}`))
+    }));
+}
+
+function pageNeedsSearchEntries(page: ThemePageJson): boolean {
+  return page.sectionsOrder.some((sectionId) => {
+    const type = page.sections[sectionId]?.type;
+    return type === "search" || type === "search_results";
+  });
+}
+
 function siteSearchCards(
   site: Site,
   products: SiteProduct[],
   siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>,
   creativePacks: CreativePack[],
-  pages: Site["pages"]
+  pages: SearchPageEntry[]
 ): SearchResultCard[] {
   const productCards = activeProducts(products).map((product, index) => {
     const price = productPrice(product);
@@ -2242,16 +2322,12 @@ function siteSearchCards(
     }));
 
   const contentPages = pages
-    .filter((page) => ["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/"))
-    .map((page, index) => ({
+    .map((page) => ({
       id: page.id,
       kind: "page" as const,
       title: page.title,
-      description:
-        Object.values(page.publishedJson.sections)
-          .map((section) => setting(section, "subtitle") || setting(section, "body") || setting(section, "text"))
-          .find(Boolean) || `${page.title} page`,
-      imageUrl: pageHeroImage(site, page, fallbackImageForSeed(`${site.slug}-${slugify(page.slug)}-${index}`)),
+      description: page.description,
+      imageUrl: page.imageUrl,
       href: page.slug,
       meta: page.pageType,
       keywords: [page.title, page.slug, page.pageType]
@@ -2321,37 +2397,37 @@ const fallbackHeroImages = [
 ];
 
 const aidreamcapesFallbackHeroImages = [
-  "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png",
-  "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png",
-  "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png"
+  "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260630webp",
+  "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260630webp",
+  "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp"
 ];
 
 const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; category: string; description: string; meta: string; credits: string; imageUrl: string; href: string }> = [
-  { id: "aidream_fallback_destination", title: "Route Portrait Albums", category: "Route", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.png", href: "/collections/route-portrait-albums" },
-  { id: "aidream_fallback_coastal", title: "Coastal Light Sets", category: "Coastal", description: "Sea-view, island, resort, and cliffside portraits with warm travel light.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/coastal-getaways" },
-  { id: "aidream_fallback_city", title: "Old Quarter Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/old-city-walks" },
-  { id: "aidream_fallback_sunset", title: "Scenic Outlooks", category: "Outlook", description: "Golden-hour terraces, ridge paths, sea cliffs, and panoramic private albums.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png", href: "/collections/scenic-overlooks" },
-  { id: "aidream_fallback_profile", title: "Solo Traveler Profiles", category: "Profile", description: "Warm travel portraits for creators, solo trips, writers, and personal journey pages.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/solo-traveler-profiles" },
-  { id: "aidream_fallback_editorial", title: "Editorial Getaways", category: "Editorial", description: "Magazine-style travel portraits with fashion-led settings and cinematic crops.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/editorial-getaways" },
-  { id: "aidream_fallback_cafe", title: "Cafe & Street Stories", category: "Street", description: "Cafe portraits, balcony mornings, crosswalk moments, and quiet city details for travel journals.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.png", href: "/collections/cafe-street-stories" },
-  { id: "aidream_fallback_travel", title: "Roadside Escape Frames", category: "Route", description: "Open roads, coast roads, motel glow, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.png", href: "/collections/road-trip-frames" },
-  { id: "aidream_fallback_itinerary", title: "Route Moodboards", category: "Moodboard", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.png", href: "/collections/itinerary-moodboards" },
-  { id: "aidream_fallback_postcard", title: "Postcard Story Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/postcard-social-sets" },
-  { id: "aidream_fallback_lagoon", title: "Lagoon Route Studies", category: "Coastal", description: "Clear-water coves, boat decks, pale resort blues, and easy seaside portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/lagoon-route-studies" },
-  { id: "aidream_fallback_villa", title: "Private Villa Stays", category: "Resort", description: "Courtyard villas, pool gardens, sunlit rooms, and quiet luxury travel portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/island-resort-scenes-v2.png", href: "/collections/private-villa-stays" },
-  { id: "aidream_fallback_rooftop", title: "Rooftop City Nights", category: "City", description: "Blue-hour rooftop scenes, terrace dinners, skyline portraits, and city-break crops.", meta: "22 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/rooftop-city-nights" },
-  { id: "aidream_fallback_market", title: "Market Morning Walks", category: "City", description: "Flower markets, local stalls, linen outfits, and morning portraits for city travel albums.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.png", href: "/collections/market-morning-walks" },
-  { id: "aidream_fallback_rain", title: "Rainy City Breaks", category: "City", description: "Umbrella walks, wet-street reflections, museum days, and moody hotel awnings.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.png", href: "/collections/rainy-city-breaks" },
-  { id: "aidream_fallback_desert", title: "Desert Road Stories", category: "Route", description: "Open roads, sunset dust, vintage motel color, and warm route portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.png", href: "/collections/desert-road-stories" },
-  { id: "aidream_fallback_lake", title: "Lake House Weekends", category: "Open Air", description: "Dock portraits, canoe moments, pine roads, and calm weekend escape scenes.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png", href: "/collections/lake-house-weekends" },
-  { id: "aidream_fallback_snow", title: "Snow Lodge Escapes", category: "Open Air", description: "Alpine villages, lodge interiors, fireplaces, and soft winter trail portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png", href: "/collections/snow-lodge-escapes" },
-  { id: "aidream_fallback_rail", title: "Rail Journey Portraits", category: "Route", description: "Train windows, platforms, overnight route mood, and slow-travel portrait frames.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.png", href: "/collections/rail-journey-portraits" },
-  { id: "aidream_fallback_cover", title: "Travel Journal Covers", category: "Creator", description: "Editorial cover crops, title-space portraits, and story opener images.", meta: "16 photos", credits: "16 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/travel-journal-covers" },
-  { id: "aidream_fallback_solo", title: "Solo Traveler Profiles", category: "Creator", description: "Confident destination profile portraits for journals, creator bios, and private albums.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.png", href: "/collections/solo-traveler-profiles" },
-  { id: "aidream_fallback_shared", title: "Shared Route Albums", category: "Moments", description: "Paired travel portraits for coasts, city dinners, balconies, and scenic overlooks.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.png", href: "/collections/shared-route-albums" },
-  { id: "aidream_fallback_family", title: "Family Travel Keepsakes", category: "Moments", description: "Gentle group portraits for resorts, old towns, outlooks, and share-ready memory cards.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.png", href: "/collections/family-travel-keepsakes" },
-  { id: "aidream_fallback_honeymoon", title: "Honeymoon Itinerary Scenes", category: "Moments", description: "Romantic suites, coastal dinners, city strolls, and golden-hour shared route portraits.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.png", href: "/collections/honeymoon-itinerary-scenes" },
-  { id: "aidream_fallback_retreat", title: "Wellness Retreat Scenes", category: "Resort", description: "Spa decks, yoga mornings, mineral pools, and calm restorative travel portraits.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/island-resort-scenes-v2.png", href: "/collections/wellness-retreat-scenes" }
+  { id: "aidream_fallback_destination", title: "Route Portrait Albums", category: "Route", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260630webp", href: "/collections/route-portrait-albums" },
+  { id: "aidream_fallback_coastal", title: "Coastal Light Sets", category: "Coastal", description: "Sea-view, island, resort, and cliffside portraits with warm travel light.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260630webp", href: "/collections/coastal-getaways" },
+  { id: "aidream_fallback_city", title: "Old Quarter Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/old-quarter-walks-cover.webp?v=20260630webp", href: "/collections/old-city-walks" },
+  { id: "aidream_fallback_sunset", title: "Scenic Outlooks", category: "Outlook", description: "Golden-hour terraces, ridge paths, sea cliffs, and panoramic private albums.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260630webp", href: "/collections/scenic-overlooks" },
+  { id: "aidream_fallback_profile", title: "Celestial Profile Stories", category: "Profile", description: "Warm profile portraits for creators, solo trips, writers, and personal journey pages.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp", href: "/collections/celestial-profile-stories" },
+  { id: "aidream_fallback_editorial", title: "Editorial Getaways", category: "Editorial", description: "Magazine-style travel portraits with fashion-led settings and cinematic crops.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.webp?v=20260630webp", href: "/collections/editorial-getaways" },
+  { id: "aidream_fallback_cafe", title: "Cafe & Street Stories", category: "Street", description: "Cafe portraits, balcony mornings, crosswalk moments, and quiet city details for travel journals.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.webp?v=20260630webp", href: "/collections/cafe-street-stories" },
+  { id: "aidream_fallback_travel", title: "Roadside Escape Frames", category: "Route", description: "Open roads, coast roads, motel glow, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.webp?v=20260630webp", href: "/collections/road-trip-frames" },
+  { id: "aidream_fallback_itinerary", title: "Route Moodboards", category: "Moodboard", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.webp?v=20260630webp", href: "/collections/itinerary-moodboards" },
+  { id: "aidream_fallback_postcard", title: "Postcard Story Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.webp?v=20260630webp", href: "/collections/postcard-social-sets" },
+  { id: "aidream_fallback_lagoon", title: "Lagoon Route Studies", category: "Coastal", description: "Clear-water coves, boat decks, pale resort blues, and easy seaside portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/lagoon-route-studies-cover.webp?v=20260630webp", href: "/collections/lagoon-route-studies" },
+  { id: "aidream_fallback_villa", title: "Private Villa Stays", category: "Resort", description: "Courtyard villas, pool gardens, sunlit rooms, and quiet luxury travel portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/private-villa-stays-cover.webp?v=20260630webp", href: "/collections/private-villa-stays" },
+  { id: "aidream_fallback_rooftop", title: "Rooftop City Nights", category: "City", description: "Blue-hour rooftop scenes, terrace dinners, skyline portraits, and city-break crops.", meta: "22 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rooftop-city-nights-cover.webp?v=20260630webp", href: "/collections/rooftop-city-nights" },
+  { id: "aidream_fallback_market", title: "Market Morning Walks", category: "City", description: "Flower markets, local stalls, linen outfits, and morning portraits for city travel albums.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/market-morning-walks-cover.webp?v=20260630webp", href: "/collections/market-morning-walks" },
+  { id: "aidream_fallback_rain", title: "Rainy City Breaks", category: "City", description: "Umbrella walks, wet-street reflections, museum days, and moody hotel awnings.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rainy-city-breaks-cover.webp?v=20260630webp", href: "/collections/rainy-city-breaks" },
+  { id: "aidream_fallback_desert", title: "Desert Road Stories", category: "Route", description: "Open roads, sunset dust, vintage motel color, and warm route portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/desert-road-stories-cover.webp?v=20260630webp", href: "/collections/desert-road-stories" },
+  { id: "aidream_fallback_lake", title: "Lake House Weekends", category: "Open Air", description: "Dock portraits, canoe moments, pine roads, and calm weekend escape scenes.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/lake-house-weekends-cover.webp?v=20260630webp", href: "/collections/lake-house-weekends" },
+  { id: "aidream_fallback_snow", title: "Snow Lodge Escapes", category: "Open Air", description: "Alpine villages, lodge interiors, fireplaces, and soft winter trail portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/snow-lodge-escapes-cover.webp?v=20260630webp", href: "/collections/snow-lodge-escapes" },
+  { id: "aidream_fallback_rail", title: "Rail Journey Portraits", category: "Route", description: "Train windows, platforms, overnight route mood, and slow-travel portrait frames.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rail-journey-portraits-cover.webp?v=20260630webp", href: "/collections/rail-journey-portraits" },
+  { id: "aidream_fallback_cover", title: "Travel Journal Covers", category: "Creator", description: "Editorial cover crops, title-space portraits, and story opener images.", meta: "16 photos", credits: "16 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/travel-journal-covers-cover.webp?v=20260630webp", href: "/collections/travel-journal-covers" },
+  { id: "aidream_fallback_solo", title: "Solo Traveler Profiles", category: "Creator", description: "Confident destination profile portraits for journals, creator bios, and private albums.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/solo-traveler-profiles-cover.webp?v=20260630webp", href: "/collections/solo-traveler-profiles" },
+  { id: "aidream_fallback_shared", title: "Shared Route Albums", category: "Moments", description: "Paired travel portraits for coasts, city dinners, balconies, and scenic overlooks.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/shared-route-albums-cover.webp?v=20260630webp", href: "/collections/shared-route-albums" },
+  { id: "aidream_fallback_family", title: "Family Travel Keepsakes", category: "Moments", description: "Gentle group portraits for resorts, old towns, outlooks, and share-ready memory cards.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/family-travel-keepsakes-cover.webp?v=20260630webp", href: "/collections/family-travel-keepsakes" },
+  { id: "aidream_fallback_golden_route", title: "Golden Hour Route Stories", category: "Moments", description: "Warm overlook paths, sunset roads, city terraces, and soft destination portraits.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories-cover.webp?v=20260630webp", href: "/collections/golden-hour-route-stories" },
+  { id: "aidream_fallback_retreat", title: "Wellness Retreat Scenes", category: "Resort", description: "Spa decks, yoga mornings, mineral pools, and calm restorative travel portraits.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/wellness-retreat-scenes-cover.webp?v=20260630webp", href: "/collections/wellness-retreat-scenes" }
 ];
 
 const accentBlue = "#2f6fed";
@@ -2475,17 +2551,70 @@ function storefrontPaidToolText(value: string): string {
     .replace(/\bPaid plans unlock\b/g, "Paid plans include")
     .replace(/\bpaid plans unlock\b/g, "paid plans include")
     .replace(/\bunlock private model creation\b/g, "include private model creation")
-    .trim();
+	    .trim();
+}
+
+function storefrontBrandName(site: Site): string {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  if (identity.includes("aidreamcapes")) return "Aidreamcapes";
+  if (identity.includes("mydreamshoots") || identity.includes("dreamshoot")) return "MyDreamShoots";
+  return site.branding.logoText || site.name;
+}
+
+function storefrontBrandText(site: Site, value: string): string {
+  const brand = storefrontBrandName(site);
+  return value
+    .replace(/\bMydreamShoots\b/g, "MyDreamShoots")
+    .replace(/\bMydreamshoots\b/g, "MyDreamShoots")
+    .replace(/\bDreamShootAI\b/g, brand);
 }
 
 function storefrontPaidSiteCopy(site: Site): Site {
+  const brand = storefrontBrandName(site);
   return {
     ...site,
+    name: storefrontBrandText(site, site.name),
     branding: {
       ...site.branding,
-      market: storefrontPaidToolText(site.branding.market || ""),
-      description: storefrontPaidToolText(site.branding.description || "")
+      logoText: brand,
+      market: storefrontBrandText(site, storefrontPaidToolText(site.branding.market || "")),
+      description: storefrontBrandText(site, storefrontPaidToolText(site.branding.description || ""))
     }
+  };
+}
+
+function storefrontBrandValue(site: Site, value: ThemeSettingValue): ThemeSettingValue {
+  if (typeof value === "string") return storefrontBrandText(site, value);
+  if (Array.isArray(value)) return value.map((item) => storefrontBrandValue(site, item) as string);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nested]) => [key, storefrontBrandValue(site, nested as ThemeSettingValue)])
+    ) as ThemeSettingValue;
+  }
+  return value;
+}
+
+function storefrontBrandPageCopy(site: Site, page: ThemePageJson): ThemePageJson {
+  const sections = Object.fromEntries(
+    Object.entries(page.sections).map(([sectionId, section]) => [
+      sectionId,
+      {
+        ...section,
+        settings: Object.fromEntries(
+          Object.entries(section.settings).map(([key, value]) => [key, storefrontBrandValue(site, value)])
+        ),
+        blocks: section.blocks?.map((block) => ({
+          ...block,
+          settings: Object.fromEntries(
+            Object.entries(block.settings).map(([key, value]) => [key, storefrontBrandValue(site, value)])
+          )
+        }))
+      }
+    ])
+  ) as ThemePageJson["sections"];
+  return {
+    ...page,
+    sections
   };
 }
 
@@ -2502,20 +2631,20 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
     dreamshootToolBlock("mega_tool_gala", "Gala photo maker", "Create formal night-out portraits with polished editorial lighting.", "Photo AI", packImages.gala, "/tools/gala-photo", "Style"),
     dreamshootToolBlock("mega_tool_noir", "Noir character portraits", "Generate cinematic mafia, detective, and vintage city character looks.", "Photo AI", packImages.gala, "/tools/noir-portrait", "Noir"),
     dreamshootToolBlock("mega_tool_anime", "Anime avatar builder", "Create stylized profile avatars and character-inspired social images.", "Photo AI", packImages.avatar, "/tools/anime-avatar", "Avatar"),
-    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in scenic outdoor, hiking, and travel-inspired scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
+    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
     dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images.", "Photo AI", packImages.fashion, "/tools/fashion-editorial", "Editorial"),
     dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/product-lifestyle", "Commerce"),
-    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full route portrait package.", "Route Portrait Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
-    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "Route Portrait Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
-    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "Route Portrait Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
-    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "Route Portrait Edit", packImages.headshots, "/tools/photo-enhancer"),
-    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "Route Portrait Edit", packImages.beauty, "/tools/portrait-retouch"),
-    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "Route Portrait Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
-    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "Route Portrait Edit", packImages.fashion, "/tools/color-correction"),
-    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "Route Portrait Edit", packImages.copy, "/tools/old-photo-restoration"),
-    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "Route Portrait Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
-    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "Route Portrait Edit", packImages.copy, "/tools/magic-upscaler"),
-    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished route portrait package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
+    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full AI shoot package.", "Photo Package Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
+    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "Photo Package Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
+    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "Photo Package Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
+    dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "Photo Package Edit", packImages.headshots, "/tools/photo-enhancer"),
+    dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "Photo Package Edit", packImages.beauty, "/tools/portrait-retouch"),
+    dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "Photo Package Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
+    dreamshootToolBlock("mega_edit_color", "Color correction", "Balance tones for profile photos, posters, and package previews.", "Photo Package Edit", packImages.fashion, "/tools/color-correction"),
+    dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "Photo Package Edit", packImages.copy, "/tools/old-photo-restoration"),
+    dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "Photo Package Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
+    dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "Photo Package Edit", packImages.copy, "/tools/magic-upscaler"),
+    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished AI shoot package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
     dreamshootToolBlock("mega_video_profile", "Profile clip maker", "Create social profile motion from headshots or creator portraits.", "Video AI", packImages.headshots, "/tools/profile-clip", "Social"),
     dreamshootToolBlock("mega_video_fan", "Fan poster motion", "Animate World Cup fan posters and match-day profile scenes.", "Video AI", packImages.sports, "/tools/fan-poster-motion", "Sports"),
     dreamshootToolBlock("mega_video_intro", "Creator intro video", "Turn creator portraits into short intro clips for profiles and reels.", "Video AI", packImages.creator, "/tools/creator-intro-video", "Creator"),
@@ -2561,9 +2690,12 @@ function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockInstance
 }
 
 function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageMegaGroup[] {
+  const maxGroups = 8;
+  const maxItemsPerGroup = 8;
   const groups = new Map<string, PhotoPackageMegaGroup>();
   creativePacks
     .filter((pack) => pack.status === "active")
+    .slice(0, 48)
     .forEach((pack) => {
       const parent = pack.categoryRecord?.parent;
       const groupLabel = parent?.label || dreamshootCategoryLabel(pack.categoryRecord?.slug || pack.category);
@@ -2579,10 +2711,11 @@ function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageM
   return Array.from(groups.values())
     .map((group) => ({
       ...group,
-      items: group.items.sort((a, b) => a.label.localeCompare(b.label))
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label)).slice(0, maxItemsPerGroup)
     }))
     .filter((group) => group.items.length > 0)
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .slice(0, maxGroups);
 }
 
 function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | undefined): PhotoPackageMegaGroup[] {
@@ -2590,12 +2723,12 @@ function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | un
   if (!taxonomyBlocks.length) return [];
   return [
     {
-      label: "Travel Packages",
-      slug: "travel-packages",
-      description: "Destination, coast, city, trail, and postcard directions for private travel galleries.",
+      label: "AI Shoot Packages",
+      slug: "ai-shoot-packages",
+      description: "Headshots, fan photos, creator portraits, beauty looks, and private AI shoot packages.",
       icon: "Sparkles",
       items: taxonomyBlocks.map((block) => {
-        const title = blockValue(block, "title", "Travel package");
+        const title = blockValue(block, "title", "Photo package");
         return {
           label: title,
           slug: slugify(blockValue(block, "href", title)),
@@ -2827,7 +2960,7 @@ function DreamShootMegaToolsPanel({
 }) {
   const warm = variantTone === "warm";
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
-  const orderedCategories = ["Photo AI", "Route Portrait Edit", "Video AI"].filter((category) => categories.includes(category));
+  const orderedCategories = ["Photo AI", "Photo Package Edit", "Video AI"].filter((category) => categories.includes(category));
   const extraCategories = categories.filter((category) => !orderedCategories.includes(category));
   const allCategories = [...orderedCategories, ...extraCategories];
   const summaryCategories = (variant === "popover" ? allCategories : allCategories.slice(0, 3)).slice(0, 3);
@@ -2932,7 +3065,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">Travel Packages</span>
+        <span className="min-w-0 flex-1">AI Shoot Packages</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>
@@ -2973,7 +3106,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
 
 function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; tools: SectionBlockInstance[] }) {
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
-  const orderedCategories = ["Photo AI", "Route Portrait Edit", "Video AI"].filter((category) => categories.includes(category));
+  const orderedCategories = ["Photo AI", "Photo Package Edit", "Video AI"].filter((category) => categories.includes(category));
   const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))].slice(0, 3);
   const groupedCategories = displayCategories.map((category) => ({
     category,
@@ -3065,6 +3198,12 @@ function imageHeightClass(value: string): string {
 
 function stripHtml(value: string): string {
   return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function truncateText(value: string, maxLength: number): string {
+  const text = stripHtml(value);
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, Math.max(0, maxLength - 1)).trimEnd()}...`;
 }
 
 function shortAccessibleText(value: string, fallback: string): string {
@@ -3181,7 +3320,7 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
   return {
     id: block.id,
     title,
-    description: blockValue(block, "description", "A private AI route portrait package with album-ready outputs."),
+    description: blockValue(block, "description", "A private AI shoot package with album-ready outputs."),
     category: blockValue(block, "category", "Package"),
     meta: blockValue(block, "meta", "20 photos"),
     credits: blockValue(block, "credits", "20 credits"),
@@ -3199,8 +3338,8 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
     card("catalog_cyberpunk", "Cyberpunk", "Creative", "Neon city portraits and future-fashion scenes.", "20 photos", "26 credits", packImages.creative, "/collections/cyberpunk"),
     card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview hair directions, colors, and beauty styling before choosing a full package.", "20 photos", "18 credits", packImages.beauty, "/collections/hairstyle"),
     card("catalog_gala", "Gala Photos", "Creative", "Formal night-out photos with editorial lighting and red-carpet energy.", "20 photos", "24 credits", packImages.gala, "/collections/gala-photos"),
-    card("catalog_travel", "Travel portrait pack", "Travel", "Destination-style portraits, outdoor profile photos, and vacation-ready album images.", "24 photos", "24 credits", packImages.travel, "/collections/travel"),
-    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, shared route portraits, and announcement-ready scenes.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
+    card("catalog_travel", "Lifestyle portrait pack", "Lifestyle", "Outdoor profile photos, creator lifestyle scenes, and album-ready personal-brand images.", "24 photos", "24 credits", packImages.travel, "/collections/travel"),
+    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, shared portrait scenes, and announcement-ready images.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
     card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Traditional wedding looks with lehenga, saree, sherwani, jewelry, and album-ready portraits.", "20 photos", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
     card("catalog_christmas", "Christmas Photos", "Seasonal", "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", "20 photos", "20 credits", "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", "/collections/christmas-photos"),
     card("catalog_creator", "Creator Portraits", "Creator", "Personal-brand portraits for bios, newsletters, founder pages, and social profiles.", "20 photos", "24 credits", packImages.creator, "/collections/creator-portraits"),
@@ -4056,7 +4195,7 @@ function renderLegacySaasSection({
           </div>
           <div>
             <h3 className="font-semibold">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "title", setting(section, "special_title", "Newsletter"))}</h3>
-            <p className="mt-3 text-sm leading-6 text-zinc-600">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "describe", setting(section, "special_desc", "Get new route portraitshoot drops and product updates."))}</p>
+            <p className="mt-3 text-sm leading-6 text-zinc-600">{blockValue(newsletterBlocks[0] ?? { id: "newsletter", type: "newsletter", settings: {} }, "describe", setting(section, "special_desc", "Get new AI shoot package drops and product updates."))}</p>
             <div className="mt-4 flex overflow-hidden rounded-full border border-black/10 bg-white">
               <input className="min-w-0 flex-1 px-4 py-3 text-sm outline-none" placeholder="Email address" />
               <button className="bg-zinc-950 px-4 text-sm font-medium text-white">Join</button>
@@ -4153,10 +4292,10 @@ function SectionView({
                 className="mt-6 max-w-[15.4ch] text-[clamp(3.15rem,5.35vw,5.7rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#171514] text-balance [font-family:var(--site-title-font)]"
                 data-headline-text={setting(section, "headline")}
               >
-                {setting(section, "headline", "route portraits that look like a real shoot")}
+                {setting(section, "headline", "AI photo packages that look like a real shoot")}
               </h1>
               <p className="mt-5 max-w-[32rem] text-[1.03rem] leading-[1.86] text-[#665f58]">
-                {setting(section, "subheadline", "Turn everyday uploads into polished creator, portrait, travel, seasonal, and editorial photo packs.")}
+                {setting(section, "subheadline", "Turn everyday uploads into polished creator portraits, headshots, fan photos, seasonal looks, and editorial photo packs.")}
               </p>
               <div className="mt-7 grid max-w-[35rem] gap-x-6 gap-y-3 sm:grid-cols-2">
                 {bullets.slice(0, 4).map((item) => (
@@ -4252,14 +4391,14 @@ function SectionView({
                   key={`dreamshoot_hero_grid_${index}`}
                   style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
-                  <StorefrontImage
-                    alt=""
-                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-                    fetchPriority={index === 0 ? "auto" : "low"}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
-                    src={gridImages[index % gridImages.length] ?? primaryImage}
-                  />
+	                  <StorefrontImage
+	                    alt=""
+	                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
+	                    fetchPriority="low"
+	                    loading="lazy"
+	                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
+	                    src={gridImages[index % gridImages.length] ?? primaryImage}
+	                  />
                 </div>
               ))}
             </div>
@@ -4373,7 +4512,7 @@ function SectionView({
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", "4.9/5 from photo-package subscribers")}</p>
-                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, route portrait packages, private albums, and checkout stay inside your account.</p>
+                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, AI shoot packages, private albums, and checkout stay inside your account.</p>
                 </div>
                 </div>
               </div>
@@ -4925,14 +5064,14 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-12 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-12 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <Link
-            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this route portrait package"))}
+            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this AI shoot package"))}
             className={dark ? "group grid overflow-hidden rounded-[32px] border border-white/10 bg-[#15171c] shadow-[0_34px_100px_-68px_rgba(0,0,0,0.86)] md:grid-cols-[0.92fr_1.08fr]" : "group grid overflow-hidden rounded-[32px] border border-[#ded5ca] bg-[#fffdf8]/90 shadow-[0_34px_100px_-76px_rgba(20,22,26,0.32)] md:grid-cols-[0.9fr_1.1fr]"}
             href={hrefFor(site, setting(section, "ctaHref", "#packages"))}
           >
             <div className={dark ? "flex min-h-[380px] flex-col justify-between p-7 text-white md:p-10" : "flex min-h-[380px] flex-col justify-between p-7 text-[#14161a] md:p-10"}>
               <div>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/58" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{setting(section, "eyebrow")}</p>
-                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private route portrait packages")}</h2>
+                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private AI shoot packages")}</h2>
                 <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/70" : "mt-5 max-w-xl text-sm leading-7 text-[#625d56]"}>{setting(section, "subtitle")}</p>
                 <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
                   {displayStats.slice(0, 3).map((stat, index) => (
@@ -5938,14 +6077,14 @@ function SectionView({
                 href={hrefFor(site, card.href)}
                 key={card.id}
               >
-                <StorefrontImage
-                  alt={card.title}
-                  className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
-                  fetchPriority={index === 0 && renderContext.pagePath === "/" ? "auto" : "low"}
-                  loading={index === 0 && renderContext.pagePath === "/" ? "eager" : "lazy"}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
-                  src={card.imageUrl}
-                />
+	                <StorefrontImage
+	                  alt={card.title}
+	                  className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+	                  fetchPriority="low"
+	                  loading="lazy"
+	                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+	                  src={card.imageUrl}
+	                />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,5,11,0.18)_0%,rgba(2,5,11,0.58)_42%,rgba(2,5,11,0.92)_100%)]" />
                 <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(201,88,242,0.18),rgba(22,220,240,0)_44%)] opacity-0 transition group-hover:opacity-100" />
                 <div className="relative flex min-h-[360px] w-full flex-col p-5 sm:p-6">
@@ -5976,7 +6115,7 @@ function SectionView({
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5"
                 href={hrefFor(site, "/collections")}
               >
-                Explore all route portrait packages
+                Explore all photo packages
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -6056,14 +6195,14 @@ function SectionView({
           href: blockValue(card, "href", "/collections"),
           block: card
         }));
-    const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
+    const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.slice(0, 36).map((card) => {
       const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
       return {
         id: card.id,
         title: card.title,
-        description: card.description,
+        description: truncateText(card.description, 220),
         meta: card.meta,
-        keywords: card.keywords.filter((keyword): keyword is string => Boolean(keyword)),
+        keywords: card.keywords.filter((keyword): keyword is string => Boolean(keyword)).slice(0, 5),
         imageUrl: card.imageUrl,
         href: hrefFor(site, card.href),
         appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack)) : hrefFor(site, "/app/create"),
@@ -6209,7 +6348,7 @@ function SectionView({
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">{kind === "tool" ? "AI tool guide" : "Photo package directory"}</p>
               <h2 className="mt-4 text-[clamp(2.15rem,4.8vw,4.4rem)] font-bold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "route portrait package")}
+                {setting(section, "title", isAidreamcapesSite(site) ? "route portrait package" : "AI shoot package")}
               </h2>
               <p className="mt-5 max-w-4xl text-[1.05rem] leading-8 text-[#555f6d]">{setting(section, "subtitle", site.branding.description)}</p>
               {details.length ? (
@@ -6326,7 +6465,7 @@ function SectionView({
               {...xfcartBlockAttrs(lead, 0, "visual_proof")}
             >
               <StorefrontImage
-                alt={blockValue(lead, "title", "Featured route portrait package")}
+                alt={blockValue(lead, "title", isAidreamcapesSite(site) ? "Featured route portrait package" : "Featured AI shoot package")}
                 className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                 sizes="(max-width: 1024px) 100vw, 49vw"
                 src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))}
@@ -6563,7 +6702,8 @@ function SectionView({
     const featured = [...displayCards]
       .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
       .slice(0, featuredCount);
-    const directory = displayCards;
+    const featuredKeys = new Set(featured.map((card) => card.href || card.id));
+    const directory = displayCards.filter((card) => !featuredKeys.has(card.href || card.id));
     const tabs = listLines(setting(section, "tabs", "All|Headshots|Beauty|Creative|Sports|Wedding|Cultural|Couple|Seasonal|Video"));
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
     const directoryCount = directory.length;
@@ -6578,7 +6718,7 @@ function SectionView({
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
             <div>
               <h2 className="max-w-[46rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "Choose a route portrait package first.")}
+                {setting(section, "title", aidreamcapes ? "Choose a route portrait package first." : "Choose an AI shoot package first.")}
               </h2>
               <div className="mt-10 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
@@ -6886,7 +7026,7 @@ function SectionView({
         settings: {
           title: "Background changer",
           description: "Swap a plain portrait background before creating a full scene pack.",
-          category: "Route Portrait Edit",
+          category: "Photo Package Edit",
           badge: "Studio",
           imageUrl: dreamshootToolSceneDefaults.entry,
           href: "/tools/background-changer"
@@ -6918,8 +7058,8 @@ function SectionView({
       }
     ];
     const tools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
-    const configuredCategories = listLines(setting(section, "categories", "Route Portrait Edit|Route Portrait|AI Video"));
-    const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Route Portrait"))));
+    const configuredCategories = listLines(setting(section, "categories", aidreamcapes ? "Route Portrait Edit|Route Portrait|AI Video" : "Photo Package Edit|Photo AI|AI Video"));
+    const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", aidreamcapes ? "Route Portrait" : "Photo AI"))));
     const categories = Array.from(new Set([...configuredCategories, ...toolCategories]));
     const layout = setting(section, "layout", "directory");
     const dark = layout === "dark";
@@ -7065,7 +7205,7 @@ function SectionView({
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-              {setting(section, "secondaryCta", "View route portrait packages")}
+              {setting(section, "secondaryCta", aidreamcapes ? "View route portrait packages" : "View photo packages")}
               <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -7355,7 +7495,7 @@ function SectionView({
         section,
         "backgroundImage",
         aidreamcapes
-          ? "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.png"
+          ? "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.webp?v=20260630webp"
           : "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
       )
     );
@@ -7400,7 +7540,7 @@ function SectionView({
             <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {setting(section, "title", "Simple, Transparent Pricing")}
             </h2>
-            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", "Choose the right credit plan for private AI route portrait packages.")}</p>
+            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private AI route portrait packages." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
           </div>
           <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,0.72fr)_minmax(300px,0.28fr)]">
             <div className="grid gap-4 lg:grid-cols-3">
@@ -7424,7 +7564,7 @@ function SectionView({
                 const defaultFeatures = [
                   `${price.creditsGranted} AI photo credits`,
                   "Create photo albums in minutes",
-                  "Route Portrait Editor with prompts",
+                  aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
                   "Special AI photo filters",
                   "Create photos by writing prompts in seconds",
                   "Create AI videos",
@@ -7532,7 +7672,7 @@ function SectionView({
           <div className="grid gap-6 md:grid-cols-[0.7fr_1fr] md:items-end">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]">installed AI apps</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, "Plan your route portrait package")}</h2>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, isAidreamcapesSite(site) ? "Plan your route portrait package" : "Plan your AI shoot package")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-[#625d56] md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -8993,7 +9133,7 @@ function SectionView({
             <div className="mt-5 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `${cards.length} matching results` : "Search route portrait packages, tools, pricing, and help guides."}
+                {searchTerm ? `${cards.length} matching results` : isAidreamcapesSite(site) ? "Search route portrait packages, tools, pricing, and help guides." : "Search photo packages, AI tools, pricing, and help guides."}
               </span>
             </div>
           </div>
@@ -9330,7 +9470,7 @@ function SectionView({
                     <div className="flex flex-1 flex-col p-[18px]">
                       <div className="flex items-center gap-3">
                         {avatar ? (
-                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={blockValue(item, "name", "Customer")} />
+	                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={blockValue(item, "name", "Customer")} loading="lazy" decoding="async" fetchPriority="low" />
                         ) : (
                           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ebe0] text-sm font-semibold text-[#8c7156]">
                             {blockValue(item, "name", "Customer").slice(0, 1) || "C"}
@@ -9349,7 +9489,7 @@ function SectionView({
                       <p className="mt-4 text-[0.9rem] leading-6 text-[#1c2026]">{blockValue(item, "quote")}</p>
                     </div>
                     <div className="relative h-[180px] overflow-hidden bg-[#f2e8da]">
-                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={`${blockValue(item, "name", "Customer")} photo result`} />
+	                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={`${blockValue(item, "name", "Customer")} photo result`} loading="lazy" decoding="async" fetchPriority="low" />
                       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/38 to-transparent" />
                       <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />

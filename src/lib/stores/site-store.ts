@@ -3,7 +3,7 @@ import "server-only";
 import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
-import { canonicalSiteSlug, cleanHost, isPlatformHost, legacySiteSlugCandidates } from "@/lib/domain-routing";
+import { canonicalSiteSlug, cleanHost, hostDomainCandidates, isPlatformHost, legacySiteSlugCandidates } from "@/lib/domain-routing";
 import { suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
@@ -422,26 +422,36 @@ const publicRuntimeCreativePackSelect = {
   createdAt: true,
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
+type PublicRuntimeCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicRuntimeCreativePackSelect }>;
 const publicRuntimeSiteAiAppSelect = {
   id: true,
   siteId: true,
   enabled: true,
   creditCost: true,
   routeKey: true,
-  workflowConfig: true,
-  providerConfig: true,
   aiApp: {
     select: {
       id: true,
       slug: true,
       name: true,
       description: true,
-      appType: true,
-      parameterSchema: true
+      appType: true
     }
   }
 } satisfies Prisma.SiteAiAppSelect;
 type PublicRuntimeSiteAiAppRecord = Prisma.SiteAiAppGetPayload<{ select: typeof publicRuntimeSiteAiAppSelect }>;
+const publicRuntimeMediaAssetSelect = {
+  id: true,
+  siteId: true,
+  label: true,
+  storageKey: true,
+  mimeType: true,
+  usageType: true,
+  sourceType: true,
+  previewUrl: true,
+  originUrl: true,
+  createdAt: true
+} satisfies Prisma.MediaAssetSelect;
 const emptyThemePageJson = {
   pageType: "content",
   version: 1,
@@ -678,21 +688,22 @@ async function getSiteRelational(siteId: string): Promise<Site> {
 async function getSiteByHostRelational(host: string | null | undefined): Promise<Site | undefined> {
   const value = cleanHost(host);
   if (!value || isPlatformHost(value) || value === "localhost" || value === "127.0.0.1") return undefined;
+  const candidates = hostDomainCandidates(value);
 
   const activeDomain = await prisma.siteDomain.findFirst({
-    where: { domain: value, status: "active" },
+    where: { domain: { in: candidates }, status: "active" },
     include: { site: { include: siteRuntimeInclude } }
   });
   if (activeDomain?.site) return toSite(activeDomain.site);
 
-  const anyDomain = await prisma.siteDomain.findUnique({
-    where: { domain: value },
+  const anyDomain = await prisma.siteDomain.findFirst({
+    where: { domain: { in: candidates } },
     include: { site: { include: siteRuntimeInclude } }
   });
   if (anyDomain?.site) return toSite(anyDomain.site);
 
   const primaryDomainSite = await prisma.site.findFirst({
-    where: { primaryDomain: value },
+    where: { primaryDomain: { in: candidates } },
     include: siteRuntimeInclude
   });
   return primaryDomainSite ? toSite(primaryDomainSite) : undefined;
@@ -759,6 +770,47 @@ function toPublicRuntimeSiteAiApp(record: PublicRuntimeSiteAiAppRecord): SiteAiA
   };
 }
 
+function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): CreativePack {
+  const pack = toCreativePack(record);
+  const categoryRecord = pack.categoryRecord
+    ? {
+        id: pack.categoryRecord.id,
+        siteId: "",
+        parentId: pack.categoryRecord.parentId,
+        parent: pack.categoryRecord.parent
+          ? {
+              id: pack.categoryRecord.parent.id,
+              siteId: "",
+              parentId: pack.categoryRecord.parent.parentId,
+              slug: pack.categoryRecord.parent.slug,
+              label: pack.categoryRecord.parent.label,
+              description: pack.categoryRecord.parent.description,
+              icon: pack.categoryRecord.parent.icon,
+              iconName: pack.categoryRecord.parent.iconName,
+              sortOrder: 0,
+              status: "active" as const,
+              createdAt: ""
+            }
+          : undefined,
+        slug: pack.categoryRecord.slug,
+        label: pack.categoryRecord.label,
+        description: pack.categoryRecord.description,
+        icon: pack.categoryRecord.icon,
+        iconName: pack.categoryRecord.iconName,
+        imageUrl: pack.categoryRecord.imageUrl,
+        sortOrder: 0,
+        status: "active" as const,
+        createdAt: ""
+      }
+    : undefined;
+  return {
+    ...pack,
+    prompt: undefined,
+    galleryImages: [],
+    categoryRecord
+  };
+}
+
 function storefrontPerfMark(label: string, startedAt: number, meta: Record<string, unknown> = {}) {
   if (process.env.STOREFRONT_PROFILE !== "1") return;
   console.info("[storefront:public-runtime]", label, {
@@ -785,7 +837,7 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
     orderBy: [{ status: "asc" }, { createdAt: "asc" }],
     take
   });
-  return rows.map(toCreativePack);
+  return rows.map(toPublicRuntimeCreativePack);
 });
 
 export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug: string, collectionSlug: string): Promise<PlatformState | undefined> => {
@@ -888,16 +940,17 @@ type PublicRuntimeSiteLookup =
 async function getPublicRuntimeSiteLookupByHost(host: string | null | undefined): Promise<PublicRuntimeSiteLookup | undefined> {
   const value = cleanHost(host);
   if (!value || isPlatformHost(value) || value === "localhost" || value === "127.0.0.1") return undefined;
+  const candidates = hostDomainCandidates(value);
 
   const domain = await prisma.siteDomain.findFirst({
-    where: { domain: value },
+    where: { domain: { in: candidates } },
     orderBy: [{ status: "asc" }, { isPrimary: "desc" }],
     select: { siteId: true }
   });
   if (domain?.siteId) return { id: domain.siteId };
 
   const site = await prisma.site.findFirst({
-    where: { primaryDomain: value },
+    where: { primaryDomain: { in: candidates } },
     select: { id: true }
   });
   return site ? { id: site.id } : undefined;
@@ -924,7 +977,14 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
   const siteId = site.id;
   const limits = publicRuntimeLimits(needs.profile);
 
-  const [products, siteAiApps, creativePacks, mediaAssets, toolCategories, toolMenuItems] = await Promise.all([
+  const [
+    products,
+    siteAiApps,
+    creativePacks,
+    mediaAssets,
+    toolCategories,
+    toolMenuItems
+  ] = await Promise.all([
     needs.products
       ? prisma.product.findMany({
           where: { siteId, status: "active" },
@@ -962,16 +1022,13 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     needs.mediaAssets
       ? prisma.mediaAsset.findMany({
           where: { siteId, usageType: { in: ["theme", "package", "sample"] } },
+          select: publicRuntimeMediaAssetSelect,
           orderBy: [{ createdAt: "desc" }, { id: "asc" }],
           take: limits.mediaAssets
         })
       : Promise.resolve([]),
-    needs.toolMenus
-      ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 })
-      : Promise.resolve([]),
-    needs.toolMenus
-      ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 })
-      : Promise.resolve([])
+    needs.toolMenus ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
+    needs.toolMenus ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([])
   ]);
   storefrontPerfMark("collections", startedAt, {
     products: products.length,
@@ -991,7 +1048,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     siteAiApps: siteAiApps.map(toPublicRuntimeSiteAiApp),
     toolCategories: toolCategories.map(toToolCategory),
     toolMenuItems: toolMenuItems.map(toToolMenuItem),
-    creativePacks: creativePacks.map(toCreativePack),
+    creativePacks: creativePacks.map(toPublicRuntimeCreativePack),
     mediaAssets: mappedMediaAssets
   });
   storefrontPerfMark("done", startedAt);

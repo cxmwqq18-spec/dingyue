@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CustomerAccountShell } from "@/components/storefront/customer-account-shell";
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
+import { UserRound } from "lucide-react";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData } from "@/lib/types";
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
@@ -162,6 +163,72 @@ export function CustomerBootstrapPrefetch({ mode = "workspace", siteSlug }: { mo
   }, [mode, siteSlug]);
 
   return null;
+}
+
+export function CustomerHeaderBootstrapControls({
+  children,
+  dark = false,
+  accountHref,
+  logoutHref,
+  siteId,
+  siteSlug,
+  variant = "desktop",
+  signedInClassName,
+  signOutClassName
+}: {
+  children: ReactNode;
+  dark?: boolean;
+  accountHref: string;
+  logoutHref: string;
+  siteId: string;
+  siteSlug: string;
+  variant?: "desktop" | "mobile";
+  signedInClassName: string;
+  signOutClassName: string;
+}) {
+  const state = useCustomerBootstrap(siteSlug, "shell");
+  if (state.status !== "ready") return <>{children}</>;
+  const customer = state.data.customer;
+  if (variant === "mobile") {
+    return (
+      <div className={signedInClassName}>
+        <p className="truncate text-sm font-semibold">{customer.name}</p>
+        <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
+        <div className="mt-3 grid gap-2">
+          <a className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref}>
+            Account
+          </a>
+        </div>
+        <form action={logoutHref} className="mt-3" method="post">
+          <input name="siteId" type="hidden" value={siteId} />
+          <button className={signOutClassName} type="submit">
+            Sign out
+          </button>
+        </form>
+      </div>
+    );
+  }
+  return (
+    <div className={signedInClassName}>
+      <a className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref}>
+        <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
+          <UserRound className="h-4 w-4" strokeWidth={1.8} />
+        </span>
+        <span className="min-w-0 text-left">
+          <span className="block max-w-[11rem] truncate text-sm font-semibold">{customer.name}</span>
+          <span className={dark ? "block max-w-[13rem] truncate text-xs text-white/62" : "block max-w-[13rem] truncate text-xs text-[#64605a]"}>
+            {customer.email}
+          </span>
+        </span>
+      </a>
+      <form action={logoutHref} method="post">
+        <input name="siteId" type="hidden" value={siteId} />
+        <button className={signOutClassName} type="submit">
+          Sign out
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export function CustomerAccountClientPage({

@@ -456,10 +456,10 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("authButtonLabel", "Auth button label", "Get Started with Email"),
       text("imageBadge", "Image badge", "40 photo album"),
       text("imageCaption", "Image caption", "Private photo albums, ready for client delivery."),
-      text("detailCardEyebrow", "Detail card eyebrow", "MydreamShoots"),
+      text("detailCardEyebrow", "Detail card eyebrow", "MyDreamShoots"),
       text("detailCardTitle", "Detail card title", "Destination photo scenes, private delivery, and editorial detail."),
       textarea("detailCardBody", "Detail card body", "Upload your photos, choose a destination, and receive a polished private album."),
-      text("socialProofLabel", "Floating proof label", "Popov purchased the MydreamShoots Pro 36 minutes ago"),
+      text("socialProofLabel", "Floating proof label", "Popov purchased the MyDreamShoots Pro 36 minutes ago"),
       checkbox("showStats", "Show metrics inside hero", true),
       select(
         "layout",
@@ -477,7 +477,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [ctaBlock, statBlock],
     presets: [
       {
-        label: "MydreamShoots-style photo hero",
+        label: "MyDreamShoots-style photo hero",
         settings: {
           eyebrow: "Private AI photo studio",
           headline: "Create studio-quality AI photo packs from everyday selfies.",
@@ -496,10 +496,10 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           authButtonLabel: "Get Started with Email",
           imageBadge: "40 photo album",
           imageCaption: "Private photo albums, ready for client delivery.",
-          detailCardEyebrow: "MydreamShoots",
+          detailCardEyebrow: "MyDreamShoots",
           detailCardTitle: "Destination photo scenes, private delivery, and editorial detail.",
           detailCardBody: "Upload your photos, choose a destination, and receive a polished private album.",
-          socialProofLabel: "Popov purchased the MydreamShoots Pro 36 minutes ago",
+          socialProofLabel: "Popov purchased the MyDreamShoots Pro 36 minutes ago",
           showStats: true,
           layout: "studio_commerce"
         },
@@ -615,7 +615,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [statBlock],
     presets: [
       {
-        label: "MydreamShoots proof metrics",
+        label: "MyDreamShoots proof metrics",
         settings: {
           anchor: "metrics",
           eyebrow: "Trusted worldwide",
@@ -651,7 +651,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [destinationCardBlock],
     presets: [
       {
-        label: "MydreamShoots destination wall",
+        label: "MyDreamShoots destination wall",
         settings: {
           anchor: "styles",
           eyebrow: "Popular destinations",
@@ -685,7 +685,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [exampleCardBlock],
     presets: [
       {
-        label: "MydreamShoots inspiration wall",
+        label: "MyDreamShoots inspiration wall",
         settings: {
           anchor: "examples",
           eyebrow: "Inspiring examples",
@@ -722,7 +722,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "email_start_panel",
     label: "Email Start Panel",
     category: "AI business",
-    description: "MydreamShoots-style email capture and quick-start entry panel for customers.",
+    description: "MyDreamShoots-style email capture and quick-start entry panel for customers.",
     maxBlocks: 4,
     settings: [
       text("anchor", "Anchor", "start"),
@@ -736,7 +736,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [statBlock],
     presets: [
       {
-        label: "MydreamShoots email start",
+        label: "MyDreamShoots email start",
         settings: {
           anchor: "start",
           eyebrow: "Start your AI shoot",
@@ -805,7 +805,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [cardBlock, exampleCardBlock],
     presets: [
       {
-        label: "MydreamShoots black solution showcase",
+        label: "MyDreamShoots black solution showcase",
         settings: {
           anchor: "possibilities",
           eyebrow: "AI makes it possible",
@@ -1000,7 +1000,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "photo_package_wall",
     label: "Photo Package Wall",
     category: "Storefront",
-    description: "MydreamShoots-style package catalog with image-rich cards and real pack bindings.",
+    description: "MyDreamShoots-style package catalog with image-rich cards and real pack bindings.",
     maxBlocks: 24,
     settings: [
       text("anchor", "Anchor", "packages"),
@@ -1054,7 +1054,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     ],
     presets: [
       {
-        label: "MydreamShoots-style package wall",
+        label: "MyDreamShoots-style package wall",
         settings: {
           anchor: "packages",
           eyebrow: "Photo packages",
@@ -1096,7 +1096,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "sample_strip",
     label: "Sample Strip",
     category: "Storefront",
-    description: "MydreamShoots-style horizontal sample gallery for showing many generated looks.",
+    description: "MyDreamShoots-style horizontal sample gallery for showing many generated looks.",
     maxBlocks: 20,
     settings: [
       text("anchor", "Anchor", "samples"),
@@ -1104,7 +1104,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("title", "Title", "A full shoot library from a handful of selfies."),
       textarea("subtitle", "Subtitle", "Use this band to show the breadth of photo styles available in the AI studio."),
       text("cardBadgeLabel", "Card badge label", "Before AI"),
-      textarea("footerBody", "Footer body", "MydreamShoots turns those planning limits into a private album workflow: choose a package, upload source photos, and receive an editorial story without booking a studio shoot."),
+      textarea("footerBody", "Footer body", "MyDreamShoots turns those planning limits into a private album workflow: choose a package, upload source photos, and receive an editorial story without booking a studio shoot."),
       text("footerCtaLabel", "Footer CTA label", "See the AI solution"),
       url("footerCtaHref", "Footer CTA link", "#possibilities"),
       select(
@@ -1127,14 +1127,14 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     ],
     presets: [
       {
-        label: "MydreamShoots pain-point wall",
+        label: "MyDreamShoots pain-point wall",
         settings: {
           anchor: "pain-points",
           eyebrow: "AI photo problems",
           title: "Tired of these AI photo problems?",
           subtitle: "Turn the biggest photo objections into a clear before-AI story, then guide customers toward a private AI album.",
           cardBadgeLabel: "Before AI",
-          footerBody: "MydreamShoots turns those planning limits into a private album workflow: choose a package, upload source photos, and receive an editorial story without booking a studio shoot.",
+          footerBody: "MyDreamShoots turns those planning limits into a private album workflow: choose a package, upload source photos, and receive an editorial story without booking a studio shoot.",
           footerCtaLabel: "See the AI solution",
           footerCtaHref: "#possibilities",
           speed: "still"
@@ -1147,7 +1147,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         ]
       },
       {
-        label: "MydreamShoots-style sample band",
+        label: "MyDreamShoots-style sample band",
         settings: {
           anchor: "samples",
           eyebrow: "Generated looks",
@@ -1241,7 +1241,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_feature_tabs: {
     type: "dreamshoot_feature_tabs",
-    label: "MydreamShoots Feature Tabs",
+    label: "MyDreamShoots Feature Tabs",
     category: "Storefront",
     description: "Hero-adjacent feature selector for photo packages, videos, virtual try-on, and background changes.",
     maxBlocks: 8,
@@ -1263,7 +1263,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [featureTabBlock],
     presets: [
       {
-        label: "MydreamShoots feature rail",
+        label: "MyDreamShoots feature rail",
         settings: {
           anchor: "features",
           eyebrow: "AI photo tools",
@@ -1301,7 +1301,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "dreamshoot_tool_collection",
     label: "Paid Tool Collection",
     category: "AI business",
-    description: "MydreamShoots-style paid tools directory that turns utility traffic into subscriptions.",
+    description: "MyDreamShoots-style paid tools directory that turns utility traffic into subscriptions.",
     maxBlocks: 36,
     settings: [
       text("anchor", "Anchor", "tools"),
@@ -1328,7 +1328,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [dreamshootToolBlock],
     presets: [
       {
-        label: "MydreamShoots paid tools directory",
+        label: "MyDreamShoots paid tools directory",
         settings: {
           anchor: "tools",
           eyebrow: "AI tools",
@@ -1354,7 +1354,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_package_taxonomy: {
     type: "dreamshoot_package_taxonomy",
-    label: "MydreamShoots Package Taxonomy",
+    label: "MyDreamShoots Package Taxonomy",
     category: "Storefront",
     description: "Reference-style package taxonomy for headshot, style, lifestyle, gala, creator, sports, and video directions.",
     maxBlocks: 20,
@@ -1377,7 +1377,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [dreamshootTaxonomyBlock],
     presets: [
       {
-        label: "MydreamShoots package categories",
+        label: "MyDreamShoots package categories",
         settings: {
           anchor: "package-taxonomy",
           eyebrow: "Photo package library",
@@ -1398,7 +1398,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_visual_proof: {
     type: "dreamshoot_visual_proof",
-    label: "MydreamShoots Visual Proof Gallery",
+    label: "MyDreamShoots Visual Proof Gallery",
     category: "Storefront",
     description: "Second-screen proof gallery that sells finished photo outcomes before features.",
     maxBlocks: 8,
@@ -1438,7 +1438,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_featured_pack: {
     type: "dreamshoot_featured_pack",
-    label: "MydreamShoots Featured Pack",
+    label: "MyDreamShoots Featured Pack",
     category: "Storefront",
     description: "Seasonal or campaign pack module with a large offer panel and image collage.",
     maxBlocks: 8,
@@ -1505,7 +1505,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_package_catalog: {
     type: "dreamshoot_package_catalog",
-    label: "MydreamShoots Package Catalog",
+    label: "MyDreamShoots Package Catalog",
     category: "Storefront",
     description: "Complete package catalog section with featured cards and a full category strip.",
     maxBlocks: 32,
@@ -1530,7 +1530,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [dreamshootCatalogPackBlock],
     presets: [
       {
-        label: "Complete MydreamShoots catalog",
+        label: "Complete MyDreamShoots catalog",
         settings: {
           anchor: "packages",
           label: "Photo package catalog",
@@ -1555,7 +1555,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
   },
   dreamshoot_flow_bridge: {
     type: "dreamshoot_flow_bridge",
-    label: "MydreamShoots Flow Bridge",
+    label: "MyDreamShoots Flow Bridge",
     category: "Storefront",
     description: "How-it-works section that bridges package browsing into pricing.",
     maxBlocks: 8,
@@ -1608,7 +1608,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("anchor", "Anchor", "start"),
       text("eyebrow", "Eyebrow", "Start studio"),
       text("title", "Title", "Generate your first private album from a secure account."),
-      textarea("subtitle", "Subtitle", "Mirrors MydreamShoots's quick login pattern while routing into the site customer system."),
+      textarea("subtitle", "Subtitle", "Mirrors MyDreamShoots's quick login pattern while routing into the site customer system."),
       text("emailPlaceholder", "Email placeholder", "you@example.com"),
       text("buttonLabel", "Email button", "Continue with email"),
       url("actionHref", "Action link", "/login"),
@@ -1647,7 +1647,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     type: "shoot_pack_marquee",
     label: "Shoot Pack Marquee",
     category: "Storefront",
-    description: "MydreamShoots-style pack strip for photo, lifestyle, creator, portrait, gala, and sports offers.",
+    description: "MyDreamShoots-style pack strip for photo, lifestyle, creator, portrait, gala, and sports offers.",
     maxBlocks: 16,
     settings: [
       text("anchor", "Anchor", "packs"),
@@ -1691,7 +1691,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     ],
     presets: [
       {
-        label: "MydreamShoots pack marquee",
+        label: "MyDreamShoots pack marquee",
         settings: {
           anchor: "packs",
           eyebrow: "Popular packs",
@@ -1750,7 +1750,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [journeyStepBlock],
     presets: [
       {
-        label: "MydreamShoots final journey CTA",
+        label: "MyDreamShoots final journey CTA",
         settings: {
           anchor: "journey",
           eyebrow: "Your photo story",
@@ -2030,7 +2030,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     blocks: [testimonialBlock],
     presets: [
       {
-        label: "MydreamShoots customer proof wall",
+        label: "MyDreamShoots customer proof wall",
         settings: {
           anchor: "reviews",
           title: "Loved by creators and solo buyers",

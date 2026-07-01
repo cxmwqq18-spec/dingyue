@@ -17,7 +17,7 @@ import {
   renderToolPage,
   resolveToolPageForSite
 } from "@/lib/storefront-render";
-import { canonicalAidreamcapesCollectionPath, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import type { PlatformState } from "@/lib/types";
@@ -47,10 +47,6 @@ const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner
 
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
-}
-
-function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
-  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
 function canUseMydreamshootsSyntheticPage(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
@@ -133,11 +129,8 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!site) return {};
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
-    redirectAidreamcapesLegacyTool(site, path[1]);
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
     if (!resolved) return {};
-    redirectMydreamshootsLegacyTool(resolved.site, path[1]);
-    redirectAidreamcapesLegacyTool(resolved.site, path[1]);
     return metadataForSeoDirectory(resolved.site, "tool", path[1]);
   }
   if (path[0] === "collections" && path[1]) {
@@ -188,6 +181,7 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
+  if (slug === "/tool") redirect("/tools");
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
@@ -204,6 +198,8 @@ export default async function HostStorefrontCatchAllPage({
     const toolSite = resolvedToolPage?.site ?? site;
     redirectMydreamshootsLegacyTool(toolSite, path[1]);
     redirectAidreamcapesLegacyTool(toolSite, path[1]);
+    const canonicalToolPath = canonicalSeoDirectoryPathForSite(toolSite, "tool", path[1]);
+    if (canonicalToolPath !== `/tools/${path[1]}`) permanentRedirect(canonicalToolPath);
   }
   const hasKnownPublicRoute =
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
@@ -233,8 +229,8 @@ export default async function HostStorefrontCatchAllPage({
     return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
-  if (collectionCategory && isAidreamcapesSite(site)) {
-    const canonicalCollectionPath = canonicalAidreamcapesCollectionPath(collectionCategory);
+  if (collectionCategory) {
+    const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionCategory);
     if (canonicalCollectionPath !== `/collections/${collectionCategory}`) permanentRedirect(canonicalCollectionPath);
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();

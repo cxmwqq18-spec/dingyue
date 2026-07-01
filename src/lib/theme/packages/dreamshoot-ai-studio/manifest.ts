@@ -3,7 +3,7 @@ import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplateLabels, dream
 
 export const dreamshootAiStudioPackage: ThemePackageManifest = {
   key: "dreamshoot-ai-studio",
-  name: "MydreamShoots Studio",
+  name: "MyDreamShoots Studio",
   description: "AI photo subscription storefront package with conversion, pricing, packages, upload, generation, progress, album, policy, help, and content templates.",
   audience: "AI photo packages, headshots, creator portraits, style previews, seasonal cards, AI video, and private album subscription stores.",
   accent: "#2f6fed",

@@ -37,7 +37,7 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 16);
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 3);
     const uniquePaths = Array.from(new Set(pathKey.split("|").filter(Boolean)))
       .sort((left, right) => pathPriority(left) - pathPriority(right))
       .slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 4);
@@ -54,7 +54,7 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
           if (cancelled) return;
           staggerTimer = window.setTimeout(() => prefetchNext(index + 1), 260);
         };
-        if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH !== "0") {
+        if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH === "1") {
           const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
           void Promise.race([
             fetch(path, { cache: "force-cache", credentials: "same-origin" }).catch(() => undefined),
