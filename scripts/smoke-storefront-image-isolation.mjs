@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import sharp from "sharp";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data/platform-state.json");
@@ -29,6 +30,35 @@ function hashFile(url) {
   return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
 
+async function perceptualHashFile(url) {
+  const filePath = localFileForUrl(url);
+  if (!fs.existsSync(filePath)) return "";
+  const { data } = await sharp(filePath)
+    .resize(9, 8, { fit: "fill" })
+    .grayscale()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  let bits = "";
+  for (let y = 0; y < 8; y += 1) {
+    for (let x = 0; x < 8; x += 1) {
+      const left = data[y * 9 + x];
+      const right = data[y * 9 + x + 1];
+      bits += left > right ? "1" : "0";
+    }
+  }
+  return bits;
+}
+
+function hammingDistance(left, right) {
+  if (!left || !right || left.length !== right.length) return Number.POSITIVE_INFINITY;
+  let distance = 0;
+  for (let index = 0; index < left.length; index += 1) {
+    if (left[index] !== right[index]) distance += 1;
+  }
+  return distance;
+}
+
 function addImage(records, siteId, scope, context, value) {
   const url = normalizeImageUrl(value);
   if (!url) return;
@@ -51,7 +81,7 @@ function collectStorefrontImages(siteId) {
 
   for (const pack of state.creativePacks ?? []) {
     if (pack.siteId !== siteId) continue;
-    addImage(records, siteId, "creative-pack-cover", `pack:${pack.slug ?? pack.id}:cover`, pack.coverImageUrl);
+    addImage(records, siteId, "creative-pack-cover", `pack:${pack.slug ?? pack.id}:cover`, pack.imageUrl ?? pack.coverImageUrl);
   }
 
   for (const category of state.creativePackCategories ?? []) {
@@ -104,6 +134,7 @@ function duplicateGroups(items, keyFn) {
 }
 
 const recordsBySite = Object.fromEntries(siteIds.map((siteId) => [siteId, collectStorefrontImages(siteId)]));
+const perceptualRecordsBySite = {};
 
 for (const siteId of siteIds) {
   const uniqueRecords = [
@@ -131,10 +162,55 @@ for (const siteId of siteIds) {
   }
 }
 
+const nearDuplicateScopes = new Set(["creative-pack-cover", "category", "catalog_pack", "taxonomy_card"]);
+const nearDuplicateThreshold = 8;
+for (const siteId of siteIds) {
+  const perceptualRecords = [];
+  const uniqueUrlRecords = [
+    ...new Map(
+      recordsBySite[siteId]
+        .filter((record) => nearDuplicateScopes.has(record.scope))
+        .map((record) => [`${record.scope}:${record.url}`, record])
+    ).values()
+  ];
+
+  for (const record of uniqueUrlRecords) {
+    const perceptualHash = await perceptualHashFile(record.url);
+    if (perceptualHash) perceptualRecords.push({ ...record, perceptualHash });
+  }
+  perceptualRecordsBySite[siteId] = perceptualRecords;
+
+  for (let leftIndex = 0; leftIndex < perceptualRecords.length; leftIndex += 1) {
+    const left = perceptualRecords[leftIndex];
+    for (let rightIndex = leftIndex + 1; rightIndex < perceptualRecords.length; rightIndex += 1) {
+      const right = perceptualRecords[rightIndex];
+      if (left.scope !== right.scope) continue;
+      if (left.url === right.url) continue;
+      if (left.context === right.context) continue;
+      const distance = hammingDistance(left.perceptualHash, right.perceptualHash);
+      if (distance > nearDuplicateThreshold) continue;
+      failures.push(
+        `near_duplicate_storefront_image:${siteId}:distance=${distance}:${left.url} (${left.context}) <> ${right.url} (${right.context})`
+      );
+    }
+  }
+}
+
 for (const left of hashesBySite.site_dreamshoot ?? []) {
   for (const right of hashesBySite.site_aidreamcapes ?? []) {
     if (left.hash !== right.hash) continue;
     failures.push(`cross_storefront_image_hash:${left.hash}:site_dreamshoot:${left.url} (${left.context}) <> site_aidreamcapes:${right.url} (${right.context})`);
+  }
+}
+
+for (const left of perceptualRecordsBySite.site_dreamshoot ?? []) {
+  for (const right of perceptualRecordsBySite.site_aidreamcapes ?? []) {
+    if (left.url === right.url) continue;
+    const distance = hammingDistance(left.perceptualHash, right.perceptualHash);
+    if (distance > nearDuplicateThreshold) continue;
+    failures.push(
+      `cross_storefront_near_duplicate_image:distance=${distance}:site_dreamshoot:${left.url} (${left.context}) <> site_aidreamcapes:${right.url} (${right.context})`
+    );
   }
 }
 
