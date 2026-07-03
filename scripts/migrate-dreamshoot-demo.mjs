@@ -487,9 +487,12 @@ function buildThemeRecord({ id, status, name, themeId, pages, settings }) {
 }
 
 const subscriptionPlans = [
-  { id: "prod_dreamshoot_starter", family: "starter", name: "Starter", monthlyPriceId: "price_dreamshoot_starter_monthly", yearlyPriceId: "price_dreamshoot_starter_yearly", monthlyAmountCents: 2450, originalAmountCents: 3500, monthlyCredits: 200, yearlyAmountCents: 14700, yearlyCredits: 2400, yearlyEquivalentMonthlyCents: 1225, featured: false, planSubtitle: "For one focused photo package", editingLabel: "Standard editing", generatedPhotos: 20, destinationCount: 2, deliveryDays: 3 },
-  { id: "prod_dreamshoot_pro", family: "pro", name: "Pro", monthlyPriceId: "price_dreamshoot_pro_monthly", yearlyPriceId: "price_dreamshoot_pro_yearly", monthlyAmountCents: 3500, originalAmountCents: 5000, monthlyCredits: 300, yearlyAmountCents: 21000, yearlyCredits: 3600, yearlyEquivalentMonthlyCents: 1750, featured: true, planSubtitle: "Best for multiple package looks", editingLabel: "Advanced editing", generatedPhotos: 40, destinationCount: 4, deliveryDays: 2 },
-  { id: "prod_dreamshoot_premium", family: "premium", name: "Premium", monthlyPriceId: "price_dreamshoot_premium_monthly", yearlyPriceId: "price_dreamshoot_premium_yearly", monthlyAmountCents: 6300, originalAmountCents: 9000, monthlyCredits: 600, yearlyAmountCents: 37800, yearlyCredits: 7200, yearlyEquivalentMonthlyCents: 3150, featured: false, planSubtitle: "For creators who want the full catalog", editingLabel: "Premium editing and retouching", generatedPhotos: 80, destinationCount: 8, deliveryDays: 1 }
+  { id: "prod_dreamshoot_starter", family: "starter", name: "Starter", audience: "couple", monthlyPriceId: "price_dreamshoot_starter_monthly", yearlyPriceId: "price_dreamshoot_starter_yearly", monthlyAmountCents: 2450, originalAmountCents: 3500, monthlyCredits: 200, yearlyAmountCents: 18000, yearlyCredits: 2400, yearlyEquivalentMonthlyCents: 1500, featured: false, bestValue: false, planSubtitle: "Perfect for couples just starting their AI journey", editingLabel: "Standard editing", generatedPhotos: 20, destinationCount: 2, deliveryDays: 3 },
+  { id: "prod_dreamshoot_pro", family: "pro", name: "Pro", audience: "couple", monthlyPriceId: "price_dreamshoot_pro_monthly", yearlyPriceId: "price_dreamshoot_pro_yearly", monthlyAmountCents: 3500, originalAmountCents: 5000, monthlyCredits: 300, yearlyAmountCents: 24000, yearlyCredits: 3600, yearlyEquivalentMonthlyCents: 2000, featured: true, bestValue: false, planSubtitle: "Most popular choice for couples", editingLabel: "Advanced editing", generatedPhotos: 40, destinationCount: 4, deliveryDays: 2 },
+  { id: "prod_dreamshoot_premium", family: "premium", name: "Premium", audience: "couple", monthlyPriceId: "price_dreamshoot_premium_monthly", yearlyPriceId: "price_dreamshoot_premium_yearly", monthlyAmountCents: 6300, originalAmountCents: 9000, monthlyCredits: 600, yearlyAmountCents: 40000, yearlyCredits: 7200, yearlyEquivalentMonthlyCents: 3333, featured: false, bestValue: true, planSubtitle: "Ultimate package for the perfect AI experience", editingLabel: "Premium editing and retouching", generatedPhotos: 80, destinationCount: 8, deliveryDays: 1 },
+  { id: "prod_dreamshoot_single_starter", family: "single_starter", name: "Single Starter", audience: "single", monthlyPriceId: "price_dreamshoot_single_starter_monthly", yearlyPriceId: "price_dreamshoot_single_starter_yearly", monthlyAmountCents: 1260, originalAmountCents: 1800, monthlyCredits: 200, yearlyAmountCents: 10800, yearlyCredits: 2400, yearlyEquivalentMonthlyCents: 900, featured: false, bestValue: false, planSubtitle: "Focused AI photos for one person", editingLabel: "Standard editing", generatedPhotos: 20, destinationCount: 2, deliveryDays: 3 },
+  { id: "prod_dreamshoot_single_pro", family: "single_pro", name: "Single Pro", audience: "single", monthlyPriceId: "price_dreamshoot_single_pro_monthly", yearlyPriceId: "price_dreamshoot_single_pro_yearly", monthlyAmountCents: 2660, originalAmountCents: 3800, monthlyCredits: 300, yearlyAmountCents: 22800, yearlyCredits: 3600, yearlyEquivalentMonthlyCents: 1900, featured: true, bestValue: false, planSubtitle: "More looks for one-person albums", editingLabel: "Advanced editing", generatedPhotos: 40, destinationCount: 4, deliveryDays: 2 },
+  { id: "prod_dreamshoot_single_premium", family: "single_premium", name: "Single Premium", audience: "single", monthlyPriceId: "price_dreamshoot_single_premium_monthly", yearlyPriceId: "price_dreamshoot_single_premium_yearly", monthlyAmountCents: 4760, originalAmountCents: 6800, monthlyCredits: 600, yearlyAmountCents: 40800, yearlyCredits: 7200, yearlyEquivalentMonthlyCents: 3400, featured: false, bestValue: true, planSubtitle: "Full creative access for solo albums", editingLabel: "Premium editing and retouching", generatedPhotos: 80, destinationCount: 8, deliveryDays: 1 }
 ];
 
 const products = subscriptionPlans.map((plan) => ({
@@ -520,6 +523,8 @@ const products = subscriptionPlans.map((plan) => ({
         discountLabel: "30% off",
         billingCadence: "monthly",
         planFamily: plan.family,
+        audience: plan.audience,
+        bestValue: plan.bestValue,
         publicReference: `MyDreamShoots ${String(plan.name).toLowerCase()} credit package`
       }
     },
@@ -546,32 +551,100 @@ const products = subscriptionPlans.map((plan) => ({
         yearlyEquivalentMonthlyCents: plan.yearlyEquivalentMonthlyCents,
         yearlySavingsLabel: "6 months free",
         planFamily: plan.family,
+        audience: plan.audience,
+        bestValue: plan.bestValue,
         publicReference: `MyDreamShoots ${String(plan.name).toLowerCase()} yearly credit package`
       }
     }
   ]
 }));
 
-products.push({
-  id: "prod_dreamshoot_boost",
-  siteId,
-  name: "Extra 150 Credits",
-  type: "credit_pack",
-  status: "active",
-  prices: [
-    {
-      id: "price_dreamshoot_boost",
-      siteId,
-      productId: "prod_dreamshoot_boost",
-      label: "Extra 150 credits",
-      amountCents: 1800,
-      currency: "usd",
-      interval: "one_time",
-      creditsGranted: 150,
-      stripePriceId: "manual_dreamshoot_boost_150"
-    }
-  ]
-});
+products.push(
+  {
+    id: "prod_dreamshoot_one_shot",
+    siteId,
+    name: "One-shot trial",
+    type: "credit_pack",
+    status: "active",
+    prices: [
+      {
+        id: "price_dreamshoot_one_shot",
+        siteId,
+        productId: "prod_dreamshoot_one_shot",
+        label: "One-shot trial",
+        amountCents: 999,
+        currency: "usd",
+        interval: "one_time",
+        creditsGranted: 40,
+        stripePriceId: envOrManualPrice("MYDREAMSHOOTS_STRIPE_PRICE_ONE_SHOT", "manual_dreamshoot_one_shot"),
+        metadata: { oneShot: true, publicReference: "MyDreamShoots one-shot trial" }
+      }
+    ]
+  },
+  {
+    id: "prod_dreamshoot_credits_small",
+    siteId,
+    name: "Small credit pack",
+    type: "credit_pack",
+    status: "active",
+    prices: [
+      {
+        id: "price_dreamshoot_credits_small",
+        siteId,
+        productId: "prod_dreamshoot_credits_small",
+        label: "Small credit pack",
+        amountCents: 1200,
+        currency: "usd",
+        interval: "one_time",
+        creditsGranted: 100,
+        stripePriceId: envOrManualPrice("MYDREAMSHOOTS_STRIPE_PRICE_CREDITS_SMALL", "manual_dreamshoot_credits_small"),
+        metadata: { packSize: "small", publicReference: "MyDreamShoots small credit pack" }
+      }
+    ]
+  },
+  {
+    id: "prod_dreamshoot_credits_medium",
+    siteId,
+    name: "Medium credit pack",
+    type: "credit_pack",
+    status: "active",
+    prices: [
+      {
+        id: "price_dreamshoot_credits_medium",
+        siteId,
+        productId: "prod_dreamshoot_credits_medium",
+        label: "Medium credit pack",
+        amountCents: 2000,
+        currency: "usd",
+        interval: "one_time",
+        creditsGranted: 200,
+        stripePriceId: envOrManualPrice("MYDREAMSHOOTS_STRIPE_PRICE_CREDITS_MEDIUM", "manual_dreamshoot_credits_medium"),
+        metadata: { packSize: "medium", publicReference: "MyDreamShoots medium credit pack" }
+      }
+    ]
+  },
+  {
+    id: "prod_dreamshoot_credits_large",
+    siteId,
+    name: "Large credit pack",
+    type: "credit_pack",
+    status: "active",
+    prices: [
+      {
+        id: "price_dreamshoot_credits_large",
+        siteId,
+        productId: "prod_dreamshoot_credits_large",
+        label: "Large credit pack",
+        amountCents: 3200,
+        currency: "usd",
+        interval: "one_time",
+        creditsGranted: 350,
+        stripePriceId: envOrManualPrice("MYDREAMSHOOTS_STRIPE_PRICE_CREDITS_LARGE", "manual_dreamshoot_credits_large"),
+        metadata: { packSize: "large", publicReference: "MyDreamShoots large credit pack" }
+      }
+    ]
+  }
+);
 
 const creativePacks = [
   ["pack_dreamshoot_headshots", "Professional Headshots", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Credit cost is shown before generation.", "headshots", 20, 20, "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],

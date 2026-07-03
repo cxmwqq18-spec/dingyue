@@ -896,6 +896,12 @@ function buildThemeSettings() {
   globalSections.footer.settings.tagline = "AI travel portraits and private destination albums from everyday uploads.";
   globalSections.footer.settings.body = "Aidreamcapes helps customers plan source photos, choose a travel package, generate destination-style portraits, and download private gallery-ready results from one account.";
   globalSections.footer.settings.bottomLine = "Source-photo planning, route-aware credits, and private album delivery.";
+  globalSections.footer.settings.instagramUrl = "https://www.instagram.com/aidreamcapes";
+  globalSections.footer.settings.facebookUrl = "https://www.facebook.com/aidreamcapes";
+  globalSections.footer.settings.pinterestUrl = "https://www.pinterest.com/aidreamcapes";
+  globalSections.footer.settings.youtubeUrl = "https://www.youtube.com/@aidreamcapes";
+  globalSections.footer.settings.twitterUrl = "https://x.com/aidreamcapes";
+  globalSections.footer.settings.showPaymentIcons = true;
   globalSections.footer.settings.contactAddress = companyAddress;
   globalSections.footer.settings.contactEmail = supportEmail;
   globalSections.footer.settings.salesEmail = salesEmail;

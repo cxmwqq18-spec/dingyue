@@ -25,6 +25,7 @@ import {
   ChevronRight,
   CloudRain,
   Clock3,
+  CreditCard,
   Download,
   Facebook,
   Globe2,
@@ -44,6 +45,7 @@ import {
   ShoppingCart,
   Sparkles,
   Tags,
+  Twitter,
   UploadCloud,
   UserRound,
   Users,
@@ -1064,12 +1066,39 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : links.slice(Math.min(4, links.length));
+  const defaultSocialUrls = isAidreamcapesFooter
+    ? {
+        instagramUrl: "https://www.instagram.com/aidreamcapes",
+        facebookUrl: "https://www.facebook.com/aidreamcapes",
+        pinterestUrl: "https://www.pinterest.com/aidreamcapes",
+        youtubeUrl: "https://www.youtube.com/@aidreamcapes",
+        twitterUrl: "https://x.com/aidreamcapes"
+      }
+    : isDreamShootFooter
+      ? {
+          instagramUrl: "https://www.instagram.com/mydreamshoots",
+          facebookUrl: "https://www.facebook.com/mydreamshoots",
+          pinterestUrl: "https://www.pinterest.com/mydreamshoots",
+          youtubeUrl: "https://www.youtube.com/@mydreamshoots",
+          twitterUrl: "https://x.com/mydreamshoots"
+        }
+      : {
+          instagramUrl: "",
+          facebookUrl: "",
+          pinterestUrl: "",
+          youtubeUrl: "",
+          twitterUrl: ""
+        };
   const socialLinks = [
-    { label: "Instagram", href: footer ? setting(footer, "instagramUrl", "") : "", icon: Instagram },
-    { label: "Facebook", href: footer ? setting(footer, "facebookUrl", "") : "", icon: Facebook },
-    { label: "Pinterest", href: footer ? setting(footer, "pinterestUrl", "") : "", icon: Pin },
-    { label: "YouTube", href: footer ? setting(footer, "youtubeUrl", "") : "", icon: Youtube }
+    { label: "Instagram", href: footer ? setting(footer, "instagramUrl", defaultSocialUrls.instagramUrl) : defaultSocialUrls.instagramUrl, icon: Instagram },
+    { label: "Facebook", href: footer ? setting(footer, "facebookUrl", defaultSocialUrls.facebookUrl) : defaultSocialUrls.facebookUrl, icon: Facebook },
+    { label: "Pinterest", href: footer ? setting(footer, "pinterestUrl", defaultSocialUrls.pinterestUrl) : defaultSocialUrls.pinterestUrl, icon: Pin },
+    { label: "YouTube", href: footer ? setting(footer, "youtubeUrl", defaultSocialUrls.youtubeUrl) : defaultSocialUrls.youtubeUrl, icon: Youtube },
+    { label: "X", href: footer ? setting(footer, "twitterUrl", defaultSocialUrls.twitterUrl) : defaultSocialUrls.twitterUrl, icon: Twitter }
   ].filter((item) => item.href);
+  const showPaymentIconsValue = footer?.settings.showPaymentIcons;
+  const showPaymentIcons = showPaymentIconsValue === undefined ? true : showPaymentIconsValue !== false && showPaymentIconsValue !== "false";
+  const paymentMethods = ["Visa", "Mastercard", "Amex"];
   const footerColumns = [
     { heading: footer ? setting(footer, "productHeading", "Product") : "Product", items: productLinks },
     { heading: footer ? setting(footer, "companyHeading", "Company") : "Company", items: companyLinks },
@@ -1141,24 +1170,6 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
                 ))}
               </dl>
             ) : null}
-            {socialLinks.length ? (
-              <div className="mt-5 flex flex-wrap items-center gap-2.5">
-                {socialLinks.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      aria-label={`${item.label} for ${readableFooterTitle}`}
-                      className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/22 hover:bg-white/[0.08]" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white"}
-                      href={item.href}
-                      key={item.label}
-                      rel={isExternalFooterLink(item.href) ? "nofollow" : undefined}
-                    >
-                      <Icon className="h-4 w-4" strokeWidth={1.8} />
-                    </Link>
-                  );
-                })}
-              </div>
-            ) : null}
           </div>
           <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-4">
             {footerColumns.map((column) => (
@@ -1187,12 +1198,44 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
               <p className={dark ? "mt-3.5 text-[0.9rem] leading-6 text-white/62" : "mt-3.5 text-[0.9rem] leading-6 text-[#625d56]"}>
                 {footer ? setting(footer, "socialBody", "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.") : "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account."}
               </p>
+              {socialLinks.length ? (
+                <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                  {socialLinks.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        aria-label={`${item.label} for ${readableFooterTitle}`}
+                        className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/24 hover:bg-white/[0.1] hover:text-white" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white"}
+                        href={item.href}
+                        key={item.label}
+                        rel={isExternalFooterLink(item.href) ? "nofollow noopener noreferrer" : undefined}
+                        target={isExternalFooterLink(item.href) ? "_blank" : undefined}
+                      >
+                        <Icon className="h-4 w-4" strokeWidth={1.8} />
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
-        <div className={dark ? "mt-5 flex flex-col gap-2 text-[11px] text-white/42 sm:flex-row sm:items-center sm:justify-between" : "mt-5 flex flex-col gap-2 text-[11px] text-[#8c7f72] sm:flex-row sm:items-center sm:justify-between"}>
-          <p>{normalizedCopyright}</p>
-          <p>{footer ? setting(footer, "bottomLine", "Monthly credits, one-time top-ups, and private galleries in one photo workspace.") : "Monthly credits, one-time top-ups, and private galleries in one photo workspace."}</p>
+        <div className={dark ? "mt-5 flex flex-col gap-3 text-[11px] text-white/48 lg:flex-row lg:items-center lg:justify-start" : "mt-5 flex flex-col gap-3 text-[11px] text-[#8c7f72] lg:flex-row lg:items-center lg:justify-start"}>
+          <p className="shrink-0">{normalizedCopyright}</p>
+          <p className="max-w-[44rem] lg:ml-8">{footer ? setting(footer, "bottomLine", "Monthly credits, one-time top-ups, and private galleries in one photo workspace.") : "Monthly credits, one-time top-ups, and private galleries in one photo workspace."}</p>
+          {showPaymentIcons ? (
+            <div aria-label="Accepted card payments" className="flex flex-wrap items-center gap-1.5 lg:ml-4">
+              {paymentMethods.map((method) => (
+                <span
+                  className={dark ? "inline-flex h-7 items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.05] px-2.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white/68" : "inline-flex h-7 items-center gap-1.5 rounded-md border border-[#ddd2c5] bg-white/75 px-2.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#625d56]"}
+                  key={method}
+                >
+                  <CreditCard className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  {method}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </footer>
@@ -1578,6 +1621,12 @@ function priceMetaBool(price: SiteProduct["prices"][number] | undefined, key: st
   if (typeof raw === "boolean") return raw;
   if (typeof raw === "string") return raw === "true";
   return fallback;
+}
+
+function productAudience(product: SiteProduct): PricingAudience {
+  const metadataAudience = product.prices.map((price) => priceMetaString(price, "audience", "")).find(Boolean) || "";
+  const identity = `${product.id} ${product.name} ${metadataAudience}`.toLowerCase();
+  return identity.includes("single") || identity.includes("solo") ? "single" : "couple";
 }
 
 function importedThemeBadge(schema: ReturnType<typeof getSectionSchema>) {
@@ -2379,10 +2428,16 @@ function searchCardsForQuery(cards: SearchResultCard[], query: string) {
 }
 
 type BillingCycle = "month" | "year";
+type PricingAudience = "couple" | "single";
 
 function billingCycleFromQuery(query: Record<string, string | string[] | undefined>): BillingCycle {
   const value = queryValue(query.billing).toLowerCase();
   return value === "year" || value === "yearly" || value === "annual" ? "year" : "month";
+}
+
+function pricingAudienceFromQuery(query: Record<string, string | string[] | undefined>): PricingAudience {
+  const value = queryValue(query.audience || query.model).toLowerCase();
+  return value === "single" || value === "solo" ? "single" : "couple";
 }
 
 function selectedCartProduct(products: SiteProduct[], query: Record<string, string | string[] | undefined>) {
@@ -7552,12 +7607,17 @@ function SectionView({
   if (section.type === "pricing_table") {
     const aidreamcapes = isAidreamcapesSite(site);
     const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
-    const displayProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
+    const pricingAudience = pricingAudienceFromQuery(renderContext.query);
+    const allSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
+    const displayProducts = allSubscriptionProducts.filter((product) => productAudience(product) === pricingAudience);
     const creditPacks = products.filter((product) => product.type === "credit_pack" && product.status === "active");
     const billingCycle = billingCycleFromQuery(renderContext.query);
     const canShowBillingSwitch = displayProducts.some((product) => productHasBillingCycle(product, "year"));
-    const monthlyHref = hrefFor(site, "/pricing?billing=monthly#plans");
-    const yearlyHref = hrefFor(site, "/pricing?billing=yearly#plans");
+    const canShowAudienceSwitch = allSubscriptionProducts.some((product) => productAudience(product) === "single") && allSubscriptionProducts.some((product) => productAudience(product) === "couple");
+    const monthlyHref = hrefFor(site, `/pricing?billing=monthly&audience=${pricingAudience}#plans`);
+    const yearlyHref = hrefFor(site, `/pricing?billing=yearly&audience=${pricingAudience}#plans`);
+    const coupleHref = hrefFor(site, `/pricing?billing=${billingCycle === "year" ? "yearly" : "monthly"}&audience=couple#plans`);
+    const singleHref = hrefFor(site, `/pricing?billing=${billingCycle === "year" ? "yearly" : "monthly"}&audience=single#plans`);
     const featuredProductId =
       displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
       displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, billingCycle), "featured", false))?.id ??
@@ -7616,9 +7676,31 @@ function SectionView({
               {setting(section, "title", "Simple, Transparent Pricing")}
             </h2>
             <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private AI route portrait packages." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
+            {!aidreamcapes ? (
+              <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. MyDreamShoots keeps pricing flexible with monthly, yearly, single-person, couple, one-shot, and extra-credit options.</p>
+            ) : null}
           </div>
+          <div className="mt-7 flex flex-wrap gap-3">
+          {canShowAudienceSwitch ? (
+            <div className="inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
+              <Link
+                aria-current={pricingAudience === "couple" ? "true" : undefined}
+                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${pricingAudience === "couple" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
+                href={coupleHref}
+              >
+                Couple
+              </Link>
+              <Link
+                aria-current={pricingAudience === "single" ? "true" : undefined}
+                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${pricingAudience === "single" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
+                href={singleHref}
+              >
+                Single
+              </Link>
+            </div>
+          ) : null}
           {canShowBillingSwitch ? (
-            <div className="mt-7 inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
+            <div className="inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
               <Link
                 aria-current={billingCycle === "month" ? "true" : undefined}
                 className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === "month" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
@@ -7635,6 +7717,7 @@ function SectionView({
               </Link>
             </div>
           ) : null}
+          </div>
           <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,0.72fr)_minmax(300px,0.28fr)]">
             <div className="grid gap-4 lg:grid-cols-3">
               {displayProducts.slice(0, 3).map((product) => {
@@ -7646,6 +7729,7 @@ function SectionView({
                 const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
                 const discountLabel = priceMetaString(price, "discountLabel", "");
                 const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
+                const bestValue = priceMetaBool(price, "bestValue", false);
                 const planSubtitle = priceMetaString(
                   price,
                   "planSubtitle",
@@ -7669,11 +7753,11 @@ function SectionView({
                 ];
                 const featureLines = priceMetaLines(price, "featuresText");
                 const features = featureLines.length ? featureLines : defaultFeatures;
-                const badgeLabel = priceMetaString(price, "badgeLabel", setting(section, "featuredBadgeLabel", "Most Popular"));
+                const badgeLabel = priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
                 const buttonLabel = priceMetaString(price, "buttonLabel", "Select plan");
                 return (
-                  <div className={`relative flex h-full flex-col rounded-[12px] border ${featured ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`} key={product.id}>
-                    {featured ? (
+                  <div className={`relative flex h-full flex-col rounded-[12px] border ${featured || bestValue ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`} key={product.id}>
+                    {featured || bestValue ? (
                       <div className="absolute left-5 top-5 rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
                         {badgeLabel}
                       </div>
@@ -7739,7 +7823,7 @@ function SectionView({
                   <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-white/66" : "mt-1 text-sm leading-6 text-white/66"}>Need extra credits? Add a one-time pack without changing your subscription.</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  {creditPacks.slice(0, 2).map((product) => {
+                  {creditPacks.slice(0, 4).map((product) => {
                     const price = productPrice(product);
                     if (!price) return null;
                     return (

@@ -13,6 +13,11 @@ const brandProfiles = [
     footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
     salesEmail: "sales@mydreamshoots.com",
+    instagramUrl: "https://www.instagram.com/mydreamshoots",
+    facebookUrl: "https://www.facebook.com/mydreamshoots",
+    pinterestUrl: "https://www.pinterest.com/mydreamshoots",
+    youtubeUrl: "https://www.youtube.com/@mydreamshoots",
+    twitterUrl: "https://x.com/mydreamshoots",
     aboutTitle: "About MyDreamShoots",
     aboutBody:
       "MyDreamShoots is a private AI photo package workspace for everyday uploads, personal AI models, visible credits, secure checkout, and customer-only gallery delivery.",
@@ -46,6 +51,11 @@ const brandProfiles = [
     footerLogoAlt: "Aidreamcapes heart logo for cinematic dreamscape portraits and private galleries",
     supportEmail: "support@aidreamcapes.com",
     salesEmail: "sales@aidreamcapes.com",
+    instagramUrl: "https://www.instagram.com/aidreamcapes",
+    facebookUrl: "https://www.facebook.com/aidreamcapes",
+    pinterestUrl: "https://www.pinterest.com/aidreamcapes",
+    youtubeUrl: "https://www.youtube.com/@aidreamcapes",
+    twitterUrl: "https://x.com/aidreamcapes",
     aboutTitle: "About Aidreamcapes",
     aboutBody:
       "Aidreamcapes is a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
@@ -204,6 +214,12 @@ function upsertFooterLinks(settings, profile) {
     contactAddress: companyAddress,
     contactEmail: profile.supportEmail,
     salesEmail: profile.salesEmail,
+    instagramUrl: profile.instagramUrl,
+    facebookUrl: profile.facebookUrl,
+    pinterestUrl: profile.pinterestUrl,
+    youtubeUrl: profile.youtubeUrl,
+    twitterUrl: profile.twitterUrl,
+    showPaymentIcons: true,
     copyright: `© 2026 ${profile.brand}. All rights reserved.`
   };
   const blocks = Array.isArray(next.globalSections.footer.blocks) ? next.globalSections.footer.blocks : [];

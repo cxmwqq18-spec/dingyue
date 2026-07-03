@@ -2214,6 +2214,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       url("facebookUrl", "Facebook", ""),
       url("pinterestUrl", "Pinterest", ""),
       url("youtubeUrl", "YouTube", ""),
+      url("twitterUrl", "X / Twitter", ""),
+      checkbox("showPaymentIcons", "Show payment icons", true),
       text("bottomLine", "Bottom line", "Private albums, live pricing, and destination photo storytelling in one storefront."),
       text("copyright", "Copyright", "All rights reserved.")
     ],

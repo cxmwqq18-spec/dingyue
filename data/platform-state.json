@@ -34820,203 +34820,6 @@
       ]
     },
     {
-      "id": "prod_dreamshoot_starter",
-      "siteId": "site_dreamshoot",
-      "name": "Starter",
-      "type": "subscription",
-      "status": "active",
-      "prices": [
-        {
-          "id": "price_dreamshoot_starter_monthly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_starter",
-          "label": "Starter",
-          "amountCents": 2450,
-          "currency": "usd",
-          "interval": "month",
-          "creditsGranted": 200,
-          "stripePriceId": "manual_price_dreamshoot_starter_monthly",
-          "metadata": {
-            "generatedPhotos": 20,
-            "destinationCount": 2,
-            "deliveryDays": 3,
-            "featured": false,
-            "planSubtitle": "For one focused photo package",
-            "editingLabel": "Standard editing",
-            "originalAmountCents": 3500,
-            "discountLabel": "30% off",
-            "billingCadence": "monthly",
-            "planFamily": "starter",
-            "publicReference": "MyDreamShoots starter credit package"
-          }
-        },
-        {
-          "id": "price_dreamshoot_starter_yearly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_starter",
-          "label": "Starter yearly",
-          "amountCents": 14700,
-          "currency": "usd",
-          "interval": "year",
-          "creditsGranted": 2400,
-          "stripePriceId": "manual_price_dreamshoot_starter_yearly",
-          "metadata": {
-            "generatedPhotos": 20,
-            "destinationCount": 2,
-            "deliveryDays": 3,
-            "featured": false,
-            "planSubtitle": "For one focused photo package",
-            "editingLabel": "Standard editing",
-            "originalAmountCents": 42000,
-            "discountLabel": "Pay 6, get 12",
-            "billingCadence": "yearly",
-            "yearlyEquivalentMonthlyCents": 1225,
-            "yearlySavingsLabel": "6 months free",
-            "planFamily": "starter",
-            "publicReference": "MyDreamShoots starter yearly credit package"
-          }
-        }
-      ]
-    },
-    {
-      "id": "prod_dreamshoot_pro",
-      "siteId": "site_dreamshoot",
-      "name": "Pro",
-      "type": "subscription",
-      "status": "active",
-      "prices": [
-        {
-          "id": "price_dreamshoot_pro_monthly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_pro",
-          "label": "Pro",
-          "amountCents": 3500,
-          "currency": "usd",
-          "interval": "month",
-          "creditsGranted": 300,
-          "stripePriceId": "manual_price_dreamshoot_pro_monthly",
-          "metadata": {
-            "generatedPhotos": 40,
-            "destinationCount": 4,
-            "deliveryDays": 2,
-            "featured": true,
-            "planSubtitle": "Best for multiple package looks",
-            "editingLabel": "Advanced editing",
-            "originalAmountCents": 5000,
-            "discountLabel": "30% off",
-            "billingCadence": "monthly",
-            "planFamily": "pro",
-            "publicReference": "MyDreamShoots pro credit package"
-          }
-        },
-        {
-          "id": "price_dreamshoot_pro_yearly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_pro",
-          "label": "Pro yearly",
-          "amountCents": 21000,
-          "currency": "usd",
-          "interval": "year",
-          "creditsGranted": 3600,
-          "stripePriceId": "manual_price_dreamshoot_pro_yearly",
-          "metadata": {
-            "generatedPhotos": 40,
-            "destinationCount": 4,
-            "deliveryDays": 2,
-            "featured": true,
-            "planSubtitle": "Best for multiple package looks",
-            "editingLabel": "Advanced editing",
-            "originalAmountCents": 60000,
-            "discountLabel": "Pay 6, get 12",
-            "billingCadence": "yearly",
-            "yearlyEquivalentMonthlyCents": 1750,
-            "yearlySavingsLabel": "6 months free",
-            "planFamily": "pro",
-            "publicReference": "MyDreamShoots pro yearly credit package"
-          }
-        }
-      ]
-    },
-    {
-      "id": "prod_dreamshoot_premium",
-      "siteId": "site_dreamshoot",
-      "name": "Premium",
-      "type": "subscription",
-      "status": "active",
-      "prices": [
-        {
-          "id": "price_dreamshoot_premium_monthly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_premium",
-          "label": "Premium",
-          "amountCents": 6300,
-          "currency": "usd",
-          "interval": "month",
-          "creditsGranted": 600,
-          "stripePriceId": "manual_price_dreamshoot_premium_monthly",
-          "metadata": {
-            "generatedPhotos": 80,
-            "destinationCount": 8,
-            "deliveryDays": 1,
-            "featured": false,
-            "planSubtitle": "For creators who want the full catalog",
-            "editingLabel": "Premium editing and retouching",
-            "originalAmountCents": 9000,
-            "discountLabel": "30% off",
-            "billingCadence": "monthly",
-            "planFamily": "premium",
-            "publicReference": "MyDreamShoots premium credit package"
-          }
-        },
-        {
-          "id": "price_dreamshoot_premium_yearly",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_premium",
-          "label": "Premium yearly",
-          "amountCents": 37800,
-          "currency": "usd",
-          "interval": "year",
-          "creditsGranted": 7200,
-          "stripePriceId": "manual_price_dreamshoot_premium_yearly",
-          "metadata": {
-            "generatedPhotos": 80,
-            "destinationCount": 8,
-            "deliveryDays": 1,
-            "featured": false,
-            "planSubtitle": "For creators who want the full catalog",
-            "editingLabel": "Premium editing and retouching",
-            "originalAmountCents": 108000,
-            "discountLabel": "Pay 6, get 12",
-            "billingCadence": "yearly",
-            "yearlyEquivalentMonthlyCents": 3150,
-            "yearlySavingsLabel": "6 months free",
-            "planFamily": "premium",
-            "publicReference": "MyDreamShoots premium yearly credit package"
-          }
-        }
-      ]
-    },
-    {
-      "id": "prod_dreamshoot_boost",
-      "siteId": "site_dreamshoot",
-      "name": "Extra 150 Credits",
-      "type": "credit_pack",
-      "status": "active",
-      "prices": [
-        {
-          "id": "price_dreamshoot_boost",
-          "siteId": "site_dreamshoot",
-          "productId": "prod_dreamshoot_boost",
-          "label": "Extra 150 credits",
-          "amountCents": 1800,
-          "currency": "usd",
-          "interval": "one_time",
-          "creditsGranted": 150,
-          "stripePriceId": "manual_dreamshoot_boost_150"
-        }
-      ]
-    },
-    {
       "id": "prod_aidreamcapes_starter",
       "siteId": "site_aidreamcapes",
       "name": "Trailhead",
@@ -35210,6 +35013,480 @@
           "interval": "one_time",
           "creditsGranted": 150,
           "stripePriceId": "manual_aidreamcapes_boost_150"
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_starter",
+      "siteId": "site_dreamshoot",
+      "name": "Starter",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_starter_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_starter",
+          "label": "Starter",
+          "amountCents": 2450,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 200,
+          "stripePriceId": "manual_price_dreamshoot_starter_monthly",
+          "metadata": {
+            "generatedPhotos": 20,
+            "destinationCount": 2,
+            "deliveryDays": 3,
+            "featured": false,
+            "planSubtitle": "Perfect for couples just starting their AI journey",
+            "editingLabel": "Standard editing",
+            "originalAmountCents": 3500,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "starter",
+            "audience": "couple",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots starter credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_starter_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_starter",
+          "label": "Starter yearly",
+          "amountCents": 18000,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 2400,
+          "stripePriceId": "manual_price_dreamshoot_starter_yearly",
+          "metadata": {
+            "generatedPhotos": 20,
+            "destinationCount": 2,
+            "deliveryDays": 3,
+            "featured": false,
+            "planSubtitle": "Perfect for couples just starting their AI journey",
+            "editingLabel": "Standard editing",
+            "originalAmountCents": 42000,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 1500,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "starter",
+            "audience": "couple",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots starter yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_pro",
+      "siteId": "site_dreamshoot",
+      "name": "Pro",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_pro_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_pro",
+          "label": "Pro",
+          "amountCents": 3500,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 300,
+          "stripePriceId": "manual_price_dreamshoot_pro_monthly",
+          "metadata": {
+            "generatedPhotos": 40,
+            "destinationCount": 4,
+            "deliveryDays": 2,
+            "featured": true,
+            "planSubtitle": "Most popular choice for couples",
+            "editingLabel": "Advanced editing",
+            "originalAmountCents": 5000,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "pro",
+            "audience": "couple",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots pro credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_pro_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_pro",
+          "label": "Pro yearly",
+          "amountCents": 24000,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 3600,
+          "stripePriceId": "manual_price_dreamshoot_pro_yearly",
+          "metadata": {
+            "generatedPhotos": 40,
+            "destinationCount": 4,
+            "deliveryDays": 2,
+            "featured": true,
+            "planSubtitle": "Most popular choice for couples",
+            "editingLabel": "Advanced editing",
+            "originalAmountCents": 60000,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 2000,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "pro",
+            "audience": "couple",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots pro yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_premium",
+      "siteId": "site_dreamshoot",
+      "name": "Premium",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_premium_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_premium",
+          "label": "Premium",
+          "amountCents": 6300,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 600,
+          "stripePriceId": "manual_price_dreamshoot_premium_monthly",
+          "metadata": {
+            "generatedPhotos": 80,
+            "destinationCount": 8,
+            "deliveryDays": 1,
+            "featured": false,
+            "planSubtitle": "Ultimate package for the perfect AI experience",
+            "editingLabel": "Premium editing and retouching",
+            "originalAmountCents": 9000,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "premium",
+            "audience": "couple",
+            "bestValue": true,
+            "publicReference": "MyDreamShoots premium credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_premium_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_premium",
+          "label": "Premium yearly",
+          "amountCents": 40000,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 7200,
+          "stripePriceId": "manual_price_dreamshoot_premium_yearly",
+          "metadata": {
+            "generatedPhotos": 80,
+            "destinationCount": 8,
+            "deliveryDays": 1,
+            "featured": false,
+            "planSubtitle": "Ultimate package for the perfect AI experience",
+            "editingLabel": "Premium editing and retouching",
+            "originalAmountCents": 108000,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 3333,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "premium",
+            "audience": "couple",
+            "bestValue": true,
+            "publicReference": "MyDreamShoots premium yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_single_starter",
+      "siteId": "site_dreamshoot",
+      "name": "Single Starter",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_single_starter_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_starter",
+          "label": "Single Starter",
+          "amountCents": 1260,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 200,
+          "stripePriceId": "manual_price_dreamshoot_single_starter_monthly",
+          "metadata": {
+            "generatedPhotos": 20,
+            "destinationCount": 2,
+            "deliveryDays": 3,
+            "featured": false,
+            "planSubtitle": "Focused AI photos for one person",
+            "editingLabel": "Standard editing",
+            "originalAmountCents": 1800,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "single_starter",
+            "audience": "single",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots single starter credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_single_starter_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_starter",
+          "label": "Single Starter yearly",
+          "amountCents": 10800,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 2400,
+          "stripePriceId": "manual_price_dreamshoot_single_starter_yearly",
+          "metadata": {
+            "generatedPhotos": 20,
+            "destinationCount": 2,
+            "deliveryDays": 3,
+            "featured": false,
+            "planSubtitle": "Focused AI photos for one person",
+            "editingLabel": "Standard editing",
+            "originalAmountCents": 21600,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 900,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "single_starter",
+            "audience": "single",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots single starter yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_single_pro",
+      "siteId": "site_dreamshoot",
+      "name": "Single Pro",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_single_pro_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_pro",
+          "label": "Single Pro",
+          "amountCents": 2660,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 300,
+          "stripePriceId": "manual_price_dreamshoot_single_pro_monthly",
+          "metadata": {
+            "generatedPhotos": 40,
+            "destinationCount": 4,
+            "deliveryDays": 2,
+            "featured": true,
+            "planSubtitle": "More looks for one-person albums",
+            "editingLabel": "Advanced editing",
+            "originalAmountCents": 3800,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "single_pro",
+            "audience": "single",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots single pro credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_single_pro_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_pro",
+          "label": "Single Pro yearly",
+          "amountCents": 22800,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 3600,
+          "stripePriceId": "manual_price_dreamshoot_single_pro_yearly",
+          "metadata": {
+            "generatedPhotos": 40,
+            "destinationCount": 4,
+            "deliveryDays": 2,
+            "featured": true,
+            "planSubtitle": "More looks for one-person albums",
+            "editingLabel": "Advanced editing",
+            "originalAmountCents": 45600,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 1900,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "single_pro",
+            "audience": "single",
+            "bestValue": false,
+            "publicReference": "MyDreamShoots single pro yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_single_premium",
+      "siteId": "site_dreamshoot",
+      "name": "Single Premium",
+      "type": "subscription",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_single_premium_monthly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_premium",
+          "label": "Single Premium",
+          "amountCents": 4760,
+          "currency": "usd",
+          "interval": "month",
+          "creditsGranted": 600,
+          "stripePriceId": "manual_price_dreamshoot_single_premium_monthly",
+          "metadata": {
+            "generatedPhotos": 80,
+            "destinationCount": 8,
+            "deliveryDays": 1,
+            "featured": false,
+            "planSubtitle": "Full creative access for solo albums",
+            "editingLabel": "Premium editing and retouching",
+            "originalAmountCents": 6800,
+            "discountLabel": "30% off",
+            "billingCadence": "monthly",
+            "planFamily": "single_premium",
+            "audience": "single",
+            "bestValue": true,
+            "publicReference": "MyDreamShoots single premium credit package"
+          }
+        },
+        {
+          "id": "price_dreamshoot_single_premium_yearly",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_single_premium",
+          "label": "Single Premium yearly",
+          "amountCents": 40800,
+          "currency": "usd",
+          "interval": "year",
+          "creditsGranted": 7200,
+          "stripePriceId": "manual_price_dreamshoot_single_premium_yearly",
+          "metadata": {
+            "generatedPhotos": 80,
+            "destinationCount": 8,
+            "deliveryDays": 1,
+            "featured": false,
+            "planSubtitle": "Full creative access for solo albums",
+            "editingLabel": "Premium editing and retouching",
+            "originalAmountCents": 81600,
+            "discountLabel": "Pay 6, get 12",
+            "billingCadence": "yearly",
+            "yearlyEquivalentMonthlyCents": 3400,
+            "yearlySavingsLabel": "6 months free",
+            "planFamily": "single_premium",
+            "audience": "single",
+            "bestValue": true,
+            "publicReference": "MyDreamShoots single premium yearly credit package"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_one_shot",
+      "siteId": "site_dreamshoot",
+      "name": "One-shot trial",
+      "type": "credit_pack",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_one_shot",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_one_shot",
+          "label": "One-shot trial",
+          "amountCents": 999,
+          "currency": "usd",
+          "interval": "one_time",
+          "creditsGranted": 40,
+          "stripePriceId": "manual_dreamshoot_one_shot",
+          "metadata": {
+            "oneShot": true,
+            "publicReference": "MyDreamShoots one-shot trial"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_credits_small",
+      "siteId": "site_dreamshoot",
+      "name": "Small credit pack",
+      "type": "credit_pack",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_credits_small",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_credits_small",
+          "label": "Small credit pack",
+          "amountCents": 1200,
+          "currency": "usd",
+          "interval": "one_time",
+          "creditsGranted": 100,
+          "stripePriceId": "manual_dreamshoot_credits_small",
+          "metadata": {
+            "packSize": "small",
+            "publicReference": "MyDreamShoots small credit pack"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_credits_medium",
+      "siteId": "site_dreamshoot",
+      "name": "Medium credit pack",
+      "type": "credit_pack",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_credits_medium",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_credits_medium",
+          "label": "Medium credit pack",
+          "amountCents": 2000,
+          "currency": "usd",
+          "interval": "one_time",
+          "creditsGranted": 200,
+          "stripePriceId": "manual_dreamshoot_credits_medium",
+          "metadata": {
+            "packSize": "medium",
+            "publicReference": "MyDreamShoots medium credit pack"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod_dreamshoot_credits_large",
+      "siteId": "site_dreamshoot",
+      "name": "Large credit pack",
+      "type": "credit_pack",
+      "status": "active",
+      "prices": [
+        {
+          "id": "price_dreamshoot_credits_large",
+          "siteId": "site_dreamshoot",
+          "productId": "prod_dreamshoot_credits_large",
+          "label": "Large credit pack",
+          "amountCents": 3200,
+          "currency": "usd",
+          "interval": "one_time",
+          "creditsGranted": 350,
+          "stripePriceId": "manual_dreamshoot_credits_large",
+          "metadata": {
+            "packSize": "large",
+            "publicReference": "MyDreamShoots large credit pack"
+          }
         }
       ]
     }
