@@ -56,7 +56,7 @@ export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial
     label: fallback?.label ?? record.label ?? row.id,
     amountCents: row.amountCents,
     currency: row.currency,
-    interval: row.interval === "one_time" ? "one_time" : "month",
+    interval: row.interval === "year" ? "year" : row.interval === "one_time" ? "one_time" : "month",
     creditsGranted: row.creditsGranted,
     stripePriceId: row.stripePriceId ?? fallback?.stripePriceId ?? `manual_${row.id}`,
     metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined)

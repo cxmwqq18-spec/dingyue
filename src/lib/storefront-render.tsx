@@ -70,7 +70,7 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     mediaAssets: getSiteMediaAssetsFromState(state, siteId),
     products: getSiteProductsFromState(state, siteId),
     siteAiApps: getSiteAppsFromState(state, siteId),
-    toolMenuItems: state.toolMenuItems.filter((item) => item.siteId === siteId)
+    toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId)
   };
 }
 
@@ -1452,7 +1452,7 @@ export async function renderCustomerWorkspacePageBySlug({
   ).toString();
   const loginPathWithNext = `${loginPath}?next=${encodeURIComponent(`${workspacePath}${queryString ? `?${queryString}` : ""}`)}`;
   const isWorkspaceRoute = slug === "/app" || slug.startsWith("/app/");
-  const initialWorkspacePanel = slug === "/app/upload" ? "upload" : "create";
+  const initialWorkspacePanel = slug === "/app/upload" ? "upload" : slug === "/app" ? "overview" : "create";
   if (slug === "/account") {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
     if (!siteId) notFound();

@@ -49,7 +49,7 @@ function toolDetailJsonFromBlock(block: SectionBlockInstance, title: string, cat
   const detailJson = block.settings?.detailJson;
   if (detailJson && typeof detailJson === "object" && !Array.isArray(detailJson)) return detailJson;
   const description = blockString(block, "description", `${title} for private AI photo packages.`);
-  const ctaLabel = categoryLabel.toLowerCase().includes("video") ? "Preview motion" : "Start a photo set";
+  const ctaLabel = categoryLabel.toLowerCase().includes("video") ? "Preview motion" : "Create my first photo set";
   return {
     title,
     subtitle: description,

@@ -15,15 +15,19 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
+  "ai-image-studio": "/tools",
   "background-changer": "/tools/route-portrait-engine",
   "background-remover": "/tools/route-portrait-engine",
   "dreamscape-generator": "/tools/route-portrait-engine",
   "image-to-video": "/tools/route-portrait-engine",
+  "image-studio": "/tools",
   "portrait-generator": "/tools/route-portrait-engine",
   "portrait-maker": "/tools/route-portrait-engine",
   "product-reverie": "/tools/route-moodboard",
   "soft-glam": "/tools/cafe-street-story",
   "couple-escape-album": "/tools/shared-route-album",
+  "wedding-portraits": "/tools",
+  "world-cup-fan-photos": "/tools",
   headshot: "/tools/route-portrait-engine"
 };
 

@@ -14,7 +14,8 @@ export function AssetsPanel({
   assets,
   createHref = "#create",
   emptyTitle = "No private uploads yet.",
-  emptyBody = "Add private source photos before creating an album request."
+  emptyBody = "Add private source photos before creating an album request.",
+  tone = "light"
 }: {
   siteId: string;
   customer: PublicCustomer;
@@ -22,6 +23,7 @@ export function AssetsPanel({
   createHref?: string;
   emptyTitle?: string;
   emptyBody?: string;
+  tone?: "light" | "dark";
 }) {
   const [items, setItems] = useState(assets);
   const [label, setLabel] = useState("reference portrait");
@@ -34,6 +36,23 @@ export function AssetsPanel({
   const safePage = Math.min(page, totalPages);
   const pageStart = (safePage - 1) * PAGE_SIZE;
   const visibleItems = items.slice(pageStart, pageStart + PAGE_SIZE);
+  const dark = tone === "dark";
+  const textClass = dark ? "text-white" : "text-[#171514]";
+  const mutedClass = dark ? "text-white/60" : "text-[#6d665f]";
+  const panelClass = dark ? "border-white/10 bg-white/[0.04]" : "border-[#eadfce] bg-[#fbf7f0]";
+  const fieldClass = dark
+    ? "border-white/12 bg-[#07090d] text-white placeholder:text-white/32 file:bg-white file:text-[#101114]"
+    : "border-[#ded5ca] bg-white text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]";
+  const dashedFieldClass = dark
+    ? "border-white/14 bg-[#07090d] text-white file:bg-white file:text-[#101114]"
+    : "border-[#cdbfae] bg-white text-[#171514] file:bg-[#171514] file:text-white";
+  const primaryClass = dark
+    ? "bg-[linear-gradient(135deg,#ff5ebd,#2f6fed,#31d4ff)] text-white"
+    : "bg-[#171514] text-white";
+  const cardClass = dark
+    ? "border-white/10 bg-[#0f131c] text-white shadow-[0_16px_48px_-40px_rgba(0,0,0,0.92)]"
+    : "border-[#e4dace] bg-white text-[#171514] shadow-[0_16px_48px_-40px_rgba(20,22,26,0.14)]";
+  const skeletonClass = dark ? "bg-white/[0.08]" : "bg-[#efe6d9]";
 
   useEffect(() => {
     setItems(assets);
@@ -126,64 +145,64 @@ export function AssetsPanel({
     <div>
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-[#171514]">Private uploads</h2>
-          <p className="mt-1 text-sm text-[#6d665f]">{message}</p>
+          <h2 className={`text-2xl font-semibold ${textClass}`}>Private uploads</h2>
+          <p className={`mt-1 text-sm ${mutedClass}`}>{message}</p>
         </div>
       </div>
       <form className="grid gap-3 md:grid-cols-[1fr_auto]" onSubmit={createAsset}>
         <div className="grid gap-3">
-          <label className="grid gap-2 text-sm font-medium text-[#171514]">
+          <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
             Image file
             <input
               accept="image/*"
-              className="rounded-[18px] border border-dashed border-[#cdbfae] bg-white px-4 py-3 text-sm text-[#171514] file:mr-4 file:rounded-full file:border-0 file:bg-[#171514] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
+              className={`rounded-[18px] border border-dashed px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold ${dashedFieldClass}`}
               multiple
               onChange={(event) => setFiles(Array.from(event.target.files ?? []))}
               type="file"
             />
           </label>
-          <label className="grid gap-2 text-sm font-medium text-[#171514]">
+          <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
             Upload label
             <input
-              className="rounded-[18px] border border-[#ded5ca] bg-white px-4 py-3 text-[#171514] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+              className={`rounded-[18px] border px-4 py-3 ${fieldClass}`}
               onChange={(event) => setLabel(event.target.value)}
               placeholder={files[0]?.name.replace(/\.[^.]+$/, "") || "reference portrait"}
               value={label}
             />
-            {files.length > 1 ? <span className="text-xs leading-5 text-[#6d665f]">Multiple uploads use each file name as its label.</span> : null}
+            {files.length > 1 ? <span className={`text-xs leading-5 ${mutedClass}`}>Multiple uploads use each file name as its label.</span> : null}
           </label>
         </div>
-        <button className="self-end rounded-[18px] bg-[#171514] px-5 py-3 text-sm font-semibold text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={pending || !files.length}>
+        <button className={`self-end rounded-[18px] px-5 py-3 text-sm font-semibold active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryClass}`} disabled={pending || !files.length}>
           <UploadCloud className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
           {pending ? "Uploading" : files.length > 1 ? "Upload photos" : "Upload photo"}
         </button>
       </form>
-      <div className="mt-4 flex flex-wrap items-center gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] px-4 py-3 text-sm text-[#625d56]">
+      <div className={`mt-4 flex flex-wrap items-center gap-3 rounded-[18px] border px-4 py-3 text-sm ${panelClass} ${mutedClass}`}>
         <span>After uploading the needed photos, return to the selected tool and start the private request.</span>
-        <a className="inline-flex rounded-full bg-[#171514] px-4 py-2 text-xs font-semibold text-white" href={createHref}>
+        <a className={`inline-flex rounded-full px-4 py-2 text-xs font-semibold ${primaryClass}`} href={createHref}>
           Continue to tool setup
         </a>
       </div>
       <div className="mt-5 grid gap-3">
         {visibleItems.length ? (
           visibleItems.map((asset) => (
-            <div className="grid gap-3 rounded-[20px] border border-[#e4dace] bg-white p-4 text-sm shadow-[0_16px_48px_-40px_rgba(20,22,26,0.14)] md:grid-cols-[92px_1fr_0.32fr_0.4fr]" key={asset.id}>
-              <div className="overflow-hidden rounded-[16px] bg-[#efe6d9]">
+            <div className={`grid gap-3 rounded-[20px] border p-4 text-sm md:grid-cols-[92px_1fr_0.32fr_0.4fr] ${cardClass}`} key={asset.id}>
+              <div className={`overflow-hidden rounded-[16px] ${dark ? "bg-white/[0.06]" : "bg-[#efe6d9]"}`}>
                 <img className="aspect-[4/5] h-full w-full object-cover" src={asset.previewUrl} alt={asset.label} />
               </div>
               <span className="min-w-0">
-                <span className="block font-medium text-[#171514]">{asset.label}</span>
-                <span className="mt-1 inline-flex rounded-full border border-[#eadfce] bg-[#fbf7f0] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#8a7a6d]">
+                <span className={`block font-medium ${textClass}`}>{asset.label}</span>
+                <span className={`mt-1 inline-flex rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] ${dark ? "border-white/10 bg-white/[0.06] text-white/54" : "border-[#eadfce] bg-[#fbf7f0] text-[#8a7a6d]"}`}>
                   {asset.role === "input" ? "source photo" : "gallery image"}
                 </span>
-                <span className="mt-2 block text-xs text-[#8a7a6d]">{asset.role === "input" ? "Private source image" : "Private gallery image"}</span>
+                <span className={`mt-2 block text-xs ${mutedClass}`}>{asset.role === "input" ? "Private source image" : "Private gallery image"}</span>
               </span>
-              <span className="font-mono text-[#625d56]">{asset.mimeType}</span>
+              <span className={`font-mono ${mutedClass}`}>{asset.mimeType}</span>
               <span className="flex gap-2 md:justify-end">
-                <button className="rounded-[14px] border border-[#ded5ca] bg-[#fbf7f0] px-3 py-2 text-[#171514] active:scale-[0.98]" onClick={() => downloadAsset(asset.id)} type="button">
+                <button className={`rounded-[14px] border px-3 py-2 active:scale-[0.98] ${dark ? "border-white/10 bg-white/[0.06] text-white" : "border-[#ded5ca] bg-[#fbf7f0] text-[#171514]"}`} onClick={() => downloadAsset(asset.id)} type="button">
                   <Download className="h-4 w-4" strokeWidth={1.8} />
                 </button>
-                <button className="rounded-[14px] border border-[#ded5ca] bg-[#fbf7f0] px-3 py-2 text-[#8f4d3a] active:scale-[0.98]" onClick={() => deleteAsset(asset.id)} type="button">
+                <button className={`rounded-[14px] border px-3 py-2 active:scale-[0.98] ${dark ? "border-white/10 bg-white/[0.06] text-[#ff8a8a]" : "border-[#ded5ca] bg-[#fbf7f0] text-[#8f4d3a]"}`} onClick={() => deleteAsset(asset.id)} type="button">
                   <Trash2 className="h-4 w-4" strokeWidth={1.8} />
                 </button>
               </span>
@@ -192,36 +211,36 @@ export function AssetsPanel({
         ) : loadingAssets ? (
           <div className="grid gap-3" aria-busy="true" aria-label="Loading private uploads">
             {[0, 1, 2].map((item) => (
-              <div className="grid gap-3 rounded-[20px] border border-[#e4dace] bg-white p-4 md:grid-cols-[92px_1fr_0.32fr_0.4fr]" key={item}>
-                <div className="aspect-[4/5] rounded-[16px] bg-[#efe6d9]" />
+              <div className={`grid gap-3 rounded-[20px] border p-4 md:grid-cols-[92px_1fr_0.32fr_0.4fr] ${cardClass}`} key={item}>
+                <div className={`aspect-[4/5] rounded-[16px] ${skeletonClass}`} />
                 <div className="grid content-start gap-3">
-                  <div className="h-4 w-40 rounded-full bg-[#efe6d9]" />
-                  <div className="h-6 w-28 rounded-full bg-[#fbf7f0]" />
-                  <div className="h-3 w-36 rounded-full bg-[#efe6d9]" />
+                  <div className={`h-4 w-40 rounded-full ${skeletonClass}`} />
+                  <div className={`h-6 w-28 rounded-full ${dark ? "bg-white/[0.05]" : "bg-[#fbf7f0]"}`} />
+                  <div className={`h-3 w-36 rounded-full ${skeletonClass}`} />
                 </div>
-                <div className="h-4 w-24 rounded-full bg-[#efe6d9]" />
+                <div className={`h-4 w-24 rounded-full ${skeletonClass}`} />
                 <div className="flex gap-2 md:justify-end">
-                  <div className="h-9 w-10 rounded-[14px] bg-[#fbf7f0]" />
-                  <div className="h-9 w-10 rounded-[14px] bg-[#fbf7f0]" />
+                  <div className={`h-9 w-10 rounded-[14px] ${dark ? "bg-white/[0.05]" : "bg-[#fbf7f0]"}`} />
+                  <div className={`h-9 w-10 rounded-[14px] ${dark ? "bg-white/[0.05]" : "bg-[#fbf7f0]"}`} />
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="rounded-[20px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-5 text-sm text-[#6d665f]">
-            <p className="font-semibold text-[#171514]">{emptyTitle}</p>
+          <div className={`rounded-[20px] border border-dashed p-5 text-sm ${dark ? "border-white/12 bg-white/[0.035] text-white/62" : "border-[#d8cab9] bg-[#fbf7f0] text-[#6d665f]"}`}>
+            <p className={`font-semibold ${textClass}`}>{emptyTitle}</p>
             <p className="mt-2 leading-6">{emptyBody}</p>
           </div>
         )}
       </div>
       {totalPages > 1 ? (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#6d665f]">
+        <div className={`mt-4 flex flex-wrap items-center justify-between gap-3 text-xs ${mutedClass}`}>
           <span className="whitespace-nowrap">
             Page {safePage} of {totalPages} · {items.length} uploads
           </span>
           <div className="flex items-center gap-2">
             <button
-              className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#ded5ca] bg-white px-3 font-semibold text-[#171514] disabled:cursor-not-allowed disabled:opacity-45"
+              className={`inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border px-3 font-semibold disabled:cursor-not-allowed disabled:opacity-45 ${dark ? "border-white/10 bg-white/[0.06] text-white" : "border-[#ded5ca] bg-white text-[#171514]"}`}
               disabled={safePage <= 1}
               onClick={() => setPage((current) => Math.max(1, current - 1))}
               type="button"
@@ -229,7 +248,7 @@ export function AssetsPanel({
               Previous
             </button>
             <button
-              className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border border-[#ded5ca] bg-white px-3 font-semibold text-[#171514] disabled:cursor-not-allowed disabled:opacity-45"
+              className={`inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full border px-3 font-semibold disabled:cursor-not-allowed disabled:opacity-45 ${dark ? "border-white/10 bg-white/[0.06] text-white" : "border-[#ded5ca] bg-white text-[#171514]"}`}
               disabled={safePage >= totalPages}
               onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
               type="button"

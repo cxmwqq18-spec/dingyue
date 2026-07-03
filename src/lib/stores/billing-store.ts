@@ -7,9 +7,24 @@ import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
 
 type Tx = Prisma.TransactionClient;
+const validPriceIntervals = ["month", "year", "one_time"] as const;
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
+}
+
+function isSubscriptionInterval(interval: Price["interval"] | string): boolean {
+  return interval === "month" || interval === "year";
+}
+
+function periodEndForInterval(interval: Price["interval"] | string): Date {
+  const periodEnd = new Date();
+  if (interval === "year") {
+    periodEnd.setFullYear(periodEnd.getFullYear() + 1);
+  } else {
+    periodEnd.setMonth(periodEnd.getMonth() + 1);
+  }
+  return periodEnd;
 }
 
 async function readCustomerForUpdate(tx: Tx, siteId: string, customerId: string) {
@@ -64,7 +79,7 @@ export async function upsertProductPriceRelational(params: {
     if (!label) throw new StoreError("price_label_required", 400);
     if (!Number.isInteger(params.amountCents) || params.amountCents < 0) throw new StoreError("invalid_price_amount", 400);
     if (!currency) throw new StoreError("invalid_price_currency", 400);
-    if (!["month", "one_time"].includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
+    if (!validPriceIntervals.includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
     if (!Number.isInteger(params.creditsGranted) || params.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
 
     const priceId = params.priceId ?? uid("price");
@@ -125,7 +140,7 @@ export async function createProductWithPriceRelational(params: {
     if (!label) throw new StoreError("price_label_required", 400);
     if (!Number.isInteger(params.price.amountCents) || params.price.amountCents < 0) throw new StoreError("invalid_price_amount", 400);
     if (!currency) throw new StoreError("invalid_price_currency", 400);
-    if (!["month", "one_time"].includes(params.price.interval)) throw new StoreError("invalid_price_interval", 400);
+    if (!validPriceIntervals.includes(params.price.interval)) throw new StoreError("invalid_price_interval", 400);
     if (!Number.isInteger(params.price.creditsGranted) || params.price.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
 
     const productId = uid("prod");
@@ -321,9 +336,8 @@ export async function completeAdminCheckoutRelational(params: {
     });
 
     let subscriptionRow: Prisma.SubscriptionGetPayload<object> | undefined;
-    if (price.interval === "month" || price.product.type === "subscription") {
-      const periodEnd = new Date();
-      periodEnd.setMonth(periodEnd.getMonth() + 1);
+    if (isSubscriptionInterval(price.interval) || price.product.type === "subscription") {
+      const periodEnd = periodEndForInterval(price.interval);
       await tx.subscription.updateMany({
         where: {
           siteId: params.siteId,
@@ -537,11 +551,10 @@ export async function recordStripeWebhookRelational(payload: {
     });
 
     let subscriptionRow: Prisma.SubscriptionGetPayload<object> | undefined;
-    if (price && (price.interval === "month" || price.productId)) {
+    if (price && (isSubscriptionInterval(price.interval) || price.productId)) {
       const product = await tx.product.findFirst({ where: { siteId, id: price.productId } });
-      if (product?.type === "subscription" || price.interval === "month") {
-        const periodEnd = new Date();
-        periodEnd.setMonth(periodEnd.getMonth() + 1);
+      if (product?.type === "subscription" || isSubscriptionInterval(price.interval)) {
+        const periodEnd = periodEndForInterval(price.interval);
         const stripeSubscriptionId =
           payload.data?.object?.subscription ??
           (payload.data?.object?.id?.startsWith("sub_") ? payload.data.object.id : undefined) ??

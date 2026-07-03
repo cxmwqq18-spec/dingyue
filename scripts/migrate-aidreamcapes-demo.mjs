@@ -267,6 +267,11 @@ const brandReplacements = [
   ["Noah", "Julian"],
   ["AI route portrait packages", "AI travel escape portraits"],
   ["route portrait packages", "travel packages"],
+  ["Browse packages", "Travel Packages"],
+  ["Create my first photo set", "Create travel portraits"],
+  ["Photo Packages", "Travel Packages"],
+  ["Return to AI photo packages, pricing, sign-in, or your private Aidreamcapes workspace.", "Return to travel packages, pricing, sign-in, or your private Aidreamcapes workspace."],
+  ["Compare Aidreamcapes plans, shown before generation, one-time top-ups, private uploads, and destination gallery delivery before creating a travel portrait request.", "Compare Aidreamcapes plans, visible credit costs, one-time top-ups, private uploads, and destination gallery delivery before creating a travel portrait request."],
   ["Photo packages", "Travel packages"],
   ["private AI photo workspace", "private cinematic escape workspace"],
   ["private photo workspace", "private escape portrait workspace"],
@@ -1413,7 +1418,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
         aidreamcapesPackImages.postcard
       ].join("|"),
       heroVisualOverride: aidreamcapesPackImages.dreamscape,
-      socialProofLabel: "4.9/5 from private travel album customers",
+      socialProofLabel: "Private route galleries for travel portraits",
       primaryCta: "Start a package",
       primaryHref: "/login",
       secondaryCta: "View travel packages",
@@ -1575,7 +1580,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
       subtitle: "Choose a travel direction, add source-photo context, approve the credit hold, and review finished portraits in your account.",
       primaryCta: "Start a travel set",
       primaryHref: "/login",
-      secondaryCta: "Browse packages",
+      secondaryCta: "Travel Packages",
       secondaryHref: "/collections"
     };
   });
@@ -1748,6 +1753,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
   if (mapping.slug === "/404") {
     if (pageJson.sections.not_found_1?.settings) {
       syncSectionCopy(pageJson.sections.not_found_1, {
+        subtitle: "Return to travel packages, pricing, sign-in, or your private Aidreamcapes workspace.",
         secondaryCta: "View travel packages"
       });
     }
@@ -1813,30 +1819,70 @@ function buildThemeRecord({ id, status, name, themeId, pages, settings }) {
   };
 }
 
-const products = [
-  ["prod_aidreamcapes_starter", "Trailhead", "price_aidreamcapes_starter", 3500, 200, false, "For one focused route portrait album", "Source-photo review", 20, 2, 3],
-  ["prod_aidreamcapes_pro", "Wayfinder", "price_aidreamcapes_pro", 5000, 300, true, "For testing several destination moods", "Route-aware editing", 40, 4, 2],
-  ["prod_aidreamcapes_premium", "Field Atlas", "price_aidreamcapes_premium", 9000, 600, false, "For creators planning a full travel image library", "Premium scene continuity", 80, 8, 1]
-].map(([id, name, priceId, amountCents, creditsGranted, featured, planSubtitle, editingLabel, generatedPhotos, destinationCount, deliveryDays]) => {
-  const priceEnvName = `AIDREAMCAPES_STRIPE_PRICE_${String(name).toUpperCase()}`;
+const subscriptionPlans = [
+  { id: "prod_aidreamcapes_starter", family: "trailhead", name: "Trailhead", monthlyPriceId: "price_aidreamcapes_trailhead_monthly", yearlyPriceId: "price_aidreamcapes_trailhead_yearly", monthlyAmountCents: 2450, originalAmountCents: 3500, monthlyCredits: 200, yearlyAmountCents: 14700, yearlyCredits: 2400, yearlyEquivalentMonthlyCents: 1225, featured: false, planSubtitle: "For one focused route portrait album", editingLabel: "Source-photo review", generatedPhotos: 20, destinationCount: 2, deliveryDays: 3 },
+  { id: "prod_aidreamcapes_pro", family: "wayfinder", name: "Wayfinder", monthlyPriceId: "price_aidreamcapes_wayfinder_monthly", yearlyPriceId: "price_aidreamcapes_wayfinder_yearly", monthlyAmountCents: 3500, originalAmountCents: 5000, monthlyCredits: 300, yearlyAmountCents: 21000, yearlyCredits: 3600, yearlyEquivalentMonthlyCents: 1750, featured: true, planSubtitle: "For testing several destination moods", editingLabel: "Route-aware editing", generatedPhotos: 40, destinationCount: 4, deliveryDays: 2 },
+  { id: "prod_aidreamcapes_premium", family: "field_atlas", name: "Field Atlas", monthlyPriceId: "price_aidreamcapes_field_atlas_monthly", yearlyPriceId: "price_aidreamcapes_field_atlas_yearly", monthlyAmountCents: 6300, originalAmountCents: 9000, monthlyCredits: 600, yearlyAmountCents: 37800, yearlyCredits: 7200, yearlyEquivalentMonthlyCents: 3150, featured: false, planSubtitle: "For creators planning a full travel image library", editingLabel: "Premium scene continuity", generatedPhotos: 80, destinationCount: 8, deliveryDays: 1 }
+];
+
+const products = subscriptionPlans.map((plan) => {
+  const envPrefix = `AIDREAMCAPES_STRIPE_PRICE_${plan.family.toUpperCase()}`;
   return {
-  id,
+  id: plan.id,
   siteId,
-  name,
+  name: plan.name,
   type: "subscription",
   status: "active",
   prices: [
     {
-      id: priceId,
+      id: plan.monthlyPriceId,
       siteId,
-      productId: id,
-      label: name,
-      amountCents,
+      productId: plan.id,
+      label: plan.name,
+      amountCents: plan.monthlyAmountCents,
       currency: "usd",
       interval: "month",
-      creditsGranted,
-      stripePriceId: envOrManualPrice(priceEnvName, `manual_${priceId}`),
-      metadata: { generatedPhotos, destinationCount, deliveryDays, featured, planSubtitle, editingLabel, publicReference: `Aidreamcapes ${String(name).toLowerCase()} credit plan` }
+      creditsGranted: plan.monthlyCredits,
+      stripePriceId: envOrManualPrice(`${envPrefix}_MONTHLY`, `manual_${plan.monthlyPriceId}`),
+      metadata: {
+        generatedPhotos: plan.generatedPhotos,
+        destinationCount: plan.destinationCount,
+        deliveryDays: plan.deliveryDays,
+        featured: plan.featured,
+        planSubtitle: plan.planSubtitle,
+        editingLabel: plan.editingLabel,
+        originalAmountCents: plan.originalAmountCents,
+        discountLabel: "Route launch price",
+        billingCadence: "monthly",
+        planFamily: plan.family,
+        publicReference: `Aidreamcapes ${String(plan.name).toLowerCase()} monthly route credit plan`
+      }
+    },
+    {
+      id: plan.yearlyPriceId,
+      siteId,
+      productId: plan.id,
+      label: `${plan.name} yearly`,
+      amountCents: plan.yearlyAmountCents,
+      currency: "usd",
+      interval: "year",
+      creditsGranted: plan.yearlyCredits,
+      stripePriceId: envOrManualPrice(`${envPrefix}_YEARLY`, `manual_${plan.yearlyPriceId}`),
+      metadata: {
+        generatedPhotos: plan.generatedPhotos,
+        destinationCount: plan.destinationCount,
+        deliveryDays: plan.deliveryDays,
+        featured: plan.featured,
+        planSubtitle: plan.planSubtitle,
+        editingLabel: plan.editingLabel,
+        originalAmountCents: plan.originalAmountCents * 12,
+        discountLabel: "Pay 6, get 12",
+        billingCadence: "yearly",
+        yearlyEquivalentMonthlyCents: plan.yearlyEquivalentMonthlyCents,
+        yearlySavingsLabel: "6 months free",
+        planFamily: plan.family,
+        publicReference: `Aidreamcapes ${String(plan.name).toLowerCase()} yearly route credit plan`
+      }
     }
   ]
   };
@@ -1858,7 +1904,7 @@ products.push({
       currency: "usd",
       interval: "one_time",
       creditsGranted: 150,
-      stripePriceId: envOrManualPrice("AIDREAMCAPES_STRIPE_PRICE_BOOST", "manual_aidreamcapes_boost_150")
+      stripePriceId: envOrManualPrice("AIDREAMCAPES_STRIPE_PRICE_BOOST_150", "manual_aidreamcapes_boost_150")
     }
   ]
 });
@@ -2117,7 +2163,7 @@ state.subscriptions = replaceWhere(state.subscriptions ?? [], (item) => item.sit
     siteId,
     customerId: "cust_aidreamcapes_aria",
     productId: "prod_aidreamcapes_pro",
-    priceId: "price_aidreamcapes_pro",
+    priceId: "price_aidreamcapes_wayfinder_monthly",
     stripeSubscriptionId: "sub_demo_aidreamcapes_voyage_300",
     status: "active",
     currentPeriodEnd: "2026-07-27T00:00:00.000Z",
@@ -2131,7 +2177,7 @@ state.orders = replaceWhere(state.orders ?? [], (item) => item.siteId === siteId
     siteId,
     customerId: "cust_aidreamcapes_aria",
     status: "fulfilled",
-    amountCents: 5000,
+    amountCents: 3500,
     currency: "usd",
     credits: 300,
     sourceId: "cs_demo_aidreamcapes_voyage_001",

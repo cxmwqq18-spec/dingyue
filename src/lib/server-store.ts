@@ -76,7 +76,7 @@ import type {
   ThemeSettings,
   ThemeSettingValue
 } from "./types";
-import { resolveMediaAssetUrl } from "@/lib/media";
+import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
 
@@ -202,6 +202,19 @@ function safeCustomerAssetRelativePath(storageKey: string): string {
 
 function customerAssetFilePath(storageKey: string): string {
   return path.join(customerAssetRoot, safeCustomerAssetRelativePath(storageKey));
+}
+
+function customerAssetFileExists(storageKey: string): boolean {
+  try {
+    return fs.existsSync(customerAssetFilePath(storageKey));
+  } catch {
+    return false;
+  }
+}
+
+function isCustomerAssetStorageKey(storageKey: string | undefined): storageKey is string {
+  const normalized = storageKey?.trim().replace(/\\/g, "/").replace(/^\/+/, "");
+  return Boolean(normalized && (normalized.startsWith("customer-assets/") || (normalized.startsWith("sites/") && normalized.includes("/customers/"))));
 }
 
 type TextReplacement = {
@@ -1490,11 +1503,17 @@ export function toThemeRuntimeJob(job: GenerationJob): ThemeRuntimeJob {
 
 export function toThemeRuntimeAsset(state: PlatformState, asset: AssetUpload): ThemeRuntimeAsset {
   const site = runtimeSiteForState(state, asset.siteId);
+  const storageKey = asset.storageKey?.trim();
+  const previewUrl = site
+    ? isCustomerAssetStorageKey(storageKey) && !customerAssetFileExists(storageKey)
+      ? fallbackImageForSeed(`${site.slug}-${asset.id}-${storageKey}`)
+      : resolveMediaAssetUrl(site, storageKey)
+    : "";
   return {
     id: asset.id,
     jobId: asset.jobId,
     label: asset.label,
-    previewUrl: site ? resolveMediaAssetUrl(site, asset.storageKey) : "",
+    previewUrl,
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,
@@ -3129,7 +3148,7 @@ export function createProductPrice(params: {
     if (!label) throw new StoreError("price_label_required", 400);
     if (!Number.isInteger(params.amountCents) || params.amountCents < 0) throw new StoreError("invalid_price_amount", 400);
     if (!currency) throw new StoreError("invalid_price_currency", 400);
-    if (!["month", "one_time"].includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
+    if (!["month", "year", "one_time"].includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
     if (!Number.isInteger(params.creditsGranted) || params.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
     const priceId = uid("price");
     const price: Price = {

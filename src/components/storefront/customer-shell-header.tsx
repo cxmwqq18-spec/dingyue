@@ -25,8 +25,8 @@ const aidreamcapesPackageGroups = [
     icon: Map,
     items: [
       { label: "Route Portrait Albums", href: "/collections/route-portrait-albums" },
-      { label: "Coastal Light Sets", href: "/collections/coastal-getaways" },
-      { label: "Old Quarter Walks", href: "/collections/old-city-walks" },
+      { label: "Coastal Light Sets", href: "/collections/coastal-light-sets" },
+      { label: "Old Quarter Walks", href: "/collections/cafe-corner-stories" },
       { label: "Island Balcony Scenes", href: "/collections/island-resort-scenes" }
     ]
   },
@@ -35,9 +35,9 @@ const aidreamcapesPackageGroups = [
     accent: "#c084fc",
     icon: Mountain,
     items: [
-      { label: "Alpine Trail Frames", href: "/collections/mountain-trails" },
-      { label: "Roadside Escape Frames", href: "/collections/road-trip-frames" },
-      { label: "Scenic Outlooks", href: "/collections/scenic-overlooks" }
+      { label: "Alpine Trail Frames", href: "/collections/cinematic-travel" },
+      { label: "Roadside Escape Frames", href: "/collections/cinematic-travel" },
+      { label: "Scenic Outlooks", href: "/collections/golden-hour-route-stories" }
     ]
   },
   {
@@ -45,9 +45,9 @@ const aidreamcapesPackageGroups = [
     accent: "#34d399",
     icon: Coffee,
     items: [
-      { label: "Cafe & Street Stories", href: "/collections/cafe-street-stories" },
-      { label: "Route Moodboards", href: "/collections/itinerary-moodboards" },
-      { label: "Postcard Story Sets", href: "/collections/postcard-social-sets" }
+      { label: "Cafe & Street Stories", href: "/collections/cafe-corner-stories" },
+      { label: "Route Moodboards", href: "/collections/route-moodboard" },
+      { label: "Postcard Story Sets", href: "/collections/social-keepsakes" }
     ]
   }
 ];
@@ -109,9 +109,9 @@ const aidreamcapesToolGroups = [
     accent: "#c084fc",
     icon: Route,
     items: [
-      { label: "Scenic Overlook Story Maker", href: "/tools/scenic-overlook-story" },
+      { label: "Scenic Overlook Story Maker", href: "/tools/golden-hour-route-story" },
       { label: "Alpine Trail Frame Scene Tool", href: "/tools/cinematic-travel" },
-      { label: "Old Quarter Walk Portrait Tool", href: "/tools/travel-profile-story" }
+      { label: "Old Quarter Walk Portrait Tool", href: "/tools/cafe-street-story" }
     ]
   },
   {
@@ -150,8 +150,8 @@ function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo pac
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
               </summary>
               <div className="mt-3 grid gap-2">
-                {group.items.map((item) => (
-                  <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={item.href}>
+                {group.items.map((item, itemIndex) => (
+                  <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${itemIndex}`}>
                     <span>{item.label}</span>
                     <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
                   </StorefrontInstantLink>
@@ -200,7 +200,7 @@ function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; g
               {group.items.map((item, index) => {
                 const Icon = icons[(groupIndex + index) % icons.length];
                 return (
-                  <StorefrontInstantLink className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={item.href}>
+                  <StorefrontInstantLink className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${index}`}>
                     <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white" strokeWidth={1.8} />
                     <span>{item.label}</span>
                   </StorefrontInstantLink>
@@ -231,7 +231,7 @@ export function CustomerShellHeader({
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const logoText = site.branding.logoText || site.name || (isAidreamcapes ? "Aidreamcapes" : "MyDreamShoots");
+  const logoText = isAidreamcapes ? "Aidreamcapes" : "MyDreamShoots";
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || dreamshootLogoSrc;
   const activePackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
@@ -244,12 +244,12 @@ export function CustomerShellHeader({
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className="mx-auto grid max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
-          {isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create realistic AI photo packages from everyday uploads."}
+          {isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create private AI photo sets from everyday selfies."}
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${logoText} home`} className="flex min-w-0 items-center gap-3" href={basePath} title={`${logoText} home`}>
             <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
-              <img className="h-9 w-9 object-contain" src={logoSrc} alt="" aria-hidden="true" />
+              <img className="h-9 w-9 object-contain" src={logoSrc} alt="" aria-hidden="true" width={36} height={36} />
             </span>
             <span className="min-w-0">
               <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>
@@ -260,7 +260,7 @@ export function CustomerShellHeader({
           <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label={isAidreamcapes ? "Travel Packages" : "Photo Packages"}
+              label={isAidreamcapes ? "Travel Packages" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
             >
@@ -274,7 +274,7 @@ export function CustomerShellHeader({
             >
               <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/how-it-works`}>
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#workflow`}>
               How it works
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>

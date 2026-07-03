@@ -411,7 +411,7 @@ export interface Price {
   label: string;
   amountCents: number;
   currency: string;
-  interval: "month" | "one_time";
+  interval: "month" | "year" | "one_time";
   creditsGranted: number;
   stripePriceId: string;
   metadata?: Record<string, string | number | boolean>;

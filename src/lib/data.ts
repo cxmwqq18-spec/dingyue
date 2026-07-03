@@ -84,7 +84,7 @@ const publishedSettings: ThemeSettings = {
       mobileLabel: "Menu"
     }, [
       { id: "global_header_tools", type: "menu_link", settings: { label: "Tools", href: "#tools" } },
-      { id: "global_header_packages", type: "menu_link", settings: { label: "Photo Packages", href: "#packages" } },
+      { id: "global_header_packages", type: "menu_link", settings: { label: "Browse packages", href: "#packages" } },
       { id: "global_header_blog", type: "menu_link", settings: { label: "Blog", href: "/policies/privacy" } }
     ]),
     footer: section("footer", {
@@ -349,9 +349,9 @@ const dreamShootHomeSections = {
     subtitle: "World Cup, gala, travel, headshot, beauty, try-on, creator, and editorial packs give customers clear outcomes to choose from.",
     source: "creative_packs"
   }, [
-    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
-    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "40 photos", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
-    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "20 photos", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/gala-photo" } }
+    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "Private gallery", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
+    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "Private gallery", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
+    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "Private gallery", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/gala-photo" } }
   ]),
   launcher_1: section("ai_feature_launcher", {
     anchor: "features",
@@ -402,7 +402,7 @@ const homeJson: ThemePageJson = {
   sections: {
     hero_1: section("hero", {
       eyebrow: "",
-      headline: "AI photo packages that feel real",
+      headline: "Studio-quality AI photos from the selfies on your phone.",
       subheadline:
         "Turn everyday uploads into headshots, creator portraits, World Cup fan photos, gala scenes, travel looks, and short video-ready images.",
       mediaAssetId: "media_lumen_editorial_hero",
@@ -427,7 +427,7 @@ const homeJson: ThemePageJson = {
       title: "Trusted by customers creating headshots, fan photos, and private albums",
       style: "dark"
     }, [
-      { id: "logo_reviews", type: "logo", settings: { name: "5-star reviews", imageUrl: "", badge: "Proof" } },
+      { id: "logo_reviews", type: "logo", settings: { name: "Use cases", imageUrl: "", badge: "Proof" } },
       { id: "logo_packages", type: "logo", settings: { name: "Photo Packages", imageUrl: "", badge: "Catalog" } },
       { id: "logo_model", type: "logo", settings: { name: "Personal AI Model", imageUrl: "", badge: "Private" } },
       { id: "logo_video", type: "logo", settings: { name: "AI Video", imageUrl: "", badge: "Motion" } },

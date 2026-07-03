@@ -9,6 +9,18 @@ import { CustomerAssetReviewPanel } from "@/components/admin/customer-asset-revi
 import { ErpSection, ErpStatGrid } from "@/components/admin/erp-primitives";
 import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import type { Album, AssetUpload, CreativePack, CustomerModel, PublicCustomer, SiteAdmin } from "@/lib/types";
+import type { JobStatus } from "@/lib/types";
+
+type CustomerAssetJob = {
+  id: string;
+  customerId: string;
+  status: JobStatus;
+  sourceAssetIds: string[];
+  outputStorageKeys: string[];
+  error?: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 type CustomersPagePayload = {
   customers?: PublicCustomer[];
@@ -16,6 +28,7 @@ type CustomersPagePayload = {
   albums?: Album[];
   packs?: CreativePack[];
   customerAssets?: AssetUpload[];
+  customerAssetJobs?: CustomerAssetJob[];
   siteAdmins?: SiteAdmin[];
   signupCreditGrant: number;
   error?: string;
@@ -80,8 +93,14 @@ function mergePayload(current: CustomersPagePayload | null, next: CustomersPageP
     albums: next.albums ?? current?.albums,
     packs: next.packs ?? current?.packs,
     customerAssets: next.customerAssets ?? current?.customerAssets,
+    customerAssetJobs: next.customerAssetJobs ?? current?.customerAssetJobs,
     siteAdmins: next.siteAdmins ?? current?.siteAdmins
   };
+}
+
+function isAbortError(error: unknown): boolean {
+  return error instanceof DOMException && error.name === "AbortError"
+    || error instanceof Error && (error.name === "AbortError" || error.message.toLowerCase().includes("aborted"));
 }
 
 export function CustomersPageClient({
@@ -113,7 +132,7 @@ export function CustomersPageClient({
         const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, { init: { signal: controller.signal } });
         const result = response.data;
         if (!response.ok) throw new Error(result.error ?? "顾客数据加载失败。");
-        if (active) setPayload((current) => mergePayload(current, result));
+        if (active && !controller.signal.aborted) setPayload((current) => mergePayload(current, result));
       } finally {
         controllers.delete(controller);
       }
@@ -126,12 +145,12 @@ export function CustomersPageClient({
         window.setTimeout(() => {
           if (!active) return;
           void Promise.all([loadDetail("models"), loadDetail("delivery")]).catch((error) => {
-            if (!active) return;
+            if (!active || isAbortError(error)) return;
             setError(error instanceof Error ? error.message : "顾客明细加载失败。");
           });
         }, 0);
       } catch (error) {
-        if (!active) return;
+        if (!active || isAbortError(error)) return;
         setError(error instanceof Error ? error.message : "顾客数据加载失败。");
       }
     }
@@ -218,6 +237,7 @@ export function CustomersPageClient({
         {payload.customerAssets && payload.customerModels ? (
           <CustomerAssetReviewPanel
             assets={payload.customerAssets}
+            assetJobs={payload.customerAssetJobs ?? []}
             customers={payload.customers ?? []}
             models={payload.customerModels}
             siteId={siteId}

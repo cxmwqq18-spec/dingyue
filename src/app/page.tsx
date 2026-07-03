@@ -5,10 +5,8 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
 import {
   readStorefrontAccessSummaryFromDatabase,
-  readStorefrontPlatformStateFromDatabase,
   readStorefrontPlatformStateFromLegacyJson,
-  readStorefrontPublicRuntimeStateByHostFromDatabase,
-  readStorefrontSiteByHostFromDatabase
+  readStorefrontPublicRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { AccessRoutePrefetcher } from "@/components/platform/access-route-prefetcher";
@@ -16,7 +14,7 @@ import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminP
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { getPage } from "@/lib/data";
-import type { PlatformState, Site } from "@/lib/types";
+import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -32,7 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerStore = await headers();
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   if (!shouldResolveHostSite(hostCandidates)) return {};
-  const hostSite = await getHostSiteWithFallback(hostCandidates);
+  const hostRuntimeState = await getHostRuntimeStateWithFallback(hostCandidates);
+  const hostSite = hostRuntimeState ? getSiteByHostCandidatesFromState(hostRuntimeState, hostCandidates) ?? hostRuntimeState.sites[0] : undefined;
   if (!hostSite) return noindexMetadata;
   return metadataForSingleThemePage(hostSite, getPage(hostSite, "/"));
 }
@@ -48,31 +47,17 @@ function isLocalDevelopmentHost(host: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || host.endsWith(".localhost");
 }
 
-async function getHostSiteWithFallback(hosts: Array<string | null>): Promise<Site | undefined> {
-  if (!shouldResolveHostSite(hosts)) return undefined;
-  try {
-    for (const host of hosts) {
-      const site = await readStorefrontSiteByHostFromDatabase(host);
-      if (site) return site;
-    }
-  } catch {
-    // Fall through to the full state reader for local or migrating databases.
-  }
-  const platformState = await readStorefrontPlatformStateFromDatabase();
-  return getSiteByHostCandidatesFromState(platformState, hosts);
-}
-
 async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
   if (!shouldResolveHostSite(hosts)) return undefined;
   try {
     for (const host of hosts) {
-      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host);
+      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/");
       if (state) return state;
     }
   } catch {
-    // Fall through to the full state reader for local or migrating databases.
+    // Fall through to the legacy state reader for local or migrating databases.
   }
-  const platformState = await readStorefrontPlatformStateFromDatabase();
+  const platformState = await readStorefrontPlatformStateFromLegacyJson();
   const site = getSiteByHostCandidatesFromState(platformState, hosts);
   return site ? platformState : undefined;
 }
@@ -116,7 +101,7 @@ export default async function HomePage({
   const hostSite = hostRuntimeState ? getSiteByHostCandidatesFromState(hostRuntimeState, hostCandidates) ?? hostRuntimeState.sites[0] : undefined;
   if (hostSite && hostRuntimeState) {
     const query = searchParams ? await searchParams : {};
-    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: hostRuntimeState });
+    return renderStorefrontPage({ site: hostSite, slug: "/", query, routeMode: "host", state: hostRuntimeState, deferCustomerRuntime: true });
   }
   if (process.env.NODE_ENV === "production" && shouldResolveHostSite(hostCandidates)) notFound();
   const accessSummary = await getAccessSummaryWithFallback();

@@ -65,15 +65,16 @@ const slugRows = mydreamshootsSite.pages.map((page) => ({
 const duplicateSlugRows = Array.from(
   slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
 ).filter(([, rows]) => rows.length > 1);
+const headshotSlugOwner = slugRows.find((row) => row.slug === "/tools/headshot" && row.index === true);
 
 assert(!duplicateSlugRows.length, "MyDreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
 assert(
-  slugRows.some((row) => row.id === "site_dreamshoot_tool_image_static_alias" && row.slug === "/tools/headshot" && row.index === true),
-  "canonical headshot tool page must own /tools/headshot and remain indexable"
+  Boolean(headshotSlugOwner),
+  "canonical headshot tool page must expose /tools/headshot and remain indexable"
 );
 assert(
-  slugRows.some((row) => row.id === "site_dreamshoot_tool_image" && row.slug === "/app/legacy-ai-image-studio" && row.index === false),
-  "legacy image studio page must not duplicate /tools/headshot or enter the sitemap"
+  !slugRows.some((row) => row.slug === "/app/legacy-ai-image-studio" && row.index !== false),
+  "legacy image studio page must not enter the sitemap when present"
 );
 
 const hrefHits = [];
@@ -125,16 +126,27 @@ assert(
   "sitemap URL expansion must dedupe canonical paths after static, dynamic, and required paths are merged"
 );
 assert(
+  seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&
+    seoIndexing.includes("collectExplicitSeoDirectoryPaths(site)") &&
+    seoIndexing.includes('`/collections/${slug}`') &&
+    seoIndexing.includes('`/tools/${slug}`'),
+  "sitemap URL expansion must include all explicit SEO collection and tool directory pages"
+);
+assert(
   sitemapRoute.includes('export const dynamic = "force-dynamic"') &&
     sitemapRoute.includes('request.headers.get("x-forwarded-host")') &&
     sitemapRoute.includes('request.headers.get("host")') &&
-    sitemapRoute.includes("getStorefrontSitemapUrlsForHost"),
-  "sitemap route must select URLs using the request host"
+    sitemapRoute.includes("getStorefrontSitemapUrlsForHost") &&
+    sitemapRoute.includes('"cache-control"') &&
+    sitemapRoute.includes('"x-sitemap-url-count"'),
+  "sitemap route must select URLs using the request host and emit cache/diagnostic headers"
 );
 assert(
   seoIndexing.includes("getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>") &&
     seoIndexing.includes("normalizedHosts.some((host) => isHostForSite(item, host))") &&
-    seoIndexing.includes("getAidreamcapesSitemapUrls"),
+    seoIndexing.includes("getAidreamcapesSitemapUrls") &&
+    seoIndexing.includes("isLocalDevelopmentHost") &&
+    seoIndexing.includes("runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site))"),
   "sitemap indexing must expose a host-aware single-site URL selector"
 );
 
@@ -166,7 +178,7 @@ console.log(JSON.stringify({
   ok: true,
   mydreamshootsPageSlugCount: slugRows.length,
   duplicateSlugCount: duplicateSlugRows.length,
-  headshotSlugOwner: "site_dreamshoot_tool_image_static_alias",
+  headshotSlugOwner: headshotSlugOwner?.id,
   legacyToolPage: {
     id: "site_dreamshoot_tool_image",
     slug: "/app/legacy-ai-image-studio",

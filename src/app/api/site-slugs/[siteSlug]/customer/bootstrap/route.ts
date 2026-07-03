@@ -14,6 +14,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
+  const includeMode = new URL(request.url).searchParams.get("include");
   const siteId = await getSiteIdBySlugRelational(siteSlug);
   if (!siteId) {
     return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
@@ -21,13 +22,24 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   const current = await getCurrentCustomerForSite(siteId);
   if (!current) {
+    if (includeMode === "shell") {
+      return NextResponse.json(
+        {
+          ok: true,
+          authenticated: false,
+          site: undefined,
+          siteAiApps: [],
+          creativePacks: []
+        },
+        { headers: { "Cache-Control": "private, max-age=8" } }
+      );
+    }
     return NextResponse.json(
       { ok: false, error: "customer_login_required", loginPath: `/site/${publicSiteSlug(siteSlug)}/login` },
       { status: 401 }
     );
   }
 
-  const includeMode = new URL(request.url).searchParams.get("include");
   if (includeMode === "shell") {
     const site = await getCustomerWorkspaceSiteShellRelational(siteSlug);
     if (!site) {

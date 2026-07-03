@@ -35,14 +35,19 @@ function sitemapXml(urls: string[]): string {
 }
 
 export async function GET(request: Request): Promise<Response> {
+  const host = request.headers.get("host");
+  const forwardedHost = request.headers.get("x-forwarded-host");
   const urls = await getStorefrontSitemapUrlsForHost([
-    request.headers.get("x-forwarded-host"),
-    request.headers.get("host")
+    host,
+    forwardedHost
   ]);
 
   return new Response(sitemapXml(urls), {
     headers: {
-      "content-type": "application/xml; charset=utf-8"
+      "content-type": "application/xml; charset=utf-8",
+      "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
+      "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+      "x-sitemap-url-count": String(urls.length)
     }
   });
 }

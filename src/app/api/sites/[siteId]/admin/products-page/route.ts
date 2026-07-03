@@ -118,7 +118,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           label: price.label,
           amountCents: price.amountCents,
           currency: price.currency,
-          interval: price.interval === "one_time" ? "one_time" : "month",
+          interval: price.interval === "year" ? "year" : price.interval === "one_time" ? "one_time" : "month",
           creditsGranted: price.creditsGranted,
           stripePriceId: price.stripePriceId ?? `manual_${price.id}`,
           metadata: jsonRecord(price.metadata)

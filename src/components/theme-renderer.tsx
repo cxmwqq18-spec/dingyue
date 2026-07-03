@@ -490,7 +490,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
-  const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity) || title.includes("ʍʏ");
+  const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity);
   const isAidreamcapes = isAidreamcapesSite(site);
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
@@ -526,7 +526,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
       ? configuredLogoImageUrl || brandingLogoImageUrl || dreamshootDefaultLogoImageUrl
       : configuredLogoImageUrl || brandingLogoImageUrl;
   const readableBrandTitle = isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : title;
-  const visualBrandTitle = isDreamShoot ? "ʍʏƉʀɛǟʍֆhoots" : isAidreamcapes ? "ልiጋreamርapes" : readableBrandTitle;
+  const visualBrandTitle = isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : readableBrandTitle;
   const brandDescription = isDreamShoot
     ? "MyDreamShoots home, AI shoot packages, creator portraits, headshots, fan photos, and private albums"
     : isAidreamcapes
@@ -624,6 +624,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     src={mediaAssetUrl(site, logoImageUrl)}
                     alt={logoAlt}
                     title={logoAlt}
+                    width={isDreamShoot ? 32 : 56}
+                    height={isDreamShoot ? 32 : 56}
                   />
                 </span>
               ) : (
@@ -632,7 +634,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	                </span>
 	              )}
               <span className="min-w-0 shrink" title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>
-                <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot ? "block max-w-[min(42vw,17rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.05rem,2vw,1.66rem)] font-semibold leading-none text-white" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot || isAidreamcapes ? "true" : undefined} title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "ልiጋreamርapes" : undefined}>{visualBrandTitle}</span>
+                <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : isDreamShoot ? "block max-w-[min(42vw,17rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.05rem,2vw,1.66rem)] font-semibold leading-none text-white" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isDreamShoot || isAidreamcapes ? "true" : undefined} title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>{visualBrandTitle}</span>
                 {isDreamShoot ? <span className="sr-only">MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums</span> : null}
 	                {isAidreamcapes ? <span className="sr-only">Aidreamcapes AI travel portraits and private galleries</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
@@ -915,10 +917,10 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const isDreamShootFooter = /dreamshoot/i.test(footerIdentity);
   const isAidreamcapesFooter = /aidreamcapes/i.test(footerIdentity);
   const readableFooterTitle = isDreamShootFooter ? "MyDreamShoots" : isAidreamcapesFooter ? "Aidreamcapes" : title;
-  const visualFooterTitle = isDreamShootFooter && /^mydreamshoots$/i.test(title.trim())
-    ? "ʍʏƉʀɛǟʍֆhoots"
+  const visualFooterTitle = isDreamShootFooter
+    ? "MyDreamShoots"
     : isAidreamcapesFooter
-      ? "ልiጋreamርapes"
+      ? "Aidreamcapes"
       : title || readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
@@ -999,7 +1001,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["Cookie Policy", "/cookies", "support"]
           ]
         : [
-            ["Photo Packages", "/collections", "product"],
+            ["Browse packages", "/collections", "product"],
             ["Tools", "/tools", "product"],
             ["How it works", "/#workflow", "product"],
             ["Pricing", "/pricing", "product"],
@@ -1102,7 +1104,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
               {isAidreamcapesFooter ? (
                 <AidreamcapesLogoMark className="h-10 w-10 shrink-0 object-contain" />
               ) : logoImageUrl ? (
-                <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} />
+                <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} />
               ) : (
                 <span className={dark ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white text-[10px] font-semibold tracking-[0.18em] text-[#14161a]" : "inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.18em] text-white"}>
                   {brandMark}
@@ -1145,6 +1147,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
                   const Icon = item.icon;
                   return (
                     <Link
+                      aria-label={`${item.label} for ${readableFooterTitle}`}
                       className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/22 hover:bg-white/[0.08]" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white"}
                       href={item.href}
                       key={item.label}
@@ -1420,11 +1423,39 @@ function fallbackAltFromImageSrc(src: string): string {
   if (cleanPath.includes("/site_aidreamcapes/creative-packs/")) {
     const aidreamcapesAltByFilename: Record<string, string> = {
       "coastal-getaways-v2.png": "Coastal Light Sets",
+      "coastal-getaways-v2.webp": "Coastal Light Sets",
+      "coastal-light-sets-cover.png": "Coastal Light Sets",
+      "coastal-light-sets-cover.webp": "Coastal Light Sets",
       "scenic-overlooks-v2.png": "Scenic Outlooks",
+      "scenic-overlooks-v2.webp": "Scenic Outlooks",
+      "golden-hour-route-stories-cover.png": "Golden Hour Route Stories",
+      "golden-hour-route-stories-cover.webp": "Golden Hour Route Stories",
       "road-trip-frames-v2.png": "Roadside Escape Frames",
+      "road-trip-frames-v2.webp": "Roadside Escape Frames",
+      "cinematic-travel.png": "Cinematic Travel Portraits",
+      "cinematic-travel.webp": "Cinematic Travel Portraits",
       "itinerary-moodboards-v2.png": "Route Moodboards",
+      "itinerary-moodboards-v2.webp": "Route Moodboards",
+      "route-moodboards-cover.png": "Route Moodboards",
+      "route-moodboards-cover.webp": "Route Moodboards",
       "postcard-social-sets-v2.png": "Postcard Story Sets",
-      "island-resort-scenes-v2.png": "Island Balcony Scenes"
+      "postcard-social-sets-v2.webp": "Postcard Story Sets",
+      "social-keepsakes.png": "Social Keepsakes",
+      "social-keepsakes.webp": "Social Keepsakes",
+      "island-resort-scenes-v2.png": "Island Balcony Scenes",
+      "island-resort-scenes-v2.webp": "Island Balcony Scenes",
+      "old-quarter-walks-cover.png": "Old Quarter Walks",
+      "old-quarter-walks-cover.webp": "Old Quarter Walks",
+      "cafe-street-story-studio.png": "Cafe Street Story Studio",
+      "cafe-street-story-studio.webp": "Cafe Street Story Studio",
+      "dreamscape-portraits.png": "Route Portrait Albums",
+      "dreamscape-portraits.webp": "Route Portrait Albums",
+      "destination-story.png": "Destination Story Portraits",
+      "destination-story.webp": "Destination Story Portraits",
+      "postcard-journey.png": "Postcard Journey Portraits",
+      "postcard-journey.webp": "Postcard Journey Portraits",
+      "mountain-trails.png": "Alpine Route Portraits",
+      "mountain-trails.webp": "Alpine Route Portraits"
     };
     const mappedAlt = aidreamcapesAltByFilename[filename];
     if (mappedAlt) return mappedAlt;
@@ -1620,7 +1651,7 @@ function hrefFor(site: Site, href: string): string {
     const category = new URLSearchParams(href.slice(href.indexOf("?") + 1)).get("category") ?? "";
     return routedSitePath(site, collectionHref(category));
   }
-  if (href.startsWith("/cart?")) return routedSitePath(site, "/cart");
+  if (href.startsWith("/cart?")) return routedSitePath(site, href);
   if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
     return routedSitePath(site, "/tools");
   }
@@ -1898,7 +1929,7 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance): { description
       action: "Preview product shots"
     },
     "background-changer": {
-      description: "Replace busy or plain portrait backgrounds before you spend credits on a larger package, so your source image matches the look you want.",
+      description: "Replace busy or plain portrait backgrounds for cleaner personal images. Do not use edits for misleading claims or fake evidence.",
       tags: ["Clean backdrop", "Before checkout"],
       action: "Change background"
     },
@@ -2304,7 +2335,7 @@ function siteSearchCards(
       description: pack.description || pack.headline,
       imageUrl: packImage(site, pack),
       href: `/tools/${pack.aiAppSlug}`,
-      meta: `${pack.outputCount} images / ${pack.creditCost} credits`,
+      meta: `${pack.creditCost} credits / private gallery`,
       keywords: [pack.name, pack.category, pack.headline, pack.description, pack.aiAppSlug]
     }));
 
@@ -2347,16 +2378,24 @@ function searchCardsForQuery(cards: SearchResultCard[], query: string) {
   );
 }
 
+type BillingCycle = "month" | "year";
+
+function billingCycleFromQuery(query: Record<string, string | string[] | undefined>): BillingCycle {
+  const value = queryValue(query.billing).toLowerCase();
+  return value === "year" || value === "yearly" || value === "annual" ? "year" : "month";
+}
+
 function selectedCartProduct(products: SiteProduct[], query: Record<string, string | string[] | undefined>) {
   const active = activeProducts(products);
   const selectedProductId = queryValue(query.product);
   const selectedPriceId = queryValue(query.price);
+  const billingCycle = billingCycleFromQuery(query);
   const product =
     active.find((item) => item.id === selectedProductId || item.prices.some((price) => price.id === selectedPriceId)) ??
     active[0];
   const price =
     product?.prices.find((item) => item.id === selectedPriceId) ??
-    (product ? productPrice(product) : undefined);
+    (product ? productPriceForBilling(product, billingCycle) : undefined);
   return { product, price };
 }
 
@@ -2383,7 +2422,7 @@ function collectionPageCards(
     id: pack.id,
     title: pack.name,
     description: pack.description || pack.headline,
-    meta: `${pack.outputCount} images`,
+    meta: "Private gallery",
     credits: `${pack.creditCost} credits`,
     imageUrl: packImage(site, pack),
     href: creativePackCollectionHref(pack)
@@ -2403,27 +2442,27 @@ const aidreamcapesFallbackHeroImages = [
 ];
 
 const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; category: string; description: string; meta: string; credits: string; imageUrl: string; href: string }> = [
-  { id: "aidream_fallback_destination", title: "Route Portrait Albums", category: "Route", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260630webp", href: "/collections/route-portrait-albums" },
-  { id: "aidream_fallback_coastal", title: "Coastal Light Sets", category: "Coastal", description: "Sea-view, island, resort, and cliffside portraits with warm travel light.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260630webp", href: "/collections/coastal-getaways" },
-  { id: "aidream_fallback_city", title: "Old Quarter Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/old-quarter-walks-cover.webp?v=20260630webp", href: "/collections/old-city-walks" },
-  { id: "aidream_fallback_sunset", title: "Scenic Outlooks", category: "Outlook", description: "Golden-hour terraces, ridge paths, sea cliffs, and panoramic private albums.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260630webp", href: "/collections/scenic-overlooks" },
-  { id: "aidream_fallback_profile", title: "Celestial Profile Stories", category: "Profile", description: "Warm profile portraits for creators, solo trips, writers, and personal journey pages.", meta: "20 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp", href: "/collections/celestial-profile-stories" },
+  { id: "aidream_fallback_destination", title: "Route Portrait Albums", category: "Route", description: "Cinematic city, coast, resort, and scenic-route portraits built for private travel galleries.", meta: "Private gallery", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/dreamscape-portraits.webp?v=20260630webp", href: "/collections/route-portrait-albums" },
+  { id: "aidream_fallback_coastal", title: "Coastal Light Sets", category: "Coastal", description: "Sea-view, island, resort, and cliffside portraits with warm travel light.", meta: "Private gallery", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/coastal-getaways-v2.webp?v=20260630webp", href: "/collections/coastal-light-sets" },
+  { id: "aidream_fallback_city", title: "Old Quarter Walks", category: "City", description: "Stone lanes, market mornings, balcony light, and museum-day portraits for city journals.", meta: "City journal", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/old-quarter-walks-cover.webp?v=20260630webp", href: "/collections/cafe-corner-stories" },
+  { id: "aidream_fallback_sunset", title: "Scenic Outlooks", category: "Outlook", description: "Golden-hour terraces, ridge paths, sea cliffs, and panoramic private albums.", meta: "Scenic gallery", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260630webp", href: "/collections/golden-hour-route-stories" },
+  { id: "aidream_fallback_profile", title: "Celestial Profile Stories", category: "Profile", description: "Warm profile portraits for creators, solo trips, writers, and personal journey pages.", meta: "Profile stories", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp", href: "/collections/celestial-profile-stories" },
   { id: "aidream_fallback_editorial", title: "Editorial Getaways", category: "Editorial", description: "Magazine-style travel portraits with fashion-led settings and cinematic crops.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/editorial-getaways.webp?v=20260630webp", href: "/collections/editorial-getaways" },
-  { id: "aidream_fallback_cafe", title: "Cafe & Street Stories", category: "Street", description: "Cafe portraits, balcony mornings, crosswalk moments, and quiet city details for travel journals.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.webp?v=20260630webp", href: "/collections/cafe-street-stories" },
-  { id: "aidream_fallback_travel", title: "Roadside Escape Frames", category: "Route", description: "Open roads, coast roads, motel glow, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.webp?v=20260630webp", href: "/collections/road-trip-frames" },
-  { id: "aidream_fallback_itinerary", title: "Route Moodboards", category: "Moodboard", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.webp?v=20260630webp", href: "/collections/itinerary-moodboards" },
-  { id: "aidream_fallback_postcard", title: "Postcard Story Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.webp?v=20260630webp", href: "/collections/postcard-social-sets" },
-  { id: "aidream_fallback_lagoon", title: "Lagoon Route Studies", category: "Coastal", description: "Clear-water coves, boat decks, pale resort blues, and easy seaside portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/lagoon-route-studies-cover.webp?v=20260630webp", href: "/collections/lagoon-route-studies" },
-  { id: "aidream_fallback_villa", title: "Private Villa Stays", category: "Resort", description: "Courtyard villas, pool gardens, sunlit rooms, and quiet luxury travel portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/private-villa-stays-cover.webp?v=20260630webp", href: "/collections/private-villa-stays" },
+  { id: "aidream_fallback_cafe", title: "Cafe & Street Stories", category: "Street", description: "Cafe portraits, balcony mornings, crosswalk moments, and quiet city details for travel journals.", meta: "Street stories", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.webp?v=20260630webp", href: "/collections/cafe-corner-stories" },
+  { id: "aidream_fallback_travel", title: "Roadside Escape Frames", category: "Route", description: "Open roads, coast roads, motel glow, and dream-trip visuals.", meta: "28 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/road-trip-frames-v2.webp?v=20260630webp", href: "/collections/cinematic-travel" },
+  { id: "aidream_fallback_itinerary", title: "Route Moodboards", category: "Moodboard", description: "Trip notes, outfit plans, and route moods organized into gallery-ready visual direction.", meta: "16 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/itinerary-moodboards-v2.webp?v=20260630webp", href: "/collections/route-moodboard" },
+  { id: "aidream_fallback_postcard", title: "Postcard Story Sets", category: "Postcard", description: "Postcard crops, profile banners, trip memory cards, and private travel keepsakes.", meta: "Postcard set", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.webp?v=20260630webp", href: "/collections/social-keepsakes" },
+  { id: "aidream_fallback_lagoon", title: "Lagoon Route Studies", category: "Coastal", description: "Clear-water coves, boat decks, pale resort blues, and easy seaside portraits.", meta: "Lagoon route", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/lagoon-route-studies-cover.webp?v=20260630webp", href: "/collections/lagoon-route-studies" },
+  { id: "aidream_fallback_villa", title: "Private Villa Stays", category: "Resort", description: "Courtyard villas, pool gardens, sunlit rooms, and quiet luxury travel portraits.", meta: "Villa story", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/private-villa-stays-cover.webp?v=20260630webp", href: "/collections/private-villa-stays" },
   { id: "aidream_fallback_rooftop", title: "Rooftop City Nights", category: "City", description: "Blue-hour rooftop scenes, terrace dinners, skyline portraits, and city-break crops.", meta: "22 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rooftop-city-nights-cover.webp?v=20260630webp", href: "/collections/rooftop-city-nights" },
-  { id: "aidream_fallback_market", title: "Market Morning Walks", category: "City", description: "Flower markets, local stalls, linen outfits, and morning portraits for city travel albums.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/market-morning-walks-cover.webp?v=20260630webp", href: "/collections/market-morning-walks" },
+  { id: "aidream_fallback_market", title: "Market Morning Walks", category: "City", description: "Flower markets, local stalls, linen outfits, and morning portraits for city travel albums.", meta: "Market route", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/market-morning-walks-cover.webp?v=20260630webp", href: "/collections/market-morning-walks" },
   { id: "aidream_fallback_rain", title: "Rainy City Breaks", category: "City", description: "Umbrella walks, wet-street reflections, museum days, and moody hotel awnings.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rainy-city-breaks-cover.webp?v=20260630webp", href: "/collections/rainy-city-breaks" },
-  { id: "aidream_fallback_desert", title: "Desert Road Stories", category: "Route", description: "Open roads, sunset dust, vintage motel color, and warm route portraits.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/desert-road-stories-cover.webp?v=20260630webp", href: "/collections/desert-road-stories" },
+  { id: "aidream_fallback_desert", title: "Desert Road Stories", category: "Route", description: "Open roads, sunset dust, vintage motel color, and warm route portraits.", meta: "Desert route", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/desert-road-stories-cover.webp?v=20260630webp", href: "/collections/desert-road-stories" },
   { id: "aidream_fallback_lake", title: "Lake House Weekends", category: "Open Air", description: "Dock portraits, canoe moments, pine roads, and calm weekend escape scenes.", meta: "22 photos", credits: "20 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/lake-house-weekends-cover.webp?v=20260630webp", href: "/collections/lake-house-weekends" },
-  { id: "aidream_fallback_snow", title: "Snow Lodge Escapes", category: "Open Air", description: "Alpine villages, lodge interiors, fireplaces, and soft winter trail portraits.", meta: "24 photos", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/snow-lodge-escapes-cover.webp?v=20260630webp", href: "/collections/snow-lodge-escapes" },
-  { id: "aidream_fallback_rail", title: "Rail Journey Portraits", category: "Route", description: "Train windows, platforms, overnight route mood, and slow-travel portrait frames.", meta: "20 photos", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rail-journey-portraits-cover.webp?v=20260630webp", href: "/collections/rail-journey-portraits" },
+  { id: "aidream_fallback_snow", title: "Snow Lodge Escapes", category: "Open Air", description: "Alpine villages, lodge interiors, fireplaces, and soft winter trail portraits.", meta: "Snow route", credits: "24 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/snow-lodge-escapes-cover.webp?v=20260630webp", href: "/collections/snow-lodge-escapes" },
+  { id: "aidream_fallback_rail", title: "Rail Journey Portraits", category: "Route", description: "Train windows, platforms, overnight route mood, and slow-travel portrait frames.", meta: "Rail route", credits: "18 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/rail-journey-portraits-cover.webp?v=20260630webp", href: "/collections/rail-journey-portraits" },
   { id: "aidream_fallback_cover", title: "Travel Journal Covers", category: "Creator", description: "Editorial cover crops, title-space portraits, and story opener images.", meta: "16 photos", credits: "16 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/travel-journal-covers-cover.webp?v=20260630webp", href: "/collections/travel-journal-covers" },
-  { id: "aidream_fallback_solo", title: "Solo Traveler Profiles", category: "Creator", description: "Confident destination profile portraits for journals, creator bios, and private albums.", meta: "24 photos", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/solo-traveler-profiles-cover.webp?v=20260630webp", href: "/collections/solo-traveler-profiles" },
+  { id: "aidream_fallback_solo", title: "Solo Traveler Profiles", category: "Creator", description: "Confident destination profile portraits for journals, creator bios, and private albums.", meta: "Profile story", credits: "22 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/solo-traveler-profiles-cover.webp?v=20260630webp", href: "/collections/solo-traveler-profiles" },
   { id: "aidream_fallback_shared", title: "Shared Route Albums", category: "Moments", description: "Paired travel portraits for coasts, city dinners, balconies, and scenic overlooks.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/shared-route-albums-cover.webp?v=20260630webp", href: "/collections/shared-route-albums" },
   { id: "aidream_fallback_family", title: "Family Travel Keepsakes", category: "Moments", description: "Gentle group portraits for resorts, old towns, outlooks, and share-ready memory cards.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/family-travel-keepsakes-cover.webp?v=20260630webp", href: "/collections/family-travel-keepsakes" },
   { id: "aidream_fallback_golden_route", title: "Golden Hour Route Stories", category: "Moments", description: "Warm overlook paths, sunset roads, city terraces, and soft destination portraits.", meta: "28 photos", credits: "26 credits", imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/golden-hour-route-stories-cover.webp?v=20260630webp", href: "/collections/golden-hour-route-stories" },
@@ -2547,7 +2586,7 @@ function storefrontPaidToolText(value: string): string {
     .replace(new RegExp(`\\b${freeWordInsensitive} tool\\b`, "g"), "Studio tool")
     .replace(new RegExp(`\\b${freeWordInsensitive} enhancer\\b`, "g"), "photo enhancer")
     .replace(new RegExp(`\\b${freeWordInsensitive} entry\\b`, "g"), "studio entry")
-    .replace(new RegExp(`\\b${freeWordInsensitive}\\b`, "g"), "paid")
+    .replace(new RegExp(`\\b${freeWordInsensitive}\\b`, "g"), "credit-based")
     .replace(/\bPaid plans unlock\b/g, "Paid plans include")
     .replace(/\bpaid plans unlock\b/g, "paid plans include")
     .replace(/\bunlock private model creation\b/g, "include private model creation")
@@ -2634,9 +2673,9 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
     dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
     dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images.", "Photo AI", packImages.fashion, "/tools/fashion-editorial", "Editorial"),
     dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/product-lifestyle", "Commerce"),
-    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background before ordering a full AI shoot package.", "Photo Package Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
-    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images.", "Photo Package Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
-    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions from portraits, cards, and generated scenes.", "Photo Package Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
+    dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background for cleaner personal images. Do not use edits for misleading claims or fake evidence.", "Photo Package Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
+    dreamshootToolBlock("mega_edit_remove_bg", "Background remover", "Cut out product or portrait backgrounds for cleaner source images you own or have permission to edit.", "Photo Package Edit", dreamshootToolSceneDefaults.upload, "/tools/background-remover"),
+    dreamshootToolBlock("mega_edit_magic_eraser", "Magic eraser", "Remove small distractions without creating misleading before-and-after claims.", "Photo Package Edit", dreamshootToolSceneDefaults.form, "/tools/magic-eraser"),
     dreamshootToolBlock("mega_edit_enhancer", "Photo enhancer", "Improve low-light uploads before using them for private model training.", "Photo Package Edit", packImages.headshots, "/tools/photo-enhancer"),
     dreamshootToolBlock("mega_edit_retouch", "Portrait retouch", "Clean skin, flyaways, and lighting without changing the customer's identity.", "Photo Package Edit", packImages.beauty, "/tools/portrait-retouch"),
     dreamshootToolBlock("mega_edit_unblur", "Unblur image", "Rescue soft phone shots before they enter a paid generation workflow.", "Photo Package Edit", dreamshootToolSceneDefaults.progress, "/tools/unblur-image"),
@@ -2723,12 +2762,12 @@ function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | un
   if (!taxonomyBlocks.length) return [];
   return [
     {
-      label: "AI Shoot Packages",
-      slug: "ai-shoot-packages",
-      description: "Headshots, fan photos, creator portraits, beauty looks, and private AI shoot packages.",
+      label: "Route Portrait Packages",
+      slug: "route-portrait-packages",
+      description: "Travel portraits, destination routes, scenic stays, and private journey galleries.",
       icon: "Sparkles",
       items: taxonomyBlocks.map((block) => {
-        const title = blockValue(block, "title", "Photo package");
+        const title = blockValue(block, "title", "Route portrait package");
         return {
           label: title,
           slug: slugify(blockValue(block, "href", title)),
@@ -2959,6 +2998,7 @@ function DreamShootMegaToolsPanel({
   variantTone?: "dark" | "warm";
 }) {
   const warm = variantTone === "warm";
+  const aidreamcapes = isAidreamcapesSite(site);
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const orderedCategories = ["Photo AI", "Photo Package Edit", "Video AI"].filter((category) => categories.includes(category));
   const extraCategories = categories.filter((category) => !orderedCategories.includes(category));
@@ -3025,13 +3065,14 @@ function DreamShootMegaToolsPanel({
               <div className="grid gap-3">
                 {group.items.map((tool, index) => {
                   const Icon = dreamshootToolIcon(index, group.category);
+                  const toolPrefix = aidreamcapes ? "aidreamcapes_mega_tool" : "dreamshoot_mega_tool";
                   return (
                     <Link
                       aria-label={cardLinkLabel("Open tool", storefrontPaidToolBlockValue(tool, "title", "AI photo tool"), "this tool")}
                       className={warm ? "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                       href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
-                      key={instanceKey(tool, index, "dreamshoot_mega_tool")}
-                      {...xfcartBlockAttrs(tool, index, "dreamshoot_mega_tool")}
+                      key={instanceKey(tool, index, toolPrefix)}
+                      {...xfcartBlockAttrs(tool, index, toolPrefix)}
                     >
                       <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
                   <span>{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
@@ -3062,10 +3103,11 @@ function mobileMenuSummaryClass(dark: boolean) {
 function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups: PhotoPackageMegaGroup[]; site: Site }) {
   const visibleGroups = groups.slice(0, 8);
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const menuLabel = isAidreamcapesSite(site) ? "Route Portrait Packages" : "AI Shoot Packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">AI Shoot Packages</span>
+        <span className="min-w-0 flex-1">{menuLabel}</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>
@@ -3226,6 +3268,35 @@ function productPrice(product: SiteProduct): SiteProduct["prices"][number] | und
   return product.prices.find((price) => price.interval === "month") ?? product.prices[0];
 }
 
+function productPriceForBilling(product: SiteProduct, cycle: BillingCycle): SiteProduct["prices"][number] | undefined {
+  return product.prices.find((price) => price.interval === cycle) ?? productPrice(product);
+}
+
+function productHasBillingCycle(product: SiteProduct, cycle: BillingCycle): boolean {
+  return product.prices.some((price) => price.interval === cycle);
+}
+
+function pricePeriodLabel(price: SiteProduct["prices"][number] | undefined): string {
+  if (!price) return "";
+  if (price.interval === "year") return "/ year";
+  if (price.interval === "month") return "/ month";
+  return "one-time";
+}
+
+function priceCreditsLabel(price: SiteProduct["prices"][number] | undefined): string {
+  if (!price) return "No active price";
+  if (price.interval === "year") return `${price.creditsGranted} credits for the year`;
+  if (price.interval === "month") return `${price.creditsGranted} credits / month`;
+  return `${price.creditsGranted} one-time credits`;
+}
+
+function priceAmountLabel(price: SiteProduct["prices"][number] | undefined): string {
+  if (!price) return "";
+  const period = pricePeriodLabel(price);
+  const amount = formatCurrency(price.amountCents, price.currency);
+  return period && period !== "one-time" ? `${amount} ${period}` : amount;
+}
+
 function productImage(site: Site, product: SiteProduct, index: number): string {
   const seed = `${site.slug}-${product.id}-${index}`;
   if (product.type === "subscription") return fallbackImageForSeed(`${seed}-studio`);
@@ -3261,7 +3332,7 @@ function selectedPackCards(site: Site, section: SectionInstance, creativePacks: 
       description: selected.description || selected.headline,
       imageUrl: packImage(site, selected),
       href: `/tools/${selected.aiAppSlug}`,
-      meta: `${selected.outputCount} images`,
+      meta: "Private gallery",
       price: `${selected.creditCost} credits`
     }];
   }
@@ -3284,7 +3355,7 @@ function packCards(site: Site, creativePacks: CreativePack[], maxCount = 6) {
     description: pack.description || pack.headline,
     imageUrl: packImage(site, pack),
     href: creativePackCollectionHref(pack),
-    meta: `${pack.outputCount} images`,
+    meta: "Private gallery",
     price: `${pack.creditCost} credits`
   }));
 }
@@ -3295,7 +3366,7 @@ function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamSho
     title: pack.name,
     description: pack.description || pack.headline,
     category: pack.category,
-    meta: `${pack.outputCount} photos`,
+    meta: "Private gallery",
     credits: `${pack.creditCost} credits`,
     imageUrl: packImage(site, pack),
     href: creativePackCollectionHref(pack)
@@ -3322,7 +3393,7 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
     title,
     description: blockValue(block, "description", "A private AI shoot package with album-ready outputs."),
     category: blockValue(block, "category", "Package"),
-    meta: blockValue(block, "meta", "20 photos"),
+    meta: blockValue(block, "meta", "Private gallery"),
     credits: blockValue(block, "credits", "20 credits"),
     imageUrl: mediaAssetUrl(site, blockValue(block, "imageUrl", packImages.creator)),
     href: blockValue(block, "href", collectionHref(title))
@@ -3333,22 +3404,22 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
   const card = (id: string, title: string, category: string, description: string, meta: string, credits: string, imageUrl: string, href: string) =>
     dreamshootCatalogCardFromBlock(site, { id, type: "catalog_pack", settings: { title, category, description, meta, credits, imageUrl, href } });
   return [
-    card("catalog_worldcup", "World Cup fan photos", "Sports", "Match-day portraits, fan posters, and stadium-inspired profile images.", "40 photos", "26 credits", packImages.sports, "/collections/world-cup-fan-photos"),
-    card("catalog_headshot", "Professional Headshots", "Headshots", "LinkedIn, founder, resume, and team-ready portraits.", "20 photos", "20 credits", packImages.headshots, "/collections/headshots"),
-    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Neon city portraits and future-fashion scenes.", "20 photos", "26 credits", packImages.creative, "/collections/cyberpunk"),
-    card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview hair directions, colors, and beauty styling before choosing a full package.", "20 photos", "18 credits", packImages.beauty, "/collections/hairstyle"),
-    card("catalog_gala", "Gala Photos", "Creative", "Formal night-out photos with editorial lighting and red-carpet energy.", "20 photos", "24 credits", packImages.gala, "/collections/gala-photos"),
-    card("catalog_travel", "Lifestyle portrait pack", "Lifestyle", "Outdoor profile photos, creator lifestyle scenes, and album-ready personal-brand images.", "24 photos", "24 credits", packImages.travel, "/collections/travel"),
-    card("catalog_wedding", "Wedding portraits", "Wedding", "Wedding-style albums, shared portrait scenes, and announcement-ready images.", "24 photos", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
-    card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Traditional wedding looks with lehenga, saree, sherwani, jewelry, and album-ready portraits.", "20 photos", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
-    card("catalog_christmas", "Christmas Photos", "Seasonal", "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", "20 photos", "20 credits", "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", "/collections/christmas-photos"),
-    card("catalog_creator", "Creator Portraits", "Creator", "Personal-brand portraits for bios, newsletters, founder pages, and social profiles.", "20 photos", "24 credits", packImages.creator, "/collections/creator-portraits"),
-    card("catalog_avatar", "Anime Avatar", "Avatar", "Stylized avatar concepts for profiles, fan communities, and playful identity updates.", "20 photos", "24 credits", packImages.avatar, "/collections/anime-avatar"),
-    card("catalog_fashion", "Fashion Editorial", "Beauty", "Editorial-style outfit, beauty, and posing directions for polished visual sets.", "20 photos", "24 credits", packImages.fashion, "/collections/fashion-editorial"),
-    card("catalog_nature", "Nature adventure", "Travel", "Outdoor portrait scenes with mountains, forests, coastlines, and natural light.", "20 photos", "18 credits", packImages.travel, "/collections/nature"),
-    card("catalog_mafia", "Noir portraits", "Creative", "Dramatic noir styling, moody interiors, tailored outfits, and cinematic contrast.", "20 photos", "22 credits", packImages.gala, "/collections/mafia"),
-    card("catalog_profile", "Profile Cards", "Creator", "Social profile cards, avatar crops, and clean personal introduction visuals.", "20 photos", "20 credits", packImages.headshots, "/collections/profile-cards"),
-    card("catalog_product", "Product lifestyle", "Utility", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "20 photos", "22 credits", packImages.copy, "/collections/product-style")
+    card("catalog_worldcup", "World Cup fan photos", "Sports", "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only.", "Private gallery", "26 credits", packImages.sports, "/collections/world-cup-fan-photos"),
+    card("catalog_headshot", "Professional Headshots", "Headshots", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles.", "Work profiles", "20 credits", packImages.headshots, "/collections/headshots"),
+    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/collections/cyberpunk"),
+    card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package.", "Style preview", "18 credits", packImages.beauty, "/collections/hairstyle"),
+    card("catalog_gala", "Gala Photos", "Creative", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/collections/gala-photos"),
+    card("catalog_travel", "Lifestyle portrait pack", "Lifestyle", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/collections/travel"),
+    card("catalog_wedding", "Wedding portraits", "Wedding", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
+    card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Create wedding-inspired cultural portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
+    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png", "/collections/christmas-photos"),
+    card("catalog_creator", "Creator Portraits", "Creator", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/collections/creator-portraits"),
+    card("catalog_avatar", "Anime Avatar", "Avatar", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/collections/anime-avatar"),
+    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set.", "Style preview", "24 credits", packImages.fashion, "/collections/fashion-editorial"),
+    card("catalog_nature", "Nature adventure", "Travel", "Place your portrait into travel-inspired scenes such as beaches, mountains, city streets, and scenic backdrops.", "Travel-inspired", "18 credits", packImages.travel, "/collections/nature"),
+    card("catalog_mafia", "Noir portraits", "Creative", "Create dramatic noir-style character portraits from photos you own or have permission to use.", "Character scenes", "22 credits", packImages.gala, "/collections/mafia"),
+    card("catalog_profile", "Profile Cards", "Creator", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/collections/profile-cards"),
+    card("catalog_product", "Product lifestyle", "Utility", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/collections/product-style")
   ];
 }
 
@@ -3642,7 +3713,7 @@ function renderLegacySaasSection({
             <div className="mt-6 flex items-end justify-between gap-4 border-t border-black/10 pt-5">
               <div>
                 <p className="font-mono text-3xl">{price ? formatCurrency(price.amountCents, price.currency) : "Price available soon"}</p>
-                <p className="mt-1 text-xs text-zinc-500">{price ? `${price.creditsGranted} credits / ${price.interval === "month" ? "month" : "one time"}` : "No active price"}</p>
+                <p className="mt-1 text-xs text-zinc-500">{priceCreditsLabel(price)}</p>
               </div>
               <span className="rounded-full bg-moss/10 px-3 py-1.5 text-xs font-medium text-moss">{setting(section, "is_stock_show", "true") === "false" ? "stock hidden" : "available"}</span>
             </div>
@@ -4237,6 +4308,7 @@ function SectionView({
   if (legacySaasSection) return legacySaasSection;
 
   if (section.type === "hero") {
+    const aidreamcapes = isAidreamcapesSite(site);
     const images = [
       setting(section, "imageUrl", fallbackHeroImages[0]),
       setting(section, "secondaryImageUrl", fallbackHeroImages[1]),
@@ -4246,7 +4318,7 @@ function SectionView({
     const displayImages = images.length ? images : legacyImages;
     const ctas = sectionBlocks(section, "cta");
     const stats = sectionBlocks(section, "stat");
-    const legacyStats = listSetting(section, "stats", ["20-40|photos per themed album", "Private|customer albums", "Secure|trusted checkout"]);
+    const legacyStats = listSetting(section, "stats", ["Credits|shown before generation", "Private|customer galleries", "Checkout|secure payments"]);
     if (setting(section, "layout", "editorial") === "studio_commerce") {
       const bullets = listLines(
         setting(
@@ -4292,7 +4364,7 @@ function SectionView({
                 className="mt-6 max-w-[15.4ch] text-[clamp(3.15rem,5.35vw,5.7rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#171514] text-balance [font-family:var(--site-title-font)]"
                 data-headline-text={setting(section, "headline")}
               >
-                {setting(section, "headline", "AI photo packages that look like a real shoot")}
+                {setting(section, "headline", "Studio-quality AI photos from the selfies on your phone.")}
               </h1>
               <p className="mt-5 max-w-[32rem] text-[1.03rem] leading-[1.86] text-[#665f58]">
                 {setting(section, "subheadline", "Turn everyday uploads into polished creator portraits, headshots, fan photos, seasonal looks, and editorial photo packs.")}
@@ -4331,11 +4403,11 @@ function SectionView({
                   {Array.from({ length: 5 }).map((_, starIndex) => (
                     <span key={starIndex}>★</span>
                   ))}
-                  <span className="ml-2 text-[0.98rem] font-medium text-[#4d4842]">{setting(section, "socialProofLabel", "4.9/5 from private photo customers").split(" from")[0]}</span>
+                  <span className="ml-2 text-[0.98rem] font-medium text-[#4d4842]">{setting(section, "socialProofLabel", "Private photo customers").split(" from")[0]}</span>
                 </div>
                 <p className="mt-3 text-[1.08rem] leading-7 text-[#4f4a44]">
-                  {setting(section, "socialProofLabel", "4.9/5 from private photo customers").includes("from")
-                    ? setting(section, "socialProofLabel", "4.9/5 from private photo customers").replace(/^.*?from\s*/i, "From ")
+                  {setting(section, "socialProofLabel", "Private photo customers").includes("from")
+                    ? setting(section, "socialProofLabel", "Private photo customers").replace(/^.*?from\s*/i, "From ")
                     : setting(section, "socialProofLabel", "Private photo customers")}
                 </p>
                 <div className="mt-4 flex -space-x-2.5">
@@ -4379,7 +4451,7 @@ function SectionView({
         .filter(Boolean)
         .slice(0, 10)
         .map((image) => mediaAssetUrl(site, image));
-      const imageBadge = setting(section, "imageBadge", blockValue(heroStats[0], "value", "40") ? `${blockValue(heroStats[0], "value", "40")} photo album` : "40 photo album");
+      const imageBadge = setting(section, "imageBadge", "Private photo album");
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
       return (
         <section className="dreamshoot-hero-motion relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
@@ -4511,8 +4583,8 @@ function SectionView({
                   </div>
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
-                  <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", "4.9/5 from photo-package subscribers")}</p>
-                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">Credits, AI shoot packages, private albums, and checkout stay inside your account.</p>
+                  <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", aidreamcapes ? "Private route gallery customers" : "Private photo-package customers")}</p>
+                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">{aidreamcapes ? "Credits, route portrait packages, private destination galleries, and checkout stay inside your account." : "Credits, AI shoot packages, private albums, and checkout stay inside your account."}</p>
                 </div>
                 </div>
               </div>
@@ -4612,7 +4684,7 @@ function SectionView({
               <div className="flex flex-col gap-4">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/70 bg-zinc-200 shadow-diffusion">
                   <img className="h-full w-full object-cover" src={displayImages[0] ?? fallbackHeroImages[0]} alt="Generated AI portrait album" />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/82 px-3 py-1.5 text-xs font-medium backdrop-blur">40 photo album</div>
+                  <div className="absolute left-4 top-4 rounded-full bg-white/82 px-3 py-1.5 text-xs font-medium backdrop-blur">Private photo album</div>
                 </div>
                 <div className="grid grid-cols-[1fr_0.82fr] gap-4">
                   <div className="rounded-2xl bg-zinc-950 p-4 text-stone-50">
@@ -4638,7 +4710,7 @@ function SectionView({
     return (
       <section className={dark ? "border-y border-white/10 bg-[#0a0a0b] px-5 py-8 text-white" : "border-y border-black/10 bg-white px-5 py-8"} id={sectionAnchor(section, "trusted")}>
         <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <p className={dark ? "text-sm font-semibold text-white/72" : "text-sm font-semibold text-zinc-600"}>{setting(section, "title", "Trusted by reviews websites")}</p>
+          <p className={dark ? "text-sm font-semibold text-white/72" : "text-sm font-semibold text-zinc-600"}>{setting(section, "title", "Private photo sets for everyday use")}</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {items.map((item, index) => {
               const name = blockValue(item, "name", "Brand");
@@ -4660,10 +4732,10 @@ function SectionView({
     const metrics = stats.length
       ? stats
       : ([
-          { id: "metric_destinations", type: "stat", settings: { value: "100+", label: "Dream Destinations" } },
-          { id: "metric_customers", type: "stat", settings: { value: "10,000+", label: "Happy Customers" } },
-          { id: "metric_satisfaction", type: "stat", settings: { value: "99%", label: "Satisfaction Rate" } },
-          { id: "metric_support", type: "stat", settings: { value: "24/7", label: "AI Support" } }
+          { id: "metric_private", type: "stat", settings: { value: "Private", label: "Customer galleries" } },
+          { id: "metric_credits", type: "stat", settings: { value: "Credits", label: "Shown before generation" } },
+          { id: "metric_packages", type: "stat", settings: { value: "Packages", label: "Headshots, fan posts, style previews" } },
+          { id: "metric_checkout", type: "stat", settings: { value: "Checkout", label: "Secure payment flow" } }
         ] as SectionBlockInstance[]);
     const tone = setting(section, "tone", "light");
     const dark = tone === "dark";
@@ -5052,6 +5124,7 @@ function SectionView({
     const image = mediaAssetUrl(site, setting(section, "imageUrl", fallbackHeroImages[0]));
     const tone = setting(section, "tone", "warm");
     const dark = tone === "dark";
+    const aidreamcapes = isAidreamcapesSite(site);
     const stats = sectionBlocks(section, "stat");
     const displayStats = stats.length
       ? stats
@@ -5064,14 +5137,14 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-12 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-12 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <Link
-            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", "this AI shoot package"))}
+            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", aidreamcapes ? "this route portrait package" : "this AI shoot package"))}
             className={dark ? "group grid overflow-hidden rounded-[32px] border border-white/10 bg-[#15171c] shadow-[0_34px_100px_-68px_rgba(0,0,0,0.86)] md:grid-cols-[0.92fr_1.08fr]" : "group grid overflow-hidden rounded-[32px] border border-[#ded5ca] bg-[#fffdf8]/90 shadow-[0_34px_100px_-76px_rgba(20,22,26,0.32)] md:grid-cols-[0.9fr_1.1fr]"}
             href={hrefFor(site, setting(section, "ctaHref", "#packages"))}
           >
             <div className={dark ? "flex min-h-[380px] flex-col justify-between p-7 text-white md:p-10" : "flex min-h-[380px] flex-col justify-between p-7 text-[#14161a] md:p-10"}>
               <div>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/58" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{setting(section, "eyebrow")}</p>
-                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "Private AI shoot packages")}</h2>
+                <h2 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, aidreamcapes ? "Private route portrait packages" : "Private AI shoot packages")}</h2>
                 <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/70" : "mt-5 max-w-xl text-sm leading-7 text-[#625d56]"}>{setting(section, "subtitle")}</p>
                 <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
                   {displayStats.slice(0, 3).map((stat, index) => (
@@ -5092,8 +5165,8 @@ function SectionView({
               <div className={dark ? "absolute inset-0 bg-gradient-to-r from-[#15171c]/76 via-black/10 to-black/34" : "absolute inset-0 bg-gradient-to-r from-black/48 via-black/6 to-black/28"} />
               <div className={dark ? "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/14 bg-black/48 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.72)] backdrop-blur-md" : "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/24 bg-[#111114]/72 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.64)] backdrop-blur-md"}>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/62">featured collection</p>
-                <p className="mt-2 text-xl font-semibold leading-tight">{setting(section, "imageCaption", "Private photo pack workflow")}</p>
-                <p className="mt-2 text-sm leading-6 text-white/74">{setting(section, "imageMeta", "Upload, reserve credits, create, and receive your private photo pack from one account.")}</p>
+                <p className="mt-2 text-xl font-semibold leading-tight">{setting(section, "imageCaption", aidreamcapes ? "Private route gallery workflow" : "Private photo pack workflow")}</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">{setting(section, "imageMeta", aidreamcapes ? "Upload, reserve credits, create, and receive your private destination gallery from one account." : "Upload, reserve credits, create, and receive your private photo pack from one account.")}</p>
               </div>
             </div>
           </Link>
@@ -5250,10 +5323,10 @@ function SectionView({
   if (section.type === "trust_signal_bar") {
     const stats = sectionBlocks(section, "stat");
     const fallbackStats = [
-      { id: "trust_private", type: "stat", settings: { value: "100% Private & Secure", label: "Your photos and data are always protected." } },
-      { id: "trust_guarantee", type: "stat", settings: { value: "Satisfaction Guarantee", label: "Not satisfied? We'll make it right." } },
-      { id: "trust_fees", type: "stat", settings: { value: "No Hidden Fees", label: "What you see is what you pay." } },
-      { id: "trust_revisions", type: "stat", settings: { value: "Unlimited Revisions", label: "We work with you until you love the results." } }
+      { id: "trust_private", type: "stat", settings: { value: "Private galleries", label: "Uploads and results stay tied to the signed-in account." } },
+      { id: "trust_credits", type: "stat", settings: { value: "Visible credits", label: "Credit cost is shown before generation starts." } },
+      { id: "trust_checkout", type: "stat", settings: { value: "Secure checkout", label: "Plans and top-ups use the checkout flow." } },
+      { id: "trust_policy", type: "stat", settings: { value: "Policy guided", label: "Refunds and account access follow the posted site terms." } }
     ] as SectionBlockInstance[];
     const items = (stats.length ? stats : fallbackStats).slice(0, 4);
     return (
@@ -5459,7 +5532,7 @@ function SectionView({
         ? "workspace"
         : "showcase"
     );
-    const ctaLabel = setting(section, "ctaLabel", launcherSurface === "account" ? "Upload photos" : "Start a photo set");
+    const ctaLabel = setting(section, "ctaLabel", launcherSurface === "account" ? "Upload photos" : isAidreamcapesSite(site) ? "Create travel portraits" : "Create my first photo set");
     const ctaHref = hrefFor(site, setting(section, "ctaHref", "/app"));
     const customer = runtime?.customer;
     const workspaceSummary = [
@@ -5895,7 +5968,7 @@ function SectionView({
                   </div>
                   <div className="p-5">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">{pack.outputCount} images</span>
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">Private gallery</span>
                       <span className="font-mono text-xs text-zinc-500">{pack.creditCost} credits</span>
                     </div>
                     <h3 className="mt-4 text-xl font-semibold tracking-tight">{pack.name}</h3>
@@ -5956,7 +6029,7 @@ function SectionView({
           id: pack.id,
           title: pack.name,
           description: pack.description || pack.headline,
-          meta: `${pack.outputCount} photos`,
+          meta: "Private gallery",
           credits: `${pack.creditCost} credits`,
           category: packCategoryLabelForStorefront(pack),
           trainingLabel: pack.trainingRequired ? "Private model" : "Ready workflow",
@@ -5983,7 +6056,7 @@ function SectionView({
         id: "fallback_route_story",
         title: "Route Story Kit",
         description: "Route portraits, travel journal crops, postcard sets, and private gallery albums.",
-        meta: "24 photos",
+        meta: "Private gallery",
         credits: "22 credits",
         category: "Route",
         trainingLabel: "Ready workflow",
@@ -5993,7 +6066,7 @@ function SectionView({
         id: "fallback_creator",
         title: "Creator Studio Pack",
         description: "AI portraits for profile updates, gifts, creator posts, and private albums.",
-        meta: "40 photos",
+        meta: "Creator profiles",
         credits: "24 credits",
         category: "Creator",
         trainingLabel: "Ready workflow",
@@ -6030,7 +6103,7 @@ function SectionView({
                   <h3 className="mt-4 text-[clamp(2rem,4vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white">{selectedPack.headline || selectedPack.name}</h3>
                   <p className="mt-5 text-sm leading-7 text-white/62">{selectedPack.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.outputCount} photos</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">Private gallery</span>
                     <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.creditCost} credits</span>
                     <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.trainingRequired ? "Private model" : "Ready workflow"}</span>
                   </div>
@@ -6208,7 +6281,7 @@ function SectionView({
         appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack)) : hrefFor(site, "/app/create"),
         chips: matchingPack
           ? [
-              `${matchingPack.outputCount || 20} photos`,
+              "Private gallery",
               `${matchingPack.creditCost || 20} credits`,
               dreamshootDefaultToolTitle(matchingPack.aiAppSlug || "image-studio"),
               matchingPack.trainingRequired ? "Training required" : "Ready workflow"
@@ -6234,7 +6307,7 @@ function SectionView({
       : [];
     const detailChips = selectedPack
       ? [
-          `${selectedPack.outputCount || 20} photos`,
+          "Private gallery",
           `${selectedPack.creditCost || 20} credits`,
           dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio"),
           selectedPack.trainingRequired ? "Training required" : "Ready workflow"
@@ -6541,7 +6614,7 @@ function SectionView({
     })).filter((item) => item.title || item.body);
     const overlayChips = listLines(setting(section, "overlayChips", "fan poster|avatar|stadium|social-ready"));
     const metrics = [
-      { value: setting(section, "photos", "40 photos"), label: "Full album" },
+      { value: setting(section, "photos", "Private gallery"), label: "Customer album" },
       { value: setting(section, "credits", "26 credits"), label: "Shown upfront" },
       { value: setting(section, "privacy", "Private album"), label: "Identity-safe" }
     ];
@@ -6570,7 +6643,7 @@ function SectionView({
                 {setting(section, "title", "World Cup fan photos for match-day moments.")}
               </h2>
               <p className={aidreamcapes ? "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72" : "mt-5 max-w-lg text-[1rem] leading-[1.48] text-white/72"}>
-                {setting(section, "subtitle", "Turn everyday selfies into fan posters, stadium-style portraits, match-day avatars, and private albums built for social sharing.")}
+                {setting(section, "subtitle", "Create personal fan portraits, match-day posters, and profile avatars from your own selfies.")}
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link className="inline-flex items-center gap-2 rounded-[18px] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }}>
@@ -6609,7 +6682,7 @@ function SectionView({
                 </div>
               </div>
               <p className={aidreamcapes ? "mt-5 text-xs leading-5 text-white/45" : "mt-5 text-xs leading-5 text-white/45"}>
-                {setting(section, "safetyCopy", "Safe styling: no real player likenesses, official team logos, or protected marks required.")}
+                {setting(section, "safetyCopy", "For personal fan use only. Do not use official marks, event logos, player likenesses, or brand assets without permission.")}
               </p>
             </div>
             <div className={aidreamcapes ? "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6" : "relative overflow-hidden rounded-[34px] border border-white/14 bg-[#090A11]/88 p-4 shadow-[0_36px_120px_-76px_rgba(0,0,0,0.96)] backdrop-blur md:p-6"}>
@@ -6648,7 +6721,7 @@ function SectionView({
               </div>
               <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
                 <p className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54" : "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54"}>
-                  {setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and high-intent photo moments.")}
+                  {setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and personal fan-photo moments.")}
                 </p>
                 <div className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.055] p-3" : "rounded-[18px] border border-white/10 bg-white/[0.055] p-3"}>
                   <p className={aidreamcapes ? "text-xs font-semibold text-white" : "text-xs font-semibold text-white"}>{setting(section, "campaignLabel", aidreamcapes ? "Current route: Coastal portrait sets" : "Current campaign: World Cup Fan Photos")}</p>
@@ -6680,10 +6753,10 @@ function SectionView({
       .map((pack) => dreamshootCatalogCardFromPack(site, pack));
     const packCards = usePacks ? packItems : [];
     const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Match-day portraits, fan posters, and stadium-inspired profile images.", category: "Sports", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "LinkedIn, founder, resume, and team-ready portraits.", category: "Headshots", meta: "20 photos", credits: "20 credits", imageUrl: packImages.headshots, href: "/collections/headshots" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Neon city portraits and future-fashion scenes.", category: "Creative", meta: "20 photos", credits: "26 credits", imageUrl: packImages.creative, href: "/collections/cyberpunk" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Formal night-out portraits and red-carpet styling.", category: "Creative", meta: "20 photos", credits: "24 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" } })
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", category: "Sports", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_headshot", type: "catalog_pack", settings: { title: "Professional Headshots", description: "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles.", category: "Headshots", meta: "Work profiles", credits: "20 credits", imageUrl: packImages.headshots, href: "/collections/headshots" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_cyberpunk", type: "catalog_pack", settings: { title: "Cyberpunk", description: "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", category: "Creative", meta: "Neon portraits", credits: "26 credits", imageUrl: packImages.creative, href: "/collections/cyberpunk" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_gala", type: "catalog_pack", settings: { title: "Gala Photos", description: "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", category: "Creative", meta: "Evening portraits", credits: "24 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" } })
     ];
     const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site) : defaultDreamshootCatalogCards(site);
     const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
@@ -6735,17 +6808,14 @@ function SectionView({
             </div>
             <div className="lg:pb-4">
               <p className={aidreamcapes ? "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72" : "max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72"}>
-                {setting(section, "subtitle", "This is where browsing turns into buying: each card has a clear outcome, credit cost, photo count, and one next action.")}
+                {setting(section, "subtitle", "Each package shows what it creates, who it is for, and the credit cost before you start.")}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
                   {directoryCount} active packages
                 </span>
                 <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
-                  Reference breadth covered
-                </span>
-                <span className={aidreamcapes ? "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72" : "rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72"}>
-                  Editable in Products
+                  Credit cost shown before generation
                 </span>
               </div>
               <div className={aidreamcapes ? "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]" : "mt-8 rounded-[26px] border border-white/14 bg-white/[0.05] p-4 shadow-[0_28px_90px_-70px_rgba(0,0,0,0.95)]"}>
@@ -6797,7 +6867,7 @@ function SectionView({
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/42" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/42"}>Full directory</p>
-                  <h3 className={aidreamcapes ? "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white" : "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white"}>All package outcomes, not a short demo list.</h3>
+                  <h3 className={aidreamcapes ? "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white" : "mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white"}>Browse all available photo packs.</h3>
                 </div>
                 <Link className={aidreamcapes ? "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" : "inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
                   Open collections
@@ -6850,10 +6920,10 @@ function SectionView({
   if (section.type === "dreamshoot_flow_bridge") {
     const steps = sectionBlocks(section, "card");
     const fallbackSteps: SectionBlockInstance[] = [
-      { id: "flow_upload", type: "card", settings: { title: "Upload selfies", text: "Use 8-12 clear phone photos per person.", meta: "01" } },
-      { id: "flow_model", type: "card", settings: { title: "Build private model", text: "Keep identity consistent across packages.", meta: "02" } },
-      { id: "flow_pack", type: "card", settings: { title: "Pick a package", text: "Choose a finished outcome and see the credits before you start.", meta: "03" } },
-      { id: "flow_album", type: "card", settings: { title: "Generate album", text: "Review, download, upscale, or add motion from your private workspace.", meta: "04" } }
+      { id: "flow_upload", type: "card", settings: { title: "Upload clear photos", text: "Use photos you own or have permission to use, with the face or subject clearly visible.", meta: "01" } },
+      { id: "flow_package", type: "card", settings: { title: "Choose a package", text: "Pick the result you want before starting generation.", meta: "02" } },
+      { id: "flow_credits", type: "card", settings: { title: "Review credits", text: "See the credit cost before the request starts.", meta: "03" } },
+      { id: "flow_album", type: "card", settings: { title: "Download results", text: "Review and download finished images from your private workspace.", meta: "04" } }
     ];
     const displaySteps = (steps.length ? steps : fallbackSteps).slice(0, 4);
     const beforeImage = mediaAssetUrl(site, setting(section, "beforeImage", "/assets/dreamshoot/frames/workflow-upload-source.png"));
@@ -7168,13 +7238,14 @@ function SectionView({
                     {grouped.map((tool, index) => {
                       const directoryCopy = dreamshootToolDirectoryCopy(tool);
                       const toolTitle = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
+                      const toolPrefix = aidreamcapes ? "aidreamcapes_tool" : "dreamshoot_tool";
                       return (
                         <Link
                           aria-label={cardLinkLabel(directoryCopy.action, toolTitle, "this tool")}
                           className={dark ? "group flex min-h-[240px] flex-col rounded-[18px] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[240px] flex-col rounded-[18px] border border-[#d9e5e1] bg-white p-5 text-[#151a24] shadow-[0_20px_60px_-56px_rgba(23,74,67,0.48)] transition hover:-translate-y-1 hover:border-[#88bdb2] hover:shadow-[0_26px_76px_-58px_rgba(23,74,67,0.65)]"}
                           href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, storefrontPaidToolBlockValue(tool, "title", ""))}
-                          key={instanceKey(tool, index, "dreamshoot_tool")}
-                          {...xfcartBlockAttrs(tool, index, "dreamshoot_tool")}
+                          key={instanceKey(tool, index, toolPrefix)}
+                          {...xfcartBlockAttrs(tool, index, toolPrefix)}
                         >
                           <div className="flex flex-wrap gap-2">
                             {directoryCopy.tags.map((tag) => (
@@ -7201,11 +7272,11 @@ function SectionView({
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
-              {setting(section, "primaryCta", "Start a photo set")}
+              {setting(section, "primaryCta", aidreamcapes ? "Create travel portraits" : "Create my first photo set")}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
             <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-              {setting(section, "secondaryCta", aidreamcapes ? "View route portrait packages" : "View photo packages")}
+              {setting(section, "secondaryCta", aidreamcapes ? "Travel Packages" : "View photo packages")}
               <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -7223,7 +7294,7 @@ function SectionView({
           id: pack.id,
           title: pack.name,
           description: pack.description || pack.headline,
-          meta: `${pack.outputCount} photos`,
+          meta: "Private gallery",
           credits: `${pack.creditCost} credits`,
           imageUrl: packImage(site, pack),
           href: creativePackCollectionHref(pack)
@@ -7238,9 +7309,9 @@ function SectionView({
           href: blockValue(item, "href", "/tools")
         }));
     const fallbackCards = [
-      { id: "worldcup", title: "World Cup Fan Photos", description: "Stadium portraits, fan posters, and match-day profile scenes.", meta: "40 photos", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
-      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, and newsletter-ready portraits from selfies.", meta: "20 photos", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
-      { id: "gala", title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "40 photos", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
+      { id: "worldcup", title: "World Cup Fan Photos", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
+      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
+      { id: "gala", title: "Gala Photos", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -7483,12 +7554,16 @@ function SectionView({
     const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
     const displayProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
     const creditPacks = products.filter((product) => product.type === "credit_pack" && product.status === "active");
+    const billingCycle = billingCycleFromQuery(renderContext.query);
+    const canShowBillingSwitch = displayProducts.some((product) => productHasBillingCycle(product, "year"));
+    const monthlyHref = hrefFor(site, "/pricing?billing=monthly#plans");
+    const yearlyHref = hrefFor(site, "/pricing?billing=yearly#plans");
     const featuredProductId =
       displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
-      displayProducts.find((product) => priceMetaBool(productPrice(product), "featured", false))?.id ??
+      displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, billingCycle), "featured", false))?.id ??
       displayProducts[0]?.id;
     const featuredProduct = displayProducts.find((product) => product.id === featuredProductId);
-    const featuredPrice = featuredProduct ? productPrice(featuredProduct) : undefined;
+    const featuredPrice = featuredProduct ? productPriceForBilling(featuredProduct, billingCycle) : undefined;
     const pricingImage = mediaAssetUrl(
       site,
       setting(
@@ -7504,7 +7579,7 @@ function SectionView({
     const sidePanelBody = priceMetaString(
       featuredPrice,
       "sidePanelBody",
-      setting(section, "sidePanelBody", "Customers can generate private photo albums in minutes, keep credits predictable, and top up only when they need more runs.")
+      setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
     );
     const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
       .map((line) => {
@@ -7542,16 +7617,35 @@ function SectionView({
             </h2>
             <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private AI route portrait packages." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
           </div>
+          {canShowBillingSwitch ? (
+            <div className="mt-7 inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
+              <Link
+                aria-current={billingCycle === "month" ? "true" : undefined}
+                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === "month" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
+                href={monthlyHref}
+              >
+                Monthly
+              </Link>
+              <Link
+                aria-current={billingCycle === "year" ? "true" : undefined}
+                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === "year" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
+                href={yearlyHref}
+              >
+                Yearly
+              </Link>
+            </div>
+          ) : null}
           <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,0.72fr)_minmax(300px,0.28fr)]">
             <div className="grid gap-4 lg:grid-cols-3">
               {displayProducts.slice(0, 3).map((product) => {
-                const price = productPrice(product);
+                const price = productPriceForBilling(product, billingCycle);
                 if (!price) return null;
                 const destinations = priceMetaNumber(price, "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
                 const featured = product.id === featuredProductId;
-                const pricePeriod = price.interval === "month" ? "/ month" : "one-time";
+                const pricePeriod = pricePeriodLabel(price);
                 const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
                 const discountLabel = priceMetaString(price, "discountLabel", "");
+                const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
                 const planSubtitle = priceMetaString(
                   price,
                   "planSubtitle",
@@ -7559,11 +7653,11 @@ function SectionView({
                     ? "Start with one focused headshot, beauty, or profile set"
                     : product.name === "Pro" || product.name === "Popular"
                       ? "Compare several package styles with room for reruns"
-                      : "More monthly credits for premium packs, video add-ons, and repeat campaigns"
+                      : "More credits for premium packs, video add-ons, and repeat campaigns"
                 );
                 const defaultFeatures = [
-                  `${price.creditsGranted} AI photo credits`,
-                  "Create photo albums in minutes",
+                  price.interval === "year" ? `${price.creditsGranted} AI photo credits for the year` : `${price.creditsGranted} AI photo credits`,
+                  "Create private photo albums after generation completes",
                   aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
                   "Special AI photo filters",
                   "Create photos by writing prompts in seconds",
@@ -7590,6 +7684,9 @@ function SectionView({
                       <p className="text-[2.65rem] font-semibold leading-none tracking-[-0.04em] [font-family:var(--site-title-font)]">{formatCurrency(price.amountCents, price.currency)}</p>
                       <p className="pb-2 text-[0.88rem] text-[#7f786f]">{pricePeriod}</p>
                     </div>
+                    {price.interval === "year" && yearlyEquivalentMonthlyCents > 0 ? (
+                      <p className="mt-2 text-sm font-medium text-[#7f786f]">Equivalent to {formatCurrency(yearlyEquivalentMonthlyCents, price.currency)} / month</p>
+                    ) : null}
                     {originalAmountCents > price.amountCents ? (
                       <div className="mt-3 flex flex-wrap items-center gap-2">
                         <span className="text-sm text-[#8a837b] line-through">{formatCurrency(originalAmountCents, price.currency)}</span>
@@ -9183,6 +9280,7 @@ function SectionView({
     const currency = selectedPrice?.currency ?? productsForCart[0]?.prices[0]?.currency ?? site.currency;
     const returnHref = setting(section, "returnHref", "/pricing");
     const selectedLinePrice = selectedPrice ?? (selectedProduct ? productPrice(selectedProduct) : productsForCart[0] ? productPrice(productsForCart[0]) : undefined);
+    const selectedAmountLabel = selectedLinePrice ? priceAmountLabel(selectedLinePrice) : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--";
     const customer = runtime?.customer;
     const loginHref = hrefFor(site, `/login?next=${encodeURIComponent(`/cart?product=${selectedProduct?.id ?? ""}&price=${selectedLinePrice?.id ?? ""}`)}`);
     const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
@@ -9205,10 +9303,10 @@ function SectionView({
                     <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={product.name} />
                     <div>
                       <p className="font-semibold">{product.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{price?.creditsGranted ?? 0} credits</p>
+                      <p className="mt-1 text-sm text-zinc-500">{priceCreditsLabel(price)}</p>
                       {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">Selected from pricing/search</p> : null}
                     </div>
-                    <p className="font-mono">{price ? formatCurrency(price.amountCents, price.currency) : ""}</p>
+                    <p className="font-mono">{priceAmountLabel(price)}</p>
                   </div>
                 );
               })}
@@ -9236,14 +9334,14 @@ function SectionView({
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                 <span className="text-white/64">Amount</span>
-                <span>{estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}</span>
+                <span>{hasExplicitSelection ? selectedAmountLabel : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}</span>
               </div>
             </div>
             <CartCheckoutPanel
               customer={customer}
               loginHref={loginHref}
               returnHref={hrefFor(site, returnHref)}
-              selectedAmountLabel={estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}
+              selectedAmountLabel={selectedAmountLabel}
               selectedCredits={estimatedCredits}
               selectedPriceId={selectedLinePrice?.id}
               siteId={site.id}
@@ -9271,15 +9369,15 @@ function SectionView({
             <>
               <div className="grid gap-6 md:grid-cols-[1fr_0.82fr]">
                 <div>
-                  <Link className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-600" href={hrefFor(site, "/app")}>
+                  <Link className="mb-6 inline-flex items-center gap-2 text-sm text-white/65 hover:text-white" href={hrefFor(site, "/app")}>
                     <ChevronRight className="h-4 w-4 rotate-180" strokeWidth={1.8} />
                     Back to workspace
                   </Link>
                   <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Album request")}</p>
-                  <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">{customerRequestTitle(job)}</h1>
-                  <p className="mt-4 max-w-2xl leading-7 text-zinc-600">{setting(section, "subtitle", "Review the selected album request, held credits, delivered images, and credit history.")}</p>
+                  <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">{customerRequestTitle(job)}</h1>
+                  <p className="mt-4 max-w-2xl leading-7 text-white/68">{setting(section, "subtitle", "Review the selected album request, held credits, delivered images, and credit history.")}</p>
                 </div>
-                <div className="rounded-[1.4rem] border border-black/10 bg-white p-6 shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
+                <div className="rounded-[1.4rem] border border-black/10 bg-white p-6 text-zinc-950 shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm text-zinc-500">{app?.aiApp.name ?? job.aiAppId}</p>
@@ -9298,15 +9396,15 @@ function SectionView({
                     </span>
                   </div>
                   <div className="mt-5 grid gap-3 text-sm">
-                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
+                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3 text-zinc-950">
                       <span className="text-zinc-500">Created</span>
                       <span className="font-mono">{customerDateTimeLabel(job.createdAt)}</span>
                     </div>
-                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
+                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3 text-zinc-950">
                       <span className="text-zinc-500">Updated</span>
                       <span className="font-mono">{customerDateTimeLabel(job.updatedAt)}</span>
                     </div>
-                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3">
+                    <div className="flex items-center justify-between rounded-[1rem] border border-black/10 bg-[#fbfaf7] px-4 py-3 text-zinc-950">
                       <span className="text-zinc-500">Delivered files</span>
                       <span className="font-mono">{jobDetail.assets.length}</span>
                     </div>
@@ -9320,7 +9418,7 @@ function SectionView({
                   { label: "Credit entries", value: String(jobDetail.ledger.length), detail: "history for this request" },
                   { label: "Delivered files", value: String(jobDetail.assets.length), detail: "private gallery images" }
                 ].map((item) => (
-                  <div className="rounded-[1.1rem] border border-black/10 bg-white p-4" key={item.label}>
+                  <div className="rounded-[1.1rem] border border-black/10 bg-white p-4 text-zinc-950" key={item.label}>
                     <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-400">{item.label}</p>
                     <p className="mt-3 text-2xl font-semibold">{item.value}</p>
                     <p className="mt-1 text-xs text-zinc-500">{item.detail}</p>
@@ -9329,11 +9427,11 @@ function SectionView({
               </div>
               <div className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
                 {settingBool(section, "showLedger", true) ? (
-                  <div className="rounded-[1.3rem] border border-black/10 bg-white p-5">
+                  <div className="rounded-[1.3rem] border border-black/10 bg-white p-5 text-zinc-950">
                     <h2 className="text-2xl font-semibold">Credit history</h2>
                     <div className="mt-5 divide-y divide-black/10 overflow-hidden rounded-[1rem] border border-black/10 bg-white">
                       {jobDetail.ledger.length ? jobDetail.ledger.map((entry) => (
-                        <div className="grid gap-3 px-4 py-3 text-sm md:grid-cols-[0.6fr_0.35fr_1fr]" key={entry.id}>
+                        <div className="grid gap-3 px-4 py-3 text-sm text-zinc-950 md:grid-cols-[0.6fr_0.35fr_1fr]" key={entry.id}>
                           <span className="font-medium">{customerLedgerLabel(entry.type)}</span>
                           <span className="font-mono">{entry.amount}</span>
                           <span className="truncate font-mono text-xs text-zinc-500">{entry.createdAt}</span>
@@ -9345,14 +9443,26 @@ function SectionView({
                   </div>
                 ) : null}
                 {settingBool(section, "showAssets", true) ? (
-                  <div className="rounded-[1.3rem] border border-black/10 bg-white p-5">
+                  <div className="rounded-[1.3rem] border border-black/10 bg-white p-5 text-zinc-950">
                     <h2 className="text-2xl font-semibold">Delivered images</h2>
-                    <div className="mt-5 grid gap-3">
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
                       {jobDetail.assets.length ? jobDetail.assets.map((asset) => (
-                        <div className="rounded-[1rem] border border-black/10 bg-[#fbfaf7] p-4" key={asset.id}>
-                          <p className="font-semibold">{asset.label}</p>
-                          <p className="mt-1 text-sm text-zinc-500">Private gallery image</p>
-                          <p className="mt-3 text-xs text-zinc-500">{asset.mimeType} / {customerAssetReviewLabel(asset.reviewStatus)}</p>
+                        <div className="overflow-hidden rounded-[1rem] border border-black/10 bg-[#fbfaf7]" key={asset.id}>
+                          {asset.previewUrl ? (
+                            <img alt={asset.label} className="aspect-[4/3] w-full bg-zinc-100 object-cover" src={asset.previewUrl} />
+                          ) : (
+                            <div className="flex aspect-[4/3] w-full items-center justify-center bg-zinc-100 px-4 text-center text-sm text-zinc-500">Image preview unavailable</div>
+                          )}
+                          <div className="p-4">
+                            <p className="truncate font-semibold text-zinc-950">{asset.label}</p>
+                            <p className="mt-1 text-sm text-zinc-500">Private gallery image</p>
+                            <p className="mt-3 text-xs text-zinc-500">{asset.mimeType} / {customerAssetReviewLabel(asset.reviewStatus)}</p>
+                            {asset.previewUrl ? (
+                              <a className="mt-4 inline-flex rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-zinc-800" href={asset.previewUrl} rel="noreferrer" target="_blank">
+                                Open image
+                              </a>
+                            ) : null}
+                          </div>
                         </div>
                       )) : (
                         <div className="rounded-[1rem] border border-dashed border-black/10 bg-[#fbfaf7] p-5 text-sm text-zinc-500">No delivered images are attached to this request yet.</div>
@@ -9423,6 +9533,7 @@ function SectionView({
       }
     );
     const featuredVoices = items.slice(0, 4);
+    const isDreamShootUseCaseWall = /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
     return (
       <section className="relative overflow-hidden bg-[#fffaf3] px-5 py-16 text-[#14161a] md:py-18" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -9430,19 +9541,25 @@ function SectionView({
             <div className="pt-2">
               <div className="h-px w-14 bg-[#b98a57]" />
               <h2 className="mt-4 max-w-[12ch] text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
-                {headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
+                {isDreamShootUseCaseWall ? "Ways people use MyDreamShoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
               </h2>
-              <p className="mt-5 max-w-[17rem] text-[0.94rem] leading-7 text-[#6d665f]">{setting(section, "summaryBody", setting(section, "subtitle"))}</p>
-              <div className="mt-8 flex items-center gap-2 text-[#d59a4b]">
-                {Array.from({ length: 5 }).map((_, starIndex) => (
-                  <span key={starIndex}>★</span>
-                ))}
-                <span className="ml-3 text-[1.2rem] font-medium text-[#24211d]">{setting(section, "summaryRating", "4.9/5")}</span>
-              </div>
-              <p className="mt-2 text-[0.94rem] text-[#6d665f]">{setting(section, "summaryMeta", "From 10,000+ reviews")}</p>
+              <p className="mt-5 max-w-[17rem] text-[0.94rem] leading-7 text-[#6d665f]">
+                {isDreamShootUseCaseWall ? "Choose the kind of private photo set you need before uploading source photos or spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
+              </p>
+              {!isDreamShootUseCaseWall ? (
+                <>
+                  <div className="mt-8 flex items-center gap-2 text-[#d59a4b]">
+                    {Array.from({ length: 5 }).map((_, starIndex) => (
+                      <span key={starIndex}>★</span>
+                    ))}
+                    <span className="ml-3 text-[1.2rem] font-medium text-[#24211d]">{setting(section, "summaryRating", "")}</span>
+                  </div>
+                  <p className="mt-2 text-[0.94rem] text-[#6d665f]">{setting(section, "summaryMeta", "Customer examples")}</p>
+                </>
+              ) : null}
               <div className="mt-5 flex flex-wrap items-center gap-2">
                 {items.slice(0, 5).map((item, index) => {
-                  const name = blockValue(item, "name", "Customer");
+                  const name = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Use case")) : blockValue(item, "name", "Customer");
                   const initials = name
                     .split(/\s+/)
                     .filter(Boolean)
@@ -9456,7 +9573,7 @@ function SectionView({
                   );
                 })}
                 <span className="ml-1 rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]">
-                  verified profiles
+                  Private examples
                 </span>
               </div>
             </div>
@@ -9465,35 +9582,39 @@ function SectionView({
                 const avatar = mediaAssetUrl(site, blockValue(item, "avatarUrl", ""));
                 const resultImage = mediaAssetUrl(site, blockValue(item, "resultImageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
                 const rating = Math.max(1, Math.min(5, Number(blockValue(item, "rating", "5")) || 5));
+                const cardTitle = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Private photo set")) : blockValue(item, "name", "Customer");
+                const cardMeta = isDreamShootUseCaseWall ? blockValue(item, "location", blockValue(item, "name", "")) : blockValue(item, "location", "");
                 return (
                   <article className="group flex min-h-[380px] min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]" key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
                     <div className="flex flex-1 flex-col p-[18px]">
                       <div className="flex items-center gap-3">
                         {avatar ? (
-	                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={blockValue(item, "name", "Customer")} loading="lazy" decoding="async" fetchPriority="low" />
+	                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={cardTitle} loading="lazy" decoding="async" fetchPriority="low" />
                         ) : (
                           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ebe0] text-sm font-semibold text-[#8c7156]">
-                            {blockValue(item, "name", "Customer").slice(0, 1) || "C"}
+                            {cardTitle.slice(0, 1) || "P"}
                           </div>
                         )}
                         <div className="min-w-0">
-                          <p className="truncate text-[0.98rem] font-semibold text-[#171b22]">{blockValue(item, "name", "Customer")}</p>
-                          <p className="mt-1 text-sm font-medium text-[#8a8d92]">{blockValue(item, "location", "")}</p>
+                          <p className="truncate text-[0.98rem] font-semibold text-[#171b22]">{cardTitle}</p>
+                          <p className="mt-1 text-sm font-medium text-[#8a8d92]">{cardMeta}</p>
                         </div>
                       </div>
-                      <div className="mt-5 flex items-center gap-1 text-[1.02rem] leading-none text-[#d59a4b]">
-                        {Array.from({ length: rating }).map((_, starIndex) => (
-                          <span key={starIndex}>★</span>
-                        ))}
-                      </div>
+                      {!isDreamShootUseCaseWall ? (
+                        <div className="mt-5 flex items-center gap-1 text-[1.02rem] leading-none text-[#d59a4b]">
+                          {Array.from({ length: rating }).map((_, starIndex) => (
+                            <span key={starIndex}>★</span>
+                          ))}
+                        </div>
+                      ) : null}
                       <p className="mt-4 text-[0.9rem] leading-6 text-[#1c2026]">{blockValue(item, "quote")}</p>
                     </div>
                     <div className="relative h-[180px] overflow-hidden bg-[#f2e8da]">
-	                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={`${blockValue(item, "name", "Customer")} photo result`} loading="lazy" decoding="async" fetchPriority="low" />
+	                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={`${cardTitle} photo result`} loading="lazy" decoding="async" fetchPriority="low" />
                       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/38 to-transparent" />
                       <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />
-                        Verified gallery
+                        Private gallery example
                       </div>
                     </div>
                   </article>
@@ -9720,7 +9841,7 @@ function SectionView({
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={packImages[pack.category] ?? packImages.fashion} alt={pack.name} />
                 </div>
                 <h3 className="mt-4 font-semibold">{pack.name}</h3>
-                <p className="mt-1 text-xs leading-5 text-zinc-500">{pack.outputCount} images / {pack.creditCost} credits</p>
+                <p className="mt-1 text-xs leading-5 text-zinc-500">{pack.creditCost} credits / private gallery</p>
               </Link>
             ))}
           </div>

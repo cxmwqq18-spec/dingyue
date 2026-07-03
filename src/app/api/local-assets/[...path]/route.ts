@@ -1,7 +1,7 @@
 import { readFile, stat } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
-import { hasCustomerSession } from "@/lib/api-auth";
+import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
 
 const assetRoot = path.join(process.cwd(), "data", "customer-assets");
 
@@ -13,6 +13,15 @@ const mimeByExtension: Record<string, string> = {
   ".gif": "image/gif"
 };
 
+const missingAssetPlaceholder = Buffer.from(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Asset unavailable">
+  <rect width="320" height="320" rx="28" fill="#f4f7f6"/>
+  <path d="M78 219l52-63 39 47 25-31 48 47H78z" fill="#cbd8d4"/>
+  <circle cx="215" cy="112" r="23" fill="#dbe5e2"/>
+  <rect x="65" y="65" width="190" height="190" rx="22" fill="none" stroke="#b9cbc6" stroke-width="10"/>
+</svg>`
+);
+
 async function resolveAsset(params: Promise<{ path: string[] }>) {
   const { path: segments } = await params;
   const safeSegments = segments.filter((segment) => segment && segment !== ".." && !segment.includes("\\"));
@@ -23,18 +32,30 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
   if (!filePath.startsWith(`${assetRoot}${path.sep}`)) {
     return { error: "asset_not_found", status: 404 as const };
   }
-  const fileStat = await stat(filePath).catch(() => null);
-  if (!fileStat?.isFile()) {
-    return { error: "asset_not_found", status: 404 as const };
-  }
   const siteIndex = safeSegments.indexOf("sites");
   const customerIndex = safeSegments.indexOf("customers");
   if (siteIndex >= 0 && customerIndex >= 0) {
     const siteId = safeSegments[siteIndex + 1];
     const customerId = safeSegments[customerIndex + 1];
-    if (!siteId || !customerId || !(await hasCustomerSession(siteId, customerId))) {
+    const hasAccess = siteId && customerId
+      ? (await hasCustomerSession(siteId, customerId)) || (await hasSiteAdminSession(siteId))
+      : false;
+    if (!hasAccess) {
       return { error: "customer_login_required", status: 401 as const };
     }
+  }
+  const fileStat = await stat(filePath).catch(() => null);
+  if (!fileStat?.isFile()) {
+    if (siteIndex >= 0 && customerIndex >= 0) {
+      return {
+        filePath: undefined,
+        size: missingAssetPlaceholder.length,
+        contentType: "image/svg+xml",
+        bytes: missingAssetPlaceholder,
+        placeholder: true
+      };
+    }
+    return { error: "asset_not_found", status: 404 as const };
   }
   const extension = path.extname(filePath).toLowerCase();
   return {
@@ -51,12 +72,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
     }
-    const bytes = await readFile(asset.filePath);
+    const bytes = "bytes" in asset ? asset.bytes : await readFile(asset.filePath);
     return new Response(bytes, {
       headers: {
         "Content-Type": asset.contentType,
         "Content-Length": String(asset.size),
-        "Cache-Control": "private, max-age=60"
+        "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
+        ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {})
       }
     });
   } catch (error) {
@@ -78,7 +100,8 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
       headers: {
         "Content-Type": asset.contentType,
         "Content-Length": String(asset.size),
-        "Cache-Control": "private, max-age=60"
+        "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
+        ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {})
       }
     });
   } catch {

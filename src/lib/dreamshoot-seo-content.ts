@@ -41,6 +41,27 @@ function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryD
   return value.includes("aidreamcapes");
 }
 
+function seoDirectoryIcons(site: Site): Metadata["icons"] {
+  if (isAidreamcapesSite(site)) {
+    return {
+      icon: [
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
+      ],
+      shortcut: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702",
+      apple: [{ url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
+    };
+  }
+  return {
+    icon: [
+      { url: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
+      { url: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
+    ],
+    shortcut: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702",
+    apple: [{ url: "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
+  };
+}
+
 const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/login": {
     title: "Sign in to MyDreamShoots - private AI photo workspace",
@@ -186,7 +207,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
       "Each package can support several visual directions, including minimal studio light, glossy editorial beauty, warm lifestyle portraits, and social-ready square crops.",
       "Beauty packages include source-photo guidance, visible credit expectations, and delivery formats for private album review."
     ],
-    useCases: ["Profile refreshes for creators and founders", "Beauty portfolio concepts before a real shoot", "Soft glam portraits for social posts", "Skincare, hairstyle, and makeup visual planning"],
+    useCases: ["Profile refreshes for creators and founders", "Beauty portfolio concepts before a studio session", "Soft glam portraits for social posts", "Skincare, hairstyle, and makeup visual planning"],
     workflow: ["Upload clear selfies with natural expressions.", "Choose beauty, hairstyle, or editorial direction.", "Generate a private album with polished portrait options.", "Use favorites for profiles, campaigns, or video-ready motion ideas."],
     ctaLabel: "Create AI Beauty Photos",
     ctaHref: "/tools/virtual-try-on"
@@ -211,16 +232,17 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   },
   headshots: {
     label: "Headshots",
-    title: "AI Headshot Maker - professional profile photos from selfies",
-    description: "Generate professional AI headshots for LinkedIn, resumes, founder profiles, teams, and creator pages with private MyDreamShoots uploads and album delivery.",
+    title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+    description: "Generate AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private MyDreamShoots uploads and credit costs shown before generation.",
     keywords: "AI Headshot Maker, professional AI headshots, LinkedIn photo generator, business portrait AI, MyDreamShoots headshots",
     h2: "headshots",
     h3: ["Professional AI headshots", "Business profile photo structure", "Private delivery for teams and founders"],
     intro: "The Headshots collection is for customers who need sharp, trustworthy portraits without booking a studio. It explains business-photo outcomes, source-photo quality, and how credits convert into private album options.",
     details: [
-      "Headshot packages focus on clear business uses: LinkedIn, resumes, founder bios, consulting profiles, hiring pages, and team directories.",
+      "Headshot packages focus on clear business uses: LinkedIn, resumes, founder bios, speaker pages, and team directories.",
       "MyDreamShoots keeps the workflow simple: upload varied selfies, select a professional look, generate, then choose the best portrait from a private gallery.",
-      "Individuals and teams can choose the finished business-photo outcome before spending credits."
+      "Individuals and teams can choose the finished business-photo outcome before spending credits.",
+      "Not for passports, official IDs, legal documents, impersonation, or creating headshots of someone who did not give permission."
     ],
     useCases: ["LinkedIn profile refresh", "Founder and operator bios", "Resume and job-search portraits", "Team page headshots"],
     workflow: ["Upload clear face photos with varied angles.", "Choose business, founder, or clean studio styling.", "Generate multiple realistic portrait options.", "Download final headshots for professional channels."],
@@ -229,16 +251,17 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   },
   sports: {
     label: "Sports",
-    title: "AI Sports Fan Photo Maker - stadium portraits and fan posters",
-    description: "Create AI sports fan photos, stadium portraits, fan posters, match-day avatars, and social banners with MyDreamShoots private uploads.",
+    title: "AI World Cup Fan Photos & Match-Day Posters | MyDreamShoots",
+    description: "Create personal AI World Cup fan photos, match-day posters, and profile avatars from your own selfies with MyDreamShoots private uploads.",
     keywords: "AI Sports Fan Photo Maker, World Cup fan photos, stadium portrait generator, fan poster AI, sports avatar maker",
     h2: "sports",
     h3: ["Sports fan photo categories", "Match-day avatar and poster outputs", "Private sports album workflow"],
-    intro: "The Sports collection turns fan moments into stadium-style images, posters, avatars, and banners. It is built for match days, tournaments, and seasonal campaigns without relying on official logos or protected marks.",
+    intro: "The Sports collection turns fan moments into stadium-style images, posters, avatars, and banners for personal use. It is built for match days and seasonal fan moments without relying on official logos or protected marks.",
     details: [
       "Sports pages need concrete outputs: fan posters, stadium portraits, square avatars, wide banners, friend-group scenes, and social story crops.",
       "The MyDreamShoots workflow keeps the result personal: customers upload their own images, choose fan energy, then receive a private album.",
-      "Sports packages pair match-day outcomes with the matching tool so customers can move from source photos to a private album."
+      "Sports packages pair match-day outcomes with the matching tool so customers can move from source photos to a private album.",
+      "For personal fan creativity only. Do not request official team logos, tournament marks, player likenesses, celebrity faces, or brand assets unless you have permission."
     ],
     useCases: ["World Cup and football fan photos", "Match-day profile images", "Tournament posters", "Sports creator social content"],
     workflow: ["Upload one or more fan portraits.", "Choose stadium, poster, avatar, or friend-scene styling.", "Generate private match-day images.", "Download social-ready crops and banners."],
@@ -270,7 +293,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     keywords: "AI Hairstyle Photo Maker, hairstyle preview AI, hair color photo generator, beauty hair portraits, MyDreamShoots hairstyle",
     h2: "hairstyle",
     h3: ["Hairstyle preview structure", "Color and cut planning", "Private beauty album delivery"],
-    intro: "The Hairstyle package focuses on hair direction before a full portrait set. Customers can compare length, color, styling, lighting, and beauty crops without mixing in unrelated package categories.",
+    intro: "Preview haircut, color, and styling ideas before you commit to a real salon change or a full image package.",
     details: [
       "Use hairstyle previews for salon inspiration, creator refreshes, soft glam portraits, and planning before a paid package.",
       "The best inputs are clear face photos with visible hair shape, varied angles, and simple lighting.",
@@ -320,11 +343,11 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   cyberpunk: {
     label: "Cyberpunk",
     title: "AI Cyberpunk Photo Maker - neon city portraits from selfies",
-    description: "Generate AI cyberpunk portraits with MyDreamShoots: neon city lighting, futuristic wardrobe, cinematic street scenes, and private album delivery.",
+    description: "Turn your selfie into a neon city portrait with night lights, futuristic styling, high-contrast poster crops, and private album delivery.",
     keywords: "AI Cyberpunk Photo Maker, cyberpunk portrait generator, neon AI photos, futuristic portrait AI, MyDreamShoots cyberpunk",
     h2: "cyberpunk",
     h3: ["Neon portrait structure", "Futuristic scene direction", "Private cyberpunk album delivery"],
-    intro: "The Cyberpunk package is for customers who want high-impact neon portraits, dramatic street scenes, and futuristic styling from private uploads.",
+    intro: "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.",
     details: [
       "Cyberpunk packages highlight neon lighting, wardrobe mood, portrait crops, and private album outputs.",
       "The strongest inputs are expressive face photos with enough detail for identity preservation.",
@@ -358,13 +381,13 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
 const toolDirectory: Record<string, SeoDirectorySeed> = {
   headshot: {
     label: "Headshot",
-    title: "AI Headshot Maker - Create professional profile photos with MyDreamShoots",
-    description: "Use the MyDreamShoots AI Headshot Maker to create realistic LinkedIn, resume, founder, and team portraits from private source photos.",
+    title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+    description: "Use the MyDreamShoots AI Headshot Maker to create realistic LinkedIn, resume, founder, and team portraits from private source photos with visible credits.",
     keywords: "AI Headshot Maker, professional headshot AI, LinkedIn headshot generator, MyDreamShoots headshot",
     h2: "headshot",
     h3: ["Professional headshot input guide", "Business portrait outputs", "Private profile photo delivery"],
     intro: "Upload clear selfies or casual portraits and turn them into polished headshots for LinkedIn, resumes, founder pages, team bios, and creator profiles.",
-    details: ["Best inputs include face-forward photos with varied angles, simple lighting, and natural expressions.", "Finished results include clean studio portraits, founder-style images, resume-ready crops, and team profile options.", "Start with a professional portrait set, review the credits, and create a private album from your selected source photos."],
+    details: ["Best inputs include face-forward photos with varied angles, simple lighting, and natural expressions.", "Finished results include clean studio portraits, founder-style images, resume-ready crops, and team profile options.", "Start with a professional portrait set, review the credits, and create a private album from your selected source photos.", "Do not use headshot results for passports, government IDs, legal documents, impersonation, or representing someone without permission."],
     useCases: ["LinkedIn and resume portraits", "Founder pages", "Consultant bios", "Team profile images"],
     workflow: ["Upload source portraits.", "Choose professional styling.", "Generate headshot options.", "Download final profile-ready images."],
     ctaLabel: "Create Profile Headshots",
@@ -378,7 +401,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     h2: "background changer",
     h3: ["Background changer input guide", "Clean background outputs", "Next steps for edited images"],
     intro: "Upload a clear subject photo and replace the setting behind it with a cleaner background for portraits, product shots, listings, and social images.",
-    details: ["Best inputs have a visible person, product, or object with enough contrast from the background.", "Finished results can move a subject from cluttered rooms into studio, lifestyle, creator, or brand-friendly scenes.", "Use the edited image as a final asset or as stronger source material before creating a full photo package."],
+    details: ["Best inputs have a visible person, product, or object with enough contrast from the background.", "Finished results can move a subject from cluttered rooms into studio, lifestyle, creator, or brand-friendly scenes.", "Use the edited image as a final asset or as stronger source material before creating a full photo package.", "Do not use background edits for deceptive advertising, fake evidence, misleading before-and-after claims, or images you do not have permission to edit."],
     useCases: ["Cleaner profile photos", "Product and listing images", "Creator post drafts", "Source-photo repair before a package"],
     workflow: ["Upload a clear subject photo.", "Choose the new background direction.", "Generate the edited image.", "Save or continue with a larger photo set."],
     ctaLabel: "Change a Background",
@@ -401,12 +424,12 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
-    description: "Create World Cup fan photos, stadium portraits, match-day posters, avatars, and social banners with MyDreamShoots private AI generation.",
+    description: "Create personal World Cup fan photos, stadium portraits, match-day posters, avatars, and social banners with MyDreamShoots private AI generation.",
     keywords: "AI World Cup Fan Photo Maker, World Cup fan photos, stadium portrait AI, match-day poster generator",
     h2: "world cup fan photos",
     h3: ["Stadium fan photo inputs", "Match-day poster outputs", "Private sports image delivery"],
-    intro: "Upload fan portraits and create match-day images with stadium scenes, fan posters, avatars, banners, and friend-group concepts that feel personal without needing official marks.",
-    details: ["Use it for tournament campaigns, profile updates, and sports creator content.", "The tool can create square avatars, poster-like compositions, and wide social banners.", "Customers stay inside the MyDreamShoots private upload and album flow."],
+    intro: "Upload fan portraits and create personal match-day images with stadium scenes, fan posters, avatars, banners, and friend-group concepts that feel personal without needing official marks.",
+    details: ["Use it for personal fan posts, profile updates, and sports creator content that you have permission to publish.", "The tool can create square avatars, poster-like compositions, and wide social banners.", "Customers stay inside the MyDreamShoots private upload and album flow.", "Do not use official marks, event logos, club badges, player likenesses, celebrity likenesses, or brand assets unless you have permission."],
     useCases: ["Football fan avatars", "Tournament posters", "Match-day social posts", "Friend fan-photo concepts"],
     workflow: ["Upload fan portraits.", "Choose stadium, poster, or avatar direction.", "Generate private sports images.", "Download social-ready crops."],
     ctaLabel: "Create Fan Photos",
@@ -420,7 +443,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     h2: "virtual try-on",
     h3: ["Outfit and hairstyle previews", "Fashion portrait structure", "Private try-on workflow"],
     intro: "The virtual try-on tool helps customers preview wardrobe, hairstyle, and fashion directions before committing to a larger photo package.",
-    details: ["It is useful for outfit planning, creator looks, beauty profiles, and editorial social images.", "Source portraits become try-on concepts and private album options.", "Customers can review the look, credit use, and next album step before starting."],
+    details: ["It is useful for outfit planning, creator looks, beauty profiles, and editorial social images.", "Source portraits become try-on concepts and private album options.", "Customers can review the look, credit use, and next album step before starting.", "Only upload photos of yourself or people who gave permission. Try-on outputs are style previews, not identity documents, medical advice, or a guarantee of real-world fit."],
     useCases: ["Outfit previews", "Hairstyle concepts", "Beauty profile refreshes", "Fashion editorial tests"],
     workflow: ["Upload clear source portraits.", "Choose outfit, hairstyle, or fashion direction.", "Generate try-on images.", "Save favorites for a full package."],
     ctaLabel: "Try Outfit Looks",
@@ -1117,13 +1140,12 @@ export function metadataForDreamshootFallbackRoute(
     follow: true
   };
   const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
-  const keywords = seed.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean);
   const ogImage = absoluteRouteSeoImageUrl(options);
   const siteName = fallbackRouteSiteName(siteSlug, options);
   return {
     title: seed.title,
     description: seed.description,
-    keywords,
+    keywords: undefined,
     alternates: { canonical },
     robots: {
       index: seed.index,
@@ -1178,7 +1200,7 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
   return {
     title: item.title,
     description: item.description,
-    keywords: item.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean),
+    keywords: undefined,
     alternates: { canonical },
     robots: {
       index: item.explicit,
@@ -1196,7 +1218,8 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
       title: item.title,
       description: item.description,
       ...(ogImage ? { images: [ogImage] } : {})
-    }
+    },
+    icons: seoDirectoryIcons(site)
   };
 }
 

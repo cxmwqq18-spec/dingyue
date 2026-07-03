@@ -47,6 +47,18 @@ export function signWorkerPayload(unsigned: Omit<WorkerPayload, "signature">, se
   return crypto.createHmac("sha256", secret).update(JSON.stringify(unsigned)).digest("hex");
 }
 
+export function verifyWorkerPayloadSignature(payload: WorkerPayload, secret = process.env.AI_WORKER_SECRET ?? "dev-worker-secret"): boolean {
+  if (!payload.signature) return false;
+  const unsigned = { ...payload };
+  delete (unsigned as Partial<WorkerPayload>).signature;
+  const expected = signWorkerPayload(unsigned as Omit<WorkerPayload, "signature">, secret);
+  try {
+    return crypto.timingSafeEqual(Buffer.from(payload.signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
 export function signWorkerCallback(payload: Record<string, unknown>, secret = process.env.AI_WORKER_SECRET ?? "dev-worker-secret"): string {
   const unsigned = { ...payload };
   delete unsigned.signature;
@@ -142,7 +154,10 @@ export async function buildWorkerPayload(params: {
 }
 
 export async function dispatchWorkerPayload(payload: WorkerPayload): Promise<WorkerDispatchResult> {
-  const endpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
+  const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
+  const endpoint = configuredEndpoint || (process.env.NODE_ENV !== "production"
+    ? new URL("/api/internal/ai-worker/dispatch", payload.callbackUrl).toString()
+    : "");
   if (!endpoint) return { status: "skipped" };
   try {
     const response = await fetch(endpoint, {

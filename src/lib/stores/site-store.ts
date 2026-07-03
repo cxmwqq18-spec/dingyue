@@ -491,12 +491,12 @@ const accountCustomerRuntimeLimits = {
   creativePacks: 0,
   mediaAssets: 0,
   subscriptions: 2,
-  orders: 4,
-  jobs: 4,
-  assetUploads: 0,
+  orders: 12,
+  jobs: 12,
+  assetUploads: 24,
   ledger: 4,
   customerModels: 0,
-  albums: 3
+  albums: 12
 } as const;
 const fullSiteRuntimeLimits = {
   customers: 50,
@@ -725,14 +725,15 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const primary = slugs.find((slug) => slug !== "/404") ?? "/";
   const isHome = primary === "/";
   const isPricing = primary === "/pricing";
+  const isCart = primary === "/cart";
   const isTools = primary === "/tools" || primary.startsWith("/tools/");
   const isToolDetail = primary.startsWith("/tools/") && Boolean(contextSlug);
   const isCollections = primary === "/collections" || primary.startsWith("/collections/");
   const isCollectionDetail = isCollections && Boolean(contextSlug);
   const isWorkspace = primary === "/app";
   return {
-    profile: isHome ? "home" : isPricing ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isCollections ? "collections" : isWorkspace ? "workspace" : "page",
-    products: isHome || isPricing,
+    profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isCollections ? "collections" : isWorkspace ? "workspace" : "page",
+    products: isHome || isPricing || isCart,
     siteAiApps: isHome || (isTools && !isToolDetail) || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
@@ -1095,6 +1096,17 @@ function mapOrderRuntime(order: Prisma.OrderGetPayload<object>): PlatformState["
   };
 }
 
+function storageKeysFromJobResult(value: unknown): string[] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+  const outputs = (value as { outputs?: unknown }).outputs;
+  if (!Array.isArray(outputs)) return [];
+  return outputs.flatMap((output) => {
+    if (!output || typeof output !== "object" || Array.isArray(output)) return [];
+    const storageKey = (output as { storageKey?: unknown }).storageKey;
+    return typeof storageKey === "string" && storageKey.trim() ? [storageKey.trim()] : [];
+  });
+}
+
 export const getStorefrontCustomerRuntimeStateForSite = cache(async (params: StorefrontCustomerRuntimeParams): Promise<PlatformState | undefined> => {
   const identity = params.sessionId ? `session:${params.sessionId}` : params.customerId ? `customer:${params.customerId}` : "anonymous";
   const profile = params.profile ?? "full";
@@ -1175,13 +1187,78 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
     prisma.subscription.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.subscriptions }),
     prisma.order.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.orders }),
     prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs }),
-    prisma.assetUpload.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.assetUploads }),
+    prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null }, orderBy: { createdAt: "desc" }, take: limits.assetUploads }),
     prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger }),
     prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels }),
     prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
   ]);
 
   if (!customer) return undefined;
+
+  const visibleJobs = [...jobs];
+  const visibleAssets = [...assetUploads];
+  const visibleAlbums = [...albums];
+  const jobIds = new Set(visibleJobs.map((job) => job.id));
+  const albumJobIds = new Set(visibleAlbums.flatMap((album) => album.sourceJobId ? [album.sourceJobId] : []));
+  const missingAlbumJobIds = [...albumJobIds].filter((jobId) => !jobIds.has(jobId));
+  if (missingAlbumJobIds.length) {
+    const relatedJobs = await prisma.generationJob.findMany({
+      where: { siteId, customerId, id: { in: missingAlbumJobIds } },
+      orderBy: { updatedAt: "desc" },
+      take: Math.max(missingAlbumJobIds.length, limits.jobs)
+    });
+    for (const job of relatedJobs) {
+      if (!jobIds.has(job.id)) {
+        visibleJobs.push(job);
+        jobIds.add(job.id);
+      }
+    }
+  }
+
+  const outputStorageKeys = new Set(visibleJobs.flatMap((job) => storageKeysFromJobResult(job.resultJson)));
+  const assetIds = new Set(visibleAssets.map((asset) => asset.id));
+  const assetJobIds = new Set(visibleAssets.flatMap((asset) => asset.jobId ? [asset.jobId] : []));
+  const coverAssetIds = new Set(visibleAlbums.flatMap((album) => album.coverAssetId ? [album.coverAssetId] : []));
+  const relatedAssetOr: Prisma.AssetUploadWhereInput[] = [];
+  const missingAssetJobIds = [...jobIds].filter((jobId) => !assetJobIds.has(jobId));
+  const missingCoverAssetIds = [...coverAssetIds].filter((assetId) => !assetIds.has(assetId));
+  if (missingAssetJobIds.length) relatedAssetOr.push({ jobId: { in: missingAssetJobIds } });
+  if (missingCoverAssetIds.length) relatedAssetOr.push({ id: { in: missingCoverAssetIds } });
+  if (outputStorageKeys.size) relatedAssetOr.push({ storageKey: { in: [...outputStorageKeys] } });
+  if (relatedAssetOr.length) {
+    const relatedAssets = await prisma.assetUpload.findMany({
+      where: { siteId, customerId, deletedAt: null, OR: relatedAssetOr },
+      orderBy: { createdAt: "desc" },
+      take: Math.max(limits.assetUploads || 24, relatedAssetOr.length * 12)
+    });
+    for (const asset of relatedAssets) {
+      if (!assetIds.has(asset.id)) {
+        visibleAssets.push(asset);
+        assetIds.add(asset.id);
+        if (asset.jobId) assetJobIds.add(asset.jobId);
+      }
+    }
+  }
+
+  const albumIds = new Set(visibleAlbums.map((album) => album.id));
+  const missingAlbumJobIdsFromJobs = [...jobIds].filter((jobId) => !albumJobIds.has(jobId));
+  const missingAlbumCoverAssetIds = [...assetIds].filter((assetId) => !coverAssetIds.has(assetId));
+  const relatedAlbumOr: Prisma.AlbumWhereInput[] = [];
+  if (missingAlbumJobIdsFromJobs.length) relatedAlbumOr.push({ sourceJobId: { in: missingAlbumJobIdsFromJobs } });
+  if (missingAlbumCoverAssetIds.length) relatedAlbumOr.push({ coverAssetId: { in: missingAlbumCoverAssetIds } });
+  if (relatedAlbumOr.length) {
+    const relatedAlbums = await prisma.album.findMany({
+      where: { siteId, customerId, OR: relatedAlbumOr },
+      orderBy: { updatedAt: "desc" },
+      take: Math.max(limits.albums || 12, relatedAlbumOr.length * 6)
+    });
+    for (const album of relatedAlbums) {
+      if (!albumIds.has(album.id)) {
+        visibleAlbums.push(album);
+        albumIds.add(album.id);
+      }
+    }
+  }
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
   const mappedSite = params.profile === "account" || params.profile === "workspace"
@@ -1202,11 +1279,11 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
     customerSessions: identity.session ? [toCustomerSessionRelational(identity.session)] : [],
     subscriptions: subscriptions.map(mapSubscriptionRuntime),
     orders: orders.map(mapOrderRuntime),
-    jobs: jobs.map(mapGenerationJob),
-    assetUploads: assetUploads.map(toAssetUploadRelational),
+    jobs: visibleJobs.map(mapGenerationJob),
+    assetUploads: visibleAssets.map(toAssetUploadRelational),
     ledger: ledger.map(mapCreditLedger),
     customerModels: customerModels.map(toCustomerModelRelational),
-    albums: albums.map(toAlbumRelational)
+    albums: visibleAlbums.map(toAlbumRelational)
   });
 }
 

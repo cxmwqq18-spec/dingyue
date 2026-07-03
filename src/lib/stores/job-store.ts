@@ -7,7 +7,8 @@ import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
 
 type Tx = Prisma.TransactionClient;
-const jobStoreTimeoutMs = Math.max(1000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "8000") || 8000);
+const jobStoreTimeoutMs = Math.max(5000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "20000") || 20000);
+const jobStoreTransactionOptions = { timeout: jobStoreTimeoutMs, maxWait: Math.min(5000, jobStoreTimeoutMs) };
 const DEFAULT_MAX_SOURCE_ASSETS = 24;
 
 function uid(prefix: string): string {
@@ -119,8 +120,39 @@ function normalizePromptInputs(requestJson?: Record<string, unknown>): Record<st
 
 type GenerationCreativePack = Pick<Prisma.CreativePackGetPayload<object>, "id" | "name" | "headline" | "category" | "aiAppSlug" | "prompt" | "creditCost" | "outputCount">;
 
+function safeCreativePrompt(value: string): string {
+  return value
+    .replace(/create a coherent \d+[- ]image package[^.]*\./gi, "Create one standalone image for this package slot.")
+    .replace(/create a coherent [a-z]+[- ]image package[^.]*\./gi, "Create one standalone image for this package slot.")
+    .replace(/\b\d+[- ]image package\b/gi, "single-image package slot")
+    .replace(/\bfull set\b/gi, "single package slot")
+    .replace(/varied poses, camera distances, and compositions/gi, "one clear pose, one camera distance, and one composition")
+    .replace(/no collage unless[^.]*\./gi, "No collage, no grid, no contact sheet, no split panels.")
+    .replace(/keeps? the subject recognizable[^.]*\./gi, "Use the uploaded image only as a broad style, pose, color, and composition reference, without recreating or verifying any real person's identity.")
+    .replace(/key facial features/gi, "general portrait styling")
+    .replace(/overall identity/gi, "overall mood")
+    .replace(/identity consistency/gi, "style consistency")
+    .replace(/recognizable identity/gi, "coherent styling");
+}
+
+function defaultCreativePrompt(creativePack?: GenerationCreativePack | null): string {
+  if (!creativePack) return "";
+  if (creativePack.prompt?.trim()) return safeCreativePrompt(creativePack.prompt.trim());
+  if (creativePack.category === "anime-avatar") {
+    return "Use the uploaded image only as a broad style, pose, color, and composition reference. Create an original anime-inspired avatar with expressive eyes, polished digital illustration finish, tasteful outfit styling, vibrant but controlled color palette, high-detail linework, and soft shading. Do not recreate or verify any real person's identity.";
+  }
+  return "";
+}
+
+function isRenderablePromptField(key: string) {
+  return !["assetIds", "creativePackId", "customerModelId", "outputCount", "rerunOf", "rerunBy"].includes(key);
+}
+
 function renderPrompt(template: string | undefined, context: { flowName: string; fields: Record<string, string | number | boolean>; assetCount: number; themeName?: string; themePrompt?: string }): string {
-  const fieldText = Object.entries(context.fields).map(([key, value]) => `${key}: ${String(value)}`).join("; ");
+  const fieldText = Object.entries(context.fields)
+    .filter(([key]) => isRenderablePromptField(key))
+    .map(([key, value]) => `${key}: ${String(value)}`)
+    .join("; ");
   const source = template?.trim() || "Create {{flowName}} using {{fields}} with {{assetCount}} selected source photos.";
   return source
     .replaceAll("{{flowName}}", context.flowName)
@@ -152,7 +184,7 @@ function resolveGenerationRequest(params: {
   if (params.requestedAssetIds.length < minAssets) throw new StoreError("not_enough_source_assets", 400);
   if (params.requestedAssetIds.length > maxAssets) throw new StoreError("too_many_source_assets", 400);
   const flowName = workflow.flowName ?? params.siteAiApp.aiApp.name;
-  const themePrompt = params.creativePack?.prompt?.trim() ?? "";
+  const themePrompt = defaultCreativePrompt(params.creativePack);
   const basePrompt = renderPrompt(workflow.promptTemplate, {
     flowName,
     fields,
@@ -318,7 +350,7 @@ export async function createGenerationJobRelational(params: {
       ledger: mapCreditLedger(result.ledger),
       customer: mapCustomer(result.customer)
     };
-  }), "job_create_timeout");
+  }, jobStoreTransactionOptions), "job_create_timeout");
 }
 
 export async function updateGenerationJobStatusRelational(params: {
@@ -346,7 +378,7 @@ export async function updateGenerationJobStatusRelational(params: {
       }
     });
     return { job: mapGenerationJob(updatedJob), alreadyFinal };
-  }), "job_status_update_timeout");
+  }, jobStoreTransactionOptions), "job_status_update_timeout");
 }
 
 export async function settleGenerationJobRelational(params: {
@@ -411,7 +443,7 @@ export async function settleGenerationJobRelational(params: {
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: job.customerId, siteId: job.siteId }, include: { balance: true } });
     return { job: mapGenerationJob(updatedJob), ledger: mapCreditLedger(ledger), alreadyProcessed: false, customer: mapCustomer(updatedCustomer) };
-  }), "job_result_update_timeout");
+  }, jobStoreTransactionOptions), "job_result_update_timeout");
 }
 
 async function upsertAlbumForSettledJob(
@@ -504,5 +536,5 @@ export async function rerunGenerationJobRelational(params: {
       ledger: mapCreditLedger(rerun.ledger),
       customer: mapCustomer(rerun.customer)
     };
-  }), "job_rerun_timeout");
+  }, jobStoreTransactionOptions), "job_rerun_timeout");
 }

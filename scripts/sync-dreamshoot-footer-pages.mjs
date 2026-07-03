@@ -8,7 +8,7 @@ const brandProfiles = [
   {
     matcher: /mydreamshoots|dreamshoot/i,
     brand: "MyDreamShoots",
-    footerTitle: "ʍʏƉʀɛǟʍֆhoots",
+    footerTitle: "MyDreamShoots",
     footerLogoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
     footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
@@ -23,7 +23,7 @@ const brandProfiles = [
     contactDescription:
       "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information.",
     footerLinks: [
-      ["Photo Packages", "/collections", "product"],
+      ["Browse packages", "/collections", "product"],
       ["Tools", "/tools", "product"],
       ["How it works", "/#workflow", "product"],
       ["Pricing", "/pricing", "product"],

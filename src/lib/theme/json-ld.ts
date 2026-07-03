@@ -25,7 +25,6 @@ function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
     .replace(/\b[Ff]ree AI tools\b/g, "AI tools")
     .replace(/\b[Ff]ree tools\b/g, "studio tools")
     .replace(/\b[Ff]ree tool\b/g, "studio tool")
-    .replace(/\b[Ff]ree\b/g, "paid")
     .replace(/\s+/g, " ")
     .trim();
 }

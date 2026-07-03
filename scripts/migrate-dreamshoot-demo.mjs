@@ -28,6 +28,10 @@ function hashPassword(password) {
   return `sha256:${crypto.createHash("sha256").update(password).digest("hex")}`;
 }
 
+function envOrManualPrice(envName, fallback) {
+  return process.env[envName]?.trim() || fallback;
+}
+
 function replaceWhere(items, predicate, nextItems) {
   return [...items.filter((item) => !predicate(item)), ...nextItems];
 }
@@ -482,35 +486,67 @@ function buildThemeRecord({ id, status, name, themeId, pages, settings }) {
   };
 }
 
-const products = [
-  ["prod_dreamshoot_starter", "Starter", "price_dreamshoot_starter", 3500, 200, false, "For one focused photo package", "Standard editing", 20, 2, 3],
-  ["prod_dreamshoot_pro", "Pro", "price_dreamshoot_pro", 5000, 300, true, "Best for multiple package looks", "Advanced editing", 40, 4, 2],
-  ["prod_dreamshoot_premium", "Premium", "price_dreamshoot_premium", 9000, 600, false, "For creators who want the full catalog", "Premium editing and retouching", 80, 8, 1]
-].map(([id, name, priceId, amountCents, creditsGranted, featured, planSubtitle, editingLabel, generatedPhotos, destinationCount, deliveryDays]) => ({
-  id,
+const subscriptionPlans = [
+  { id: "prod_dreamshoot_starter", family: "starter", name: "Starter", monthlyPriceId: "price_dreamshoot_starter_monthly", yearlyPriceId: "price_dreamshoot_starter_yearly", monthlyAmountCents: 2450, originalAmountCents: 3500, monthlyCredits: 200, yearlyAmountCents: 14700, yearlyCredits: 2400, yearlyEquivalentMonthlyCents: 1225, featured: false, planSubtitle: "For one focused photo package", editingLabel: "Standard editing", generatedPhotos: 20, destinationCount: 2, deliveryDays: 3 },
+  { id: "prod_dreamshoot_pro", family: "pro", name: "Pro", monthlyPriceId: "price_dreamshoot_pro_monthly", yearlyPriceId: "price_dreamshoot_pro_yearly", monthlyAmountCents: 3500, originalAmountCents: 5000, monthlyCredits: 300, yearlyAmountCents: 21000, yearlyCredits: 3600, yearlyEquivalentMonthlyCents: 1750, featured: true, planSubtitle: "Best for multiple package looks", editingLabel: "Advanced editing", generatedPhotos: 40, destinationCount: 4, deliveryDays: 2 },
+  { id: "prod_dreamshoot_premium", family: "premium", name: "Premium", monthlyPriceId: "price_dreamshoot_premium_monthly", yearlyPriceId: "price_dreamshoot_premium_yearly", monthlyAmountCents: 6300, originalAmountCents: 9000, monthlyCredits: 600, yearlyAmountCents: 37800, yearlyCredits: 7200, yearlyEquivalentMonthlyCents: 3150, featured: false, planSubtitle: "For creators who want the full catalog", editingLabel: "Premium editing and retouching", generatedPhotos: 80, destinationCount: 8, deliveryDays: 1 }
+];
+
+const products = subscriptionPlans.map((plan) => ({
+  id: plan.id,
   siteId,
-  name,
+  name: plan.name,
   type: "subscription",
   status: "active",
   prices: [
     {
-      id: priceId,
+      id: plan.monthlyPriceId,
       siteId,
-      productId: id,
-      label: name,
-      amountCents,
+      productId: plan.id,
+      label: plan.name,
+      amountCents: plan.monthlyAmountCents,
       currency: "usd",
       interval: "month",
-      creditsGranted,
-      stripePriceId: `manual_${priceId}`,
+      creditsGranted: plan.monthlyCredits,
+      stripePriceId: envOrManualPrice(`MYDREAMSHOOTS_STRIPE_PRICE_${plan.family.toUpperCase()}_MONTHLY`, `manual_${plan.monthlyPriceId}`),
       metadata: {
-        generatedPhotos,
-        destinationCount,
-        deliveryDays,
-        featured,
-        planSubtitle,
-        editingLabel,
-        publicReference: `MyDreamShoots ${String(name).toLowerCase()} credit package`
+        generatedPhotos: plan.generatedPhotos,
+        destinationCount: plan.destinationCount,
+        deliveryDays: plan.deliveryDays,
+        featured: plan.featured,
+        planSubtitle: plan.planSubtitle,
+        editingLabel: plan.editingLabel,
+        originalAmountCents: plan.originalAmountCents,
+        discountLabel: "30% off",
+        billingCadence: "monthly",
+        planFamily: plan.family,
+        publicReference: `MyDreamShoots ${String(plan.name).toLowerCase()} credit package`
+      }
+    },
+    {
+      id: plan.yearlyPriceId,
+      siteId,
+      productId: plan.id,
+      label: `${plan.name} yearly`,
+      amountCents: plan.yearlyAmountCents,
+      currency: "usd",
+      interval: "year",
+      creditsGranted: plan.yearlyCredits,
+      stripePriceId: envOrManualPrice(`MYDREAMSHOOTS_STRIPE_PRICE_${plan.family.toUpperCase()}_YEARLY`, `manual_${plan.yearlyPriceId}`),
+      metadata: {
+        generatedPhotos: plan.generatedPhotos,
+        destinationCount: plan.destinationCount,
+        deliveryDays: plan.deliveryDays,
+        featured: plan.featured,
+        planSubtitle: plan.planSubtitle,
+        editingLabel: plan.editingLabel,
+        originalAmountCents: plan.originalAmountCents * 12,
+        discountLabel: "Pay 6, get 12",
+        billingCadence: "yearly",
+        yearlyEquivalentMonthlyCents: plan.yearlyEquivalentMonthlyCents,
+        yearlySavingsLabel: "6 months free",
+        planFamily: plan.family,
+        publicReference: `MyDreamShoots ${String(plan.name).toLowerCase()} yearly credit package`
       }
     }
   ]
@@ -538,17 +574,17 @@ products.push({
 });
 
 const creativePacks = [
-  ["pack_dreamshoot_headshots", "Professional Headshots", "Founder, LinkedIn, team, resume, and personal brand portraits from simple selfies.", "headshots", 20, 20, "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["pack_dreamshoot_worldcup", "World Cup Fan Photos", "Stadium portraits, fan posters, match-day avatars, and private social albums.", "sports", 40, 26, "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
-  ["pack_dreamshoot_hairstyle", "Hairstyle", "Preview hair directions, colors, and beauty styling before choosing a full image package.", "beauty", 20, 18, "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
-  ["pack_dreamshoot_cyberpunk", "Cyberpunk", "Neon city portraits, future fashion, night-life looks, and high-contrast digital art scenes.", "creative", 20, 26, "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
+  ["pack_dreamshoot_headshots", "Professional Headshots", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Credit cost is shown before generation.", "headshots", 20, 20, "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
+  ["pack_dreamshoot_worldcup", "World Cup Fan Photos", "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only; do not use official marks or player likenesses without permission.", "sports", 40, 26, "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
+  ["pack_dreamshoot_hairstyle", "Hairstyle", "Preview haircut, color, and styling ideas before you commit to a real salon change or a full image package.", "beauty", 20, 18, "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
+  ["pack_dreamshoot_cyberpunk", "Cyberpunk", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "creative", 20, 26, "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
   ["pack_dreamshoot_gala", "Gala Photos", "Formal night-out photos with polished editorial lighting, black-tie styling, and red-carpet energy.", "creative", 20, 24, "/assets/dreamshoot/frames/sample-gala.png"],
   ["pack_dreamshoot_mafia", "Mafia", "Vintage noir styling, dramatic suits, classic portraits, and cinematic themed scenes.", "creative", 20, 22, "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
   ["pack_dreamshoot_nature", "Nature", "Outdoor adventure portraits, scenic backdrops, travel moments, and landscape-led profile images.", "creative", 20, 18, "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
   ["pack_dreamshoot_travel", "Travel Scene Pack", "Cliffside, city, resort, and destination-style portraits without a studio booking.", "creative", 36, 22, "/assets/dreamshoot/generated/20260618/cliffside-holiday-v1.png"],
   ["pack_dreamshoot_virtual_tryon", "Virtual Try-On", "Outfit and styling previews for polished scene planning before full-package generation.", "beauty", 36, 20, "/assets/dreamshoot/frames/tab-virtual-looks.png"],
   ["pack_dreamshoot_profile_cards", "Profile Cards", "Polished profile cards, newsletter portraits, and creator announcement visuals.", "creator", 20, 20, "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
-  ["pack_dreamshoot_creator_portraits", "Creator Portraits", "Solo creator portraits for personal brands, landing pages, newsletters, and profile refreshes.", "creator", 20, 24, "/assets/dreamshoot/avatar-nora-gpt2.png"],
+  ["pack_dreamshoot_creator_portraits", "Creator Portraits", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "creator", 20, 24, "/assets/dreamshoot/avatar-nora-gpt2.png"],
   ["pack_dreamshoot_fashion_editorial", "Fashion Editorial", "Magazine-style outfit stories, dramatic styling, and polished editorial portraits.", "creator", 20, 24, "/assets/dreamshoot/editorial-headshot-gpt2.png"],
   ["pack_dreamshoot_anime_avatar", "Anime Avatar", "Stylized avatar concepts, profile art, and character-inspired portraits for social channels.", "avatar", 20, 24, "/assets/dreamshoot/frames/story-beauty-portrait.png"],
   ["pack_dreamshoot_product_style", "Product Style", "Creator product shots, lifestyle visuals, and campaign-ready image concepts.", "creator", 20, 22, "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
@@ -558,12 +594,12 @@ const creativePacks = [
   ["pack_dreamshoot_desi_wedding", "Desi Wedding", "South Asian wedding portraits, festive styling, formal couple poses, and celebration-ready album scenes.", "cultural", 20, 24, "/assets/dreamshoot/couple-studio-hero.svg"],
   ["pack_dreamshoot_valentine", "Valentine Photos", "Romantic card-ready portraits, gift visuals, couple moments, and soft social media scenes.", "couple", 20, 20, "/assets/dreamshoot/generated/20260618/city-date-night-v1.png"],
   ["pack_dreamshoot_engagement", "Engagement", "Proposal scenes, announcement images, save-the-date looks, and romantic portrait sets.", "couple", 20, 22, "/assets/dreamshoot/frames/sample-engagement.png"],
-  ["pack_dreamshoot_boudoir", "Boudoir", "Tasteful private portraits with soft lighting, confident styling, and album-only delivery.", "boudoir", 20, 24, "/assets/dreamshoot/beauty-portrait-gpt2.png"],
+  ["pack_dreamshoot_boudoir", "Boudoir", "Create a private boudoir-inspired portrait set from photos you own and have permission to use. Adult, consensual use only.", "boudoir", 20, 24, "/assets/dreamshoot/beauty-portrait-gpt2.png"],
   ["pack_dreamshoot_holiday", "Holiday", "Travel, vacation, family-card, resort, and festive album scenes for seasonal sharing.", "seasonal", 20, 20, "/assets/dreamshoot/date-night.svg"],
   ["pack_dreamshoot_christmas_couple", "Christmas Couple", "Cozy festive couple portraits, holiday-card scenes, fireplace looks, and winter album moments.", "couple", 20, 22, "/assets/dreamshoot/frames/sample-christmas-couple.png"],
   ["pack_dreamshoot_christmas", "Christmas Photos", "Solo festive portraits, greeting-card visuals, market scenes, and warm seasonal images.", "seasonal", 20, 20, "/assets/dreamshoot/generated/20260619/christmas-solo-card-v1.png"],
   ["pack_dreamshoot_ai_video", "AI Video Add-ons", "Turn finished package images into short motion concepts for reels, profile clips, and social campaigns.", "video", 8, 18, "/assets/dreamshoot/editorial-headshot.svg"],
-  ["pack_dreamshoot_upscaler", "Magic Upscaler", "Refine favorite outputs for sharper delivery, larger downloads, and cleaner profile use.", "utility", 8, 10, "/assets/dreamshoot/beauty-portrait.svg"]
+  ["pack_dreamshoot_upscaler", "Magic Upscaler", "Sharpen a favorite generated image for cleaner downloads, profile use, and larger display sizes.", "utility", 8, 10, "/assets/dreamshoot/beauty-portrait.svg"]
 ].map(([id, name, description, category, outputCount, creditCost, imageUrl], index) => ({
   id,
   siteId,
@@ -744,7 +780,7 @@ state.subscriptions = replaceWhere(state.subscriptions ?? [], (item) => item.sit
     siteId,
     customerId: "cust_dreamshoot_nora",
     productId: "prod_dreamshoot_pro",
-    priceId: "price_dreamshoot_pro",
+    priceId: "price_dreamshoot_pro_monthly",
     stripeSubscriptionId: "sub_demo_dreamshoot_pro_300",
     status: "active",
     currentPeriodEnd: "2026-07-18T00:00:00.000Z",
@@ -758,7 +794,7 @@ state.orders = replaceWhere(state.orders ?? [], (item) => item.siteId === siteId
     siteId,
     customerId: "cust_dreamshoot_nora",
     status: "fulfilled",
-    amountCents: 5000,
+    amountCents: 3500,
     currency: "usd",
     credits: 300,
     sourceId: "cs_demo_dreamshoot_pro_001",

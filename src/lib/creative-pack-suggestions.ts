@@ -59,14 +59,14 @@ export function suggestedCreativePackPrompt(pack: CreativePackSuggestionInput) {
   return [
     `Theme: ${title}.`,
     `Purpose: ${pack.description}`,
-    "Use the uploaded customer reference photos as identity anchors; preserve the same person, facial structure, age range, skin tone, body proportions, and recognizable features.",
+    "Use the uploaded customer reference photos as visual anchors for broad subject, pose, color, styling, and composition cues without verifying or recreating a real person's identity.",
     `Visual direction: ${creativePackCategoryPromptDirections[pack.category]}.`,
-    `Create a coherent ${pack.outputCount || 8}-image package with varied poses, camera distances, and compositions while keeping one consistent premium aesthetic.`,
+    "Create one standalone image for one package slot. The package may contain multiple outputs, but each generated file must contain exactly one finished portrait image.",
     pack.trainingRequired
-      ? "If a trained personal model is available, prioritize model consistency and reuse the customer's learned identity across the full set."
-      : "If no trained model is available, use the uploaded references conservatively and avoid changing identity.",
+      ? "If a trained personal model is available, prioritize consistent styling from that model for this single output."
+      : "If no trained model is available, use the uploaded references conservatively and keep the result broadly aligned with the source.",
     "Photography language: photorealistic editorial quality, clean lens rendering, natural skin texture, controlled highlights, believable shadows, high-end commercial finish.",
-    "Composition requirements: subject remains the hero, no text overlays, no logos, no watermarks, no UI elements, no collage unless the specific theme explicitly asks for a contact sheet.",
+    "Composition requirements: subject remains the hero, no text overlays, no logos, no watermarks, no UI elements, no collage, no grid, no contact sheet, no split panels.",
     "Safety and quality constraints: avoid distorted hands, extra limbs, duplicated faces, melted accessories, overly plastic skin, explicit nudity, minors, medical claims, celebrity imitation, or brand-trademark misuse.",
     "Output should feel like a curated DreamShootAI paid package, ready for private gallery delivery and frontend package previews."
   ].join("\n");

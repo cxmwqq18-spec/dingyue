@@ -754,6 +754,8 @@ export function JobCreateForm({
 
   return (
     <form className="grid gap-5" onSubmit={createJob}>
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid gap-5">
       <div className="grid gap-3">
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 01</p>
@@ -814,12 +816,12 @@ export function JobCreateForm({
             })}
           </div>
         ) : null}
-        <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-4" : "grid gap-3 lg:grid-cols-2"}>
+        <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 2xl:grid-cols-3" : "grid gap-3 lg:grid-cols-2"}>
           {createMode === "theme" ? visibleCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
             return (
               <button
-                className={`grid min-h-[292px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
+                className={`grid min-h-[268px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
                 key={pack.id}
@@ -1053,7 +1055,9 @@ export function JobCreateForm({
           </div>
         )}
       </div>
-      <div className={`grid gap-3 rounded-[16px] border p-4 sm:grid-cols-3 ${panelClass}`}>
+        </div>
+        <aside className="grid h-fit gap-4 xl:sticky xl:top-[118px]">
+      <div className={`grid gap-3 rounded-[18px] border p-4 ${panelClass}`}>
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Credits</p>
           <p className={`mt-3 text-2xl font-semibold ${textClass}`}>{createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedApp?.creditCost ?? 0}</p>
@@ -1081,6 +1085,8 @@ export function JobCreateForm({
         </div>
       </div>
       <p className={`text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>{message}</p>
+        </aside>
+      </div>
     </form>
   );
 }

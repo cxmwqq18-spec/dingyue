@@ -33,6 +33,7 @@ export function resolveMediaAssetUrl(site: Site, value: string | undefined): str
   if (asset?.originUrl) return asset.originUrl;
   if (lookup.startsWith("/assets/dreamshoot/")) return lookup;
   if (lookup.startsWith("customer-assets/")) return `/api/local-assets/${lookup.slice("customer-assets/".length)}`;
+  if (lookup.startsWith("sites/") && lookup.includes("/customers/")) return `/api/local-assets/${lookup}`;
   if (lookup.startsWith("/themes/theme1/")) return fallbackImageForSeed(lookup);
   if (lookup.startsWith("http")) return lookup;
   if (lookup.startsWith("/")) return lookup;

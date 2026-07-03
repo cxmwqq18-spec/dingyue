@@ -191,9 +191,12 @@ export function AiToolsPageClient({
     async function load() {
       setError(null);
       try {
+        const summaryUrl = summaryReloadKey > 0
+          ? `/api/sites/${siteId}/admin/ai-page?detail=summary&reload=${summaryReloadKey}`
+          : `/api/sites/${siteId}/admin/ai-page?detail=summary`;
         const response = await fetchAdminJson<AiToolsPagePayload>(
-          `/api/sites/${siteId}/admin/ai-page?detail=summary&reload=${summaryReloadKey}`,
-          { init: { signal: controller.signal }, ttlMs: 0 },
+          summaryUrl,
+          { init: { signal: controller.signal }, timeoutMs: 30_000 },
         );
         const result = response.data;
         if (cancelled) return;

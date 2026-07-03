@@ -125,6 +125,9 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   // 后台高风险变更 - 每15分钟8次
   adminMutation: { windowMs: 900000, maxRequests: 8, keyPrefix: "admin_mutation" },
 
+  // 后台客户素材清理 - 支持人工连续删除和小批量清理
+  adminCustomerAssetDelete: { windowMs: 60000, maxRequests: 60, keyPrefix: "admin_customer_asset_delete" },
+
   // 平台进入站点后台桥接 - 登录跳转路径，允许频繁切换站点
   adminBridge: { windowMs: 60000, maxRequests: 60, keyPrefix: "admin_bridge" },
 };

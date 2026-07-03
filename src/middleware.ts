@@ -36,16 +36,20 @@ const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
   "travel-portraits": "nature-adventure"
 };
 const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
+  "ai-image-studio": "",
   "background-changer": "route-portrait-engine",
   "background-remover": "route-portrait-engine",
   "couple-escape-album": "shared-route-album",
   "dreamscape-generator": "route-portrait-engine",
   headshot: "route-portrait-engine",
   "image-to-video": "route-portrait-engine",
+  "image-studio": "",
   "portrait-generator": "route-portrait-engine",
   "portrait-maker": "route-portrait-engine",
   "product-reverie": "route-moodboard",
-  "soft-glam": "cafe-street-story"
+  "soft-glam": "cafe-street-story",
+  "wedding-portraits": "",
+  "world-cup-fan-photos": ""
 };
 const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/about": "/about-us",
@@ -53,6 +57,7 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/content-policy": "/content",
   "/cookie-policy": "/cookies",
   "/delivery-policy": "/shipping",
+  "/examples": "/collections",
   "/policies/content": "/content",
   "/policies/cookies": "/cookies",
   "/policies/privacy": "/privacy",
@@ -66,14 +71,19 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/terms-of-service": "/terms",
   "/tool": "/tools"
 };
+const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/collections", "/tools", "/pricing", "/help"]);
 
 const SEO_HEAD_TAG_RE =
   /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
 const AIDREAMCAPES_LOGO_IMG_RE =
   /<img\b(?=[^>]*src=["']\/assets\/sites\/site_aidreamcapes\/brand\/aidreamcapesai-logo-refined\.svg[^"']*["'])(?=[^>]*alt=["'][^"']*Aidreamcapes[^"']*["'])([^>]*)\/?>/gi;
-const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701logo";
-const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
+const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702";
+const AIDREAMCAPES_ICON_SVG = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260702";
+const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260702";
+const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702";
+const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702";
+const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
 const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries"><defs><linearGradient id="aidreamcapes-header-logo" x1="92" y1="76" x2="420" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#A855F7"/><stop offset="0.48" stop-color="#F65BA8"/><stop offset="1" stop-color="#52C7D8"/></linearGradient></defs><g fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M256 388c-56-49-126-91-126-174 0-52 41-84 85-70 19 6 32 20 41 38 9-18 22-32 41-38 44-14 85 18 85 70 0 83-70 125-126 174Z"/><path d="M256 176l42 78-42 86-42-86 42-78Z"/><path d="M192 254h128"/></g><circle cx="256" cy="254" r="18" fill="transparent" stroke="#F65BA8" stroke-width="12"/></svg>`;
 
 function normalizePathSlug(value: string): string {
@@ -163,6 +173,18 @@ function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefine
   return NextResponse.redirect(nextUrl, 308);
 }
 
+function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | undefined {
+  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  if (!LOCAL_DEFAULT_STOREFRONT_PATHS.has(pathname.toLowerCase())) return undefined;
+  const host = (request.headers.get("host") ?? "").toLowerCase();
+  if (!host.startsWith("localhost") && !host.startsWith("127.0.0.1")) return undefined;
+
+  const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.pathname = `/site/${defaultSiteSlug}${pathname}`;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
 function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
@@ -220,15 +242,22 @@ function moveSeoTagsBeforeResources(html: string): string {
   return `${beforeHeadContent}${reorderedHead}${afterHeadContent}`;
 }
 
-function siteIconForRequest(request: NextRequest): string | undefined {
+type StorefrontIconSet = {
+  png: string;
+  svg: string;
+  apple: string;
+};
+
+function siteIconForRequest(request: NextRequest): StorefrontIconSet | undefined {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
-  if (identity.includes("aidreamcapes")) return AIDREAMCAPES_ICON;
-  if (identity.includes("mydreamshoots")) return MYDREAMSHOOTS_ICON;
+  if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_ICON, svg: AIDREAMCAPES_ICON_SVG, apple: AIDREAMCAPES_APPLE_ICON };
+  if (identity.includes("mydreamshoots")) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
+  if (BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
   return undefined;
 }
 
-function withStorefrontIcons(html: string, iconHref: string | undefined): string {
-  if (!iconHref) return html;
+function withStorefrontIcons(html: string, icons: StorefrontIconSet | undefined): string {
+  if (!icons) return html;
   const headOpen = html.search(/<head\b[^>]*>/i);
   if (headOpen < 0) return html;
 
@@ -239,14 +268,14 @@ function withStorefrontIcons(html: string, iconHref: string | undefined): string
   const beforeHeadContent = html.slice(0, headOpenEnd + 1);
   const headContent = html.slice(headOpenEnd + 1, headClose).replace(ICON_HEAD_TAG_RE, "");
   const afterHeadContent = html.slice(headClose);
-  const iconTags = `<link rel="icon" href="${iconHref}" type="image/svg+xml"/><link rel="shortcut icon" href="${iconHref}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${iconHref}"/>`;
+  const iconTags = `<link rel="icon" href="${icons.png}" type="image/png" sizes="192x192"/><link rel="shortcut icon" href="${icons.png}" type="image/png"/><link rel="icon" href="${icons.svg}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
   const insertionPoint = leadingRequiredHeadLength(headContent);
   return `${beforeHeadContent}${headContent.slice(0, insertionPoint)}${iconTags}${headContent.slice(insertionPoint)}${afterHeadContent}`;
 }
 
 function withInlineAidreamcapesLogo(html: string, request: NextRequest): string {
   const iconHref = siteIconForRequest(request);
-  if (iconHref !== AIDREAMCAPES_ICON) return html;
+  if (iconHref?.png !== AIDREAMCAPES_ICON) return html;
   return html.replace(AIDREAMCAPES_LOGO_IMG_RE, AIDREAMCAPES_INLINE_LOGO);
 }
 
@@ -271,7 +300,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   if (!iconHref) return undefined;
 
   const upstreamUrl = sameServerUrl(request);
-  upstreamUrl.pathname = iconHref.split("?")[0] ?? iconHref;
+  upstreamUrl.pathname = iconHref.png.split("?")[0] ?? iconHref.png;
   upstreamUrl.search = "";
 
   const upstreamResponse = await fetch(upstreamUrl, {
@@ -281,9 +310,9 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
-  headers.set("content-type", "image/svg+xml; charset=utf-8");
+  headers.set("content-type", "image/png");
   headers.set("cache-control", "no-store, max-age=0");
-  headers.set("x-storefront-icon-source", iconHref);
+  headers.set("x-storefront-icon-source", iconHref.png);
 
   return new Response(upstreamResponse.body, {
     status: upstreamResponse.status,
@@ -296,7 +325,7 @@ export async function middleware(request: NextRequest) {
   const iconResponse = await storefrontIconResponse(request);
   if (iconResponse) return iconResponse;
 
-  const redirectResponse = canonicalPublicHostSitePathRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  const redirectResponse = canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return redirectResponse;
   if (!shouldReorderStorefrontHead(request)) return nextWithPathname(request);
 

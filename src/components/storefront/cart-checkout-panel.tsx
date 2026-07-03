@@ -84,7 +84,7 @@ export function CartCheckoutPanel({
             <span>{currentBalance ?? 0} credits</span>
           </div>
           <div className="mt-3 flex items-center justify-between gap-3">
-            <span className="text-white/64">This top-up</span>
+            <span className="text-white/64">Selected plan</span>
             <span>{selectedCredits} credits / {selectedAmountLabel}</span>
           </div>
         </div>
@@ -99,7 +99,7 @@ export function CartCheckoutPanel({
           <div className="flex items-start gap-2">
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.8} />
             <div>
-              <p className="font-semibold">Top-up complete. {result.grantedCredits ?? selectedCredits} credits have been added.</p>
+              <p className="font-semibold">Checkout complete. {result.grantedCredits ?? selectedCredits} credits have been added.</p>
               <p className="mt-1 font-mono text-xs text-emerald-100/80">Order {result.order.id}</p>
             </div>
           </div>
@@ -119,7 +119,7 @@ export function CartCheckoutPanel({
           type="button"
         >
           {busy ? <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.8} /> : <ShieldCheck className="h-4 w-4" strokeWidth={1.8} />}
-          {busy ? "Processing" : "Complete top-up"}
+          {busy ? "Processing" : "Complete checkout"}
         </button>
       ) : (
         <Link className="inline-flex w-full justify-center rounded-full bg-white px-4 py-3 text-sm font-semibold text-zinc-950" href={loginHref}>

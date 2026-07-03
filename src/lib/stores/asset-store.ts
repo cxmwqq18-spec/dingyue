@@ -2,6 +2,7 @@ import "server-only";
 import fs from "fs";
 import path from "path";
 import type { PrismaClient } from "@prisma/client";
+import { fallbackImageForSeed } from "@/lib/media";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import type { Album, AssetUpload, CustomerModel, ThemeRuntimeAsset } from "@/lib/types";
@@ -17,6 +18,18 @@ import {
 
 type DbClient = PrismaClient;
 const customerAssetRoot = path.join(process.cwd(), "data", "customer-assets");
+
+function customerAssetFilePath(storageKey: string): string {
+  return path.join(customerAssetRoot, storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, ""));
+}
+
+function customerAssetFileExists(storageKey: string): boolean {
+  try {
+    return fs.existsSync(customerAssetFilePath(storageKey));
+  } catch {
+    return false;
+  }
+}
 
 const requiredAssetMetadataFields = [
   "id",
@@ -193,11 +206,14 @@ export function readCustomerAssetFileByStorageKey(params: {
 
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
+  const previewUrl = customerAssetFileExists(storageKey)
+    ? `/api/local-assets/${storageKey}`
+    : fallbackImageForSeed(`${asset.siteId}-${asset.id}-${storageKey}`);
   return {
     id: asset.id,
     jobId: asset.jobId,
     label: asset.label,
-    previewUrl: `/api/local-assets/${storageKey}`,
+    previewUrl,
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,

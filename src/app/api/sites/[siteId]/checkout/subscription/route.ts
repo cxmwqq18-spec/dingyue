@@ -9,6 +9,10 @@ import { mapProduct } from "@/lib/stores/prisma-mappers";
 import { createStripeCheckoutSession, stripeCheckoutReadiness } from "@/lib/stripe-checkout";
 import type { NextRequest } from "next/server";
 
+function checkoutModeForInterval(interval: string): "subscription" | "payment" {
+  return interval === "month" || interval === "year" ? "subscription" : "payment";
+}
+
 export async function HEAD() {
   return new Response(null, { status: 200 });
 }
@@ -45,6 +49,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!price) {
     return NextResponse.json({ error: "price_not_found_for_site" }, { status: 404 });
   }
+  const checkoutMode = checkoutModeForInterval(price.interval);
 
   const customerEmail = guard.current.customer.email.trim().toLowerCase();
   const admin = await prisma.siteAdmin.findFirst({
@@ -115,7 +120,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         order: checkout.order,
         stripeAccountId: site.connect.stripeAccountId,
         origin,
-        mode: price.interval === "month" ? "subscription" : "payment",
+        mode: checkoutMode,
         metadata: {
           ...checkout.metadata,
           stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId ?? ""
@@ -127,7 +132,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         checkoutUrl: session.url,
         checkoutSessionId: session.id,
         stripeAccount: site.connect.stripeAccountId,
-        mode: price.interval === "month" ? "subscription" : "payment",
+        mode: checkoutMode,
         price: checkout.price,
         order: checkout.order,
         metadata: {
@@ -152,7 +157,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     error: "payment_provider_not_enabled_for_customer",
     checkoutUrl: undefined,
     stripeAccount: site.connect?.stripeAccountId,
-    mode: price.interval === "month" ? "subscription" : "payment",
+    mode: checkoutMode,
     price: checkout.price,
     order: checkout.order,
     metadata: {

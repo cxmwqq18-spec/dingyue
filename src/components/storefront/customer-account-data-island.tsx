@@ -169,7 +169,7 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
       <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id="account-orders">
         <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Orders</p>
         <div className="mt-4 grid gap-3">
-          {orders.length ? orders.slice(0, 4).map((order) => (
+          {orders.length ? orders.slice(0, 12).map((order) => (
             <div className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={order.id}>
               <div>
                 <p className="font-semibold text-[#171514]">{money(order.amountCents, order.currency)}</p>
@@ -177,6 +177,14 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
               </div>
               <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{orderStatusLabel(order.status)}</span>
             </div>
+          )) : jobs.length ? jobs.slice(0, 12).map((job, index) => (
+            <StorefrontInstantLink className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={`/site/${siteSlug}/app/jobs/${job.id}`} key={job.id}>
+              <div>
+                <p className="font-semibold text-[#171514]">{requestTitle(job.id, index)}</p>
+                <p className="mt-1 text-xs text-[#7d7064]">{job.creditsReserved} credits · {dateLabel(job.createdAt)}</p>
+              </div>
+              <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{jobStatusLabel(job.status)}</span>
+            </StorefrontInstantLink>
           )) : (
             <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No orders recorded for this account yet.</p>
           )}
@@ -192,7 +200,7 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
           </StorefrontInstantLink>
         </div>
         <div className="mt-4 grid gap-3">
-          {jobs.length ? jobs.slice(0, 4).map((job, index) => (
+          {jobs.length ? jobs.slice(0, 12).map((job, index) => (
             <StorefrontInstantLink className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={`/site/${siteSlug}/app/jobs/${job.id}`} key={job.id}>
               <p className="font-semibold text-[#171514]">{requestTitle(job.id, index)}</p>
               <p className="mt-1 text-xs text-[#7d7064]">{jobStatusLabel(job.status)} · {job.creditsReserved} credits held</p>
@@ -212,7 +220,7 @@ export function CustomerAccountDataIsland({ initialRuntime, siteId, siteSlug }: 
           </StorefrontInstantLink>
         </div>
         <div className="mt-4 grid gap-3">
-          {albums.length ? albums.slice(0, 3).map((album) => (
+          {albums.length ? albums.slice(0, 12).map((album) => (
             <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={album.id}>
               <p className="font-semibold text-[#171514]">{album.title}</p>
               <p className="mt-1 text-xs text-[#7d7064]">{albumStatusLabel(album.status)} · {album.outputCount} images</p>

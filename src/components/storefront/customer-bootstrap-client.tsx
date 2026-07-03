@@ -8,8 +8,9 @@ import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData } 
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {
-  site: CustomerBootstrapSite;
-  customer: PublicCustomer;
+  authenticated?: boolean;
+  site?: CustomerBootstrapSite;
+  customer?: PublicCustomer;
   siteAiApps: SiteAiApp[];
   creativePacks: CreativePack[];
   accountRuntime?: ThemeRuntimeData;
@@ -19,12 +20,29 @@ type LoadState =
   | { status: "ready"; data: CustomerBootstrap; error?: undefined; loginPath?: undefined }
   | { status: "error"; data?: undefined; error: string; loginPath?: string };
 type BootstrapMode = "workspace" | "shell" | "account";
+type AuthenticatedCustomerBootstrap = CustomerBootstrap & {
+  site: CustomerBootstrapSite;
+  customer: PublicCustomer;
+};
+type BootstrapErrorPayload = Partial<CustomerBootstrap> & {
+  ok?: boolean;
+  error?: string;
+  loginPath?: string;
+};
 
 const bootstrapCache = new Map<string, CustomerBootstrap>();
 const bootstrapRequests = new Map<string, Promise<CustomerBootstrap>>();
 
 function bootstrapCacheKey(siteSlug: string, mode: BootstrapMode): string {
   return mode === "workspace" ? siteSlug : `${siteSlug}:${mode}`;
+}
+
+function isAuthenticatedBootstrap(bootstrap: CustomerBootstrap): bootstrap is AuthenticatedCustomerBootstrap {
+  return Boolean(bootstrap.site && bootstrap.customer);
+}
+
+function isLoginRequiredBootstrapError(response: Response, data: BootstrapErrorPayload): boolean {
+  return response.status === 401 || data.error === "auth_required" || data.error === "customer_login_required" || Boolean(data.loginPath);
 }
 
 async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mode: BootstrapMode = "workspace"): Promise<CustomerBootstrap> {
@@ -43,15 +61,24 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
     signal
   })
     .then(async (response) => {
-      const data = (await response.json().catch(() => ({}))) as Partial<CustomerBootstrap> & {
-        ok?: boolean;
-        error?: string;
-        loginPath?: string;
-      };
-      if (!response.ok || !data.ok || !data.site || !data.customer || !data.siteAiApps || !data.creativePacks) {
+      const data = (await response.json().catch(() => ({}))) as BootstrapErrorPayload;
+      if (mode === "shell" && isLoginRequiredBootstrapError(response, data)) {
+        const bootstrap = {
+          authenticated: false,
+          siteAiApps: data.siteAiApps ?? [],
+          creativePacks: data.creativePacks ?? []
+        };
+        bootstrapCache.set(cacheKey, bootstrap);
+        return bootstrap;
+      }
+      if (!response.ok || !data.ok || !data.siteAiApps || !data.creativePacks) {
+        throw Object.assign(new Error(data.error || "customer_bootstrap_unavailable"), { loginPath: data.loginPath });
+      }
+      if (mode !== "shell" && (!data.site || !data.customer)) {
         throw Object.assign(new Error(data.error || "customer_bootstrap_unavailable"), { loginPath: data.loginPath });
       }
       const bootstrap = {
+        authenticated: data.authenticated ?? Boolean(data.customer),
         site: data.site,
         customer: data.customer,
         siteAiApps: data.siteAiApps,
@@ -188,6 +215,7 @@ export function CustomerHeaderBootstrapControls({
 }) {
   const state = useCustomerBootstrap(siteSlug, "shell");
   if (state.status !== "ready") return <>{children}</>;
+  if (!state.data.customer) return <>{children}</>;
   const customer = state.data.customer;
   if (variant === "mobile") {
     return (
@@ -241,12 +269,13 @@ export function CustomerAccountClientPage({
   siteSlug: string;
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
-  const state = useCustomerBootstrap(siteSlug, "shell", !hasInitialAccountData);
+  const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
   if (initialCustomer && initialSite) return <CustomerAccountShell customer={initialCustomer} site={initialSite} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
-  return <CustomerAccountShell customer={state.data.customer} site={state.data.site} />;
+  if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
+  return <CustomerAccountShell customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} />;
 }
 
 export function CustomerWorkspaceClientPage({
@@ -263,7 +292,7 @@ export function CustomerWorkspaceClientPage({
   siteSlug: string;
 }) {
   const state = useCustomerBootstrap(siteSlug, "workspace", !initialBootstrap);
-  if (initialBootstrap) {
+  if (initialBootstrap && isAuthenticatedBootstrap(initialBootstrap)) {
     return (
       <CustomerWorkspaceShell
         assets={[]}
@@ -280,6 +309,7 @@ export function CustomerWorkspaceClientPage({
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your private workspace." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your workspace session could not be verified from this browser." />;
+  if (!isAuthenticatedBootstrap(state.data)) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
   return (
     <CustomerWorkspaceShell
       assets={[]}

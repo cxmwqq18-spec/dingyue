@@ -12,6 +12,8 @@ import {
   toPublicCustomer
 } from "@/lib/server-store";
 import { toAlbumRelational, toAssetUploadRelational, toCreativePack, toCustomerModelRelational, toPublicCustomerRelational, toSiteAdmin } from "@/lib/stores/prisma-mappers";
+import type { AssetUpload } from "@/lib/types";
+import type { JobStatus } from "@/lib/types";
 
 const customersPageCache = createServerTtlCache("site-admin-customers-page", Number(process.env.SITE_ADMIN_CUSTOMERS_PAGE_CACHE_TTL_MS ?? 15_000));
 
@@ -41,6 +43,61 @@ function includeCustomers(detail: CustomersPageDetail): boolean {
   return detail === "all" || detail === "customers" || detail === "assets";
 }
 
+type AdminCustomerAsset = AssetUpload & {
+  previewUrl: string;
+  downloadUrl: string;
+  sourceAssetIds?: string[];
+};
+
+type AdminCustomerAssetJob = {
+  id: string;
+  customerId: string;
+  status: JobStatus;
+  sourceAssetIds: string[];
+  outputStorageKeys: string[];
+  error?: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+function adminCustomerAssetUrl(asset: Pick<AssetUpload, "storageKey">): string {
+  const storageKey = asset.storageKey.replace(/^customer-assets\//, "").replace(/^\/+/, "");
+  if (!storageKey || storageKey.includes("..") || storageKey.includes("\\")) return "";
+  return `/api/local-assets/${storageKey}`;
+}
+
+function toAdminCustomerAsset(asset: AssetUpload, sourceAssetIds?: string[]): AdminCustomerAsset {
+  return {
+    ...asset,
+    previewUrl: adminCustomerAssetUrl(asset),
+    downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
+    ...(sourceAssetIds?.length ? { sourceAssetIds } : {})
+  };
+}
+
+function sourceAssetIdsFromRequestJson(value: unknown): string[] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+  const assetIds = (value as { assetIds?: unknown }).assetIds;
+  return Array.isArray(assetIds) ? assetIds.filter((item): item is string => typeof item === "string" && item.length > 0) : [];
+}
+
+function outputStorageKeysFromResultJson(value: unknown): string[] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+  const outputs = (value as { outputs?: unknown }).outputs;
+  if (!Array.isArray(outputs)) return [];
+  return outputs.flatMap((output) => {
+    if (!output || typeof output !== "object" || Array.isArray(output)) return [];
+    const storageKey = (output as { storageKey?: unknown }).storageKey;
+    return typeof storageKey === "string" && storageKey.length > 0 ? [storageKey] : [];
+  });
+}
+
+function errorFromResultJson(value: unknown): string | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const error = (value as { error?: unknown }).error;
+  return typeof error === "string" && error.trim().length > 0 ? error : undefined;
+}
+
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const url = new URL(request.url);
@@ -59,14 +116,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       customerModels: getSiteCustomerModelsFromState(state, siteId),
       albums: getSiteAlbumsFromState(state, siteId),
       packs: getSiteCreativePacksFromState(state, siteId).slice(0, adminPackListTake),
-      customerAssets,
+      customerAssets: customerAssets.map((asset) => toAdminCustomerAsset(asset)),
       siteAdmins: state.siteAdmins.filter((admin) => admin.siteId === siteId).slice(0, adminSiteAdminListTake),
       signupCreditGrant: state.sites.find((site) => site.id === siteId)?.signupCreditGrant ?? 0
     });
   }
 
-  const payload = await perf.measure("cache", () => customersPageCache.get(`${siteId}:${detail}`, async () => {
-    const [site, customers, customerModels, albums, packs, customerAssets, siteAdmins] = await perf.measure("db", () => runDbTasks([
+  const loadPayload = async () => {
+    const [site, customers, customerModels, albums, packs, customerAssets, generationJobs, siteAdmins] = await perf.measure("db", () => runDbTasks([
       includeDetail(detail, "customers")
         ? () => prisma.site.findUnique({ where: { id: siteId }, select: { id: true, signupCreditGrant: true } })
         : () => Promise.resolve({ id: siteId, signupCreditGrant: 0 }),
@@ -176,6 +233,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         take: adminCustomerAssetTake
       })
         : () => Promise.resolve([]),
+      includeDetail(detail, "delivery") || includeDetail(detail, "assets")
+        ? () => prisma.generationJob.findMany({
+        where: { siteId },
+        select: { id: true, customerId: true, status: true, requestJson: true, resultJson: true, createdAt: true, updatedAt: true },
+        orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+        take: adminCustomerAssetTake
+      })
+        : () => Promise.resolve([]),
       includeDetail(detail, "customers")
         ? () => prisma.siteAdmin.findMany({
         where: { siteId },
@@ -187,17 +252,43 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     ], siteAdminReadConcurrency));
 
     if (!site) return undefined;
+    const sourceAssetIdsByJobId = new Map(
+      generationJobs.map((job) => [String(job.id), sourceAssetIdsFromRequestJson(job.requestJson)])
+    );
+    const customerAssetJobs: AdminCustomerAssetJob[] = generationJobs
+      .map((job) => ({
+        id: String(job.id),
+        customerId: String(job.customerId),
+        status: job.status as JobStatus,
+        sourceAssetIds: sourceAssetIdsFromRequestJson(job.requestJson),
+        outputStorageKeys: outputStorageKeysFromResultJson(job.resultJson),
+        error: errorFromResultJson(job.resultJson),
+        createdAt: job.createdAt instanceof Date ? job.createdAt.toISOString() : String(job.createdAt),
+        updatedAt: job.updatedAt instanceof Date ? job.updatedAt.toISOString() : String(job.updatedAt)
+      }))
+      .filter((job) => job.sourceAssetIds.length > 0 || job.outputStorageKeys.length > 0);
     return {
       ok: true,
       ...(includeCustomers(detail) ? { customers: customers.map((customer) => toPublicCustomerRelational(customer as unknown as Record<string, unknown>)) } : {}),
       ...(includeDetail(detail, "models") || includeDetail(detail, "assets") ? { customerModels: customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>)) } : {}),
       ...(includeDetail(detail, "delivery") ? { albums: albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>)) } : {}),
       ...(includeDetail(detail, "delivery") ? { packs: packs.map(toCreativePack) } : {}),
-      ...(includeDetail(detail, "delivery") || includeDetail(detail, "assets") ? { customerAssets: customerAssets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) } : {}),
+      ...(includeDetail(detail, "delivery") || includeDetail(detail, "assets") ? {
+        customerAssets: customerAssets.map((asset) => {
+          const mapped = toAssetUploadRelational(asset as unknown as Record<string, unknown>);
+          return toAdminCustomerAsset(mapped, mapped.jobId ? sourceAssetIdsByJobId.get(mapped.jobId) : undefined);
+        }),
+        customerAssetJobs
+      } : {}),
       ...(includeDetail(detail, "customers") ? { siteAdmins: siteAdmins.map(toSiteAdmin) } : {}),
       signupCreditGrant: site.signupCreditGrant
     };
-  }));
+  };
+
+  const shouldBypassCache = includeDetail(detail, "assets") || includeDetail(detail, "delivery");
+  const payload = shouldBypassCache
+    ? await perf.measure("db-live", loadPayload)
+    : await perf.measure("cache", () => customersPageCache.get(`${siteId}:${detail}`, loadPayload));
 
   if (!payload) {
     return adminPerfJson(perf, { error: "site_not_found" }, { status: 404 });

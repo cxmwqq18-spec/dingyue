@@ -123,13 +123,33 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
     return overrides[slug];
   }
   const overrides: Record<string, Partial<PageSeo>> = {
+    "/": {
+      title: "AI Headshot & Portrait Generator | Private Photo Sets from Selfies | MyDreamShoots",
+      description: "Create private AI headshots, creator portraits, fan posters, beauty previews, and themed photo albums from selfies with credit costs shown before generation."
+    },
     "/collections": {
-      title: "MyDreamShoots Photo Packages",
-      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums."
+      title: "Browse private AI photo packages | MyDreamShoots",
+      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
+    },
+    "/collections/headshots": {
+      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+      description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
+    },
+    "/collections/world-cup-fan-photos": {
+      title: "AI World Cup Fan Photos & Match-Day Posters | MyDreamShoots",
+      description: "Create personal AI World Cup fan photos, match-day posters, and profile avatars from your own selfies for private fan use."
+    },
+    "/collections/boudoir": {
+      title: "Private AI Boudoir Photo Package | MyDreamShoots",
+      description: "Create private boudoir-inspired AI portraits for adult, consensual use from photos you own or have permission to use."
+    },
+    "/pricing": {
+      title: "MyDreamShoots Pricing | Credits for Private AI Photo Packages",
+      description: "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
     },
     "/tools": {
-      title: "MyDreamShoots Photo Tools",
-      description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and albums."
+      title: "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | MyDreamShoots",
+      description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
     },
     "/help": {
       title: "MyDreamShoots Help Center",
@@ -184,6 +204,33 @@ function siteIconUrl(site: Site): string | undefined {
   const footerLogo = pickSettingText(settings?.globalSections?.footer?.settings?.logoImageUrl);
   const brandingLogo = (site.branding as { logoImageUrl?: string }).logoImageUrl;
   return localAssetUrl(pickText(headerLogo, brandingLogo, footerLogo));
+}
+
+function siteIcons(site: Site): Metadata["icons"] | undefined {
+  const slug = site.slug.toLowerCase();
+  if (slug.includes("aidreamcapes")) {
+    return {
+      icon: [
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
+      ],
+      shortcut: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702",
+      apple: [{ url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
+    };
+  }
+  if (slug.includes("mydreamshoots")) {
+    return {
+      icon: [
+        { url: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
+        { url: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
+      ],
+      shortcut: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702",
+      apple: [{ url: "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
+    };
+  }
+
+  const icon = siteIconUrl(site);
+  return icon ? { icon, shortcut: icon, apple: icon } : undefined;
 }
 
 function preferOptimizedShareImage(pathOrUrl: string): string {
@@ -242,6 +289,8 @@ export function applyTitleTemplate(title: string, template: string, site: Site):
   const cleanTemplate = normalizeStorefrontBrandText(site, template, defaultTitleTemplate(site));
   const suffix = cleanTemplate.replace("%s", "").replace(/^[\s|:–-]+|[\s|:–-]+$/g, "");
   if (normalizeTitleToken(cleanTitle) === normalizeTitleToken(suffix)) return cleanTitle;
+  if (suffix && normalizeTitleToken(cleanTitle).includes(normalizeTitleToken(suffix))) return cleanTitle;
+  if (suffix && normalizeTitleToken(cleanTitle).endsWith(` | ${normalizeTitleToken(suffix)}`)) return cleanTitle;
   if (cleanTemplate.includes("%s")) return cleanTemplate.replace("%s", cleanTitle);
   return cleanTitle === cleanTemplate ? cleanTitle : `${cleanTitle} | ${cleanTemplate}`;
 }
@@ -273,16 +322,15 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const defaultRobots = defaultRobotsForPage(page);
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || seo.siteTitle), seo.titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, seo.siteDescription);
-  const keywords = cleanText(pageSeo.keywords, seo.siteKeywords);
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
-  const icon = siteIconUrl(site);
+  const icons = siteIcons(site);
 
   return {
     title,
     description,
-    keywords: keywords ? keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean) : undefined,
+    keywords: undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? seo.robots.index : false,
@@ -301,7 +349,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
       description,
       images: ogImage ? [ogImage] : undefined
     },
-    icons: icon ? { icon, shortcut: icon, apple: icon } : undefined
+    icons
   };
 }
 
@@ -337,16 +385,15 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   };
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || siteTitle), titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, siteDescription);
-  const keywords = cleanText(pageSeo.keywords, siteKeywords);
   const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
-  const icon = siteIconUrl(site);
+  const icons = siteIcons(site);
 
   return {
     title,
     description,
-    keywords: keywords ? keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean) : undefined,
+    keywords: undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? currentSeo?.robots?.index ?? true : false,
@@ -365,7 +412,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
       description,
       images: ogImage ? [ogImage] : undefined
     },
-    icons: icon ? { icon, shortcut: icon, apple: icon } : undefined
+    icons
   };
 }
 

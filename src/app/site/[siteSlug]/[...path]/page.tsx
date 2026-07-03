@@ -99,7 +99,8 @@ export default async function SiteCatchAllPage({
   const publicSlug = publicSiteSlug(siteSlug);
   if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
   if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
-  if (slug === "/how-it-works") redirect(`/site/${publicSlug}`);
+  if (slug === "/how-it-works") redirect(`/site/${publicSlug}#workflow`);
+  if (slug === "/examples") redirect(`/site/${publicSlug}/collections`);
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);
@@ -139,5 +140,5 @@ export default async function SiteCatchAllPage({
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     isDreamshootPartnerTemplateSite(publicSite);
   if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
-  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state, deferCustomerRuntime: true });
+  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }
