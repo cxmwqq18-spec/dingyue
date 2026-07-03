@@ -49,6 +49,19 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
+function searchParamsSuffix(query: Record<string, string | string[] | undefined>): string {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (Array.isArray(value)) {
+      for (const item of value) params.append(key, item);
+    } else if (typeof value === "string") {
+      params.set(key, value);
+    }
+  }
+  const serialized = params.toString();
+  return serialized ? `?${serialized}` : "";
+}
+
 function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
@@ -174,7 +187,8 @@ export default async function HostStorefrontCatchAllPage({
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
     if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "collections" || firstSegment === "pricing" || firstSegment === "help") {
-      redirect(`/site/${defaultSiteSlug}${slug}`);
+      const query = searchParams ? await searchParams : {};
+      redirect(`/site/${defaultSiteSlug}${slug}${searchParamsSuffix(query)}`);
     }
   }
   if (slug === "/about") redirect("/about-us");
