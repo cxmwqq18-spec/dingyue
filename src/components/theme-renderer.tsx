@@ -1266,6 +1266,41 @@ function blockValue(block: SectionBlockInstance, key: string, fallback = ""): st
   return value.trim() ? value : fallback;
 }
 
+function manualBlockImageAlt(block: SectionBlockInstance, fallback: string, options: { src?: string } = {}): string {
+  return manualImageAlt({
+    explicitAlt: blockValue(block, "imageAlt", ""),
+    id: block.id,
+    src: options.src || blockValue(block, "imageUrl", ""),
+    fallback
+  });
+}
+
+function manualImageAlt({
+  explicitAlt,
+  id,
+  src,
+  fallback
+}: {
+  explicitAlt?: string;
+  id?: string;
+  src?: string;
+  fallback: string;
+}): string {
+  const explicit = explicitAlt?.trim();
+  if (explicit) return explicit;
+  const mapped = manualAltForImage({ id, src });
+  if (mapped) return mapped;
+  return fallback;
+}
+
+function manualCatalogImageAlt(card: DreamShootCatalogCard): string {
+  return manualImageAlt({
+    id: card.id,
+    src: card.imageUrl,
+    fallback: `${card.title} package image`
+  });
+}
+
 function headingSetting(section: SectionInstance, key: string, fallback: string): string {
   return setting(section, key, fallback).trim() || fallback;
 }
@@ -1406,6 +1441,126 @@ function cleanStorefrontImageSrc(src: string): string {
   return src.trim().replace(/&amp;/g, "&").replace(/\\+$/g, "");
 }
 
+function imageFilename(src = ""): string {
+  const cleanPath = cleanStorefrontImageSrc(src).split("?")[0]?.split("#")[0] ?? "";
+  return cleanPath.split("/").filter(Boolean).pop()?.toLowerCase() ?? "";
+}
+
+function imageBasename(src = ""): string {
+  return imageFilename(src).replace(/\.(png|jpe?g|webp|avif|svg)$/i, "");
+}
+
+const dreamshootManualImageAltByFile: Record<string, string> = {
+  "hero-grid-business": "Scrolling hero portrait of a man in a polished business headshot style for professional AI profile photos",
+  "hero-grid-beauty": "Scrolling hero portrait of a woman with beauty lighting and hairstyle styling for AI profile photo previews",
+  "hero-grid-cyber": "Scrolling hero portrait in a neon cyberpunk city scene for creative AI photo packages",
+  "hero-grid-travel": "Scrolling hero portrait in a travel lifestyle scene for destination-style AI photo packages",
+  "hero-grid-sports": "Scrolling hero portrait of a football fan in a stadium scene for sports AI photo packages",
+  "hero-grid-avatar": "Scrolling hero image of a stylized avatar portrait for social profile photo packages",
+  "hero-grid-product": "Scrolling hero image of a creator product-style photo for commerce-ready AI image packages",
+  "hero-grid-video": "Scrolling hero preview showing a motion-ready AI photo result for video add-ons",
+  "hero-grid-social": "Scrolling hero portrait for a social-ready creator profile update",
+  "hero-grid-noir": "Scrolling hero portrait with cinematic noir lighting for character photo packages",
+  "hero-grid-gala": "Editorial fashion portrait with formal gala styling for a polished AI photo package",
+  "hero-grid-upscale": "Scrolling hero preview of an AI-enhanced portrait for image upscaling tools",
+  "hero-credit-studio-card": "Credit studio preview card showing AI photo package creation and private album delivery",
+  "hero-package-wall": "Homepage photo package wall showing multiple AI portrait outcomes",
+  "proof-worldcup-gallery": "Collage of football fans cheering in a stadium with confetti for a World Cup fan photo package",
+  "proof-business-founder": "Business portrait of a man in an office for a professional AI headshot package",
+  "proof-beauty-hair": "Beauty portrait collage showing hairstyle and polished profile preview looks",
+  "proof-cinematic-worlds": "Cinematic neon city portrait of a man for a creative AI photo package",
+  "proof-couple-engagement": "Couple posing in front of a city skyline for a travel-style portrait package",
+  "stadium-portrait": "Single football fan portrait under stadium floodlights for a World Cup match-day photo package",
+  "friend-fan-photos": "Group of friends in football fan outfits celebrating together for a World Cup fan photo package",
+  "match-day-avatar": "Square match-day football fan avatar portrait for social profiles",
+  "fan-poster": "Football fan poster artwork with stadium lighting for match-day sharing",
+  "social-story": "Vertical World Cup fan photo story layout for mobile social sharing",
+  "banner-cover": "Wide football fan banner image for World Cup cover and campaign posts",
+  "catalog-worldcup-card": "Football fans celebrating in a stadium for the World Cup fan photos package",
+  "catalog-headshot-card": "Professional business headshot portrait for LinkedIn and resume photo packages",
+  "catalog-hairstyle-card": "Hairstyle preview portrait showing polished hair and beauty styling",
+  "cyberpunk-solo-city-v1": "Neon city cyberpunk portrait for a futuristic AI photo package",
+  "catalog-gala-card": "Formal gala portrait with editorial lighting for a night-out photo package",
+  "sample-professional-headshot": "Professional studio headshot sample for business profile photo packages",
+  "story-beauty-portrait": "Stylized beauty portrait for an anime avatar package",
+  "sample-wedding-trip": "Couple wedding-style portrait scene for a private AI photo album",
+  "beauty-portrait-gpt2": "Soft studio beauty portrait for a boudoir-inspired photo package",
+  "sample-christmas-couple": "Festive couple portrait for a Christmas photo package",
+  "mafia-noir-single-v1": "Noir character portrait in dramatic lighting for a cinematic photo package",
+  "tab-virtual-looks": "Fashion try-on preview showing outfit and styling options",
+  "avatar-nora-gpt2": "Creator profile portrait for a personal-brand photo package",
+  "nature-adventure-solo-v1": "Outdoor adventure portrait in a natural landscape for a nature photo package",
+  "holiday-portrait-v1": "Profile-card portrait designed for social and creator use",
+  "upscaler-utility-v1": "Product-style utility preview for polished AI image enhancement",
+  "holiday-card-gpt2": "Holiday card style portrait for social sharing",
+  "story-wedding-look": "Traditional Indian wedding-style portrait with ornate celebration styling",
+  "city-date-night-v1": "Romantic city date-night couple portrait for a Valentine photo package",
+  "sample-engagement": "Engagement-style couple portrait for announcement-ready photo sets",
+  "magic-upscaler-pack": "AI image upscaler preview showing enhanced portrait detail",
+  "holiday-travel-pack": "Holiday travel portrait scene for seasonal AI photo packages",
+  "christmas-solo-card-v1": "Solo festive Christmas portrait for greeting-card style images",
+  "ai-video-addons-pack": "AI video add-on preview card for motion-ready photo outputs",
+  "desi-wedding-pack": "Desi wedding-style portrait package with traditional celebration styling",
+  "cliffside-holiday-v1": "Cliffside travel portrait scene for destination-inspired photo packages",
+  "workflow-upload-source": "Source photo upload example used before creating an AI photo album",
+  "faq-intro-portrait": "Portrait preview beside the DreamShootAI FAQ section",
+  "world-cup-fan-star-clean-v1": "Football fan stadium photo concept for a match-day AI image package",
+  "world-cup-fan-star-v1": "Football fan celebration concept for a sports AI photo package",
+  "date-night-gpt2": "Romantic date-night portrait sample for couple photo packages",
+  "hero-gpt2": "DreamShootAI hero portrait collage preview for private AI photo packages",
+  "hero-gpt2-fast": "DreamShootAI fast-loading hero portrait collage preview for AI photo packages",
+  "flow-before-upload": "Original source photo upload before AI photo generation",
+  "hairstyle-preview-v1": "Generated hairstyle portrait after AI photo processing",
+  "flow-private-album-workspace": "Private album workspace preview with delivered AI photo results",
+  "editorial-headshot-gpt2": "Professional headshot result inside a private AI photo album",
+  "sample-cyberpunk": "Cyberpunk portrait result inside a private AI photo album",
+  "pricing-credits-visual": "AI photo subscription pricing panel with credits and private album package options",
+  "review-ava-avatar": "Casual customer avatar for Ava's LinkedIn refresh review",
+  "review-ava-result-gala": "Formal gala-style AI portrait result from Ava's LinkedIn refresh review",
+  "review-lucas-avatar": "Casual customer avatar for Lucas's match-day fan photo review",
+  "review-lucas-result-headshot": "Professional AI headshot result from Lucas's match-day fan photo review",
+  "review-mia-avatar": "Casual customer avatar for Mia's creator profile update review",
+  "review-mia-result-beauty-sports": "Beauty and sports-inspired AI portrait result from Mia's creator profile update review",
+  "review-noah-avatar": "Casual customer avatar for Noah's private style preview review",
+  "review-noah-result-social-card": "Social card style AI portrait result from Noah's private style preview review"
+};
+
+const dreamshootManualImageAltByBlockId: Record<string, string> = {
+  proof_worldcup: dreamshootManualImageAltByFile["proof-worldcup-gallery"],
+  proof_headshots: dreamshootManualImageAltByFile["proof-business-founder"],
+  proof_hairstyle: dreamshootManualImageAltByFile["proof-beauty-hair"],
+  proof_cyberpunk: dreamshootManualImageAltByFile["proof-cinematic-worlds"],
+  proof_travel: dreamshootManualImageAltByFile["proof-couple-engagement"],
+  seasonal_worldcup_1: dreamshootManualImageAltByFile["stadium-portrait"],
+  seasonal_worldcup_2: dreamshootManualImageAltByFile["friend-fan-photos"],
+  seasonal_worldcup_3: dreamshootManualImageAltByFile["match-day-avatar"],
+  seasonal_worldcup_4: dreamshootManualImageAltByFile["fan-poster"],
+  seasonal_worldcup_5: dreamshootManualImageAltByFile["social-story"],
+  seasonal_worldcup_6: dreamshootManualImageAltByFile["banner-cover"],
+  catalog_worldcup: dreamshootManualImageAltByFile["catalog-worldcup-card"],
+  catalog_headshot: dreamshootManualImageAltByFile["catalog-headshot-card"],
+  catalog_hairstyle: dreamshootManualImageAltByFile["catalog-hairstyle-card"],
+  catalog_cyberpunk: dreamshootManualImageAltByFile["cyberpunk-solo-city-v1"],
+  catalog_gala: dreamshootManualImageAltByFile["catalog-gala-card"],
+  catalog_wedding: dreamshootManualImageAltByFile["sample-wedding-trip"],
+  catalog_indian_wedding: dreamshootManualImageAltByFile["story-wedding-look"],
+  catalog_christmas: dreamshootManualImageAltByFile["christmas-solo-card-v1"],
+  catalog_creator: dreamshootManualImageAltByFile["avatar-nora-gpt2"],
+  catalog_avatar: dreamshootManualImageAltByFile["story-beauty-portrait"],
+  catalog_fashion: dreamshootManualImageAltByFile["hero-grid-gala"],
+  catalog_nature: dreamshootManualImageAltByFile["nature-adventure-solo-v1"],
+  catalog_mafia: dreamshootManualImageAltByFile["mafia-noir-single-v1"],
+  catalog_profile: dreamshootManualImageAltByFile["holiday-portrait-v1"],
+  catalog_product: dreamshootManualImageAltByFile["upscaler-utility-v1"]
+};
+
+function manualAltForImage({ id, src }: { id?: string; src?: string }): string {
+  const byFile = dreamshootManualImageAltByFile[imageBasename(src)];
+  if (byFile) return byFile;
+  const byBlock = id ? dreamshootManualImageAltByBlockId[id.trim().toLowerCase()] : "";
+  return byBlock || "";
+}
+
 function preferDreamshootOptimizedImage(src: string): string {
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   return src.replace(/\.png(\?.*)?$/i, (match, query = "") => `.webp${query}`);
@@ -1523,7 +1678,8 @@ function StorefrontImage({
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
   const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
-  const resolvedAlt = alt?.trim() || fallbackAltFromImageSrc(resolvedSrc);
+  const fallbackAlt = alt?.trim() || fallbackAltFromImageSrc(resolvedSrc);
+  const resolvedAlt = alt === "" ? "" : manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
     return (
       <img
@@ -4518,14 +4674,14 @@ function SectionView({
                   key={`dreamshoot_hero_grid_${index}`}
                   style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
-	                  <StorefrontImage
-	                    alt=""
-	                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-	                    fetchPriority="low"
-	                    loading="lazy"
-	                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
-	                    src={gridImages[index % gridImages.length] ?? primaryImage}
-	                  />
+                  <StorefrontImage
+                    alt={manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `DreamShootAI scrolling hero photo package preview ${index + 1}` })}
+                    className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
+                    fetchPriority="low"
+                    loading="lazy"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
+                    src={gridImages[index % gridImages.length] ?? primaryImage}
+                  />
                 </div>
               ))}
             </div>
@@ -6593,7 +6749,7 @@ function SectionView({
               {...xfcartBlockAttrs(lead, 0, "visual_proof")}
             >
               <StorefrontImage
-                alt={blockValue(lead, "title", isAidreamcapesSite(site) ? "Featured route portrait package" : "Featured AI shoot package")}
+                alt={manualBlockImageAlt(lead, isAidreamcapesSite(site) ? "Featured route portrait package" : "Featured AI shoot package")}
                 className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                 sizes="(max-width: 1024px) 100vw, 49vw"
                 src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))}
@@ -6620,7 +6776,7 @@ function SectionView({
                   {...xfcartBlockAttrs(card, index + 1, "visual_proof")}
                 >
                   <StorefrontImage
-                    alt={blockValue(card, "title", "Photo result")}
+                    alt={manualBlockImageAlt(card, "Photo result")}
                     className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     src={mediaAssetUrl(site, blockValue(card, "imageUrl", packImages.fashion))}
@@ -6750,7 +6906,7 @@ function SectionView({
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
                       <StorefrontImage
-                        alt={blockValue(item, "label", "Featured pack image")}
+                        alt={manualBlockImageAlt(item, "Featured pack image")}
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                         sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 18vw"
                         src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))}
@@ -6895,7 +7051,7 @@ function SectionView({
               >
                 <div className={aidreamcapes ? "relative aspect-[4/3] overflow-hidden bg-white/[0.04]" : "relative aspect-[4/3] overflow-hidden bg-white/[0.04]"}>
                   <StorefrontImage
-                    alt={card.title}
+                    alt={manualCatalogImageAlt(card)}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
                     fetchPriority={index === 0 ? "auto" : "low"}
                     loading={index === 0 ? "eager" : "lazy"}
@@ -6939,7 +7095,7 @@ function SectionView({
                   >
                     <div className={aidreamcapes ? "relative aspect-[1.42] overflow-hidden bg-white/[0.04]" : "relative aspect-[1.42] overflow-hidden bg-white/[0.04]"}>
                       <StorefrontImage
-                        alt={card.title}
+                        alt={manualCatalogImageAlt(card)}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.045]"
                         fetchPriority="low"
                         loading="lazy"
@@ -7025,12 +7181,12 @@ function SectionView({
                   <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">Show how a clear source upload becomes a finished route portrait.</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
-                      <img className="h-full w-full object-cover" src={beforeImage} alt="Before upload" />
+                      <img className="h-full w-full object-cover" src={beforeImage} alt={manualImageAlt({ src: beforeImage, fallback: "Original source photo before AI photo generation" })} />
                       <span className="absolute left-4 top-4 rounded-full bg-[#1e1712]/58 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
                     </div>
                     <div className="hidden h-[104px] w-px bg-[#dfd0bd] sm:block" />
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
-                      <img className="h-full w-full object-cover" src={afterImage} alt="After AI result" />
+                      <img className="h-full w-full object-cover" src={afterImage} alt={manualImageAlt({ src: afterImage, fallback: "Generated AI photo result after processing" })} />
                       <span className="absolute left-4 top-4 rounded-full bg-[#b86e36] px-3 py-1 text-xs font-semibold text-white">After</span>
                     </div>
                   </div>
@@ -7041,7 +7197,7 @@ function SectionView({
                   <div className="mt-5 flex flex-wrap items-center gap-3">
                     {albumImages.map((image, index) => (
                       <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white" key={image}>
-                        <img className="h-full w-full object-cover" src={image} alt={`Album preview ${index + 1}`} />
+                        <img className="h-full w-full object-cover" src={image} alt={manualImageAlt({ src: image, fallback: `Private album preview image ${index + 1}` })} />
                       </div>
                     ))}
                     <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-[#eadfce] bg-white px-4 text-center">
@@ -7100,12 +7256,12 @@ function SectionView({
                 <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#586071]">See how clear source photos become polished results while your model and album stay private.</p>
                 <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
-                    <img className="h-full w-full object-cover" src={beforeImage} alt="Before upload" />
+                    <img className="h-full w-full object-cover" src={beforeImage} alt={manualImageAlt({ src: beforeImage, fallback: "Original source photo before AI photo generation" })} />
                     <span className="absolute left-4 top-4 rounded-full bg-black/42 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
                   </div>
                   <div className="hidden h-[104px] w-px bg-[#b8b2a9] sm:block" />
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
-                    <img className="h-full w-full object-cover" src={afterImage} alt="After AI result" />
+                    <img className="h-full w-full object-cover" src={afterImage} alt={manualImageAlt({ src: afterImage, fallback: "Generated AI photo result after processing" })} />
                     <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: dreamshootBrandGradient }}>After</span>
                   </div>
                 </div>
@@ -7116,7 +7272,7 @@ function SectionView({
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   {albumImages.map((image, index) => (
                     <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white/[0.06]" key={image}>
-                      <img className="h-full w-full object-cover" src={image} alt={`Album preview ${index + 1}`} />
+                      <img className="h-full w-full object-cover" src={image} alt={manualImageAlt({ src: image, fallback: `Private album preview image ${index + 1}` })} />
                     </div>
                   ))}
                   <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-white/12 bg-white/[0.06] px-4 text-center">
@@ -9668,12 +9824,14 @@ function SectionView({
                 const rating = Math.max(1, Math.min(5, Number(blockValue(item, "rating", "5")) || 5));
                 const cardTitle = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Private photo set")) : blockValue(item, "name", "Customer");
                 const cardMeta = isDreamShootUseCaseWall ? blockValue(item, "location", blockValue(item, "name", "")) : blockValue(item, "location", "");
+                const customerName = blockValue(item, "name", "Customer");
+                const customerRole = blockValue(item, "role", "customer review");
                 return (
                   <article className="group flex min-h-[380px] min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]" key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
                     <div className="flex flex-1 flex-col p-[18px]">
                       <div className="flex items-center gap-3">
                         {avatar ? (
-	                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={cardTitle} loading="lazy" decoding="async" fetchPriority="low" />
+                          <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={`Customer avatar for ${customerName} ${customerRole} review`} loading="lazy" decoding="async" fetchPriority="low" />
                         ) : (
                           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ebe0] text-sm font-semibold text-[#8c7156]">
                             {cardTitle.slice(0, 1) || "P"}
@@ -9694,7 +9852,7 @@ function SectionView({
                       <p className="mt-4 text-[0.9rem] leading-6 text-[#1c2026]">{blockValue(item, "quote")}</p>
                     </div>
                     <div className="relative h-[180px] overflow-hidden bg-[#f2e8da]">
-	                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={`${cardTitle} photo result`} loading="lazy" decoding="async" fetchPriority="low" />
+                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" src={resultImage} alt={manualImageAlt({ src: resultImage, fallback: `AI photo result from ${customerName}'s ${customerRole} review` })} loading="lazy" decoding="async" fetchPriority="low" />
                       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/38 to-transparent" />
                       <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />
