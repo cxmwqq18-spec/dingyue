@@ -422,7 +422,7 @@ export function CustomerWorkspaceShell({
               Workspace update
             </div>
             <p className="mt-3 text-xs leading-6 text-white/66">
-              Source uploads, package selection, credit hold, and generated albums now use one request flow.
+              Private uploads, package selection, credit hold, and generated albums now use one request flow.
             </p>
           </div>
         </aside>
