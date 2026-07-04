@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AlertCircle, Bot, Camera, CheckCircle2, ChevronRight, Clock3, Compass, ImageIcon, LayoutGrid, PlaySquare, Search, Sparkles, UploadCloud, WalletCards } from "lucide-react";
+import { AlertCircle, Bot, Camera, CheckCircle2, ChevronRight, Clock3, Compass, ImageIcon, LayoutGrid, PlaySquare, Search, Sparkles, UploadCloud, WalletCards, X } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
@@ -165,6 +165,7 @@ export function CustomerWorkspaceShell({
       : activeNavItems[0]?.id ?? "";
   const [activePanel, setActivePanel] = useState<CustomerWorkspacePanel>(initialPanel);
   const [activeNavId, setActiveNavId] = useState(initialNavId);
+  const [activeOperationId, setActiveOperationId] = useState<string | null>(null);
   const [resourceTab, setResourceTab] = useState<WorkspaceResourceTab>("all");
   const [activeGuideStep, setActiveGuideStep] = useState(() => initialPanel === "overview" ? 2 : initialPanel === "upload" ? 1 : 0);
   const currentStepIndex = activePanel === "overview" ? 2 : activeGuideStep;
@@ -220,6 +221,7 @@ export function CustomerWorkspaceShell({
   const guidedBullets = isAidreamcapes
     ? ["Destination portrait packages", "Private source uploads", "Credit cost shown before generation", "Travel albums and downloads"]
     : ["Upload selfies from this account", "Browse themed photo packages", "Credit cost shown before generation", "Private albums and downloads"];
+  const activeOperationItem = activeOperationId ? activeNavItems.find((item) => item.id === activeOperationId) : undefined;
 
   function scrollToWorkspaceAnchor(anchor: WorkspaceAnchor) {
     if (typeof window === "undefined") return;
@@ -287,14 +289,21 @@ export function CustomerWorkspaceShell({
       <StorefrontNavigationFeedback />
       <CustomerShellHeader creativePacks={creativePacks} customer={customer} site={site} tone="dark" />
 
-      <main className={`${isGuidedShootFlow ? "min-h-[calc(100vh-97px)] border-t border-white/8" : "grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[340px_minmax(0,1fr)]"}`}>
-        {!isGuidedShootFlow ? (
+      <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[340px_minmax(0,1fr)]">
         <aside className="border-b border-white/10 bg-[#0b0c0f] px-4 py-5 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
           <div className="rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(123,72,255,0.18),rgba(49,212,255,0.06))] p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">Private workspace</p>
             <p className="mt-2 text-lg font-semibold leading-tight">{brandLabel}</p>
             <p className="mt-2 text-xs leading-5 text-white/56">{customer.email}</p>
           </div>
+          {isGuidedShootFlow ? (
+            <div className="mt-4 rounded-[18px] border border-white/10 bg-white/[0.035] p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">Operate</p>
+              <p className="mt-2 text-sm leading-6 text-white/66">
+                Select a left action to open its controls, then keep choosing packages and tools in the large panel.
+              </p>
+            </div>
+          ) : null}
 
           <nav className="mt-5 grid gap-1">
             {activeNavItems.map((item) => {
@@ -310,6 +319,10 @@ export function CustomerWorkspaceShell({
                     onClick={() => {
                       setActiveNavId(item.id);
                       if (target.tab) setResourceTab(target.tab);
+                      if (isGuidedShootFlow) {
+                        setActiveOperationId(item.id);
+                        return;
+                      }
                       choosePanel(target.panel, target.anchor);
                     }}
                     type="button"
@@ -336,7 +349,6 @@ export function CustomerWorkspaceShell({
             </p>
           </div>
         </aside>
-        ) : null}
 
         <section className="min-w-0 bg-[#080a0f]">
           {isGuidedShootFlow ? (
@@ -712,6 +724,93 @@ export function CustomerWorkspaceShell({
           </div>
         </section>
       </main>
+      {activeOperationItem ? (() => {
+        const Icon = activeOperationItem.icon;
+        const target = navAnchorForItem(activeOperationItem.id);
+        const isAlbumOperation = target.panel === "overview";
+        const isUploadOperation = target.anchor === "step-upload" || target.anchor === "source-photos";
+        return (
+          <div className="fixed inset-0 z-50 grid place-items-center bg-black/66 px-4 py-6 backdrop-blur-sm" data-workspace-operation-dialog="true" role="dialog" aria-modal="true" aria-labelledby="workspace-operation-title">
+            <div className="w-full max-w-xl overflow-hidden rounded-[22px] border border-white/14 bg-[#10131b] text-white shadow-[0_34px_90px_-45px_rgba(0,0,0,0.95)]">
+              <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-[14px] border border-white/10 bg-white/[0.06]">
+                    <Icon className="h-5 w-5 text-[#31d4ff]" strokeWidth={1.8} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#ff9f43]">Workspace action</p>
+                    <h2 className="mt-2 text-xl font-semibold" id="workspace-operation-title">{activeOperationItem.label}</h2>
+                    <p className="mt-2 text-sm leading-6 text-white/60">
+                      Use this action panel for quick edits, then keep the main window focused on package, tool, image, and result selection.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  aria-label="Close action panel"
+                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.05] text-white/70 transition hover:bg-white/[0.1] hover:text-white"
+                  onClick={() => setActiveOperationId(null)}
+                  type="button"
+                >
+                  <X className="h-4 w-4" strokeWidth={1.9} />
+                </button>
+              </div>
+              <div className="grid gap-4 p-5">
+                <div className="grid gap-2 sm:grid-cols-3">
+                  {activeOperationItem.actions.map((action) => (
+                    <button
+                      className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff]"
+                      key={action}
+                      onClick={() => {
+                        setActiveOperationId(null);
+                        if (target.tab) setResourceTab(target.tab);
+                        choosePanel(target.panel, target.anchor);
+                      }}
+                      type="button"
+                    >
+                      <p className="text-sm font-semibold">{action}</p>
+                      <p className="mt-1 text-xs leading-5 text-white/46">Open this action in the main window.</p>
+                    </button>
+                  ))}
+                </div>
+                <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
+                  <p className="text-sm font-semibold">Next step</p>
+                  <p className="mt-2 text-sm leading-6 text-white/60">
+                    {isAlbumOperation
+                      ? "Open the review area to check finished albums, downloads, favorites, and credit activity."
+                      : isUploadOperation
+                        ? "Open the selfie upload controls inside the same request flow."
+                        : "Open the large selection window to choose a theme package or tool image."}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5"
+                    onClick={() => {
+                      setActiveOperationId(null);
+                      if (target.tab) setResourceTab(target.tab);
+                      choosePanel(target.panel, target.anchor);
+                    }}
+                    type="button"
+                  >
+                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : "Open selection window"}
+                    <ChevronRight className="h-4 w-4" strokeWidth={1.9} />
+                  </button>
+                  <button
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
+                    onClick={() => {
+                      setActiveOperationId(null);
+                      choosePanel("create", "step-create");
+                    }}
+                    type="button"
+                  >
+                    Browse themes and tools
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })() : null}
     </div>
   );
 }
