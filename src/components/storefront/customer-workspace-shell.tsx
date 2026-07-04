@@ -17,6 +17,7 @@ type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "p
 export type CustomerWorkspacePanel = "overview" | "create" | "upload";
 type WorkspaceResourceTab = "all" | "videos" | "albums" | "saved" | "explore";
 type WorkspaceAnchor = "step-upload" | "step-create" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
+type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceRuntimeState =
   | { status: "loading"; runtime?: undefined; error?: undefined }
   | { status: "ready"; runtime: ThemeRuntimeData; error?: undefined }
@@ -168,6 +169,8 @@ export function CustomerWorkspaceShell({
   const [activeOperationId, setActiveOperationId] = useState<string | null>(null);
   const [resourceTab, setResourceTab] = useState<WorkspaceResourceTab>("all");
   const [activeGuideStep, setActiveGuideStep] = useState(() => initialPanel === "overview" ? 2 : initialPanel === "upload" ? 1 : 0);
+  const [preferredCreateMode, setPreferredCreateMode] = useState<WorkspaceCreateMode>("theme");
+  const [preferredCreateModeRequest, setPreferredCreateModeRequest] = useState(0);
   const currentStepIndex = activePanel === "overview" ? 2 : activeGuideStep;
   const activeTitle = isAidreamcapes ? "Build a private travel portrait set." : "Create your private AI photo set.";
   const brandLabel = isAidreamcapes ? "Aidreamcapes" : myDreamShootsDisplayName;
@@ -251,6 +254,27 @@ export function CustomerWorkspaceShell({
     if (itemId === "explore") return { panel: "overview", anchor: "resources-explore", tab: "explore" };
     if (itemId === "model-studio" || itemId === "source-library") return { panel: "upload", anchor: "step-upload" };
     return { panel: "create", anchor: "step-create" };
+  }
+
+  function createModeForOperation(itemId: string): WorkspaceCreateMode {
+    return itemId === "photo-editor" || itemId === "video" || itemId === "route-editor" || itemId === "story-clips" ? "tool" : "theme";
+  }
+
+  function mainWindowTargetForOperation(
+    itemId: string,
+    target = navAnchorForItem(itemId)
+  ): { panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor; tab?: WorkspaceResourceTab } {
+    if (itemId === "model-studio" || itemId === "source-library") return { panel: "create", anchor: "source-photos" };
+    return target;
+  }
+
+  function openOperationInMainWindow(itemId: string, target = navAnchorForItem(itemId)) {
+    const destination = mainWindowTargetForOperation(itemId, target);
+    setActiveOperationId(null);
+    setPreferredCreateMode(createModeForOperation(itemId));
+    setPreferredCreateModeRequest((current) => current + 1);
+    if (destination.tab) setResourceTab(destination.tab);
+    choosePanel(destination.panel, destination.anchor);
   }
 
   useEffect(() => {
@@ -727,8 +751,10 @@ export function CustomerWorkspaceShell({
       {activeOperationItem ? (() => {
         const Icon = activeOperationItem.icon;
         const target = navAnchorForItem(activeOperationItem.id);
-        const isAlbumOperation = target.panel === "overview";
-        const isUploadOperation = target.anchor === "step-upload" || target.anchor === "source-photos";
+        const mainTarget = mainWindowTargetForOperation(activeOperationItem.id, target);
+        const operationMode = createModeForOperation(activeOperationItem.id);
+        const isAlbumOperation = mainTarget.panel === "overview";
+        const isUploadOperation = mainTarget.anchor === "step-upload" || mainTarget.anchor === "source-photos";
         return (
           <div className="fixed inset-0 z-50 grid place-items-center bg-black/66 px-4 py-6 backdrop-blur-sm" data-workspace-operation-dialog="true" role="dialog" aria-modal="true" aria-labelledby="workspace-operation-title">
             <div className="w-full max-w-xl overflow-hidden rounded-[22px] border border-white/14 bg-[#10131b] text-white shadow-[0_34px_90px_-45px_rgba(0,0,0,0.95)]">
@@ -760,11 +786,7 @@ export function CustomerWorkspaceShell({
                     <button
                       className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff]"
                       key={action}
-                      onClick={() => {
-                        setActiveOperationId(null);
-                        if (target.tab) setResourceTab(target.tab);
-                        choosePanel(target.panel, target.anchor);
-                      }}
+                      onClick={() => openOperationInMainWindow(activeOperationItem.id, target)}
                       type="button"
                     >
                       <p className="text-sm font-semibold">{action}</p>
@@ -779,26 +801,26 @@ export function CustomerWorkspaceShell({
                       ? "Open the review area to check finished albums, downloads, favorites, and credit activity."
                       : isUploadOperation
                         ? "Open the selfie upload controls inside the same request flow."
-                        : "Open the large selection window to choose a theme package or tool image."}
+                        : operationMode === "tool"
+                          ? "Open the large tool image window, choose a focused AI tool, then continue with source photos and review."
+                          : "Open the large package image window, choose a themed photo package, then continue with source photos and review."}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <button
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5"
-                    onClick={() => {
-                      setActiveOperationId(null);
-                      if (target.tab) setResourceTab(target.tab);
-                      choosePanel(target.panel, target.anchor);
-                    }}
+                    onClick={() => openOperationInMainWindow(activeOperationItem.id, target)}
                     type="button"
                   >
-                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : "Open selection window"}
+                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : operationMode === "tool" ? "Open tool window" : "Open package window"}
                     <ChevronRight className="h-4 w-4" strokeWidth={1.9} />
                   </button>
                   <button
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
                     onClick={() => {
                       setActiveOperationId(null);
+                      setPreferredCreateMode("theme");
+                      setPreferredCreateModeRequest((current) => current + 1);
                       choosePanel("create", "step-create");
                     }}
                     type="button"
