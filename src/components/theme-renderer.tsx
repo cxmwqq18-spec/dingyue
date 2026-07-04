@@ -13,6 +13,7 @@ import { DreamshootPackageCatalogClient } from "@/components/storefront/dreamsho
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
+import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
@@ -7712,17 +7713,93 @@ function SectionView({
   if (section.type === "pricing_table") {
     const aidreamcapes = isAidreamcapesSite(site);
     const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
-    const displayProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
+    const activeSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
+    const displayProducts = (activeSubscriptionProducts.length ? activeSubscriptionProducts : activeProducts(products)).slice(0, 3);
     const billingCycle = billingCycleFromQuery(renderContext.query);
     const canShowBillingSwitch = displayProducts.some((product) => productHasBillingCycle(product, "year"));
-    const monthlyHref = hrefFor(site, "/pricing?billing=monthly#plans");
-    const yearlyHref = hrefFor(site, "/pricing?billing=yearly#plans");
-    const featuredProductId =
-      displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
-      displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, billingCycle), "featured", false))?.id ??
-      displayProducts[0]?.id;
-    const featuredProduct = displayProducts.find((product) => product.id === featuredProductId);
-    const featuredPrice = featuredProduct ? productPriceForBilling(featuredProduct, billingCycle) : undefined;
+    const featuredProductIdsByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, string | undefined>>((acc, cycle) => {
+      acc[cycle] =
+        displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
+        displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, cycle), "featured", false))?.id ??
+        displayProducts[0]?.id;
+      return acc;
+    }, { month: undefined, year: undefined });
+    const featuredPricesByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, SiteProduct["prices"][number] | undefined>>((acc, cycle) => {
+      const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
+      acc[cycle] = featuredProduct ? productPriceForBilling(featuredProduct, cycle) : undefined;
+      return acc;
+    }, { month: undefined, year: undefined });
+    const pricingPlans = displayProducts.map((product) => {
+      const prices = (["month", "year"] as const).reduce<Partial<Record<BillingCycle, {
+        id: string;
+        formattedAmount: string;
+        formattedOriginalAmount: string;
+        formattedEquivalentMonthly: string;
+        periodLabel: string;
+        planSubtitle: string;
+        discountLabel: string;
+        features: string[];
+        featured: boolean;
+        bestValue: boolean;
+        badgeLabel: string;
+        buttonLabel: string;
+        cartHref: string;
+      }>>>((acc, cycle) => {
+        const price = productPriceForBilling(product, cycle);
+        if (!price) return acc;
+        const destinations = priceMetaNumber(price, "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
+        const featured = product.id === featuredProductIdsByCycle[cycle];
+        const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
+        const discountLabel = priceMetaString(price, "discountLabel", "");
+        const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
+        const bestValue = priceMetaBool(price, "bestValue", false);
+        const planSubtitle = priceMetaString(
+          price,
+          "planSubtitle",
+          product.name === "Starter"
+            ? "Start with one focused headshot, beauty, or profile set"
+            : product.name === "Pro" || product.name === "Popular"
+              ? "Compare several package styles with room for reruns"
+              : "More credits for premium packs, video add-ons, and repeat campaigns"
+        );
+        const defaultFeatures = [
+          price.interval === "year" ? `${price.creditsGranted} AI photo credits for the year` : `${price.creditsGranted} AI photo credits`,
+          "Create private photo albums after generation completes",
+          aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
+          "Special AI photo filters",
+          "Create photos by writing prompts in seconds",
+          "Create AI videos",
+          "Magic Upscaler for high-res images",
+          "No watermark",
+          ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
+          ...(destinations >= 999 ? ["Unlimited style directions"] : [])
+        ];
+        const featureLines = priceMetaLines(price, "featuresText");
+        const features = featureLines.length ? featureLines : defaultFeatures;
+        const badgeLabel = priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
+        acc[cycle] = {
+          id: price.id,
+          formattedAmount: formatCurrency(price.amountCents, price.currency),
+          formattedOriginalAmount: originalAmountCents > price.amountCents ? formatCurrency(originalAmountCents, price.currency) : "",
+          formattedEquivalentMonthly: price.interval === "year" && yearlyEquivalentMonthlyCents > 0 ? formatCurrency(yearlyEquivalentMonthlyCents, price.currency) : "",
+          periodLabel: pricePeriodLabel(price),
+          planSubtitle,
+          discountLabel,
+          features,
+          featured,
+          bestValue,
+          badgeLabel,
+          buttonLabel: priceMetaString(price, "buttonLabel", "Select plan"),
+          cartHref: hrefFor(site, `/cart?product=${product.id}&price=${price.id}`)
+        };
+        return acc;
+      }, {});
+      return {
+        id: product.id,
+        name: product.name,
+        prices
+      };
+    });
     const pricingImage = mediaAssetUrl(
       site,
       setting(
@@ -7733,26 +7810,40 @@ function SectionView({
           : "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
       )
     );
-    const sidePanelEyebrow = priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe"));
-    const sidePanelTitle = priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."));
-    const sidePanelBody = priceMetaString(
-      featuredPrice,
-      "sidePanelBody",
-      setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-    );
-    const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
-      .map((line) => {
-        const [label, ...detailParts] = line.split("|").map((part) => part.trim());
-        return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
-      })
-      .filter((item): item is readonly [string, string] => Boolean(item));
-    const sidePanelItems = configuredSideItems.length
-      ? configuredSideItems
-      : [
-          ["Starter", aidreamcapes ? "Best for quick route stories, cafe scenes, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
-          ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
-          ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
-        ];
+    const sidePanels = (["month", "year"] as const).reduce<Record<BillingCycle, {
+      eyebrow: string;
+      title: string;
+      body: string;
+      items: Array<readonly [string, string]>;
+    }>>((acc, cycle) => {
+      const featuredPrice = featuredPricesByCycle[cycle];
+      const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
+        .map((line) => {
+          const [label, ...detailParts] = line.split("|").map((part) => part.trim());
+          return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
+        })
+        .filter((item): item is readonly [string, string] => Boolean(item));
+      acc[cycle] = {
+        eyebrow: priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
+        title: priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+        body: priceMetaString(
+          featuredPrice,
+          "sidePanelBody",
+          setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
+        ),
+        items: configuredSideItems.length
+          ? configuredSideItems
+          : [
+              ["Starter", aidreamcapes ? "Best for quick route stories, cafe scenes, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
+              ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
+              ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
+            ]
+      };
+      return acc;
+    }, {
+      month: { eyebrow: "", title: "", body: "", items: [] },
+      year: { eyebrow: "", title: "", body: "", items: [] }
+    });
     return (
       <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
         <div className="absolute inset-0">
@@ -7779,123 +7870,13 @@ function SectionView({
               <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. MyDreamShoots keeps plan selection simple with monthly and yearly subscriptions.</p>
             ) : null}
           </div>
-          <div className="mt-7 flex flex-wrap gap-3">
-          {canShowBillingSwitch ? (
-            <div className="inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
-              <Link
-                aria-current={billingCycle === "month" ? "true" : undefined}
-                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === "month" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
-                href={monthlyHref}
-              >
-                Monthly
-              </Link>
-              <Link
-                aria-current={billingCycle === "year" ? "true" : undefined}
-                className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === "year" ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
-                href={yearlyHref}
-              >
-                Yearly
-              </Link>
-            </div>
-          ) : null}
-          </div>
-          <div className="mt-8 grid gap-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
-            <div className="grid gap-4 lg:grid-cols-3">
-              {displayProducts.slice(0, 3).map((product) => {
-                const price = productPriceForBilling(product, billingCycle);
-                if (!price) return null;
-                const destinations = priceMetaNumber(price, "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
-                const featured = product.id === featuredProductId;
-                const pricePeriod = pricePeriodLabel(price);
-                const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
-                const discountLabel = priceMetaString(price, "discountLabel", "");
-                const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
-                const bestValue = priceMetaBool(price, "bestValue", false);
-                const planSubtitle = priceMetaString(
-                  price,
-                  "planSubtitle",
-                  product.name === "Starter"
-                    ? "Start with one focused headshot, beauty, or profile set"
-                    : product.name === "Pro" || product.name === "Popular"
-                      ? "Compare several package styles with room for reruns"
-                      : "More credits for premium packs, video add-ons, and repeat campaigns"
-                );
-                const defaultFeatures = [
-                  price.interval === "year" ? `${price.creditsGranted} AI photo credits for the year` : `${price.creditsGranted} AI photo credits`,
-                  "Create private photo albums after generation completes",
-                  aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
-                  "Special AI photo filters",
-                  "Create photos by writing prompts in seconds",
-                  "Create AI videos",
-                  "Magic Upscaler for high-res images",
-                  "No watermark",
-                  ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
-                  ...(destinations >= 999 ? ["Unlimited style directions"] : [])
-                ];
-                const featureLines = priceMetaLines(price, "featuresText");
-                const features = featureLines.length ? featureLines : defaultFeatures;
-	                const hasBadge = featured || bestValue;
-	                const badgeLabel = priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
-                const buttonLabel = priceMetaString(price, "buttonLabel", "Select plan");
-                return (
-                  <div className={`relative flex h-full flex-col rounded-[12px] border ${featured || bestValue ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`} key={product.id}>
-	                    {hasBadge ? (
-	                      <div className="absolute left-5 top-5 rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
-	                        {badgeLabel}
-	                      </div>
-	                    ) : null}
-	                    <p className={`${hasBadge ? "mt-12" : "mt-2"} text-[1.72rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)]`}>{product.name}</p>
-                    <p className="mt-2 min-h-[2.75rem] text-[0.92rem] text-[#6d665f]">{planSubtitle}</p>
-                    <div className="mt-6 flex items-end gap-2">
-                      <p className="text-[2.65rem] font-semibold leading-none tracking-[-0.04em] [font-family:var(--site-title-font)]">{formatCurrency(price.amountCents, price.currency)}</p>
-                      <p className="pb-2 text-[0.88rem] text-[#7f786f]">{pricePeriod}</p>
-                    </div>
-                    {price.interval === "year" && yearlyEquivalentMonthlyCents > 0 ? (
-                      <p className="mt-2 text-sm font-medium text-[#7f786f]">Equivalent to {formatCurrency(yearlyEquivalentMonthlyCents, price.currency)} / month</p>
-                    ) : null}
-                    {originalAmountCents > price.amountCents ? (
-                      <div className="mt-3 flex flex-wrap items-center gap-2">
-                        <span className="text-sm text-[#8a837b] line-through">{formatCurrency(originalAmountCents, price.currency)}</span>
-                        {discountLabel ? <span className="rounded-full bg-[#f4e0c7] px-2.5 py-1 text-[0.72rem] font-semibold text-[#8a5728]">{discountLabel}</span> : null}
-                      </div>
-                    ) : null}
-                    <div className="mt-6 grid gap-2.5 text-[0.88rem] text-[#4f4944]">
-                      {features.map((feature, index) => (
-                        <div className="flex items-start gap-3" key={`${feature}_${index}`}>
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold transition hover:-translate-y-0.5 ${featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={hrefFor(site, `/cart?product=${product.id}&price=${price.id}`)}>
-                      {buttonLabel}
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="relative hidden min-h-[430px] xl:block">
-              <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
-                <div>
-                  <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">{sidePanelEyebrow}</p>
-                  <h3 className="mt-3 max-w-[14ch] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
-                    {sidePanelTitle}
-                  </h3>
-                  <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
-                    {sidePanelBody}
-                  </p>
-                </div>
-                <div className="grid gap-3">
-                  {sidePanelItems.map(([label, detail]) => (
-                    <div className={aidreamcapes ? "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
-                      <p className={aidreamcapes ? "text-sm font-semibold text-white" : "text-sm font-semibold text-white"}>{label}</p>
-                      <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-white/64" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <PricingBillingTable
+            aidreamcapes={aidreamcapes}
+            canShowBillingSwitch={canShowBillingSwitch}
+            initialBillingCycle={billingCycle}
+            plans={pricingPlans}
+            sidePanels={sidePanels}
+          />
         </div>
       </section>
     );
