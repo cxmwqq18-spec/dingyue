@@ -136,6 +136,15 @@ function trimProductsForStorefront(renderData: SiteRenderData, limit = 8): SiteR
   return (active.length ? active : renderData.products).slice(0, limit).map(lightweightProduct);
 }
 
+function trimPricingProductsForStorefront(renderData: SiteRenderData, limit = 8): SiteRenderData["products"] {
+  const active = renderData.products.filter((product) => product.status === "active");
+  const source = active.length ? active : renderData.products;
+  const subscriptions = source.filter((product) => product.type === "subscription");
+  const subscriptionIds = new Set(subscriptions.map((product) => product.id));
+  const remaining = source.filter((product) => !subscriptionIds.has(product.id));
+  return [...subscriptions, ...remaining].slice(0, limit).map(lightweightProduct);
+}
+
 function lightweightPrice(price: Price): Price {
   return {
     id: price.id,
@@ -315,13 +324,14 @@ function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: S
 function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
   const sectionTypes = pageSectionTypes(pageJson);
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
+  const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table");
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
   const packLimit = slug === "/" ? publicHomePackLimit : slug === "/collections" ? publicDirectoryPackLimit : 18;
   return {
     creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
     mediaAssets: renderData.mediaAssets,
-    products: needsProducts ? trimProductsForStorefront(renderData, slug === "/pricing" || slug === "/cart" ? 12 : 6) : [],
+    products: needsProducts ? (hasPricingTable ? trimPricingProductsForStorefront(renderData, 12) : trimProductsForStorefront(renderData, slug === "/cart" ? 12 : 6)) : [],
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : [],
     toolMenuItems: renderData.toolMenuItems.slice(0, 80).map(lightweightToolMenuItem)
   };
