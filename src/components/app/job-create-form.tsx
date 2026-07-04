@@ -998,7 +998,7 @@ export function JobCreateForm({
           ))}
         </div>
       </div>
-      <div className={`grid scroll-mt-28 gap-3 rounded-[16px] border p-4 ${panelClass}`} id="source-photos">
+      <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
         <label className={`grid gap-2 text-sm font-medium ${textClass} sm:max-w-xs`}>
           Estimated outputs
           <input
@@ -1063,9 +1063,10 @@ export function JobCreateForm({
         ))}
       </div>
       ) : null}
-      <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
+      <div className={`grid scroll-mt-28 gap-3 rounded-[16px] border p-4 ${panelClass}`} id="source-photos">
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 02 · Source photos</p>
+          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Attach source photos</h3>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
             Upload selfies or source photos for the AI to reference. Select {minAssets === 1 ? "at least one" : `at least ${minAssets}`} and up to {effectiveMaxAssets} for this request; keep the rest in your workspace for later.
           </p>
