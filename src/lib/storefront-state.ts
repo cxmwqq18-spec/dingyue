@@ -2,6 +2,7 @@ import { cache } from "react";
 import { readStorefrontPlatformStateJsonFallback, readStorefrontPlatformStateRelational } from "@/lib/storefront-state-relational";
 import {
   getStorefrontAccessSummaryRelational,
+  getStorefrontPublicCollectionDirectoryStateBySlug,
   getStorefrontPublicRuntimeStateByHost,
   getStorefrontPublicCollectionDetailStateBySlug,
   getStorefrontPublicCollectionMetadataStateBySlug,
@@ -21,6 +22,7 @@ export const readStorefrontPlatformStateFromDatabase = cache(() => readStorefron
 export const readStorefrontPlatformStateFromLegacyJson = cache(() => readStorefrontPlatformStateJsonFallback());
 export const readStorefrontSiteByHostFromDatabase = getStorefrontSiteByHostRelational;
 export const readStorefrontPublicRuntimeStateByHostFromDatabase = getStorefrontPublicRuntimeStateByHost;
+export const readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase = getStorefrontPublicCollectionDirectoryStateBySlug;
 export const readStorefrontPublicCollectionDetailStateBySlugFromDatabase = getStorefrontPublicCollectionDetailStateBySlug;
 export const readStorefrontPublicCollectionMetadataStateBySlugFromDatabase = getStorefrontPublicCollectionMetadataStateBySlug;
 export const readStorefrontPublicMetadataStateBySlugFromDatabase = getStorefrontPublicMetadataStateBySlug;

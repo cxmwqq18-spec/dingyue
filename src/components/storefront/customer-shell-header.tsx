@@ -1,13 +1,17 @@
 "use client";
 
-import { ArrowRight, BadgeCheck, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map, Mountain, PlayCircle, Route, Scissors, Sparkles, Sun, UserCircle, Users, Waves } from "lucide-react";
+import { ArrowRight, BadgeCheck, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Route, Scissors, Sparkles, Sun, UserCircle, Users, Waves } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import type { PublicCustomer, Site } from "@/lib/types";
+import type { CreativePack, PublicCustomer, Site } from "@/lib/types";
+import type { LucideIcon } from "lucide-react";
 
 type CustomerShellHeaderSite = Pick<Site, "slug" | "name" | "branding" | "primaryDomain">;
-type MenuGroup = typeof packageGroups;
+type MenuGroupItem = { label: string; href: string };
+type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: MenuGroupItem[] };
+type MenuGroup = MenuGroupEntry[];
 
 const packageGroups = [
   { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
@@ -22,7 +26,7 @@ const aidreamcapesPackageGroups = [
   {
     label: "Scene Atlases",
     accent: "#38bdf8",
-    icon: Map,
+    icon: MapIcon,
     items: [
       { label: "Route Portrait Albums", href: "/collections/route-portrait-albums" },
       { label: "Coastal Light Sets", href: "/collections/coastal-light-sets" },
@@ -97,7 +101,7 @@ const aidreamcapesToolGroups = [
   {
     label: "Route Builders",
     accent: "#38bdf8",
-    icon: Map,
+    icon: MapIcon,
     items: [
       { label: "Route Portrait Engine", href: "/tools/route-portrait-engine" },
       { label: "Coastal Light Composer", href: "/tools/coastal-portrait" },
@@ -127,6 +131,76 @@ const aidreamcapesToolGroups = [
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
+const myDreamShootsDisplayName = "ʍʏƉʀɛǟʍֆhoots";
+
+function slugifyMenuLabel(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function titleCaseMenuLabel(value: string) {
+  return value
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function iconForMenuGroup(seed: string): LucideIcon {
+  const normalized = seed.toLowerCase();
+  if (normalized.includes("beauty") || normalized.includes("hair") || normalized.includes("edit")) return Scissors;
+  if (normalized.includes("creator") || normalized.includes("headshot") || normalized.includes("profile")) return Users;
+  if (normalized.includes("couple") || normalized.includes("wedding") || normalized.includes("boudoir")) return Heart;
+  if (normalized.includes("travel") || normalized.includes("nature") || normalized.includes("route") || normalized.includes("cultural")) return MapIcon;
+  if (normalized.includes("sport") || normalized.includes("video") || normalized.includes("motion")) return PlayCircle;
+  if (normalized.includes("season") || normalized.includes("holiday")) return Sun;
+  if (normalized.includes("avatar") || normalized.includes("anime")) return ImageIcon;
+  if (normalized.includes("creative") || normalized.includes("gala")) return Sparkles;
+  return Camera;
+}
+
+function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[]): MenuGroup {
+  const groups: Array<MenuGroupEntry & { slug: string }> = [];
+  (creativePacks ?? [])
+    .filter((pack) => pack.status === "active")
+    .slice(0, 48)
+    .forEach((pack) => {
+      const parent = pack.categoryRecord?.parent;
+      const groupLabel = parent?.label || titleCaseMenuLabel(pack.categoryRecord?.slug || pack.category || "Photo packages");
+      const groupSlug = parent?.slug || slugifyMenuLabel(groupLabel);
+      const itemLabel = pack.categoryRecord?.label || pack.name;
+      const itemSlug = pack.categoryRecord?.slug || slugifyMenuLabel(pack.name);
+      let group = groups.find((item) => item.slug === groupSlug);
+      if (!group) {
+        group = {
+          slug: groupSlug,
+          label: groupLabel,
+          accent: packageGroups[groups.length % packageGroups.length]?.accent ?? "#38a8ff",
+          icon: iconForMenuGroup(`${groupSlug} ${groupLabel}`),
+          items: []
+        };
+        groups.push(group);
+      }
+      if (!group.items.some((item) => item.href === `/collections/${itemSlug}`)) {
+        group.items.push({ label: itemLabel, href: `/collections/${itemSlug}` });
+      }
+    });
+
+  return groups
+    .map((group) => ({
+      label: group.label,
+      accent: group.accent,
+      icon: group.icon,
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label)).slice(0, 8)
+    }))
+    .filter((group) => group.items.length > 0)
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .slice(0, 8);
+}
 
 function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo package studios" }: { basePath: string; groups?: MenuGroup; title?: string }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
@@ -172,7 +246,7 @@ function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo pac
 }
 
 function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: typeof toolGroups }) {
-  const icons = [Camera, ImageIcon, Sparkles, Users, Scissors, BadgeCheck, Sun, Map];
+  const icons = [Camera, ImageIcon, Sparkles, Users, Scissors, BadgeCheck, Sun, MapIcon];
   return (
     <div className="overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
       <div className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</div>
@@ -223,17 +297,26 @@ function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; g
 export function CustomerShellHeader({
   site,
   customer,
-  tone = "dark"
+  tone = "dark",
+  creativePacks = []
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
   tone?: "light" | "dark";
+  creativePacks?: CreativePack[];
 }) {
-  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
+  const pathname = usePathname();
+  const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
+  const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const logoText = isAidreamcapes ? "Aidreamcapes" : "MyDreamShoots";
+  const isMyDreamShoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const logoText = isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
+  const readableLogoText = isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
+  const homeHref = basePath || "/";
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || dreamshootLogoSrc;
-  const activePackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
+  const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks);
+  const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
+  const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
   const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
   const dark = tone === "dark";
   const navClass = dark
@@ -247,13 +330,13 @@ export function CustomerShellHeader({
           {isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create private AI photo sets from everyday selfies."}
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
-          <StorefrontInstantLink aria-label={`${logoText} home`} className="flex min-w-0 items-center gap-3" href={basePath} title={`${logoText} home`}>
+          <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
             <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
               <img className="h-9 w-9 object-contain" src={logoSrc} alt="" aria-hidden="true" width={36} height={36} />
             </span>
             <span className="min-w-0">
               <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>
-              <span className="sr-only">{logoText}</span>
+              <span className="sr-only">{readableLogoText}</span>
             </span>
           </StorefrontInstantLink>
 
@@ -262,7 +345,7 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label={isAidreamcapes ? "Travel Packages" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
+              prefetchPaths={activePackageGroups.map((group) => `${basePath}${group.items[0]?.href ?? "/collections"}`).slice(0, 2)}
             >
               <PackageMegaPanel basePath={basePath} groups={activePackageGroups} title={isAidreamcapes ? "Travel route studios" : "Photo package studios"} />
             </ClickMegaMenu>
@@ -270,7 +353,7 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label="Tools"
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={activeToolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`)).slice(0, 4)}
+              prefetchPaths={activeToolGroups.map((group) => `${basePath}${group.items[0]?.href ?? "/tools"}`).slice(0, 2)}
             >
               <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>

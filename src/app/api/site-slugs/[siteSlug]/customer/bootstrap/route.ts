@@ -59,13 +59,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 
   if (includeMode === "account") {
-    const [site, accountState] = await Promise.all([
+    const [site, accountState, bootstrap] = await Promise.all([
       getCustomerWorkspaceSiteShellRelational(siteSlug),
       readStorefrontCustomerRuntimeStateForSiteFromDatabase({
         siteId,
         sessionId: current.sessionId,
         profile: "account"
-      })
+      }),
+      getCustomerWorkspaceBootstrapRelational(siteSlug)
     ]);
     if (!site) {
       return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         site,
         customer: current.customer,
         siteAiApps: [],
-        creativePacks: [],
+        creativePacks: bootstrap?.creativePacks ?? [],
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }

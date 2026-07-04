@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { Order, PublicCustomer, Subscription } from "@/lib/types";
 
@@ -22,13 +22,17 @@ type CheckoutResult = {
 function errorMessage(code?: string) {
   return {
     customer_login_required: "Sign in to your customer account before checkout.",
-    connect_not_ready: "This site is not connected to live payments yet, so customer credit top-ups cannot complete automatically.",
-    payment_provider_not_enabled_for_customer: "Live payments are not enabled yet, so customer credits will not be granted automatically.",
-    payment_provider_not_ready: "This site's payment setup is not ready yet.",
+    connect_not_ready: "Payments are not ready. This site is not connected to live checkout yet, so credits cannot be added from this cart.",
+    payment_provider_not_enabled_for_customer: "Payments are not ready. Live checkout is not enabled for this plan yet, so credits cannot be added from this cart.",
+    payment_provider_not_ready: "Payments are not ready. This site's payment setup needs to be completed first.",
     price_not_found_for_site: "This plan price does not exist or does not belong to this site.",
     price_has_no_credits: "This price does not include any credits to grant.",
     product_not_active: "This plan is not active."
   }[code ?? ""] ?? code ?? "Checkout could not be completed.";
+}
+
+function isPaymentReadinessError(code?: string) {
+  return code === "connect_not_ready" || code === "payment_provider_not_enabled_for_customer" || code === "payment_provider_not_ready";
 }
 
 export function CartCheckoutPanel({
@@ -105,9 +109,17 @@ export function CartCheckoutPanel({
           </div>
         </div>
       ) : result?.error ? (
-        <div className="rounded-[1rem] border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-50">
-          {errorMessage(result.error)}
-          {result.checkoutUrl ? <span className="block pt-1 text-xs text-amber-100/70">When live payments are connected, this flow will redirect to checkout. Credits are not granted early.</span> : null}
+        <div className="rounded-[1rem] border border-amber-300/25 bg-amber-300/10 p-4 text-sm leading-6 text-amber-50">
+          <div className="flex items-start gap-2">
+            {isPaymentReadinessError(result.error) ? <AlertTriangle className="mt-1 h-4 w-4 shrink-0" strokeWidth={1.8} /> : null}
+            <div>
+              {isPaymentReadinessError(result.error) ? <p className="font-semibold">Payments are not ready</p> : null}
+              <p>{errorMessage(result.error)}</p>
+              <p className="mt-1 text-xs text-amber-100/70">
+                Credits are granted only after a real payment confirmation. Please try again after payment setup is complete.
+              </p>
+            </div>
+          </div>
         </div>
       ) : null}
 

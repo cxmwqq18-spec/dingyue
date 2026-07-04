@@ -1,5 +1,5 @@
 import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { dreamshootPublicSeoPageMetadata } from "@/lib/dreamshoot-seo-content";
+import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
 export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
@@ -26,8 +26,12 @@ function page(pageType: string, sectionsOrder: string[], sections: ThemePageJson
   };
 }
 
-function seoForPublicPage(path: keyof typeof dreamshootPublicSeoPageMetadata): ThemePageJson["seo"] {
-  const metadata = dreamshootPublicSeoPageMetadata[path];
+type DreamshootPublicSeoSiteSeed = Parameters<typeof getDreamshootPublicSeoPageMetadataForSite>[0];
+type DreamshootPublicSeoPath = "/creators-circle" | "/partner-registration" | "/about-us" | "/contact-us";
+
+function seoForPublicPage(path: DreamshootPublicSeoPath, site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
+  const metadata = getDreamshootPublicSeoPageMetadataForSite(site, path);
+  if (!metadata) return undefined;
   return {
     title: metadata.title,
     description: metadata.description,
@@ -126,34 +130,34 @@ const assets = {
 } as const;
 
 const dreamshootMegaTools = [
-  block("mega_tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Create clean profile portraits for resumes, teams, and founder pages.", category: "Photo AI", badge: "Profile", imageUrl: assets.catalogHeadshotCard, href: toolHref("headshot") }),
-  block("mega_tool_creator", "tool_card", { title: "Creator portrait studio", description: "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", category: "Photo AI", badge: "Creator", imageUrl: assets.heroGridSocial, href: toolHref("creator-portrait") }),
-  block("mega_tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. Personal fan use only.", category: "Photo AI", badge: "Sports", imageUrl: assets.worldCupStadiumPortrait, href: toolHref("world-cup-fan-photos") }),
-  block("mega_tool_cyberpunk", "tool_card", { title: "Cyberpunk portrait maker", description: "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", category: "Photo AI", badge: "Scene", imageUrl: assets.heroGridCyber, href: toolHref("cyberpunk-portrait") }),
-  block("mega_tool_gala", "tool_card", { title: "Gala photo maker", description: "Create formal night-out portraits with polished editorial lighting.", category: "Photo AI", badge: "Style", imageUrl: assets.heroGridGala, href: toolHref("gala-photo") }),
-  block("mega_tool_noir", "tool_card", { title: "Noir character portraits", description: "Generate cinematic mafia, detective, and vintage city character looks.", category: "Photo AI", badge: "Noir", imageUrl: assets.heroGridNoir, href: toolHref("noir-portrait") }),
-  block("mega_tool_anime", "tool_card", { title: "Anime avatar builder", description: "Create stylized profile avatars and character-inspired social images.", category: "Photo AI", badge: "Avatar", imageUrl: assets.heroGridAvatar, href: toolHref("anime-avatar") }),
-  block("mega_tool_nature", "tool_card", { title: "Nature adventure photos", description: "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes.", category: "Photo AI", badge: "Outdoor", imageUrl: assets.natureSolo, href: toolHref("nature-adventure") }),
-  block("mega_tool_fashion", "tool_card", { title: "Fashion editorial set", description: "Create magazine-style outfit stories and polished personal-brand images.", category: "Photo AI", badge: "Editorial", imageUrl: assets.manPortrait, href: toolHref("fashion-editorial") }),
-  block("mega_tool_product", "tool_card", { title: "Product lifestyle photos", description: "Preview creator product shots, social commerce visuals, and campaign scenes.", category: "Photo AI", badge: "Commerce", imageUrl: assets.heroGridProduct, href: toolHref("product-lifestyle") }),
-  block("mega_edit_background", "tool_card", { title: "Background changer", description: "Replace a plain selfie background for cleaner personal images. Do not use edits for misleading claims or fake evidence.", category: "AI Photo Edit", badge: "Studio", imageUrl: assets.sampleCyberpunk, href: toolHref("background-changer") }),
-  block("mega_edit_remove_bg", "tool_card", { title: "Background remover", description: "Cut out product or portrait backgrounds for cleaner source images you own or have permission to edit.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.upload, href: toolHref("background-remover") }),
-  block("mega_edit_magic_eraser", "tool_card", { title: "Magic eraser", description: "Remove small distractions from portraits, cards, and generated scenes without creating misleading before-and-after claims.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.hairstyle, href: toolHref("magic-eraser") }),
-  block("mega_edit_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Studio", imageUrl: assets.headshot, href: toolHref("photo-enhancer") }),
-  block("mega_edit_retouch", "tool_card", { title: "Portrait retouch", description: "Clean skin, flyaways, and lighting without changing the customer's identity.", category: "AI Photo Edit", badge: "Retouch", imageUrl: assets.womanPortrait, href: toolHref("portrait-retouch") }),
-  block("mega_edit_unblur", "tool_card", { title: "Unblur image", description: "Rescue soft phone shots before they enter a paid generation workflow.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.heroGridUpscale, href: toolHref("unblur-image") }),
-  block("mega_edit_color", "tool_card", { title: "Color correction", description: "Balance tones for profile photos, posters, and package previews.", category: "AI Photo Edit", badge: "Color", imageUrl: assets.proofBeautyHair, href: toolHref("color-correction") }),
-  block("mega_edit_restore", "tool_card", { title: "Old photo restoration", description: "Repair faded family photos and prepare them for private album delivery.", category: "AI Photo Edit", badge: "Restore", imageUrl: assets.socialCard, href: toolHref("old-photo-restoration") }),
-  block("mega_edit_prompt", "tool_card", { title: "Edit by prompt", description: "Describe a focused edit and preview it before spending package credits.", category: "AI Photo Edit", badge: "Prompt", imageUrl: assets.flowBeforeUpload, href: toolHref("edit-by-prompt") }),
-  block("mega_edit_upscale", "tool_card", { title: "Magic upscaler", description: "Sharpen a favorite generated image for cleaner downloads, profile use, and larger display sizes.", category: "AI Photo Edit", badge: "HD", imageUrl: assets.magicUpscalerPack, href: toolHref("magic-upscaler") }),
-  block("mega_video_image", "tool_card", { title: "Image to video concept", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: assets.heroGridVideo, href: toolHref("image-to-video") }),
-  block("mega_video_profile", "tool_card", { title: "Profile clip maker", description: "Create social profile motion from headshots or creator portraits.", category: "Video AI", badge: "Social", imageUrl: assets.reviewLucasResultHeadshot, href: toolHref("profile-clip") }),
-  block("mega_video_fan", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: assets.catalogWorldcupCard, href: toolHref("fan-poster-motion") }),
-  block("mega_video_intro", "tool_card", { title: "Creator intro video", description: "Turn creator portraits into short intro clips for profiles and reels.", category: "Video AI", badge: "Creator", imageUrl: assets.reviewNoahResultSocialCard, href: toolHref("creator-intro-video") }),
-  block("mega_video_product", "tool_card", { title: "Product teaser clip", description: "Create simple motion ideas for product-style package outputs.", category: "Video AI", badge: "Commerce", imageUrl: assets.aiVideoAddonsPack, href: toolHref("product-teaser-clip") }),
-  block("mega_video_avatar", "tool_card", { title: "Animated avatar preview", description: "Preview avatar-style motion concepts for profile campaigns.", category: "Video AI", badge: "Avatar", imageUrl: assets.reviewAvaAvatar, href: toolHref("animated-avatar") }),
-  block("mega_video_fashion", "tool_card", { title: "Fashion reel starter", description: "Create short reel concepts from editorial and try-on package outputs.", category: "Video AI", badge: "Style", imageUrl: assets.virtualLooks, href: toolHref("fashion-reel") }),
-  block("mega_video_album", "tool_card", { title: "Album story video", description: "Turn favorite generated images into a compact customer album story.", category: "Video AI", badge: "Album", imageUrl: assets.flowPrivateAlbumWorkspace, href: toolHref("album-story-video") })
+  block("mega_tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Input: clear selfies or portraits you own or have permission to use. Output: private profile-ready headshot options. Best for: LinkedIn, resumes, founder bios, speaker pages, and team profiles. Cost: credits are shown before generation.", category: "Photo AI", badge: "Profile", imageUrl: assets.catalogHeadshotCard, href: toolHref("headshot") }),
+  block("mega_tool_creator", "tool_card", { title: "Creator portrait studio", description: "Input: source portraits and creator references you own or can use. Output: private creator portraits for profiles, media kits, newsletters, and thumbnails. Best for: refreshing a public creator presence. Cost: credits are shown before generation.", category: "Photo AI", badge: "Creator", imageUrl: assets.heroGridSocial, href: toolHref("creator-portrait") }),
+  block("mega_tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Input: your own selfies for personal fan use. Output: private fan portraits, posters, and profile avatars. Best for: match-day social posts without official marks, logos, or player likenesses. Cost: credits are shown before generation.", category: "Photo AI", badge: "Sports", imageUrl: assets.worldCupStadiumPortrait, href: toolHref("world-cup-fan-photos") }),
+  block("mega_tool_cyberpunk", "tool_card", { title: "Cyberpunk portrait maker", description: "Input: a clear portrait you own or have permission to use. Output: private neon city portrait crops. Best for: cinematic profile images and poster-style scenes. Cost: credits are shown before generation.", category: "Photo AI", badge: "Scene", imageUrl: assets.heroGridCyber, href: toolHref("cyberpunk-portrait") }),
+  block("mega_tool_gala", "tool_card", { title: "Gala photo maker", description: "Input: clear portraits and style direction you own or can use. Output: private formal evening portrait options. Best for: event-inspired profile images and polished album looks. Cost: credits are shown before generation.", category: "Photo AI", badge: "Style", imageUrl: assets.heroGridGala, href: toolHref("gala-photo") }),
+  block("mega_tool_noir", "tool_card", { title: "Noir character portraits", description: "Input: your own portrait with character direction. Output: private noir-style character portraits. Best for: dramatic profile concepts and creative scenes. Cost: credits are shown before generation.", category: "Photo AI", badge: "Noir", imageUrl: assets.heroGridNoir, href: toolHref("noir-portrait") }),
+  block("mega_tool_anime", "tool_card", { title: "Anime avatar builder", description: "Input: your own portrait or avatar reference. Output: private stylized avatar concepts. Best for: profile updates, fan communities, and playful identity ideas. Cost: credits are shown before generation.", category: "Photo AI", badge: "Avatar", imageUrl: assets.heroGridAvatar, href: toolHref("anime-avatar") }),
+  block("mega_tool_nature", "tool_card", { title: "Nature adventure photos", description: "Input: your own portrait and outdoor mood direction. Output: private nature and adventure portrait scenes. Best for: travel-inspired profiles and lifestyle albums. Cost: credits are shown before generation.", category: "Photo AI", badge: "Outdoor", imageUrl: assets.natureSolo, href: toolHref("nature-adventure") }),
+  block("mega_tool_fashion", "tool_card", { title: "Fashion editorial set", description: "Input: your own photo and style references. Output: private fashion editorial and visual try-on previews. Best for: outfit direction, creator looks, and adult consensual non-explicit styling. Cost: credits are shown before generation.", category: "Photo AI", badge: "Editorial", imageUrl: assets.manPortrait, href: toolHref("fashion-editorial") }),
+  block("mega_tool_product", "tool_card", { title: "Product lifestyle photos", description: "Input: product or creator reference images you own or can use. Output: private product-style lifestyle image concepts. Best for: campaign drafts, social commerce visuals, and creator product scenes. Cost: credits are shown before generation.", category: "Photo AI", badge: "Commerce", imageUrl: assets.heroGridProduct, href: toolHref("product-lifestyle") }),
+  block("mega_edit_background", "tool_card", { title: "Background changer", description: "Input: one portrait or product photo you own or can edit. Output: a private image with a cleaner replacement background. Best for: preparing source photos before a full package. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Studio", imageUrl: assets.sampleCyberpunk, href: toolHref("background-changer") }),
+  block("mega_edit_remove_bg", "tool_card", { title: "Background remover", description: "Input: one image you own or have permission to edit. Output: a private cutout or cleaner source image. Best for: profile, listing, and package-prep images. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.upload, href: toolHref("background-remover") }),
+  block("mega_edit_magic_eraser", "tool_card", { title: "Magic eraser", description: "Input: one photo you own or have permission to edit. Output: a private image with small distractions removed. Best for: cleaning portraits, cards, and generated scenes without misleading claims. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.hairstyle, href: toolHref("magic-eraser") }),
+  block("mega_edit_enhancer", "tool_card", { title: "Photo enhancer", description: "Input: a low-light or soft photo you own. Output: a private enhanced source image. Best for: improving uploads before premium generation. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Studio", imageUrl: assets.headshot, href: toolHref("photo-enhancer") }),
+  block("mega_edit_retouch", "tool_card", { title: "Portrait retouch", description: "Input: a portrait you own or have permission to retouch. Output: a private cleaned portrait that preserves identity. Best for: skin, flyaway, and lighting cleanup before delivery. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Retouch", imageUrl: assets.womanPortrait, href: toolHref("portrait-retouch") }),
+  block("mega_edit_unblur", "tool_card", { title: "Unblur image", description: "Input: a soft phone shot you own. Output: a private sharper source image. Best for: rescuing usable uploads before a package. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Utility", imageUrl: assets.heroGridUpscale, href: toolHref("unblur-image") }),
+  block("mega_edit_color", "tool_card", { title: "Color correction", description: "Input: a portrait, poster, or package preview you own. Output: a private image with cleaner tone balance. Best for: profile photos, posters, and package previews. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Color", imageUrl: assets.proofBeautyHair, href: toolHref("color-correction") }),
+  block("mega_edit_restore", "tool_card", { title: "Old photo restoration", description: "Input: an old photo you own or have permission to restore. Output: a private repaired image for album use. Best for: family-photo cleanup and private gallery delivery. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Restore", imageUrl: assets.socialCard, href: toolHref("old-photo-restoration") }),
+  block("mega_edit_prompt", "tool_card", { title: "Edit by prompt", description: "Input: one image you own plus a focused edit prompt. Output: a private edited preview. Best for: testing a specific change before spending package credits. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Prompt", imageUrl: assets.flowBeforeUpload, href: toolHref("edit-by-prompt") }),
+  block("mega_edit_upscale", "tool_card", { title: "Magic upscaler", description: "Input: a generated or uploaded image you own. Output: a private higher-resolution download. Best for: profile images, larger displays, and final album favorites. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "HD", imageUrl: assets.magicUpscalerPack, href: toolHref("magic-upscaler") }),
+  block("mega_video_image", "tool_card", { title: "Image to video concept", description: "Input: one finished image you own or generated. Output: a private short motion concept. Best for: social posts, profile intros, and campaign previews. Cost: credits are shown before video generation.", category: "Video AI", badge: "Preview", imageUrl: assets.heroGridVideo, href: toolHref("image-to-video") }),
+  block("mega_video_profile", "tool_card", { title: "Profile clip maker", description: "Input: headshots or creator portraits you own. Output: a private profile motion clip. Best for: social profiles and short intros. Cost: credits are shown before video generation.", category: "Video AI", badge: "Social", imageUrl: assets.reviewLucasResultHeadshot, href: toolHref("profile-clip") }),
+  block("mega_video_fan", "tool_card", { title: "Fan poster motion", description: "Input: fan poster images from your own selfies. Output: a private match-day motion concept. Best for: personal fan posts without official marks, logos, or player likenesses. Cost: credits are shown before video generation.", category: "Video AI", badge: "Sports", imageUrl: assets.catalogWorldcupCard, href: toolHref("fan-poster-motion") }),
+  block("mega_video_intro", "tool_card", { title: "Creator intro video", description: "Input: creator portraits you own or generated. Output: a private intro clip for profiles and reels. Best for: creator pages and media-kit motion. Cost: credits are shown before video generation.", category: "Video AI", badge: "Creator", imageUrl: assets.reviewNoahResultSocialCard, href: toolHref("creator-intro-video") }),
+  block("mega_video_product", "tool_card", { title: "Product teaser clip", description: "Input: product-style package outputs you own. Output: a private teaser motion concept. Best for: campaign drafts and social commerce previews. Cost: credits are shown before video generation.", category: "Video AI", badge: "Commerce", imageUrl: assets.aiVideoAddonsPack, href: toolHref("product-teaser-clip") }),
+  block("mega_video_avatar", "tool_card", { title: "Animated avatar preview", description: "Input: avatar-style images you own or generated. Output: a private animated avatar preview. Best for: profile campaigns and playful identity updates. Cost: credits are shown before video generation.", category: "Video AI", badge: "Avatar", imageUrl: assets.reviewAvaAvatar, href: toolHref("animated-avatar") }),
+  block("mega_video_fashion", "tool_card", { title: "Fashion reel starter", description: "Input: editorial or try-on preview images you own. Output: a private fashion reel concept. Best for: style direction and creator content previews, not fit guarantees. Cost: credits are shown before video generation.", category: "Video AI", badge: "Style", imageUrl: assets.virtualLooks, href: toolHref("fashion-reel") }),
+  block("mega_video_album", "tool_card", { title: "Album story video", description: "Input: favorite generated images from your private album. Output: a private compact album story video. Best for: sharing a finished set as a short motion recap. Cost: credits are shown before video generation.", category: "Video AI", badge: "Album", imageUrl: assets.flowPrivateAlbumWorkspace, href: toolHref("album-story-video") })
 ];
 
 const homeSections: ThemePageJson["sections"] = {
@@ -162,8 +166,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "Studio-quality AI photos from the selfies on your phone.",
-      subheadline: "Upload your photos once, then create private headshots, creator portraits, fan posters, beauty previews, and themed albums. You see the credit cost before every generation.",
+      headline: "Create studio-style headshots and themed portraits from your selfies.",
+      subheadline: "Upload clear photos once, then create private headshots, creator portraits, fan posters, beauty previews, and themed albums. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
@@ -260,19 +264,20 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "packages",
       label: "Photo package catalog",
       title: "Choose a photo package first.",
-      subtitle: "Each package shows what it creates, who it is for, and the credit cost before you start.",
+      subtitle: "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Only upload photos you own or have permission to use.",
       tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Lifestyle|Cultural|Seasonal|Video|Utility",
       steps: "Pick pack|See credit cost|Generate album",
       source: "creative_packs",
       featuredCount: 5
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only; do not use official marks or player likenesses without permission.", category: "Sports", meta: "Private gallery", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: "/collections/world-cup-fan-photos" }),
-      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Credit cost is shown before generation.", category: "Headshots", meta: "Work profiles", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: "/collections/headshots" }),
+      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only; do not use official marks, logos, or player likenesses without permission.", category: "Sports", meta: "Private gallery", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: "/collections/world-cup-fan-photos" }),
+      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", category: "Headshots", meta: "Work profiles", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: "/collections/headshots" }),
       block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", category: "Creative", meta: "Poster crops", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/collections/cyberpunk" }),
       block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview haircut, color, and styling ideas before you commit to a salon change or full image package.", category: "Beauty", meta: "Style preview", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/collections/hairstyle" }),
       block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", category: "Creative", meta: "Evening portraits", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/collections/gala-photos" }),
-      block("catalog_travel", "catalog_pack", { title: "Lifestyle portrait pack", description: "Outdoor profile photos, creator scenes, and personal-brand album images.", category: "Lifestyle", meta: "Lifestyle scenes", credits: "24 credits", imageUrl: assets.holidayTravelPack, href: "/collections/travel" })
+      block("catalog_travel", "catalog_pack", { title: "Lifestyle portrait pack", description: "Outdoor profile photos, creator scenes, and personal-brand album images.", category: "Lifestyle", meta: "Lifestyle scenes", credits: "24 credits", imageUrl: assets.holidayTravelPack, href: "/collections/travel" }),
+      block("catalog_fashion", "catalog_pack", { title: "Fashion Editorial", description: "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", category: "Beauty", meta: "Style preview", credits: "24 credits", imageUrl: assets.virtualLooks, href: "/collections/fashion-editorial" })
     ]
   ),
   flow_bridge_1: section(
@@ -281,7 +286,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "workflow",
       label: "Private album workflow",
       title: "From upload to private album.",
-      subtitle: "Upload source photos, confirm the package and credits, then follow the request into a private gallery.",
+      subtitle: "Upload source photos, confirm the package and credits, then follow the request into a private gallery. Your uploads stay private by default.",
       beforeImage: assets.flowBeforeUpload,
       afterImage: assets.hairstyle,
       albumImageOne: assets.flowPrivateAlbumWorkspace,
@@ -291,9 +296,9 @@ const homeSections: ThemePageJson["sections"] = {
       bridgeHref: "/pricing"
     },
     [
-      block("flow_upload", "card", { title: "Upload photos", text: "Upload clear photos you own or have permission to use.", meta: "01" }),
+      block("flow_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "01" }),
       block("flow_pack", "card", { title: "Choose a package", text: "Choose a photo package or quick AI tool.", meta: "02" }),
-      block("flow_credits", "card", { title: "Review credits", text: "Review the credit cost before generation.", meta: "03" }),
+      block("flow_credits", "card", { title: "How credits work", text: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.", meta: "03" }),
       block("flow_album", "card", { title: "Generate and download", text: "Generate your private results and download the photos you want to keep.", meta: "04" })
     ]
   ),
@@ -303,14 +308,14 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "package-taxonomy",
       eyebrow: "Photo package library",
       title: "AI photo packages by style, use case, and delivery goal.",
-      subtitle: "Compare AI headshots, hairstyle previews, World Cup fan photos, cyberpunk portraits, nature scenes, gala looks, creator portraits, and video add-ons before you spend credits.",
+      subtitle: "Compare AI headshots, hairstyle previews, World Cup fan photos, fashion previews, boudoir-inspired sets, and video add-ons before you spend credits. Your uploads stay private by default.",
       layout: "editorial"
     },
     [
-      block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshots" }),
-      block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/beauty" }),
+      block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshots" }),
+      block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/beauty" }),
       block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections/creative" }),
-      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/sports" }),
+      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/sports" }),
       block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/collections/video" }),
       block("taxonomy_creator", "taxonomy_card", { title: "Creator lifestyle", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Creator", keywords: "creator portraits|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections/creator" })
     ]
@@ -337,7 +342,7 @@ const homeSections: ThemePageJson["sections"] = {
     anchor: "packages",
     eyebrow: "AI photo packages",
     title: "AI photo packages for every profile, post, and private album.",
-    subtitle: "Compare credit costs, source-photo requirements, private model needs, and delivery expectations before starting a headshot, sports, beauty, creator, lifestyle, or cinematic portrait pack.",
+    subtitle: "Compare credit costs, source-photo requirements, private model needs, and delivery expectations before starting a headshot, sports, beauty, creator, lifestyle, or cinematic portrait pack. Only upload photos you own or have permission to use.",
     source: "creative_packs",
     layout: "editorial",
     maxCount: "32"
@@ -350,9 +355,9 @@ const homeSections: ThemePageJson["sections"] = {
     source: "blocks",
     layout: "steps"
   }, [
-    block("pkg_path_upload", "card", { title: "Upload", text: "Add clear selfies, portraits, and style references to your private MyDreamShoots workspace.", meta: "Step 01", imageUrl: assets.upload }),
+    block("pkg_path_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "Step 01", imageUrl: assets.upload }),
     block("pkg_path_preview", "card", { title: "Preview", text: "Use studio tools to preview the look before paying for the full package.", meta: "Step 02", imageUrl: assets.hairstyle }),
-    block("pkg_path_pay", "card", { title: "Generate", text: "Use credits for the package you selected, with the cost shown before the request starts.", meta: "Step 03", imageUrl: assets.socialCard }),
+    block("pkg_path_pay", "card", { title: "How credits work", text: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.", meta: "Step 03", imageUrl: assets.socialCard }),
     block("pkg_path_deliver", "card", { title: "Deliver", text: "Finished outputs return to the private album and stay tied to the account.", meta: "Step 04", imageUrl: assets.avatarPortrait })
   ]),
   feature_tabs_1: section(
@@ -382,7 +387,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("tab_tryon", "feature_tab", {
         label: "Try-on and style",
         title: "Preview looks before a full package",
-        description: "Test hairstyle, wardrobe, beauty, or gala directions before spending credits on a premium pack.",
+        description: "Test hairstyle, wardrobe, beauty, or gala directions before spending credits on a premium pack. Try-on outputs are visual previews, not exact fit guarantees.",
         imageUrl: assets.tryOn,
         href: toolHref("virtual-try-on")
       })
@@ -394,7 +399,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "tools",
       eyebrow: "AI tools",
       title: "Paid AI photo tools for better source images.",
-      subtitle: "Use background changes, image enhancement, portrait cleanup, upscaling, and video previews before moving into paid AI photo packages and private albums.",
+      subtitle: "Use paid tools for background changes, image enhancement, portrait cleanup, upscaling, video previews, and visual try-on previews. Each card explains input, output, best use, and cost before you move into private photo packages.",
       categories: "Photo AI|AI Photo Edit|Video AI",
       primaryCta: "Create my first photo set",
       primaryHref: "/login",
@@ -451,12 +456,12 @@ const homeSections: ThemePageJson["sections"] = {
   ),
   trust_1: section(
     "trust_signal_bar",
-    { anchor: "trust", title: "Private uploads, clear credits, secure checkout, and customer-only galleries." },
+    { anchor: "trust", title: "Private by default, with clear credits before generation." },
     [
-      block("trust_private", "stat", { value: "Private", label: "source photos and albums stay inside the signed-in customer account" }),
-      block("trust_credits", "stat", { value: "History", label: "credits are granted, reserved, used, or returned with visible history" }),
+      block("trust_private", "stat", { value: "Private by default", label: "Your uploads stay private inside the signed-in customer account" }),
+      block("trust_credits", "stat", { value: "How credits work", label: "credit costs are shown, reserved, used, or returned with visible history" }),
       block("trust_model", "stat", { value: "Model", label: "premium packages use a private identity model for consistent results" }),
-      block("trust_checkout", "stat", { value: "Checkout", label: "subscriptions and one-time credit packs use secure checkout" })
+      block("trust_checkout", "stat", { value: "Checkout", label: "monthly and yearly subscriptions use secure checkout" })
     ]
   ),
   plan_rules_1: section(
@@ -464,8 +469,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "plan-rules",
       eyebrow: "Plans and credits",
-      title: "Credits are reviewed before generation.",
-      body: "Plans and credit packs support private package generation, credit history, and gallery delivery from one account. You can review the cost before each request starts.",
+      title: "How credits work",
+      body: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation. Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history.",
       imageUrl: assets.manPortrait,
       primaryCta: "Choose a plan",
       primaryHref: "/pricing",
@@ -477,8 +482,8 @@ const homeSections: ThemePageJson["sections"] = {
     [
       block("plan_rule_tools", "card", { meta: "source prep", title: "Prepare better source photos", description: "Background edits, previews, upscaling, and try-on flows can help prepare clearer inputs before a full package." }),
       block("plan_rule_model", "card", { meta: "identity consistency", title: "Use a private identity flow", description: "Premium packages can use a private identity workflow so results stay more consistent across different scenes." }),
-      block("plan_rule_credits", "card", { meta: "credit history", title: "Review credits first", description: "Credits are visible before a request starts. Successful generations consume the reserved credits, and failed requests can return them according to status." }),
-      block("plan_rule_gallery", "card", { meta: "private delivery", title: "Download from the gallery", description: "Finished outputs return to the signed-in customer's gallery for review and download." })
+      block("plan_rule_credits", "card", { meta: "How credits work", title: "Review credits first", description: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation." }),
+      block("plan_rule_gallery", "card", { meta: "Private by default", title: "Your uploads stay private", description: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history." })
     ]
   ),
   pricing_1: section("pricing_table", {
@@ -633,8 +638,8 @@ const homeSections: ThemePageJson["sections"] = {
 const templateSections = {
   pricing_intro_1: section("rich_text", {
     eyebrow: "Pricing",
-    title: "Credits for private AI photo packages.",
-    body: "Choose a plan based on how often you need AI headshots, creator portraits, fan photos, image cleanup, video previews, and private gallery delivery. Each package shows the credit cost before generation starts; failed requests can return reserved credits according to request status.",
+    title: "How credits work for private AI photo packages.",
+    body: "Choose a plan based on how often you need AI headshots, creator portraits, fan photos, image cleanup, video previews, and private gallery delivery. Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.",
     headingLevel: "h1"
   }),
   package_hero_1: section("media_banner", {
@@ -670,10 +675,10 @@ const templateSections = {
   ),
   tool_banner_1: section("media_banner", {
     anchor: "tool",
-    eyebrow: "AI Image Studio",
-    title: "Create polished AI photo sets from everyday uploads.",
-    subtitle: "Upload source photos, choose a style, confirm credits, generate AI portraits, and collect the final set in your private gallery.",
-    imageUrl: assets.gala,
+    eyebrow: "AI Headshot Generator",
+    title: "AI headshots for LinkedIn, resumes, and founder profiles.",
+    subtitle: "Create a private set of professional headshots from clear selfies. Not for official IDs, impersonation, or representing someone without permission.",
+    imageUrl: assets.headshotLifestyle,
     ctaLabel: "Upload photos",
     ctaHref: "/app"
   }),
@@ -785,7 +790,8 @@ const templateSections = {
   ])
 };
 
-export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
+export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSiteSeed): Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> {
+  return {
   home: page(
     "home",
     ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
@@ -855,7 +861,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     ["tool_banner_1", "entry_1", "upload_1", "form_1", "progress_1", "album_1", "trust_1", "faq_1"],
     {
       tool_banner_1: templateSections.tool_banner_1,
-      entry_1: section("ai_tool_entry", { aiAppSlug: "image_generator", title: "AI image studio for scenes, looks, and polished final sets", subtitle: "Upload source photos, choose a scene style, confirm credits, and receive finished AI portraits in a private album.", ctaLabel: "Start this photo set", imageUrl: assets.gala }),
+      entry_1: section("ai_tool_entry", { aiAppSlug: "image_generator", title: "Create professional headshots from selfies", subtitle: "Upload clear portraits you own, confirm the credit cost, and receive private headshot options for LinkedIn, resumes, team pages, and founder bios.", ctaLabel: "Start this headshot set", imageUrl: assets.headshotLifestyle }),
       upload_1: section("upload_panel", { title: "Private source photo upload", helper: "Upload clear portraits, selfies, and references that belong to you before starting an AI photo package.", imageUrl: assets.upload }),
       form_1: section("generation_form", { aiAppSlug: "image_generator", title: "Generate a scene pack", helper: "Choose the style, confirm the credit cost, and start a private generation request." }),
       progress_1: section("job_progress", { title: "Generation progress" }),
@@ -1026,7 +1032,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       conversion_1: homeSections.conversion_1
     },
     1,
-    seoForPublicPage("/creators-circle")
+    seoForPublicPage("/creators-circle", site)
   ),
   "partner-registration": page(
     "content",
@@ -1038,7 +1044,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       conversion_1: homeSections.conversion_1
     },
     1,
-    seoForPublicPage("/partner-registration")
+    seoForPublicPage("/partner-registration", site)
   ),
   "about-us": page(
     "content",
@@ -1047,7 +1053,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       about_intro_1: section("rich_text", {
         eyebrow: "About MyDreamShoots",
         title: "Private AI photo packages with clear credits and real customer delivery.",
-        body: "MyDreamShoots helps customers turn everyday selfies into themed AI photo packages, professional headshots, creator portraits, beauty edits, lifestyle scenes, and private albums without booking a studio session. Every order is built around a signed-in account, visible credit use, secure checkout, and customer-only gallery access.",
+        body: "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.heroPackageWall,
@@ -1078,7 +1084,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       conversion_1: homeSections.conversion_1
     },
     1,
-    seoForPublicPage("/about-us")
+    seoForPublicPage("/about-us", site)
   ),
   "contact-us": page(
     "content",
@@ -1111,7 +1117,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       conversion_1: homeSections.conversion_1
     },
     1,
-    seoForPublicPage("/contact-us")
+    seoForPublicPage("/contact-us", site)
   ),
   search: page(
     "search",
@@ -1143,7 +1149,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
       cart_intro_1: section("rich_text", {
         eyebrow: "Cart",
         title: "Confirm the plan before checkout.",
-        body: "Review your selected subscription or credit pack, confirm the included credits, and continue to checkout before starting premium AI photo generation.",
+        body: "Review your selected subscription plan, confirm the included credits, and continue to checkout before starting premium AI photo generation.",
         headingLevel: "h1"
       }),
       cart_1: section("cart_summary", {
@@ -1151,7 +1157,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
         title: "Your selected MyDreamShoots plan",
         subtitle: "Your selected plan, credit amount, and checkout status stay connected to your MyDreamShoots account. Credits are added after payment confirmation.",
         emptyTitle: "Choose a plan first",
-        emptyBody: "Open pricing to select a subscription or one-time credit pack.",
+        emptyBody: "Open pricing to select a monthly or yearly subscription plan.",
         returnLabel: "Back to pricing",
         returnHref: "/pricing"
       }),
@@ -1180,7 +1186,10 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
     },
     1
   )
-};
+  };
+}
+
+export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = dreamshootAiStudioTemplatesForSite();
 
 export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTemplateKey, string> = {
   home: "Home",
@@ -1210,7 +1219,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
 
 export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
-    logoText: "MyDreamShoots",
+    logoText: "ʍʏƉʀɛǟʍֆhoots",
     market: "AI photo packages, personal AI models, paid tools, credits, AI video, and private albums",
     description: "MyDreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery."
   },
@@ -1252,7 +1261,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     globalSections: {
       header: {
         settings: {
-          title: "MyDreamShoots",
+          title: "ʍʏƉʀɛǟʍֆhoots",
           sticky: true,
           ctaLabel: "Create my first photo set",
           ctaHref: "/login",
@@ -1272,7 +1281,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       },
       footer: {
         settings: {
-          title: "MyDreamShoots",
+          title: "ʍʏƉʀɛǟʍֆhoots",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
           logoAlt: "MyDreamShoots heart camera logo",
           tagline: "Private AI photo sets with visible credit costs and gallery delivery",
@@ -1281,7 +1290,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           companyHeading: "Content",
           supportHeading: "Support",
           socialHeading: "Why it works",
-          socialBody: "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
+          socialBody: "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
           instagramUrl: "https://www.instagram.com/mydreamshoots",
           facebookUrl: "https://www.facebook.com/mydreamshoots",
           pinterestUrl: "https://www.pinterest.com/mydreamshoots",
@@ -1312,10 +1321,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       }
     },
     seo: {
-      siteTitle: "MyDreamShoots",
+      siteTitle: "ʍʏƉʀɛǟʍֆhoots",
       siteDescription: "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
       siteKeywords: "",
-      titleTemplate: "%s | MyDreamShoots",
+      titleTemplate: "%s | ʍʏƉʀɛǟʍֆhoots",
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {

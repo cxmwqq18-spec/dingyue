@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
 import { canPublishPaidProducts } from "@/lib/billing";
-import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { completeAdminCheckoutRelational, startCustomerCheckoutRelational } from "@/lib/stores/billing-store";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { mapProduct } from "@/lib/stores/prisma-mappers";
 import { createStripeCheckoutSession, stripeCheckoutReadiness } from "@/lib/stripe-checkout";
 import type { NextRequest } from "next/server";
+
+const CHECKOUT_RETRY_RATE_LIMIT = { windowMs: 60000, maxRequests: 12, keyPrefix: "checkout" };
 
 function checkoutModeForInterval(interval: string): "subscription" | "payment" {
   return interval === "month" || interval === "year" ? "subscription" : "payment";
@@ -40,7 +41,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!body.customerId || !body.priceId) {
     return NextResponse.json({ error: "missing_customer_or_price" }, { status: 400 });
   }
-  const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.checkout, key: `${siteId}:${body.customerId}:checkout` });
+  const checkoutRateKey = body.intentId
+    ? `${siteId}:${body.customerId}:checkout:${body.intentId.trim().replace(/[^a-zA-Z0-9:_-]/g, "").slice(0, 120)}`
+    : `${siteId}:${body.customerId}:checkout`;
+  const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: CHECKOUT_RETRY_RATE_LIMIT, key: checkoutRateKey });
   if (!guard.ok) return guard.response;
   const price = await prisma.price.findFirst({
     where: { siteId, id: body.priceId },
@@ -92,6 +96,28 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: "connect_not_ready", checkoutStatus: "payment_provider_not_ready", message: allowed.reason }, { status: 409 });
   }
 
+  const preflightStripeReady = stripeCheckoutReadiness({
+    stripeAccountId: site.connect?.stripeAccountId,
+    stripePriceId: price.stripePriceId
+  });
+  if (!preflightStripeReady.ok || !site.connect?.stripeAccountId) {
+    return NextResponse.json({
+      ok: false,
+      checkoutStatus: "payment_provider_not_ready",
+      error: "payment_provider_not_enabled_for_customer",
+      checkoutUrl: undefined,
+      stripeAccount: site.connect?.stripeAccountId,
+      mode: checkoutMode,
+      metadata: {
+        siteId,
+        customerId: body.customerId,
+        priceId: price.id,
+        stripePriceId: price.stripePriceId ?? ""
+      },
+      note: `${preflightStripeReady.ok ? "Stripe checkout is ready." : preflightStripeReady.reason} Credits are granted by webhook after payment.`
+    }, { status: 409 });
+  }
+
   let checkout;
   try {
     checkout = await startCustomerCheckoutRelational({
@@ -105,65 +131,43 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: error instanceof Error ? error.message : "checkout_start_failed" }, { status });
   }
 
-  const stripeReady = stripeCheckoutReadiness({
-    stripeAccountId: site.connect?.stripeAccountId,
-    stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId
-  });
-  if (stripeReady.ok && site.connect?.stripeAccountId) {
-    try {
-      const origin = request.headers.get("origin") ?? new URL(request.url).origin;
-      const session = await createStripeCheckoutSession({
-        siteId,
-        siteSlug: site.slug,
-        customer: checkout.customer,
-        price: checkout.price,
-        order: checkout.order,
-        stripeAccountId: site.connect.stripeAccountId,
-        origin,
-        mode: checkoutMode,
-        metadata: {
-          ...checkout.metadata,
-          stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId ?? ""
-        }
-      });
-      return NextResponse.json({
-        ok: true,
-        checkoutStatus: "payment_required",
-        checkoutUrl: session.url,
-        checkoutSessionId: session.id,
-        stripeAccount: site.connect.stripeAccountId,
-        mode: checkoutMode,
-        price: checkout.price,
-        order: checkout.order,
-        metadata: {
-          ...checkout.metadata,
-          stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId
-        },
-        note: "Stripe Checkout Session created. Credits are granted by webhook after payment."
-      });
-    } catch (error) {
-      return NextResponse.json({
-        ok: false,
-        checkoutStatus: "payment_provider_error",
-        error: error instanceof Error ? error.message : "stripe_checkout_session_failed",
-        order: checkout.order
-      }, { status: 502 });
-    }
+  try {
+    const origin = request.headers.get("origin") ?? new URL(request.url).origin;
+    const session = await createStripeCheckoutSession({
+      siteId,
+      siteSlug: site.slug,
+      customer: checkout.customer,
+      price: checkout.price,
+      order: checkout.order,
+      stripeAccountId: site.connect.stripeAccountId,
+      origin,
+      mode: checkoutMode,
+      metadata: {
+        ...checkout.metadata,
+        stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId ?? ""
+      }
+    });
+    return NextResponse.json({
+      ok: true,
+      checkoutStatus: "payment_required",
+      checkoutUrl: session.url,
+      checkoutSessionId: session.id,
+      stripeAccount: site.connect.stripeAccountId,
+      mode: checkoutMode,
+      price: checkout.price,
+      order: checkout.order,
+      metadata: {
+        ...checkout.metadata,
+        stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId
+      },
+      note: "Stripe Checkout Session created. Credits are granted by webhook after payment."
+    });
+  } catch (error) {
+    return NextResponse.json({
+      ok: false,
+      checkoutStatus: "payment_provider_error",
+      error: error instanceof Error ? error.message : "stripe_checkout_session_failed",
+      order: checkout.order
+    }, { status: 502 });
   }
-
-  return NextResponse.json({
-    ok: false,
-    checkoutStatus: "payment_required",
-    error: "payment_provider_not_enabled_for_customer",
-    checkoutUrl: undefined,
-    stripeAccount: site.connect?.stripeAccountId,
-    mode: checkoutMode,
-    price: checkout.price,
-    order: checkout.order,
-    metadata: {
-      ...checkout.metadata,
-      stripePriceId: price.stripePriceId ?? checkout.price.stripePriceId
-    },
-    note: `${stripeReady.ok ? "Stripe checkout is ready." : stripeReady.reason} Credits are granted by webhook after payment.`
-  });
 }

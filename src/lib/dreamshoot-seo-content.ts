@@ -131,7 +131,7 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
   }
 };
 
-const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/about-us": {
     title: "About Aidreamcapes",
     description:
@@ -171,6 +171,14 @@ const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataS
 };
 
 export const dreamshootPublicSeoPagePaths = Object.keys(dreamshootPublicSeoPageMetadata);
+
+export function getDreamshootPublicSeoPageMetadataForSite(
+  site: (Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }) | undefined,
+  path: string
+): DreamshootRouteMetadataSeed | undefined {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return isAidreamcapesSite(site) ? aidreamcapesPublicSeoPageMetadata[normalizedPath] : dreamshootPublicSeoPageMetadata[normalizedPath];
+}
 
 const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/tools": {
@@ -357,6 +365,24 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     workflow: ["Upload clean source portraits.", "Choose neon city styling.", "Generate a private cyberpunk album.", "Download favorites for profile or campaign use."],
     ctaLabel: "Create Cyberpunk Photos",
     ctaHref: "/tools/cyberpunk-portrait"
+  },
+  boudoir: {
+    label: "Boudoir",
+    title: "Private AI Boudoir Photo Package | MyDreamShoots",
+    description: "Create private boudoir-inspired AI portraits for adult, consensual use from photos you own or have permission to use, with non-explicit styling and private album delivery.",
+    keywords: "AI boudoir photo package, private boudoir portraits, adult consensual portrait AI, MyDreamShoots boudoir",
+    h2: "boudoir",
+    h3: ["Consensual adult portrait guidance", "Private non-explicit styling", "Boudoir-inspired album delivery"],
+    intro: "The Boudoir collection is for consenting adults who want tasteful, private, non-explicit portrait concepts from photos they own or have permission to use.",
+    details: [
+      "Use Boudoir only for adult subjects who gave permission for this style of portrait.",
+      "Outputs focus on lighting, wardrobe mood, confidence, and private album presentation rather than explicit content.",
+      "Do not upload minors, non-consenting people, stolen images, or requests meant to shame, impersonate, or expose someone."
+    ],
+    useCases: ["Private confidence portraits", "Tasteful studio moodboards", "Anniversary keepsake concepts", "Adult personal album previews"],
+    workflow: ["Upload adult source photos with clear consent.", "Choose tasteful studio or soft editorial styling.", "Generate a private non-explicit album.", "Review and download only the images you want to keep."],
+    ctaLabel: "Create Private Portraits",
+    ctaHref: "/tools/fashion-editorial"
   },
   travel: {
     label: "Lifestyle",

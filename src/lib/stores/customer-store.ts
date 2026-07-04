@@ -1,5 +1,5 @@
 import "server-only";
-import type { PrismaClient } from "@prisma/client";
+import { Prisma, type PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -17,6 +17,10 @@ import {
 } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
+
+function isUniqueConstraintError(error: unknown): boolean {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002";
+}
 
 export async function listSiteCustomersRelational(
   siteId: string,
@@ -42,26 +46,31 @@ export async function createCustomerSessionRelational(
   await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status", "passwordHash"]);
   await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
 
-  const result = await client.$transaction(async (tx) => {
-    const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true, slug: true, signupCreditGrant: true } });
-    if (!site) throw new StoreError("site_not_found", 404);
-    const signupCreditGrant = Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0)));
+  const site = await client.site.findUnique({ where: { id: params.siteId }, select: { id: true, slug: true, signupCreditGrant: true } });
+  if (!site) throw new StoreError("site_not_found", 404);
+  const existing = await client.customer.findUnique({
+    where: { siteId_email: { siteId: params.siteId, email } },
+    include: { balance: true }
+  });
+  let customer = existing;
+  let createdCustomer = false;
 
-    const existing = await tx.customer.findUnique({
-      where: { siteId_email: { siteId: params.siteId, email } },
-      include: { balance: true }
-    });
-    let customer = existing;
-    let createdCustomer = false;
-    if (!customer) {
-      createdCustomer = true;
-      const customerId = relationalUid(`cust_${site.slug}`);
-      customer = await tx.customer.create({
+  if (customer) {
+    if (!verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
+      throw new StoreError("invalid_customer_credentials", 401);
+    }
+  } else {
+    createdCustomer = true;
+    const signupCreditGrant = Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0)));
+    const customerId = relationalUid(`cust_${site.slug}`);
+    const passwordHash = hashRelationalPassword(params.password);
+    try {
+      customer = await client.customer.create({
         data: {
           id: customerId,
           siteId: params.siteId,
           email,
-          passwordHash: hashRelationalPassword(params.password),
+          passwordHash,
           name: params.name?.trim() || email.split("@")[0],
           status: "active",
           balance: {
@@ -89,11 +98,20 @@ export async function createCustomerSessionRelational(
         },
         include: { balance: true }
       });
-    } else if (!verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
-      throw new StoreError("invalid_customer_credentials", 401);
+    } catch (error) {
+      if (!isUniqueConstraintError(error)) throw error;
+      customer = await client.customer.findUnique({
+        where: { siteId_email: { siteId: params.siteId, email } },
+        include: { balance: true }
+      });
+      if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
+        throw new StoreError("invalid_customer_credentials", 401);
+      }
+      createdCustomer = false;
     }
+  }
 
-    const session = await (tx as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
+  const session = await (client as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
       data: {
         id: relationalUid("sess"),
         siteId: params.siteId,
@@ -102,14 +120,11 @@ export async function createCustomerSessionRelational(
       }
     });
 
-    return {
-      customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
-      session: toCustomerSessionRelational(session),
-      createdCustomer
-    };
-  });
-
-  return result;
+  return {
+    customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
+    session: toCustomerSessionRelational(session),
+    createdCustomer
+  };
 }
 
 export async function createExistingCustomerSessionRelational(
@@ -123,32 +138,28 @@ export async function createExistingCustomerSessionRelational(
   await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status", "passwordHash"]);
   await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
 
-  const result = await client.$transaction(async (tx) => {
-    const customer = await tx.customer.findUnique({
-      where: { siteId_email: { siteId: params.siteId, email } },
-      include: { balance: true }
-    });
-    if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
-      throw new StoreError("invalid_customer_credentials", 401);
+  const customer = await client.customer.findUnique({
+    where: { siteId_email: { siteId: params.siteId, email } },
+    include: { balance: true }
+  });
+  if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
+    throw new StoreError("invalid_customer_credentials", 401);
+  }
+
+  const session = await (client as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
+    data: {
+      id: relationalUid("sess"),
+      siteId: params.siteId,
+      customerId: customer.id,
+      expiresAt: new Date(Date.now() + relationalSessionTtlMs)
     }
-
-    const session = await (tx as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
-      data: {
-        id: relationalUid("sess"),
-        siteId: params.siteId,
-        customerId: customer.id,
-        expiresAt: new Date(Date.now() + relationalSessionTtlMs)
-      }
-    });
-
-    return {
-      customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
-      session: toCustomerSessionRelational(session),
-      createdCustomer: false
-    };
   });
 
-  return result;
+  return {
+    customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
+    session: toCustomerSessionRelational(session),
+    createdCustomer: false
+  };
 }
 
 export async function deleteCustomerSessionRelational(sessionId: string, client: DbClient = prisma): Promise<void> {

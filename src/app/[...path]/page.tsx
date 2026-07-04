@@ -4,8 +4,10 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import {
+  readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPlatformStateFromDatabase,
   readStorefrontPublicRuntimeStateByHostFromDatabase,
+  readStorefrontSiteByHostFromDatabase,
   readStorefrontRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
 import {
@@ -94,6 +96,19 @@ async function getHostPublicToolRuntimeStateWithFallback(hosts: Array<string | n
   return getHostRuntimeStateForModeWithFallback(hosts, "public", pageSlug, toolSlug);
 }
 
+async function getHostPublicCollectionRuntimeStateWithFallback(hosts: Array<string | null>, collectionSlug: string): Promise<PlatformState | undefined> {
+  const normalizedCollectionSlug = collectionSlug.trim();
+  for (const host of hosts) {
+    if (!host) continue;
+    const site = await readStorefrontSiteByHostFromDatabase(host);
+    if (!site) continue;
+    const state = await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(site.slug, normalizedCollectionSlug);
+    const resolved = resolveHostCollectionPage(state, hosts, collectionSlug);
+    if (resolved) return state;
+  }
+  return getHostRuntimeStateForModeWithFallback(hosts, "public", "/collections", collectionSlug);
+}
+
 async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null>, mode: "public" | "private", pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> {
   try {
     for (const host of hosts) {
@@ -115,6 +130,12 @@ function resolveHostToolPage(state: PlatformState | undefined, hosts: Array<stri
   if (!state || !site) return undefined;
   const resolved = resolveToolPageForSite(state, site, toolSlug);
   return resolved.matched ? { state, site, ...resolved } : undefined;
+}
+
+function resolveHostCollectionPage(state: PlatformState | undefined, hosts: Array<string | null>, collectionSlug: string) {
+  const site = state ? getSiteByHostCandidatesFromState(state, hosts) ?? state.sites[0] : undefined;
+  if (!state || !site) return undefined;
+  return canResolveCollectionSlugForSite(state, site, collectionSlug) ? { state, site } : undefined;
 }
 
 async function resolveHostToolPageWithFallback(hosts: Array<string | null>, toolSlug: string) {
@@ -204,8 +225,11 @@ export default async function HostStorefrontCatchAllPage({
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
+  const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
+    : collectionCategory
+    ? await getHostPublicCollectionRuntimeStateWithFallback(hostCandidates, collectionCategory)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
@@ -247,7 +271,6 @@ export default async function HostStorefrontCatchAllPage({
     if (!resolvedToolPage) notFound();
     return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
-  const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   if (collectionCategory) {
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionCategory);
     if (canonicalCollectionPath !== `/collections/${collectionCategory}`) permanentRedirect(canonicalCollectionPath);

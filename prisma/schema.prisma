@@ -134,50 +134,50 @@ model PlatformAsyncJob {
 }
 
 model Site {
-  id                 String                      @id
-  name               String
-  slug               String                      @unique
-  status             String
-  primaryDomain      String
-  timezone           String                      @default("UTC")
-  currency           String                      @default("usd")
-  signupCreditGrant  Int                         @default(0)
-  branding           Json
-  createdAt          DateTime                    @default(now())
-  updatedAt          DateTime                    @updatedAt
-  domains            SiteDomain[]
-  admins             SiteAdmin[]
-  adminSessions      SiteAdminSession[]
-  customers          Customer[]
-  customerSessions   CustomerSession[]
-  emailVerifications CustomerEmailVerification[]
-  products           Product[]
-  prices             Price[]
-  subscriptions      Subscription[]
-  orders             Order[]
-  paymentEvents      PaymentEvent[]
-  ledger             CreditLedger[]
-  balances           CreditBalance[]
-  pages              ThemePage[]
-  settings           ThemeSettings?
-  publications       ThemePublication[]
-  siteThemes         SiteTheme[]
-  themeCopies        ThemeCopy[]
-  connect            StripeConnectAccount?
-  aiApps             SiteAiApp[]
-  gatewayGroups      AiGatewayGroup[]
-  toolCategories     ToolCategory[]
-  toolMenuItems      ToolMenuItem[]
+  id                     String                      @id
+  name                   String
+  slug                   String                      @unique
+  status                 String
+  primaryDomain          String
+  timezone               String                      @default("UTC")
+  currency               String                      @default("usd")
+  signupCreditGrant      Int                         @default(0)
+  branding               Json
+  createdAt              DateTime                    @default(now())
+  updatedAt              DateTime                    @updatedAt
+  domains                SiteDomain[]
+  admins                 SiteAdmin[]
+  adminSessions          SiteAdminSession[]
+  customers              Customer[]
+  customerSessions       CustomerSession[]
+  emailVerifications     CustomerEmailVerification[]
+  products               Product[]
+  prices                 Price[]
+  subscriptions          Subscription[]
+  orders                 Order[]
+  paymentEvents          PaymentEvent[]
+  ledger                 CreditLedger[]
+  balances               CreditBalance[]
+  pages                  ThemePage[]
+  settings               ThemeSettings?
+  publications           ThemePublication[]
+  siteThemes             SiteTheme[]
+  themeCopies            ThemeCopy[]
+  connect                StripeConnectAccount?
+  aiApps                 SiteAiApp[]
+  gatewayGroups          AiGatewayGroup[]
+  toolCategories         ToolCategory[]
+  toolMenuItems          ToolMenuItem[]
   creativePackCategories CreativePackCategory[]
-  creativePacks      CreativePack[]
-  mediaAssets        MediaAsset[]
-  customerModels     CustomerModel[]
-  albums             Album[]
-  jobs               GenerationJob[]
-  uploads            AssetUpload[]
-  auditLogs          AuditLog[]
-  partnerApplications PartnerApplication[]
-  emailConfigAssignment SiteEmailConfigAssignment?
+  creativePacks          CreativePack[]
+  mediaAssets            MediaAsset[]
+  customerModels         CustomerModel[]
+  albums                 Album[]
+  jobs                   GenerationJob[]
+  uploads                AssetUpload[]
+  auditLogs              AuditLog[]
+  partnerApplications    PartnerApplication[]
+  emailConfigAssignment  SiteEmailConfigAssignment?
 
   @@index([status])
   @@index([primaryDomain])
@@ -363,6 +363,7 @@ model Subscription {
   price                Price     @relation(fields: [priceId], references: [id])
 
   @@index([siteId, customerId, status])
+  @@index([siteId, customerId, createdAt])
   @@index([siteId, productId])
   @@index([siteId, status, createdAt])
   @@index([siteId, status, currentPeriodEnd])
@@ -382,9 +383,9 @@ model Order {
   site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
   customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
+  @@unique([siteId, customerId, sourceId])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, status])
-  @@index([siteId, sourceId])
   @@index([siteId, status, createdAt])
 }
 
@@ -417,6 +418,7 @@ model CreditLedger {
   site       Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
   customer   Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
+  @@unique([siteId, customerId, type, sourceId])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, sourceType, sourceId])
   @@index([siteId, type, createdAt])
@@ -472,19 +474,19 @@ model SiteAiApp {
 }
 
 model ToolCategory {
-  id          String   @id
+  id          String         @id
   siteId      String
   parentId    String?
   slug        String
   label       String
   description String?
   icon        String?
-  sortOrder   Int      @default(0)
-  status      String   @default("active")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  parent      ToolCategory? @relation("ToolCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  sortOrder   Int            @default(0)
+  status      String         @default("active")
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  site        Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent      ToolCategory?  @relation("ToolCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
   children    ToolCategory[] @relation("ToolCategoryChildren")
   menuItems   ToolMenuItem[]
 
@@ -494,7 +496,7 @@ model ToolCategory {
 }
 
 model ToolMenuItem {
-  id          String   @id
+  id          String        @id
   siteId      String
   categoryId  String?
   slug        String
@@ -505,11 +507,11 @@ model ToolMenuItem {
   imageUrl    String?
   href        String
   detailJson  Json?
-  sortOrder   Int      @default(0)
-  status      String   @default("active")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  sortOrder   Int           @default(0)
+  status      String        @default("active")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  site        Site          @relation(fields: [siteId], references: [id], onDelete: Cascade)
   category    ToolCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   @@unique([siteId, slug])
@@ -654,7 +656,7 @@ model MediaAsset {
 }
 
 model CreativePack {
-  id               String   @id
+  id               String                @id
   siteId           String
   categoryId       String?
   name             String
@@ -666,14 +668,14 @@ model CreativePack {
   status           String
   creditCost       Int
   outputCount      Int
-  trainingRequired Boolean  @default(false)
-  generationCount  Int      @default(0)
-  conversionRate   Float    @default(0)
+  trainingRequired Boolean               @default(false)
+  generationCount  Int                   @default(0)
+  conversionRate   Float                 @default(0)
   imageUrl         String?
   galleryImages    Json?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  site             Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  site             Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
   categoryRecord   CreativePackCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   albums           Album[]
 
@@ -685,24 +687,24 @@ model CreativePack {
 }
 
 model CreativePackCategory {
-  id          String   @id
-  siteId      String
-  parentId    String?
-  slug        String
-  label       String
-  description String?
-  heroTitle   String?
+  id           String                 @id
+  siteId       String
+  parentId     String?
+  slug         String
+  label        String
+  description  String?
+  heroTitle    String?
   heroSubtitle String?
-  icon        String?
-  imageUrl    String?
-  sortOrder   Int      @default(0)
-  status      String   @default("active")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  parent      CreativePackCategory? @relation("CreativePackCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
-  children    CreativePackCategory[] @relation("CreativePackCategoryChildren")
-  packs       CreativePack[]
+  icon         String?
+  imageUrl     String?
+  sortOrder    Int                    @default(0)
+  status       String                 @default("active")
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  site         Site                   @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent       CreativePackCategory?  @relation("CreativePackCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children     CreativePackCategory[] @relation("CreativePackCategoryChildren")
+  packs        CreativePack[]
 
   @@unique([siteId, slug])
   @@index([siteId, parentId, sortOrder])
@@ -752,6 +754,7 @@ model Album {
   coverAsset     AssetUpload?   @relation("AlbumCoverAsset", fields: [coverAssetId], references: [id])
 
   @@index([siteId, customerId, status])
+  @@index([siteId, customerId, updatedAt])
   @@index([siteId, sourceJobId])
   @@index([siteId, creativePackId])
   @@index([siteId, status, updatedAt])
@@ -793,26 +796,26 @@ model AssetUpload {
 }
 
 model PartnerApplication {
-  id          String   @id
-  siteId      String
-  email       String
-  name        String
-  company     String?
-  website     String?
-  socialLinks Json?
-  audience    String?
-  cadence     String?
+  id            String    @id
+  siteId        String
+  email         String
+  name          String
+  company       String?
+  website       String?
+  socialLinks   Json?
+  audience      String?
+  cadence       String?
   campaignIdeas String?
-  message     String?
-  status      String   @default("pending")
-  source      String?
-  reviewedBy  String?
-  reviewedAt  DateTime?
-  reviewNote  String?
-  metadata    Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  message       String?
+  status        String    @default("pending")
+  source        String?
+  reviewedBy    String?
+  reviewedAt    DateTime?
+  reviewNote    String?
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  site          Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@index([siteId, status])
   @@index([siteId, createdAt])
@@ -838,6 +841,7 @@ model GenerationJob {
   albums          Album[]
 
   @@index([siteId, customerId, createdAt])
+  @@index([siteId, customerId, updatedAt])
   @@index([siteId, status])
   @@index([siteId, aiAppId])
   @@index([siteId, status, updatedAt])

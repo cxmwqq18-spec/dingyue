@@ -40,6 +40,13 @@ const storefrontPublicPathPrefixes = [
   "/tools"
 ];
 
+const hoverPrefetchPathPrefixes = [
+  "/collections",
+  "/help",
+  "/pricing",
+  "/tools"
+];
+
 function internalStorefrontHref(href: LinkProps["href"], target?: string) {
   if (typeof href !== "string" || href.startsWith("#") || (target && target !== "_self")) return null;
   const targetUrl = new URL(href, window.location.href);
@@ -48,6 +55,30 @@ function internalStorefrontHref(href: LinkProps["href"], target?: string) {
   const isHostMode = storefrontPublicPathPrefixes.some((prefix) => targetUrl.pathname === prefix || targetUrl.pathname.startsWith(`${prefix}/`));
   if (!isPathMode && !isHostMode) return null;
   return targetUrl;
+}
+
+function storefrontPublicPathname(targetUrl: URL) {
+  return targetUrl.pathname.replace(/^\/site\/[^/]+/, "") || "/";
+}
+
+function canHoverPrefetch(targetUrl: URL) {
+  if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH_ALL === "1") return true;
+  const publicPathname = storefrontPublicPathname(targetUrl);
+  if (publicPathname === "/account" || publicPathname.startsWith("/account/")) return false;
+  if (publicPathname === "/app" || publicPathname.startsWith("/app/")) return false;
+  if (publicPathname === "/album" || publicPathname.startsWith("/album/")) return false;
+  if (publicPathname === "/checkout" || publicPathname.startsWith("/checkout/")) return false;
+  if (publicPathname === "/cart" || publicPathname.startsWith("/cart/")) return false;
+  return hoverPrefetchPathPrefixes.some((prefix) => publicPathname === prefix || publicPathname.startsWith(`${prefix}/`));
+}
+
+function canFocusPrefetch(targetUrl: URL) {
+  const publicPathname = storefrontPublicPathname(targetUrl);
+  return publicPathname === "/help" || publicPathname.startsWith("/help/") || publicPathname === "/pricing";
+}
+
+function isInstantFilterAnchor(event: MouseEvent<HTMLAnchorElement> | FocusEvent<HTMLAnchorElement> | PointerEvent<HTMLAnchorElement>) {
+  return event.currentTarget.dataset.storefrontInstantFilter === "true";
 }
 
 function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -73,6 +104,7 @@ export function StorefrontInstantLink({
     if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH === "0") return;
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
+    if (!canHoverPrefetch(targetUrl)) return;
     if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;
     const nextHref = hrefFromUrl(targetUrl);
     if (prefetchedHrefs.has(nextHref)) return;
@@ -82,6 +114,7 @@ export function StorefrontInstantLink({
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
+    if (isInstantFilterAnchor(event)) return;
     if (event.defaultPrevented || isModifiedClick(event)) return;
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
@@ -93,19 +126,22 @@ export function StorefrontInstantLink({
 
   function handleFocus(event: FocusEvent<HTMLAnchorElement>) {
     onFocus?.(event);
-    if (!event.defaultPrevented) prefetchTarget();
+    if (isInstantFilterAnchor(event)) return;
+    const targetUrl = internalStorefrontHref(href, target);
+    if (!event.defaultPrevented && targetUrl && canFocusPrefetch(targetUrl)) prefetchTarget();
   }
 
   function handlePointerEnter(event: PointerEvent<HTMLAnchorElement>) {
     onPointerEnter?.(event);
+    if (isInstantFilterAnchor(event)) return;
     if (event.defaultPrevented || event.pointerType === "touch") return;
     if (hoverPrefetchTimer.current) clearTimeout(hoverPrefetchTimer.current);
-    hoverPrefetchTimer.current = setTimeout(prefetchTarget, 80);
+    hoverPrefetchTimer.current = setTimeout(prefetchTarget, 180);
   }
 
   function handlePointerDown(event: PointerEvent<HTMLAnchorElement>) {
     onPointerDown?.(event);
-    if (!event.defaultPrevented) prefetchTarget();
+    if (isInstantFilterAnchor(event)) return;
   }
 
   return (

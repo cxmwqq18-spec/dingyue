@@ -966,6 +966,49 @@ export async function saveThemeSettingsDraftRelational(params: {
   return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
 }
 
+export type ThemeFooterSocialLinks = {
+  socialHeading: string;
+  socialBody: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  pinterestUrl: string;
+  youtubeUrl: string;
+  twitterUrl: string;
+};
+
+function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFooterSocialLinks): ThemeSettings {
+  const next = cloneJson(settings);
+  next.globalSections ??= {};
+  next.globalSections.footer = normalizeGlobalSection("footer", next.globalSections.footer);
+  next.globalSections.footer.settings = {
+    ...next.globalSections.footer.settings,
+    ...socialLinks
+  };
+  return next;
+}
+
+export async function updateThemeFooterSocialLinksRelational(params: {
+  siteId: string;
+  socialLinks: ThemeFooterSocialLinks;
+  actor?: string;
+}): Promise<{ site: Site }> {
+  clearSiteThemeReadCache(params.siteId);
+  const current = await prisma.themeSettings.findUnique({ where: { siteId: params.siteId } });
+  if (!current) {
+    throw new RelationalStoreError("theme_settings_not_found", 404);
+  }
+  const draftJson = applyFooterSocialLinks(current.draftJson as unknown as ThemeSettings, params.socialLinks);
+  const publishedJson = applyFooterSocialLinks(current.publishedJson as unknown as ThemeSettings, params.socialLinks);
+  await prisma.themeSettings.update({
+    where: { siteId: params.siteId },
+    data: {
+      draftJson: cloneJson(draftJson) as unknown as Prisma.InputJsonValue,
+      publishedJson: cloneJson(publishedJson) as unknown as Prisma.InputJsonValue
+    }
+  });
+  return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
+}
+
 export async function rollbackThemePageDraftRelational(params: {
   siteId: string;
   pageId: string;

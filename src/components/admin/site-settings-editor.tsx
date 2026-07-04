@@ -6,6 +6,7 @@ import { Download, Plus, Save, Star, Trash2 } from "lucide-react";
 import type { Site, SiteDomain } from "@/lib/types";
 import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 import { StatusPill } from "@/components/ui";
 import {
   ErpCheckboxRow,
@@ -39,6 +40,39 @@ type SiteSettingsForm = {
   };
 };
 
+type SocialLinksForm = {
+  socialHeading: string;
+  socialBody: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  pinterestUrl: string;
+  youtubeUrl: string;
+  twitterUrl: string;
+};
+
+const socialLinkFields: Array<{ key: keyof SocialLinksForm; label: string; placeholder: string }> = [
+  { key: "instagramUrl", label: "Instagram", placeholder: "https://www.instagram.com/yourbrand" },
+  { key: "facebookUrl", label: "Facebook", placeholder: "https://www.facebook.com/yourbrand" },
+  { key: "pinterestUrl", label: "Pinterest", placeholder: "https://www.pinterest.com/yourbrand" },
+  { key: "youtubeUrl", label: "YouTube", placeholder: "https://www.youtube.com/@yourbrand" },
+  { key: "twitterUrl", label: "X / Twitter", placeholder: "https://x.com/yourbrand" }
+];
+
+function themeText(value: unknown): string {
+  if (value === undefined || value === null) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.map(themeText).filter(Boolean).join("\n");
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    for (const key of ["url", "title", "id", "family"]) {
+      const nested = record[key];
+      if (typeof nested === "string" || typeof nested === "number") return String(nested);
+    }
+  }
+  return "";
+}
+
 function createSiteSettingsForm(site: Site): SiteSettingsForm {
   return {
     name: site.name,
@@ -56,6 +90,22 @@ function createSiteSettingsForm(site: Site): SiteSettingsForm {
       chargesEnabled: site.connect.chargesEnabled,
       payoutsEnabled: site.connect.payoutsEnabled
     }
+  };
+}
+
+function createSocialLinksForm(site: Site): SocialLinksForm {
+  const footerSettings =
+    site.themeSettings.draftJson.globalSections?.footer?.settings ??
+    site.themeSettings.publishedJson.globalSections?.footer?.settings ??
+    {};
+  return {
+    socialHeading: themeText(footerSettings.socialHeading) || "Follow Us",
+    socialBody: themeText(footerSettings.socialBody),
+    instagramUrl: themeText(footerSettings.instagramUrl),
+    facebookUrl: themeText(footerSettings.facebookUrl),
+    pinterestUrl: themeText(footerSettings.pinterestUrl),
+    youtubeUrl: themeText(footerSettings.youtubeUrl),
+    twitterUrl: themeText(footerSettings.twitterUrl)
   };
 }
 
@@ -114,16 +164,20 @@ export function SiteSettingsEditor({
 }) {
   const router = useRouter();
   const [form, setForm] = useState<SiteSettingsForm>(() => createSiteSettingsForm(site));
+  const [socialForm, setSocialForm] = useState<SocialLinksForm>(() => createSocialLinksForm(site));
   const [domainItems, setDomainItems] = useState(domains);
   const [newDomain, setNewDomain] = useState("");
   const [newPrimary, setNewPrimary] = useState(false);
   const [message, setMessage] = useState("站点名称、品牌、收款状态和域名现在都可以在站点后台直接维护。");
+  const [socialMessage, setSocialMessage] = useState("前台页脚的社媒图标会读取这里的链接；留空则不展示对应平台。");
   const [saving, setSaving] = useState(false);
+  const [savingSocial, setSavingSocial] = useState(false);
   const [domainPage, setDomainPage] = useState(1);
   const [domainPageSize, setDomainPageSize] = useState(10);
 
   useEffect(() => {
     setForm(createSiteSettingsForm(site));
+    setSocialForm(createSocialLinksForm(site));
   }, [site]);
 
   useEffect(() => {
@@ -133,6 +187,9 @@ export function SiteSettingsEditor({
   const dirty = useMemo(() => {
     return JSON.stringify(form) !== JSON.stringify(createSiteSettingsForm(site));
   }, [form, site]);
+  const socialDirty = useMemo(() => {
+    return JSON.stringify(socialForm) !== JSON.stringify(createSocialLinksForm(site));
+  }, [site, socialForm]);
   const currentDomainPage = clampPage(domainPage, domainItems.length, domainPageSize);
   const visibleDomainItems = useMemo(() => pageItems(domainItems, currentDomainPage, domainPageSize), [domainItems, currentDomainPage, domainPageSize]);
 
@@ -166,6 +223,13 @@ export function SiteSettingsEditor({
     }));
   }
 
+  function updateSocial<K extends keyof SocialLinksForm>(key: K, value: SocialLinksForm[K]) {
+    setSocialForm((current) => ({
+      ...current,
+      [key]: value
+    }));
+  }
+
   async function save() {
     setSaving(true);
     const response = await fetch(`/api/sites/${site.id}/settings`, {
@@ -186,6 +250,24 @@ export function SiteSettingsEditor({
       setForm(createSiteSettingsForm(result.site));
     }
     setMessage("设置收款已保存。站点资料、域名、Connect 状态和品牌文案已写入站点主记录。");
+    router.refresh();
+  }
+
+  async function saveSocialLinks() {
+    setSavingSocial(true);
+    const response = await fetch(`/api/sites/${site.id}/theme/footer-social`, {
+      method: "PUT",
+      headers: siteAdminJsonHeaders(site.id),
+      body: JSON.stringify(socialForm)
+    });
+    const result = (await response.json().catch(() => ({}))) as { socialLinks?: SocialLinksForm; error?: string };
+    setSavingSocial(false);
+    if (!response.ok || !result.socialLinks) {
+      setSocialMessage(`社媒链接保存失败：${result.error ?? "unknown error"}`);
+      return;
+    }
+    setSocialForm(result.socialLinks);
+    setSocialMessage("社媒链接已保存，并已同步到前台页脚。");
     router.refresh();
   }
 
@@ -415,6 +497,57 @@ export function SiteSettingsEditor({
               这里先不接真实 Stripe onboarding，但字段、状态和站点级收款边界已经按最终系统的数据结构布局。
             </div>
           </div>
+        </div>
+      </ErpSection>
+
+      <ErpSection
+        description="运营可以在这里维护前台页脚的社媒入口。保存后会写入主题 footer 的草稿和线上配置。"
+        eyebrow="social links"
+        title="社媒链接"
+      >
+        <div className="tixing mb-4">{socialMessage}</div>
+        <ErpToolbar className="mb-5">
+          <div className="flex flex-wrap gap-2">
+            <ErpToolbarField label="栏目标题" value={socialForm.socialHeading || "Follow Us"} />
+            <ErpToolbarField label="已配置平台" value={String(socialLinkFields.filter((field) => String(socialForm[field.key] ?? "").trim()).length)} />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <span className={socialDirty ? "tag_org" : "tag_green"}>{socialDirty ? "有未保存修改" : "与当前配置一致"}</span>
+            <ErpToolbarAction label={savingSocial ? "保存中" : "保存社媒链接"} onClick={saveSocialLinks} primary />
+          </div>
+        </ErpToolbar>
+        <ErpFormGrid>
+          <ErpField hint="前台仍展示英文内容，建议使用 Follow Us、Connect with us 等简短标题。" label="前台栏目标题">
+            <ErpInput onChange={(event) => updateSocial("socialHeading", event.target.value)} value={socialForm.socialHeading} />
+          </ErpField>
+          <ErpField hint="显示在社媒图标上方的说明文案。前台用户可见，请填写英文。" label="前台说明文案" span="full">
+            <ErpTextarea className="min-h-[96px] resize-y" onChange={(event) => updateSocial("socialBody", event.target.value)} value={socialForm.socialBody} />
+          </ErpField>
+          {socialLinkFields.map((field) => (
+            <ErpField hint="支持 http 或 https；清空后前台隐藏这个平台图标。" key={field.key} label={`${field.label} 链接`}>
+              <ErpInput
+                className="font-mono"
+                onChange={(event) => updateSocial(field.key, event.target.value)}
+                placeholder={field.placeholder}
+                value={socialForm[field.key]}
+              />
+            </ErpField>
+          ))}
+        </ErpFormGrid>
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[12px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-4 py-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={socialDirty ? "tag_org" : "tag_green"}>{socialDirty ? "有未保存修改" : "与当前配置一致"}</span>
+            <span className="text-[12px] text-[#667085]">保存后前台 footer 的社媒图标会立即读取最新链接。</span>
+          </div>
+          <button
+            className="input_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55"
+            disabled={savingSocial}
+            onClick={saveSocialLinks}
+            type="button"
+          >
+            <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
+            {savingSocial ? "保存中" : "保存社媒链接"}
+          </button>
         </div>
       </ErpSection>
 

@@ -12,18 +12,20 @@ export function AssetsPanel({
   siteId,
   customer,
   assets,
-  createHref = "#create",
   emptyTitle = "No private uploads yet.",
   emptyBody = "Add private source photos before creating an album request.",
-  tone = "light"
+  tone = "light",
+  preferProvidedAssets = false,
+  onContinueToCreate
 }: {
   siteId: string;
   customer: PublicCustomer;
   assets: ThemeRuntimeAsset[];
-  createHref?: string;
   emptyTitle?: string;
   emptyBody?: string;
   tone?: "light" | "dark";
+  preferProvidedAssets?: boolean;
+  onContinueToCreate?: () => void;
 }) {
   const [items, setItems] = useState(assets);
   const [label, setLabel] = useState("reference portrait");
@@ -31,7 +33,7 @@ export function AssetsPanel({
   const [message, setMessage] = useState("Uploads stay private to this account.");
   const [pending, setPending] = useState(false);
   const [page, setPage] = useState(1);
-  const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
+  const [loadingAssets, setLoadingAssets] = useState(() => !preferProvidedAssets && assets.length === 0);
   const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
   const pageStart = (safePage - 1) * PAGE_SIZE;
@@ -60,21 +62,32 @@ export function AssetsPanel({
 
   useEffect(() => {
     let cancelled = false;
-    setLoadingAssets(true);
-    loadCustomerAssets(siteId, customer.id)
-      .then((result) => {
-        if (!cancelled) {
-          setItems(result);
-          setLoadingAssets(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setLoadingAssets(false);
-      });
+    const loadAssets = (refresh = false) => {
+      if (refresh) invalidateCustomerAssets(siteId, customer.id);
+      setLoadingAssets(true);
+      loadCustomerAssets(siteId, customer.id)
+        .then((result) => {
+          if (!cancelled) {
+            setItems(result);
+            setLoadingAssets(false);
+          }
+        })
+        .catch(() => {
+          if (!cancelled) setLoadingAssets(false);
+        });
+    };
+    const handleAssetsUpdated = () => loadAssets(true);
+    if (preferProvidedAssets) {
+      setLoadingAssets(false);
+    } else {
+      loadAssets();
+    }
+    window.addEventListener("customer-assets:updated", handleAssetsUpdated);
     return () => {
       cancelled = true;
+      window.removeEventListener("customer-assets:updated", handleAssetsUpdated);
     };
-  }, [customer.id, siteId]);
+  }, [customer.id, preferProvidedAssets, siteId]);
 
   useEffect(() => {
     setPage((current) => Math.min(current, Math.max(1, Math.ceil(items.length / PAGE_SIZE))));
@@ -179,9 +192,9 @@ export function AssetsPanel({
       </form>
       <div className={`mt-4 flex flex-wrap items-center gap-3 rounded-[18px] border px-4 py-3 text-sm ${panelClass} ${mutedClass}`}>
         <span>After uploading the needed photos, return to the selected tool and start the private request.</span>
-        <a className={`inline-flex rounded-full px-4 py-2 text-xs font-semibold ${primaryClass}`} href={createHref}>
+        <button className={`inline-flex rounded-full px-4 py-2 text-xs font-semibold ${primaryClass}`} onClick={onContinueToCreate} type="button">
           Continue to tool setup
-        </a>
+        </button>
       </div>
       <div className="mt-5 grid gap-3">
         {visibleItems.length ? (

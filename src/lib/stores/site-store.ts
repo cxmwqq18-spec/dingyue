@@ -498,6 +498,7 @@ const accountCustomerRuntimeLimits = {
   customerModels: 0,
   albums: 12
 } as const;
+type CustomerRuntimeSection = "summary" | "plan" | "orders" | "jobs" | "albums" | "credits";
 const fullSiteRuntimeLimits = {
   customers: 50,
   customerSessions: 50,
@@ -737,7 +738,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
     siteAiApps: isHome || (isTools && !isToolDetail) || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
-    toolMenus: isHome || isPricing || isTools || isCollections || isWorkspace,
+    toolMenus: isHome || isPricing || isTools || isWorkspace,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
 }
@@ -853,6 +854,15 @@ export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug:
   );
 });
 
+export const getStorefrontPublicCollectionDirectoryStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
+  const canonicalSlug = canonicalSiteSlug(slug);
+  return siteReadCache.get(
+    `public-collection-directory-shell:${canonicalSlug}`,
+    async () => loadStorefrontPublicCollectionDirectoryState(slug),
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
+});
+
 export const getStorefrontPublicCollectionMetadataStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get(
@@ -885,6 +895,27 @@ const getStorefrontPublicCollectionSiteShellBySlug = cache(async (slug: string):
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
 });
+
+async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promise<PlatformState | undefined> {
+  const startedAt = Date.now();
+  const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
+  if (!site) return undefined;
+  const creativePacks = await prisma.creativePack.findMany({
+    where: { siteId: site.id, status: "active" },
+    select: collectionDetailCreativePackSelect,
+    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+    take: publicRuntimeLimits("collections").creativePacks
+  });
+  storefrontPerfMark("collection-directory-shell:packs", startedAt, { creativePacks: creativePacks.length });
+  const mediaAssets: MediaAsset[] = [];
+  const mappedSite = toPublicSiteShell(site, mediaAssets);
+  return emptyPlatformState({
+    sites: [mappedSite],
+    siteDomains: site.domains.map(toSiteDomain),
+    creativePacks: creativePacks.map(toCreativePack),
+    mediaAssets
+  });
+}
 
 async function loadStorefrontPublicCollectionDetailState(slug: string, collectionSlug: string): Promise<PlatformState | undefined> {
   const startedAt = Date.now();
@@ -1065,7 +1096,62 @@ type StorefrontCustomerRuntimeParams = {
   sessionId?: string;
   customerId?: string;
   profile?: "full" | "workspace" | "account";
+  section?: CustomerRuntimeSection;
 };
+
+export const getStorefrontCustomerJobDetailStateForSite = cache(async ({
+  jobId,
+  sessionId,
+  siteId
+}: {
+  jobId: string;
+  sessionId: string;
+  siteId: string;
+}): Promise<PlatformState | undefined> => {
+  return siteReadCache.get(
+    `customer-job-detail:${siteId}:${sessionId}:${jobId}`,
+    async () => {
+      const identity = await resolveCustomerRuntimeIdentity({ siteId, sessionId });
+      if (!identity) return undefined;
+      const [site, customer, job] = await Promise.all([
+        prisma.site.findUnique({ where: { id: siteId }, select: customerRuntimeSiteSelect }),
+        prisma.customer.findFirst({ where: { id: identity.customerId, siteId }, include: { balance: true } }),
+        prisma.generationJob.findFirst({ where: { id: jobId, siteId, customerId: identity.customerId } })
+      ]);
+      if (!site || !customer || !job) return undefined;
+      const [ledger, assetUploads, siteAiApps] = await Promise.all([
+        prisma.creditLedger.findMany({
+          where: { siteId, customerId: identity.customerId, sourceId: job.id },
+          orderBy: { createdAt: "desc" },
+          take: 24
+        }),
+        prisma.assetUpload.findMany({
+          where: { siteId, customerId: identity.customerId, jobId: job.id, deletedAt: null },
+          orderBy: { createdAt: "desc" },
+          take: 48
+        }),
+        prisma.siteAiApp.findMany({
+          where: { siteId, aiAppId: job.aiAppId },
+          include: { aiApp: true },
+          take: 1
+        })
+      ]);
+      const mappedMediaAssets: MediaAsset[] = [];
+      const mappedSite = toPublicSiteShell(site as CustomerRuntimeSiteRecord, mappedMediaAssets);
+      return emptyPlatformState({
+        sites: [mappedSite],
+        siteDomains: site.domains.map(toSiteDomain),
+        customers: [mapCustomer(customer)],
+        customerSessions: identity.session ? [toCustomerSessionRelational(identity.session)] : [],
+        siteAiApps: siteAiApps.map(toSiteAiApp),
+        jobs: [mapGenerationJob(job)],
+        ledger: ledger.map(mapCreditLedger),
+        assetUploads: assetUploads.map(toAssetUploadRelational)
+      });
+    },
+    Number(process.env.STOREFRONT_JOB_DETAIL_CACHE_TTL_MS ?? 15_000)
+  );
+});
 
 function mapSubscriptionRuntime(subscription: Prisma.SubscriptionGetPayload<object>): PlatformState["subscriptions"][number] {
   return {
@@ -1110,8 +1196,9 @@ function storageKeysFromJobResult(value: unknown): string[] {
 export const getStorefrontCustomerRuntimeStateForSite = cache(async (params: StorefrontCustomerRuntimeParams): Promise<PlatformState | undefined> => {
   const identity = params.sessionId ? `session:${params.sessionId}` : params.customerId ? `customer:${params.customerId}` : "anonymous";
   const profile = params.profile ?? "full";
+  const section = params.section ?? "summary";
   return siteReadCache.get(
-    `customer-runtime:${params.siteId}:${identity}:${profile}`,
+    `customer-runtime:${params.siteId}:${identity}:${profile}:${section}`,
     () => loadStorefrontCustomerRuntimeStateForSite(params),
     Number(process.env.STOREFRONT_PRIVATE_CACHE_TTL_MS ?? 30_000)
   );
@@ -1152,6 +1239,15 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
 
   const siteId = params.siteId;
   const customerId = identity.customerId;
+  const section = params.section ?? "summary";
+  const sectionedAccount = params.profile === "account";
+  const wantsSubscriptions = !sectionedAccount || section === "summary" || section === "plan";
+  const wantsOrders = !sectionedAccount || section === "summary" || section === "orders";
+  const wantsJobs = !sectionedAccount || section === "summary" || section === "jobs";
+  const wantsAssets = !sectionedAccount || section === "summary" || section === "albums";
+  const wantsLedger = !sectionedAccount || section === "summary" || section === "albums" || section === "credits";
+  const wantsModels = !sectionedAccount || section === "summary";
+  const wantsAlbums = !sectionedAccount || section === "summary" || section === "albums";
   const limits = params.profile === "account"
     ? accountCustomerRuntimeLimits
     : params.profile === "workspace"
@@ -1184,13 +1280,27 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
       ? prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }], take: limits.mediaAssets })
       : Promise.resolve([]),
     prisma.customer.findFirst({ where: { id: customerId, siteId }, include: { balance: true } }),
-    prisma.subscription.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.subscriptions }),
-    prisma.order.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.orders }),
-    prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs }),
-    prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null }, orderBy: { createdAt: "desc" }, take: limits.assetUploads }),
-    prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger }),
-    prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels }),
-    prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
+    wantsSubscriptions && limits.subscriptions
+      ? prisma.subscription.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.subscriptions })
+      : Promise.resolve([]),
+    wantsOrders && limits.orders
+      ? prisma.order.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.orders })
+      : Promise.resolve([]),
+    wantsJobs && limits.jobs
+      ? prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs })
+      : Promise.resolve([]),
+    wantsAssets && limits.assetUploads
+      ? prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null }, orderBy: { createdAt: "desc" }, take: limits.assetUploads })
+      : Promise.resolve([]),
+    wantsLedger && limits.ledger
+      ? prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger })
+      : Promise.resolve([]),
+    wantsModels && limits.customerModels
+      ? prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels })
+      : Promise.resolve([]),
+    wantsAlbums && limits.albums
+      ? prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
+      : Promise.resolve([])
   ]);
 
   if (!customer) return undefined;
@@ -1200,7 +1310,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   const visibleAlbums = [...albums];
   const jobIds = new Set(visibleJobs.map((job) => job.id));
   const albumJobIds = new Set(visibleAlbums.flatMap((album) => album.sourceJobId ? [album.sourceJobId] : []));
-  const missingAlbumJobIds = [...albumJobIds].filter((jobId) => !jobIds.has(jobId));
+  const missingAlbumJobIds = wantsJobs ? [...albumJobIds].filter((jobId) => !jobIds.has(jobId)) : [];
   if (missingAlbumJobIds.length) {
     const relatedJobs = await prisma.generationJob.findMany({
       where: { siteId, customerId, id: { in: missingAlbumJobIds } },
@@ -1225,7 +1335,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   if (missingAssetJobIds.length) relatedAssetOr.push({ jobId: { in: missingAssetJobIds } });
   if (missingCoverAssetIds.length) relatedAssetOr.push({ id: { in: missingCoverAssetIds } });
   if (outputStorageKeys.size) relatedAssetOr.push({ storageKey: { in: [...outputStorageKeys] } });
-  if (relatedAssetOr.length) {
+  if (wantsAssets && relatedAssetOr.length) {
     const relatedAssets = await prisma.assetUpload.findMany({
       where: { siteId, customerId, deletedAt: null, OR: relatedAssetOr },
       orderBy: { createdAt: "desc" },
@@ -1246,7 +1356,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   const relatedAlbumOr: Prisma.AlbumWhereInput[] = [];
   if (missingAlbumJobIdsFromJobs.length) relatedAlbumOr.push({ sourceJobId: { in: missingAlbumJobIdsFromJobs } });
   if (missingAlbumCoverAssetIds.length) relatedAlbumOr.push({ coverAssetId: { in: missingAlbumCoverAssetIds } });
-  if (relatedAlbumOr.length) {
+  if (wantsAlbums && relatedAlbumOr.length) {
     const relatedAlbums = await prisma.album.findMany({
       where: { siteId, customerId, OR: relatedAlbumOr },
       orderBy: { updatedAt: "desc" },
@@ -1692,6 +1802,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       }),
       prisma.creativePack.findMany({
         where: { siteId: site.id, status: "active" },
+        include: { categoryRecord: { include: { parent: true } } },
         orderBy: [{ createdAt: "asc" }],
         take: workspaceCustomerRuntimeLimits.creativePacks
       })

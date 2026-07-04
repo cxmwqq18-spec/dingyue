@@ -1,6 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import type { CreativePack, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -11,6 +11,7 @@ type JsonLdInput = {
   pagePath: string;
   routeMode: "host" | "path";
   creativePacks?: CreativePack[];
+  products?: Product[];
 };
 
 function cleanText(value: unknown, fallback = ""): string {
@@ -209,29 +210,66 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
   };
 }
 
-function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const path = input.pagePath;
   if (path.startsWith("/tools/")) {
-    return {
+    return [{
       "@type": "Service",
       name: title,
       description,
       provider: { "@type": "Organization", name: siteBrandName(input.site) },
       serviceType: schemaServiceType(input.site, path),
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path))
-    };
+    }];
   }
   if (path.startsWith("/pricing")) {
-    const pack = input.creativePacks?.find((item) => item.status === "active" && title.toLowerCase().includes(item.name.toLowerCase()));
-    return {
-      "@type": "Product",
-      name: pack?.name || title,
-      description: pack?.description || description,
-      brand: { "@type": "Brand", name: siteBrandName(input.site) },
-      ...(pack ? { image: pack.imageUrl ? absoluteUrl(input.site, input.routeMode, pack.imageUrl) : undefined } : {})
-    };
+    const siteName = siteBrandName(input.site);
+    const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path));
+    const activeProducts = input.products?.filter((product) => product.siteId === input.site.id && product.status === "active") ?? [];
+    const offers = activeProducts.flatMap((product) =>
+      product.prices.map((price) => ({
+        "@type": "Offer",
+        name: price.label || product.name,
+        price: (price.amountCents / 100).toFixed(2),
+        priceCurrency: price.currency.toUpperCase(),
+        availability: "https://schema.org/InStock",
+        category: product.type === "subscription" ? "AI photo subscription" : "AI photo credit pack",
+        description: `${price.creditsGranted} credits${price.interval === "one_time" ? "" : ` per ${price.interval}`}`,
+        url
+      }))
+    );
+    const offerCatalog = offers.length
+      ? {
+          "@type": "OfferCatalog",
+          "@id": `${url}#offers`,
+          name: `${siteName} plans and credit packs`,
+          itemListElement: offers
+        }
+      : undefined;
+    return [
+      {
+        "@type": "Service",
+        name: title,
+        description,
+        provider: { "@type": "Organization", name: siteName },
+        serviceType: isAidreamcapesSite(input.site) ? "AI travel portrait generation service" : "AI photo generation service",
+        url,
+        ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: siteName,
+        description,
+        applicationCategory: "PhotographyApplication",
+        operatingSystem: "Web",
+        url,
+        provider: { "@type": "Organization", name: siteName },
+        ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
+      },
+      offerCatalog
+    ].filter(Boolean) as JsonLdNode[];
   }
-  return undefined;
+  return [];
 }
 
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
@@ -290,18 +328,18 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const siteName = siteBrandName(input.site);
   const graph: Array<JsonLdNode | undefined> = [
     {
-	      "@type": "Organization",
-	      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
-	      name: siteName,
-	      url: siteBaseUrl(input.site, input.routeMode),
-	      description: cleanSchemaText(input.site, input.site.branding.description)
-	    },
-	    websiteSchema(input.site, input.routeMode),
-	    breadcrumbs(input.site, input.routeMode, input.pagePath, title),
-	    faqSchema(input.site, input.pageJson),
+      "@type": "Organization",
+      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
+      name: siteName,
+      url: siteBaseUrl(input.site, input.routeMode),
+      description: cleanSchemaText(input.site, input.site.branding.description)
+    },
+    websiteSchema(input.site, input.routeMode),
+    breadcrumbs(input.site, input.routeMode, input.pagePath, title),
+    faqSchema(input.site, input.pageJson),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
     ...collectionPageSchema(input, title, description),
-    serviceOrProductSchema(input, title, description)
+    ...serviceOrProductSchema(input, title, description)
   ];
 
   return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean), url }];

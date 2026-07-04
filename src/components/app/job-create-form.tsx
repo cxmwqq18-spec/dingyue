@@ -11,6 +11,9 @@ type CreateMode = "theme" | "tool";
 
 const DEFAULT_THEME_OUTPUT_COUNT = 5;
 const DEFAULT_MAX_SOURCE_ASSETS = 24;
+const COLLAPSED_CATEGORY_LIMIT = 10;
+const COLLAPSED_THEME_CARD_LIMIT = 6;
+const COLLAPSED_TOOL_CARD_LIMIT = 6;
 const TOOL_PROMPT_FIELD_ID = "prompt";
 const TOOL_PROMPT_BLOCKLIST = [
   "child sexual",
@@ -172,6 +175,51 @@ const TOOL_PRESET_LIBRARY: ToolPreset[] = [
     description: "Create simple motion ideas for product-style package outputs.",
     category: "Motion builders",
     prompt: "Create a short product teaser motion concept with clean framing and subtle commercial-style movement."
+  }
+];
+
+const AIDREAMCAPES_TOOL_PRESET_LIBRARY: ToolPreset[] = [
+  {
+    id: "route-portrait-composer",
+    title: "Route Portrait Composer",
+    description: "Build scenic travel portraits from everyday source photos and destination notes.",
+    category: "Travel portrait tools",
+    prompt: "Create a realistic travel portrait with route-ready styling, natural light, and destination atmosphere."
+  },
+  {
+    id: "city-walk-editor",
+    title: "City Walk Editor",
+    description: "Shape street, cafe, plaza, and old-city portrait scenes without planning a physical shoot.",
+    category: "Travel portrait tools",
+    prompt: "Create an old-city walking portrait with natural street light, believable wardrobe, and editorial travel framing."
+  },
+  {
+    id: "coastal-light-maker",
+    title: "Coastal Light Maker",
+    description: "Preview beach, cliffside, marina, and resort portrait lighting for private albums.",
+    category: "Destination tools",
+    prompt: "Create a coastal travel portrait with warm seaside light, realistic background depth, and relaxed vacation styling."
+  },
+  {
+    id: "scenic-overlook-story",
+    title: "Scenic Overlook Story",
+    description: "Turn source portraits into mountain, terrace, and overlook scenes with postcard-ready framing.",
+    category: "Destination tools",
+    prompt: "Create a scenic overlook portrait with panoramic landscape context, natural pose, and cinematic but realistic light."
+  },
+  {
+    id: "postcard-crop-set",
+    title: "Postcard Crop Set",
+    description: "Prepare profile, story, and memory-card crops from route portrait outputs.",
+    category: "Delivery tools",
+    prompt: "Create a travel postcard portrait crop set with consistent color, clean composition, and social-ready framing."
+  },
+  {
+    id: "travel-motion-concept",
+    title: "Travel Motion Concept",
+    description: "Create short route-story motion ideas from finished travel portraits.",
+    category: "Delivery tools",
+    prompt: "Create a short travel portrait motion concept with subtle camera movement and natural destination atmosphere."
   }
 ];
 
@@ -398,8 +446,9 @@ function displayMaterialRule(rule: string): string {
     .replace(/1\s*[-–]\s*4\s+uploaded images/i, "one or more uploaded images");
 }
 
-function buildToolPresets(siteAiApps: SiteAiApp[]): ToolPreset[] {
+function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset[] {
   const firstBackendSlug = siteAiApps[0]?.aiApp.slug;
+  const presetLibrary = /aidreamcapes/i.test(siteSlug) ? AIDREAMCAPES_TOOL_PRESET_LIBRARY : TOOL_PRESET_LIBRARY;
   const realTools = siteAiApps.map((app) => ({
     id: normalizeToolId(app.aiApp.slug),
     title: app.aiApp.name,
@@ -409,7 +458,7 @@ function buildToolPresets(siteAiApps: SiteAiApp[]): ToolPreset[] {
     backendSlug: app.aiApp.slug,
     prompt: ""
   }));
-  const library = TOOL_PRESET_LIBRARY.map((preset) => ({
+  const library = presetLibrary.map((preset) => ({
     ...preset,
     backendSlug: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.aiApp.slug ?? firstBackendSlug,
     creditCost: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.creditCost ?? siteAiApps[0]?.creditCost
@@ -428,7 +477,9 @@ export function JobCreateForm({
   assets = [],
   emptyTitle = "No enabled album experience.",
   emptyBody = "Enable an album experience for this site before publishing this form.",
-  tone = "dark"
+  tone = "dark",
+  preferProvidedAssets = false,
+  onOpenUploadManager
 }: {
   siteId: string;
   siteSlug: string;
@@ -441,10 +492,12 @@ export function JobCreateForm({
   emptyTitle?: string;
   emptyBody?: string;
   tone?: "dark" | "light";
+  preferProvidedAssets?: boolean;
+  onOpenUploadManager?: () => void;
 }) {
   const router = useRouter();
   const normalizedInitialToolId = normalizeToolId(initialToolId);
-  const toolPresets = useMemo(() => buildToolPresets(siteAiApps), [siteAiApps]);
+  const toolPresets = useMemo(() => buildToolPresets(siteAiApps, siteSlug), [siteAiApps, siteSlug]);
   const initialPack =
     creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId) ??
     creativePacks.find((pack) => pack.status === "active" && (normalizeToolId(pack.aiAppSlug) === normalizedInitialToolId || pack.id === initialToolId));
@@ -463,11 +516,13 @@ export function JobCreateForm({
   const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
   const [availableAssets, setAvailableAssets] = useState(assets);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => initialSelectedAssets(assets, workflowFor(initialApp)));
-  const [message, setMessage] = useState("Choose a package, select source photos, then start your private photo set.");
+  const [message, setMessage] = useState("Choose a package, upload or select source photos, then start your private AI photoshoot.");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
   const [deletingAssetIds, setDeletingAssetIds] = useState<string[]>([]);
-  const [loadingAssets, setLoadingAssets] = useState(() => assets.length === 0);
+  const [loadingAssets, setLoadingAssets] = useState(() => !preferProvidedAssets && assets.length === 0);
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllOptions, setShowAllOptions] = useState(false);
   const localAssetMutationRef = useRef(0);
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
   const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
@@ -475,6 +530,14 @@ export function JobCreateForm({
   const visibleCreativePacks = themeCategory === "all"
     ? activeCreativePacks
     : activeCreativePacks.filter((pack) => (pack.categoryRecord?.label || pack.category) === themeCategory);
+  const categoryOptions = ["all", ...themeCategories];
+  const displayedCategoryOptions = showAllCategories ? categoryOptions : categoryOptions.slice(0, COLLAPSED_CATEGORY_LIMIT);
+  const hasMoreCategories = categoryOptions.length > COLLAPSED_CATEGORY_LIMIT;
+  const displayedCreativePacks = showAllOptions ? visibleCreativePacks : visibleCreativePacks.slice(0, COLLAPSED_THEME_CARD_LIMIT);
+  const displayedToolPresets = showAllOptions ? toolPresets : toolPresets.slice(0, COLLAPSED_TOOL_CARD_LIMIT);
+  const hiddenOptionCount = createMode === "theme"
+    ? Math.max(visibleCreativePacks.length - displayedCreativePacks.length, 0)
+    : Math.max(toolPresets.length - displayedToolPresets.length, 0);
   const appPacks = packsForApp(creativePacks, selectedApp?.aiApp.slug ?? "");
   const selectedPack = (createMode === "theme" ? activeCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? activeCreativePacks[0] : appPacks[0]);
   const selectedWorkflow = workflowFor(selectedApp);
@@ -532,13 +595,17 @@ export function JobCreateForm({
         });
     };
     const handleAssetsUpdated = () => loadAssets(true);
-    loadAssets();
+    if (preferProvidedAssets) {
+      setLoadingAssets(false);
+    } else {
+      loadAssets();
+    }
     window.addEventListener("customer-assets:updated", handleAssetsUpdated);
     return () => {
       cancelled = true;
       window.removeEventListener("customer-assets:updated", handleAssetsUpdated);
     };
-  }, [customer.id, siteId]);
+  }, [customer.id, preferProvidedAssets, siteId]);
 
   function toggleAsset(assetId: string) {
     setSelectedAssetIds((current) =>
@@ -574,7 +641,7 @@ export function JobCreateForm({
 
   function updateCreateMode(nextMode: CreateMode) {
     setCreateMode(nextMode);
-    setMessage(nextMode === "theme" ? "Choose a package, select source photos, then start your private photo set." : "Describe the result you want, attach source photos, then start this tool.");
+    setMessage(nextMode === "theme" ? "Choose a package, upload or select source photos, then start your private AI photoshoot." : "Describe the result you want, attach source photos, then start this tool.");
     setFormValues((current) => {
       if (nextMode === "theme") {
         const next: Record<string, string | number | boolean> = { ...current, outputCount: themeOutputCount };
@@ -762,7 +829,7 @@ export function JobCreateForm({
           <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
           <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
             {createMode === "theme"
-              ? "Photo packages set the style direction, estimated outputs, credit use, and source-photo needs."
+              ? "Photo packages set the style direction, estimated outputs, credit use, and source-photo needs before you upload or select images."
               : "Tools use your source photos and notes to create a focused private result."}
           </p>
         </div>
@@ -798,8 +865,9 @@ export function JobCreateForm({
           })}
         </div>
         {createMode === "theme" && themeCategories.length > 1 ? (
-          <div className="flex flex-wrap gap-2">
-            {["all", ...themeCategories].map((category) => {
+          <div className={`rounded-[18px] border p-2 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/10"}`}>
+            <div className="flex flex-wrap gap-2">
+            {displayedCategoryOptions.map((category) => {
               const active = themeCategory === category;
               return (
                 <button
@@ -814,10 +882,20 @@ export function JobCreateForm({
                 </button>
               );
             })}
+            {hasMoreCategories ? (
+              <button
+                className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white"}`}
+                onClick={() => setShowAllCategories((current) => !current)}
+                type="button"
+              >
+                {showAllCategories ? "Show less" : `View ${categoryOptions.length - displayedCategoryOptions.length} more`}
+              </button>
+            ) : null}
+            </div>
           </div>
         ) : null}
-        <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 2xl:grid-cols-3" : "grid gap-3 lg:grid-cols-2"}>
-          {createMode === "theme" ? visibleCreativePacks.map((pack) => {
+        <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" : "grid gap-3 md:grid-cols-2 xl:grid-cols-3"}>
+          {createMode === "theme" ? displayedCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
             return (
               <button
@@ -861,7 +939,7 @@ export function JobCreateForm({
                 </span>
               </button>
             );
-          }) : toolPresets.map((preset) => {
+          }) : displayedToolPresets.map((preset) => {
             const active = preset.id === selectedToolId;
             return (
               <button
@@ -891,6 +969,17 @@ export function JobCreateForm({
             );
           })}
         </div>
+        {hiddenOptionCount > 0 || showAllOptions ? (
+          <div className="flex justify-center">
+            <button
+              className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.04] text-white/68 hover:border-white/24 hover:text-white"}`}
+              onClick={() => setShowAllOptions((current) => !current)}
+              type="button"
+            >
+              {showAllOptions ? "Show fewer options" : `View ${hiddenOptionCount} more ${createMode === "theme" ? "packages" : "tools"}`}
+            </button>
+          </div>
+        ) : null}
       </div>
       <div className={`rounded-[16px] border p-4 ${panelClass}`}>
         <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Material rules</p>
@@ -909,7 +998,7 @@ export function JobCreateForm({
           ))}
         </div>
       </div>
-      <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
+      <div className={`grid scroll-mt-28 gap-3 rounded-[16px] border p-4 ${panelClass}`} id="source-photos">
         <label className={`grid gap-2 text-sm font-medium ${textClass} sm:max-w-xs`}>
           Estimated outputs
           <input
@@ -976,13 +1065,13 @@ export function JobCreateForm({
       ) : null}
       <div className={`grid gap-3 rounded-[16px] border p-4 ${panelClass}`}>
         <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Source photos</p>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 02 · Source photos</p>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
-            Source photos are the private images you upload for the AI to reference. Select {minAssets === 1 ? "at least one" : `at least ${minAssets}`} and up to {effectiveMaxAssets} for this request; keep the rest in your workspace for later.
+            Upload selfies or source photos for the AI to reference. Select {minAssets === 1 ? "at least one" : `at least ${minAssets}`} and up to {effectiveMaxAssets} for this request; keep the rest in your workspace for later.
           </p>
           <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] px-4 py-2 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass} ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
             <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
-            {uploadingSources ? "Uploading photos" : "Upload source photos"}
+            {uploadingSources ? "Uploading photos" : "Upload selfies or source photos"}
             <input
               accept="image/*"
               className="sr-only"
@@ -1048,10 +1137,10 @@ export function JobCreateForm({
         ) : (
           <div className={`rounded-[18px] border border-dashed p-4 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/16 text-white/68"}`}>
             <p>No source photos yet. Upload private photos here, or open the full upload manager.</p>
-            <a className={`mt-3 inline-flex items-center gap-2 rounded-[14px] border px-4 py-2 text-xs font-semibold ${light ? "border-[#171514] bg-[#171514] text-white" : "border-white/10 bg-white/[0.08] text-white"}`} href={`/site/${siteSlug}/app/upload`}>
+            <button className={`mt-3 inline-flex items-center gap-2 rounded-[14px] border px-4 py-2 text-xs font-semibold ${light ? "border-[#171514] bg-[#171514] text-white" : "border-white/10 bg-white/[0.08] text-white"}`} onClick={onOpenUploadManager} type="button">
               <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
               Open upload manager
-            </a>
+            </button>
           </div>
         )}
       </div>
@@ -1074,7 +1163,7 @@ export function JobCreateForm({
           <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>Available customer credits</p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button className={`rounded-[18px] px-5 py-3 text-sm font-semibold active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`} disabled={pending || !aiAppSlug || !sourceAssets.length || selectedAssetIds.length < minAssets}>
           <Play className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
           {pending ? "Starting" : modeSubmitLabel}

@@ -11,6 +11,7 @@ import { customerSessionCookie } from "@/lib/session";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { getStorefrontCustomerJobDetailStateForSite } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -62,11 +63,15 @@ export default async function JobDetailPage({
     pathname: `/app/jobs/${jobId}`,
     siteSlug
   });
-  const query = searchParams ? await searchParams : {};
-  const publicState = await readPublicRuntimeStateBySlugWithFallback(publicSlug, jobDetailSlug);
+  const [query, publicState] = await Promise.all([
+    searchParams ? searchParams : Promise.resolve({}),
+    readPublicRuntimeStateBySlugWithFallback(publicSlug, jobDetailSlug)
+  ]);
   const publicSite = publicState?.sites[0];
   if (!publicSite) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(publicSite.id))?.value;
   if (!sessionId) redirect(`/site/${publicSiteSlug(publicSite.slug)}/login`);
-  return renderCustomerJobDetailPage({ site: publicSite, jobId, query, routeMode: "path" });
+  const detailState = await getStorefrontCustomerJobDetailStateForSite({ siteId: publicSite.id, sessionId, jobId });
+  if (!detailState) notFound();
+  return renderCustomerJobDetailPage({ site: publicSite, jobId, query, routeMode: "path", state: detailState });
 }

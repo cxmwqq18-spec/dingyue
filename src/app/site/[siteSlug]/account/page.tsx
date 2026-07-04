@@ -5,7 +5,7 @@ import { CustomerAccountClientPage } from "@/components/storefront/customer-boot
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
-import { getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational } from "@/lib/stores/site-store";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: "Account", robots: { index: false, follow: false } };
@@ -25,11 +25,13 @@ export default async function CustomerAccountPage({
     siteSlug
   });
   const siteId = await getSiteIdBySlugRelational(publicSlug);
-  if (!siteId) redirect(`/site/${publicSiteSlug(publicSlug)}/login`);
-  const [current, site] = await Promise.all([
+  const loginPath = `/site/${publicSiteSlug(publicSlug)}/login?next=${encodeURIComponent(`/site/${publicSiteSlug(publicSlug)}/account`)}`;
+  if (!siteId) redirect(loginPath);
+  const [current, site, bootstrap] = await Promise.all([
     getCurrentCustomerForSite(siteId),
-    getCustomerWorkspaceSiteShellRelational(publicSlug)
+    getCustomerWorkspaceSiteShellRelational(publicSlug),
+    getCustomerWorkspaceBootstrapRelational(publicSlug)
   ]);
-  if (!current || !site) redirect(`/site/${publicSiteSlug(publicSlug)}/login`);
-  return <CustomerAccountClientPage initialCustomer={current.customer} initialSite={site} siteSlug={publicSiteSlug(publicSlug)} />;
+  if (!current || !site) redirect(loginPath);
+  return <CustomerAccountClientPage initialCreativePacks={bootstrap?.creativePacks ?? []} initialCustomer={current.customer} initialSite={site} siteSlug={publicSiteSlug(publicSlug)} />;
 }

@@ -29,8 +29,8 @@ import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { canonicalAidreamcapesDirectorySlug, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
-import { dreamshootAiStudioTemplates } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import type { CustomerSession, PlatformState, PublicCustomer, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
+import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
+import type { CreativePack, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
@@ -109,7 +109,7 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
 const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
 const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
-const publicHomePackLimit = 48;
+const publicHomePackLimit = 24;
 const publicDirectoryPackLimit = 48;
 
 function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
@@ -117,43 +117,165 @@ function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
 }
 
 function trimCreativePacksForStorefront(renderData: SiteRenderData, limit: number): SiteRenderData["creativePacks"] {
-  return renderData.creativePacks.slice(0, limit).map((pack) => ({
-    ...pack,
-    prompt: undefined,
-    galleryImages: []
-  }));
+  return renderData.creativePacks.slice(0, limit).map(lightweightCreativePack);
 }
 
 async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit: number): Promise<SiteRenderData["creativePacks"]> {
-  const sanitizedExisting = existing.map((pack) => ({
-    ...pack,
-    prompt: undefined,
-    galleryImages: []
-  }));
+  const sanitizedExisting = existing.map(lightweightCreativePack);
   if (sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
-  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map((pack) => ({
-    ...pack,
-    prompt: undefined,
-    galleryImages: []
-  }));
+  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map(lightweightCreativePack);
   return fullPacks.length > sanitizedExisting.length ? fullPacks : sanitizedExisting;
 }
 
 function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = 12): SiteRenderData["siteAiApps"] {
-  return renderData.siteAiApps.slice(0, limit).map((siteApp) => ({
-    ...siteApp,
-    providerConfig: undefined,
-    workflowConfig: undefined,
-    aiApp: {
-      ...siteApp.aiApp,
-      parameterSchema: []
-    }
-  }));
+  return renderData.siteAiApps.slice(0, limit).map(lightweightSiteAiApp);
 }
 
 function trimProductsForStorefront(renderData: SiteRenderData, limit = 8): SiteRenderData["products"] {
   const active = renderData.products.filter((product) => product.status === "active");
-  return (active.length ? active : renderData.products).slice(0, limit);
+  return (active.length ? active : renderData.products).slice(0, limit).map(lightweightProduct);
+}
+
+function lightweightPrice(price: Price): Price {
+  return {
+    id: price.id,
+    siteId: price.siteId,
+    productId: price.productId,
+    label: price.label,
+    amountCents: price.amountCents,
+    currency: price.currency,
+    interval: price.interval,
+    creditsGranted: price.creditsGranted,
+    stripePriceId: price.stripePriceId,
+    metadata: price.metadata
+  };
+}
+
+function lightweightProduct(product: Product): Product {
+  return {
+    id: product.id,
+    siteId: product.siteId,
+    name: product.name,
+    type: product.type,
+    status: product.status,
+    prices: product.prices.map(lightweightPrice)
+  };
+}
+
+function lightweightSiteAiApp(siteApp: SiteAiApp): SiteAiApp {
+  return {
+    id: siteApp.id,
+    siteId: siteApp.siteId,
+    enabled: siteApp.enabled,
+    creditCost: siteApp.creditCost,
+    routeKey: siteApp.routeKey,
+    providerConfig: undefined,
+    workflowConfig: undefined,
+    aiApp: {
+      id: siteApp.aiApp.id,
+      slug: siteApp.aiApp.slug,
+      name: siteApp.aiApp.name,
+      description: siteApp.aiApp.description,
+      appType: siteApp.aiApp.appType,
+      parameterSchema: []
+    }
+  };
+}
+
+function lightweightCategoryRecord(category: CreativePack["categoryRecord"]): CreativePack["categoryRecord"] {
+  if (!category) return undefined;
+  return {
+    id: category.id,
+    siteId: category.siteId,
+    parentId: category.parentId,
+    parent: category.parent
+      ? {
+          id: category.parent.id,
+          siteId: category.parent.siteId,
+          parentId: category.parent.parentId,
+          slug: category.parent.slug,
+          label: category.parent.label,
+          description: category.parent.description,
+          icon: category.parent.icon,
+          iconName: category.parent.iconName,
+          imageUrl: category.parent.imageUrl,
+          sortOrder: category.parent.sortOrder,
+          status: category.parent.status,
+          createdAt: ""
+        }
+      : undefined,
+    slug: category.slug,
+    label: category.label,
+    description: category.description,
+    heroTitle: category.heroTitle,
+    heroSubtitle: category.heroSubtitle,
+    icon: category.icon,
+    iconName: category.iconName,
+    imageUrl: category.imageUrl,
+    sortOrder: category.sortOrder,
+    status: category.status,
+    createdAt: ""
+  };
+}
+
+function lightweightCreativePack(pack: CreativePack): CreativePack {
+  return {
+    id: pack.id,
+    siteId: pack.siteId,
+    categoryId: pack.categoryId,
+    name: pack.name,
+    headline: pack.headline,
+    description: pack.description,
+    prompt: undefined,
+    category: pack.category,
+    aiAppSlug: pack.aiAppSlug,
+    status: pack.status,
+    creditCost: pack.creditCost,
+    outputCount: pack.outputCount,
+    trainingRequired: pack.trainingRequired,
+    generationCount: pack.generationCount,
+    conversionRate: pack.conversionRate,
+    createdAt: "",
+    imageUrl: pack.imageUrl,
+    galleryImages: [],
+    categoryRecord: lightweightCategoryRecord(pack.categoryRecord)
+  };
+}
+
+function lightweightMediaAsset(asset: MediaAsset): MediaAsset {
+  return {
+    id: asset.id,
+    siteId: asset.siteId,
+    label: asset.label,
+    storageKey: asset.storageKey,
+    mimeType: asset.mimeType,
+    usage: asset.usage,
+    sourceType: asset.sourceType,
+    previewUrl: asset.previewUrl,
+    originUrl: asset.originUrl,
+    altText: asset.altText,
+    createdAt: ""
+  };
+}
+
+function lightweightToolMenuItem(item: ToolMenuItem): ToolMenuItem {
+  return {
+    id: item.id,
+    siteId: item.siteId,
+    categoryId: item.categoryId,
+    category: item.category,
+    slug: item.slug,
+    title: item.title,
+    description: item.description,
+    badge: item.badge,
+    icon: item.icon,
+    imageUrl: item.imageUrl,
+    href: item.href,
+    detailJson: item.detailJson,
+    sortOrder: item.sortOrder,
+    status: item.status,
+    createdAt: ""
+  };
 }
 
 function collectStorefrontMediaReferences(value: unknown, refs: Set<string>, parentKey = ""): void {
@@ -187,7 +309,7 @@ function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: S
     refs.has(asset.storageKey) ||
     Boolean(asset.previewUrl && refs.has(asset.previewUrl)) ||
     Boolean(asset.originUrl && refs.has(asset.originUrl))
-  );
+  ).map(lightweightMediaAsset);
 }
 
 function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
@@ -201,7 +323,7 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
     mediaAssets: renderData.mediaAssets,
     products: needsProducts ? trimProductsForStorefront(renderData, slug === "/pricing" || slug === "/cart" ? 12 : 6) : [],
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : [],
-    toolMenuItems: renderData.toolMenuItems.slice(0, 80)
+    toolMenuItems: renderData.toolMenuItems.slice(0, 80).map(lightweightToolMenuItem)
   };
 }
 
@@ -1268,7 +1390,7 @@ export async function renderStorefrontPage({
     settings,
     trimRenderDataForPage(renderData, pageJson, slug)
   );
-  if (slug === "/" || slug === "/collections") {
+  if (slug === "/" || (slug === "/collections" && (!isFocusedCollectionPage || pageRenderData.creativePacks.length < publicDirectoryPackLimit))) {
     const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
     pageRenderData = {
       ...pageRenderData,
@@ -1319,7 +1441,8 @@ export async function renderStorefrontPage({
           pageJson,
           pagePath: slug,
           routeMode,
-          creativePacks: pageRenderData.creativePacks
+          creativePacks: pageRenderData.creativePacks,
+          products: state.products
         }),
     lightweightChrome: false
   });
@@ -1333,7 +1456,7 @@ function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | u
     slug === "/about-us" ? "about-us" :
     slug === "/contact-us" ? "contact-us" :
     "creators-circle";
-  const pageJson = dreamshootAiStudioTemplates[templateKey];
+  const pageJson = dreamshootAiStudioTemplatesForSite(site)[templateKey];
   return {
     id: `${site.id}_${templateKey}_synthetic`,
     siteId: site.id,
@@ -1553,7 +1676,7 @@ export async function renderCustomerJobDetailPage({
   const page = currentSite.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ?? getPage(currentSite, "/app/jobs/progress");
   const settings = currentSite.themeSettings.publishedJson;
   const runtime = {
-    ...getThemeRuntimeForCustomer(state, currentSite.id, current.customer.id),
+    ...runtimeWithEmptyCollections({ customer: current.customer }),
     jobDetail: {
       job: toThemeRuntimeJob(job),
       ledger: getCustomerLedgerFromState(state, currentSite.id, current.customer.id)
@@ -1571,7 +1694,8 @@ export async function renderCustomerJobDetailPage({
     renderData: trimRenderDataForPage(renderData, page.publishedJson, `/app/jobs/${job.id}`),
     routeMode,
     runtime,
-    settings
+    settings,
+    lightweightChrome: true
   });
 }
 

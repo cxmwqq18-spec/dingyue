@@ -72,6 +72,7 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/tool": "/tools"
 };
 const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/collections", "/tools", "/pricing", "/help"]);
+const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
 const SEO_HEAD_TAG_RE =
   /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/gi;
@@ -175,7 +176,11 @@ function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefine
 
 function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
-  if (!LOCAL_DEFAULT_STOREFRONT_PATHS.has(pathname.toLowerCase())) return undefined;
+  const normalizedPath = pathname.toLowerCase();
+  const shouldRedirect =
+    LOCAL_DEFAULT_STOREFRONT_PATHS.has(normalizedPath) ||
+    LOCAL_DEFAULT_STOREFRONT_PREFIXES.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
+  if (!shouldRedirect) return undefined;
   const host = (request.headers.get("host") ?? "").toLowerCase();
   if (!host.startsWith("localhost") && !host.startsWith("127.0.0.1")) return undefined;
 

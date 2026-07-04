@@ -262,20 +262,22 @@ export function CustomerHeaderBootstrapControls({
 export function CustomerAccountClientPage({
   initialCustomer,
   initialSite,
+  initialCreativePacks = [],
   siteSlug
 }: {
   initialCustomer?: PublicCustomer;
   initialSite?: CustomerBootstrapSite;
+  initialCreativePacks?: CreativePack[];
   siteSlug: string;
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
   const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
-  if (initialCustomer && initialSite) return <CustomerAccountShell customer={initialCustomer} site={initialSite} />;
+  if (initialCustomer && initialSite) return <CustomerAccountShell creativePacks={initialCreativePacks} customer={initialCustomer} site={initialSite} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
   if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
-  return <CustomerAccountShell customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} />;
+  return <CustomerAccountShell creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} />;
 }
 
 export function CustomerWorkspaceClientPage({

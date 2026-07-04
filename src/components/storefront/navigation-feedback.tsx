@@ -49,7 +49,7 @@ function showPending(href?: string) {
     pendingDelayTimeout = undefined;
     emitSnapshot({ href, pending: true });
     fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
-  }, 180);
+  }, 70);
 }
 
 function clearPending() {
@@ -70,6 +70,7 @@ function isModifiedClick(event: MouseEvent) {
 function shouldShowStorefrontNavigationFeedback(anchor: HTMLAnchorElement) {
   const href = anchor.getAttribute("href");
   if (!href || href.startsWith("#") || anchor.hasAttribute("download")) return false;
+  if (anchor.dataset.storefrontInstantFilter === "true") return false;
   if (anchor.target && anchor.target !== "_self") return false;
 
   const targetUrl = new URL(href, window.location.href);

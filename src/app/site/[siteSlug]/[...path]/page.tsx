@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPlatformState,
+  readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase,
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase
@@ -32,7 +33,9 @@ function stateWithSiteFirst(state: PlatformState, siteSlug: string): PlatformSta
 
 async function readPublicRuntimeStateBySlugWithFallback(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
   try {
-    const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug);
+    const state = pageSlug === "/collections"
+      ? await readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase(siteSlug)
+      : await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug);
     if (state?.sites[0]) return state;
   } catch {
     // Local development can exhaust the relational pool; legacy state keeps public routes renderable.
@@ -107,6 +110,16 @@ export default async function SiteCatchAllPage({
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(`/site/${publicSlug}/refunds`);
   if (slug === "/content-policy" || slug === "/policies/content") redirect(`/site/${publicSlug}/content`);
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(`/site/${publicSlug}/shipping`);
+  if (slug === "/checkout") {
+    const query = new URLSearchParams();
+    for (const [key, value] of Object.entries(searchParams ? await searchParams : {})) {
+      if (typeof value === "string") query.set(key, value);
+      else if (Array.isArray(value)) {
+        for (const item of value) query.append(key, item);
+      }
+    }
+    redirect(`/site/${publicSlug}/cart${query.size ? `?${query.toString()}` : ""}`);
+  }
   if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
   if (slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};

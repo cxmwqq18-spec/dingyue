@@ -53,8 +53,8 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
     if (resolved.matched) return { state: toolsState, site: toolsSite, ...resolved };
   }
   const state =
-    toolsState ??
     detailState ??
+    toolsState ??
     await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, "/");
   const site = state?.sites[0];
   if (!state || !site) return { state, site, siteAiApps: [], page: undefined, app: undefined, matched: false };
