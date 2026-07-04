@@ -109,8 +109,9 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
 const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
 const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "photo_package_wall", "products", "products_plus", "search_results"]);
-const publicHomePackLimit = 24;
-const publicDirectoryPackLimit = 48;
+const publicHomePackLimit = 96;
+const publicDirectoryPackLimit = 128;
+const publicToolLimit = 96;
 
 function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
   return new Set(pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId]?.type).filter((type): type is string => Boolean(type)));
@@ -122,12 +123,18 @@ function trimCreativePacksForStorefront(renderData: SiteRenderData, limit: numbe
 
 async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit: number): Promise<SiteRenderData["creativePacks"]> {
   const sanitizedExisting = existing.map(lightweightCreativePack);
-  if (sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
   const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map(lightweightCreativePack);
-  return fullPacks.length > sanitizedExisting.length ? fullPacks : sanitizedExisting;
+  if (!fullPacks.length) return sanitizedExisting.slice(0, limit);
+
+  const fullPackIds = new Set(fullPacks.map((pack) => pack.id));
+  const merged = [
+    ...fullPacks,
+    ...sanitizedExisting.filter((pack) => !fullPackIds.has(pack.id))
+  ];
+  return merged.slice(0, limit);
 }
 
-function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = 12): SiteRenderData["siteAiApps"] {
+function trimSiteAiAppsForStorefront(renderData: SiteRenderData, limit = publicToolLimit): SiteRenderData["siteAiApps"] {
   return renderData.siteAiApps.slice(0, limit).map(lightweightSiteAiApp);
 }
 
@@ -327,13 +334,14 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
   const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table");
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
-  const packLimit = slug === "/" ? publicHomePackLimit : slug === "/collections" ? publicDirectoryPackLimit : 18;
+  const packLimit = slug === "/" ? publicHomePackLimit : slug === "/collections" ? publicDirectoryPackLimit : publicHomePackLimit;
+  const siteAiAppLimit = slug === "/tools" ? publicToolLimit : 48;
   return {
     creativePacks: needsCreativePacks ? trimCreativePacksForStorefront(renderData, packLimit) : [],
     mediaAssets: renderData.mediaAssets,
     products: needsProducts ? (hasPricingTable ? trimPricingProductsForStorefront(renderData, 12) : trimProductsForStorefront(renderData, slug === "/cart" ? 12 : 6)) : [],
-    siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData) : [],
-    toolMenuItems: renderData.toolMenuItems.slice(0, 80).map(lightweightToolMenuItem)
+    siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData, siteAiAppLimit) : [],
+    toolMenuItems: renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem)
   };
 }
 

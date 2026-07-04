@@ -2967,7 +2967,6 @@ function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockInstance
   return items
     .filter((item) => item.status === "active")
     .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title))
-    .slice(0, 12)
     .map((item) => {
       const parent = item.category?.parent;
       const category = parent?.label || item.category?.label || "AI Tools";
@@ -2994,12 +2993,9 @@ function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockInstance
 }
 
 function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageMegaGroup[] {
-  const maxGroups = 4;
-  const maxItemsPerGroup = 4;
   const groups = new Map<string, PhotoPackageMegaGroup>();
   creativePacks
     .filter((pack) => pack.status === "active")
-    .slice(0, 24)
     .forEach((pack) => {
       const parent = pack.categoryRecord?.parent;
       const groupLabel = parent?.label || dreamshootCategoryLabel(pack.categoryRecord?.slug || pack.category);
@@ -3015,11 +3011,10 @@ function getPhotoPackageMegaGroups(creativePacks: CreativePack[]): PhotoPackageM
   return Array.from(groups.values())
     .map((group) => ({
       ...group,
-      items: group.items.sort((a, b) => a.label.localeCompare(b.label)).slice(0, maxItemsPerGroup)
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label))
     }))
     .filter((group) => group.items.length > 0)
-    .sort((a, b) => a.label.localeCompare(b.label))
-    .slice(0, maxGroups);
+    .sort((a, b) => a.label.localeCompare(b.label));
 }
 
 function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | undefined): PhotoPackageMegaGroup[] {
@@ -3275,7 +3270,7 @@ function DreamShootMegaToolsPanel({
     meta: dreamshootMegaCategoryMeta(category)
   })).map((group) => ({ ...group, meta: dreamshootToolGroupMeta(group.category, group.items) }));
   const summaryGroups = groupedCategories.filter((group) => summaryCategories.includes(group.category));
-  const detailGroups = variant === "section" ? groupedCategories : summaryGroups;
+  const detailGroups = groupedCategories;
   return (
     <div
       className={
@@ -3366,7 +3361,7 @@ function mobileMenuSummaryClass(dark: boolean) {
 }
 
 function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups: PhotoPackageMegaGroup[]; site: Site }) {
-  const visibleGroups = groups.slice(0, 8);
+  const visibleGroups = groups;
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const menuLabel = isAidreamcapesSite(site) ? "Route Portrait Packages" : "AI Shoot Packages";
   return (
@@ -3392,7 +3387,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
                   <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-category:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-category:-rotate-90"} strokeWidth={2} />
                 </summary>
                 <div className="grid gap-1 pb-1 pl-8 pt-1">
-                  {group.items.slice(0, 6).map((item) => (
+                  {group.items.map((item) => (
                     <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={hrefFor(site, item.href)} key={item.slug}>
                       {item.label}
                     </Link>
@@ -3414,7 +3409,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
 function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; tools: SectionBlockInstance[] }) {
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const orderedCategories = ["Photo AI", "Photo Package Edit", "Video AI"].filter((category) => categories.includes(category));
-  const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))].slice(0, 3);
+  const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))];
   const groupedCategories = displayCategories.map((category) => ({
     category,
     items: tools.filter((tool) => blockValue(tool, "category", "Photo AI") === category),
@@ -3443,7 +3438,7 @@ function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; too
                   <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-tool:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-tool:-rotate-90"} strokeWidth={2} />
                 </summary>
                 <div className="grid gap-1 pb-1 pl-8 pt-1">
-                  {group.items.slice(0, 8).map((tool, index) => {
+                  {group.items.map((tool, index) => {
                     const title = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
                     return (
                       <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, title)} key={instanceKey(tool, index, "mobile_tool")}>

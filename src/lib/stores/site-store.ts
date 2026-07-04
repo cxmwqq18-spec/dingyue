@@ -746,8 +746,8 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
 function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["profile"]) {
   return {
     products: profile === "pricing" ? 12 : 8,
-    siteAiApps: profile === "tools" ? 8 : profile === "home" ? 6 : 12,
-    creativePacks: profile === "collection-detail" ? 4 : profile === "collections" ? 48 : profile === "tools" ? 18 : profile === "home" ? 48 : 12,
+    siteAiApps: profile === "tools" ? 96 : profile === "home" ? 48 : 48,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 96 : 24,
     mediaAssets: profile === "home" ? 24 : profile === "workspace" ? 40 : 0
   };
 }
