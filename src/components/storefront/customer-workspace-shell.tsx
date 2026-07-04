@@ -578,6 +578,8 @@ export function CustomerWorkspaceShell({
                     customer={customer}
                     initialCreativePackId={initialCreativePackId}
                     initialToolId={initialToolId}
+                    preferredMode={preferredCreateMode}
+                    preferredModeRequest={preferredCreateModeRequest}
                     siteAiApps={siteAiApps}
                     siteId={site.id}
                     siteSlug={site.slug}

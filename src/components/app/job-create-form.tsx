@@ -479,6 +479,8 @@ export function JobCreateForm({
   emptyBody = "Enable an album experience for this site before publishing this form.",
   tone = "dark",
   preferProvidedAssets = false,
+  preferredMode,
+  preferredModeRequest,
   onOpenUploadManager
 }: {
   siteId: string;
@@ -493,6 +495,8 @@ export function JobCreateForm({
   emptyBody?: string;
   tone?: "dark" | "light";
   preferProvidedAssets?: boolean;
+  preferredMode?: CreateMode;
+  preferredModeRequest?: number;
   onOpenUploadManager?: () => void;
 }) {
   const router = useRouter();
@@ -687,6 +691,19 @@ export function JobCreateForm({
       setThemeCategory(nextCategory);
     }
   }
+
+  useEffect(() => {
+    if (!preferredMode || preferredMode === createMode) return;
+    if (preferredMode === "tool") {
+      const nextPreset = toolPresets.find((preset) => preset.id === selectedToolId) ?? toolPresets[0];
+      updateCreateMode("tool");
+      if (nextPreset) updateToolPreset(nextPreset);
+      return;
+    }
+    const nextPack = activeCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? activeCreativePacks[0];
+    updateCreateMode("theme");
+    if (nextPack) updateCreativePack(nextPack);
+  }, [preferredMode, preferredModeRequest]);
 
   async function uploadSourceFiles(files: FileList | null) {
     const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
@@ -939,17 +956,27 @@ export function JobCreateForm({
                 </span>
               </button>
             );
-          }) : displayedToolPresets.map((preset) => {
+          }) : displayedToolPresets.map((preset, index) => {
             const active = preset.id === selectedToolId;
+            const previewPack = activeCreativePacks[index % Math.max(activeCreativePacks.length, 1)];
             return (
               <button
-                className={`min-h-[120px] rounded-[16px] border p-4 text-left transition hover:-translate-y-0.5 ${
+                className={`grid min-h-[248px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
                 key={preset.id}
                 onClick={() => updateToolPreset(preset)}
                 type="button"
               >
+                <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
+                  {previewPack?.imageUrl ? (
+                    <img className="aspect-[4/3] w-full object-cover" src={previewPack.imageUrl} alt={preset.title} />
+                  ) : (
+                    <span className="flex aspect-[4/3] items-center justify-center">
+                      <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
+                    </span>
+                  )}
+                </span>
                 <span className="flex items-start justify-between gap-3">
                   <span className="min-w-0">
                     <span className="block truncate text-base font-semibold">{preset.title}</span>
