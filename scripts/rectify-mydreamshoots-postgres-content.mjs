@@ -6,7 +6,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const replacements = new Map([
-  ["ʍʏƉʀɛǟʍֆhoots", "MyDreamShoots"],
   ["4.9/5 from creators using private photo packs", "Private uploads and clear credit costs"],
   ["5-star reviews", "Use cases"],
   ["Show finished outcomes first: sports posters, clean headshots, cinematic portraits, style previews, and seasonal albums.", "See examples of what your selfies can become: headshots, fan posters, creator portraits, style previews, and seasonal albums."],

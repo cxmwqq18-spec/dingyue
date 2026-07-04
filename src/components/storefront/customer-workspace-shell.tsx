@@ -105,7 +105,7 @@ function WorkspaceInlineLoading({ label }: { label: string }) {
 
 const workspaceSteps: Array<{ panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor; title: string; detail: string }> = [
   { panel: "create", anchor: "step-create", title: "Choose package", detail: "Pick a photo package or focused tool and review the credit cost before generation." },
-  { panel: "create", anchor: "source-photos", title: "Upload selfies", detail: "Attach private source photos inside the same request before submitting." },
+  { panel: "create", anchor: "source-photos", title: "Upload selfies", detail: "Create the private model photos for this request before submitting." },
   { panel: "overview", anchor: "review-request", title: "Review results", detail: "Track generation status, private albums, downloads, favorites, and credit activity." }
 ];
 
@@ -114,7 +114,7 @@ const navItems = [
   { id: "photo-editor", label: "AI Photo Editor", status: "Open", icon: Sparkles, panel: "create" as const, actions: ["Prompt edit", "Retouch", "Background"] },
   { id: "albums", label: "AI Albums", status: "Ready", icon: ImageIcon, panel: "overview" as const, actions: ["Recent albums", "Delivery status", "Downloads"] },
   { id: "video", label: "AI Video", status: "Concept", icon: PlaySquare, panel: "create" as const, actions: ["Image to video", "Profile clip", "Motion prompt"] },
-  { id: "model-studio", label: "Model Studio", status: "Private", icon: Bot, panel: "upload" as const, actions: ["Upload sources", "Training set", "Identity review"] },
+  { id: "model-studio", label: "Model Studio", status: "Private", icon: Bot, panel: "upload" as const, actions: ["Upload selfies", "Training set", "Identity review"] },
   { id: "explore", label: "Explore", status: "Live", icon: Search, panel: "overview" as const, actions: ["Browse ideas", "Saved looks", "Package picks"] }
 ];
 
@@ -171,12 +171,16 @@ export function CustomerWorkspaceShell({
   const [activeGuideStep, setActiveGuideStep] = useState(() => initialPanel === "overview" ? 2 : initialPanel === "upload" ? 1 : 0);
   const [preferredCreateMode, setPreferredCreateMode] = useState<WorkspaceCreateMode>("theme");
   const [preferredCreateModeRequest, setPreferredCreateModeRequest] = useState(0);
+  const [operationActionById, setOperationActionById] = useState<Record<string, string>>({});
+  const [operationNoteById, setOperationNoteById] = useState<Record<string, string>>({});
+  const [appliedOperationContext, setAppliedOperationContext] = useState<{ action?: string; note?: string; source?: string }>({});
+  const [showStepGuide, setShowStepGuide] = useState(false);
   const currentStepIndex = activePanel === "overview" ? 2 : activeGuideStep;
   const activeTitle = isAidreamcapes ? "Build a private travel portrait set." : "Create your private AI photo set.";
   const brandLabel = isAidreamcapes ? "Aidreamcapes" : myDreamShootsDisplayName;
   const activeSubtitle = isAidreamcapes
-    ? "Choose a route-ready package, attach source photos, then generate and review a private travel portrait set in one workspace."
-    : "Choose a photo package, upload selfies or source photos, then generate and review a private AI photo set in one workspace.";
+    ? "Choose a route-ready package, upload travel references, then generate and review a private travel portrait set in one workspace."
+    : "Choose a photo package, upload selfies, then generate and review a private AI photo set in one workspace.";
   const tabItems: Array<{ id: WorkspaceResourceTab; label: string }> = useMemo(
     () =>
       isAidreamcapes
@@ -219,10 +223,10 @@ export function CustomerWorkspaceShell({
   const heroPreviewPacks = creativePacks.filter((pack) => pack.status === "active" && pack.imageUrl).slice(0, 5);
   const guidedTitle = isAidreamcapes ? "Create a private travel portrait set." : "Create your dream photoshoot.";
   const guidedSubtitle = isAidreamcapes
-    ? "Choose a route style, upload travel source photos, confirm credits, and review a private album from the same flow."
+    ? "Choose a route style, upload travel references, confirm credits, and review a private album from the same flow."
     : "Choose a photo package, upload selfies, confirm credits, and review your private AI album from the same flow.";
   const guidedBullets = isAidreamcapes
-    ? ["Destination portrait packages", "Private source uploads", "Credit cost shown before generation", "Travel albums and downloads"]
+    ? ["Destination portrait packages", "Private travel references", "Credit cost shown before generation", "Travel albums and downloads"]
     : ["Upload selfies from this account", "Browse themed photo packages", "Credit cost shown before generation", "Private albums and downloads"];
   const activeOperationItem = activeOperationId ? activeNavItems.find((item) => item.id === activeOperationId) : undefined;
 
@@ -270,11 +274,35 @@ export function CustomerWorkspaceShell({
 
   function openOperationInMainWindow(itemId: string, target = navAnchorForItem(itemId)) {
     const destination = mainWindowTargetForOperation(itemId, target);
+    const navItem = activeNavItems.find((item) => item.id === itemId);
+    const selectedAction = operationActionById[itemId] ?? navItem?.actions[0] ?? navItem?.label ?? "";
     setActiveOperationId(null);
+    setAppliedOperationContext({
+      action: selectedAction,
+      note: operationNoteById[itemId]?.trim() || undefined,
+      source: navItem?.label
+    });
     setPreferredCreateMode(createModeForOperation(itemId));
     setPreferredCreateModeRequest((current) => current + 1);
     if (destination.tab) setResourceTab(destination.tab);
     choosePanel(destination.panel, destination.anchor);
+  }
+
+  function editAppliedOperation() {
+    const item = activeNavItems.find((navItem) => navItem.label === appliedOperationContext.source);
+    if (!item) return;
+    setActiveNavId(item.id);
+    setActiveOperationId(item.id);
+  }
+
+  function showCurrentRequestReview() {
+    setActivePanel("create");
+    setActiveGuideStep(2);
+    if (typeof window === "undefined") return;
+    window.history.replaceState(null, "", "#review-current-request");
+    window.setTimeout(() => {
+      document.getElementById("review-current-request")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
 
   useEffect(() => {
@@ -326,6 +354,31 @@ export function CustomerWorkspaceShell({
               <p className="mt-2 text-sm leading-6 text-white/66">
                 Select a left action to open its controls, then keep choosing packages and tools in the large panel.
               </p>
+            </div>
+          ) : null}
+
+          {isGuidedShootFlow && (appliedOperationContext.action || appliedOperationContext.note) ? (
+            <div className="mt-4 rounded-[18px] border border-[#31d4ff]/35 bg-[#07131a] p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Current request</p>
+              <p className="mt-2 text-sm font-semibold text-white">{appliedOperationContext.action ?? "Custom operation"}</p>
+              {appliedOperationContext.source ? <p className="mt-1 text-xs leading-5 text-white/48">{appliedOperationContext.source}</p> : null}
+              {appliedOperationContext.note ? <p className="mt-2 line-clamp-3 text-xs leading-5 text-white/62">{appliedOperationContext.note}</p> : null}
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <button
+                  className="rounded-[12px] border border-white/12 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                  onClick={editAppliedOperation}
+                  type="button"
+                >
+                  Edit action
+                </button>
+                <button
+                  className="rounded-[12px] border border-white/12 bg-white px-3 py-2 text-xs font-semibold text-[#101114] transition hover:-translate-y-0.5"
+                  onClick={showCurrentRequestReview}
+                  type="button"
+                >
+                  Review
+                </button>
+              </div>
             </div>
           ) : null}
 
@@ -494,6 +547,22 @@ export function CustomerWorkspaceShell({
               })}
             </div>
 
+            {isGuidedShootFlow ? (
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-white/10 bg-white/[0.035] px-4 py-3">
+                <p className="text-xs leading-5 text-white/58">
+                  View the full package, selfie upload, and review sequence without leaving the current workspace.
+                </p>
+                <button
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                  onClick={() => setShowStepGuide(true)}
+                  type="button"
+                >
+                  View steps
+                  <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.9} />
+                </button>
+              </div>
+            ) : null}
+
             {!isGuidedShootFlow ? (
             <div className="mt-6 grid grid-cols-2 gap-2 md:grid-cols-5">
               {tabItems.map((tab) => (
@@ -521,7 +590,7 @@ export function CustomerWorkspaceShell({
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Step 01</p>
-                    <h2 className="mt-2 text-xl font-semibold">Attach source photos</h2>
+                    <h2 className="mt-2 text-xl font-semibold">Upload selfies</h2>
                     <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
                       Upload private selfies or reference images for the selected AI request. These files stay in your signed-in workspace.
                     </p>
@@ -541,7 +610,7 @@ export function CustomerWorkspaceShell({
                 </div>
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.035] p-4">
                   <p className="text-sm leading-6 text-white/58">
-                    {sourceAssets.length ? "Your source photos are ready. Continue to choose a package or tool." : "Upload at least one source photo before starting a generation request."}
+                    {sourceAssets.length ? "Your private photos are ready. Continue to choose a package or tool." : "Upload at least one selfie before starting a generation request."}
                   </p>
                   <button
                     className="rounded-full border border-white/12 bg-white px-5 py-2.5 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45"
@@ -578,12 +647,15 @@ export function CustomerWorkspaceShell({
                     customer={customer}
                     initialCreativePackId={initialCreativePackId}
                     initialToolId={initialToolId}
+                    operationContext={appliedOperationContext}
                     preferredMode={preferredCreateMode}
                     preferredModeRequest={preferredCreateModeRequest}
                     siteAiApps={siteAiApps}
                     siteId={site.id}
                     siteSlug={site.slug}
+                    onContinueToSources={() => choosePanel("create", "source-photos")}
                     onOpenUploadManager={() => choosePanel("upload", "step-upload")}
+                    onReviewCurrentRequest={showCurrentRequestReview}
                     preferProvidedAssets
                     tone="dark"
                   />
@@ -600,7 +672,7 @@ export function CustomerWorkspaceShell({
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/44">Step 03 · Review request</p>
                 <h2 className="mt-2 text-xl font-semibold">Review credits, resources, and delivery</h2>
                 <p className="mt-2 text-sm leading-6 text-white/58">
-                  Confirm the selected workflow, attached source photos, available credits, and generated resources before you continue.
+                  Confirm the selected workflow, private model photos, available credits, and generated resources before you continue.
                 </p>
               </div>
               <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
@@ -620,7 +692,7 @@ export function CustomerWorkspaceShell({
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: "Sources", value: sourceAssets.length },
+                  { label: "Selfies", value: sourceAssets.length },
                   { label: "Ready", value: readyJobs },
                   { label: "Credits", value: customer.balance.available }
                 ].map((item) => (
@@ -681,7 +753,7 @@ export function CustomerWorkspaceShell({
                     <img alt={asset.label} className="aspect-square rounded-[12px] object-cover" src={asset.previewUrl} />
                     <div className="min-w-0 self-center">
                       <p className="truncate text-sm font-semibold">{asset.label}</p>
-                      <p className="mt-1 text-xs text-white/44">{asset.role === "input" ? "Source photo" : "Generated output"}</p>
+                      <p className="mt-1 text-xs text-white/44">{asset.role === "input" ? "Private photo" : "Generated output"}</p>
                     </div>
                     {asset.role === "output" ? (
                       <CustomerAssetDownloadButton
@@ -696,7 +768,7 @@ export function CustomerWorkspaceShell({
                 ))}
                 {!hydratedAssets.length ? (
                   <div className="rounded-[16px] border border-dashed border-white/14 bg-white/[0.03] p-4 text-sm leading-6 text-white/58">
-                    Upload source photos or start a package to populate this resource panel.
+                    Upload selfies or start a package to populate this resource panel.
                   </div>
                 ) : null}
               </div>
@@ -719,7 +791,7 @@ export function CustomerWorkspaceShell({
                   <div className="flex items-center justify-between gap-3 rounded-[13px] border border-white/10 bg-[#0a0d14] px-3 py-2" key={model.id}>
                     <span className="min-w-0">
                       <span className="block truncate text-xs font-semibold">{model.label}</span>
-                      <span className="mt-0.5 block text-[11px] text-white/42">{model.inputAssetCount}/{model.minInputAssets} source photos</span>
+                      <span className="mt-0.5 block text-[11px] text-white/42">{model.inputAssetCount}/{model.minInputAssets} private photos</span>
                     </span>
                     <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] font-semibold text-white/56">{model.status}</span>
                   </div>
@@ -755,6 +827,8 @@ export function CustomerWorkspaceShell({
         const target = navAnchorForItem(activeOperationItem.id);
         const mainTarget = mainWindowTargetForOperation(activeOperationItem.id, target);
         const operationMode = createModeForOperation(activeOperationItem.id);
+        const selectedAction = operationActionById[activeOperationItem.id] ?? activeOperationItem.actions[0] ?? "";
+        const operationNote = operationNoteById[activeOperationItem.id] ?? "";
         const isAlbumOperation = mainTarget.panel === "overview";
         const isUploadOperation = mainTarget.anchor === "step-upload" || mainTarget.anchor === "source-photos";
         return (
@@ -786,15 +860,35 @@ export function CustomerWorkspaceShell({
                 <div className="grid gap-2 sm:grid-cols-3">
                   {activeOperationItem.actions.map((action) => (
                     <button
-                      className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff]"
+                      className={`rounded-[14px] border p-3 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff] ${
+                        selectedAction === action ? "border-[#31d4ff]/70 bg-[#31d4ff]/10" : "border-white/10 bg-white/[0.04]"
+                      }`}
                       key={action}
-                      onClick={() => openOperationInMainWindow(activeOperationItem.id, target)}
+                      onClick={() => setOperationActionById((current) => ({ ...current, [activeOperationItem.id]: action }))}
                       type="button"
                     >
-                      <p className="text-sm font-semibold">{action}</p>
-                      <p className="mt-1 text-xs leading-5 text-white/46">Open this action in the main window.</p>
+                      <p className="flex items-center justify-between gap-2 text-sm font-semibold">
+                        <span>{action}</span>
+                        {selectedAction === action ? <CheckCircle2 className="h-4 w-4 text-[#31d4ff]" strokeWidth={1.8} /> : null}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-white/46">Select this operation, then apply it to the main window.</p>
                     </button>
                   ))}
+                </div>
+                <label className="grid gap-2 text-sm font-semibold text-white">
+                  Operation note
+                  <textarea
+                    className="min-h-[86px] rounded-[16px] border border-white/10 bg-white/[0.045] px-4 py-3 text-sm font-normal leading-6 text-white placeholder:text-white/35 focus:border-[#31d4ff]/70 focus:outline-none"
+                    onChange={(event) => setOperationNoteById((current) => ({ ...current, [activeOperationItem.id]: event.target.value }))}
+                    placeholder={operationMode === "tool" ? "Describe the edit, background, motion, or retouch direction before choosing a tool." : "Add package notes, preferred look, or selfie reminders before choosing images."}
+                    value={operationNote}
+                  />
+                </label>
+                <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
+                  <p className="text-sm font-semibold">Current selection</p>
+                  <p className="mt-2 text-sm leading-6 text-white/60">
+                    {selectedAction || activeOperationItem.label} will open {isAlbumOperation ? "the review and delivery area" : isUploadOperation ? "the selfie upload step" : operationMode === "tool" ? "the tool image selection window" : "the package image selection window"}.
+                  </p>
                 </div>
                 <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
                   <p className="text-sm font-semibold">Next step</p>
@@ -804,8 +898,8 @@ export function CustomerWorkspaceShell({
                       : isUploadOperation
                         ? "Open the selfie upload controls inside the same request flow."
                         : operationMode === "tool"
-                          ? "Open the large tool image window, choose a focused AI tool, then continue with source photos and review."
-                          : "Open the large package image window, choose a themed photo package, then continue with source photos and review."}
+                          ? "Open the large tool image window, choose a focused AI tool, then continue with selfies and review."
+                          : "Open the large package image window, choose a themed photo package, then continue with selfies and review."}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -814,7 +908,7 @@ export function CustomerWorkspaceShell({
                     onClick={() => openOperationInMainWindow(activeOperationItem.id, target)}
                     type="button"
                   >
-                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : operationMode === "tool" ? "Open tool window" : "Open package window"}
+                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : operationMode === "tool" ? "Apply and open tool window" : "Apply and open package window"}
                     <ChevronRight className="h-4 w-4" strokeWidth={1.9} />
                   </button>
                   <button
@@ -835,6 +929,54 @@ export function CustomerWorkspaceShell({
           </div>
         );
       })() : null}
+      {showStepGuide ? (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/66 px-4 py-6 backdrop-blur-sm" data-workspace-step-guide="true" role="dialog" aria-modal="true" aria-labelledby="workspace-step-guide-title">
+          <div className="w-full max-w-2xl overflow-hidden rounded-[22px] border border-white/14 bg-[#10131b] text-white shadow-[0_34px_90px_-45px_rgba(0,0,0,0.95)]">
+            <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Workspace steps</p>
+                <h2 className="mt-2 text-xl font-semibold" id="workspace-step-guide-title">Choose, upload, review.</h2>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-white/60">
+                  Follow the target flow: pick a package or tool, upload private model photos, confirm credits, then open results in Studio.
+                </p>
+              </div>
+              <button
+                aria-label="Close step guide"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.05] text-white/70 transition hover:bg-white/[0.1] hover:text-white"
+                onClick={() => setShowStepGuide(false)}
+                type="button"
+              >
+                <X className="h-4 w-4" strokeWidth={1.9} />
+              </button>
+            </div>
+            <div className="grid gap-3 p-5">
+              {workspaceSteps.map((step, index) => {
+                const active = index === currentStepIndex;
+                return (
+                  <button
+                    className={`grid gap-2 rounded-[16px] border p-4 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.06] ${
+                      active ? "border-[#31d4ff]/70 bg-[#31d4ff]/10" : "border-white/10 bg-white/[0.035]"
+                    }`}
+                    key={step.anchor}
+                    onClick={() => {
+                      setShowStepGuide(false);
+                      choosePanel(step.panel, step.anchor);
+                    }}
+                    type="button"
+                  >
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/46">Step {String(index + 1).padStart(2, "0")}</span>
+                      {active ? <span className="rounded-full bg-[#31d4ff] px-2 py-1 text-[10px] font-semibold text-[#071014]">Current</span> : null}
+                    </span>
+                    <span className="text-base font-semibold">{step.title}</span>
+                    <span className="text-sm leading-6 text-white/60">{step.detail}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

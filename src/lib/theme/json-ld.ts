@@ -320,6 +320,28 @@ function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
   };
 }
 
+function storefrontApplicationSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  const isHome = input.pagePath === "/" || input.page.slug === "/";
+  if (!isHome) return undefined;
+  const siteName = siteBrandName(input.site);
+  return {
+    "@type": "SoftwareApplication",
+    "@id": `${siteBaseUrl(input.site, input.routeMode)}#app`,
+    name: siteName,
+    description,
+    applicationCategory: "PhotographyApplication",
+    operatingSystem: "Web",
+    url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/")),
+    provider: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization` },
+    offers: {
+      "@type": "OfferCatalog",
+      "@id": `${siteBaseUrl(input.site, input.routeMode)}#plans`,
+      name: isAidreamcapesSite(input.site) ? "Aidreamcapes travel portrait packages and credits" : "MyDreamShoots photo packages and credits",
+      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
+    }
+  };
+}
+
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const title = pageTitle(input.site, input.page);
   const description = pageDescription(input.site, input.page);
@@ -335,6 +357,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
       description: cleanSchemaText(input.site, input.site.branding.description)
     },
     websiteSchema(input.site, input.routeMode),
+    storefrontApplicationSchema(input, title, description),
     breadcrumbs(input.site, input.routeMode, input.pagePath, title),
     faqSchema(input.site, input.pageJson),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),

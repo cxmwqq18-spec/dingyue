@@ -5,7 +5,6 @@ const statePath = path.resolve(process.cwd(), "data/platform-state.json");
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 
 const replacements = new Map([
-  ["ʍʏƉʀɛǟʍֆhoots", "MyDreamShoots"],
   ["4.9/5 from creators using private photo packs", "Private uploads and clear credit costs"],
   ["5-star reviews", "Use cases"],
   ["Show finished outcomes first: sports posters, clean headshots, cinematic portraits, style previews, and seasonal albums.", "See examples of what your selfies can become: headshots, fan posters, creator portraits, style previews, and seasonal albums."],
@@ -151,7 +150,7 @@ for (const site of state.sites ?? []) {
   walk(site);
   const before = JSON.stringify(site);
   if (site.themeSettings?.publishedJson?.globalSections?.footer?.settings) {
-    site.themeSettings.publishedJson.globalSections.footer.settings.title = "MyDreamShoots";
+    site.themeSettings.publishedJson.globalSections.footer.settings.title = "ʍʏƉʀɛǟʍֆhoots";
     site.themeSettings.publishedJson.globalSections.footer.settings.tagline = "Private AI photo sets with visible credit costs and gallery delivery";
     site.themeSettings.publishedJson.globalSections.footer.settings.body = "Upload your selfies, choose a style, review the credit cost, and download a private photo set.";
   }

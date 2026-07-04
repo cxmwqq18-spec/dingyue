@@ -277,7 +277,8 @@ const homeSections: ThemePageJson["sections"] = {
       block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview haircut, color, and styling ideas before you commit to a salon change or full image package.", category: "Beauty", meta: "Style preview", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/collections/hairstyle" }),
       block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", category: "Creative", meta: "Evening portraits", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/collections/gala-photos" }),
       block("catalog_travel", "catalog_pack", { title: "Lifestyle portrait pack", description: "Outdoor profile photos, creator scenes, and personal-brand album images.", category: "Lifestyle", meta: "Lifestyle scenes", credits: "24 credits", imageUrl: assets.holidayTravelPack, href: "/collections/travel" }),
-      block("catalog_fashion", "catalog_pack", { title: "Fashion Editorial", description: "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", category: "Beauty", meta: "Style preview", credits: "24 credits", imageUrl: assets.virtualLooks, href: "/collections/fashion-editorial" })
+      block("catalog_fashion", "catalog_pack", { title: "Fashion Editorial", description: "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", category: "Beauty", meta: "Style preview", credits: "24 credits", imageUrl: assets.virtualLooks, href: "/collections/fashion-editorial" }),
+      block("catalog_boudoir", "catalog_pack", { title: "Boudoir", description: "Create a private boudoir-inspired portrait set from photos you own or have permission to use. Adult, consensual, non-explicit use only; no minors, non-consenting people, stolen images, or unauthorized portraits.", category: "Boudoir", meta: "Adult consent", credits: "24 credits", imageUrl: assets.womanPortrait, href: "/collections/boudoir" })
     ]
   ),
   flow_bridge_1: section(
@@ -308,12 +309,13 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "package-taxonomy",
       eyebrow: "Photo package library",
       title: "AI photo packages by style, use case, and delivery goal.",
-      subtitle: "Compare AI headshots, hairstyle previews, World Cup fan photos, fashion previews, boudoir-inspired sets, and video add-ons before you spend credits. Your uploads stay private by default.",
+      subtitle: "Compare AI headshots, hairstyle previews, World Cup fan photos, fashion previews, adult consensual boudoir-inspired sets, and video add-ons before you spend credits. Your uploads stay private by default.",
       layout: "editorial"
     },
     [
       block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshots" }),
       block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/beauty" }),
+      block("taxonomy_boudoir", "taxonomy_card", { title: "Boudoir", description: "Tasteful, private, non-explicit portrait concepts for consenting adults only. Do not upload minors, non-consenting people, stolen images, or unauthorized portraits.", meta: "Adult consent", keywords: "boudoir|private portraits|consent", imageUrl: assets.womanPortrait, href: "/collections/boudoir" }),
       block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections/creative" }),
       block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/sports" }),
       block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/collections/video" }),

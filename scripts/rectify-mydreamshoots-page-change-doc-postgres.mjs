@@ -6,7 +6,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const replacements = new Map([
-  ["ʍʏƉʀɛǟʍֆhoots", "MyDreamShoots"],
   ["AI photo packages that feel like a real shoot", "Studio-quality AI photos from the selfies on your phone."],
   ["AI photo packages that feel real", "Studio-quality AI photos from the selfies on your phone."],
   ["Upload selfies, build a private model, then buy photo packages with monthly credits.", "Upload your photos once, then create private headshots, creator portraits, fan posters, beauty previews, and themed albums. You see the credit cost before every generation."],
@@ -135,7 +134,7 @@ async function main() {
     const publishedJson = rewriteJson(structuredClone(settings.publishedJson));
     for (const seo of [draftJson.seo, publishedJson.seo]) {
       if (!seo) continue;
-      seo.siteTitle = "MyDreamShoots";
+      seo.siteTitle = "ʍʏƉʀɛǟʍֆhoots";
       seo.siteDescription = "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.";
       seo.siteKeywords = "";
       for (const pageSeo of Object.values(seo.pages ?? {})) delete pageSeo.keywords;

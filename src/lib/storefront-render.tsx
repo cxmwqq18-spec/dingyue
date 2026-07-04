@@ -24,6 +24,7 @@ import {
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
+import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite } from "@/lib/stores/site-store";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
@@ -1604,7 +1605,8 @@ export async function renderCustomerWorkspacePageBySlug({
       getCustomerWorkspaceSiteShellRelational(canonicalSlug)
     ]);
     if (!current || !site) redirect(loginPathWithNext);
-    return <CustomerAccountClientPage initialCustomer={current.customer} initialSite={site} siteSlug={routeSlug} />;
+    const accountRuntime = await getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId });
+    return <CustomerAccountClientPage initialCustomer={current.customer} initialRuntime={accountRuntime} initialSite={site} siteSlug={routeSlug} />;
   }
 
   if (isWorkspaceRoute) {

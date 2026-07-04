@@ -152,6 +152,7 @@ function useAccountSectionRuntime(customerId: string, siteId: string, section: A
 
 function AccountCard({
   children,
+  initialRuntime,
   id,
   loadingTitle,
   section,
@@ -161,11 +162,12 @@ function AccountCard({
   children: (runtime: ThemeRuntimeData) => ReactNode;
   customerId: string;
   id: string;
+  initialRuntime?: ThemeRuntimeData;
   loadingTitle: string;
   section: AccountSection;
   siteId: string;
 }) {
-  const state = useAccountSectionRuntime(customerId, siteId, section);
+  const state = useAccountSectionRuntime(customerId, siteId, section, initialRuntime);
   return (
     <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id={id}>
       {state.status === "loading" ? <LoadingBlock title={loadingTitle} /> : null}
@@ -351,6 +353,7 @@ function CreditsCard({ runtime }: { runtime: ThemeRuntimeData }) {
 export function CustomerAccountDataIsland({
   activeSection,
   customerId,
+  initialRuntime,
   siteId,
   siteSlug
 }: {
@@ -363,27 +366,27 @@ export function CustomerAccountDataIsland({
   return (
     <div className="min-w-0">
       {activeSection === "plan" ? (
-        <AccountCard customerId={customerId} id="account-plan" loadingTitle="Plan" section="plan" siteId={siteId}>
+        <AccountCard customerId={customerId} id="account-plan" initialRuntime={initialRuntime} loadingTitle="Plan" section="plan" siteId={siteId}>
           {(runtime) => <PlanCard runtime={runtime} />}
         </AccountCard>
       ) : null}
       {activeSection === "orders" ? (
-        <AccountCard customerId={customerId} id="account-orders" loadingTitle="Orders" section="orders" siteId={siteId}>
+        <AccountCard customerId={customerId} id="account-orders" initialRuntime={initialRuntime} loadingTitle="Orders" section="orders" siteId={siteId}>
           {(runtime) => <OrdersCard runtime={runtime} siteSlug={siteSlug} />}
         </AccountCard>
       ) : null}
       {activeSection === "jobs" ? (
-        <AccountCard customerId={customerId} id="account-progress" loadingTitle="Generation progress" section="jobs" siteId={siteId}>
+        <AccountCard customerId={customerId} id="account-progress" initialRuntime={initialRuntime} loadingTitle="Generation progress" section="jobs" siteId={siteId}>
           {(runtime) => <JobsCard runtime={runtime} siteSlug={siteSlug} />}
         </AccountCard>
       ) : null}
       {activeSection === "albums" ? (
-        <AccountCard customerId={customerId} id="account-albums" loadingTitle="Albums" section="albums" siteId={siteId}>
+        <AccountCard customerId={customerId} id="account-albums" initialRuntime={initialRuntime} loadingTitle="Albums" section="albums" siteId={siteId}>
           {(runtime) => <AlbumsCard runtime={runtime} siteSlug={siteSlug} />}
         </AccountCard>
       ) : null}
       {activeSection === "credits" ? (
-        <AccountCard customerId={customerId} id="account-credits" loadingTitle="Credits" section="credits" siteId={siteId}>
+        <AccountCard customerId={customerId} id="account-credits" initialRuntime={initialRuntime} loadingTitle="Credits" section="credits" siteId={siteId}>
           {(runtime) => <CreditsCard runtime={runtime} />}
         </AccountCard>
       ) : null}
