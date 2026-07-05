@@ -4,7 +4,8 @@ import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
-const myDreamShootsDisplayName = "ʍʏƉʀɛǟʍֆhoots";
+const myDreamShootsSeoName = "MyDreamShoots";
+const myDreamShootsBrandPattern = /(?:myᕲreamshoots|ʍʏƉʀɛǟʍֆhoots|MyÐreãm\$hoots)/g;
 
 function cleanText(value: string | undefined, fallback = ""): string {
   return (value ?? fallback).replace(/\s+/g, " ").trim();
@@ -33,13 +34,14 @@ function normalizeTitleToken(value: string): string {
 function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain" | "branding">): string {
   const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText ?? ""}`.toLowerCase();
   if (token.includes("aidreamcapes")) return "Aidreamcapes";
-  if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return myDreamShootsDisplayName;
+  if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return myDreamShootsSeoName;
   return site.branding.logoText || site.name;
 }
 
 function normalizeStorefrontBrandText(site: Site, value: string | undefined, fallback = ""): string {
   const brandName = storefrontSeoBrandName(site);
   return cleanText(value, fallback)
+    .replace(myDreamShootsBrandPattern, brandName)
     .replace(/\bMyDreamShoots\b/g, brandName)
     .replace(/\bMydreamShoots\b/g, brandName)
     .replace(/\bMydreamshoots\b/g, brandName)

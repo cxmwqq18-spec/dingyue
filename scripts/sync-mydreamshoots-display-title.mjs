@@ -6,7 +6,8 @@ const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 
 const SITE_ID = "site_dreamshoot";
 const SITE_SLUG = "mydreamshoots";
-const DISPLAY_TITLE = "ʍʏƉʀɛǟʍֆhoots";
+const DISPLAY_TITLE = "myᕲreamshoots";
+const SEO_TITLE = "MyDreamShoots";
 let changeCount = 0;
 
 function setString(target, key, value) {
@@ -27,8 +28,8 @@ for (const settings of [site.themeSettings?.draftJson, site.themeSettings?.publi
   setString(settings.globalSections?.header?.settings, "title", DISPLAY_TITLE);
   setString(settings.globalSections?.footer?.settings, "title", DISPLAY_TITLE);
   if (settings.seo) {
-    setString(settings.seo, "siteTitle", DISPLAY_TITLE);
-    setString(settings.seo, "titleTemplate", `%s | ${DISPLAY_TITLE}`);
+    setString(settings.seo, "siteTitle", SEO_TITLE);
+    setString(settings.seo, "titleTemplate", `%s | ${SEO_TITLE}`);
   }
 }
 
@@ -36,7 +37,7 @@ for (const page of state.themePages ?? []) {
   if (page.siteId !== site.id) continue;
   for (const pageJson of [page.draftJson, page.publishedJson].filter(Boolean)) {
     if (pageJson.seo?.title) {
-      const nextTitle = pageJson.seo.title.replace(/\bMyDreamShoots\b/g, DISPLAY_TITLE);
+      const nextTitle = pageJson.seo.title.replace(/myᕲreamshoots/g, SEO_TITLE);
       setString(pageJson.seo, "title", nextTitle);
     }
   }

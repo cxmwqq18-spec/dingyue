@@ -1086,7 +1086,7 @@ export async function resetDraftThemeFromActiveRelational(
     });
 
     return { site: toSite(await getSiteWithThemeRecords(tx, siteId)), sourceVersion };
-  }, { timeout: 20000 });
+  }, { timeout: 60000 });
 }
 
 export async function publishDraftPageRelational(
@@ -1207,7 +1207,7 @@ export async function publishDraftPageRelational(
       metadata: { version: publishedVersion, pageId }
     });
     return { site, draftVersion, publication, publishedVersion };
-  }, { timeout: 20000 });
+  }, { timeout: 120000 });
 }
 
 export async function restoreDraftThemeFromPublicationRelational(

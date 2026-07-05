@@ -134,7 +134,8 @@ async function main() {
     const publishedJson = rewriteJson(structuredClone(settings.publishedJson));
     for (const seo of [draftJson.seo, publishedJson.seo]) {
       if (!seo) continue;
-      seo.siteTitle = "ʍʏƉʀɛǟʍֆhoots";
+      seo.siteTitle = "MyDreamShoots";
+      seo.titleTemplate = "%s | MyDreamShoots";
       seo.siteDescription = "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.";
       seo.siteKeywords = "";
       for (const pageSeo of Object.values(seo.pages ?? {})) delete pageSeo.keywords;

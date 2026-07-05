@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const WORDMARK = "ʍʏƉʀɛǟʍֆhoots";
+const WORDMARK = "myᕲreamshoots";
 const PLAIN_WORDMARK_RE = /^(MyDreamShoots|MydreamShoots|Mydreamshoots)$/;
 
 function cloneJson(value) {
@@ -18,14 +18,6 @@ function setDisplayTitle(settings) {
   if (!settings || typeof settings !== "object") return;
   if (PLAIN_WORDMARK_RE.test(settings.title ?? "")) settings.title = WORDMARK;
   if (PLAIN_WORDMARK_RE.test(settings.logoText ?? "")) settings.logoText = WORDMARK;
-}
-
-function syncSeo(seo) {
-  if (!seo || typeof seo !== "object") return;
-  if (PLAIN_WORDMARK_RE.test(seo.siteTitle ?? "")) seo.siteTitle = WORDMARK;
-  if (typeof seo.titleTemplate === "string" && /\|\s*(MyDreamShoots|MydreamShoots|Mydreamshoots)$/.test(seo.titleTemplate)) {
-    seo.titleTemplate = `%s | ${WORDMARK}`;
-  }
 }
 
 function syncThemeJson(value) {
@@ -43,10 +35,6 @@ function syncThemeJson(value) {
   if (value.globalSections && typeof value.globalSections === "object") {
     setDisplayTitle(value.globalSections.header?.settings);
     setDisplayTitle(value.globalSections.footer?.settings);
-  }
-
-  if (value.seo && typeof value.seo === "object") {
-    syncSeo(value.seo);
   }
 
   if (value.settings_data?.current && typeof value.settings_data.current === "object") {

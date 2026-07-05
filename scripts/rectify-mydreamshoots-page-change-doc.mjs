@@ -115,7 +115,8 @@ for (const site of state.sites ?? []) {
   site.themeSettings.publishedJson ??= {};
   const themeSeo = site.themeSettings.publishedJson.seo;
   if (themeSeo) {
-    themeSeo.siteTitle = "ʍʏƉʀɛǟʍֆhoots";
+    themeSeo.siteTitle = "MyDreamShoots";
+    themeSeo.titleTemplate = "%s | MyDreamShoots";
     themeSeo.siteDescription = "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.";
     themeSeo.siteKeywords = "";
     for (const pageSeo of Object.values(themeSeo.pages ?? {})) delete pageSeo.keywords;
