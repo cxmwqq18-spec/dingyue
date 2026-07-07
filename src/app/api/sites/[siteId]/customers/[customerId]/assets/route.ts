@@ -1,13 +1,32 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import fs from "fs";
-import sharp from "sharp";
 import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { StoreError, writeCustomerAssetFile } from "@/lib/server-store";
 import { createAssetUploadRelational, getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import type { NextRequest } from "next/server";
+
+type SharpFactory = (input: Buffer) => {
+  rotate: () => {
+    resize: (options: { width: number; height: number; fit: "inside"; withoutEnlargement: boolean }) => {
+      jpeg: (options: { quality: number; mozjpeg: boolean }) => {
+        toBuffer: () => Promise<Buffer>;
+      };
+    };
+  };
+};
+
+async function loadSharp(): Promise<SharpFactory | undefined> {
+  try {
+    const moduleName = "sharp";
+    const mod = await import(/* webpackIgnore: true */ moduleName);
+    return (mod.default ?? mod) as SharpFactory;
+  } catch {
+    return undefined;
+  }
+}
 
 function assetErrorResponse(error: unknown, fallback = "asset_create_failed") {
   const status = error instanceof StoreError ? error.status : 500;
@@ -33,6 +52,8 @@ async function prepareUploadedImage(file: File): Promise<{ bytes: Buffer; mimeTy
   const maxDimension = Math.max(512, Number(process.env.CUSTOMER_UPLOAD_IMAGE_MAX_DIMENSION ?? "2000") || 2000);
   const quality = Math.max(60, Math.min(Number(process.env.CUSTOMER_UPLOAD_IMAGE_QUALITY ?? "84") || 84, 95));
   try {
+    const sharp = await loadSharp();
+    if (!sharp) throw new Error("sharp_unavailable");
     const prepared = await sharp(bytes)
       .rotate()
       .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })

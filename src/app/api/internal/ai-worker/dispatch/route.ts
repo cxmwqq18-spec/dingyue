@@ -1,7 +1,6 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
-import sharp from "sharp";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
 import {
   signWorkerCallback,
@@ -12,6 +11,26 @@ import {
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+type SharpFactory = (input: Buffer) => {
+  rotate: () => {
+    resize: (options: { width: number; height: number; fit: "inside"; withoutEnlargement: boolean }) => {
+      jpeg: (options: { quality: number; mozjpeg: boolean }) => {
+        toBuffer: () => Promise<Buffer>;
+      };
+    };
+  };
+};
+
+async function loadSharp(): Promise<SharpFactory | undefined> {
+  try {
+    const moduleName = "sharp";
+    const mod = await import(/* webpackIgnore: true */ moduleName);
+    return (mod.default ?? mod) as SharpFactory;
+  } catch {
+    return undefined;
+  }
+}
 
 type ImageGenerationResponse = {
   data?: Array<{ b64_json?: string; image_base64?: string }>;
@@ -199,6 +218,8 @@ async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_REFERENCE_MAX_DIMENSION ?? "1600") || 1600);
   const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_REFERENCE_QUALITY ?? "82") || 82, 95));
   try {
+    const sharp = await loadSharp();
+    if (!sharp) throw new Error("sharp_unavailable");
     const resized = await sharp(Buffer.from(bytes))
       .rotate()
       .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
