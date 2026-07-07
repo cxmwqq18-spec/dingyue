@@ -5499,12 +5499,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
+                      "label": "Use email access",
                       "helper": "Fast start for couples and planners.",
-                      "kind": "google",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -5581,12 +5581,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
+                      "label": "Use email access",
                       "helper": "Fast start for couples and planners.",
-                      "kind": "google",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -9391,9 +9391,11 @@
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
                   "authRibbon": "New Christmas Photos!",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
-                  "authButtonLabel": "Get Started with Email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
+                  "authButtonLabel": "Create account with email",
+                  "authPrimaryHref": "/login?mode=login",
+                  "authEmailHref": "/login?mode=register",
                   "socialProofLabel": "Popov purchased the MyDreamShoots Pro 36 minutes ago",
                   "layout": "immersive_dark"
                 },
@@ -9922,9 +9924,11 @@
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
                   "authRibbon": "New Christmas Photos!",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
-                  "authButtonLabel": "Get Started with Email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
+                  "authButtonLabel": "Create account with email",
+                  "authPrimaryHref": "/login?mode=login",
+                  "authEmailHref": "/login?mode=register",
                   "socialProofLabel": "Popov purchased the MyDreamShoots Pro 36 minutes ago",
                   "layout": "immersive_dark"
                 },
@@ -11480,12 +11484,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -11557,12 +11561,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -12291,7 +12295,7 @@
       "currency": "usd",
       "timezone": "America/New_York",
       "branding": {
-        "logoText": "ʍʏƉʀɛǟʍֆhoots",
+        "logoText": "myᕲreamshoots",
         "market": "AI photo packages, personal AI models, free tools, credits, AI video, and private albums",
         "description": "MyDreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery.",
         "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"
@@ -12393,7 +12397,7 @@
             "header": {
               "type": "header",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "sticky": true,
                 "ctaLabel": "Create my first photo set",
                 "ctaHref": "/login",
@@ -12784,7 +12788,7 @@
             "footer": {
               "type": "footer",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                 "logoAlt": "MyDreamShoots heart camera logo",
                 "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -12796,7 +12800,7 @@
                 "socialBody": "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
                 "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                 "contactEmail": "support@mydreamshoots.com",
-                "salesEmail": "sales@mydreamshoots.com",
+                "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved."
               },
@@ -12922,9 +12926,9 @@
             }
           },
           "seo": {
-            "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+            "siteTitle": "MyDreamShoots",
             "siteDescription": "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-            "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+            "titleTemplate": "%s | MyDreamShoots",
             "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
             "robots": {
               "index": true,
@@ -13262,7 +13266,7 @@
             "header": {
               "type": "header",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "sticky": true,
                 "ctaLabel": "Create my first photo set",
                 "ctaHref": "/login",
@@ -13653,7 +13657,7 @@
             "footer": {
               "type": "footer",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                 "logoAlt": "MyDreamShoots heart camera logo",
                 "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -13665,7 +13669,7 @@
                 "socialBody": "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
                 "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                 "contactEmail": "support@mydreamshoots.com",
-                "salesEmail": "sales@mydreamshoots.com",
+                "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved."
               },
@@ -13791,9 +13795,9 @@
             }
           },
           "seo": {
-            "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+            "siteTitle": "MyDreamShoots",
             "siteDescription": "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.",
-            "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+            "titleTemplate": "%s | MyDreamShoots",
             "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
             "robots": {
               "index": true,
@@ -14083,8 +14087,8 @@
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
                   "authRibbon": "Plans start at $24.50/month",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
                   "authButtonLabel": "Create my first photo set with Email",
                   "imageBadge": "15+ package categories",
                   "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -14800,8 +14804,8 @@
                   "highlightWord": "real",
                   "heroBadge": "AI photo package studio",
                   "authRibbon": "Plans start at $24.50/month",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
                   "authButtonLabel": "Create my first photo set with Email",
                   "imageBadge": "15+ package categories",
                   "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -18548,12 +18552,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -18702,12 +18706,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -21259,15 +21263,15 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Contact us",
-                  "title": "Contact MyDreamShoots support or sales.",
-                  "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                  "title": "Contact MyDreamShoots support.",
+                  "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                   "headingLevel": "h1",
                   "tone": "dark",
                   "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                   "primaryCta": "Email support",
                   "primaryHref": "mailto:support@mydreamshoots.com",
-                  "secondaryCta": "Email sales",
-                  "secondaryHref": "mailto:sales@mydreamshoots.com"
+                  "secondaryCta": "Email support",
+                  "secondaryHref": "mailto:support@mydreamshoots.com"
                 },
                 "blocks": [
                   {
@@ -21283,9 +21287,9 @@
                     "id": "contact_sales",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Sales",
-                      "title": "sales@mydreamshoots.com",
-                      "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                      "meta": "Account help",
+                      "title": "support@mydreamshoots.com",
+                      "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                     }
                   },
                   {
@@ -21306,7 +21310,7 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
                 },
                 "blocks": []
               },
@@ -21444,15 +21448,15 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Contact us",
-                  "title": "Contact MyDreamShoots support or sales.",
-                  "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                  "title": "Contact MyDreamShoots support.",
+                  "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                   "headingLevel": "h1",
                   "tone": "dark",
                   "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                   "primaryCta": "Email support",
                   "primaryHref": "mailto:support@mydreamshoots.com",
-                  "secondaryCta": "Email sales",
-                  "secondaryHref": "mailto:sales@mydreamshoots.com"
+                  "secondaryCta": "Email support",
+                  "secondaryHref": "mailto:support@mydreamshoots.com"
                 },
                 "blocks": [
                   {
@@ -21468,9 +21472,9 @@
                     "id": "contact_sales",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Sales",
-                      "title": "sales@mydreamshoots.com",
-                      "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                      "meta": "Account help",
+                      "title": "support@mydreamshoots.com",
+                      "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                     }
                   },
                   {
@@ -21491,7 +21495,7 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
                 },
                 "blocks": []
               },
@@ -24922,9 +24926,11 @@
                   "highlightWord": "planned",
                   "heroBadge": "Private destination albums",
                   "authRibbon": "Travel styles live now",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
-                  "authButtonLabel": "Get Started with Email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
+                  "authButtonLabel": "Create account with email",
+                  "authPrimaryHref": "/login?mode=login",
+                  "authEmailHref": "/login?mode=register",
                   "imageBadge": "Travel album",
                   "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                   "socialProofLabel": "Private route galleries for travel portraits",
@@ -25610,9 +25616,11 @@
                   "highlightWord": "planned",
                   "heroBadge": "Private destination albums",
                   "authRibbon": "Travel styles live now",
-                  "authPrimaryLabel": "Continue with Google",
-                  "authEmailPlaceholder": "Enter your email",
-                  "authButtonLabel": "Get Started with Email",
+                  "authPrimaryLabel": "Continue with email",
+                  "authEmailPlaceholder": "Email address",
+                  "authButtonLabel": "Create account with email",
+                  "authPrimaryHref": "/login?mode=login",
+                  "authEmailHref": "/login?mode=register",
                   "imageBadge": "Travel album",
                   "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                   "socialProofLabel": "Private route galleries for travel portraits",
@@ -29359,12 +29367,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -29518,12 +29526,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "login_google",
+                    "id": "login_email_access",
                     "type": "login_method",
                     "settings": {
-                      "label": "Continue with Google",
-                      "helper": "Fast sign-in for returning customers.",
-                      "kind": "google",
+                      "label": "Use email access",
+                      "helper": "Log in, register, or reset your password from one private account page.",
+                      "kind": "email",
                       "href": "/login"
                     }
                   },
@@ -39558,12 +39566,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
+                    "label": "Use email access",
                     "helper": "Fast start for couples and planners.",
-                    "kind": "google",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -43847,12 +43855,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
+                    "label": "Use email access",
                     "helper": "Fast start for couples and planners.",
-                    "kind": "google",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -45650,9 +45658,11 @@
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
                 "authRibbon": "New Christmas Photos!",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
-                "authButtonLabel": "Get Started with Email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
+                "authButtonLabel": "Create account with email",
+                "authPrimaryHref": "/login?mode=login",
+                "authEmailHref": "/login?mode=register",
                 "socialProofLabel": "Popov purchased the MyDreamShoots Pro 36 minutes ago",
                 "layout": "immersive_dark"
               },
@@ -46722,12 +46732,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -47564,9 +47574,11 @@
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
                 "authRibbon": "New Christmas Photos!",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
-                "authButtonLabel": "Get Started with Email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
+                "authButtonLabel": "Create account with email",
+                "authPrimaryHref": "/login?mode=login",
+                "authEmailHref": "/login?mode=register",
                 "socialProofLabel": "Popov purchased the MyDreamShoots Pro 36 minutes ago",
                 "layout": "immersive_dark"
               },
@@ -48636,12 +48648,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -49570,8 +49582,8 @@
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
                 "authRibbon": "Plans start at $24.50/month",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
                 "authButtonLabel": "Create my first photo set with Email",
                 "imageBadge": "15+ package categories",
                 "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -51807,12 +51819,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -53003,15 +53015,15 @@
               "card_name": "rich_text",
               "settings": {
                 "eyebrow": "Contact us",
-                "title": "Contact MyDreamShoots support or sales.",
-                "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                "title": "Contact MyDreamShoots support.",
+                "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                 "headingLevel": "h1",
                 "tone": "dark",
                 "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                 "primaryCta": "Email support",
                 "primaryHref": "mailto:support@mydreamshoots.com",
-                "secondaryCta": "Email sales",
-                "secondaryHref": "mailto:sales@mydreamshoots.com"
+                "secondaryCta": "Email support",
+                "secondaryHref": "mailto:support@mydreamshoots.com"
               },
               "blocks": [
                 {
@@ -53027,9 +53039,9 @@
                   "id": "contact_sales",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Sales",
-                    "title": "sales@mydreamshoots.com",
-                    "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                    "meta": "Account help",
+                    "title": "support@mydreamshoots.com",
+                    "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                   }
                 },
                 {
@@ -53052,7 +53064,7 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@mydreamshoots.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
               },
               "blocks": []
             },
@@ -53765,7 +53777,7 @@
                 "version": "1",
                 "card_name": "MyDreamShoots header",
                 "settings": {
-                  "title": "ʍʏƉʀɛǟʍֆhoots",
+                  "title": "myᕲreamshoots",
                   "sticky": true,
                   "ctaLabel": "Create my first photo set",
                   "ctaHref": "/login",
@@ -54158,7 +54170,7 @@
                 "version": "1",
                 "card_name": "MyDreamShoots footer",
                 "settings": {
-                  "title": "ʍʏƉʀɛǟʍֆhoots",
+                  "title": "myᕲreamshoots",
                   "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                   "logoAlt": "MyDreamShoots heart camera logo",
                   "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -54170,7 +54182,7 @@
                   "socialBody": "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
                   "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                   "contactEmail": "support@mydreamshoots.com",
-                  "salesEmail": "sales@mydreamshoots.com",
+                  "salesEmail": "",
                   "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                   "copyright": "© 2026 MyDreamShoots. All rights reserved."
                 },
@@ -54367,9 +54379,9 @@
               ]
             },
             "seo": {
-              "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+              "siteTitle": "MyDreamShoots",
               "siteDescription": "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-              "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+              "titleTemplate": "%s | MyDreamShoots",
               "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
               "robots": {
                 "index": true,
@@ -54765,8 +54777,8 @@
                 "highlightWord": "real",
                 "heroBadge": "AI photo package studio",
                 "authRibbon": "Plans start at $24.50/month",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
                 "authButtonLabel": "Create my first photo set with Email",
                 "imageBadge": "15+ package categories",
                 "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -57002,12 +57014,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -58198,15 +58210,15 @@
               "card_name": "rich_text",
               "settings": {
                 "eyebrow": "Contact us",
-                "title": "Contact MyDreamShoots support or sales.",
-                "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                "title": "Contact MyDreamShoots support.",
+                "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                 "headingLevel": "h1",
                 "tone": "dark",
                 "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                 "primaryCta": "Email support",
                 "primaryHref": "mailto:support@mydreamshoots.com",
-                "secondaryCta": "Email sales",
-                "secondaryHref": "mailto:sales@mydreamshoots.com"
+                "secondaryCta": "Email support",
+                "secondaryHref": "mailto:support@mydreamshoots.com"
               },
               "blocks": [
                 {
@@ -58222,9 +58234,9 @@
                   "id": "contact_sales",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Sales",
-                    "title": "sales@mydreamshoots.com",
-                    "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                    "meta": "Account help",
+                    "title": "support@mydreamshoots.com",
+                    "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                   }
                 },
                 {
@@ -58247,7 +58259,7 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@mydreamshoots.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
               },
               "blocks": []
             },
@@ -58960,7 +58972,7 @@
                 "version": "1",
                 "card_name": "MyDreamShoots header",
                 "settings": {
-                  "title": "ʍʏƉʀɛǟʍֆhoots",
+                  "title": "myᕲreamshoots",
                   "sticky": true,
                   "ctaLabel": "Create my first photo set",
                   "ctaHref": "/login",
@@ -59353,7 +59365,7 @@
                 "version": "1",
                 "card_name": "MyDreamShoots footer",
                 "settings": {
-                  "title": "ʍʏƉʀɛǟʍֆhoots",
+                  "title": "myᕲreamshoots",
                   "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                   "logoAlt": "MyDreamShoots heart camera logo",
                   "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -59365,7 +59377,7 @@
                   "socialBody": "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
                   "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                   "contactEmail": "support@mydreamshoots.com",
-                  "salesEmail": "sales@mydreamshoots.com",
+                  "salesEmail": "",
                   "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                   "copyright": "© 2026 MyDreamShoots. All rights reserved."
                 },
@@ -59562,9 +59574,9 @@
               ]
             },
             "seo": {
-              "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+              "siteTitle": "MyDreamShoots",
               "siteDescription": "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-              "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+              "titleTemplate": "%s | MyDreamShoots",
               "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
               "robots": {
                 "index": true,
@@ -59960,9 +59972,11 @@
                 "highlightWord": "planned",
                 "heroBadge": "Private destination albums",
                 "authRibbon": "Travel styles live now",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
-                "authButtonLabel": "Get Started with Email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
+                "authButtonLabel": "Create account with email",
+                "authPrimaryHref": "/login?mode=login",
+                "authEmailHref": "/login?mode=register",
                 "imageBadge": "Travel album",
                 "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                 "socialProofLabel": "Private route galleries for travel portraits",
@@ -62160,12 +62174,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -65173,9 +65187,11 @@
                 "highlightWord": "planned",
                 "heroBadge": "Private destination albums",
                 "authRibbon": "Travel styles live now",
-                "authPrimaryLabel": "Continue with Google",
-                "authEmailPlaceholder": "Enter your email",
-                "authButtonLabel": "Get Started with Email",
+                "authPrimaryLabel": "Continue with email",
+                "authEmailPlaceholder": "Email address",
+                "authButtonLabel": "Create account with email",
+                "authPrimaryHref": "/login?mode=login",
+                "authEmailHref": "/login?mode=register",
                 "imageBadge": "Travel album",
                 "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                 "socialProofLabel": "Private route galleries for travel portraits",
@@ -67373,12 +67389,12 @@
               },
               "blocks": [
                 {
-                  "id": "login_google",
+                  "id": "login_email_access",
                   "type": "login_method",
                   "settings": {
-                    "label": "Continue with Google",
-                    "helper": "Fast sign-in for returning customers.",
-                    "kind": "google",
+                    "label": "Use email access",
+                    "helper": "Log in, register, or reset your password from one private account page.",
+                    "kind": "email",
                     "href": "/login"
                   }
                 },
@@ -72460,12 +72476,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
+                        "label": "Use email access",
                         "helper": "Fast start for couples and planners.",
-                        "kind": "google",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },
@@ -76750,12 +76766,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
+                        "label": "Use email access",
                         "helper": "Fast start for couples and planners.",
-                        "kind": "google",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },
@@ -78438,8 +78454,8 @@
                     "highlightWord": "real",
                     "heroBadge": "AI photo package studio",
                     "authRibbon": "Plans start at $24.50/month",
-                    "authPrimaryLabel": "Continue with Google",
-                    "authEmailPlaceholder": "Enter your email",
+                    "authPrimaryLabel": "Continue with email",
+                    "authEmailPlaceholder": "Email address",
                     "authButtonLabel": "Create my first photo set with Email",
                     "imageBadge": "15+ package categories",
                     "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -80668,12 +80684,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
-                        "helper": "Fast sign-in for returning customers.",
-                        "kind": "google",
+                        "label": "Use email access",
+                        "helper": "Log in, register, or reset your password from one private account page.",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },
@@ -82017,15 +82033,15 @@
                   "type": "rich_text",
                   "settings": {
                     "eyebrow": "Contact us",
-                    "title": "Contact MyDreamShoots support or sales.",
-                    "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                    "title": "Contact MyDreamShoots support.",
+                    "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                     "headingLevel": "h1",
                     "tone": "dark",
                     "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                     "primaryCta": "Email support",
                     "primaryHref": "mailto:support@mydreamshoots.com",
-                    "secondaryCta": "Email sales",
-                    "secondaryHref": "mailto:sales@mydreamshoots.com"
+                    "secondaryCta": "Email support",
+                    "secondaryHref": "mailto:support@mydreamshoots.com"
                   },
                   "blocks": [
                     {
@@ -82041,9 +82057,9 @@
                       "id": "contact_sales",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Sales",
-                        "title": "sales@mydreamshoots.com",
-                        "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                        "meta": "Account help",
+                        "title": "support@mydreamshoots.com",
+                        "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                       }
                     },
                     {
@@ -82064,7 +82080,7 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
                   },
                   "blocks": []
                 },
@@ -83017,7 +83033,7 @@
             "header": {
               "type": "header",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "sticky": true,
                 "ctaLabel": "Create my first photo set",
                 "ctaHref": "/login",
@@ -83408,7 +83424,7 @@
             "footer": {
               "type": "footer",
               "settings": {
-                "title": "ʍʏƉʀɛǟʍֆhoots",
+                "title": "myᕲreamshoots",
                 "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                 "logoAlt": "MyDreamShoots heart camera logo",
                 "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -83420,7 +83436,7 @@
                 "socialBody": "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
                 "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                 "contactEmail": "support@mydreamshoots.com",
-                "salesEmail": "sales@mydreamshoots.com",
+                "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved."
               },
@@ -83546,9 +83562,9 @@
             }
           },
           "seo": {
-            "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+            "siteTitle": "MyDreamShoots",
             "siteDescription": "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-            "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+            "titleTemplate": "%s | MyDreamShoots",
             "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
             "robots": {
               "index": true,
@@ -83972,8 +83988,8 @@
                     "highlightWord": "real",
                     "heroBadge": "AI photo package studio",
                     "authRibbon": "Plans start at $24.50/month",
-                    "authPrimaryLabel": "Continue with Google",
-                    "authEmailPlaceholder": "Enter your email",
+                    "authPrimaryLabel": "Continue with email",
+                    "authEmailPlaceholder": "Email address",
                     "authButtonLabel": "Create my first photo set with Email",
                     "imageBadge": "15+ package categories",
                     "imageCaption": "Choose a photo package first, then generate a private album.",
@@ -86209,12 +86225,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
-                        "helper": "Fast sign-in for returning customers.",
-                        "kind": "google",
+                        "label": "Use email access",
+                        "helper": "Log in, register, or reset your password from one private account page.",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },
@@ -87405,15 +87421,15 @@
                   "card_name": "rich_text",
                   "settings": {
                     "eyebrow": "Contact us",
-                    "title": "Contact MyDreamShoots support or sales.",
-                    "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+                    "title": "Contact MyDreamShoots support.",
+                    "body": "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
                     "headingLevel": "h1",
                     "tone": "dark",
                     "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
                     "primaryCta": "Email support",
                     "primaryHref": "mailto:support@mydreamshoots.com",
-                    "secondaryCta": "Email sales",
-                    "secondaryHref": "mailto:sales@mydreamshoots.com"
+                    "secondaryCta": "Email support",
+                    "secondaryHref": "mailto:support@mydreamshoots.com"
                   },
                   "blocks": [
                     {
@@ -87429,9 +87445,9 @@
                       "id": "contact_sales",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Sales",
-                        "title": "sales@mydreamshoots.com",
-                        "description": "For plan questions, creator or team use cases, campaign planning, and business inquiries."
+                        "meta": "Account help",
+                        "title": "support@mydreamshoots.com",
+                        "description": "For plan questions, creator use cases, billing review, credits, and private album delivery help."
                       }
                     },
                     {
@@ -87454,7 +87470,7 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
                   },
                   "blocks": []
                 },
@@ -88167,7 +88183,7 @@
                     "version": "1",
                     "card_name": "MyDreamShoots header",
                     "settings": {
-                      "title": "ʍʏƉʀɛǟʍֆhoots",
+                      "title": "myᕲreamshoots",
                       "sticky": true,
                       "ctaLabel": "Create my first photo set",
                       "ctaHref": "/login",
@@ -88560,7 +88576,7 @@
                     "version": "1",
                     "card_name": "MyDreamShoots footer",
                     "settings": {
-                      "title": "ʍʏƉʀɛǟʍֆhoots",
+                      "title": "myᕲreamshoots",
                       "logoImageUrl": "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
                       "logoAlt": "MyDreamShoots heart camera logo",
                       "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
@@ -88572,7 +88588,7 @@
                       "socialBody": "Private uploads, live pricing, predictable credits, and finished delivery inside one customer account.",
                       "contactAddress": "8 THE GREEN STE B, DOVER, DE 19901",
                       "contactEmail": "support@mydreamshoots.com",
-                      "salesEmail": "sales@mydreamshoots.com",
+                      "salesEmail": "",
                       "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                       "copyright": "© 2026 MyDreamShoots. All rights reserved."
                     },
@@ -88769,9 +88785,9 @@
                   ]
                 },
                 "seo": {
-                  "siteTitle": "ʍʏƉʀɛǟʍֆhoots",
+                  "siteTitle": "MyDreamShoots",
                   "siteDescription": "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
-                  "titleTemplate": "%s | ʍʏƉʀɛǟʍֆhoots",
+                  "titleTemplate": "%s | MyDreamShoots",
                   "defaultOgImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                   "robots": {
                     "index": true,
@@ -89036,9 +89052,11 @@
                     "highlightWord": "planned",
                     "heroBadge": "Private destination albums",
                     "authRibbon": "Travel styles live now",
-                    "authPrimaryLabel": "Continue with Google",
-                    "authEmailPlaceholder": "Enter your email",
-                    "authButtonLabel": "Get Started with Email",
+                    "authPrimaryLabel": "Continue with email",
+                    "authEmailPlaceholder": "Email address",
+                    "authButtonLabel": "Create account with email",
+                    "authPrimaryHref": "/login?mode=login",
+                    "authEmailHref": "/login?mode=register",
                     "imageBadge": "Travel album",
                     "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                     "socialProofLabel": "Private route galleries for travel portraits",
@@ -91252,12 +91270,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
-                        "helper": "Fast sign-in for returning customers.",
-                        "kind": "google",
+                        "label": "Use email access",
+                        "helper": "Log in, register, or reset your password from one private account page.",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },
@@ -94619,9 +94637,11 @@
                     "highlightWord": "planned",
                     "heroBadge": "Private destination albums",
                     "authRibbon": "Travel styles live now",
-                    "authPrimaryLabel": "Continue with Google",
-                    "authEmailPlaceholder": "Enter your email",
-                    "authButtonLabel": "Get Started with Email",
+                    "authPrimaryLabel": "Continue with email",
+                    "authEmailPlaceholder": "Email address",
+                    "authButtonLabel": "Create account with email",
+                    "authPrimaryHref": "/login?mode=login",
+                    "authEmailHref": "/login?mode=register",
                     "imageBadge": "Travel album",
                     "imageCaption": "Coastal, mountain, and city travel portraits delivered privately.",
                     "socialProofLabel": "Private route galleries for travel portraits",
@@ -96819,12 +96839,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "login_google",
+                      "id": "login_email_access",
                       "type": "login_method",
                       "settings": {
-                        "label": "Continue with Google",
-                        "helper": "Fast sign-in for returning customers.",
-                        "kind": "google",
+                        "label": "Use email access",
+                        "helper": "Log in, register, or reset your password from one private account page.",
+                        "kind": "email",
                         "href": "/login"
                       }
                     },

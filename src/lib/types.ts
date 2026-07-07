@@ -564,6 +564,9 @@ export interface PlatformAiProvider {
   modelType: "gpt-image-2" | "gpt-5.5" | string;
   priority: number;
   preferred: boolean;
+  supportsGenerationN: boolean;
+  supportsEditN: boolean;
+  maxImagesPerRequest: number;
   createdAt: string;
   updatedAt: string;
   updatedBy?: string;
@@ -760,6 +763,8 @@ export interface AssetUpload {
   reviewStatus: "pending" | "approved" | "rejected";
   validationStatus?: "pending" | "passed" | "failed";
   validationReport?: Record<string, string | number | boolean>;
+  isFavorite?: boolean;
+  favoriteAt?: string;
   createdAt: string;
   deletedAt?: string;
 }
@@ -783,17 +788,21 @@ export interface ThemeRuntimeJob {
   createdAt: string;
   updatedAt: string;
   requestJson?: Record<string, unknown>;
+  resultJson?: Record<string, unknown>;
 }
 
 export interface ThemeRuntimeAsset {
   id: string;
   jobId?: string;
+  subjectRole?: string;
   label: string;
   previewUrl: string;
   downloadUrl?: string;
   mimeType: string;
   role: AssetUpload["role"];
   reviewStatus: AssetUpload["reviewStatus"];
+  isFavorite?: boolean;
+  favoriteAt?: string;
   createdAt: string;
 }
 

@@ -34,6 +34,9 @@ async function payload(extra: Record<string, unknown> = {}) {
       modelType: provider.modelType,
       priority: provider.priority,
       preferred: provider.preferred,
+      supportsGenerationN: provider.supportsGenerationN,
+      supportsEditN: provider.supportsEditN,
+      maxImagesPerRequest: provider.maxImagesPerRequest,
       createdAt: provider.createdAt,
       updatedAt: provider.updatedAt,
       updatedBy: provider.updatedBy,
@@ -75,6 +78,9 @@ export async function PUT(request: NextRequest) {
     apiKey?: string;
     modelType?: string;
     makeCurrent?: boolean;
+    supportsGenerationN?: boolean;
+    supportsEditN?: boolean;
+    maxImagesPerRequest?: number;
   };
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_ai_provider_label" }, { status: 400 });
   if (!body.id && !body.aiUrl?.trim()) return NextResponse.json({ error: "missing_ai_provider_url" }, { status: 400 });
@@ -94,6 +100,9 @@ export async function PUT(request: NextRequest) {
     apiKey: body.apiKey,
     modelType: body.modelType,
     makeCurrent: body.makeCurrent,
+    supportsGenerationN: Boolean(body.supportsGenerationN),
+    supportsEditN: Boolean(body.supportsEditN),
+    maxImagesPerRequest: body.maxImagesPerRequest,
     actor: permission.current.platformAdmin.id
   });
   return NextResponse.json(await payload());

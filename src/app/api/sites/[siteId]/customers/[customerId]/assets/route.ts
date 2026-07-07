@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import fs from "fs";
+import sharp from "sharp";
 import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
+import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { StoreError, writeCustomerAssetFile } from "@/lib/server-store";
 import { createAssetUploadRelational, getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
@@ -17,6 +19,31 @@ function cleanUploadedFileName(fileName: string): string {
   return fileName.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "") || "upload";
 }
 
+function normalizedImageFileName(fileName: string, mimeType: string): string {
+  if (mimeType === "image/jpeg") {
+    const baseName = fileName.replace(/\.[^.]+$/, "");
+    return `${baseName || "upload"}.jpg`;
+  }
+  return fileName;
+}
+
+async function prepareUploadedImage(file: File): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
+  const bytes = Buffer.from(await file.arrayBuffer());
+  if (file.type.includes("gif")) return { bytes, mimeType: file.type || "image/gif", fileName: file.name };
+  const maxDimension = Math.max(512, Number(process.env.CUSTOMER_UPLOAD_IMAGE_MAX_DIMENSION ?? "2000") || 2000);
+  const quality = Math.max(60, Math.min(Number(process.env.CUSTOMER_UPLOAD_IMAGE_QUALITY ?? "84") || 84, 95));
+  try {
+    const prepared = await sharp(bytes)
+      .rotate()
+      .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality, mozjpeg: true })
+      .toBuffer();
+    return { bytes: prepared, mimeType: "image/jpeg", fileName: normalizedImageFileName(file.name, "image/jpeg") };
+  } catch {
+    return { bytes, mimeType: file.type || "application/octet-stream", fileName: file.name };
+  }
+}
+
 function removeWrittenAssetFile(filePath: string | undefined) {
   if (!filePath) return;
   try {
@@ -26,6 +53,16 @@ function removeWrittenAssetFile(filePath: string | undefined) {
   }
 }
 
+function assetRolesFromParam(value: string | null): Array<"input" | "output" | "training_input"> | undefined {
+  if (value === "workspace-gallery" || value === "source-picker" || value === "admin-review") return customerAssetRolesForSurface(value);
+  if (!value || value === "all") return undefined;
+  const roles = value
+    .split(",")
+    .map((role) => role.trim())
+    .filter((role): role is "input" | "output" | "training_input" => role === "input" || role === "output" || role === "training_input");
+  return roles.length ? roles : undefined;
+}
+
 export async function GET(_request: Request, { params }: { params: Promise<{ siteId: string; customerId: string }> }) {
   const { siteId, customerId } = await params;
   if (!(await hasCustomerSession(siteId, customerId))) {
@@ -33,7 +70,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
   }
   const url = new URL(_request.url);
   const requestedLimit = Number(url.searchParams.get("limit") ?? "100");
-  const result = await getCustomerAssetsRelational({ siteId, customerId, take: requestedLimit });
+  const result = await getCustomerAssetsRelational({ siteId, customerId, roles: assetRolesFromParam(url.searchParams.get("role")), take: requestedLimit });
   return NextResponse.json({
     ok: true,
     assets: result.assets.map(toThemeRuntimeAssetRelational)
@@ -53,6 +90,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       mimeType?: string;
       role?: "input" | "output";
       jobId?: string;
+      subjectRole?: string;
       file?: File;
     } = {};
 
@@ -63,6 +101,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         label: String(formData.get("label") ?? ""),
         role: formData.get("role") === "output" ? "output" : "input",
         jobId: typeof formData.get("jobId") === "string" ? String(formData.get("jobId")) : undefined,
+        subjectRole: typeof formData.get("subjectRole") === "string" ? String(formData.get("subjectRole")) : undefined,
         file: fileValue instanceof File ? fileValue : undefined
       };
       if (!body.file) {
@@ -74,7 +113,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       if (body.file.size > 10 * 1024 * 1024) {
         return NextResponse.json({ ok: false, error: "asset_file_too_large" }, { status: 413 });
       }
-      body.mimeType = body.file.type || "application/octet-stream";
       body.label = body.label || body.file.name.replace(/\.[^.]+$/, "");
     } else {
       body = (await request.json().catch(() => ({}))) as {
@@ -82,16 +120,18 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         mimeType?: string;
         role?: "input" | "output";
         jobId?: string;
+        subjectRole?: string;
       };
     }
 
-    const storageKey = body.file
-      ? `customer-assets/sites/${siteId}/customers/${customerId}/assets/${crypto.randomUUID()}-${cleanUploadedFileName(body.file.name)}`
+    const preparedFile = body.file ? await prepareUploadedImage(body.file) : undefined;
+    if (preparedFile) body.mimeType = preparedFile.mimeType;
+    const storageKey = body.file && preparedFile
+      ? `customer-assets/sites/${siteId}/customers/${customerId}/assets/${crypto.randomUUID()}-${cleanUploadedFileName(preparedFile.fileName)}`
       : undefined;
     let writtenFilePath: string | undefined;
-    if (body.file && storageKey) {
-      const bytes = Buffer.from(await body.file.arrayBuffer());
-      writtenFilePath = writeCustomerAssetFile({ storageKey, bytes }).path;
+    if (preparedFile && storageKey) {
+      writtenFilePath = writeCustomerAssetFile({ storageKey, bytes: preparedFile.bytes }).path;
     }
 
     let result: Awaited<ReturnType<typeof createAssetUploadRelational>>;
@@ -103,6 +143,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         mimeType: body.mimeType ?? "image/jpeg",
         role: body.role ?? "input",
         jobId: body.jobId,
+        subjectRole: body.subjectRole,
         storageKey
       });
     } catch (error) {

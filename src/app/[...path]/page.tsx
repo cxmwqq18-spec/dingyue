@@ -22,6 +22,7 @@ import {
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -37,6 +38,7 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "background-changer": "/tools/route-portrait-engine",
   "background-remover": "/tools/route-portrait-engine",
   "dreamscape-generator": "/tools/route-portrait-engine",
+  "image-generator": "/tools/route-portrait-engine",
   "image-to-video": "/tools/route-portrait-engine",
   "image-studio": "/tools",
   "portrait-generator": "/tools/route-portrait-engine",
@@ -68,8 +70,18 @@ function isMydreamshootsSite(site: { slug: string; name: string; branding: { log
   return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
-function canUseMydreamshootsSyntheticPage(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
-  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && isMydreamshootsSite(site);
+function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
+  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function canUseStorefrontPartnerTemplate(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
+  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isMydreamshootsSite(site) || isAidreamcapesSite(site));
+}
+
+function storefrontPolicySeoForSite(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
+  if (isAidreamcapesSite(site)) return getAidreamcapesPolicySeo(slug);
+  if (isMydreamshootsSite(site)) return getMydreamshootsPolicySeo(slug);
+  return undefined;
 }
 
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
@@ -79,7 +91,7 @@ function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; bra
 }
 
 function redirectAidreamcapesLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
-  if (!/aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) return;
+  if (!isAidreamcapesSite(site)) return;
   const redirectPath = AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[toolSlug.trim().toLowerCase()];
   if (redirectPath) permanentRedirect(redirectPath);
 }
@@ -176,12 +188,27 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     return metadataForSeoDirectory(site, "collection", path[1]);
   }
   if (path[0] === "dashboard") return { title: "Workspace" };
-  if (canUseMydreamshootsSyntheticPage(site, slug)) {
+  if (canUseStorefrontPartnerTemplate(site, slug)) {
     return metadataForDreamshootFallbackRoute(site.slug, slug, {
       primaryDomain: site.primaryDomain,
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
       siteName: site.branding.logoText || site.name
     });
+  }
+  const policySeo = storefrontPolicySeoForSite(site, slug);
+  if (policySeo) {
+    return {
+      title: policySeo.title,
+      description: policySeo.description,
+      keywords: policySeo.keywords,
+      robots: {
+        follow: policySeo.follow,
+        index: policySeo.index
+      },
+      alternates: {
+        canonical: policyCanonicalUrlForSite(site, policySeo.canonicalPath)
+      }
+    };
   }
   const page = findPage(site, slug);
   return page ? metadataForSingleThemePage(site, page) : {};
@@ -249,7 +276,8 @@ export default async function HostStorefrontCatchAllPage({
     Boolean(resolvedToolPage) ||
     firstSegment === "collections" && Boolean(path[1]) ||
     Boolean(findPage(site, publicPageSlug)) ||
-    canUseMydreamshootsSyntheticPage(site, publicPageSlug);
+    canUseStorefrontPartnerTemplate(site, publicPageSlug) ||
+    Boolean(storefrontPolicySeoForSite(site, publicPageSlug));
   if (!needsPrivateRuntime && !hasKnownPublicRoute) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {
@@ -277,7 +305,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(`/${path.join("/")}`);
-  if (!collectionCategory && !findPage(site, pageSlug) && !canUseMydreamshootsSyntheticPage(site, pageSlug)) notFound();
+  if (!collectionCategory && !findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug) && !storefrontPolicySeoForSite(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,

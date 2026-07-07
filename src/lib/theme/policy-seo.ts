@@ -256,6 +256,16 @@ export function normalizePolicyPath(path: string): string {
   return `/${trimmed.replace(/^\/+/, "").replace(/\/+$/, "")}`;
 }
 
+export function policyCanonicalUrlForSite(site: { primaryDomain?: string | null }, canonicalPath: string): string {
+  const normalizedPath = normalizePolicyPath(canonicalPath);
+  const host = String(site.primaryDomain ?? "")
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .split("/")[0]
+    .replace(/\/+$/, "");
+  return host ? `https://${host}${normalizedPath}` : normalizedPath;
+}
+
 export function getMydreamshootsPolicySeo(path: string): PolicySeoCopy | undefined {
   return MYDREAMSHOOTS_POLICY_SEO_BY_PATH[normalizePolicyPath(path)];
 }

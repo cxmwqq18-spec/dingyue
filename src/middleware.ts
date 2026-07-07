@@ -27,6 +27,7 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   "lagoon-route-studys": "lagoon-route-studies"
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
+  lifestyle: "travel",
   "professional-headshots": "headshots"
 };
 const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
@@ -42,6 +43,7 @@ const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
   "couple-escape-album": "shared-route-album",
   "dreamscape-generator": "route-portrait-engine",
   headshot: "route-portrait-engine",
+  "image-generator": "route-portrait-engine",
   "image-to-video": "route-portrait-engine",
   "image-studio": "",
   "portrait-generator": "route-portrait-engine",
@@ -75,7 +77,9 @@ const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/collections", "/tools", "/pric
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
 const SEO_HEAD_TAG_RE =
-  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/gi;
+  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
+const LEADING_SEO_HEAD_TAG_RE =
+  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
 const AIDREAMCAPES_LOGO_IMG_RE =
   /<img\b(?=[^>]*src=["']\/assets\/sites\/site_aidreamcapes\/brand\/aidreamcapesai-logo-refined\.svg[^"']*["'])(?=[^>]*alt=["'][^"']*Aidreamcapes[^"']*["'])([^>]*)\/?>/gi;
@@ -205,7 +209,7 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
 }
 
 function shouldReorderStorefrontHead(request: NextRequest): boolean {
-  if (process.env.STOREFRONT_EDGE_HTML_REWRITE !== "1") return false;
+  if (process.env.STOREFRONT_EDGE_HTML_REWRITE === "0") return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
@@ -218,9 +222,15 @@ function shouldReorderStorefrontHead(request: NextRequest): boolean {
   return TARGET_SITE_PATH_RE.test(pathname) || TARGET_HOST_RE.test(host);
 }
 
-function leadingRequiredHeadLength(headContent: string): number {
-  const leadingMetaRe = /^(?:\s*<meta\b(?=[^>]*(?:charset=|name=["']viewport["']))[^>]*\/?>)*/i;
-  return headContent.match(leadingMetaRe)?.[0].length ?? 0;
+function titleFirstSeoTags(tags: string[]): string[] {
+  const titleIndex = tags.findIndex((tag) => /^<title\b/i.test(tag));
+  if (titleIndex < 0) return tags;
+  const titleTag = tags[titleIndex];
+  return [titleTag, ...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)];
+}
+
+function leadingSeoHeadLength(headContent: string): number {
+  return headContent.match(LEADING_SEO_HEAD_TAG_RE)?.[0].length ?? 0;
 }
 
 function moveSeoTagsBeforeResources(html: string): string {
@@ -240,11 +250,14 @@ function moveSeoTagsBeforeResources(html: string): string {
     seoTags.push(tag);
     return "";
   });
+  const strippedAfterHead = afterHeadContent.replace(SEO_HEAD_TAG_RE, (tag) => {
+    seoTags.push(tag);
+    return "";
+  });
   if (!seoTags.length) return html;
 
-  const insertionPoint = leadingRequiredHeadLength(strippedHead);
-  const reorderedHead = `${strippedHead.slice(0, insertionPoint)}${seoTags.join("")}${strippedHead.slice(insertionPoint)}`;
-  return `${beforeHeadContent}${reorderedHead}${afterHeadContent}`;
+  const reorderedHead = `${titleFirstSeoTags(seoTags).join("")}${strippedHead}`;
+  return `${beforeHeadContent}${reorderedHead}${strippedAfterHead}`;
 }
 
 type StorefrontIconSet = {
@@ -274,7 +287,7 @@ function withStorefrontIcons(html: string, icons: StorefrontIconSet | undefined)
   const headContent = html.slice(headOpenEnd + 1, headClose).replace(ICON_HEAD_TAG_RE, "");
   const afterHeadContent = html.slice(headClose);
   const iconTags = `<link rel="icon" href="${icons.png}" type="image/png" sizes="192x192"/><link rel="shortcut icon" href="${icons.png}" type="image/png"/><link rel="icon" href="${icons.svg}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
-  const insertionPoint = leadingRequiredHeadLength(headContent);
+  const insertionPoint = leadingSeoHeadLength(headContent);
   return `${beforeHeadContent}${headContent.slice(0, insertionPoint)}${iconTags}${headContent.slice(insertionPoint)}${afterHeadContent}`;
 }
 

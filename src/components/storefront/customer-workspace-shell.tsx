@@ -1,93 +1,243 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
-import { AlertCircle, Bot, Camera, CheckCircle2, ChevronRight, Clock3, Compass, ImageIcon, LayoutGrid, PlaySquare, Search, Sparkles, UploadCloud, WalletCards, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ChevronDown, ChevronLeft, ChevronRight, Heart, LayoutGrid, Trash2, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
-import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { csrfHeader } from "@/lib/client-csrf";
+import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
+import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData } from "@/lib/types";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerWorkspacePanel = "overview" | "create" | "upload";
-type WorkspaceResourceTab = "all" | "videos" | "albums" | "saved" | "explore";
+type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "videos" | "packages";
 type WorkspaceAnchor = "step-upload" | "step-create" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
 type WorkspaceCreateMode = "theme" | "tool";
+type WorkspaceSubscriptionStatus = "loading" | "active" | "required";
+type SampleTarget = "primary" | "partner";
+type SampleAsset = ThemeRuntimeAsset & {
+  localStatus?: "uploading" | "ready" | "failed";
+  localTarget?: SampleTarget;
+};
 type WorkspaceRuntimeState =
-  | { status: "loading"; runtime?: undefined; error?: undefined }
-  | { status: "ready"; runtime: ThemeRuntimeData; error?: undefined }
-  | { status: "error"; runtime?: undefined; error: string };
-const myDreamShootsDisplayName = "ʍʏƉʀɛǟʍֆhoots";
+  | { status: "idle"; runtime?: undefined; error?: undefined }
+  | { status: "loading"; refreshKey: number; runtime?: ThemeRuntimeData; error?: undefined }
+  | { status: "ready"; refreshKey: number; runtime: ThemeRuntimeData; error?: undefined }
+  | { status: "error"; refreshKey: number; runtime?: ThemeRuntimeData; error: string };
+type OutputCopyJob = {
+  id: string;
+  createdAt: string;
+  requestJson?: Record<string, unknown>;
+};
+const myDreamShootsDisplayName = "myᕲreamshoots";
+type RuntimeJob = ThemeRuntimeData["jobs"][number];
+type RuntimeOutputSlot = {
+  index: number;
+  status: "queued" | "running" | "succeeded" | "failed";
+  stage?: string;
+  storageKey?: string;
+  mimeType?: string;
+  error?: string;
+  updatedAt?: string;
+};
 
-function workspaceJobStatusLabel(status: ThemeRuntimeData["jobs"][number]["status"]): string {
-  if (status === "queued") return "Queued";
-  if (status === "running") return "Creating";
-  if (status === "succeeded") return "Ready";
-  if (status === "failed") return "Failed";
-  if (status === "refunded") return "Credits returned";
-  return "Waiting";
+function outputCopyJob(job: ThemeRuntimeData["jobs"][number] | undefined): OutputCopyJob | undefined {
+  if (!job) return undefined;
+  return {
+    id: job.id,
+    createdAt: job.createdAt,
+    ...(job.requestJson ? { requestJson: job.requestJson } : {})
+  };
 }
 
-function workspaceJobStatusClass(status: ThemeRuntimeData["jobs"][number]["status"]): string {
-  if (status === "succeeded") return "border-[#22c55e]/30 bg-[#22c55e]/12 text-[#8df0b5]";
-  if (status === "failed") return "border-[#fb7185]/30 bg-[#fb7185]/12 text-[#ff9eb0]";
-  if (status === "running") return "border-[#31d4ff]/30 bg-[#31d4ff]/12 text-[#86eaff]";
-  if (status === "refunded") return "border-[#f59e0b]/30 bg-[#f59e0b]/12 text-[#ffd18a]";
-  return "border-white/12 bg-white/[0.05] text-white/66";
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
-function workspaceJobTitle(job: ThemeRuntimeData["jobs"][number], index: number): string {
-  const creativePack = job.requestJson?.creativePack;
-  if (creativePack && typeof creativePack === "object" && !Array.isArray(creativePack)) {
-    const name = (creativePack as Record<string, unknown>).name;
-    if (typeof name === "string" && name.trim()) return name.trim();
+function hasActiveWorkspaceSubscription(subscriptions: ThemeRuntimeData["subscriptions"] | undefined): boolean {
+  const now = Date.now();
+  return (subscriptions ?? []).some((subscription) => {
+    if (subscription.status !== "active" && subscription.status !== "trialing") return false;
+    return new Date(subscription.currentPeriodEnd).getTime() > now;
+  });
+}
+
+function stringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+}
+
+function jobFields(job: RuntimeJob): Record<string, unknown> {
+  return recordValue(job.requestJson?.fields);
+}
+
+function jobResult(job: RuntimeJob): Record<string, unknown> {
+  return recordValue(job.resultJson);
+}
+
+function workspaceJobTitle(job: RuntimeJob): string {
+  const fields = jobFields(job);
+  const title = fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
+  return typeof title === "string" && title.trim() ? title.trim().slice(0, 80) : "AI photo request";
+}
+
+function workspaceJobStageLabel(job: RuntimeJob): string {
+  const stage = jobResult(job).lastWorkerStage;
+  if (job.status === "failed") return "Generation failed";
+  if (job.status === "succeeded") return "Images delivered";
+  if (stage === "local_worker_started") return "Preparing the generator";
+  if (stage === "source_images_ready") return "Reading selected photos";
+  if (stage === "provider_request_started") return "Generating images";
+  if (stage === "provider_response_received") return "Saving generated images";
+  if (job.status === "queued") return "Waiting in queue";
+  if (job.status === "running") return "Generating images";
+  return "Request updated";
+}
+
+function workspaceJobProgress(job: RuntimeJob, assetsCount: number): number {
+  const stage = jobResult(job).lastWorkerStage;
+  if (job.status === "failed" || job.status === "succeeded") return 100;
+  if (assetsCount > 0) return 95;
+  if (stage === "provider_response_received") return 88;
+  if (stage === "provider_request_started") return 62;
+  if (stage === "source_images_ready") return 42;
+  if (stage === "local_worker_started") return 25;
+  if (job.status === "running") return 18;
+  return 8;
+}
+
+function workspaceJobBody(job: RuntimeJob): string {
+  const result = jobResult(job);
+  if (job.status === "failed") {
+    const error = typeof result.error === "string" ? result.error : "";
+    if (error.includes("timeout") || error.includes("UND_ERR_CONNECT_TIMEOUT")) return "The image provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.";
+    if (error.includes("fetch failed")) return "The image provider connection failed before it returned images. Credits were returned automatically, and you can retry.";
+    return "The generator could not finish this request. Credits were returned automatically, and you can retry from the same workspace.";
   }
-  const flow = job.requestJson?.flow;
-  if (flow && typeof flow === "object" && !Array.isArray(flow)) {
-    const flowName = (flow as Record<string, unknown>).flowName;
-    if (typeof flowName === "string" && flowName.trim()) return flowName.trim();
+  if (result.lastWorkerStage === "provider_request_started") {
+    const elapsedMs = Date.now() - new Date(job.updatedAt).getTime();
+    if (elapsedMs > 4 * 60_000) return "The image model is taking longer than expected. If it does not return soon, credits will be released automatically and you can retry.";
+    return "Your selected photos and prompt are with the image model. This is usually the longest step.";
   }
-  const suffix = job.id.split("_").pop()?.slice(-6);
-  return `Generation ${suffix ? suffix.toUpperCase() : String(index + 1).padStart(2, "0")}`;
+  if (result.lastWorkerStage === "source_images_ready") return "Your selected photos are being prepared for generation.";
+  if (job.status === "queued") return "Credits are held and this request is waiting for the generator.";
+  return "This page refreshes status automatically while your request is running.";
 }
 
-function compactDateTime(value: string): string {
+function requestedJobOutputCount(job: RuntimeJob): number {
+  const billing = recordValue(job.requestJson?.billing);
+  const fields = jobFields(job);
+  const raw = billing.outputCount ?? fields.outputCount ?? job.requestJson?.outputCount;
+  const count = Number(raw);
+  return Number.isFinite(count) && count > 0 ? Math.max(1, Math.trunc(count)) : 1;
+}
+
+function workspaceJobOutputSlots(job: RuntimeJob, assetsCount: number): RuntimeOutputSlot[] {
+  const result = jobResult(job);
+  const rawSlots = Array.isArray(result.outputSlots) ? result.outputSlots : [];
+  const slotsByIndex = new Map<number, RuntimeOutputSlot>();
+  for (const rawSlot of rawSlots) {
+    if (!rawSlot || typeof rawSlot !== "object" || Array.isArray(rawSlot)) continue;
+    const record = rawSlot as Record<string, unknown>;
+    const index = Number(record.index);
+    const status = record.status === "succeeded" || record.status === "failed" || record.status === "running" || record.status === "queued"
+      ? record.status
+      : "queued";
+    if (!Number.isFinite(index) || index < 1) continue;
+    slotsByIndex.set(Math.trunc(index), {
+      index: Math.trunc(index),
+      status,
+      stage: typeof record.stage === "string" ? record.stage : undefined,
+      storageKey: typeof record.storageKey === "string" ? record.storageKey : undefined,
+      mimeType: typeof record.mimeType === "string" ? record.mimeType : undefined,
+      error: typeof record.error === "string" ? record.error : undefined,
+      updatedAt: typeof record.updatedAt === "string" ? record.updatedAt : undefined
+    });
+  }
+  const total = Math.max(requestedJobOutputCount(job), slotsByIndex.size, assetsCount);
+  return Array.from({ length: total }, (_, itemIndex) => {
+    const index = itemIndex + 1;
+    return slotsByIndex.get(index) ?? {
+      index,
+      status: job.status === "failed" ? "failed" : job.status === "succeeded" ? "succeeded" : job.status === "running" ? "running" : "queued"
+    };
+  });
+}
+
+function slotLabel(slot: RuntimeOutputSlot): string {
+  if (slot.status === "succeeded") return "Delivered";
+  if (slot.status === "failed") return "Failed";
+  if (slot.status === "running") return "Generating";
+  return "Queued";
+}
+
+function workspaceStoragePreviewUrl(storageKey: string): string {
+  if (storageKey.startsWith("customer-assets/")) return `/api/local-assets/${storageKey.slice("customer-assets/".length)}`;
+  if (storageKey.startsWith("sites/") && storageKey.includes("/customers/")) return `/api/local-assets/${storageKey}`;
+  if (storageKey.startsWith("/")) return storageKey;
+  return `/api/local-assets/${storageKey}`;
+}
+
+function workspaceJobTime(value: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit"
+  }).format(new Date(value));
+}
+
+function isSameLocalDay(value: string, reference: Date): boolean {
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-  }).format(date);
+  if (Number.isNaN(date.getTime())) return false;
+  return date.getFullYear() === reference.getFullYear() &&
+    date.getMonth() === reference.getMonth() &&
+    date.getDate() === reference.getDate();
 }
 
-function useWorkspaceRuntime(siteId: string): WorkspaceRuntimeState {
-  const [state, setState] = useState<WorkspaceRuntimeState>({ status: "loading" });
+function isVideoAsset(asset: Pick<ThemeRuntimeAsset, "mimeType">): boolean {
+  return asset.mimeType.startsWith("video/");
+}
+
+function useWorkspaceRuntime(siteId: string, refreshKey = 0, enabled = true): WorkspaceRuntimeState {
+  const [state, setState] = useState<WorkspaceRuntimeState>(() => enabled ? { status: "loading", refreshKey } : { status: "idle" });
 
   useEffect(() => {
+    if (!enabled) {
+      setState((current) => current.status === "ready" || current.status === "loading" ? current : { status: "idle" });
+      return;
+    }
     const controller = new AbortController();
-    fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace`, {
+    const refreshParam = refreshKey > 0 ? `&refresh=${refreshKey}` : "";
+    setState((current) => current.status === "ready" ? { status: "loading", refreshKey, runtime: current.runtime } : { status: "loading", refreshKey });
+    fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace${refreshParam}`, {
+      cache: "no-store",
       credentials: "same-origin",
       signal: controller.signal
     })
       .then(async (response) => {
         const data = (await response.json().catch(() => ({}))) as { ok?: boolean; runtime?: ThemeRuntimeData; error?: string };
         if (!response.ok || !data.ok || !data.runtime) throw new Error(data.error || "workspace_runtime_unavailable");
-        setState({ status: "ready", runtime: data.runtime });
+        setState({ status: "ready", refreshKey, runtime: data.runtime });
       })
       .catch((error) => {
         if (controller.signal.aborted) return;
-        setState({ status: "error", error: error instanceof Error ? error.message : "workspace_runtime_unavailable" });
+        setState((current) => ({
+          status: "error",
+          refreshKey,
+          ...(current.runtime ? { runtime: current.runtime } : {}),
+          error: error instanceof Error ? error.message : "workspace_runtime_unavailable"
+        }));
       });
 
     return () => controller.abort();
-  }, [siteId]);
+  }, [enabled, siteId, refreshKey]);
 
   return state;
 }
@@ -103,28 +253,20 @@ function WorkspaceInlineLoading({ label }: { label: string }) {
   );
 }
 
-const workspaceSteps: Array<{ panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor; title: string; detail: string }> = [
-  { panel: "create", anchor: "step-create", title: "Choose package", detail: "Pick a photo package or focused tool and review the credit cost before generation." },
-  { panel: "create", anchor: "source-photos", title: "Upload selfies", detail: "Create the private model photos for this request before submitting." },
-  { panel: "overview", anchor: "review-request", title: "Review results", detail: "Track generation status, private albums, downloads, favorites, and credit activity." }
+type StudioConsoleSectionId = "generate" | "try-on" | "video" | "background" | "model";
+
+const studioConsoleSections: Array<{ id: StudioConsoleSectionId; label: string; panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor }> = [
+  { id: "generate", label: "Generate Image", panel: "create", anchor: "step-create" },
+  { id: "try-on", label: "Try-On", panel: "create", anchor: "step-create" },
+  { id: "video", label: "Image to Video", panel: "create", anchor: "step-create" },
+  { id: "background", label: "Change Background", panel: "create", anchor: "step-create" },
+  { id: "model", label: "Create New AI Model", panel: "create", anchor: "source-photos" }
 ];
 
-const navItems = [
-  { id: "ai-photos", label: "AI Photos", status: "Open", icon: Camera, panel: "create" as const, actions: ["Single portrait", "Couple set", "No-input prompt"] },
-  { id: "photo-editor", label: "AI Photo Editor", status: "Open", icon: Sparkles, panel: "create" as const, actions: ["Prompt edit", "Retouch", "Background"] },
-  { id: "albums", label: "AI Albums", status: "Ready", icon: ImageIcon, panel: "overview" as const, actions: ["Recent albums", "Delivery status", "Downloads"] },
-  { id: "video", label: "AI Video", status: "Concept", icon: PlaySquare, panel: "create" as const, actions: ["Image to video", "Profile clip", "Motion prompt"] },
-  { id: "model-studio", label: "Model Studio", status: "Private", icon: Bot, panel: "upload" as const, actions: ["Upload selfies", "Training set", "Identity review"] },
-  { id: "explore", label: "Explore", status: "Live", icon: Search, panel: "overview" as const, actions: ["Browse ideas", "Saved looks", "Package picks"] }
-];
-
-const aidreamcapesNavItems = [
-  { id: "travel-portraits", label: "Travel Portraits", status: "Open", icon: Compass, panel: "create" as const, actions: ["Solo route", "Couple route", "No-input scene"] },
-  { id: "route-editor", label: "Route Photo Editor", status: "Open", icon: Sparkles, panel: "create" as const, actions: ["Prompt edit", "Light match", "Backdrop"] },
-  { id: "route-albums", label: "Route Albums", status: "Ready", icon: ImageIcon, panel: "overview" as const, actions: ["Recent albums", "Delivery status", "Downloads"] },
-  { id: "story-clips", label: "Story Clips", status: "Concept", icon: PlaySquare, panel: "create" as const, actions: ["Image to video", "Story cover", "Motion prompt"] },
-  { id: "source-library", label: "Source Library", status: "Private", icon: UploadCloud, panel: "upload" as const, actions: ["Upload sources", "Route references", "Identity review"] },
-  { id: "explore", label: "Explore", status: "Live", icon: Search, panel: "overview" as const, actions: ["Browse routes", "Saved looks", "Package picks"] }
+const studioGenderOptions = [
+  { id: "man", label: "Man", icon: UserRound },
+  { id: "woman", label: "Woman", icon: Users },
+  { id: "nonbinary", label: "N-Bi", icon: UserRound }
 ];
 
 export function CustomerWorkspaceShell({
@@ -147,89 +289,265 @@ export function CustomerWorkspaceShell({
   initialPanel?: CustomerWorkspacePanel;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
-  const prefetchPaths = useMemo(() => [`${basePath}/account`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
-  const runtimeState = useWorkspaceRuntime(site.id);
-  const runtime = runtimeState.status === "ready" ? runtimeState.runtime : undefined;
-  const hydratedAssets = runtime?.assets ?? assets;
+  const prefetchPaths = useMemo(
+    () => [basePath || "/", `${basePath}/collections`, `${basePath}/tools`, `${basePath}/pricing`, `${basePath}/#faq`, `${basePath}/app/create`],
+    [basePath]
+  );
+  const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
+  const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(false);
+  const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
+  const runtime = runtimeState.runtime;
+  const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(assets);
+  const hydratedAssets = runtimeAssets;
   const recentJobs = runtime?.jobs ?? [];
-  const recentAlbums = runtime?.albums ?? [];
   const customerModels = runtime?.customerModels ?? [];
-  const recentLedger = runtime?.ledger ?? [];
+  const subscriptionStatus: WorkspaceSubscriptionStatus = runtime
+    ? hasActiveWorkspaceSubscription(runtime.subscriptions) ? "active" : "required"
+    : "loading";
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const activeNavItems = isAidreamcapes ? aidreamcapesNavItems : navItems;
-  const initialNavId = initialPanel === "upload"
-    ? isAidreamcapes ? "source-library" : "model-studio"
-    : initialPanel === "overview"
-      ? isAidreamcapes ? "route-albums" : "albums"
-      : activeNavItems[0]?.id ?? "";
   const [activePanel, setActivePanel] = useState<CustomerWorkspacePanel>(initialPanel);
-  const [activeNavId, setActiveNavId] = useState(initialNavId);
-  const [activeOperationId, setActiveOperationId] = useState<string | null>(null);
   const [resourceTab, setResourceTab] = useState<WorkspaceResourceTab>("all");
-  const [activeGuideStep, setActiveGuideStep] = useState(() => initialPanel === "overview" ? 2 : initialPanel === "upload" ? 1 : 0);
   const [preferredCreateMode, setPreferredCreateMode] = useState<WorkspaceCreateMode>("theme");
   const [preferredCreateModeRequest, setPreferredCreateModeRequest] = useState(0);
-  const [operationActionById, setOperationActionById] = useState<Record<string, string>>({});
-  const [operationNoteById, setOperationNoteById] = useState<Record<string, string>>({});
   const [appliedOperationContext, setAppliedOperationContext] = useState<{ action?: string; note?: string; source?: string }>({});
-  const [showStepGuide, setShowStepGuide] = useState(false);
-  const currentStepIndex = activePanel === "overview" ? 2 : activeGuideStep;
-  const activeTitle = isAidreamcapes ? "Build a private travel portrait set." : "Create your private AI photo set.";
-  const brandLabel = isAidreamcapes ? "Aidreamcapes" : myDreamShootsDisplayName;
-  const activeSubtitle = isAidreamcapes
-    ? "Choose a route-ready package, upload travel references, then generate and review a private travel portrait set in one workspace."
-    : "Choose a photo package, upload selfies, then generate and review a private AI photo set in one workspace.";
+  const [activeStudioSection, setActiveStudioSection] = useState<StudioConsoleSectionId | null>("model");
+  const [studioModelName, setStudioModelName] = useState("");
+  const [studioTrainingMode, setStudioTrainingMode] = useState<"single" | "couple">(isAidreamcapes ? "single" : "couple");
+  const [primaryGender, setPrimaryGender] = useState("nonbinary");
+  const [partnerGender, setPartnerGender] = useState("nonbinary");
+  const [selectedPreviewAssetId, setSelectedPreviewAssetId] = useState<string | null>(null);
+  const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter((asset) => asset.role === "input" || asset.role === "training_input"));
+  const [primarySampleIds, setPrimarySampleIds] = useState<string[]>([]);
+  const [partnerSampleIds, setPartnerSampleIds] = useState<string[]>([]);
+  const [uploadingSampleTarget, setUploadingSampleTarget] = useState<SampleTarget | null>(null);
+  const [sampleUploadMessage, setSampleUploadMessage] = useState("Upload samples to preview them here before generation.");
+  const [workspaceNotice, setWorkspaceNotice] = useState("");
+  const [runtimeRefreshMessage, setRuntimeRefreshMessage] = useState("");
+  const [manualRefreshPending, setManualRefreshPending] = useState(false);
+  const [manualRefreshKey, setManualRefreshKey] = useState<number | null>(null);
+  const [focusedJobId, setFocusedJobId] = useState<string | null>(null);
+  const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
+  const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
+  const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
+  const pendingSampleTargetRef = useRef<SampleTarget>("primary");
+  const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
+  const restoredSampleSelectionRef = useRef(false);
+  const sampleSelectionStorageKey = useMemo(() => `dreamshoot:workspace:${site.id}:${customer.id}:sample-selection:v1`, [customer.id, site.id]);
   const tabItems: Array<{ id: WorkspaceResourceTab; label: string }> = useMemo(
-    () =>
-      isAidreamcapes
-        ? [
-            { id: "all", label: "All" },
-            { id: "videos", label: "Routes" },
-            { id: "albums", label: "Albums" },
-            { id: "saved", label: "Saved" },
-            { id: "explore", label: "Explore" }
-          ]
-        : [
-            { id: "all", label: "All" },
-            { id: "videos", label: "Videos" },
-            { id: "albums", label: "Photo Album" },
-            { id: "saved", label: "Favorites" },
-            { id: "explore", label: "Explore" }
-          ],
-    [isAidreamcapes]
+    () => [
+      { id: "all", label: "All" },
+      { id: "recent", label: "Recent" },
+      { id: "favorites", label: "Favorites" },
+      { id: "try-on", label: "Try-on" },
+      { id: "videos", label: "Videos" },
+      { id: "packages", label: "Pick Package" }
+    ],
+    []
   );
-  const galleryAssets = hydratedAssets.filter((asset) => asset.role === "output");
-  const sourceAssets = hydratedAssets.filter((asset) => asset.role === "input");
-  const readyJobs = recentJobs.filter((job) => job.status === "succeeded").length;
+  const galleryAssets = hydratedAssets.filter((asset) => shouldShowAssetOnSurface(asset, "workspace-gallery"));
+  const sourceAssets = sampleAssets;
+  const readySourceAssets = sourceAssets.filter((asset) => !asset.id.startsWith("local:") && asset.localStatus !== "uploading" && asset.localStatus !== "failed");
+  const readyPrimarySampleIds = primarySampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
+  const readyPartnerSampleIds = partnerSampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
+  const previewSamples = sourceAssets.filter((asset) => asset.localStatus !== "failed");
+  const previewSampleIndex = previewSampleId ? previewSamples.findIndex((asset) => asset.id === previewSampleId) : -1;
+  const previewSample = previewSampleIndex >= 0 ? previewSamples[previewSampleIndex] : undefined;
   const activeJobs = recentJobs.filter((job) => job.status === "queued" || job.status === "running").length;
   const failedJobs = recentJobs.filter((job) => job.status === "failed").length;
-  const latestOutputsByJobId = new Map<string, ThemeRuntimeAsset>();
-  for (const asset of galleryAssets) {
-    if (asset.jobId && !latestOutputsByJobId.has(asset.jobId)) latestOutputsByJobId.set(asset.jobId, asset);
-  }
+  const runtimeIsLoading = runtimeState.status === "loading";
+  const runtimeIsInitializing = !runtime && (runtimeState.status === "idle" || runtimeState.status === "loading");
+  const completedRuntimeRefreshKey = runtimeState.status === "ready" || runtimeState.status === "error" ? runtimeState.refreshKey : null;
   const resourceTitleByTab: Record<WorkspaceResourceTab, string> = {
-    all: "Workspace resources",
-    videos: isAidreamcapes ? "Route concepts" : "Video concepts",
-    albums: isAidreamcapes ? "Travel albums" : "Photo albums",
-    saved: "Saved selections",
-    explore: "Explore ideas"
+    all: "All assets",
+    recent: "Recent generations",
+    favorites: "Favorite selections",
+    "try-on": "Try-on results",
+    videos: "Video concepts",
+    packages: "Available packages"
   };
+
+  useEffect(() => {
+    if (runtimeFetchEnabled) return;
+    const startRuntimeFetch = () => setRuntimeFetchEnabled(true);
+    let idleId: number | undefined;
+    const timeoutId = window.setTimeout(() => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(startRuntimeFetch, { timeout: 1200 });
+        return;
+      }
+      startRuntimeFetch();
+    }, 120);
+    return () => {
+      window.clearTimeout(timeoutId);
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
+    };
+  }, [runtimeFetchEnabled]);
+
+  useEffect(() => {
+    const jobStatus = searchParams.get("job_status");
+    if (jobStatus !== "unavailable" && jobStatus !== "workspace") return;
+    const jobId = searchParams.get("job_id");
+    setFocusedJobId(jobId);
+    setWorkspaceNotice(
+      jobStatus === "workspace"
+        ? "Request status is shown in your workspace. The list has been refreshed so you can review the latest generation result."
+        : jobId
+          ? "That request is still syncing or is no longer available from this session. Your workspace has been refreshed so you can review the latest request status."
+          : "That request is still syncing or is no longer available from this session. Your workspace has been refreshed."
+    );
+    setRuntimeFetchEnabled(true);
+    setRuntimeRefreshKey((current) => current + 1);
+    setActivePanel("overview");
+    setResourceTab("all");
+    window.setTimeout(() => {
+      document.getElementById("resources-all")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!recentJobs.some((job) => job.status === "queued" || job.status === "running")) return;
+    const interval = window.setInterval(() => {
+      setRuntimeFetchEnabled(true);
+      setRuntimeRefreshKey((current) => current + 1);
+    }, 5000);
+    return () => window.clearInterval(interval);
+  }, [recentJobs]);
+
+  useEffect(() => {
+    if (!manualRefreshPending || manualRefreshKey === null || completedRuntimeRefreshKey !== manualRefreshKey) return;
+    if (runtimeState.status === "ready") {
+      setManualRefreshPending(false);
+      setManualRefreshKey(null);
+      setRuntimeRefreshMessage(`Last checked ${workspaceJobTime(new Date().toISOString())}`);
+    }
+    if (runtimeState.status === "error") {
+      setManualRefreshPending(false);
+      setManualRefreshKey(null);
+      setRuntimeRefreshMessage("Status refresh failed. Try again.");
+    }
+  }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
+  useEffect(() => {
+    setRuntimeAssets(runtime?.assets ?? assets);
+  }, [assets, runtime?.assets]);
+  const allResourceAssets = galleryAssets;
+  const tryOnJobIds = new Set(
+    recentJobs
+      .filter((job) => JSON.stringify(job.requestJson ?? {}).toLowerCase().includes("try-on"))
+      .map((job) => job.id)
+  );
+  const todayResourceAssets = galleryAssets.filter((asset) => isSameLocalDay(asset.createdAt, new Date()));
+  const visibleResourceAssets =
+    resourceTab === "all"
+      ? allResourceAssets
+      : resourceTab === "videos"
+        ? galleryAssets.filter((asset) => asset.mimeType.startsWith("video/"))
+      : resourceTab === "try-on"
+        ? galleryAssets.filter((asset) => asset.jobId ? tryOnJobIds.has(asset.jobId) : false)
+      : resourceTab === "recent"
+        ? todayResourceAssets
+      : resourceTab === "favorites"
+        ? galleryAssets.filter((asset) => asset.isFavorite)
+        : allResourceAssets;
+  const selectedPreviewIndex = selectedPreviewAssetId ? Math.max(0, visibleResourceAssets.findIndex((asset) => asset.id === selectedPreviewAssetId)) : -1;
+  const selectedPreviewAsset = selectedPreviewIndex >= 0 ? visibleResourceAssets[selectedPreviewIndex] : undefined;
+  const outputCopyJobs = useMemo(() => recentJobs.map(outputCopyJob).filter((job): job is OutputCopyJob => Boolean(job)), [recentJobs]);
+  const jobById = useMemo(() => new Map(outputCopyJobs.map((job) => [job.id, job])), [outputCopyJobs]);
+  const outputCountByJobId = useMemo(() => {
+    const counts = new Map<string, number>();
+    galleryAssets.forEach((asset) => {
+      if (!asset.jobId) return;
+      counts.set(asset.jobId, (counts.get(asset.jobId) ?? 0) + 1);
+    });
+    return counts;
+  }, [galleryAssets]);
+  const visibleStatusJobs = useMemo(() => {
+    const focusedJob = focusedJobId ? recentJobs.find((job) => job.id === focusedJobId) : undefined;
+    if (focusedJob) return [focusedJob];
+    const activeJob = recentJobs.find((job) => job.status === "queued" || job.status === "running");
+    return [activeJob ?? recentJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
+  }, [focusedJobId, recentJobs]);
+  const outputIndexByAssetId = useMemo(() => {
+    const counts = new Map<string, number>();
+    return new Map(galleryAssets.map((asset) => {
+      const jobKey = asset.jobId ?? asset.id;
+      const next = (counts.get(jobKey) ?? 0) + 1;
+      counts.set(jobKey, next);
+      return [asset.id, next] as const;
+    }));
+  }, [galleryAssets]);
+  const outputCopyForAsset = (asset: ThemeRuntimeAsset) => generatedOutputCopy({
+    asset,
+    imageIndex: outputIndexByAssetId.get(asset.id) ?? 1,
+    job: asset.jobId ? jobById.get(asset.jobId) : undefined,
+    jobs: outputCopyJobs
+  });
+  const selectedPreviewCopy = selectedPreviewAsset ? outputCopyForAsset(selectedPreviewAsset) : undefined;
+  function renderResourceAssetCard(asset: ThemeRuntimeAsset) {
+    const outputCopy = outputCopyForAsset(asset);
+    const video = isVideoAsset(asset);
+    return (
+      <div className="group grid h-full min-h-[390px] overflow-hidden rounded-[12px] border border-white/8 bg-[#0d1118] transition hover:border-white/20" key={asset.id}>
+        <div className="relative self-start">
+          {video ? (
+            <div className="relative">
+              <video
+                className="aspect-[4/5] w-full object-cover"
+                controls
+                muted
+                playsInline
+                preload="metadata"
+                src={asset.previewUrl}
+              />
+              <button
+                className="absolute bottom-3 left-3 rounded-full border border-white/18 bg-black/56 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur transition hover:bg-white/14"
+                onClick={() => setSelectedPreviewAssetId(asset.id)}
+                type="button"
+              >
+                Open preview
+              </button>
+            </div>
+          ) : (
+            <button className="block w-full text-left" onClick={() => setSelectedPreviewAssetId(asset.id)} type="button">
+              <img alt={outputCopy.title} className="aspect-[4/5] w-full object-cover transition duration-200 group-hover:scale-[1.03]" src={asset.previewUrl} />
+            </button>
+          )}
+          <button
+            aria-label={asset.isFavorite ? "Remove from favorites" : "Add to favorites"}
+            className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border backdrop-blur transition ${
+              asset.isFavorite ? "border-[#ff7ab8]/55 bg-[#ff4aa2]/90 text-white" : "border-white/18 bg-black/46 text-white/72 hover:bg-white/12 hover:text-white"
+            }`}
+            onClick={(event) => {
+              event.stopPropagation();
+              void toggleAssetFavorite(asset);
+            }}
+            type="button"
+          >
+            <Heart className={`h-4 w-4 ${asset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
+          </button>
+        </div>
+        <div className="grid min-h-[138px] grid-rows-[1fr_auto] gap-2 p-3">
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold" title={outputCopy.title}>{outputCopy.title}</p>
+            <p className="mt-1 line-clamp-2 min-h-[2.5rem] text-xs leading-5 text-white/42" title={outputCopy.description}>{outputCopy.description}</p>
+          </div>
+          <CustomerAssetDownloadButton
+            assetId={asset.id}
+            className="inline-flex h-10 w-full items-center justify-center rounded-[8px] border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1] disabled:cursor-wait disabled:opacity-60"
+            customerId={customer.id}
+            label="Download"
+            siteId={site.id}
+          />
+        </div>
+      </div>
+    );
+  }
   const showUploadStep = activePanel === "upload";
   const showCreateStep = activePanel === "create";
   const showReviewStep = activePanel === "overview";
-  const isGuidedShootFlow = activePanel === "create" || activePanel === "upload";
-  const heroPreviewPacks = creativePacks.filter((pack) => pack.status === "active" && pack.imageUrl).slice(0, 5);
-  const guidedTitle = isAidreamcapes ? "Create a private travel portrait set." : "Create your dream photoshoot.";
-  const guidedSubtitle = isAidreamcapes
-    ? "Choose a route style, upload travel references, confirm credits, and review a private album from the same flow."
-    : "Choose a photo package, upload selfies, confirm credits, and review your private AI album from the same flow.";
-  const guidedBullets = isAidreamcapes
-    ? ["Destination portrait packages", "Private travel references", "Credit cost shown before generation", "Travel albums and downloads"]
-    : ["Upload selfies from this account", "Browse themed photo packages", "Credit cost shown before generation", "Private albums and downloads"];
-  const activeOperationItem = activeOperationId ? activeNavItems.find((item) => item.id === activeOperationId) : undefined;
-
   function scrollToWorkspaceAnchor(anchor: WorkspaceAnchor) {
     if (typeof window === "undefined") return;
     window.history.replaceState(null, "", `#${anchor}`);
@@ -239,9 +557,6 @@ export function CustomerWorkspaceShell({
   }
 
   function choosePanel(panel: CustomerWorkspacePanel, anchor: WorkspaceAnchor) {
-    if (anchor === "step-create") setActiveGuideStep(0);
-    if (anchor === "source-photos" || anchor === "step-upload") setActiveGuideStep(1);
-    if (anchor === "review-request" || anchor.startsWith("resources-")) setActiveGuideStep(2);
     setActivePanel(panel);
     scrollToWorkspaceAnchor(anchor);
   }
@@ -252,57 +567,197 @@ export function CustomerWorkspaceShell({
     scrollToWorkspaceAnchor(`resources-${tab}`);
   }
 
-  function navAnchorForItem(itemId: string): { panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor; tab?: WorkspaceResourceTab } {
-    if (itemId === "albums" || itemId === "route-albums") return { panel: "overview", anchor: "resources-albums", tab: "albums" };
-    if (itemId === "video" || itemId === "story-clips") return { panel: "create", anchor: "step-create" };
-    if (itemId === "explore") return { panel: "overview", anchor: "resources-explore", tab: "explore" };
-    if (itemId === "model-studio" || itemId === "source-library") return { panel: "upload", anchor: "step-upload" };
-    return { panel: "create", anchor: "step-create" };
-  }
-
-  function createModeForOperation(itemId: string): WorkspaceCreateMode {
-    return itemId === "photo-editor" || itemId === "video" || itemId === "route-editor" || itemId === "story-clips" ? "tool" : "theme";
-  }
-
-  function mainWindowTargetForOperation(
-    itemId: string,
-    target = navAnchorForItem(itemId)
-  ): { panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor; tab?: WorkspaceResourceTab } {
-    if (itemId === "model-studio" || itemId === "source-library") return { panel: "create", anchor: "source-photos" };
-    return target;
-  }
-
-  function openOperationInMainWindow(itemId: string, target = navAnchorForItem(itemId)) {
-    const destination = mainWindowTargetForOperation(itemId, target);
-    const navItem = activeNavItems.find((item) => item.id === itemId);
-    const selectedAction = operationActionById[itemId] ?? navItem?.actions[0] ?? navItem?.label ?? "";
-    setActiveOperationId(null);
-    setAppliedOperationContext({
-      action: selectedAction,
-      note: operationNoteById[itemId]?.trim() || undefined,
-      source: navItem?.label
+  function requestWorkspaceRefresh() {
+    setRuntimeFetchEnabled(true);
+    setManualRefreshPending(true);
+    setRuntimeRefreshMessage("Refreshing workspace status...");
+    setRuntimeRefreshKey((current) => {
+      const next = current + 1;
+      setManualRefreshKey(next);
+      return next;
     });
-    setPreferredCreateMode(createModeForOperation(itemId));
-    setPreferredCreateModeRequest((current) => current + 1);
-    if (destination.tab) setResourceTab(destination.tab);
-    choosePanel(destination.panel, destination.anchor);
   }
 
-  function editAppliedOperation() {
-    const item = activeNavItems.find((navItem) => navItem.label === appliedOperationContext.source);
-    if (!item) return;
-    setActiveNavId(item.id);
-    setActiveOperationId(item.id);
+  async function toggleAssetFavorite(asset: ThemeRuntimeAsset) {
+    const nextFavorite = !asset.isFavorite;
+    const nextFavoriteAt = nextFavorite ? new Date().toISOString() : undefined;
+    setRuntimeAssets((current) => current.map((item) => item.id === asset.id ? { ...item, isFavorite: nextFavorite, favoriteAt: nextFavoriteAt } : item));
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...csrfHeader(`customer_csrf_${site.id}`)
+      },
+      body: JSON.stringify({ isFavorite: nextFavorite })
+    });
+    const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+    if (!response.ok || !result.asset) {
+      setRuntimeAssets((current) => current.map((item) => item.id === asset.id ? asset : item));
+      setRuntimeRefreshMessage("Favorite update failed. Try again.");
+      return;
+    }
+    setRuntimeAssets((current) => current.map((item) => item.id === result.asset!.id ? result.asset! : item));
+    setSelectedPreviewAssetId((current) => current === result.asset!.id ? result.asset!.id : current);
+  }
+
+  function showJobStatus(jobId: string) {
+    setFocusedJobId(jobId);
+    setRuntimeFetchEnabled(true);
+    setRuntimeRefreshKey((current) => current + 1);
+    setWorkspaceNotice(`Request ${jobId} was created. Your workspace is refreshing so you can follow the latest status here.`);
+    setActivePanel("overview");
+    setResourceTab("all");
+    window.setTimeout(() => {
+      document.getElementById("resources-all")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
 
   function showCurrentRequestReview() {
     setActivePanel("create");
-    setActiveGuideStep(2);
     if (typeof window === "undefined") return;
     window.history.replaceState(null, "", "#review-current-request");
     window.setTimeout(() => {
       document.getElementById("review-current-request")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
+  }
+
+  function openCreateUploadPicker(target: "primary" | "partner" = "primary") {
+    setActivePanel("create");
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("customer-workspace:open-source-upload", { detail: { target } }));
+      scrollToWorkspaceAnchor("source-photos");
+    }, 120);
+  }
+
+  function openSidebarSamplePicker(target: SampleTarget) {
+    pendingSampleTargetRef.current = target;
+    sampleUploadInputRef.current?.click();
+  }
+
+  function mergeSamples(nextAssets: SampleAsset[]) {
+    setSampleAssets((current) => {
+      const byId = new Map(current.map((asset) => [asset.id, asset]));
+      nextAssets.forEach((asset) => byId.set(asset.id, asset));
+      return Array.from(byId.values()).sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime());
+    });
+  }
+
+  function removeSampleId(assetId: string) {
+    setPrimarySampleIds((current) => current.filter((id) => id !== assetId));
+    setPartnerSampleIds((current) => current.filter((id) => id !== assetId));
+    if (previewSampleId === assetId) setPreviewSampleId(null);
+  }
+
+  function replaceSampleId(oldId: string, nextAsset: ThemeRuntimeAsset, target: SampleTarget) {
+    setSampleAssets((current) => current.map((asset) => asset.id === oldId ? { ...nextAsset, localStatus: "ready", localTarget: target } : asset));
+    const replaceIds = (ids: string[]) => ids.map((id) => id === oldId ? nextAsset.id : id);
+    if (target === "partner") {
+      setPartnerSampleIds((current) => Array.from(new Set(replaceIds(current))).slice(0, 15));
+    } else {
+      setPrimarySampleIds((current) => Array.from(new Set(replaceIds(current))).slice(0, 15));
+    }
+    if (previewSampleId === oldId) setPreviewSampleId(nextAsset.id);
+  }
+
+  function moveSamplePreview(direction: -1 | 1) {
+    if (!previewSamples.length) return;
+    const currentIndex = previewSampleIndex >= 0 ? previewSampleIndex : 0;
+    const nextIndex = (currentIndex + direction + previewSamples.length) % previewSamples.length;
+    setPreviewSampleId(previewSamples[nextIndex].id);
+  }
+
+  async function deleteSample(asset: SampleAsset) {
+    if (asset.localStatus === "uploading") return;
+    if (asset.id.startsWith("local:")) {
+      removeSampleId(asset.id);
+      setSampleAssets((current) => current.filter((item) => item.id !== asset.id));
+      return;
+    }
+    setDeletingSampleId(asset.id);
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}`, {
+      method: "DELETE",
+      headers: csrfHeader(`customer_csrf_${site.id}`)
+    });
+    setDeletingSampleId(null);
+    if (!response.ok) {
+      setSampleUploadMessage("We could not delete this sample. Please try again.");
+      return;
+    }
+    removeSampleId(asset.id);
+    setSampleAssets((current) => current.filter((item) => item.id !== asset.id));
+    setSampleUploadMessage("Sample deleted.");
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  async function uploadSidebarSamples(files: FileList | null) {
+    const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
+    if (!imageFiles.length) {
+      setSampleUploadMessage("Choose one or more image files before uploading.");
+      return;
+    }
+    const target = pendingSampleTargetRef.current;
+    setUploadingSampleTarget(target);
+    setSampleUploadMessage(`Uploading ${imageFiles.length} sample${imageFiles.length === 1 ? "" : "s"}...`);
+    const now = Date.now();
+    const optimisticAssets: SampleAsset[] = imageFiles.map((file, index) => ({
+      id: `local:${target}:${now}:${index}`,
+      label: file.name.replace(/\.[^.]+$/, "") || `sample ${index + 1}`,
+      previewUrl: URL.createObjectURL(file),
+      mimeType: file.type || "image/jpeg",
+      role: "input",
+      reviewStatus: "approved",
+      createdAt: new Date(now + index).toISOString(),
+      localStatus: "uploading",
+      localTarget: target
+    }));
+    optimisticAssets.forEach((asset) => sampleBlobUrlsRef.current.add(asset.previewUrl));
+    mergeSamples(optimisticAssets);
+    const optimisticIds = optimisticAssets.map((asset) => asset.id);
+    if (target === "partner") {
+      setPartnerSampleIds((current) => Array.from(new Set([...optimisticIds, ...current])).slice(0, 15));
+    } else {
+      setPrimarySampleIds((current) => Array.from(new Set([...optimisticIds, ...current])).slice(0, 15));
+    }
+    const createdAssets: ThemeRuntimeAsset[] = [];
+    for (const [index, file] of imageFiles.entries()) {
+      const optimisticId = optimisticAssets[index].id;
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("label", file.name.replace(/\.[^.]+$/, "") || `sample ${index + 1}`);
+      formData.append("role", "input");
+      formData.append("subjectRole", target);
+      const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+        method: "POST",
+        headers: csrfHeader(`customer_csrf_${site.id}`),
+        body: formData
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+      if (!response.ok || !result.asset) {
+        setSampleAssets((current) => current.map((asset) => asset.id === optimisticId ? { ...asset, localStatus: "failed" } : asset));
+        removeSampleId(optimisticId);
+        setUploadingSampleTarget(null);
+        setSampleUploadMessage(`We could not upload ${file.name}. Please try again.`);
+        return;
+      }
+      createdAssets.push(result.asset);
+      replaceSampleId(optimisticId, result.asset, target);
+    }
+    const createdIds = createdAssets.map((asset) => asset.id);
+    if (target === "partner") {
+      setPartnerSampleIds((current) => Array.from(new Set([...createdIds, ...current])).slice(0, 15));
+    } else {
+      setPrimarySampleIds((current) => Array.from(new Set([...createdIds, ...current])).slice(0, 15));
+    }
+    setSampleUploadMessage(`${createdAssets.length} sample${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
+    setUploadingSampleTarget(null);
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  function movePreview(direction: -1 | 1) {
+    if (!visibleResourceAssets.length) return;
+    const currentIndex = selectedPreviewIndex >= 0 ? selectedPreviewIndex : 0;
+    const nextIndex = (currentIndex + direction + visibleResourceAssets.length) % visibleResourceAssets.length;
+    setSelectedPreviewAssetId(visibleResourceAssets[nextIndex].id);
   }
 
   useEffect(() => {
@@ -311,19 +766,15 @@ export function CustomerWorkspaceShell({
     if (!anchor) return;
     if (anchor === "step-upload") {
       setActivePanel("upload");
-      setActiveGuideStep(1);
     }
     if (anchor === "source-photos") {
       setActivePanel("create");
-      setActiveGuideStep(1);
     }
     if (anchor === "step-create") {
       setActivePanel("create");
-      setActiveGuideStep(0);
     }
     if (anchor === "review-request") {
       setActivePanel("overview");
-      setActiveGuideStep(2);
     }
     if (anchor.startsWith("resources-")) {
       const tab = anchor.replace("resources-", "") as WorkspaceResourceTab;
@@ -335,255 +786,401 @@ export function CustomerWorkspaceShell({
     window.setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ block: "start" }), 0);
   }, [tabItems]);
 
+  useEffect(() => {
+    const nextSamples = hydratedAssets.filter((asset) => asset.role === "input" || asset.role === "training_input");
+    if (nextSamples.length) mergeSamples(nextSamples);
+  }, [hydratedAssets]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || restoredSampleSelectionRef.current) return;
+    const availableIds = new Set(readySourceAssets.map((asset) => asset.id));
+    if (!availableIds.size) return;
+
+    let nextPrimaryIds: string[] = [];
+    let nextPartnerIds: string[] = [];
+    const saved = window.localStorage.getItem(sampleSelectionStorageKey);
+    if (saved) {
+      const parsed = recordValue((() => {
+        try {
+          return JSON.parse(saved) as unknown;
+        } catch {
+          return {};
+        }
+      })());
+      nextPrimaryIds = stringArray(parsed.primarySampleIds).filter((id) => availableIds.has(id)).slice(0, 15);
+      nextPartnerIds = stringArray(parsed.partnerSampleIds).filter((id) => availableIds.has(id)).slice(0, 15);
+      if (parsed.studioTrainingMode === "single" || parsed.studioTrainingMode === "couple") setStudioTrainingMode(parsed.studioTrainingMode);
+      if (typeof parsed.primaryGender === "string" && parsed.primaryGender) setPrimaryGender(parsed.primaryGender);
+      if (typeof parsed.partnerGender === "string" && parsed.partnerGender) setPartnerGender(parsed.partnerGender);
+      if (typeof parsed.studioModelName === "string") setStudioModelName(parsed.studioModelName);
+    }
+
+    if (!nextPrimaryIds.length) {
+      nextPrimaryIds = readySourceAssets.filter((asset) => asset.subjectRole === "primary").map((asset) => asset.id).slice(0, 15);
+    }
+    if (!nextPartnerIds.length) {
+      nextPartnerIds = readySourceAssets.filter((asset) => asset.subjectRole === "partner").map((asset) => asset.id).slice(0, 15);
+    }
+
+    if (!nextPrimaryIds.length && !nextPartnerIds.length) {
+      const recentJobWithSources = recentJobs.find((job) => {
+        const fields = jobFields(job);
+        return stringArray(fields.primaryAssetIds).some((id) => availableIds.has(id)) || stringArray(fields.partnerAssetIds).some((id) => availableIds.has(id));
+      });
+      if (recentJobWithSources) {
+        const fields = jobFields(recentJobWithSources);
+        nextPrimaryIds = stringArray(fields.primaryAssetIds).filter((id) => availableIds.has(id)).slice(0, 15);
+        nextPartnerIds = stringArray(fields.partnerAssetIds).filter((id) => availableIds.has(id)).slice(0, 15);
+        if (fields.trainingMode === "single" || fields.trainingMode === "couple") setStudioTrainingMode(fields.trainingMode);
+      }
+    }
+
+    if (!nextPrimaryIds.length && !nextPartnerIds.length && recentJobs.length && readySourceAssets.length) {
+      nextPrimaryIds = readySourceAssets.slice(0, 1).map((asset) => asset.id);
+      const latestTrainingMode = jobFields(recentJobs[0]).trainingMode;
+      const shouldRestorePartner = studioTrainingMode === "couple" || latestTrainingMode === "couple";
+      if (shouldRestorePartner) {
+        nextPartnerIds = readySourceAssets.slice(1, 2).map((asset) => asset.id);
+        setStudioTrainingMode("couple");
+      }
+    }
+
+    if (nextPrimaryIds.length) setPrimarySampleIds(nextPrimaryIds);
+    if (nextPartnerIds.length) setPartnerSampleIds(nextPartnerIds);
+    restoredSampleSelectionRef.current = true;
+  }, [readySourceAssets, recentJobs, sampleSelectionStorageKey]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !restoredSampleSelectionRef.current) return;
+    window.localStorage.setItem(sampleSelectionStorageKey, JSON.stringify({
+      primarySampleIds,
+      partnerSampleIds,
+      studioTrainingMode,
+      primaryGender,
+      partnerGender,
+      studioModelName
+    }));
+  }, [partnerGender, partnerSampleIds, primaryGender, primarySampleIds, sampleSelectionStorageKey, studioModelName, studioTrainingMode]);
+
+  useEffect(() => {
+    const handleAssetsUpdated = () => {
+      setRuntimeRefreshKey((current) => current + 1);
+    };
+    window.addEventListener("customer-assets:updated", handleAssetsUpdated);
+    return () => window.removeEventListener("customer-assets:updated", handleAssetsUpdated);
+  }, []);
+
+  useEffect(() => () => {
+    sampleBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    sampleBlobUrlsRef.current.clear();
+  }, []);
+
+  useEffect(() => {
+    if (activeJobs <= 0) return;
+    const timer = window.setInterval(() => {
+      setRuntimeRefreshKey((current) => current + 1);
+    }, 4500);
+    return () => window.clearInterval(timer);
+  }, [activeJobs]);
+
+  useEffect(() => {
+    if (!selectedPreviewAssetId) return;
+    if (!visibleResourceAssets.some((asset) => asset.id === selectedPreviewAssetId)) {
+      setSelectedPreviewAssetId(null);
+    }
+  }, [selectedPreviewAssetId, visibleResourceAssets]);
+
   return (
     <div className="min-h-screen bg-[#07090d] font-sans text-white">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
       <CustomerShellHeader creativePacks={creativePacks} customer={customer} site={site} tone="dark" />
 
-      <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[340px_minmax(0,1fr)]">
-        <aside className="border-b border-white/10 bg-[#0b0c0f] px-4 py-5 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r">
-          <div className="rounded-[18px] border border-white/10 bg-[linear-gradient(145deg,rgba(123,72,255,0.18),rgba(49,212,255,0.06))] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">Private workspace</p>
-            <p className="mt-2 text-lg font-semibold leading-tight">{brandLabel}</p>
-            <p className="mt-2 text-xs leading-5 text-white/56">{customer.email}</p>
-          </div>
-          {isGuidedShootFlow ? (
-            <div className="mt-4 rounded-[18px] border border-white/10 bg-white/[0.035] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/48">Operate</p>
-              <p className="mt-2 text-sm leading-6 text-white/66">
-                Select a left action to open its controls, then keep choosing packages and tools in the large panel.
+      <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[430px_minmax(0,1fr)] xl:grid-cols-[450px_minmax(0,1fr)]">
+        <aside className="border-b border-white/10 bg-[#0b0c0f] px-3 py-4 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r xl:px-4">
+          <div className="rounded-[16px] border border-white/10 bg-[#0f1116] p-4">
+            <p className="text-sm font-semibold text-white/84">{customerModels[0]?.label ?? "No Model Selected"}</p>
+            {customerModels[0] ? (
+              <p className="mt-1 flex items-center gap-1 text-xs text-white/46">
+                <Heart className="h-3.5 w-3.5 fill-[#ff4aa2] text-[#ff4aa2]" strokeWidth={1.8} />
+                {customerModels[0].status}
               </p>
-            </div>
-          ) : null}
+            ) : (
+              <p className="mt-1 text-xs leading-5 text-white/46">Create a private model before package generation.</p>
+            )}
+          </div>
 
-          {isGuidedShootFlow && (appliedOperationContext.action || appliedOperationContext.note) ? (
-            <div className="mt-4 rounded-[18px] border border-[#31d4ff]/35 bg-[#07131a] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Current request</p>
-              <p className="mt-2 text-sm font-semibold text-white">{appliedOperationContext.action ?? "Custom operation"}</p>
-              {appliedOperationContext.source ? <p className="mt-1 text-xs leading-5 text-white/48">{appliedOperationContext.source}</p> : null}
-              {appliedOperationContext.note ? <p className="mt-2 line-clamp-3 text-xs leading-5 text-white/62">{appliedOperationContext.note}</p> : null}
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                <button
-                  className="rounded-[12px] border border-white/12 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                  onClick={editAppliedOperation}
-                  type="button"
-                >
-                  Edit action
-                </button>
-                <button
-                  className="rounded-[12px] border border-white/12 bg-white px-3 py-2 text-xs font-semibold text-[#101114] transition hover:-translate-y-0.5"
-                  onClick={showCurrentRequestReview}
-                  type="button"
-                >
-                  Review
-                </button>
-              </div>
-            </div>
-          ) : null}
-
-          <nav className="mt-5 grid gap-1">
-            {activeNavItems.map((item) => {
-              const Icon = item.icon;
-              const active = activeNavId === item.id;
-              const target = navAnchorForItem(item.id);
+          <nav className="mt-4 divide-y divide-white/8 border-y border-white/8" data-studio-console-sidebar="true">
+            {studioConsoleSections.map((section) => {
+              const expanded = activeStudioSection === section.id;
               return (
-                <div className="border-b border-white/8 py-1" key={item.id}>
+                <div key={section.id}>
                   <button
-                    aria-controls={target.anchor}
-                    aria-current={active ? "page" : undefined}
-                    className={`group flex min-h-[58px] w-full items-center gap-3 rounded-[14px] px-2 py-3 text-left transition hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff] ${active ? "text-white" : "text-white/54"}`}
+                    aria-controls={`studio-console-${section.id}`}
+                    aria-expanded={expanded}
+                    className="flex min-h-[58px] w-full items-center justify-between gap-3 px-1 py-4 text-left text-sm font-semibold text-white/82 transition hover:text-white"
                     onClick={() => {
-                      setActiveNavId(item.id);
-                      if (target.tab) setResourceTab(target.tab);
-                      if (isGuidedShootFlow) {
-                        setActiveOperationId(item.id);
-                        return;
-                      }
-                      choosePanel(target.panel, target.anchor);
+                      setActiveStudioSection((current) => current === section.id ? null : section.id);
                     }}
                     type="button"
                   >
-                    <Icon className={`h-5 w-5 shrink-0 ${active ? "text-[#ff5ebd]" : "text-white/42"}`} strokeWidth={1.9} />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-semibold">{item.label}</span>
-                      <span className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${active ? "bg-[#21c06b] text-white" : "bg-white/[0.07] text-white/46"}`}>{item.status}</span>
-                    </span>
-                    <ChevronRight className={`h-4 w-4 shrink-0 text-white/36 transition ${active ? "translate-x-0.5 text-[#31d4ff]" : ""}`} strokeWidth={1.8} />
+                    <span>{section.label}</span>
+                    <ChevronDown className={`h-4 w-4 text-white/42 transition ${expanded ? "rotate-180 text-white/70" : ""}`} strokeWidth={1.8} />
                   </button>
+                  {expanded ? (
+                    section.id === "model" ? (
+                      <div className="grid gap-4 pb-5" id={`studio-console-${section.id}`}>
+                        <div className="rounded-[14px] border border-white/20 bg-[#111318] p-4">
+                          <p className="text-sm font-semibold">{isAidreamcapes ? "Train Travel Model" : "Train Model"}</p>
+                          <p className="mt-2 text-xs leading-5 text-white/58">
+                            Add clear photos for each person when available. You can continue without a minimum, and each request can use up to 15 photos.
+                          </p>
+                          <div className="mt-4 flex items-center gap-3">
+                            <span className="text-xs font-semibold text-white/70">Training Mode:</span>
+                            <div className="inline-grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/10 bg-white/[0.04]">
+                              {(["single", "couple"] as const).map((mode) => (
+                                <button
+                                  className={`px-4 py-2 text-xs font-semibold transition ${studioTrainingMode === mode ? "bg-[#3f5066] text-white" : "text-white/54 hover:bg-white/[0.05] hover:text-white"}`}
+                                  key={mode}
+                                  onClick={() => setStudioTrainingMode(mode)}
+                                  type="button"
+                                >
+                                  {mode === "single" ? "Single" : "Couple"}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid gap-2 rounded-[14px] border border-white/12 bg-[#101216] p-4 text-sm font-semibold text-white">
+                          <label htmlFor="studio-model-name">Name</label>
+                          <span className="text-xs font-normal leading-5 text-white/52">Give your model a name so you can easily identify it later.</span>
+                          <input
+                            autoComplete="off"
+                            className="relative z-10 rounded-[10px] border border-white/10 bg-[#05070b] px-3 py-3 text-sm font-normal text-white outline-none transition placeholder:text-white/32 focus:border-[#ff4aa2]/70"
+                            id="studio-model-name"
+                            onChange={(event) => setStudioModelName(event.target.value)}
+                            placeholder={studioTrainingMode === "couple" ? "e.g. Natalie and Jack Photos" : "e.g. Natalie Photos"}
+                            type="text"
+                            value={studioModelName}
+                          />
+                        </div>
+
+                        <div className="grid gap-3 rounded-[14px] border border-white/12 bg-[#101216] p-4">
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div>
+                              <p className="text-sm font-semibold">{studioTrainingMode === "couple" ? "Your Gender" : "Subject Gender"}</p>
+                              <div className="mt-3 grid grid-cols-3 gap-2">
+                                {studioGenderOptions.map((option) => {
+                                  const Icon = option.icon;
+                                  const active = primaryGender === option.id;
+                                  return (
+                                    <button
+                                      className={`grid min-h-[72px] place-items-center rounded-[12px] border px-2 py-2 text-xs font-semibold transition ${
+                                        active ? "border-[#ff4aa2] bg-[#ff4aa2]/10 text-white" : "border-white/10 bg-black/20 text-white/54 hover:border-white/25 hover:text-white"
+                                      }`}
+                                      key={option.id}
+                                      onClick={() => setPrimaryGender(option.id)}
+                                      type="button"
+                                    >
+                                      <Icon className="h-5 w-5" strokeWidth={1.8} />
+                                      <span>{option.label}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            {studioTrainingMode === "couple" ? (
+                              <div>
+                                <p className="text-sm font-semibold">Partner Gender</p>
+                                <div className="mt-3 grid grid-cols-3 gap-2">
+                                  {studioGenderOptions.map((option) => {
+                                    const Icon = option.icon;
+                                    const active = partnerGender === option.id;
+                                    return (
+                                      <button
+                                        className={`grid min-h-[72px] place-items-center rounded-[12px] border px-2 py-2 text-xs font-semibold transition ${
+                                          active ? "border-[#ff4aa2] bg-[#ff4aa2]/10 text-white" : "border-white/10 bg-black/20 text-white/54 hover:border-white/25 hover:text-white"
+                                        }`}
+                                        key={option.id}
+                                        onClick={() => setPartnerGender(option.id)}
+                                        type="button"
+                                      >
+                                        <Icon className="h-5 w-5" strokeWidth={1.8} />
+                                        <span>{option.label}</span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
+                        </div>
+
+                        <div className="grid gap-3 rounded-[14px] border border-white/12 bg-[#101216] p-4">
+                          {(studioTrainingMode === "couple"
+                            ? [
+                                { id: "primary" as const, title: "Your Samples", body: "Upload photos for the primary person." },
+                                { id: "partner" as const, title: "Partner Samples", body: "Upload photos for the partner person." }
+                              ]
+                            : [{ id: "primary" as const, title: "Your Samples", body: "Upload photos for this private model." }]
+                          ).map((group) => (
+                            <div className="rounded-[12px] border border-white/10 bg-black/20 p-3" key={group.id}>
+                              <div className="flex items-center justify-between gap-3">
+                                <div>
+                                  <p className="text-sm font-semibold">{group.title}</p>
+                                  <p className="mt-1 text-xs leading-5 text-white/52">
+                                    {group.body} Uploaded {group.id === "partner" ? partnerSampleIds.length : primarySampleIds.length} selected sample{(group.id === "partner" ? partnerSampleIds.length : primarySampleIds.length) === 1 ? "" : "s"}. Use up to 15 clear samples per request.
+                                  </p>
+                                </div>
+                                <button
+                                  className="rounded-[10px] border border-white/12 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                                  disabled={uploadingSampleTarget === group.id}
+                                  onClick={() => openSidebarSamplePicker(group.id)}
+                                  type="button"
+                                >
+                                  {uploadingSampleTarget === group.id ? "Uploading" : "Upload"}
+                                </button>
+                              </div>
+                              <div className="mt-3 grid grid-cols-3 gap-2">
+                                {sourceAssets.filter((asset) => (group.id === "partner" ? partnerSampleIds : primarySampleIds).includes(asset.id)).slice(0, 6).map((asset) => (
+                                  <button
+                                    className="group/sample relative overflow-hidden rounded-[10px] border border-white/10 bg-black/30"
+                                    disabled={asset.localStatus === "failed"}
+                                    key={`${group.id}_${asset.id}`}
+                                    onClick={() => setPreviewSampleId(asset.id)}
+                                    type="button"
+                                  >
+                                    <img alt={asset.label} className="aspect-square w-full object-cover transition group-hover/sample:scale-[1.03]" src={asset.previewUrl} />
+                                    {asset.localStatus === "uploading" ? (
+                                      <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">Uploading</span>
+                                    ) : null}
+                                    {asset.localStatus === "failed" ? (
+                                      <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">Failed</span>
+                                    ) : null}
+                                  </button>
+                                ))}
+                                {!(group.id === "partner" ? partnerSampleIds : primarySampleIds).length ? (
+                                  <button
+                                    className="col-span-3 grid min-h-[104px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/20 px-4 py-5 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/60 hover:text-white"
+                                    onClick={() => openSidebarSamplePicker(group.id)}
+                                    type="button"
+                                  >
+                                    Click Upload to select image files.
+                                  </button>
+                                ) : null}
+                              </div>
+                            </div>
+                          ))}
+                          <input
+                            accept="image/*"
+                            className="sr-only"
+                            multiple
+                            onChange={(event) => {
+                              void uploadSidebarSamples(event.target.files);
+                              event.target.value = "";
+                            }}
+                            ref={sampleUploadInputRef}
+                            type="file"
+                          />
+                          <p className="text-xs leading-5 text-white/46">{sampleUploadMessage}</p>
+                          <button
+                            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#4c55e8] px-4 py-3 text-xs font-semibold text-white transition hover:bg-[#5c66ff] disabled:cursor-not-allowed disabled:opacity-55"
+                            disabled={!primarySampleIds.length && !partnerSampleIds.length}
+                            onClick={() => {
+                              setAppliedOperationContext({
+                                action: isAidreamcapes ? "Travel model training" : "AI model training",
+                                note: studioModelName.trim() || undefined,
+                                source: "Create New AI Model"
+                              });
+                              setPreferredCreateMode("theme");
+                              setPreferredCreateModeRequest((current) => current + 1);
+                              choosePanel("create", "step-create");
+                            }}
+                            type="button"
+                          >
+                            Train Model ({studioTrainingMode === "couple" ? 100 : 50} credits)
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="grid gap-3 pb-5" id={`studio-console-${section.id}`}>
+                        <div className="rounded-[14px] border border-white/12 bg-[#101216] p-4">
+                          <p className="text-sm font-semibold">{section.label}</p>
+                          <p className="mt-2 text-xs leading-5 text-white/52">
+                            Use the main window to select a package or tool, then return here for model setup and sample maintenance.
+                          </p>
+                          <button
+                            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-white/12 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                            onClick={() => {
+                              if (section.id === "video") setPreferredCreateMode("tool");
+                              choosePanel(section.panel, section.anchor);
+                            }}
+                            type="button"
+                          >
+                            Open workspace
+                            <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  ) : null}
                 </div>
               );
             })}
           </nav>
-
-          <div className="mt-6 rounded-[18px] border border-[#2f6fed]/35 bg-[#101329] p-4">
-            <div className="flex items-center gap-2 text-sm font-semibold">
-              <Sparkles className="h-4 w-4 text-[#73a7ff]" strokeWidth={1.8} />
-              Workspace update
-            </div>
-            <p className="mt-3 text-xs leading-6 text-white/66">
-              Private uploads, package selection, credit hold, and generated albums now use one request flow.
-            </p>
-          </div>
         </aside>
 
-        <section className="min-w-0 bg-[#080a0f]">
-          {isGuidedShootFlow ? (
-            <div className="relative overflow-hidden border-b border-white/10 px-5 py-8 xl:px-8">
-              <div className="pointer-events-none absolute inset-0 opacity-70">
-                <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_70%_20%,rgba(49,212,255,0.28),transparent_34%),radial-gradient(circle_at_42%_54%,rgba(255,94,189,0.22),transparent_42%)]" />
-                <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,#ff9f43,#ff5ebd,#31d4ff)]" />
-              </div>
-              <div className="relative mx-auto grid max-w-[1500px] gap-7 xl:grid-cols-[minmax(0,1fr)_430px] xl:items-end">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/[0.05] px-4 py-2 text-xs font-semibold text-white/78">
-                    <span className="h-2 w-2 rounded-full bg-[#31d4ff]" />
-                    AI photo package studio
-                  </div>
-                  <h1 className="mt-6 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-white md:text-6xl">
-                    {guidedTitle}
-                  </h1>
-                  <p className="mt-5 max-w-2xl text-base leading-8 text-white/70">{guidedSubtitle}</p>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {guidedBullets.map((item) => (
-                      <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/76" key={item}>
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[#31d4ff]" strokeWidth={1.8} />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-[22px] border border-[#31d4ff]/50 bg-[linear-gradient(135deg,rgba(255,94,189,0.2),rgba(49,212,255,0.12)),#10131b] p-5">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#ff9f43]">Signed in</p>
-                      <p className="mt-2 text-lg font-semibold text-white">{customer.name || customer.email}</p>
-                      <p className="mt-1 text-xs text-white/56">{customer.email}</p>
-                    </div>
-                    <span className="rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white">
-                      {customer.balance.available} credits
-                    </span>
-                  </div>
-                  <div className="mt-5 grid grid-cols-3 gap-2">
-                    {heroPreviewPacks.length ? heroPreviewPacks.slice(0, 3).map((pack) => (
-                      <button
-                        className="group overflow-hidden rounded-[14px] border border-white/10 bg-black/20 text-left"
-                        key={pack.id}
-                        onClick={() => choosePanel("create", "step-create")}
-                        type="button"
-                      >
-                        <img alt={pack.name} className="aspect-[4/5] w-full object-cover transition duration-200 group-hover:scale-[1.04]" src={pack.imageUrl ?? ""} />
-                      </button>
-                    )) : (
-                      [0, 1, 2].map((item) => <div className="aspect-[4/5] rounded-[14px] border border-white/10 bg-white/[0.06]" key={item} />)
-                    )}
-                  </div>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    <button
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5"
-                      onClick={() => choosePanel("create", "step-create")}
-                      type="button"
-                    >
-                      Browse packages
-                      <ChevronRight className="h-4 w-4" strokeWidth={1.9} />
-                    </button>
-                    <button
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/18 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
-                      onClick={() => choosePanel("create", "source-photos")}
-                      type="button"
-                    >
-                      Upload selfies
-                      <UploadCloud className="h-4 w-4" strokeWidth={1.9} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : null}
-
-          <div className={`${isGuidedShootFlow ? "mx-auto max-w-[1500px] border-b border-white/10 px-5 py-5 xl:px-8" : "border-b border-white/10 px-5 py-5 xl:px-8"}`}>
-            {!isGuidedShootFlow ? (
-            <div className="flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#ff9f43]">Customer studio</p>
-                <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.02em] md:text-5xl">{activeTitle}</h1>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/62">{activeSubtitle}</p>
-              </div>
-              <StorefrontInstantLink className="inline-flex w-fit rounded-full border border-white/14 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-white hover:bg-white/[0.08]" href={`${basePath}/account`}>
-                Account center
-              </StorefrontInstantLink>
-            </div>
-            ) : null}
-
-            <div className={`${isGuidedShootFlow ? "grid gap-2 md:grid-cols-3" : "mt-6 grid gap-3 xl:grid-cols-3"}`}>
-              {workspaceSteps.map((step, index) => {
-                const active = index === currentStepIndex;
-                const complete = index < currentStepIndex;
-                return (
-                  <button
-                    className={`group grid ${isGuidedShootFlow ? "min-h-[78px] gap-2 rounded-[16px] px-4 py-3" : "min-h-[94px] gap-3 rounded-[18px] p-4"} border text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff] ${
-                      active
-                        ? "border-[#31d4ff]/70 bg-[linear-gradient(135deg,rgba(255,94,189,0.24),rgba(49,212,255,0.14))] text-white shadow-[0_18px_50px_-36px_rgba(49,212,255,0.65)]"
-                        : complete
-                        ? "border-white/16 bg-white/[0.055] text-white"
-                      : "border-white/10 bg-white/[0.025] text-white/58"
-                    }`}
-                    key={step.title}
-                    onClick={() => choosePanel(step.panel, step.anchor)}
-                    type="button"
-                  >
-                    <span className="flex items-center justify-between gap-3">
-                      <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${active ? "text-[#31d4ff]" : "text-white/42"}`}>
-                        Step {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {complete ? <CheckCircle2 className="h-4 w-4 text-[#21c06b]" strokeWidth={1.8} /> : <span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-[#31d4ff]" : "bg-white/20"}`} />}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-semibold">{step.title}</span>
-                      <span className={`mt-1 block text-xs leading-5 ${active ? "text-white/70" : "text-white/48"} ${isGuidedShootFlow ? "line-clamp-2" : ""}`}>{step.detail}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {isGuidedShootFlow ? (
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-white/10 bg-white/[0.035] px-4 py-3">
-                <p className="text-xs leading-5 text-white/58">
-                  View the full package, selfie upload, and review sequence without leaving the current workspace.
-                </p>
+        <section className="min-w-0 bg-[#050506]">
+          <div className="border-b border-white/10 px-5 py-4 xl:px-8">
+            <div className="flex flex-wrap items-center gap-3">
+                  {tabItems.map((tab) => (
                 <button
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                  onClick={() => setShowStepGuide(true)}
-                  type="button"
-                >
-                  View steps
-                  <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.9} />
-                </button>
-              </div>
-            ) : null}
-
-            {!isGuidedShootFlow ? (
-            <div className="mt-6 grid grid-cols-2 gap-2 md:grid-cols-5">
-              {tabItems.map((tab) => (
-                <button
-                  className={`inline-flex min-h-12 items-center justify-center rounded-[14px] border px-4 text-sm font-semibold transition ${
-                    resourceTab === tab.id
-                      ? "border-[#2f6fed] bg-[#2f6fed] text-white"
-                      : "border-white/10 bg-[#151b28] text-white/50 hover:border-white/24 hover:text-white"
+                  className={`inline-flex min-h-10 items-center justify-center rounded-[10px] px-4 text-sm font-semibold transition ${
+                    resourceTab === tab.id && (activePanel === "overview" || tab.id === "packages")
+                      ? "bg-[#2f6fed] text-white"
+                      : "bg-[#1d2633] text-white/62 hover:bg-[#283345] hover:text-white"
                   }`}
                   key={tab.id}
-                  onClick={() => chooseResourceTab(tab.id)}
+                  onClick={() => {
+                    if (tab.id === "packages") {
+                      setPreferredCreateMode("theme");
+                      setPreferredCreateModeRequest((current) => current + 1);
+                      setResourceTab("packages");
+                      choosePanel("create", "step-create");
+                      return;
+                    }
+                    chooseResourceTab(tab.id);
+                  }}
                   type="button"
                 >
                   {tab.label}
                 </button>
               ))}
             </div>
-            ) : null}
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-sm text-white/54">
+                <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-semibold text-white/70">
+                  Credits: {customer.balance.available}
+                </span>
+                <span>{resourceTitleByTab[resourceTab]}</span>
+              </div>
+            </div>
           </div>
 
-          <div className={`${isGuidedShootFlow ? "mx-auto grid max-w-[1500px] gap-5 px-5 py-5 xl:px-8" : "grid gap-5 px-5 py-5 xl:px-8"}`}>
+          <div className="grid gap-5 px-5 py-5 xl:px-8">
+            {workspaceNotice ? (
+              <div className="flex flex-wrap items-start justify-between gap-3 rounded-[18px] border border-amber-300/25 bg-amber-300/10 px-4 py-3 text-sm leading-6 text-amber-50" role="status">
+                <p className="max-w-3xl">{workspaceNotice}</p>
+                <button
+                  className="rounded-full border border-amber-100/20 px-3 py-1 text-xs font-semibold text-amber-50/80 transition hover:bg-amber-100/10 hover:text-amber-50"
+                  onClick={() => setWorkspaceNotice("")}
+                  type="button"
+                >
+                  Dismiss
+                </button>
+              </div>
+            ) : null}
             <div className="grid gap-5">
               {showUploadStep ? (
               <section className="scroll-mt-28 rounded-[22px] border border-white/10 bg-[#0c0f16] p-4 shadow-[0_24px_80px_-62px_rgba(0,0,0,0.92)] md:p-5" id="step-upload">
@@ -596,21 +1193,21 @@ export function CustomerWorkspaceShell({
                     </p>
                   </div>
                   <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58">
-                    {sourceAssets.length} sources
+                    {sourceAssets.length} private photos
                   </span>
                 </div>
-                {runtimeState.status === "loading" ? <WorkspaceInlineLoading label="Loading your private uploads in this panel." /> : null}
+                {runtimeIsInitializing ? <WorkspaceInlineLoading label="Loading your private uploads in this panel." /> : null}
                 {runtimeState.status === "error" ? (
                   <div className="rounded-[18px] border border-dashed border-white/12 bg-white/[0.035] p-4 text-sm text-white/64">
                     Workspace activity could not load. You can refresh the page or open your account center.
                   </div>
                 ) : null}
-                <div className={runtimeState.status === "loading" ? "mt-4" : undefined}>
+                <div className={runtimeIsInitializing ? "mt-4" : undefined}>
                   <AssetsPanel assets={hydratedAssets} customer={customer} onContinueToCreate={() => choosePanel("create", "step-create")} preferProvidedAssets siteId={site.id} tone="dark" />
                 </div>
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.035] p-4">
                   <p className="text-sm leading-6 text-white/58">
-                    {sourceAssets.length ? "Your private photos are ready. Continue to choose a package or tool." : "Upload at least one selfie before starting a generation request."}
+                    {sourceAssets.length ? "Your private photos are ready. Continue to choose a package or tool." : "You can continue without a minimum photo count, or upload samples for stronger results."}
                   </p>
                   <button
                     className="rounded-full border border-white/12 bg-white px-5 py-2.5 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45"
@@ -633,7 +1230,7 @@ export function CustomerWorkspaceShell({
                     </span>
                     <div>
                       <h2 className="text-base font-semibold">Start your AI photoshoot</h2>
-                      <p className="mt-1 text-xs text-white/50">Choose a package, upload or select selfies, review credits, then start your private request.</p>
+                      <p className="mt-1 text-xs text-white/50">Choose a package, upload selfies, confirm credits, then start your private request.</p>
                     </div>
                   </div>
                   <span className="hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58 sm:inline-flex">
@@ -643,8 +1240,12 @@ export function CustomerWorkspaceShell({
                 <div className="p-4 md:p-5">
                   <JobCreateForm
                     assets={hydratedAssets}
-                    creativePacks={creativePacks.map((pack) => ({ ...pack, prompt: undefined }))}
+                    creativePacks={creativePacks}
                     customer={customer}
+                    customerModels={customerModels}
+                    externalPartnerAssetIds={readyPartnerSampleIds}
+                    externalPrimaryAssetIds={readyPrimarySampleIds}
+                    externalSourceAssets={readySourceAssets}
                     initialCreativePackId={initialCreativePackId}
                     initialToolId={initialToolId}
                     operationContext={appliedOperationContext}
@@ -653,6 +1254,9 @@ export function CustomerWorkspaceShell({
                     siteAiApps={siteAiApps}
                     siteId={site.id}
                     siteSlug={site.slug}
+                    subscriptionStatus={subscriptionStatus}
+                    trainingMode={studioTrainingMode}
+                    onJobCreated={showJobStatus}
                     onContinueToSources={() => choosePanel("create", "source-photos")}
                     onOpenUploadManager={() => choosePanel("upload", "step-upload")}
                     onReviewCurrentRequest={showCurrentRequestReview}
@@ -664,316 +1268,292 @@ export function CustomerWorkspaceShell({
               ) : null}
 
               {showReviewStep ? (
-            <section className="relative grid scroll-mt-28 content-start gap-4 rounded-[22px] border border-white/10 bg-[#0c0f16] p-4" id="review-request">
+            <section className="relative min-h-[620px] scroll-mt-28 rounded-[2px] bg-[#050506]" id="review-request">
               {tabItems.map((tab) => (
                 <span aria-hidden="true" className="absolute -top-28" id={`resources-${tab.id}`} key={`anchor_${tab.id}`} />
               ))}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/44">Step 03 · Review request</p>
-                <h2 className="mt-2 text-xl font-semibold">Review credits, resources, and delivery</h2>
-                <p className="mt-2 text-sm leading-6 text-white/58">
-                  Confirm the selected workflow, private model photos, available credits, and generated resources before you continue.
-                </p>
-              </div>
-              <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/44">Resource panel</p>
-                <h3 className="mt-2 text-base font-semibold">{resourceTitleByTab[resourceTab]}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/58">
-                  {resourceTab === "all"
-                    ? "Review private uploads, recent outputs, and account-ready assets without leaving the workspace."
-                    : resourceTab === "albums"
-                      ? "Album deliveries appear here after generation jobs finish."
-                      : resourceTab === "saved"
-                        ? "Saved package choices and favorite looks stay attached to this account."
-                        : resourceTab === "explore"
-                          ? "Use this area to compare ideas before starting a request."
-                          : "Motion concepts and video-ready references will collect here."}
-                </p>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { label: "Selfies", value: sourceAssets.length },
-                  { label: "Ready", value: readyJobs },
-                  { label: "Credits", value: customer.balance.available }
-                ].map((item) => (
-                  <div className="rounded-[14px] border border-white/10 bg-white/[0.04] p-3" key={item.label}>
-                    <p className="text-2xl font-semibold">{item.value}</p>
-                    <p className="mt-1 text-[11px] font-semibold text-white/44">{item.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="grid gap-3 rounded-[16px] border border-white/10 bg-white/[0.035] p-3">
-                <div className="flex items-center justify-between gap-3">
+              <div className="flex min-h-[620px] flex-col">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/6 px-2 pb-4">
                   <div>
-                    <p className="text-sm font-semibold">Recent generations</p>
-                    <p className="mt-1 text-xs text-white/44">{activeJobs} active, {failedJobs} need attention</p>
+                    <h2 className="text-lg font-semibold">{resourceTitleByTab[resourceTab]}</h2>
+                    <p className="mt-1 text-xs text-white/42">{activeJobs} active jobs · {failedJobs} need attention · {visibleResourceAssets.length} generated items</p>
                   </div>
-                  <StorefrontInstantLink className="inline-flex shrink-0 rounded-full border border-white/12 px-3 py-1.5 text-xs font-semibold text-white/66 hover:bg-white/[0.07] hover:text-white" href={`${basePath}/app/jobs/progress`}>
-                    View all
-                  </StorefrontInstantLink>
-                </div>
-                {runtimeState.status === "loading" ? <WorkspaceInlineLoading label="Loading generation history." /> : null}
-                {recentJobs.length ? recentJobs.slice(0, 4).map((job, index) => {
-                  const output = latestOutputsByJobId.get(job.id);
-                  return (
-                    <StorefrontInstantLink
-                      className="grid grid-cols-[46px_1fr] gap-3 rounded-[14px] border border-white/10 bg-[#0a0d14] p-2 transition hover:border-white/20 hover:bg-white/[0.05]"
-                      href={`${basePath}/app/jobs/${job.id}`}
-                      key={job.id}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      className="rounded-[8px] border border-white/12 bg-white/[0.05] px-3 py-2 text-xs font-semibold text-white/66 hover:bg-white/[0.1] hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+                      disabled={runtimeIsLoading || manualRefreshPending}
+                      onClick={requestWorkspaceRefresh}
+                      type="button"
                     >
-                      <div className="grid aspect-square place-items-center overflow-hidden rounded-[11px] border border-white/10 bg-white/[0.04]">
-                        {output ? (
-                          <img alt={output.label} className="h-full w-full object-cover" src={output.previewUrl} />
-                        ) : job.status === "failed" ? (
-                          <AlertCircle className="h-4 w-4 text-[#ff9eb0]" strokeWidth={1.8} />
-                        ) : (
-                          <Clock3 className="h-4 w-4 text-white/50" strokeWidth={1.8} />
-                        )}
-                      </div>
-                      <div className="min-w-0 self-center">
-                        <div className="flex min-w-0 items-center gap-2">
-                          <p className="truncate text-sm font-semibold">{workspaceJobTitle(job, index)}</p>
-                          <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${workspaceJobStatusClass(job.status)}`}>
-                            {workspaceJobStatusLabel(job.status)}
-                          </span>
-                        </div>
-                        <p className="mt-1 truncate text-xs text-white/44">{job.creditsReserved} credits · {compactDateTime(job.updatedAt || job.createdAt)}</p>
-                      </div>
-                    </StorefrontInstantLink>
-                  );
-                }) : runtimeState.status !== "loading" ? (
-                  <div className="rounded-[14px] border border-dashed border-white/14 bg-white/[0.03] p-3 text-sm leading-6 text-white/58">
-                    Start a package and every generation will appear here with progress and results.
+                      {runtimeIsLoading || manualRefreshPending ? "Refreshing..." : "Refresh status"}
+                    </button>
+                    <button
+                      className="rounded-[8px] bg-[#2f6fed] px-3 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
+                      onClick={() => {
+                        setPreferredCreateMode("theme");
+                        setPreferredCreateModeRequest((current) => current + 1);
+                        setResourceTab("packages");
+                        choosePanel("create", "step-create");
+                      }}
+                      type="button"
+                    >
+                      Pick Package
+                    </button>
                   </div>
+                </div>
+                {runtimeRefreshMessage ? (
+                  <p className="px-2 pt-2 text-right text-xs text-white/40" role="status">{runtimeRefreshMessage}</p>
                 ) : null}
-              </div>
-              <div className="grid gap-3">
-                {[...galleryAssets, ...sourceAssets].slice(0, 4).map((asset) => (
-                  <div className="grid grid-cols-[56px_1fr] gap-3 rounded-[16px] border border-white/10 bg-white/[0.035] p-2" key={asset.id}>
-                    <img alt={asset.label} className="aspect-square rounded-[12px] object-cover" src={asset.previewUrl} />
-                    <div className="min-w-0 self-center">
-                      <p className="truncate text-sm font-semibold">{asset.label}</p>
-                      <p className="mt-1 text-xs text-white/44">{asset.role === "input" ? "Private photo" : "Generated output"}</p>
+
+                {runtimeIsLoading && visibleResourceAssets.length ? (
+                  <div className="p-5"><WorkspaceInlineLoading label="Refreshing dashboard resources." /></div>
+                ) : null}
+
+                {runtimeIsInitializing && !visibleResourceAssets.length ? (
+                  <div className="p-5"><WorkspaceInlineLoading label="Loading workspace resources." /></div>
+                ) : null}
+
+                {resourceTab === "all" && visibleStatusJobs.length ? (
+                  <div className="grid gap-3 border-b border-white/6 py-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-sm font-semibold text-white/80">Request progress</p>
+                      <button
+                        className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-white/52 transition hover:bg-white/[0.07] hover:text-white/78 disabled:cursor-not-allowed disabled:opacity-45"
+                        disabled={runtimeIsLoading || manualRefreshPending}
+                        onClick={requestWorkspaceRefresh}
+                        type="button"
+                      >
+                        {runtimeIsLoading || manualRefreshPending ? "Checking..." : "Check now"}
+                      </button>
                     </div>
-                    {asset.role === "output" ? (
-                      <CustomerAssetDownloadButton
-                        assetId={asset.id}
-                        className="col-span-2 inline-flex items-center justify-center gap-2 rounded-[12px] border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1] disabled:cursor-wait disabled:opacity-60"
-                        customerId={customer.id}
-                        label="Download"
-                        siteId={site.id}
-                      />
-                    ) : null}
+                    <div className="grid gap-3 lg:grid-cols-2">
+                      {visibleStatusJobs.map((job) => {
+                        const assetsCount = outputCountByJobId.get(job.id) ?? 0;
+                        const progress = workspaceJobProgress(job, assetsCount);
+                        const failed = job.status === "failed";
+                        const slots = workspaceJobOutputSlots(job, assetsCount);
+                        return (
+                          <div
+                            className={`rounded-[14px] border p-4 ${
+                              failed ? "border-rose-400/22 bg-rose-500/10" : "border-amber-300/18 bg-amber-300/8"
+                            }`}
+                            key={job.id}
+                            role={failed ? "alert" : "status"}
+                          >
+                            <div className="flex flex-wrap items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job)}>{workspaceJobTitle(job)}</p>
+                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobStageLabel(job)}</p>
+                              </div>
+                              <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
+                                {job.status}
+                              </span>
+                            </div>
+                            <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job)}</p>
+                            {slots.length > 1 || slots.some((slot) => slot.storageKey || slot.status === "failed") ? (
+                              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                                {slots.map((slot) => {
+                                  const slotSucceeded = slot.status === "succeeded";
+                                  const slotFailed = slot.status === "failed";
+                                  return (
+                                    <div
+                                      className={`overflow-hidden rounded-[10px] border ${
+                                        slotSucceeded
+                                          ? "border-emerald-300/24 bg-emerald-300/8"
+                                          : slotFailed
+                                            ? "border-rose-300/24 bg-rose-300/8"
+                                            : "border-white/10 bg-white/[0.035]"
+                                      }`}
+                                      key={`${job.id}_${slot.index}`}
+                                    >
+                                      {slot.storageKey ? (
+                                        <img
+                                          alt={`Output ${slot.index}`}
+                                          className="aspect-[4/3] w-full object-cover"
+                                          src={workspaceStoragePreviewUrl(slot.storageKey)}
+                                        />
+                                      ) : null}
+                                      <div className="flex items-center justify-between gap-2 px-3 py-2">
+                                        <span className="text-[11px] font-semibold text-white/74">Image {slot.index}</span>
+                                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                                          slotSucceeded
+                                            ? "bg-emerald-300/12 text-emerald-100"
+                                            : slotFailed
+                                              ? "bg-rose-300/12 text-rose-100"
+                                              : "bg-white/8 text-white/48"
+                                        }`}>
+                                          {slotLabel(slot)}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            ) : null}
+                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                              <div
+                                className={`h-full rounded-full transition-all ${failed ? "bg-rose-300" : "bg-[#31d4ff]"}`}
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
+                              <span>{assetsCount ? `${assetsCount} output${assetsCount === 1 ? "" : "s"} attached` : `${progress}% complete`}</span>
+                              <span>Updated {workspaceJobTime(job.updatedAt)}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                ))}
-                {!hydratedAssets.length ? (
-                  <div className="rounded-[16px] border border-dashed border-white/14 bg-white/[0.03] p-4 text-sm leading-6 text-white/58">
-                    Upload selfies or start a package to populate this resource panel.
+                ) : null}
+
+                {visibleResourceAssets.length ? (
+                  <div className="grid auto-rows-fr gap-4 py-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    {visibleResourceAssets.slice(0, 16).map((asset) => renderResourceAssetCard(asset))}
+                  </div>
+                ) : null}
+
+                {!visibleResourceAssets.length && !runtimeIsInitializing ? (
+                  <div className="grid min-h-[460px] place-items-center rounded-[2px] border border-white/6 bg-[#050506]">
+                    <div className="max-w-md text-center">
+                      <p className="text-base font-semibold text-white/84">
+                        {resourceTab === "favorites"
+                          ? "No favorite images yet"
+                          : resourceTab === "recent"
+                            ? "No images generated today"
+                            : resourceTab === "videos"
+                              ? "No generated videos yet"
+                              : "No generated images yet"}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-white/42">
+                        {resourceTab === "favorites"
+                          ? "Use the heart button on generated images to collect them in Favorites."
+                          : resourceTab === "recent"
+                            ? "Recent shows only outputs created today. Older images remain available in All assets."
+                            : resourceTab === "videos"
+                              ? "Video outputs will appear here once a video request returns a video file."
+                              : "Upload source photos in the creation flow, pick a package, then finished outputs will appear here."}
+                      </p>
+                      <div className="mt-5 flex flex-wrap justify-center gap-2">
+                        <button
+                          className="rounded-[8px] border border-white/12 bg-white/[0.06] px-4 py-2 text-xs font-semibold text-white hover:bg-white/[0.1]"
+                          onClick={() => choosePanel("create", "source-photos")}
+                          type="button"
+                        >
+                          Upload samples
+                        </button>
+                        <button
+                          className="rounded-[8px] bg-[#2f6fed] px-4 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
+                          onClick={() => {
+                            setPreferredCreateMode("theme");
+                            setPreferredCreateModeRequest((current) => current + 1);
+                            setResourceTab("packages");
+                            choosePanel("create", "step-create");
+                          }}
+                          type="button"
+                        >
+                          Pick Package
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ) : null}
               </div>
-              <div className="grid gap-2 rounded-[16px] border border-white/10 bg-white/[0.035] p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <Bot className="h-4 w-4 text-[#31d4ff]" strokeWidth={1.8} />
-                  Models and albums
+              {selectedPreviewAsset ? (
+                <div className="fixed inset-0 z-[90] grid place-items-center bg-black/82 p-4" role="dialog" aria-modal="true" aria-label="Generated asset preview">
+                  <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_260px]">
+                    <button className="absolute right-4 top-4 z-10 rounded-full border border-white/12 bg-black/40 p-2 text-white transition hover:bg-white/10" onClick={() => setSelectedPreviewAssetId(null)} type="button">
+                      <X className="h-4 w-4" strokeWidth={1.8} />
+                    </button>
+                    <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
+                      {isVideoAsset(selectedPreviewAsset) ? (
+                        <video className="max-h-[82vh] w-full object-contain" controls playsInline src={selectedPreviewAsset.previewUrl} />
+                      ) : (
+                        <img alt={selectedPreviewCopy?.title ?? selectedPreviewAsset.label} className="max-h-[82vh] w-full object-contain" src={selectedPreviewAsset.previewUrl} />
+                      )}
+                    </div>
+                    <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
+                      <div>
+                        <p className="text-xs font-semibold text-white/46">{isVideoAsset(selectedPreviewAsset) ? "Generated video" : "Generated output"}</p>
+                        <h3 className="mt-2 break-words text-lg font-semibold text-white">{selectedPreviewCopy?.title ?? selectedPreviewAsset.label}</h3>
+                        {selectedPreviewCopy?.description ? <p className="mt-2 text-sm leading-6 text-white/58">{selectedPreviewCopy.description}</p> : null}
+                        <p className="mt-2 text-xs text-white/46">{selectedPreviewIndex + 1} of {visibleResourceAssets.length}</p>
+                      </div>
+                      <div className="grid gap-2">
+                        <div className="flex gap-2">
+                          <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(-1)} type="button">
+                            <ChevronLeft className="h-4 w-4" strokeWidth={1.8} />
+                          </button>
+                          <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(1)} type="button">
+                            <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+                          </button>
+                        </div>
+                        <button
+                          className={`inline-flex h-10 items-center justify-center gap-2 rounded-[8px] border px-3 text-xs font-semibold transition ${
+                            selectedPreviewAsset.isFavorite
+                              ? "border-[#ff7ab8]/50 bg-[#ff4aa2]/90 text-white hover:bg-[#ff62ae]"
+                              : "border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]"
+                          }`}
+                          onClick={() => void toggleAssetFavorite(selectedPreviewAsset)}
+                          type="button"
+                        >
+                          <Heart className={`h-4 w-4 ${selectedPreviewAsset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
+                          {selectedPreviewAsset.isFavorite ? "Remove favorite" : "Add favorite"}
+                        </button>
+                        <CustomerAssetDownloadButton
+                          assetId={selectedPreviewAsset.id}
+                          className="inline-flex h-10 items-center justify-center rounded-[8px] bg-[#2f6fed] px-3 text-xs font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-wait disabled:opacity-60"
+                          customerId={customer.id}
+                          label="Download"
+                          siteId={site.id}
+                        />
+                      </div>
+                    </aside>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="rounded-[13px] border border-white/10 bg-[#0a0d14] p-3">
-                    <p className="text-xl font-semibold">{customerModels.length}</p>
-                    <p className="mt-1 text-xs text-white/44">Private models</p>
-                  </div>
-                  <div className="rounded-[13px] border border-white/10 bg-[#0a0d14] p-3">
-                    <p className="text-xl font-semibold">{recentAlbums.length}</p>
-                    <p className="mt-1 text-xs text-white/44">Albums</p>
-                  </div>
-                </div>
-                {customerModels.slice(0, 2).map((model) => (
-                  <div className="flex items-center justify-between gap-3 rounded-[13px] border border-white/10 bg-[#0a0d14] px-3 py-2" key={model.id}>
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{model.label}</span>
-                      <span className="mt-0.5 block text-[11px] text-white/42">{model.inputAssetCount}/{model.minInputAssets} private photos</span>
-                    </span>
-                    <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] font-semibold text-white/56">{model.status}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="grid gap-2 rounded-[16px] border border-white/10 bg-white/[0.035] p-3">
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <WalletCards className="h-4 w-4 text-[#ff9f43]" strokeWidth={1.8} />
-                  Credit activity
-                </div>
-                {recentLedger.slice(0, 3).map((entry) => (
-                  <div className="flex items-center justify-between gap-3 rounded-[13px] border border-white/10 bg-[#0a0d14] px-3 py-2 text-xs" key={entry.id}>
-                    <span className="capitalize text-white/66">{entry.type.replace(/_/g, " ")}</span>
-                    <span className={entry.amount >= 0 ? "font-semibold text-[#8df0b5]" : "font-semibold text-white/78"}>
-                      {entry.amount > 0 ? "+" : ""}{entry.amount}
-                    </span>
-                  </div>
-                ))}
-                {!recentLedger.length ? (
-                  <p className="rounded-[13px] border border-dashed border-white/14 bg-white/[0.03] p-3 text-xs leading-5 text-white/54">
-                    Credit holds and completed generation charges will appear here.
-                  </p>
-                ) : null}
-              </div>
+              ) : null}
             </section>
               ) : null}
             </div>
           </div>
         </section>
       </main>
-      {activeOperationItem ? (() => {
-        const Icon = activeOperationItem.icon;
-        const target = navAnchorForItem(activeOperationItem.id);
-        const mainTarget = mainWindowTargetForOperation(activeOperationItem.id, target);
-        const operationMode = createModeForOperation(activeOperationItem.id);
-        const selectedAction = operationActionById[activeOperationItem.id] ?? activeOperationItem.actions[0] ?? "";
-        const operationNote = operationNoteById[activeOperationItem.id] ?? "";
-        const isAlbumOperation = mainTarget.panel === "overview";
-        const isUploadOperation = mainTarget.anchor === "step-upload" || mainTarget.anchor === "source-photos";
-        return (
-          <div className="fixed inset-0 z-50 grid place-items-center bg-black/66 px-4 py-6 backdrop-blur-sm" data-workspace-operation-dialog="true" role="dialog" aria-modal="true" aria-labelledby="workspace-operation-title">
-            <div className="w-full max-w-xl overflow-hidden rounded-[22px] border border-white/14 bg-[#10131b] text-white shadow-[0_34px_90px_-45px_rgba(0,0,0,0.95)]">
-              <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
-                <div className="flex items-start gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-[14px] border border-white/10 bg-white/[0.06]">
-                    <Icon className="h-5 w-5 text-[#31d4ff]" strokeWidth={1.8} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#ff9f43]">Workspace action</p>
-                    <h2 className="mt-2 text-xl font-semibold" id="workspace-operation-title">{activeOperationItem.label}</h2>
-                    <p className="mt-2 text-sm leading-6 text-white/60">
-                      Use this action panel for quick edits, then keep the main window focused on package, tool, image, and result selection.
-                    </p>
-                  </div>
+      {previewSample ? (
+        <div className="fixed inset-0 z-[95] grid place-items-center bg-black/84 p-4" role="dialog" aria-modal="true" aria-label="Uploaded sample preview">
+          <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_280px]">
+            <button className="absolute right-4 top-4 z-10 rounded-full border border-white/12 bg-black/45 p-2 text-white transition hover:bg-white/10" onClick={() => setPreviewSampleId(null)} type="button">
+              <X className="h-4 w-4" strokeWidth={1.8} />
+            </button>
+            <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
+              <img alt={previewSample.label} className="max-h-[82vh] w-full object-contain" src={previewSample.previewUrl} />
+            </div>
+            <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
+              <div>
+                <p className="text-xs font-semibold text-white/46">Uploaded sample</p>
+                <h3 className="mt-2 break-words text-lg font-semibold text-white">{previewSample.label}</h3>
+                <p className="mt-2 text-xs text-white/46">{previewSampleIndex + 1} of {previewSamples.length}</p>
+                {previewSample.localStatus === "uploading" ? <p className="mt-3 rounded-[8px] border border-white/10 bg-white/[0.05] px-3 py-2 text-xs text-white/64">Upload is still finishing. Preview is available now.</p> : null}
+              </div>
+              <div className="grid gap-2">
+                <div className="flex gap-2">
+                  <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => moveSamplePreview(-1)} type="button">
+                    <ChevronLeft className="h-4 w-4" strokeWidth={1.8} />
+                  </button>
+                  <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => moveSamplePreview(1)} type="button">
+                    <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+                  </button>
                 </div>
                 <button
-                  aria-label="Close action panel"
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.05] text-white/70 transition hover:bg-white/[0.1] hover:text-white"
-                  onClick={() => setActiveOperationId(null)}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-[8px] border border-rose-300/25 bg-rose-500/12 px-3 text-xs font-semibold text-rose-100 transition hover:bg-rose-500/18 disabled:cursor-wait disabled:opacity-55"
+                  disabled={deletingSampleId === previewSample.id || previewSample.localStatus === "uploading"}
+                  onClick={() => void deleteSample(previewSample)}
                   type="button"
                 >
-                  <X className="h-4 w-4" strokeWidth={1.9} />
+                  <Trash2 className="h-4 w-4" strokeWidth={1.8} />
+                  {deletingSampleId === previewSample.id ? "Deleting" : "Delete sample"}
                 </button>
               </div>
-              <div className="grid gap-4 p-5">
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {activeOperationItem.actions.map((action) => (
-                    <button
-                      className={`rounded-[14px] border p-3 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#31d4ff] ${
-                        selectedAction === action ? "border-[#31d4ff]/70 bg-[#31d4ff]/10" : "border-white/10 bg-white/[0.04]"
-                      }`}
-                      key={action}
-                      onClick={() => setOperationActionById((current) => ({ ...current, [activeOperationItem.id]: action }))}
-                      type="button"
-                    >
-                      <p className="flex items-center justify-between gap-2 text-sm font-semibold">
-                        <span>{action}</span>
-                        {selectedAction === action ? <CheckCircle2 className="h-4 w-4 text-[#31d4ff]" strokeWidth={1.8} /> : null}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-white/46">Select this operation, then apply it to the main window.</p>
-                    </button>
-                  ))}
-                </div>
-                <label className="grid gap-2 text-sm font-semibold text-white">
-                  Operation note
-                  <textarea
-                    className="min-h-[86px] rounded-[16px] border border-white/10 bg-white/[0.045] px-4 py-3 text-sm font-normal leading-6 text-white placeholder:text-white/35 focus:border-[#31d4ff]/70 focus:outline-none"
-                    onChange={(event) => setOperationNoteById((current) => ({ ...current, [activeOperationItem.id]: event.target.value }))}
-                    placeholder={operationMode === "tool" ? "Describe the edit, background, motion, or retouch direction before choosing a tool." : "Add package notes, preferred look, or selfie reminders before choosing images."}
-                    value={operationNote}
-                  />
-                </label>
-                <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
-                  <p className="text-sm font-semibold">Current selection</p>
-                  <p className="mt-2 text-sm leading-6 text-white/60">
-                    {selectedAction || activeOperationItem.label} will open {isAlbumOperation ? "the review and delivery area" : isUploadOperation ? "the selfie upload step" : operationMode === "tool" ? "the tool image selection window" : "the package image selection window"}.
-                  </p>
-                </div>
-                <div className="rounded-[16px] border border-white/10 bg-white/[0.035] p-4">
-                  <p className="text-sm font-semibold">Next step</p>
-                  <p className="mt-2 text-sm leading-6 text-white/60">
-                    {isAlbumOperation
-                      ? "Open the review area to check finished albums, downloads, favorites, and credit activity."
-                      : isUploadOperation
-                        ? "Open the selfie upload controls inside the same request flow."
-                        : operationMode === "tool"
-                          ? "Open the large tool image window, choose a focused AI tool, then continue with selfies and review."
-                          : "Open the large package image window, choose a themed photo package, then continue with selfies and review."}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5"
-                    onClick={() => openOperationInMainWindow(activeOperationItem.id, target)}
-                    type="button"
-                  >
-                    {isAlbumOperation ? "View results" : isUploadOperation ? "Upload selfies" : operationMode === "tool" ? "Apply and open tool window" : "Apply and open package window"}
-                    <ChevronRight className="h-4 w-4" strokeWidth={1.9} />
-                  </button>
-                  <button
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
-                    onClick={() => {
-                      setActiveOperationId(null);
-                      setPreferredCreateMode("theme");
-                      setPreferredCreateModeRequest((current) => current + 1);
-                      choosePanel("create", "step-create");
-                    }}
-                    type="button"
-                  >
-                    Browse themes and tools
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })() : null}
-      {showStepGuide ? (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/66 px-4 py-6 backdrop-blur-sm" data-workspace-step-guide="true" role="dialog" aria-modal="true" aria-labelledby="workspace-step-guide-title">
-          <div className="w-full max-w-2xl overflow-hidden rounded-[22px] border border-white/14 bg-[#10131b] text-white shadow-[0_34px_90px_-45px_rgba(0,0,0,0.95)]">
-            <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Workspace steps</p>
-                <h2 className="mt-2 text-xl font-semibold" id="workspace-step-guide-title">Choose, upload, review.</h2>
-                <p className="mt-2 max-w-xl text-sm leading-6 text-white/60">
-                  Follow the target flow: pick a package or tool, upload private model photos, confirm credits, then open results in Studio.
-                </p>
-              </div>
-              <button
-                aria-label="Close step guide"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.05] text-white/70 transition hover:bg-white/[0.1] hover:text-white"
-                onClick={() => setShowStepGuide(false)}
-                type="button"
-              >
-                <X className="h-4 w-4" strokeWidth={1.9} />
-              </button>
-            </div>
-            <div className="grid gap-3 p-5">
-              {workspaceSteps.map((step, index) => {
-                const active = index === currentStepIndex;
-                return (
-                  <button
-                    className={`grid gap-2 rounded-[16px] border p-4 text-left transition hover:border-[#31d4ff]/50 hover:bg-white/[0.06] ${
-                      active ? "border-[#31d4ff]/70 bg-[#31d4ff]/10" : "border-white/10 bg-white/[0.035]"
-                    }`}
-                    key={step.anchor}
-                    onClick={() => {
-                      setShowStepGuide(false);
-                      choosePanel(step.panel, step.anchor);
-                    }}
-                    type="button"
-                  >
-                    <span className="flex items-center justify-between gap-3">
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/46">Step {String(index + 1).padStart(2, "0")}</span>
-                      {active ? <span className="rounded-full bg-[#31d4ff] px-2 py-1 text-[10px] font-semibold text-[#071014]">Current</span> : null}
-                    </span>
-                    <span className="text-base font-semibold">{step.title}</span>
-                    <span className="text-sm leading-6 text-white/60">{step.detail}</span>
-                  </button>
-                );
-              })}
-            </div>
+            </aside>
           </div>
         </div>
       ) : null}

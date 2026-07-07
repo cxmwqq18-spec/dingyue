@@ -52,6 +52,9 @@ export async function getCustomerAccountSummaryRuntimeRelational({
       updatedAt: iso(job.updatedAt),
       requestJson: job.requestJson && typeof job.requestJson === "object" && !Array.isArray(job.requestJson)
         ? job.requestJson as Record<string, unknown>
+        : undefined,
+      resultJson: job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson)
+        ? job.resultJson as Record<string, unknown>
         : undefined
     })),
     assets: [],

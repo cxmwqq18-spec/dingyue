@@ -10,7 +10,6 @@ import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { CreativePack, PublicCustomer, Site, ThemeRuntimeData } from "@/lib/types";
 
 type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
-const myDreamShootsDisplayName = "ʍʏƉʀɛǟʍֆhoots";
 const accountNavItems = [
   { id: "plan", hash: "account-plan", label: "Plan" },
   { id: "orders", hash: "account-orders", label: "Orders" },
@@ -36,9 +35,8 @@ export function CustomerAccountShell({
   creativePacks?: CreativePack[];
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
-  const prefetchPaths = useMemo(() => [`${basePath}/app`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
-  const isMyDreamShoots = /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const brandName = isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
+  const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/app`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
+  const accountDisplayName = customer.name?.trim() || customer.email.split("@")[0] || "Your";
   const [activeSection, setActiveSection] = useState<AccountSection>("plan");
 
   useEffect(() => {
@@ -65,9 +63,9 @@ export function CustomerAccountShell({
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9b6b42]">Customer account</p>
           <div className="mt-3">
             <div>
-              <h1 className="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.02em] md:text-4xl">{brandName} account center.</h1>
+              <h1 className="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.02em] md:text-4xl">{accountDisplayName}&apos;s account center.</h1>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-[#625d56]">
-                Review your credits, orders, generation progress, delivered albums, and private activity from one place.
+                Signed in as {customer.email}. Review credits, orders, generation progress, delivered albums, and private activity from one place.
               </p>
             </div>
           </div>

@@ -686,6 +686,7 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
 }
 
 const dreamshootCollectionAliases: Record<string, string> = {
+  lifestyle: "travel",
   "professional-headshots": "headshots"
 };
 

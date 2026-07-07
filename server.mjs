@@ -21,6 +21,9 @@ function tagKey(tag) {
   if (property) return `meta:property:${property}`;
   const rel = tag.match(/\brel=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
   if (rel === "canonical") return "link:canonical";
+  const scriptType = tag.match(/\btype=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
+  const scriptId = tag.match(/\bid=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
+  if (scriptType === "application/ld+json") return `script:ld-json:${scriptId || tag}`;
   return tag;
 }
 
@@ -30,7 +33,8 @@ function pullSeoTags(head) {
   const patterns = [
     /<title\b[^>]*>[\s\S]*?<\/title>/gi,
     /<meta\s+(?=[^>]*(?:name=(["'])(?:description|keywords|robots|twitter:[^"']+)\1|property=(["'])og:[^"']+\2))[^>]*>/gi,
-    /<link\s+(?=[^>]*rel=(["'])canonical\1)[^>]*>/gi
+    /<link\s+(?=[^>]*rel=(["'])canonical\1)[^>]*>/gi,
+    /<script\b(?=[^>]*type=(["'])application\/ld\+json\1)[^>]*>[\s\S]*?<\/script>/gi
   ];
   let remaining = head;
 
@@ -48,15 +52,11 @@ function pullSeoTags(head) {
   return { remaining, tags };
 }
 
-function leadingHeadMetaLength(head) {
-  let offset = 0;
-  const leadingMetaPattern = /^(?:\s*<meta\s+(?:charSet=(["'])?utf-8\1|name=(["'])viewport\2)[^>]*>)/i;
-  while (true) {
-    const slice = head.slice(offset);
-    const match = slice.match(leadingMetaPattern);
-    if (!match) return offset;
-    offset += match[0].length;
-  }
+function titleFirstSeoTags(tags) {
+  const titleIndex = tags.findIndex((tag) => /^<title\b/i.test(tag));
+  if (titleIndex < 0) return tags;
+  const titleTag = tags[titleIndex];
+  return [titleTag, ...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)];
 }
 
 function reorderHtmlHead(html) {
@@ -69,8 +69,7 @@ function reorderHtmlHead(html) {
   const { remaining, tags } = pullSeoTags(head);
   if (!tags.length) return html;
 
-  const insertAt = leadingHeadMetaLength(remaining);
-  const reorderedHead = `${remaining.slice(0, insertAt)}${tags.join("")}${remaining.slice(insertAt)}`;
+  const reorderedHead = `${titleFirstSeoTags(tags).join("")}${remaining}`;
   return `${html.slice(0, headStart)}${reorderedHead}${html.slice(headClose)}`;
 }
 

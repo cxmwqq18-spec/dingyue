@@ -39,8 +39,20 @@ export interface WorkerResultPayload {
   status: "succeeded" | "failed";
   outputs?: Array<{ storageKey: string; mimeType?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
-  costTrace?: { estimatedCostUsd?: number };
+  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }> };
   error?: string;
+}
+
+export type WorkerOutputSlotStatus = "queued" | "running" | "succeeded" | "failed";
+
+export interface WorkerOutputSlot {
+  index: number;
+  status: WorkerOutputSlotStatus;
+  stage?: string;
+  storageKey?: string;
+  mimeType?: string;
+  error?: string;
+  updatedAt?: string;
 }
 
 export function signWorkerPayload(unsigned: Omit<WorkerPayload, "signature">, secret: string): string {

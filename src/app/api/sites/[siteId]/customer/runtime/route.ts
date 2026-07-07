@@ -5,7 +5,8 @@ import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
-import { toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
+import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
+import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { cookies } from "next/headers";
 import type { CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
@@ -36,6 +37,258 @@ type RuntimeJob = ThemeRuntimeData["jobs"][number];
 type RuntimeAlbum = ThemeRuntimeData["albums"][number];
 type RuntimeLedgerEntry = ThemeRuntimeData["ledger"][number];
 type AccountCurrentCustomer = { customer: PublicCustomer; session: CustomerSession; sessionId: string };
+type WorkspaceRuntimeQueryRow = {
+  customer: unknown;
+  jobs: unknown;
+  assets: unknown;
+  subscriptions: unknown;
+  customerModels: unknown;
+};
+
+function objectFromJson(value: unknown): Record<string, unknown> | undefined {
+  if (value && typeof value === "object" && !Array.isArray(value)) return value as Record<string, unknown>;
+  if (typeof value !== "string") return undefined;
+  try {
+    const parsed = JSON.parse(value) as unknown;
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed as Record<string, unknown> : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function rowsFromJson(value: unknown): Record<string, unknown>[] {
+  const parsed = typeof value === "string"
+    ? (() => {
+        try {
+          return JSON.parse(value) as unknown;
+        } catch {
+          return undefined;
+        }
+      })()
+    : value;
+  return Array.isArray(parsed)
+    ? parsed.filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === "object" && !Array.isArray(item))
+    : [];
+}
+
+function numberFromRaw(value: unknown): number {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "bigint") return Number(value);
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+
+function isoFromRaw(value: unknown): string {
+  if (value instanceof Date) return value.toISOString();
+  if (typeof value === "string") {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toISOString();
+  }
+  return new Date(0).toISOString();
+}
+
+function jsonRecord(value: unknown): Record<string, unknown> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
+function publicCustomerFromWorkspaceRow(row: Record<string, unknown>): PublicCustomer {
+  const status = row.status === "past_due" || row.status === "blocked" ? row.status : "active";
+  return {
+    id: String(row.id),
+    siteId: String(row.siteId),
+    email: String(row.email),
+    name: String(row.name),
+    status,
+    balance: {
+      available: numberFromRaw(row.balanceAvailable),
+      reserved: numberFromRaw(row.balanceReserved)
+    }
+  };
+}
+
+function runtimeJobFromWorkspaceRow(job: Record<string, unknown>): RuntimeJob {
+  return {
+    id: String(job.id),
+    aiAppId: String(job.aiAppId),
+    status: String(job.status) as RuntimeJob["status"],
+    creditsReserved: numberFromRaw(job.creditsReserved),
+    createdAt: isoFromRaw(job.createdAt),
+    updatedAt: isoFromRaw(job.updatedAt),
+    requestJson: jsonRecord(job.requestJson),
+    resultJson: jsonRecord(job.resultJson)
+  };
+}
+
+function runtimeSubscriptionFromWorkspaceRow(subscription: Record<string, unknown>): RuntimeSubscription {
+  return {
+    id: String(subscription.id),
+    productId: String(subscription.productId),
+    priceId: String(subscription.priceId),
+    status: String(subscription.status) as RuntimeSubscription["status"],
+    currentPeriodEnd: isoFromRaw(subscription.currentPeriodEnd),
+    creditsPerCycle: numberFromRaw(subscription.creditsPerCycle),
+    createdAt: isoFromRaw(subscription.createdAt)
+  };
+}
+
+async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
+  const [row] = await prisma.$queryRaw<WorkspaceRuntimeQueryRow[]>`
+    WITH "currentCustomer" AS (
+      SELECT
+        c.id,
+        c."siteId",
+        c.email,
+        c.name,
+        c.status,
+        COALESCE(b.balance, 0) AS "balanceAvailable",
+        COALESCE(b.reserved, 0) AS "balanceReserved"
+      FROM "CustomerSession" s
+      JOIN "Customer" c
+        ON c.id = s."customerId"
+        AND c."siteId" = s."siteId"
+      LEFT JOIN "CreditBalance" b
+        ON b."siteId" = c."siteId"
+        AND b."customerId" = c.id
+      WHERE s.id = ${sessionId}
+        AND s."siteId" = ${siteId}
+        AND s."expiresAt" > NOW()
+      LIMIT 1
+    ),
+    "recentJobs" AS (
+      SELECT j.*
+      FROM "GenerationJob" j
+      JOIN "currentCustomer" cc
+        ON cc.id = j."customerId"
+        AND cc."siteId" = j."siteId"
+      ORDER BY j."updatedAt" DESC
+      LIMIT 8
+    ),
+    "workspaceAssets" AS (
+      SELECT *
+      FROM (
+        (
+          SELECT a.*
+          FROM "AssetUpload" a
+          JOIN "currentCustomer" cc
+            ON cc.id = a."customerId"
+            AND cc."siteId" = a."siteId"
+          WHERE a."role" IN ('input', 'training_input', 'output')
+            AND a."deletedAt" IS NULL
+          ORDER BY a."createdAt" DESC
+          LIMIT 96
+        )
+        UNION
+        (
+          SELECT a.*
+          FROM "AssetUpload" a
+          JOIN "currentCustomer" cc
+            ON cc.id = a."customerId"
+            AND cc."siteId" = a."siteId"
+          WHERE a."role" = 'output'
+            AND a."deletedAt" IS NULL
+            AND (
+              a."validationReport"->>'isFavorite' = 'true'
+              OR NULLIF(a."validationReport"->>'favoriteAt', '') IS NOT NULL
+            )
+        )
+      ) AS assets
+    ),
+    "relatedJobs" AS (
+      SELECT j.*
+      FROM "GenerationJob" j
+      JOIN "currentCustomer" cc
+        ON cc.id = j."customerId"
+        AND cc."siteId" = j."siteId"
+      WHERE j.id IN (
+        SELECT DISTINCT "jobId"
+        FROM "workspaceAssets"
+        WHERE "jobId" IS NOT NULL
+      )
+        AND j.id NOT IN (SELECT id FROM "recentJobs")
+    ),
+    "workspaceJobs" AS (
+      SELECT * FROM "recentJobs"
+      UNION
+      SELECT * FROM "relatedJobs"
+    )
+    SELECT
+      json_build_object(
+        'id', cc.id,
+        'siteId', cc."siteId",
+        'email', cc.email,
+        'name', cc.name,
+        'status', cc.status,
+        'balanceAvailable', cc."balanceAvailable",
+        'balanceReserved', cc."balanceReserved"
+      ) AS customer,
+      COALESCE((
+        SELECT json_agg(row_to_json(j) ORDER BY j."updatedAt" DESC)
+        FROM "workspaceJobs" j
+      ), '[]'::json) AS jobs,
+      COALESCE((
+        SELECT json_agg(row_to_json(a) ORDER BY a."createdAt" DESC)
+        FROM "workspaceAssets" a
+      ), '[]'::json) AS assets,
+      COALESCE((
+        SELECT json_agg(row_to_json(s) ORDER BY s."createdAt" DESC)
+        FROM (
+          SELECT s.*
+          FROM "Subscription" s
+          JOIN "currentCustomer" subscription_customer
+            ON subscription_customer.id = s."customerId"
+            AND subscription_customer."siteId" = s."siteId"
+          ORDER BY s."createdAt" DESC
+          LIMIT 4
+        ) s
+      ), '[]'::json) AS subscriptions,
+      COALESCE((
+        SELECT json_agg(row_to_json(m) ORDER BY m."updatedAt" DESC)
+        FROM (
+          SELECT m.*
+          FROM "CustomerModel" m
+          JOIN "currentCustomer" model_customer
+            ON model_customer.id = m."customerId"
+            AND model_customer."siteId" = m."siteId"
+          ORDER BY m."updatedAt" DESC
+          LIMIT 4
+        ) m
+      ), '[]'::json) AS "customerModels"
+    FROM "currentCustomer" cc
+  `;
+  const customerRow = objectFromJson(row?.customer);
+  if (!customerRow) return undefined;
+  const customer = publicCustomerFromWorkspaceRow(customerRow);
+  const jobs = rowsFromJson(row?.jobs);
+  const assets = rowsFromJson(row?.assets);
+  const subscriptions = rowsFromJson(row?.subscriptions);
+  const customerModels = rowsFromJson(row?.customerModels);
+  return {
+    customer,
+    runtime: {
+      ...emptyRuntime(),
+      customer,
+      jobs: jobs.map(runtimeJobFromWorkspaceRow),
+      assets: assets.map((asset) => toThemeRuntimeAssetRelational(toAssetUploadRelational(asset))),
+      subscriptions: subscriptions.map(runtimeSubscriptionFromWorkspaceRow),
+      customerModels: customerModels.map((model) => {
+        const mapped = toCustomerModelRelational(model);
+        return {
+          id: mapped.id,
+          label: mapped.label,
+          modelType: mapped.modelType,
+          status: mapped.status,
+          inputAssetCount: mapped.inputAssetCount,
+          minInputAssets: mapped.minInputAssets,
+          createdAt: mapped.createdAt,
+          updatedAt: mapped.updatedAt
+        };
+      })
+    }
+  };
+}
 
 function normalizeSection(value: string | null): CustomerRuntimeSection {
   if (value === "plan" || value === "orders" || value === "jobs" || value === "albums" || value === "credits") return value;
@@ -89,7 +342,7 @@ function trimRuntime(runtime: ThemeRuntimeData, profile: string, section: Custom
     return {
       ...runtime,
       jobs: (runtime.jobs ?? []).slice(0, 8),
-      assets: (runtime.assets ?? []).slice(0, 24),
+      assets: (runtime.assets ?? []).slice(0, 96),
       albums: (runtime.albums ?? []).slice(0, 8),
       ledger: (runtime.ledger ?? []).slice(0, 12),
       subscriptions: (runtime.subscriptions ?? []).slice(0, 4),
@@ -381,6 +634,9 @@ async function readAccountSectionRuntimeForSession({
           updatedAt: iso(job.updatedAt),
           requestJson: job.requestJson && typeof job.requestJson === "object" && !Array.isArray(job.requestJson)
             ? job.requestJson as Record<string, unknown>
+            : undefined,
+          resultJson: job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson)
+            ? job.resultJson as Record<string, unknown>
             : undefined
         }))
       }
@@ -442,11 +698,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json({ ok: false, error: "customer_login_required", runtime: emptyRuntime() }, { status: 401 });
   }
 
-  const profile = new URL(request.url).searchParams.get("profile") ?? "account";
-  const section = normalizeSection(new URL(request.url).searchParams.get("section"));
+  const searchParams = new URL(request.url).searchParams;
+  const profile = searchParams.get("profile") ?? "account";
+  const section = normalizeSection(searchParams.get("section"));
+  const refreshToken = searchParams.get("refresh") ?? "";
   const normalizedProfile = profile === "workspace" ? "workspace" : profile === "account" ? "account" : "full";
   const result = await customerRuntimeCache.get(
-    `${siteId}:${sessionId}:${normalizedProfile}:${section}`,
+    `${siteId}:${sessionId}:${normalizedProfile}:${section}:${refreshToken}`,
     async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
       if (normalizedProfile === "account") {
         const accountRuntime = await readAccountSectionRuntimeForSession({ section, sessionId, siteId });
@@ -455,6 +713,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           customer: accountRuntime.current.customer,
           runtime: accountRuntime.runtime
         };
+      }
+      if (normalizedProfile === "workspace") {
+        return readWorkspaceRuntimeDirect(siteId, sessionId);
       }
       const current = await getCurrentCustomerForSite(siteId);
       if (!current) return undefined;
@@ -482,6 +743,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       customer: result.customer
     }
   }, {
-    headers: { "Cache-Control": "private, max-age=20" }
+    headers: { "Cache-Control": refreshToken ? "private, no-store" : "private, max-age=20" }
   });
 }

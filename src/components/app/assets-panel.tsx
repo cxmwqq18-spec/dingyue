@@ -65,7 +65,7 @@ export function AssetsPanel({
     const loadAssets = (refresh = false) => {
       if (refresh) invalidateCustomerAssets(siteId, customer.id);
       setLoadingAssets(true);
-      loadCustomerAssets(siteId, customer.id)
+      loadCustomerAssets(siteId, customer.id, 100, "source-picker")
         .then((result) => {
           if (!cancelled) {
             setItems(result);

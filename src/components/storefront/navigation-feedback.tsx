@@ -16,6 +16,12 @@ let lastPendingHref = "";
 let lastPendingAt = 0;
 const subscribers = new Set<() => void>();
 
+function navigationPendingDelayMs() {
+  const configuredDelay = Number(process.env.NEXT_PUBLIC_STOREFRONT_NAV_PENDING_DELAY_MS ?? 2400);
+  if (!Number.isFinite(configuredDelay)) return 2400;
+  return Math.min(Math.max(configuredDelay, 650), 5000);
+}
+
 function emitSnapshot(next: StorefrontNavigationSnapshot) {
   snapshot = next;
   subscribers.forEach((listener) => listener());
@@ -40,7 +46,8 @@ function hrefFromUrl(targetUrl: URL) {
 
 function showPending(href?: string) {
   const now = Date.now();
-  if (href && href === lastPendingHref && now - lastPendingAt < 650) return;
+  const pendingDelayMs = navigationPendingDelayMs();
+  if (href && href === lastPendingHref && now - lastPendingAt < pendingDelayMs) return;
   lastPendingHref = href ?? "";
   lastPendingAt = now;
   if (pendingDelayTimeout) window.clearTimeout(pendingDelayTimeout);
@@ -49,7 +56,7 @@ function showPending(href?: string) {
     pendingDelayTimeout = undefined;
     emitSnapshot({ href, pending: true });
     fallbackTimeout = window.setTimeout(() => emitSnapshot({ pending: false }), 8000);
-  }, 70);
+  }, pendingDelayMs);
 }
 
 function clearPending() {
@@ -103,7 +110,6 @@ export function StorefrontNavigationFeedback() {
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       if (event.defaultPrevented || isModifiedClick(event)) return;
-      if (event instanceof PointerEvent && event.pointerType === "mouse") return;
       const target = event.target instanceof Element ? event.target : null;
       const anchor = target?.closest<HTMLAnchorElement>("a[href]");
       if (!anchor) return;
@@ -133,6 +139,11 @@ export function StorefrontNavigationFeedback() {
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[2400]" aria-live="polite" aria-label="Loading page">
       <div className="h-[3px] w-full overflow-hidden bg-transparent">
         <div className="h-full w-1/3 animate-[admin-progress_1.05s_ease-in-out_infinite] bg-[#16dcf0] shadow-[0_0_18px_rgba(22,220,240,0.72)]" />
+      </div>
+      <div className="mx-auto mt-3 flex max-w-[1680px] justify-center px-4">
+        <div className="rounded-full border border-white/12 bg-[#05070e]/90 px-4 py-2 text-xs font-semibold text-white shadow-[0_18px_48px_-28px_rgba(0,0,0,0.82)] backdrop-blur">
+          Loading page
+        </div>
       </div>
     </div>
   );

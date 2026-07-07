@@ -235,8 +235,8 @@ const loginMethodBlock: ThemeBlockSchema = {
   type: "login_method",
   label: "Login method",
   settings: [
-    text("label", "Label", "Continue with Google"),
-    text("helper", "Helper", "OAuth-ready entry for production storefronts."),
+    text("label", "Label", "Use email access"),
+    text("helper", "Helper", "Log in, register, or reset your password from one private account page."),
     select(
       "kind",
       "Kind",
@@ -245,13 +245,13 @@ const loginMethodBlock: ThemeBlockSchema = {
         ["email", "Email"],
         ["apple", "Apple"]
       ],
-      "google"
+      "email"
     ),
     url("href", "Link", "/login")
   ],
   preset: {
     label: "Login method",
-    settings: { label: "Continue with Google", helper: "OAuth-ready entry for production storefronts.", kind: "google", href: "/login" }
+    settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" }
   }
 };
 
@@ -451,9 +451,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("highlightWord", "Highlighted word", "real"),
       text("heroBadge", "Hero badge", "AI photo package studio"),
       text("authRibbon", "Auth ribbon", "World Cup fan pack live"),
-      text("authPrimaryLabel", "Auth primary label", "Continue with Google"),
-      text("authEmailPlaceholder", "Auth email placeholder", "Enter your email"),
-      text("authButtonLabel", "Auth button label", "Get Started with Email"),
+      text("authPrimaryLabel", "Auth primary label", "Continue with email"),
+      text("authEmailPlaceholder", "Auth email placeholder", "Email address"),
+      text("authButtonLabel", "Auth button label", "Create account with email"),
       text("imageBadge", "Image badge", "40 photo album"),
       text("imageCaption", "Image caption", "Private photo albums, ready for client delivery."),
       text("detailCardEyebrow", "Detail card eyebrow", "MyDreamShoots"),
@@ -491,9 +491,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           highlightWord: "real",
           heroBadge: "AI photo package studio",
           authRibbon: "World Cup fan pack live",
-          authPrimaryLabel: "Continue with Google",
-          authEmailPlaceholder: "Enter your email",
-          authButtonLabel: "Get Started with Email",
+          authPrimaryLabel: "Continue with email",
+          authEmailPlaceholder: "Email address",
+          authButtonLabel: "Create account with email",
           imageBadge: "40 photo album",
           imageCaption: "Private photo albums, ready for client delivery.",
           detailCardEyebrow: "MyDreamShoots",
@@ -1637,7 +1637,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           imageMeta: "Keep scene, style, and reception requests inside one elegant client workspace."
         },
         blocks: [
-          block("login_google", "login_method", { label: "Continue with Google", helper: "OAuth-ready entry for production.", kind: "google", href: "/login" }),
+          block("login_email_access", "login_method", { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" }),
           block("login_email", "login_method", { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" })
         ]
       }

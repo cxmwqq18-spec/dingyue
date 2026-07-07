@@ -55,9 +55,12 @@ function countMatches(text, pattern) {
 function lowercaseBrandCopyHits(text) {
   return [...text.matchAll(/\bmydreamshoots\b/g)].filter((match) => {
     const index = match.index ?? 0;
-    const before = text.slice(Math.max(0, index - 1), index);
-    const after = text.slice(index + match[0].length, index + match[0].length + 2);
-    return before !== "@" && before !== "." && after !== ".";
+    const lineStart = text.lastIndexOf("\n", index) + 1;
+    const lineEndIndex = text.indexOf("\n", index);
+    const lineEnd = lineEndIndex === -1 ? text.length : lineEndIndex;
+    const line = text.slice(lineStart, lineEnd);
+    if (/https?:\/\/|mailto:|@/.test(line)) return false;
+    return true;
   });
 }
 

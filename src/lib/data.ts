@@ -285,7 +285,7 @@ const dreamShootHomeSections = {
     buttonLabel: "Continue with email",
     actionHref: "/login"
   }, [
-    { id: "login_google", type: "login_method", settings: { label: "Continue with Google", helper: "Fast sign-in for returning customers.", kind: "google", href: "/login" } },
+    { id: "login_email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
     { id: "login_email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
   ]),
   trust_bar_1: section("trust_signal_bar", {
@@ -414,9 +414,11 @@ const homeJson: ThemePageJson = {
       highlightWord: "real",
       heroBadge: "AI photo package studio",
       authRibbon: "World Cup and gala packs live",
-      authPrimaryLabel: "Continue with Google",
-      authEmailPlaceholder: "Enter your email",
-      authButtonLabel: "Get Started with Email",
+      authPrimaryLabel: "Continue with email",
+      authEmailPlaceholder: "Email address",
+      authButtonLabel: "Create account with email",
+      authPrimaryHref: "/login?mode=login",
+      authEmailHref: "/login?mode=register",
       socialProofLabel: "Creators use MyDreamShoots Pro for private photo packs",
       layout: "immersive_dark"
     }, [
@@ -726,9 +728,9 @@ const loginJson: ThemePageJson = {
       actionHref: "/login",
       imageBadge: "Private customer access",
       imageCaption: "Every source photo, credit, and gallery stays attached to your private account.",
-      imageMeta: "Continue with Google or email to access the private customer workspace."
+      imageMeta: "Use email access to open the private customer workspace."
     }, [
-      { id: "login_google", type: "login_method", settings: { label: "Continue with Google", helper: "Quick sign-in entry for returning customers.", kind: "google", href: "/login" } },
+      { id: "login_email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
       { id: "login_email", type: "login_method", settings: { label: "Use email login", helper: "Password login for private album access.", kind: "email", href: "/login" } }
     ]),
     trust_1: section("trust_signal_bar", {

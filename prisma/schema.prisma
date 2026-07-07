@@ -100,16 +100,19 @@ model PlatformCloudflareAccount {
 }
 
 model PlatformAiProvider {
-  id        String   @id
-  label     String
-  aiUrl     String
-  apiKey    String?
-  modelType String
-  priority  Int      @default(0)
-  preferred Boolean  @default(false)
-  updatedBy String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String   @id
+  label               String
+  aiUrl               String
+  apiKey              String?
+  modelType           String
+  priority            Int      @default(0)
+  preferred           Boolean  @default(false)
+  supportsGenerationN Boolean  @default(false)
+  supportsEditN       Boolean  @default(false)
+  maxImagesPerRequest Int      @default(1)
+  updatedBy           String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   @@index([preferred, priority])
 }

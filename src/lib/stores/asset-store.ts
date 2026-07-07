@@ -124,20 +124,42 @@ export async function deleteAssetUploadRelational(
 }
 
 export async function getCustomerAssetsRelational(
-  params: { siteId: string; customerId: string; includeDeleted?: boolean; take?: number },
+  params: { siteId: string; customerId: string; includeDeleted?: boolean; take?: number; roles?: AssetUpload["role"][] },
   client: DbClient = prisma
 ): Promise<{ assets: AssetUpload[] }> {
   const take = params.take === undefined ? undefined : Math.min(Math.max(Math.trunc(params.take), 1), 500);
+  const roles = params.roles?.filter((role) => role === "input" || role === "output" || role === "training_input");
   const assets = await client.assetUpload.findMany({
     where: compactObject({
       siteId: params.siteId,
       customerId: params.customerId,
+      role: roles?.length ? { in: roles } : undefined,
       deletedAt: params.includeDeleted ? undefined : null
     }),
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     take
   });
   return { assets: assets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) };
+}
+
+export async function updateCustomerAssetFavoriteRelational(
+  params: { siteId: string; customerId: string; assetId: string; isFavorite: boolean },
+  client: DbClient = prisma
+): Promise<{ asset: AssetUpload }> {
+  const asset = await client.assetUpload.findFirst({
+    where: { id: params.assetId, siteId: params.siteId, customerId: params.customerId, deletedAt: null }
+  });
+  if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
+  if (asset.role !== "output") throw new StoreError("only_generated_outputs_can_be_favorited", 400);
+  const currentReport = prismaJsonObject(toAssetUploadRelational(asset as unknown as Record<string, unknown>).validationReport) ?? {};
+  const favoriteReport = params.isFavorite
+    ? { ...currentReport, isFavorite: true, favoriteAt: new Date().toISOString() }
+    : Object.fromEntries(Object.entries(currentReport).filter(([key]) => key !== "isFavorite" && key !== "favoriteAt"));
+  const updated = await client.assetUpload.update({
+    where: { id: params.assetId },
+    data: { validationReport: favoriteReport }
+  });
+  return { asset: toAssetUploadRelational(updated as unknown as Record<string, unknown>) };
 }
 
 export async function getCustomerAssetRelational(
@@ -212,12 +234,15 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
   return {
     id: asset.id,
     jobId: asset.jobId,
+    subjectRole: asset.subjectRole,
     label: asset.label,
     previewUrl,
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,
     reviewStatus: asset.reviewStatus,
+    isFavorite: asset.isFavorite,
+    favoriteAt: asset.favoriteAt,
     createdAt: asset.createdAt
   };
 }

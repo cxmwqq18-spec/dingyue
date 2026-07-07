@@ -4,11 +4,22 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const prefetchPriority = [
+  "/",
+  "/login",
+  "/pricing",
+  "/tools",
+  "/collections",
+  "/help",
+  "/blog"
+];
+
+const warmFetchPathPrefixes = [
+  "/",
+  "/login",
   "/collections",
   "/tools",
   "/pricing",
-  "/help",
-  "/blog"
+  "/help"
 ];
 
 function normalizedPublicPath(path: string) {
@@ -27,6 +38,7 @@ function canIdlePrefetch(path: string) {
   if (pathname === "/checkout" || pathname.startsWith("/checkout/")) return false;
   if (pathname === "/cart" || pathname.startsWith("/cart/")) return false;
   if (pathname === window.location.pathname.replace(/^\/site\/[^/]+/, "")) return false;
+  if (pathname === "/") return true;
   return prefetchPriority.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
@@ -34,6 +46,24 @@ function pathPriority(path: string) {
   const pathname = normalizedPublicPath(path);
   const index = prefetchPriority.findIndex((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
   return index === -1 ? prefetchPriority.length : index;
+}
+
+function shouldWarmFetch(path: string) {
+  const pathname = normalizedPublicPath(path);
+  if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH === "0") return false;
+  if (pathname === "/login") return true;
+  if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH !== "1") return false;
+  return warmFetchPathPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+}
+
+function warmDelayForPath(path: string, index: number) {
+  const pathname = normalizedPublicPath(path);
+  if (pathname === "/tools" || pathname.startsWith("/tools/")) return 80;
+  if (pathname === "/collections" || pathname.startsWith("/collections/")) return 180;
+  if (pathname === "/login") return 260;
+  if (pathname === "/pricing") return 520;
+  if (pathname === "/help" || pathname.startsWith("/help/")) return 900;
+  return 1200 + index * 300;
 }
 
 export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
@@ -45,45 +75,54 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
     if (connection?.saveData) return;
     if (connection?.effectiveType && /(^|-)2g$/.test(connection.effectiveType)) return;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 1);
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 4);
     const uniquePaths = Array.from(new Set(pathKey.split("|").filter(Boolean)))
       .filter(canIdlePrefetch)
       .sort((left, right) => pathPriority(left) - pathPriority(right))
       .slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 1);
     if (!uniquePaths.length) return;
     let cancelled = false;
-    let staggerTimer: number | undefined;
+    let activeWarmFetch: AbortController | undefined;
+    const warmTimers: number[] = [];
 
-    const prefetch = () => {
-      const prefetchNext = (index: number) => {
-        if (cancelled || index >= uniquePaths.length) return;
-        const path = uniquePaths[index];
-        router.prefetch(path);
-        const scheduleNext = () => {
-          if (cancelled) return;
-          staggerTimer = window.setTimeout(() => prefetchNext(index + 1), 650);
-        };
-        if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH === "1") {
-          const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
-          void Promise.race([
-            fetch(path, { cache: "force-cache", credentials: "same-origin" }).catch(() => undefined),
-            timeout
-          ]).then(scheduleNext);
-          return;
-        }
-        scheduleNext();
-      };
-
-      prefetchNext(0);
+    const cancelPendingPrefetch = () => {
+      cancelled = true;
+      activeWarmFetch?.abort();
+      activeWarmFetch = undefined;
+      warmTimers.forEach((timer) => window.clearTimeout(timer));
+      warmTimers.length = 0;
     };
 
-    const idleId = typeof window.requestIdleCallback === "function"
-      ? window.requestIdleCallback(prefetch, { timeout: 1600 })
-      : window.setTimeout(prefetch, 900);
+    const prefetch = () => {
+      if (cancelled) return;
+      uniquePaths.forEach((path, index) => {
+        const warmTimer = window.setTimeout(() => {
+          if (cancelled) return;
+          if (shouldWarmFetch(path)) {
+            activeWarmFetch?.abort();
+            const controller = new AbortController();
+            activeWarmFetch = controller;
+            void fetch(path, { cache: "force-cache", credentials: "same-origin", signal: controller.signal })
+              .then((response) => response.arrayBuffer())
+              .then(() => undefined)
+              .catch(() => undefined)
+              .finally(() => {
+                if (activeWarmFetch === controller) activeWarmFetch = undefined;
+              });
+            return;
+          }
+          router.prefetch(path);
+        }, warmDelayForPath(path, index));
+        warmTimers.push(warmTimer);
+      });
+    };
+
+    const idleId = window.setTimeout(prefetch, 120);
+    window.addEventListener("storefront:navigation-start", cancelPendingPrefetch);
 
     return () => {
-      cancelled = true;
-      if (staggerTimer) window.clearTimeout(staggerTimer);
+      window.removeEventListener("storefront:navigation-start", cancelPendingPrefetch);
+      cancelPendingPrefetch();
       if (typeof idleId === "number") {
         window.clearTimeout(idleId);
         return;

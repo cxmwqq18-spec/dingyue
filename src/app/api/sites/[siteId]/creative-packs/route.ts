@@ -102,7 +102,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         aiAppSlug: app || undefined,
         AND: [categoryWhere(category), searchWhere(query)].filter(Boolean) as Prisma.CreativePackWhereInput[]
       };
-      const [site, packs] = await Promise.all([
+      const [site, packs, total] = await Promise.all([
         prisma.site.findUnique({ where: { id: siteId }, select: { id: true } }),
         prisma.creativePack.findMany({
           where: publicWhere,
@@ -110,10 +110,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           orderBy: { createdAt: "desc" },
           skip: (page - 1) * pageSize,
           take: pageSize
-        })
+        }),
+        prisma.creativePack.count({ where: publicWhere })
       ]);
       if (!site) return { ok: false as const, error: "site_not_found" };
-      const total = packs.length;
       return {
         ok: true,
         packs: packs.map((pack) => ({ ...toCreativePack(pack), prompt: undefined })),

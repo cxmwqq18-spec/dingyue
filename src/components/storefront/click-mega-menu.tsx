@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ChevronRight, X } from "lucide-react";
 
@@ -18,21 +19,82 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const prefetchedRef = useRef(false);
-  const prefetchTimerRef = useRef<number | undefined>(undefined);
+  const prefetchTimerRefs = useRef<number[]>([]);
+  const warmFetchTimerRefs = useRef<number[]>([]);
+  const hoveredPrefetchRef = useRef<Set<string>>(new Set());
+  const warmFetchedRef = useRef<Set<string>>(new Set());
+  const warmFetchControllersRef = useRef<Set<AbortController>>(new Set());
   const panelId = useId();
   const prefetchKey = prefetchPaths.filter(Boolean).join("|");
 
+  const cancelWarmFetches = useCallback(() => {
+    warmFetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
+    warmFetchTimerRefs.current = [];
+    warmFetchControllersRef.current.forEach((controller) => controller.abort());
+    warmFetchControllersRef.current.clear();
+  }, []);
+
+  const warmFetchPath = useCallback((path: string, delayMs = 0) => {
+    if (!path || warmFetchedRef.current.has(path)) return;
+    if (path.includes("/app") || path.includes("/account") || path.includes("/cart") || path.includes("/checkout")) return;
+    warmFetchedRef.current.add(path);
+    const run = () => {
+      const controller = new AbortController();
+      warmFetchControllersRef.current.add(controller);
+      void fetch(path, { cache: "force-cache", credentials: "same-origin", priority: "low", signal: controller.signal })
+        .then((response) => response.arrayBuffer())
+        .then(() => undefined)
+        .catch(() => undefined)
+        .finally(() => {
+          warmFetchControllersRef.current.delete(controller);
+        });
+    };
+    if (delayMs > 0) {
+      const timer = window.setTimeout(() => {
+        warmFetchTimerRefs.current = warmFetchTimerRefs.current.filter((current) => current !== timer);
+        run();
+      }, delayMs);
+      warmFetchTimerRefs.current.push(timer);
+      return;
+    }
+    run();
+  }, []);
+
   const prefetchMenuPaths = useCallback(() => {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH !== "1") return;
+    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
     if (prefetchedRef.current) return;
     prefetchedRef.current = true;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 1);
-    const uniquePaths = Array.from(new Set(prefetchKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 6);
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 8);
+    const uniquePaths = Array.from(new Set(prefetchKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 8);
     if (!uniquePaths.length) return;
-    prefetchTimerRef.current = window.setTimeout(() => {
-      for (const path of uniquePaths) router.prefetch(path);
-    }, 250);
-  }, [prefetchKey, router]);
+    uniquePaths.slice(0, 2).forEach((path, index) => warmFetchPath(path, 90 + index * 180));
+    prefetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
+    prefetchTimerRefs.current = uniquePaths.map((path, index) =>
+      window.setTimeout(() => {
+        router.prefetch(path);
+      }, 60 + index * 180)
+    );
+  }, [prefetchKey, router, warmFetchPath]);
+
+  const prefetchHoveredAnchor = useCallback((target: EventTarget | null) => {
+    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
+    const anchor = target instanceof Element ? target.closest<HTMLAnchorElement>("a[href]") : null;
+    const href = anchor?.getAttribute("href");
+    if (!href || href.startsWith("#") || anchor?.target && anchor.target !== "_self") return;
+    let path = "";
+    try {
+      const url = new URL(href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      if (url.hash && url.pathname === window.location.pathname && url.search === window.location.search) return;
+      path = `${url.pathname}${url.search}`;
+    } catch {
+      return;
+    }
+    if (!path || hoveredPrefetchRef.current.has(path)) return;
+    hoveredPrefetchRef.current.add(path);
+    router.prefetch(path);
+    warmFetchPath(path, 240);
+  }, [router, warmFetchPath]);
 
   useEffect(() => {
     if (!open) return;
@@ -52,12 +114,14 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, [open]);
 
   useEffect(() => {
-    if (!open || process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH !== "1") return;
+    if (!open || process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
     prefetchMenuPaths();
     return () => {
-      if (prefetchTimerRef.current) window.clearTimeout(prefetchTimerRef.current);
+      prefetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
+      prefetchTimerRefs.current = [];
+      cancelWarmFetches();
     };
-  }, [open, prefetchMenuPaths]);
+  }, [cancelWarmFetches, open, prefetchMenuPaths]);
 
   return (
     <div
@@ -66,11 +130,15 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         const target = event.target instanceof Element ? event.target : null;
         const anchor = target?.closest<HTMLAnchorElement>("a[href]");
         if (!anchor) return;
-        setOpen(false);
+        flushSync(() => setOpen(false));
+        cancelWarmFetches();
         const href = anchor.getAttribute("href");
         if (href && !href.startsWith("#") && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) {
           window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
         }
+      }}
+      onPointerOverCapture={(event) => {
+        if (event.pointerType !== "touch") prefetchHoveredAnchor(event.target);
       }}
       ref={menuRef}
     >
@@ -79,9 +147,13 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         aria-expanded={open}
         aria-haspopup="dialog"
         className={buttonClassName}
+        onFocus={prefetchMenuPaths}
         onClick={() => {
           prefetchMenuPaths();
           setOpen((current) => !current);
+        }}
+        onPointerEnter={(event) => {
+          if (event.pointerType !== "touch") prefetchMenuPaths();
         }}
         type="button"
         {...blockAttrs}

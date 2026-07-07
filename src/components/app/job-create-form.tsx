@@ -1,24 +1,34 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { CheckCircle2, Play, Sparkles, Trash2, UploadCloud } from "lucide-react";
-import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset } from "@/lib/types";
+import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
 
 type CreateMode = "theme" | "tool";
+type PackageAudience = "self" | "partner" | "both";
+type UploadTarget = "primary" | "partner";
 type OperationContext = {
   action?: string;
   note?: string;
   source?: string;
 };
+type SubscriptionStatus = "loading" | "active" | "required";
 
-const DEFAULT_THEME_OUTPUT_COUNT = 5;
-const DEFAULT_MAX_SOURCE_ASSETS = 24;
-const COLLAPSED_CATEGORY_LIMIT = 10;
-const COLLAPSED_THEME_CARD_LIMIT = 6;
-const COLLAPSED_TOOL_CARD_LIMIT = 6;
+type CreatedJobFeedback = {
+  workerDispatch?: {
+    status?: "skipped" | "sent" | "failed";
+    error?: string;
+  };
+  note?: string;
+};
+
+const DEFAULT_THEME_OUTPUT_COUNT = 1;
+const DEFAULT_MAX_SOURCE_ASSETS = 15;
+const COLLAPSED_CATEGORY_LIMIT = Number.POSITIVE_INFINITY;
+const COLLAPSED_THEME_CARD_LIMIT = Number.POSITIVE_INFINITY;
+const COLLAPSED_TOOL_CARD_LIMIT = Number.POSITIVE_INFINITY;
 const TOOL_PROMPT_FIELD_ID = "prompt";
 const TOOL_PROMPT_BLOCKLIST = [
   "child sexual",
@@ -51,7 +61,7 @@ const TOOL_PRESET_LIBRARY: ToolPreset[] = [
   {
     id: "headshot-generator",
     title: "Headshot Photo Generator",
-    description: "Create polished work profiles, team portraits, and founder photos from clear source images.",
+    description: "Create polished work profiles, team portraits, and founder photos from clear selfies.",
     category: "Portrait makers",
     prompt: "Create a polished professional headshot with natural lighting, clean background, and a confident expression."
   },
@@ -100,7 +110,7 @@ const TOOL_PRESET_LIBRARY: ToolPreset[] = [
   {
     id: "background-remover",
     title: "Background Remover",
-    description: "Cut out product or portrait backgrounds for cleaner source images.",
+    description: "Cut out product or portrait backgrounds for cleaner private photos.",
     category: "Cleanup tools",
     prompt: "Remove the background cleanly and preserve the subject edges for a transparent or neutral-background result."
   },
@@ -208,7 +218,7 @@ const AIDREAMCAPES_TOOL_PRESET_LIBRARY: ToolPreset[] = [
   {
     id: "scenic-overlook-story",
     title: "Scenic Overlook Story",
-    description: "Turn source portraits into mountain, terrace, and overlook scenes with postcard-ready framing.",
+    description: "Turn private portraits into mountain, terrace, and overlook scenes with postcard-ready framing.",
     category: "Destination tools",
     prompt: "Create a scenic overlook portrait with panoramic landscape context, natural pose, and cinematic but realistic light."
   },
@@ -323,7 +333,7 @@ function assetRules(workflow?: AiWorkflowConfig) {
 
 function maxAssetsForWorkflow(workflow?: AiWorkflowConfig): number {
   const configuredMax = assetRules(workflow).max;
-  return configuredMax && configuredMax > 0 ? configuredMax : DEFAULT_MAX_SOURCE_ASSETS;
+  return Math.min(configuredMax && configuredMax > 0 ? configuredMax : DEFAULT_MAX_SOURCE_ASSETS, DEFAULT_MAX_SOURCE_ASSETS);
 }
 
 function valuesFor(app?: SiteAiApp): Record<string, string | number | boolean> {
@@ -426,6 +436,12 @@ function jobErrorMessage(error?: string, status?: number): string {
   if (error === "insufficient_credits") {
     return "You do not have enough credits for this request. Please add credits or choose a smaller package.";
   }
+  if (error === "subscription_required") {
+    return "Choose an active subscription before starting generation. Credits are your monthly balance, but generation also requires a current plan.";
+  }
+  if (error === "generation_job_already_running") {
+    return "One photo request is already running. Wait for it to finish before starting a new one.";
+  }
   if (error === "customer_past_due") {
     return "Your account needs billing attention before starting a new request.";
   }
@@ -472,6 +488,12 @@ function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset
   return Array.from(new Map([...realTools, ...library].map((preset) => [preset.id, preset])).values());
 }
 
+const packageAudienceOptions: Array<{ id: PackageAudience; title: string; description: string; helper: string }> = [
+  { id: "self", title: "For Myself", description: "Generate photos of the primary person in this model.", helper: "Uses your selected photos as the main subject." },
+  { id: "partner", title: "For My Partner", description: "Generate photos focused on the partner profile.", helper: "Uses partner photos as the main subject when partner samples are selected." },
+  { id: "both", title: "For Both of Us", description: "Generate couple-style photos using both profiles.", helper: "Combines your photos and partner photos for couple-style outputs." }
+];
+
 export function JobCreateForm({
   siteId,
   siteSlug,
@@ -481,6 +503,10 @@ export function JobCreateForm({
   initialCreativePackId,
   initialToolId,
   assets = [],
+  externalSourceAssets,
+  externalPrimaryAssetIds,
+  externalPartnerAssetIds,
+  customerModels = [],
   emptyTitle = "No enabled album experience.",
   emptyBody = "Enable an album experience for this site before publishing this form.",
   tone = "dark",
@@ -488,6 +514,9 @@ export function JobCreateForm({
   preferredMode,
   preferredModeRequest,
   operationContext,
+  subscriptionStatus = "active",
+  trainingMode = "single",
+  onJobCreated,
   onContinueToSources,
   onReviewCurrentRequest,
   onOpenUploadManager
@@ -500,6 +529,10 @@ export function JobCreateForm({
   initialCreativePackId?: string;
   initialToolId?: string;
   assets?: ThemeRuntimeAsset[];
+  externalSourceAssets?: ThemeRuntimeAsset[];
+  externalPrimaryAssetIds?: string[];
+  externalPartnerAssetIds?: string[];
+  customerModels?: ThemeRuntimeCustomerModel[];
   emptyTitle?: string;
   emptyBody?: string;
   tone?: "dark" | "light";
@@ -507,11 +540,13 @@ export function JobCreateForm({
   preferredMode?: CreateMode;
   preferredModeRequest?: number;
   operationContext?: OperationContext;
+  subscriptionStatus?: SubscriptionStatus;
+  trainingMode?: "single" | "couple";
+  onJobCreated?: (jobId: string, feedback?: CreatedJobFeedback) => void;
   onContinueToSources?: () => void;
   onReviewCurrentRequest?: () => void;
   onOpenUploadManager?: () => void;
 }) {
-  const router = useRouter();
   const normalizedInitialToolId = normalizeToolId(initialToolId);
   const toolPresets = useMemo(() => buildToolPresets(siteAiApps, siteSlug), [siteAiApps, siteSlug]);
   const initialPack =
@@ -530,16 +565,26 @@ export function JobCreateForm({
   const [themeCategory, setThemeCategory] = useState("all");
   const [formValues, setFormValues] = useState<Record<string, string | number | boolean>>(() => valuesForMode(initialApp, initialMode));
   const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
-  const [availableAssets, setAvailableAssets] = useState(assets);
-  const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => initialSelectedAssets(assets, workflowFor(initialApp)));
+  const initialAvailableAssets = externalSourceAssets?.length ? mergeAssetLists(externalSourceAssets, assets) : assets;
+  const [availableAssets, setAvailableAssets] = useState(initialAvailableAssets);
+  const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => externalPrimaryAssetIds ?? initialSelectedAssets(initialAvailableAssets, workflowFor(initialApp)));
+  const [partnerSelectedAssetIds, setPartnerSelectedAssetIds] = useState<string[]>(() => externalPartnerAssetIds ?? []);
+  const [selectedCustomerModelId, setSelectedCustomerModelId] = useState(() => customerModels.find((model) => model.status === "ready")?.id ?? customerModels[0]?.id ?? "");
+  const [packageAudience, setPackageAudience] = useState<PackageAudience>(() => customerModels[0]?.modelType === "couple" ? "both" : "self");
   const [message, setMessage] = useState("Choose a package, upload or select selfies, then review your private AI photoshoot.");
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTone, setDialogTone] = useState<"info" | "success" | "error">("info");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
+  const [packageDialogOpen, setPackageDialogOpen] = useState(false);
+  const [packagePromptDraft, setPackagePromptDraft] = useState("");
   const [deletingAssetIds, setDeletingAssetIds] = useState<string[]>([]);
   const [loadingAssets, setLoadingAssets] = useState(() => !preferProvidedAssets && assets.length === 0);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllOptions, setShowAllOptions] = useState(false);
   const localAssetMutationRef = useRef(0);
+  const sourceUploadInputRef = useRef<HTMLInputElement | null>(null);
+  const pendingUploadTargetRef = useRef<UploadTarget>("primary");
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
   const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
   const themeCategories = Array.from(new Set(activeCreativePacks.map((pack) => pack.categoryRecord?.label || pack.category).filter(Boolean)));
@@ -558,32 +603,57 @@ export function JobCreateForm({
   const selectedPack = (createMode === "theme" ? activeCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? activeCreativePacks[0] : appPacks[0]);
   const selectedWorkflow = workflowFor(selectedApp);
   const selectedToolPreset = toolPresets.find((preset) => preset.id === selectedToolId);
-  const selectedToolPreviewPack = activeCreativePacks[
-    Math.max(0, displayedToolPresets.findIndex((preset) => preset.id === selectedToolId)) % Math.max(activeCreativePacks.length, 1)
-  ];
-  const selectionPreviewImage = createMode === "theme" ? selectedPack?.imageUrl : selectedToolPreviewPack?.imageUrl;
+  const selectionPreviewImage = createMode === "theme" ? selectedPack?.imageUrl : undefined;
   const selectionTitle = createMode === "theme" ? selectedPack?.name ?? "Photo package" : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? "AI tool";
   const selectionDescription = createMode === "theme"
     ? selectedPack?.description || selectedPack?.headline || "Choose this package, attach selfies, then review credits before generation."
     : selectedToolPreset?.description ?? "Choose this focused tool, attach selfies, then review credits before generation.";
   const sourceAssets = assetsForRules(availableAssets, selectedWorkflow);
+  const selectedCustomerModel = customerModels.find((model) => model.id === selectedCustomerModelId) ?? customerModels[0];
   const selectedFields = workflowFields(selectedWorkflow);
   const selectedAssetRules = assetRules(selectedWorkflow);
-  const minAssets = selectedAssetRules.min ?? 1;
+  const minAssets = 0;
   const effectiveMaxAssets = maxAssetsForWorkflow(selectedWorkflow);
   const materialRules = selectedWorkflow?.materialRules?.length ? selectedWorkflow.materialRules : selectedApp ? defaultWorkflow(selectedApp).materialRules ?? [] : [];
   const modeFields = fieldsForMode(selectedFields, createMode);
   const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool";
   const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
-  const selectionCreditCost = createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedToolPreset?.creditCost ?? selectedApp?.creditCost ?? 0;
-  const canStartRequest = Boolean(aiAppSlug && sourceAssets.length && selectedAssetIds.length >= minAssets);
-  const selectedSourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
+  const unitCreditCost = createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedToolPreset?.creditCost ?? selectedApp?.creditCost ?? 0;
+  const billableOutputCount = createMode === "theme" ? Math.max(1, requestOutputCount) : 1;
+  const selectionCreditCost = unitCreditCost * billableOutputCount;
+  const selectionUnitCostLabel = createMode === "theme" ? `${unitCreditCost} per image` : `${unitCreditCost} per request`;
+  const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : "Tool result";
+  const configureSelectionLabel = createMode === "theme" ? "Configure package" : "Configure tool";
+  const selectedRequestAssetIds = Array.from(new Set([...selectedAssetIds, ...partnerSelectedAssetIds])).slice(0, effectiveMaxAssets);
   const light = tone === "light";
+  const pricingHref = `/site/${siteSlug}/pricing`;
+  const subscriptionGateMessage = subscriptionStatus === "loading"
+    ? "Checking your subscription before generation. You can keep preparing photos while this loads."
+    : subscriptionStatus === "required"
+      ? "Start a subscription before generating. Credits are your monthly balance; a current plan unlocks workspace requests."
+      : "";
+  const creditsUsageNote = createMode === "theme"
+    ? `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`
+    : `${selectionCreditCost} credits are spent for this tool request.`;
+  const subscriptionGateClass = subscriptionStatus === "required"
+    ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
+    : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/68");
+  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length <= effectiveMaxAssets && subscriptionStatus === "active");
+  const selectedSourceAssets = sourceAssets.filter((asset) => selectedRequestAssetIds.includes(asset.id));
+  const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
+  const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
+  const isCoupleFlow = trainingMode === "couple" || selectedCustomerModel?.modelType === "couple" || packageAudience === "both";
+  const selectedModelLabel = selectedCustomerModel?.label ?? (selectedSourceAssets.length ? "Uploaded selfies" : "No model selected");
   const textClass = light ? "text-[#171514]" : "text-white";
   const mutedClass = light ? "text-[#6f675e]" : "text-white/62";
   const eyebrowClass = light ? "text-[#9b6b42]" : "text-white/48";
   const panelClass = light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-white/[0.04] text-white";
   const subtlePanelClass = light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/16";
+  const dialogStatusClass = dialogTone === "error"
+    ? (light ? "border-[#f0b7a5] bg-[#fff1ee] text-[#8d2d1b]" : "border-red-400/30 bg-red-500/10 text-red-100")
+    : dialogTone === "success"
+      ? (light ? "border-[#b9d8bd] bg-[#f1fff2] text-[#286139]" : "border-emerald-300/25 bg-emerald-400/10 text-emerald-100")
+      : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/72");
   const fieldClass = light
     ? "border-[#dfd3c4] bg-white text-[#171514] placeholder:text-[#9d9388]"
     : "border-white/10 bg-white/[0.05] text-white placeholder:text-white/35";
@@ -601,12 +671,36 @@ export function JobCreateForm({
   }, [assets]);
 
   useEffect(() => {
+    if (!externalSourceAssets) return;
+    setAvailableAssets((current) => mergeAssetLists(externalSourceAssets, current));
+  }, [externalSourceAssets]);
+
+  useEffect(() => {
+    if (!externalPrimaryAssetIds) return;
+    setSelectedAssetIds(externalPrimaryAssetIds.slice(0, DEFAULT_MAX_SOURCE_ASSETS));
+  }, [externalPrimaryAssetIds]);
+
+  useEffect(() => {
+    if (!externalPartnerAssetIds) return;
+    setPartnerSelectedAssetIds(externalPartnerAssetIds.slice(0, DEFAULT_MAX_SOURCE_ASSETS));
+  }, [externalPartnerAssetIds]);
+
+  useEffect(() => {
+    if (selectedCustomerModelId && customerModels.some((model) => model.id === selectedCustomerModelId)) return;
+    const nextModel = customerModels.find((model) => model.status === "ready") ?? customerModels[0];
+    if (nextModel) {
+      setSelectedCustomerModelId(nextModel.id);
+      setPackageAudience(nextModel.modelType === "couple" ? "both" : "self");
+    }
+  }, [customerModels, selectedCustomerModelId]);
+
+  useEffect(() => {
     let cancelled = false;
     const loadAssets = (refresh = false) => {
       if (refresh) invalidateCustomerAssets(siteId, customer.id);
       const mutationVersion = localAssetMutationRef.current;
       setLoadingAssets(true);
-      loadCustomerAssets(siteId, customer.id)
+      loadCustomerAssets(siteId, customer.id, 100, "source-picker")
         .then((result) => {
           if (!cancelled) {
             let nextAssets = result;
@@ -615,6 +709,7 @@ export function JobCreateForm({
               return nextAssets;
             });
             setSelectedAssetIds((current) => current.filter((id) => nextAssets.some((asset) => asset.id === id)));
+            setPartnerSelectedAssetIds((current) => current.filter((id) => nextAssets.some((asset) => asset.id === id)));
             setLoadingAssets(false);
           }
         })
@@ -635,14 +730,20 @@ export function JobCreateForm({
     };
   }, [customer.id, preferProvidedAssets, siteId]);
 
-  function toggleAsset(assetId: string) {
-    setSelectedAssetIds((current) =>
-      current.includes(assetId)
-        ? current.filter((id) => id !== assetId)
-        : current.length >= effectiveMaxAssets
-          ? current
-          : [...current, assetId]
-    );
+  function selectedTotalAfterToggle(assetId: string, target: "primary" | "partner", currentTargetIds: string[]): number {
+    const nextTargetIds = currentTargetIds.includes(assetId)
+      ? currentTargetIds.filter((id) => id !== assetId)
+      : [...currentTargetIds, assetId];
+    const otherIds = target === "primary" ? partnerSelectedAssetIds : selectedAssetIds;
+    return new Set([...nextTargetIds, ...otherIds]).size;
+  }
+
+  function toggleAsset(assetId: string, target: "primary" | "partner" = "primary") {
+    const setter = target === "primary" ? setSelectedAssetIds : setPartnerSelectedAssetIds;
+    setter((current) => {
+      if (!current.includes(assetId) && selectedTotalAfterToggle(assetId, target, current) > effectiveMaxAssets) return current;
+      return current.includes(assetId) ? current.filter((id) => id !== assetId) : [...current, assetId];
+    });
   }
 
   function updateAiApp(nextSlug: string, nextMode: CreateMode = createMode) {
@@ -650,13 +751,15 @@ export function JobCreateForm({
     const nextApp = siteAiApps.find((app) => app.aiApp.slug === nextSlug);
     setCreativePackId(packsForApp(creativePacks, nextSlug)[0]?.id ?? "");
     setFormValues(valuesForMode(nextApp, nextMode));
-    setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)));
+    setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)).slice(0, DEFAULT_MAX_SOURCE_ASSETS));
+    setPartnerSelectedAssetIds([]);
   }
 
   function updateCreativePack(pack: CreativePack) {
     setCreateMode("theme");
     setThemeCategory(pack.categoryRecord?.label || pack.category || "all");
     setCreativePackId(pack.id);
+    setPackagePromptDraft(pack.prompt?.trim() || pack.description || pack.headline || "");
     if (pack.aiAppSlug !== aiAppSlug) {
       updateAiApp(pack.aiAppSlug, "theme");
       setCreativePackId(pack.id);
@@ -695,7 +798,7 @@ export function JobCreateForm({
     if (preset.backendSlug !== aiAppSlug) {
       setAiAppSlug(preset.backendSlug);
       const nextApp = siteAiApps.find((app) => app.aiApp.slug === preset.backendSlug);
-      setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)));
+      setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)).slice(0, DEFAULT_MAX_SOURCE_ASSETS));
     }
     setFormValues((current) => ({
       ...valuesForMode(siteAiApps.find((app) => app.aiApp.slug === preset.backendSlug), "tool"),
@@ -703,6 +806,34 @@ export function JobCreateForm({
       [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || preset.prompt)
     }));
     setMessage("Describe the result you want, attach selfies, then review this tool request.");
+  }
+
+  function openPackageDialog() {
+    setDialogMessage("");
+    setDialogTone("info");
+    if (createMode === "theme" && selectedPack) {
+      setPackagePromptDraft((current) => current || selectedPack.prompt?.trim() || selectedPack.description || selectedPack.headline || "");
+    }
+    if (createMode === "tool" && selectedToolPreset) {
+      setPackagePromptDraft((current) => current || String(formValues[TOOL_PROMPT_FIELD_ID] || selectedToolPreset.prompt || ""));
+    }
+    setPackageDialogOpen(true);
+  }
+
+  function selectCreativePackAndOpen(pack: CreativePack) {
+    updateCreativePack(pack);
+    setDialogMessage("");
+    setDialogTone("info");
+    setPackagePromptDraft(pack.prompt?.trim() || pack.description || pack.headline || "");
+    setPackageDialogOpen(true);
+  }
+
+  function selectToolPresetAndOpen(preset: ToolPreset) {
+    updateToolPreset(preset);
+    setDialogMessage("");
+    setDialogTone("info");
+    setPackagePromptDraft(String(formValues[TOOL_PROMPT_FIELD_ID] || preset.prompt || ""));
+    setPackageDialogOpen(true);
   }
 
   function updateThemeCategory(nextCategory: string) {
@@ -727,6 +858,24 @@ export function JobCreateForm({
       document.getElementById("review-current-request")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
   }
+
+  function continueToReviewOrSelfies() {
+    openPackageDialog();
+  }
+
+  function openSourceUploadPicker() {
+    sourceUploadInputRef.current?.click();
+  }
+
+  useEffect(() => {
+    const handleOpenUpload = (event: Event) => {
+      const target = (event as CustomEvent<{ target?: UploadTarget }>).detail?.target;
+      pendingUploadTargetRef.current = target === "partner" ? "partner" : "primary";
+      openSourceUploadPicker();
+    };
+    window.addEventListener("customer-workspace:open-source-upload", handleOpenUpload);
+    return () => window.removeEventListener("customer-workspace:open-source-upload", handleOpenUpload);
+  }, []);
 
   useEffect(() => {
     if (!preferredMode || preferredMode === createMode) return;
@@ -788,7 +937,12 @@ export function JobCreateForm({
     invalidateCustomerAssets(siteId, customer.id);
     localAssetMutationRef.current += 1;
     setAvailableAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
-    setSelectedAssetIds((current) => [...createdAssets.map((asset) => asset.id), ...current].slice(0, effectiveMaxAssets));
+    const createdIds = createdAssets.map((asset) => asset.id);
+    if (pendingUploadTargetRef.current === "partner") {
+      setPartnerSelectedAssetIds((current) => [...createdIds, ...current].slice(0, effectiveMaxAssets));
+    } else {
+      setSelectedAssetIds((current) => [...createdIds, ...current].slice(0, effectiveMaxAssets));
+    }
     setMessage(`${createdAssets.length} private photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the selfies you want to use.`);
     setUploadingSources(false);
   }
@@ -813,71 +967,181 @@ export function JobCreateForm({
     localAssetMutationRef.current += 1;
     setAvailableAssets((current) => current.filter((item) => item.id !== asset.id));
     setSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
+    setPartnerSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
     setMessage("Private photo deleted.");
   }
 
-  async function createJob(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function createJob(event?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
+    event?.preventDefault();
+    const showDialogError = (text: string) => {
+      setDialogTone("error");
+      setDialogMessage(text);
+      setMessage(text);
+    };
     if (createMode === "theme" && !selectedPack) {
-      setMessage("Choose a photo package before starting.");
+      showDialogError("Choose a photo package before starting.");
       return;
     }
-    if (!sourceAssets.length) {
-      setMessage("Upload at least one selfie before starting a photo set.");
+    if (subscriptionStatus === "loading") {
+      showDialogError("We are still checking your subscription. Try again in a moment.");
       return;
     }
-    if (selectedAssetIds.length < minAssets) {
-      setMessage(`Select at least ${minAssets} private photo${minAssets === 1 ? "" : "s"} for this photo set.`);
+    if (subscriptionStatus === "required") {
+      showDialogError("Choose a subscription before starting generation. Your workspace setup stays saved.");
+      return;
+    }
+    if (selectedRequestAssetIds.length > effectiveMaxAssets) {
+      showDialogError(`Use up to ${effectiveMaxAssets} private photos for this photo set.`);
+      return;
+    }
+    if (selectionCreditCost > customer.balance.available) {
+      showDialogError(`This request needs ${selectionCreditCost} credits, but ${customer.balance.available} are available. Add credits or choose a smaller package.`);
       return;
     }
     const missingField = modeFields.find((field) => field.required && (formValues[field.id] === "" || formValues[field.id] === undefined || formValues[field.id] === null));
     if (missingField) {
-      setMessage(`Complete ${missingField.label} before starting.`);
+      showDialogError(`Complete ${missingField.label} before starting.`);
       return;
     }
     if (createMode === "tool") {
       const prompt = String(formValues[TOOL_PROMPT_FIELD_ID] ?? "").trim();
       const blockedTerm = blockedPromptTerm(prompt);
       if (blockedTerm) {
-        setMessage("This prompt includes unsafe or disallowed content. Please revise it before starting.");
+        showDialogError("This prompt includes unsafe or disallowed content. Please revise it before starting.");
         return;
       }
     }
-    const requestFields = Object.fromEntries(modeFields.map((field) => [field.id, formValues[field.id] ?? fieldValueDefault(field)]));
+    const requestFields: Record<string, unknown> = Object.fromEntries(modeFields.map((field) => [field.id, formValues[field.id] ?? fieldValueDefault(field)]));
     if (createMode === "theme") {
       requestFields.outputCount = themeOutputCount;
+      requestFields.packageAudience = packageAudience;
+      requestFields.customerModelLabel = selectedModelLabel;
+      requestFields.creativePackName = selectedPack?.name ?? "";
+      requestFields.creativePackPrompt = selectedPack?.prompt ?? "";
+      requestFields.packagePrompt = packagePromptDraft.trim();
+      requestFields.primaryAssetIds = selectedAssetIds;
+      requestFields.partnerAssetIds = isCoupleFlow ? partnerSelectedAssetIds : [];
+      requestFields.trainingMode = trainingMode;
       delete requestFields.style;
-      delete requestFields.prompt;
     } else {
       requestFields.toolPresetId = selectedToolId;
       requestFields.toolPresetTitle = toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? "";
+      requestFields.customerModelLabel = selectedModelLabel;
+      requestFields.prompt = packagePromptDraft.trim() || String(formValues[TOOL_PROMPT_FIELD_ID] ?? "");
+      requestFields.primaryAssetIds = selectedAssetIds;
+      requestFields.partnerAssetIds = isCoupleFlow ? partnerSelectedAssetIds : [];
+      requestFields.trainingMode = trainingMode;
     }
     setPending(true);
+    setDialogTone("info");
+    setDialogMessage("Creating the job and reserving credits. Keep this window open until the request status page opens.");
     setMessage("Starting your photo set and holding credits...");
-    const response = await fetch(`/api/sites/${siteId}/ai/jobs`, {
-      method: "POST",
-      headers: customerJsonHeaders(siteId),
-      body: JSON.stringify({
-        customerId: customer.id,
-        aiAppSlug,
-        params: {
-          mode: createMode,
-          creativePackId: createMode === "theme" ? selectedPack?.id : undefined,
-          fields: requestFields,
-          workflowVersion: selectedWorkflow?.version ?? 1,
-          assetIds: selectedAssetIds
-        }
-      })
-    });
-    const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string } };
-    if (!response.ok || !result.job) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 30_000);
+    let response: Response;
+    try {
+      response = await fetch(`/api/sites/${siteId}/ai/jobs`, {
+        method: "POST",
+        headers: customerJsonHeaders(siteId),
+        signal: controller.signal,
+        body: JSON.stringify({
+          customerId: customer.id,
+          aiAppSlug,
+          params: {
+            mode: createMode,
+            creativePackId: createMode === "theme" ? selectedPack?.id : undefined,
+            fields: requestFields,
+            workflowVersion: selectedWorkflow?.version ?? 1,
+            customerModelId: selectedCustomerModel?.id,
+            assetIds: selectedRequestAssetIds,
+            primaryAssetIds: selectedAssetIds,
+            partnerAssetIds: isCoupleFlow ? partnerSelectedAssetIds : []
+          }
+        })
+      });
+    } catch (error) {
+      window.clearTimeout(timeout);
       setPending(false);
-      setMessage(jobErrorMessage(result.error, response.status));
+      const text = error instanceof DOMException && error.name === "AbortError"
+        ? "This request is taking longer than expected. Refresh the All tab before retrying so you do not duplicate a request that may have started."
+        : "The network failed while starting this request. Please check the connection and try again.";
+      showDialogError(text);
       return;
     }
-    const href = `/site/${siteSlug}/app/jobs/${result.job.id}`;
-    window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
-    router.push(href);
+    window.clearTimeout(timeout);
+    const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string }; workerDispatch?: CreatedJobFeedback["workerDispatch"]; note?: string };
+    if (!response.ok || !result.job) {
+      setPending(false);
+      showDialogError(jobErrorMessage(result.error, response.status));
+      return;
+    }
+    const dispatchStatus = result.workerDispatch?.status;
+    const dispatchMessage =
+      dispatchStatus === "failed"
+        ? `Job created, but the generator did not accept it: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Opening the request status page.`
+        : dispatchStatus === "skipped"
+          ? "Job created and credits are held, but no generator is configured for this environment. Opening the request status page."
+          : "Job created. Opening the request status page so you can follow generation progress.";
+    setDialogTone("success");
+    setDialogMessage(dispatchMessage);
+    setMessage(dispatchMessage);
+    setPending(false);
+    setPackageDialogOpen(false);
+    onJobCreated?.(result.job.id, { workerDispatch: result.workerDispatch, note: result.note });
+  }
+
+  function renderPhotoPicker(title: string, description: string, target: "primary" | "partner", selectedIds: string[]) {
+    return (
+      <div className={`grid gap-3 rounded-[16px] border p-3 ${subtlePanelClass}`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className={`text-sm font-semibold ${textClass}`}>{title}</p>
+            <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{description}</p>
+          </div>
+          <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${light ? "border-[#eadfce] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
+            {selectedIds.length} selected
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {sourceAssets.map((asset) => {
+            const checked = selectedIds.includes(asset.id);
+            const deleting = deletingAssetIds.includes(asset.id);
+            return (
+              <div className={`group relative overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")} ${deleting ? "opacity-55" : ""}`} key={`${target}_${asset.id}`}>
+                <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
+                <button
+                  aria-label={`Delete ${asset.label}`}
+                  className="absolute left-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/62 text-white opacity-90 shadow-sm transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-45"
+                  disabled={deleting}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    void deleteSourceAsset(asset);
+                  }}
+                  title="Delete private photo"
+                  type="button"
+                >
+                  <Trash2 className="h-3.5 w-3.5" strokeWidth={2} />
+                </button>
+                <button
+                  aria-pressed={checked}
+                  className="absolute inset-0 cursor-pointer"
+                  disabled={deleting}
+                  onClick={() => toggleAsset(asset.id, target)}
+                  type="button"
+                >
+                  <span className="sr-only">{checked ? "Deselect" : "Select"} {asset.label}</span>
+                </button>
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
+                  <span className="block truncate text-xs font-semibold">{asset.label}</span>
+                </span>
+                <input aria-label={`Use ${asset.label}`} checked={checked} className="absolute right-2 top-2 z-10 h-4 w-4" disabled={deleting} onChange={() => toggleAsset(asset.id, target)} type="checkbox" />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
   }
 
   if (!siteAiApps.length) {
@@ -891,39 +1155,8 @@ export function JobCreateForm({
 
   return (
     <form className="grid gap-5" onSubmit={createJob}>
-      <div className={`grid gap-3 rounded-[18px] border p-4 ${light ? "border-[#eadfce] bg-[#fffaf3] text-[#171514]" : "border-white/10 bg-black/20 text-white"}`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Creation flow</p>
-            <h3 className={`mt-2 text-lg font-semibold ${textClass}`}>Select, upload, review, then generate.</h3>
-          </div>
-          <button
-            className={`inline-flex items-center justify-center gap-2 rounded-[14px] border px-4 py-2.5 text-xs font-semibold transition ${
-              light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/[0.1] hover:text-white"
-            }`}
-            onClick={reviewCurrentRequest}
-            type="button"
-          >
-            View request summary
-          </button>
-        </div>
-        <div className="grid gap-2 md:grid-cols-3">
-          {[
-            { label: "Choose package or tool", value: selectionTitle, complete: Boolean(selectionTitle) },
-            { label: "Create private model", value: `${selectedAssetIds.length}/${Math.max(minAssets, 1)} selfies selected`, complete: selectedAssetIds.length >= minAssets },
-            { label: "Confirm request", value: `${selectionCreditCost} credits held`, complete: canStartRequest }
-          ].map((item, index) => (
-            <div className={`rounded-[14px] border p-3 ${item.complete ? (light ? "border-[#d9c3aa] bg-white" : "border-white/16 bg-white/[0.055]") : subtlePanelClass}`} key={item.label}>
-              <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${item.complete ? "text-[#21c06b]" : eyebrowClass}`}>Step {String(index + 1).padStart(2, "0")}</p>
-              <p className={`mt-2 text-sm font-semibold ${textClass}`}>{item.label}</p>
-              <p className={`mt-1 truncate text-xs ${mutedClass}`}>{item.value}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="grid gap-5">
-      <div className="grid gap-3">
+      <div className="grid gap-5">
+        <div className="grid gap-3">
         {operationContext?.action || operationContext?.note ? (
           <div className={`rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-[#31d4ff]/35 bg-[#31d4ff]/8"}`}>
             <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Applied workspace action</p>
@@ -1006,57 +1239,77 @@ export function JobCreateForm({
             </div>
           </div>
         ) : null}
-        <div className={`grid overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} lg:grid-cols-[minmax(280px,0.95fr)_minmax(0,1.05fr)]`}>
-          <div className={`relative min-h-[260px] ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
-            {selectionPreviewImage ? (
-              <img alt={selectionTitle} className="absolute inset-0 h-full w-full object-cover" src={selectionPreviewImage} />
-            ) : (
-              <div className="absolute inset-0 grid place-items-center">
-                <Sparkles className="h-8 w-8 opacity-60" strokeWidth={1.8} />
+        <div className={`grid overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} ${createMode === "theme" ? "lg:grid-cols-[minmax(360px,1.25fr)_minmax(320px,0.75fr)]" : ""}`}>
+          {createMode === "theme" ? (
+            <div className={`relative min-h-[340px] ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
+              {selectionPreviewImage ? (
+                <img alt={selectionTitle} className="absolute inset-0 h-full w-full object-cover" src={selectionPreviewImage} />
+              ) : (
+                <div className="absolute inset-0 grid place-items-center">
+                  <Sparkles className="h-8 w-8 opacity-60" strokeWidth={1.8} />
+                </div>
+              )}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Current selection</p>
+                <p className="mt-2 text-lg font-semibold leading-tight">{selectionTitle}</p>
               </div>
-            )}
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Current selection</p>
-              <p className="mt-2 text-lg font-semibold leading-tight">{selectionTitle}</p>
             </div>
-          </div>
+          ) : null}
           <div className="grid content-between gap-5 p-4">
             <div>
               <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? "Selected package" : "Selected tool"}</p>
               <h4 className={`mt-3 text-xl font-semibold ${textClass}`}>{selectionTitle}</h4>
               <p className={`mt-3 text-sm leading-6 ${mutedClass}`}>{selectionDescription}</p>
+              {createMode === "tool" ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolPreset?.category ?? "Tool"}</span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedApp?.aiApp.name ?? "AI tool"}</span>
+                </div>
+              ) : null}
             </div>
             <div className="grid gap-2 sm:grid-cols-3">
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
-                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Credits</p>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Required credits</p>
                 <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectionCreditCost}</p>
+                <p className={`mt-1 text-[11px] leading-4 ${mutedClass}`}>{selectionUnitCostLabel}</p>
               </div>
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
                 <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selfies</p>
-                <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectedAssetIds.length}/{effectiveMaxAssets}</p>
+                <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectedRequestAssetIds.length}/{effectiveMaxAssets}</p>
               </div>
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
                 <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Output</p>
-                <p className={`mt-2 text-xl font-semibold ${textClass}`}>{requestOutputCount}</p>
+                <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectionOutputLabel}</p>
               </div>
             </div>
+            <p className={`text-xs leading-5 ${mutedClass}`}>{creditsUsageNote}</p>
+            {subscriptionGateMessage ? (
+              <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+                <span>{subscriptionGateMessage}</span>
+                {subscriptionStatus === "required" ? (
+                  <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
+                    Choose a plan
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
             <div className="flex flex-wrap gap-2">
               <button
                 className={`inline-flex items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-xs font-semibold transition active:scale-[0.98] ${primaryButtonClass}`}
-                onClick={onContinueToSources}
+                onClick={openPackageDialog}
                 type="button"
               >
-                Continue to selfies
-                <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
+                {configureSelectionLabel}
+                <Play className="h-4 w-4" strokeWidth={1.8} />
               </button>
               <button
                 className={`inline-flex items-center justify-center gap-2 rounded-[14px] border px-4 py-2.5 text-xs font-semibold transition ${
                   light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/[0.1] hover:text-white"
                 }`}
-                onClick={reviewCurrentRequest}
+                onClick={openPackageDialog}
                 type="button"
               >
-                Review request steps
+                Review and start
               </button>
             </div>
           </div>
@@ -1070,7 +1323,7 @@ export function JobCreateForm({
                   active ? selectedCardClass : neutralCardClass
                 }`}
                 key={pack.id}
-                onClick={() => updateCreativePack(pack)}
+                onClick={() => selectCreativePackAndOpen(pack)}
                 type="button"
               >
                 <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
@@ -1097,7 +1350,7 @@ export function JobCreateForm({
                   </span>
                   <span className="mt-3 flex flex-wrap gap-2">
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
-                      {pack.creditCost} credits
+                      {pack.creditCost} credits per image
                     </span>
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
                       {pack.outputCount} outputs
@@ -1106,41 +1359,37 @@ export function JobCreateForm({
                 </span>
               </button>
             );
-          }) : displayedToolPresets.map((preset, index) => {
+          }) : displayedToolPresets.map((preset) => {
             const active = preset.id === selectedToolId;
-            const previewPack = activeCreativePacks[index % Math.max(activeCreativePacks.length, 1)];
+            const presetCreditCost = preset.creditCost ?? selectedApp?.creditCost ?? 0;
             return (
               <button
-                className={`grid min-h-[248px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
+                className={`grid min-h-[188px] content-start gap-3 rounded-[16px] border p-4 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
                 key={preset.id}
-                onClick={() => updateToolPreset(preset)}
+                onClick={() => selectToolPresetAndOpen(preset)}
                 type="button"
               >
-                <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
-                  {previewPack?.imageUrl ? (
-                    <img className="aspect-[4/3] w-full object-cover" src={previewPack.imageUrl} alt={preset.title} />
-                  ) : (
-                    <span className="flex aspect-[4/3] items-center justify-center">
-                      <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
-                    </span>
-                  )}
-                </span>
                 <span className="flex items-start justify-between gap-3">
                   <span className="min-w-0">
-                    <span className="block truncate text-base font-semibold">{preset.title}</span>
+                    <span className="block text-base font-semibold leading-5">{preset.title}</span>
                     <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : `mt-2 line-clamp-2 block text-sm leading-6 ${mutedClass}`}>
                       {preset.description}
-                    </span>
-                    <span className={active ? `mt-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${selectedSoftPillClass}` : `mt-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>
-                      {preset.category}
                     </span>
                   </span>
                   {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                 </span>
-                <span className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
-                  {preset.creditCost ?? selectedApp?.creditCost ?? 0} credits
+                <span className="mt-1 flex flex-wrap gap-2">
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
+                    {preset.category}
+                  </span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
+                    {presetCreditCost} credits
+                  </span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
+                    Tool result
+                  </span>
                 </span>
               </button>
             );
@@ -1162,18 +1411,22 @@ export function JobCreateForm({
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Request setup</p>
-            <h4 className={`mt-2 text-base font-semibold ${textClass}`}>Confirm the package rules before uploading selfies.</h4>
+            <h4 className={`mt-2 text-base font-semibold ${textClass}`}>
+              {createMode === "theme" ? "Confirm the package rules before uploading selfies." : "Confirm the tool rules before uploading selfies."}
+            </h4>
           </div>
-          <label className={`grid min-w-[150px] gap-2 text-sm font-medium ${textClass}`}>
-            Estimated outputs
-            <input
-              className={`rounded-[14px] border px-4 py-2.5 ${fieldClass}`}
-              min={1}
-              onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
-              type="number"
-              value={themeOutputCount}
-            />
-          </label>
+          {createMode === "theme" ? (
+            <label className={`grid min-w-[150px] gap-2 text-sm font-medium ${textClass}`}>
+              Estimated outputs
+              <input
+                className={`rounded-[14px] border px-4 py-2.5 ${fieldClass}`}
+                min={1}
+                onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
+                type="number"
+                value={themeOutputCount}
+              />
+            </label>
+          ) : null}
         </div>
         {createMode === "theme" && selectedPack ? (
           <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
@@ -1189,7 +1442,9 @@ export function JobCreateForm({
             </div>
           ))}
         </div>
-        <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>Default is 5 images. Adjust this number if you want a different delivery estimate.</p>
+        <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
+          {createMode === "theme" ? "Default is 5 images. Adjust this number if you want a different delivery estimate." : "Tool requests use one focused result type. Add clear notes and selected selfies before review."}
+        </p>
       </div>
       {createMode === "tool" ? (
       <div className="grid gap-4 md:grid-cols-2">
@@ -1243,16 +1498,28 @@ export function JobCreateForm({
         ))}
       </div>
       ) : null}
-      <div className={`grid scroll-mt-28 gap-3 rounded-[16px] border p-4 ${panelClass}`} id="source-photos">
+      <div className="sr-only" id="source-photos">
+        <input
+          accept="image/*"
+          multiple
+          onChange={(event) => {
+            void uploadSourceFiles(event.target.files);
+            event.target.value = "";
+          }}
+          ref={sourceUploadInputRef}
+          type="file"
+        />
+      </div>
+      <div className="hidden" id="legacy-source-photos">
         <div>
           <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 02 · Private model</p>
           <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Upload selfies for your private model</h3>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
-            Add clear selfies or reference photos that the AI can use for this request. Select {minAssets === 1 ? "at least one" : `at least ${minAssets}`} and up to {effectiveMaxAssets}; your uploads stay inside this signed-in workspace and can be reused for later photo sets.
+            Add clear selfies or reference photos when available. There is no minimum photo count; each request can use up to {effectiveMaxAssets} photos inside this signed-in workspace.
           </p>
           <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] px-4 py-2 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass} ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
             <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
-            {uploadingSources ? "Uploading selfies" : "Upload selfies"}
+            {uploadingSources ? "Uploading selfies" : "Upload selfies in batch"}
             <input
               accept="image/*"
               className="sr-only"
@@ -1264,48 +1531,21 @@ export function JobCreateForm({
               type="file"
             />
           </label>
+          <p className={`mt-2 text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
+            Select multiple image files at once. Uploaded photos appear below for browsing, selection, and removal before generation.
+          </p>
         </div>
         {sourceAssets.length ? (
-          <>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
-              {sourceAssets.map((asset) => {
-                const checked = selectedAssetIds.includes(asset.id);
-                const deleting = deletingAssetIds.includes(asset.id);
-                return (
-                  <div className={`group relative overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")} ${deleting ? "opacity-55" : ""}`} key={asset.id}>
-                    <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
-                    <button
-                      aria-label={`Delete ${asset.label}`}
-                      className="absolute left-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/62 text-white opacity-90 shadow-sm transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-45"
-                      disabled={deleting}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        void deleteSourceAsset(asset);
-                      }}
-                      title="Delete private photo"
-                      type="button"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" strokeWidth={2} />
-                    </button>
-                    <button
-                      aria-pressed={checked}
-                      className="absolute inset-0 cursor-pointer"
-                      disabled={deleting}
-                      onClick={() => toggleAsset(asset.id)}
-                      type="button"
-                    >
-                      <span className="sr-only">{checked ? "Deselect" : "Select"} {asset.label}</span>
-                    </button>
-                    <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
-                      <span className="block truncate text-xs font-semibold">{asset.label}</span>
-                    </span>
-                    <input aria-label={`Use ${asset.label}`} checked={checked} className="absolute right-2 top-2 z-10 h-4 w-4" disabled={deleting} onChange={() => toggleAsset(asset.id)} type="checkbox" />
-                  </div>
-                );
-              })}
-            </div>
-          </>
+          <div className="grid gap-3">
+            {isCoupleFlow ? (
+              <>
+                {renderPhotoPicker("Your photos", "Select photos for the primary person. Use any number up to the 15-photo request limit.", "primary", selectedAssetIds)}
+                {renderPhotoPicker("Partner photos", "Select photos for the partner. These are combined with your photos before generation.", "partner", partnerSelectedAssetIds)}
+              </>
+            ) : (
+              renderPhotoPicker("Browse uploaded photos", `${sourceAssets.length} private photos are ready. Select any images that should drive this request, up to 15 total.`, "primary", selectedAssetIds)
+            )}
+          </div>
         ) : loadingAssets ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" aria-busy="true" aria-label="Loading private photos">
             {[0, 1, 2, 3].map((item) => (
@@ -1319,23 +1559,22 @@ export function JobCreateForm({
           </div>
         ) : (
           <div className={`rounded-[18px] border border-dashed p-4 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/16 text-white/68"}`}>
-            <p>No selfies are ready yet. Upload private photos here, or open the full upload manager.</p>
-            <button className={`mt-3 inline-flex items-center gap-2 rounded-[14px] border px-4 py-2 text-xs font-semibold ${light ? "border-[#171514] bg-[#171514] text-white" : "border-white/10 bg-white/[0.08] text-white"}`} onClick={onOpenUploadManager} type="button">
-              <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
-              Open upload manager
-            </button>
+            <p>No selfies are ready yet. Upload private photos here to keep this request in one flow.</p>
+            <p className={`mt-3 text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
+              Use the Upload selfies button above to stay in this generation flow.
+            </p>
           </div>
         )}
         <div className={`flex flex-wrap items-center justify-between gap-3 rounded-[16px] border p-4 ${subtlePanelClass}`}>
           <div>
             <p className={`text-sm font-semibold ${textClass}`}>Selected model photos</p>
             <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
-              {selectedAssetIds.length} selected, {minAssets} required, up to {effectiveMaxAssets} for this request.
+              {selectedRequestAssetIds.length} selected, no minimum required, up to {effectiveMaxAssets} for this request.
             </p>
           </div>
           <button
             className={`inline-flex items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-xs font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`}
-            disabled={!sourceAssets.length || selectedAssetIds.length < minAssets}
+            disabled={selectedRequestAssetIds.length > effectiveMaxAssets}
             onClick={reviewCurrentRequest}
             type="button"
           >
@@ -1343,88 +1582,334 @@ export function JobCreateForm({
           </button>
         </div>
       </div>
-      <div className={`grid scroll-mt-28 gap-4 rounded-[16px] border p-4 ${panelClass}`} id="review-current-request">
-        <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 03 · Review request</p>
-          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Confirm this request</h3>
-          <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
-            Review the selected package or tool, private model photos, credit hold, and delivery estimate before starting generation.
-          </p>
+      <div className="hidden" id="review-current-request">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 03 · Confirm package</p>
+            <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Choose model, audience, credits, then generate.</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-6 ${mutedClass}`}>
+              Match the target Studio flow: select the model that should drive this request, choose who the package is for, confirm credits and outputs, then start generation.
+            </p>
+          </div>
+          <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#eadfce] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
+            {customer.balance.available} credits available
+          </span>
         </div>
-        <div className="grid gap-2 md:grid-cols-4">
-          {[
-            { label: createMode === "theme" ? "Package" : "Tool", value: selectionTitle },
-            { label: "Selfies", value: `${selectedAssetIds.length}/${Math.max(minAssets, 1)} ready` },
-            { label: "Credits", value: `${selectionCreditCost}` },
-            { label: "Output", value: createMode === "theme" ? `${requestOutputCount} images` : "Tool result" }
-          ].map((item) => (
-            <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`} key={item.label}>
-              <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{item.label}</p>
-              <p className={`mt-2 text-sm font-semibold leading-5 ${textClass}`}>{item.value}</p>
+
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,0.9fr)_minmax(340px,0.75fr)]">
+          <div className={`grid gap-4 rounded-[16px] border p-4 ${subtlePanelClass}`}>
+            <div>
+              <p className={`text-sm font-semibold ${textClass}`}>Select your model</p>
+              <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+                Use a trained model when available, or continue with the uploaded selfies selected in this request.
+              </p>
             </div>
-          ))}
-        </div>
-        {selectedSourceAssets.length ? (
-          <div className="grid gap-3 sm:grid-cols-3 md:grid-cols-5">
-            {selectedSourceAssets.slice(0, 5).map((asset) => (
-              <div className={`overflow-hidden rounded-[14px] border ${subtlePanelClass}`} key={asset.id}>
-                <img alt={asset.label} className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} />
-                <p className={`truncate px-2 py-2 text-xs font-semibold ${textClass}`}>{asset.label}</p>
+            {customerModels.length ? (
+              <select
+                className={`rounded-[14px] border px-4 py-3 text-sm ${fieldClass}`}
+                onChange={(event) => setSelectedCustomerModelId(event.target.value)}
+                value={selectedCustomerModelId}
+              >
+                {customerModels.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.label} · {model.status.replace(/_/g, " ")} · {model.inputAssetCount}/{model.minInputAssets} photos
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div className={`rounded-[14px] border border-dashed p-3 text-sm leading-6 ${light ? "border-[#d8cab9] bg-white text-[#706961]" : "border-white/12 bg-black/18 text-white/64"}`}>
+                No trained model is ready yet. This request will use the selected private selfies.
               </div>
-            ))}
+            )}
+            <div className="grid gap-2 sm:grid-cols-3">
+              {packageAudienceOptions.map((option) => {
+                const active = packageAudience === option.id;
+                return (
+                  <button
+                    className={`min-h-[104px] rounded-[14px] border p-3 text-left transition ${
+                      active ? selectedCardClass : neutralCardClass
+                    }`}
+                    key={option.id}
+                    onClick={() => setPackageAudience(option.id)}
+                    type="button"
+                  >
+                    <span className="flex items-start justify-between gap-2">
+                      <span className="text-sm font-semibold">{option.title}</span>
+                      {active ? <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.8} /> : null}
+                    </span>
+                    <span className={`mt-2 block text-xs leading-5 ${active ? (light ? "text-[#5f5a54]" : "text-[#30343a]") : mutedClass}`}>
+                      {option.description}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            {selectedSourceAssets.length ? (
+              <div className="grid gap-2">
+                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selected selfies</p>
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                  {selectedSourceAssets.slice(0, 10).map((asset) => (
+                    <div className={`overflow-hidden rounded-[12px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/18"}`} key={asset.id}>
+                      <img alt={asset.label} className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-        {operationContext?.action || operationContext?.note ? (
-          <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
-            <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Workspace action</p>
-            <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? "Custom operation"}</p>
-            {operationContext.note ? <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{operationContext.note}</p> : null}
+
+          <div className={`grid content-between gap-4 rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/24"}`}>
+            <div className="grid gap-3">
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{createMode === "theme" ? "Package" : "Tool"}</p>
+                <p className={`mt-2 text-lg font-semibold ${textClass}`}>{selectionTitle}</p>
+                <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{selectionDescription}</p>
+              </div>
+              {[
+                { label: "Model", value: selectedModelLabel },
+                { label: "Audience", value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? "For Myself" },
+                { label: "Selfies", value: `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected` },
+                { label: "Required credits", value: `${selectionCreditCost}` },
+                { label: "Price per image", value: `${unitCreditCost}` },
+                { label: "Output", value: createMode === "theme" ? `${requestOutputCount} images` : "Tool result" }
+              ].map((item) => (
+                <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
+                  <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
+                  <span className={`max-w-[58%] truncate text-right text-sm font-semibold ${textClass}`}>{item.value}</span>
+                </div>
+              ))}
+              <p className={`text-xs leading-5 ${mutedClass}`}>{creditsUsageNote}</p>
+              {operationContext?.action || operationContext?.note ? (
+                <div className={`rounded-[12px] border p-3 ${subtlePanelClass}`}>
+                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Workspace action</p>
+                  <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? "Custom operation"}</p>
+                  {operationContext.note ? <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{operationContext.note}</p> : null}
+                </div>
+              ) : null}
+            </div>
+            <div className="grid gap-3">
+              <p className={`text-xs leading-5 ${mutedClass}`}>
+                {selectedRequestAssetIds.length > effectiveMaxAssets ? `Use up to ${effectiveMaxAssets} private photos before starting.` : "You can start without a minimum photo count, or add photos for stronger results."}
+              </p>
+              {subscriptionGateMessage ? (
+                <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+                  <span>{subscriptionGateMessage}</span>
+                  {subscriptionStatus === "required" ? (
+                    <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
+                      Choose a plan
+                    </a>
+                  ) : null}
+                </div>
+              ) : null}
+              <button
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`}
+                disabled={pending || !canStartRequest}
+                onClick={openPackageDialog}
+                type="button"
+              >
+                <Play className="h-4 w-4" strokeWidth={1.8} />
+                Review and start
+              </button>
+            </div>
           </div>
-        ) : null}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className={`text-xs leading-5 ${mutedClass}`}>
-            {selectedAssetIds.length < minAssets ? "Select the required private photos before starting." : "Everything needed for this request is selected."}
-          </p>
-          <button
-            className={`inline-flex items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-xs font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`}
-            disabled={pending || !canStartRequest}
-            type="submit"
-          >
-            <Play className="h-4 w-4" strokeWidth={1.8} />
-            {pending ? "Starting" : modeSubmitLabel}
+        </div>
+      </div>
+      </div>
+      {packageDialogOpen ? (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/72 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Photo package generation settings">
+          <div className={`max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[18px] border p-5 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] ${light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/14 bg-[#121821] text-white"}`}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className={`font-mono text-[10px] uppercase tracking-[0.18em] ${eyebrowClass}`}>{createMode === "theme" ? "Photo package" : "AI tool"}</p>
+                <h3 className={`mt-2 text-2xl font-semibold ${textClass}`}>{selectionTitle}</h3>
+                <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>{selectionDescription}</p>
+              </div>
+              <button
+                className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${light ? "border-[#dfd3c4] text-[#706961] hover:bg-[#fffaf3]" : "border-white/12 text-white/64 hover:bg-white/[0.06] hover:text-white"}`}
+                onClick={() => setPackageDialogOpen(false)}
+                type="button"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_260px]">
+              <div className="grid gap-4">
+                <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
+                  Select your model
+                  {customerModels.length ? (
+                    <select
+                      className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
+                      onChange={(event) => setSelectedCustomerModelId(event.target.value)}
+                      value={selectedCustomerModelId}
+                    >
+                      {customerModels.map((model) => (
+                        <option key={model.id} value={model.id}>
+                          {model.label} · {model.status.replace(/_/g, " ")}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className={`rounded-[14px] border border-dashed p-3 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/18 text-white/64"}`}>
+                      No trained model is ready yet. This request will use the selected uploaded selfies.
+                    </span>
+                  )}
+                </label>
+
+                <div className="grid gap-2 sm:grid-cols-3">
+                  {packageAudienceOptions.map((option) => {
+                    const active = packageAudience === option.id;
+                    return (
+                      <button
+                        className={`min-h-[112px] rounded-[14px] border p-3 text-left transition ${active ? selectedCardClass : neutralCardClass}`}
+                        key={option.id}
+                        onClick={() => setPackageAudience(option.id)}
+                        type="button"
+                      >
+                        <span className="flex items-start justify-between gap-2">
+                          <span className="text-sm font-semibold">{option.title}</span>
+                          {active ? <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.8} /> : null}
+                        </span>
+                        <span className={`mt-2 block text-xs leading-5 ${active ? (light ? "text-[#5f5a54]" : "text-[#30343a]") : mutedClass}`}>
+                          {option.description}
+                        </span>
+                        <span className={`mt-2 block text-[11px] leading-4 ${active ? (light ? "text-[#756b63]" : "text-[#4b525c]") : mutedClass}`}>
+                          {option.helper}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {createMode === "theme" ? (
+                  <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
+                    Estimated outputs
+                    <input
+                      className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
+                      min={1}
+                      onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
+                      type="number"
+                      value={themeOutputCount}
+                    />
+                  </label>
+                ) : null}
+
+                <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
+                  Generation prompt and package notes
+                  <textarea
+                    className={`min-h-[120px] rounded-[14px] border px-4 py-3 ${fieldClass}`}
+                    onChange={(event) => {
+                      setPackagePromptDraft(event.target.value);
+                      if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, event.target.value);
+                    }}
+                    placeholder="Confirm the package prompt, styling notes, or generation direction."
+                    value={packagePromptDraft}
+                  />
+                </label>
+
+                <div className={`grid gap-3 rounded-[14px] border p-3 ${subtlePanelClass}`}>
+                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selected uploads</p>
+                  {isCoupleFlow ? (
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {[
+                        { title: "Your photos", assets: primarySourceAssets },
+                        { title: "Partner photos", assets: partnerSourceAssets }
+                      ].map((group) => (
+                        <div key={group.title}>
+                          <p className={`text-sm font-semibold ${textClass}`}>{group.title} · {group.assets.length}</p>
+                          <div className="mt-2 grid grid-cols-4 gap-2">
+                            {group.assets.slice(0, 8).map((asset) => (
+                              <img alt={asset.label} className="aspect-square rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-5 gap-2">
+                      {primarySourceAssets.slice(0, 10).map((asset) => (
+                        <img alt={asset.label} className="aspect-square rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} />
+                      ))}
+                    </div>
+                  )}
+                  {!selectedRequestAssetIds.length ? (
+                    <p className={`text-xs leading-5 ${mutedClass}`}>No photos are selected. You can still start without a minimum, or upload samples from the left panel for stronger results.</p>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className={`grid content-between gap-4 rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/24"}`}>
+                <div className="grid gap-3">
+                  {[
+                    { label: "Model", value: selectedModelLabel },
+                    { label: "Audience", value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? "For Myself" },
+                    { label: "Primary", value: `${selectedAssetIds.length} photos` },
+                    { label: "Partner", value: isCoupleFlow ? `${partnerSelectedAssetIds.length} photos` : "Not used" },
+                    { label: "Required credits", value: `${selectionCreditCost}` },
+                    { label: "Price per image", value: `${unitCreditCost}` },
+                    { label: "Output", value: createMode === "theme" ? `${requestOutputCount} images` : "Tool result" }
+                  ].map((item) => (
+                    <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
+                      <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
+                      <span className={`max-w-[58%] truncate text-right text-sm font-semibold ${textClass}`}>{item.value}</span>
+                    </div>
+                  ))}
+                  <p className={`text-xs leading-5 ${mutedClass}`}>{creditsUsageNote}</p>
+                </div>
+                <div className="grid gap-3">
+                  <p className={`text-xs leading-5 ${mutedClass}`}>
+                    The request sends the selected package, prompt notes, primary photos, partner photos, audience, model, and output count to the generation job.
+                  </p>
+                  {subscriptionGateMessage ? (
+                    <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+                      <span>{subscriptionGateMessage}</span>
+                      {subscriptionStatus === "required" ? (
+                        <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
+                          Choose a plan
+                        </a>
+                      ) : null}
+                    </div>
+                  ) : null}
+                  {dialogMessage ? (
+                    <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${dialogStatusClass}`} role={dialogTone === "error" ? "alert" : "status"}>
+                      {dialogMessage}
+                    </div>
+                  ) : null}
+                  <button
+                    className={`inline-flex w-full items-center justify-center gap-2 rounded-[14px] px-4 py-3 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`}
+                    disabled={pending || !canStartRequest}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      void createJob(event);
+                    }}
+                    type="button"
+                  >
+                    <Play className="h-4 w-4" strokeWidth={1.8} />
+                    {pending ? "Creating job..." : modeSubmitLabel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <div className={`flex flex-wrap items-center justify-between gap-3 rounded-[16px] border p-4 ${panelClass}`}>
+        <div>
+          <p className={`text-sm font-semibold ${textClass}`}>{createMode === "theme" ? "Photo package mode" : "Tool mode"}</p>
+          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{message}</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
+            {selectionCreditCost} credits
+          </span>
+          <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
+            {customer.balance.available} available
+          </span>
+          <button className={`rounded-[14px] px-4 py-2.5 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass}`} onClick={continueToReviewOrSelfies} type="button">
+            Review request
           </button>
         </div>
-      </div>
-        </div>
-        <aside className="grid h-fit gap-4 xl:sticky xl:top-[118px]">
-      <div className={`grid gap-3 rounded-[18px] border p-4 ${panelClass}`}>
-        <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Credits</p>
-          <p className={`mt-3 text-2xl font-semibold ${textClass}`}>{selectionCreditCost}</p>
-          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>Held while your request is being created</p>
-        </div>
-        <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? "Package" : "Tool"}</p>
-          <p className={`mt-3 text-sm font-semibold ${textClass}`}>{selectionTitle}</p>
-          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{createMode === "theme" ? `${requestOutputCount} estimated outputs` : "Prompt-guided tool result"}</p>
-        </div>
-        <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Balance</p>
-          <p className={`mt-3 text-2xl font-semibold ${textClass}`}>{customer.balance.available}</p>
-          <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>Available customer credits</p>
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <button className={`rounded-[18px] px-5 py-3 text-sm font-semibold active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${primaryButtonClass}`} disabled={!canStartRequest} onClick={reviewCurrentRequest} type="button">
-          Review request
-        </button>
-        <div className={`inline-flex items-center gap-2 rounded-[18px] border px-4 py-3 text-xs font-medium ${light ? "border-[#dfd3c4] bg-white text-[#706961]" : "border-white/10 bg-white/[0.04] text-white/70"}`}>
-          <Sparkles className="h-4 w-4" strokeWidth={1.8} />
-          {createMode === "theme" ? "Photo package mode" : "Tool mode"}
-        </div>
-      </div>
-      <p className={`text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>{message}</p>
-        </aside>
       </div>
     </form>
   );

@@ -6,10 +6,13 @@ import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
 import { CustomerAccountDataIsland } from "@/components/storefront/customer-account-data-island";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
-import { CustomerBootstrapPrefetch, CustomerHeaderBootstrapControls } from "@/components/storefront/customer-bootstrap-client";
+import { CustomerBootstrapPrefetch, CustomerHeaderBootstrapControls, CustomerWorkspaceRuntimePrefetch } from "@/components/storefront/customer-bootstrap-client";
+import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { DreamshootPackageCatalogClient } from "@/components/storefront/dreamshoot-package-catalog-client";
+import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
+import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -28,7 +31,6 @@ import {
   ChevronRight,
   CloudRain,
   Clock3,
-  CreditCard,
   Download,
   Facebook,
   Globe2,
@@ -60,14 +62,15 @@ function Link(props: StorefrontInstantLinkProps) {
   return <StorefrontInstantLink {...props} />;
 }
 
-const dreamShootsVisibleTitle = "ʍʏƉʀɛǟʍֆhoots";
+const dreamShootsVisibleTitle = "myᕲreamshoots";
 
 function publicPrefetchCandidatesForPath(path: string) {
-  if (path === "/") return ["/collections", "/tools"];
-  if (path === "/collections" || path.startsWith("/collections/")) return [];
-  if (path === "/tools" || path.startsWith("/tools/")) return [];
-  if (path === "/pricing") return ["/collections", "/tools"];
-  return ["/collections"];
+  if (path === "/") return ["/login", "/tools", "/collections", "/pricing"];
+  if (path === "/collections" || path.startsWith("/collections/")) return ["/", "/pricing", "/tools"];
+  if (path === "/tools" || path.startsWith("/tools/")) return ["/", "/pricing", "/collections"];
+  if (path === "/pricing") return ["/", "/collections", "/tools", "/help"];
+  if (path === "/help") return ["/", "/collections", "/tools", "/pricing"];
+  return ["/", "/collections", "/tools", "/pricing"];
 }
 
 import { getSectionSchema } from "@/lib/section-schema";
@@ -76,7 +79,6 @@ import { formatCurrency } from "@/lib/data";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
-import type { JsonLdNode } from "@/lib/theme/json-ld";
 import type {
   CreativePack,
   SectionBlockInstance,
@@ -92,7 +94,7 @@ import type {
 } from "@/lib/types";
 
 type StorefrontRouteMode = "host" | "path";
-type RoutedSite = Site & {
+export type RoutedSite = Site & {
   __storefrontBasePath?: string;
 };
 type SearchPageEntry = Pick<ThemePageJson, "pageType"> & {
@@ -116,7 +118,6 @@ export function ThemeRenderer({
   pagePath,
   query = {},
   routeMode = "path",
-  jsonLd = [],
   lightweightChrome = false,
   previewSelection
 }: {
@@ -132,7 +133,6 @@ export function ThemeRenderer({
   pagePath?: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: StorefrontRouteMode;
-  jsonLd?: JsonLdNode[];
   lightweightChrome?: boolean;
   previewSelection?: {
     sectionId?: string;
@@ -144,6 +144,7 @@ export function ThemeRenderer({
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
   const entries = visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
+  const lazyRouteMode: StorefrontRouteMode = routeMode === "host" ? "host" : "path";
   const routedSite: RoutedSite = {
     ...displaySite,
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
@@ -151,7 +152,7 @@ export function ThemeRenderer({
   const publicPrefetchPaths = mode === "published"
     ? publicPrefetchCandidatesForPath(normalizedPath).map((path) => hrefFor(routedSite, path))
     : [];
-  const storefrontPrefetchPaths = Array.from(new Set(publicPrefetchPaths)).slice(0, 2);
+  const storefrontPrefetchPaths = Array.from(new Set(publicPrefetchPaths)).slice(0, 4);
   const renderContext = {
     pagePath: normalizedPath,
     query,
@@ -163,17 +164,13 @@ export function ThemeRenderer({
       className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
       suppressHydrationWarning={mode === "published"}
     >
-      {mode === "published"
-        ? jsonLd.map((node, index) => (
-            <script
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(node).replace(/</g, "\\u003c") }}
-              key={`json_ld_${index}`}
-              type="application/ld+json"
-            />
-          ))
-        : null}
       {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
-      {runtime?.customer && mode === "published" ? <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} /> : null}
+      {runtime?.customer && mode === "published" ? (
+        <>
+          <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
+          <CustomerWorkspaceRuntimePrefetch siteId={site.id} siteSlug={publicSlug} />
+        </>
+      ) : null}
       <StorefrontNavigationFeedback />
       <div
         className="xfcart-section"
@@ -187,21 +184,31 @@ export function ThemeRenderer({
       </div>
       <main data-theme-sections-root="">
         {entries.map(([id, section], index) => (
-          <ThemeSectionFrame
-            creativePacks={creativePacks}
-            id={id}
-            key={id}
-            lazyRender={mode === "published" && index > 1}
-            mode={mode}
-            previewSelection={previewSelection}
-            products={products}
-            renderContext={renderContext}
-            runtime={runtime}
-            section={section}
-            site={routedSite}
-            siteAiApps={siteAiApps}
-            toolMenuItems={toolMenuItems}
-          />
+          mode === "published" && index > 0 ? (
+            <LazyStorefrontSection
+              apiPath={storefrontSectionApiPath(publicSlug, normalizedPath, id, query, lazyRouteMode)}
+              intrinsicSize={lazyIntrinsicSectionSize(canonicalSectionType(section.type))}
+              key={id}
+              sectionId={id}
+              sectionType={section.type}
+            />
+          ) : (
+            <ThemeSectionFrame
+              creativePacks={creativePacks}
+              id={id}
+              key={id}
+              lazyRender={false}
+              mode={mode}
+              previewSelection={previewSelection}
+              products={products}
+              renderContext={renderContext}
+              runtime={runtime}
+              section={section}
+              site={routedSite}
+              siteAiApps={siteAiApps}
+              toolMenuItems={toolMenuItems}
+            />
+          )
         ))}
       </main>
       <div
@@ -210,6 +217,10 @@ export function ThemeRenderer({
         data-section-style=""
         data-section-type="footer_plus"
         id="xfcart-section-footer_plus"
+        style={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "1px 420px"
+        }}
         {...previewSelectedAttrs(previewSelection, "footer_plus")}
       >
         <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} />
@@ -241,6 +252,25 @@ type RenderContext = {
   query: Record<string, string | string[] | undefined>;
   page: ThemePageJson;
   pages: SearchPageEntry[];
+};
+
+export type StorefrontSectionPayload = {
+  clientSite: RoutedSite;
+  component: "ThemeSectionFrame";
+  id: string;
+  mode: "published";
+  pagePath: string;
+  renderData: {
+    creativePacks: CreativePack[];
+    products: ReturnType<typeof import("@/lib/data").getSiteProducts>;
+    siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
+    toolMenuItems: ToolMenuItem[];
+  };
+  renderContext: RenderContext;
+  routeMode: StorefrontRouteMode;
+  runtime?: ThemeRuntimeData;
+  section: SectionInstance;
+  site?: RoutedSite;
 };
 
 type SiteProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
@@ -382,6 +412,12 @@ const sectionTypesUsingCreativePacks = new Set([
   "search_results"
 ]);
 
+const sectionTypesUsingToolMenuItems = new Set([
+  "aidreamcapes_tool_collection",
+  "dreamshoot_tool_collection",
+  "search_results"
+]);
+
 const sectionTypesUsingCustomerRuntime = new Set([
   "album_gallery",
   "cart_summary",
@@ -420,7 +456,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
         contentVisibility: "auto",
-        containIntrinsicSize: "1px 760px"
+        containIntrinsicSize: `1px ${lazyIntrinsicSectionSize(sectionType)}`
       }
     : undefined;
   return (
@@ -443,10 +479,45 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
         section={sectionType === section.type ? section : { ...section, type: sectionType }}
         site={site}
         siteAiApps={sectionTypesUsingSiteAiApps.has(sectionType) ? siteAiApps : []}
-        toolMenuItems={toolMenuItems}
+        toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
       />
     </div>
   );
+}
+
+export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
+  const renderData = payload.renderData ?? {
+    creativePacks: [],
+    products: [],
+    siteAiApps: [],
+    toolMenuItems: []
+  };
+  const site = payload.clientSite ?? payload.site;
+  return (
+    <ThemeSectionFrame
+      creativePacks={renderData.creativePacks}
+      id={payload.id}
+      lazyRender={false}
+      mode={payload.mode}
+      products={renderData.products}
+      renderContext={payload.renderContext}
+      runtime={payload.runtime}
+      section={payload.section}
+      site={site}
+      siteAiApps={renderData.siteAiApps}
+      toolMenuItems={renderData.toolMenuItems}
+    />
+  );
+}
+
+function lazyIntrinsicSectionSize(sectionType: string): string {
+  if (sectionType.includes("hero")) return "820px";
+  if (sectionType.includes("taxonomy") || sectionType.includes("catalog")) return "980px";
+  if (sectionType.includes("gallery") || sectionType.includes("wall")) return "900px";
+  if (sectionType.includes("pricing")) return "760px";
+  if (sectionType.includes("faq") || sectionType.includes("rich_text") || sectionType.includes("policy")) return "520px";
+  if (sectionType.includes("footer")) return "420px";
+  return "720px";
 }
 
 function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: string } | undefined, sectionId: string) {
@@ -455,6 +526,18 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
     "data-xfcart-selected": "true",
     ...(previewSelection.blockId ? { "data-xfcart-selected-block": previewSelection.blockId } : {})
   };
+}
+
+function storefrontSectionApiPath(siteSlug: string, pagePath: string, sectionId: string, query: Record<string, string | string[] | undefined>, routeMode: StorefrontRouteMode) {
+  const params = new URLSearchParams();
+  params.set("pagePath", pagePath);
+  params.set("routeMode", routeMode);
+  params.set("sectionId", sectionId);
+  Object.entries(query).forEach(([key, value]) => {
+    if (typeof value === "string") params.append(key, value);
+    else if (Array.isArray(value)) value.forEach((item) => params.append(key, item));
+  });
+  return `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?${params.toString()}`;
 }
 
 function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: string }) {
@@ -497,17 +580,17 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const isWorkspaceNavLink = (label: string, href: string) => {
     const normalizedLabel = label.trim().toLowerCase();
     const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
-    return normalizedLabel === "workspace" || normalizedLabel === "工作区" || normalizedHref === "/app";
+    return normalizedLabel === "workspace" || normalizedLabel === "workbench" || normalizedLabel === "\u5de5\u4f5c\u53f0" || normalizedLabel === "\u5de5\u4f5c\u533a" || normalizedHref === "/app" || normalizedHref === "/app/create";
   };
-  const headerBlocks = header?.blocks?.filter((block) => block.type === "menu_link" && !isWorkspaceNavLink(blockValue(block, "label"), blockValue(block, "href", "#"))) ?? [];
-  const links = headerBlocks.length
-    ? headerBlocks.map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
-    : settings.navigation.headerLinks
-        .filter((link) => !isWorkspaceNavLink(link.label, link.href))
-        .map((link, index) => ({
-          ...link,
-          block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
-        }));
+  const workspaceLink = { label: "Workspace", href: "/app/create", block: { id: "header_nav_workspace", type: "menu_link", settings: { label: "Workspace", href: "/app/create" } } as SectionBlockInstance };
+  const configuredLinks = header?.blocks?.filter((block) => block.type === "menu_link").map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
+    ?? settings.navigation.headerLinks.map((link, index) => ({
+      ...link,
+      block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
+    }));
+  const links = configuredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
+    ? configuredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: "Workspace", href: "/app/create" } : link)
+    : [...configuredLinks, workspaceLink];
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
@@ -530,13 +613,17 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
       ? configuredPhotoPackageMegaGroups
       : dreamshootFallbackPhotoPackageGroups;
   const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
-  const photoPackageMegaPrefetchPaths = photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href))).slice(0, 10);
+  const photoPackageMegaPrefetchPaths = [
+    hrefFor(site, "/collections"),
+    ...photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href)))
+  ].slice(0, 10);
   const toolsMegaPrefetchPaths = showDreamShootToolsMega
     ? [hrefFor(site, "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", "/tools")))]
     : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
-  const ctaHref = header ? setting(header, "ctaHref", "/login") : "/login";
+  const configuredCtaHref = header ? setting(header, "ctaHref", "/app/create") : "/app/create";
+  const ctaHref = configuredCtaHref === "/login" || configuredCtaHref.startsWith("/login?") ? "/app/create" : configuredCtaHref;
   const mobileLabel = header ? setting(header, "mobileLabel", "Menu") : "Menu";
   const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
   const brandingLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
@@ -563,8 +650,13 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const brandMark = brandInitials(readableBrandTitle);
   const customer = runtime?.customer;
   const shouldClientBootstrapCustomer = runtime?.clientBootstrapCustomer === true && !customer;
-  const signedInClassName = dark ? "hidden shrink-0 items-center gap-3 rounded-[18px] border border-white/14 bg-white/[0.07] px-3 py-2 text-white shadow-[0_18px_48px_-34px_rgba(0,0,0,0.75)] lg:flex" : "hidden shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white px-3 py-2 text-[#15171a] shadow-[0_10px_28px_-22px_rgba(0,0,0,0.35)] lg:flex";
-  const signOutClassName = dark ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/14 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/[0.08]" : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 px-3 py-2 text-sm font-medium transition hover:bg-black/[0.04]";
+  const unifiedDreamShootHeader = isDreamShoot || isAidreamcapes;
+  const signedInClassName = darkHeaderControls
+    ? "hidden min-w-0 items-center gap-3 rounded-full border border-white/55 bg-transparent px-4 py-2 text-sm leading-tight text-white lg:flex"
+    : "hidden min-w-0 items-center gap-3 rounded-full border border-[#dfd3c4] bg-white px-4 py-2 text-sm leading-tight text-[#171514] lg:flex";
+  const signOutClassName = darkHeaderControls
+    ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/55 bg-transparent px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08]"
+    : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-[#171514] bg-[#171514] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black";
   const mobileSignedInClassName = dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]";
   const mobileSignOutClassName = dark ? "inline-flex w-full justify-center rounded-[14px] border border-white/14 px-4 py-3 text-sm font-semibold text-white" : "inline-flex w-full justify-center rounded-[14px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white";
   return (
@@ -585,7 +677,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
           {announceText}
         </div>
       ) : null}
-      <div className={airyCommerceHeader ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
+      <div className={airyCommerceHeader ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : unifiedDreamShootHeader ? "mx-auto grid min-h-[72px] max-w-[1680px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-5 px-5 py-2" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
         <HeaderLink
           href={hrefFor(site, "/")}
           aria-label={brandDescription}
@@ -593,7 +685,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
           className={
             dark || isDreamShoot
 	              ? isDreamShoot
-	                ? "inline-flex items-center gap-3 rounded-[18px] px-0 py-0 text-white"
+	                ? "inline-flex min-w-0 items-center gap-3 text-white"
 	                : isAidreamcapes
 	                  ? "inline-flex items-center gap-2 px-0 py-0 text-white sm:gap-3"
 	                  : "inline-flex items-center gap-3 rounded-[16px] border border-white/10 bg-white px-3 py-2 text-zinc-950 shadow-[0_22px_60px_-38px_rgba(0,0,0,0.75)]"
@@ -620,7 +712,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                 <span
                   className={
 			                    isDreamShoot
-			                      ? "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] border border-white/10 bg-[#0b0d16] shadow-[0_0_0_1px_rgba(122,76,255,0.55),0_16px_46px_-24px_rgba(236,75,221,0.74),0_0_34px_-14px_rgba(22,220,240,0.75)] before:absolute before:inset-[-1px] before:-z-10 before:rounded-[16px] before:bg-[linear-gradient(135deg,#7A4CFF_0%,#EC4BDD_48%,#16DCF0_100%)]"
+			                      ? `relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${darkHeaderControls ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`
 		                      : isAidreamcapes && dark
 		                        ? "relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-11 sm:w-11"
 		                        : lightCommerce || isAidreamcapes
@@ -633,7 +725,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                   <img
                     className={
 		                      isDreamShoot
-		                        ? "h-8 w-8 object-contain"
+		                        ? "h-9 w-9 object-contain"
 		                        : isAidreamcapes && dark
 		                          ? "h-full w-full object-contain"
 		                          : lightCommerce || isAidreamcapes
@@ -645,8 +737,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     src={mediaAssetUrl(site, logoImageUrl)}
                     alt={logoAlt}
                     title={logoAlt}
-                    width={isDreamShoot ? 32 : 56}
-                    height={isDreamShoot ? 32 : 56}
+                    width={isDreamShoot ? 36 : 56}
+                    height={isDreamShoot ? 36 : 56}
                   />
                 </span>
               ) : (
@@ -656,7 +748,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	              )}
               <span className="min-w-0 shrink" title={isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : undefined}>
                 {isDreamShoot ? (
-                  <DreamShootsWordmark className="block shrink-0 whitespace-nowrap text-[1.08rem] font-semibold leading-none text-white [font-family:var(--site-title-font)] lg:text-[1.14rem]" />
+                  <DreamShootsWordmark className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${darkHeaderControls ? "text-white" : "text-[#171514]"}`} />
                 ) : (
                   <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isAidreamcapes ? "true" : undefined} title={isAidreamcapes ? "Aidreamcapes" : undefined}>{visualBrandTitle}</span>
                 )}
@@ -667,11 +759,11 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
             </>
           ) : visualBrandTitle}
         </HeaderLink>
-        <nav className={dark ? "hidden min-w-0 items-center justify-center gap-2 lg:flex xl:gap-3" : airyCommerceHeader ? "hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7" : "hidden min-w-0 items-center justify-center gap-5 text-sm text-[var(--site-body)] md:flex"}>
+        <nav className={dark ? (unifiedDreamShootHeader ? "hidden min-w-0 items-center justify-center gap-3 text-sm font-semibold lg:flex" : "hidden min-w-0 items-center justify-center gap-2 lg:flex xl:gap-3") : airyCommerceHeader ? "hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7" : "hidden min-w-0 items-center justify-center gap-5 text-sm text-[var(--site-body)] md:flex"}>
           {links.map((link, index) => {
             const navClass = dark
               ? isDreamShoot
-                ? `inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[16px] px-3.5 py-2.5 text-[0.82rem] font-semibold text-white transition hover:bg-white/[0.08] xl:px-4 xl:text-sm ${index === 0 ? "border border-transparent bg-[#0b0d16] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_0_1px_rgba(122,76,255,0.55),0_0_24px_-12px_rgba(22,220,240,0.8)]" : "border border-white/16 bg-white/[0.035]"}`
+                ? `inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[16px] border px-5 py-3 text-sm font-semibold text-white transition hover:border-white/28 hover:bg-white/[0.08] ${index === 0 ? "border-white/16 bg-white/[0.035] shadow-[0_10px_30px_-24px_rgba(52,39,88,0.4)]" : "border-white/16 bg-white/[0.035]"}`
                 : "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:border-white/50 hover:bg-white/[0.08]"
               : lightCommerce
                 ? "inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-[0.94rem] font-medium text-[#171514] transition hover:text-[#b07b47] 2xl:text-[0.98rem]"
@@ -682,7 +774,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	            const linkNode = isMegaLink ? null : (
 	              <HeaderLink
 	                className={navClass}
-	                href={hrefFor(site, link.href)}
+	                href={hrefForPage(site, link.href, pagePath)}
                 {...xfcartBlockAttrs(link.block, index, "header_nav")}
               >
                 {link.label}
@@ -719,29 +811,25 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
         <div className={darkHeaderControls ? "flex items-center justify-end gap-1.5 rounded-full border border-white/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0" : "flex items-center justify-end gap-1.5 rounded-full border border-black/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0"}>
           {customer ? (
             <div className={signedInClassName}>
-              <HeaderLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/account")}>
-                <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
+              <HeaderLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={hrefFor(site, "/app/create")}>
+                <span className={darkHeaderControls ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
                   <UserRound className="h-4 w-4" strokeWidth={1.8} />
                 </span>
                 <span className="min-w-0 text-left">
-                  <span className="block max-w-[11rem] truncate text-sm font-semibold">{customer.name}</span>
-                  <span className={dark ? "block max-w-[13rem] truncate text-xs text-white/62" : "block max-w-[13rem] truncate text-xs text-[#64605a]"}>
+                  <span className="block max-w-[10rem] truncate text-sm font-semibold">{customer.name}</span>
+                  <span className={darkHeaderControls ? "block max-w-[10rem] truncate text-xs text-white/72" : "block max-w-[10rem] truncate text-xs text-[#706961]"}>
                     {customer.email}
                   </span>
                 </span>
               </HeaderLink>
-              <form action={hrefFor(site, "/logout")} method="post">
-                <input name="siteId" type="hidden" value={site.id} />
-                <button className={signOutClassName} type="submit">
-                  Sign out
-                </button>
-              </form>
+              <CustomerSignOutButton className={signOutClassName} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
             </div>
           ) : shouldClientBootstrapCustomer ? (
             <CustomerHeaderBootstrapControls
-              accountHref={hrefFor(site, "/account")}
+              accountHref={hrefFor(site, "/app/create")}
               dark={dark}
-              logoutHref={hrefFor(site, "/logout")}
+              loginHref={hrefFor(site, "/login")}
+              logoutHref={`/api/sites/${site.id}/auth/logout`}
               signedInClassName={signedInClassName}
               signOutClassName={signOutClassName}
               siteId={site.id}
@@ -863,7 +951,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     return (
                       <HeaderLink
                         className={mobileLinkClass}
-                        href={hrefFor(site, link.href)}
+                        href={hrefForPage(site, link.href, pagePath)}
                         key={`mobile_${link.label}_${link.href}`}
                         {...xfcartBlockAttrs(link.block, index, "header_nav_mobile")}
                       >
@@ -877,22 +965,18 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     <p className="truncate text-sm font-semibold">{customer.name}</p>
                     <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
                     <div className="mt-3 grid gap-2">
-                      <HeaderLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/account")}>
+                      <HeaderLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/app/create")}>
                         Account
                       </HeaderLink>
                     </div>
-                    <form action={hrefFor(site, "/logout")} className="mt-3" method="post">
-                      <input name="siteId" type="hidden" value={site.id} />
-                      <button className={mobileSignOutClassName} type="submit">
-                        Sign out
-                      </button>
-                    </form>
+                    <CustomerSignOutButton className={`${mobileSignOutClassName} mt-3`} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
                   </div>
                 ) : shouldClientBootstrapCustomer ? (
                   <CustomerHeaderBootstrapControls
-                    accountHref={hrefFor(site, "/account")}
+                    accountHref={hrefFor(site, "/app/create")}
                     dark={dark}
-                    logoutHref={hrefFor(site, "/logout")}
+                    loginHref={hrefFor(site, "/login")}
+                    logoutHref={`/api/sites/${site.id}/auth/logout`}
                     signOutClassName={mobileSignOutClassName}
                     signedInClassName={mobileSignedInClassName}
                     siteId={site.id}
@@ -951,10 +1035,10 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
   const contactAddressFallback = isDreamShootFooter || isAidreamcapesFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
   const contactEmailFallback = isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
-  const salesEmailFallback = isAidreamcapesFooter ? "sales@aidreamcapes.com" : isDreamShootFooter ? "sales@mydreamshoots.com" : "";
+  const salesEmailFallback = isAidreamcapesFooter ? "sales@aidreamcapes.com" : "";
   const contactAddress = footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
   const contactEmail = footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
-  const salesEmail = footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
+  const salesEmail = isDreamShootFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
   const contactItems = [
     contactAddress ? { label: "Company address", value: contactAddress, href: "" } : null,
     contactEmail ? { label: "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
@@ -1126,7 +1210,14 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   ].filter((item) => item.href);
   const showPaymentIconsValue = footer?.settings.showPaymentIcons;
   const showPaymentIcons = showPaymentIconsValue === undefined ? true : showPaymentIconsValue !== false && showPaymentIconsValue !== "false";
-  const paymentMethods = ["Visa", "Mastercard", "Amex"];
+  const paymentMethods = [
+    { key: "visa", label: "VISA" },
+    { key: "mastercard", label: "Mastercard" },
+    { key: "amex", label: "AMEX" },
+    { key: "paypal", label: "PayPal" },
+    { key: "apple-pay", label: "Apple Pay" },
+    { key: "google-pay", label: "Google Pay" }
+  ];
   const footerColumns = [
     { heading: footer ? setting(footer, "productHeading", "Product") : "Product", items: productLinks },
     { heading: footer ? setting(footer, "companyHeading", "Company") : "Company", items: companyLinks },
@@ -1261,11 +1352,24 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             <div aria-label="Accepted card payments" className="flex shrink-0 flex-wrap items-center gap-1.5 lg:ml-6 lg:justify-end">
               {paymentMethods.map((method) => (
                 <span
-                  className={dark ? "inline-flex h-7 items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.05] px-2.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white/68" : "inline-flex h-7 items-center gap-1.5 rounded-md border border-[#ddd2c5] bg-white/75 px-2.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#625d56]"}
-                  key={method}
+                  className="inline-flex h-7 min-w-12 items-center justify-center rounded-[4px] border border-black/10 bg-white px-2.5 text-[10px] font-bold tracking-[0.01em] text-[#111318] shadow-[0_8px_22px_-18px_rgba(255,255,255,0.7)]"
+                  key={method.key}
+                  title={method.label}
                 >
-                  <CreditCard className="h-3.5 w-3.5" strokeWidth={1.8} />
-                  {method}
+                  {method.key === "mastercard" ? (
+                    <span aria-label="Mastercard" className="relative inline-flex h-4 w-7 items-center justify-center">
+                      <span className="absolute left-0 h-4 w-4 rounded-full bg-[#eb001b]" />
+                      <span className="absolute right-0 h-4 w-4 rounded-full bg-[#f79e1b] mix-blend-multiply" />
+                    </span>
+                  ) : method.key === "apple-pay" ? (
+                    <span className="whitespace-nowrap normal-case">Apple Pay</span>
+                  ) : method.key === "google-pay" ? (
+                    <span className="whitespace-nowrap normal-case">
+                      <span className="text-[#4285f4]">G</span> Pay
+                    </span>
+                  ) : (
+                    <span className="whitespace-nowrap">{method.label}</span>
+                  )}
                 </span>
               ))}
             </div>
@@ -1873,7 +1977,7 @@ function hrefFor(site: Site, href: string): string {
   const normalizedPolicyPath = shortPolicyPath(href);
   if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);
   if (href === "#workflow") return routedSitePath(site, "/#workflow");
-  if (href === "#faq") return routedSitePath(site, "/help");
+  if (href === "#faq") return routedSitePath(site, "/#faq");
   if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
   if (href === "/app#create") return routedSitePath(site, "/app/create");
   if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");
@@ -1893,6 +1997,25 @@ function hrefFor(site: Site, href: string): string {
     return routedSitePath(site, "/tools");
   }
   return routedSitePath(site, href);
+}
+
+function hrefForPage(site: Site, href: string, pagePath: string): string {
+  const normalizedPagePath = !pagePath || pagePath === "/" ? "/" : pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
+  if (normalizedPagePath === "/" && href.startsWith("#")) return href;
+  if (normalizedPagePath === "/" && href.startsWith("/#")) return href.slice(1);
+  return hrefFor(site, href);
+}
+
+function formActionFor(site: Site, href: string): string {
+  const actionHref = hrefFor(site, href);
+  const queryStart = actionHref.indexOf("?");
+  return queryStart >= 0 ? actionHref.slice(0, queryStart) : actionHref;
+}
+
+function hiddenSearchParamsFromHref(href: string): { name: string; value: string }[] {
+  const queryStart = href.indexOf("?");
+  if (queryStart < 0) return [];
+  return Array.from(new URLSearchParams(href.slice(queryStart + 1)).entries()).map(([name, value]) => ({ name, value }));
 }
 
 function isExternalHttpHrefForSite(site: Site, href: string): boolean {
@@ -2359,7 +2482,7 @@ function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[]): SectionBlock
   for (const block of blocks) {
     merged.set(toolBlockSlug(block), block);
   }
-  return Array.from(merged.values()).slice(0, 12);
+  return Array.from(merged.values());
 }
 
 function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
@@ -2545,7 +2668,7 @@ function pageHeroImage(site: Site, page: Site["pages"][number], fallback: string
   return mediaAssetUrl(site, image);
 }
 
-function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
+export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
   return site.pages
     .filter((page) => ["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/"))
     .slice(0, 16)
@@ -3545,9 +3668,16 @@ function pricePeriodLabel(price: SiteProduct["prices"][number] | undefined): str
 
 function priceCreditsLabel(price: SiteProduct["prices"][number] | undefined): string {
   if (!price) return "No active price";
-  if (price.interval === "year") return `${price.creditsGranted} credits for the year`;
-  if (price.interval === "month") return `${price.creditsGranted} credits / month`;
+  if (price.interval === "year") return `${price.creditsGranted} yearly credits balance`;
+  if (price.interval === "month") return `${price.creditsGranted} monthly credits balance`;
   return `${price.creditsGranted} one-time credits`;
+}
+
+function creditsImageEstimateLabel(price: SiteProduct["prices"][number] | undefined, perImageCredits = 24): string {
+  if (!price || price.creditsGranted <= 0) return "";
+  const estimatedImages = Math.floor(price.creditsGranted / perImageCredits);
+  if (estimatedImages <= 0) return `Less than one ${perImageCredits}-credit image`;
+  return `About ${estimatedImages} image${estimatedImages === 1 ? "" : "s"} at ${perImageCredits} credits each`;
 }
 
 function priceAmountLabel(price: SiteProduct["prices"][number] | undefined): string {
@@ -4723,6 +4853,9 @@ function SectionView({
         .map((image) => mediaAssetUrl(site, image));
       const imageBadge = setting(section, "imageBadge", "Private photo album");
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
+      const authEmailHref = setting(section, "authEmailHref", "/login?mode=register");
+      const authEmailParams = hiddenSearchParamsFromHref(authEmailHref);
+      const motionHeroAltPrefix = isAidreamcapesSite(site) ? "Aidreamcapes scrolling travel portrait preview" : "MyDreamShoots scrolling AI photo package preview";
       return (
         <section className="dreamshoot-hero-motion relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
           <div className="absolute inset-0 -z-10">
@@ -4734,7 +4867,7 @@ function SectionView({
                   style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
                   <StorefrontImage
-                    alt={manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `DreamShootAI scrolling hero photo package preview ${index + 1}` })}
+                    alt={manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `${motionHeroAltPrefix} ${index + 1}` })}
                     className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
                     fetchPriority="low"
                     loading="lazy"
@@ -4834,23 +4967,31 @@ function SectionView({
                   <p className="mt-1.5 text-lg font-semibold leading-tight sm:mt-2 sm:text-2xl">{imageCaption}</p>
                 </div>
                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
-                  <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))}>
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                      <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
-                    </span>
-                    <span>{setting(section, "authPrimaryLabel", "Continue with Google")}</span>
+                  <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
+                    <Mail className="h-5 w-5" strokeWidth={1.8} />
+                    <span>{setting(section, "authPrimaryLabel", "Continue with email")}</span>
                   </Link>
                   <div className="hidden grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-white/54 sm:grid">
                     <span className="h-px bg-white/24" />
                     or
                     <span className="h-px bg-white/24" />
                   </div>
-                  <div className="hidden gap-2 sm:grid">
-                    <div className="rounded-[13px] border border-white/16 bg-white px-4 py-3 text-sm text-zinc-500 shadow-[inset_0_-1px_0_rgba(22,220,240,0.35)]">{setting(section, "authEmailPlaceholder", "Enter your email")}</div>
-                    <Link className="inline-flex min-h-[48px] items-center justify-center rounded-[13px] px-5 text-sm font-semibold text-white shadow-[0_18px_48px_-32px_rgba(22,220,240,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "authEmailHref", "/login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.72), rgba(22,220,240,0.58))" }}>
-                      {setting(section, "authButtonLabel", "Get Started with Email")}
-                    </Link>
-                  </div>
+                  <form action={formActionFor(site, authEmailHref)} className="hidden gap-2 sm:grid">
+                    {authEmailParams.map((param) => (
+                      <input key={`${param.name}_${param.value}`} name={param.name} type="hidden" value={param.value} />
+                    ))}
+                    <input
+                      autoComplete="email"
+                      className="min-h-[48px] rounded-[13px] border border-white/16 bg-white px-4 py-3 text-sm text-[#111318] shadow-[inset_0_-1px_0_rgba(22,220,240,0.35)] outline-none transition placeholder:text-zinc-500 focus:border-white focus:ring-2 focus:ring-white/24"
+                      name="email"
+                      placeholder={setting(section, "authEmailPlaceholder", "Email address")}
+                      required
+                      type="email"
+                    />
+                    <button className="inline-flex min-h-[48px] items-center justify-center rounded-[13px] px-5 text-sm font-semibold text-white shadow-[0_18px_48px_-32px_rgba(22,220,240,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98]" style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.72), rgba(22,220,240,0.58))" }} type="submit">
+                      {setting(section, "authButtonLabel", "Create account with email")}
+                    </button>
+                  </form>
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", aidreamcapes ? "Private route gallery customers" : "Private photo-package customers")}</p>
@@ -4870,8 +5011,8 @@ function SectionView({
             ))}
           </div>
           <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] pb-7 md:hidden">
-            <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
-              <span>{setting(section, "imageBadge", "15+ package categories")}: {setting(section, "authPrimaryLabel", "Continue with Google")}</span>
+            <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
+              <span>{setting(section, "imageBadge", "15+ package categories")}: {setting(section, "authPrimaryLabel", "Continue with email")}</span>
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -5488,6 +5629,8 @@ function SectionView({
     const methods = sectionBlocks(section, "login_method");
     const auth = runtime?.auth;
     const showRealLoginForm = Boolean(auth) && renderContext.pagePath === "/login" && mode !== "preview";
+    const requestedAuthMode = queryValue(renderContext.query.mode);
+    const initialAuthMode = requestedAuthMode === "register" || requestedAuthMode === "password_reset" ? requestedAuthMode : "login";
     const featureImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.upload));
     const secondaryImage = mediaAssetUrl(site, setting(section, "secondaryImageUrl", "/assets/dreamshoot/avatar-nora-gpt2-fast.png"));
     const featureLabel = setting(section, "imageBadge", "Private customer access");
@@ -5505,7 +5648,7 @@ function SectionView({
             <p className="mt-4 max-w-xl text-sm leading-7 text-white/64">{setting(section, "subtitle")}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {[
-                ["Continue with Google", "Use a familiar sign-in option when it is available for your account."],
+                ["Email access", "Log in, register, or reset your password with the email on your private account."],
                 ["Email login", "Your credits, uploads, requests, and albums stay inside your private account."],
                 ["Private delivery", "Return anytime to track progress and download finished photo sets."]
               ].map(([label, detail]) => (
@@ -5541,15 +5684,16 @@ function SectionView({
               </div>
               <div className="p-3 md:p-4">
                 {showRealLoginForm ? (
-	                  <LoginForm
-	                    defaultEmail={auth?.defaultEmail}
-	                    defaultName={auth?.defaultName}
-	                    initialMessage={auth?.initialMessage}
-	                    returnTo={queryValue(renderContext.query.next)}
-	                    siteId={site.id}
-	                    storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
-	                    siteSlug={site.slug}
-	                  />
+                  <LoginForm
+                    defaultEmail={queryValue(renderContext.query.email)}
+                    defaultName={auth?.defaultName}
+                    initialMode={initialAuthMode}
+                    initialMessage={auth?.initialMessage}
+                    returnTo={queryValue(renderContext.query.next)}
+                    siteId={site.id}
+                    storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
+                    siteSlug={site.slug}
+                  />
                 ) : (
                   <>
                     <div className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-3 py-2">
@@ -5561,7 +5705,7 @@ function SectionView({
                     </div>
                     <div className="mt-4 grid gap-2">
                       {(methods.length ? methods : [
-                        { id: "google", type: "login_method", settings: { label: "Continue with Google", helper: "Fast sign-in for returning customers.", kind: "google", href: "/login" } },
+                        { id: "email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
                         { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
                       ]).map((method, index) => (
                         <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
@@ -6448,7 +6592,7 @@ function SectionView({
                       <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.trainingLabel}</span>
                     </div>
                     <h3 className="text-[clamp(1.35rem,2.1vw,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-balance text-white">{card.title}</h3>
-                    <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-white/74">{card.description}</p>
+                    <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/74" title={card.description}>{card.description}</p>
                     <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
                       Open package
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
@@ -6544,7 +6688,7 @@ function SectionView({
           href: blockValue(card, "href", "/collections"),
           block: card
         }));
-    const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.slice(0, 36).map((card) => {
+    const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
       const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
       return {
         id: card.id,
@@ -6765,19 +6909,19 @@ function SectionView({
     const tabs = listLines(setting(section, "tabs", "All|Couple|Seasonal|Headshots|Beauty|Creative|Video"));
     const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes"));
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" : "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24"} id={sectionAnchor(section, "proof-gallery")}>
+      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-16" : "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-16"} id={sectionAnchor(section, "proof-gallery")}>
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]"} />
         <div className={aidreamcapes ? "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]" : "absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:90px_90px]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
           <div className={aidreamcapes ? "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62" : "flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62"}>
             <span>{setting(section, "label", "Visual proof gallery")}</span>
           </div>
-          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
-            <div>
-              <h2 className="max-w-3xl text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] text-balance [font-family:var(--site-title-font)]">
+          <div className="mt-6 grid gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.68fr)] lg:items-start">
+            <div className="max-w-[42rem]">
+              <h2 className="max-w-[39rem] text-[clamp(2.45rem,4.8vw,3.9rem)] font-semibold leading-[1.02] text-balance [font-family:var(--site-title-font)]">
                 {setting(section, "title", "See what your selfies can become.")}
               </h2>
-              <div className="mt-10 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-3">
                 {tabs.map((tab, index) => (
                   <Link
                     className={aidreamcapes ? "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white" : "rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"}
@@ -6790,11 +6934,11 @@ function SectionView({
                 ))}
               </div>
             </div>
-            <div className="lg:pb-7">
-              <p className={aidreamcapes ? "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72" : "max-w-[38rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.22] text-white/72"}>
+            <div className="rounded-[22px] border border-white/12 bg-white/[0.045] p-5 lg:ml-auto lg:max-w-[34rem]">
+              <p className={aidreamcapes ? "max-w-[31rem] text-[clamp(1.04rem,1.35vw,1.28rem)] leading-[1.35] text-white/76" : "max-w-[31rem] text-[clamp(1.04rem,1.35vw,1.28rem)] leading-[1.35] text-white/76"}>
                 {setting(section, "subtitle", "Explore finished private albums by purpose, from source portraits to polished headshots, scene packs, style previews, and seasonal keepsakes.")}
               </p>
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-5 flex flex-wrap gap-3">
                 {badges.map((badge, index) => (
                   <span
                     className={aidreamcapes ? "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76" : "rounded-full border border-white/16 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-white/76"}
@@ -6807,7 +6951,7 @@ function SectionView({
               </div>
             </div>
           </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)]">
+          <div className="mt-7 grid gap-5 lg:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)]">
             <Link
               className="group relative min-h-[460px] overflow-hidden rounded-[28px] border border-white/14 bg-white/[0.05] shadow-[0_36px_120px_-70px_rgba(0,0,0,0.96)]"
               href={hrefFor(site, blockValue(lead, "href", "/login"))}
@@ -6851,7 +6995,7 @@ function SectionView({
                     <span className="rounded-full border border-white/18 bg-black/24 px-3 py-1.5 text-xs font-medium text-white/86 backdrop-blur">{blockValue(card, "badge", blockValue(card, "category", "Package"))}</span>
                     <h3 className="mt-4 text-[1.45rem] font-semibold leading-tight tracking-[-0.03em] text-white">{blockValue(card, "title", "Photo result")}</h3>
                     <div className="mt-1 flex items-end justify-between gap-4">
-                      <p className="max-w-[17rem] text-sm leading-5 text-white/72">{blockValue(card, "description")}</p>
+                      <p className="line-clamp-2 max-w-[17rem] text-sm leading-5 text-white/72" title={blockValue(card, "description")}>{blockValue(card, "description")}</p>
                       <ArrowRight className="h-5 w-5 shrink-0 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </div>
                   </div>
@@ -7295,7 +7439,7 @@ function SectionView({
         <section className={aidreamcapes ? "relative isolate overflow-hidden bg-[#05070E] px-4 py-10 text-white sm:px-5 sm:py-14" : "relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14"} id={sectionAnchor(section, "tools")}>
           <div className={aidreamcapes ? "absolute inset-0 -z-10 opacity-46" : "absolute inset-0 -z-10 opacity-46"}>
             <div className="grid h-full min-h-[620px] grid-cols-3 gap-3 blur-[0.2px] sm:grid-cols-4 lg:grid-cols-6">
-              {tools.slice(0, 12).map((tool, index) => (
+              {tools.map((tool, index) => (
                 <div className={`relative overflow-hidden rounded-[16px] ${aidreamcapes ? "bg-zinc-900" : "bg-zinc-900"} ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
                   <StorefrontImage
                     alt=""
@@ -7329,8 +7473,21 @@ function SectionView({
         </section>
       );
     }
+    const directoryCards: DreamshootToolDirectoryCard[] = tools.map((tool) => {
+      const directoryCopy = dreamshootToolDirectoryCopy(tool);
+      const toolTitle = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
+      return {
+        id: tool.id,
+        title: toolTitle,
+        description: directoryCopy.description,
+        category: blockValue(tool, "category", aidreamcapes ? "Route Portrait" : "Photo AI"),
+        tags: directoryCopy.tags,
+        href: toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, storefrontPaidToolBlockValue(tool, "title", ""))
+      };
+    });
+    const toolSectionId = sectionAnchor(section, "tools");
     return (
-      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#eef4f2] px-5 py-14 text-[#151a24]"} id={sectionAnchor(section, "tools")}>
+      <section className={dark ? "bg-[#0a0a0b] px-5 py-16 text-white" : "bg-[#eef4f2] px-5 py-14 text-[#151a24]"} id={toolSectionId}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className={dark ? "grid gap-8 rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_30px_90px_-68px_rgba(255,255,255,0.45)] lg:grid-cols-[1.15fr_0.85fr] lg:p-9" : "grid gap-8 rounded-[28px] border border-[#d7e4df] bg-[#fbfdfb] p-6 shadow-[0_28px_90px_-72px_rgba(23,74,67,0.55)] lg:grid-cols-[1.15fr_0.85fr] lg:p-9"}>
             <div>
@@ -7358,7 +7515,7 @@ function SectionView({
                 ))}
               </div>
               <div className={dark ? "flex flex-wrap items-center gap-2 rounded-[20px] border border-white/10 bg-black/18 p-2" : "flex flex-wrap items-center gap-2 rounded-[20px] border border-[#d8e5e1] bg-[#eef4f2] p-2"}>
-                <a className={dark ? "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-white px-4 py-3 text-center text-sm font-bold text-[#101114]" : "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-[#183c39] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_18px_34px_-28px_rgba(24,60,57,0.9)]"} href={`#${sectionAnchor(section, "tools")}`}>
+                <a className={dark ? "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-white px-4 py-3 text-center text-sm font-bold text-[#101114]" : "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] bg-[#183c39] px-4 py-3 text-center text-sm font-bold text-white shadow-[0_18px_34px_-28px_rgba(24,60,57,0.9)]"} href={`#${toolSectionId}`}>
                   All tools
                 </a>
                 {categories.map((category) => (
@@ -7366,7 +7523,7 @@ function SectionView({
                     <span className={dark ? "text-sm font-bold text-white/30" : "text-sm font-bold text-[#7d918d]"}>/</span>
                     <a
                       className={dark ? "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] px-4 py-3 text-center text-sm font-bold text-white/70 transition hover:bg-white/[0.08] hover:text-white" : "inline-flex items-center justify-center whitespace-nowrap rounded-[14px] px-4 py-3 text-center text-sm font-bold text-[#34434a] transition hover:bg-white hover:text-[#236f64]"}
-                      href={`#${sectionAnchor(section, "tools")}-${slugify(category)}`}
+                      href={`#${toolSectionId}-${slugify(category)}`}
                     >
                       {category}
                     </a>
@@ -7375,67 +7532,16 @@ function SectionView({
               </div>
             </div>
           </div>
-          <div className="mt-10 grid gap-12">
-            {categories.map((category) => {
-              const grouped = tools.filter((tool) => blockValue(tool, "category", "Route Portrait") === category);
-              if (!grouped.length) return null;
-              return (
-                <div id={`${sectionAnchor(section, "tools")}-${slugify(category)}`} key={category}>
-                  <div className={dark ? "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/10 pb-4" : "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-[#d3e0dc] pb-4"}>
-                    <div>
-                      <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</h3>
-                      <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>{grouped.length} tools with clear pages and guided next steps.</p>
-                    </div>
-                    <span className={dark ? "rounded-full border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-white/50" : "rounded-full border border-[#c6d8d3] bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#57706a]"}>
-                      {grouped.length} entries
-                    </span>
-                  </div>
-                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                    {grouped.map((tool, index) => {
-                      const directoryCopy = dreamshootToolDirectoryCopy(tool);
-                      const toolTitle = storefrontPaidToolBlockValue(tool, "title", "AI photo tool");
-                      const toolPrefix = aidreamcapes ? "aidreamcapes_tool" : "dreamshoot_tool";
-                      return (
-                        <Link
-                          aria-label={cardLinkLabel(directoryCopy.action, toolTitle, "this tool")}
-                          className={dark ? "group flex min-h-[240px] flex-col rounded-[18px] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[240px] flex-col rounded-[18px] border border-[#d9e5e1] bg-white p-5 text-[#151a24] shadow-[0_20px_60px_-56px_rgba(23,74,67,0.48)] transition hover:-translate-y-1 hover:border-[#88bdb2] hover:shadow-[0_26px_76px_-58px_rgba(23,74,67,0.65)]"}
-                          href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, storefrontPaidToolBlockValue(tool, "title", ""))}
-                          key={instanceKey(tool, index, toolPrefix)}
-                          {...xfcartBlockAttrs(tool, index, toolPrefix)}
-                        >
-                          <div className="flex flex-wrap gap-2">
-                            {directoryCopy.tags.map((tag) => (
-                              <span className={dark ? "rounded-[8px] border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-white/72" : "rounded-[8px] border border-[#cfe1dc] bg-[#eff7f4] px-2.5 py-1 text-xs font-semibold text-[#287066]"} key={tag}>
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <h4 className="mt-6 text-[1.18rem] font-bold leading-tight">{toolTitle}</h4>
-                          <p className={dark ? "mt-4 line-clamp-4 text-sm leading-6 text-white/64" : "mt-4 line-clamp-4 text-sm leading-6 text-[#56636b]"}>
-                            {directoryCopy.description}
-                          </p>
-                          <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#1d6f64]"}>
-                            {directoryCopy.action}
-                            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
-                          </span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]"} href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
-              {setting(section, "primaryCta", aidreamcapes ? "Create travel portraits" : "Create my first photo set")}
-              <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-            </Link>
-            <Link className={dark ? "inline-flex items-center gap-2 rounded-[16px] border border-white/14 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] active:scale-[0.98]" : "inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 hover:bg-[#fbfaf7] active:scale-[0.98]"} href={hrefFor(site, setting(section, "secondaryHref", "/collections"))}>
-              {setting(section, "secondaryCta", aidreamcapes ? "Travel Packages" : "View photo packages")}
-              <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
-            </Link>
-          </div>
+          <DreamshootToolDirectoryClient
+            cards={directoryCards}
+            categories={categories}
+            dark={dark}
+            primaryCta={setting(section, "primaryCta", aidreamcapes ? "Create travel portraits" : "Create my first photo set")}
+            primaryHref={hrefFor(site, setting(section, "primaryHref", "/login"))}
+            secondaryCta={setting(section, "secondaryCta", aidreamcapes ? "Travel Packages" : "View photo packages")}
+            secondaryHref={hrefFor(site, setting(section, "secondaryHref", "/collections"))}
+            sectionId={toolSectionId}
+          />
         </div>
       </section>
     );
@@ -7758,7 +7864,8 @@ function SectionView({
               : "More credits for premium packs, video add-ons, and repeat campaigns"
         );
         const defaultFeatures = [
-          price.interval === "year" ? `${price.creditsGranted} AI photo credits for the year` : `${price.creditsGranted} AI photo credits`,
+          priceCreditsLabel(price),
+          creditsImageEstimateLabel(price),
           "Create private photo albums after generation completes",
           aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
           "Special AI photo filters",
@@ -7768,7 +7875,7 @@ function SectionView({
           "No watermark",
           ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
           ...(destinations >= 999 ? ["Unlimited style directions"] : [])
-        ];
+        ].filter(Boolean);
         const featureLines = priceMetaLines(price, "featuresText");
         const features = featureLines.length ? featureLines : defaultFeatures;
         const badgeLabel = priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));

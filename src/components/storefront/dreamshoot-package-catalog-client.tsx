@@ -253,7 +253,7 @@ export function DreamshootPackageCatalogClient({
               </div>
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/62">{card.description}</p>
+                <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/62" title={card.description}>{card.description}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
                   <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.meta}</span>
                   <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.credits}</span>
@@ -302,7 +302,7 @@ export function DreamshootPackageCatalogClient({
                     <div className="flex items-start gap-3">
                       <div className="min-w-0">
                         <h3 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h3>
-                        <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56">{card.description}</p>
+                        <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56" title={card.description}>{card.description}</p>
                       </div>
                       <ArrowRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" strokeWidth={1.8} />
                     </div>

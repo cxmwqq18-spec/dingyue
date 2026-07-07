@@ -11,6 +11,8 @@ import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import type { Album, AssetUpload, CreativePack, CustomerModel, PublicCustomer, SiteAdmin } from "@/lib/types";
 import type { JobStatus } from "@/lib/types";
 
+const customersPageRequestTimeoutMs = 8_000;
+
 type CustomerAssetJob = {
   id: string;
   customerId: string;
@@ -129,7 +131,10 @@ export function CustomersPageClient({
     async function loadDetail(detail: "customers" | "models" | "delivery") {
       const controller = nextController();
       try {
-        const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, { init: { signal: controller.signal } });
+        const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, {
+          timeoutMs: customersPageRequestTimeoutMs,
+          init: { signal: controller.signal }
+        });
         const result = response.data;
         if (!response.ok) throw new Error(result.error ?? "顾客数据加载失败。");
         if (active && !controller.signal.aborted) setPayload((current) => mergePayload(current, result));

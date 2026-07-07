@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
+import { updateCustomerAssetFavoriteRelational } from "@/lib/stores/asset-store";
 import type { NextRequest } from "next/server";
 
 type DeleteMode = "asset" | "output" | "job";
@@ -12,6 +13,11 @@ type DeleteCustomerAssetBody = {
   customerId?: string;
   assetId?: string;
   jobId?: string;
+};
+type FavoriteCustomerAssetBody = {
+  customerId?: string;
+  assetId?: string;
+  isFavorite?: unknown;
 };
 
 type JobRequestJson = {
@@ -164,6 +170,34 @@ async function deleteAssetResource(tx: Prisma.TransactionClient, params: { siteI
     deletedSourceAssetIds: [],
     deletedAlbumScope: "asset"
   };
+}
+
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
+  const { siteId } = await params;
+  const guard = await requireSiteMutation(request, siteId, {
+    roles: ["owner", "admin"],
+    rateLimit: RATE_LIMITS.adminCustomerAssetDelete
+  });
+  if (!guard.ok) return guard.response;
+
+  const body = (await request.json().catch(() => ({}))) as FavoriteCustomerAssetBody;
+  if (!body.customerId || !body.assetId || typeof body.isFavorite !== "boolean") {
+    return NextResponse.json({ ok: false, error: "invalid_favorite_request" }, { status: 400 });
+  }
+
+  try {
+    const result = await updateCustomerAssetFavoriteRelational({
+      siteId,
+      customerId: body.customerId,
+      assetId: body.assetId,
+      isFavorite: body.isFavorite
+    });
+    return NextResponse.json({ ok: true, asset: result.asset });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "asset_favorite_update_failed";
+    const status = message.includes("not_found") ? 404 : message.includes("only_generated_outputs") ? 400 : 500;
+    return NextResponse.json({ ok: false, error: message }, { status });
+  }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {

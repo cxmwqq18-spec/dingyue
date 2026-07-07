@@ -177,9 +177,11 @@ const homeSections: ThemePageJson["sections"] = {
       highlightWord: "real",
       heroBadge: "AI photo package studio",
       authRibbon: "Plans start at $24.50/month",
-      authPrimaryLabel: "Continue with Google",
-      authEmailPlaceholder: "Enter your email",
-      authButtonLabel: "Get Started with Email",
+      authPrimaryLabel: "Continue with email",
+      authEmailPlaceholder: "Email address",
+      authButtonLabel: "Create account with email",
+      authPrimaryHref: "/login?mode=login",
+      authEmailHref: "/login?mode=register",
       imageBadge: "15+ package categories",
       imageCaption: "Choose a photo package first, then generate a private album.",
       socialProofLabel: "Private uploads and clear credit costs",
@@ -894,7 +896,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
           imageCaption: "Every source photo, credit, and gallery stays attached to your private account."
         },
         [
-          block("login_google", "login_method", { label: "Continue with Google", helper: "Fast sign-in for returning customers.", kind: "google", href: "/login" }),
+          block("login_email_access", "login_method", { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" }),
           block("login_email", "login_method", { label: "Use email login", helper: "Password login is available for private gallery access.", kind: "email", href: "/login" })
         ]
       ),
@@ -1094,18 +1096,18 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     {
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
-        title: "Contact MyDreamShoots support or sales.",
-        body: "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, business inquiries, or sales conversations.",
+        title: "Contact MyDreamShoots support.",
+        body: "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
         primaryCta: "Email support",
         primaryHref: "mailto:support@mydreamshoots.com",
-        secondaryCta: "Email sales",
-        secondaryHref: "mailto:sales@mydreamshoots.com"
+        secondaryCta: "Email support",
+        secondaryHref: "mailto:support@mydreamshoots.com"
       }, [
         block("contact_support", "rich_text_card", { meta: "Support", title: "support@mydreamshoots.com", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
-        block("contact_sales", "rich_text_card", { meta: "Sales", title: "sales@mydreamshoots.com", description: "For plan questions, creator or team use cases, campaign planning, and business inquiries." }),
+        block("contact_account", "rich_text_card", { meta: "Account help", title: "support@mydreamshoots.com", description: "For plan questions, creator use cases, billing review, credits, and private album delivery help." }),
         block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B, DOVER, DE 19901", description: "Company mailing address for MyDreamShoots business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
@@ -1113,7 +1115,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         headingLevel: "h2",
         lastUpdated: "June 28, 2026",
         contactEmail: "support@mydreamshoots.com",
-        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private album delivery help.</p><h3>Sales</h3><p>Email <a href=\"mailto:sales@mydreamshoots.com\">sales@mydreamshoots.com</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
       }),
       faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
@@ -1221,7 +1223,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
 
 export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
-    logoText: "ʍʏƉʀɛǟʍֆhoots",
+    logoText: "myᕲreamshoots",
     market: "AI photo packages, personal AI models, paid tools, credits, AI video, and private albums",
     description: "MyDreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery."
   },
@@ -1263,7 +1265,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     globalSections: {
       header: {
         settings: {
-          title: "ʍʏƉʀɛǟʍֆhoots",
+          title: "myᕲreamshoots",
           sticky: true,
           ctaLabel: "Create my first photo set",
           ctaHref: "/login",
@@ -1283,7 +1285,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       },
       footer: {
         settings: {
-          title: "ʍʏƉʀɛǟʍֆhoots",
+          title: "myᕲreamshoots",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
           logoAlt: "MyDreamShoots heart camera logo",
           tagline: "Private AI photo sets with visible credit costs and gallery delivery",
@@ -1301,7 +1303,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           showPaymentIcons: true,
           contactAddress: "8 THE GREEN STE B, DOVER, DE 19901",
           contactEmail: "support@mydreamshoots.com",
-          salesEmail: "sales@mydreamshoots.com",
+          salesEmail: "",
           bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
           copyright: "© 2026 MyDreamShoots. All rights reserved."
         },
@@ -1323,10 +1325,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       }
     },
     seo: {
-      siteTitle: "ʍʏƉʀɛǟʍֆhoots",
+      siteTitle: "MyDreamShoots",
       siteDescription: "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
       siteKeywords: "",
-      titleTemplate: "%s | ʍʏƉʀɛǟʍֆhoots",
+      titleTemplate: "%s | MyDreamShoots",
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {

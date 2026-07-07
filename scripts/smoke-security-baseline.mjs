@@ -95,11 +95,13 @@ function expectSecurityHeaders(response, label) {
 
 expectSecurityHeaders((await request("/", { allowFailure: true })).response, "security headers");
 
-await request("/api/platform/state", {
+const legacyReset = await request("/api/platform/state", {
   method: "POST",
   body: { reset: true },
-  headers: { "x-smoke-reset": "true" }
+  headers: { "x-smoke-reset": "true" },
+  allowFailure: true
 });
+expectOneOfStatuses(legacyReset, [200, 204, 410], "legacy platform reset");
 
 const ownerLogin = await request("/api/sites/site_lumen/admin/auth/login", {
   method: "POST",

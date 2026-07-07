@@ -861,6 +861,9 @@ async function loadPlatformAiProviderStatusRelational() {
         modelType: provider.modelType,
         priority: provider.priority,
         preferred: provider.preferred,
+        supportsGenerationN: provider.supportsGenerationN,
+        supportsEditN: provider.supportsEditN,
+        maxImagesPerRequest: provider.maxImagesPerRequest,
         createdAt: provider.createdAt,
         updatedAt: provider.updatedAt,
         updatedBy: provider.updatedBy,
@@ -1395,7 +1398,12 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
+
+function normalizeProviderMaxImagesPerRequest(value: unknown) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? Math.max(1, Math.min(Math.trunc(numeric), 20)) : 1;
+}
 
 export async function listPlatformAiProvidersRelational(): Promise<PlatformAiProvider[]> {
   const records = await prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
@@ -1410,7 +1418,17 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational();
-  return providers.map(({ id, label, aiUrl, modelType, priority, preferred }) => ({ id, label, aiUrl, modelType, priority, preferred }));
+  return providers.map(({ id, label, aiUrl, modelType, priority, preferred, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+    id,
+    label,
+    aiUrl,
+    modelType,
+    priority,
+    preferred,
+    supportsGenerationN,
+    supportsEditN,
+    maxImagesPerRequest
+  }));
 }
 
 export async function upsertPlatformAiProviderRelational(params: {
@@ -1420,6 +1438,9 @@ export async function upsertPlatformAiProviderRelational(params: {
   apiKey?: string;
   modelType: string;
   makeCurrent?: boolean;
+  supportsGenerationN?: boolean;
+  supportsEditN?: boolean;
+  maxImagesPerRequest?: number;
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
@@ -1437,6 +1458,9 @@ export async function upsertPlatformAiProviderRelational(params: {
             apiKey: params.apiKey?.trim() || existing.apiKey,
             modelType: params.modelType.trim(),
             preferred: shouldPrefer || existing.preferred,
+            supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
+            supportsEditN: params.supportsEditN ?? existing.supportsEditN,
+            maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest ?? existing.maxImagesPerRequest),
             updatedBy: params.actor
           }
         })
@@ -1449,6 +1473,9 @@ export async function upsertPlatformAiProviderRelational(params: {
             modelType: params.modelType.trim(),
             priority: providerCount + 1,
             preferred: shouldPrefer,
+            supportsGenerationN: Boolean(params.supportsGenerationN),
+            supportsEditN: Boolean(params.supportsEditN),
+            maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest),
             updatedBy: params.actor
           }
         });

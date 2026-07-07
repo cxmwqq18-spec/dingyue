@@ -35,6 +35,9 @@ type AiProviderRow = {
   updatedBy?: string;
   isCurrent: boolean;
   preferred: boolean;
+  supportsGenerationN: boolean;
+  supportsEditN: boolean;
+  maxImagesPerRequest: number;
   status: {
     configured: boolean;
     aiUrlConfigured: boolean;
@@ -73,6 +76,21 @@ type ProviderFormState = {
   apiKey: string;
   modelType: string;
   makeCurrent: boolean;
+  supportsGenerationN: boolean;
+  supportsEditN: boolean;
+  maxImagesPerRequest: number;
+};
+
+const defaultProviderForm: ProviderFormState = {
+  id: "",
+  label: "",
+  aiUrl: "",
+  apiKey: "",
+  modelType: "gpt-image-2",
+  makeCurrent: true,
+  supportsGenerationN: false,
+  supportsEditN: false,
+  maxImagesPerRequest: 1
 };
 
 function errorLabel(code?: string): string {
@@ -93,6 +111,13 @@ function errorLabel(code?: string): string {
   }[code ?? ""] ?? code ?? "unknown error";
 }
 
+function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">) {
+  const maxImages = Math.max(1, Math.min(Math.trunc(Number(provider.maxImagesPerRequest) || 1), 20));
+  const generation = provider.supportsGenerationN ? "文生图 n" : "文生图单张";
+  const edit = provider.supportsEditN ? "图生图 n" : "图生图单张";
+  return `${generation} / ${edit} / 单次 ${maxImages}`;
+}
+
 export function PlatformAiProviderPanel({
   initialStatus
 }: {
@@ -101,7 +126,7 @@ export function PlatformAiProviderPanel({
   const router = useRouter();
   const [status, setStatus] = useState(initialStatus);
   const [query, setQuery] = useState("");
-  const [form, setForm] = useState<ProviderFormState>({ id: "", label: "", aiUrl: "", apiKey: "", modelType: "gpt-image-2", makeCurrent: true });
+  const [form, setForm] = useState<ProviderFormState>(defaultProviderForm);
   const [customModelType, setCustomModelType] = useState("");
   const [editForm, setEditForm] = useState<ProviderFormState | null>(null);
   const [editCustomModelType, setEditCustomModelType] = useState("");
@@ -126,7 +151,17 @@ export function PlatformAiProviderPanel({
   }, [query, status.providers]);
 
   function edit(provider: AiProviderRow) {
-    setEditForm({ id: provider.id, label: provider.label, aiUrl: provider.aiUrl, apiKey: "", modelType: provider.modelType, makeCurrent: provider.isCurrent });
+    setEditForm({
+      id: provider.id,
+      label: provider.label,
+      aiUrl: provider.aiUrl,
+      apiKey: "",
+      modelType: provider.modelType,
+      makeCurrent: provider.isCurrent,
+      supportsGenerationN: provider.supportsGenerationN,
+      supportsEditN: provider.supportsEditN,
+      maxImagesPerRequest: provider.maxImagesPerRequest || 1
+    });
     setEditCustomModelType(modelTypes.includes(provider.modelType) ? "" : provider.modelType);
     setEditMessage("API Key 留空会保留原密钥；AI URL 可以清空保存。");
   }
@@ -186,7 +221,7 @@ export function PlatformAiProviderPanel({
         setEditMessage("");
         setMessage(`${nextForm.label.trim() || "AI 供应商"} 已保存，列表已更新。`);
       } else {
-        setForm({ id: "", label: "", aiUrl: "", apiKey: "", modelType: "gpt-image-2", makeCurrent: true });
+        setForm(defaultProviderForm);
         setCustomModelType("");
         setMessage("AI 供应商配置已保存。");
       }
@@ -371,11 +406,30 @@ export function PlatformAiProviderPanel({
               <ErpField label="扩展模型">
                 <ErpInput className="font-mono" onChange={(event) => setCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={customModelType} />
               </ErpField>
+              <ErpField label="单次最多返回">
+                <ErpInput
+                  min={1}
+                  max={20}
+                  onChange={(event) => setForm((draft) => ({ ...draft, maxImagesPerRequest: Math.max(1, Math.min(Math.trunc(Number(event.target.value) || 1), 20)) }))}
+                  type="number"
+                  value={form.maxImagesPerRequest}
+                />
+              </ErpField>
             </ErpFormGrid>
-            <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
-              <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked }))} type="checkbox" />
-              保存后设为优先供应商
-            </label>
+            <div className="flex flex-wrap gap-4">
+              <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                <input checked={form.supportsGenerationN} onChange={(event) => setForm((draft) => ({ ...draft, supportsGenerationN: event.target.checked }))} type="checkbox" />
+                文生图支持 n 多图返回
+              </label>
+              <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                <input checked={form.supportsEditN} onChange={(event) => setForm((draft) => ({ ...draft, supportsEditN: event.target.checked }))} type="checkbox" />
+                图生图支持 n 多图返回
+              </label>
+              <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked }))} type="checkbox" />
+                保存后设为优先供应商
+              </label>
+            </div>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="tixing min-w-0 flex-1">{message}</div>
               <div className="flex flex-wrap gap-2">
@@ -404,6 +458,7 @@ export function PlatformAiProviderPanel({
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{provider.label}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{provider.modelType} / {provider.status.apiKeyPreview || "missing key"}</div>
+                  <div className="mt-1 truncate text-[11px] text-[#667085]">{providerCapabilityText(provider)}</div>
                 </div>
                 <div className="truncate font-mono text-[12px] text-[#667085]">{provider.aiUrl}</div>
                 <div className="flex flex-wrap gap-2">
@@ -475,11 +530,30 @@ export function PlatformAiProviderPanel({
                 <ErpField label="扩展模型">
                   <ErpInput className="font-mono" onChange={(event) => setEditCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={editCustomModelType} />
                 </ErpField>
+                <ErpField label="单次最多返回">
+                  <ErpInput
+                    min={1}
+                    max={20}
+                    onChange={(event) => setEditForm((draft) => draft ? { ...draft, maxImagesPerRequest: Math.max(1, Math.min(Math.trunc(Number(event.target.value) || 1), 20)) } : draft)}
+                    type="number"
+                    value={editForm.maxImagesPerRequest}
+                  />
+                </ErpField>
               </ErpFormGrid>
-              <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
-                <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked } : draft)} type="checkbox" />
-                保存后设为优先供应商
-              </label>
+              <div className="flex flex-wrap gap-4">
+                <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                  <input checked={editForm.supportsGenerationN} onChange={(event) => setEditForm((draft) => draft ? { ...draft, supportsGenerationN: event.target.checked } : draft)} type="checkbox" />
+                  文生图支持 n 多图返回
+                </label>
+                <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                  <input checked={editForm.supportsEditN} onChange={(event) => setEditForm((draft) => draft ? { ...draft, supportsEditN: event.target.checked } : draft)} type="checkbox" />
+                  图生图支持 n 多图返回
+                </label>
+                <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                  <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked } : draft)} type="checkbox" />
+                  保存后设为优先供应商
+                </label>
+              </div>
               <div className="rounded-[8px] border border-[#e7edf3] bg-[#f8fafc] px-3 py-2 text-[12px] leading-5 text-[#667085]">
                 {editMessage || "API Key 留空会保留原密钥；AI URL 支持清空。"}
               </div>

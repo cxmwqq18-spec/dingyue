@@ -150,7 +150,7 @@ for (const site of state.sites ?? []) {
   walk(site);
   const before = JSON.stringify(site);
   if (site.themeSettings?.publishedJson?.globalSections?.footer?.settings) {
-    site.themeSettings.publishedJson.globalSections.footer.settings.title = "ʍʏƉʀɛǟʍֆhoots";
+    site.themeSettings.publishedJson.globalSections.footer.settings.title = "myᕲreamshoots";
     site.themeSettings.publishedJson.globalSections.footer.settings.tagline = "Private AI photo sets with visible credit costs and gallery delivery";
     site.themeSettings.publishedJson.globalSections.footer.settings.body = "Upload your selfies, choose a style, review the credit cost, and download a private photo set.";
   }

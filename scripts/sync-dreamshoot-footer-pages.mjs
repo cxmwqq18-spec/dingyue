@@ -12,7 +12,7 @@ const brandProfiles = [
     footerLogoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
     footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
-    salesEmail: "sales@mydreamshoots.com",
+    salesEmail: "",
     instagramUrl: "https://www.instagram.com/mydreamshoots",
     facebookUrl: "https://www.facebook.com/mydreamshoots",
     pinterestUrl: "https://www.pinterest.com/mydreamshoots",
@@ -24,7 +24,7 @@ const brandProfiles = [
     aboutSeoTitle: "About MyDreamShoots - private AI photo packages and albums",
     aboutDescription:
       "Learn about MyDreamShoots, an AI photo package workspace for private uploads, personal AI models, clear credits, secure checkout, and customer-only gallery delivery.",
-    contactSeoTitle: "Contact MyDreamShoots - support, sales, and company address",
+    contactSeoTitle: "Contact MyDreamShoots - support and company address",
     contactDescription:
       "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information.",
     footerLinks: [
@@ -99,8 +99,8 @@ function pageJson(profile, page) {
   const body = isShipping
     ? `<h3>No physical shipping</h3><p>${profile.brand} sells digital AI photo credits, generated image packages, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by ${profile.brand}.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>`
     : isContact
-      ? `<h3>Support</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account access, upload guidance, billing review, refunds, privacy requests, credit history, generation status, or private gallery delivery help.</p><h3>Sales</h3><p>Email <a href="mailto:${profile.salesEmail}">${profile.salesEmail}</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>${companyAddress}</p>`
-      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for support or <a href="mailto:${profile.salesEmail}">${profile.salesEmail}</a> for sales questions.</p><h3>Company address</h3><p>${companyAddress}</p>`;
+      ? `<h3>Support</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account access, upload guidance, billing review, refunds, privacy requests, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company address</h3><p>${companyAddress}</p>`
+      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account support, plan questions, or private gallery delivery help.</p><h3>Company address</h3><p>${companyAddress}</p>`;
   return {
     version: 1,
     pageType: isShipping ? "policy" : "content",

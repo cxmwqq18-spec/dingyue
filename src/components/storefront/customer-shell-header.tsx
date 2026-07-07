@@ -3,12 +3,13 @@
 import { ArrowRight, BadgeCheck, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Route, Scissors, Sparkles, Sun, UserCircle, Users, Waves } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
+import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { CreativePack, PublicCustomer, Site } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 
-type CustomerShellHeaderSite = Pick<Site, "slug" | "name" | "branding" | "primaryDomain">;
+type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 type MenuGroupItem = { label: string; href: string };
 type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: MenuGroupItem[] };
 type MenuGroup = MenuGroupEntry[];
@@ -131,7 +132,7 @@ const aidreamcapesToolGroups = [
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
-const myDreamShootsDisplayName = "ʍʏƉʀɛǟʍֆhoots";
+const myDreamShootsDisplayName = "myᕲreamshoots";
 
 function slugifyMenuLabel(value: string) {
   return value
@@ -167,7 +168,6 @@ function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[]): MenuGrou
   const groups: Array<MenuGroupEntry & { slug: string }> = [];
   (creativePacks ?? [])
     .filter((pack) => pack.status === "active")
-    .slice(0, 48)
     .forEach((pack) => {
       const parent = pack.categoryRecord?.parent;
       const groupLabel = parent?.label || titleCaseMenuLabel(pack.categoryRecord?.slug || pack.category || "Photo packages");
@@ -195,11 +195,10 @@ function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[]): MenuGrou
       label: group.label,
       accent: group.accent,
       icon: group.icon,
-      items: group.items.sort((a, b) => a.label.localeCompare(b.label)).slice(0, 8)
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label))
     }))
     .filter((group) => group.items.length > 0)
-    .sort((a, b) => a.label.localeCompare(b.label))
-    .slice(0, 8);
+    .sort((a, b) => a.label.localeCompare(b.label));
 }
 
 function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo package studios" }: { basePath: string; groups?: MenuGroup; title?: string }) {
@@ -318,6 +317,14 @@ export function CustomerShellHeader({
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
   const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
+  const packagePrefetchPaths = Array.from(new Set([
+    `${basePath}/collections`,
+    ...activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
+  ])).slice(0, 10);
+  const toolPrefetchPaths = Array.from(new Set([
+    `${basePath}/tools`,
+    ...activeToolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
+  ])).slice(0, 8);
   const dark = tone === "dark";
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
@@ -345,7 +352,7 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label={isAidreamcapes ? "Travel Packages" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={activePackageGroups.map((group) => `${basePath}${group.items[0]?.href ?? "/collections"}`).slice(0, 2)}
+              prefetchPaths={packagePrefetchPaths}
             >
               <PackageMegaPanel basePath={basePath} groups={activePackageGroups} title={isAidreamcapes ? "Travel route studios" : "Photo package studios"} />
             </ClickMegaMenu>
@@ -353,23 +360,26 @@ export function CustomerShellHeader({
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
               label="Tools"
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
-              prefetchPaths={activeToolGroups.map((group) => `${basePath}${group.items[0]?.href ?? "/tools"}`).slice(0, 2)}
+              prefetchPaths={toolPrefetchPaths}
             >
               <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#workflow`}>
               How it works
             </StorefrontInstantLink>
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`}>
+              Workspace
+            </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>
               Pricing
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/faq`}>
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#faq`}>
               FAQ
             </StorefrontInstantLink>
           </nav>
 
           <div className="flex min-w-0 items-center gap-2">
-            <StorefrontInstantLink className={`hidden min-w-0 items-center gap-3 rounded-full border px-4 py-2 text-sm leading-tight md:inline-flex ${dark ? "border-white/55 bg-transparent text-white" : "border-[#dfd3c4] bg-white text-[#171514]"}`} href={`${basePath}/account`}>
+            <StorefrontInstantLink className={`hidden min-w-0 items-center gap-3 rounded-full border px-4 py-2 text-sm leading-tight md:inline-flex ${dark ? "border-white/55 bg-transparent text-white" : "border-[#dfd3c4] bg-white text-[#171514]"}`} href={`${basePath}/app/create`}>
               <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${dark ? "bg-white text-[#171514]" : "bg-[#171514] text-white"}`}>
                 <UserCircle className="h-5 w-5" strokeWidth={1.8} />
               </span>
@@ -378,11 +388,7 @@ export function CustomerShellHeader({
                 <span className={`block max-w-[10rem] truncate text-xs ${dark ? "text-white/72" : "text-[#706961]"}`}>{customer.email}</span>
               </span>
             </StorefrontInstantLink>
-            <form action={`${basePath}/logout`} method="post">
-              <button className={`rounded-full border px-5 py-3 text-sm font-semibold transition ${dark ? "border-white/55 bg-transparent text-white hover:bg-white/8" : "border-[#171514] bg-[#171514] text-white hover:bg-black"}`} type="submit">
-                Sign out
-              </button>
-            </form>
+            <CustomerSignOutButton className={`rounded-full border px-5 py-3 text-sm font-semibold transition ${dark ? "border-white/55 bg-transparent text-white hover:bg-white/8" : "border-[#171514] bg-[#171514] text-white hover:bg-black"}`} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={`${basePath}/login`} siteId={site.id} />
           </div>
         </div>
       </div>

@@ -38,6 +38,16 @@ function jsonRecord(value: Prisma.JsonValue | null | undefined): Record<string, 
   return value as Record<string, unknown>;
 }
 
+function primitiveRecord(value: Prisma.JsonValue | null | undefined): Record<string, string | number | boolean> | undefined {
+  const record = jsonRecord(value);
+  if (!record) return undefined;
+  return Object.fromEntries(
+    Object.entries(record).filter((entry): entry is [string, string | number | boolean] =>
+      typeof entry[1] === "string" || typeof entry[1] === "number" || typeof entry[1] === "boolean"
+    )
+  );
+}
+
 function jsonObject<T>(value: Prisma.JsonValue | null | undefined): T | undefined {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
   return cloneJson(value) as T;
@@ -173,18 +183,28 @@ export function mapAlbum(row: Prisma.AlbumGetPayload<object>): Album {
 }
 
 export function mapAssetUpload(row: Prisma.AssetUploadGetPayload<object>): AssetUpload {
+  const validationReport = primitiveRecord(row.validationReport);
+  const favoriteAt = typeof validationReport?.favoriteAt === "string" ? validationReport.favoriteAt : undefined;
+  const isFavorite = validationReport?.isFavorite === true || Boolean(favoriteAt);
   return {
     id: row.id,
     siteId: row.siteId,
     customerId: row.customerId,
-    label: row.id,
+    customerModelId: row.customerModelId ?? undefined,
+    subjectRole: row.subjectRole ?? undefined,
+    jobId: row.jobId ?? undefined,
+    label: row.label,
     storageKey: row.storageKey,
-    mimeType: "image/webp",
-    role: "output",
+    mimeType: row.mimeType,
+    role: row.role as AssetUpload["role"],
     visibility: "private",
     reviewStatus: row.reviewStatus === "pending" || row.reviewStatus === "rejected" ? row.reviewStatus : "approved",
+    validationStatus: row.validationStatus as AssetUpload["validationStatus"],
+    validationReport,
+    isFavorite,
+    favoriteAt,
     deletedAt: row.deletedAt ? iso(row.deletedAt) : undefined,
-    createdAt: new Date(0).toISOString()
+    createdAt: iso(row.createdAt)
   };
 }
 
@@ -280,6 +300,9 @@ export function toCustomerSessionRelational(session: Record<string, unknown>): C
 export function toAssetUploadRelational(asset: Record<string, unknown>): AssetUpload {
   const createdAt = toIsoString(asset.createdAt as Date | string | undefined) ?? new Date(0).toISOString();
   const deletedAt = toIsoString(asset.deletedAt as Date | string | undefined);
+  const validationReport = objectRecord(asset.validationReport);
+  const favoriteAt = typeof validationReport?.favoriteAt === "string" ? validationReport.favoriteAt : undefined;
+  const isFavorite = validationReport?.isFavorite === true || Boolean(favoriteAt);
   return {
     id: String(asset.id),
     siteId: String(asset.siteId),
@@ -294,7 +317,9 @@ export function toAssetUploadRelational(asset: Record<string, unknown>): AssetUp
     visibility: (optionalString(asset.visibility) ?? "private") as AssetUpload["visibility"],
     reviewStatus: (optionalString(asset.reviewStatus) ?? "approved") as AssetUpload["reviewStatus"],
     validationStatus: optionalString(asset.validationStatus) as AssetUpload["validationStatus"],
-    validationReport: objectRecord(asset.validationReport),
+    validationReport,
+    isFavorite,
+    favoriteAt,
     createdAt,
     deletedAt
   };
@@ -1031,10 +1056,14 @@ export function toPlatformAiProvider(record: {
   modelType: string;
   priority: number;
   preferred: boolean;
+  supportsGenerationN?: boolean | null;
+  supportsEditN?: boolean | null;
+  maxImagesPerRequest?: number | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   updatedBy?: string | null;
 }): import("@/lib/types").PlatformAiProvider {
+  const maxImagesPerRequest = Number(record.maxImagesPerRequest);
   return {
     id: record.id,
     label: record.label,
@@ -1043,6 +1072,9 @@ export function toPlatformAiProvider(record: {
     modelType: record.modelType,
     priority: record.priority,
     preferred: record.preferred,
+    supportsGenerationN: Boolean(record.supportsGenerationN),
+    supportsEditN: Boolean(record.supportsEditN),
+    maxImagesPerRequest: Number.isFinite(maxImagesPerRequest) ? Math.max(1, Math.min(Math.trunc(maxImagesPerRequest), 20)) : 1,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString(),
     updatedBy: record.updatedBy ?? undefined

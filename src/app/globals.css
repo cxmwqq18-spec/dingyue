@@ -56,6 +56,16 @@ a {
   text-decoration: none;
 }
 
+main[data-theme-sections-root] section[id] {
+  scroll-margin-top: 112px;
+}
+
+@media (max-width: 768px) {
+  main[data-theme-sections-root] section[id] {
+    scroll-margin-top: 88px;
+  }
+}
+
 button,
 input,
 select,

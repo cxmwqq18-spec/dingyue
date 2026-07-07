@@ -1497,7 +1497,8 @@ export function toThemeRuntimeJob(job: GenerationJob): ThemeRuntimeJob {
     creditsReserved: job.creditsReserved,
     createdAt: job.createdAt,
     updatedAt: job.updatedAt,
-    requestJson: job.requestJson
+    requestJson: job.requestJson,
+    resultJson: job.resultJson
   };
 }
 
@@ -4084,6 +4085,15 @@ export function deleteCustomerSession(sessionId: string): PlatformState {
   });
 }
 
+function hasActiveCustomerSubscription(state: PlatformState, siteId: string, customerId: string): boolean {
+  const now = Date.now();
+  return state.subscriptions.some((subscription) => {
+    if (subscription.siteId !== siteId || subscription.customerId !== customerId) return false;
+    if (subscription.status !== "active" && subscription.status !== "trialing") return false;
+    return new Date(subscription.currentPeriodEnd).getTime() > now;
+  });
+}
+
 export function createGenerationJob(params: {
   siteId: string;
   customerId: string;
@@ -4096,6 +4106,7 @@ export function createGenerationJob(params: {
     if (!customer) throw new StoreError("customer_not_found_for_site", 404);
     if (customer.status === "past_due") throw new StoreError("customer_past_due", 402);
     if (customer.status === "blocked") throw new StoreError("customer_blocked", 403);
+    if (!hasActiveCustomerSubscription(state, params.siteId, params.customerId)) throw new StoreError("subscription_required", 402);
     const siteAiApp = state.siteAiApps.find(
       (item) => item.siteId === params.siteId && item.enabled && item.aiApp.slug === params.aiAppSlug
     );
@@ -4374,13 +4385,23 @@ export function recordStripeWebhook(payload: {
   return result;
 }
 
-export function getPlatformAiProviderFallbackQueue(): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred">> {
+export function getPlatformAiProviderFallbackQueue(): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">> {
   const state = readPlatformState();
   const providers = state.platformAiProviders ?? [];
   return providers
     .slice()
     .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)
-    .map(({ id, label, aiUrl, modelType, priority, preferred }) => ({ id, label, aiUrl, modelType, priority, preferred }));
+    .map(({ id, label, aiUrl, modelType, priority, preferred, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+      id,
+      label,
+      aiUrl,
+      modelType,
+      priority,
+      preferred,
+      supportsGenerationN,
+      supportsEditN,
+      maxImagesPerRequest
+    }));
 }
 
 export function updatePlatformEmailSettings(params: {
@@ -4586,6 +4607,9 @@ export function upsertPlatformAiProvider(params: {
   apiKey?: string;
   modelType: string;
   makeCurrent?: boolean;
+  supportsGenerationN?: boolean;
+  supportsEditN?: boolean;
+  maxImagesPerRequest?: number;
   actor?: string;
 }): PlatformAiProvider {
   let result: PlatformAiProvider | undefined;
@@ -4599,6 +4623,9 @@ export function upsertPlatformAiProvider(params: {
       existing.aiUrl = params.aiUrl.trim();
       existing.apiKey = params.apiKey?.trim() || existing.apiKey;
       existing.modelType = params.modelType.trim();
+      existing.supportsGenerationN = Boolean(params.supportsGenerationN);
+      existing.supportsEditN = Boolean(params.supportsEditN);
+      existing.maxImagesPerRequest = Math.max(1, Math.min(Math.trunc(Number(params.maxImagesPerRequest) || 1), 20));
       existing.updatedAt = now;
       existing.updatedBy = params.actor;
       result = existing;
@@ -4611,6 +4638,9 @@ export function upsertPlatformAiProvider(params: {
         modelType: params.modelType.trim(),
         priority: providers.length + 1,
         preferred: providers.length === 0,
+        supportsGenerationN: Boolean(params.supportsGenerationN),
+        supportsEditN: Boolean(params.supportsEditN),
+        maxImagesPerRequest: Math.max(1, Math.min(Math.trunc(Number(params.maxImagesPerRequest) || 1), 20)),
         createdAt: now,
         updatedAt: now,
         updatedBy: params.actor

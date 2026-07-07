@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
-import { verifyWorkerCallbackSignature } from "@/lib/worker";
+import { verifyWorkerCallbackSignature, type WorkerOutputSlot } from "@/lib/worker";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
   const { jobId } = await params;
-  const body = (await request.json().catch(() => ({}))) as { siteId?: string; requestId?: string; status?: string; stage?: string; signature?: string };
+  const body = (await request.json().catch(() => ({}))) as { siteId?: string; requestId?: string; status?: string; stage?: string; outputSlots?: WorkerOutputSlot[]; signature?: string };
   if (!body.siteId || !body.requestId || !body.status) {
     return NextResponse.json({ error: "invalid_worker_status_payload" }, { status: 400 });
   }
@@ -24,7 +24,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       siteId: body.siteId,
       requestId: body.requestId,
       status: body.status,
-      stage: body.stage
+      stage: body.stage,
+      outputSlots: Array.isArray(body.outputSlots) ? body.outputSlots : undefined
     });
     return NextResponse.json({
       accepted: true,

@@ -35,7 +35,7 @@ async function readJsonResponse<T>(response: Response): Promise<CachedJsonRespon
 }
 
 export async function fetchAdminJson<T>(url: string, options: FetchAdminJsonOptions = {}): Promise<CachedJsonResponse<T>> {
-  const { init, ttlMs = defaultTtlMs, timeoutMs = 12_000 } = options;
+  const { init, ttlMs = defaultTtlMs, timeoutMs = 8_000 } = options;
   const method = (init?.method ?? "GET").toUpperCase();
   const key = cacheKey(url, init);
   const isGet = method === "GET";

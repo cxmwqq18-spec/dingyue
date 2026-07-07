@@ -48,7 +48,8 @@ export function LoginForm({
   siteSlug,
   storefrontBasePath,
   defaultEmail,
-  defaultName = "Mara Voss",
+  defaultName = "",
+  initialMode = "login",
   initialMessage,
   returnTo
 }: {
@@ -57,6 +58,7 @@ export function LoginForm({
   storefrontBasePath?: string;
   defaultEmail?: string;
   defaultName?: string;
+  initialMode?: CustomerAuthMode;
   initialMessage?: string;
   returnTo?: string;
 }) {
@@ -67,14 +69,14 @@ export function LoginForm({
     if (!basePath) return normalizedPath;
     return normalizedPath === "/" ? basePath : `${basePath}${normalizedPath}`;
   };
-  const [mode, setMode] = useState<CustomerAuthMode>("login");
+  const [mode, setMode] = useState<CustomerAuthMode>(initialMode);
   const [email, setEmail] = useState(defaultEmail ?? "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name] = useState(defaultName);
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
-  const [message, setMessage] = useState(initialMessage ?? modeCopy.login.message);
+  const [message, setMessage] = useState(initialMessage ?? modeCopy[initialMode].message);
   const [pending, setPending] = useState(false);
   const [devCode, setDevCode] = useState("");
   const [codeCooldownUntil, setCodeCooldownUntil] = useState(0);
@@ -224,21 +226,6 @@ export function LoginForm({
 
   return (
     <form action={sitePath("/login/submit")} className="mx-auto grid w-full max-w-[420px] min-w-0 gap-3 text-white" method="post" onSubmit={submitHandler}>
-      <button
-        className="flex min-h-[48px] w-full items-center justify-center gap-3 rounded-[6px] border border-white/20 bg-transparent px-4 text-base font-semibold text-white transition hover:border-white/42 hover:bg-white/[0.06] active:scale-[0.99]"
-        type="button"
-        onClick={() => setMessage("Google is reserved for the production OAuth entry. Use email login in this build.")}
-      >
-        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_6px_18px_-12px_rgba(255,255,255,0.9)]">
-          <img className="h-5 w-5" src="/assets/brand/google-g.svg" alt="" aria-hidden="true" />
-        </span>
-        <span>Continue with Google</span>
-      </button>
-      <div className="flex items-center justify-center gap-4 py-2">
-        <div className="h-px flex-1 bg-white/22" />
-        <span className="text-sm text-white/58">or</span>
-        <div className="h-px flex-1 bg-white/22" />
-      </div>
       <div className="grid grid-cols-3 gap-1 rounded-[8px] border border-white/10 bg-white/[0.04] p-1">
         {(["login", "register", "password_reset"] as CustomerAuthMode[]).map((item) => (
           <button

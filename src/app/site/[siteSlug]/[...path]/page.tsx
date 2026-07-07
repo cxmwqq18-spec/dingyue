@@ -2,18 +2,15 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
-  readStorefrontPlatformState,
-  readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase,
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
-  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
-  readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage } from "@/lib/storefront-render";
+import { preferLocalPathModeState, readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import type { PlatformState } from "@/lib/types";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
@@ -21,39 +18,15 @@ function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; bra
   return /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
-function stateWithSiteFirst(state: PlatformState, siteSlug: string): PlatformState | undefined {
-  const canonicalSlug = publicSiteSlug(siteSlug);
-  const site = state.sites.find((item) => publicSiteSlug(item.slug) === canonicalSlug || item.slug === siteSlug);
-  if (!site) return undefined;
-  return {
-    ...state,
-    sites: [site, ...state.sites.filter((item) => item.id !== site.id)]
-  };
-}
-
-async function readPublicRuntimeStateBySlugWithFallback(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
-  try {
-    const state = pageSlug === "/collections"
-      ? await readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase(siteSlug)
-      : await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug);
-    if (state?.sites[0]) return state;
-  } catch {
-    // Local development can exhaust the relational pool; legacy state keeps public routes renderable.
-  }
-  return stateWithSiteFirst(await readStorefrontPlatformState(), siteSlug);
-}
-
-async function readPublicPageMetadataStateBySlugWithFallback(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
-  try {
-    const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, pageSlug);
-    if (state?.sites[0]) return state;
-  } catch {
-    // Fall back to the JSON state used by local storefront previews.
-  }
-  return stateWithSiteFirst(await readStorefrontPlatformState(), siteSlug);
+function storefrontPolicySeoForSite(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
+  const identity = `${site.slug} ${site.name} ${site.branding.logoText}`;
+  if (/aidreamcapes/i.test(identity)) return getAidreamcapesPolicySeo(slug);
+  if (/dreamshoot/i.test(identity)) return getMydreamshootsPolicySeo(slug);
+  return undefined;
 }
 
 async function readCollectionRouteState(siteSlug: string, collectionCategory: string) {
+  if (preferLocalPathModeState()) return readPathModePublicRuntimeState(siteSlug, "/collections");
   try {
     const detailState = await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory);
     const detailSite = detailState?.sites[0];
@@ -61,7 +34,7 @@ async function readCollectionRouteState(siteSlug: string, collectionCategory: st
   } catch {
     // Continue to the broader collections state or local JSON fallback.
   }
-  return readPublicRuntimeStateBySlugWithFallback(siteSlug, "/collections");
+  return readPathModePublicRuntimeState(siteSlug, "/collections");
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
@@ -69,10 +42,12 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const requestedSlug = `/${path.join("/")}`;
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
   const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
-  if (slug === "/account") return { title: "Account" };
+  if (slug === "/account") return { title: "Workspace", robots: { index: false, follow: false } };
   const state = collectionCategory
     ? await readCollectionRouteState(siteSlug, collectionCategory)
-    : await readPublicPageMetadataStateBySlugWithFallback(siteSlug, slug);
+    : slug === "/collections"
+      ? await readPathModePublicRuntimeState(siteSlug, "/collections")
+    : await readPathModePublicMetadataState(siteSlug, slug);
   const site = state?.sites[0];
   if (!site) return {};
   if (collectionCategory) {
@@ -85,6 +60,21 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
       siteName: site.branding.logoText || site.name
     });
+  }
+  const policySeo = storefrontPolicySeoForSite(site, slug);
+  if (policySeo) {
+    return {
+      title: policySeo.title,
+      description: policySeo.description,
+      keywords: policySeo.keywords,
+      robots: {
+        follow: policySeo.follow,
+        index: policySeo.index
+      },
+      alternates: {
+        canonical: policyCanonicalUrlForSite(site, policySeo.canonicalPath)
+      }
+    };
   }
   const page = findPage(site, slug);
   return page ? metadataForSingleThemePage(site, page) : {};
@@ -125,6 +115,7 @@ export default async function SiteCatchAllPage({
     const query = searchParams ? await searchParams : {};
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app", query, routeMode: "path" });
   }
+  if (slug === "/account") redirect(`/site/${publicSlug}/app/create`);
   if (path[0] === "app") {
     const query = searchParams ? await searchParams : {};
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
@@ -135,13 +126,10 @@ export default async function SiteCatchAllPage({
     ...(searchParams ? await searchParams : {}),
     ...(collectionCategory ? { category: collectionCategory } : {})
   };
-  if (slug === "/account") {
-    return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
-  }
   const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(slug);
   const state = collectionCategory
     ? await readCollectionRouteState(publicSlug, collectionCategory)
-    : await readPublicRuntimeStateBySlugWithFallback(publicSlug, pageSlug);
+    : await readPathModePublicRuntimeState(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
   if (collectionCategory) {
@@ -152,6 +140,7 @@ export default async function SiteCatchAllPage({
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     isDreamshootPartnerTemplateSite(publicSite);
-  if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
+  const canUseStorefrontPolicy = Boolean(storefrontPolicySeoForSite(publicSite, pageSlug));
+  if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate && !canUseStorefrontPolicy) notFound();
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }

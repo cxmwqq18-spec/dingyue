@@ -3,13 +3,16 @@ import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationJob, SiteAiApp } from "@/lib/types";
+import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
+import type { WorkerOutputSlot } from "@/lib/worker";
 
 type Tx = Prisma.TransactionClient;
 const jobStoreTimeoutMs = Math.max(5000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "20000") || 20000);
 const jobStoreTransactionOptions = { timeout: jobStoreTimeoutMs, maxWait: Math.min(5000, jobStoreTimeoutMs) };
 const DEFAULT_MAX_SOURCE_ASSETS = 24;
+const ACTIVE_SUBSCRIPTION_STATUSES = ["active", "trialing"];
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
@@ -118,6 +121,56 @@ function normalizePromptInputs(requestJson?: Record<string, unknown>): Record<st
   );
 }
 
+function stringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
+}
+
+function requestedOutputCount(requestJson?: Record<string, unknown>): number {
+  const fields = fieldRecord(requestJson);
+  const raw = Number(fields.outputCount ?? requestJson?.outputCount ?? 1);
+  if (!Number.isFinite(raw) || raw <= 0) return 1;
+  return Math.max(1, Math.min(Math.trunc(raw), 20));
+}
+
+function fieldRecord(requestJson?: Record<string, unknown>): Record<string, unknown> {
+  const fields = requestJson?.fields;
+  return fields && typeof fields === "object" && !Array.isArray(fields) ? fields as Record<string, unknown> : {};
+}
+
+function subjectCompositionInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
+  const fields = fieldRecord(requestJson);
+  const packageAudience = String(fields.packageAudience ?? requestJson?.packageAudience ?? "").toLowerCase();
+  const trainingMode = String(fields.trainingMode ?? requestJson?.trainingMode ?? "").toLowerCase();
+  const primaryAssetIds = stringArray(fields.primaryAssetIds ?? requestJson?.primaryAssetIds);
+  const partnerAssetIds = stringArray(fields.partnerAssetIds ?? requestJson?.partnerAssetIds);
+  const wantsTwoPeople =
+    packageAudience === "both" ||
+    packageAudience.includes("both") ||
+    trainingMode === "couple" ||
+    partnerAssetIds.length > 0;
+
+  if (wantsTwoPeople) {
+    const subjectSource = primaryAssetIds.length && partnerAssetIds.length
+      ? "Use the primary selected photos as the first person and the partner selected photos as the second person."
+      : "Use the selected source photos as references for two distinct people.";
+    return [
+      "Subject requirement: the final image must show exactly two visible adult people together in the same frame as a pair.",
+      subjectSource,
+      "Do not create a solo portrait, single-person crop, collage, split panel, or contact sheet."
+    ].join(" ");
+  }
+
+  if (packageAudience === "partner") {
+    return "Subject requirement: focus the final image on the partner subject from the selected partner photos when available. Do not add extra people unless requested.";
+  }
+
+  if (requestedAssetIds.length > 1) {
+    return "Subject requirement: use the selected source photos as references for one coherent primary subject unless the request explicitly asks for two people.";
+  }
+
+  return "Subject requirement: create one final portrait of the primary subject.";
+}
+
 type GenerationCreativePack = Pick<Prisma.CreativePackGetPayload<object>, "id" | "name" | "headline" | "category" | "aiAppSlug" | "prompt" | "creditCost" | "outputCount">;
 
 function safeCreativePrompt(value: string): string {
@@ -192,9 +245,10 @@ function resolveGenerationRequest(params: {
     themeName: params.creativePack?.name,
     themePrompt
   });
+  const subjectInstruction = subjectCompositionInstruction(params.requestJson, params.requestedAssetIds);
   const renderedPrompt = themePrompt
-    ? `${basePrompt}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
-    : basePrompt;
+    ? `${basePrompt}\n\n${subjectInstruction}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
+    : `${basePrompt}\n\n${subjectInstruction}`;
   return {
     fields,
     workflow,
@@ -205,7 +259,8 @@ function resolveGenerationRequest(params: {
       rendered: renderedPrompt,
       negativePrompt: workflow.negativePrompt ?? "",
       themeName: params.creativePack?.name ?? "",
-      themePrompt
+      themePrompt,
+      subjectInstruction
     }
   };
 }
@@ -244,6 +299,57 @@ async function reserveCreditsForJob(tx: Tx, job: { id: string; siteId: string; c
   return ledger;
 }
 
+async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customerId: string }) {
+  const staleBefore = new Date(Date.now() - Math.max(5 * 60_000, Number(process.env.AI_JOB_ACTIVE_STALE_MS ?? "480000") || 480_000));
+  const staleJobs = await tx.generationJob.findMany({
+    where: {
+      siteId: params.siteId,
+      customerId: params.customerId,
+      status: { in: ["queued", "running"] },
+      updatedAt: { lt: staleBefore }
+    }
+  });
+  for (const job of staleJobs) {
+    const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
+    const reserved = Math.max(0, Math.min(job.creditsReserved, customer.balance?.reserved ?? 0));
+    if (reserved > 0) {
+      await tx.creditBalance.update({
+        where: { id: customer.balance!.id },
+        data: { balance: { increment: reserved }, reserved: { decrement: reserved } }
+      });
+      await tx.creditLedger.create({
+        data: {
+          id: uid("led"),
+          siteId: job.siteId,
+          customerId: job.customerId,
+          amount: reserved,
+          type: "release",
+          sourceType: "generation_job",
+          sourceId: job.id
+        }
+      });
+    }
+    await tx.generationJob.update({
+      where: { id: job.id },
+      data: {
+        status: "failed",
+        resultJson: toPrismaJson({
+          ...jsonObject<Record<string, unknown>>(job.resultJson),
+          error: "generation_job_expired",
+          outputs: [],
+          settledAt: new Date().toISOString()
+        })
+      }
+    });
+  }
+}
+
+export async function releaseStaleActiveGenerationJobsRelational(params: { siteId: string; customerId: string }): Promise<void> {
+  await withJobStoreTimeout(prisma.$transaction(async (tx) => {
+    await releaseStaleActiveJobs(tx, params);
+  }, jobStoreTransactionOptions), "stale_job_release_timeout");
+}
+
 async function createGenerationJobInTx(tx: Tx, params: {
   siteId: string;
   customerId: string;
@@ -253,11 +359,27 @@ async function createGenerationJobInTx(tx: Tx, params: {
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
   if (customer.status === "past_due") throw new StoreError("customer_past_due", 402);
   if (customer.status === "blocked") throw new StoreError("customer_blocked", 403);
+  const subscription = await tx.subscription.findFirst({
+    where: {
+      siteId: params.siteId,
+      customerId: params.customerId,
+      status: { in: ACTIVE_SUBSCRIPTION_STATUSES },
+      currentPeriodEnd: { gt: new Date() }
+    },
+    select: { id: true }
+  });
+  if (!subscription) throw new StoreError("subscription_required", 402);
   const siteAiApp = await tx.siteAiApp.findFirst({
     where: { siteId: params.siteId, enabled: true, aiApp: { slug: params.aiAppSlug } },
     include: { aiApp: true }
   });
   if (!siteAiApp) throw new StoreError("ai_app_not_enabled_for_site", 404);
+  await releaseStaleActiveJobs(tx, { siteId: params.siteId, customerId: params.customerId });
+  const activeJob = await tx.generationJob.findFirst({
+    where: { siteId: params.siteId, customerId: params.customerId, status: { in: ["queued", "running"] } },
+    select: { id: true }
+  });
+  if (activeJob) throw new StoreError("generation_job_already_running", 409);
 
   const creativePackId = typeof params.requestJson?.creativePackId === "string" ? params.requestJson.creativePackId : undefined;
   const creativePack = creativePackId
@@ -277,7 +399,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
     : null;
   if (creativePackId && !creativePack) throw new StoreError("creative_pack_not_found_for_site", 404);
   if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
-  const creditsReserved = creativePack?.creditCost ?? siteAiApp.creditCost;
+  const unitCreditCost = creativePack?.creditCost ?? siteAiApp.creditCost;
+  const outputCount = isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
+  const creditsReserved = unitCreditCost * outputCount;
   if ((customer.balance?.balance ?? 0) < creditsReserved) throw new StoreError("insufficient_credits", 402);
 
   const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
@@ -305,6 +429,11 @@ async function createGenerationJobInTx(tx: Tx, params: {
       requestJson: toPrismaJson({
         ...(params.requestJson ?? {}),
         fields: resolvedRequest.fields,
+        billing: {
+          unitCreditCost,
+          outputCount,
+          creditsReserved
+        },
         worker: siteAiApp.routeKey,
         flow: {
           version: resolvedRequest.workflow.version,
@@ -359,16 +488,35 @@ export async function updateGenerationJobStatusRelational(params: {
   requestId: string;
   status: string;
   stage?: string;
+  outputSlots?: WorkerOutputSlot[];
 }): Promise<{ job: GenerationJob; alreadyFinal: boolean }> {
   return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const alreadyFinal = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
+    const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
+    const previousSlots = Array.isArray(previousResult.outputSlots) ? previousResult.outputSlots : [];
+    const slotsByIndex = new Map<number, WorkerOutputSlot>();
+    for (const slot of previousSlots) {
+      if (!slot || typeof slot !== "object" || Array.isArray(slot)) continue;
+      const record = slot as WorkerOutputSlot;
+      if (Number.isFinite(record.index)) slotsByIndex.set(record.index, record);
+    }
+    const now = new Date().toISOString();
+    for (const slot of params.outputSlots ?? []) {
+      if (!Number.isFinite(slot.index)) continue;
+      slotsByIndex.set(slot.index, {
+        ...(slotsByIndex.get(slot.index) ?? {}),
+        ...slot,
+        updatedAt: slot.updatedAt ?? now
+      });
+    }
     const resultJson = {
-      ...((job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>),
+      ...previousResult,
       lastWorkerStatus: params.status,
       lastWorkerStage: params.stage ?? "worker_update",
-      requestId: params.requestId
+      requestId: params.requestId,
+      outputSlots: Array.from(slotsByIndex.values()).sort((left, right) => left.index - right.index)
     };
     const updatedJob = await tx.generationJob.update({
       where: { id: job.id },
@@ -388,7 +536,7 @@ export async function settleGenerationJobRelational(params: {
   status: "succeeded" | "failed";
   outputs?: Array<{ storageKey: string; mimeType?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
-  costTrace?: { estimatedCostUsd?: number };
+  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }> };
   error?: string;
 }): Promise<{ job: GenerationJob; ledger?: CreditLedgerEntry; alreadyProcessed: boolean; customer: Customer }> {
   return withJobStoreTimeout(prisma.$transaction(async (tx) => {
@@ -398,17 +546,26 @@ export async function settleGenerationJobRelational(params: {
     const alreadyProcessed = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
     if (alreadyProcessed) return { job: mapGenerationJob(job), alreadyProcessed, customer: mapCustomer(customer) };
 
-    const ledgerType = params.status === "succeeded" ? "consume" : "release";
-    let ledger = await tx.creditLedger.findFirst({
-      where: { siteId: job.siteId, customerId: job.customerId, type: ledgerType, sourceId: job.id }
-    });
-    if (!ledger) {
+    const outputs = params.outputs ?? [];
+    const requestJson = job.requestJson && typeof job.requestJson === "object" && !Array.isArray(job.requestJson)
+      ? job.requestJson as Record<string, unknown>
+      : {};
+    const billing = requestJson.billing && typeof requestJson.billing === "object" && !Array.isArray(requestJson.billing)
+      ? requestJson.billing as Record<string, unknown>
+      : {};
+    const requestedOutputs = Math.max(1, Math.trunc(Number(billing.outputCount) || outputs.length || 1));
+    const unitCreditCost = Math.max(0, Math.trunc(Number(billing.unitCreditCost) || Math.ceil(job.creditsReserved / requestedOutputs)));
+    const deliveredOutputs = params.status === "succeeded" ? outputs.length : 0;
+    const consumeAmount = Math.min(job.creditsReserved, deliveredOutputs * unitCreditCost);
+    const releaseAmount = Math.max(0, job.creditsReserved - consumeAmount);
+    let ledger: Prisma.CreditLedgerGetPayload<object> | undefined;
+    if (params.status === "succeeded" && consumeAmount > 0) {
       const updated = await tx.creditBalance.updateMany({
         where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
-        data:
-          params.status === "succeeded"
-            ? { reserved: { decrement: job.creditsReserved } }
-            : { balance: { increment: job.creditsReserved }, reserved: { decrement: job.creditsReserved } }
+        data: {
+          reserved: { decrement: job.creditsReserved },
+          ...(releaseAmount > 0 ? { balance: { increment: releaseAmount } } : {})
+        }
       });
       if (updated.count !== 1) throw new StoreError("reserved_credits_not_available", 409);
       ledger = await tx.creditLedger.create({
@@ -416,21 +573,59 @@ export async function settleGenerationJobRelational(params: {
           id: uid("led"),
           siteId: job.siteId,
           customerId: job.customerId,
-          amount: params.status === "succeeded" ? -job.creditsReserved : job.creditsReserved,
-          type: ledgerType,
+          amount: -consumeAmount,
+          type: "consume",
+          sourceType: "generation_job",
+          sourceId: job.id
+        }
+      });
+      if (releaseAmount > 0) {
+        await tx.creditLedger.create({
+          data: {
+            id: uid("led"),
+            siteId: job.siteId,
+            customerId: job.customerId,
+            amount: releaseAmount,
+            type: "release",
+            sourceType: "generation_job",
+            sourceId: job.id
+          }
+        });
+      }
+    } else {
+      const updated = await tx.creditBalance.updateMany({
+        where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
+        data: { balance: { increment: job.creditsReserved }, reserved: { decrement: job.creditsReserved } }
+      });
+      if (updated.count !== 1) throw new StoreError("reserved_credits_not_available", 409);
+      ledger = await tx.creditLedger.create({
+        data: {
+          id: uid("led"),
+          siteId: job.siteId,
+          customerId: job.customerId,
+          amount: job.creditsReserved,
+          type: "release",
           sourceType: "generation_job",
           sourceId: job.id
         }
       });
     }
-    const outputs = params.outputs ?? [];
     const updatedJob = await tx.generationJob.update({
       where: { id: job.id },
       data: {
         status: params.status,
         resultJson: toPrismaJson({
+          ...((job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>),
           requestId: params.requestId,
           outputs,
+          billingSettlement: {
+            requestedOutputs,
+            deliveredOutputs,
+            unitCreditCost,
+            creditsReserved: job.creditsReserved,
+            creditsConsumed: consumeAmount,
+            creditsReleased: releaseAmount
+          },
           providerTrace: params.providerTrace ?? [],
           costTrace: params.costTrace ?? {},
           error: params.error ?? null,
@@ -452,6 +647,12 @@ async function upsertAlbumForSettledJob(
   outputs: Array<{ storageKey: string; mimeType?: string }>
 ) {
   const assetIds: string[] = [];
+  const mappedJob = mapGenerationJob(job);
+  const customerJobs = await tx.generationJob.findMany({
+    where: { siteId: job.siteId, customerId: job.customerId },
+    orderBy: { createdAt: "asc" }
+  });
+  const mappedCustomerJobs = customerJobs.map(mapGenerationJob);
   for (const [index, output] of outputs.entries()) {
     const existing = await tx.assetUpload.findFirst({
       where: { siteId: job.siteId, customerId: job.customerId, jobId: job.id, storageKey: output.storageKey }
@@ -466,7 +667,7 @@ async function upsertAlbumForSettledJob(
         siteId: job.siteId,
         customerId: job.customerId,
         jobId: job.id,
-        label: `Output ${index + 1}`,
+        label: generatedOutputCopy({ imageIndex: index + 1, job: mappedJob, jobs: mappedCustomerJobs }).title,
         storageKey: output.storageKey,
         mimeType: output.mimeType ?? "image/webp",
         role: "output",

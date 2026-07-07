@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Download, Eye, Trash2 } from "lucide-react";
+import { Download, Eye, Heart, Trash2 } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
@@ -37,6 +37,11 @@ type DeleteCustomerAssetResult = {
   ok?: boolean;
   deletedJobIds?: string[];
   deletedAssetIds?: string[];
+  error?: string;
+};
+type FavoriteCustomerAssetResult = {
+  ok?: boolean;
+  asset?: Pick<AssetUpload, "id" | "isFavorite" | "favoriteAt">;
   error?: string;
 };
 type DeleteMode = "asset" | "output" | "job";
@@ -221,6 +226,9 @@ function AssetThumbnailStrip({
     <div className="min-w-[640px] max-w-[900px]">
       <div className="mb-2 flex items-center justify-between gap-3 text-xs">
         <span className="font-medium text-zinc-700">共 {assets.length} 张 AI 输出图</span>
+        <button className="rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-zinc-600 hover:border-sky-300 hover:text-sky-700" onClick={() => onOpen(assets[0].id)} type="button">
+          查看全部
+        </button>
         {hiddenCount ? <span className="text-zinc-400">还有 {hiddenCount} 张</span> : null}
       </div>
       <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
@@ -239,7 +247,10 @@ function AssetThumbnailStrip({
               ) : (
                 <span className="flex h-[72px] w-full items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无图</span>
               )}
-              <span className="mt-1 block truncate text-[11px] font-medium text-zinc-700">输出 {index + 1}</span>
+              <span className="mt-1 flex items-center gap-1 truncate text-[11px] font-medium text-zinc-700">
+                {asset.isFavorite ? <Heart className="h-3 w-3 fill-rose-500 text-rose-500" strokeWidth={1.8} /> : null}
+                输出 {index + 1}
+              </span>
             </button>
           );
         })}
@@ -265,9 +276,11 @@ export function CustomerAssetReviewPanel({
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<AssetUpload["role"] | "">("");
   const [reviewFilter, setReviewFilter] = useState<AssetUpload["reviewStatus"] | "">("");
+  const [favoriteFilter, setFavoriteFilter] = useState<"" | "favorite">("");
   const [message, setMessage] = useState("源图、训练图和输出图进入任务队列前都需要在当前站点内完成审核。");
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
   const [reviewingAssetId, setReviewingAssetId] = useState<string | null>(null);
+  const [favoritingAssetId, setFavoritingAssetId] = useState<string | null>(null);
   const [deletingGroupId, setDeletingGroupId] = useState<string | null>(null);
   const [deletedJobIds, setDeletedJobIds] = useState<Set<string>>(() => new Set());
   const [page, setPage] = useState(1);
@@ -282,6 +295,7 @@ export function CustomerAssetReviewPanel({
     return items.filter((asset) => {
       if (roleFilter && asset.role !== roleFilter) return false;
       if (reviewFilter && asset.reviewStatus !== reviewFilter) return false;
+      if (favoriteFilter === "favorite" && !asset.isFavorite) return false;
       if (!normalized) return true;
       const customer = customers.find((item) => item.id === asset.customerId);
       const model = asset.customerModelId ? models.find((item) => item.id === asset.customerModelId) : undefined;
@@ -290,7 +304,7 @@ export function CustomerAssetReviewPanel({
         .toLowerCase()
         .includes(normalized);
     });
-  }, [customers, items, models, query, reviewFilter, roleFilter]);
+  }, [customers, favoriteFilter, items, models, query, reviewFilter, roleFilter]);
 
   const visibleAssetJobs = useMemo(() => assetJobs.filter((job) => !deletedJobIds.has(job.id)), [assetJobs, deletedJobIds]);
   const groupedItems = useMemo(() => buildAssetGroups(filteredItems, items, visibleAssetJobs), [filteredItems, items, visibleAssetJobs]);
@@ -298,7 +312,7 @@ export function CustomerAssetReviewPanel({
   const pagedGroups = pageItems(groupedItems, currentPage, pageSize);
   const selectedAsset = selectedAssetId ? items.find((asset) => asset.id === selectedAssetId) : undefined;
 
-  useEffect(() => setPage(1), [query, roleFilter, reviewFilter, pageSize]);
+  useEffect(() => setPage(1), [query, roleFilter, reviewFilter, favoriteFilter, pageSize]);
   useEffect(() => {
     if (page !== currentPage) setPage(currentPage);
   }, [currentPage, page]);
@@ -332,6 +346,43 @@ export function CustomerAssetReviewPanel({
     setQuery("");
     setRoleFilter("");
     setReviewFilter("");
+    setFavoriteFilter("");
+  }
+
+  async function toggleFavoriteAsset(asset: ReviewAsset) {
+    if (asset.role !== "output") {
+      setMessage("只有 AI 输出图可以加入收藏。");
+      return;
+    }
+    const nextFavorite = !asset.isFavorite;
+    const nextFavoriteAt = nextFavorite ? new Date().toISOString() : undefined;
+    setFavoritingAssetId(asset.id);
+    setItems((current) => current.map((item) => item.id === asset.id ? { ...item, isFavorite: nextFavorite, favoriteAt: nextFavoriteAt } : item));
+    setMessage(`正在${nextFavorite ? "收藏" : "取消收藏"} ${asset.label}...`);
+    try {
+      const response = await fetchAdminJson<FavoriteCustomerAssetResult>(`/api/sites/${siteId}/admin/customer-assets`, {
+        init: {
+          method: "PATCH",
+          headers: siteAdminJsonHeaders(siteId),
+          body: JSON.stringify({
+            customerId: asset.customerId,
+            assetId: asset.id,
+            isFavorite: nextFavorite
+          })
+        },
+        timeoutMs: 12_000
+      });
+      if (!response.ok || !response.data.asset) {
+        throw new Error(response.data.error || "asset_favorite_update_failed");
+      }
+      setItems((current) => current.map((item) => item.id === asset.id ? { ...item, isFavorite: response.data.asset!.isFavorite, favoriteAt: response.data.asset!.favoriteAt } : item));
+      setMessage(`${asset.label} 已${response.data.asset.isFavorite ? "加入收藏" : "取消收藏"}。`);
+    } catch (error) {
+      setItems((current) => current.map((item) => item.id === asset.id ? asset : item));
+      setMessage(error instanceof Error ? `收藏更新失败：${error.message}` : "收藏更新失败，请稍后重试。");
+    } finally {
+      setFavoritingAssetId(null);
+    }
   }
 
   async function reviewAsset(asset: ReviewAsset, reviewStatus: AssetUpload["reviewStatus"]) {
@@ -436,6 +487,9 @@ export function CustomerAssetReviewPanel({
           <span className="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{items.filter((asset) => asset.reviewStatus === "approved").length} 已通过</span>
           <span className="whitespace-nowrap rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700">{items.filter((asset) => asset.reviewStatus === "pending").length} 待审核</span>
           <span className="whitespace-nowrap rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-rose-700">{items.filter((asset) => asset.reviewStatus === "rejected").length} 已拒绝</span>
+          <button className="whitespace-nowrap rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-rose-700" onClick={() => setFavoriteFilter("favorite")} type="button">
+            {items.filter((asset) => asset.isFavorite).length} 已收藏
+          </button>
           <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-zinc-500">{groupedItems.length} 当前显示</span>
         </div>
         <div className="mt-4 grid gap-3 lg:grid-cols-[minmax(220px,1fr)_150px_170px_auto]">
@@ -548,6 +602,17 @@ export function CustomerAssetReviewPanel({
                         <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => setSelectedAssetId(asset.id)} type="button">
                           <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />结果详情
                         </button>
+                        {asset.role === "output" ? (
+                          <button
+                            className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap border-rose-200 bg-rose-50 text-rose-700 disabled:opacity-50"
+                            disabled={favoritingAssetId === asset.id}
+                            onClick={() => toggleFavoriteAsset(asset)}
+                            type="button"
+                          >
+                            <Heart className={`h-3.5 w-3.5 ${asset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
+                            {asset.isFavorite ? "取消收藏" : "收藏"}
+                          </button>
+                        ) : null}
                         <button
                           className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap border-rose-200 bg-rose-50 text-rose-700 disabled:opacity-50"
                           disabled={deletingGroupId === group.id}
@@ -599,6 +664,7 @@ export function CustomerAssetReviewPanel({
                 ["模型", model ? `${model.label} / ${model.status}` : "未关联"],
                 ["创建时间", formatDate(selectedAsset.createdAt)],
                 ["审核状态", reviewStatusLabel(selectedAsset.reviewStatus)],
+                ["收藏状态", selectedAsset.isFavorite ? `已收藏${selectedAsset.favoriteAt ? ` / ${formatDate(selectedAsset.favoriteAt)}` : ""}` : "未收藏"],
                 ["主体角色", selectedAsset.subjectRole ?? "未设置"],
                 ["任务 ID", selectedAsset.jobId ?? "未关联"],
                 ["模型 ID", selectedAsset.customerModelId ?? "未关联"]
@@ -634,6 +700,14 @@ export function CustomerAssetReviewPanel({
                         打开图片
                       </a>
                     ) : null}
+                    <button
+                      className="rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-700 disabled:opacity-50"
+                      disabled={selectedAsset.role !== "output" || favoritingAssetId === selectedAsset.id}
+                      onClick={() => toggleFavoriteAsset(selectedAsset)}
+                      type="button"
+                    >
+                      {selectedAsset.isFavorite ? "取消收藏" : "加入收藏"}
+                    </button>
                     <button
                       className="rounded-[8px] border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700 disabled:opacity-50"
                       disabled={reviewingAssetId === selectedAsset.id || selectedAsset.reviewStatus === "approved"}

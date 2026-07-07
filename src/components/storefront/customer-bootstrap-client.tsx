@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CustomerAccountShell } from "@/components/storefront/customer-account-shell";
+import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
+import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData } from "@/lib/types";
 
@@ -29,6 +31,8 @@ type BootstrapErrorPayload = Partial<CustomerBootstrap> & {
   error?: string;
   loginPath?: string;
 };
+const workspaceRuntimeWarmCache = new Set<string>();
+const workspaceRuntimeWarmRequests = new Map<string, Promise<void>>();
 
 const bootstrapCache = new Map<string, CustomerBootstrap>();
 const bootstrapRequests = new Map<string, Promise<CustomerBootstrap>>();
@@ -138,7 +142,7 @@ function CustomerPageError({ message }: { message: string }) {
   );
 }
 
-function useCustomerBootstrap(siteSlug: string, mode: BootstrapMode = "workspace", enabled = true): LoadState {
+function useCustomerBootstrap(siteSlug: string, mode: BootstrapMode = "workspace", enabled = true, delayMs = 0): LoadState {
   const cacheKey = useMemo(() => bootstrapCacheKey(siteSlug, mode), [mode, siteSlug]);
   const [state, setState] = useState<LoadState>(() => {
     const cached = bootstrapCache.get(cacheKey) ?? (mode === "shell" ? bootstrapCache.get(siteSlug) : undefined);
@@ -154,16 +158,28 @@ function useCustomerBootstrap(siteSlug: string, mode: BootstrapMode = "workspace
     }
 
     const controller = new AbortController();
-    setState({ status: "loading" });
-    loadCustomerBootstrap(siteSlug, controller.signal, mode)
-      .then((bootstrap) => setState({ status: "ready", data: bootstrap }))
-      .catch((error) => {
-        if (controller.signal.aborted) return;
-        const loginPath = typeof error === "object" && error && "loginPath" in error && typeof error.loginPath === "string" ? error.loginPath : undefined;
-        setState({ status: "error", error: error instanceof Error ? error.message : "customer_bootstrap_unavailable", loginPath });
-      });
-    return () => controller.abort();
-  }, [cacheKey, enabled, mode, siteSlug]);
+    const cancelBootstrap = () => {
+      controller.abort();
+      if (timer) window.clearTimeout(timer);
+    };
+    const load = () => {
+      setState({ status: "loading" });
+      loadCustomerBootstrap(siteSlug, controller.signal, mode)
+        .then((bootstrap) => setState({ status: "ready", data: bootstrap }))
+        .catch((error) => {
+          if (controller.signal.aborted) return;
+          const loginPath = typeof error === "object" && error && "loginPath" in error && typeof error.loginPath === "string" ? error.loginPath : undefined;
+          setState({ status: "error", error: error instanceof Error ? error.message : "customer_bootstrap_unavailable", loginPath });
+        });
+    };
+    const timer = delayMs > 0 ? window.setTimeout(load, delayMs) : undefined;
+    if (!timer) load();
+    window.addEventListener("storefront:navigation-start", cancelBootstrap);
+    return () => {
+      window.removeEventListener("storefront:navigation-start", cancelBootstrap);
+      cancelBootstrap();
+    };
+  }, [cacheKey, delayMs, enabled, mode, siteSlug]);
 
   return state;
 }
@@ -176,18 +192,82 @@ export function CustomerBootstrapPrefetch({ mode = "workspace", siteSlug }: { mo
     const prefetch = () => {
       loadCustomerBootstrap(siteSlug, controller.signal, mode).catch(() => undefined);
     };
-    const idleId = typeof window.requestIdleCallback === "function"
-      ? window.requestIdleCallback(prefetch, { timeout: 1200 })
-      : window.setTimeout(prefetch, 400);
-    return () => {
-      controller.abort();
-      if (typeof idleId === "number") {
-        window.clearTimeout(idleId);
+    const delayMs = mode === "shell" ? 3200 : 400;
+    const idleId = window.setTimeout(() => {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(prefetch, { timeout: 1200 });
         return;
       }
-      window.cancelIdleCallback?.(idleId);
+      prefetch();
+    }, delayMs);
+    const cancelBootstrapPrefetch = () => {
+      controller.abort();
+      window.clearTimeout(idleId);
+    };
+    window.addEventListener("storefront:navigation-start", cancelBootstrapPrefetch);
+    return () => {
+      window.removeEventListener("storefront:navigation-start", cancelBootstrapPrefetch);
+      cancelBootstrapPrefetch();
     };
   }, [mode, siteSlug]);
+
+  return null;
+}
+
+async function warmCustomerWorkspaceRuntime(siteSlug: string, siteId: string, signal?: AbortSignal): Promise<void> {
+  const cacheKey = `${siteId}:${siteSlug}`;
+  if (workspaceRuntimeWarmCache.has(cacheKey)) return;
+  const inFlight = workspaceRuntimeWarmRequests.get(cacheKey);
+  if (inFlight) return inFlight;
+  const request = loadCustomerBootstrap(siteSlug, signal, "shell")
+    .then(async (bootstrap) => {
+      if (!bootstrap.customer) return;
+      const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/customer/runtime?profile=workspace`, {
+        cache: "no-store",
+        credentials: "same-origin",
+        signal
+      });
+      if (response.ok) workspaceRuntimeWarmCache.add(cacheKey);
+    })
+    .catch(() => undefined)
+    .finally(() => {
+      workspaceRuntimeWarmRequests.delete(cacheKey);
+    });
+  workspaceRuntimeWarmRequests.set(cacheKey, request);
+  return request;
+}
+
+export function CustomerWorkspaceRuntimePrefetch({ siteId, siteSlug }: { siteId: string; siteSlug: string }) {
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_STOREFRONT_WORKSPACE_RUNTIME_PREFETCH === "0") return;
+    const cacheKey = `${siteId}:${siteSlug}`;
+    if (workspaceRuntimeWarmCache.has(cacheKey)) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (connection?.saveData) return;
+    if (connection?.effectiveType && /(^|-)2g$/.test(connection.effectiveType)) return;
+    const controller = new AbortController();
+    let idleId: number | undefined;
+    const prefetch = () => {
+      void warmCustomerWorkspaceRuntime(siteSlug, siteId, controller.signal);
+    };
+    const timerId = window.setTimeout(() => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(prefetch, { timeout: 2200 });
+        return;
+      }
+      prefetch();
+    }, Number(process.env.NEXT_PUBLIC_STOREFRONT_WORKSPACE_RUNTIME_PREFETCH_DELAY_MS ?? 1200));
+    const cancel = () => {
+      controller.abort();
+      window.clearTimeout(timerId);
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
+    };
+    window.addEventListener("storefront:navigation-start", cancel);
+    return () => {
+      window.removeEventListener("storefront:navigation-start", cancel);
+      cancel();
+    };
+  }, [siteId, siteSlug]);
 
   return null;
 }
@@ -196,6 +276,7 @@ export function CustomerHeaderBootstrapControls({
   children,
   dark = false,
   accountHref,
+  loginHref,
   logoutHref,
   siteId,
   siteSlug,
@@ -206,6 +287,7 @@ export function CustomerHeaderBootstrapControls({
   children: ReactNode;
   dark?: boolean;
   accountHref: string;
+  loginHref: string;
   logoutHref: string;
   siteId: string;
   siteSlug: string;
@@ -213,7 +295,7 @@ export function CustomerHeaderBootstrapControls({
   signedInClassName: string;
   signOutClassName: string;
 }) {
-  const state = useCustomerBootstrap(siteSlug, "shell");
+  const state = useCustomerBootstrap(siteSlug, "shell", true, Number(process.env.NEXT_PUBLIC_STOREFRONT_HEADER_BOOTSTRAP_DELAY_MS ?? 1800));
   if (state.status !== "ready") return <>{children}</>;
   if (!state.data.customer) return <>{children}</>;
   const customer = state.data.customer;
@@ -223,22 +305,17 @@ export function CustomerHeaderBootstrapControls({
         <p className="truncate text-sm font-semibold">{customer.name}</p>
         <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
         <div className="mt-3 grid gap-2">
-          <a className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref}>
+          <StorefrontInstantLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref}>
             Account
-          </a>
+          </StorefrontInstantLink>
         </div>
-        <form action={logoutHref} className="mt-3" method="post">
-          <input name="siteId" type="hidden" value={siteId} />
-          <button className={signOutClassName} type="submit">
-            Sign out
-          </button>
-        </form>
+        <CustomerSignOutButton className={`${signOutClassName} mt-3`} logoutHref={logoutHref} redirectHref={loginHref} siteId={siteId} />
       </div>
     );
   }
   return (
     <div className={signedInClassName}>
-      <a className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref}>
+      <StorefrontInstantLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref}>
         <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
           <UserRound className="h-4 w-4" strokeWidth={1.8} />
         </span>
@@ -248,13 +325,8 @@ export function CustomerHeaderBootstrapControls({
             {customer.email}
           </span>
         </span>
-      </a>
-      <form action={logoutHref} method="post">
-        <input name="siteId" type="hidden" value={siteId} />
-        <button className={signOutClassName} type="submit">
-          Sign out
-        </button>
-      </form>
+      </StorefrontInstantLink>
+      <CustomerSignOutButton className={signOutClassName} logoutHref={logoutHref} redirectHref={loginHref} siteId={siteId} />
     </div>
   );
 }

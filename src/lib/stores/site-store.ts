@@ -5,6 +5,8 @@ import { cache } from "react";
 
 import { canonicalSiteSlug, cleanHost, hostDomainCandidates, isPlatformHost, legacySiteSlugCandidates } from "@/lib/domain-routing";
 import { suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
+import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
+import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -151,7 +153,6 @@ const collectionDetailSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      draftJson: true,
       publishedJson: true
     }
   },
@@ -165,7 +166,6 @@ const collectionDetailSiteSelect = {
   },
   settings: {
     select: {
-      draftJson: true,
       publishedJson: true
     }
   },
@@ -213,7 +213,6 @@ const publicRuntimeSiteSelect = {
   },
   settings: {
     select: {
-      draftJson: true,
       publishedJson: true
     }
   }
@@ -256,7 +255,6 @@ const customerRuntimeSiteSelect = {
   },
   settings: {
     select: {
-      draftJson: true,
       publishedJson: true
     }
   },
@@ -511,7 +509,7 @@ const fullSiteRuntimeLimits = {
   albums: 80
 } as const;
 
-function toAdminShellThemeSettings(record?: { draftJson: unknown; publishedJson: unknown } | null): Site["themeSettings"] {
+function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson: unknown } | null): Site["themeSettings"] {
   const toShellSettings = (value: unknown): Site["themeSettings"]["draftJson"] => {
     const settings = cloneJson(value ?? {}) as Partial<Site["themeSettings"]["draftJson"]>;
     return {
@@ -547,9 +545,10 @@ function toAdminShellThemeSettings(record?: { draftJson: unknown; publishedJson:
       saasSettingsCurrent: settings.saasSettingsCurrent
     };
   };
+  const publishedJson = record?.publishedJson;
   return {
-    draftJson: toShellSettings(record?.draftJson),
-    publishedJson: toShellSettings(record?.publishedJson)
+    draftJson: toShellSettings(record?.draftJson ?? publishedJson),
+    publishedJson: toShellSettings(publishedJson)
   };
 }
 
@@ -735,10 +734,10 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   return {
     profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isCollections ? "collections" : isWorkspace ? "workspace" : "page",
     products: isHome || isPricing || isCart,
-    siteAiApps: isHome || (isTools && !isToolDetail) || isWorkspace,
+    siteAiApps: isHome || isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
-    toolMenus: isHome || isPricing || isTools || isWorkspace,
+    toolMenus: isHome || isTools || isWorkspace,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
 }
@@ -746,9 +745,9 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
 function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["profile"]) {
   return {
     products: profile === "pricing" ? 12 : 8,
-    siteAiApps: profile === "tools" ? 96 : profile === "home" ? 48 : 48,
-    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 96 : 24,
-    mediaAssets: profile === "home" ? 24 : profile === "workspace" ? 40 : 0
+    siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 48 : 24,
+    mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
   };
 }
 
@@ -900,19 +899,14 @@ async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promi
   const startedAt = Date.now();
   const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
   if (!site) return undefined;
-  const creativePacks = await prisma.creativePack.findMany({
-    where: { siteId: site.id, status: "active" },
-    select: collectionDetailCreativePackSelect,
-    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-    take: publicRuntimeLimits("collections").creativePacks
-  });
+  const creativePacks = await getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks);
   storefrontPerfMark("collection-directory-shell:packs", startedAt, { creativePacks: creativePacks.length });
   const mediaAssets: MediaAsset[] = [];
   const mappedSite = toPublicSiteShell(site, mediaAssets);
   return emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),
-    creativePacks: creativePacks.map(toCreativePack),
+    creativePacks,
     mediaAssets
   });
 }
@@ -922,31 +916,21 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
   const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
   if (!site) return undefined;
   storefrontPerfMark("collection-shell:site-shell", startedAt, { collectionSlug });
+  const mappedSite = toPublicSiteShell(site, []);
+  const explicitSeoCollection = isExplicitSeoDirectoryContentForSite(mappedSite, "collection", collectionSlug);
 
   const [selectedPacks, menuPacks] = await Promise.all([
-    prisma.creativePack.findMany({
-      where: {
-        siteId: site.id,
-        status: "active",
-        OR: [
-          { categoryRecord: { is: { slug: collectionSlug } } },
-          { categoryRecord: { is: { parent: { is: { slug: collectionSlug } } } } },
-          { name: { equals: collectionSlug, mode: "insensitive" } },
-          { name: { contains: collectionSlug.replace(/-/g, " "), mode: "insensitive" } }
-        ]
-      },
-      select: collectionDetailCreativePackSelect,
-      orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-      take: publicRuntimeLimits("collection-detail").creativePacks
-    }),
-    prisma.creativePack.findMany({
-      where: { siteId: site.id, status: "active" },
-      select: collectionDetailCreativePackSelect,
-      orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-      take: publicRuntimeLimits("collections").creativePacks
-    })
+    explicitSeoCollection
+      ? Promise.resolve([])
+      : loadStorefrontPublicCollectionSelectedPacks(site.id, collectionSlug),
+    getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks)
   ]);
-  const creativePacks = Array.from(new Map([...selectedPacks, ...menuPacks].map((pack) => [pack.id, pack])).values());
+  const creativePacks = Array.from(
+    new Map([
+      ...selectedPacks.map((pack) => toCreativePack(pack)),
+      ...menuPacks
+    ].map((pack) => [pack.id, pack])).values()
+  );
   storefrontPerfMark("collection-shell:packs", startedAt, {
     selectedPacks: selectedPacks.length,
     menuPacks: menuPacks.length,
@@ -954,15 +938,45 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
   });
 
   const mediaAssets: MediaAsset[] = [];
-  const mappedSite = toPublicSiteShell(site, mediaAssets);
   const state = emptyPlatformState({
-    sites: [mappedSite],
+    sites: [{ ...mappedSite, mediaAssets }],
     siteDomains: site.domains.map(toSiteDomain),
-    creativePacks: creativePacks.map(toCreativePack),
+    creativePacks,
     mediaAssets
   });
   storefrontPerfMark("collection-shell:done", startedAt);
   return state;
+}
+
+async function loadStorefrontPublicCollectionSelectedPacks(siteId: string, collectionSlug: string) {
+  const category = await prisma.creativePackCategory.findUnique({
+    where: { siteId_slug: { siteId, slug: collectionSlug } },
+    select: {
+      id: true,
+      children: {
+        select: { id: true }
+      }
+    }
+  });
+  const categoryIds = category ? [category.id, ...category.children.map((child) => child.id)] : [];
+  if (categoryIds.length) {
+    return prisma.creativePack.findMany({
+      where: { siteId, status: "active", categoryId: { in: categoryIds } },
+      select: collectionDetailCreativePackSelect,
+      orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+      take: publicRuntimeLimits("collection-detail").creativePacks
+    });
+  }
+  return prisma.creativePack.findMany({
+    where: {
+      siteId,
+      status: "active",
+      name: { equals: collectionSlug.replace(/-/g, " "), mode: "insensitive" }
+    },
+    select: collectionDetailCreativePackSelect,
+    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+    take: publicRuntimeLimits("collection-detail").creativePacks
+  });
 }
 
 type PublicRuntimeSiteLookup =
@@ -1045,7 +1059,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
                   { name: { contains: needs.contextSlug.replace(/-/g, " "), mode: "insensitive" } }
                 ]
               }
-            : { siteId, status: { in: ["active", "draft"] } },
+            : { siteId, status: "active" },
           select: publicRuntimeCreativePackSelect,
           orderBy: [{ status: "asc" }, { createdAt: "asc" }],
           take: limits.creativePacks
@@ -1099,7 +1113,7 @@ type StorefrontCustomerRuntimeParams = {
   section?: CustomerRuntimeSection;
 };
 
-export const getStorefrontCustomerJobDetailStateForSite = cache(async ({
+export async function getStorefrontCustomerJobDetailStateForSite({
   jobId,
   sessionId,
   siteId
@@ -1107,7 +1121,7 @@ export const getStorefrontCustomerJobDetailStateForSite = cache(async ({
   jobId: string;
   sessionId: string;
   siteId: string;
-}): Promise<PlatformState | undefined> => {
+}): Promise<PlatformState | undefined> {
   return siteReadCache.get(
     `customer-job-detail:${siteId}:${sessionId}:${jobId}`,
     async () => {
@@ -1149,9 +1163,9 @@ export const getStorefrontCustomerJobDetailStateForSite = cache(async ({
         assetUploads: assetUploads.map(toAssetUploadRelational)
       });
     },
-    Number(process.env.STOREFRONT_JOB_DETAIL_CACHE_TTL_MS ?? 15_000)
+    Number(process.env.STOREFRONT_JOB_DETAIL_CACHE_TTL_MS ?? 1_000)
   );
-});
+}
 
 function mapSubscriptionRuntime(subscription: Prisma.SubscriptionGetPayload<object>): PlatformState["subscriptions"][number] {
   return {
@@ -1245,6 +1259,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   const wantsOrders = !sectionedAccount || section === "summary" || section === "orders";
   const wantsJobs = !sectionedAccount || section === "summary" || section === "jobs";
   const wantsAssets = !sectionedAccount || section === "summary" || section === "albums";
+  const assetRoles = params.profile === "workspace" ? customerAssetRolesForSurface("workspace-gallery") : undefined;
   const wantsLedger = !sectionedAccount || section === "summary" || section === "albums" || section === "credits";
   const wantsModels = !sectionedAccount || section === "summary";
   const wantsAlbums = !sectionedAccount || section === "summary" || section === "albums";
@@ -1290,7 +1305,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
       ? prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs })
       : Promise.resolve([]),
     wantsAssets && limits.assetUploads
-      ? prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null }, orderBy: { createdAt: "desc" }, take: limits.assetUploads })
+      ? prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null, role: assetRoles?.length ? { in: assetRoles } : undefined }, orderBy: { createdAt: "desc" }, take: limits.assetUploads })
       : Promise.resolve([]),
     wantsLedger && limits.ledger
       ? prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger })
@@ -1337,7 +1352,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   if (outputStorageKeys.size) relatedAssetOr.push({ storageKey: { in: [...outputStorageKeys] } });
   if (wantsAssets && relatedAssetOr.length) {
     const relatedAssets = await prisma.assetUpload.findMany({
-      where: { siteId, customerId, deletedAt: null, OR: relatedAssetOr },
+      where: { siteId, customerId, deletedAt: null, role: assetRoles?.length ? { in: assetRoles } : undefined, OR: relatedAssetOr },
       orderBy: { createdAt: "desc" },
       take: Math.max(limits.assetUploads || 24, relatedAssetOr.length * 12)
     });
@@ -1371,12 +1386,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   }
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-  const mappedSite = params.profile === "account" || params.profile === "workspace"
-    ? toPublicSiteShell(site as CustomerRuntimeSiteRecord, mappedMediaAssets)
-    : {
-        ...toSite(site),
-        mediaAssets: mappedMediaAssets
-      };
+  const mappedSite = toPublicSiteShell(site as CustomerRuntimeSiteRecord, mappedMediaAssets);
 
   return emptyPlatformState({
     sites: [mappedSite],

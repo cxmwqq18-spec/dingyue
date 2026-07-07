@@ -40,9 +40,6 @@ async function assertPricing() {
     const { response, text } = await fetchText(`/site/${siteSlug}/pricing?billing=${billing}`);
     assert(response.ok, `pricing ${billing} failed with ${response.status}`);
     const visible = textFromHtml(text);
-    for (const tier of ["Starter", "Pro", "Premium"]) {
-      assert(visible.includes(tier), `pricing ${billing} missing ${tier}`);
-    }
     assert(!text.includes("audience="), `pricing ${billing} still exposes audience query`);
     assert(!/Single\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing} still shows Single plans`);
     assert(!/Couple\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing} still shows Couple plans`);
@@ -50,6 +47,17 @@ async function assertPricing() {
       !/Add-on credits|One-shot trial|Small credit pack|Medium credit pack|Large credit pack/i.test(visible),
       `pricing ${billing} still shows one-time add-on purchase cards`
     );
+
+    const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/pricing&sectionId=pricing_1&routeMode=path&billing=${billing}`;
+    const section = await fetchText(sectionPath, { headers: { accept: "application/json" } });
+    assert(section.response.ok, `pricing ${billing} section failed with ${section.response.status}`);
+    const payload = JSON.parse(section.text);
+    const subscriptionProducts = (payload.renderData?.products ?? []).filter((product) => product.type === "subscription" && product.status === "active");
+    for (const tier of ["Starter", "Pro", "Premium"]) {
+      const product = subscriptionProducts.find((item) => item.name === tier);
+      assert(product, `pricing ${billing} section missing ${tier}`);
+      assert(product.prices?.some((price) => billing === "monthly" ? price.interval === "month" : price.interval === "year"), `pricing ${billing} section missing ${tier} ${billing} price`);
+    }
   }
 }
 
@@ -57,9 +65,17 @@ async function assertCartPriceSelection() {
   const { response, text } = await fetchText(`/site/${siteSlug}/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly`);
   assert(response.ok, `cart failed with ${response.status}`);
   const visible = textFromHtml(text);
-  assert(visible.includes("Pro"), "cart does not show selected Pro plan");
-  assert(visible.includes("$240") || visible.includes("240"), "cart does not show yearly Pro price");
+  assert(visible.includes("Cart") || visible.includes("Checkout"), "cart page shell did not render");
   assert(!text.includes("audience="), "cart still exposes audience query");
+
+  const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/cart&sectionId=cart_1&routeMode=path&product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly`;
+  const section = await fetchText(sectionPath, { headers: { accept: "application/json" } });
+  assert(section.response.ok, `cart section failed with ${section.response.status}`);
+  const payload = JSON.parse(section.text);
+  const selectedProduct = (payload.renderData?.products ?? []).find((product) => product.id === "prod_dreamshoot_pro");
+  const selectedPrice = selectedProduct?.prices?.find((price) => price.id === "price_dreamshoot_pro_yearly");
+  assert(selectedProduct?.name === "Pro", "cart section does not include selected Pro plan");
+  assert(selectedPrice?.amountCents === 24000 && selectedPrice?.interval === "year", "cart section does not include yearly Pro price");
 }
 
 async function assertCheckoutUnauthBlocked() {
