@@ -45,6 +45,7 @@
     "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",
     "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
     "smoke:mydreamshoots-pricing-checkout": "node scripts/smoke-mydreamshoots-pricing-checkout.mjs",
+    "smoke:mydreamshoots-login-redirect": "node scripts/smoke-mydreamshoots-login-redirect.mjs",
     "smoke:server": "node scripts/run-smoke-server.mjs",
     "smoke:security-baseline": "node scripts/smoke-security-baseline.mjs",
     "smoke:designer-concurrency": "node scripts/smoke-designer-concurrency.mjs",

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
@@ -52,6 +52,10 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+
+async function hasAnyCustomerSessionCookie(): Promise<boolean> {
+  return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
 
 function searchParamsSuffix(query: Record<string, string | string[] | undefined>): string {
   const params = new URLSearchParams();
@@ -168,6 +172,9 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
+    return { title: "Workspace" };
+  }
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
     return {};
   }
@@ -187,7 +194,6 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     if (!canResolveCollectionSlugForSite(state, site, path[1])) return {};
     return metadataForSeoDirectory(site, "collection", path[1]);
   }
-  if (path[0] === "dashboard") return { title: "Workspace" };
   if (canUseStorefrontPartnerTemplate(site, slug)) {
     return metadataForDreamshootFallbackRoute(site.slug, slug, {
       primaryDomain: site.primaryDomain,
@@ -249,8 +255,16 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
   if (slug === "/tool") redirect("/tools");
+  if (slug === "/app" || slug === "/dashboard") {
+    const query = searchParams ? await searchParams : {};
+    redirect(`/app/create${searchParamsSuffix(query)}`);
+  }
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
+  if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie())) {
+    const query = searchParams ? await searchParams : {};
+    redirect(`/login?next=${encodeURIComponent(`${slug}${searchParamsSuffix(query)}`)}`);
+  }
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
   const state = needsPrivateRuntime
@@ -293,7 +307,7 @@ export default async function HostStorefrontCatchAllPage({
     return renderCustomerWorkspacePage({ site, slug: "/account", query, routeMode: "host", state });
   }
   if (firstSegment === "dashboard") {
-    return renderCustomerWorkspacePage({ site, slug: "/app", query, routeMode: "host", state });
+    redirect(`/app/create${searchParamsSuffix(query)}`);
   }
   if (firstSegment === "tools" && path[1]) {
     if (!resolvedToolPage) notFound();

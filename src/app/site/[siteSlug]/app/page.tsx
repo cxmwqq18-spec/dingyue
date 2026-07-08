@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
+import { redirect } from "next/navigation";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -8,11 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CustomerWorkspacePage({
-  params,
-  searchParams
+  params
 }: {
   params: Promise<{ siteSlug: string }>;
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug } = await params;
   const headerStore = await headers();
@@ -21,6 +19,5 @@ export default async function CustomerWorkspacePage({
     pathname: "/app",
     siteSlug
   });
-  const query = searchParams ? await searchParams : {};
-  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app", query, routeMode: "path" });
+  redirect(`/site/${publicSlug}/app/create`);
 }

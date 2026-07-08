@@ -112,11 +112,11 @@ export default async function SiteCatchAllPage({
   }
   if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
   if (slug === "/dashboard") {
-    const query = searchParams ? await searchParams : {};
-    return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app", query, routeMode: "path" });
+    redirect(`/site/${publicSlug}/app/create`);
   }
   if (slug === "/account") redirect(`/site/${publicSlug}/app/create`);
   if (path[0] === "app") {
+    if (slug === "/app") redirect(`/site/${publicSlug}/app/create`);
     const query = searchParams ? await searchParams : {};
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
   }

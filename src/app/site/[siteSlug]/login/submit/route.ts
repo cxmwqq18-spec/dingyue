@@ -7,5 +7,5 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
   const site = await getSiteBySlugForPublicAuth(siteSlug);
   if (!site) return NextResponse.redirect(new URL("/", request.url), 303);
 
-  return handleCustomerLoginForm(request, site, `/site/${site.slug}/app`, `/site/${site.slug}/login`);
+  return handleCustomerLoginForm(request, site, `/site/${site.slug}/app/create`, `/site/${site.slug}/login`);
 }

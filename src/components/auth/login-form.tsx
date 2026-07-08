@@ -119,7 +119,8 @@ export function LoginForm({
   }
 
   function openCustomerWorkspace() {
-    const href = returnTo && returnTo.startsWith(sitePath("/")) ? returnTo : sitePath("/app");
+    const fallbackHref = sitePath("/app/create");
+    const href = returnTo && returnTo.startsWith(sitePath("/")) ? returnTo : fallbackHref;
     window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
     router.replace(href);
   }
