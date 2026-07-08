@@ -151,6 +151,29 @@ function referenceRoles(payload: WorkerPayload) {
   };
 }
 
+function referenceRoleLabel(role: string) {
+  if (role === "primary") return "PRIMARY_PERSON_REFERENCE";
+  if (role === "partner") return "PARTNER_PERSON_REFERENCE";
+  return "GENERAL_SOURCE_REFERENCE";
+}
+
+function referenceRoleInstruction(payload: WorkerPayload) {
+  const assets = inputAssets(payload).slice(0, 4);
+  if (!assets.length) return "";
+  const roles = referenceRoles(payload);
+  const roleLines = assets.map((asset, index) => `${index + 1}. ${referenceRoleLabel(roles.roleFor(asset.assetId))}`).join("\n");
+  if (!roles.partnerAssetIds.size) {
+    return `Reference image role map:\n${roleLines}\nUse the listed reference image or images for the requested subject only.`;
+  }
+  return [
+    `Reference image role map:\n${roleLines}`,
+    "Binding rules: Person A must be derived from PRIMARY_PERSON_REFERENCE images. Person B must be derived from PARTNER_PERSON_REFERENCE images.",
+    "Use visible cues from both the primary and partner reference groups. Do not let one uploaded image supply both final people.",
+    "If a primary reference image contains an extra person, treat that extra person as background/context only and do not use them as Person B.",
+    "If a partner reference image contains an extra person, treat that extra person as background/context only and do not use them as Person A."
+  ].join("\n");
+}
+
 function subjectCompositionInstruction(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields) ?? {};
   const packageAudience = textValue(fields.packageAudience ?? payload.params.packageAudience).toLowerCase();
@@ -165,12 +188,12 @@ function subjectCompositionInstruction(payload: WorkerPayload) {
 
   if (wantsTwoPeople) {
     const subjectSource = primaryAssetIds.length && partnerAssetIds.length
-      ? "Use the primary reference photos for person A and the partner reference photos for person B. Person B must come from the partner reference photos, not from an invented face."
+      ? "Use the primary reference photos for person A and the partner reference photos for person B. Person B must come from the partner reference photos, not from an invented face or from an extra person visible in the primary photos."
       : "Use the source photos as references for two distinct people.";
     return [
       "Final composition requirement: show exactly two visible adult people together in one realistic scene.",
       subjectSource,
-      "Keep both reference subjects represented as the two people in the final image, with the primary subject and partner subject both visible.",
+      "Keep both reference groups represented as the two people in the final image, with the primary subject and partner subject both visible.",
       "The two people should be styled as a couple or paired subjects, both clearly visible from head and upper body or full body.",
       "Do not generate a solo portrait, do not crop one person out, and do not create a collage, split panel, contact sheet, or multiple unrelated portraits."
     ].join(" ");
@@ -190,6 +213,7 @@ function buildPrompt(payload: WorkerPayload) {
     textValue(payload.params.style) ? `Style: ${textValue(payload.params.style)}` : "",
     "Create exactly one standalone image for this output slot.",
     subjectCompositionInstruction(payload),
+    referenceRoleInstruction(payload),
     "Do not create a collage, grid, contact sheet, split panel, moodboard, storyboard, or multiple avatars inside the same image.",
     "Use the provided customer source image or images as visual references when available: keep broad subject, pose, color, composition, and non-sensitive styling cues while producing an original themed result.",
     "Stylized editorial image, tasteful composition, no text, no watermark, no UI."
@@ -257,6 +281,13 @@ async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: 
   }
 }
 
+function imageEditFormFieldName(totalAssets: number) {
+  const mode = process.env.LOCAL_AI_WORKER_IMAGE_FIELD_MODE?.trim();
+  if (mode === "repeated-image") return "image";
+  if (mode === "image-array") return "image[]";
+  return totalAssets > 1 ? "image[]" : "image";
+}
+
 async function buildImageEditForm(params: {
   payload: WorkerPayload;
   model: string;
@@ -276,6 +307,7 @@ async function buildImageEditForm(params: {
 
   const assets = inputAssets(params.payload).slice(0, 4);
   if (!assets.length) return undefined;
+  const imageFieldName = imageEditFormFieldName(assets.length);
 
   for (const [index, asset] of assets.entries()) {
     const roles = referenceRoles(params.payload);
@@ -292,7 +324,7 @@ async function buildImageEditForm(params: {
     const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
     const bytes = new Uint8Array(await response.arrayBuffer());
     const prepared = await prepareProviderImage(bytes, mimeType);
-    form.append(index === 0 ? "image" : "image[]", new Blob([prepared.bytes], { type: prepared.mimeType }), `${role}-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
+    form.append(imageFieldName, new Blob([prepared.bytes], { type: prepared.mimeType }), `${role}-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
   }
   return form;
 }

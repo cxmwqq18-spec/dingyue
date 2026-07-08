@@ -156,11 +156,12 @@ function subjectCompositionInstruction(requestJson: Record<string, unknown> | un
 
   if (wantsTwoPeople) {
     const subjectSource = primaryAssetIds.length && partnerAssetIds.length
-      ? "Use the primary selected photos as the first person and the partner selected photos as the second person."
+      ? "Use the primary selected photos as the first person and the partner selected photos as the second person. The second person must come from the partner selected photos, not from an extra person visible in the primary selected photos."
       : "Use the selected source photos as references for two distinct people.";
     return [
       "Subject requirement: the final image must show exactly two visible adult people together in the same frame as a pair.",
       subjectSource,
+      "Keep both selected reference groups represented. Do not let one uploaded image supply both final people.",
       "Do not create a solo portrait, single-person crop, collage, split panel, or contact sheet."
     ].join(" ");
   }
