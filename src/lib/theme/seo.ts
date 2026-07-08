@@ -106,6 +106,11 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   const aidreamcapes = isAidreamcapesSeoSite(site);
   if (aidreamcapes) {
     const overrides: Record<string, Partial<PageSeo>> = {
+      "/": {
+        title: "AIdreamcapes – the most advanced AI photo generator  maker",
+        description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
+        keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
+      },
       "/about-us": {
         title: "About Aidreamcapes",
         description: "Learn how Aidreamcapes turns private uploads into cinematic portraits, visible credit workflows, and customer-only galleries."
@@ -128,8 +133,9 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   }
   const overrides: Record<string, Partial<PageSeo>> = {
     "/": {
-      title: "AI Headshot & Portrait Generator | Private Photo Sets from Selfies | MyDreamShoots",
-      description: "Create private AI headshots, creator portraits, fan posters, beauty previews, and themed photo albums from selfies with credit costs shown before generation."
+      title: "Professional AI Photo Generator Online - MyDreamShoots",
+      description: "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.",
+      keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
     },
     "/collections": {
       title: "Browse private AI photo packages | MyDreamShoots",
@@ -257,7 +263,7 @@ export function normalizeThemeSeo(site: Site, settings: ThemeSettings): NonNulla
         {
           title,
           description,
-          keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, existing?.keywords, current?.siteKeywords),
+          keywords: pickText(knownSeo?.keywords, jsonSeo?.keywords, policySeo?.keywords, existing?.keywords, current?.siteKeywords),
           ogImage: pickText(jsonSeo?.ogImage, existing?.ogImage),
           canonicalPath: normalizeCanonicalPath(pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, existing?.canonicalPath), page.slug),
           index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? existing?.index ?? (current?.robots?.index === false ? false : defaultRobots.index),
@@ -317,7 +323,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const pageSeo: PageSeo = {
     title: pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
     description: pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
-    keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, seo.siteKeywords),
+    keywords: pickText(knownSeo?.keywords, jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, seo.siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, seo.defaultOgImage),
     canonicalPath: pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? seo.robots.index,
@@ -334,7 +340,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   return {
     title,
     description,
-    keywords: undefined,
+    keywords: cleanText(pageSeo.keywords) || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? seo.robots.index : false,
@@ -381,7 +387,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const pageSeo: PageSeo = {
     title: pickText(knownSeo?.title, jsonSeo?.title, policySeo?.title, fallbackPageSeo.title),
     description: pickText(knownSeo?.description, jsonSeo?.description, policySeo?.description, fallbackPageSeo.description),
-    keywords: pickText(jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, siteKeywords),
+    keywords: pickText(knownSeo?.keywords, jsonSeo?.keywords, policySeo?.keywords, fallbackPageSeo.keywords, siteKeywords),
     ogImage: pickText(jsonSeo?.ogImage, fallbackPageSeo.ogImage, defaultOgImage),
     canonicalPath: pickText(knownSeo?.canonicalPath, policySeo?.canonicalPath, jsonSeo?.canonical, jsonSeo?.canonicalPath, fallbackPageSeo.canonicalPath, page.slug),
     index: jsonSeo?.robots?.index ?? jsonSeo?.index ?? policySeo?.index ?? fallbackPageSeo.index ?? currentSeo?.robots?.index ?? true,
@@ -397,7 +403,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   return {
     title,
     description,
-    keywords: undefined,
+    keywords: cleanText(pageSeo.keywords) || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? currentSeo?.robots?.index ?? true : false,
