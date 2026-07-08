@@ -5,7 +5,8 @@ const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)((aidreamcapes|mydreamshoots)\.com)$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)\/(?:admin|app|account|login|register|reset-password|checkout)(?:\/|$)/i;
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   adventure: "cinematic-travel",
@@ -213,12 +214,12 @@ function shouldReorderStorefrontHead(request: NextRequest): boolean {
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
-  if (INTERNAL_PATH_RE.test(pathname) || PRIVATE_STORE_PATH_RE.test(pathname)) return false;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (INTERNAL_PATH_RE.test(pathname) || PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname))) return false;
 
   const accept = request.headers.get("accept") ?? "";
   if (accept && !accept.includes("text/html") && !accept.includes("*/*")) return false;
 
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   return TARGET_SITE_PATH_RE.test(pathname) || TARGET_HOST_RE.test(host);
 }
 
