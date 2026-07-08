@@ -591,7 +591,7 @@ export function CustomerWorkspaceShell({
   function requestWorkspaceRefresh() {
     setRuntimeFetchEnabled(true);
     setManualRefreshPending(true);
-    setRuntimeRefreshMessage("Refreshing workspace status...");
+    setRuntimeRefreshMessage("");
     setRuntimeRefreshKey((current) => {
       const next = current + 1;
       setManualRefreshKey(next);
@@ -1379,13 +1379,9 @@ export function CustomerWorkspaceShell({
                     </button>
                   </div>
                 </div>
-                {runtimeRefreshMessage ? (
-                  <p className="px-2 pt-2 text-right text-xs text-white/40" role="status">{runtimeRefreshMessage}</p>
-                ) : null}
-
-                {runtimeIsLoading && visibleResourceAssets.length ? (
-                  <div className="p-5"><WorkspaceInlineLoading label="Refreshing dashboard resources." /></div>
-                ) : null}
+                <p className="min-h-5 px-2 pt-2 text-right text-xs text-white/40" role="status">
+                  {runtimeRefreshMessage || (runtimeIsLoading || manualRefreshPending ? "Refreshing status..." : "")}
+                </p>
 
                 {runtimeIsInitializing && !visibleResourceAssets.length ? (
                   <div className="p-5"><WorkspaceInlineLoading label="Loading workspace resources." /></div>
