@@ -39,15 +39,6 @@ type OutputCopyJob = {
 const myDreamShootsDisplayName = "myᕲreamshoots";
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
 
-function customerAssetClientBaseUrl(): string {
-  const raw = process.env.NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL || process.env.NEXT_PUBLIC_CUSTOMER_ASSET_SHARED_BASE_URL || "";
-  if (!raw) return "";
-  try {
-    return new URL(raw).origin;
-  } catch {
-    return "";
-  }
-}
 type RuntimeOutputSlot = {
   index: number;
   status: "queued" | "running" | "succeeded" | "failed";
@@ -188,16 +179,13 @@ function slotLabel(slot: RuntimeOutputSlot): string {
   return "Queued";
 }
 
+function normalizedWorkspaceStorageKey(storageKey: string): string {
+  return storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, "");
+}
+
 function workspaceStoragePreviewUrl(storageKey: string): string {
-  const baseUrl = customerAssetClientBaseUrl();
-  const localAssetUrl = (key: string) => {
-    const path = `/api/local-assets/${key}`;
-    return baseUrl ? `${baseUrl}${path}` : path;
-  };
-  if (storageKey.startsWith("customer-assets/")) return localAssetUrl(storageKey.slice("customer-assets/".length));
-  if (storageKey.startsWith("sites/") && storageKey.includes("/customers/")) return localAssetUrl(storageKey);
   if (storageKey.startsWith("/")) return storageKey;
-  return localAssetUrl(storageKey);
+  return `/api/local-assets/${normalizedWorkspaceStorageKey(storageKey)}`;
 }
 
 function workspaceJobTime(value: string): string {
@@ -485,6 +473,16 @@ export function CustomerWorkspaceShell({
     });
     return counts;
   }, [galleryAssets]);
+  const outputPreviewUrlByStorageKey = useMemo(() => {
+    const urls = new Map<string, string>();
+    galleryAssets.forEach((asset) => {
+      if (!asset.storageKey) return;
+      urls.set(normalizedWorkspaceStorageKey(asset.storageKey), asset.previewUrl);
+    });
+    return urls;
+  }, [galleryAssets]);
+  const workspaceSlotPreviewUrl = (storageKey: string) =>
+    outputPreviewUrlByStorageKey.get(normalizedWorkspaceStorageKey(storageKey)) ?? workspaceStoragePreviewUrl(storageKey);
   const visibleStatusJobs = useMemo(() => {
     const focusedJob = focusedJobId ? recentJobs.find((job) => job.id === focusedJobId) : undefined;
     if (focusedJob) return [focusedJob];
@@ -1444,7 +1442,7 @@ export function CustomerWorkspaceShell({
                                         <img
                                           alt={`Output ${slot.index}`}
                                           className="aspect-[4/3] w-full object-cover"
-                                          src={workspaceStoragePreviewUrl(slot.storageKey)}
+                                          src={workspaceSlotPreviewUrl(slot.storageKey)}
                                         />
                                       ) : null}
                                       <div className="flex items-center justify-between gap-2 px-3 py-2">

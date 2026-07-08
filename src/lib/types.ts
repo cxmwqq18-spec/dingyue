@@ -804,6 +804,7 @@ export interface ThemeRuntimeAsset {
   jobId?: string;
   subjectRole?: string;
   label: string;
+  storageKey?: string;
   previewUrl: string;
   downloadUrl?: string;
   mimeType: string;

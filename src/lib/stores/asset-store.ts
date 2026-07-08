@@ -330,6 +330,7 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     jobId: asset.jobId,
     subjectRole: asset.subjectRole,
     label: asset.label,
+    storageKey,
     previewUrl,
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
