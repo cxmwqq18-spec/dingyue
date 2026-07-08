@@ -4,7 +4,6 @@ import type { PrismaClient } from "@prisma/client";
 import {
   customerAssetFileExists,
   customerAssetFilePath,
-  customerAssetUrl,
   deleteCustomerAssetFileShared,
   hasRemoteCustomerAssetReadSource,
   normalizeCustomerAssetStorageKey,
@@ -76,6 +75,10 @@ function sourceAssetIdsFromJobRequest(value: unknown): string[] {
   return [request.assetIds, request.primaryAssetIds, request.partnerAssetIds, fields.primaryAssetIds, fields.partnerAssetIds]
     .flatMap((entry) => Array.isArray(entry) ? entry : [])
     .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+}
+
+function customerAssetPreviewUrl(storageKey: string): string {
+  return `/api/local-assets/${normalizeCustomerAssetStorageKey(storageKey)}`;
 }
 
 export async function createAssetUploadRelational(
@@ -319,8 +322,8 @@ export async function readCustomerAssetFileByStorageKey(params: {
 
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
-  const previewUrl = customerAssetFileExists(storageKey)
-    ? customerAssetUrl(storageKey)
+  const previewUrl = customerAssetFileExists(storageKey) || hasRemoteCustomerAssetReadSource()
+    ? customerAssetPreviewUrl(storageKey)
     : fallbackImageForSeed(`${asset.siteId}-${asset.id}-${storageKey}`);
   return {
     id: asset.id,

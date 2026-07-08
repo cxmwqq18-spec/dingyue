@@ -16,6 +16,7 @@ export type CustomerBootstrap = {
   siteAiApps: SiteAiApp[];
   creativePacks: CreativePack[];
   accountRuntime?: ThemeRuntimeData;
+  workspaceRuntime?: ThemeRuntimeData;
 };
 type LoadState =
   | { status: "loading"; data?: undefined; error?: undefined; loginPath?: undefined }
@@ -87,7 +88,8 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         customer: data.customer,
         siteAiApps: data.siteAiApps,
         creativePacks: data.creativePacks,
-        accountRuntime: data.accountRuntime
+        accountRuntime: data.accountRuntime,
+        workspaceRuntime: data.workspaceRuntime
       };
       bootstrapCache.set(cacheKey, bootstrap);
       if (mode === "workspace") bootstrapCache.set(siteSlug, bootstrap);
@@ -371,11 +373,12 @@ export function CustomerWorkspaceClientPage({
   if (initialBootstrap && isAuthenticatedBootstrap(initialBootstrap)) {
     return (
       <CustomerWorkspaceShell
-        assets={[]}
+        assets={initialBootstrap.workspaceRuntime?.assets ?? []}
         creativePacks={initialBootstrap.creativePacks}
         customer={initialBootstrap.customer}
         initialCreativePackId={initialCreativePackId}
         initialPanel={initialPanel}
+        initialRuntime={initialBootstrap.workspaceRuntime}
         initialToolId={initialToolId}
         site={initialBootstrap.site}
         siteAiApps={initialBootstrap.siteAiApps}
@@ -388,11 +391,12 @@ export function CustomerWorkspaceClientPage({
   if (!isAuthenticatedBootstrap(state.data)) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
   return (
     <CustomerWorkspaceShell
-      assets={[]}
+      assets={state.data.workspaceRuntime?.assets ?? []}
       creativePacks={state.data.creativePacks}
       customer={state.data.customer}
       initialCreativePackId={initialCreativePackId}
       initialPanel={initialPanel}
+      initialRuntime={state.data.workspaceRuntime}
       initialToolId={initialToolId}
       site={state.data.site}
       siteAiApps={state.data.siteAiApps}

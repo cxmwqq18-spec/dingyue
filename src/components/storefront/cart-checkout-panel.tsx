@@ -125,13 +125,20 @@ export function CartCheckoutPanel({
 
       {customer ? (
         <button
+          aria-label={busy ? "Processing checkout" : "Complete checkout"}
           className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
           disabled={!canSubmit}
           onClick={submitCheckout}
           type="button"
         >
-          {busy ? <Loader2 className="h-4 w-4 animate-spin" strokeWidth={1.8} /> : <ShieldCheck className="h-4 w-4" strokeWidth={1.8} />}
-          {busy ? "Processing" : "Complete checkout"}
+          <Loader2 aria-hidden="true" className={busy ? "h-4 w-4 animate-spin" : "hidden h-4 w-4"} strokeWidth={1.8} />
+          <ShieldCheck aria-hidden="true" className={busy ? "hidden h-4 w-4" : "h-4 w-4"} strokeWidth={1.8} />
+          <span aria-hidden={!busy} className={busy ? "" : "hidden"}>
+            Processing
+          </span>
+          <span aria-hidden={busy} className={busy ? "hidden" : ""}>
+            Complete checkout
+          </span>
         </button>
       ) : (
         <Link className="inline-flex w-full justify-center rounded-full bg-white px-4 py-3 text-sm font-semibold text-zinc-950" href={loginHref}>

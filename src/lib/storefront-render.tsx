@@ -5,6 +5,7 @@ import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { ThemeRenderer, ThemeSectionFrame, searchPageEntriesForSite, type StorefrontSectionPayload, type RoutedSite } from "@/components/theme-renderer";
 import { findPage, getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
+import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { preferLocalPathModeState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import {
   getCustomerBySessionFromState,
@@ -1989,7 +1990,11 @@ export async function renderCustomerWorkspacePage({
   currentSite.mediaAssets = renderData.mediaAssets;
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
-  const runtime = trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug);
+  const adminAccess = await getCustomerAdminAccessForSite({ siteId: currentSite.id, customer: current.customer });
+  const runtime = {
+    ...trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug),
+    adminAccess
+  };
 
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
@@ -2057,14 +2062,27 @@ export async function renderCustomerWorkspacePageBySlug({
     if (!siteId) notFound();
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
-    const [current, bootstrap] = await Promise.all([
+    const [current, bootstrap, workspaceState] = await Promise.all([
       getCustomerBySessionRelational({ siteId, sessionId }),
-      getCustomerWorkspaceBootstrapRelational(canonicalSlug)
+      getCustomerWorkspaceBootstrapRelational(canonicalSlug),
+      readStorefrontCustomerRuntimeStateForSiteFromDatabase({ siteId, sessionId, profile: "workspace" }).catch(() => undefined)
     ]);
     if (!current || !bootstrap) redirect(loginPathWithNext);
+    const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: current.customer });
+    const workspaceRuntime = workspaceState
+      ? trimCustomerRuntimeForWorkspace(getThemeRuntimeForCustomer(workspaceState, siteId, current.customer.id), "/app")
+      : runtimeWithEmptyCollections({ customer: current.customer });
     return (
       <CustomerWorkspaceClientPage
-        initialBootstrap={{ ...bootstrap, customer: current.customer }}
+        initialBootstrap={{
+          ...bootstrap,
+          customer: current.customer,
+          workspaceRuntime: {
+            ...workspaceRuntime,
+            customer: current.customer,
+            adminAccess
+          }
+        }}
         initialCreativePackId={typeof query.pack === "string" ? query.pack : undefined}
         initialPanel={initialWorkspacePanel}
         initialToolId={typeof query.tool_id === "string" ? query.tool_id : undefined}
@@ -2090,7 +2108,11 @@ export async function renderCustomerWorkspacePageBySlug({
   currentSite.mediaAssets = renderData.mediaAssets;
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
-  const runtime = trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug);
+  const adminAccess = await getCustomerAdminAccessForSite({ siteId: currentSite.id, customer: current.customer });
+  const runtime = {
+    ...trimCustomerRuntimeForWorkspace(getCustomerRuntimeFromState(state, currentSite.id, current.customer, true), slug),
+    adminAccess
+  };
 
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)

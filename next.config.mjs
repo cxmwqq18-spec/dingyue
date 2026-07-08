@@ -47,6 +47,14 @@ const nextConfig = {
         headers: noindexPrivateHeaders
       },
       {
+        source: "/api/local-assets/:path*",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "private, max-age=60" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" }
+        ]
+      },
+      {
         source: "/",
         headers: publicStorefrontHeaders
       },

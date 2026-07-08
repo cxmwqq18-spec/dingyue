@@ -20,7 +20,7 @@ export type CustomerWorkspacePanel = "overview" | "create" | "upload";
 type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "videos" | "packages";
 type WorkspaceAnchor = "step-upload" | "step-create" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
 type WorkspaceCreateMode = "theme" | "tool";
-type WorkspaceSubscriptionStatus = "loading" | "active" | "required";
+type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
 type SampleTarget = "primary" | "partner";
 type SampleAsset = ThemeRuntimeAsset & {
   localStatus?: "uploading" | "ready" | "failed";
@@ -292,6 +292,7 @@ export function CustomerWorkspaceShell({
   creativePacks,
   initialCreativePackId,
   initialToolId,
+  initialRuntime,
   initialPanel = "overview"
 }: {
   site: CustomerWorkspaceSite;
@@ -301,6 +302,7 @@ export function CustomerWorkspaceShell({
   creativePacks: CreativePack[];
   initialCreativePackId?: string;
   initialToolId?: string;
+  initialRuntime?: ThemeRuntimeData;
   initialPanel?: CustomerWorkspacePanel;
 }) {
   const pathname = usePathname();
@@ -315,14 +317,17 @@ export function CustomerWorkspaceShell({
   const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
   const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(false);
   const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
-  const runtime = runtimeState.runtime;
-  const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(assets);
+  const runtime = runtimeState.runtime ?? initialRuntime;
+  const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(() => initialRuntime?.assets ?? assets);
   const hydratedAssets = runtimeAssets;
   const recentJobs = runtime?.jobs ?? [];
   const customerModels = runtime?.customerModels ?? [];
-  const subscriptionStatus: WorkspaceSubscriptionStatus = runtime
-    ? hasActiveWorkspaceSubscription(runtime.subscriptions) ? "active" : "required"
-    : "loading";
+  const adminSubscriptionBypass = runtime?.adminAccess?.canBypassBilling === true;
+  const subscriptionStatus: WorkspaceSubscriptionStatus = adminSubscriptionBypass
+    ? "admin"
+    : runtime
+      ? hasActiveWorkspaceSubscription(runtime.subscriptions) ? "active" : "required"
+      : "loading";
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   const [activePanel, setActivePanel] = useState<CustomerWorkspacePanel>(initialPanel);
   const [resourceTab, setResourceTab] = useState<WorkspaceResourceTab>("all");
@@ -447,8 +452,8 @@ export function CustomerWorkspaceShell({
     }
   }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
   useEffect(() => {
-    setRuntimeAssets(runtime?.assets ?? assets);
-  }, [assets, runtime?.assets]);
+    setRuntimeAssets(runtime?.assets ?? initialRuntime?.assets ?? assets);
+  }, [assets, initialRuntime?.assets, runtime?.assets]);
   const allResourceAssets = galleryAssets;
   const tryOnJobIds = new Set(
     recentJobs
@@ -839,6 +844,8 @@ export function CustomerWorkspaceShell({
     if (typeof window === "undefined" || restoredSampleSelectionRef.current) return;
     const availableIds = new Set(readySourceAssets.map((asset) => asset.id));
     if (!availableIds.size) return;
+    const defaultPrimarySampleIds = () => readySourceAssets.filter((asset) => asset.subjectRole === "primary").map((asset) => asset.id).slice(0, 15);
+    const defaultPartnerSampleIds = () => readySourceAssets.filter((asset) => asset.subjectRole === "partner").map((asset) => asset.id).slice(0, 15);
 
     let nextPrimaryIds: string[] = [];
     let nextPartnerIds: string[] = [];
@@ -860,10 +867,10 @@ export function CustomerWorkspaceShell({
     }
 
     if (!nextPrimaryIds.length) {
-      nextPrimaryIds = readySourceAssets.filter((asset) => asset.subjectRole === "primary").map((asset) => asset.id).slice(0, 15);
+      nextPrimaryIds = defaultPrimarySampleIds();
     }
     if (!nextPartnerIds.length) {
-      nextPartnerIds = readySourceAssets.filter((asset) => asset.subjectRole === "partner").map((asset) => asset.id).slice(0, 15);
+      nextPartnerIds = defaultPartnerSampleIds();
     }
 
     if (!nextPrimaryIds.length && !nextPartnerIds.length) {

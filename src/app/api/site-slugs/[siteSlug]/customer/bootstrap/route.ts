@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
+import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import {
   getCustomerWorkspaceBootstrapRelational,
   getCustomerWorkspaceSiteShellRelational,
@@ -9,12 +10,26 @@ import {
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import { cookies } from "next/headers";
+import type { ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
+
+function emptyRuntime(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
+  return {
+    jobs: [],
+    assets: [],
+    albums: [],
+    ledger: [],
+    subscriptions: [],
+    orders: [],
+    customerModels: [],
+    ...runtime
+  };
 }
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
@@ -111,10 +126,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     );
   }
 
-  const bootstrap = await getCustomerWorkspaceBootstrapRelational(siteSlug);
+  const [bootstrap, workspaceState, adminAccess] = await Promise.all([
+    getCustomerWorkspaceBootstrapRelational(siteSlug),
+    readStorefrontCustomerRuntimeStateForSiteFromDatabase({
+      siteId,
+      sessionId: current.sessionId,
+      profile: "workspace"
+    }).catch(() => undefined),
+    getCustomerAdminAccessForSite({ siteId, customer: current.customer })
+  ]);
   if (!bootstrap) {
     return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
   }
+  const workspaceRuntime = workspaceState
+    ? getThemeRuntimeForCustomer(workspaceState, siteId, current.customer.id)
+    : emptyRuntime({ customer: current.customer });
 
   return NextResponse.json(
     {
@@ -122,7 +148,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       site: bootstrap.site,
       customer: current.customer,
       siteAiApps: bootstrap.siteAiApps,
-      creativePacks: bootstrap.creativePacks
+      creativePacks: bootstrap.creativePacks,
+      workspaceRuntime: {
+        ...workspaceRuntime,
+        customer: current.customer,
+        adminAccess
+      }
     },
     { headers: { "Cache-Control": "private, max-age=8" } }
   );

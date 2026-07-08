@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
+import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
@@ -738,11 +739,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json({ ok: false, error: "customer_runtime_unavailable", runtime: emptyRuntime() }, { status: 404 });
   }
 
+  const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: result.customer });
   return NextResponse.json({
     ok: true,
     runtime: {
       ...result.runtime,
-      customer: result.customer
+      customer: result.customer,
+      adminAccess
     }
   }, {
     headers: { "Cache-Control": refreshToken ? "private, no-store" : "private, max-age=20" }

@@ -63,7 +63,7 @@ export function customerAssetWriteBaseUrl(): string {
 }
 
 export function hasRemoteCustomerAssetReadSource(): boolean {
-  return Boolean(customerAssetReadBaseUrl());
+  return Boolean(customerAssetReadBaseUrl() || customerAssetWriteBaseUrl());
 }
 
 export function shouldAssumeRemoteCustomerAssetsReadable(): boolean {
@@ -128,30 +128,43 @@ export async function readCustomerAssetFileRemote(params: {
   baseUrl?: string;
   secret?: string;
 }): Promise<{ storageKey: string; bytes: Buffer; mimeType: string }> {
-  const baseUrl = normalizeBaseUrl(params.baseUrl || customerAssetReadBaseUrl());
-  if (!baseUrl) throw new CustomerAssetStorageError("customer_asset_read_base_url_required", 500);
+  const baseUrls = Array.from(new Set([
+    normalizeBaseUrl(params.baseUrl || customerAssetReadBaseUrl()),
+    normalizeBaseUrl(customerAssetWriteBaseUrl())
+  ].filter(Boolean)));
+  if (!baseUrls.length) throw new CustomerAssetStorageError("customer_asset_read_base_url_required", 500);
   const secret = params.secret ?? process.env.CUSTOMER_ASSET_TRANSFER_SECRET ?? process.env.AI_WORKER_SECRET;
   if (!secret || secret === "dev-worker-secret") {
     throw new CustomerAssetStorageError("customer_asset_transfer_secret_required", 500);
   }
   const storageKey = normalizeCustomerAssetStorageKey(params.storageKey);
-  const url = new URL("/api/internal/customer-assets", baseUrl);
-  url.searchParams.set("storageKey", storageKey);
-  const response = await fetch(url, {
-    headers: {
-      "X-Customer-Asset-Transfer-Secret": secret
-    },
-    cache: "no-store"
-  });
-  if (!response.ok) {
-    const result = (await response.json().catch(() => ({}))) as { error?: string };
-    throw new CustomerAssetStorageError(result.error || `customer_asset_remote_read_failed_${response.status}`, response.status || 500);
+  let lastError: unknown;
+  for (const baseUrl of baseUrls) {
+    try {
+      const url = new URL("/api/internal/customer-assets", baseUrl);
+      url.searchParams.set("storageKey", storageKey);
+      const response = await fetch(url, {
+        headers: {
+          "X-Customer-Asset-Transfer-Secret": secret
+        },
+        cache: "no-store"
+      });
+      if (!response.ok) {
+        const result = (await response.json().catch(() => ({}))) as { error?: string };
+        lastError = new CustomerAssetStorageError(result.error || `customer_asset_remote_read_failed_${response.status}`, response.status || 500);
+        continue;
+      }
+      return {
+        storageKey,
+        bytes: Buffer.from(await response.arrayBuffer()),
+        mimeType: response.headers.get("content-type")?.split(";")[0]?.trim() || "application/octet-stream"
+      };
+    } catch (error) {
+      lastError = error;
+    }
   }
-  return {
-    storageKey,
-    bytes: Buffer.from(await response.arrayBuffer()),
-    mimeType: response.headers.get("content-type")?.split(";")[0]?.trim() || "application/octet-stream"
-  };
+  if (lastError instanceof CustomerAssetStorageError) throw lastError;
+  throw new CustomerAssetStorageError("customer_asset_remote_read_failed", 500);
 }
 
 export async function writeCustomerAssetFileRemote(params: {

@@ -283,6 +283,14 @@ export interface SiteAdmin {
 
 export type PublicSiteAdmin = Omit<SiteAdmin, "passwordHash">;
 
+export interface CustomerAdminAccess {
+  canBypassBilling: boolean;
+  siteAdminId?: string;
+  role?: PublicSiteAdmin["role"];
+  displayName?: string;
+  source?: "site_admin_session" | "site_admin_email";
+}
+
 export type PartnerApplicationStatus = "pending" | "approved" | "rejected" | "archived";
 
 export interface PartnerApplication {
@@ -858,6 +866,7 @@ export interface ThemeRuntimeOrder {
 
 export interface ThemeRuntimeData {
   customer?: PublicCustomer;
+  adminAccess?: CustomerAdminAccess;
   jobs: ThemeRuntimeJob[];
   assets: ThemeRuntimeAsset[];
   albums: ThemeRuntimeAlbum[];

@@ -9,6 +9,11 @@ import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/
 import type { WorkerOutputSlot } from "@/lib/worker";
 
 type Tx = Prisma.TransactionClient;
+type JobSubscriptionBypass = {
+  enabled: boolean;
+  reason: "site_admin";
+  siteAdminId?: string;
+};
 const jobStoreTimeoutMs = Math.max(5000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "20000") || 20000);
 const jobStoreTransactionOptions = { timeout: jobStoreTimeoutMs, maxWait: Math.min(5000, jobStoreTimeoutMs) };
 const DEFAULT_MAX_SOURCE_ASSETS = 24;
@@ -355,20 +360,24 @@ async function createGenerationJobInTx(tx: Tx, params: {
   customerId: string;
   aiAppSlug: string;
   requestJson?: Record<string, unknown>;
+  subscriptionBypass?: JobSubscriptionBypass;
 }) {
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
   if (customer.status === "past_due") throw new StoreError("customer_past_due", 402);
   if (customer.status === "blocked") throw new StoreError("customer_blocked", 403);
-  const subscription = await tx.subscription.findFirst({
-    where: {
-      siteId: params.siteId,
-      customerId: params.customerId,
-      status: { in: ACTIVE_SUBSCRIPTION_STATUSES },
-      currentPeriodEnd: { gt: new Date() }
-    },
-    select: { id: true }
-  });
-  if (!subscription) throw new StoreError("subscription_required", 402);
+  const hasSubscriptionBypass = params.subscriptionBypass?.enabled === true;
+  if (!hasSubscriptionBypass) {
+    const subscription = await tx.subscription.findFirst({
+      where: {
+        siteId: params.siteId,
+        customerId: params.customerId,
+        status: { in: ACTIVE_SUBSCRIPTION_STATUSES },
+        currentPeriodEnd: { gt: new Date() }
+      },
+      select: { id: true }
+    });
+    if (!subscription) throw new StoreError("subscription_required", 402);
+  }
   const siteAiApp = await tx.siteAiApp.findFirst({
     where: { siteId: params.siteId, enabled: true, aiApp: { slug: params.aiAppSlug } },
     include: { aiApp: true }
@@ -401,7 +410,8 @@ async function createGenerationJobInTx(tx: Tx, params: {
   if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
   const unitCreditCost = creativePack?.creditCost ?? siteAiApp.creditCost;
   const outputCount = isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
-  const creditsReserved = unitCreditCost * outputCount;
+  const billableCredits = unitCreditCost * outputCount;
+  const creditsReserved = billableCredits;
   if ((customer.balance?.balance ?? 0) < creditsReserved) throw new StoreError("insufficient_credits", 402);
 
   const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
@@ -432,7 +442,16 @@ async function createGenerationJobInTx(tx: Tx, params: {
         billing: {
           unitCreditCost,
           outputCount,
-          creditsReserved
+          creditsReserved,
+          billableCredits,
+          ...(hasSubscriptionBypass
+            ? {
+                subscriptionBypass: {
+                  reason: params.subscriptionBypass?.reason ?? "site_admin",
+                  siteAdminId: params.subscriptionBypass?.siteAdminId
+                }
+              }
+            : {})
         },
         worker: siteAiApp.routeKey,
         flow: {
@@ -460,7 +479,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
       })
     }
   });
-  const ledger = await reserveCreditsForJob(tx, job);
+  const ledger = creditsReserved > 0 ? await reserveCreditsForJob(tx, job) : undefined;
   const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
   return { job, siteAiApp, ledger, customer: updatedCustomer };
 }
@@ -470,13 +489,14 @@ export async function createGenerationJobRelational(params: {
   customerId: string;
   aiAppSlug: string;
   requestJson?: Record<string, unknown>;
-}): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger: CreditLedgerEntry; customer: Customer }> {
+  subscriptionBypass?: JobSubscriptionBypass;
+}): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer }> {
   return withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const result = await createGenerationJobInTx(tx, params);
     return {
       job: mapGenerationJob(result.job),
       siteAiApp: mapSiteAiApp(result.siteAiApp),
-      ledger: mapCreditLedger(result.ledger),
+      ledger: result.ledger ? mapCreditLedger(result.ledger) : undefined,
       customer: mapCustomer(result.customer)
     };
   }, jobStoreTransactionOptions), "job_create_timeout");
@@ -559,7 +579,7 @@ export async function settleGenerationJobRelational(params: {
     const consumeAmount = Math.min(job.creditsReserved, deliveredOutputs * unitCreditCost);
     const releaseAmount = Math.max(0, job.creditsReserved - consumeAmount);
     let ledger: Prisma.CreditLedgerGetPayload<object> | undefined;
-    if (params.status === "succeeded" && consumeAmount > 0) {
+    if (job.creditsReserved > 0 && params.status === "succeeded" && consumeAmount > 0) {
       const updated = await tx.creditBalance.updateMany({
         where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
         data: {
@@ -592,7 +612,7 @@ export async function settleGenerationJobRelational(params: {
           }
         });
       }
-    } else {
+    } else if (job.creditsReserved > 0) {
       const updated = await tx.creditBalance.updateMany({
         where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
         data: { balance: { increment: job.creditsReserved }, reserved: { decrement: job.creditsReserved } }
@@ -637,7 +657,7 @@ export async function settleGenerationJobRelational(params: {
       await upsertAlbumForSettledJob(tx, updatedJob, outputs);
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: job.customerId, siteId: job.siteId }, include: { balance: true } });
-    return { job: mapGenerationJob(updatedJob), ledger: mapCreditLedger(ledger), alreadyProcessed: false, customer: mapCustomer(updatedCustomer) };
+    return { job: mapGenerationJob(updatedJob), ledger: ledger ? mapCreditLedger(ledger) : undefined, alreadyProcessed: false, customer: mapCustomer(updatedCustomer) };
   }, jobStoreTransactionOptions), "job_result_update_timeout");
 }
 
@@ -734,7 +754,7 @@ export async function rerunGenerationJobRelational(params: {
       sourceJob: mapGenerationJob(sourceJob),
       job: mapGenerationJob(rerun.job),
       siteAiApp: mapSiteAiApp(rerun.siteAiApp),
-      ledger: mapCreditLedger(rerun.ledger),
+      ledger: mapCreditLedger(rerun.ledger!),
       customer: mapCustomer(rerun.customer)
     };
   }, jobStoreTransactionOptions), "job_rerun_timeout");

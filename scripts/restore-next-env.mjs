@@ -17,8 +17,19 @@ if (fs.existsSync(nextEnvPath) && fs.readFileSync(nextEnvPath, "utf8") !== stabl
 
 if (fs.existsSync(tsconfigPath)) {
   const tsconfig = JSON.parse(fs.readFileSync(tsconfigPath, "utf8"));
+  const stableNextTypeIncludes = new Set([
+    ".next-3010/types/**/*.ts",
+    ".next-dev/types/**/*.ts",
+    ".next/types/**/*.ts"
+  ]);
   tsconfig.include = Array.from(
-    new Set((tsconfig.include ?? []).filter((item) => typeof item === "string" && !item.startsWith(".next-build/")))
+    new Set(
+      (tsconfig.include ?? []).filter((item) => {
+        if (typeof item !== "string") return false;
+        if (!item.startsWith(".next-")) return true;
+        return stableNextTypeIncludes.has(item);
+      })
+    )
   );
   if (!tsconfig.include.includes(".next/types/**/*.ts")) tsconfig.include.push(".next/types/**/*.ts");
   if (!tsconfig.include.includes("next-env.d.ts")) tsconfig.include.push("next-env.d.ts");

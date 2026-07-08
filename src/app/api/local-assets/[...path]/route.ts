@@ -1,7 +1,7 @@
 import { readFile, stat } from "fs/promises";
 import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
-import { contentTypeForCustomerAssetPath, customerAssetFilePathFromSegments } from "@/lib/customer-asset-storage";
+import { contentTypeForCustomerAssetPath, customerAssetFilePathFromSegments, hasRemoteCustomerAssetReadSource, readCustomerAssetFileRemote } from "@/lib/customer-asset-storage";
 
 const missingAssetPlaceholder = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Asset unavailable">
@@ -39,6 +39,19 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
   const fileStat = await stat(filePath).catch(() => null);
   if (!fileStat?.isFile()) {
     if (siteIndex >= 0 && customerIndex >= 0) {
+      if (hasRemoteCustomerAssetReadSource()) {
+        try {
+          const remote = await readCustomerAssetFileRemote({ storageKey: safeSegments.join("/") });
+          return {
+            filePath: undefined,
+            size: remote.bytes.length,
+            contentType: remote.mimeType,
+            bytes: remote.bytes
+          };
+        } catch {
+          // Fall through to the placeholder so broken remote assets do not crash the workspace.
+        }
+      }
       return {
         filePath: undefined,
         size: missingAssetPlaceholder.length,
@@ -63,7 +76,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
     }
-    const bytes = "bytes" in asset ? asset.bytes : await readFile(asset.filePath);
+    const bytes = "bytes" in asset && asset.bytes
+      ? new Uint8Array(asset.bytes)
+      : new Uint8Array(await readFile(asset.filePath));
     return new Response(bytes, {
       headers: {
         "Content-Type": asset.contentType,

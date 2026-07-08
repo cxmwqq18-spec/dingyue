@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
+import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { createGenerationJobRelational } from "@/lib/stores/job-store";
@@ -31,10 +32,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const baseUrl = new URL(request.url).origin;
   try {
+    const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
     const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
       siteId,
       customerId: body.customerId,
       aiAppSlug: body.aiAppSlug,
+      subscriptionBypass: adminAccess.canBypassBilling
+        ? { enabled: true, reason: "site_admin", siteAdminId: adminAccess.siteAdminId }
+        : undefined,
       requestJson: {
         ...(body.params ?? {}),
         assetIds: Array.isArray(body.params?.assetIds) ? body.params.assetIds.filter((item): item is string => typeof item === "string") : [],
@@ -43,16 +48,26 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       }
     });
     const workerPayload = await buildWorkerPayload({ job, siteAiApp, baseUrl });
-    const workerDispatch = await dispatchWorkerPayload(workerPayload);
+    const shouldSkipWorkerDispatch = process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1";
+    const workerDispatch = shouldSkipWorkerDispatch
+      ? { status: "skipped" as const }
+      : await dispatchWorkerPayload(workerPayload);
     return NextResponse.json({
       ok: true,
       job,
       customer,
       customerBalance: customer.balance,
-      ledgerAction: ledger,
+      adminAccess,
+      ledgerAction: ledger ?? null,
       workerPayload,
       workerDispatch,
-      note: workerDispatch.status === "skipped" ? "Persisted job and reserved credits. Worker dispatch is not configured." : "Persisted job, reserved credits, and attempted worker dispatch."
+      note: workerDispatch.status === "skipped"
+        ? adminAccess.canBypassBilling
+          ? "Persisted admin job and reserved credits. Worker dispatch is not configured."
+          : "Persisted job and reserved credits. Worker dispatch is not configured."
+        : adminAccess.canBypassBilling
+          ? "Persisted admin job, reserved credits, and attempted worker dispatch."
+          : "Persisted job, reserved credits, and attempted worker dispatch."
     });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

@@ -189,73 +189,85 @@ function buildAssetGroups(assets: ReviewAsset[], allAssets: ReviewAsset[], jobs:
   });
 }
 
-function AssetMiniCard({ asset, onOpen }: { asset: ReviewAsset; onOpen: (assetId: string) => void }) {
+function AssetThumb({ asset }: { asset: ReviewAsset }) {
   const previewUrl = assetPreviewUrl(asset);
   return (
-    <button
-      className="grid w-full grid-cols-[54px_minmax(0,1fr)] items-center gap-3 rounded-[10px] border border-zinc-200 bg-white p-2 text-left transition hover:border-zinc-300 hover:bg-zinc-50"
-      onClick={() => onOpen(asset.id)}
-      type="button"
-    >
+    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-zinc-200 bg-zinc-50">
       {previewUrl ? (
-        <img alt={asset.label} className="h-[54px] w-[54px] rounded-[8px] border border-zinc-200 bg-zinc-100 object-cover" src={previewUrl} />
+        <img alt="" className="h-full w-full object-cover" src={previewUrl} />
       ) : (
-        <span className="flex h-[54px] w-[54px] items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无图</span>
+        <span className="text-[10px] text-zinc-400">无图</span>
       )}
-      <span className="min-w-0">
-        <span className={`mb-1 inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium ${assetRoleTone(asset.role)}`}>
-          {assetRoleLabel(asset.role)}
-        </span>
-        <span className="block truncate text-sm font-medium text-zinc-950">{asset.label}</span>
-        <span className="block truncate font-mono text-[11px] text-zinc-400">{asset.id}</span>
-      </span>
-    </button>
+    </span>
   );
 }
 
-function AssetThumbnailStrip({
-  assets,
-  onOpen
-}: {
-  assets: ReviewAsset[];
-  onOpen: (assetId: string) => void;
-}) {
-  const visibleAssets = assets.slice(0, 10);
-  const hiddenCount = Math.max(0, assets.length - visibleAssets.length);
+function AssetDetailCard({ asset }: { asset: ReviewAsset }) {
+  const previewUrl = assetPreviewUrl(asset);
   return (
-    <div className="min-w-[640px] max-w-[900px]">
-      <div className="mb-2 flex items-center justify-between gap-3 text-xs">
-        <span className="font-medium text-zinc-700">共 {assets.length} 张 AI 输出图</span>
-        <button className="rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-zinc-600 hover:border-sky-300 hover:text-sky-700" onClick={() => onOpen(assets[0].id)} type="button">
-          查看全部
-        </button>
-        {hiddenCount ? <span className="text-zinc-400">还有 {hiddenCount} 张</span> : null}
+    <div className="grid gap-3 rounded-[12px] border border-zinc-200 bg-white p-3">
+      <div className="overflow-hidden rounded-[10px] border border-zinc-200 bg-zinc-50">
+        {previewUrl ? (
+          <img alt={asset.label} className="h-44 w-full object-cover" src={previewUrl} />
+        ) : (
+          <div className="flex h-44 items-center justify-center text-sm text-zinc-400">无可预览图片</div>
+        )}
       </div>
-      <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
-        {visibleAssets.map((asset, index) => {
-          const previewUrl = assetPreviewUrl(asset);
-          return (
-            <button
-              className="group w-[92px] shrink-0 rounded-[10px] border border-zinc-200 bg-white p-1.5 text-left transition hover:border-sky-300 hover:bg-sky-50"
-              key={asset.id}
-              onClick={() => onOpen(asset.id)}
-              title={`${asset.label} / ${asset.id}`}
-              type="button"
-            >
-              {previewUrl ? (
-                <img alt={asset.label} className="h-[72px] w-full rounded-[8px] border border-zinc-100 bg-zinc-100 object-cover" src={previewUrl} />
-              ) : (
-                <span className="flex h-[72px] w-full items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无图</span>
-              )}
-              <span className="mt-1 flex items-center gap-1 truncate text-[11px] font-medium text-zinc-700">
-                {asset.isFavorite ? <Heart className="h-3 w-3 fill-rose-500 text-rose-500" strokeWidth={1.8} /> : null}
-                输出 {index + 1}
-              </span>
-            </button>
-          );
-        })}
+      <div className="min-w-0">
+        <div className="mb-2 flex flex-wrap items-center gap-2">
+          <span className={`inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium ${assetRoleTone(asset.role)}`}>
+            {assetRoleLabel(asset.role)}
+          </span>
+          <StatusPill label={reviewStatusLabel(asset.reviewStatus)} tone={reviewTone(asset.reviewStatus)} />
+          {asset.isFavorite ? (
+            <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-700">
+              <Heart className="h-3 w-3 fill-current" strokeWidth={1.8} />收藏
+            </span>
+          ) : null}
+        </div>
+        <p className="truncate text-sm font-semibold text-zinc-950" title={asset.label}>{asset.label}</p>
+        <p className="mt-1 truncate font-mono text-[11px] text-zinc-400" title={asset.id}>{asset.id}</p>
+        <p className="mt-1 break-all font-mono text-[11px] leading-5 text-zinc-500">{asset.storageKey}</p>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {previewUrl ? (
+          <a className="rounded-[8px] border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700" href={previewUrl} rel="noreferrer" target="_blank">
+            打开图片
+          </a>
+        ) : null}
+        {asset.downloadUrl ? (
+          <a className="rounded-[8px] border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700" href={asset.downloadUrl} rel="noreferrer" target="_blank">
+            下载
+          </a>
+        ) : null}
       </div>
     </div>
+  );
+}
+
+function GroupAssetSection({
+  title,
+  emptyText,
+  assets
+}: {
+  title: string;
+  emptyText: string;
+  assets: ReviewAsset[];
+}) {
+  return (
+    <section className="grid gap-3">
+      <div className="flex items-center justify-between gap-3">
+        <h4 className="text-sm font-semibold text-zinc-950">{title}</h4>
+        <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs text-zinc-500">{assets.length} 张</span>
+      </div>
+      {assets.length ? (
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {assets.map((asset) => <AssetDetailCard asset={asset} key={asset.id} />)}
+        </div>
+      ) : (
+        <div className="rounded-[12px] border border-dashed border-zinc-200 bg-zinc-50 p-5 text-sm text-zinc-500">{emptyText}</div>
+      )}
+    </section>
   );
 }
 
@@ -278,7 +290,7 @@ export function CustomerAssetReviewPanel({
   const [reviewFilter, setReviewFilter] = useState<AssetUpload["reviewStatus"] | "">("");
   const [favoriteFilter, setFavoriteFilter] = useState<"" | "favorite">("");
   const [message, setMessage] = useState("源图、训练图和输出图进入任务队列前都需要在当前站点内完成审核。");
-  const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
   const [reviewingAssetId, setReviewingAssetId] = useState<string | null>(null);
   const [favoritingAssetId, setFavoritingAssetId] = useState<string | null>(null);
   const [deletingGroupId, setDeletingGroupId] = useState<string | null>(null);
@@ -310,7 +322,7 @@ export function CustomerAssetReviewPanel({
   const groupedItems = useMemo(() => buildAssetGroups(filteredItems, items, visibleAssetJobs), [filteredItems, items, visibleAssetJobs]);
   const currentPage = clampPage(page, groupedItems.length, pageSize);
   const pagedGroups = pageItems(groupedItems, currentPage, pageSize);
-  const selectedAsset = selectedAssetId ? items.find((asset) => asset.id === selectedAssetId) : undefined;
+  const selectedGroup = selectedGroupId ? groupedItems.find((group) => group.id === selectedGroupId) : undefined;
 
   useEffect(() => setPage(1), [query, roleFilter, reviewFilter, favoriteFilter, pageSize]);
   useEffect(() => {
@@ -449,7 +461,7 @@ export function CustomerAssetReviewPanel({
       const removedJobs = new Set(response.data.deletedJobIds ?? []);
       if (group.job) removedJobs.add(group.job.id);
       setItems((current) => current.filter((item) => !removedAssets.has(item.id)));
-      if (selectedAssetId && removedAssets.has(selectedAssetId)) setSelectedAssetId(null);
+      if (selectedGroupId === group.id) setSelectedGroupId(null);
       if (removedJobs.size) {
         setDeletedJobIds((current) => new Set([...current, ...removedJobs]));
       }
@@ -511,23 +523,23 @@ export function CustomerAssetReviewPanel({
       </div>
       <div className="mt-5 overflow-hidden rounded-[12px] border border-zinc-200 bg-white">
         <div className="overflow-x-auto">
-          <table className="list min-w-[2050px] table-fixed">
+          <table className="list min-w-[1420px] table-fixed">
             <colgroup>
-              <col className="w-[360px]" />
-              <col className="w-[760px]" />
+              <col className="w-[280px]" />
+              <col className="w-[170px]" />
+              <col className="w-[230px]" />
               <col className="w-[240px]" />
-              <col className="w-[120px]" />
               <col className="w-[260px]" />
-              <col className="w-[210px]" />
+              <col className="w-[180px]" />
               <col className="w-[130px]" />
-              <col className="w-[320px]" />
+              <col className="w-[180px]" />
             </colgroup>
             <thead>
               <tr>
+                <th className="bgtt aleft">记录</th>
                 <th className="bgtt aleft">源图</th>
                 <th className="bgtt aleft">AI 生成结果</th>
                 <th className="bgtt aleft">顾客</th>
-                <th className="bgtt">模型</th>
                 <th className="bgtt">任务</th>
                 <th className="bgtt">创建时间</th>
                 <th className="bgtt">审核状态</th>
@@ -538,37 +550,47 @@ export function CustomerAssetReviewPanel({
               {pagedGroups.map((group) => {
                 const asset = group.primaryAsset;
                 const customer = customers.find((item) => item.id === asset.customerId);
-                const model = asset.customerModelId ? models.find((item) => item.id === asset.customerModelId) : undefined;
+                const firstSource = group.sourceAssets[0];
+                const firstOutput = group.outputAssets[0];
                 return (
-                  <tr key={group.id}>
-                    <td className="aleft align-middle">
-                      <div className="grid min-w-[240px] gap-2">
-                        {group.sourceAssets.length ? group.sourceAssets.map((sourceAsset) => (
-                          <AssetMiniCard asset={sourceAsset} key={sourceAsset.id} onOpen={setSelectedAssetId} />
-                        )) : (
-                          <span className="rounded-[10px] border border-dashed border-zinc-200 bg-zinc-50 px-3 py-4 text-sm text-zinc-400">未关联源图</span>
-                        )}
+                  <tr className="h-[72px]" key={group.id}>
+                    <td className="aleft whitespace-nowrap align-middle">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <AssetThumb asset={asset} />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className={`inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium ${assetRoleTone(asset.role)}`}>
+                              {assetRoleLabel(asset.role)}
+                            </span>
+                            {asset.isFavorite ? <Heart className="h-3.5 w-3.5 shrink-0 fill-rose-500 text-rose-500" strokeWidth={1.8} /> : null}
+                          </div>
+                          <p className="mt-1 max-w-[190px] truncate text-sm font-semibold text-zinc-950" title={asset.label}>{asset.label}</p>
+                          <p className="max-w-[190px] truncate font-mono text-[11px] text-zinc-400" title={group.id}>{group.id}</p>
+                        </div>
                       </div>
                     </td>
-                    <td className="aleft align-middle">
-                      <div className="min-w-[640px]">
-                        {group.outputAssets.length ? (
-                          <AssetThumbnailStrip assets={group.outputAssets} onOpen={setSelectedAssetId} />
-                        ) : (
-                          <span className="rounded-[10px] border border-dashed border-zinc-200 bg-zinc-50 px-3 py-4 text-sm text-zinc-500">
-                            <span className="block font-medium">{group.job ? `${jobStatusLabel(group.job.status)}，暂无输出图` : "暂无生成结果"}</span>
-                            {group.job?.error ? (
-                              <span className="mt-1 block line-clamp-2 text-xs text-rose-600" title={group.job.error}>{group.job.error}</span>
-                            ) : null}
-                          </span>
-                        )}
+                    <td className="aleft whitespace-nowrap align-middle">
+                      <div className="flex min-w-0 items-center gap-2">
+                        {firstSource ? <AssetThumb asset={firstSource} /> : <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无</span>}
+                        <span className="min-w-0 flex-1 overflow-hidden">
+                          <span className="block truncate text-sm font-medium text-zinc-700">{group.sourceAssets.length ? `${group.sourceAssets.length} 张源图` : "未关联源图"}</span>
+                          <span className="block truncate font-mono text-[11px] text-zinc-400" title={firstSource?.id ?? ""}>{firstSource?.id ?? ""}</span>
+                        </span>
+                      </div>
+                    </td>
+                    <td className="aleft whitespace-nowrap align-middle">
+                      <div className="flex min-w-0 items-center gap-2">
+                        {firstOutput ? <AssetThumb asset={firstOutput} /> : <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无</span>}
+                        <span className="min-w-0 flex-1 overflow-hidden">
+                          <span className="block truncate text-sm font-medium text-zinc-700">{group.outputAssets.length ? `${group.outputAssets.length} 张输出图` : group.job ? `${jobStatusLabel(group.job.status)}，暂无输出` : "暂无生成结果"}</span>
+                          <span className="block truncate text-[11px] text-rose-600" title={group.job?.error ?? ""}>{group.job?.error ?? ""}</span>
+                        </span>
                       </div>
                     </td>
                     <td className="aleft whitespace-nowrap align-middle">
                       <span className="block max-w-[220px] truncate text-zinc-700">{customer?.email ?? asset.customerId}</span>
-                      <span className="text-[11px] text-zinc-400">{customer?.name ?? "未命名顾客"}</span>
+                      <span className="block max-w-[220px] truncate text-[11px] text-zinc-400">{customer?.name ?? "未命名顾客"}</span>
                     </td>
-                    <td className="whitespace-nowrap align-middle">{model?.label ?? "未关联"}</td>
                     <td className="whitespace-nowrap align-middle text-[11px] text-zinc-500">
                       {group.job ? (
                         <span className="flex min-w-0 items-center gap-2">
@@ -582,7 +604,7 @@ export function CustomerAssetReviewPanel({
                     <td className="whitespace-nowrap align-middle font-mono text-[11px] text-zinc-500">{formatDate(asset.createdAt)}</td>
                     <td className="whitespace-nowrap align-middle"><StatusPill label={reviewStatusLabel(asset.reviewStatus)} tone={reviewTone(asset.reviewStatus)} /></td>
                     <td className="whitespace-nowrap align-middle">
-                      <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap">
+                      <span className="inline-flex flex-nowrap items-center justify-center gap-1.5 whitespace-nowrap">
                         <button
                           className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap"
                           disabled={reviewingAssetId === asset.id || asset.reviewStatus === "approved"}
@@ -599,20 +621,9 @@ export function CustomerAssetReviewPanel({
                         >
                           拒绝
                         </button>
-                        <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => setSelectedAssetId(asset.id)} type="button">
-                          <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />结果详情
+                        <button className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" onClick={() => setSelectedGroupId(group.id)} type="button">
+                          <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />详情
                         </button>
-                        {asset.role === "output" ? (
-                          <button
-                            className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap border-rose-200 bg-rose-50 text-rose-700 disabled:opacity-50"
-                            disabled={favoritingAssetId === asset.id}
-                            onClick={() => toggleFavoriteAsset(asset)}
-                            type="button"
-                          >
-                            <Heart className={`h-3.5 w-3.5 ${asset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
-                            {asset.isFavorite ? "取消收藏" : "收藏"}
-                          </button>
-                        ) : null}
                         <button
                           className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap border-rose-200 bg-rose-50 text-rose-700 disabled:opacity-50"
                           disabled={deletingGroupId === group.id}
@@ -642,44 +653,66 @@ export function CustomerAssetReviewPanel({
       </div>
       <AdminPagination page={currentPage} pageSize={pageSize} total={groupedItems.length} onPageChange={setPage} onPageSizeChange={setPageSize} />
 
-      {selectedAsset ? (
+      {selectedGroup ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/45 p-4" role="dialog" aria-modal="true">
-          <div className="max-h-[88vh] w-full max-w-3xl overflow-y-auto rounded-[12px] bg-white shadow-2xl">
+          <div className="max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-[12px] bg-white shadow-2xl">
             <div className="flex items-start justify-between gap-4 border-b border-zinc-200 px-5 py-4">
-              <div>
-                <p className="text-xs font-medium text-clay">{assetRoleLabel(selectedAsset.role)}</p>
-                <h3 className="mt-1 text-lg font-semibold text-zinc-950">{selectedAsset.label}</h3>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-clay">生成记录详情</p>
+                <h3 className="mt-1 truncate text-lg font-semibold text-zinc-950">{selectedGroup.primaryAsset.label}</h3>
               </div>
-              <button className="rounded-[8px] border border-black/10 px-3 py-1.5 text-sm" onClick={() => setSelectedAssetId(null)} type="button">关闭</button>
+              <button className="rounded-[8px] border border-black/10 px-3 py-1.5 text-sm" onClick={() => setSelectedGroupId(null)} type="button">关闭</button>
             </div>
             {(() => {
-              const customer = customers.find((item) => item.id === selectedAsset.customerId);
-              const model = selectedAsset.customerModelId ? models.find((item) => item.id === selectedAsset.customerModelId) : undefined;
-              const previewUrl = assetPreviewUrl(selectedAsset);
+              const asset = selectedGroup.primaryAsset;
+              const customer = customers.find((item) => item.id === asset.customerId);
+              const model = asset.customerModelId ? models.find((item) => item.id === asset.customerModelId) : undefined;
               const detailRows = [
-                ["素材路径", selectedAsset.storageKey],
-                ["类型", assetRoleLabel(selectedAsset.role)],
-                ["文件类型", selectedAsset.mimeType],
-                ["顾客", customer ? `${customer.name} / ${customer.email}` : selectedAsset.customerId],
+                ["记录 ID", selectedGroup.id],
+                ["顾客", customer ? `${customer.name} / ${customer.email}` : asset.customerId],
                 ["模型", model ? `${model.label} / ${model.status}` : "未关联"],
-                ["创建时间", formatDate(selectedAsset.createdAt)],
-                ["审核状态", reviewStatusLabel(selectedAsset.reviewStatus)],
-                ["收藏状态", selectedAsset.isFavorite ? `已收藏${selectedAsset.favoriteAt ? ` / ${formatDate(selectedAsset.favoriteAt)}` : ""}` : "未收藏"],
-                ["主体角色", selectedAsset.subjectRole ?? "未设置"],
-                ["任务 ID", selectedAsset.jobId ?? "未关联"],
-                ["模型 ID", selectedAsset.customerModelId ?? "未关联"]
+                ["任务 ID", selectedGroup.job?.id ?? asset.jobId ?? "未关联"],
+                ["任务状态", selectedGroup.job ? jobStatusLabel(selectedGroup.job.status) : "未关联"],
+                ["源图数量", String(selectedGroup.sourceAssets.length)],
+                ["生成图数量", String(selectedGroup.outputAssets.length)],
+                ["创建时间", formatDate(asset.createdAt)],
+                ["更新时间", selectedGroup.job ? formatDate(selectedGroup.job.updatedAt) : "未关联"],
+                ["审核状态", reviewStatusLabel(asset.reviewStatus)],
+                ["模型 ID", asset.customerModelId ?? "未关联"]
               ];
               return (
                 <div className="grid gap-5 p-5">
-                  <div className="overflow-hidden rounded-[12px] border border-zinc-200 bg-zinc-50">
-                    {previewUrl ? (
-                      <img alt={selectedAsset.label} className="max-h-[420px] w-full object-contain" src={previewUrl} />
-                    ) : (
-                      <div className="flex min-h-[220px] items-center justify-center text-sm text-zinc-500">当前素材没有可预览的图片文件。</div>
-                    )}
+                  <div className="grid gap-3 rounded-[12px] border border-zinc-200 bg-zinc-50 p-4 text-sm lg:grid-cols-4">
+                    <div className="rounded-[10px] bg-white p-3">
+                      <p className="text-xs text-zinc-500">源图</p>
+                      <p className="mt-1 text-xl font-semibold text-zinc-950">{selectedGroup.sourceAssets.length}</p>
+                    </div>
+                    <div className="rounded-[10px] bg-white p-3">
+                      <p className="text-xs text-zinc-500">生成图</p>
+                      <p className="mt-1 text-xl font-semibold text-zinc-950">{selectedGroup.outputAssets.length}</p>
+                    </div>
+                    <div className="rounded-[10px] bg-white p-3">
+                      <p className="text-xs text-zinc-500">任务状态</p>
+                      <p className="mt-2">
+                        {selectedGroup.job ? (
+                          <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-medium ${jobStatusTone(selectedGroup.job.status)}`}>{jobStatusLabel(selectedGroup.job.status)}</span>
+                        ) : (
+                          <span className="text-sm text-zinc-500">未关联</span>
+                        )}
+                      </p>
+                    </div>
+                    <div className="rounded-[10px] bg-white p-3">
+                      <p className="text-xs text-zinc-500">顾客</p>
+                      <p className="mt-1 truncate text-sm font-semibold text-zinc-950" title={customer?.email ?? asset.customerId}>{customer?.email ?? asset.customerId}</p>
+                    </div>
                   </div>
-                  <div className={`rounded-[10px] border px-4 py-3 text-sm leading-6 ${assetRoleTone(selectedAsset.role)}`}>
-                    {assetRoleHint(selectedAsset.role)}
+                  {selectedGroup.job?.error ? (
+                    <div className="rounded-[10px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-700">
+                      {selectedGroup.job.error}
+                    </div>
+                  ) : null}
+                  <div className={`rounded-[10px] border px-4 py-3 text-sm leading-6 ${assetRoleTone(asset.role)}`}>
+                    {assetRoleHint(asset.role)}
                   </div>
                   <div className="grid gap-2 rounded-[10px] border border-zinc-200 bg-zinc-50 p-4 text-sm">
                     {detailRows.map(([label, value]) => (
@@ -689,37 +722,32 @@ export function CustomerAssetReviewPanel({
                       </div>
                     ))}
                   </div>
-                  <div className="flex flex-wrap justify-end gap-2">
-                    {previewUrl ? (
-                      <a
-                        className="rounded-[8px] border border-zinc-200 bg-white px-4 py-2 text-sm text-zinc-700"
-                        href={previewUrl}
-                        rel="noreferrer"
-                        target="_blank"
+                  <GroupAssetSection assets={selectedGroup.sourceAssets} emptyText="当前记录未关联源图。" title="源图 / 客户上传图" />
+                  <GroupAssetSection assets={selectedGroup.outputAssets} emptyText={selectedGroup.job ? `${jobStatusLabel(selectedGroup.job.status)}，暂无生成图。` : "当前记录暂无生成图。"} title="生成图 / AI 输出图" />
+                  <div className="flex flex-wrap justify-end gap-2 border-t border-zinc-200 pt-4">
+                    {selectedGroup.outputAssets.map((outputAsset) => (
+                      <button
+                        className="rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-700 disabled:opacity-50"
+                        disabled={favoritingAssetId === outputAsset.id}
+                        key={outputAsset.id}
+                        onClick={() => toggleFavoriteAsset(outputAsset)}
+                        type="button"
                       >
-                        打开图片
-                      </a>
-                    ) : null}
-                    <button
-                      className="rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-700 disabled:opacity-50"
-                      disabled={selectedAsset.role !== "output" || favoritingAssetId === selectedAsset.id}
-                      onClick={() => toggleFavoriteAsset(selectedAsset)}
-                      type="button"
-                    >
-                      {selectedAsset.isFavorite ? "取消收藏" : "加入收藏"}
-                    </button>
+                        {outputAsset.isFavorite ? "取消收藏" : "收藏输出图"}
+                      </button>
+                    ))}
                     <button
                       className="rounded-[8px] border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700 disabled:opacity-50"
-                      disabled={reviewingAssetId === selectedAsset.id || selectedAsset.reviewStatus === "approved"}
-                      onClick={() => reviewAsset(selectedAsset, "approved")}
+                      disabled={reviewingAssetId === asset.id || asset.reviewStatus === "approved"}
+                      onClick={() => reviewAsset(asset, "approved")}
                       type="button"
                     >
                       标记通过
                     </button>
                     <button
                       className="rounded-[8px] border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-700 disabled:opacity-50"
-                      disabled={reviewingAssetId === selectedAsset.id || selectedAsset.reviewStatus === "rejected"}
-                      onClick={() => reviewAsset(selectedAsset, "rejected")}
+                      disabled={reviewingAssetId === asset.id || asset.reviewStatus === "rejected"}
+                      onClick={() => reviewAsset(asset, "rejected")}
                       type="button"
                     >
                       标记拒绝

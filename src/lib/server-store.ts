@@ -1515,6 +1515,7 @@ export function toThemeRuntimeAsset(state: PlatformState, asset: AssetUpload): T
   return {
     id: asset.id,
     jobId: asset.jobId,
+    subjectRole: asset.subjectRole,
     label: asset.label,
     previewUrl,
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,

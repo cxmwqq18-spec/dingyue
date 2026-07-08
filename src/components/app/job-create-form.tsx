@@ -14,7 +14,7 @@ type OperationContext = {
   note?: string;
   source?: string;
 };
-type SubscriptionStatus = "loading" | "active" | "required";
+type SubscriptionStatus = "loading" | "active" | "required" | "admin";
 
 type CreatedJobFeedback = {
   workerDispatch?: {
@@ -631,14 +631,17 @@ export function JobCreateForm({
     ? "Checking your subscription before generation. You can keep preparing photos while this loads."
     : subscriptionStatus === "required"
       ? "Start a subscription before generating. Credits are your monthly balance; a current plan unlocks workspace requests."
+      : subscriptionStatus === "admin"
+        ? "Site admin access is active. Subscription is not required, and credits will still be reserved for this request."
       : "";
+  const subscriptionBypassActive = subscriptionStatus === "admin";
   const creditsUsageNote = createMode === "theme"
     ? `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`
     : `${selectionCreditCost} credits are spent for this tool request.`;
   const subscriptionGateClass = subscriptionStatus === "required"
     ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
     : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/68");
-  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length <= effectiveMaxAssets && subscriptionStatus === "active");
+  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive));
   const selectedSourceAssets = sourceAssets.filter((asset) => selectedRequestAssetIds.includes(asset.id));
   const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
   const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
@@ -1077,8 +1080,10 @@ export function JobCreateForm({
     }
     setPending(true);
     setDialogTone("info");
-    setDialogMessage("Creating the job and reserving credits. Keep this window open until the request status page opens.");
-    setMessage("Starting your photo set and holding credits...");
+    setDialogMessage(subscriptionBypassActive
+      ? "Creating the admin job and reserving credits. Keep this window open until the request status page opens."
+      : "Creating the job and reserving credits. Keep this window open until the request status page opens.");
+    setMessage(subscriptionBypassActive ? "Starting your admin photo set and holding credits..." : "Starting your photo set and holding credits...");
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 30_000);
     let response: Response;
@@ -1098,7 +1103,8 @@ export function JobCreateForm({
             customerModelId: selectedCustomerModel?.id,
             assetIds: selectedRequestAssetIds,
             primaryAssetIds: selectedAssetIds,
-            partnerAssetIds: isCoupleFlow ? partnerSelectedAssetIds : []
+            partnerAssetIds: isCoupleFlow ? partnerSelectedAssetIds : [],
+            subscriptionBypassRequested: subscriptionBypassActive ? "site_admin" : undefined
           }
         })
       });
@@ -1123,7 +1129,9 @@ export function JobCreateForm({
       dispatchStatus === "failed"
         ? `Job created, but the generator did not accept it: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Opening the request status page.`
         : dispatchStatus === "skipped"
-          ? "Job created and credits are held, but no generator is configured for this environment. Opening the request status page."
+          ? subscriptionBypassActive
+            ? "Admin job created and credits are held, but no generator is configured for this environment. Opening the request status page."
+            : "Job created and credits are held, but no generator is configured for this environment. Opening the request status page."
           : "Job created. Opening the request status page so you can follow generation progress.";
     setDialogTone("success");
     setDialogMessage(dispatchMessage);
