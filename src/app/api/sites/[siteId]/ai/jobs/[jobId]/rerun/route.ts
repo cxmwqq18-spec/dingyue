@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
+import { publicUrlForRequest } from "@/lib/session";
 import { rerunGenerationJobRelational, settleGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload, dispatchWorkerPayload } from "@/lib/worker";
+import { buildWorkerPayload, dispatchWorkerPayload, resolveWorkerBaseUrls } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function POST(
@@ -13,11 +14,11 @@ export async function POST(
   const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:job-rerun` });
   if (!guard.ok) return guard.response;
   const body = (await request.json().catch(() => ({}))) as { actor?: string };
-  const baseUrl = new URL(request.url).origin;
+  const workerBaseUrls = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
 
   try {
     const result = await rerunGenerationJobRelational({ siteId, jobId, actor: body.actor });
-    const workerPayload = await buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrl });
+    const workerPayload = await buildWorkerPayload({ job: result.job, siteAiApp: result.siteAiApp, baseUrls: workerBaseUrls });
     const workerDispatch = await dispatchWorkerPayload(workerPayload);
     if (workerDispatch.status !== "sent") {
       const settled = await settleGenerationJobRelational({

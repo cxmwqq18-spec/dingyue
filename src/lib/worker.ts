@@ -31,6 +31,11 @@ export interface WorkerDispatchResult {
   error?: string;
 }
 
+export type WorkerBaseUrls = {
+  publicBaseUrl: string;
+  callbackBaseUrl?: string;
+};
+
 export interface WorkerResultPayload {
   jobId: string;
   siteId: string;
@@ -111,6 +116,10 @@ function shouldUseLocalWorkerDispatch() {
   return process.env.LOCAL_AI_WORKER_ENABLED === "1" && hasExplicitWorkerSecret();
 }
 
+function isLoopbackHost(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname === "[::1]";
+}
+
 export function resolveWorkerDispatchEndpoint(payload: Pick<WorkerPayload, "callbackUrl">): string {
   const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
   if (configuredEndpoint) return configuredEndpoint;
@@ -119,13 +128,31 @@ export function resolveWorkerDispatchEndpoint(payload: Pick<WorkerPayload, "call
     : "";
 }
 
+export function resolveWorkerBaseUrls(publicBaseUrl: string): WorkerBaseUrls {
+  const normalizedPublicBaseUrl = publicBaseUrl.replace(/\/$/, "");
+  const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
+  if (!configuredEndpoint) return { publicBaseUrl: normalizedPublicBaseUrl };
+  try {
+    const endpoint = new URL(configuredEndpoint);
+    if (isLoopbackHost(endpoint.hostname)) {
+      return {
+        publicBaseUrl: normalizedPublicBaseUrl,
+        callbackBaseUrl: endpoint.origin
+      };
+    }
+  } catch {
+    return { publicBaseUrl: normalizedPublicBaseUrl };
+  }
+  return { publicBaseUrl: normalizedPublicBaseUrl };
+}
+
 function requestedAssetIds(job: GenerationJob): string[] {
   const value = job.requestJson.assetIds;
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
 }
 
-async function buildInputAssets(params: { job: GenerationJob; baseUrl: string }): Promise<Array<{ assetId: string; signedUrl: string }>> {
-  const baseUrl = params.baseUrl.replace(/\/$/, "");
+async function buildInputAssets(params: { job: GenerationJob; assetBaseUrl: string }): Promise<Array<{ assetId: string; signedUrl: string }>> {
+  const assetBaseUrl = params.assetBaseUrl.replace(/\/$/, "");
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
   const assets = await Promise.all(
     requestedAssetIds(params.job).map(async (assetId) => {
@@ -142,22 +169,25 @@ async function buildInputAssets(params: { job: GenerationJob; baseUrl: string })
       });
       return {
         assetId: result.asset.id,
-        signedUrl: `${baseUrl}/api/sites/${params.job.siteId}/customers/${params.job.customerId}/assets/${result.asset.id}/download?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`
+        signedUrl: `${assetBaseUrl}/api/sites/${params.job.siteId}/customers/${params.job.customerId}/assets/${result.asset.id}/download?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`
       };
     })
   );
-  return assets.length ? assets : [{ assetId: "asset_demo", signedUrl: `${baseUrl}/api/demo-assets/input.jpg` }];
+  return assets.length ? assets : [{ assetId: "asset_demo", signedUrl: `${assetBaseUrl}/api/demo-assets/input.jpg` }];
 }
 
 export async function buildWorkerPayload(params: {
   job: GenerationJob;
   siteAiApp: SiteAiApp;
-  baseUrl: string;
+  baseUrl?: string;
+  baseUrls?: WorkerBaseUrls;
   secret?: string;
 }): Promise<WorkerPayload> {
   const requestId = `req_${params.job.id}`;
   const secret = params.secret ?? process.env.AI_WORKER_SECRET ?? "dev-worker-secret";
-  const inputAssets = await buildInputAssets({ job: params.job, baseUrl: params.baseUrl });
+  const baseUrls = params.baseUrls ?? resolveWorkerBaseUrls(params.baseUrl ?? "");
+  const callbackBaseUrl = (baseUrls.callbackBaseUrl ?? baseUrls.publicBaseUrl).replace(/\/$/, "");
+  const inputAssets = await buildInputAssets({ job: params.job, assetBaseUrl: callbackBaseUrl });
   const unsigned: Omit<WorkerPayload, "signature"> = {
     jobId: params.job.id,
     siteId: params.job.siteId,
@@ -173,8 +203,8 @@ export async function buildWorkerPayload(params: {
       strategy: "preferred_then_priority",
       providers: await getPlatformAiProviderFallbackQueueRelational()
     },
-    callbackUrl: `${params.baseUrl}/api/internal/ai-worker/jobs/${params.job.id}/result`,
-    statusCallbackUrl: `${params.baseUrl}/api/internal/ai-worker/jobs/${params.job.id}/status`,
+    callbackUrl: `${callbackBaseUrl}/api/internal/ai-worker/jobs/${params.job.id}/result`,
+    statusCallbackUrl: `${callbackBaseUrl}/api/internal/ai-worker/jobs/${params.job.id}/status`,
     requestId
   };
   return {

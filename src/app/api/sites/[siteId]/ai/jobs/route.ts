@@ -3,8 +3,9 @@ import { requireCustomerMutation } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
+import { publicUrlForRequest } from "@/lib/session";
 import { createGenerationJobRelational, settleGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload, dispatchWorkerPayload } from "@/lib/worker";
+import { buildWorkerPayload, dispatchWorkerPayload, resolveWorkerBaseUrls } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
   const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.generation, key: `${siteId}:${body.customerId}:jobs` });
   if (!guard.ok) return guard.response;
-  const baseUrl = new URL(request.url).origin;
+  const workerBaseUrls = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
   try {
     const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
     const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
       }
     });
-    const workerPayload = await buildWorkerPayload({ job, siteAiApp, baseUrl });
+    const workerPayload = await buildWorkerPayload({ job, siteAiApp, baseUrls: workerBaseUrls });
     const shouldSkipWorkerDispatch = process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1";
     const workerDispatch = shouldSkipWorkerDispatch
       ? { status: "skipped" as const }
