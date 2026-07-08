@@ -91,18 +91,6 @@ const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v
 const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702";
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
 const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries"><defs><linearGradient id="aidreamcapes-header-logo" x1="92" y1="76" x2="420" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#A855F7"/><stop offset="0.48" stop-color="#F65BA8"/><stop offset="1" stop-color="#52C7D8"/></linearGradient></defs><g fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M256 388c-56-49-126-91-126-174 0-52 41-84 85-70 19 6 32 20 41 38 9-18 22-32 41-38 44-14 85 18 85 70 0 83-70 125-126 174Z"/><path d="M256 176l42 78-42 86-42-86 42-78Z"/><path d="M192 254h128"/></g><circle cx="256" cy="254" r="18" fill="transparent" stroke="#F65BA8" stroke-width="12"/></svg>`;
-const LAUNCH_CHECKLIST_TDK = {
-  aidreamcapes: {
-    title: "AIdreamcapes – the most advanced AI photo generator  maker",
-    description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
-    keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
-  },
-  mydreamshoots: {
-    title: "Professional AI Photo Generator Online - MyDreamShoots",
-    description: "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.",
-    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
-  }
-} as const;
 
 function normalizePathSlug(value: string): string {
   const decoded = (() => {
@@ -304,43 +292,6 @@ function withStorefrontIcons(html: string, icons: StorefrontIconSet | undefined)
   return `${beforeHeadContent}${headContent.slice(0, insertionPoint)}${iconTags}${headContent.slice(insertionPoint)}${afterHeadContent}`;
 }
 
-function launchChecklistTdkForRequest(request: NextRequest): typeof LAUNCH_CHECKLIST_TDK[keyof typeof LAUNCH_CHECKLIST_TDK] | undefined {
-  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
-  const host = `${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
-  if ((pathname === "/" && host.includes("aidreamcapes.com")) || pathname === "/site/aidreamcapes") return LAUNCH_CHECKLIST_TDK.aidreamcapes;
-  if ((pathname === "/" && host.includes("mydreamshoots.com")) || pathname === "/site/mydreamshoots") return LAUNCH_CHECKLIST_TDK.mydreamshoots;
-  return undefined;
-}
-
-function exactMetaTag(name: "description" | "keywords", content: string): string {
-  return `<meta name="${name}" content="${content}"/>`;
-}
-
-function withLaunchChecklistHomeTdk(html: string, request: NextRequest): string {
-  const tdk = launchChecklistTdkForRequest(request);
-  if (!tdk) return html;
-
-  const headOpen = html.search(/<head\b[^>]*>/i);
-  if (headOpen < 0) return html;
-
-  const headOpenEnd = html.indexOf(">", headOpen);
-  const headClose = html.search(/<\/head>/i);
-  if (headOpenEnd < 0 || headClose < 0 || headClose <= headOpenEnd) return html;
-
-  const beforeHeadContent = html.slice(0, headOpenEnd + 1);
-  const headContent = html.slice(headOpenEnd + 1, headClose);
-  const afterHeadContent = html.slice(headClose);
-  const titleTag = `<title>${tdk.title}</title>`;
-  const descriptionTag = exactMetaTag("description", tdk.description);
-  const keywordsTag = exactMetaTag("keywords", tdk.keywords);
-  const headWithTdk = headContent
-    .replace(/<title\b[^>]*>[\s\S]*?<\/title>/i, titleTag)
-    .replace(/<meta\b(?=[^>]*\bname=["']description["'])[^>]*\/?>/i, descriptionTag)
-    .replace(/<meta\b(?=[^>]*\bname=["']keywords["'])[^>]*\/?>/i, keywordsTag);
-
-  return `${beforeHeadContent}${headWithTdk}${afterHeadContent}`;
-}
-
 function withInlineAidreamcapesLogo(html: string, request: NextRequest): string {
   const iconHref = siteIconForRequest(request);
   if (iconHref?.png !== AIDREAMCAPES_ICON) return html;
@@ -410,7 +361,7 @@ export async function middleware(request: NextRequest) {
   if (!upstreamResponse.ok || !contentType.includes("text/html")) return upstreamResponse;
 
   const html = await upstreamResponse.text();
-  const rewrittenHtml = withInlineAidreamcapesLogo(withLaunchChecklistHomeTdk(withStorefrontIcons(moveSeoTagsBeforeResources(html), siteIconForRequest(request)), request), request);
+  const rewrittenHtml = withInlineAidreamcapesLogo(withStorefrontIcons(moveSeoTagsBeforeResources(html), siteIconForRequest(request)), request);
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
   headers.set("cache-control", "no-store, max-age=0");

@@ -106,11 +106,6 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   const aidreamcapes = isAidreamcapesSeoSite(site);
   if (aidreamcapes) {
     const overrides: Record<string, Partial<PageSeo>> = {
-      "/": {
-        title: "AIdreamcapes – the most advanced AI photo generator  maker",
-        description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
-        keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
-      },
       "/about-us": {
         title: "About Aidreamcapes",
         description: "Learn how Aidreamcapes turns private uploads into cinematic portraits, visible credit workflows, and customer-only galleries."
@@ -132,11 +127,6 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
     return overrides[slug];
   }
   const overrides: Record<string, Partial<PageSeo>> = {
-    "/": {
-      title: "Professional AI Photo Generator Online - MyDreamShoots",
-      description: "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.",
-      keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
-    },
     "/collections": {
       title: "Browse private AI photo packages | MyDreamShoots",
       description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
