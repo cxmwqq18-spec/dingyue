@@ -3,7 +3,7 @@ import { requireCustomerMutation } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
-import { createGenerationJobRelational } from "@/lib/stores/job-store";
+import { createGenerationJobRelational, settleGenerationJobRelational } from "@/lib/stores/job-store";
 import { buildWorkerPayload, dispatchWorkerPayload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -52,6 +52,24 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const workerDispatch = shouldSkipWorkerDispatch
       ? { status: "skipped" as const }
       : await dispatchWorkerPayload(workerPayload);
+    if (!shouldSkipWorkerDispatch && workerDispatch.status !== "sent") {
+      const settled = await settleGenerationJobRelational({
+        jobId: job.id,
+        siteId,
+        requestId: workerPayload.requestId,
+        status: "failed",
+        error: workerDispatch.error ?? "worker_dispatch_failed"
+      });
+      return NextResponse.json({
+        ok: false,
+        error: workerDispatch.error ?? "worker_dispatch_failed",
+        job: settled.job,
+        customer: settled.customer,
+        customerBalance: settled.customer.balance,
+        workerDispatch,
+        note: "Worker dispatch was not accepted. The job was failed and reserved credits were released."
+      }, { status: workerDispatch.status === "skipped" ? 503 : 502 });
+    }
     return NextResponse.json({
       ok: true,
       job,

@@ -101,6 +101,24 @@ export function verifyWorkerCallbackSignature(payload: Record<string, unknown>, 
   }
 }
 
+function hasExplicitWorkerSecret() {
+  const secret = process.env.AI_WORKER_SECRET?.trim();
+  return Boolean(secret && secret !== "dev-worker-secret");
+}
+
+function shouldUseLocalWorkerDispatch() {
+  if (process.env.NODE_ENV !== "production") return true;
+  return process.env.LOCAL_AI_WORKER_ENABLED === "1" && hasExplicitWorkerSecret();
+}
+
+export function resolveWorkerDispatchEndpoint(payload: Pick<WorkerPayload, "callbackUrl">): string {
+  const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
+  if (configuredEndpoint) return configuredEndpoint;
+  return shouldUseLocalWorkerDispatch()
+    ? new URL("/api/internal/ai-worker/dispatch", payload.callbackUrl).toString()
+    : "";
+}
+
 function requestedAssetIds(job: GenerationJob): string[] {
   const value = job.requestJson.assetIds;
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
@@ -166,11 +184,8 @@ export async function buildWorkerPayload(params: {
 }
 
 export async function dispatchWorkerPayload(payload: WorkerPayload): Promise<WorkerDispatchResult> {
-  const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
-  const endpoint = configuredEndpoint || (process.env.NODE_ENV !== "production"
-    ? new URL("/api/internal/ai-worker/dispatch", payload.callbackUrl).toString()
-    : "");
-  if (!endpoint) return { status: "skipped" };
+  const endpoint = resolveWorkerDispatchEndpoint(payload);
+  if (!endpoint) return { status: "skipped", error: "worker_dispatch_not_configured" };
   try {
     const response = await fetch(endpoint, {
       method: "POST",
