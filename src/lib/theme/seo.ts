@@ -102,6 +102,34 @@ function isAidreamcapesSeoSite(site: Site): boolean {
   return `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
 }
 
+function isMyDreamShootsSeoSite(site: Site): boolean {
+  const token = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase();
+  return token.includes("mydreamshoots") || site.id === "site_dreamshoot";
+}
+
+function storefrontLaunchChecklistSeo(
+  site: Site,
+  slug: string,
+  seo: Pick<PageSeo, "title" | "description" | "keywords">
+): Pick<PageSeo, "title" | "description" | "keywords"> {
+  if (slug !== "/") return seo;
+  if (isAidreamcapesSeoSite(site)) {
+    return {
+      title: "AIdreamcapes – the most advanced AI photo generator  maker",
+      description:
+        "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
+      keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
+    };
+  }
+  if (!isMyDreamShootsSeoSite(site)) return seo;
+  return {
+    title: "Professional AI Photo Generator Online - MyDreamShoots",
+    description:
+      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.",
+    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
+  };
+}
+
 function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> | undefined {
   const aidreamcapes = isAidreamcapesSeoSite(site);
   if (aidreamcapes) {
@@ -326,27 +354,31 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
   const icons = siteIcons(site);
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const finalTitle = launchChecklistSeo.title;
+  const finalDescription = launchChecklistSeo.description;
+  const finalKeywords = launchChecklistSeo.keywords;
 
   return {
-    title,
-    description,
-    keywords: cleanText(pageSeo.keywords) || undefined,
+    title: finalTitle,
+    description: finalDescription,
+    keywords: finalKeywords || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? seo.robots.index : false,
       follow: pageSeo.follow ?? seo.robots.follow
     },
     openGraph: {
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       url: canonical,
       siteName: seo.siteTitle,
       images: ogImage ? [{ url: ogImage }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       images: ogImage ? [ogImage] : undefined
     },
     icons
@@ -389,27 +421,31 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
   const icons = siteIcons(site);
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const finalTitle = launchChecklistSeo.title;
+  const finalDescription = launchChecklistSeo.description;
+  const finalKeywords = launchChecklistSeo.keywords;
 
   return {
-    title,
-    description,
-    keywords: cleanText(pageSeo.keywords) || undefined,
+    title: finalTitle,
+    description: finalDescription,
+    keywords: finalKeywords || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: defaultRobots.index ? pageSeo.index ?? currentSeo?.robots?.index ?? true : false,
       follow: pageSeo.follow ?? currentSeo?.robots?.follow ?? true
     },
     openGraph: {
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       url: canonical,
       siteName: siteTitle,
       images: ogImage ? [{ url: ogImage }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       images: ogImage ? [ogImage] : undefined
     },
     icons
