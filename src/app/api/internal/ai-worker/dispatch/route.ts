@@ -36,6 +36,13 @@ async function loadSharp(): Promise<SharpFactory | undefined> {
   }
 }
 
+function shouldUseSharpForWorkerImages() {
+  const explicit = process.env.LOCAL_AI_WORKER_USE_SHARP?.trim();
+  if (explicit === "1") return true;
+  if (explicit === "0" || process.env.LOCAL_AI_WORKER_DISABLE_SHARP === "1") return false;
+  return process.env.NODE_ENV !== "production";
+}
+
 type ImageGenerationResponse = {
   data?: Array<{ b64_json?: string; image_base64?: string }>;
   output?: Array<{ b64_json?: string; image_base64?: string }>;
@@ -243,6 +250,7 @@ function extensionForMime(mimeType: string) {
 
 async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
   if (mimeType.includes("gif")) return { bytes: blobPartFromBytes(Buffer.from(bytes)), mimeType };
+  if (!shouldUseSharpForWorkerImages()) return { bytes: blobPartFromBytes(Buffer.from(bytes)), mimeType };
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_REFERENCE_MAX_DIMENSION ?? "1600") || 1600);
   const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_REFERENCE_QUALITY ?? "82") || 82, 95));
   try {
