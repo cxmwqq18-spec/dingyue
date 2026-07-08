@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { publishCustomerJobEventForJob } from "@/lib/customer-job-events";
 import { StoreError } from "@/lib/server-store";
 import { updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
 import { verifyWorkerCallbackSignature, type WorkerOutputSlot } from "@/lib/worker";
@@ -26,6 +27,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       status: body.status,
       stage: body.stage,
       outputSlots: Array.isArray(body.outputSlots) ? body.outputSlots : undefined
+    });
+    publishCustomerJobEventForJob("status", result.job, {
+      alreadyFinal: result.alreadyFinal,
+      stage: body.stage
     });
     return NextResponse.json({
       accepted: true,

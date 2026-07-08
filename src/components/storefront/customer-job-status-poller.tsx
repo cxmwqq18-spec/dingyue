@@ -53,7 +53,7 @@ function statusBody(job: RuntimeJob, assetsCount: number): string {
   if (job.status === "queued") {
     return "Credits are held and the request is waiting for the generator.";
   }
-  return "Keep this page open or come back later. The status refreshes automatically.";
+  return "Keep this page open or come back later. The status updates when the generator sends progress.";
 }
 
 function failureDetail(job: RuntimeJob): string | undefined {
@@ -97,7 +97,8 @@ export function CustomerJobStatusPoller({ initialAssetsCount, initialJob, siteId
   useEffect(() => {
     if (isFinal) return;
     let cancelled = false;
-    const interval = window.setInterval(async () => {
+    if (typeof window === "undefined" || typeof window.EventSource === "undefined") return;
+    const refreshJob = async () => {
       try {
         const response = await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=${Date.now()}`, {
           cache: "no-store"
@@ -113,10 +114,24 @@ export function CustomerJobStatusPoller({ initialAssetsCount, initialJob, siteId
       } catch {
         if (!cancelled) setRefreshError("Status refresh paused. Reload the page to check again.");
       }
-    }, 4000);
+    };
+    const events = new EventSource(`/api/sites/${siteId}/customer/job-events`);
+    const handleJobEvent = (event: MessageEvent<string>) => {
+      const payload = (() => {
+        try {
+          return JSON.parse(event.data) as { jobId?: unknown };
+        } catch {
+          return {};
+        }
+      })();
+      if (payload.jobId !== initialJob.id) return;
+      void refreshJob();
+    };
+    events.addEventListener("job", handleJobEvent);
     return () => {
       cancelled = true;
-      window.clearInterval(interval);
+      events.removeEventListener("job", handleJobEvent);
+      events.close();
     };
   }, [initialJob.id, isFinal, siteId]);
 

@@ -129,7 +129,7 @@ function workspaceJobBody(job: RuntimeJob): string {
   }
   if (result.lastWorkerStage === "source_images_ready") return "Your selected photos are being prepared for generation.";
   if (job.status === "queued") return "Credits are held and this request is waiting for the generator.";
-  return "This page refreshes status automatically while your request is running.";
+  return "The workspace updates when the generator sends progress.";
 }
 
 function requestedJobOutputCount(job: RuntimeJob): number {
@@ -337,6 +337,7 @@ export function CustomerWorkspaceShell({
   const [runtimeRefreshMessage, setRuntimeRefreshMessage] = useState("");
   const [manualRefreshPending, setManualRefreshPending] = useState(false);
   const [manualRefreshKey, setManualRefreshKey] = useState<number | null>(null);
+  const eventRefreshKeyRef = useRef<number | null>(null);
   const [focusedJobId, setFocusedJobId] = useState<string | null>(null);
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
@@ -418,13 +419,37 @@ export function CustomerWorkspaceShell({
   }, [searchParams]);
 
   useEffect(() => {
-    if (!recentJobs.some((job) => job.status === "queued" || job.status === "running")) return;
-    const interval = window.setInterval(() => {
+    if (typeof window === "undefined" || typeof window.EventSource === "undefined") return;
+    const events = new EventSource(`/api/sites/${site.id}/customer/job-events`);
+    const refreshFromJobEvent = (event: MessageEvent<string>) => {
+      const payload = (() => {
+        try {
+          return JSON.parse(event.data) as { jobId?: unknown; status?: unknown };
+        } catch {
+          return {};
+        }
+      })();
+      if (typeof payload.jobId !== "string") return;
+      const eventJobId = payload.jobId;
+      setFocusedJobId((current) => current ?? eventJobId);
       setRuntimeFetchEnabled(true);
-      setRuntimeRefreshKey((current) => current + 1);
-    }, 5000);
-    return () => window.clearInterval(interval);
-  }, [recentJobs]);
+      setRuntimeRefreshMessage(
+        payload.status === "succeeded" || payload.status === "failed"
+          ? "Generator callback received. Refreshing workspace."
+          : "Generator progress received. Refreshing workspace."
+      );
+      setRuntimeRefreshKey((current) => {
+        const next = current + 1;
+        eventRefreshKeyRef.current = next;
+        return next;
+      });
+    };
+    events.addEventListener("job", refreshFromJobEvent);
+    return () => {
+      events.removeEventListener("job", refreshFromJobEvent);
+      events.close();
+    };
+  }, [site.id]);
 
   useEffect(() => {
     if (!manualRefreshPending || manualRefreshKey === null || completedRuntimeRefreshKey !== manualRefreshKey) return;
@@ -439,6 +464,17 @@ export function CustomerWorkspaceShell({
       setRuntimeRefreshMessage("Status refresh failed. Try again.");
     }
   }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
+  useEffect(() => {
+    const eventRefreshKey = eventRefreshKeyRef.current;
+    if (eventRefreshKey === null || completedRuntimeRefreshKey !== eventRefreshKey) return;
+    eventRefreshKeyRef.current = null;
+    if (runtimeState.status === "ready") {
+      setRuntimeRefreshMessage(`Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
+    }
+    if (runtimeState.status === "error") {
+      setRuntimeRefreshMessage("Generator callback received, but workspace refresh failed. Use Check now.");
+    }
+  }, [completedRuntimeRefreshKey, runtimeState.status]);
   useEffect(() => {
     setRuntimeAssets(runtime?.assets ?? initialRuntime?.assets ?? assets);
   }, [assets, initialRuntime?.assets, runtime?.assets]);
@@ -933,14 +969,6 @@ export function CustomerWorkspaceShell({
     sampleBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     sampleBlobUrlsRef.current.clear();
   }, []);
-
-  useEffect(() => {
-    if (activeJobs <= 0) return;
-    const timer = window.setInterval(() => {
-      setRuntimeRefreshKey((current) => current + 1);
-    }, 4500);
-    return () => window.clearInterval(timer);
-  }, [activeJobs]);
 
   useEffect(() => {
     if (!selectedPreviewAssetId) return;

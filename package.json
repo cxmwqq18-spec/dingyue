@@ -23,6 +23,7 @@
     "smoke:public-seo-policy": "node scripts/smoke-public-seo-policy.mjs",
     "smoke:cart-translate-checkout": "node scripts/smoke-cart-translate-checkout.mjs",
     "smoke:aidreamcapes-admin-workspace": "node scripts/smoke-aidreamcapes-admin-workspace.mjs",
+    "smoke:customer-job-events": "node scripts/smoke-customer-job-events.mjs",
     "smoke:dreamshoot-public-seo-templates": "node scripts/smoke-dreamshoot-public-seo-templates.mjs",
     "smoke:aidreamcapes-backend": "node scripts/smoke-aidreamcapes-backend-isolation.mjs",
     "smoke:site-admin-nav-instant": "node scripts/smoke-site-admin-nav-instant.mjs",

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { publishCustomerJobEventForJob } from "@/lib/customer-job-events";
 import { StoreError } from "@/lib/server-store";
 import { settleGenerationJobRelational } from "@/lib/stores/job-store";
 import { verifyWorkerCallbackSignature, type WorkerResultPayload } from "@/lib/worker";
@@ -28,6 +29,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       providerTrace: body.providerTrace,
       costTrace: body.costTrace,
       error: body.error
+    });
+    publishCustomerJobEventForJob("result", result.job, {
+      alreadyProcessed: result.alreadyProcessed
     });
     return NextResponse.json({
       accepted: true,
