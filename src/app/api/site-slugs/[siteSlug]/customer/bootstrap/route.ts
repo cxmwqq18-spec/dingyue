@@ -8,13 +8,36 @@ import {
 } from "@/lib/stores/site-store";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
+import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+async function hasAnyCustomerSessionCookie(): Promise<boolean> {
+  return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const includeMode = new URL(request.url).searchParams.get("include");
+  if (!(await hasAnyCustomerSessionCookie())) {
+    if (includeMode === "shell") {
+      return NextResponse.json(
+        {
+          ok: true,
+          authenticated: false,
+          site: undefined,
+          siteAiApps: [],
+          creativePacks: []
+        },
+        { headers: { "Cache-Control": "private, max-age=8" } }
+      );
+    }
+    return NextResponse.json(
+      { ok: false, error: "customer_login_required", loginPath: `/site/${publicSiteSlug(siteSlug)}/login` },
+      { status: 401 }
+    );
+  }
   const siteId = await getSiteIdBySlugRelational(siteSlug);
   if (!siteId) {
     return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });

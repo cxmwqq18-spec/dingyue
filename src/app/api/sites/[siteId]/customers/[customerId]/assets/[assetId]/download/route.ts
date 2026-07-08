@@ -50,11 +50,12 @@ export async function GET(
       return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
     }
     const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
-    const result = readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
-    const extension = result.asset.mimeType.split("/")[1]?.replace(/[^a-z0-9]+/gi, "") || "bin";
+    const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
+    const mimeType = result.mimeType || result.asset.mimeType;
+    const extension = mimeType.split("/")[1]?.replace(/[^a-z0-9]+/gi, "") || "bin";
     return new Response(new Uint8Array(result.bytes), {
       headers: {
-        "Content-Type": result.asset.mimeType,
+        "Content-Type": mimeType,
         "Content-Disposition": `attachment; filename="${result.asset.id}.${extension}"`
       }
     });

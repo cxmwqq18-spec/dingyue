@@ -38,6 +38,16 @@ type OutputCopyJob = {
 };
 const myDreamShootsDisplayName = "myᕲreamshoots";
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
+
+function customerAssetClientBaseUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL || process.env.NEXT_PUBLIC_CUSTOMER_ASSET_SHARED_BASE_URL || "";
+  if (!raw) return "";
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return "";
+  }
+}
 type RuntimeOutputSlot = {
   index: number;
   status: "queued" | "running" | "succeeded" | "failed";
@@ -179,10 +189,15 @@ function slotLabel(slot: RuntimeOutputSlot): string {
 }
 
 function workspaceStoragePreviewUrl(storageKey: string): string {
-  if (storageKey.startsWith("customer-assets/")) return `/api/local-assets/${storageKey.slice("customer-assets/".length)}`;
-  if (storageKey.startsWith("sites/") && storageKey.includes("/customers/")) return `/api/local-assets/${storageKey}`;
+  const baseUrl = customerAssetClientBaseUrl();
+  const localAssetUrl = (key: string) => {
+    const path = `/api/local-assets/${key}`;
+    return baseUrl ? `${baseUrl}${path}` : path;
+  };
+  if (storageKey.startsWith("customer-assets/")) return localAssetUrl(storageKey.slice("customer-assets/".length));
+  if (storageKey.startsWith("sites/") && storageKey.includes("/customers/")) return localAssetUrl(storageKey);
   if (storageKey.startsWith("/")) return storageKey;
-  return `/api/local-assets/${storageKey}`;
+  return localAssetUrl(storageKey);
 }
 
 function workspaceJobTime(value: string): string {
@@ -336,6 +351,7 @@ export function CustomerWorkspaceShell({
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
   const restoredSampleSelectionRef = useRef(false);
+  const syncedInitialSamplesRef = useRef(false);
   const sampleSelectionStorageKey = useMemo(() => `dreamshoot:workspace:${site.id}:${customer.id}:sample-selection:v1`, [customer.id, site.id]);
   const tabItems: Array<{ id: WorkspaceResourceTab; label: string }> = useMemo(
     () => [
@@ -659,6 +675,48 @@ export function CustomerWorkspaceShell({
     if (previewSampleId === oldId) setPreviewSampleId(nextAsset.id);
   }
 
+  async function syncCurrentSamples(keepAssetIds: string[]) {
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+      method: "PATCH",
+      headers: {
+        ...csrfHeader(`customer_csrf_${site.id}`),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ action: "keep_current_samples", keepAssetIds })
+    });
+    if (!response.ok) return;
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  async function deleteSamples(assets: SampleAsset[]) {
+    const remoteIds = assets
+      .filter((asset) => !asset.id.startsWith("local:") && asset.localStatus !== "uploading")
+      .map((asset) => asset.id);
+    const localIds = assets.filter((asset) => asset.id.startsWith("local:")).map((asset) => asset.id);
+    if (!remoteIds.length && !localIds.length) return;
+    remoteIds.forEach((assetId) => removeSampleId(assetId));
+    localIds.forEach((assetId) => removeSampleId(assetId));
+    setSampleAssets((current) => current.filter((item) => !remoteIds.includes(item.id) && !localIds.includes(item.id)));
+    if (!remoteIds.length) return;
+    setDeletingSampleId(remoteIds[0]);
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+      method: "DELETE",
+      headers: {
+        ...csrfHeader(`customer_csrf_${site.id}`),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ assetIds: remoteIds })
+    });
+    setDeletingSampleId(null);
+    if (!response.ok) {
+      setSampleUploadMessage(remoteIds.length === 1 ? "We could not delete this sample. Please refresh and try again." : "We could not delete every selected sample. Please refresh and try again.");
+      setRuntimeRefreshKey((current) => current + 1);
+      return;
+    }
+    setSampleUploadMessage(remoteIds.length === 1 ? "Sample deleted." : `${remoteIds.length} samples deleted.`);
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
   function moveSamplePreview(direction: -1 | 1) {
     if (!previewSamples.length) return;
     const currentIndex = previewSampleIndex >= 0 ? previewSampleIndex : 0;
@@ -668,25 +726,7 @@ export function CustomerWorkspaceShell({
 
   async function deleteSample(asset: SampleAsset) {
     if (asset.localStatus === "uploading") return;
-    if (asset.id.startsWith("local:")) {
-      removeSampleId(asset.id);
-      setSampleAssets((current) => current.filter((item) => item.id !== asset.id));
-      return;
-    }
-    setDeletingSampleId(asset.id);
-    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}`, {
-      method: "DELETE",
-      headers: csrfHeader(`customer_csrf_${site.id}`)
-    });
-    setDeletingSampleId(null);
-    if (!response.ok) {
-      setSampleUploadMessage("We could not delete this sample. Please try again.");
-      return;
-    }
-    removeSampleId(asset.id);
-    setSampleAssets((current) => current.filter((item) => item.id !== asset.id));
-    setSampleUploadMessage("Sample deleted.");
-    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+    await deleteSamples([asset]);
   }
 
   async function uploadSidebarSamples(files: FileList | null) {
@@ -743,11 +783,15 @@ export function CustomerWorkspaceShell({
       replaceSampleId(optimisticId, result.asset, target);
     }
     const createdIds = createdAssets.map((asset) => asset.id);
+    const nextPrimaryIds = target === "partner" ? primarySampleIds : Array.from(new Set([...createdIds, ...primarySampleIds])).slice(0, 15);
+    const nextPartnerIds = target === "partner" ? Array.from(new Set([...createdIds, ...partnerSampleIds])).slice(0, 15) : partnerSampleIds;
     if (target === "partner") {
-      setPartnerSampleIds((current) => Array.from(new Set([...createdIds, ...current])).slice(0, 15));
+      setPartnerSampleIds(nextPartnerIds);
     } else {
-      setPrimarySampleIds((current) => Array.from(new Set([...createdIds, ...current])).slice(0, 15));
+      setPrimarySampleIds(nextPrimaryIds);
     }
+    const keepIds = Array.from(new Set([...nextPrimaryIds, ...nextPartnerIds])).slice(0, 30);
+    void syncCurrentSamples(keepIds);
     setSampleUploadMessage(`${createdAssets.length} sample${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
     setUploadingSampleTarget(null);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
@@ -861,6 +905,16 @@ export function CustomerWorkspaceShell({
       studioModelName
     }));
   }, [partnerGender, partnerSampleIds, primaryGender, primarySampleIds, sampleSelectionStorageKey, studioModelName, studioTrainingMode]);
+
+  useEffect(() => {
+    if (syncedInitialSamplesRef.current || !restoredSampleSelectionRef.current || runtimeState.status !== "ready") return;
+    const availableIds = new Set(readySourceAssets.map((asset) => asset.id));
+    const keepIds = Array.from(new Set([...primarySampleIds, ...partnerSampleIds]))
+      .filter((assetId) => availableIds.has(assetId) && !assetId.startsWith("local:"));
+    if (!keepIds.length) return;
+    syncedInitialSamplesRef.current = true;
+    void syncCurrentSamples(keepIds);
+  }, [partnerSampleIds, primarySampleIds, readySourceAssets, runtimeState.status]);
 
   useEffect(() => {
     const handleAssetsUpdated = () => {
@@ -1024,54 +1078,71 @@ export function CustomerWorkspaceShell({
                                 { id: "partner" as const, title: "Partner Samples", body: "Upload photos for the partner person." }
                               ]
                             : [{ id: "primary" as const, title: "Your Samples", body: "Upload photos for this private model." }]
-                          ).map((group) => (
-                            <div className="rounded-[12px] border border-white/10 bg-black/20 p-3" key={group.id}>
-                              <div className="flex items-center justify-between gap-3">
-                                <div>
-                                  <p className="text-sm font-semibold">{group.title}</p>
-                                  <p className="mt-1 text-xs leading-5 text-white/52">
-                                    {group.body} Uploaded {group.id === "partner" ? partnerSampleIds.length : primarySampleIds.length} selected sample{(group.id === "partner" ? partnerSampleIds.length : primarySampleIds.length) === 1 ? "" : "s"}. Use up to 15 clear samples per request.
-                                  </p>
+                          ).map((group) => {
+                            const selectedIds = group.id === "partner" ? partnerSampleIds : primarySampleIds;
+                            const selectedGroupAssets = sourceAssets.filter((asset) => selectedIds.includes(asset.id));
+                            const remoteDeleting = selectedGroupAssets.some((asset) => deletingSampleId === asset.id);
+                            return (
+                              <div className="rounded-[12px] border border-white/10 bg-black/20 p-3" key={group.id}>
+                                <div className="flex items-center justify-between gap-3">
+                                  <div>
+                                    <p className="text-sm font-semibold">{group.title}</p>
+                                    <p className="mt-1 text-xs leading-5 text-white/52">
+                                      {group.body} Uploaded {selectedGroupAssets.length} selected sample{selectedGroupAssets.length === 1 ? "" : "s"}. Use up to 15 clear samples per request.
+                                    </p>
+                                  </div>
+                                  <div className="flex shrink-0 gap-2">
+                                    {selectedGroupAssets.length ? (
+                                      <button
+                                        className="rounded-[10px] border border-rose-300/25 bg-rose-500/12 px-3 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-500/18 disabled:cursor-wait disabled:opacity-55"
+                                        disabled={remoteDeleting}
+                                        onClick={() => void deleteSamples(selectedGroupAssets)}
+                                        type="button"
+                                      >
+                                        {remoteDeleting ? "Deleting" : "Delete selected"}
+                                      </button>
+                                    ) : null}
+                                    <button
+                                      className="rounded-[10px] border border-white/12 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
+                                      disabled={uploadingSampleTarget === group.id}
+                                      onClick={() => openSidebarSamplePicker(group.id)}
+                                      type="button"
+                                    >
+                                      {uploadingSampleTarget === group.id ? "Uploading" : "Upload"}
+                                    </button>
+                                  </div>
                                 </div>
-                                <button
-                                  className="rounded-[10px] border border-white/12 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                                  disabled={uploadingSampleTarget === group.id}
-                                  onClick={() => openSidebarSamplePicker(group.id)}
-                                  type="button"
-                                >
-                                  {uploadingSampleTarget === group.id ? "Uploading" : "Upload"}
-                                </button>
+                                <div className="mt-3 grid grid-cols-3 gap-2">
+                                  {selectedGroupAssets.slice(0, 6).map((asset) => (
+                                    <button
+                                      className="group/sample relative overflow-hidden rounded-[10px] border border-white/10 bg-black/30"
+                                      disabled={asset.localStatus === "failed"}
+                                      key={`${group.id}_${asset.id}`}
+                                      onClick={() => setPreviewSampleId(asset.id)}
+                                      type="button"
+                                    >
+                                      <img alt={asset.label} className="aspect-square w-full object-cover transition group-hover/sample:scale-[1.03]" src={asset.previewUrl} />
+                                      {asset.localStatus === "uploading" ? (
+                                        <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">Uploading</span>
+                                      ) : null}
+                                      {asset.localStatus === "failed" ? (
+                                        <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">Failed</span>
+                                      ) : null}
+                                    </button>
+                                  ))}
+                                  {!selectedGroupAssets.length ? (
+                                    <button
+                                      className="col-span-3 grid min-h-[104px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/20 px-4 py-5 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/60 hover:text-white"
+                                      onClick={() => openSidebarSamplePicker(group.id)}
+                                      type="button"
+                                    >
+                                      Click Upload to select image files.
+                                    </button>
+                                  ) : null}
+                                </div>
                               </div>
-                              <div className="mt-3 grid grid-cols-3 gap-2">
-                                {sourceAssets.filter((asset) => (group.id === "partner" ? partnerSampleIds : primarySampleIds).includes(asset.id)).slice(0, 6).map((asset) => (
-                                  <button
-                                    className="group/sample relative overflow-hidden rounded-[10px] border border-white/10 bg-black/30"
-                                    disabled={asset.localStatus === "failed"}
-                                    key={`${group.id}_${asset.id}`}
-                                    onClick={() => setPreviewSampleId(asset.id)}
-                                    type="button"
-                                  >
-                                    <img alt={asset.label} className="aspect-square w-full object-cover transition group-hover/sample:scale-[1.03]" src={asset.previewUrl} />
-                                    {asset.localStatus === "uploading" ? (
-                                      <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">Uploading</span>
-                                    ) : null}
-                                    {asset.localStatus === "failed" ? (
-                                      <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">Failed</span>
-                                    ) : null}
-                                  </button>
-                                ))}
-                                {!(group.id === "partner" ? partnerSampleIds : primarySampleIds).length ? (
-                                  <button
-                                    className="col-span-3 grid min-h-[104px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/20 px-4 py-5 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/60 hover:text-white"
-                                    onClick={() => openSidebarSamplePicker(group.id)}
-                                    type="button"
-                                  >
-                                    Click Upload to select image files.
-                                  </button>
-                                ) : null}
-                              </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                           <input
                             accept="image/*"
                             className="sr-only"

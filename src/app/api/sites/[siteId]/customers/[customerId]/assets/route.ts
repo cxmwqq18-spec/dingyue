@@ -1,11 +1,25 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import fs from "fs";
 import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
+import {
+  cleanCustomerAssetFileName,
+  customerAssetStorageKey,
+  deleteCustomerAssetFileShared,
+  extensionForCustomerAssetMime,
+  prepareCompressedCustomerImage,
+  writeCustomerAssetFileShared
+} from "@/lib/customer-asset-storage";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
-import { StoreError, writeCustomerAssetFile } from "@/lib/server-store";
-import { createAssetUploadRelational, getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { StoreError } from "@/lib/server-store";
+import {
+  customerAssetHasReadableFile,
+  createAssetUploadRelational,
+  deleteAssetUploadsRelational,
+  getCustomerAssetsRelational,
+  pruneCustomerInputAssetsRelational,
+  toThemeRuntimeAssetRelational
+} from "@/lib/stores/asset-store";
 import type { NextRequest } from "next/server";
 
 type SharpFactory = (input: Buffer) => {
@@ -35,7 +49,7 @@ function assetErrorResponse(error: unknown, fallback = "asset_create_failed") {
 }
 
 function cleanUploadedFileName(fileName: string): string {
-  return fileName.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "") || "upload";
+  return cleanCustomerAssetFileName(fileName);
 }
 
 function normalizedImageFileName(fileName: string, mimeType: string): string {
@@ -65,13 +79,9 @@ async function prepareUploadedImage(file: File): Promise<{ bytes: Buffer; mimeTy
   }
 }
 
-function removeWrittenAssetFile(filePath: string | undefined) {
-  if (!filePath) return;
-  try {
-    fs.unlinkSync(filePath);
-  } catch {
-    // Best-effort cleanup after DB write failure; callers still receive the DB error.
-  }
+function removeWrittenAssetFile(storageKey: string | undefined) {
+  if (!storageKey) return;
+  void deleteCustomerAssetFileShared(storageKey).catch(() => null);
 }
 
 function assetRolesFromParam(value: string | null): Array<"input" | "output" | "training_input"> | undefined {
@@ -92,9 +102,10 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
   const url = new URL(_request.url);
   const requestedLimit = Number(url.searchParams.get("limit") ?? "100");
   const result = await getCustomerAssetsRelational({ siteId, customerId, roles: assetRolesFromParam(url.searchParams.get("role")), take: requestedLimit });
+  const readableAssets = result.assets.filter((asset) => customerAssetHasReadableFile(asset));
   return NextResponse.json({
     ok: true,
-    assets: result.assets.map(toThemeRuntimeAssetRelational)
+    assets: readableAssets.map(toThemeRuntimeAssetRelational)
   });
 }
 
@@ -147,12 +158,31 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const preparedFile = body.file ? await prepareUploadedImage(body.file) : undefined;
     if (preparedFile) body.mimeType = preparedFile.mimeType;
-    const storageKey = body.file && preparedFile
-      ? `customer-assets/sites/${siteId}/customers/${customerId}/assets/${crypto.randomUUID()}-${cleanUploadedFileName(preparedFile.fileName)}`
+    const compressedFile = preparedFile
+      ? prepareCompressedCustomerImage({
+        bytes: preparedFile.bytes,
+        mimeType: preparedFile.mimeType,
+        fileName: preparedFile.fileName,
+        purpose: "input"
+      })
       : undefined;
-    let writtenFilePath: string | undefined;
-    if (preparedFile && storageKey) {
-      writtenFilePath = writeCustomerAssetFile({ storageKey, bytes: preparedFile.bytes }).path;
+    if (compressedFile) body.mimeType = compressedFile.mimeType;
+    const storageKey = body.file && compressedFile
+      ? customerAssetStorageKey({
+        siteId,
+        customerId,
+        fileName: `${crypto.randomUUID()}-${cleanUploadedFileName(compressedFile.fileName).replace(/\.[^.]+$/, "")}.${extensionForCustomerAssetMime(compressedFile.mimeType)}`
+      })
+      : undefined;
+    let writtenStorageKey: string | undefined;
+    if (compressedFile && storageKey) {
+      await writeCustomerAssetFileShared({
+        storageKey,
+        bytes: compressedFile.bytes,
+        mimeType: compressedFile.mimeType,
+        purpose: "input"
+      });
+      writtenStorageKey = storageKey;
     }
 
     let result: Awaited<ReturnType<typeof createAssetUploadRelational>>;
@@ -168,12 +198,46 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         storageKey
       });
     } catch (error) {
-      removeWrittenAssetFile(writtenFilePath);
+      removeWrittenAssetFile(writtenStorageKey);
       throw error;
     }
 
     return NextResponse.json({ ok: true, asset: toThemeRuntimeAssetRelational(result.asset) });
   } catch (error) {
     return assetErrorResponse(error);
+  }
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ siteId: string; customerId: string }> }) {
+  const { siteId, customerId } = await params;
+  const guard = await requireCustomerMutation(request, siteId, customerId, { key: `${siteId}:${customerId}:assets-delete` });
+  if (!guard.ok) return guard.response;
+  try {
+    const body = (await request.json().catch(() => ({}))) as { assetIds?: unknown };
+    const assetIds = Array.isArray(body.assetIds) ? body.assetIds.filter((item): item is string => typeof item === "string") : [];
+    if (!assetIds.length) {
+      return NextResponse.json({ ok: false, error: "asset_ids_required" }, { status: 400 });
+    }
+    const result = await deleteAssetUploadsRelational({ siteId, customerId, assetIds });
+    return NextResponse.json({ ok: true, deletedCount: result.deletedCount, assets: result.assets.map(toThemeRuntimeAssetRelational) });
+  } catch (error) {
+    return assetErrorResponse(error, "asset_delete_failed");
+  }
+}
+
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ siteId: string; customerId: string }> }) {
+  const { siteId, customerId } = await params;
+  const guard = await requireCustomerMutation(request, siteId, customerId, { key: `${siteId}:${customerId}:assets-prune` });
+  if (!guard.ok) return guard.response;
+  try {
+    const body = (await request.json().catch(() => ({}))) as { action?: unknown; keepAssetIds?: unknown };
+    if (body.action !== "keep_current_samples") {
+      return NextResponse.json({ ok: false, error: "unsupported_asset_patch_action" }, { status: 400 });
+    }
+    const keepAssetIds = Array.isArray(body.keepAssetIds) ? body.keepAssetIds.filter((item): item is string => typeof item === "string") : [];
+    const result = await pruneCustomerInputAssetsRelational({ siteId, customerId, keepAssetIds });
+    return NextResponse.json({ ok: true, deletedCount: result.deletedCount });
+  } catch (error) {
+    return assetErrorResponse(error, "asset_prune_failed");
   }
 }

@@ -938,11 +938,15 @@ export function JobCreateForm({
     localAssetMutationRef.current += 1;
     setAvailableAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
     const createdIds = createdAssets.map((asset) => asset.id);
+    const nextPrimaryIds = pendingUploadTargetRef.current === "partner" ? selectedAssetIds : [...createdIds, ...selectedAssetIds].slice(0, effectiveMaxAssets);
+    const nextPartnerIds = pendingUploadTargetRef.current === "partner" ? [...createdIds, ...partnerSelectedAssetIds].slice(0, effectiveMaxAssets) : partnerSelectedAssetIds;
     if (pendingUploadTargetRef.current === "partner") {
-      setPartnerSelectedAssetIds((current) => [...createdIds, ...current].slice(0, effectiveMaxAssets));
+      setPartnerSelectedAssetIds(nextPartnerIds);
     } else {
-      setSelectedAssetIds((current) => [...createdIds, ...current].slice(0, effectiveMaxAssets));
+      setSelectedAssetIds(nextPrimaryIds);
     }
+    const keepIds = Array.from(new Set([...nextPrimaryIds, ...nextPartnerIds])).slice(0, DEFAULT_MAX_SOURCE_ASSETS * 2);
+    void syncCurrentSourceAssets(keepIds);
     setMessage(`${createdAssets.length} private photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the selfies you want to use.`);
     setUploadingSources(false);
   }
@@ -969,6 +973,45 @@ export function JobCreateForm({
     setSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
     setPartnerSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
     setMessage("Private photo deleted.");
+  }
+
+  async function deleteSelectedSourceAssets(assetIds: string[]) {
+    const remoteIds = Array.from(new Set(assetIds.filter(Boolean))).filter((assetId) => !deletingAssetIds.includes(assetId));
+    if (!remoteIds.length) return;
+    const confirmed = window.confirm(`Delete ${remoteIds.length} selected private photo${remoteIds.length === 1 ? "" : "s"}?`);
+    if (!confirmed) return;
+    setDeletingAssetIds((current) => Array.from(new Set([...current, ...remoteIds])));
+    setMessage(remoteIds.length === 1 ? "Deleting private photo..." : `Deleting ${remoteIds.length} private photos...`);
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+      method: "DELETE",
+      headers: {
+        ...csrfHeader(`customer_csrf_${siteId}`),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ assetIds: remoteIds })
+    });
+    setDeletingAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
+    if (!response.ok) {
+      setMessage("We could not delete every selected private photo. Please refresh and try again.");
+      return;
+    }
+    invalidateCustomerAssets(siteId, customer.id);
+    localAssetMutationRef.current += 1;
+    setAvailableAssets((current) => current.filter((item) => !remoteIds.includes(item.id)));
+    setSelectedAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
+    setPartnerSelectedAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
+    setMessage(`${remoteIds.length} private photo${remoteIds.length === 1 ? "" : "s"} deleted.`);
+  }
+
+  async function syncCurrentSourceAssets(keepAssetIds: string[]) {
+    await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+      method: "PATCH",
+      headers: {
+        ...csrfHeader(`customer_csrf_${siteId}`),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ action: "keep_current_samples", keepAssetIds })
+    }).catch(() => null);
   }
 
   async function createJob(event?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
@@ -1091,6 +1134,7 @@ export function JobCreateForm({
   }
 
   function renderPhotoPicker(title: string, description: string, target: "primary" | "partner", selectedIds: string[]) {
+    const deletingSelected = selectedIds.some((id) => deletingAssetIds.includes(id));
     return (
       <div className={`grid gap-3 rounded-[16px] border p-3 ${subtlePanelClass}`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1098,9 +1142,21 @@ export function JobCreateForm({
             <p className={`text-sm font-semibold ${textClass}`}>{title}</p>
             <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{description}</p>
           </div>
-          <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${light ? "border-[#eadfce] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
-            {selectedIds.length} selected
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${light ? "border-[#eadfce] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
+              {selectedIds.length} selected
+            </span>
+            {selectedIds.length ? (
+              <button
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition disabled:cursor-wait disabled:opacity-55 ${light ? "border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100" : "border-rose-300/25 bg-rose-500/12 text-rose-100 hover:bg-rose-500/18"}`}
+                disabled={deletingSelected}
+                onClick={() => void deleteSelectedSourceAssets(selectedIds)}
+                type="button"
+              >
+                {deletingSelected ? "Deleting" : "Delete selected"}
+              </button>
+            ) : null}
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {sourceAssets.map((asset) => {

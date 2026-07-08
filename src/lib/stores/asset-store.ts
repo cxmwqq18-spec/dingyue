@@ -1,7 +1,16 @@
 import "server-only";
 import fs from "fs";
-import path from "path";
 import type { PrismaClient } from "@prisma/client";
+import {
+  customerAssetFileExists,
+  customerAssetFilePath,
+  customerAssetUrl,
+  deleteCustomerAssetFileShared,
+  hasRemoteCustomerAssetReadSource,
+  normalizeCustomerAssetStorageKey,
+  readCustomerAssetFileRemote,
+  shouldAssumeRemoteCustomerAssetsReadable
+} from "@/lib/customer-asset-storage";
 import { fallbackImageForSeed } from "@/lib/media";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
@@ -17,19 +26,6 @@ import {
 } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
-const customerAssetRoot = path.join(process.cwd(), "data", "customer-assets");
-
-function customerAssetFilePath(storageKey: string): string {
-  return path.join(customerAssetRoot, storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, ""));
-}
-
-function customerAssetFileExists(storageKey: string): boolean {
-  try {
-    return fs.existsSync(customerAssetFilePath(storageKey));
-  } catch {
-    return false;
-  }
-}
 
 const requiredAssetMetadataFields = [
   "id",
@@ -46,18 +42,40 @@ const requiredAssetMetadataFields = [
 ];
 
 export function safeCustomerAssetStorageKey(params: { siteId: string; customerId: string; storageKey: string }): string {
-  const normalized = params.storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, "");
+  let normalized = "";
+  try {
+    normalized = normalizeCustomerAssetStorageKey(params.storageKey);
+  } catch {
+    throw new StoreError("unsafe_asset_storage_key", 400);
+  }
   const expectedPrefix = `sites/${params.siteId}/customers/${params.customerId}/assets/`;
   if (
     !normalized ||
     normalized.includes("..") ||
-    path.isAbsolute(normalized) ||
     normalized.split("/").some((part) => part === "." || part === "") ||
     !normalized.startsWith(expectedPrefix)
   ) {
     throw new StoreError("unsafe_asset_storage_key", 400);
   }
   return normalized;
+}
+
+function deleteAssetFileBestEffort(storageKey: string) {
+  try {
+    void deleteCustomerAssetFileShared(storageKey).catch(() => null);
+  } catch {
+    // Metadata should remain deletable even when a file was already missing.
+  }
+}
+
+function sourceAssetIdsFromJobRequest(value: unknown): string[] {
+  const request = value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+  const fields = request.fields && typeof request.fields === "object" && !Array.isArray(request.fields)
+    ? request.fields as Record<string, unknown>
+    : {};
+  return [request.assetIds, request.primaryAssetIds, request.partnerAssetIds, fields.primaryAssetIds, fields.partnerAssetIds]
+    .flatMap((entry) => Array.isArray(entry) ? entry : [])
+    .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
 export async function createAssetUploadRelational(
@@ -120,7 +138,66 @@ export async function deleteAssetUploadRelational(
     where: { id: params.assetId },
     data: { deletedAt: new Date() }
   });
+  deleteAssetFileBestEffort(asset.storageKey);
   return { asset: toAssetUploadRelational(updated as unknown as Record<string, unknown>) };
+}
+
+export async function deleteAssetUploadsRelational(
+  params: { siteId: string; customerId: string; assetIds: string[] },
+  client: DbClient = prisma
+): Promise<{ assets: AssetUpload[]; deletedCount: number }> {
+  const assetIds = Array.from(new Set(params.assetIds.map((id) => id.trim()).filter(Boolean))).slice(0, 100);
+  if (!assetIds.length) return { assets: [], deletedCount: 0 };
+  const assets = await client.assetUpload.findMany({
+    where: { id: { in: assetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null }
+  });
+  const foundIds = new Set(assets.map((asset) => asset.id));
+  const missingId = assetIds.find((assetId) => !foundIds.has(assetId));
+  if (missingId) throw new StoreError("asset_not_found_for_customer", 404);
+  const deletedAt = new Date();
+  const updated = await client.assetUpload.updateMany({
+    where: { id: { in: assetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null },
+    data: { deletedAt }
+  });
+  for (const asset of assets) deleteAssetFileBestEffort(asset.storageKey);
+  return {
+    assets: assets.map((asset) => toAssetUploadRelational({ ...asset, deletedAt } as unknown as Record<string, unknown>)),
+    deletedCount: updated.count
+  };
+}
+
+export async function pruneCustomerInputAssetsRelational(
+  params: { siteId: string; customerId: string; keepAssetIds: string[] },
+  client: DbClient = prisma
+): Promise<{ deletedCount: number }> {
+  const keepAssetIds = Array.from(new Set(params.keepAssetIds.map((id) => id.trim()).filter(Boolean)));
+  const referencedJobs = await client.generationJob.findMany({
+    where: {
+      siteId: params.siteId,
+      customerId: params.customerId,
+      status: { in: ["queued", "running"] }
+    },
+    select: { requestJson: true },
+    orderBy: { createdAt: "desc" },
+    take: 24
+  });
+  const protectedAssetIds = new Set([...keepAssetIds, ...referencedJobs.flatMap((job) => sourceAssetIdsFromJobRequest(job.requestJson))]);
+  const staleAssets = await client.assetUpload.findMany({
+    where: {
+      siteId: params.siteId,
+      customerId: params.customerId,
+      deletedAt: null,
+      role: { in: ["input", "training_input"] },
+      ...(protectedAssetIds.size ? { id: { notIn: Array.from(protectedAssetIds) } } : {})
+    }
+  });
+  if (!staleAssets.length) return { deletedCount: 0 };
+  await client.assetUpload.updateMany({
+    where: { id: { in: staleAssets.map((asset) => asset.id) }, siteId: params.siteId, customerId: params.customerId },
+    data: { deletedAt: new Date() }
+  });
+  for (const asset of staleAssets) deleteAssetFileBestEffort(asset.storageKey);
+  return { deletedCount: staleAssets.length };
 }
 
 export async function getCustomerAssetsRelational(
@@ -140,6 +217,11 @@ export async function getCustomerAssetsRelational(
     take
   });
   return { assets: assets.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>)) };
+}
+
+export function customerAssetHasReadableFile(asset: Pick<AssetUpload, "storageKey">): boolean {
+  if (shouldAssumeRemoteCustomerAssetsReadable()) return true;
+  return customerAssetFileExists(asset.storageKey.replace(/^customer-assets\//, ""));
 }
 
 export async function updateCustomerAssetFavoriteRelational(
@@ -210,26 +292,35 @@ export async function createAssetDownloadLinkRelational(
   };
 }
 
-export function readCustomerAssetFileByStorageKey(params: {
+export async function readCustomerAssetFileByStorageKey(params: {
   siteId: string;
   customerId: string;
   asset: AssetUpload;
-}): { asset: AssetUpload; bytes: Buffer } {
+}): Promise<{ asset: AssetUpload; bytes: Buffer; mimeType: string }> {
   const storageKey = safeCustomerAssetStorageKey({
     siteId: params.siteId,
     customerId: params.customerId,
     storageKey: params.asset.storageKey
   });
-  const filePath = path.join(customerAssetRoot, storageKey);
-  if (!filePath.startsWith(`${customerAssetRoot}${path.sep}`)) throw new StoreError("unsafe_asset_storage_key", 400);
-  if (!fs.existsSync(filePath)) throw new StoreError("asset_file_missing", 404);
-  return { asset: params.asset, bytes: fs.readFileSync(filePath) };
+  const filePath = customerAssetFilePath(storageKey);
+  if (fs.existsSync(filePath)) {
+    return { asset: params.asset, bytes: fs.readFileSync(filePath), mimeType: params.asset.mimeType };
+  }
+  if (hasRemoteCustomerAssetReadSource()) {
+    try {
+      const remote = await readCustomerAssetFileRemote({ storageKey });
+      return { asset: params.asset, bytes: remote.bytes, mimeType: remote.mimeType || params.asset.mimeType };
+    } catch {
+      throw new StoreError("asset_file_missing", 404);
+    }
+  }
+  throw new StoreError("asset_file_missing", 404);
 }
 
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
   const previewUrl = customerAssetFileExists(storageKey)
-    ? `/api/local-assets/${storageKey}`
+    ? customerAssetUrl(storageKey)
     : fallbackImageForSeed(`${asset.siteId}-${asset.id}-${storageKey}`);
   return {
     id: asset.id,

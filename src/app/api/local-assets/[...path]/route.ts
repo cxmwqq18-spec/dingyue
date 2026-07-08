@@ -1,17 +1,7 @@
 import { readFile, stat } from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
-
-const assetRoot = path.join(process.cwd(), "data", "customer-assets");
-
-const mimeByExtension: Record<string, string> = {
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".png": "image/png",
-  ".webp": "image/webp",
-  ".gif": "image/gif"
-};
+import { contentTypeForCustomerAssetPath, customerAssetFilePathFromSegments } from "@/lib/customer-asset-storage";
 
 const missingAssetPlaceholder = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Asset unavailable">
@@ -28,8 +18,10 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
   if (safeSegments.length !== segments.length) {
     return { error: "unsafe_asset_path", status: 400 as const };
   }
-  const filePath = path.join(assetRoot, ...safeSegments);
-  if (!filePath.startsWith(`${assetRoot}${path.sep}`)) {
+  let filePath = "";
+  try {
+    filePath = customerAssetFilePathFromSegments(safeSegments);
+  } catch {
     return { error: "asset_not_found", status: 404 as const };
   }
   const siteIndex = safeSegments.indexOf("sites");
@@ -57,11 +49,10 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
     }
     return { error: "asset_not_found", status: 404 as const };
   }
-  const extension = path.extname(filePath).toLowerCase();
   return {
     filePath,
     size: fileStat.size,
-    contentType: mimeByExtension[extension] ?? "application/octet-stream"
+    contentType: contentTypeForCustomerAssetPath(filePath)
   };
 }
 

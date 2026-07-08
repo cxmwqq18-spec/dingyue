@@ -1,6 +1,10 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
+import {
+  customerAssetStorageKey,
+  extensionForCustomerAssetMime,
+  prepareCompressedCustomerImage,
+  writeCustomerAssetFileShared
+} from "@/lib/customer-asset-storage";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
 import {
   signWorkerCallback,
@@ -425,19 +429,32 @@ async function generateWithProvider(params: {
       }
       const [b64] = imageBase64List(body);
       if (!b64) throw new Error("ai_provider_empty_image_payload");
-      const storageKey = `sites/${params.payload.siteId}/customers/${params.payload.customerId}/assets/${params.payload.jobId}-output-${slotIndex}.png`;
-      const filePath = path.join(process.cwd(), "data", "customer-assets", storageKey);
-      await mkdir(path.dirname(filePath), { recursive: true });
-      await writeFile(filePath, Buffer.from(b64, "base64"));
+      const preparedOutput = prepareCompressedCustomerImage({
+        bytes: Buffer.from(b64, "base64"),
+        mimeType: "image/png",
+        fileName: `${params.payload.jobId}-output-${slotIndex}.png`,
+        purpose: "output"
+      });
+      const storageKey = customerAssetStorageKey({
+        siteId: params.payload.siteId,
+        customerId: params.payload.customerId,
+        fileName: `${params.payload.jobId}-output-${slotIndex}.${extensionForCustomerAssetMime(preparedOutput.mimeType)}`
+      });
+      await writeCustomerAssetFileShared({
+        storageKey,
+        bytes: preparedOutput.bytes,
+        mimeType: preparedOutput.mimeType,
+        purpose: "output"
+      });
       await postWorkerSlotStatus(params.payload, "running", "provider_response_received", {
         index: slotIndex,
         status: "succeeded",
         stage: "provider_response_received",
         storageKey,
-        mimeType: "image/png",
+        mimeType: preparedOutput.mimeType,
         updatedAt: new Date().toISOString()
       });
-      return { storageKey, mimeType: "image/png", providerLabel, index: slotIndex };
+      return { storageKey, mimeType: preparedOutput.mimeType, providerLabel, index: slotIndex };
     } catch (error) {
       await postWorkerSlotStatus(params.payload, "running", "provider_slot_failed", {
         index: slotIndex,

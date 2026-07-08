@@ -663,6 +663,11 @@ async function readCustomerSessionId(siteId: string): Promise<string | undefined
   return (await cookies()).get(customerSessionCookie(siteId))?.value;
 }
 
+async function hasAnyCustomerSessionCookie(): Promise<boolean> {
+  const { cookies } = await import("next/headers");
+  return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
+
 async function getCurrentCustomerSession(
   state: PlatformState,
   siteId: string,
@@ -2030,6 +2035,9 @@ export async function renderCustomerWorkspacePageBySlug({
   const loginPathWithNext = `${loginPath}?next=${encodeURIComponent(`${workspacePath}${queryString ? `?${queryString}` : ""}`)}`;
   const isWorkspaceRoute = slug === "/app" || slug.startsWith("/app/");
   const initialWorkspacePanel = slug === "/app/upload" ? "upload" : slug === "/app" ? "overview" : "create";
+  if ((slug === "/account" || isWorkspaceRoute) && !(await hasAnyCustomerSessionCookie())) {
+    redirect(loginPathWithNext);
+  }
   if (slug === "/account") {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
     if (!siteId) notFound();

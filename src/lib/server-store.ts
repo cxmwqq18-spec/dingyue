@@ -24,6 +24,13 @@ import { defaultBlock, defaultSection, getSectionSchema } from "@/lib/section-sc
 import { withNormalizedSeo } from "@/lib/theme/seo";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { getThemePackages, themePackageTemplateToPageJson, type ThemePackageManifest, type ThemePackageSiteSettings } from "@/lib/theme/registry";
+import {
+  customerAssetFileExists as storageCustomerAssetFileExists,
+  customerAssetFilePath as storageCustomerAssetFilePath,
+  deleteCustomerAssetFile as storageDeleteCustomerAssetFile,
+  normalizeCustomerAssetStorageKey,
+  writeCustomerAssetFile as storageWriteCustomerAssetFile
+} from "@/lib/customer-asset-storage";
 import type {
   Album,
   AssetUpload,
@@ -190,26 +197,21 @@ function writePostgresStateCache(state: PlatformState): void {
   }
 }
 
-const customerAssetRoot = path.join(dataDir, "customer-assets");
-
 function safeCustomerAssetRelativePath(storageKey: string): string {
-  const normalized = storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, "");
-  if (!normalized || normalized.includes("..") || path.isAbsolute(normalized)) {
+  try {
+    return normalizeCustomerAssetStorageKey(storageKey);
+  } catch {
     throw new StoreError("unsafe_asset_storage_key", 400);
   }
-  return normalized;
 }
 
 function customerAssetFilePath(storageKey: string): string {
-  return path.join(customerAssetRoot, safeCustomerAssetRelativePath(storageKey));
+  safeCustomerAssetRelativePath(storageKey);
+  return storageCustomerAssetFilePath(storageKey);
 }
 
 function customerAssetFileExists(storageKey: string): boolean {
-  try {
-    return fs.existsSync(customerAssetFilePath(storageKey));
-  } catch {
-    return false;
-  }
+  return storageCustomerAssetFileExists(storageKey);
 }
 
 function isCustomerAssetStorageKey(storageKey: string | undefined): storageKey is string {
@@ -1688,10 +1690,7 @@ export function writeCustomerAssetFile(params: {
   storageKey: string;
   bytes: Buffer;
 }): { path: string; size: number } {
-  const filePath = customerAssetFilePath(params.storageKey);
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, params.bytes);
-  return { path: filePath, size: params.bytes.length };
+  return storageWriteCustomerAssetFile(params);
 }
 
 export function readCustomerAssetFile(params: {
@@ -1721,6 +1720,11 @@ export function deleteAssetUpload(params: {
     );
     if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
     asset.deletedAt = new Date().toISOString();
+    try {
+      storageDeleteCustomerAssetFile(asset.storageKey);
+    } catch {
+      // The metadata delete should still succeed if the file was already gone.
+    }
     result = { asset };
   });
   if (!result) throw new StoreError("asset_delete_failed", 500);

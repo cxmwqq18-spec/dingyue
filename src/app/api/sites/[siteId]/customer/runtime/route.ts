@@ -6,7 +6,7 @@ import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
-import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { customerAssetHasReadableFile, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { cookies } from "next/headers";
 import type { CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
@@ -178,7 +178,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
           WHERE a."role" IN ('input', 'training_input', 'output')
             AND a."deletedAt" IS NULL
           ORDER BY a."createdAt" DESC
-          LIMIT 96
+          LIMIT 48
         )
         UNION
         (
@@ -262,7 +262,9 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
   if (!customerRow) return undefined;
   const customer = publicCustomerFromWorkspaceRow(customerRow);
   const jobs = rowsFromJson(row?.jobs);
-  const assets = rowsFromJson(row?.assets);
+  const assets = rowsFromJson(row?.assets)
+    .map((asset) => toAssetUploadRelational(asset))
+    .filter((asset) => customerAssetHasReadableFile(asset));
   const subscriptions = rowsFromJson(row?.subscriptions);
   const customerModels = rowsFromJson(row?.customerModels);
   return {
@@ -271,7 +273,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
       ...emptyRuntime(),
       customer,
       jobs: jobs.map(runtimeJobFromWorkspaceRow),
-      assets: assets.map((asset) => toThemeRuntimeAssetRelational(toAssetUploadRelational(asset))),
+      assets: assets.map((asset) => toThemeRuntimeAssetRelational(asset)),
       subscriptions: subscriptions.map(runtimeSubscriptionFromWorkspaceRow),
       customerModels: customerModels.map((model) => {
         const mapped = toCustomerModelRelational(model);

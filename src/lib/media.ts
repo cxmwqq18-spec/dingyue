@@ -25,6 +25,19 @@ export function findSiteMediaAsset(site: Site, value: string | undefined): Media
   return siteMediaAssets(site).find((asset) => asset.id === lookup || asset.storageKey === lookup || asset.previewUrl === lookup || asset.originUrl === lookup);
 }
 
+function customerAssetPublicUrl(storageKey: string): string {
+  const normalized = storageKey.replace(/^customer-assets\//, "").replace(/^\/+/, "");
+  const rawBaseUrl = process.env.NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL || process.env.CUSTOMER_ASSET_READ_BASE_URL || process.env.CUSTOMER_ASSET_SHARED_BASE_URL || "";
+  let baseUrl = "";
+  try {
+    baseUrl = rawBaseUrl ? new URL(rawBaseUrl).origin : "";
+  } catch {
+    baseUrl = "";
+  }
+  const path = `/api/local-assets/${normalized}`;
+  return baseUrl ? `${baseUrl}${path}` : path;
+}
+
 export function resolveMediaAssetUrl(site: Site, value: string | undefined): string {
   const lookup = value?.trim();
   if (!lookup) return "";
@@ -32,8 +45,8 @@ export function resolveMediaAssetUrl(site: Site, value: string | undefined): str
   if (asset?.previewUrl) return asset.previewUrl;
   if (asset?.originUrl) return asset.originUrl;
   if (lookup.startsWith("/assets/dreamshoot/")) return lookup;
-  if (lookup.startsWith("customer-assets/")) return `/api/local-assets/${lookup.slice("customer-assets/".length)}`;
-  if (lookup.startsWith("sites/") && lookup.includes("/customers/")) return `/api/local-assets/${lookup}`;
+  if (lookup.startsWith("customer-assets/")) return customerAssetPublicUrl(lookup);
+  if (lookup.startsWith("sites/") && lookup.includes("/customers/")) return customerAssetPublicUrl(lookup);
   if (lookup.startsWith("/themes/theme1/")) return fallbackImageForSeed(lookup);
   if (lookup.startsWith("http")) return lookup;
   if (lookup.startsWith("/")) return lookup;
