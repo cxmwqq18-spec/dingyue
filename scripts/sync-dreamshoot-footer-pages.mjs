@@ -2,13 +2,14 @@ import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const companyAddress = "8 THE GREEN STE B, DOVER, DE 19901";
+const defaultCompanyAddress = "8 THE GREEN STE B, DOVER, DE 19901";
 
 const brandProfiles = [
   {
     matcher: /mydreamshoots|dreamshoot/i,
     brand: "MyDreamShoots",
     footerTitle: "MyDreamShoots",
+    companyAddress: defaultCompanyAddress,
     footerLogoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
     footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
@@ -46,11 +47,12 @@ const brandProfiles = [
   {
     matcher: /aidreamcapes/i,
     brand: "Aidreamcapes",
-    footerTitle: "Aidreamcapes",
-    footerLogoImageUrl: "/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg?v=aidreamcapes-cream",
-    footerLogoAlt: "Aidreamcapes heart logo for cinematic dreamscape portraits and private galleries",
+    footerTitle: "ልiጋreamርapes",
+    companyAddress: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
+    footerLogoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708",
+    footerLogoAlt: "Aidreamcapes logo for AI travel portraits and private destination galleries",
     supportEmail: "support@aidreamcapes.com",
-    salesEmail: "sales@aidreamcapes.com",
+    salesEmail: "",
     instagramUrl: "https://www.instagram.com/aidreamcapes",
     facebookUrl: "https://www.facebook.com/aidreamcapes",
     pinterestUrl: "https://www.pinterest.com/aidreamcapes",
@@ -62,9 +64,9 @@ const brandProfiles = [
     aboutSeoTitle: "About Aidreamcapes - private AI dreamscape portraits and galleries",
     aboutDescription:
       "Learn about Aidreamcapes, a private AI dreamscape portrait workspace for source photo planning, visible credits, cinematic scenes, and customer-only gallery delivery.",
-    contactSeoTitle: "Contact Aidreamcapes - support, sales, and company address",
+    contactSeoTitle: "Contact Aidreamcapes - support and company address",
     contactDescription:
-      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, billing review, privacy requests, or company address information.",
     footerLinks: [
       ["Travel Packages", "/collections", "product"],
       ["Tools", "/tools", "product"],
@@ -99,8 +101,8 @@ function pageJson(profile, page) {
   const body = isShipping
     ? `<h3>No physical shipping</h3><p>${profile.brand} sells digital AI photo credits, generated image packages, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by ${profile.brand}.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>`
     : isContact
-      ? `<h3>Support</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account access, upload guidance, billing review, refunds, privacy requests, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company address</h3><p>${companyAddress}</p>`
-      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account support, plan questions, or private gallery delivery help.</p><h3>Company address</h3><p>${companyAddress}</p>`;
+      ? `<h3>Support</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account access, upload guidance, billing review, refunds, privacy requests, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company address</h3><p>${profile.companyAddress}</p>`
+      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account support, plan questions, or private gallery delivery help.</p><h3>Company address</h3><p>${profile.companyAddress}</p>`;
   return {
     version: 1,
     pageType: isShipping ? "policy" : "content",
@@ -211,7 +213,7 @@ function upsertFooterLinks(settings, profile) {
     title: profile.footerTitle,
     logoImageUrl: profile.footerLogoImageUrl,
     logoAlt: profile.footerLogoAlt,
-    contactAddress: companyAddress,
+    contactAddress: profile.companyAddress,
     contactEmail: profile.supportEmail,
     salesEmail: profile.salesEmail,
     instagramUrl: profile.instagramUrl,

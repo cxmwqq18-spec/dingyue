@@ -132,7 +132,9 @@ const aidreamcapesToolGroups = [
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
+const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
 const myDreamShootsDisplayName = "myᕲreamshoots";
+const aidreamcapesDisplayName = "ልiጋreamርapes";
 
 function slugifyMenuLabel(value: string) {
   return value
@@ -309,10 +311,15 @@ export function CustomerShellHeader({
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   const isMyDreamShoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const logoText = isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
+  const logoText = isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
   const readableLogoText = isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
-  const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || dreamshootLogoSrc;
+  const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
+  const logoAlt = isAidreamcapes
+    ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
+    : isMyDreamShoots
+      ? "MyDreamShoots heart camera logo"
+      : `${readableLogoText} logo`;
   const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
@@ -339,7 +346,7 @@ export function CustomerShellHeader({
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
             <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
-              <img className="h-9 w-9 object-contain" src={logoSrc} alt="" aria-hidden="true" width={36} height={36} />
+              <img className="h-9 w-9 object-contain" src={logoSrc} alt={logoAlt} width={36} height={36} />
             </span>
             <span className="min-w-0">
               <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>

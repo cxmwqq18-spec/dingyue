@@ -63,6 +63,7 @@ function Link(props: StorefrontInstantLinkProps) {
 }
 
 const dreamShootsVisibleTitle = "myᕲreamshoots";
+const aidreamcapesVisibleTitle = "ልiጋreamርapes";
 
 function publicPrefetchCandidatesForPath(path: string) {
   if (path === "/") return ["/login", "/tools", "/collections", "/pricing"];
@@ -544,18 +545,23 @@ function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: str
   return (
     <svg className={className} viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries">
       <defs>
-        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="92" y1="76" x2="420" y2="430" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#A855F7" />
-          <stop offset="0.48" stopColor="#F65BA8" />
-          <stop offset="1" stopColor="#52C7D8" />
+        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="104" y1="72" x2="410" y2="438" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#FF8A5B" />
+          <stop offset="0.44" stopColor="#EC4BDD" />
+          <stop offset="1" stopColor="#22D3EE" />
         </linearGradient>
+        <radialGradient id="aidreamcapes-logo-mark-glow" cx="0" cy="0" r="1" gradientTransform="matrix(156 0 0 156 256 250)" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.95" />
+          <stop offset="0.52" stopColor="#F7B7FF" stopOpacity="0.3" />
+          <stop offset="1" stopColor="#22D3EE" stopOpacity="0" />
+        </radialGradient>
       </defs>
-      <g fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M256 388c-56-49-126-91-126-174 0-52 41-84 85-70 19 6 32 20 41 38 9-18 22-32 41-38 44-14 85 18 85 70 0 83-70 125-126 174Z" />
-        <path d="M256 176l42 78-42 86-42-86 42-78Z" />
-        <path d="M192 254h128" />
-      </g>
-      <circle cx="256" cy="254" r="18" fill="transparent" stroke="#F65BA8" strokeWidth="12" />
+      <circle cx="256" cy="256" r="184" fill="url(#aidreamcapes-logo-mark-glow)" opacity="0.95" />
+      <path d="M256 76c75 0 136 61 136 136 0 95-82 160-136 224-54-64-136-129-136-224 0-75 61-136 136-136Z" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="28" strokeLinejoin="round" />
+      <path d="M256 140l54 126-54 92-54-92 54-126Z" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M198 266h116" fill="none" stroke="#FFFFFF" strokeWidth="18" strokeLinecap="round" opacity="0.9" />
+      <circle cx="256" cy="266" r="22" fill="#05070E" stroke="#FFFFFF" strokeWidth="10" />
+      <path d="M365 103v40M345 123h40M151 372v26M138 385h26" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="16" strokeLinecap="round" opacity="0.92" />
     </svg>
   );
 }
@@ -634,7 +640,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
       ? configuredLogoImageUrl || brandingLogoImageUrl || dreamshootDefaultLogoImageUrl
       : configuredLogoImageUrl || brandingLogoImageUrl;
   const readableBrandTitle = isDreamShoot ? "MyDreamShoots" : isAidreamcapes ? "Aidreamcapes" : title;
-  const visualBrandTitle = isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapes ? "Aidreamcapes" : readableBrandTitle;
+  const visualBrandTitle = isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
   const brandDescription = isDreamShoot
     ? "MyDreamShoots home, AI shoot packages, creator portraits, headshots, fan photos, and private albums"
     : isAidreamcapes
@@ -1029,16 +1035,16 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const visualFooterTitle = isDreamShootFooter
     ? dreamShootsVisibleTitle
     : isAidreamcapesFooter
-      ? "Aidreamcapes"
+      ? aidreamcapesVisibleTitle
       : title || readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
-  const contactAddressFallback = isDreamShootFooter || isAidreamcapesFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
+  const contactAddressFallback = isAidreamcapesFooter ? "30 N GOULD ST STE R,SHERIDAN,WY 82801" : isDreamShootFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
   const contactEmailFallback = isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
-  const salesEmailFallback = isAidreamcapesFooter ? "sales@aidreamcapes.com" : "";
+  const salesEmailFallback = "";
   const contactAddress = footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
   const contactEmail = footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
-  const salesEmail = isDreamShootFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
+  const salesEmail = isDreamShootFooter || isAidreamcapesFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
   const contactItems = [
     contactAddress ? { label: "Company address", value: contactAddress, href: "" } : null,
     contactEmail ? { label: "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
@@ -1047,7 +1053,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
-  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a" : "";
+  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708" : "";
   const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
   const footerBg = footer
@@ -1263,9 +1269,10 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
                   {isDreamShootFooter ? (
                     <DreamShootsWordmark className="block shrink-0 whitespace-nowrap text-[1.32rem] font-semibold leading-none text-white [font-family:var(--site-title-font)]" />
                   ) : (
-                    <span>{visualFooterTitle}</span>
+                    <span aria-hidden={isAidreamcapesFooter ? "true" : undefined}>{visualFooterTitle}</span>
                   )}
                   {isDreamShootFooter ? <span className="sr-only">MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums</span> : null}
+                  {isAidreamcapesFooter ? <span className="sr-only">Aidreamcapes AI travel portraits and private galleries</span> : null}
                 </h2>
                 <p className={dark ? "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-white/44" : "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8f7d6d]"}>
                   {tagline}
@@ -1714,10 +1721,10 @@ function preferAidreamcapesPhotoAsset(src: string): string {
     return preferAidreamcapesPhotoAsset(`/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`);
   }
   if (cleanSrc.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701img";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260701img";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260701img";

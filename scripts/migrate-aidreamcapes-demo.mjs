@@ -15,9 +15,8 @@ const primaryDomain = "www.aidreamcapes.com";
 const apexDomain = "aidreamcapes.com";
 const localDomain = "aidreamcapes.localhost";
 const supportEmail = "support@aidreamcapes.com";
-const salesEmail = "sales@aidreamcapes.com";
-const companyAddress = "8 THE GREEN STE B, DOVER, DE 19901";
-const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
+const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
 const visualSiteTitle = "ልiጋreamርapes";
 const aidreamcapesImageBase = "/assets/sites/site_aidreamcapes/creative-packs";
 const aidreamcapesAsset = (name, version = "20260630webp") => `${aidreamcapesImageBase}/${name}.webp?v=${version}`;
@@ -477,9 +476,9 @@ const aidreamcapesSeoPages = {
     follow: true
   },
   contact: {
-    title: "Contact travel portrait support and sales",
-    description: "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
-    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI travel portrait support, Aidreamcapes sales, private gallery help",
+    title: "Contact travel portrait support",
+    description: "Contact Aidreamcapes for travel portrait support, source photo guidance, billing review, privacy requests, or company address information.",
+    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI travel portrait support, private gallery help",
     canonicalPath: "/contact-us",
     index: true,
     follow: true
@@ -904,7 +903,7 @@ function buildThemeSettings() {
   globalSections.footer.settings.showPaymentIcons = true;
   globalSections.footer.settings.contactAddress = companyAddress;
   globalSections.footer.settings.contactEmail = supportEmail;
-  globalSections.footer.settings.salesEmail = salesEmail;
+  globalSections.footer.settings.salesEmail = "";
   globalSections.footer.settings.copyright = "© 2026 Aidreamcapes. All rights reserved.";
   globalSections.footer.blocks = [
     { id: "aidreamcapes_footer_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections", group: "product" } },
@@ -1697,12 +1696,11 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
     if (pageJson.sections.contact_intro_1?.settings) {
       pageJson.sections.contact_intro_1.settings = {
         eyebrow: "Contact",
-        title: "Contact Aidreamcapes support or sales.",
-        body: "Reach the right Aidreamcapes inbox for source photo guidance, travel request status, account access, billing review, privacy questions, plan fit, or creator and business use cases."
+        title: "Contact Aidreamcapes support.",
+        body: "Reach Aidreamcapes support for source photo guidance, travel request status, account access, billing review, privacy questions, plan fit, or creator and business use cases."
       };
       pageJson.sections.contact_intro_1.blocks = [
         { id: "contact_support", type: "rich_text_card", settings: { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and private travel gallery delivery support." } },
-        { id: "contact_sales", type: "rich_text_card", settings: { meta: "Sales", title: salesEmail, description: "For plan questions, creator use cases, campaign planning, team workflows, and business inquiries." } },
         { id: "contact_address", type: "rich_text_card", settings: { meta: "Mail", title: companyAddress, description: "Use this company address for Aidreamcapes formal correspondence and business records." } }
       ];
     }
@@ -1711,7 +1709,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
         title: "Contact information",
         lastUpdated: "June 28, 2026",
         contactEmail: supportEmail,
-        body: `<h3>Support</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account access, source photo guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, or private gallery delivery help.</p><h3>Sales</h3><p>Email <a href="mailto:${salesEmail}">${salesEmail}</a> for plan questions, business use, creator collaborations, team workflows, or campaign planning.</p><h3>Company address</h3><p>${companyAddress}</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>`
+        body: `<h3>Support</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account access, source photo guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, business inquiries, or private gallery delivery help.</p><h3>Company address</h3><p>${companyAddress}</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>`
       });
     }
   }
@@ -2068,7 +2066,7 @@ const site = {
   currency: "usd",
   timezone: "America/New_York",
   branding: {
-    logoText: siteName,
+    logoText: visualSiteTitle,
     market: "AI travel portraits, destination scenes, cinematic escape packages, credits, and private galleries",
     description: settings.seo.siteDescription,
     logoImageUrl

@@ -189,10 +189,10 @@ function localAssetUrl(pathOrUrl: string | undefined): string | undefined {
     return undefined;
   }
   if (normalized.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
   }
   if (normalized.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260630a";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
   }
   if (!normalized.startsWith("/")) normalized = `/${normalized}`;
   return normalized;
@@ -211,11 +211,11 @@ function siteIcons(site: Site): Metadata["icons"] | undefined {
   if (slug.includes("aidreamcapes")) {
     return {
       icon: [
-        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
-        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260708", type: "image/png", sizes: "192x192" },
+        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708", type: "image/svg+xml" }
       ],
-      shortcut: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702",
-      apple: [{ url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
+      shortcut: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260708",
+      apple: [{ url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260708", sizes: "180x180", type: "image/png" }]
     };
   }
   if (slug.includes("mydreamshoots")) {
