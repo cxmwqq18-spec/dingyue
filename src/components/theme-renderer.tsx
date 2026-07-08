@@ -545,23 +545,23 @@ function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: str
   return (
     <svg className={className} viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries">
       <defs>
-        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="104" y1="72" x2="410" y2="438" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#FF8A5B" />
-          <stop offset="0.44" stopColor="#EC4BDD" />
-          <stop offset="1" stopColor="#22D3EE" />
+        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#fff0b8" />
+          <stop offset="0.38" stopColor="#ff75b7" />
+          <stop offset="1" stopColor="#8a7cff" />
         </linearGradient>
-        <radialGradient id="aidreamcapes-logo-mark-glow" cx="0" cy="0" r="1" gradientTransform="matrix(156 0 0 156 256 250)" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.95" />
-          <stop offset="0.52" stopColor="#F7B7FF" stopOpacity="0.3" />
-          <stop offset="1" stopColor="#22D3EE" stopOpacity="0" />
+        <radialGradient id="aidreamcapes-logo-mark-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.9" />
+          <stop offset="0.55" stopColor="#b8f7ff" stopOpacity="0.25" />
+          <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx="256" cy="256" r="184" fill="url(#aidreamcapes-logo-mark-glow)" opacity="0.95" />
-      <path d="M256 76c75 0 136 61 136 136 0 95-82 160-136 224-54-64-136-129-136-224 0-75 61-136 136-136Z" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="28" strokeLinejoin="round" />
-      <path d="M256 140l54 126-54 92-54-92 54-126Z" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M198 266h116" fill="none" stroke="#FFFFFF" strokeWidth="18" strokeLinecap="round" opacity="0.9" />
-      <circle cx="256" cy="266" r="22" fill="#05070E" stroke="#FFFFFF" strokeWidth="10" />
-      <path d="M365 103v40M345 123h40M151 372v26M138 385h26" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="16" strokeLinecap="round" opacity="0.92" />
+      <rect width="512" height="512" rx="118" fill="#080a12" />
+      <circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="30" />
+      <circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" strokeWidth="23" opacity="0.95" />
+      <circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-logo-mark-aura)" />
+      <path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="13" strokeLinecap="round" />
+      <path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" strokeWidth="17" strokeLinecap="round" opacity="0.76" />
     </svg>
   );
 }
@@ -1042,7 +1042,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const contactAddressFallback = isAidreamcapesFooter ? "30 N GOULD ST STE R,SHERIDAN,WY 82801" : isDreamShootFooter ? "8 THE GREEN STE B, DOVER, DE 19901" : "";
   const contactEmailFallback = isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
   const salesEmailFallback = "";
-  const contactAddress = footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
+  const contactAddress = isAidreamcapesFooter ? contactAddressFallback : footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
   const contactEmail = footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
   const salesEmail = isDreamShootFooter || isAidreamcapesFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
   const contactItems = [
@@ -1053,7 +1053,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
-  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708" : "";
+  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c" : "";
   const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
   const footerBg = footer
@@ -1721,10 +1721,10 @@ function preferAidreamcapesPhotoAsset(src: string): string {
     return preferAidreamcapesPhotoAsset(`/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`);
   }
   if (cleanSrc.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260701img";

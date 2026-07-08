@@ -49,7 +49,7 @@ const brandProfiles = [
     brand: "Aidreamcapes",
     footerTitle: "ልiጋreamርapes",
     companyAddress: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-    footerLogoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708",
+    footerLogoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c",
     footerLogoAlt: "Aidreamcapes logo for AI travel portraits and private destination galleries",
     supportEmail: "support@aidreamcapes.com",
     salesEmail: "",

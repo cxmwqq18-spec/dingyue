@@ -132,7 +132,7 @@ const aidreamcapesToolGroups = [
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
-const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
+const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const myDreamShootsDisplayName = "myᕲreamshoots";
 const aidreamcapesDisplayName = "ልiጋreamርapes";
 

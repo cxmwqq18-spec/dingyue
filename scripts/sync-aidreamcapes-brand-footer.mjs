@@ -7,7 +7,7 @@ const visualTitle = "ልiጋreamርapes";
 const readableTitle = "Aidreamcapes";
 const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
 const supportEmail = "support@aidreamcapes.com";
-const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
+const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const logoAlt = "Aidreamcapes logo for AI travel portraits and private destination galleries";
 
 function cloneJson(value) {

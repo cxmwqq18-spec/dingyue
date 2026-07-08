@@ -16,7 +16,7 @@ const apexDomain = "aidreamcapes.com";
 const localDomain = "aidreamcapes.localhost";
 const supportEmail = "support@aidreamcapes.com";
 const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
-const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708";
+const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const visualSiteTitle = "ልiጋreamርapes";
 const aidreamcapesImageBase = "/assets/sites/site_aidreamcapes/creative-packs";
 const aidreamcapesAsset = (name, version = "20260630webp") => `${aidreamcapesImageBase}/${name}.webp?v=${version}`;
