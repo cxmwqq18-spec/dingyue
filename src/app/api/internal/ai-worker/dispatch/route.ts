@@ -55,6 +55,8 @@ type ImageInputAsset = {
   signedUrl: string;
 };
 
+type WorkerImageProvider = WorkerPayload["aiProviderFallback"]["providers"][number];
+
 function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
 }
@@ -107,6 +109,26 @@ function safeImagePrompt(value: string) {
 function isImageGenerationModel(model: string) {
   const normalized = model.trim().toLowerCase();
   return normalized.startsWith("gpt-image") || normalized.includes("image");
+}
+
+function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
+  const selection = recordValue(payload.providerSelection);
+  const selectedProviderId = textValue(selection?.providerId);
+  const selectedProvider = selectedProviderId
+    ? imageProviders.find((provider) => provider.id === selectedProviderId)
+    : undefined;
+
+  if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
+  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false) return selectedProvider ? [selectedProvider] : [];
+
+  const preferredProviders = Array.from(new Map([
+    ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
+    ...imageProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
+  ]).values());
+  const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
+  const fallbackProviders = imageProviders.filter((provider) => !preferredIds.has(provider.id));
+  return [...preferredProviders, ...fallbackProviders];
 }
 
 function outputCount(payload: WorkerPayload) {
@@ -570,9 +592,7 @@ async function generateWithProvider(params: {
 }
 
 async function runLocalWorker(payload: WorkerPayload) {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
-  const preferredImageProviders = imageProviders.filter((provider) => provider.preferred);
-  const providers = preferredImageProviders.length ? preferredImageProviders : imageProviders;
+  const providers = orderedImageProviders(payload);
   if (!providers.length) {
     await postWorkerResult(payload, { status: "failed", error: "no_image_ai_provider_configured" });
     return;
