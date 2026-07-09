@@ -41,6 +41,16 @@ function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryD
   return value.includes("aidreamcapes");
 }
 
+function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
+  if (!site) return false;
+  const value = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
+  return value.includes("-xby") || value.includes("_xby");
+}
+
+function spanishXbyBrandName(site?: Pick<Site, "name"> & { branding?: Pick<Site["branding"], "logoText"> }): string {
+  return site?.branding?.logoText || site?.name || "Tienda IA";
+}
+
 function seoDirectoryIcons(site: Site): Metadata["icons"] {
   if (isAidreamcapesSite(site)) {
     return {
@@ -170,6 +180,76 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
   }
 };
 
+const spanishMydreamshootsPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/about-us": {
+    title: "Sobre MyDreamShoots-xby",
+    description: "Conoce MyDreamShoots-xby, una tienda privada para crear retratos, headshots, fotos de pareja, albumes y galerias con IA desde selfies.",
+    keywords: "sobre MyDreamShoots-xby, fotos IA privadas, retratos IA, galerias privadas",
+    canonicalPath: "/about-us",
+    index: true,
+    follow: true
+  },
+  "/contact-us": {
+    title: "Contacto MyDreamShoots-xby",
+    description: "Contacta con MyDreamShoots-xby para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.",
+    keywords: "contacto MyDreamShoots-xby, soporte fotos IA, ayuda creditos",
+    canonicalPath: "/contact-us",
+    index: true,
+    follow: true
+  },
+  "/creators-circle": {
+    title: "Circulo de creadores MyDreamShoots-xby",
+    description: "Unete al programa de creadores de MyDreamShoots-xby para campanas de fotos con IA, galerias privadas y colaboraciones.",
+    keywords: "creadores MyDreamShoots-xby, programa de creadores IA, colaboracion fotos IA",
+    canonicalPath: "/creators-circle",
+    index: true,
+    follow: true
+  },
+  "/partner-registration": {
+    title: "Registro de partners MyDreamShoots-xby",
+    description: "Solicita colaborar con MyDreamShoots-xby y comparte tu audiencia, canales, objetivos y encaje para campanas de fotos con IA.",
+    keywords: "partners MyDreamShoots-xby, colaboracion IA, registro creadores",
+    canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
+  }
+};
+
+const spanishAidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/about-us": {
+    title: "Sobre Aidreamcapes-xby",
+    description: "Conoce Aidreamcapes-xby, una tienda privada para crear retratos de viaje, escenas de destino y galerias cinematicas con IA.",
+    keywords: "sobre Aidreamcapes-xby, retratos de viaje IA, galerias privadas",
+    canonicalPath: "/about-us",
+    index: true,
+    follow: true
+  },
+  "/contact-us": {
+    title: "Contacto Aidreamcapes-xby",
+    description: "Contacta con Aidreamcapes-xby para soporte de cuenta, fotos fuente, creditos, facturacion, privacidad o entrega de galerias.",
+    keywords: "contacto Aidreamcapes-xby, soporte retratos IA, ayuda creditos",
+    canonicalPath: "/contact-us",
+    index: true,
+    follow: true
+  },
+  "/creators-circle": {
+    title: "Circulo de creadores Aidreamcapes-xby",
+    description: "Unete al programa de creadores de Aidreamcapes-xby para campanas de retratos de viaje, galerias privadas y colaboraciones.",
+    keywords: "creadores Aidreamcapes-xby, retratos de viaje IA, colaboracion creadores",
+    canonicalPath: "/creators-circle",
+    index: true,
+    follow: true
+  },
+  "/partner-registration": {
+    title: "Registro de partners Aidreamcapes-xby",
+    description: "Solicita colaborar con Aidreamcapes-xby y comparte tu audiencia, canales, objetivos y encaje para retratos de viaje con IA.",
+    keywords: "partners Aidreamcapes-xby, colaboracion retratos IA, registro creadores",
+    canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
+  }
+};
+
 export const dreamshootPublicSeoPagePaths = Object.keys(dreamshootPublicSeoPageMetadata);
 
 export function getDreamshootPublicSeoPageMetadataForSite(
@@ -177,6 +257,11 @@ export function getDreamshootPublicSeoPageMetadataForSite(
   path: string
 ): DreamshootRouteMetadataSeed | undefined {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  if (isSpanishXbySite(site)) {
+    return isAidreamcapesSite(site)
+      ? spanishAidreamcapesPublicSeoPageMetadata[normalizedPath]
+      : spanishMydreamshootsPublicSeoPageMetadata[normalizedPath];
+  }
   return isAidreamcapesSite(site) ? aidreamcapesPublicSeoPageMetadata[normalizedPath] : dreamshootPublicSeoPageMetadata[normalizedPath];
 }
 
@@ -195,6 +280,68 @@ const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataS
     description:
       "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms before creating portraits.",
     keywords: "Aidreamcapes terms, AI portrait terms, private gallery terms, AI credit policy",
+    canonicalPath: "/terms",
+    index: true,
+    follow: true
+  }
+};
+
+const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/login": {
+    title: "Iniciar sesion en MyDreamShoots-xby",
+    description: "Accede a MyDreamShoots-xby para gestionar subidas privadas, creditos, pedidos de fotos con IA, albumes y descargas.",
+    keywords: "MyDreamShoots-xby login, cuenta fotos IA, galeria privada",
+    canonicalPath: "/login",
+    index: false,
+    follow: true
+  },
+  "/pricing": {
+    title: "Precios MyDreamShoots-xby - creditos y planes de fotos IA",
+    description: "Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega de galerias privadas antes de crear fotos con IA.",
+    keywords: "precios MyDreamShoots-xby, creditos IA, planes fotos IA",
+    canonicalPath: "/pricing",
+    index: true,
+    follow: true
+  },
+  "/tools": {
+    title: "Herramientas de fotos con IA | MyDreamShoots-xby",
+    description: "Explora herramientas para headshots, fondos, retoque, video corto, probador virtual, paquetes privados y galerias con creditos visibles.",
+    keywords: "herramientas IA, fotos IA, headshot IA, cambiador de fondo",
+    canonicalPath: "/tools",
+    index: true,
+    follow: true
+  }
+};
+
+const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/login": {
+    title: "Iniciar sesion en Aidreamcapes-xby",
+    description: "Accede a Aidreamcapes-xby para gestionar subidas privadas, creditos, pedidos de retratos de viaje, galerias y descargas.",
+    keywords: "Aidreamcapes-xby login, cuenta retratos IA, galeria privada",
+    canonicalPath: "/login",
+    index: false,
+    follow: true
+  },
+  "/pricing": {
+    title: "Precios Aidreamcapes-xby - creditos para retratos de viaje",
+    description: "Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega privada antes de crear retratos de viaje con IA.",
+    keywords: "precios Aidreamcapes-xby, creditos IA, retratos de viaje IA",
+    canonicalPath: "/pricing",
+    index: true,
+    follow: true
+  },
+  "/tools": {
+    title: "Herramientas de retratos de viaje | Aidreamcapes-xby",
+    description: "Explora herramientas para retratos de ruta, luz costera, escenas de viaje, postales y galerias privadas con IA.",
+    keywords: "herramientas viaje IA, retratos de ruta, fotos de destino IA",
+    canonicalPath: "/tools",
+    index: true,
+    follow: true
+  },
+  "/terms": {
+    title: "Terminos de servicio | Aidreamcapes-xby",
+    description: "Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable.",
+    keywords: "terminos Aidreamcapes-xby, politica creditos IA, galeria privada",
     canonicalPath: "/terms",
     index: true,
     follow: true
@@ -1131,6 +1278,65 @@ function fallbackTool(slug: string, brandName = "MyDreamShoots"): SeoDirectorySe
   };
 }
 
+function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: string, aidreamcapes: boolean): SeoDirectorySeed {
+  const label = cleanDirectoryLabel(slug);
+  const lower = label.toLowerCase();
+  if (kind === "collection") {
+    return {
+      label,
+      title: aidreamcapes ? `${label} con IA | ${brandName}` : `Paquete de fotos ${label} con IA | ${brandName}`,
+      description: aidreamcapes
+        ? `Explora ${label} en ${brandName}: retratos de viaje, escenas de destino, creditos visibles, subidas privadas y galerias descargables.`
+        : `Explora el paquete ${label} en ${brandName}: fotos fuente privadas, creditos visibles, estilos creativos y entrega en galeria.`,
+      keywords: aidreamcapes
+        ? `${lower} IA, retratos de viaje IA, ${brandName}, galeria privada`
+        : `${lower} IA, paquete de fotos IA, ${brandName}, galeria privada`,
+      h2: aidreamcapes ? `${lower} con estilo de viaje` : `${lower} con IA`,
+      h3: aidreamcapes
+        ? ["Direccion de destino", "Fotos fuente privadas", "Entrega en galeria"]
+        : ["Direccion del paquete", "Fotos fuente privadas", "Album descargable"],
+      intro: aidreamcapes
+        ? `Esta coleccion ayuda a elegir un ambiente de viaje antes de generar imagenes con ${brandName}.`
+        : `Esta coleccion ayuda a elegir un estilo visual antes de subir fotos y gastar creditos en ${brandName}.`,
+      details: [
+        "Revisa el estilo, los creditos y el resultado esperado antes de continuar.",
+        "Sube solo fotos propias o con permiso de uso.",
+        "Los resultados se entregan dentro de una cuenta privada para revisar y descargar."
+      ],
+      useCases: aidreamcapes
+        ? ["Retratos de destino", "Perfiles de viaje", "Historias para creadores", "Recuerdos privados"]
+        : ["Fotos de perfil", "Contenido para creadores", "Albumes privados", "Conceptos visuales"],
+      workflow: ["Elige una direccion visual.", "Sube fotos claras.", "Confirma creditos antes de generar.", "Descarga tus favoritos desde la galeria privada."],
+      ctaLabel: aidreamcapes ? "Crear retratos de viaje" : "Crear fotos con IA",
+      ctaHref: "/app/create"
+    };
+  }
+  return {
+    label,
+    title: aidreamcapes ? `Herramienta ${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`,
+    description: aidreamcapes
+      ? `Usa ${label} en ${brandName} para preparar retratos de viaje, escenas de destino, creditos visibles y galerias privadas.`
+      : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, previews y albumes listos para descargar.`,
+    keywords: aidreamcapes
+      ? `${lower} IA, herramienta de viaje IA, ${brandName}, galeria privada`
+      : `${lower} IA, herramienta de fotos IA, ${brandName}, editor IA`,
+    h2: `herramienta ${lower}`,
+    h3: ["Guia de entrada", "Resultado esperado", "Entrega privada"],
+    intro: `Usa ${label} para pasar de una subida clara a un resultado privado con IA y creditos visibles.`,
+    details: [
+      "Empieza con fotos o referencias claras que tengas permiso para usar.",
+      "El resultado aparece en tu cuenta privada para revisar, descargar o continuar editando.",
+      "El coste en creditos se muestra antes de iniciar la generacion."
+    ],
+    useCases: aidreamcapes
+      ? ["Retratos de ruta", "Escenas de viaje", "Conceptos de destino", "Galerias privadas"]
+      : ["Fotos de perfil", "Previews creativos", "Ediciones rapidas", "Albumes privados"],
+    workflow: ["Revisa el uso recomendado.", "Sube fotos claras.", "Elige el estilo o destino.", "Genera y descarga desde tu galeria privada."],
+    ctaLabel: "Empezar ahora",
+    ctaHref: `/app/create?tool_id=${slug}`
+  };
+}
+
 function normalizeRouteMetadataPath(value: string): string {
   const trimmed = value.trim();
   if (!trimmed || trimmed === "/") return "/";
@@ -1143,6 +1349,7 @@ function dreamshootFallbackMetadataCanonical(siteSlug: string, primaryDomain: st
 
 function fallbackRouteSiteName(siteSlug: string, options: { primaryDomain?: string; siteName?: string }): string {
   const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
+  if (siteIdentity.includes("-xby") || siteIdentity.includes("_xby")) return options.siteName?.trim() || siteSlug;
   if (siteIdentity.includes("aidreamcapes")) return "Aidreamcapes";
   if (siteIdentity.includes("mydreamshoots") || siteIdentity.includes("dreamshoot")) return "MyDreamShoots";
   return options.siteName?.trim() || "MyDreamShoots";
@@ -1156,9 +1363,33 @@ export function metadataForDreamshootFallbackRoute(
   const normalizedPath = normalizeRouteMetadataPath(path);
   const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
   const aidreamcapes = siteIdentity.includes("aidreamcapes");
-  const publicMetadata = aidreamcapes ? aidreamcapesPublicSeoPageMetadata : dreamshootPublicSeoPageMetadata;
-  const fallbackMetadata = aidreamcapes ? aidreamcapesFallbackRouteMetadata : dreamshootFallbackRouteMetadata;
-  const seed = publicMetadata[normalizedPath] ?? fallbackMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? {
+  const spanishXby = siteIdentity.includes("-xby") || siteIdentity.includes("_xby");
+  const publicMetadata = spanishXby
+    ? aidreamcapes
+      ? spanishAidreamcapesPublicSeoPageMetadata
+      : spanishMydreamshootsPublicSeoPageMetadata
+    : aidreamcapes
+      ? aidreamcapesPublicSeoPageMetadata
+      : dreamshootPublicSeoPageMetadata;
+  const fallbackMetadata = spanishXby
+    ? aidreamcapes
+      ? spanishAidreamcapesFallbackRouteMetadata
+      : spanishMydreamshootsFallbackRouteMetadata
+    : aidreamcapes
+      ? aidreamcapesFallbackRouteMetadata
+      : dreamshootFallbackRouteMetadata;
+  const defaultSeed = spanishXby
+    ? {
+        title: aidreamcapes ? "Aidreamcapes-xby" : "MyDreamShoots-xby",
+        description: aidreamcapes
+          ? "Aidreamcapes-xby es una tienda privada para retratos de viaje con IA, creditos, subidas privadas y galerias de cliente."
+          : "MyDreamShoots-xby es una tienda privada para fotos con IA, creditos, paquetes creativos y galerias de cliente.",
+        keywords: aidreamcapes ? "Aidreamcapes-xby, retratos de viaje IA, galeria privada" : "MyDreamShoots-xby, fotos IA, galeria privada",
+        canonicalPath: normalizedPath,
+        index: false,
+        follow: true
+      }
+    : {
     title: "MyDreamShoots",
     description: "MyDreamShoots is a private AI photo workspace for uploads, credits, creator photo packages, AI tools, and customer-only galleries.",
     keywords: "MyDreamShoots, AI photo workspace, AI creator photo packages, private photo gallery",
@@ -1166,6 +1397,7 @@ export function metadataForDreamshootFallbackRoute(
     index: false,
     follow: true
   };
+  const seed = publicMetadata[normalizedPath] ?? fallbackMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? defaultSeed;
   const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
   const ogImage = absoluteRouteSeoImageUrl(options);
   const siteName = fallbackRouteSiteName(siteSlug, options);
@@ -1201,12 +1433,17 @@ export function getSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string):
 export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   const slug = normalizeDirectorySlug(rawSlug);
   const aidreamcapes = isAidreamcapesSite(site);
+  const spanishXby = isSpanishXbySite(site);
   const collectionSource = aidreamcapes ? aidreamcapesCollectionDirectory : collectionDirectory;
   const toolSource = aidreamcapes ? aidreamcapesToolDirectory : toolDirectory;
-  const brandName = aidreamcapes ? "Aidreamcapes" : "MyDreamShoots";
+  const brandName = spanishXby ? spanishXbyBrandName(site) : aidreamcapes ? "Aidreamcapes" : "MyDreamShoots";
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
   const explicit = kind === "collection" ? Boolean(collectionSource[canonicalSlug]) : Boolean(toolSource[canonicalSlug]);
-  const source = kind === "collection" ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName) : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
+  const source = spanishXby
+    ? spanishDirectorySeed(kind, canonicalSlug, brandName, aidreamcapes)
+    : kind === "collection"
+      ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName)
+      : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
   const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
   return {
     ...source,

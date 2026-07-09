@@ -310,16 +310,21 @@ export function CustomerShellHeader({
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const isSpanishXby = /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   const isMyDreamShoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const logoText = isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
-  const readableLogoText = isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
+  const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
+  const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
-  const logoAlt = isAidreamcapes
-    ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
-    : isMyDreamShoots
-      ? "MyDreamShoots heart camera logo"
-      : `${readableLogoText} logo`;
+  const logoAlt = isSpanishXby
+    ? isAidreamcapes
+      ? `${readableLogoText} logo para retratos de viaje con IA y galerias privadas`
+      : `${readableLogoText} logo para paquetes de fotos con IA y galerias privadas`
+    : isAidreamcapes
+      ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
+      : isMyDreamShoots
+        ? "MyDreamShoots heart camera logo"
+        : `${readableLogoText} logo`;
   const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
@@ -341,7 +346,11 @@ export function CustomerShellHeader({
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className="mx-auto grid max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
-          {isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create private AI photo sets from everyday selfies."}
+          {isSpanishXby
+            ? isAidreamcapes
+              ? "Crea retratos de viaje con IA desde tus fotos cotidianas."
+              : "Crea sets privados de fotos con IA desde selfies cotidianos."
+            : isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create private AI photo sets from everyday selfies."}
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
@@ -357,28 +366,32 @@ export function CustomerShellHeader({
           <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label={isAidreamcapes ? "Travel Packages" : "Browse packages"}
+              label={isSpanishXby ? isAidreamcapes ? "Paquetes de viaje" : "Ver paquetes" : isAidreamcapes ? "Travel Packages" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
-              <PackageMegaPanel basePath={basePath} groups={activePackageGroups} title={isAidreamcapes ? "Travel route studios" : "Photo package studios"} />
+              <PackageMegaPanel
+                basePath={basePath}
+                groups={activePackageGroups}
+                title={isSpanishXby ? isAidreamcapes ? "Estudios de rutas de viaje" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Travel route studios" : "Photo package studios"}
+              />
             </ClickMegaMenu>
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label="Tools"
+              label={isSpanishXby ? "Herramientas" : "Tools"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
             >
               <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#workflow`}>
-              How it works
+              {isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`}>
-              Workspace
+              {isSpanishXby ? "Espacio privado" : "Workspace"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>
-              Pricing
+              {isSpanishXby ? "Precios" : "Pricing"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#faq`}>
               FAQ

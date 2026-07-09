@@ -814,6 +814,7 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
   const introSectionId = "collections_intro_1";
   if (pageJson.sections[introSectionId]) return pageJson;
   const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   const firstSection = pageJson.sections[pageJson.sectionsOrder[0]];
   const sections = Object.fromEntries(
     Object.entries(pageJson.sections).map(([sectionId, section]) => {
@@ -841,14 +842,22 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
         type: "rich_text",
         settings: {
           anchor: "packages",
-          eyebrow: isAidreamcapes ? "Travel package library" : "Photo package library",
-          title: firstSection?.settings?.title || (isAidreamcapes ? "AI travel portrait packages by route, scene, and keepsake goal." : "AI photo packages by style, use case, and delivery goal."),
-          body: firstSection?.settings?.subtitle || (isAidreamcapes
-            ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
-            : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits."),
-          primaryCta: isAidreamcapes ? "Browse travel packages" : "Browse photo packages",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de paquetes de viaje" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Travel package library" : "Photo package library",
+          title: isSpanishXby
+            ? isAidreamcapes
+              ? "Paquetes de retratos de viaje por ruta, escena y recuerdo."
+              : "Paquetes de fotos con IA por estilo, uso y entrega."
+            : firstSection?.settings?.title || (isAidreamcapes ? "AI travel portrait packages by route, scene, and keepsake goal." : "AI photo packages by style, use case, and delivery goal."),
+          body: isSpanishXby
+            ? isAidreamcapes
+              ? "Explora retratos de ruta, sets de luz costera, paseos urbanos, escenas al aire libre y recuerdos privados antes de gastar creditos."
+              : "Compara headshots, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
+            : firstSection?.settings?.subtitle || (isAidreamcapes
+              ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
+              : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits."),
+          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver paquetes de viaje" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse travel packages" : "Browse photo packages",
           primaryHref: "#package-taxonomy",
-          secondaryCta: "View pricing",
+          secondaryCta: isSpanishXby ? "Ver precios" : "View pricing",
           secondaryHref: "/pricing",
           layout: "compact",
           headingLevel: "h1"
@@ -1246,6 +1255,7 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   const blocks = toolBlocksFromTheme(site);
   const toolsBySlug = new Map<string, SectionBlockInstance>();
   const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   if (isAidreamcapes) {
     for (const slug of getExplicitSeoDirectorySlugsForSite(site, "tool")) {
       toolsBySlug.set(slug, aidreamcapesToolBlockForSlug(site, slug));
@@ -1268,11 +1278,25 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
         type: "dreamshoot_tool_collection",
         settings: {
           anchor: "tools",
-          title: isAidreamcapes ? "Aidreamcapes studio tools" : "AI Tools Collection",
-          subtitle: isAidreamcapes
-            ? "Choose a focused Aidreamcapes tool for destination portraits, city breaks, coastal light, adventure routes, private travel albums, and postcard-ready story sets."
-            : "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
-          categories: isAidreamcapes ? "Destination Tools|Travel Moment Tools|Adventure Tools|Creator Travel Tools" : "Photo AI|AI Photo Edit|Video AI",
+          title: isSpanishXby
+            ? isAidreamcapes
+              ? "Herramientas de retratos de viaje con IA"
+              : "Herramientas de fotos con IA"
+            : isAidreamcapes
+              ? "Aidreamcapes studio tools"
+              : "AI Tools Collection",
+          subtitle: isSpanishXby
+            ? isAidreamcapes
+              ? "Elige herramientas para retratos de destino, escapadas urbanas, luz costera, rutas, albumes privados y postales."
+              : "Elige herramientas para generar fotos, cambiar fondos, preparar videos, retocar imagenes y entregar albumes privados."
+            : isAidreamcapes
+              ? "Choose a focused Aidreamcapes tool for destination portraits, city breaks, coastal light, adventure routes, private travel albums, and postcard-ready story sets."
+              : "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
+          categories: isSpanishXby
+            ? isAidreamcapes
+              ? "Herramientas de destino|Momentos de viaje|Aventura|Creadores"
+              : "Foto IA|Edicion IA|Video IA"
+            : isAidreamcapes ? "Destination Tools|Travel Moment Tools|Adventure Tools|Creator Travel Tools" : "Photo AI|AI Photo Edit|Video AI",
           layout: "directory"
         },
         blocks: tools

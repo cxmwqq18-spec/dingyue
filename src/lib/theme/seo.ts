@@ -33,6 +33,7 @@ function normalizeTitleToken(value: string): string {
 
 function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain" | "branding">): string {
   const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText ?? ""}`.toLowerCase();
+  if (token.includes("-xby") || token.includes("_xby")) return site.branding.logoText || site.name;
   if (token.includes("aidreamcapes")) return "Aidreamcapes";
   if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return myDreamShootsSeoName;
   return site.branding.logoText || site.name;
@@ -40,12 +41,18 @@ function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "prima
 
 function normalizeStorefrontBrandText(site: Site, value: string | undefined, fallback = ""): string {
   const brandName = storefrontSeoBrandName(site);
-  return cleanText(value, fallback)
+  const text = cleanText(value, fallback);
+  if ((brandName.includes("-xby") || brandName.includes("_xby")) && text.toLowerCase().includes(brandName.toLowerCase())) {
+    return text;
+  }
+  return text
     .replace(myDreamShootsBrandPattern, brandName)
     .replace(/\bMyDreamShoots\b/g, brandName)
     .replace(/\bMydreamShoots\b/g, brandName)
     .replace(/\bMydreamshoots\b/g, brandName)
-    .replace(/\bDreamShootAI\b/g, brandName);
+    .replace(/\bDreamShootAI\b/g, brandName)
+    .replace(/\bMyDreamShoots-xby-xby\b/g, "MyDreamShoots-xby")
+    .replace(/\bAidreamcapes-xby-xby\b/g, "Aidreamcapes-xby");
 }
 
 function defaultTitleTemplate(site: Site): string {
@@ -107,12 +114,117 @@ function isMyDreamShootsSeoSite(site: Site): boolean {
   return token.includes("mydreamshoots") || site.id === "site_dreamshoot";
 }
 
+function isSpanishXbySeoSite(site: Site): boolean {
+  const token = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase();
+  return token.includes("-xby") || token.includes("_xby");
+}
+
+function isSpanishAidreamcapesXbySeoSite(site: Site): boolean {
+  return isSpanishXbySeoSite(site) && isAidreamcapesSeoSite(site);
+}
+
+function isSpanishMyDreamShootsXbySeoSite(site: Site): boolean {
+  return isSpanishXbySeoSite(site) && isMyDreamShootsSeoSite(site);
+}
+
+function spanishXbyBrandName(site: Site): string {
+  return site.branding.logoText || site.name || storefrontSeoBrandName(site);
+}
+
+function spanishXbySeoOverride(site: Site, slug: string): Partial<PageSeo> | undefined {
+  const brand = spanishXbyBrandName(site);
+  const aidreamcapes = isSpanishAidreamcapesXbySeoSite(site);
+  const common: Record<string, Partial<PageSeo>> = {
+    "/pricing": {
+      title: `${brand} precios - planes y creditos con IA`,
+      description: `Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega privada antes de crear imagenes con ${brand}.`
+    },
+    "/tools": {
+      title: aidreamcapes ? `${brand} herramientas de retratos de viaje con IA` : `${brand} herramientas de fotos con IA`,
+      description: aidreamcapes
+        ? `Explora herramientas de ${brand} para retratos de ruta, luz costera, escenas de viaje, postales y galerias privadas.`
+        : `Explora herramientas de ${brand} para headshots, fondos, retoque, video, probador virtual, paquetes privados y galerias con creditos visibles.`
+    },
+    "/collections": {
+      title: aidreamcapes ? `Paquetes de retratos de viaje con IA | ${brand}` : `Paquetes privados de fotos con IA | ${brand}`,
+      description: aidreamcapes
+        ? `Explora paquetes de ${brand} para costa, ciudad, ruta, balcones, retiros, postales y albumes privados de viaje.`
+        : `Explora paquetes de ${brand} para headshots, pareja, belleza, creador, deporte, bodas y albumes privados con IA.`
+    },
+    "/about-us": {
+      title: `Sobre ${brand}`,
+      description: `${brand} ofrece una experiencia privada para subir fotos, revisar creditos, crear imagenes con IA y recibir galerias de cliente.`
+    },
+    "/contact-us": {
+      title: `Contacto | ${brand}`,
+      description: `Contacta con ${brand} para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.`
+    },
+    "/help": {
+      title: `Centro de ayuda | ${brand}`,
+      description: `Resuelve dudas sobre fotos fuente, creditos, checkout, privacidad, reembolsos, paquetes y entrega privada en ${brand}.`
+    },
+    "/terms": {
+      title: `Terminos de servicio | ${brand}`,
+      description: `Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`
+    },
+    "/policies/terms": {
+      title: `Terminos de servicio | ${brand}`,
+      description: `Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`,
+      canonicalPath: "/terms"
+    },
+    "/privacy": {
+      title: `Politica de privacidad | ${brand}`,
+      description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago y galerias privadas.`
+    },
+    "/policies/privacy": {
+      title: `Politica de privacidad | ${brand}`,
+      description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago y galerias privadas.`,
+      canonicalPath: "/privacy"
+    },
+    "/cookies": {
+      title: `Politica de cookies | ${brand}`,
+      description: `Consulta como ${brand} usa cookies para sesiones, checkout, seguridad, preferencias y analitica operativa.`
+    },
+    "/policies/cookies": {
+      title: `Politica de cookies | ${brand}`,
+      description: `Consulta como ${brand} usa cookies para sesiones, checkout, seguridad, preferencias y analitica operativa.`,
+      canonicalPath: "/cookies"
+    },
+    "/content": {
+      title: `Politica de contenido | ${brand}`,
+      description: `Revisa las reglas de contenido, consentimiento, fotos fuente, seguridad creativa y uso aceptable de ${brand}.`
+    },
+    "/policies/content": {
+      title: `Politica de contenido | ${brand}`,
+      description: `Revisa las reglas de contenido, consentimiento, fotos fuente, seguridad creativa y uso aceptable de ${brand}.`,
+      canonicalPath: "/content"
+    }
+  };
+  return common[slug];
+}
+
 function storefrontLaunchChecklistSeo(
   site: Site,
   slug: string,
   seo: Pick<PageSeo, "title" | "description" | "keywords">
 ): Pick<PageSeo, "title" | "description" | "keywords"> {
   if (slug !== "/") return seo;
+  if (isSpanishAidreamcapesXbySeoSite(site)) {
+    return {
+      title: "Aidreamcapes-xby - generador de retratos de viaje con IA",
+      description:
+        "Transforma tus fotos favoritas en retratos de viaje profesionales con Aidreamcapes-xby. Elige destino, ambiente y estilo desde casa con galerias privadas.",
+      keywords: "retratos de viaje IA,fotos de viaje IA,generador de fotos IA,albumes de destino,retratos cinematicos,Aidreamcapes-xby"
+    };
+  }
+  if (isSpanishMyDreamShootsXbySeoSite(site)) {
+    return {
+      title: "MyDreamShoots-xby - generador de fotos con IA online",
+      description:
+        "Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con MyDreamShoots-xby. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.",
+      keywords: "generador de fotos IA,retratos IA,fotos de pareja IA,headshots IA,album privado IA,selfies,MyDreamShoots-xby"
+    };
+  }
   if (isAidreamcapesSeoSite(site)) {
     return {
       title: "AIdreamcapes – the most advanced AI photo generator  maker",
@@ -131,6 +243,7 @@ function storefrontLaunchChecklistSeo(
 }
 
 function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> | undefined {
+  if (isSpanishXbySeoSite(site)) return spanishXbySeoOverride(site, slug);
   const aidreamcapes = isAidreamcapesSeoSite(site);
   if (aidreamcapes) {
     const overrides: Record<string, Partial<PageSeo>> = {

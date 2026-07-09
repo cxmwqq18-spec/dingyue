@@ -12,8 +12,8 @@ export type DreamshootToolDirectoryCard = {
   href: string;
 };
 
-function cardLinkLabel(action: string, title: string) {
-  const cleanTitle = title.replace(/\s+/g, " ").trim() || "this tool";
+function cardLinkLabel(action: string, title: string, fallback = "this tool") {
+  const cleanTitle = title.replace(/\s+/g, " ").trim() || fallback;
   return `${action} ${cleanTitle}`;
 }
 
@@ -29,6 +29,7 @@ export function DreamshootToolDirectoryClient({
   primaryHref,
   secondaryCta,
   secondaryHref,
+  locale = "en",
   sectionId
 }: {
   cards: DreamshootToolDirectoryCard[];
@@ -38,8 +39,10 @@ export function DreamshootToolDirectoryClient({
   primaryHref: string;
   secondaryCta: string;
   secondaryHref: string;
+  locale?: "en" | "es";
   sectionId: string;
 }) {
+  const spanish = locale === "es";
   const allCategories = useMemo(
     () => Array.from(new Set([...categories, ...cards.map((card) => card.category)])),
     [categories, cards]
@@ -56,16 +59,18 @@ export function DreamshootToolDirectoryClient({
               <div className={dark ? "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/10 pb-4" : "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-[#d3e0dc] pb-4"}>
                 <div>
                   <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</h3>
-                  <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>{grouped.length} tools with clear pages and guided next steps.</p>
+                  <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>
+                    {spanish ? `${grouped.length} herramientas con paginas claras y pasos guiados.` : `${grouped.length} tools with clear pages and guided next steps.`}
+                  </p>
                 </div>
                 <span className={dark ? "rounded-full border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-white/50" : "rounded-full border border-[#c6d8d3] bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#57706a]"}>
-                  {grouped.length} entries
+                  {spanish ? `${grouped.length} entradas` : `${grouped.length} entries`}
                 </span>
               </div>
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 {grouped.map((tool) => (
                   <a
-                    aria-label={cardLinkLabel("Open", tool.title)}
+                    aria-label={cardLinkLabel(spanish ? "Abrir" : "Open", tool.title, spanish ? "esta herramienta" : "this tool")}
                     className={dark ? "group flex min-h-[240px] flex-col rounded-[18px] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[240px] flex-col rounded-[18px] border border-[#d9e5e1] bg-white p-5 text-[#151a24] shadow-[0_20px_60px_-56px_rgba(23,74,67,0.48)] transition hover:-translate-y-1 hover:border-[#88bdb2] hover:shadow-[0_26px_76px_-58px_rgba(23,74,67,0.65)]"}
                     href={tool.href}
                     key={tool.id}
@@ -82,7 +87,7 @@ export function DreamshootToolDirectoryClient({
                       {tool.description}
                     </p>
                     <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#1d6f64]"}>
-                      Open tool
+                      {spanish ? "Abrir herramienta" : "Open tool"}
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </span>
                   </a>
