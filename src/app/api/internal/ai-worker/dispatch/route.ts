@@ -56,6 +56,12 @@ type ImageInputAsset = {
 };
 
 type WorkerImageProvider = WorkerPayload["aiProviderFallback"]["providers"][number];
+type GeneratedOutput = {
+  storageKey: string;
+  mimeType: string;
+  providerLabel: string;
+  index: number;
+};
 
 function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
@@ -470,7 +476,8 @@ async function postWorkerResult(
 async function generateWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
-  count: number;
+  slotIndexes: number[];
+  totalCount: number;
 }) {
   const provider = await getPlatformAiProviderRelational(params.providerId);
   if (!provider?.apiKey?.trim()) {
@@ -491,11 +498,12 @@ async function generateWithProvider(params: {
   await postWorkerStatus(params.payload, "running", "provider_request_started");
 
   async function generateSlot(slotIndex: number) {
-    const promptForSlot = promptForOutputSlot(prompt, slotIndex, params.count);
+    const promptForSlot = promptForOutputSlot(prompt, slotIndex, params.totalCount);
     await postWorkerSlotStatus(params.payload, "running", "provider_request_started", {
       index: slotIndex,
       status: "running",
       stage: "provider_request_started",
+      error: "",
       updatedAt: new Date().toISOString()
     });
     try {
@@ -562,6 +570,7 @@ async function generateWithProvider(params: {
         stage: "provider_response_received",
         storageKey,
         mimeType: preparedOutput.mimeType,
+        error: "",
         updatedAt: new Date().toISOString()
       });
       return { storageKey, mimeType: preparedOutput.mimeType, providerLabel, index: slotIndex };
@@ -578,17 +587,14 @@ async function generateWithProvider(params: {
   }
 
   const slots = await Promise.allSettled(
-    Array.from({ length: params.count }, (_, index) => generateSlot(index + 1))
+    params.slotIndexes.map((slotIndex) => generateSlot(slotIndex))
   );
   const outputs = slots
-    .filter((slot): slot is PromiseFulfilledResult<{ storageKey: string; mimeType: string; providerLabel: string; index: number }> => slot.status === "fulfilled")
+    .filter((slot): slot is PromiseFulfilledResult<GeneratedOutput> => slot.status === "fulfilled")
     .map((slot) => slot.value)
     .sort((left, right) => left.index - right.index);
-  if (!outputs.length) {
-    const firstError = slots.find((slot): slot is PromiseRejectedResult => slot.status === "rejected")?.reason;
-    throw firstError instanceof Error ? firstError : new Error("ai_provider_empty_image_payload");
-  }
-  return outputs;
+  const firstError = slots.find((slot): slot is PromiseRejectedResult => slot.status === "rejected")?.reason;
+  return { outputs, error: firstError };
 }
 
 async function runLocalWorker(payload: WorkerPayload) {
@@ -600,6 +606,8 @@ async function runLocalWorker(payload: WorkerPayload) {
 
   await postWorkerStatus(payload, "running", "local_worker_started");
   const providerTrace: Array<{ provider: string; attempts: number }> = [];
+  const totalCount = outputCount(payload);
+  const successfulOutputsByIndex = new Map<number, GeneratedOutput>();
   let lastError = "";
   const providerErrors: Array<{ provider: string; error: string }> = [];
 
@@ -607,21 +615,39 @@ async function runLocalWorker(payload: WorkerPayload) {
     const trace = { provider: provider.label || provider.id, attempts: 0 };
     providerTrace.push(trace);
     try {
-      let outputs: Array<{ storageKey: string; mimeType: string }> | undefined;
       let outputError: unknown;
       for (const attempt of Array.from({ length: providerAttempts() }, (_, attemptIndex) => attemptIndex + 1)) {
+        const missingSlotIndexes = Array.from({ length: totalCount }, (_, index) => index + 1)
+          .filter((slotIndex) => !successfulOutputsByIndex.has(slotIndex));
+        if (!missingSlotIndexes.length) break;
         trace.attempts += 1;
         try {
-          outputs = (await generateWithProvider({ payload, providerId: provider.id, count: outputCount(payload) }))
-            .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType }));
-          break;
+          const result = await generateWithProvider({
+            payload,
+            providerId: provider.id,
+            slotIndexes: missingSlotIndexes,
+            totalCount
+          });
+          for (const output of result.outputs) {
+            successfulOutputsByIndex.set(output.index, output);
+          }
+          outputError = result.error;
+          if (!result.error || successfulOutputsByIndex.size >= totalCount) break;
+          if (!isRetryableProviderError(result.error) || attempt >= providerAttempts()) break;
+          await new Promise((resolve) => setTimeout(resolve, 900 * attempt));
         } catch (error) {
           outputError = error;
           if (!isRetryableProviderError(error) || attempt >= providerAttempts()) break;
           await new Promise((resolve) => setTimeout(resolve, 900 * attempt));
         }
       }
-      if (!outputs?.length) throw outputError instanceof Error ? outputError : new Error("local_worker_generation_failed");
+      if (successfulOutputsByIndex.size < totalCount) {
+        const missingCount = totalCount - successfulOutputsByIndex.size;
+        throw outputError instanceof Error ? outputError : new Error(`local_worker_missing_${missingCount}_outputs`);
+      }
+      const outputs = Array.from(successfulOutputsByIndex.values())
+        .sort((left, right) => left.index - right.index)
+        .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType }));
       await postWorkerResult(payload, {
         status: "succeeded",
         outputs,
@@ -633,6 +659,20 @@ async function runLocalWorker(payload: WorkerPayload) {
       lastError = errorMessage(error);
       providerErrors.push({ provider: provider.label || provider.id, error: lastError });
     }
+  }
+
+  const partialOutputs = Array.from(successfulOutputsByIndex.values())
+    .sort((left, right) => left.index - right.index)
+    .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType }));
+  if (partialOutputs.length) {
+    await postWorkerResult(payload, {
+      status: "succeeded",
+      outputs: partialOutputs,
+      providerTrace,
+      error: lastError || "local_worker_partial_generation_failed",
+      costTrace: { estimatedCostUsd: 0, providerErrors }
+    });
+    return;
   }
 
   await postWorkerResult(payload, {

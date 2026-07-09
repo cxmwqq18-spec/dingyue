@@ -27,6 +27,20 @@ const checks = [
     label: "image edit uploads default to repeated image fields for provider compatibility",
     pass: /function imageEditFormFieldName\([^)]*\)\s*{[\s\S]*if \(mode === "image-array"\) return "image\[\]";[\s\S]*return "image";[\s\S]*}/.test(source) &&
       !source.includes('return totalAssets > 1 ? "image[]" : "image";')
+  },
+  {
+    label: "worker preserves successful output slots while retrying missing slots",
+    pass: source.includes("successfulOutputsByIndex") && source.includes("missingSlotIndexes")
+  },
+  {
+    label: "single provider attempt cannot settle a partial multi-output package",
+    pass: !/if \(!outputs\.length\)[\s\S]*return outputs;/.test(source)
+  },
+  {
+    label: "exhausted provider retries keep any partial outputs for settlement",
+    pass: source.includes("const partialOutputs = Array.from(successfulOutputsByIndex.values())") &&
+      source.includes("if (partialOutputs.length)") &&
+      source.includes('error: lastError || "local_worker_partial_generation_failed"')
   }
 ];
 
