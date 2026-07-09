@@ -164,8 +164,53 @@ function referenceRoleLabel(role: string) {
   return "GENERAL_SOURCE_REFERENCE";
 }
 
+function providerReferenceRolePriority(role: string) {
+  if (role === "partner") return 0;
+  if (role === "primary") return 1;
+  return 2;
+}
+
+function providerInputAssets(payload: WorkerPayload): ImageInputAsset[] {
+  const roles = referenceRoles(payload);
+  return inputAssets(payload)
+    .slice(0, 4)
+    .map((asset, originalIndex) => ({ asset, originalIndex, role: roles.roleFor(asset.assetId) }))
+    .sort((left, right) => {
+      const roleDelta = providerReferenceRolePriority(left.role) - providerReferenceRolePriority(right.role);
+      return roleDelta || left.originalIndex - right.originalIndex;
+    })
+    .map((item) => item.asset);
+}
+
+function referenceManifest(payload: WorkerPayload) {
+  const roles = referenceRoles(payload);
+  const assets = providerInputAssets(payload);
+  if (!assets.length) return "";
+  return [
+    "Provider reference manifest:",
+    ...assets.map((asset, index) => {
+      const role = roles.roleFor(asset.assetId);
+      return `REFERENCE_${index + 1}: role=${referenceRoleLabel(role)} assetId=${asset.assetId}`;
+    })
+  ].join("\n");
+}
+
+function balancedReferenceInstruction(payload: WorkerPayload) {
+  const roles = referenceRoles(payload);
+  if (!roles.partnerAssetIds.size) {
+    return "Use the provided customer source image or images as visual references when available: keep broad subject, color, and non-sensitive styling cues while producing an original themed result.";
+  }
+  return [
+    "Use the provided customer source images as balanced person references, not as one copied composition.",
+    "Do not let PRIMARY_PERSON_REFERENCE dominate the result or supply both final people.",
+    "For couple outputs, Person B must visibly borrow cues from PARTNER_PERSON_REFERENCE images, including hair, clothing color, posture, and visible context where useful.",
+    "Do not use an extra person from PRIMARY_PERSON_REFERENCE as Person B.",
+    "Keep the final scene original and themed instead of copying the primary reference photo's selfie composition."
+  ].join(" ");
+}
+
 function referenceRoleInstruction(payload: WorkerPayload) {
-  const assets = inputAssets(payload).slice(0, 4);
+  const assets = providerInputAssets(payload);
   if (!assets.length) return "";
   const roles = referenceRoles(payload);
   const roleLines = assets.map((asset, index) => `${index + 1}. ${referenceRoleLabel(roles.roleFor(asset.assetId))}`).join("\n");
@@ -176,6 +221,7 @@ function referenceRoleInstruction(payload: WorkerPayload) {
     `Reference image role map:\n${roleLines}`,
     "Binding rules: Person A must be derived from PRIMARY_PERSON_REFERENCE images. Person B must be derived from PARTNER_PERSON_REFERENCE images.",
     "Use visible cues from both the primary and partner reference groups. Do not let one uploaded image supply both final people.",
+    "When the primary and partner references conflict, preserve Person B from PARTNER_PERSON_REFERENCE instead of using the second person visible in the primary reference.",
     "If a primary reference image contains an extra person, treat that extra person as background/context only and do not use them as Person B.",
     "If a partner reference image contains an extra person, treat that extra person as background/context only and do not use them as Person A."
   ].join("\n");
@@ -202,6 +248,7 @@ function subjectCompositionInstruction(payload: WorkerPayload) {
       subjectSource,
       "Keep both reference groups represented as the two people in the final image, with the primary subject and partner subject both visible.",
       "The two people should be styled as a couple or paired subjects, both clearly visible from head and upper body or full body.",
+      "Do not copy the two-person arrangement from the primary reference when a partner reference is provided.",
       "Do not generate a solo portrait, do not crop one person out, and do not create a collage, split panel, contact sheet, or multiple unrelated portraits."
     ].join(" ");
   }
@@ -221,8 +268,9 @@ function buildPrompt(payload: WorkerPayload) {
     "Create exactly one standalone image for this output slot.",
     subjectCompositionInstruction(payload),
     referenceRoleInstruction(payload),
+    referenceManifest(payload),
     "Do not create a collage, grid, contact sheet, split panel, moodboard, storyboard, or multiple avatars inside the same image.",
-    "Use the provided customer source image or images as visual references when available: keep broad subject, pose, color, composition, and non-sensitive styling cues while producing an original themed result.",
+    balancedReferenceInstruction(payload),
     "Stylized editorial image, tasteful composition, no text, no watermark, no UI."
   ].filter(Boolean);
   return promptParts.join("\n\n");
@@ -313,12 +361,12 @@ async function buildImageEditForm(params: {
     form.append("n", String(params.outputCount));
   }
 
-  const assets = inputAssets(params.payload).slice(0, 4);
+  const assets = providerInputAssets(params.payload);
   if (!assets.length) return undefined;
   const imageFieldName = imageEditFormFieldName(assets.length);
+  const roles = referenceRoles(params.payload);
 
   for (const [index, asset] of assets.entries()) {
-    const roles = referenceRoles(params.payload);
     const role = roles.roleFor(asset.assetId);
     const response = await fetchWithTimeout(
       asset.signedUrl,
@@ -332,7 +380,8 @@ async function buildImageEditForm(params: {
     const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
     const bytes = new Uint8Array(await response.arrayBuffer());
     const prepared = await prepareProviderImage(bytes, mimeType);
-    form.append(imageFieldName, new Blob([prepared.bytes], { type: prepared.mimeType }), `${role}-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
+    const roleLabel = referenceRoleLabel(role).toLowerCase();
+    form.append(imageFieldName, new Blob([prepared.bytes], { type: prepared.mimeType }), `reference-${index + 1}-${roleLabel}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
   }
   return form;
 }
