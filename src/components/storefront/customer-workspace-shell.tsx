@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChevronDown, ChevronLeft, ChevronRight, Heart, LayoutGrid, Trash2, X, UserRound, Users } from "lucide-react";
+import { CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Heart, LayoutGrid, Trash2, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
@@ -44,9 +44,18 @@ type RuntimeOutputSlot = {
   status: "queued" | "running" | "succeeded" | "failed";
   stage?: string;
   storageKey?: string;
+  previewUrl?: string;
   mimeType?: string;
   error?: string;
   updatedAt?: string;
+};
+
+type WorkspaceOutputRecord = {
+  key: string;
+  index?: number;
+  storageKey?: string;
+  previewUrl?: string;
+  mimeType?: string;
 };
 
 function outputCopyJob(job: ThemeRuntimeData["jobs"][number] | undefined): OutputCopyJob | undefined {
@@ -102,18 +111,6 @@ function workspaceJobStageLabel(job: RuntimeJob): string {
   return "Request updated";
 }
 
-function workspaceJobProgress(job: RuntimeJob, assetsCount: number): number {
-  const stage = jobResult(job).lastWorkerStage;
-  if (job.status === "failed" || job.status === "succeeded") return 100;
-  if (assetsCount > 0) return 95;
-  if (stage === "provider_response_received") return 88;
-  if (stage === "provider_request_started") return 62;
-  if (stage === "source_images_ready") return 42;
-  if (stage === "local_worker_started") return 25;
-  if (job.status === "running") return 18;
-  return 8;
-}
-
 function workspaceJobBody(job: RuntimeJob): string {
   const result = jobResult(job);
   if (job.status === "failed") {
@@ -140,7 +137,7 @@ function requestedJobOutputCount(job: RuntimeJob): number {
   return Number.isFinite(count) && count > 0 ? Math.max(1, Math.trunc(count)) : 1;
 }
 
-function workspaceJobOutputSlots(job: RuntimeJob, assetsCount: number): RuntimeOutputSlot[] {
+function workspaceJobOutputSlots(job: RuntimeJob, outputAssets: ThemeRuntimeAsset[]): RuntimeOutputSlot[] {
   const result = jobResult(job);
   const rawSlots = Array.isArray(result.outputSlots) ? result.outputSlots : [];
   const slotsByIndex = new Map<number, RuntimeOutputSlot>();
@@ -162,12 +159,76 @@ function workspaceJobOutputSlots(job: RuntimeJob, assetsCount: number): RuntimeO
       updatedAt: typeof record.updatedAt === "string" ? record.updatedAt : undefined
     });
   }
-  const total = Math.max(requestedJobOutputCount(job), slotsByIndex.size, assetsCount);
+  const rawOutputs = Array.isArray(result.outputs) ? result.outputs : [];
+  const slotIndexByStorageKey = new Map<string, number>();
+  slotsByIndex.forEach((slot) => {
+    if (slot.storageKey) slotIndexByStorageKey.set(normalizedWorkspaceStorageKey(slot.storageKey), slot.index);
+  });
+  const outputRecords: WorkspaceOutputRecord[] = [];
+  const seenOutputKeys = new Set<string>();
+  const appendOutputRecord = (record: Omit<WorkspaceOutputRecord, "key">) => {
+    const key = record.storageKey ? normalizedWorkspaceStorageKey(record.storageKey) : record.previewUrl?.trim();
+    if (!key || seenOutputKeys.has(key)) return;
+    seenOutputKeys.add(key);
+    outputRecords.push({ ...record, key });
+  };
+  rawOutputs.forEach((rawOutput) => {
+    if (!rawOutput || typeof rawOutput !== "object" || Array.isArray(rawOutput)) return;
+    const record = rawOutput as Record<string, unknown>;
+    if (typeof record.storageKey !== "string" || !record.storageKey.trim()) return;
+    const outputRecordIndex = Number(record.index);
+    appendOutputRecord({
+      index: Number.isFinite(outputRecordIndex) && outputRecordIndex > 0 ? Math.trunc(outputRecordIndex) : undefined,
+      storageKey: record.storageKey,
+      mimeType: typeof record.mimeType === "string" ? record.mimeType : undefined
+    });
+  });
+  outputAssets.forEach((asset, outputIndex) => {
+    appendOutputRecord({
+      index: outputIndex + 1,
+      storageKey: asset.storageKey,
+      previewUrl: asset.previewUrl,
+      mimeType: asset.mimeType
+    });
+  });
+  outputRecords.forEach((outputRecord, outputIndex) => {
+    const matchedIndex = outputRecord.storageKey ? slotIndexByStorageKey.get(normalizedWorkspaceStorageKey(outputRecord.storageKey)) : undefined;
+    const fallbackIndex = Array.from({ length: Math.max(requestedJobOutputCount(job), slotsByIndex.size, outputRecords.length) }, (_, itemIndex) => itemIndex + 1)
+      .find((candidate) => {
+        const existingSlot = slotsByIndex.get(candidate);
+        if (!existingSlot) return true;
+        if (existingSlot.status === "failed") return false;
+        if (!existingSlot.storageKey || !outputRecord.storageKey) return true;
+        return normalizedWorkspaceStorageKey(existingSlot.storageKey) === normalizedWorkspaceStorageKey(outputRecord.storageKey);
+      });
+    const index = matchedIndex ??
+      outputRecord.index ??
+      (rawSlots.length ? fallbackIndex : undefined) ??
+      outputIndex + 1;
+    slotsByIndex.set(index, {
+      ...(slotsByIndex.get(index) ?? { index }),
+      index,
+      status: "succeeded",
+      stage: "provider_response_received",
+      storageKey: outputRecord.storageKey ?? slotsByIndex.get(index)?.storageKey,
+      previewUrl: outputRecord.previewUrl ?? slotsByIndex.get(index)?.previewUrl,
+      mimeType: outputRecord.mimeType ?? slotsByIndex.get(index)?.mimeType,
+      updatedAt: slotsByIndex.get(index)?.updatedAt
+    });
+  });
+  const deliveredCount = Math.max(outputRecords.length, outputAssets.length);
+  const total = Math.max(requestedJobOutputCount(job), slotsByIndex.size, deliveredCount);
   return Array.from({ length: total }, (_, itemIndex) => {
     const index = itemIndex + 1;
     return slotsByIndex.get(index) ?? {
       index,
-      status: job.status === "failed" ? "failed" : job.status === "succeeded" ? "succeeded" : job.status === "running" ? "running" : "queued"
+      status: index <= deliveredCount
+        ? "succeeded"
+        : job.status === "failed" || job.status === "succeeded"
+          ? "failed"
+          : job.status === "running"
+            ? "running"
+            : "queued"
     };
   });
 }
@@ -177,6 +238,60 @@ function slotLabel(slot: RuntimeOutputSlot): string {
   if (slot.status === "failed") return "Failed";
   if (slot.status === "running") return "Generating";
   return "Queued";
+}
+
+function workspaceSlotProgress(slot: RuntimeOutputSlot): number {
+  if (slot.status === "succeeded" || slot.status === "failed") return 100;
+  if (slot.stage === "provider_response_received") return 88;
+  if (slot.stage === "provider_request_started") return 62;
+  if (slot.stage === "source_images_ready") return 42;
+  if (slot.stage === "local_worker_started") return 25;
+  if (slot.status === "running") return 35;
+  return 8;
+}
+
+function workspaceSlotProgressText(slot: RuntimeOutputSlot): string {
+  if (slot.status === "succeeded") return "Output ready";
+  if (slot.status === "failed") return "Needs retry";
+  if (slot.stage === "provider_response_received") return "Saving output";
+  if (slot.stage === "provider_request_started") return "Generating output";
+  if (slot.stage === "source_images_ready") return "Preparing photos";
+  if (slot.stage === "local_worker_started") return "Preparing request";
+  if (slot.status === "running") return "Generating output";
+  return "Waiting for this slot";
+}
+
+function workspaceSlotSummary(slots: RuntimeOutputSlot[]): string {
+  const delivered = slots.filter((slot) => slot.status === "succeeded").length;
+  const failed = slots.filter((slot) => slot.status === "failed").length;
+  const pending = slots.length - delivered - failed;
+  const parts = [`${delivered} of ${slots.length} delivered`];
+  if (pending > 0) parts.push(`${pending} pending`);
+  if (failed > 0) parts.push(`${failed} failed`);
+  return parts.join(" · ");
+}
+
+function workspaceJobSlotStageLabel(job: RuntimeJob, slots: RuntimeOutputSlot[]): string {
+  if (slots.length <= 1) return workspaceJobStageLabel(job);
+  const delivered = slots.filter((slot) => slot.status === "succeeded").length;
+  const failed = slots.filter((slot) => slot.status === "failed").length;
+  const pending = slots.length - delivered - failed;
+  if (delivered === slots.length) return "Images delivered";
+  if (failed > 0 && delivered > 0) return "Some images need attention";
+  if (failed > 0 && pending === 0) return "Generation failed";
+  if (delivered > 0 && pending > 0) return "More images are still generating";
+  if (pending > 0) return "Images are generating";
+  return workspaceJobStageLabel(job);
+}
+
+function workspaceJobStatusBadge(job: RuntimeJob, slots: RuntimeOutputSlot[]): string {
+  const delivered = slots.filter((slot) => slot.status === "succeeded").length;
+  const failed = slots.filter((slot) => slot.status === "failed").length;
+  const pending = slots.length - delivered - failed;
+  if (slots.length > 1 && failed === slots.length) return "failed";
+  if (slots.length > 1 && delivered > 0 && failed > 0) return "partial";
+  if (slots.length > 1 && delivered > 0 && pending > 0) return "partial";
+  return job.status;
 }
 
 function normalizedWorkspaceStorageKey(storageKey: string): string {
@@ -341,6 +456,7 @@ export function CustomerWorkspaceShell({
   const [focusedJobId, setFocusedJobId] = useState<string | null>(null);
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
+  const [sampleDeleteConfirm, setSampleDeleteConfirm] = useState<{ assets: SampleAsset[]; label: string } | null>(null);
   const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
@@ -501,13 +617,13 @@ export function CustomerWorkspaceShell({
   const selectedPreviewAsset = selectedPreviewIndex >= 0 ? visibleResourceAssets[selectedPreviewIndex] : undefined;
   const outputCopyJobs = useMemo(() => recentJobs.map(outputCopyJob).filter((job): job is OutputCopyJob => Boolean(job)), [recentJobs]);
   const jobById = useMemo(() => new Map(outputCopyJobs.map((job) => [job.id, job])), [outputCopyJobs]);
-  const outputCountByJobId = useMemo(() => {
-    const counts = new Map<string, number>();
+  const outputAssetsByJobId = useMemo(() => {
+    const assetsByJobId = new Map<string, ThemeRuntimeAsset[]>();
     galleryAssets.forEach((asset) => {
       if (!asset.jobId) return;
-      counts.set(asset.jobId, (counts.get(asset.jobId) ?? 0) + 1);
+      assetsByJobId.set(asset.jobId, [...(assetsByJobId.get(asset.jobId) ?? []), asset]);
     });
-    return counts;
+    return assetsByJobId;
   }, [galleryAssets]);
   const outputPreviewUrlByStorageKey = useMemo(() => {
     const urls = new Map<string, string>();
@@ -697,6 +813,39 @@ export function CustomerWorkspaceShell({
     });
   }
 
+  function sampleTargetFor(asset: SampleAsset): SampleTarget {
+    if (asset.localTarget === "partner" || asset.subjectRole === "partner") return "partner";
+    return "primary";
+  }
+
+  function groupSamplesFor(target: SampleTarget) {
+    if (studioTrainingMode !== "couple") return sourceAssets;
+    return sourceAssets.filter((asset) => sampleTargetFor(asset) === target || (target === "primary" && !asset.subjectRole && !asset.localTarget));
+  }
+
+  function toggleSampleSelection(target: SampleTarget, asset: SampleAsset) {
+    if (asset.localStatus === "uploading" || asset.localStatus === "failed") return;
+    const updateIds = (current: string[]) => {
+      if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
+      if (current.length >= 15) {
+        setSampleUploadMessage("Use up to 15 selected samples per request.");
+        return current;
+      }
+      return [asset.id, ...current];
+    };
+    if (target === "partner") {
+      setPartnerSampleIds(updateIds);
+    } else {
+      setPrimarySampleIds(updateIds);
+    }
+  }
+
+  function requestSampleDelete(assets: SampleAsset[], label: string) {
+    const deletableAssets = assets.filter((asset) => asset.localStatus !== "uploading");
+    if (!deletableAssets.length) return;
+    setSampleDeleteConfirm({ assets: deletableAssets, label });
+  }
+
   function removeSampleId(assetId: string) {
     setPrimarySampleIds((current) => current.filter((id) => id !== assetId));
     setPartnerSampleIds((current) => current.filter((id) => id !== assetId));
@@ -765,7 +914,7 @@ export function CustomerWorkspaceShell({
 
   async function deleteSample(asset: SampleAsset) {
     if (asset.localStatus === "uploading") return;
-    await deleteSamples([asset]);
+    requestSampleDelete([asset], asset.label || "sample");
   }
 
   async function uploadSidebarSamples(files: FileList | null) {
@@ -1113,7 +1262,8 @@ export function CustomerWorkspaceShell({
                             : [{ id: "primary" as const, title: "Your Samples", body: "Upload photos for this private model." }]
                           ).map((group) => {
                             const selectedIds = group.id === "partner" ? partnerSampleIds : primarySampleIds;
-                            const selectedGroupAssets = sourceAssets.filter((asset) => selectedIds.includes(asset.id));
+                            const groupAssets = groupSamplesFor(group.id);
+                            const selectedGroupAssets = groupAssets.filter((asset) => selectedIds.includes(asset.id));
                             const remoteDeleting = selectedGroupAssets.some((asset) => deletingSampleId === asset.id);
                             return (
                               <div className="rounded-[12px] border border-white/10 bg-black/20 p-3" key={group.id}>
@@ -1121,18 +1271,18 @@ export function CustomerWorkspaceShell({
                                   <div>
                                     <p className="text-sm font-semibold">{group.title}</p>
                                     <p className="mt-1 text-xs leading-5 text-white/52">
-                                      {group.body} Uploaded {selectedGroupAssets.length} selected sample{selectedGroupAssets.length === 1 ? "" : "s"}. Use up to 15 clear samples per request.
+                                      {group.body} {selectedGroupAssets.length} selected. Tap a photo to choose samples, then delete selected if needed.
                                     </p>
                                   </div>
                                   <div className="flex shrink-0 gap-2">
-                                    {selectedGroupAssets.length ? (
+                                    {groupAssets.length ? (
                                       <button
                                         className="rounded-[10px] border border-rose-300/25 bg-rose-500/12 px-3 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-500/18 disabled:cursor-wait disabled:opacity-55"
-                                        disabled={remoteDeleting}
-                                        onClick={() => void deleteSamples(selectedGroupAssets)}
+                                        disabled={remoteDeleting || !selectedGroupAssets.length}
+                                        onClick={() => requestSampleDelete(selectedGroupAssets, group.title)}
                                         type="button"
                                       >
-                                        {remoteDeleting ? "Deleting" : "Delete selected"}
+                                        {remoteDeleting ? "Deleting" : selectedGroupAssets.length ? "Delete selected" : "Select to delete"}
                                       </button>
                                     ) : null}
                                     <button
@@ -1145,25 +1295,56 @@ export function CustomerWorkspaceShell({
                                     </button>
                                   </div>
                                 </div>
-                                <div className="mt-3 grid grid-cols-3 gap-2">
-                                  {selectedGroupAssets.slice(0, 6).map((asset) => (
-                                    <button
-                                      className="group/sample relative overflow-hidden rounded-[10px] border border-white/10 bg-black/30"
-                                      disabled={asset.localStatus === "failed"}
-                                      key={`${group.id}_${asset.id}`}
-                                      onClick={() => setPreviewSampleId(asset.id)}
-                                      type="button"
-                                    >
-                                      <img alt={asset.label} className="aspect-square w-full object-cover transition group-hover/sample:scale-[1.03]" src={asset.previewUrl} />
+                                <div className="mt-3 grid grid-cols-3 gap-2" role="list" aria-label={`${group.title} samples`}>
+                                  {groupAssets.slice(0, 15).map((asset) => {
+                                    const selected = selectedIds.includes(asset.id);
+                                    const selectable = asset.localStatus !== "uploading" && asset.localStatus !== "failed";
+                                    return (
+                                      <div
+                                        className={`group/sample relative overflow-hidden rounded-[10px] border bg-black/30 transition ${
+                                          selected ? "border-[#31d4ff] ring-2 ring-[#31d4ff]/35" : "border-white/10 hover:border-white/28"
+                                        }`}
+                                        key={`${group.id}_${asset.id}`}
+                                        role="listitem"
+                                      >
+                                        <button
+                                          aria-pressed={selected}
+                                          className="block w-full text-left disabled:cursor-not-allowed"
+                                          disabled={!selectable}
+                                          onClick={() => toggleSampleSelection(group.id, asset)}
+                                          title={selected ? "Selected for this request" : "Select this sample"}
+                                          type="button"
+                                        >
+                                          <img alt={asset.label} className={`aspect-square w-full object-cover transition group-hover/sample:scale-[1.03] ${selected ? "brightness-105" : "opacity-72"}`} src={asset.previewUrl} />
+                                          <span className={`absolute left-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full border text-white shadow-[0_8px_22px_-14px_rgba(0,0,0,0.8)] ${
+                                            selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#051016]" : "border-white/45 bg-black/56"
+                                          }`}>
+                                            {selected ? <CheckCircle2 className="h-4 w-4" strokeWidth={2.2} /> : null}
+                                          </span>
+                                        </button>
+                                        <button
+                                          aria-label={`Preview ${asset.label}`}
+                                          className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full border border-white/25 bg-black/56 text-white/76 opacity-0 transition hover:bg-white/12 hover:text-white group-hover/sample:opacity-100"
+                                          onClick={() => setPreviewSampleId(asset.id)}
+                                          type="button"
+                                        >
+                                          <Eye className="h-3.5 w-3.5" strokeWidth={1.9} />
+                                        </button>
+                                        <span className={`absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                                          selected ? "bg-[#31d4ff] text-[#041014]" : "bg-black/58 text-white/64"
+                                        }`}>
+                                          {selected ? "Selected" : "Tap to select"}
+                                        </span>
                                       {asset.localStatus === "uploading" ? (
                                         <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">Uploading</span>
                                       ) : null}
                                       {asset.localStatus === "failed" ? (
                                         <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">Failed</span>
                                       ) : null}
-                                    </button>
-                                  ))}
-                                  {!selectedGroupAssets.length ? (
+                                      </div>
+                                    );
+                                  })}
+                                  {!groupAssets.length ? (
                                     <button
                                       className="col-span-3 grid min-h-[104px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/20 px-4 py-5 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/60 hover:text-white"
                                       onClick={() => openSidebarSamplePicker(group.id)}
@@ -1428,10 +1609,9 @@ export function CustomerWorkspaceShell({
                     </div>
                     <div className="grid gap-3 lg:grid-cols-2">
                       {visibleStatusJobs.map((job) => {
-                        const assetsCount = outputCountByJobId.get(job.id) ?? 0;
-                        const progress = workspaceJobProgress(job, assetsCount);
-                        const failed = job.status === "failed";
-                        const slots = workspaceJobOutputSlots(job, assetsCount);
+                        const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
+                        const slots = workspaceJobOutputSlots(job, outputAssets);
+                        const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
                         return (
                           <div
                             className={`rounded-[14px] border p-4 ${
@@ -1443,61 +1623,81 @@ export function CustomerWorkspaceShell({
                             <div className="flex flex-wrap items-start justify-between gap-3">
                               <div className="min-w-0">
                                 <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job)}>{workspaceJobTitle(job)}</p>
-                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobStageLabel(job)}</p>
+                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots)}</p>
                               </div>
                               <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
-                                {job.status}
+                                {workspaceJobStatusBadge(job, slots)}
                               </span>
                             </div>
                             <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job)}</p>
-                            {slots.length > 1 || slots.some((slot) => slot.storageKey || slot.status === "failed") ? (
-                              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                                {slots.map((slot) => {
-                                  const slotSucceeded = slot.status === "succeeded";
-                                  const slotFailed = slot.status === "failed";
-                                  return (
-                                    <div
-                                      className={`overflow-hidden rounded-[10px] border ${
-                                        slotSucceeded
-                                          ? "border-emerald-300/24 bg-emerald-300/8"
-                                          : slotFailed
-                                            ? "border-rose-300/24 bg-rose-300/8"
-                                            : "border-white/10 bg-white/[0.035]"
-                                      }`}
-                                      key={`${job.id}_${slot.index}`}
-                                    >
-                                      {slot.storageKey ? (
-                                        <img
-                                          alt={`Output ${slot.index}`}
-                                          className="aspect-[4/3] w-full object-cover"
-                                          src={workspaceSlotPreviewUrl(slot.storageKey)}
-                                        />
-                                      ) : null}
-                                      <div className="flex items-center justify-between gap-2 px-3 py-2">
-                                        <span className="text-[11px] font-semibold text-white/74">Image {slot.index}</span>
-                                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
-                                          slotSucceeded
-                                            ? "bg-emerald-300/12 text-emerald-100"
-                                            : slotFailed
-                                              ? "bg-rose-300/12 text-rose-100"
-                                              : "bg-white/8 text-white/48"
-                                        }`}>
-                                          {slotLabel(slot)}
+                            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                              {slots.map((slot) => {
+                                const slotSucceeded = slot.status === "succeeded";
+                                const slotFailed = slot.status === "failed";
+                                const slotProgress = workspaceSlotProgress(slot);
+                                return (
+                                  <div
+                                    className={`overflow-hidden rounded-[10px] border ${
+                                      slotSucceeded
+                                        ? "border-emerald-300/24 bg-emerald-300/8"
+                                        : slotFailed
+                                          ? "border-rose-300/24 bg-rose-300/8"
+                                          : "border-white/10 bg-white/[0.035]"
+                                    }`}
+                                    key={`${job.id}_${slot.index}`}
+                                  >
+                                    {slot.storageKey ? (
+                                      <img
+                                        alt={`Output ${slot.index}`}
+                                        className="aspect-[4/3] w-full object-cover"
+                                        src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
+                                      />
+                                    ) : (
+                                      <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
+                                        <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
+                                          {workspaceSlotProgressText(slot)}
                                         </span>
                                       </div>
+                                    )}
+                                    <div className="flex items-center justify-between gap-2 px-3 py-2">
+                                      <span className="text-[11px] font-semibold text-white/74">Image {slot.index}</span>
+                                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                                        slotSucceeded
+                                          ? "bg-emerald-300/12 text-emerald-100"
+                                          : slotFailed
+                                            ? "bg-rose-300/12 text-rose-100"
+                                            : "bg-white/8 text-white/48"
+                                      }`}>
+                                        {slotLabel(slot)}
+                                      </span>
                                     </div>
-                                  );
-                                })}
-                              </div>
-                            ) : null}
-                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-                              <div
-                                className={`h-full rounded-full transition-all ${failed ? "bg-rose-300" : "bg-[#31d4ff]"}`}
-                                style={{ width: `${progress}%` }}
-                              />
+                                    <div className="px-3 pb-3">
+                                      <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                                        <div
+                                          className={`h-full rounded-full transition-all ${
+                                            slotFailed
+                                              ? "bg-rose-300"
+                                              : slotSucceeded
+                                                ? "bg-emerald-300"
+                                                : "bg-[#31d4ff]"
+                                          }`}
+                                          style={{ width: `${slotProgress}%` }}
+                                        />
+                                      </div>
+                                      <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
+                                        <span className="truncate">{workspaceSlotProgressText(slot)}</span>
+                                        <span className="shrink-0">{slotFailed ? "Stopped" : `${slotProgress}%`}</span>
+                                      </div>
+                                      {slotFailed && slot.error ? (
+                                        <p className="mt-1 truncate text-[10px] text-rose-100/50" title={slot.error}>{slot.error}</p>
+                                      ) : null}
+                                    </div>
+                                  </div>
+                                );
+                              })}
                             </div>
                             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
-                              <span>{assetsCount ? `${assetsCount} output${assetsCount === 1 ? "" : "s"} attached` : `${progress}% complete`}</span>
+                              <span>{workspaceSlotSummary(slots)}</span>
                               <span>Updated {workspaceJobTime(job.updatedAt)}</span>
                             </div>
                           </div>
@@ -1618,6 +1818,40 @@ export function CustomerWorkspaceShell({
           </div>
         </section>
       </main>
+      {sampleDeleteConfirm ? (
+        <div className="fixed inset-0 z-[110] grid place-items-center bg-black/78 p-4" role="dialog" aria-modal="true" aria-label="Confirm sample deletion">
+          <div className="w-full max-w-sm rounded-[16px] border border-white/14 bg-[#090b10] p-5 text-white shadow-[0_30px_100px_-42px_rgba(0,0,0,0.95)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-200/70">Confirm delete</p>
+            <h3 className="mt-2 text-lg font-semibold">
+              Delete {sampleDeleteConfirm.assets.length === 1 ? "this sample" : `${sampleDeleteConfirm.assets.length} samples`}?
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-white/58">
+              This removes the selected sample{sampleDeleteConfirm.assets.length === 1 ? "" : "s"} from your private account and from {sampleDeleteConfirm.label}. This cannot be undone.
+            </p>
+            <div className="mt-5 flex gap-2">
+              <button
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-[10px] border border-white/12 bg-white/[0.06] px-4 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
+                onClick={() => setSampleDeleteConfirm(null)}
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] border border-rose-300/25 bg-rose-500/18 px-4 text-sm font-semibold text-rose-100 transition hover:bg-rose-500/25"
+                onClick={() => {
+                  const assetsToDelete = sampleDeleteConfirm.assets;
+                  setSampleDeleteConfirm(null);
+                  void deleteSamples(assetsToDelete);
+                }}
+                type="button"
+              >
+                <Trash2 className="h-4 w-4" strokeWidth={1.8} />
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
       {previewSample ? (
         <div className="fixed inset-0 z-[95] grid place-items-center bg-black/84 p-4" role="dialog" aria-modal="true" aria-label="Uploaded sample preview">
           <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_280px]">
