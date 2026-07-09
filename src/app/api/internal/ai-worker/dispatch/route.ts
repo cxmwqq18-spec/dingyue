@@ -358,11 +358,11 @@ async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: 
   }
 }
 
-function imageEditFormFieldName(totalAssets: number) {
+function imageEditFormFieldName(_totalAssets: number) {
   const mode = process.env.LOCAL_AI_WORKER_IMAGE_FIELD_MODE?.trim();
   if (mode === "repeated-image") return "image";
   if (mode === "image-array") return "image[]";
-  return totalAssets > 1 ? "image[]" : "image";
+  return "image";
 }
 
 async function buildImageEditForm(params: {

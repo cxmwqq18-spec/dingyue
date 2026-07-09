@@ -22,6 +22,11 @@ const checks = [
   {
     label: "fixed provider mode can still restrict generation to one configured provider",
     pass: source.includes('selection?.mode === "fixed_provider"')
+  },
+  {
+    label: "image edit uploads default to repeated image fields for provider compatibility",
+    pass: /function imageEditFormFieldName\([^)]*\)\s*{[\s\S]*if \(mode === "image-array"\) return "image\[\]";[\s\S]*return "image";[\s\S]*}/.test(source) &&
+      !source.includes('return totalAssets > 1 ? "image[]" : "image";')
   }
 ];
 
