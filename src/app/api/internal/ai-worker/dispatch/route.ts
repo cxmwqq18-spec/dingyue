@@ -202,9 +202,9 @@ function balancedReferenceInstruction(payload: WorkerPayload) {
   }
   return [
     "Use the provided customer source images as balanced person references, not as one copied composition.",
-    "Do not let PRIMARY_PERSON_REFERENCE dominate the result or supply both final people.",
-    "For couple outputs, Person B must visibly borrow cues from PARTNER_PERSON_REFERENCE images, including hair, clothing color, posture, and visible context where useful.",
-    "Do not use an extra person from PRIMARY_PERSON_REFERENCE as Person B.",
+    "Do not let PRIMARY_PERSON_REFERENCE dominate the result or cause PARTNER_PERSON_REFERENCE people to be omitted.",
+    "For multi-person outputs, visibly borrow cues from PARTNER_PERSON_REFERENCE images, including hair, clothing color, posture, and visible context where useful.",
+    "Do not discard clear additional people visible in PRIMARY_PERSON_REFERENCE images.",
     "Keep the final scene original and themed instead of copying the primary reference photo's selfie composition."
   ].join(" ");
 }
@@ -219,11 +219,10 @@ function referenceRoleInstruction(payload: WorkerPayload) {
   }
   return [
     `Reference image role map:\n${roleLines}`,
-    "Binding rules: Person A must be derived from PRIMARY_PERSON_REFERENCE images. Person B must be derived from PARTNER_PERSON_REFERENCE images.",
-    "Use visible cues from both the primary and partner reference groups. Do not let one uploaded image supply both final people.",
-    "When the primary and partner references conflict, preserve Person B from PARTNER_PERSON_REFERENCE instead of using the second person visible in the primary reference.",
-    "If a primary reference image contains an extra person, treat that extra person as background/context only and do not use them as Person B.",
-    "If a partner reference image contains an extra person, treat that extra person as background/context only and do not use them as Person A."
+    "Binding rules: every clear adult person visible in PRIMARY_PERSON_REFERENCE images should remain represented, and every clear adult person visible in PARTNER_PERSON_REFERENCE images should also remain represented.",
+    "Use visible cues from both the primary and partner reference groups. Do not let one uploaded image supply the whole final group.",
+    "When multiple reference images contain different people, combine them into one natural travel group instead of choosing only one reference image.",
+    "If the primary reference shows two clear people and the partner reference shows one clear person, the final travel photo should show three adults together."
   ].join("\n");
 }
 
@@ -241,14 +240,14 @@ function subjectCompositionInstruction(payload: WorkerPayload) {
 
   if (wantsTwoPeople) {
     const subjectSource = primaryAssetIds.length && partnerAssetIds.length
-      ? "Use the primary reference photos for person A and the partner reference photos for person B. Person B must come from the partner reference photos, not from an invented face or from an extra person visible in the primary photos."
-      : "Use the source photos as references for two distinct people.";
+      ? "Use the primary reference photos and partner reference photos as separate source groups. Preserve every clear adult person visible across those groups instead of limiting the output to one person per group."
+      : "Use the source photos as references for a natural group when multiple clear people are visible.";
     return [
-      "Final composition requirement: show exactly two visible adult people together in one realistic scene.",
+      "Final composition requirement: show all clear adult people from the selected source photos together in one realistic scene.",
       subjectSource,
-      "Keep both reference groups represented as the two people in the final image, with the primary subject and partner subject both visible.",
-      "The two people should be styled as a couple or paired subjects, both clearly visible from head and upper body or full body.",
-      "Do not copy the two-person arrangement from the primary reference when a partner reference is provided.",
+      "Keep both reference groups represented in the final image, with each visible source person included as a distinct final person.",
+      "Style them as a travel group or paired subjects, all clearly visible from head and upper body or full body.",
+      "Do not copy the arrangement from the primary reference when a partner reference is provided.",
       "Do not generate a solo portrait, do not crop one person out, and do not create a collage, split panel, contact sheet, or multiple unrelated portraits."
     ].join(" ");
   }

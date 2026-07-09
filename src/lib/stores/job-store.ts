@@ -156,12 +156,13 @@ function subjectCompositionInstruction(requestJson: Record<string, unknown> | un
 
   if (wantsTwoPeople) {
     const subjectSource = primaryAssetIds.length && partnerAssetIds.length
-      ? "Use the primary selected photos as the first person and the partner selected photos as the second person. The second person must come from the partner selected photos, not from an extra person visible in the primary selected photos."
-      : "Use the selected source photos as references for two distinct people.";
+      ? "Use the primary selected photos and partner selected photos as separate source groups. Preserve every clear adult person visible across those groups instead of limiting the output to one person per group."
+      : "Use the selected source photos as references for a natural group when multiple clear people are visible.";
     return [
-      "Subject requirement: the final image must show exactly two visible adult people together in the same frame as a pair.",
+      "Subject requirement: the final image must show all clear adult people from the selected source photos together in the same frame.",
       subjectSource,
-      "Keep both selected reference groups represented. Do not let one uploaded image supply both final people.",
+      "Keep all selected reference groups represented. Do not let one uploaded image supply the whole final group.",
+      "If the primary selected photo shows two clear people and the partner selected photo shows one clear person, the final travel photo should show three adults together.",
       "Do not create a solo portrait, single-person crop, collage, split panel, or contact sheet."
     ].join(" ");
   }

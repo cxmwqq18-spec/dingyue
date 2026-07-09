@@ -345,8 +345,8 @@ export function CustomerShellHeader({
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
-            <span className={`relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] border ${dark ? "border-white/10 bg-white shadow-[0_14px_34px_-24px_rgba(124,58,237,0.7)]" : "border-[#e2d7ec] bg-white shadow-[0_12px_28px_-22px_rgba(124,58,237,0.55)]"}`}>
-              <img className="h-9 w-9 object-contain" src={logoSrc} alt={logoAlt} width={36} height={36} />
+            <span className="relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] bg-transparent">
+              <img className="h-12 w-12 object-contain" src={logoSrc} alt={logoAlt} width={48} height={48} />
             </span>
             <span className="min-w-0">
               <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>

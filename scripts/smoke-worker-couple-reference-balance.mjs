@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const routePath = path.resolve(__dirname, "../src/app/api/internal/ai-worker/dispatch/route.ts");
+const jobStorePath = path.resolve(__dirname, "../src/lib/stores/job-store.ts");
 const source = fs.readFileSync(routePath, "utf8");
+const jobStoreSource = fs.readFileSync(jobStorePath, "utf8");
 
 const checks = [
   {
@@ -14,12 +16,20 @@ const checks = [
       /if \(role === "primary"\) return 1;/.test(source)
   },
   {
-    label: "prompt explicitly prevents the primary reference from supplying both people",
-    pass: source.includes("Do not let PRIMARY_PERSON_REFERENCE dominate the result or supply both final people.")
+    label: "worker does not force couple jobs down to exactly two people",
+    pass: !source.includes("exactly two visible adult people")
   },
   {
-    label: "prompt prevents the extra person in the primary photo from becoming Person B",
-    pass: source.includes("Do not use an extra person from PRIMARY_PERSON_REFERENCE as Person B.")
+    label: "job creation prompt does not force couple jobs down to exactly two people",
+    pass: !jobStoreSource.includes("exactly two visible adult people")
+  },
+  {
+    label: "worker preserves clear extra people from primary references",
+    pass: source.includes("Do not discard clear additional people visible in PRIMARY_PERSON_REFERENCE images.")
+  },
+  {
+    label: "job creation prompt preserves three-person source combinations",
+    pass: jobStoreSource.includes("primary selected photo shows two clear people and the partner selected photo shows one clear person")
   },
   {
     label: "provider prompt includes a machine-readable reference manifest",
