@@ -21,7 +21,9 @@ import type {
   PublicSiteAdmin,
   SiteAiApp,
   ToolCategory,
-  ToolMenuItem
+  ToolMenuItem,
+  VideoTheme,
+  VideoThemeCategory
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 
@@ -124,12 +126,13 @@ export function mapPaymentEvent(row: Prisma.PaymentEventGetPayload<object>): Pay
 }
 
 export function mapAiApp(row: Prisma.AiAppGetPayload<object>): AiApp {
+  const appType = row.appType === "copy" || row.appType === "avatar" || row.appType === "video" ? row.appType : "image";
   return {
     id: row.id,
     slug: row.slug,
     name: row.name,
     description: row.description,
-    appType: row.appType === "copy" || row.appType === "avatar" ? row.appType : "image",
+    appType,
     parameterSchema: jsonArray(row.parameterSchema)
   };
 }
@@ -708,6 +711,72 @@ export function toCreativePackCategory(record: {
     sortOrder: record.sortOrder,
     status: record.status as CreativePackCategory["status"],
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toVideoThemeCategory(record: {
+  id: string;
+  siteId: string;
+  slug: string;
+  label: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  sortOrder: number;
+  status: string;
+  createdAt?: Date | string;
+}): VideoThemeCategory {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    slug: record.slug,
+    label: record.label,
+    description: record.description ?? undefined,
+    imageUrl: record.imageUrl ?? undefined,
+    sortOrder: record.sortOrder,
+    status: record.status as VideoThemeCategory["status"],
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+  };
+}
+
+export function toVideoTheme(record: {
+  id: string;
+  siteId: string;
+  categoryId?: string | null;
+  category?: Parameters<typeof toVideoThemeCategory>[0] | null;
+  slug: string;
+  name: string;
+  headline: string;
+  description: string;
+  prompt: string;
+  status: string;
+  creditCost: number;
+  durationSeconds: number;
+  maxFrames: number;
+  generationCount: number;
+  imageUrl?: string | null;
+  galleryImages?: unknown;
+  createdAt?: Date | string;
+}): VideoTheme {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    categoryId: record.categoryId ?? undefined,
+    category: record.category ? toVideoThemeCategory(record.category) : undefined,
+    slug: record.slug,
+    name: record.name,
+    headline: record.headline,
+    description: record.description,
+    prompt: record.prompt,
+    status: record.status as VideoTheme["status"],
+    creditCost: record.creditCost,
+    durationSeconds: record.durationSeconds,
+    maxFrames: record.maxFrames,
+    generationCount: record.generationCount,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    imageUrl: record.imageUrl ?? undefined,
+    galleryImages: Array.isArray(record.galleryImages)
+      ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+      : undefined
   };
 }
 

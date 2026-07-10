@@ -238,6 +238,22 @@ const AIDREAMCAPES_TOOL_PRESET_LIBRARY: ToolPreset[] = [
   }
 ];
 
+const STANDALONE_VIDEO_TOOL_IDS = new Set([
+  "album-story-video",
+  "creator-intro-video",
+  "fan-poster-motion",
+  "fashion-reel",
+  "image-to-video",
+  "product-teaser-clip",
+  "profile-clip",
+  "travel-motion-concept"
+]);
+
+function isStandaloneVideoToolPreset(preset: Pick<ToolPreset, "id" | "title" | "category">) {
+  const text = `${preset.id} ${preset.title} ${preset.category}`.toLowerCase();
+  return STANDALONE_VIDEO_TOOL_IDS.has(preset.id) || /\b(video|motion|clip|reel)\b/i.test(text);
+}
+
 function normalizeToolId(value: string | undefined): string {
   return (value ?? "").trim().toLowerCase().replace(/_/g, "-");
 }
@@ -471,7 +487,7 @@ function displayMaterialRule(rule: string): string {
 function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset[] {
   const firstBackendSlug = siteAiApps[0]?.aiApp.slug;
   const presetLibrary = /aidreamcapes/i.test(siteSlug) ? AIDREAMCAPES_TOOL_PRESET_LIBRARY : TOOL_PRESET_LIBRARY;
-  const realTools = siteAiApps.map((app) => ({
+  const realTools = siteAiApps.filter((app) => app.aiApp.appType !== "video" && normalizeToolId(app.aiApp.slug) !== "video-generator").map((app) => ({
     id: normalizeToolId(app.aiApp.slug),
     title: app.aiApp.name,
     description: app.aiApp.description,
@@ -484,7 +500,7 @@ function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset
     ...preset,
     backendSlug: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.aiApp.slug ?? firstBackendSlug,
     creditCost: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.creditCost ?? siteAiApps[0]?.creditCost
-  })).filter((preset) => Boolean(preset.backendSlug));
+  })).filter((preset) => Boolean(preset.backendSlug) && !isStandaloneVideoToolPreset(preset));
   return Array.from(new Map([...realTools, ...library].map((preset) => [preset.id, preset])).values());
 }
 

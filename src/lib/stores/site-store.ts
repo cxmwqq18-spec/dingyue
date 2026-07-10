@@ -27,7 +27,9 @@ import type {
   SiteDomain,
   ThemePageJson,
   ThemePage,
-  ThemePublication
+  ThemePublication,
+  VideoTheme,
+  VideoThemeCategory
 } from "@/lib/types";
 import type { PublishPreflightMediaAsset, PublishPreflightProduct, PublishPreflightSiteAiApp } from "@/lib/theme/publish-preflight";
 
@@ -63,6 +65,8 @@ import {
   toSiteDomain,
   toToolCategory,
   toToolMenuItem,
+  toVideoTheme,
+  toVideoThemeCategory,
   uid,
   verifyRelationalPassword,
 } from "./prisma-mappers";
@@ -598,6 +602,8 @@ function emptyPlatformState(overrides: Partial<PlatformState> = {}): PlatformSta
     toolMenuItems: [],
     aiGatewayGroups: [],
     creativePacks: [],
+    videoThemeCategories: [],
+    videoThemes: [],
     mediaAssets: [],
     themePublications: [],
     siteThemes: [],
@@ -3454,6 +3460,381 @@ export async function deleteSiteAdminRelational(params: {
     metadata: { email: admin.email, role: admin.role }
   });
   return { deletedAdmin: toSiteAdmin(admin) };
+}
+
+const defaultVideoThemeCategories = [
+  {
+    slug: "portrait-motion",
+    label: "Portrait Motion",
+    description: "Subtle cinematic movement for people, profile scenes, and expressive closeups.",
+    imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "travel-story",
+    label: "Travel Story",
+    description: "Route, city, coast, resort, and scenic short clips from ordered frame references.",
+    imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "social-cards",
+    label: "Social Cards",
+    description: "Short social profile clips with clean camera motion and polished editorial timing.",
+    imageUrl: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "wedding-memory",
+    label: "Wedding Memory",
+    description: "Romantic keepsake clips, vows, portraits, and soft celebration motion.",
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "product-teaser",
+    label: "Product Teaser",
+    description: "Compact product reveal clips with controlled light, texture, and camera travel.",
+    imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "seasonal-mood",
+    label: "Seasonal Mood",
+    description: "Holiday, festival, and atmospheric clips with warm environmental motion.",
+    imageUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=1200&q=80"
+  }
+] as const;
+
+const defaultVideoThemes = [
+  {
+    slug: "cinematic-portrait-motion",
+    categorySlug: "portrait-motion",
+    name: "Cinematic Portrait Motion",
+    headline: "A refined moving portrait from customer frames.",
+    description: "Adds natural breathing motion, subtle hair and fabric movement, and a slow cinematic push-in.",
+    prompt: "Create a realistic cinematic portrait video from the supplied ordered image frames. Preserve the people, wardrobe cues, face-safe broad likeness cues, lighting direction, and composition from the frames while adding subtle natural motion, soft parallax, gentle hair and fabric movement, and a slow polished camera push-in. Keep the result elegant, private, and editorial.",
+    creditCost: 24,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "travel-route-story",
+    categorySlug: "travel-story",
+    name: "Travel Route Story",
+    headline: "A short travel scene that follows the uploaded frame order.",
+    description: "Turns 1-4 frames into a cohesive travel moment with natural scene motion.",
+    prompt: "Create a realistic travel short video using the supplied image frames in their exact order as visual beats. Preserve all clear people and scene details represented across the frames, then blend them into one continuous travel moment with cinematic camera movement, natural wind, light, and environment motion. If different frames show different people, include every clear adult person as part of the final travel group unless the user note says otherwise.",
+    creditCost: 28,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "social-profile-clip",
+    categorySlug: "social-cards",
+    name: "Social Profile Clip",
+    headline: "A clean short clip for profile and social cards.",
+    description: "Polished motion for social headers, profile moments, and creator cards.",
+    prompt: "Create a polished social profile video from the ordered image frames. Keep the subject presentation clean, confident, and realistic, with a subtle camera slide, natural expression movement, and crisp editorial lighting. Preserve the ordered frame references and avoid adding text, logos, UI, borders, or collage layouts.",
+    creditCost: 22,
+    durationSeconds: 5,
+    imageUrl: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "wedding-memory-film",
+    categorySlug: "wedding-memory",
+    name: "Wedding Memory Film",
+    headline: "A soft romantic keepsake clip from frame references.",
+    description: "Creates a warm wedding or couple-memory moment with gentle motion.",
+    prompt: "Create a soft romantic keepsake video from the supplied ordered frames. Preserve couple and guest cues represented in the frames, use warm natural light, elegant camera drift, and gentle fabric, flower, and background movement. Keep the tone tasteful, realistic, intimate, and celebratory without text or artificial overlays.",
+    creditCost: 30,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "product-showcase-motion",
+    categorySlug: "product-teaser",
+    name: "Product Showcase Motion",
+    headline: "A compact product reveal from image frames.",
+    description: "Uses one or more product frames to create a realistic reveal clip.",
+    prompt: "Create a realistic product showcase video using the supplied image frames as ordered visual beats. Preserve the product shape, material, color, packaging, and key details while adding controlled studio light movement, soft reflections, and a smooth reveal camera move. Do not invent text, claims, labels, logos, or extra product details not present in the references.",
+    creditCost: 26,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    slug: "holiday-card-motion",
+    categorySlug: "seasonal-mood",
+    name: "Holiday Card Motion",
+    headline: "A warm seasonal clip from customer frames.",
+    description: "Adds festive atmosphere, gentle camera movement, and cozy light.",
+    prompt: "Create a warm seasonal short video from the supplied ordered frames. Preserve the people, outfits, and key visual references while adding gentle festive atmosphere, soft light movement, subtle background motion, and a cozy cinematic camera drift. Keep it realistic, tasteful, and free of text overlays, watermarks, or UI.",
+    creditCost: 24,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=1200&q=80"
+  }
+] as const;
+
+function clampInteger(value: number, fallback: number, min: number, max: number): number {
+  if (!Number.isFinite(value)) return fallback;
+  return Math.max(min, Math.min(max, Math.trunc(value)));
+}
+
+function videoThemeStatus(value: unknown): VideoTheme["status"] {
+  return value === "active" || value === "paused" || value === "draft" ? value : "draft";
+}
+
+function videoThemeCategoryStatus(value: unknown): VideoThemeCategory["status"] {
+  return value === "active" || value === "paused" || value === "draft" ? value : "active";
+}
+
+function defaultVideoWorkflowConfig(): AiWorkflowConfig {
+  return {
+    version: 1,
+    flowName: "Image to Video",
+    description: "Upload or select ordered image frames, choose a video theme, and generate one private video clip.",
+    submitLabel: "Generate video",
+    promptTemplate: "Create one private video for {{flowName}} using the selected video theme and {{assetCount}} ordered frame images.",
+    steps: [
+      {
+        id: "video_frames",
+        title: "Select video frames",
+        kind: "asset_select",
+        assetRules: { min: 1, max: 4, roles: ["input", "training_input"], accept: ["image/*"], required: true }
+      },
+      {
+        id: "video_theme",
+        title: "Choose video theme",
+        kind: "fields",
+        fields: [
+          { id: "videoThemeId", label: "Video theme", type: "text", required: true },
+          { id: "promptNote", label: "Optional note", type: "textarea", required: false }
+        ]
+      },
+      { id: "review_request", title: "Review request", kind: "review" }
+    ]
+  };
+}
+
+export async function ensureVideoGeneratorAppForSiteRelational(siteId: string): Promise<{ siteAiApp: SiteAiApp }> {
+  const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
+  if (!site) throw new RelationalStoreError("site_not_found", 404);
+  const aiApp = await prisma.aiApp.upsert({
+    where: { slug: "video_generator" },
+    create: {
+      id: "ai_video_generator",
+      slug: "video_generator",
+      name: "Image to Video",
+      description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+      appType: "video",
+      parameterSchema: []
+    },
+    update: {
+      name: "Image to Video",
+      description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+      appType: "video"
+    }
+  });
+  const siteAiApp = await prisma.siteAiApp.upsert({
+    where: { siteId_aiAppId: { siteId, aiAppId: aiApp.id } },
+    create: {
+      id: uid("sai"),
+      siteId,
+      aiAppId: aiApp.id,
+      enabled: true,
+      creditCost: 24,
+      routeKey: "local.video.grok",
+      workflowConfig: defaultVideoWorkflowConfig() as unknown as Prisma.InputJsonValue,
+      providerConfig: { mode: "platform_fallback", fallbackEnabled: true } as Prisma.InputJsonValue
+    },
+    update: {
+      enabled: true,
+      routeKey: "local.video.grok",
+      workflowConfig: defaultVideoWorkflowConfig() as unknown as Prisma.InputJsonValue,
+      providerConfig: { mode: "platform_fallback", fallbackEnabled: true } as Prisma.InputJsonValue
+    },
+    include: { aiApp: true }
+  });
+  clearSiteReadCache();
+  return { siteAiApp: toSiteAiApp(siteAiApp) };
+}
+
+export async function ensureDefaultVideoThemesRelational(siteId: string): Promise<void> {
+  await ensureVideoGeneratorAppForSiteRelational(siteId);
+  const existing = await prisma.videoTheme.count({ where: { siteId } });
+  if (existing > 0) return;
+  const categoriesBySlug = new Map<string, string>();
+  for (const [index, category] of defaultVideoThemeCategories.entries()) {
+    const row = await prisma.videoThemeCategory.upsert({
+      where: { siteId_slug: { siteId, slug: category.slug } },
+      create: {
+        id: uid("video_cat"),
+        siteId,
+        slug: category.slug,
+        label: category.label,
+        description: category.description,
+        imageUrl: category.imageUrl,
+        sortOrder: index,
+        status: "active"
+      },
+      update: {
+        label: category.label,
+        description: category.description,
+        imageUrl: category.imageUrl,
+        sortOrder: index,
+        status: "active"
+      }
+    });
+    categoriesBySlug.set(category.slug, row.id);
+  }
+  for (const theme of defaultVideoThemes) {
+    const categoryId = categoriesBySlug.get(theme.categorySlug);
+    await prisma.videoTheme.upsert({
+      where: { siteId_slug: { siteId, slug: theme.slug } },
+      create: {
+        id: uid("video_theme"),
+        siteId,
+        categoryId,
+        slug: theme.slug,
+        name: theme.name,
+        headline: theme.headline,
+        description: theme.description,
+        prompt: theme.prompt,
+        status: "active",
+        creditCost: theme.creditCost,
+        durationSeconds: theme.durationSeconds,
+        maxFrames: 4,
+        imageUrl: theme.imageUrl,
+        galleryImages: [theme.imageUrl]
+      },
+      update: {}
+    });
+  }
+  clearSiteReadCache();
+}
+
+export async function upsertVideoThemeCategoryRelational(params: {
+  siteId: string;
+  categoryId?: string;
+  slug?: string;
+  label: string;
+  description?: string;
+  imageUrl?: string;
+  sortOrder?: number;
+  status?: VideoThemeCategory["status"];
+}): Promise<{ category: VideoThemeCategory; created: boolean }> {
+  const site = await prisma.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
+  if (!site) throw new RelationalStoreError("site_not_found", 404);
+  const label = params.label.trim();
+  if (label.length < 2) throw new RelationalStoreError("video_theme_category_label_required", 400);
+  const slug = slugify(params.slug || label);
+  if (!slug) throw new RelationalStoreError("video_theme_category_slug_required", 400);
+  const existing = params.categoryId
+    ? await prisma.videoThemeCategory.findFirst({ where: { id: params.categoryId, siteId: params.siteId } })
+    : null;
+  const data = {
+    slug,
+    label,
+    description: params.description?.trim() || null,
+    imageUrl: params.imageUrl?.trim() || null,
+    sortOrder: clampInteger(Number(params.sortOrder ?? 0), 0, -10000, 10000),
+    status: videoThemeCategoryStatus(params.status)
+  };
+  const category = existing
+    ? await prisma.videoThemeCategory.update({ where: { id: existing.id }, data })
+    : await prisma.videoThemeCategory.create({
+        data: { id: params.categoryId ?? uid("video_cat"), siteId: params.siteId, ...data }
+      });
+  clearSiteReadCache();
+  return { category: toVideoThemeCategory(category), created: !existing };
+}
+
+export async function deleteVideoThemeCategoryRelational(params: {
+  siteId: string;
+  categoryId: string;
+}): Promise<{ deletedCategory: VideoThemeCategory }> {
+  const category = await prisma.videoThemeCategory.findFirst({ where: { siteId: params.siteId, id: params.categoryId } });
+  if (!category) throw new RelationalStoreError("video_theme_category_not_found", 404);
+  await prisma.videoThemeCategory.delete({ where: { id: category.id } });
+  clearSiteReadCache();
+  return { deletedCategory: toVideoThemeCategory(category) };
+}
+
+export async function upsertVideoThemeRelational(params: {
+  siteId: string;
+  themeId?: string;
+  categoryId?: string;
+  slug?: string;
+  name: string;
+  headline?: string;
+  description: string;
+  prompt: string;
+  status?: VideoTheme["status"];
+  creditCost: number;
+  durationSeconds: number;
+  maxFrames: number;
+  imageUrl?: string;
+  galleryImages?: string[];
+}): Promise<{ theme: VideoTheme; created: boolean }> {
+  await ensureVideoGeneratorAppForSiteRelational(params.siteId);
+  const name = params.name.trim();
+  if (name.length < 2) throw new RelationalStoreError("video_theme_name_required", 400);
+  const slug = slugify(params.slug || name);
+  if (!slug) throw new RelationalStoreError("video_theme_slug_required", 400);
+  const description = params.description.trim();
+  if (description.length < 8) throw new RelationalStoreError("video_theme_description_required", 400);
+  const prompt = params.prompt.trim();
+  if (prompt.length < 12) throw new RelationalStoreError("video_theme_prompt_required", 400);
+  if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
+  const creditCost = clampInteger(Number(params.creditCost), 24, 0, 10000);
+  const durationSeconds = clampInteger(Number(params.durationSeconds), 6, 1, 15);
+  const maxFrames = clampInteger(Number(params.maxFrames), 4, 1, 4);
+  const galleryImages = Array.isArray(params.galleryImages) ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 12) : [];
+  const imageUrl = params.imageUrl?.trim() || galleryImages[0] || null;
+  const category = params.categoryId
+    ? await prisma.videoThemeCategory.findFirst({ where: { siteId: params.siteId, id: params.categoryId }, select: { id: true } })
+    : null;
+  if (params.categoryId && !category) throw new RelationalStoreError("video_theme_category_not_found", 404);
+  const existing = params.themeId
+    ? await prisma.videoTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId } })
+    : null;
+  const data = {
+    slug,
+    name,
+    headline: params.headline?.trim() || name,
+    description,
+    prompt,
+    status: videoThemeStatus(params.status),
+    creditCost,
+    durationSeconds,
+    maxFrames,
+    categoryId: category?.id ?? null,
+    imageUrl,
+    galleryImages
+  };
+  const theme = existing
+    ? await prisma.videoTheme.update({
+        where: { id: existing.id },
+        include: { category: true },
+        data
+      })
+    : await prisma.videoTheme.create({
+        include: { category: true },
+        data: {
+          id: params.themeId ?? uid("video_theme"),
+          siteId: params.siteId,
+          generationCount: 0,
+          ...data
+        }
+      });
+  clearSiteReadCache();
+  return { theme: toVideoTheme(theme), created: !existing };
+}
+
+export async function deleteVideoThemeRelational(params: {
+  siteId: string;
+  themeId: string;
+}): Promise<{ deletedTheme: VideoTheme }> {
+  const theme = await prisma.videoTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId }, include: { category: true } });
+  if (!theme) throw new RelationalStoreError("video_theme_not_found", 404);
+  await prisma.videoTheme.delete({ where: { id: theme.id } });
+  clearSiteReadCache();
+  return { deletedTheme: toVideoTheme(theme) };
 }
 
 export async function upsertCreativePackRelational(params: {

@@ -89,11 +89,11 @@ const toolGroups = [
     accent: "#38a8ff",
     icon: PlayCircle,
     items: [
-      { label: "Album story video", href: "/tools/album-story-video" },
-      { label: "Profile Clip Maker", href: "/tools/profile-clip" },
-      { label: "Creator Intro Video", href: "/tools/creator-intro-video" },
-      { label: "Fashion reel starter", href: "/tools/fashion-reel" },
-      { label: "Product teaser clip", href: "/tools/product-teaser-clip" }
+      { label: "Album story video", href: "/app/create#step-video" },
+      { label: "Profile Clip Maker", href: "/app/create#step-video" },
+      { label: "Creator Intro Video", href: "/app/create#step-video" },
+      { label: "Fashion reel starter", href: "/app/create#step-video" },
+      { label: "Product teaser clip", href: "/app/create#step-video" }
     ]
   }
 ];

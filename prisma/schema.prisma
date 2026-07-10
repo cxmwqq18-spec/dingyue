@@ -173,6 +173,8 @@ model Site {
   toolMenuItems          ToolMenuItem[]
   creativePackCategories CreativePackCategory[]
   creativePacks          CreativePack[]
+  videoThemeCategories   VideoThemeCategory[]
+  videoThemes            VideoTheme[]
   mediaAssets            MediaAsset[]
   customerModels         CustomerModel[]
   albums                 Album[]
@@ -711,6 +713,52 @@ model CreativePackCategory {
 
   @@unique([siteId, slug])
   @@index([siteId, parentId, sortOrder])
+  @@index([siteId, status])
+}
+
+model VideoTheme {
+  id              String              @id
+  siteId          String
+  categoryId      String?
+  slug            String
+  name            String
+  headline        String
+  description     String
+  prompt          String
+  status          String              @default("draft")
+  creditCost      Int
+  durationSeconds Int                 @default(6)
+  maxFrames       Int                 @default(4)
+  generationCount Int                 @default(0)
+  imageUrl        String?
+  galleryImages   Json?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  site            Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  category        VideoThemeCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@unique([siteId, slug])
+  @@index([siteId, status])
+  @@index([siteId, categoryId])
+  @@index([siteId, status, createdAt])
+}
+
+model VideoThemeCategory {
+  id          String       @id
+  siteId      String
+  slug        String
+  label       String
+  description String?
+  imageUrl    String?
+  sortOrder   Int          @default(0)
+  status      String       @default("active")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  site        Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  themes      VideoTheme[]
+
+  @@unique([siteId, slug])
+  @@index([siteId, sortOrder])
   @@index([siteId, status])
 }
 

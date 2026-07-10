@@ -162,8 +162,13 @@ function isVideoGenerationRequest(payload: WorkerPayload) {
   const requestSignals = [
     payload.aiApp,
     payload.routeKey,
+    textValue(payload.params.mode),
     textValue(payload.params.outputType),
+    textValue(payload.params.videoThemeId),
     textValue(fields?.outputType),
+    textValue(fields?.mode),
+    textValue(fields?.videoThemeId),
+    textValue(fields?.videoThemeName),
     textValue(fields?.toolPresetId),
     textValue(fields?.toolPresetTitle),
     textValue(fields?.toolPresetSlug)
@@ -400,14 +405,25 @@ function promptForOutputSlot(prompt: string, slotIndex: number, totalCount: numb
 
 function buildVideoPrompt(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
+  const frameAssets = videoFrameAssets(payload);
+  const frameManifest = frameAssets.length
+    ? [
+        "Ordered frame manifest:",
+        ...frameAssets.map((asset, index) => `Frame ${index + 1}: assetId=${asset.assetId}. ${index === 0 ? "Use as the opening frame anchor." : "Use as a later reference beat and preserve important people, product, wardrobe, prop, and scene cues."}`)
+      ].join("\n")
+    : "";
   const promptParts = [
     promptText(payload.prompt),
     promptText(payload.params.prompt),
+    textValue(fields?.videoThemePrompt) ? `Video theme prompt: ${textValue(fields?.videoThemePrompt)}` : "",
     textValue(fields?.prompt),
+    textValue(fields?.promptNote) ? `User note: ${textValue(fields?.promptNote)}` : "",
     textValue(payload.params.style) ? `Style: ${textValue(payload.params.style)}` : "",
-    textValue(fields?.toolPresetTitle) ? `Tool: ${textValue(fields?.toolPresetTitle)}` : "",
+    textValue(fields?.videoThemeName) ? `Video theme: ${textValue(fields?.videoThemeName)}` : textValue(fields?.toolPresetTitle) ? `Tool: ${textValue(fields?.toolPresetTitle)}` : "",
     subjectCompositionInstruction(payload),
+    frameManifest,
     "Animate the uploaded first frame into a short realistic video. Preserve the first-frame composition, subject continuity, clothing cues, and scene direction while adding natural motion and cinematic camera movement.",
+    "If more than one ordered frame is supplied, use every frame as an intentional visual reference. Do not silently ignore later frames or generate a clip that only reflects Frame 1.",
     "Return one polished video clip with no text overlay, no watermark, and no UI."
   ].filter(Boolean);
   return promptParts.join("\n\n");
@@ -417,8 +433,8 @@ function inputAssets(payload: WorkerPayload): ImageInputAsset[] {
   return payload.inputAssets.filter((asset) => asset.assetId !== "asset_demo" && asset.signedUrl.trim());
 }
 
-function firstFrameAsset(payload: WorkerPayload): ImageInputAsset | undefined {
-  return inputAssets(payload)[0];
+function videoFrameAssets(payload: WorkerPayload): ImageInputAsset[] {
+  return inputAssets(payload).slice(0, 4);
 }
 
 function providerReachableAssetUrl(asset: ImageInputAsset) {
@@ -632,11 +648,13 @@ async function createVideoTask(params: {
   apiKey: string;
   model: string;
   prompt: string;
-  imageUrl: string;
+  imageUrls: string[];
   videoParams: { aspect_ratio: string; resolution: string; duration: string };
   protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
+  const firstImageUrl = params.imageUrls[0];
+  if (!firstImageUrl) throw new Error("ai_provider_video_first_frame_required");
   const endpoint = params.protocol === "openai-videos"
     ? `${params.baseUrl}/v1/videos`
     : `${params.baseUrl}/v1/media/generate`;
@@ -646,14 +664,15 @@ async function createVideoTask(params: {
         prompt: params.prompt,
         seconds: params.videoParams.duration,
         duration: Number(params.videoParams.duration),
-        image: params.imageUrl,
-        images: [params.imageUrl]
+        image: firstImageUrl,
+        images: params.imageUrls,
+        input_reference: params.imageUrls
       }
     : {
         model: params.model,
         params: {
           ...params.videoParams,
-          images: [params.imageUrl]
+          images: params.imageUrls
         },
         prompt: params.prompt
       };
@@ -669,7 +688,8 @@ async function createVideoTask(params: {
   const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
   const taskId = videoTaskId(body);
   if (!response.ok || !taskId) {
-    throw new Error(`ai_provider_video_create_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+    const multiFrameHint = params.imageUrls.length > 1 ? "multi_frame_payload_rejected_" : "";
+    throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}`);
   }
   return taskId;
 }
@@ -761,11 +781,12 @@ async function generateVideoWithProvider(params: {
   if (!isVideoGenerationModel(model)) {
     throw new Error(`ai_provider_not_video_model_${provider.label || provider.id}_${model}`);
   }
-  const referenceAsset = firstFrameAsset(params.payload);
+  const referenceAssets = videoFrameAssets(params.payload);
+  const referenceAsset = referenceAssets[0];
   if (!referenceAsset) throw new Error("ai_provider_video_first_frame_required");
-  const imageUrl = providerReachableAssetUrl(referenceAsset);
-  if (!imageUrl || isLoopbackUrl(imageUrl)) {
-    throw new Error("ai_provider_video_first_frame_public_url_required");
+  const imageUrls = referenceAssets.map(providerReachableAssetUrl).filter(Boolean);
+  if (imageUrls.length !== referenceAssets.length || imageUrls.some(isLoopbackUrl)) {
+    throw new Error("ai_provider_video_frame_public_urls_required");
   }
 
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
@@ -788,7 +809,7 @@ async function generateVideoWithProvider(params: {
     apiKey: provider.apiKey,
     model,
     prompt,
-    imageUrl,
+    imageUrls,
     videoParams,
     protocol,
     timeoutMs

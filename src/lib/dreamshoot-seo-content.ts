@@ -592,7 +592,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Creator intro clips", "Product teaser videos", "Social motion posts", "Campaign video previews"],
     workflow: ["Upload one finished image.", "Choose the motion idea and clip use case.", "Generate a private short video draft.", "Download or use the result to plan the next video package."],
     ctaLabel: "Create a Short Video",
-    ctaHref: "/app/create?tool_id=image-to-video"
+    ctaHref: "/app/create#step-video"
   },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",

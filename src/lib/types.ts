@@ -452,7 +452,7 @@ export interface AiApp {
   slug: string;
   name: string;
   description: string;
-  appType: "image" | "copy" | "avatar";
+  appType: "image" | "copy" | "avatar" | "video";
   parameterSchema: Array<{ id: string; label: string; type: "text" | "select"; options?: string[] }>;
 }
 
@@ -643,6 +643,38 @@ export interface CreativePackCategory {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+}
+
+export interface VideoThemeCategory {
+  id: string;
+  siteId: string;
+  slug: string;
+  label: string;
+  description?: string;
+  imageUrl?: string;
+  sortOrder: number;
+  status: "active" | "draft" | "paused";
+  createdAt: string;
+}
+
+export interface VideoTheme {
+  id: string;
+  siteId: string;
+  categoryId?: string;
+  category?: VideoThemeCategory;
+  slug: string;
+  name: string;
+  headline: string;
+  description: string;
+  prompt: string;
+  status: "active" | "draft" | "paused";
+  creditCost: number;
+  durationSeconds: number;
+  maxFrames: number;
+  generationCount: number;
+  createdAt: string;
+  imageUrl?: string;
+  galleryImages?: string[];
 }
 
 export interface MediaAsset {
@@ -914,6 +946,8 @@ export interface PlatformState {
   toolCategories: ToolCategory[];
   toolMenuItems: ToolMenuItem[];
   creativePacks: CreativePack[];
+  videoThemeCategories?: VideoThemeCategory[];
+  videoThemes?: VideoTheme[];
   mediaAssets: MediaAsset[];
   themePublications: ThemePublication[];
   siteThemes: SiteTheme[];

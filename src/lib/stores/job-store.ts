@@ -104,6 +104,16 @@ function isThemeModeRequest(requestJson?: Record<string, unknown>): boolean {
   return requestJson?.mode === "theme" || typeof requestJson?.creativePackId === "string";
 }
 
+function isVideoModeRequest(requestJson?: Record<string, unknown>): boolean {
+  const fields = fieldRecord(requestJson);
+  return requestJson?.mode === "video" ||
+    requestJson?.outputType === "video" ||
+    typeof requestJson?.videoThemeId === "string" ||
+    fields.mode === "video" ||
+    fields.outputType === "video" ||
+    typeof fields.videoThemeId === "string";
+}
+
 function isThemeManagedField(field: AiWorkflowField): boolean {
   const id = field.id.toLowerCase().replace(/[_-]/g, "");
   const label = field.label.toLowerCase();
@@ -179,6 +189,9 @@ function subjectCompositionInstruction(requestJson: Record<string, unknown> | un
 }
 
 type GenerationCreativePack = Pick<Prisma.CreativePackGetPayload<object>, "id" | "name" | "headline" | "category" | "aiAppSlug" | "prompt" | "creditCost" | "outputCount">;
+type GenerationVideoTheme = Pick<Prisma.VideoThemeGetPayload<object>, "id" | "categoryId" | "slug" | "name" | "headline" | "description" | "prompt" | "creditCost" | "durationSeconds" | "maxFrames" | "imageUrl"> & {
+  category?: { slug: string; label: string } | null;
+};
 
 function safeCreativePrompt(value: string): string {
   return value
@@ -204,8 +217,40 @@ function defaultCreativePrompt(creativePack?: GenerationCreativePack | null): st
   return "";
 }
 
+function defaultVideoThemePrompt(videoTheme?: GenerationVideoTheme | null): string {
+  return videoTheme?.prompt?.trim() ?? "";
+}
+
+function videoFrameOrderInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
+  if (!requestedAssetIds.length) return "";
+  const fields = fieldRecord(requestJson);
+  const promptNote = typeof fields.promptNote === "string" && fields.promptNote.trim()
+    ? `User note: ${fields.promptNote.trim()}`
+    : "";
+  return [
+    "Video frame order requirement: use the selected source images as ordered frame references, not as interchangeable examples.",
+    ...requestedAssetIds.map((assetId, index) => `Frame ${index + 1}: assetId=${assetId}. ${index === 0 ? "This is the opening visual anchor." : "Preserve this frame as a later visual beat and keep its important subjects and scene cues represented."}`),
+    requestedAssetIds.length > 1
+      ? "When later frames show additional clear adult people, products, wardrobe, props, or background elements, represent them clearly in the final video instead of silently using only Frame 1."
+      : "Use the single frame as the first-frame anchor for the generated clip.",
+    "Keep the final result as one continuous realistic video clip, not a slideshow, collage, grid, or split panel.",
+    promptNote
+  ].filter(Boolean).join("\n");
+}
+
 function isRenderablePromptField(key: string) {
-  return !["assetIds", "creativePackId", "customerModelId", "outputCount", "rerunOf", "rerunBy"].includes(key);
+  return ![
+    "assetIds",
+    "creativePackId",
+    "customerModelId",
+    "outputCount",
+    "rerunOf",
+    "rerunBy",
+    "videoThemeId",
+    "videoThemeName",
+    "videoThemePrompt",
+    "frameAssetIds"
+  ].includes(key);
 }
 
 function renderPrompt(template: string | undefined, context: { flowName: string; fields: Record<string, string | number | boolean>; assetCount: number; themeName?: string; themePrompt?: string }): string {
@@ -227,14 +272,16 @@ function resolveGenerationRequest(params: {
   siteAiApp: Prisma.SiteAiAppGetPayload<{ include: { aiApp: true } }>;
   requestedAssetIds: string[];
   creativePack?: GenerationCreativePack | null;
+  videoTheme?: GenerationVideoTheme | null;
 }) {
   const workflow = jsonObject<AiWorkflowConfig>(params.siteAiApp.workflowConfig) ?? defaultWorkflowConfig(params.siteAiApp);
   const provider = jsonObject<AiProviderConfig>(params.siteAiApp.providerConfig) ?? { mode: "platform_fallback", fallbackEnabled: true };
   const themeMode = isThemeModeRequest(params.requestJson);
+  const videoMode = isVideoModeRequest(params.requestJson) || Boolean(params.videoTheme);
   const fields = normalizePromptInputs(params.requestJson);
   const missingField = workflowFields(workflow).find((field) =>
     field.required &&
-    !(themeMode && isThemeManagedField(field)) &&
+    !((themeMode || videoMode) && isThemeManagedField(field)) &&
     (fields[field.id] === undefined || fields[field.id] === "")
   );
   if (missingField) throw new StoreError("missing_required_prompt_input", 400);
@@ -244,18 +291,28 @@ function resolveGenerationRequest(params: {
   if (params.requestedAssetIds.length < minAssets) throw new StoreError("not_enough_source_assets", 400);
   if (params.requestedAssetIds.length > maxAssets) throw new StoreError("too_many_source_assets", 400);
   const flowName = workflow.flowName ?? params.siteAiApp.aiApp.name;
-  const themePrompt = defaultCreativePrompt(params.creativePack);
+  const themePrompt = params.videoTheme ? defaultVideoThemePrompt(params.videoTheme) : defaultCreativePrompt(params.creativePack);
   const basePrompt = renderPrompt(workflow.promptTemplate, {
     flowName,
     fields,
     assetCount: params.requestedAssetIds.length,
-    themeName: params.creativePack?.name,
+    themeName: params.videoTheme?.name ?? params.creativePack?.name,
     themePrompt
   });
   const subjectInstruction = subjectCompositionInstruction(params.requestJson, params.requestedAssetIds);
-  const renderedPrompt = themePrompt
-    ? `${basePrompt}\n\n${subjectInstruction}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
-    : `${basePrompt}\n\n${subjectInstruction}`;
+  const videoFrameInstruction = params.videoTheme ? videoFrameOrderInstruction(params.requestJson, params.requestedAssetIds) : "";
+  const renderedPrompt = params.videoTheme
+    ? [
+        basePrompt,
+        `Selected video theme: ${params.videoTheme.name}`,
+        params.videoTheme.category?.label ? `Video category: ${params.videoTheme.category.label}` : "",
+        `Theme prompt: ${themePrompt}`,
+        videoFrameInstruction,
+        "Fixed video constraints: generate one MP4 video clip. No text overlay, no watermark, no UI, no split-screen, no storyboard panels."
+      ].filter(Boolean).join("\n\n")
+    : themePrompt
+      ? `${basePrompt}\n\n${subjectInstruction}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
+      : `${basePrompt}\n\n${subjectInstruction}`;
   return {
     fields,
     workflow,
@@ -265,9 +322,10 @@ function resolveGenerationRequest(params: {
       inputs: fields,
       rendered: renderedPrompt,
       negativePrompt: workflow.negativePrompt ?? "",
-      themeName: params.creativePack?.name ?? "",
+      themeName: params.videoTheme?.name ?? params.creativePack?.name ?? "",
       themePrompt,
-      subjectInstruction
+      subjectInstruction,
+      videoFrameInstruction
     }
   };
 }
@@ -392,7 +450,45 @@ async function createGenerationJobInTx(tx: Tx, params: {
   });
   if (activeJob) throw new StoreError("generation_job_already_running", 409);
 
-  const creativePackId = typeof params.requestJson?.creativePackId === "string" ? params.requestJson.creativePackId : undefined;
+  const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
+    ? params.requestJson.assetIds.filter((item): item is string => typeof item === "string")
+    : [];
+  const fields = fieldRecord(params.requestJson);
+  const rawVideoThemeId = typeof params.requestJson?.videoThemeId === "string"
+    ? params.requestJson.videoThemeId
+    : typeof fields.videoThemeId === "string"
+      ? fields.videoThemeId
+      : undefined;
+  const videoMode = isVideoModeRequest(params.requestJson) || params.aiAppSlug === "video_generator";
+  if (videoMode && params.aiAppSlug !== "video_generator") throw new StoreError("video_theme_tool_mismatch", 400);
+  if (videoMode && !rawVideoThemeId) throw new StoreError("video_theme_required", 400);
+  const videoTheme = rawVideoThemeId
+    ? await tx.videoTheme.findFirst({
+        where: { id: rawVideoThemeId, siteId: params.siteId, status: "active" },
+        select: {
+          id: true,
+          categoryId: true,
+          slug: true,
+          name: true,
+          headline: true,
+          description: true,
+          prompt: true,
+          creditCost: true,
+          durationSeconds: true,
+          maxFrames: true,
+          imageUrl: true,
+          category: { select: { slug: true, label: true } }
+        }
+      })
+    : null;
+  if (videoMode && !videoTheme) throw new StoreError("video_theme_not_found_for_site", 404);
+  if (videoTheme) {
+    const maxFrames = Math.min(4, Math.max(1, Math.trunc(videoTheme.maxFrames)));
+    if (requestedAssetIds.length < 1) throw new StoreError("video_frames_required", 400);
+    if (requestedAssetIds.length > maxFrames) throw new StoreError("too_many_video_frames", 400);
+  }
+
+  const creativePackId = !videoTheme && typeof params.requestJson?.creativePackId === "string" ? params.requestJson.creativePackId : undefined;
   const creativePack = creativePackId
     ? await tx.creativePack.findFirst({
         where: { id: creativePackId, siteId: params.siteId, status: "active" },
@@ -410,16 +506,13 @@ async function createGenerationJobInTx(tx: Tx, params: {
     : null;
   if (creativePackId && !creativePack) throw new StoreError("creative_pack_not_found_for_site", 404);
   if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
-  const unitCreditCost = creativePack?.creditCost ?? siteAiApp.creditCost;
-  const outputCount = isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
+  const unitCreditCost = videoTheme?.creditCost ?? creativePack?.creditCost ?? siteAiApp.creditCost;
+  const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
   const billableCredits = unitCreditCost * outputCount;
   const creditsReserved = billableCredits;
   if ((customer.balance?.balance ?? 0) < creditsReserved) throw new StoreError("insufficient_credits", 402);
 
-  const requestedAssetIds = Array.isArray(params.requestJson?.assetIds)
-    ? params.requestJson.assetIds.filter((item): item is string => typeof item === "string")
-    : [];
-  const resolvedRequest = resolveGenerationRequest({ requestJson: params.requestJson, siteAiApp, requestedAssetIds, creativePack });
+  const resolvedRequest = resolveGenerationRequest({ requestJson: params.requestJson, siteAiApp, requestedAssetIds, creativePack, videoTheme });
   if (requestedAssetIds.length) {
     const validAssets = await tx.assetUpload.findMany({
       where: { id: { in: requestedAssetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null },
@@ -429,6 +522,19 @@ async function createGenerationJobInTx(tx: Tx, params: {
     const invalidAssetId = requestedAssetIds.find((assetId) => !validAssetIds.has(assetId));
     if (invalidAssetId) throw new StoreError("asset_not_found_for_customer", 404);
   }
+  const resolvedFields = videoTheme
+    ? {
+        ...resolvedRequest.fields,
+        mode: "video",
+        outputType: "video",
+        videoThemeId: videoTheme.id,
+        videoThemeName: videoTheme.name,
+        videoThemePrompt: videoTheme.prompt,
+        frameAssetIds: requestedAssetIds,
+        duration: String(videoTheme.durationSeconds),
+        maxFrames: Math.min(4, Math.max(1, Math.trunc(videoTheme.maxFrames)))
+      }
+    : resolvedRequest.fields;
 
   const job = await tx.generationJob.create({
     data: {
@@ -440,7 +546,15 @@ async function createGenerationJobInTx(tx: Tx, params: {
       creditsReserved,
       requestJson: toPrismaJson({
         ...(params.requestJson ?? {}),
-        fields: resolvedRequest.fields,
+        ...(videoTheme
+          ? {
+              mode: "video",
+              outputType: "video",
+              videoThemeId: videoTheme.id,
+              assetIds: requestedAssetIds
+            }
+          : {}),
+        fields: resolvedFields,
         billing: {
           unitCreditCost,
           outputCount,
@@ -474,6 +588,23 @@ async function createGenerationJobInTx(tx: Tx, params: {
               prompt: creativePack.prompt ?? "",
               creditCost: creativePack.creditCost,
               outputCount: creativePack.outputCount
+            }
+          : undefined,
+        videoTheme: videoTheme
+          ? {
+              id: videoTheme.id,
+              slug: videoTheme.slug,
+              name: videoTheme.name,
+              headline: videoTheme.headline,
+              description: videoTheme.description,
+              categoryId: videoTheme.categoryId,
+              categorySlug: videoTheme.category?.slug ?? "",
+              categoryLabel: videoTheme.category?.label ?? "",
+              prompt: videoTheme.prompt,
+              creditCost: videoTheme.creditCost,
+              durationSeconds: videoTheme.durationSeconds,
+              maxFrames: videoTheme.maxFrames,
+              imageUrl: videoTheme.imageUrl ?? ""
             }
           : undefined,
         prompt: resolvedRequest.prompt,

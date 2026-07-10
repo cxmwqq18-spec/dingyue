@@ -9,6 +9,7 @@ import { CustomerShellHeader } from "@/components/storefront/customer-shell-head
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
+import { CustomerVideoWorkspace } from "@/components/storefront/customer-video-workspace";
 import { csrfHeader } from "@/lib/client-csrf";
 import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
@@ -16,9 +17,9 @@ import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData } from "@/lib/types";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
-export type CustomerWorkspacePanel = "overview" | "create" | "upload";
+export type CustomerWorkspacePanel = "overview" | "create" | "upload" | "video";
 type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "videos" | "packages";
-type WorkspaceAnchor = "step-upload" | "step-create" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
+type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
 type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
 type SampleTarget = "primary" | "partner";
@@ -94,7 +95,7 @@ function jobResult(job: RuntimeJob): Record<string, unknown> {
 
 function workspaceJobTitle(job: RuntimeJob): string {
   const fields = jobFields(job);
-  const title = fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
+  const title = fields.videoThemeName ?? fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
   return typeof title === "string" && title.trim() ? title.trim().slice(0, 80) : "AI photo request";
 }
 
@@ -386,7 +387,7 @@ type StudioConsoleSectionId = "generate" | "try-on" | "video" | "background" | "
 const studioConsoleSections: Array<{ id: StudioConsoleSectionId; label: string; panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor }> = [
   { id: "generate", label: "Generate Image", panel: "create", anchor: "step-create" },
   { id: "try-on", label: "Try-On", panel: "create", anchor: "step-create" },
-  { id: "video", label: "Image to Video", panel: "create", anchor: "step-create" },
+  { id: "video", label: "Image to Video", panel: "video", anchor: "step-video" },
   { id: "background", label: "Change Background", panel: "create", anchor: "step-create" },
   { id: "model", label: "Create New AI Model", panel: "create", anchor: "source-photos" }
 ];
@@ -728,6 +729,7 @@ export function CustomerWorkspaceShell({
   }
   const showUploadStep = activePanel === "upload";
   const showCreateStep = activePanel === "create";
+  const showVideoStep = activePanel === "video";
   const showReviewStep = activePanel === "overview";
   function scrollToWorkspaceAnchor(anchor: WorkspaceAnchor) {
     if (typeof window === "undefined") return;
@@ -1014,6 +1016,9 @@ export function CustomerWorkspaceShell({
     }
     if (anchor === "step-create") {
       setActivePanel("create");
+    }
+    if (anchor === "step-video") {
+      setActivePanel("video");
     }
     if (anchor === "review-request") {
       setActivePanel("overview");
@@ -1408,7 +1413,6 @@ export function CustomerWorkspaceShell({
                           <button
                             className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-white/12 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
                             onClick={() => {
-                              if (section.id === "video") setPreferredCreateMode("tool");
                               choosePanel(section.panel, section.anchor);
                             }}
                             type="button"
@@ -1560,6 +1564,16 @@ export function CustomerWorkspaceShell({
                   />
                 </div>
               </section>
+              ) : null}
+
+              {showVideoStep ? (
+                <CustomerVideoWorkspace
+                  assets={hydratedAssets}
+                  customer={customer}
+                  onJobCreated={showJobStatus}
+                  siteId={site.id}
+                  subscriptionStatus={subscriptionStatus}
+                />
               ) : null}
 
               {showReviewStep ? (

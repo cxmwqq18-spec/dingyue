@@ -5,6 +5,7 @@ import {
   Boxes,
   CreditCard,
   FileText,
+  Film,
   PackageCheck,
   Palette,
   ShoppingBag,
@@ -20,6 +21,7 @@ import {
 } from "@/components/admin/erp-primitives";
 import { PricingEditor } from "@/components/admin/pricing-editor";
 import { ToolTaxonomyEditor } from "@/components/admin/tool-taxonomy-editor";
+import { VideoThemeEditor } from "@/components/admin/video-theme-editor";
 import { money } from "@/lib/ops";
 import type { CreativePack, Product, SiteAiApp } from "@/lib/types";
 
@@ -128,6 +130,13 @@ export function ProductsPageClient({
       tone: "border-violet-200 bg-violet-50 text-violet-700",
       detail: "维护前台 AI 工具入口、消耗积分、输出数量和上下架状态。",
     },
+    {
+      title: "视频主题",
+      href: "#video-themes",
+      icon: Film,
+      tone: "border-cyan-200 bg-cyan-50 text-cyan-700",
+      detail: "独立维护图片转视频主题、提示词、时长、积分和启停状态。",
+    },
   ];
 
   const derived = useMemo(() => {
@@ -151,6 +160,7 @@ export function ProductsPageClient({
       creditPacks,
       lowestPrice,
       subscriptionProducts,
+      videoApps: payload?.siteAiApps.filter((app) => app.aiApp.appType === "video").length ?? 0,
       totalPrices: products.reduce(
         (sum, product) => sum + product.prices.length,
         0,
@@ -206,7 +216,15 @@ export function ProductsPageClient({
             icon: Boxes,
             tone: derived.activePacks ? "good" : "warn",
           },
+          {
+            label: "视频生成",
+            value: String(derived.videoApps),
+            detail: "独立图片转视频工作区绑定",
+            icon: Film,
+            tone: derived.videoApps ? "good" : "warn",
+          },
         ]}
+        columns={5}
       />
 
       <ErpSection
@@ -261,8 +279,8 @@ export function ProductsPageClient({
               </h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 1. 先维护价格套餐，确认金额、周期和到账 Credits。 2.
-                再维护拍摄包入口，确认工具绑定和每次消耗。 3.
-                拍摄包列表内会直接展示前台入口检查口径，保存后打开前台核对即可。
+                再维护拍摄包入口和视频主题，确认工具绑定、提示词和每次消耗。 3.
+                保存后打开前台核对生成入口即可。
               </p>
             </div>
           </div>
@@ -335,6 +353,26 @@ export function ProductsPageClient({
             siteId={siteId}
           />
           <ToolTaxonomyEditor siteId={siteId} />
+        </ErpSection>
+      </div>
+
+      <div className="min-w-0 max-w-full scroll-mt-24" id="video-themes">
+        <ErpSection
+          action={
+            <ErpToolbarAction
+              href={modulePath(siteSlug, "/app/create#step-video")}
+              label="打开视频工作区"
+              primary
+            />
+          }
+          description="这里维护的是独立图片转视频模块的主题分类和主题提示词。前台用户上传或选择帧图后，会选择这里启用的视频主题来生成单个 MP4。"
+          eyebrow="图片转视频"
+          title="视频主题"
+        >
+          <div className="mb-4 rounded-[12px] border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+            操作提示：视频主题不再走旧工具卡。每个主题都需要配置提示词、积分、时长和最大帧图数；后端会把主题提示词、用户补充说明和帧图顺序拼成最终视频提示词。
+          </div>
+          <VideoThemeEditor siteId={siteId} />
         </ErpSection>
       </div>
     </div>

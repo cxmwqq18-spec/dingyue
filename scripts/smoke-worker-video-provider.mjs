@@ -38,8 +38,11 @@ const checks = [
       files.dispatch.includes("/content")
   },
   {
-    label: "video provider sends exactly one first-frame reference image",
-    pass: files.dispatch.includes("images: [params.imageUrl]") &&
+    label: "video provider sends ordered multi-frame references without falling back to the first frame only",
+    pass: files.dispatch.includes("image: firstImageUrl") &&
+      files.dispatch.includes("images: params.imageUrls") &&
+      files.dispatch.includes("input_reference: params.imageUrls") &&
+      files.dispatch.includes("multi_frame_payload_rejected_") &&
       files.dispatch.includes("ai_provider_video_first_frame_required")
   },
   {

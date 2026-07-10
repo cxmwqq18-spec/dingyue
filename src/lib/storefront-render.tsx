@@ -996,6 +996,10 @@ function categoryForToolSlug(toolSlug: string): string {
   return "Photo AI";
 }
 
+function isStandaloneVideoToolSlug(toolSlug: string): boolean {
+  return toolSlug.includes("video") || toolSlug.includes("clip") || toolSlug.includes("motion") || toolSlug.includes("reel");
+}
+
 function fallbackToolBlockForSlug(toolSlug: string): SectionBlockInstance | undefined {
   if (!dreamshootImageStudioToolAliases.has(toolSlug)) return undefined;
   const title = titleFromToolSlug(toolSlug);
@@ -1384,7 +1388,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   const workflowItems = detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
   const useCaseItems = detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
-  const appCreateHref = `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
+  const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? "/app/create#step-video" : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
     const type = page.sections[sectionId]?.type;
     return type && !workspaceOnlyToolSectionTypes.has(type);
