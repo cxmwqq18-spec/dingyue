@@ -24,11 +24,18 @@ const checks = [
       files.dispatch.includes("await runLocalVideoWorker(payload)")
   },
   {
-    label: "video provider uses the documented media generate and status endpoints",
+    label: "video provider supports the LK888 media generate and status endpoints",
     pass: files.dispatch.includes("/v1/media/generate") &&
       files.dispatch.includes("/v1/media/status") &&
       files.dispatch.includes("is_final === true") &&
       files.dispatch.includes('body.state === "success"')
+  },
+  {
+    label: "video provider supports SmartPickLid OpenAI-compatible video endpoints",
+    pass: files.dispatch.includes('return "openai-videos"') &&
+      files.dispatch.includes("/v1/videos") &&
+      files.dispatch.includes("body.status === \"completed\"") &&
+      files.dispatch.includes("/content")
   },
   {
     label: "video provider sends exactly one first-frame reference image",

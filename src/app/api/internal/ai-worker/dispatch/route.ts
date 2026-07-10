@@ -59,12 +59,14 @@ type ImageInputAsset = {
 type VideoGenerateResponse = {
   code?: number;
   data?: { task_id?: string | number };
+  id?: string | number;
   task_id?: string | number;
   msg?: string;
   error?: unknown;
 };
 
 type VideoStatusResponse = {
+  id?: string | number;
   task_id?: string | number;
   state?: string;
   status?: string;
@@ -73,9 +75,12 @@ type VideoStatusResponse = {
   progress?: string;
   result_url?: string;
   result_type?: string;
-  error?: string;
+  error?: unknown;
+  message?: string;
   cost?: number;
 };
+
+type VideoProviderProtocol = "lk888-media" | "openai-videos";
 
 type WorkerImageProvider = WorkerPayload["aiProviderFallback"]["providers"][number];
 type GeneratedOutput = {
@@ -602,7 +607,7 @@ async function postWorkerResult(
 }
 
 function videoTaskId(body: VideoGenerateResponse) {
-  const taskId = body.data?.task_id ?? body.task_id;
+  const taskId = body.data?.task_id ?? body.task_id ?? body.id;
   return typeof taskId === "number" || typeof taskId === "string" ? String(taskId) : "";
 }
 
@@ -612,6 +617,16 @@ function normalizedVideoMimeType(value: string) {
   return "video/mp4";
 }
 
+function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
+  try {
+    const hostname = new URL(baseUrl).hostname.toLowerCase();
+    if (hostname.includes("smartpicklid")) return "openai-videos";
+  } catch {
+    return "lk888-media";
+  }
+  return "lk888-media";
+}
+
 async function createVideoTask(params: {
   baseUrl: string;
   apiKey: string;
@@ -619,22 +634,36 @@ async function createVideoTask(params: {
   prompt: string;
   imageUrl: string;
   videoParams: { aspect_ratio: string; resolution: string; duration: string };
+  protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
-  const response = await fetchWithTimeout(`${params.baseUrl}/v1/media/generate`, {
+  const endpoint = params.protocol === "openai-videos"
+    ? `${params.baseUrl}/v1/videos`
+    : `${params.baseUrl}/v1/media/generate`;
+  const payload = params.protocol === "openai-videos"
+    ? {
+        model: params.model,
+        prompt: params.prompt,
+        seconds: params.videoParams.duration,
+        duration: Number(params.videoParams.duration),
+        image: params.imageUrl,
+        images: [params.imageUrl]
+      }
+    : {
+        model: params.model,
+        params: {
+          ...params.videoParams,
+          images: [params.imageUrl]
+        },
+        prompt: params.prompt
+      };
+  const response = await fetchWithTimeout(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${params.apiKey}`
     },
-    body: JSON.stringify({
-      model: params.model,
-      params: {
-        ...params.videoParams,
-        images: [params.imageUrl]
-      },
-      prompt: params.prompt
-    }),
+    body: JSON.stringify(payload),
     cache: "no-store"
   }, Math.min(params.timeoutMs, 60_000), `ai_provider_video_create_timeout_${Math.min(params.timeoutMs, 60_000)}`);
   const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
@@ -650,6 +679,7 @@ async function pollVideoTask(params: {
   baseUrl: string;
   apiKey: string;
   taskId: string;
+  protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
   const startedAt = Date.now();
@@ -657,8 +687,10 @@ async function pollVideoTask(params: {
   let lastStatus = "";
   while (Date.now() - startedAt < params.timeoutMs) {
     await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
-    const url = new URL(`${params.baseUrl}/v1/media/status`);
-    url.searchParams.set("task_id", params.taskId);
+    const url = params.protocol === "openai-videos"
+      ? new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)
+      : new URL(`${params.baseUrl}/v1/media/status`);
+    if (params.protocol === "lk888-media") url.searchParams.set("task_id", params.taskId);
     const response = await fetchWithTimeout(url.toString(), {
       headers: { Authorization: `Bearer ${params.apiKey}` },
       cache: "no-store"
@@ -675,6 +707,13 @@ async function pollVideoTask(params: {
       error: "",
       updatedAt: new Date().toISOString()
     });
+    if (params.protocol === "openai-videos") {
+      if (body.status === "completed") return body;
+      if (body.status === "failed") {
+        throw new Error(`ai_provider_video_failed_failed_${textValue(body.error) || textValue(body.message) || "no_result"}`);
+      }
+      continue;
+    }
     if (body.is_final === true) {
       if (body.state === "success" && textValue(body.result_url)) return body;
       throw new Error(`ai_provider_video_failed_${body.state || "unknown"}_${textValue(body.error) || textValue(body.status) || "no_result"}`);
@@ -684,10 +723,22 @@ async function pollVideoTask(params: {
 }
 
 async function downloadVideoResult(params: {
-  resultUrl: string;
+  resultUrl?: string;
+  baseUrl?: string;
+  apiKey?: string;
+  taskId?: string;
+  protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
-  const response = await fetchWithTimeout(params.resultUrl, {
+  const resultUrl = params.protocol === "openai-videos"
+    ? `${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId ?? "")}/content`
+    : params.resultUrl;
+  if (!resultUrl) throw new Error("ai_provider_video_empty_result_url");
+  const headers = params.protocol === "openai-videos" && params.apiKey
+    ? { Authorization: `Bearer ${params.apiKey}` }
+    : undefined;
+  const response = await fetchWithTimeout(resultUrl, {
+    ...(headers ? { headers } : {}),
     cache: "no-store"
   }, Math.min(params.timeoutMs, 120_000), "ai_provider_video_download_timeout");
   if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
@@ -718,6 +769,7 @@ async function generateVideoWithProvider(params: {
   }
 
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
+  const protocol = videoProviderProtocol(baseUrl);
   const timeoutMs = videoProviderTimeoutMs();
   const prompt = buildVideoPrompt(params.payload);
   const videoParams = videoProviderParams(params.payload);
@@ -738,6 +790,7 @@ async function generateVideoWithProvider(params: {
     prompt,
     imageUrl,
     videoParams,
+    protocol,
     timeoutMs
   });
   await postWorkerSlotStatus(params.payload, "running", "video_task_created", {
@@ -752,11 +805,19 @@ async function generateVideoWithProvider(params: {
     baseUrl,
     apiKey: provider.apiKey,
     taskId,
+    protocol,
     timeoutMs
   });
   const resultUrl = textValue(status.result_url);
-  if (!resultUrl) throw new Error("ai_provider_video_empty_result_url");
-  const video = await downloadVideoResult({ resultUrl, timeoutMs });
+  if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
+  const video = await downloadVideoResult({
+    resultUrl,
+    baseUrl,
+    apiKey: provider.apiKey,
+    taskId,
+    protocol,
+    timeoutMs
+  });
   const storageKey = customerAssetStorageKey({
     siteId: params.payload.siteId,
     customerId: params.payload.customerId,
