@@ -14,11 +14,15 @@ export class CustomerAssetStorageError extends Error {
   }
 }
 
-const imageMimeByExtension: Record<string, string> = {
+const assetMimeByExtension: Record<string, string> = {
   ".gif": "image/gif",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
+  ".m4v": "video/mp4",
+  ".mov": "video/quicktime",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm",
   ".webp": "image/webp"
 };
 
@@ -113,7 +117,7 @@ export function customerAssetFileExists(storageKey: string): boolean {
 }
 
 export function contentTypeForCustomerAssetPath(filePath: string): string {
-  return imageMimeByExtension[path.extname(filePath).toLowerCase()] ?? "application/octet-stream";
+  return assetMimeByExtension[path.extname(filePath).toLowerCase()] ?? "application/octet-stream";
 }
 
 export function writeCustomerAssetFile(params: { storageKey: string; bytes: Buffer }): { path: string; size: number } {
@@ -286,6 +290,9 @@ function pruneEmptyAssetDirectories(startDir: string) {
 }
 
 export function extensionForCustomerAssetMime(mimeType: string): string {
+  if (mimeType.includes("mp4") || mimeType.includes("mpeg")) return "mp4";
+  if (mimeType.includes("quicktime")) return "mov";
+  if (mimeType.includes("webm")) return "webm";
   if (mimeType.includes("webp")) return "webp";
   if (mimeType.includes("jpeg") || mimeType.includes("jpg")) return "jpg";
   if (mimeType.includes("gif")) return "gif";

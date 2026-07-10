@@ -100,14 +100,24 @@ function workspaceJobTitle(job: RuntimeJob): string {
 
 function workspaceJobStageLabel(job: RuntimeJob): string {
   const stage = jobResult(job).lastWorkerStage;
+  const fields = jobFields(job);
+  const isVideoRequest = [fields.toolPresetId, fields.toolPresetTitle, job.requestJson?.outputType]
+    .filter((value): value is string => typeof value === "string")
+    .join(" ")
+    .toLowerCase()
+    .includes("video");
   if (job.status === "failed") return "Generation failed";
-  if (job.status === "succeeded") return "Images delivered";
+  if (job.status === "succeeded") return isVideoRequest ? "Video delivered" : "Images delivered";
   if (stage === "local_worker_started") return "Preparing the generator";
+  if (stage === "local_video_worker_started") return "Preparing the video generator";
   if (stage === "source_images_ready") return "Reading selected photos";
   if (stage === "provider_request_started") return "Generating images";
+  if (stage === "video_provider_request_started" || stage === "video_task_created") return "Generating video";
+  if (typeof stage === "string" && stage.startsWith("video_provider_running")) return "Generating video";
+  if (stage === "video_result_received") return "Saving generated video";
   if (stage === "provider_response_received") return "Saving generated images";
   if (job.status === "queued") return "Waiting in queue";
-  if (job.status === "running") return "Generating images";
+  if (job.status === "running") return isVideoRequest ? "Generating video" : "Generating images";
   return "Request updated";
 }
 
@@ -1634,6 +1644,7 @@ export function CustomerWorkspaceShell({
                               {slots.map((slot) => {
                                 const slotSucceeded = slot.status === "succeeded";
                                 const slotFailed = slot.status === "failed";
+                                const slotVideo = slot.mimeType?.startsWith("video/");
                                 const slotProgress = workspaceSlotProgress(slot);
                                 return (
                                   <div
@@ -1647,11 +1658,22 @@ export function CustomerWorkspaceShell({
                                     key={`${job.id}_${slot.index}`}
                                   >
                                     {slot.storageKey ? (
-                                      <img
-                                        alt={`Output ${slot.index}`}
-                                        className="aspect-[4/3] w-full object-cover"
-                                        src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
-                                      />
+                                      slotVideo ? (
+                                        <video
+                                          className="aspect-[4/3] w-full object-cover"
+                                          controls
+                                          muted
+                                          playsInline
+                                          preload="metadata"
+                                          src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
+                                        />
+                                      ) : (
+                                        <img
+                                          alt={`Output ${slot.index}`}
+                                          className="aspect-[4/3] w-full object-cover"
+                                          src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
+                                        />
+                                      )
                                     ) : (
                                       <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
                                         <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
@@ -1660,7 +1682,7 @@ export function CustomerWorkspaceShell({
                                       </div>
                                     )}
                                     <div className="flex items-center justify-between gap-2 px-3 py-2">
-                                      <span className="text-[11px] font-semibold text-white/74">Image {slot.index}</span>
+                                      <span className="text-[11px] font-semibold text-white/74">{slotVideo ? "Video" : "Image"} {slot.index}</span>
                                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
                                         slotSucceeded
                                           ? "bg-emerald-300/12 text-emerald-100"

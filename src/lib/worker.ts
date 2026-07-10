@@ -11,7 +11,7 @@ export interface WorkerPayload {
   routeKey: string;
   workflow?: unknown;
   prompt?: unknown;
-  inputAssets: Array<{ assetId: string; signedUrl: string }>;
+  inputAssets: Array<{ assetId: string; signedUrl: string; publicUrl?: string }>;
   params: Record<string, unknown>;
   providerSelection?: unknown;
   aiProviderFallback: {
@@ -151,8 +151,13 @@ function requestedAssetIds(job: GenerationJob): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
 }
 
-async function buildInputAssets(params: { job: GenerationJob; assetBaseUrl: string }): Promise<Array<{ assetId: string; signedUrl: string }>> {
+async function buildInputAssets(params: {
+  job: GenerationJob;
+  assetBaseUrl: string;
+  publicAssetBaseUrl?: string;
+}): Promise<Array<{ assetId: string; signedUrl: string; publicUrl?: string }>> {
   const assetBaseUrl = params.assetBaseUrl.replace(/\/$/, "");
+  const publicAssetBaseUrl = params.publicAssetBaseUrl?.replace(/\/$/, "") || assetBaseUrl;
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
   const assets = await Promise.all(
     requestedAssetIds(params.job).map(async (assetId) => {
@@ -167,13 +172,19 @@ async function buildInputAssets(params: { job: GenerationJob; assetBaseUrl: stri
         assetId: result.asset.id,
         expiresAt
       });
+      const path = `/api/sites/${params.job.siteId}/customers/${params.job.customerId}/assets/${result.asset.id}/download?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`;
       return {
         assetId: result.asset.id,
-        signedUrl: `${assetBaseUrl}/api/sites/${params.job.siteId}/customers/${params.job.customerId}/assets/${result.asset.id}/download?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`
+        signedUrl: `${assetBaseUrl}${path}`,
+        publicUrl: `${publicAssetBaseUrl}${path}`
       };
     })
   );
-  return assets.length ? assets : [{ assetId: "asset_demo", signedUrl: `${assetBaseUrl}/api/demo-assets/input.jpg` }];
+  return assets.length ? assets : [{
+    assetId: "asset_demo",
+    signedUrl: `${assetBaseUrl}/api/demo-assets/input.jpg`,
+    publicUrl: `${publicAssetBaseUrl}/api/demo-assets/input.jpg`
+  }];
 }
 
 export async function buildWorkerPayload(params: {
@@ -186,8 +197,13 @@ export async function buildWorkerPayload(params: {
   const requestId = `req_${params.job.id}`;
   const secret = params.secret ?? process.env.AI_WORKER_SECRET ?? "dev-worker-secret";
   const baseUrls = params.baseUrls ?? resolveWorkerBaseUrls(params.baseUrl ?? "");
+  const publicBaseUrl = baseUrls.publicBaseUrl.replace(/\/$/, "");
   const callbackBaseUrl = (baseUrls.callbackBaseUrl ?? baseUrls.publicBaseUrl).replace(/\/$/, "");
-  const inputAssets = await buildInputAssets({ job: params.job, assetBaseUrl: callbackBaseUrl });
+  const inputAssets = await buildInputAssets({
+    job: params.job,
+    assetBaseUrl: callbackBaseUrl,
+    publicAssetBaseUrl: publicBaseUrl
+  });
   const unsigned: Omit<WorkerPayload, "signature"> = {
     jobId: params.job.id,
     siteId: params.job.siteId,
