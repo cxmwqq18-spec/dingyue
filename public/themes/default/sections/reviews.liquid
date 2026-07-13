@@ -13,12 +13,12 @@
       {% endif %}
       {% if product.published and product.available %}
         <div class="review-product-item {% if first_product_id == product_id %}on{% endif %}" data-review-product-id="{{product_id}}">
-          <div class="image-wrap lazyload" data-bgset='{%if product.image.src %}{{ product.image.src }}{% else %}{{ defaultImg }}{% endif %}' alt="{{ product.title }}" title="{{ prouduct.title }}"></div>
+          <div class="image-wrap lazyload" data-bgset='{%if product.image.src %}{{ product.image.src }}{% else %}{{ defaultImg }}{% endif %}' role="img" aria-label="{%if product.title %}{{ product.title }}{% else %}Example product{% endif %}" title="{%if product.title %}{{ product.title }}{% else %}Example product{% endif %}"></div>
           <h3>{%if product.title %}{{ product.title }}{% else %}Example product{% endif %}</h3>
         </div>
       {%else%}
         <div class="review-product-item" data-review-product-id="">
-          <div class="image-wrap lazyload" data-bgset='{{ defaultImg }}' alt="" title=""></div>
+          <div class="image-wrap lazyload" data-bgset='{{ defaultImg }}' role="img" aria-label="Example product image" title="Example product image"></div>
           <h3>Example product</h3>
         </div>
       {% endif %} 

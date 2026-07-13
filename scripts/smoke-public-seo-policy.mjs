@@ -6,6 +6,8 @@ const seoContent = readFileSync(new URL("../src/lib/dreamshoot-seo-content.ts", 
 const siteRouteCanonical = readFileSync(new URL("../src/lib/site-route-canonical.ts", import.meta.url), "utf8");
 const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", import.meta.url), "utf8");
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
+const robotsRoute = readFileSync(new URL("../src/app/robots.ts", import.meta.url), "utf8");
+const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
 
 function assertMetadataSource(path) {
   const escapedPath = path.replace("/", "\\/");
@@ -22,6 +24,7 @@ async function assertHeaders() {
     "/tools",
     "/tools/:path*",
     "/pricing",
+    "/workflow",
     "/policies/:path*",
     "/help",
     "/blog",
@@ -34,6 +37,7 @@ async function assertHeaders() {
     "/site/:siteSlug/tools",
     "/site/:siteSlug/tools/:path*",
     "/site/:siteSlug/pricing",
+    "/site/:siteSlug/workflow",
     "/site/:siteSlug/help",
     "/site/:siteSlug/blog",
     "/site/:siteSlug/blog/:path*",
@@ -43,7 +47,42 @@ async function assertHeaders() {
     const cache = bySource.get(source)?.find((header) => header.key === "Cache-Control")?.value ?? "";
     assert.match(cache, /^public,/, `${source} should use public cache headers`);
   }
-  for (const source of ["/app", "/site/:siteSlug/app", "/login", "/site/:siteSlug/login"]) {
+  for (const source of [
+    "/admin",
+    "/admin/:path*",
+    "/app",
+    "/app/:path*",
+    "/account",
+    "/account/:path*",
+    "/cart",
+    "/cart/:path*",
+    "/checkout",
+    "/checkout/:path*",
+    "/dashboard",
+    "/dashboard/:path*",
+    "/job",
+    "/job/:path*",
+    "/login",
+    "/search",
+    "/search/:path*",
+    "/site/:siteSlug/admin",
+    "/site/:siteSlug/admin/:path*",
+    "/site/:siteSlug/app",
+    "/site/:siteSlug/app/:path*",
+    "/site/:siteSlug/account",
+    "/site/:siteSlug/account/:path*",
+    "/site/:siteSlug/cart",
+    "/site/:siteSlug/cart/:path*",
+    "/site/:siteSlug/checkout",
+    "/site/:siteSlug/checkout/:path*",
+    "/site/:siteSlug/dashboard",
+    "/site/:siteSlug/dashboard/:path*",
+    "/site/:siteSlug/job",
+    "/site/:siteSlug/job/:path*",
+    "/site/:siteSlug/login",
+    "/site/:siteSlug/search",
+    "/site/:siteSlug/search/:path*"
+  ]) {
     const headersForSource = bySource.get(source) ?? [];
     assert.equal(headersForSource.find((header) => header.key === "Cache-Control")?.value, "private, no-store, max-age=0, must-revalidate");
     assert.equal(headersForSource.find((header) => header.key === "X-Robots-Tag")?.value, "noindex, nofollow");
@@ -56,13 +95,24 @@ function assertRedirectSource(source, from, to) {
   assert.ok(conditionIndex >= 0 && targetIndex > conditionIndex, `${from} should redirect to ${to}`);
 }
 
+assertMetadataSource("/workflow");
 assertMetadataSource("/creators-circle");
 assertMetadataSource("/partner-registration");
 await assertHeaders();
-assertRedirectSource(hostCatchAll, "/refund-policy", "/policies/refunds");
-assertRedirectSource(hostCatchAll, "/content-policy", "/policies/content");
-assertRedirectSource(siteCatchAll, "/refund-policy", "/policies/refunds");
-assertRedirectSource(siteCatchAll, "/content-policy", "/policies/content");
+assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
+assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
+assertRedirectSource(siteCatchAll, "/refund-policy", "redirect(`/site/${publicSlug}/refunds`)");
+assertRedirectSource(siteCatchAll, "/content-policy", "redirect(`/site/${publicSlug}/content`)");
+assert.doesNotMatch(
+  robotsRoute,
+  /disallow|Disallow/,
+  "robots.txt should not block private UI paths because Google must be able to see noindex headers"
+);
+assert.match(
+  sitemapRoute,
+  /getStorefrontSitemapUrlsForHost\(\[\s*forwardedHost,\s*host\s*\]\)/,
+  "sitemap route should prefer x-forwarded-host over host behind proxies"
+);
 assert.match(
   hostCatchAll,
   /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools"\]\)/,
@@ -85,14 +135,28 @@ assert.match(
 );
 assert.doesNotMatch(
   siteRouteCanonical,
-  /mydreamshoots/,
-  "canonical host redirects must not hard-code mydreamshoots for other public hosts"
+  /https?:\/\/(?:www\.)?mydreamshoots\.com|www\.mydreamshoots\.com|mydreamshoots\.com/,
+  "canonical host redirects must not hard-code the MyDreamShoots production domain for other public hosts"
+);
+assert.match(
+  siteRouteCanonical,
+  /mydreamshoots\|dreamshoot\|aidreamcapes/,
+  "paired storefront canonical redirects should include both MyDreamShoots and Aidreamcapes identities"
 );
 assert.ok(
   siteRouteCanonical.includes("requestedPath === `${sitePrefix}/`") &&
     siteRouteCanonical.includes("requestedPath === `${canonicalSitePrefix}/`") &&
     siteRouteCanonical.includes('permanentRedirect("/")'),
   "/site/:slug/ should directly canonicalize to host root"
+);
+assert.doesNotMatch(
+  siteRouteCanonical,
+  /requestedPath === "\/workflow"[\s\S]*return "\/"/,
+  "/workflow must not be canonicalized to the homepage"
+);
+assert.ok(
+  siteRouteCanonical.includes('requestedPath === "/how-it-works") return "/workflow"'),
+  "/how-it-works should remain a legacy alias for /workflow"
 );
 
 console.log("public SEO policy smoke passed");

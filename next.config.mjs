@@ -79,6 +79,10 @@ const nextConfig = {
         headers: publicStorefrontHeaders
       },
       {
+        source: "/workflow",
+        headers: publicStorefrontHeaders
+      },
+      {
         source: "/privacy",
         headers: publicStorefrontHeaders
       },
@@ -123,6 +127,14 @@ const nextConfig = {
         headers: publicStorefrontHeaders
       },
       {
+        source: "/admin",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/admin/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
         source: "/platform",
         headers: noindexPrivateHeaders
       },
@@ -144,6 +156,10 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/app",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/account/:path*",
         headers: noindexPrivateHeaders
       },
       {
@@ -171,6 +187,30 @@ const nextConfig = {
         headers: noindexPrivateHeaders
       },
       {
+        source: "/site/:siteSlug/dashboard/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/dashboard",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/job/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/job",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/search/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/site/:siteSlug/search",
+        headers: noindexPrivateHeaders
+      },
+      {
         source: "/site/:siteSlug",
         headers: publicStorefrontHeaders
       },
@@ -192,6 +232,10 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/pricing",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/workflow",
         headers: publicStorefrontHeaders
       },
       {
@@ -243,6 +287,10 @@ const nextConfig = {
         headers: noindexPrivateHeaders
       },
       {
+        source: "/account/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
         source: "/app/:path*",
         headers: noindexPrivateHeaders
       },
@@ -268,6 +316,30 @@ const nextConfig = {
       },
       {
         source: "/login",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/dashboard/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/dashboard",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/job/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/job",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/search/:path*",
+        headers: noindexPrivateHeaders
+      },
+      {
+        source: "/search",
         headers: noindexPrivateHeaders
       },
       {

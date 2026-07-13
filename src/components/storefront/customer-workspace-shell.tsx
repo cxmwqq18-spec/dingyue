@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Heart, LayoutGrid, Trash2, X, UserRound, Users } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
@@ -15,17 +15,25 @@ import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData } from "@/lib/types";
+import { DEFAULT_VIDEO_FRAME_LIMIT, MAX_VIDEO_FRAME_LIMIT } from "@/lib/video-frame-config";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerWorkspacePanel = "overview" | "create" | "upload" | "video";
-type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "videos" | "packages";
-type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-photos" | "review-request" | `resources-${WorkspaceResourceTab}`;
+type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "packages";
+type VideoWorkspaceTab = "generate" | "videos";
+type CreatedWorkspaceJobFeedback = {
+  customerBalance?: PublicCustomer["balance"];
+};
+type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-photos" | "review-request" | "video-workspace-videos" | "resources-videos" | `resources-${WorkspaceResourceTab}`;
 type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
 type SampleTarget = "primary" | "partner";
 type SampleAsset = ThemeRuntimeAsset & {
   localStatus?: "uploading" | "ready" | "failed";
   localTarget?: SampleTarget;
+};
+type VideoFrameAsset = ThemeRuntimeAsset & {
+  localStatus?: "uploading" | "ready" | "failed";
 };
 type WorkspaceRuntimeState =
   | { status: "idle"; runtime?: undefined; error?: undefined }
@@ -48,6 +56,9 @@ type RuntimeOutputSlot = {
   previewUrl?: string;
   mimeType?: string;
   error?: string;
+  referenceFrameCount?: number;
+  requestedReferenceFrameCount?: number;
+  providerReferenceLimit?: number;
   updatedAt?: string;
 };
 
@@ -58,6 +69,19 @@ type WorkspaceOutputRecord = {
   previewUrl?: string;
   mimeType?: string;
 };
+
+function isSpanishXbyWorkspaceSite(site: CustomerWorkspaceSite): boolean {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  return identity.includes("-xby") || identity.includes("_xby");
+}
+
+function t(spanish: boolean, english: string, spanishText: string): string {
+  return spanish ? spanishText : english;
+}
+
+function uploadLabelFor(file: File, index: number, fallback: string) {
+  return file.name.replace(/\.[^.]+$/, "") || `${fallback} ${index + 1}`;
+}
 
 function outputCopyJob(job: ThemeRuntimeData["jobs"][number] | undefined): OutputCopyJob | undefined {
   if (!job) return undefined;
@@ -93,51 +117,67 @@ function jobResult(job: RuntimeJob): Record<string, unknown> {
   return recordValue(job.resultJson);
 }
 
-function workspaceJobTitle(job: RuntimeJob): string {
+function videoJobFrameIds(job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob | undefined): string[] {
+  const fields = recordValue(job?.requestJson?.fields);
+  return Array.from(new Set([
+    ...stringArray(fields.frameAssetIds),
+    ...stringArray(job?.requestJson?.assetIds)
+  ]));
+}
+
+function workspaceJobTitle(job: RuntimeJob, spanish = false): string {
   const fields = jobFields(job);
   const title = fields.videoThemeName ?? fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
-  return typeof title === "string" && title.trim() ? title.trim().slice(0, 80) : "AI photo request";
+  return typeof title === "string" && title.trim() ? title.trim().slice(0, 80) : isVideoRuntimeJob(job) ? t(spanish, "AI video request", "Solicitud de video IA") : t(spanish, "AI photo request", "Solicitud de fotos IA");
 }
 
-function workspaceJobStageLabel(job: RuntimeJob): string {
+function workspaceJobStageLabel(job: RuntimeJob, spanish = false, slots?: RuntimeOutputSlot[]): string {
   const stage = jobResult(job).lastWorkerStage;
-  const fields = jobFields(job);
-  const isVideoRequest = [fields.toolPresetId, fields.toolPresetTitle, job.requestJson?.outputType]
-    .filter((value): value is string => typeof value === "string")
-    .join(" ")
-    .toLowerCase()
-    .includes("video");
-  if (job.status === "failed") return "Generation failed";
-  if (job.status === "succeeded") return isVideoRequest ? "Video delivered" : "Images delivered";
-  if (stage === "local_worker_started") return "Preparing the generator";
-  if (stage === "local_video_worker_started") return "Preparing the video generator";
-  if (stage === "source_images_ready") return "Reading selected photos";
-  if (stage === "provider_request_started") return "Generating images";
-  if (stage === "video_provider_request_started" || stage === "video_task_created") return "Generating video";
-  if (typeof stage === "string" && stage.startsWith("video_provider_running")) return "Generating video";
-  if (stage === "video_result_received") return "Saving generated video";
-  if (stage === "provider_response_received") return "Saving generated images";
-  if (job.status === "queued") return "Waiting in queue";
-  if (job.status === "running") return isVideoRequest ? "Generating video" : "Generating images";
-  return "Request updated";
+  const isVideoRequest = isVideoRuntimeJob(job);
+  const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
+  if (effectiveStatus === "failed") return t(spanish, "Generation failed", "Generacion fallida");
+  if (effectiveStatus === "succeeded") return isVideoRequest ? t(spanish, "Video delivered", "Video entregado") : t(spanish, "Images delivered", "Imagenes entregadas");
+  if (stage === "local_worker_started") return t(spanish, "Preparing the generator", "Preparando el generador");
+  if (stage === "local_video_worker_started") return t(spanish, "Preparing the video generator", "Preparando el generador de video");
+  if (stage === "source_images_ready") return t(spanish, "Reading selected photos", "Leyendo fotos seleccionadas");
+  if (stage === "provider_request_started") return t(spanish, "Generating images", "Generando imagenes");
+  if (stage === "video_provider_request_started" || stage === "video_task_created") return t(spanish, "Generating video", "Generando video");
+  if (typeof stage === "string" && stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
+  if (stage === "video_result_received") return t(spanish, "Saving generated video", "Guardando video generado");
+  if (stage === "provider_response_received") return t(spanish, "Saving generated images", "Guardando imagenes generadas");
+  if (effectiveStatus === "queued") return t(spanish, "Waiting in queue", "En cola");
+  if (effectiveStatus === "running") return isVideoRequest ? t(spanish, "Generating video", "Generando video") : t(spanish, "Generating images", "Generando imagenes");
+  return t(spanish, "Request updated", "Solicitud actualizada");
 }
 
-function workspaceJobBody(job: RuntimeJob): string {
+function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutputSlot[]): string {
   const result = jobResult(job);
-  if (job.status === "failed") {
-    const error = typeof result.error === "string" ? result.error : "";
-    if (error.includes("timeout") || error.includes("UND_ERR_CONNECT_TIMEOUT")) return "The image provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.";
-    if (error.includes("fetch failed")) return "The image provider connection failed before it returned images. Credits were returned automatically, and you can retry.";
-    return "The generator could not finish this request. Credits were returned automatically, and you can retry from the same workspace.";
+  const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
+  if (isVideoRuntimeJob(job) && !videoJobFrameIds(job).length) {
+    return t(spanish, "This video request did not include selected frame images, so it cannot be trusted as a reference-based result. Start a new video after selecting frame images on the left.", "Esta solicitud de video no incluyo fotogramas seleccionados, por lo que no debe usarse como resultado basado en referencias. Crea un video nuevo despues de seleccionar fotogramas a la izquierda.");
+  }
+  if (effectiveStatus === "failed") {
+    const slotError = slots?.find((slot) => slot.status === "failed" && slot.error)?.error;
+    const error = typeof result.error === "string" && result.error ? result.error : slotError ?? "";
+    const lowerError = error.toLowerCase();
+    const isVideoRequest = isVideoRuntimeJob(job);
+    if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
+    if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) return t(spanish, "The video provider connection was interrupted before it returned a video. Credits were returned automatically, and you can retry after a short wait.", "La conexion con el proveedor de video se interrumpio antes de devolver el video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+    if (isVideoRequest && error.includes("ai_provider_video_failed")) return t(spanish, "The video provider could not finish this video. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de video no pudo terminar este video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+    if (error.includes("timeout") || error.includes("UND_ERR_CONNECT_TIMEOUT")) return isVideoRequest
+      ? t(spanish, "The video provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de video no respondio a tiempo. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.")
+      : t(spanish, "The image provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de imagenes no respondio a tiempo. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+    if (error.includes("fetch failed")) return t(spanish, "The image provider connection failed before it returned images. Credits were returned automatically, and you can retry.", "La conexion con el proveedor fallo antes de devolver imagenes. Los creditos se devolvieron automaticamente y puedes reintentar.");
+    return t(spanish, "The generator could not finish this request. Credits were returned automatically, and you can retry from the same workspace.", "El generador no pudo terminar esta solicitud. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
   }
   if (result.lastWorkerStage === "provider_request_started") {
     const elapsedMs = Date.now() - new Date(job.updatedAt).getTime();
-    if (elapsedMs > 4 * 60_000) return "The image model is taking longer than expected. If it does not return soon, credits will be released automatically and you can retry.";
-    return "Your selected photos and prompt are with the image model. This is usually the longest step.";
+    if (elapsedMs > 4 * 60_000) return t(spanish, "The image model is taking longer than expected. If it does not return soon, credits will be released automatically and you can retry.", "El modelo esta tardando mas de lo esperado. Si no responde pronto, los creditos se liberaran automaticamente y podras reintentar.");
+    return t(spanish, "Your selected photos and prompt are with the image model. This is usually the longest step.", "Tus fotos seleccionadas e instrucciones estan con el modelo. Este suele ser el paso mas largo.");
   }
-  if (result.lastWorkerStage === "source_images_ready") return "Your selected photos are being prepared for generation.";
-  if (job.status === "queued") return "Credits are held and this request is waiting for the generator.";
-  return "The workspace updates when the generator sends progress.";
+  if (result.lastWorkerStage === "source_images_ready") return t(spanish, "Your selected photos are being prepared for generation.", "Tus fotos seleccionadas se estan preparando para generar.");
+  if (effectiveStatus === "queued") return t(spanish, "Credits are held and this request is waiting for the generator.", "Los creditos estan reservados y la solicitud espera al generador.");
+  return t(spanish, "The workspace updates when the generator sends progress.", "El espacio se actualiza cuando el generador envia progreso.");
 }
 
 function requestedJobOutputCount(job: RuntimeJob): number {
@@ -167,6 +207,9 @@ function workspaceJobOutputSlots(job: RuntimeJob, outputAssets: ThemeRuntimeAsse
       storageKey: typeof record.storageKey === "string" ? record.storageKey : undefined,
       mimeType: typeof record.mimeType === "string" ? record.mimeType : undefined,
       error: typeof record.error === "string" ? record.error : undefined,
+      referenceFrameCount: Number.isFinite(Number(record.referenceFrameCount)) ? Math.max(0, Math.trunc(Number(record.referenceFrameCount))) : undefined,
+      requestedReferenceFrameCount: Number.isFinite(Number(record.requestedReferenceFrameCount)) ? Math.max(0, Math.trunc(Number(record.requestedReferenceFrameCount))) : undefined,
+      providerReferenceLimit: Number.isFinite(Number(record.providerReferenceLimit)) ? Math.max(0, Math.trunc(Number(record.providerReferenceLimit))) : undefined,
       updatedAt: typeof record.updatedAt === "string" ? record.updatedAt : undefined
     });
   }
@@ -244,65 +287,85 @@ function workspaceJobOutputSlots(job: RuntimeJob, outputAssets: ThemeRuntimeAsse
   });
 }
 
-function slotLabel(slot: RuntimeOutputSlot): string {
-  if (slot.status === "succeeded") return "Delivered";
-  if (slot.status === "failed") return "Failed";
-  if (slot.status === "running") return "Generating";
-  return "Queued";
+function workspaceJobEffectiveStatus(job: RuntimeJob, slots?: RuntimeOutputSlot[]): RuntimeJob["status"] | "partial" {
+  if (isVideoRuntimeJob(job) && !videoJobFrameIds(job).length) return "failed";
+  if (job.status === "succeeded" || job.status === "failed") return job.status;
+  const outputSlots = slots ?? workspaceJobOutputSlots(job, []);
+  if (outputSlots.length > 0 && outputSlots.every((slot) => slot.status === "failed")) return "failed";
+  if (outputSlots.some((slot) => slot.status === "succeeded") && outputSlots.some((slot) => slot.status === "failed")) return "partial";
+  return job.status;
+}
+
+function slotLabel(slot: RuntimeOutputSlot, spanish = false): string {
+  if (slot.status === "succeeded") return t(spanish, "Delivered", "Entregado");
+  if (slot.status === "failed") return t(spanish, "Failed", "Fallido");
+  if (slot.status === "running") return t(spanish, "Generating", "Generando");
+  return t(spanish, "Queued", "En cola");
 }
 
 function workspaceSlotProgress(slot: RuntimeOutputSlot): number {
   if (slot.status === "succeeded" || slot.status === "failed") return 100;
+  if (slot.stage === "video_result_received") return 90;
   if (slot.stage === "provider_response_received") return 88;
+  if (slot.stage === "video_task_created") return 68;
+  if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return 74;
+  if (slot.stage === "video_provider_request_started") return 62;
   if (slot.stage === "provider_request_started") return 62;
   if (slot.stage === "source_images_ready") return 42;
+  if (slot.stage === "local_video_worker_started") return 25;
   if (slot.stage === "local_worker_started") return 25;
   if (slot.status === "running") return 35;
   return 8;
 }
 
-function workspaceSlotProgressText(slot: RuntimeOutputSlot): string {
-  if (slot.status === "succeeded") return "Output ready";
-  if (slot.status === "failed") return "Needs retry";
-  if (slot.stage === "provider_response_received") return "Saving output";
-  if (slot.stage === "provider_request_started") return "Generating output";
-  if (slot.stage === "source_images_ready") return "Preparing photos";
-  if (slot.stage === "local_worker_started") return "Preparing request";
-  if (slot.status === "running") return "Generating output";
-  return "Waiting for this slot";
+function workspaceSlotProgressText(slot: RuntimeOutputSlot, spanish = false): string {
+  if (slot.status === "succeeded") return t(spanish, "Output ready", "Resultado listo");
+  if (slot.status === "failed") return t(spanish, "Needs retry", "Necesita reintento");
+  if (slot.stage === "video_result_received") return t(spanish, "Saving video", "Guardando video");
+  if (slot.stage === "provider_response_received") return t(spanish, "Saving output", "Guardando resultado");
+  if (slot.stage === "video_task_created") return t(spanish, "Video task created", "Tarea de video creada");
+  if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
+  if (slot.stage === "video_provider_request_started") return t(spanish, "Generating video", "Generando video");
+  if (slot.stage === "provider_request_started") return t(spanish, "Generating output", "Generando resultado");
+  if (slot.stage === "source_images_ready") return t(spanish, "Preparing photos", "Preparando fotos");
+  if (slot.stage === "local_video_worker_started") return t(spanish, "Preparing video request", "Preparando solicitud de video");
+  if (slot.stage === "local_worker_started") return t(spanish, "Preparing request", "Preparando solicitud");
+  if (slot.status === "running") return t(spanish, "Generating output", "Generando resultado");
+  return t(spanish, "Waiting for this slot", "Esperando este resultado");
 }
 
-function workspaceSlotSummary(slots: RuntimeOutputSlot[]): string {
+function workspaceSlotSummary(slots: RuntimeOutputSlot[], spanish = false): string {
   const delivered = slots.filter((slot) => slot.status === "succeeded").length;
   const failed = slots.filter((slot) => slot.status === "failed").length;
   const pending = slots.length - delivered - failed;
-  const parts = [`${delivered} of ${slots.length} delivered`];
-  if (pending > 0) parts.push(`${pending} pending`);
-  if (failed > 0) parts.push(`${failed} failed`);
+  const parts = [spanish ? `${delivered} de ${slots.length} entregados` : `${delivered} of ${slots.length} delivered`];
+  if (pending > 0) parts.push(spanish ? `${pending} pendientes` : `${pending} pending`);
+  if (failed > 0) parts.push(spanish ? `${failed} fallidos` : `${failed} failed`);
   return parts.join(" · ");
 }
 
-function workspaceJobSlotStageLabel(job: RuntimeJob, slots: RuntimeOutputSlot[]): string {
-  if (slots.length <= 1) return workspaceJobStageLabel(job);
+function workspaceJobSlotStageLabel(job: RuntimeJob, slots: RuntimeOutputSlot[], spanish = false): string {
+  if (slots.length <= 1) return workspaceJobStageLabel(job, spanish, slots);
   const delivered = slots.filter((slot) => slot.status === "succeeded").length;
   const failed = slots.filter((slot) => slot.status === "failed").length;
   const pending = slots.length - delivered - failed;
-  if (delivered === slots.length) return "Images delivered";
-  if (failed > 0 && delivered > 0) return "Some images need attention";
-  if (failed > 0 && pending === 0) return "Generation failed";
-  if (delivered > 0 && pending > 0) return "More images are still generating";
-  if (pending > 0) return "Images are generating";
-  return workspaceJobStageLabel(job);
+  if (delivered === slots.length) return t(spanish, "Images delivered", "Imagenes entregadas");
+  if (failed > 0 && delivered > 0) return t(spanish, "Some images need attention", "Algunas imagenes requieren atencion");
+  if (failed > 0 && pending === 0) return t(spanish, "Generation failed", "Generacion fallida");
+  if (delivered > 0 && pending > 0) return t(spanish, "More images are still generating", "Aun se generan mas imagenes");
+  if (pending > 0) return t(spanish, "Images are generating", "Las imagenes se estan generando");
+  return workspaceJobStageLabel(job, spanish, slots);
 }
 
 function workspaceJobStatusBadge(job: RuntimeJob, slots: RuntimeOutputSlot[]): string {
+  const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
   const delivered = slots.filter((slot) => slot.status === "succeeded").length;
   const failed = slots.filter((slot) => slot.status === "failed").length;
   const pending = slots.length - delivered - failed;
-  if (slots.length > 1 && failed === slots.length) return "failed";
+  if (effectiveStatus === "failed") return "failed";
   if (slots.length > 1 && delivered > 0 && failed > 0) return "partial";
   if (slots.length > 1 && delivered > 0 && pending > 0) return "partial";
-  return job.status;
+  return effectiveStatus;
 }
 
 function normalizedWorkspaceStorageKey(storageKey: string): string {
@@ -312,6 +375,19 @@ function normalizedWorkspaceStorageKey(storageKey: string): string {
 function workspaceStoragePreviewUrl(storageKey: string): string {
   if (storageKey.startsWith("/")) return storageKey;
   return `/api/local-assets/${normalizedWorkspaceStorageKey(storageKey)}`;
+}
+
+function workspaceAssetPreviewUrl(asset: Pick<ThemeRuntimeAsset, "previewUrl" | "storageKey" | "role">): string {
+  if (asset.role === "output" && asset.storageKey) return workspaceStoragePreviewUrl(asset.storageKey);
+  return asset.previewUrl;
+}
+
+function isVideoFrameCandidateAsset(asset: Pick<ThemeRuntimeAsset, "mimeType" | "role" | "subjectRole">): boolean {
+  return asset.mimeType.startsWith("image/") && asset.role === "input" && asset.subjectRole === "video_frame";
+}
+
+function isSampleCandidateAsset(asset: Pick<ThemeRuntimeAsset, "role" | "subjectRole">): boolean {
+  return (asset.role === "input" || asset.role === "training_input") && asset.subjectRole !== "video_frame" && asset.subjectRole !== "video_scene_reference";
 }
 
 function workspaceJobTime(value: string): string {
@@ -332,6 +408,67 @@ function isSameLocalDay(value: string, reference: Date): boolean {
 
 function isVideoAsset(asset: Pick<ThemeRuntimeAsset, "mimeType">): boolean {
   return asset.mimeType.startsWith("video/");
+}
+
+function mediaLabel(value: string | undefined): string {
+  return value?.replace(/\s+/g, " ").trim() ?? "";
+}
+
+function generatedAssetLabel(asset: ThemeRuntimeAsset, copy: { title?: string; description?: string } | undefined): string {
+  const storedAlt = mediaLabel(asset.altText);
+  if (storedAlt) return storedAlt;
+  const mediaType = isVideoAsset(asset) ? "AI-generated video" : "AI-generated image";
+  const title = mediaLabel(copy?.title) || mediaLabel(asset.label);
+  const description = mediaLabel(copy?.description);
+  return [mediaType, title, description].filter(Boolean).join(": ");
+}
+
+function uploadedSampleLabel(asset: Pick<ThemeRuntimeAsset, "altText" | "label">, target?: SampleTarget): string {
+  const storedAlt = mediaLabel(asset.altText);
+  if (storedAlt) return storedAlt;
+  const role = target === "partner" ? "partner sample photo" : target === "primary" ? "primary sample photo" : "uploaded sample photo";
+  return `Customer ${role}: ${mediaLabel(asset.label) || "reference image"}`;
+}
+
+function videoFrameLabel(asset: Pick<ThemeRuntimeAsset, "altText" | "label">, index?: number): string {
+  const storedAlt = mediaLabel(asset.altText);
+  if (storedAlt) return storedAlt;
+  const frame = typeof index === "number" ? ` ${index + 1}` : "";
+  return `Uploaded video frame${frame}: ${mediaLabel(asset.label) || "reference image"}`;
+}
+
+function isVideoRuntimeJob(job: RuntimeJob): boolean {
+  const fields = jobFields(job);
+  const values = [
+    job.requestJson?.mode,
+    job.requestJson?.outputType,
+    job.requestJson?.videoThemeId,
+    fields.mode,
+    fields.outputType,
+    fields.videoThemeId,
+    fields.videoThemeName,
+    fields.toolPresetId,
+    fields.toolPresetTitle
+  ];
+  return values
+    .filter((value): value is string => typeof value === "string")
+    .join(" ")
+    .toLowerCase()
+    .includes("video");
+}
+
+function workspaceGenerationErrorText(error: string, spanish = false): string {
+  const lowerError = error.toLowerCase();
+  if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) {
+    return t(spanish, "Frame images need a public URL before the video provider can read them.", "Los fotogramas necesitan una URL publica antes de que el proveedor de video pueda leerlos.");
+  }
+  if (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated")) {
+    return t(spanish, "The video provider connection was interrupted.", "La conexion con el proveedor de video se interrumpio.");
+  }
+  if (error.includes("ai_provider_video_failed")) {
+    return t(spanish, "The video provider could not finish this video.", "El proveedor de video no pudo terminar este video.");
+  }
+  return error;
 }
 
 function useWorkspaceRuntime(siteId: string, refreshKey = 0, enabled = true): WorkspaceRuntimeState {
@@ -398,6 +535,23 @@ const studioGenderOptions = [
   { id: "nonbinary", label: "N-Bi", icon: UserRound }
 ];
 
+function studioConsoleLabel(id: StudioConsoleSectionId, spanish: boolean): string {
+  const labels: Record<StudioConsoleSectionId, string> = {
+    generate: t(spanish, "Generate Image", "Generar imagen"),
+    "try-on": t(spanish, "Try-On", "Probador virtual"),
+    video: t(spanish, "Image to Video", "Imagen a video"),
+    background: t(spanish, "Change Background", "Cambiar fondo"),
+    model: t(spanish, "Create New AI Model", "Crear nuevo modelo IA")
+  };
+  return labels[id];
+}
+
+function studioGenderLabel(id: string, spanish: boolean): string {
+  if (id === "man") return t(spanish, "Man", "Hombre");
+  if (id === "woman") return t(spanish, "Woman", "Mujer");
+  return t(spanish, "N-Bi", "N-Bi");
+}
+
 export function CustomerWorkspaceShell({
   site,
   customer,
@@ -422,16 +576,19 @@ export function CustomerWorkspaceShell({
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const spanishXby = isSpanishXbyWorkspaceSite(site);
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(
-    () => [basePath || "/", `${basePath}/collections`, `${basePath}/tools`, `${basePath}/pricing`, `${basePath}/#faq`, `${basePath}/app/create`],
+    () => [basePath || "/", `${basePath}/collections`, `${basePath}/tools`, `${basePath}/pricing`, `${basePath}/faq`, `${basePath}/app/create`],
     [basePath]
   );
   const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
   const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(false);
   const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
   const runtime = runtimeState.runtime ?? initialRuntime;
+  const [currentCustomerBalance, setCurrentCustomerBalance] = useState<PublicCustomer["balance"]>(() => customer.balance);
+  const workspaceCustomer = useMemo(() => ({ ...customer, balance: currentCustomerBalance }), [currentCustomerBalance, customer]);
   const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(() => initialRuntime?.assets ?? assets);
   const hydratedAssets = runtimeAssets;
   const recentJobs = runtime?.jobs ?? [];
@@ -448,17 +605,24 @@ export function CustomerWorkspaceShell({
   const [preferredCreateMode, setPreferredCreateMode] = useState<WorkspaceCreateMode>("theme");
   const [preferredCreateModeRequest, setPreferredCreateModeRequest] = useState(0);
   const [appliedOperationContext, setAppliedOperationContext] = useState<{ action?: string; note?: string; source?: string }>({});
-  const [activeStudioSection, setActiveStudioSection] = useState<StudioConsoleSectionId | null>("model");
+  const [activeStudioSection, setActiveStudioSection] = useState<StudioConsoleSectionId | null>(initialPanel === "video" ? "video" : "model");
   const [studioModelName, setStudioModelName] = useState("");
   const [studioTrainingMode, setStudioTrainingMode] = useState<"single" | "couple">(isAidreamcapes ? "single" : "couple");
   const [primaryGender, setPrimaryGender] = useState("nonbinary");
   const [partnerGender, setPartnerGender] = useState("nonbinary");
   const [selectedPreviewAssetId, setSelectedPreviewAssetId] = useState<string | null>(null);
-  const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter((asset) => asset.role === "input" || asset.role === "training_input"));
+  const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter(isSampleCandidateAsset));
   const [primarySampleIds, setPrimarySampleIds] = useState<string[]>([]);
   const [partnerSampleIds, setPartnerSampleIds] = useState<string[]>([]);
+  const [videoFrameAssets, setVideoFrameAssets] = useState<VideoFrameAsset[]>(() => hydratedAssets.filter(isVideoFrameCandidateAsset));
+  const [selectedVideoFrameIds, setSelectedVideoFrameIds] = useState<string[]>([]);
+  const [draggedVideoFrameId, setDraggedVideoFrameId] = useState<string | null>(null);
+  const [uploadingVideoFrames, setUploadingVideoFrames] = useState(false);
+  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame images. New uploads are selected automatically.`, `Elige hasta ${DEFAULT_VIDEO_FRAME_LIMIT} fotogramas. Las subidas nuevas se seleccionan automaticamente.`));
+  const [videoWorkspaceTab, setVideoWorkspaceTab] = useState<VideoWorkspaceTab>("generate");
+  const [preferredToolId, setPreferredToolId] = useState<string | undefined>(undefined);
   const [uploadingSampleTarget, setUploadingSampleTarget] = useState<SampleTarget | null>(null);
-  const [sampleUploadMessage, setSampleUploadMessage] = useState("Upload samples to preview them here before generation.");
+  const [sampleUploadMessage, setSampleUploadMessage] = useState(() => t(spanishXby, "Upload samples to preview them here before generation.", "Sube muestras para verlas aqui antes de generar."));
   const [workspaceNotice, setWorkspaceNotice] = useState("");
   const [runtimeRefreshMessage, setRuntimeRefreshMessage] = useState("");
   const [manualRefreshPending, setManualRefreshPending] = useState(false);
@@ -468,6 +632,9 @@ export function CustomerWorkspaceShell({
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
   const [sampleDeleteConfirm, setSampleDeleteConfirm] = useState<{ assets: SampleAsset[]; label: string } | null>(null);
+  const videoFrameUploadInputRef = useRef<HTMLInputElement | null>(null);
+  const deletedVideoFrameIdsRef = useRef<Set<string>>(new Set());
+  const videoFrameBlobUrlsRef = useRef<Set<string>>(new Set());
   const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
@@ -476,14 +643,20 @@ export function CustomerWorkspaceShell({
   const sampleSelectionStorageKey = useMemo(() => `dreamshoot:workspace:${site.id}:${customer.id}:sample-selection:v1`, [customer.id, site.id]);
   const tabItems: Array<{ id: WorkspaceResourceTab; label: string }> = useMemo(
     () => [
-      { id: "all", label: "All" },
-      { id: "recent", label: "Recent" },
-      { id: "favorites", label: "Favorites" },
-      { id: "try-on", label: "Try-on" },
-      { id: "videos", label: "Videos" },
-      { id: "packages", label: "Pick Package" }
+      { id: "all", label: t(spanishXby, "All", "Todo") },
+      { id: "recent", label: t(spanishXby, "Recent", "Reciente") },
+      { id: "favorites", label: t(spanishXby, "Favorites", "Favoritos") },
+      { id: "try-on", label: t(spanishXby, "Try-on", "Probador") },
+      { id: "packages", label: t(spanishXby, "Pick Package", "Elegir paquete") }
     ],
-    []
+    [spanishXby]
+  );
+  const videoTabItems: Array<{ id: VideoWorkspaceTab; label: string }> = useMemo(
+    () => [
+      { id: "generate", label: t(spanishXby, "Input", "Entrada") },
+      { id: "videos", label: t(spanishXby, "Video results", "Resultados") }
+    ],
+    [spanishXby]
   );
   const galleryAssets = hydratedAssets.filter((asset) => shouldShowAssetOnSurface(asset, "workspace-gallery"));
   const sourceAssets = sampleAssets;
@@ -493,18 +666,46 @@ export function CustomerWorkspaceShell({
   const previewSamples = sourceAssets.filter((asset) => asset.localStatus !== "failed");
   const previewSampleIndex = previewSampleId ? previewSamples.findIndex((asset) => asset.id === previewSampleId) : -1;
   const previewSample = previewSampleIndex >= 0 ? previewSamples[previewSampleIndex] : undefined;
-  const activeJobs = recentJobs.filter((job) => job.status === "queued" || job.status === "running").length;
-  const failedJobs = recentJobs.filter((job) => job.status === "failed").length;
+  const readyVideoFrameAssets = useMemo(() => videoFrameAssets.filter((asset) => asset.localStatus !== "failed"), [videoFrameAssets]);
+  const readyVideoFrameAssetById = useMemo(() => new Map(readyVideoFrameAssets.map((asset) => [asset.id, asset])), [readyVideoFrameAssets]);
+  const selectedVideoFrames = useMemo(
+    () => selectedVideoFrameIds
+      .map((assetId) => readyVideoFrameAssetById.get(assetId))
+      .filter((asset): asset is VideoFrameAsset => Boolean(asset)),
+    [readyVideoFrameAssetById, selectedVideoFrameIds]
+  );
+  const readySelectedVideoFrameIds = useMemo(
+    () => selectedVideoFrames
+      .filter((asset) => !asset.id.startsWith("local:") && asset.localStatus !== "uploading")
+      .map((asset) => asset.id),
+    [selectedVideoFrames]
+  );
+  const maxVideoFrameCount = MAX_VIDEO_FRAME_LIMIT;
+  const resourceStatusJobs = recentJobs.filter((job) => !isVideoRuntimeJob(job));
+  const videoRuntimeJobs = recentJobs.filter(isVideoRuntimeJob);
+  const resourceJobStatuses = resourceStatusJobs.map((job) => workspaceJobEffectiveStatus(job));
+  const videoJobStatuses = videoRuntimeJobs.map((job) => workspaceJobEffectiveStatus(job));
+  const activeJobs = resourceJobStatuses.filter((status) => status === "queued" || status === "running").length;
+  const failedJobs = resourceJobStatuses.filter((status) => status === "failed" || status === "partial").length;
+  const activeVideoJobs = videoJobStatuses.filter((status) => status === "queued" || status === "running").length;
+  const failedVideoJobs = videoJobStatuses.filter((status) => status === "failed" || status === "partial").length;
   const runtimeIsLoading = runtimeState.status === "loading";
   const runtimeIsInitializing = !runtime && (runtimeState.status === "idle" || runtimeState.status === "loading");
   const completedRuntimeRefreshKey = runtimeState.status === "ready" || runtimeState.status === "error" ? runtimeState.refreshKey : null;
   const resourceTitleByTab: Record<WorkspaceResourceTab, string> = {
-    all: "All assets",
-    recent: "Recent generations",
-    favorites: "Favorite selections",
-    "try-on": "Try-on results",
-    videos: "Video concepts",
-    packages: "Available packages"
+    all: t(spanishXby, "All assets", "Todos los recursos"),
+    recent: t(spanishXby, "Recent generations", "Generaciones recientes"),
+    favorites: t(spanishXby, "Favorite selections", "Favoritos guardados"),
+    "try-on": t(spanishXby, "Try-on results", "Resultados de probador"),
+    packages: t(spanishXby, "Available packages", "Paquetes disponibles")
+  };
+
+  useEffect(() => {
+    setCurrentCustomerBalance(customer.balance);
+  }, [customer.balance]);
+
+  const applyCreatedJobFeedback = (feedback?: CreatedWorkspaceJobFeedback) => {
+    if (feedback?.customerBalance) setCurrentCustomerBalance(feedback.customerBalance);
   };
 
   useEffect(() => {
@@ -531,10 +732,10 @@ export function CustomerWorkspaceShell({
     setFocusedJobId(jobId);
     setWorkspaceNotice(
       jobStatus === "workspace"
-        ? "Request status is shown in your workspace. The list has been refreshed so you can review the latest generation result."
+        ? t(spanishXby, "Request status is shown in your workspace. The list has been refreshed so you can review the latest generation result.", "El estado de la solicitud se muestra en tu espacio privado. La lista se actualizo para revisar el resultado mas reciente.")
         : jobId
-          ? "That request is still syncing or is no longer available from this session. Your workspace has been refreshed so you can review the latest request status."
-          : "That request is still syncing or is no longer available from this session. Your workspace has been refreshed."
+          ? t(spanishXby, "That request is still syncing or is no longer available from this session. Your workspace has been refreshed so you can review the latest request status.", "Esa solicitud sigue sincronizando o ya no esta disponible en esta sesion. Tu espacio se actualizo para revisar el estado mas reciente.")
+          : t(spanishXby, "That request is still syncing or is no longer available from this session. Your workspace has been refreshed.", "Esa solicitud sigue sincronizando o ya no esta disponible en esta sesion. Tu espacio se actualizo.")
     );
     setRuntimeFetchEnabled(true);
     setRuntimeRefreshKey((current) => current + 1);
@@ -562,8 +763,8 @@ export function CustomerWorkspaceShell({
       setRuntimeFetchEnabled(true);
       setRuntimeRefreshMessage(
         payload.status === "succeeded" || payload.status === "failed"
-          ? "Generator callback received. Refreshing workspace."
-          : "Generator progress received. Refreshing workspace."
+          ? t(spanishXby, "Generator callback received. Refreshing workspace.", "Callback del generador recibido. Actualizando espacio.")
+          : t(spanishXby, "Generator progress received. Refreshing workspace.", "Progreso del generador recibido. Actualizando espacio.")
       );
       setRuntimeRefreshKey((current) => {
         const next = current + 1;
@@ -583,12 +784,12 @@ export function CustomerWorkspaceShell({
     if (runtimeState.status === "ready") {
       setManualRefreshPending(false);
       setManualRefreshKey(null);
-      setRuntimeRefreshMessage(`Last checked ${workspaceJobTime(new Date().toISOString())}`);
+      setRuntimeRefreshMessage(spanishXby ? `Ultima revision ${workspaceJobTime(new Date().toISOString())}` : `Last checked ${workspaceJobTime(new Date().toISOString())}`);
     }
     if (runtimeState.status === "error") {
       setManualRefreshPending(false);
       setManualRefreshKey(null);
-      setRuntimeRefreshMessage("Status refresh failed. Try again.");
+      setRuntimeRefreshMessage(t(spanishXby, "Status refresh failed. Try again.", "No se pudo actualizar el estado. Intentalo de nuevo."));
     }
   }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
   useEffect(() => {
@@ -596,38 +797,63 @@ export function CustomerWorkspaceShell({
     if (eventRefreshKey === null || completedRuntimeRefreshKey !== eventRefreshKey) return;
     eventRefreshKeyRef.current = null;
     if (runtimeState.status === "ready") {
-      setRuntimeRefreshMessage(`Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
+      setRuntimeRefreshMessage(spanishXby ? `Actualizado por callback del generador ${workspaceJobTime(new Date().toISOString())}` : `Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
     }
     if (runtimeState.status === "error") {
-      setRuntimeRefreshMessage("Generator callback received, but workspace refresh failed. Use Check now.");
+      setRuntimeRefreshMessage(t(spanishXby, "Generator callback received, but workspace refresh failed. Use Check now.", "Callback recibido, pero fallo la actualizacion. Usa Revisar ahora."));
     }
   }, [completedRuntimeRefreshKey, runtimeState.status]);
   useEffect(() => {
     setRuntimeAssets(runtime?.assets ?? initialRuntime?.assets ?? assets);
   }, [assets, initialRuntime?.assets, runtime?.assets]);
-  const allResourceAssets = galleryAssets;
+  useEffect(() => {
+    const hydratedFrameAssets = hydratedAssets.filter((asset) => isVideoFrameCandidateAsset(asset) && !deletedVideoFrameIdsRef.current.has(asset.id));
+    const hydratedFrameIds = new Set(hydratedFrameAssets.map((asset) => asset.id));
+    setVideoFrameAssets((current) => {
+      const byId = new Map<string, VideoFrameAsset>();
+      current.forEach((asset) => {
+        if (deletedVideoFrameIdsRef.current.has(asset.id)) return;
+        const localOnly = asset.id.startsWith("local:") || asset.localStatus === "uploading" || asset.localStatus === "failed";
+        if (localOnly || hydratedFrameIds.has(asset.id)) byId.set(asset.id, asset);
+      });
+      hydratedFrameAssets.forEach((asset) => byId.set(asset.id, asset));
+      return Array.from(byId.values())
+        .filter((asset) => isVideoFrameCandidateAsset(asset) && !deletedVideoFrameIdsRef.current.has(asset.id))
+        .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime());
+    });
+  }, [hydratedAssets]);
+  useEffect(() => {
+    const availableFrameIds = new Set(readyVideoFrameAssets.map((asset) => asset.id));
+    setSelectedVideoFrameIds((current) => {
+      const next = current.filter((id) => availableFrameIds.has(id)).slice(0, maxVideoFrameCount);
+      return next.length === current.length && next.every((id, index) => id === current[index]) ? current : next;
+    });
+  }, [maxVideoFrameCount, readyVideoFrameAssets]);
+  const videoResourceAssets = galleryAssets.filter(isVideoAsset);
+  const imageResourceAssets = galleryAssets.filter((asset) => !isVideoAsset(asset));
+  const allResourceAssets = imageResourceAssets;
   const tryOnJobIds = new Set(
     recentJobs
       .filter((job) => JSON.stringify(job.requestJson ?? {}).toLowerCase().includes("try-on"))
       .map((job) => job.id)
   );
-  const todayResourceAssets = galleryAssets.filter((asset) => isSameLocalDay(asset.createdAt, new Date()));
+  const todayResourceAssets = imageResourceAssets.filter((asset) => isSameLocalDay(asset.createdAt, new Date()));
   const visibleResourceAssets =
     resourceTab === "all"
       ? allResourceAssets
-      : resourceTab === "videos"
-        ? galleryAssets.filter((asset) => asset.mimeType.startsWith("video/"))
       : resourceTab === "try-on"
-        ? galleryAssets.filter((asset) => asset.jobId ? tryOnJobIds.has(asset.jobId) : false)
+        ? imageResourceAssets.filter((asset) => asset.jobId ? tryOnJobIds.has(asset.jobId) : false)
       : resourceTab === "recent"
         ? todayResourceAssets
       : resourceTab === "favorites"
-        ? galleryAssets.filter((asset) => asset.isFavorite)
+        ? imageResourceAssets.filter((asset) => asset.isFavorite)
         : allResourceAssets;
-  const selectedPreviewIndex = selectedPreviewAssetId ? Math.max(0, visibleResourceAssets.findIndex((asset) => asset.id === selectedPreviewAssetId)) : -1;
-  const selectedPreviewAsset = selectedPreviewIndex >= 0 ? visibleResourceAssets[selectedPreviewIndex] : undefined;
+  const previewableAssets = activePanel === "video" && videoWorkspaceTab === "videos" ? videoResourceAssets : visibleResourceAssets;
+  const selectedPreviewIndex = selectedPreviewAssetId ? previewableAssets.findIndex((asset) => asset.id === selectedPreviewAssetId) : -1;
+  const selectedPreviewAsset = selectedPreviewIndex >= 0 ? previewableAssets[selectedPreviewIndex] : undefined;
   const outputCopyJobs = useMemo(() => recentJobs.map(outputCopyJob).filter((job): job is OutputCopyJob => Boolean(job)), [recentJobs]);
   const jobById = useMemo(() => new Map(outputCopyJobs.map((job) => [job.id, job])), [outputCopyJobs]);
+  const assetById = useMemo(() => new Map(hydratedAssets.map((asset) => [asset.id, asset])), [hydratedAssets]);
   const outputAssetsByJobId = useMemo(() => {
     const assetsByJobId = new Map<string, ThemeRuntimeAsset[]>();
     galleryAssets.forEach((asset) => {
@@ -640,18 +866,37 @@ export function CustomerWorkspaceShell({
     const urls = new Map<string, string>();
     galleryAssets.forEach((asset) => {
       if (!asset.storageKey) return;
-      urls.set(normalizedWorkspaceStorageKey(asset.storageKey), asset.previewUrl);
+      urls.set(normalizedWorkspaceStorageKey(asset.storageKey), workspaceAssetPreviewUrl(asset));
     });
     return urls;
   }, [galleryAssets]);
   const workspaceSlotPreviewUrl = (storageKey: string) =>
     outputPreviewUrlByStorageKey.get(normalizedWorkspaceStorageKey(storageKey)) ?? workspaceStoragePreviewUrl(storageKey);
+  const videoPosterUrlForJob = (job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob | undefined): string | undefined => {
+    const frameAsset = videoJobFrameIds(job)
+      .map((assetId) => assetById.get(assetId))
+      .find((asset): asset is ThemeRuntimeAsset => Boolean(asset?.mimeType.startsWith("image/")));
+    return frameAsset ? workspaceAssetPreviewUrl(frameAsset) : undefined;
+  };
   const visibleStatusJobs = useMemo(() => {
-    const focusedJob = focusedJobId ? recentJobs.find((job) => job.id === focusedJobId) : undefined;
+    const scopedJobs = recentJobs.filter((job) => !isVideoRuntimeJob(job));
+    const focusedJob = focusedJobId ? scopedJobs.find((job) => job.id === focusedJobId) : undefined;
     if (focusedJob) return [focusedJob];
-    const activeJob = recentJobs.find((job) => job.status === "queued" || job.status === "running");
-    return [activeJob ?? recentJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
+    const activeJob = scopedJobs.find((job) => {
+      const status = workspaceJobEffectiveStatus(job);
+      return status === "queued" || status === "running";
+    });
+    return [activeJob ?? scopedJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
   }, [focusedJobId, recentJobs]);
+  const visibleVideoStatusJobs = useMemo(() => {
+    const focusedJob = focusedJobId ? videoRuntimeJobs.find((job) => job.id === focusedJobId) : undefined;
+    if (focusedJob) return [focusedJob];
+    const activeJob = videoRuntimeJobs.find((job) => {
+      const status = workspaceJobEffectiveStatus(job);
+      return status === "queued" || status === "running";
+    });
+    return [activeJob ?? videoRuntimeJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
+  }, [focusedJobId, videoRuntimeJobs]);
   const outputIndexByAssetId = useMemo(() => {
     const counts = new Map<string, number>();
     return new Map(galleryAssets.map((asset) => {
@@ -668,37 +913,50 @@ export function CustomerWorkspaceShell({
     jobs: outputCopyJobs
   });
   const selectedPreviewCopy = selectedPreviewAsset ? outputCopyForAsset(selectedPreviewAsset) : undefined;
+  const selectedPreviewLabel = selectedPreviewAsset ? generatedAssetLabel(selectedPreviewAsset, selectedPreviewCopy) : "";
   function renderResourceAssetCard(asset: ThemeRuntimeAsset) {
     const outputCopy = outputCopyForAsset(asset);
+    const assetLabel = generatedAssetLabel(asset, outputCopy);
     const video = isVideoAsset(asset);
+    const previewUrl = workspaceAssetPreviewUrl(asset);
+    const videoPosterUrl = video ? videoPosterUrlForJob(asset.jobId ? jobById.get(asset.jobId) : undefined) : undefined;
     return (
       <div className="group grid h-full min-h-[390px] overflow-hidden rounded-[12px] border border-white/8 bg-[#0d1118] transition hover:border-white/20" key={asset.id}>
         <div className="relative self-start">
           {video ? (
             <div className="relative">
-              <video
-                className="aspect-[4/5] w-full object-cover"
-                controls
-                muted
-                playsInline
-                preload="metadata"
-                src={asset.previewUrl}
-              />
-              <button
-                className="absolute bottom-3 left-3 rounded-full border border-white/18 bg-black/56 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur transition hover:bg-white/14"
-                onClick={() => setSelectedPreviewAssetId(asset.id)}
-                type="button"
-              >
-                Open preview
+                <button
+                  aria-label={assetLabel}
+                  className="group/video relative block w-full bg-black text-left"
+                  onClick={() => setSelectedPreviewAssetId(asset.id)}
+                  title={assetLabel}
+                  type="button"
+                >
+                  <video
+                    aria-label={assetLabel}
+                    className="aspect-video w-full bg-black object-contain"
+                    autoPlay
+                    loop
+                    muted
+                    poster={videoPosterUrl}
+                    playsInline
+                    preload="auto"
+                    src={previewUrl}
+                    title={assetLabel}
+                  />
+                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
+                  <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  {t(spanishXby, "Open preview", "Abrir vista previa")}
+                </span>
               </button>
             </div>
           ) : (
             <button className="block w-full text-left" onClick={() => setSelectedPreviewAssetId(asset.id)} type="button">
-              <img alt={outputCopy.title} className="aspect-[4/5] w-full object-cover transition duration-200 group-hover:scale-[1.03]" src={asset.previewUrl} />
+              <img alt={assetLabel} className="aspect-[4/5] w-full object-cover transition duration-200 group-hover:scale-[1.03]" decoding="async" loading="lazy" src={previewUrl} />
             </button>
           )}
           <button
-            aria-label={asset.isFavorite ? "Remove from favorites" : "Add to favorites"}
+            aria-label={asset.isFavorite ? t(spanishXby, "Remove from favorites", "Quitar de favoritos") : t(spanishXby, "Add to favorites", "Anadir a favoritos")}
             className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border backdrop-blur transition ${
               asset.isFavorite ? "border-[#ff7ab8]/55 bg-[#ff4aa2]/90 text-white" : "border-white/18 bg-black/46 text-white/72 hover:bg-white/12 hover:text-white"
             }`}
@@ -720,7 +978,7 @@ export function CustomerWorkspaceShell({
             assetId={asset.id}
             className="inline-flex h-10 w-full items-center justify-center rounded-[8px] border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.1] disabled:cursor-wait disabled:opacity-60"
             customerId={customer.id}
-            label="Download"
+            label={t(spanishXby, "Download", "Descargar")}
             siteId={site.id}
           />
         </div>
@@ -741,6 +999,8 @@ export function CustomerWorkspaceShell({
 
   function choosePanel(panel: CustomerWorkspacePanel, anchor: WorkspaceAnchor) {
     setActivePanel(panel);
+    if (panel === "video") setActiveStudioSection("video");
+    if (panel === "create" && anchor === "source-photos") setActiveStudioSection("model");
     scrollToWorkspaceAnchor(anchor);
   }
 
@@ -748,6 +1008,57 @@ export function CustomerWorkspaceShell({
     setActivePanel("overview");
     setResourceTab(tab);
     scrollToWorkspaceAnchor(`resources-${tab}`);
+  }
+
+  function chooseVideoWorkspaceTab(tab: VideoWorkspaceTab) {
+    setVideoWorkspaceTab(tab);
+    setActivePanel("video");
+    setActiveStudioSection("video");
+    if (typeof window === "undefined") return;
+    const anchor = tab === "generate" ? "video-step-generate" : "video-workspace-videos";
+    window.history.replaceState(null, "", `#${anchor}`);
+    window.setTimeout(() => {
+      document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  }
+
+  function focusVideoFrameManager() {
+    setActivePanel("video");
+    setActiveStudioSection("video");
+    scrollToWorkspaceAnchor("step-video");
+  }
+
+  function chooseStudioConsoleSection(section: typeof studioConsoleSections[number]) {
+    setActiveStudioSection(section.id);
+    if (section.id === "video") {
+      chooseVideoWorkspaceTab("generate");
+      return;
+    }
+    if (section.id === "generate") {
+      setPreferredToolId(undefined);
+      setPreferredCreateMode("theme");
+      setPreferredCreateModeRequest((current) => current + 1);
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      choosePanel("create", "step-create");
+      return;
+    }
+    if (section.id === "try-on" || section.id === "background") {
+      setPreferredToolId(section.id === "background" ? "background-changer" : "virtual-try-on");
+      setPreferredCreateMode("tool");
+      setPreferredCreateModeRequest((current) => current + 1);
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      choosePanel("create", "step-create");
+      return;
+    }
+    if (section.id === "model") {
+      setPreferredToolId(undefined);
+      setPreferredCreateMode("theme");
+      setPreferredCreateModeRequest((current) => current + 1);
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      choosePanel("create", "source-photos");
+      return;
+    }
+    choosePanel(section.panel, section.anchor);
   }
 
   function requestWorkspaceRefresh() {
@@ -776,23 +1087,212 @@ export function CustomerWorkspaceShell({
     const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
     if (!response.ok || !result.asset) {
       setRuntimeAssets((current) => current.map((item) => item.id === asset.id ? asset : item));
-      setRuntimeRefreshMessage("Favorite update failed. Try again.");
+      setRuntimeRefreshMessage(t(spanishXby, "Favorite update failed. Try again.", "No se pudo actualizar el favorito. Intentalo de nuevo."));
       return;
     }
     setRuntimeAssets((current) => current.map((item) => item.id === result.asset!.id ? result.asset! : item));
     setSelectedPreviewAssetId((current) => current === result.asset!.id ? result.asset!.id : current);
   }
 
-  function showJobStatus(jobId: string) {
+  function toggleVideoFrame(asset: VideoFrameAsset) {
+    if (asset.localStatus === "uploading" || asset.localStatus === "failed") return;
+    setSelectedVideoFrameIds((current) => {
+      if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
+      if (current.length >= maxVideoFrameCount) {
+        setVideoFrameMessage(t(spanishXby, `Use up to ${maxVideoFrameCount} frame images for one video.`, `Usa hasta ${maxVideoFrameCount} fotogramas para un video.`));
+        return current;
+      }
+      return [...current, asset.id];
+    });
+  }
+
+  function moveVideoFrame(assetId: string, direction: -1 | 1) {
+    setSelectedVideoFrameIds((current) => {
+      const index = current.indexOf(assetId);
+      const nextIndex = index + direction;
+      if (index < 0 || nextIndex < 0 || nextIndex >= current.length) return current;
+      const next = [...current];
+      [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
+      return next;
+    });
+  }
+
+  function dropVideoFrame(targetId: string) {
+    if (!draggedVideoFrameId || draggedVideoFrameId === targetId) return;
+    setSelectedVideoFrameIds((current) => {
+      const sourceIndex = current.indexOf(draggedVideoFrameId);
+      const targetIndex = current.indexOf(targetId);
+      if (sourceIndex < 0 || targetIndex < 0) return current;
+      const next = [...current];
+      const [item] = next.splice(sourceIndex, 1);
+      next.splice(targetIndex, 0, item);
+      return next;
+    });
+    setDraggedVideoFrameId(null);
+  }
+
+  function releaseVideoFramePreviewUrl(asset: Pick<VideoFrameAsset, "previewUrl">) {
+    if (!videoFrameBlobUrlsRef.current.delete(asset.previewUrl)) return;
+    URL.revokeObjectURL(asset.previewUrl);
+  }
+
+  function replaceVideoFrameAsset(localId: string, nextAsset: ThemeRuntimeAsset) {
+    const readyAsset: VideoFrameAsset = { ...nextAsset, subjectRole: "video_frame", role: "input", localStatus: "ready" };
+    setVideoFrameAssets((current) => current.map((asset) => {
+      if (asset.id !== localId) return asset;
+      releaseVideoFramePreviewUrl(asset);
+      return readyAsset;
+    }));
+    setRuntimeAssets((current) => current.map((asset) => asset.id === localId ? readyAsset : asset));
+    setSelectedVideoFrameIds((current) => Array.from(new Set(current.map((assetId) => assetId === localId ? nextAsset.id : assetId))).slice(0, maxVideoFrameCount));
+  }
+
+  async function uploadVideoFrameFiles(files: FileList | null) {
+    const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
+    if (!imageFiles.length) {
+      setVideoFrameMessage(t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
+      return;
+    }
+    const now = Date.now();
+    const optimisticAssets: VideoFrameAsset[] = imageFiles.map((file, index) => ({
+      id: `local:video:${now}:${index}`,
+      label: uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")),
+      previewUrl: URL.createObjectURL(file),
+      mimeType: file.type || "image/jpeg",
+      role: "input",
+      subjectRole: "video_frame",
+      reviewStatus: "approved",
+      createdAt: new Date(now + index).toISOString(),
+      localStatus: "uploading"
+    }));
+    optimisticAssets.forEach((asset) => videoFrameBlobUrlsRef.current.add(asset.previewUrl));
+    setVideoFrameAssets((current) => [
+      ...optimisticAssets,
+      ...current.filter((asset) => !optimisticAssets.some((created) => created.id === asset.id))
+    ]);
+    setRuntimeAssets((current) => [
+      ...optimisticAssets,
+      ...current.filter((asset) => !optimisticAssets.some((created) => created.id === asset.id))
+    ]);
+    setSelectedVideoFrameIds((current) => Array.from(new Set([...current, ...optimisticAssets.map((asset) => asset.id)])).slice(0, maxVideoFrameCount));
+    setUploadingVideoFrames(true);
+    setVideoFrameMessage(spanishXby ? `Subiendo ${imageFiles.length} fotograma${imageFiles.length === 1 ? "" : "s"}...` : `Uploading ${imageFiles.length} frame image${imageFiles.length === 1 ? "" : "s"}...`);
+    const createdAssets: ThemeRuntimeAsset[] = [];
+    for (const [index, file] of imageFiles.entries()) {
+      const optimisticAsset = optimisticAssets[index];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("label", uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")));
+      formData.append("role", "input");
+      formData.append("subjectRole", "video_frame");
+      const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+        method: "POST",
+        headers: csrfHeader(`customer_csrf_${site.id}`),
+        body: formData
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+      if (!response.ok || !result.asset) {
+        setVideoFrameAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
+        setRuntimeAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
+        setSelectedVideoFrameIds((current) => current.filter((assetId) => assetId !== optimisticAsset.id));
+        setUploadingVideoFrames(false);
+        setVideoFrameMessage(spanishXby ? `No pudimos subir ${file.name}. Intentalo de nuevo.` : `We could not upload ${file.name}. Please try again.`);
+        return;
+      }
+      deletedVideoFrameIdsRef.current.delete(result.asset.id);
+      createdAssets.push({ ...result.asset, subjectRole: "video_frame", role: "input" });
+      replaceVideoFrameAsset(optimisticAsset.id, result.asset);
+    }
+    setVideoFrameMessage(spanishXby
+      ? `${createdAssets.length} fotograma${createdAssets.length === 1 ? "" : "s"} subido${createdAssets.length === 1 ? "" : "s"} y seleccionado${createdAssets.length === 1 ? "" : "s"}.`
+      : `${createdAssets.length} frame image${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
+    setUploadingVideoFrames(false);
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  async function deleteVideoFrame(asset: VideoFrameAsset) {
+    if (asset.localStatus === "uploading") return;
+    const confirmed = window.confirm(t(spanishXby, `Delete "${asset.label}" from video frame images?`, `Eliminar "${asset.label}" de los fotogramas de video?`));
+    if (!confirmed) return;
+    releaseVideoFramePreviewUrl(asset);
+    deletedVideoFrameIdsRef.current.add(asset.id);
+    setSelectedVideoFrameIds((current) => current.filter((id) => id !== asset.id));
+    setVideoFrameAssets((current) => current.filter((item) => item.id !== asset.id));
+    setRuntimeAssets((current) => current.filter((item) => item.id !== asset.id));
+    if (asset.id.startsWith("local:")) {
+      setVideoFrameMessage(t(spanishXby, "Frame image removed.", "Fotograma eliminado."));
+      return;
+    }
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}`, {
+      method: "DELETE",
+      headers: csrfHeader(`customer_csrf_${site.id}`)
+    });
+    if (!response.ok) {
+      setVideoFrameMessage(t(spanishXby, "We could not delete that frame image. Refresh and try again.", "No pudimos eliminar ese fotograma. Actualiza e intentalo de nuevo."));
+      setRuntimeRefreshKey((current) => current + 1);
+      return;
+    }
+    setVideoFrameMessage(t(spanishXby, "Frame image deleted.", "Fotograma eliminado."));
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  async function deleteSelectedVideoFrames() {
+    const assetsToDelete = selectedVideoFrames.filter((asset) => asset.localStatus !== "uploading" && isVideoFrameCandidateAsset(asset));
+    if (!assetsToDelete.length) return;
+    const confirmed = window.confirm(t(
+      spanishXby,
+      `Delete ${assetsToDelete.length} selected video frame image${assetsToDelete.length === 1 ? "" : "s"}?`,
+      `Eliminar ${assetsToDelete.length} fotograma${assetsToDelete.length === 1 ? "" : "s"} de video seleccionado${assetsToDelete.length === 1 ? "" : "s"}?`
+    ));
+    if (!confirmed) return;
+    const deleteIds = assetsToDelete.map((asset) => asset.id);
+    assetsToDelete.forEach((asset) => releaseVideoFramePreviewUrl(asset));
+    deleteIds.forEach((assetId) => deletedVideoFrameIdsRef.current.add(assetId));
+    setSelectedVideoFrameIds((current) => current.filter((id) => !deleteIds.includes(id)));
+    setVideoFrameAssets((current) => current.filter((asset) => !deleteIds.includes(asset.id)));
+    setRuntimeAssets((current) => current.filter((asset) => !deleteIds.includes(asset.id)));
+    const persistedIds = deleteIds.filter((assetId) => !assetId.startsWith("local:"));
+    if (!persistedIds.length) {
+      setVideoFrameMessage(t(spanishXby, "Selected frame images deleted.", "Fotogramas seleccionados eliminados."));
+      return;
+    }
+    const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        ...csrfHeader(`customer_csrf_${site.id}`)
+      },
+      body: JSON.stringify({ assetIds: persistedIds })
+    });
+    if (!response.ok) {
+      setVideoFrameMessage(t(spanishXby, "We could not delete every selected frame image. Refresh and try again.", "No pudimos eliminar todos los fotogramas seleccionados. Actualiza e intentalo de nuevo."));
+      setRuntimeRefreshKey((current) => current + 1);
+      return;
+    }
+    setVideoFrameMessage(t(spanishXby, "Selected frame images deleted.", "Fotogramas seleccionados eliminados."));
+    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+  }
+
+  function showJobStatus(jobId: string, nextResourceTab: WorkspaceResourceTab = "all", feedback?: CreatedWorkspaceJobFeedback) {
+    applyCreatedJobFeedback(feedback);
     setFocusedJobId(jobId);
     setRuntimeFetchEnabled(true);
     setRuntimeRefreshKey((current) => current + 1);
-    setWorkspaceNotice(`Request ${jobId} was created. Your workspace is refreshing so you can follow the latest status here.`);
+    setWorkspaceNotice(t(spanishXby, `Request ${jobId} was created. Your workspace is refreshing so you can follow the latest status here.`, `Solicitud ${jobId} creada. Tu espacio se esta actualizando para seguir el estado aqui.`));
     setActivePanel("overview");
-    setResourceTab("all");
+    setResourceTab(nextResourceTab);
     window.setTimeout(() => {
-      document.getElementById("resources-all")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(`resources-${nextResourceTab}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
+  }
+
+  function showVideoJobStatus(jobId: string, feedback?: CreatedWorkspaceJobFeedback) {
+    applyCreatedJobFeedback(feedback);
+    setFocusedJobId(jobId);
+    setRuntimeFetchEnabled(true);
+    setRuntimeRefreshKey((current) => current + 1);
+    setWorkspaceNotice(t(spanishXby, `Video request ${jobId} was created. Your video workspace is refreshing so you can follow the latest status here.`, `Solicitud de video ${jobId} creada. Tu espacio de video se esta actualizando para seguir el estado aqui.`));
+    chooseVideoWorkspaceTab("videos");
   }
 
   function showCurrentRequestReview() {
@@ -832,7 +1332,12 @@ export function CustomerWorkspaceShell({
 
   function groupSamplesFor(target: SampleTarget) {
     if (studioTrainingMode !== "couple") return sourceAssets;
-    return sourceAssets.filter((asset) => sampleTargetFor(asset) === target || (target === "primary" && !asset.subjectRole && !asset.localTarget));
+    return sourceAssets.filter((asset) => {
+      if (primarySampleIds.includes(asset.id)) return target === "primary";
+      if (partnerSampleIds.includes(asset.id)) return target === "partner";
+      if (!asset.subjectRole && !asset.localTarget) return true;
+      return sampleTargetFor(asset) === target;
+    });
   }
 
   function toggleSampleSelection(target: SampleTarget, asset: SampleAsset) {
@@ -840,14 +1345,16 @@ export function CustomerWorkspaceShell({
     const updateIds = (current: string[]) => {
       if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
       if (current.length >= 15) {
-        setSampleUploadMessage("Use up to 15 selected samples per request.");
+        setSampleUploadMessage(t(spanishXby, "Use up to 15 selected samples per request.", "Usa hasta 15 muestras seleccionadas por solicitud."));
         return current;
       }
       return [asset.id, ...current];
     };
     if (target === "partner") {
+      setPrimarySampleIds((current) => current.filter((id) => id !== asset.id));
       setPartnerSampleIds(updateIds);
     } else {
+      setPartnerSampleIds((current) => current.filter((id) => id !== asset.id));
       setPrimarySampleIds(updateIds);
     }
   }
@@ -909,11 +1416,13 @@ export function CustomerWorkspaceShell({
     });
     setDeletingSampleId(null);
     if (!response.ok) {
-      setSampleUploadMessage(remoteIds.length === 1 ? "We could not delete this sample. Please refresh and try again." : "We could not delete every selected sample. Please refresh and try again.");
+      setSampleUploadMessage(remoteIds.length === 1
+        ? t(spanishXby, "We could not delete this sample. Please refresh and try again.", "No pudimos eliminar esta muestra. Actualiza e intentalo de nuevo.")
+        : t(spanishXby, "We could not delete every selected sample. Please refresh and try again.", "No pudimos eliminar todas las muestras seleccionadas. Actualiza e intentalo de nuevo."));
       setRuntimeRefreshKey((current) => current + 1);
       return;
     }
-    setSampleUploadMessage(remoteIds.length === 1 ? "Sample deleted." : `${remoteIds.length} samples deleted.`);
+    setSampleUploadMessage(remoteIds.length === 1 ? t(spanishXby, "Sample deleted.", "Muestra eliminada.") : spanishXby ? `${remoteIds.length} muestras eliminadas.` : `${remoteIds.length} samples deleted.`);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
 
@@ -926,22 +1435,22 @@ export function CustomerWorkspaceShell({
 
   async function deleteSample(asset: SampleAsset) {
     if (asset.localStatus === "uploading") return;
-    requestSampleDelete([asset], asset.label || "sample");
+    requestSampleDelete([asset], asset.label || t(spanishXby, "sample", "muestra"));
   }
 
   async function uploadSidebarSamples(files: FileList | null) {
     const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
     if (!imageFiles.length) {
-      setSampleUploadMessage("Choose one or more image files before uploading.");
+      setSampleUploadMessage(t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
       return;
     }
     const target = pendingSampleTargetRef.current;
     setUploadingSampleTarget(target);
-    setSampleUploadMessage(`Uploading ${imageFiles.length} sample${imageFiles.length === 1 ? "" : "s"}...`);
+    setSampleUploadMessage(spanishXby ? `Subiendo ${imageFiles.length} muestra${imageFiles.length === 1 ? "" : "s"}...` : `Uploading ${imageFiles.length} sample${imageFiles.length === 1 ? "" : "s"}...`);
     const now = Date.now();
     const optimisticAssets: SampleAsset[] = imageFiles.map((file, index) => ({
       id: `local:${target}:${now}:${index}`,
-      label: file.name.replace(/\.[^.]+$/, "") || `sample ${index + 1}`,
+      label: file.name.replace(/\.[^.]+$/, "") || (spanishXby ? `muestra ${index + 1}` : `sample ${index + 1}`),
       previewUrl: URL.createObjectURL(file),
       mimeType: file.type || "image/jpeg",
       role: "input",
@@ -963,7 +1472,7 @@ export function CustomerWorkspaceShell({
       const optimisticId = optimisticAssets[index].id;
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("label", file.name.replace(/\.[^.]+$/, "") || `sample ${index + 1}`);
+      formData.append("label", file.name.replace(/\.[^.]+$/, "") || (spanishXby ? `muestra ${index + 1}` : `sample ${index + 1}`));
       formData.append("role", "input");
       formData.append("subjectRole", target);
       const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
@@ -976,7 +1485,7 @@ export function CustomerWorkspaceShell({
         setSampleAssets((current) => current.map((asset) => asset.id === optimisticId ? { ...asset, localStatus: "failed" } : asset));
         removeSampleId(optimisticId);
         setUploadingSampleTarget(null);
-        setSampleUploadMessage(`We could not upload ${file.name}. Please try again.`);
+        setSampleUploadMessage(spanishXby ? `No pudimos subir ${file.name}. Intentalo de nuevo.` : `We could not upload ${file.name}. Please try again.`);
         return;
       }
       createdAssets.push(result.asset);
@@ -992,21 +1501,201 @@ export function CustomerWorkspaceShell({
     }
     const keepIds = Array.from(new Set([...nextPrimaryIds, ...nextPartnerIds])).slice(0, 30);
     void syncCurrentSamples(keepIds);
-    setSampleUploadMessage(`${createdAssets.length} sample${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
+    setSampleUploadMessage(spanishXby ? `${createdAssets.length} muestra${createdAssets.length === 1 ? "" : "s"} subida${createdAssets.length === 1 ? "" : "s"} y seleccionada${createdAssets.length === 1 ? "" : "s"}.` : `${createdAssets.length} sample${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
     setUploadingSampleTarget(null);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
 
   function movePreview(direction: -1 | 1) {
-    if (!visibleResourceAssets.length) return;
+    if (!previewableAssets.length) return;
     const currentIndex = selectedPreviewIndex >= 0 ? selectedPreviewIndex : 0;
-    const nextIndex = (currentIndex + direction + visibleResourceAssets.length) % visibleResourceAssets.length;
-    setSelectedPreviewAssetId(visibleResourceAssets[nextIndex].id);
+    const nextIndex = (currentIndex + direction + previewableAssets.length) % previewableAssets.length;
+    setSelectedPreviewAssetId(previewableAssets[nextIndex].id);
+  }
+
+  function renderVideoFrameSidebar() {
+    return (
+      <div className="grid gap-3 pb-5" id="studio-console-video">
+        <div className="rounded-[18px] border border-white/12 bg-[#0d1118] p-4 shadow-[0_24px_70px_-52px_rgba(0,0,0,0.95)]">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex min-w-0 items-start gap-3">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[16px] bg-[#173048] text-[#31d4ff] ring-1 ring-white/6">
+                <Film className="h-5 w-5" strokeWidth={1.8} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#31d4ff]">
+                  {t(spanishXby, "Step 01", "Paso 01")}
+                </p>
+                <p className="mt-1 text-sm font-semibold text-white">{t(spanishXby, "Video frame images", "Fotogramas de video")}</p>
+              </div>
+            </div>
+            <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-white/58">
+              {spanishXby ? `${selectedVideoFrameIds.length} de ${maxVideoFrameCount}` : `${selectedVideoFrameIds.length} of ${maxVideoFrameCount}`} {t(spanishXby, "selected", "seleccionados")}
+            </span>
+          </div>
+          <p className="mt-3 text-xs leading-5 text-white/56">
+            {t(spanishXby, `Upload up to ${maxVideoFrameCount} images here. Only video frame uploads appear in this list, and new uploads are selected automatically.`, `Sube hasta ${maxVideoFrameCount} imagenes aqui. Solo aparecen fotogramas subidos para video y las nuevas subidas se seleccionan automaticamente.`)}
+          </p>
+
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <button
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[12px] bg-[#31d4ff] px-3 text-xs font-semibold text-[#041014] transition hover:bg-[#4adfff] disabled:cursor-wait disabled:opacity-55"
+              disabled={uploadingVideoFrames}
+              onClick={() => videoFrameUploadInputRef.current?.click()}
+              type="button"
+            >
+              <Upload className="h-4 w-4" strokeWidth={1.8} />
+              {uploadingVideoFrames ? t(spanishXby, "Uploading", "Subiendo") : t(spanishXby, "Upload", "Subir")}
+            </button>
+            <button
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[12px] border border-white/12 bg-white/[0.05] px-3 text-xs font-semibold text-white/84 transition hover:bg-white/[0.1] hover:text-white"
+              onClick={() => chooseVideoWorkspaceTab("generate")}
+              type="button"
+            >
+              {t(spanishXby, "Write prompt", "Escribir prompt")}
+              <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+            </button>
+          </div>
+          <input
+            accept="image/*"
+            className="sr-only"
+            multiple
+            onChange={(event) => {
+              void uploadVideoFrameFiles(event.target.files);
+              event.target.value = "";
+            }}
+            ref={videoFrameUploadInputRef}
+            type="file"
+          />
+
+          <div className="mt-4 rounded-[14px] border border-white/10 bg-black/20 p-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/52">{t(spanishXby, "Selected order", "Orden seleccionado")}</p>
+              <button
+                aria-label={t(spanishXby, "Clear selected video frames", "Limpiar fotogramas seleccionados")}
+                className="grid h-7 w-7 place-items-center rounded-full border border-white/10 text-white/46 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+                disabled={!selectedVideoFrameIds.length}
+                onClick={() => setSelectedVideoFrameIds([])}
+                type="button"
+              >
+                <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+              </button>
+            </div>
+            <div className="mt-3 grid gap-2">
+              {selectedVideoFrames.length ? selectedVideoFrames.map((asset, index) => (
+                <div
+                  className="grid grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-2 rounded-[11px] border border-white/10 bg-white/[0.035] p-2"
+                  draggable
+                  key={asset.id}
+                  onDragEnd={() => setDraggedVideoFrameId(null)}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDragStart={() => setDraggedVideoFrameId(asset.id)}
+                  onDrop={() => dropVideoFrame(asset.id)}
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-[8px] bg-white/[0.06]">
+                    <img alt={videoFrameLabel(asset, index)} className="h-full w-full object-cover" decoding="async" src={asset.previewUrl} />
+                    <span className="absolute left-1.5 top-1.5 rounded-full bg-[#31d4ff] px-1.5 py-0.5 text-[10px] font-bold text-[#041014]">
+                      {index + 1}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-semibold text-white">{asset.label}</p>
+                    <p className="mt-0.5 truncate text-[11px] text-white/42">{t(spanishXby, "Drag or use arrows", "Arrastra o usa flechas")}</p>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1">
+                    <GripVertical className="h-4 w-4 text-white/32" strokeWidth={1.8} />
+                    <button aria-label={t(spanishXby, "Move frame up", "Mover fotograma arriba")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, -1)} type="button"><ArrowUp className="h-3.5 w-3.5" /></button>
+                    <button aria-label={t(spanishXby, "Move frame down", "Mover fotograma abajo")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, 1)} type="button"><ArrowDown className="h-3.5 w-3.5" /></button>
+                    <button aria-label={t(spanishXby, "Remove frame", "Quitar fotograma")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/58 hover:bg-rose-500/18 hover:text-rose-100" onClick={() => setSelectedVideoFrameIds((current) => current.filter((id) => id !== asset.id))} type="button">
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    </button>
+                  </div>
+                </div>
+              )) : (
+                <button
+                  className="grid min-h-[96px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/16 px-4 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/55 hover:text-white"
+                  onClick={() => videoFrameUploadInputRef.current?.click()}
+                  type="button"
+                >
+                  <span className="grid justify-items-center gap-2">
+                    <ImagePlus className="h-5 w-5" strokeWidth={1.8} />
+                    {t(spanishXby, "Upload frame images or select uploaded frames below.", "Sube fotogramas o selecciona fotogramas subidos abajo.")}
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="min-w-0 truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/52">{t(spanishXby, "Uploaded video frames", "Fotogramas de video subidos")}</p>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  className="rounded-full border border-rose-200/16 px-2 py-1 text-[10px] font-semibold text-rose-100/70 transition hover:bg-rose-400/12 hover:text-rose-50 disabled:cursor-not-allowed disabled:opacity-35"
+                  disabled={!selectedVideoFrames.length}
+                  onClick={() => void deleteSelectedVideoFrames()}
+                  type="button"
+                >
+                  {t(spanishXby, "Delete selected", "Eliminar seleccionados")}
+                </button>
+                <span className="text-[11px] text-white/38">{readyVideoFrameAssets.length}</span>
+              </div>
+            </div>
+            <div className="grid max-h-[520px] grid-cols-2 gap-2 overflow-y-auto pr-1">
+              {readyVideoFrameAssets.slice(0, 30).map((asset) => {
+                const selected = selectedVideoFrameIds.includes(asset.id);
+                const selectable = asset.localStatus !== "uploading" && asset.localStatus !== "failed";
+                return (
+                  <div className={`group/frame relative overflow-hidden rounded-[12px] border bg-black/30 transition ${selected ? "border-[#31d4ff] ring-2 ring-[#31d4ff]/30" : "border-white/10 hover:border-white/28"}`} key={asset.id}>
+                    <button
+                      aria-pressed={selected}
+                      className="block w-full text-left disabled:cursor-not-allowed"
+                      disabled={!selectable}
+                      onClick={() => toggleVideoFrame(asset)}
+                      title={selected ? t(spanishXby, "Selected for video", "Seleccionada para video") : t(spanishXby, "Select for video", "Seleccionar para video")}
+                      type="button"
+                    >
+                      <img alt={videoFrameLabel(asset)} className={`aspect-square w-full object-cover transition group-hover/frame:scale-[1.03] ${selected ? "brightness-105" : "opacity-76"}`} decoding="async" loading="lazy" src={asset.previewUrl} />
+                      <span className={`absolute left-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full border shadow-[0_8px_22px_-14px_rgba(0,0,0,0.8)] ${selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#051016]" : "border-white/45 bg-black/56 text-white"}`}>
+                        {selected ? <CheckCircle2 className="h-4 w-4" strokeWidth={2.2} /> : null}
+                      </span>
+                      <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/82 to-transparent px-2 pb-2 pt-7">
+                        <span className="block truncate text-[11px] font-semibold text-white">{asset.label}</span>
+                      </span>
+                    </button>
+                    <button
+                      aria-label={`Delete ${asset.label}`}
+                      className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full border border-white/16 bg-black/68 text-white/78 transition hover:border-rose-200/40 hover:bg-rose-500/32 hover:text-rose-50"
+                      onClick={() => void deleteVideoFrame(asset)}
+                      type="button"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.9} />
+                    </button>
+                  </div>
+                );
+              })}
+              {!readyVideoFrameAssets.length ? (
+                <button
+                  className="col-span-2 grid min-h-[112px] place-items-center rounded-[12px] border border-dashed border-white/18 bg-black/20 px-4 py-5 text-center text-xs leading-5 text-white/52 transition hover:border-[#31d4ff]/60 hover:text-white"
+                  onClick={() => videoFrameUploadInputRef.current?.click()}
+                  type="button"
+                >
+                  {t(spanishXby, "Upload video frame images to start. Generated photo results stay out of this list.", "Sube fotogramas de video para comenzar. Los resultados generados no aparecen en esta lista.")}
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          <p className="mt-3 text-xs font-semibold leading-5 text-red-400" role="status">{videoFrameMessage}</p>
+        </div>
+      </div>
+    );
   }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const anchor = window.location.hash.replace("#", "") as WorkspaceAnchor | "";
+    const rawAnchor = window.location.hash.replace("#", "");
+    const anchor = rawAnchor as WorkspaceAnchor | "";
     if (!anchor) return;
     if (anchor === "step-upload") {
       setActivePanel("upload");
@@ -1019,6 +1708,18 @@ export function CustomerWorkspaceShell({
     }
     if (anchor === "step-video") {
       setActivePanel("video");
+      setActiveStudioSection("video");
+    }
+    if (rawAnchor === "video-step-themes" || rawAnchor === "video-step-generate") {
+      setActivePanel("video");
+      setActiveStudioSection("video");
+      setVideoWorkspaceTab("generate");
+      if (rawAnchor === "video-step-themes") window.history.replaceState(null, "", "#video-step-generate");
+    }
+    if (anchor === "video-workspace-videos" || anchor === "resources-videos") {
+      setActivePanel("video");
+      setActiveStudioSection("video");
+      setVideoWorkspaceTab("videos");
     }
     if (anchor === "review-request") {
       setActivePanel("overview");
@@ -1030,11 +1731,16 @@ export function CustomerWorkspaceShell({
         setResourceTab(tab);
       }
     }
-    window.setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ block: "start" }), 0);
+    const scrollTarget = rawAnchor === "video-step-themes"
+      ? "video-step-generate"
+      : anchor === "resources-videos"
+        ? "video-workspace-videos"
+        : rawAnchor;
+    window.setTimeout(() => document.getElementById(scrollTarget)?.scrollIntoView({ block: "start" }), 0);
   }, [tabItems]);
 
   useEffect(() => {
-    const nextSamples = hydratedAssets.filter((asset) => asset.role === "input" || asset.role === "training_input");
+    const nextSamples = hydratedAssets.filter(isSampleCandidateAsset);
     if (nextSamples.length) mergeSamples(nextSamples);
   }, [hydratedAssets]);
 
@@ -1132,32 +1838,34 @@ export function CustomerWorkspaceShell({
   useEffect(() => () => {
     sampleBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     sampleBlobUrlsRef.current.clear();
+    videoFrameBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    videoFrameBlobUrlsRef.current.clear();
   }, []);
 
   useEffect(() => {
     if (!selectedPreviewAssetId) return;
-    if (!visibleResourceAssets.some((asset) => asset.id === selectedPreviewAssetId)) {
+    if (!previewableAssets.some((asset) => asset.id === selectedPreviewAssetId)) {
       setSelectedPreviewAssetId(null);
     }
-  }, [selectedPreviewAssetId, visibleResourceAssets]);
+  }, [selectedPreviewAssetId, previewableAssets]);
 
   return (
     <div className="min-h-screen bg-[#07090d] font-sans text-white">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader creativePacks={creativePacks} customer={customer} site={site} tone="dark" />
+      <CustomerShellHeader creativePacks={creativePacks} customer={workspaceCustomer} site={site} tone="dark" />
 
       <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[430px_minmax(0,1fr)] xl:grid-cols-[450px_minmax(0,1fr)]">
         <aside className="border-b border-white/10 bg-[#0b0c0f] px-3 py-4 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r xl:px-4">
           <div className="rounded-[16px] border border-white/10 bg-[#0f1116] p-4">
-            <p className="text-sm font-semibold text-white/84">{customerModels[0]?.label ?? "No Model Selected"}</p>
+            <p className="text-sm font-semibold text-white/84">{customerModels[0]?.label ?? t(spanishXby, "No Model Selected", "Ningun modelo seleccionado")}</p>
             {customerModels[0] ? (
               <p className="mt-1 flex items-center gap-1 text-xs text-white/46">
                 <Heart className="h-3.5 w-3.5 fill-[#ff4aa2] text-[#ff4aa2]" strokeWidth={1.8} />
                 {customerModels[0].status}
               </p>
             ) : (
-              <p className="mt-1 text-xs leading-5 text-white/46">Create a private model before package generation.</p>
+              <p className="mt-1 text-xs leading-5 text-white/46">{t(spanishXby, "Create a private model before package generation.", "Crea un modelo privado antes de generar un paquete.")}</p>
             )}
           </div>
 
@@ -1171,23 +1879,23 @@ export function CustomerWorkspaceShell({
                     aria-expanded={expanded}
                     className="flex min-h-[58px] w-full items-center justify-between gap-3 px-1 py-4 text-left text-sm font-semibold text-white/82 transition hover:text-white"
                     onClick={() => {
-                      setActiveStudioSection((current) => current === section.id ? null : section.id);
+                      chooseStudioConsoleSection(section);
                     }}
                     type="button"
                   >
-                    <span>{section.label}</span>
+                    <span>{studioConsoleLabel(section.id, spanishXby)}</span>
                     <ChevronDown className={`h-4 w-4 text-white/42 transition ${expanded ? "rotate-180 text-white/70" : ""}`} strokeWidth={1.8} />
                   </button>
                   {expanded ? (
                     section.id === "model" ? (
                       <div className="grid gap-4 pb-5" id={`studio-console-${section.id}`}>
                         <div className="rounded-[14px] border border-white/20 bg-[#111318] p-4">
-                          <p className="text-sm font-semibold">{isAidreamcapes ? "Train Travel Model" : "Train Model"}</p>
+                          <p className="text-sm font-semibold">{isAidreamcapes ? t(spanishXby, "Train Travel Model", "Entrenar modelo de viaje") : t(spanishXby, "Train Model", "Entrenar modelo")}</p>
                           <p className="mt-2 text-xs leading-5 text-white/58">
-                            Add clear photos for each person when available. You can continue without a minimum, and each request can use up to 15 photos.
+                            {t(spanishXby, "Add clear photos for each person when available. Each generation request needs at least 1 selected photo and can use up to 15 photos.", "Agrega fotos claras de cada persona cuando esten disponibles. Cada solicitud de generacion necesita al menos 1 foto seleccionada y puede usar hasta 15 fotos.")}
                           </p>
                           <div className="mt-4 flex items-center gap-3">
-                            <span className="text-xs font-semibold text-white/70">Training Mode:</span>
+                            <span className="text-xs font-semibold text-white/70">{t(spanishXby, "Training Mode:", "Modo de entrenamiento:")}</span>
                             <div className="inline-grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/10 bg-white/[0.04]">
                               {(["single", "couple"] as const).map((mode) => (
                                 <button
@@ -1196,7 +1904,7 @@ export function CustomerWorkspaceShell({
                                   onClick={() => setStudioTrainingMode(mode)}
                                   type="button"
                                 >
-                                  {mode === "single" ? "Single" : "Couple"}
+                                  {mode === "single" ? t(spanishXby, "Single", "Individual") : t(spanishXby, "Couple", "Pareja")}
                                 </button>
                               ))}
                             </div>
@@ -1204,14 +1912,14 @@ export function CustomerWorkspaceShell({
                         </div>
 
                         <div className="grid gap-2 rounded-[14px] border border-white/12 bg-[#101216] p-4 text-sm font-semibold text-white">
-                          <label htmlFor="studio-model-name">Name</label>
-                          <span className="text-xs font-normal leading-5 text-white/52">Give your model a name so you can easily identify it later.</span>
+                          <label htmlFor="studio-model-name">{t(spanishXby, "Name", "Nombre")}</label>
+                          <span className="text-xs font-normal leading-5 text-white/52">{t(spanishXby, "Give your model a name so you can easily identify it later.", "Pon un nombre al modelo para identificarlo facilmente despues.")}</span>
                           <input
                             autoComplete="off"
                             className="relative z-10 rounded-[10px] border border-white/10 bg-[#05070b] px-3 py-3 text-sm font-normal text-white outline-none transition placeholder:text-white/32 focus:border-[#ff4aa2]/70"
                             id="studio-model-name"
                             onChange={(event) => setStudioModelName(event.target.value)}
-                            placeholder={studioTrainingMode === "couple" ? "e.g. Natalie and Jack Photos" : "e.g. Natalie Photos"}
+                            placeholder={studioTrainingMode === "couple" ? t(spanishXby, "e.g. Natalie and Jack Photos", "p. ej. Fotos de Natalia y Jack") : t(spanishXby, "e.g. Natalie Photos", "p. ej. Fotos de Natalia")}
                             type="text"
                             value={studioModelName}
                           />
@@ -1220,7 +1928,7 @@ export function CustomerWorkspaceShell({
                         <div className="grid gap-3 rounded-[14px] border border-white/12 bg-[#101216] p-4">
                           <div className="grid gap-4 sm:grid-cols-2">
                             <div>
-                              <p className="text-sm font-semibold">{studioTrainingMode === "couple" ? "Your Gender" : "Subject Gender"}</p>
+                              <p className="text-sm font-semibold">{studioTrainingMode === "couple" ? t(spanishXby, "Your Gender", "Tu genero") : t(spanishXby, "Subject Gender", "Genero del sujeto")}</p>
                               <div className="mt-3 grid grid-cols-3 gap-2">
                                 {studioGenderOptions.map((option) => {
                                   const Icon = option.icon;
@@ -1235,7 +1943,7 @@ export function CustomerWorkspaceShell({
                                       type="button"
                                     >
                                       <Icon className="h-5 w-5" strokeWidth={1.8} />
-                                      <span>{option.label}</span>
+                                      <span>{studioGenderLabel(option.id, spanishXby)}</span>
                                     </button>
                                   );
                                 })}
@@ -1243,7 +1951,7 @@ export function CustomerWorkspaceShell({
                             </div>
                             {studioTrainingMode === "couple" ? (
                               <div>
-                                <p className="text-sm font-semibold">Partner Gender</p>
+                                <p className="text-sm font-semibold">{t(spanishXby, "Partner Gender", "Genero de la pareja")}</p>
                                 <div className="mt-3 grid grid-cols-3 gap-2">
                                   {studioGenderOptions.map((option) => {
                                     const Icon = option.icon;
@@ -1258,7 +1966,7 @@ export function CustomerWorkspaceShell({
                                         type="button"
                                       >
                                         <Icon className="h-5 w-5" strokeWidth={1.8} />
-                                        <span>{option.label}</span>
+                                        <span>{studioGenderLabel(option.id, spanishXby)}</span>
                                       </button>
                                     );
                                   })}
@@ -1271,10 +1979,10 @@ export function CustomerWorkspaceShell({
                         <div className="grid gap-3 rounded-[14px] border border-white/12 bg-[#101216] p-4">
                           {(studioTrainingMode === "couple"
                             ? [
-                                { id: "primary" as const, title: "Your Samples", body: "Upload photos for the primary person." },
-                                { id: "partner" as const, title: "Partner Samples", body: "Upload photos for the partner person." }
+                                { id: "primary" as const, title: t(spanishXby, "Your Samples", "Tus muestras"), body: t(spanishXby, "Upload photos for the primary person.", "Sube fotos de la persona principal.") },
+                                { id: "partner" as const, title: t(spanishXby, "Partner Samples", "Muestras de la pareja"), body: t(spanishXby, "Upload photos for the partner person.", "Sube fotos de la pareja.") }
                               ]
-                            : [{ id: "primary" as const, title: "Your Samples", body: "Upload photos for this private model." }]
+                            : [{ id: "primary" as const, title: t(spanishXby, "Your Samples", "Tus muestras"), body: t(spanishXby, "Upload photos for this private model.", "Sube fotos para este modelo privado.") }]
                           ).map((group) => {
                             const selectedIds = group.id === "partner" ? partnerSampleIds : primarySampleIds;
                             const groupAssets = groupSamplesFor(group.id);
@@ -1286,7 +1994,7 @@ export function CustomerWorkspaceShell({
                                   <div>
                                     <p className="text-sm font-semibold">{group.title}</p>
                                     <p className="mt-1 text-xs leading-5 text-white/52">
-                                      {group.body} {selectedGroupAssets.length} selected. Tap a photo to choose samples, then delete selected if needed.
+                                      {group.body} {spanishXby ? `${selectedGroupAssets.length} seleccionadas. Toca una foto para elegir muestras y elimina las seleccionadas si hace falta.` : `${selectedGroupAssets.length} selected. Tap a photo to choose samples, then delete selected if needed.`}
                                     </p>
                                   </div>
                                   <div className="flex shrink-0 gap-2">
@@ -1297,7 +2005,7 @@ export function CustomerWorkspaceShell({
                                         onClick={() => requestSampleDelete(selectedGroupAssets, group.title)}
                                         type="button"
                                       >
-                                        {remoteDeleting ? "Deleting" : selectedGroupAssets.length ? "Delete selected" : "Select to delete"}
+                                        {remoteDeleting ? t(spanishXby, "Deleting", "Eliminando") : selectedGroupAssets.length ? t(spanishXby, "Delete selected", "Eliminar seleccionadas") : t(spanishXby, "Select to delete", "Selecciona para eliminar")}
                                       </button>
                                     ) : null}
                                     <button
@@ -1306,7 +2014,7 @@ export function CustomerWorkspaceShell({
                                       onClick={() => openSidebarSamplePicker(group.id)}
                                       type="button"
                                     >
-                                      {uploadingSampleTarget === group.id ? "Uploading" : "Upload"}
+                                      {uploadingSampleTarget === group.id ? t(spanishXby, "Uploading", "Subiendo") : t(spanishXby, "Upload", "Subir")}
                                     </button>
                                   </div>
                                 </div>
@@ -1327,10 +2035,10 @@ export function CustomerWorkspaceShell({
                                           className="block w-full text-left disabled:cursor-not-allowed"
                                           disabled={!selectable}
                                           onClick={() => toggleSampleSelection(group.id, asset)}
-                                          title={selected ? "Selected for this request" : "Select this sample"}
+                                          title={selected ? t(spanishXby, "Selected for this request", "Seleccionada para esta solicitud") : t(spanishXby, "Select this sample", "Seleccionar esta muestra")}
                                           type="button"
                                         >
-                                          <img alt={asset.label} className={`aspect-square w-full object-cover transition group-hover/sample:scale-[1.03] ${selected ? "brightness-105" : "opacity-72"}`} src={asset.previewUrl} />
+                                          <img alt={uploadedSampleLabel(asset, group.id)} className={`aspect-square w-full object-cover transition group-hover/sample:scale-[1.03] ${selected ? "brightness-105" : "opacity-72"}`} src={asset.previewUrl} />
                                           <span className={`absolute left-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full border text-white shadow-[0_8px_22px_-14px_rgba(0,0,0,0.8)] ${
                                             selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#051016]" : "border-white/45 bg-black/56"
                                           }`}>
@@ -1348,13 +2056,13 @@ export function CustomerWorkspaceShell({
                                         <span className={`absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                                           selected ? "bg-[#31d4ff] text-[#041014]" : "bg-black/58 text-white/64"
                                         }`}>
-                                          {selected ? "Selected" : "Tap to select"}
+                                          {selected ? t(spanishXby, "Selected", "Seleccionada") : t(spanishXby, "Tap to select", "Toca para seleccionar")}
                                         </span>
                                       {asset.localStatus === "uploading" ? (
-                                        <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">Uploading</span>
+                                        <span className="absolute inset-0 grid place-items-center bg-black/52 text-[11px] font-semibold text-white">{t(spanishXby, "Uploading", "Subiendo")}</span>
                                       ) : null}
                                       {asset.localStatus === "failed" ? (
-                                        <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">Failed</span>
+                                        <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">{t(spanishXby, "Failed", "Fallida")}</span>
                                       ) : null}
                                       </div>
                                     );
@@ -1365,7 +2073,7 @@ export function CustomerWorkspaceShell({
                                       onClick={() => openSidebarSamplePicker(group.id)}
                                       type="button"
                                     >
-                                      Click Upload to select image files.
+                                      {t(spanishXby, "Click Upload to select image files.", "Haz clic en Subir para seleccionar archivos de imagen.")}
                                     </button>
                                   ) : null}
                                 </div>
@@ -1389,35 +2097,34 @@ export function CustomerWorkspaceShell({
                             disabled={!primarySampleIds.length && !partnerSampleIds.length}
                             onClick={() => {
                               setAppliedOperationContext({
-                                action: isAidreamcapes ? "Travel model training" : "AI model training",
+                                action: isAidreamcapes ? t(spanishXby, "Travel model training", "Entrenamiento de modelo de viaje") : t(spanishXby, "AI model training", "Entrenamiento de modelo IA"),
                                 note: studioModelName.trim() || undefined,
-                                source: "Create New AI Model"
+                                source: t(spanishXby, "Create New AI Model", "Crear nuevo modelo IA")
                               });
+                              setPreferredToolId(undefined);
                               setPreferredCreateMode("theme");
                               setPreferredCreateModeRequest((current) => current + 1);
                               choosePanel("create", "step-create");
                             }}
                             type="button"
                           >
-                            Train Model ({studioTrainingMode === "couple" ? 100 : 50} credits)
+                            {t(spanishXby, "Train Model", "Entrenar modelo")} ({studioTrainingMode === "couple" ? 100 : 50} {t(spanishXby, "credits", "creditos")})
                           </button>
                         </div>
                       </div>
-                    ) : (
+                    ) : section.id === "video" ? renderVideoFrameSidebar() : (
                       <div className="grid gap-3 pb-5" id={`studio-console-${section.id}`}>
                         <div className="rounded-[14px] border border-white/12 bg-[#101216] p-4">
                           <p className="text-sm font-semibold">{section.label}</p>
                           <p className="mt-2 text-xs leading-5 text-white/52">
-                            Use the main window to select a package or tool, then return here for model setup and sample maintenance.
+                            {t(spanishXby, "Use the main window to select a package or tool, then return here for model setup and sample maintenance.", "Usa la ventana principal para elegir un paquete o herramienta y vuelve aqui para configurar el modelo y mantener muestras.")}
                           </p>
                           <button
                             className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-white/12 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
-                            onClick={() => {
-                              choosePanel(section.panel, section.anchor);
-                            }}
+                            onClick={() => chooseStudioConsoleSection(section)}
                             type="button"
                           >
-                            Open workspace
+                            {t(spanishXby, "Open workspace", "Abrir espacio")}
                             <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
                           </button>
                         </div>
@@ -1433,7 +2140,20 @@ export function CustomerWorkspaceShell({
         <section className="min-w-0 bg-[#050506]">
           <div className="border-b border-white/10 px-5 py-4 xl:px-8">
             <div className="flex flex-wrap items-center gap-3">
-                  {tabItems.map((tab) => (
+              {showVideoStep ? videoTabItems.map((tab) => (
+                <button
+                  className={`inline-flex min-h-10 items-center justify-center rounded-[10px] px-4 text-sm font-semibold transition ${
+                    videoWorkspaceTab === tab.id
+                      ? "bg-[#2f6fed] text-white"
+                      : "bg-[#1d2633] text-white/62 hover:bg-[#283345] hover:text-white"
+                  }`}
+                  key={tab.id}
+                  onClick={() => chooseVideoWorkspaceTab(tab.id)}
+                  type="button"
+                >
+                  {tab.label}
+                </button>
+              )) : tabItems.map((tab) => (
                 <button
                   className={`inline-flex min-h-10 items-center justify-center rounded-[10px] px-4 text-sm font-semibold transition ${
                     resourceTab === tab.id && (activePanel === "overview" || tab.id === "packages")
@@ -1443,6 +2163,7 @@ export function CustomerWorkspaceShell({
                   key={tab.id}
                   onClick={() => {
                     if (tab.id === "packages") {
+                      setPreferredToolId(undefined);
                       setPreferredCreateMode("theme");
                       setPreferredCreateModeRequest((current) => current + 1);
                       setResourceTab("packages");
@@ -1460,9 +2181,9 @@ export function CustomerWorkspaceShell({
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-sm text-white/54">
                 <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-semibold text-white/70">
-                  Credits: {customer.balance.available}
+                  {t(spanishXby, "Credits", "Creditos")}: {workspaceCustomer.balance.available}
                 </span>
-                <span>{resourceTitleByTab[resourceTab]}</span>
+                <span>{showVideoStep ? t(spanishXby, "Image to video workspace", "Espacio de imagen a video") : resourceTitleByTab[resourceTab]}</span>
               </div>
             </div>
           </div>
@@ -1476,7 +2197,7 @@ export function CustomerWorkspaceShell({
                   onClick={() => setWorkspaceNotice("")}
                   type="button"
                 >
-                  Dismiss
+                  {t(spanishXby, "Dismiss", "Cerrar")}
                 </button>
               </div>
             ) : null}
@@ -1485,28 +2206,30 @@ export function CustomerWorkspaceShell({
               <section className="scroll-mt-28 rounded-[22px] border border-white/10 bg-[#0c0f16] p-4 shadow-[0_24px_80px_-62px_rgba(0,0,0,0.92)] md:p-5" id="step-upload">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">Step 01</p>
-                    <h2 className="mt-2 text-xl font-semibold">Upload selfies</h2>
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{t(spanishXby, "Step 01", "Paso 01")}</p>
+                    <h2 className="mt-2 text-xl font-semibold">{t(spanishXby, "Upload selfies", "Subir selfies")}</h2>
                     <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
-                      Upload private selfies or reference images for the selected AI request. These files stay in your signed-in workspace.
+                      {t(spanishXby, "Upload private selfies or reference images for the selected AI request. These files stay in your signed-in workspace.", "Sube selfies privados o imagenes de referencia para la solicitud IA seleccionada. Estos archivos quedan en tu espacio privado con sesion iniciada.")}
                     </p>
                   </div>
                   <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58">
-                    {sourceAssets.length} private photos
+                    {sourceAssets.length} {t(spanishXby, "private photos", "fotos privadas")}
                   </span>
                 </div>
-                {runtimeIsInitializing ? <WorkspaceInlineLoading label="Loading your private uploads in this panel." /> : null}
+                {runtimeIsInitializing ? <WorkspaceInlineLoading label={t(spanishXby, "Loading your private uploads in this panel.", "Cargando tus subidas privadas en este panel.")} /> : null}
                 {runtimeState.status === "error" ? (
                   <div className="rounded-[18px] border border-dashed border-white/12 bg-white/[0.035] p-4 text-sm text-white/64">
-                    Workspace activity could not load. You can refresh the page or open your account center.
+                    {t(spanishXby, "Workspace activity could not load. You can refresh the page or open your account center.", "No se pudo cargar la actividad del espacio. Actualiza la pagina o abre tu cuenta.")}
                   </div>
                 ) : null}
                 <div className={runtimeIsInitializing ? "mt-4" : undefined}>
-                  <AssetsPanel assets={hydratedAssets} customer={customer} onContinueToCreate={() => choosePanel("create", "step-create")} preferProvidedAssets siteId={site.id} tone="dark" />
+                  <AssetsPanel assets={hydratedAssets} customer={workspaceCustomer} onContinueToCreate={() => choosePanel("create", "step-create")} preferProvidedAssets siteId={site.id} tone="dark" />
                 </div>
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.035] p-4">
                   <p className="text-sm leading-6 text-white/58">
-                    {sourceAssets.length ? "Your private photos are ready. Continue to choose a package or tool." : "You can continue without a minimum photo count, or upload samples for stronger results."}
+                    {sourceAssets.length
+                      ? t(spanishXby, "Your private photos are ready. Continue to choose a package or tool.", "Tus fotos privadas estan listas. Continua para elegir un paquete o herramienta.")
+                      : t(spanishXby, "Upload at least 1 private photo before choosing a package or tool.", "Sube al menos 1 foto privada antes de elegir un paquete o herramienta.")}
                   </p>
                   <button
                     className="rounded-full border border-white/12 bg-white px-5 py-2.5 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45"
@@ -1514,10 +2237,242 @@ export function CustomerWorkspaceShell({
                     onClick={() => choosePanel("create", "step-create")}
                     type="button"
                   >
-                    Choose package or tool
+                    {t(spanishXby, "Choose package or tool", "Elegir paquete o herramienta")}
                   </button>
                 </div>
               </section>
+              ) : null}
+
+              {showVideoStep && videoWorkspaceTab !== "videos" ? (
+                <CustomerVideoWorkspace
+                  customer={workspaceCustomer}
+                  onJobCreated={showVideoJobStatus}
+                  onOpenFrameManager={focusVideoFrameManager}
+                  readyFrameIds={readySelectedVideoFrameIds}
+                  selectedFrameIds={selectedVideoFrameIds}
+                  setSelectedFrameIds={setSelectedVideoFrameIds}
+                  siteId={site.id}
+                  spanish={spanishXby}
+                  subscriptionStatus={subscriptionStatus}
+                />
+              ) : null}
+
+              {showVideoStep && videoWorkspaceTab === "videos" ? (
+                <section className="scroll-mt-28 rounded-[22px] border border-white/10 bg-[#0c0f16] p-4 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.92)] md:p-5" id="video-workspace-videos">
+                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{t(spanishXby, "Videos", "Videos")}</p>
+                      <h2 className="mt-2 text-lg font-semibold">{t(spanishXby, "Generated video workspace", "Espacio de videos generados")}</h2>
+                      <p className="mt-1 text-xs text-white/46">
+                        {spanishXby
+                          ? `${activeVideoJobs} trabajos activos · ${failedVideoJobs} requieren atencion · ${videoResourceAssets.length} videos generados`
+                          : `${activeVideoJobs} active jobs · ${failedVideoJobs} need attention · ${videoResourceAssets.length} generated videos`}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        className="rounded-[8px] border border-white/12 bg-white/[0.05] px-3 py-2 text-xs font-semibold text-white/66 hover:bg-white/[0.1] hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+                        disabled={runtimeIsLoading || manualRefreshPending}
+                        onClick={requestWorkspaceRefresh}
+                        type="button"
+                      >
+                        {runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Refreshing...", "Actualizando...") : t(spanishXby, "Refresh status", "Actualizar estado")}
+                      </button>
+                      <button
+                        className="rounded-[8px] bg-[#2f6fed] px-3 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
+                        onClick={() => chooseVideoWorkspaceTab("generate")}
+                        type="button"
+                      >
+                        {t(spanishXby, "Create video", "Crear video")}
+                      </button>
+                    </div>
+                  </div>
+                  <p className="min-h-5 pt-2 text-right text-xs text-white/40" role="status">
+                    {runtimeRefreshMessage || (runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Refreshing status...", "Actualizando estado...") : "")}
+                  </p>
+
+                  {runtimeIsInitializing && !videoResourceAssets.length ? (
+                    <div className="py-5"><WorkspaceInlineLoading label={t(spanishXby, "Loading video workspace.", "Cargando espacio de video.")} /></div>
+                  ) : null}
+
+                  {visibleVideoStatusJobs.length ? (
+                    <div className="grid gap-3 border-b border-white/8 py-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Video request progress", "Progreso de video")}</p>
+                        <button
+                          className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-white/52 transition hover:bg-white/[0.07] hover:text-white/78 disabled:cursor-not-allowed disabled:opacity-45"
+                          disabled={runtimeIsLoading || manualRefreshPending}
+                          onClick={requestWorkspaceRefresh}
+                          type="button"
+                        >
+                          {runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
+                        </button>
+                      </div>
+                      <div className="grid gap-3 lg:grid-cols-2">
+                        {visibleVideoStatusJobs.map((job) => {
+                          const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
+                          const slots = workspaceJobOutputSlots(job, outputAssets);
+                          const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
+                          const videoPosterUrl = videoPosterUrlForJob(job);
+                          return (
+                            <div
+                              className={`rounded-[14px] border p-4 ${
+                                failed ? "border-rose-400/22 bg-rose-500/10" : "border-amber-300/18 bg-amber-300/8"
+                              }`}
+                              key={job.id}
+                              role={failed ? "alert" : "status"}
+                            >
+                              <div className="flex flex-wrap items-start justify-between gap-3">
+                                <div className="min-w-0">
+                                  <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby)}>{workspaceJobTitle(job, spanishXby)}</p>
+                                  <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby)}</p>
+                                </div>
+                                <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
+                                  {workspaceJobStatusBadge(job, slots)}
+                                </span>
+                              </div>
+                              <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                                {slots.map((slot) => {
+                                  const slotSucceeded = slot.status === "succeeded";
+                                  const slotFailed = slot.status === "failed";
+                                  const slotVideo = slot.mimeType?.startsWith("video/");
+                                  const slotStorageKey = slot.storageKey;
+                                  const slotAsset = slotStorageKey
+                                    ? outputAssets.find((asset) => asset.storageKey && normalizedWorkspaceStorageKey(asset.storageKey) === normalizedWorkspaceStorageKey(slotStorageKey))
+                                    : undefined;
+                                  const slotAssetCopy = slotAsset ? outputCopyForAsset(slotAsset) : undefined;
+                                  const slotMediaLabel = slotAsset
+                                    ? generatedAssetLabel(slotAsset, slotAssetCopy)
+                                    : `${workspaceJobTitle(job, false)} ${slotVideo ? "video" : "image"} ${slot.index}`;
+                                  const slotProgress = workspaceSlotProgress(slot);
+                                  const slotErrorText = slot.error ? workspaceGenerationErrorText(slot.error, spanishXby) : "";
+                                  return (
+                                    <div
+                                      className={`overflow-hidden rounded-[10px] border ${
+                                        slotSucceeded
+                                          ? "border-emerald-300/24 bg-emerald-300/8"
+                                          : slotFailed
+                                            ? "border-rose-300/24 bg-rose-300/8"
+                                            : "border-white/10 bg-white/[0.035]"
+                                      }`}
+                                      key={`${job.id}_${slot.index}`}
+                                    >
+                                      {slot.storageKey ? (
+                                        slotVideo ? (
+                                          <button
+                                            aria-label={slotMediaLabel}
+                                            className="group/video relative block w-full bg-black text-left disabled:cursor-default"
+                                            disabled={!slotAsset}
+                                            onClick={() => {
+                                              if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
+                                            }}
+                                            title={slotMediaLabel}
+                                            type="button"
+                                          >
+                                            <video
+                                              aria-label={slotMediaLabel}
+                                              className="aspect-video w-full bg-black object-contain"
+                                              autoPlay
+                                              loop
+                                              muted
+                                              poster={videoPosterUrl}
+                                              playsInline
+                                              preload="auto"
+                                              src={workspaceSlotPreviewUrl(slot.storageKey)}
+                                              title={slotMediaLabel}
+                                            />
+                                            {slotAsset ? (
+                                              <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
+                                                <Eye className="h-3 w-3" strokeWidth={1.8} />
+                                                {t(spanishXby, "Open preview", "Abrir vista previa")}
+                                              </span>
+                                            ) : null}
+                                          </button>
+                                        ) : (
+                                          <img
+                                            alt={slotMediaLabel}
+                                            className="aspect-[4/3] w-full object-cover"
+                                            src={workspaceSlotPreviewUrl(slot.storageKey)}
+                                          />
+                                        )
+                                      ) : (
+                                        <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
+                                          <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
+                                            {workspaceSlotProgressText(slot, spanishXby)}
+                                          </span>
+                                        </div>
+                                      )}
+                                      <div className="flex items-center justify-between gap-2 px-3 py-2">
+                                        <span className="text-[11px] font-semibold text-white/74">{slotVideo ? "Video" : t(spanishXby, "Image", "Imagen")} {slot.index}</span>
+                                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                                          slotSucceeded
+                                            ? "bg-emerald-300/12 text-emerald-100"
+                                            : slotFailed
+                                              ? "bg-rose-300/12 text-rose-100"
+                                              : "bg-white/8 text-white/48"
+                                        }`}>
+                                          {slotLabel(slot, spanishXby)}
+                                        </span>
+                                      </div>
+                                      <div className="px-3 pb-3">
+                                        <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                                          <div
+                                            className={`h-full rounded-full transition-all ${
+                                              slotFailed
+                                                ? "bg-rose-300"
+                                                : slotSucceeded
+                                                  ? "bg-emerald-300"
+                                                  : "bg-[#31d4ff]"
+                                            }`}
+                                            style={{ width: `${slotProgress}%` }}
+                                          />
+                                        </div>
+                                        <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
+                                          <span className="truncate">{workspaceSlotProgressText(slot, spanishXby)}</span>
+                                          <span className="shrink-0">{slotFailed ? t(spanishXby, "Stopped", "Detenido") : `${slotProgress}%`}</span>
+                                        </div>
+                                        {slotFailed && slotErrorText ? (
+                                          <p className="mt-1 truncate text-[10px] text-rose-100/50" title={slotErrorText}>{slotErrorText}</p>
+                                        ) : null}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
+                                <span>{workspaceSlotSummary(slots, spanishXby)}</span>
+                                <span>{t(spanishXby, "Updated", "Actualizado")} {workspaceJobTime(job.updatedAt)}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {videoResourceAssets.length ? (
+                    <div className="grid auto-rows-fr gap-4 py-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                      {videoResourceAssets.slice(0, 16).map((asset) => renderResourceAssetCard(asset))}
+                    </div>
+                  ) : null}
+
+                  {!videoResourceAssets.length && !runtimeIsInitializing ? (
+                    <div className="grid min-h-[360px] place-items-center rounded-[12px] border border-white/8 bg-black/18">
+                      <div className="max-w-md text-center">
+                        <p className="text-base font-semibold text-white/84">{t(spanishXby, "No generated videos yet", "Aun no hay videos generados")}</p>
+                        <p className="mt-2 text-sm leading-6 text-white/42">{t(spanishXby, "Started video requests and finished MP4 files will appear in this tab.", "Las solicitudes de video y los MP4 terminados apareceran en esta pestana.")}</p>
+                        <button
+                          className="mt-5 rounded-[8px] bg-[#2f6fed] px-4 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
+                          onClick={() => chooseVideoWorkspaceTab("generate")}
+                          type="button"
+                        >
+                          {t(spanishXby, "Create video", "Crear video")}
+                        </button>
+                      </div>
+                    </div>
+                  ) : null}
+                </section>
               ) : null}
 
               {showCreateStep ? (
@@ -1528,19 +2483,19 @@ export function CustomerWorkspaceShell({
                       <LayoutGrid className="h-5 w-5" strokeWidth={1.8} />
                     </span>
                     <div>
-                      <h2 className="text-base font-semibold">Start your AI photoshoot</h2>
-                      <p className="mt-1 text-xs text-white/50">Choose a package, upload selfies, confirm credits, then start your private request.</p>
+                      <h2 className="text-base font-semibold">{t(spanishXby, "Start your AI photoshoot", "Iniciar sesion de fotos IA")}</h2>
+                      <p className="mt-1 text-xs text-white/50">{t(spanishXby, "Choose a package, upload selfies, confirm credits, then start your private request.", "Elige un paquete, sube selfies, confirma creditos e inicia tu solicitud privada.")}</p>
                     </div>
                   </div>
                   <span className="hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58 sm:inline-flex">
-                    {customer.balance.available} credits
+                    {workspaceCustomer.balance.available} {t(spanishXby, "credits", "creditos")}
                   </span>
                 </div>
                 <div className="p-4 md:p-5">
                   <JobCreateForm
                     assets={hydratedAssets}
                     creativePacks={creativePacks}
-                    customer={customer}
+                    customer={workspaceCustomer}
                     customerModels={customerModels}
                     externalPartnerAssetIds={readyPartnerSampleIds}
                     externalPrimaryAssetIds={readyPrimarySampleIds}
@@ -1550,12 +2505,14 @@ export function CustomerWorkspaceShell({
                     operationContext={appliedOperationContext}
                     preferredMode={preferredCreateMode}
                     preferredModeRequest={preferredCreateModeRequest}
+                    preferredToolId={preferredToolId}
                     siteAiApps={siteAiApps}
                     siteId={site.id}
                     siteSlug={site.slug}
                     subscriptionStatus={subscriptionStatus}
                     trainingMode={studioTrainingMode}
-                    onJobCreated={showJobStatus}
+                    locale={spanishXby ? "es" : "en"}
+                    onJobCreated={(jobId, feedback) => showJobStatus(jobId, "all", feedback)}
                     onContinueToSources={() => choosePanel("create", "source-photos")}
                     onOpenUploadManager={() => choosePanel("upload", "step-upload")}
                     onReviewCurrentRequest={showCurrentRequestReview}
@@ -1564,16 +2521,6 @@ export function CustomerWorkspaceShell({
                   />
                 </div>
               </section>
-              ) : null}
-
-              {showVideoStep ? (
-                <CustomerVideoWorkspace
-                  assets={hydratedAssets}
-                  customer={customer}
-                  onJobCreated={showJobStatus}
-                  siteId={site.id}
-                  subscriptionStatus={subscriptionStatus}
-                />
               ) : null}
 
               {showReviewStep ? (
@@ -1585,7 +2532,9 @@ export function CustomerWorkspaceShell({
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/6 px-2 pb-4">
                   <div>
                     <h2 className="text-lg font-semibold">{resourceTitleByTab[resourceTab]}</h2>
-                    <p className="mt-1 text-xs text-white/42">{activeJobs} active jobs · {failedJobs} need attention · {visibleResourceAssets.length} generated items</p>
+                    <p className="mt-1 text-xs text-white/42">
+                      {spanishXby ? `${activeJobs} trabajos activos · ${failedJobs} requieren atencion · ${visibleResourceAssets.length} recursos generados` : `${activeJobs} active jobs · ${failedJobs} need attention · ${visibleResourceAssets.length} generated items`}
+                    </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     <button
@@ -1594,11 +2543,12 @@ export function CustomerWorkspaceShell({
                       onClick={requestWorkspaceRefresh}
                       type="button"
                     >
-                      {runtimeIsLoading || manualRefreshPending ? "Refreshing..." : "Refresh status"}
+                      {runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Refreshing...", "Actualizando...") : t(spanishXby, "Refresh status", "Actualizar estado")}
                     </button>
                     <button
                       className="rounded-[8px] bg-[#2f6fed] px-3 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
                       onClick={() => {
+                        setPreferredToolId(undefined);
                         setPreferredCreateMode("theme");
                         setPreferredCreateModeRequest((current) => current + 1);
                         setResourceTab("packages");
@@ -1606,29 +2556,29 @@ export function CustomerWorkspaceShell({
                       }}
                       type="button"
                     >
-                      Pick Package
+                      {t(spanishXby, "Pick Package", "Elegir paquete")}
                     </button>
                   </div>
                 </div>
                 <p className="min-h-5 px-2 pt-2 text-right text-xs text-white/40" role="status">
-                  {runtimeRefreshMessage || (runtimeIsLoading || manualRefreshPending ? "Refreshing status..." : "")}
+                  {runtimeRefreshMessage || (runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Refreshing status...", "Actualizando estado...") : "")}
                 </p>
 
                 {runtimeIsInitializing && !visibleResourceAssets.length ? (
-                  <div className="p-5"><WorkspaceInlineLoading label="Loading workspace resources." /></div>
+                  <div className="p-5"><WorkspaceInlineLoading label={t(spanishXby, "Loading workspace resources.", "Cargando recursos del espacio.")} /></div>
                 ) : null}
 
                 {resourceTab === "all" && visibleStatusJobs.length ? (
                   <div className="grid gap-3 border-b border-white/6 py-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="text-sm font-semibold text-white/80">Request progress</p>
+                      <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Request progress", "Progreso de solicitud")}</p>
                       <button
                         className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-white/52 transition hover:bg-white/[0.07] hover:text-white/78 disabled:cursor-not-allowed disabled:opacity-45"
                         disabled={runtimeIsLoading || manualRefreshPending}
                         onClick={requestWorkspaceRefresh}
                         type="button"
                       >
-                        {runtimeIsLoading || manualRefreshPending ? "Checking..." : "Check now"}
+                        {runtimeIsLoading || manualRefreshPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
                       </button>
                     </div>
                     <div className="grid gap-3 lg:grid-cols-2">
@@ -1636,6 +2586,7 @@ export function CustomerWorkspaceShell({
                         const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
                         const slots = workspaceJobOutputSlots(job, outputAssets);
                         const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
+                        const videoPosterUrl = videoPosterUrlForJob(job);
                         return (
                           <div
                             className={`rounded-[14px] border p-4 ${
@@ -1646,20 +2597,29 @@ export function CustomerWorkspaceShell({
                           >
                             <div className="flex flex-wrap items-start justify-between gap-3">
                               <div className="min-w-0">
-                                <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job)}>{workspaceJobTitle(job)}</p>
-                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots)}</p>
+                                <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby)}>{workspaceJobTitle(job, spanishXby)}</p>
+                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby)}</p>
                               </div>
                               <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
                                 {workspaceJobStatusBadge(job, slots)}
                               </span>
                             </div>
-                            <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job)}</p>
+                            <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
                             <div className="mt-3 grid gap-2 sm:grid-cols-2">
                               {slots.map((slot) => {
                                 const slotSucceeded = slot.status === "succeeded";
                                 const slotFailed = slot.status === "failed";
                                 const slotVideo = slot.mimeType?.startsWith("video/");
+                                const slotStorageKey = slot.storageKey;
+                                const slotAsset = slotStorageKey
+                                  ? outputAssets.find((asset) => asset.storageKey && normalizedWorkspaceStorageKey(asset.storageKey) === normalizedWorkspaceStorageKey(slotStorageKey))
+                                  : undefined;
+                                const slotAssetCopy = slotAsset ? outputCopyForAsset(slotAsset) : undefined;
+                                const slotMediaLabel = slotAsset
+                                  ? generatedAssetLabel(slotAsset, slotAssetCopy)
+                                  : `${workspaceJobTitle(job, false)} ${slotVideo ? "video" : "image"} ${slot.index}`;
                                 const slotProgress = workspaceSlotProgress(slot);
+                                const slotErrorText = slot.error ? workspaceGenerationErrorText(slot.error, spanishXby) : "";
                                 return (
                                   <div
                                     className={`overflow-hidden rounded-[10px] border ${
@@ -1673,30 +2633,51 @@ export function CustomerWorkspaceShell({
                                   >
                                     {slot.storageKey ? (
                                       slotVideo ? (
-                                        <video
-                                          className="aspect-[4/3] w-full object-cover"
-                                          controls
-                                          muted
-                                          playsInline
-                                          preload="metadata"
-                                          src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
-                                        />
+                                        <button
+                                          aria-label={slotMediaLabel}
+                                          className="group/video relative block w-full bg-black text-left disabled:cursor-default"
+                                          disabled={!slotAsset}
+                                          onClick={() => {
+                                            if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
+                                          }}
+                                          title={slotMediaLabel}
+                                          type="button"
+                                        >
+                                          <video
+                                            aria-label={slotMediaLabel}
+                                            className="aspect-video w-full bg-black object-contain"
+                                            autoPlay
+                                            loop
+                                            muted
+                                            poster={videoPosterUrl}
+                                            playsInline
+                                            preload="auto"
+                                            src={workspaceSlotPreviewUrl(slot.storageKey)}
+                                            title={slotMediaLabel}
+                                          />
+                                          {slotAsset ? (
+                                            <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
+                                              <Eye className="h-3 w-3" strokeWidth={1.8} />
+                                              {t(spanishXby, "Open preview", "Abrir vista previa")}
+                                            </span>
+                                          ) : null}
+                                        </button>
                                       ) : (
                                         <img
-                                          alt={`Output ${slot.index}`}
+                                          alt={slotMediaLabel}
                                           className="aspect-[4/3] w-full object-cover"
-                                          src={slot.previewUrl ?? workspaceSlotPreviewUrl(slot.storageKey)}
+                                          src={workspaceSlotPreviewUrl(slot.storageKey)}
                                         />
                                       )
                                     ) : (
                                       <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
                                         <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
-                                          {workspaceSlotProgressText(slot)}
+                                          {workspaceSlotProgressText(slot, spanishXby)}
                                         </span>
                                       </div>
                                     )}
                                     <div className="flex items-center justify-between gap-2 px-3 py-2">
-                                      <span className="text-[11px] font-semibold text-white/74">{slotVideo ? "Video" : "Image"} {slot.index}</span>
+                                      <span className="text-[11px] font-semibold text-white/74">{slotVideo ? "Video" : t(spanishXby, "Image", "Imagen")} {slot.index}</span>
                                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
                                         slotSucceeded
                                           ? "bg-emerald-300/12 text-emerald-100"
@@ -1704,7 +2685,7 @@ export function CustomerWorkspaceShell({
                                             ? "bg-rose-300/12 text-rose-100"
                                             : "bg-white/8 text-white/48"
                                       }`}>
-                                        {slotLabel(slot)}
+                                        {slotLabel(slot, spanishXby)}
                                       </span>
                                     </div>
                                     <div className="px-3 pb-3">
@@ -1721,11 +2702,11 @@ export function CustomerWorkspaceShell({
                                         />
                                       </div>
                                       <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
-                                        <span className="truncate">{workspaceSlotProgressText(slot)}</span>
-                                        <span className="shrink-0">{slotFailed ? "Stopped" : `${slotProgress}%`}</span>
+                                        <span className="truncate">{workspaceSlotProgressText(slot, spanishXby)}</span>
+                                        <span className="shrink-0">{slotFailed ? t(spanishXby, "Stopped", "Detenido") : `${slotProgress}%`}</span>
                                       </div>
-                                      {slotFailed && slot.error ? (
-                                        <p className="mt-1 truncate text-[10px] text-rose-100/50" title={slot.error}>{slot.error}</p>
+                                      {slotFailed && slotErrorText ? (
+                                        <p className="mt-1 truncate text-[10px] text-rose-100/50" title={slotErrorText}>{slotErrorText}</p>
                                       ) : null}
                                     </div>
                                   </div>
@@ -1733,8 +2714,8 @@ export function CustomerWorkspaceShell({
                               })}
                             </div>
                             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
-                              <span>{workspaceSlotSummary(slots)}</span>
-                              <span>Updated {workspaceJobTime(job.updatedAt)}</span>
+                              <span>{workspaceSlotSummary(slots, spanishXby)}</span>
+                              <span>{t(spanishXby, "Updated", "Actualizado")} {workspaceJobTime(job.updatedAt)}</span>
                             </div>
                           </div>
                         );
@@ -1754,21 +2735,17 @@ export function CustomerWorkspaceShell({
                     <div className="max-w-md text-center">
                       <p className="text-base font-semibold text-white/84">
                         {resourceTab === "favorites"
-                          ? "No favorite images yet"
+                          ? t(spanishXby, "No favorite images yet", "Aun no hay imagenes favoritas")
                           : resourceTab === "recent"
-                            ? "No images generated today"
-                            : resourceTab === "videos"
-                              ? "No generated videos yet"
-                              : "No generated images yet"}
+                            ? t(spanishXby, "No images generated today", "Hoy no hay imagenes generadas")
+                              : t(spanishXby, "No generated images yet", "Aun no hay imagenes generadas")}
                       </p>
                       <p className="mt-2 text-sm leading-6 text-white/42">
                         {resourceTab === "favorites"
-                          ? "Use the heart button on generated images to collect them in Favorites."
+                          ? t(spanishXby, "Use the heart button on generated images to collect them in Favorites.", "Usa el boton de corazon en las imagenes generadas para guardarlas en Favoritos.")
                           : resourceTab === "recent"
-                            ? "Recent shows only outputs created today. Older images remain available in All assets."
-                            : resourceTab === "videos"
-                              ? "Video outputs will appear here once a video request returns a video file."
-                              : "Upload source photos in the creation flow, pick a package, then finished outputs will appear here."}
+                            ? t(spanishXby, "Recent shows only outputs created today. Older images remain available in All assets.", "Reciente muestra solo resultados creados hoy. Las imagenes anteriores siguen en Todos los recursos.")
+                              : t(spanishXby, "Upload source photos in the creation flow, pick a package, then finished outputs will appear here.", "Sube fotos fuente en el flujo de creacion, elige un paquete y los resultados terminados apareceran aqui.")}
                       </p>
                       <div className="mt-5 flex flex-wrap justify-center gap-2">
                         <button
@@ -1776,11 +2753,12 @@ export function CustomerWorkspaceShell({
                           onClick={() => choosePanel("create", "source-photos")}
                           type="button"
                         >
-                          Upload samples
+                          {t(spanishXby, "Upload samples", "Subir muestras")}
                         </button>
                         <button
                           className="rounded-[8px] bg-[#2f6fed] px-4 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
                           onClick={() => {
+                            setPreferredToolId(undefined);
                             setPreferredCreateMode("theme");
                             setPreferredCreateModeRequest((current) => current + 1);
                             setResourceTab("packages");
@@ -1788,81 +2766,85 @@ export function CustomerWorkspaceShell({
                           }}
                           type="button"
                         >
-                          Pick Package
+                          {t(spanishXby, "Pick Package", "Elegir paquete")}
                         </button>
                       </div>
                     </div>
                   </div>
                 ) : null}
               </div>
-              {selectedPreviewAsset ? (
-                <div className="fixed inset-0 z-[90] grid place-items-center bg-black/82 p-4" role="dialog" aria-modal="true" aria-label="Generated asset preview">
-                  <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_260px]">
-                    <button className="absolute right-4 top-4 z-10 rounded-full border border-white/12 bg-black/40 p-2 text-white transition hover:bg-white/10" onClick={() => setSelectedPreviewAssetId(null)} type="button">
-                      <X className="h-4 w-4" strokeWidth={1.8} />
-                    </button>
-                    <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
-                      {isVideoAsset(selectedPreviewAsset) ? (
-                        <video className="max-h-[82vh] w-full object-contain" controls playsInline src={selectedPreviewAsset.previewUrl} />
-                      ) : (
-                        <img alt={selectedPreviewCopy?.title ?? selectedPreviewAsset.label} className="max-h-[82vh] w-full object-contain" src={selectedPreviewAsset.previewUrl} />
-                      )}
-                    </div>
-                    <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
-                      <div>
-                        <p className="text-xs font-semibold text-white/46">{isVideoAsset(selectedPreviewAsset) ? "Generated video" : "Generated output"}</p>
-                        <h3 className="mt-2 break-words text-lg font-semibold text-white">{selectedPreviewCopy?.title ?? selectedPreviewAsset.label}</h3>
-                        {selectedPreviewCopy?.description ? <p className="mt-2 text-sm leading-6 text-white/58">{selectedPreviewCopy.description}</p> : null}
-                        <p className="mt-2 text-xs text-white/46">{selectedPreviewIndex + 1} of {visibleResourceAssets.length}</p>
-                      </div>
-                      <div className="grid gap-2">
-                        <div className="flex gap-2">
-                          <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(-1)} type="button">
-                            <ChevronLeft className="h-4 w-4" strokeWidth={1.8} />
-                          </button>
-                          <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(1)} type="button">
-                            <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
-                          </button>
-                        </div>
-                        <button
-                          className={`inline-flex h-10 items-center justify-center gap-2 rounded-[8px] border px-3 text-xs font-semibold transition ${
-                            selectedPreviewAsset.isFavorite
-                              ? "border-[#ff7ab8]/50 bg-[#ff4aa2]/90 text-white hover:bg-[#ff62ae]"
-                              : "border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]"
-                          }`}
-                          onClick={() => void toggleAssetFavorite(selectedPreviewAsset)}
-                          type="button"
-                        >
-                          <Heart className={`h-4 w-4 ${selectedPreviewAsset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
-                          {selectedPreviewAsset.isFavorite ? "Remove favorite" : "Add favorite"}
-                        </button>
-                        <CustomerAssetDownloadButton
-                          assetId={selectedPreviewAsset.id}
-                          className="inline-flex h-10 items-center justify-center rounded-[8px] bg-[#2f6fed] px-3 text-xs font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-wait disabled:opacity-60"
-                          customerId={customer.id}
-                          label="Download"
-                          siteId={site.id}
-                        />
-                      </div>
-                    </aside>
-                  </div>
-                </div>
-              ) : null}
             </section>
               ) : null}
             </div>
           </div>
         </section>
       </main>
+      {selectedPreviewAsset ? (
+        <div className="fixed inset-0 z-[90] grid place-items-center bg-black/82 p-4" role="dialog" aria-modal="true" aria-label={t(spanishXby, "Generated asset preview", "Vista previa de recurso generado")}>
+          <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_260px]">
+            <button className="absolute right-4 top-4 z-10 rounded-full border border-white/12 bg-black/40 p-2 text-white transition hover:bg-white/10" onClick={() => setSelectedPreviewAssetId(null)} type="button">
+              <X className="h-4 w-4" strokeWidth={1.8} />
+            </button>
+            <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
+              {isVideoAsset(selectedPreviewAsset) ? (
+                <video aria-label={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" controls playsInline src={workspaceAssetPreviewUrl(selectedPreviewAsset)} title={selectedPreviewLabel} />
+              ) : (
+                <img alt={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" src={workspaceAssetPreviewUrl(selectedPreviewAsset)} />
+              )}
+            </div>
+            <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
+              <div>
+                <p className="text-xs font-semibold text-white/46">{isVideoAsset(selectedPreviewAsset) ? t(spanishXby, "Generated video", "Video generado") : t(spanishXby, "Generated output", "Resultado generado")}</p>
+                <h3 className="mt-2 break-words text-lg font-semibold text-white">{selectedPreviewCopy?.title ?? selectedPreviewAsset.label}</h3>
+                {selectedPreviewCopy?.description ? <p className="mt-2 text-sm leading-6 text-white/58">{selectedPreviewCopy.description}</p> : null}
+                <p className="mt-2 text-xs text-white/46">{spanishXby ? `${selectedPreviewIndex + 1} de ${previewableAssets.length}` : `${selectedPreviewIndex + 1} of ${previewableAssets.length}`}</p>
+              </div>
+              <div className="grid gap-2">
+                <div className="flex gap-2">
+                  <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(-1)} type="button">
+                    <ChevronLeft className="h-4 w-4" strokeWidth={1.8} />
+                  </button>
+                  <button className="inline-flex h-10 flex-1 items-center justify-center rounded-[8px] border border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]" onClick={() => movePreview(1)} type="button">
+                    <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+                  </button>
+                </div>
+                <button
+                  className={`inline-flex h-10 items-center justify-center gap-2 rounded-[8px] border px-3 text-xs font-semibold transition ${
+                    selectedPreviewAsset.isFavorite
+                      ? "border-[#ff7ab8]/50 bg-[#ff4aa2]/90 text-white hover:bg-[#ff62ae]"
+                      : "border-white/12 bg-white/[0.06] text-white hover:bg-white/[0.1]"
+                  }`}
+                  onClick={() => void toggleAssetFavorite(selectedPreviewAsset)}
+                  type="button"
+                >
+                  <Heart className={`h-4 w-4 ${selectedPreviewAsset.isFavorite ? "fill-current" : ""}`} strokeWidth={1.8} />
+                  {selectedPreviewAsset.isFavorite ? t(spanishXby, "Remove favorite", "Quitar favorito") : t(spanishXby, "Add favorite", "Anadir favorito")}
+                </button>
+                <CustomerAssetDownloadButton
+                  assetId={selectedPreviewAsset.id}
+                  className="inline-flex h-10 items-center justify-center rounded-[8px] bg-[#2f6fed] px-3 text-xs font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-wait disabled:opacity-60"
+                  customerId={customer.id}
+                  label={t(spanishXby, "Download", "Descargar")}
+                  siteId={site.id}
+                />
+              </div>
+            </aside>
+          </div>
+        </div>
+      ) : null}
       {sampleDeleteConfirm ? (
-        <div className="fixed inset-0 z-[110] grid place-items-center bg-black/78 p-4" role="dialog" aria-modal="true" aria-label="Confirm sample deletion">
+        <div className="fixed inset-0 z-[110] grid place-items-center bg-black/78 p-4" role="dialog" aria-modal="true" aria-label={t(spanishXby, "Confirm sample deletion", "Confirmar eliminacion de muestra")}>
           <div className="w-full max-w-sm rounded-[16px] border border-white/14 bg-[#090b10] p-5 text-white shadow-[0_30px_100px_-42px_rgba(0,0,0,0.95)]">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-200/70">Confirm delete</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-200/70">{t(spanishXby, "Confirm delete", "Confirmar eliminacion")}</p>
             <h3 className="mt-2 text-lg font-semibold">
-              Delete {sampleDeleteConfirm.assets.length === 1 ? "this sample" : `${sampleDeleteConfirm.assets.length} samples`}?
+              {spanishXby
+                ? `Eliminar ${sampleDeleteConfirm.assets.length === 1 ? "esta muestra" : `${sampleDeleteConfirm.assets.length} muestras`}?`
+                : `Delete ${sampleDeleteConfirm.assets.length === 1 ? "this sample" : `${sampleDeleteConfirm.assets.length} samples`}?`}
             </h3>
             <p className="mt-2 text-sm leading-6 text-white/58">
-              This removes the selected sample{sampleDeleteConfirm.assets.length === 1 ? "" : "s"} from your private account and from {sampleDeleteConfirm.label}. This cannot be undone.
+              {spanishXby
+                ? `Esto elimina ${sampleDeleteConfirm.assets.length === 1 ? "la muestra seleccionada" : "las muestras seleccionadas"} de tu cuenta privada y de ${sampleDeleteConfirm.label}. No se puede deshacer.`
+                : `This removes the selected sample${sampleDeleteConfirm.assets.length === 1 ? "" : "s"} from your private account and from ${sampleDeleteConfirm.label}. This cannot be undone.`}
             </p>
             <div className="mt-5 flex gap-2">
               <button
@@ -1870,7 +2852,7 @@ export function CustomerWorkspaceShell({
                 onClick={() => setSampleDeleteConfirm(null)}
                 type="button"
               >
-                Cancel
+                {t(spanishXby, "Cancel", "Cancelar")}
               </button>
               <button
                 className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] border border-rose-300/25 bg-rose-500/18 px-4 text-sm font-semibold text-rose-100 transition hover:bg-rose-500/25"
@@ -1882,27 +2864,27 @@ export function CustomerWorkspaceShell({
                 type="button"
               >
                 <Trash2 className="h-4 w-4" strokeWidth={1.8} />
-                Delete
+                {t(spanishXby, "Delete", "Eliminar")}
               </button>
             </div>
           </div>
         </div>
       ) : null}
       {previewSample ? (
-        <div className="fixed inset-0 z-[95] grid place-items-center bg-black/84 p-4" role="dialog" aria-modal="true" aria-label="Uploaded sample preview">
+        <div className="fixed inset-0 z-[95] grid place-items-center bg-black/84 p-4" role="dialog" aria-modal="true" aria-label={t(spanishXby, "Uploaded sample preview", "Vista previa de muestra subida")}>
           <div className="relative grid max-h-[92vh] w-full max-w-6xl gap-3 overflow-hidden rounded-[14px] border border-white/12 bg-[#07090d] p-3 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] md:grid-cols-[minmax(0,1fr)_280px]">
             <button className="absolute right-4 top-4 z-10 rounded-full border border-white/12 bg-black/45 p-2 text-white transition hover:bg-white/10" onClick={() => setPreviewSampleId(null)} type="button">
               <X className="h-4 w-4" strokeWidth={1.8} />
             </button>
             <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
-              <img alt={previewSample.label} className="max-h-[82vh] w-full object-contain" src={previewSample.previewUrl} />
+              <img alt={uploadedSampleLabel(previewSample)} className="max-h-[82vh] w-full object-contain" src={previewSample.previewUrl} />
             </div>
             <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
               <div>
-                <p className="text-xs font-semibold text-white/46">Uploaded sample</p>
+                <p className="text-xs font-semibold text-white/46">{t(spanishXby, "Uploaded sample", "Muestra subida")}</p>
                 <h3 className="mt-2 break-words text-lg font-semibold text-white">{previewSample.label}</h3>
-                <p className="mt-2 text-xs text-white/46">{previewSampleIndex + 1} of {previewSamples.length}</p>
-                {previewSample.localStatus === "uploading" ? <p className="mt-3 rounded-[8px] border border-white/10 bg-white/[0.05] px-3 py-2 text-xs text-white/64">Upload is still finishing. Preview is available now.</p> : null}
+                <p className="mt-2 text-xs text-white/46">{spanishXby ? `${previewSampleIndex + 1} de ${previewSamples.length}` : `${previewSampleIndex + 1} of ${previewSamples.length}`}</p>
+                {previewSample.localStatus === "uploading" ? <p className="mt-3 rounded-[8px] border border-white/10 bg-white/[0.05] px-3 py-2 text-xs text-white/64">{t(spanishXby, "Upload is still finishing. Preview is available now.", "La subida aun esta terminando. La vista previa ya esta disponible.")}</p> : null}
               </div>
               <div className="grid gap-2">
                 <div className="flex gap-2">
@@ -1920,7 +2902,7 @@ export function CustomerWorkspaceShell({
                   type="button"
                 >
                   <Trash2 className="h-4 w-4" strokeWidth={1.8} />
-                  {deletingSampleId === previewSample.id ? "Deleting" : "Delete sample"}
+                  {deletingSampleId === previewSample.id ? t(spanishXby, "Deleting", "Eliminando") : t(spanishXby, "Delete sample", "Eliminar muestra")}
                 </button>
               </div>
             </aside>

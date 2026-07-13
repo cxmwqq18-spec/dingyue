@@ -5,12 +5,14 @@ import { useState } from "react";
 export function CustomerSignOutButton({
   className,
   label = "Sign out",
+  pendingLabel = "Signing out...",
   logoutHref,
   redirectHref,
   siteId
 }: {
   className: string;
   label?: string;
+  pendingLabel?: string;
   logoutHref: string;
   redirectHref: string;
   siteId: string;
@@ -32,7 +34,7 @@ export function CustomerSignOutButton({
 
   return (
     <button className={className} disabled={pending} onClick={signOut} type="button">
-      {pending ? "Signing out..." : label}
+      {pending ? pendingLabel : label}
     </button>
   );
 }

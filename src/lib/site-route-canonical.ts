@@ -17,7 +17,6 @@ export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string 
 
 export function shortPolicyPath(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
-  if (requestedPath === "/faq") return "/help";
   return requestedPath === "/policies/privacy" || requestedPath === "/policies/privacy-policy" || requestedPath === "/privacy-policy" ? "/privacy" :
     requestedPath === "/policies/terms" || requestedPath === "/policies/terms-of-service" || requestedPath === "/terms-of-service" ? "/terms" :
     requestedPath === "/policies/cookies" || requestedPath === "/cookie-policy" ? "/cookies" :
@@ -40,7 +39,8 @@ export function policyPageSlug(pathname: string): string {
 
 export function publicContentPageSlug(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
-  if (requestedPath === "/faq") return "/help";
+  if (requestedPath === "/faq" || requestedPath === "/help") return "/faq";
+  if (requestedPath === "/how-it-works") return "/workflow";
   return policyPageSlug(requestedPath);
 }
 
@@ -63,7 +63,16 @@ export function redirectPublicSitePathToCanonicalHost({
       permanentRedirect("/");
     }
     const normalizedPath = shortPolicyPath(requestedPath);
-    permanentRedirect(normalizedPath);
+    const pairedStorePath = /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)
+      ? normalizedPath === "/help"
+        ? "/faq"
+        : normalizedPath === "/how-it-works" || normalizedPath === "/#workflow"
+          ? "/workflow"
+          : normalizedPath === "/#faq"
+            ? "/faq"
+            : normalizedPath
+      : normalizedPath;
+    permanentRedirect(pairedStorePath);
   }
   return publicSlug;
 }

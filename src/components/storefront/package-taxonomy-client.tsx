@@ -19,6 +19,11 @@ function cardLinkLabel(action: string, title: string) {
   return `${action}: ${title || "this package"}`;
 }
 
+function isSpanishCard(card: PackageTaxonomyCard | null | undefined): boolean {
+  if (!card) return false;
+  return /\b(creditos?|galeria|retrato|retratos|viaje|ruta|album|paquete|fotos?|privad[oa])\b/i.test(`${card.title} ${card.description} ${card.meta} ${card.chips.join(" ")}`);
+}
+
 function slugFromHref(href: string) {
   const clean = href.split("?")[0]?.split("#")[0] ?? "";
   return clean.split("/").filter(Boolean).pop() ?? "";
@@ -59,6 +64,7 @@ export function PackageTaxonomyClient({
   }
 
   if (selected) {
+    const spanish = isSpanishCard(selected);
     const selectedPanelClass = variant === "cream"
       ? "rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] sm:p-7"
       : "rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7";
@@ -69,12 +75,12 @@ export function PackageTaxonomyClient({
     return (
       <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" data-package-taxonomy-client="ready">
         <div className={selectedPanelClass}>
-          <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Selected package</p>
+          <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>{spanish ? "Paquete seleccionado" : "Selected package"}</p>
           <h3 className={variant === "cream" ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
             {selected.title}
           </h3>
           <p className={variant === "cream" ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
-            {selected.description || "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request."}
+            {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
           </p>
           {selected.chips.length ? (
             <div className="mt-6 flex flex-wrap gap-2">
@@ -86,14 +92,14 @@ export function PackageTaxonomyClient({
             </div>
           ) : null}
           <a className={variant === "cream" ? "mt-7 inline-flex items-center gap-2 rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={selected.appHref}>
-            Start this package
+            {spanish ? "Empezar este paquete" : "Start this package"}
             <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
           </a>
         </div>
         <div className={selectedImageFrameClass}>
           <div className={`relative h-full min-h-[336px] overflow-hidden rounded-[18px] ${selectedImageBgClass}`}>
             <img
-              alt={`${selected.title} preview`}
+              alt={spanish ? `${selected.title} vista previa privada` : `${selected.title} preview`}
               className="h-full min-h-[336px] w-full object-cover"
               decoding="async"
               fetchPriority="low"
@@ -109,6 +115,7 @@ export function PackageTaxonomyClient({
   return (
     <div className="mt-10 grid auto-rows-[minmax(230px,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
       {cards.map((card, index) => {
+        const spanish = isSpanishCard(card);
         const mosaicVariant = index % 10;
         const cardSpanClass = mosaicVariant === 0
           ? "lg:col-span-7 lg:row-span-2"
@@ -139,7 +146,7 @@ export function PackageTaxonomyClient({
           : `group relative flex overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.07] text-white shadow-[0_22px_46px_-38px_rgba(0,0,0,0.82)] transition hover:-translate-y-1 hover:border-white/24 sm:col-span-1 ${cardSpanClass} ${cardHeightClass}`;
         return (
           <a
-            aria-label={cardLinkLabel("View collection", card.title)}
+            aria-label={cardLinkLabel(spanish ? "Ver coleccion" : "View collection", card.title)}
             className={cardClass}
             href={card.href}
             key={card.id}

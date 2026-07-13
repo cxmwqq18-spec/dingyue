@@ -1,5 +1,5 @@
 import "server-only";
-import { getCurrentSiteAdmin } from "@/lib/api-auth";
+import { getCurrentPlatformAdmin, getCurrentSiteAdmin } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import type { CustomerAdminAccess, PublicCustomer } from "@/lib/types";
 
@@ -22,6 +22,14 @@ export async function getCustomerAdminAccessForSite({
   siteId: string;
 }): Promise<CustomerAdminAccess> {
   const customerEmail = normalizeEmail(customer?.email);
+  const currentPlatformAdmin = await getCurrentPlatformAdmin();
+  if (currentPlatformAdmin) {
+    return {
+      canBypassBilling: true,
+      displayName: currentPlatformAdmin.platformAdmin.displayName,
+      source: "platform_admin_session"
+    };
+  }
   const currentSiteAdmin = await getCurrentSiteAdmin(siteId);
   if (currentSiteAdmin) {
     const adminEmail = normalizeEmail(currentSiteAdmin.siteAdmin.email);

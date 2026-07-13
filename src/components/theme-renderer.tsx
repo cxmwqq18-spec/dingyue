@@ -19,7 +19,7 @@ import { PartnerApplicationForm, type PartnerApplicationField } from "@/componen
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
-import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
+import { cleanHost, hostAwareSitePath, publicSiteSlug, publicSiteUrl } from "@/lib/domain-routing";
 import { shortPolicyPath } from "@/lib/site-route-canonical";
 import {
   AlertTriangle,
@@ -69,8 +69,8 @@ function publicPrefetchCandidatesForPath(path: string) {
   if (path === "/") return ["/login", "/tools", "/collections", "/pricing"];
   if (path === "/collections" || path.startsWith("/collections/")) return ["/", "/pricing", "/tools"];
   if (path === "/tools" || path.startsWith("/tools/")) return ["/", "/pricing", "/collections"];
-  if (path === "/pricing") return ["/", "/collections", "/tools", "/help"];
-  if (path === "/help") return ["/", "/collections", "/tools", "/pricing"];
+  if (path === "/pricing") return ["/", "/collections", "/tools", "/faq"];
+  if (path === "/faq" || path === "/help") return ["/", "/collections", "/tools", "/pricing"];
   return ["/", "/collections", "/tools", "/pricing"];
 }
 
@@ -85,6 +85,7 @@ import type {
   SectionBlockInstance,
   SectionInstance,
   Site,
+  SiteAiApp,
   ThemeRuntimeAlbum,
   ThemeRuntimeAsset,
   ThemePageJson,
@@ -330,7 +331,7 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
 }
 
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
-  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/help", "/search", "/cart"]);
+  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/faq", "/help", "/search", "/cart"]);
   const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
   return (semanticH1Paths.has(pagePath) || page.pageType === "article") && firstRichTextId === sectionId ? "h1" : "h2";
 }
@@ -541,9 +542,9 @@ function storefrontSectionApiPath(siteSlug: string, pagePath: string, sectionId:
   return `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?${params.toString()}`;
 }
 
-function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: string }) {
+function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo for AI travel portraits and private destination galleries", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries">
+    <svg className={className} viewBox="0 0 512 512" role="img" aria-label={ariaLabel}>
       <defs>
         <linearGradient id="aidreamcapes-logo-mark-gradient" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#fff0b8" />
@@ -566,10 +567,11 @@ function AidreamcapesLogoMark({ className = "h-full w-full" }: { className?: str
   );
 }
 
-function DreamShootsWordmark({ className = "" }: { className?: string }) {
+function DreamShootsWordmark({ className = "", label = "MyDreamShoots" }: { className?: string; label?: string }) {
   return (
-    <span aria-hidden="true" className={className} data-dreamshoot-wordmark="true">
-      {dreamShootsVisibleTitle}
+    <span aria-label={label} className={className} data-dreamshoot-wordmark="true" title={label}>
+      <span aria-hidden="true">{dreamShootsVisibleTitle}</span>
+      <span className="sr-only">{label}</span>
     </span>
   );
 }
@@ -582,8 +584,24 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const style = header ? setting(header, "style", "light") : "light";
   const sticky = header ? settingBool(header, "sticky", true) : true;
   const spanishXby = isSpanishXbySite(site);
+  const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
+  const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity);
+  const isAidreamcapes = isAidreamcapesSite(site);
   const announceEnabled = saasBool(saasHeader?.settings?.is_announce_show, false);
   const announceText = themeValueToString(saasHeader?.settings?.announce_title, "");
+  const spanishHeaderLabel = (label: string, href: string) => {
+    if (!spanishXby) return label;
+    const normalizedLabel = label.trim().toLowerCase();
+    const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
+    if (normalizedLabel === "faq" || normalizedHref === "/faq" || normalizedHref === "#faq" || normalizedHref === "/#faq") return "Preguntas";
+    if (normalizedLabel === "pricing" || normalizedHref === "/pricing") return "Precios";
+    if (normalizedLabel === "tools" || normalizedHref === "/tools") return "Herramientas";
+    if (normalizedLabel === "how it works" || normalizedHref === "/workflow" || normalizedHref === "/#workflow" || normalizedHref === "#workflow") return "Como funciona";
+    if (/browse packages|travel packages|photo packages|packages/.test(normalizedLabel) || normalizedHref === "/collections") return isAidreamcapes ? "Paquetes de viaje" : "Ver paquetes";
+    if (/workspace|workbench|studio/.test(normalizedLabel) || normalizedHref === "/app" || normalizedHref === "/app/create") return "Espacio privado";
+    if (/help center|help/.test(normalizedLabel) || normalizedHref === "/help") return "Centro de ayuda";
+    return label;
+  };
   const isWorkspaceNavLink = (label: string, href: string) => {
     const normalizedLabel = label.trim().toLowerCase();
     const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
@@ -591,19 +609,24 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   };
   const workspaceLabel = spanishXby ? "Espacio privado" : "Workspace";
   const workspaceLink = { label: workspaceLabel, href: "/app/create", block: { id: "header_nav_workspace", type: "menu_link", settings: { label: workspaceLabel, href: "/app/create" } } as SectionBlockInstance };
-  const configuredLinks = header?.blocks?.filter((block) => block.type === "menu_link").map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
+  const configuredLinks = (header?.blocks?.filter((block) => block.type === "menu_link").map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
     ?? settings.navigation.headerLinks.map((link, index) => ({
       ...link,
       block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
-    }));
-  const links = configuredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
+    }))).map((link) => ({ ...link, label: spanishHeaderLabel(link.label, link.href) }));
+  const rawLinks = configuredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
     ? configuredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: workspaceLabel, href: "/app/create" } : link)
     : [...configuredLinks, workspaceLink];
+  const seenHeaderHrefs = new Set<string>();
+  const links = rawLinks.filter((link) => {
+    if (!spanishXby) return true;
+    const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
+    if (seenHeaderHrefs.has(normalizedHref)) return false;
+    seenHeaderHrefs.add(normalizedHref);
+    return true;
+  });
   const dark = style === "dark_pills";
   const lightCommerce = style === "light_commerce";
-  const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
-  const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity);
-  const isAidreamcapes = isAidreamcapesSite(site);
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
   const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
@@ -611,7 +634,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
   const aidreamcapesToolBlocks = isAidreamcapes
     ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar", "image-to-video"].includes(toolBlockSlug(tool)))
     : configuredToolBlocks;
-  const toolMegaBlocks = dynamicToolBlocks.length || isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const rawToolMegaBlocks = dynamicToolBlocks.length || isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const toolMegaBlocks = spanishXby ? spanishToolBlocks(rawToolMegaBlocks, isAidreamcapes) : rawToolMegaBlocks;
   const showDreamShootToolsMega = !lightweight && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks);
   const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
@@ -676,6 +700,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
     : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-[#171514] bg-[#171514] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black";
   const mobileSignedInClassName = dark ? "mt-3 rounded-[18px] border border-white/12 bg-white/[0.06] p-3 text-white" : "mt-3 rounded-[18px] border border-[#e2d7ca] bg-white p-3 text-[#15171a]";
   const mobileSignOutClassName = dark ? "inline-flex w-full justify-center rounded-[14px] border border-white/14 px-4 py-3 text-sm font-semibold text-white" : "inline-flex w-full justify-center rounded-[14px] bg-[#171514] px-4 py-3 text-sm font-semibold text-white";
+  const signOutLabel = spanishXby ? "Cerrar sesion" : "Sign out";
+  const signingOutLabel = spanishXby ? "Cerrando sesion..." : "Signing out...";
   return (
     <header
       className={
@@ -715,7 +741,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
         >
           {dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
             <>
-              {isAidreamcapes ? (
+              {isAidreamcapes && !spanishXby ? (
                 <span
                   className={
                     isAidreamcapes && dark
@@ -723,7 +749,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                       : "flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"
                   }
                 >
-                  <AidreamcapesLogoMark className="h-full w-full object-contain" />
+                  <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-full w-full object-contain" />
                 </span>
               ) : logoImageUrl ? (
                 <span
@@ -765,9 +791,11 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
 	              )}
               <span className="min-w-0 shrink" title={readableBrandTitle}>
                 {isDreamShoot && !spanishXby ? (
-                  <DreamShootsWordmark className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${darkHeaderControls ? "text-white" : "text-[#171514]"}`} />
+                  <DreamShootsWordmark className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${darkHeaderControls ? "text-white" : "text-[#171514]"}`} label={readableBrandTitle} />
                 ) : (
-                  <span className={isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : "block text-lg font-semibold tracking-tight text-zinc-950"} aria-hidden={isAidreamcapes && !spanishXby ? "true" : undefined} title={readableBrandTitle}>{visualBrandTitle}</span>
+                  <span aria-label={readableBrandTitle} className={isDreamShoot && spanishXby ? "block max-w-[min(36vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : "block text-lg font-semibold tracking-tight text-zinc-950"} title={readableBrandTitle}>
+                    <span aria-hidden={isAidreamcapes && !spanishXby ? "true" : undefined}>{visualBrandTitle}</span>
+                  </span>
                 )}
                 {isDreamShoot ? <span className="sr-only">{spanishXby ? `${readableBrandTitle} paquetes de fotos con IA y galerias privadas` : "MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums"}</span> : null}
 	                {isAidreamcapes ? <span className="sr-only">{spanishXby ? `${readableBrandTitle} retratos de viaje con IA y galerias privadas` : "Aidreamcapes AI travel portraits and private galleries"}</span> : null}
@@ -840,7 +868,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                   </span>
                 </span>
               </HeaderLink>
-              <CustomerSignOutButton className={signOutClassName} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
+              <CustomerSignOutButton className={signOutClassName} label={signOutLabel} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={signingOutLabel} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
             </div>
           ) : shouldClientBootstrapCustomer ? (
             <CustomerHeaderBootstrapControls
@@ -848,6 +876,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
               dark={dark}
               loginHref={hrefFor(site, "/login")}
               logoutHref={`/api/sites/${site.id}/auth/logout`}
+              signOutLabel={signOutLabel}
+              signingOutLabel={signingOutLabel}
               signedInClassName={signedInClassName}
               signOutClassName={signOutClassName}
               siteId={site.id}
@@ -988,7 +1018,7 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                         {spanishXby ? "Cuenta" : "Account"}
                       </HeaderLink>
                     </div>
-                    <CustomerSignOutButton className={`${mobileSignOutClassName} mt-3`} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
+                    <CustomerSignOutButton className={`${mobileSignOutClassName} mt-3`} label={signOutLabel} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={signingOutLabel} redirectHref={hrefFor(site, "/login")} siteId={site.id} />
                   </div>
                 ) : shouldClientBootstrapCustomer ? (
                   <CustomerHeaderBootstrapControls
@@ -996,6 +1026,8 @@ export function ThemeGlobalHeader({ creativePacks = [], lightweight = false, run
                     dark={dark}
                     loginHref={hrefFor(site, "/login")}
                     logoutHref={`/api/sites/${site.id}/auth/logout`}
+                    signOutLabel={signOutLabel}
+                    signingOutLabel={signingOutLabel}
                     signOutClassName={mobileSignOutClassName}
                     signedInClassName={mobileSignedInClassName}
                     siteId={site.id}
@@ -1060,16 +1092,27 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const contactEmail = footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
   const salesEmail = isDreamShootFooter || isAidreamcapesFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
   const contactItems = [
-    contactAddress ? { label: "Company address", value: contactAddress, href: "" } : null,
-    contactEmail ? { label: "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
-    salesEmail ? { label: "Sales", value: salesEmail, href: `mailto:${salesEmail}` } : null
+    contactAddress ? { label: spanishXbyFooter ? "Direccion de empresa" : "Company address", value: contactAddress, href: "" } : null,
+    contactEmail ? { label: spanishXbyFooter ? "Soporte" : "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
+    salesEmail ? { label: spanishXbyFooter ? "Ventas" : "Sales", value: salesEmail, href: `mailto:${salesEmail}` } : null
   ].filter(Boolean) as Array<{ label: string; value: string; href: string }>;
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
   const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c" : "";
   const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
-  const logoAlt = footer ? setting(footer, "logoAlt", `${readableFooterTitle} heart camera logo`) : `${readableFooterTitle} logo`;
+  const defaultFooterLogoAlt = isDreamShootFooter
+    ? "MyDreamShoots heart camera logo for AI photo packages, personal models, studio tools, credits, and private gallery delivery"
+    : isAidreamcapesFooter
+      ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
+      : `${readableFooterTitle} logo`;
+  const logoAlt = spanishXbyFooter
+    ? isAidreamcapesFooter
+      ? `${readableFooterTitle} logo para retratos de viaje con IA y galerias privadas`
+      : `${readableFooterTitle} logo para paquetes de fotos con IA y galerias privadas`
+    : isDreamShootFooter || isAidreamcapesFooter
+      ? defaultFooterLogoAlt
+      : footer ? setting(footer, "logoAlt", defaultFooterLogoAlt) : defaultFooterLogoAlt;
   const footerBg = footer
     ? setting(footer, "backgroundColor", themeValueToString(saasFooter?.settings?.footer_bg_color, "var(--site-bg)"))
     : themeValueToString(saasFooter?.settings?.footer_bg_color, "var(--site-bg)");
@@ -1078,22 +1121,38 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     : themeValueToString(saasFooter?.settings?.footer_text_color, "var(--site-body)");
   const dark = isDarkColor(footerBg) || isDarkColor(themeValueToString(settings.saasSettingsCurrent?.skin_bg, settings.colors.background));
   if (lightweight) {
-    const quickLinks = [
-      { label: "Travel Packages", href: "/collections" },
-      { label: "Tools", href: "/tools" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "FAQ", href: "/faq" }
-    ];
+    const quickLinks = spanishXbyFooter
+      ? [
+          { label: isAidreamcapesFooter ? "Paquetes de viaje" : "Ver paquetes", href: "/collections" },
+          { label: "Herramientas", href: "/tools" },
+          { label: "Precios", href: "/pricing" },
+          { label: "Preguntas", href: "/faq" }
+        ]
+      : [
+          { label: "Travel Packages", href: "/collections" },
+          { label: "Tools", href: "/tools" },
+          { label: "Pricing", href: "/pricing" },
+          { label: "FAQ", href: "/faq" }
+        ];
     return (
       <footer className={dark ? "border-t border-white/8 px-5 py-8" : "border-t border-[#e7dccf] px-5 py-8"} style={{ background: footerBg, color: footerTextColor }}>
         <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold tracking-tight [font-family:var(--site-title-font)]">{title}</h2>
+            <h2 className="text-xl font-semibold tracking-tight [font-family:var(--site-title-font)]" title={readableFooterTitle}>
+              {isDreamShootFooter && !spanishXbyFooter ? (
+                <DreamShootsWordmark label={readableFooterTitle} />
+              ) : (
+                <span aria-label={readableFooterTitle} title={readableFooterTitle}>
+                  <span aria-hidden={visualFooterTitle !== readableFooterTitle ? "true" : undefined}>{visualFooterTitle}</span>
+                  {visualFooterTitle !== readableFooterTitle ? <span className="sr-only">{readableFooterTitle}</span> : null}
+                </span>
+              )}
+            </h2>
             <p className={dark ? "mt-1 text-sm text-white/54" : "mt-1 text-sm text-[#625d56]"}>{tagline}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {quickLinks.map((link) => (
-              <Link className={dark ? "rounded-full border border-white/10 px-3 py-2 text-sm font-semibold text-white/68 transition hover:text-white" : "rounded-full border border-[#ddd2c5] px-3 py-2 text-sm font-semibold text-[#625d56] transition hover:text-[#171514]"} href={hrefFor(site, link.href)} key={link.href}>
+              <Link className={dark ? "rounded-full border border-white/10 px-3 py-2 text-sm font-semibold text-white/68 transition hover:text-white" : "rounded-full border border-[#ddd2c5] px-3 py-2 text-sm font-semibold text-[#625d56] transition hover:text-[#171514]"} href={hrefFor(site, link.href)} key={link.href} rel="nofollow">
                 {link.label}
               </Link>
             ))}
@@ -1118,9 +1177,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           ? [
               ["Paquetes de viaje", "/collections", "product"],
               ["Herramientas", "/tools", "product"],
-              ["Como funciona", "/#workflow", "product"],
+              ["Como funciona", "/workflow", "product"],
               ["Precios", "/pricing", "product"],
-              ["Centro de ayuda", "/help", "company"],
+              ["Preguntas", "/faq", "company"],
               ["Notas de viaje", "/blog", "company"],
               ["Sobre el estudio", "/about-us", "company"],
               ["Contacto", "/contact-us", "company"],
@@ -1132,9 +1191,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           : [
               ["Ver paquetes", "/collections", "product"],
               ["Herramientas", "/tools", "product"],
-              ["Como funciona", "/#workflow", "product"],
+              ["Como funciona", "/workflow", "product"],
               ["Precios", "/pricing", "product"],
-              ["Centro de ayuda", "/help", "company"],
+              ["Preguntas", "/faq", "company"],
               ["Guias", "/blog", "company"],
               ["Sobre nosotros", "/about-us", "company"],
               ["Contacto", "/contact-us", "company"],
@@ -1147,9 +1206,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         ? [
             ["Travel Packages", "/collections", "product"],
             ["Tools", "/tools", "product"],
-            ["How it works", "/#workflow", "product"],
+            ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
-            ["Help Center", "/help", "company"],
+            ["FAQ", "/faq", "company"],
             ["Field Notes", "/blog", "company"],
             ["About the Studio", "/about-us", "company"],
             ["Contact the Studio", "/contact-us", "company"],
@@ -1162,9 +1221,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         : [
             ["Browse packages", "/collections", "product"],
             ["Tools", "/tools", "product"],
-            ["How it works", "/#workflow", "product"],
+            ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
-            ["Help center", "/help", "company"],
+            ["FAQ", "/faq", "company"],
             ["Guides", "/blog", "company"],
             ["About us", "/about-us", "company"],
             ["Contact us", "/contact-us", "company"],
@@ -1246,11 +1305,12 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           youtubeUrl: "",
           twitterUrl: ""
         };
-  const socialHref = (key: keyof typeof defaultSocialUrls) => {
-    const value = footer?.settings[key];
-    if (value === undefined || value === null) return defaultSocialUrls[key];
-    return themeValueToString(value, "").trim();
-  };
+	  const socialHref = (key: keyof typeof defaultSocialUrls) => {
+	    const value = footer?.settings[key];
+	    if (spanishXbyFooter && typeof value === "string" && /\b(?:aidreamcapes|mydreamshoots)\b/i.test(value) && !/-xby/i.test(value)) return "";
+	    if (value === undefined || value === null) return defaultSocialUrls[key];
+	    return themeValueToString(value, "").trim();
+	  };
   const socialLinks = [
     { label: "Instagram", href: socialHref("instagramUrl"), icon: Instagram },
     { label: "Facebook", href: socialHref("facebookUrl"), icon: Facebook },
@@ -1274,10 +1334,13 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     { heading: footer ? setting(footer, "supportHeading", "Support") : "Support", items: supportLinks }
   ].filter((column) => column.items.length);
   const isExternalFooterLink = (href: string) => isExternalHttpHrefForSite(site, href);
-  const footerLinkLabel = (label: string, href: string) => {
-    const normalizedHref = shortPolicyPath(href);
-    if (normalizedHref === "/privacy") return "Privacy Policy";
-    if (normalizedHref === "/terms") return "Terms of Service";
+	  const footerLinkLabel = (label: string, href: string) => {
+	    const normalizedHref = shortPolicyPath(href);
+	    if (spanishXbyFooter && normalizedHref === "/privacy") return "Politica de privacidad";
+	    if (spanishXbyFooter && normalizedHref === "/terms") return "Terminos de servicio";
+	    if (spanishXbyFooter && normalizedHref === "/cookies") return "Politica de cookies";
+	    if (normalizedHref === "/privacy") return "Privacy Policy";
+	    if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
     return label;
   };
@@ -1299,8 +1362,8 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         <div className={dark ? "grid gap-8 border-b border-white/8 pb-8 lg:grid-cols-[0.3fr_0.7fr]" : "grid gap-8 border-b border-[#e8ddd0] pb-8 lg:grid-cols-[0.3fr_0.7fr]"}>
           <div className="max-w-[24rem]">
             <div className="flex items-center gap-3.5">
-              {isAidreamcapesFooter ? (
-                <AidreamcapesLogoMark className="h-10 w-10 shrink-0 object-contain" />
+              {isAidreamcapesFooter && !spanishXbyFooter ? (
+                <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
               ) : logoImageUrl ? (
                 <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} />
               ) : (
@@ -1311,9 +1374,11 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
               <div>
                 <h2 className="text-[1.85rem] font-semibold leading-none [font-family:var(--site-title-font)]">
                   {isDreamShootFooter && !spanishXbyFooter ? (
-                    <DreamShootsWordmark className="block shrink-0 whitespace-nowrap text-[1.32rem] font-semibold leading-none text-white [font-family:var(--site-title-font)]" />
+                    <DreamShootsWordmark className="block shrink-0 whitespace-nowrap text-[1.32rem] font-semibold leading-none text-white [font-family:var(--site-title-font)]" label={readableFooterTitle} />
                   ) : (
-                    <span aria-hidden={isAidreamcapesFooter && !spanishXbyFooter ? "true" : undefined}>{visualFooterTitle}</span>
+                    <span aria-label={readableFooterTitle} title={readableFooterTitle}>
+                      <span aria-hidden={isAidreamcapesFooter && !spanishXbyFooter ? "true" : undefined}>{visualFooterTitle}</span>
+                    </span>
                   )}
                   {isDreamShootFooter ? <span className="sr-only">{spanishXbyFooter ? `${readableFooterTitle} paquetes de fotos con IA y galerias privadas` : "MyDreamShoots AI shoot packages, creator portraits, headshots, fan photos, and private albums"}</span> : null}
                   {isAidreamcapesFooter ? <span className="sr-only">{spanishXbyFooter ? `${readableFooterTitle} retratos de viaje con IA y galerias privadas` : "Aidreamcapes AI travel portraits and private galleries"}</span> : null}
@@ -1356,7 +1421,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
                       href={hrefFor(site, link.href)}
                       key={`${link.label}_${link.href}_${column.heading}`}
                       prefetch={false}
-                      rel={isExternalFooterLink(link.href) ? "nofollow" : undefined}
+                      rel={isExternalFooterLink(link.href) ? "nofollow noopener noreferrer" : "nofollow"}
                       {...xfcartBlockAttrs(link.block, index, `footer_nav_${slugify(column.heading)}`)}
                     >
                       {footerLinkLabel(link.label, link.href)}
@@ -1480,6 +1545,113 @@ function manualImageAlt({
   const mapped = manualAltForImage({ id, src });
   if (mapped) return mapped;
   return fallback;
+}
+
+function runtimeGeneratedAssetAlt(asset: Pick<ThemeRuntimeAsset, "altText" | "label" | "mimeType">, fallback = "Private gallery image"): string {
+  const storedAlt = asset.altText?.replace(/\s+/g, " ").trim();
+  if (storedAlt) return storedAlt;
+  const label = asset.label.replace(/\s+/g, " ").trim();
+  const genericLabel = !label || /^Output\s+\d+$/i.test(label);
+  if (!genericLabel) return label;
+  return asset.mimeType.startsWith("video/")
+    ? `AI-generated private gallery video: ${fallback}`
+    : `AI-generated private gallery image: ${fallback}`;
+}
+
+function spanishXbyImageAlt(site: Site, value: string): string {
+  if (!isSpanishXbySite(site)) return value;
+  const aidreamcapes = isAidreamcapesSite(site);
+  if (/\b(?:AI photo|Photo AI|source photo|Scrolling hero|scrolling travel portrait preview|scrolling AI photo package preview|ready-to-download|profile photo|photo package|Business portrait|Beauty portrait|Couple posing|World Cup fan|professional AI headshot|profile preview|travel-style portrait|Cinematic neon)\b/i.test(value)) {
+    return aidreamcapes
+      ? "Vista previa de retrato de viaje con IA para una galeria privada"
+      : "Vista previa de fotos con IA para un album privado";
+  }
+  return value
+    .replace(/\bAI photo packages\b/gi, "paquetes de fotos con IA")
+    .replace(/\bAI photo package\b/gi, "paquete de fotos con IA")
+    .replace(/\bAI photo result\b/gi, "resultado de foto con IA")
+    .replace(/\bAI photo album\b/gi, "album de fotos con IA")
+    .replace(/\bAI photo generation\b/gi, "generacion de fotos con IA")
+    .replace(/\bAI profile photos\b/gi, "fotos de perfil con IA")
+    .replace(/\bprofile photo\b/gi, "foto de perfil")
+    .replace(/\bsource photo\b/gi, "foto fuente")
+    .replace(/\bsource photos\b/gi, "fotos fuente")
+    .replace(/\bphoto package\b/gi, "paquete de fotos")
+    .replace(/\bphoto packages\b/gi, "paquetes de fotos")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function spanishProofBadgeLabel(value: string): string {
+  const labels: Record<string, string> = {
+    "private model": "Modelo privado",
+    "privado model": "Modelo privado",
+    "album-ready": "Listo para album",
+    "album ready": "Listo para album",
+    "full package catalog": "Catalogo completo de paquetes",
+    "15+ package themes": "15+ temas de paquete"
+  };
+  return labels[value.trim().toLowerCase()] ?? value;
+}
+
+function spanishXbyCategoryLinkLabel(value: string, aidreamcapes: boolean): string {
+  const localized = spanishPhotoPackageLabel(value, aidreamcapes);
+  if (localized && localized !== value) return localized;
+  const normalized = value.trim().toLowerCase().replace(/[-_]+/g, " ");
+  if (normalized === "anime avatar") return "Avatar anime";
+  if (normalized === "image generator") return "Generador de imagenes";
+  return value;
+}
+
+function spanishXbyTaxonomyKeyword(value: string, aidreamcapes: boolean): string {
+  const normalized = value.trim().toLowerCase().replace(/[-_]+/g, " ");
+  if (!normalized) return "";
+  const technicalLabels: Record<string, string> = {
+    "image generator": aidreamcapes ? "Retratos IA" : "Generador de imagenes",
+    "image": aidreamcapes ? "Retratos IA" : "Imagenes IA",
+    "copy generator": "Texto IA",
+    "avatar": "Avatar"
+  };
+  if (technicalLabels[normalized]) return technicalLabels[normalized];
+  return spanishPhotoPackageLabel(value, aidreamcapes);
+}
+
+function spanishFeaturedPackLabel(value: string, aidreamcapes: boolean): string {
+  const labels: Record<string, string> = {
+    "fan poster": "poster de hincha",
+    "fan posters": "Posters de hincha",
+    "large portrait graphics for match day": "Graficos grandes de retrato para dia de partido",
+    "stadium": "estadio",
+    "stadium portraits": "Retratos de estadio",
+    "cinematic scenes with floodlights": "Escenas cinematicas con focos",
+    "avatar": "avatar",
+    "match-day avatars": "Avatares de partido",
+    "profile-ready square crops": "Recortes cuadrados listos para perfil",
+    "perfil-ready square crops": "Recortes cuadrados listos para perfil",
+    "social-ready": "listo para redes",
+    "social banners": "Banners sociales",
+    "wide cover images for sharing": "Imagenes anchas de portada para compartir",
+    "seasonal packs rotate around tournaments, holidays, and personal fan-photo moments.": "Los paquetes de temporada giran en torno a torneos, festivos y momentos personales de aficion.",
+    "travel packages rotate around coasts, cities, resorts, trails, cafe moments, and postcard-ready memories.": "Los paquetes de viaje rotan entre costas, ciudades, resorts, senderos, momentos de cafe y recuerdos tipo postal.",
+    "viaje packages rotate around coasts, cities, resorts, trails, cafe moments, and postcard-ready memories.": "Los paquetes de viaje rotan entre costas, ciudades, resorts, senderos, momentos de cafe y recuerdos tipo postal.",
+    "destination": "destino",
+    "coastal": "costa",
+    "city": "ciudad",
+    "gallery-ready": "listo para galeria",
+    "route portraits": "Retratos de ruta",
+    "ruta portraits": "Retratos de ruta",
+    "coastal getaway scenes": "Escenas de escapada costera",
+    "costero getaway scenes": "Escenas de escapada costera",
+    "old city walk crops": "Recortes de paseo por casco antiguo",
+    "island resort frames": "Marcos de resort isleno",
+    "isla resort frames": "Marcos de resort isleno",
+    "mountain trail portraits": "Retratos de sendero de montana",
+    "cafe street stories": "Historias de cafe y calle",
+    "itinerary moodboards": "Moodboards de itinerario",
+    "postcard social cards": "Tarjetas sociales tipo postal"
+  };
+  const normalized = value.trim().toLowerCase();
+  return labels[normalized] ?? spanishPhotoPackageLabel(value, aidreamcapes);
 }
 
 function manualCatalogImageAlt(card: DreamShootCatalogCard): string {
@@ -1871,7 +2043,7 @@ function StorefrontImage({
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
   const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
   const fallbackAlt = alt?.trim() || fallbackAltFromImageSrc(resolvedSrc);
-  const resolvedAlt = alt === "" ? "" : manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
+  const resolvedAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
     return (
       <img
@@ -2012,9 +2184,23 @@ function routedSitePath(site: Site, path = "/"): string {
 function hrefFor(site: Site, href: string): string {
   if (!href) return routedSitePath(site);
   if (href === "javascript:void(0);") return "#";
+  if (/^(mailto|tel|sms):/i.test(href)) return href;
+  const pairedStore = /mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   if (href.startsWith("http")) {
     try {
       const url = new URL(href);
+      const targetHost = cleanHost(url.host);
+      const siteHost = cleanHost(site.primaryDomain);
+      const sameStoreHost = Boolean(siteHost && targetHost.replace(/^www\./, "") === siteHost.replace(/^www\./, ""));
+      if (pairedStore && sameStoreHost && url.pathname === "/help") {
+        url.pathname = "/faq";
+        return url.toString();
+      }
+      if (pairedStore && sameStoreHost && (url.pathname === "/how-it-works" || url.hash === "#workflow")) {
+        url.pathname = "/workflow";
+        url.hash = "";
+        return url.toString();
+      }
       const normalizedPolicyPath = shortPolicyPath(url.pathname);
       if (normalizedPolicyPath !== url.pathname) {
         url.pathname = normalizedPolicyPath;
@@ -2025,10 +2211,12 @@ function hrefFor(site: Site, href: string): string {
     }
     return href;
   }
+  if (pairedStore && (href === "/workflow" || href === "/how-it-works")) return publicSiteUrl(site, "/workflow");
+  if (pairedStore && href === "/help") return routedSitePath(site, "/faq");
+  if (href === "#workflow" || href === "/#workflow") return publicSiteUrl(site, "/workflow");
+  if (href === "#faq" || href === "/#faq") return routedSitePath(site, "/faq");
   const normalizedPolicyPath = shortPolicyPath(href);
   if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);
-  if (href === "#workflow") return routedSitePath(site, "/#workflow");
-  if (href === "#faq") return routedSitePath(site, "/#faq");
   if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
   if (href === "/app#create") return routedSitePath(site, "/app/create");
   if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");
@@ -2052,6 +2240,7 @@ function hrefFor(site: Site, href: string): string {
 
 function hrefForPage(site: Site, href: string, pagePath: string): string {
   const normalizedPagePath = !pagePath || pagePath === "/" ? "/" : pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
+  if (href === "#workflow" || href === "/#workflow" || href === "#faq" || href === "/#faq") return hrefFor(site, href);
   if (normalizedPagePath === "/" && href.startsWith("#")) return href;
   if (normalizedPagePath === "/" && href.startsWith("/#")) return href.slice(1);
   return hrefFor(site, href);
@@ -2720,12 +2909,13 @@ function pageHeroImage(site: Site, page: Site["pages"][number], fallback: string
 }
 
 export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
+  const useFaqPath = /mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
   return site.pages
-    .filter((page) => ["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/"))
+    .filter((page) => ["/faq", "/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/"))
     .slice(0, 16)
     .map((page, index) => ({
       id: page.id,
-      slug: page.slug,
+      slug: useFaqPath && page.slug === "/help" ? "/faq" : page.slug,
       title: page.title,
       pageType: page.publishedJson.pageType,
       description: pageSummaryText(page),
@@ -2747,6 +2937,8 @@ function siteSearchCards(
   creativePacks: CreativePack[],
   pages: SearchPageEntry[]
 ): SearchResultCard[] {
+  const spanishXbySearch = isSpanishXbySite(site);
+  const aidreamcapesSearch = isAidreamcapesSite(site);
   const productCards = activeProducts(products).map((product, index) => {
     const price = productPrice(product);
     return {
@@ -2754,13 +2946,17 @@ function siteSearchCards(
       kind: "product" as const,
       title: product.name,
       description:
-        product.type === "subscription"
-          ? "Recurring credits, private albums, and customer access."
-          : "One-time credits for more generation volume.",
+        spanishXbySearch
+          ? product.type === "subscription"
+            ? aidreamcapesSearch ? "Creditos recurrentes, albumes de viaje privados y acceso de cliente." : "Creditos recurrentes, albumes privados y acceso de cliente."
+            : "Creditos puntuales para mas volumen de generacion."
+          : product.type === "subscription"
+            ? "Recurring credits, private albums, and customer access."
+            : "One-time credits for more generation volume.",
       imageUrl: productImage(site, product, index),
       href: productHref(site, product),
-      meta: price ? `${formatCurrency(price.amountCents, price.currency)} / ${price.creditsGranted} credits` : product.type,
-      keywords: [product.name, product.type, price?.label ?? "", "pricing", "credits"]
+      meta: price ? `${formatCurrency(price.amountCents, price.currency)} / ${price.creditsGranted} ${spanishXbySearch ? "creditos" : "credits"}` : product.type,
+      keywords: [product.name, product.type, price?.label ?? "", spanishXbySearch ? "precios" : "pricing", spanishXbySearch ? "creditos" : "credits"]
     };
   });
 
@@ -2773,7 +2969,7 @@ function siteSearchCards(
       description: pack.description || pack.headline,
       imageUrl: packImage(site, pack),
       href: `/tools/${pack.aiAppSlug}`,
-      meta: `${pack.creditCost} credits / private gallery`,
+      meta: spanishXbySearch ? `${pack.creditCost} creditos / galeria privada` : `${pack.creditCost} credits / private gallery`,
       keywords: [pack.name, pack.category, pack.headline, pack.description, pack.aiAppSlug]
     }));
 
@@ -2782,12 +2978,12 @@ function siteSearchCards(
     .map((item, index) => ({
       id: item.id,
       kind: "tool" as const,
-      title: item.aiApp.name,
-      description: item.aiApp.description,
+      title: displayAiAppName(site, item),
+      description: displayAiAppDescription(site, item),
       imageUrl: fallbackImageForSeed(`${site.slug}-${item.aiApp.slug}-${index}`),
       href: `/tools/${item.aiApp.slug}`,
-      meta: `${item.creditCost} credits / private album request`,
-      keywords: [item.aiApp.name, item.aiApp.slug, item.aiApp.description, item.routeKey, item.aiApp.appType]
+      meta: isSpanishXbySite(site) ? `${item.creditCost} creditos / solicitud privada` : `${item.creditCost} credits / private album request`,
+      keywords: [displayAiAppName(site, item), item.aiApp.slug, displayAiAppDescription(site, item), item.routeKey, item.aiApp.appType]
     }));
 
   const contentPages = pages
@@ -2941,6 +3137,20 @@ function isSpanishXbySite(site: Site): boolean {
   return /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
 }
 
+function displayAiAppName(site: Site, app: SiteAiApp | undefined): string {
+  if (!app) return isSpanishXbySite(site) ? "Estudio IA" : "AI tool";
+  if (!isSpanishXbySite(site)) return app.aiApp.name;
+  return isAidreamcapesSite(site) ? "Estudio de retratos de viaje IA" : "Estudio de imagenes IA";
+}
+
+function displayAiAppDescription(site: Site, app: SiteAiApp | undefined): string {
+  if (!app) return "";
+  if (!isSpanishXbySite(site)) return app.aiApp.description;
+  return isAidreamcapesSite(site)
+    ? "Generacion privada de retratos de viaje con entrega en galeria firmada."
+    : "Generacion privada de fotos con entrega en album firmado.";
+}
+
 function spanishToolCategoryLabel(value: string, aidreamcapes: boolean): string {
   const normalized = value.toLowerCase();
   if (normalized.includes("destination")) return "Destino";
@@ -2957,7 +3167,7 @@ function spanishToolCategoryLabel(value: string, aidreamcapes: boolean): string 
 
 function spanishToolCategoryDescription(value: string, aidreamcapes: boolean): string {
   const normalized = value.toLowerCase();
-  if (normalized.includes("video")) return "Convierte imagenes terminadas en clips cortos y previews para compartir.";
+  if (normalized.includes("video")) return "Convierte imagenes terminadas en clips cortos y vistas previas para compartir.";
   if (normalized.includes("edit")) return "Limpia, restaura y ajusta fotos antes de crear el resultado final.";
   if (normalized.includes("route") || normalized.includes("travel") || normalized.includes("destination")) {
     return aidreamcapes
@@ -2967,6 +3177,118 @@ function spanishToolCategoryDescription(value: string, aidreamcapes: boolean): s
   return aidreamcapes
     ? "Crea retratos de destino y galerias privadas desde tus fotos."
     : "Crea retratos, escenas y paquetes de fotos con tus subidas.";
+}
+
+function spanishToolTitle(slug: string, fallback: string, aidreamcapes: boolean): string {
+  const bySlug: Record<string, string> = {
+    "headshot": "Retratos profesionales",
+    "headshot-generator": "Retratos profesionales",
+    "creator-portrait": "Retratos para creadores",
+    "world-cup-fan-photos": "Fotos de hincha del Mundial",
+    "cyberpunk-portrait": "Retrato cyberpunk",
+    "gala-photo": "Fotos de gala",
+    "noir-portrait": "Retrato noir",
+    "anime-avatar": "Avatar anime",
+    "nature-adventure": "Aventura natural",
+    "fashion-editorial": "Editorial de moda",
+    "product-lifestyle": "Producto lifestyle",
+    "background-changer": "Cambio de fondo",
+    "background-remover": "Eliminar fondo",
+    "magic-eraser": "Borrador magico",
+    "photo-enhancer": "Mejora de foto",
+    "portrait-retouch": "Retoque de retrato",
+    "unblur-image": "Enfoque de imagen",
+    "color-correction": "Correccion de color",
+    "old-photo-restoration": "Restauracion de fotos",
+    "edit-by-prompt": "Edicion por instrucciones",
+    "magic-upscaler": "Escalado magico",
+    "image-to-video": "Imagen a video",
+    "profile-clip": "Clip de perfil",
+    "fan-poster-motion": "Poster animado",
+    "creator-intro-video": "Intro de creador",
+    "product-teaser-clip": "Teaser de producto",
+    "animated-avatar": "Avatar animado",
+    "fashion-reel": "Reel de moda",
+    "album-story-video": "Historia de album",
+    "package-preview": "Vista previa de paquete",
+    "wedding-portraits": "Retratos de boda"
+  };
+  if (bySlug[slug]) return bySlug[slug];
+  const localizedFallback = spanishPhotoPackageLabel(fallback, aidreamcapes);
+  if (localizedFallback && localizedFallback !== fallback) return localizedFallback;
+  return aidreamcapes ? "Herramienta de retrato de viaje" : "Herramienta de fotos IA";
+}
+
+function spanishToolDescription(slug: string, category: string, aidreamcapes: boolean): string {
+  const bySlug: Record<string, string> = {
+    "headshot": "Convierte selfies claras en retratos profesionales para perfiles, CV y paginas personales con entrega privada.",
+    "headshot-generator": "Convierte selfies claras en retratos profesionales para perfiles, CV y paginas personales con entrega privada.",
+    "creator-portrait": "Crea fotos de perfil, campana y canal desde un set privado de subidas.",
+    "world-cup-fan-photos": "Genera retratos de estadio, posters de aficion y piezas de partido para compartir.",
+    "cyberpunk-portrait": "Transforma tus fotos fuente en retratos urbanos de neon con entrega en album privado.",
+    "gala-photo": "Prepara retratos de gala con luz cuidada, vestuario elegante y recortes listos para redes.",
+    "noir-portrait": "Crea retratos de personaje con ambiente cinematografico y guarda el set en tu cuenta.",
+    "anime-avatar": "Convierte una selfie clara en avatares estilizados para perfiles y campanas ligeras.",
+    "nature-adventure": "Lleva tus retratos a escenas exteriores, rutas y paisajes sin organizar una sesion.",
+    "fashion-editorial": "Crea imagenes editoriales con direccion de vestuario, luz y encuadre mas pulidos.",
+    "product-lifestyle": "Previsualiza imagenes lifestyle para producto, creador o campana antes del paquete final.",
+    "background-changer": "Cambia fondos ocupados o planos por escenas mas limpias antes de usar creditos.",
+    "background-remover": "Elimina fondos distractores y prepara fotos fuente mas limpias para perfiles o paquetes.",
+    "magic-eraser": "Quita objetos pequenos, bordes sucios o distracciones antes de enviar la solicitud.",
+    "photo-enhancer": "Mejora subidas oscuras, suaves o de bajo contraste antes de crear el resultado final.",
+    "portrait-retouch": "Ajusta piel, luz y detalles pequenos manteniendo un aspecto natural y reconocible.",
+    "unblur-image": "Recupera fotos movidas o suaves cuando casi sirven para un paquete privado.",
+    "color-correction": "Equilibra color, calidez y exposicion para que el set terminado se vea coherente.",
+    "old-photo-restoration": "Restaura fotos antiguas, escaneos o recuerdos familiares dentro de un album privado.",
+    "edit-by-prompt": "Describe un cambio concreto, revisa el resultado y decide si la imagen esta lista.",
+    "magic-upscaler": "Prepara versiones de mayor resolucion para descargar o compartir imagenes terminadas.",
+    "image-to-video": "Convierte una imagen favorita en un clip corto para redes, vistas previas o albumes.",
+    "profile-clip": "Crea una idea de movimiento breve para intros, bios y perfiles desde retratos terminados.",
+    "fan-poster-motion": "Anima posters de aficion y piezas de partido como clips cortos para compartir.",
+    "creator-intro-video": "Transforma retratos de creador en una intro sencilla para canales, reels o lanzamientos.",
+    "product-teaser-clip": "Haz una prueba de movimiento desde imagenes de producto antes de cerrar la campana.",
+    "animated-avatar": "Previsualiza movimiento de avatar para perfiles, comunidades y anuncios ligeros.",
+    "fashion-reel": "Convierte retratos editoriales o pruebas de estilo en un reel corto para compartir.",
+    "album-story-video": "Reune imagenes favoritas en una historia compacta de album terminado.",
+    "package-preview": "Previsualiza la direccion de un paquete antes de gastar creditos en un set completo.",
+    "wedding-portraits": "Crea conceptos de pareja, ceremonia y celebracion desde fotos fuente privadas antes de montar el album."
+  };
+  if (bySlug[slug]) return bySlug[slug];
+  const normalizedCategory = category.toLowerCase();
+  if (normalizedCategory.includes("video")) return "Crea una vista previa de video o movimiento breve desde imagenes aprobadas.";
+  if (normalizedCategory.includes("edicion") || normalizedCategory.includes("edit")) return "Prepara, limpia y ajusta fotos fuente antes de crear el paquete final.";
+  return aidreamcapes
+    ? "Prepara retratos de viaje, escenas de destino y galerias privadas desde tus subidas."
+    : "Crea retratos, escenas y albumes privados desde tus subidas con creditos visibles.";
+}
+
+function spanishToolBadge(slug: string, category: string, aidreamcapes: boolean): string {
+  if (slug.includes("video") || slug.includes("clip") || slug.includes("motion") || slug.includes("reel")) return "Video IA";
+  if (slug.includes("background") || slug.includes("eraser") || slug.includes("enhancer") || slug.includes("unblur") || slug.includes("correction") || slug.includes("restoration") || slug.includes("prompt")) return "Edicion";
+  if (slug.includes("wedding")) return "Pareja";
+  if (slug.includes("avatar")) return "Avatar";
+  if (slug.includes("headshot") || slug.includes("profile")) return "Perfil";
+  return category || (aidreamcapes ? "Viaje IA" : "Foto IA");
+}
+
+function spanishToolBlocks(blocks: SectionBlockInstance[], aidreamcapes: boolean): SectionBlockInstance[] {
+  return blocks.map((block) => {
+    const slug = toolBlockSlug(block);
+    const category = spanishToolCategoryLabel(blockValue(block, "category", aidreamcapes ? "Route Portrait" : "Photo AI"), aidreamcapes);
+    const title = spanishToolTitle(slug, blockValue(block, "title", ""), aidreamcapes);
+    return {
+      ...block,
+      settings: {
+        ...block.settings,
+        title,
+        category,
+        categoryTitle: category,
+        categoryDescription: spanishToolCategoryDescription(category, aidreamcapes),
+        description: spanishToolDescription(slug, category, aidreamcapes),
+        badge: spanishToolBadge(slug, category, aidreamcapes)
+      }
+    };
+  });
 }
 
 function spanishPhotoPackageLabel(value: string, aidreamcapes: boolean): string {
@@ -2991,6 +3313,7 @@ function spanishPhotoPackageLabel(value: string, aidreamcapes: boolean): string 
     "fashion editorial set": "Set editorial de moda",
     "gala photos": "Fotos de gala",
     "hairstyle": "Peinados",
+    "headshots": "Retratos profesionales",
     "magic upscaler": "Mejora magica",
     "mafia": "Noir cinematografico",
     "nature": "Naturaleza",
@@ -3032,6 +3355,64 @@ function spanishPhotoPackageLabel(value: string, aidreamcapes: boolean): string 
     "wellness retreat scenes": "Escenas de retiro wellness"
   };
   return labels[normalized] ?? trimmed;
+}
+
+function spanishAiFeatureLauncherLabel(value: string, aidreamcapes: boolean): string {
+  const trimmed = value.replace(/\s+/g, " ").trim();
+  const normalized = trimmed.toLowerCase();
+  const labels: Record<string, string> = {
+    "choose a tool": "Elige herramienta",
+    "pick the photo workflow first, then attach the source photos it needs.": "Elige primero el flujo de fotos y despues adjunta las fotos fuente necesarias.",
+    "tool first": "Herramienta primero",
+    "upload photos": "Subir fotos",
+    "collect selfies and source images inside a private customer workspace.": "Guarda selfies y fotos fuente dentro de un espacio privado de cliente.",
+    "private intake": "Subidas privadas",
+    "track progress": "Seguir progreso",
+    "show waiting, creating, delivered, review-needed, and returned-credit states.": "Muestra estados de espera, creacion, entrega, revision y creditos devueltos.",
+    "live progress": "Progreso en vivo",
+    "download albums": "Descargar albumes",
+    "deliver finished images to private customer galleries.": "Entrega imagenes terminadas en galerias privadas de cliente.",
+    "private delivery": "Entrega privada",
+    "private customer account": "Cuenta privada de cliente",
+    "album-ready workflow": "Flujo listo para album",
+    "live credits and delivery": "Creditos y entrega en vivo",
+    "create my first photo set": "Crear mi primer set",
+    "create travel portraits": "Crear retratos de viaje",
+    "customer workspace": "Espacio de cliente",
+    "customer account": "Cuenta de cliente",
+    "ai studio features": "Funciones del estudio IA",
+    "workspace overview": "Resumen del espacio",
+    "customer workspace image": "Imagen del espacio de cliente",
+    "credits clear history": "Historial de creditos claro",
+    "featured collection": "Coleccion destacada"
+  };
+  if (labels[normalized]) return labels[normalized];
+  return trimmed
+    .replace(/\bUpload photos\b/gi, "Subir fotos")
+    .replace(/\bChoose a tool\b/gi, "Elige herramienta")
+    .replace(/\bTrack progress\b/gi, "Seguir progreso")
+    .replace(/\bDownload albums\b/gi, "Descargar albumes")
+    .replace(/\bCustomer workspace\b/gi, "Espacio de cliente")
+    .replace(/\bPrivate customer\b/gi, "Cliente privado")
+    .replace(/\bprivate customer\b/gi, "cliente privado")
+    .replace(/\bcredits\b/gi, "creditos")
+    .replace(/\bCredits\b/g, "Creditos")
+    .replace(/\balbums\b/gi, "albumes")
+    .replace(/\bAlbums\b/g, "Albumes")
+    .replace(/\btravel portraits\b/gi, aidreamcapes ? "retratos de viaje" : "retratos")
+    .trim();
+}
+
+function spanishAiFeatureLauncherBlocks(blocks: SectionBlockInstance[], aidreamcapes: boolean): SectionBlockInstance[] {
+  return blocks.map((block) => ({
+    ...block,
+    settings: {
+      ...block.settings,
+      title: spanishAiFeatureLauncherLabel(blockValue(block, "title", ""), aidreamcapes),
+      description: spanishAiFeatureLauncherLabel(blockValue(block, "description", ""), aidreamcapes),
+      meta: spanishAiFeatureLauncherLabel(blockValue(block, "meta", ""), aidreamcapes)
+    }
+  }));
 }
 
 function spanishPhotoPackageMegaGroups(groups: PhotoPackageMegaGroup[], aidreamcapes: boolean): PhotoPackageMegaGroup[] {
@@ -3454,7 +3835,7 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
                     <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? aidreamcapesCopper : accent }}>
                       <GroupIcon className="h-4 w-4" strokeWidth={1.9} />
                     </span>
-                    <span className="min-w-0 truncate">{group.label}</span>
+                    <h2 className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</h2>
                     <span className={warm ? "ml-auto text-[11px] font-medium text-[#9b8877]" : "ml-auto text-[11px] font-medium text-white/36"}>{group.items.length}</span>
                     <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#9b8877] transition group-open/category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90"} strokeWidth={2} />
                   </summary>
@@ -3468,7 +3849,7 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
                           key={item.slug}
                         >
                           <ItemIcon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/package:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/package:text-white"} strokeWidth={1.8} />
-                          <span>{item.label}</span>
+                          <h2 className="text-[0.94rem] font-semibold leading-6">{item.label}</h2>
                           <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                         </Link>
                       );
@@ -3541,6 +3922,13 @@ function dreamshootToolGroupMeta(category: string, items: SectionBlockInstance[]
   };
 }
 
+function dreamshootToolCategoryHref(category: string): string {
+  const normalized = category.toLowerCase();
+  if (normalized.includes("video")) return "/tools/video-ai";
+  if (normalized.includes("edit")) return "/tools/ai-photo-edit";
+  return "/tools/photo-ai";
+}
+
 function DreamShootMegaToolsPanel({
   site,
   tools,
@@ -3594,24 +3982,25 @@ function DreamShootMegaToolsPanel({
           : "overflow-hidden rounded-[20px] border border-[#263247] bg-[#070708] p-4 text-white shadow-[0_34px_110px_-62px_rgba(0,0,0,0.88)] ring-1 ring-white/[0.04]"
       }
     >
-      <div className={warm ? "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-[#1e1712] sm:text-[1.02rem]" : "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]"}>
+      <h2 className={warm ? "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-[#1e1712] sm:text-[1.02rem]" : "mb-4 text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]"}>
         {spanishXby ? "Herramientas del estudio" : "Studio tools"}
-      </div>
+      </h2>
       <div className="flex flex-wrap items-stretch gap-3">
         {summaryGroups.map((group, index) => {
           const Icon = group.meta.icon;
           const featuredTool = group.items[0];
+          const categoryHref = aidreamcapes
+            ? featuredTool
+              ? toolActionHref(site, blockValue(featuredTool, "href", "/tools"), featuredTool.id)
+              : hrefFor(site, `/tools?category=${encodeURIComponent(slugify(group.category))}`)
+            : hrefFor(site, dreamshootToolCategoryHref(group.category));
           return (
             <Fragment key={`mega_card_${group.category}`}>
               {index > 0 && <span className={warm ? "self-center text-sm font-bold text-[#a79078]" : "self-center text-sm font-bold text-white/28"}>/</span>}
               <Link
                 aria-label={cardLinkLabel(spanishXby ? "Explorar" : "Browse", group.meta.title, spanishXby ? "esta categoria" : "this tool category")}
                 className={warm ? "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed]" : "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"}
-                href={
-                  featuredTool
-                    ? toolActionHref(site, blockValue(featuredTool, "href", "/tools/image-studio"), featuredTool.id)
-                    : hrefFor(site, `/tools?category=${encodeURIComponent(slugify(group.category))}`)
-                }
+                href={categoryHref}
               >
                 <span
                   className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow-[0_18px_46px_-28px_rgba(114,82,48,0.58)]"
@@ -3620,7 +4009,7 @@ function DreamShootMegaToolsPanel({
                   <Icon className="h-5.5 w-5.5" strokeWidth={2} />
                 </span>
                 <span className="min-w-0">
-                  <span className={warm ? "block text-[1.04rem] font-semibold leading-tight text-[#1e1712]" : "block text-[1.04rem] font-semibold leading-tight text-white"}>{group.meta.title}</span>
+                  <h3 className={warm ? "block text-[1.04rem] font-semibold leading-tight text-[#1e1712]" : "block text-[1.04rem] font-semibold leading-tight text-white"}>{group.meta.title}</h3>
                   <span className={warm ? "mt-2 block text-[0.92rem] leading-6 text-[#6f6257]" : "mt-2 block text-[0.92rem] leading-6 text-white/72"}>{group.meta.description}</span>
                 </span>
               </Link>
@@ -3648,7 +4037,7 @@ function DreamShootMegaToolsPanel({
                       {...xfcartBlockAttrs(tool, index, toolPrefix)}
                     >
                       <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
-                  <span>{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
+                      <h3 className="text-[0.94rem] font-semibold leading-6">{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</h3>
                     </Link>
                   );
                 })}
@@ -3677,7 +4066,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   const visibleGroups = groups;
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const spanishXby = isSpanishXbySite(site);
-  const menuLabel = spanishXby ? isAidreamcapesSite(site) ? "Paquetes de viaje" : "Paquetes de fotos IA" : isAidreamcapesSite(site) ? "Route Portrait Packages" : "AI Shoot Packages";
+  const menuLabel = spanishXby ? isAidreamcapesSite(site) ? "Paquetes de viaje" : "Ver paquetes" : isAidreamcapesSite(site) ? "Travel Packages" : "Browse packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
@@ -3696,14 +4085,14 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
                   <span className={dark ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.07]" : "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white"}>
                     <GroupIcon className="h-3.5 w-3.5" strokeWidth={1.9} />
                   </span>
-                  <span className="min-w-0 flex-1 truncate">{group.label}</span>
+                  <h2 className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{group.label}</h2>
                   <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.items.length}</span>
                   <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-category:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-category:-rotate-90"} strokeWidth={2} />
                 </summary>
                 <div className="grid gap-1 pb-1 pl-8 pt-1">
                   {group.items.map((item) => (
                     <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={hrefFor(site, item.href)} key={item.slug}>
-                      {item.label}
+                      <h2 className="text-sm font-semibold leading-5">{item.label}</h2>
                     </Link>
                   ))}
                 </div>
@@ -3762,7 +4151,7 @@ function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; too
                   <span className={dark ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.07]" : "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white"}>
                     <Icon className="h-3.5 w-3.5" strokeWidth={1.9} />
                   </span>
-                  <span className="min-w-0 flex-1 truncate">{group.meta.panelTitle}</span>
+                  <h3 className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{group.meta.panelTitle}</h3>
                   <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.items.length}</span>
                   <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-tool:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-tool:-rotate-90"} strokeWidth={2} />
                 </summary>
@@ -3771,7 +4160,7 @@ function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; too
                     const title = storefrontPaidToolBlockValue(tool, "title", spanishXby ? "herramienta IA" : "AI photo tool");
                     return (
                       <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id, title)} key={instanceKey(tool, index, "mobile_tool")}>
-                        {title}
+                        <h3 className="text-sm font-semibold leading-5">{title}</h3>
                       </Link>
                     );
                   })}
@@ -3884,6 +4273,22 @@ function creditsImageEstimateLabel(price: SiteProduct["prices"][number] | undefi
   const estimatedImages = Math.floor(price.creditsGranted / perImageCredits);
   if (estimatedImages <= 0) return `Less than one ${perImageCredits}-credit image`;
   return `About ${estimatedImages} image${estimatedImages === 1 ? "" : "s"} at ${perImageCredits} credits each`;
+}
+
+function localizedPriceCreditsLabel(site: Site, price: SiteProduct["prices"][number] | undefined): string {
+  if (!isSpanishXbySite(site)) return priceCreditsLabel(price);
+  if (!price) return "Sin precio activo";
+  if (price.interval === "year") return `${price.creditsGranted} creditos anuales`;
+  if (price.interval === "month") return `${price.creditsGranted} creditos mensuales`;
+  return `${price.creditsGranted} creditos de recarga`;
+}
+
+function localizedCreditsImageEstimateLabel(site: Site, price: SiteProduct["prices"][number] | undefined, perImageCredits = 24): string {
+  if (!isSpanishXbySite(site)) return creditsImageEstimateLabel(price, perImageCredits);
+  if (!price || price.creditsGranted <= 0) return "";
+  const estimatedImages = Math.floor(price.creditsGranted / perImageCredits);
+  if (estimatedImages <= 0) return `Menos de una imagen de ${perImageCredits} creditos`;
+  return `Unas ${estimatedImages} imagenes a ${perImageCredits} creditos cada una`;
 }
 
 function priceAmountLabel(price: SiteProduct["prices"][number] | undefined): string {
@@ -4426,28 +4831,31 @@ function renderLegacySaasSection({
   }
 
   if (type === "search") {
+    const spanishSearch = isSpanishXbySite(site);
     const searchTerm = queryValue(renderContext.query.q);
     const cards = searchCardsForQuery(
       siteSearchCards(site, products, siteAiApps, creativePacks, renderContext.pages),
       searchTerm
     );
-    const searchTitle = searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", "Search plans, packs, tools, and photo guides");
+    const searchTitle = searchTerm
+      ? spanishSearch ? `Resultados para "${searchTerm}"` : `Results for "${searchTerm}"`
+      : setting(section, "title", spanishSearch ? "Buscar planes, paquetes, herramientas y guias" : "Search plans, packs, tools, and photo guides");
     return (
       <section className="px-5 py-14" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white p-5">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Storefront search</p>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{spanishSearch ? "Busqueda de tienda" : "Storefront search"}</p>
             <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{searchTitle}</h1>
             <div className="mt-4 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `${cards.length} matching results` : "Search plans, packs, tools, and photo guides"}
+                {searchTerm ? `${cards.length} ${spanishSearch ? "resultados encontrados" : "matching results"}` : spanishSearch ? "Busca planes, paquetes, herramientas y guias" : "Search plans, packs, tools, and photo guides"}
               </span>
             </div>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{cards.length} results</span>
-            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">private account</span>
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{cards.length} {spanishSearch ? "resultados" : "results"}</span>
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{spanishSearch ? "cuenta privada" : "private account"}</span>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.slice(0, 12).map((card) => (
@@ -4461,7 +4869,7 @@ function renderLegacySaasSection({
           </div>
           {!cards.length ? (
             <div className="mt-8 rounded-[1.2rem] border border-dashed border-black/10 bg-white px-5 py-10 text-center text-sm text-zinc-500">
-              No results in this site. Try plan, credits, photo packs, headshots, help, or blog.
+              {spanishSearch ? "No hay resultados en este sitio. Prueba con plan, creditos, paquetes, herramientas, ayuda o guias." : "No results in this site. Try plan, credits, photo packs, headshots, help, or blog."}
             </div>
           ) : null}
         </div>
@@ -4470,6 +4878,7 @@ function renderLegacySaasSection({
   }
 
   if (type === "cart") {
+    const spanishCart = isSpanishXbySite(site);
     const active = activeProducts(products);
     const selectedProductId = queryValue(renderContext.query.product);
     const selectedPriceId = queryValue(renderContext.query.price);
@@ -4490,10 +4899,10 @@ function renderLegacySaasSection({
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[1fr_360px]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Checkout summary</p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? "Your selected plan" : "Choose a plan first"}</h1>
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{spanishCart ? "Resumen de pago" : "Checkout summary"}</p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? spanishCart ? "Tu plan seleccionado" : "Your selected plan" : spanishCart ? "Elige un plan primero" : "Choose a plan first"}</h1>
               <p className="mt-2 text-sm leading-6 text-zinc-500">
-                Review your selected collection, credit grant, and checkout amount before the private album workflow begins.
+                {spanishCart ? "Revisa plan, creditos e importe antes de continuar con el flujo privado." : "Review your selected collection, credit grant, and checkout amount before the private album workflow begins."}
               </p>
             </div>
             <div className="divide-y divide-black/10">
@@ -4504,40 +4913,40 @@ function renderLegacySaasSection({
                     <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={product.name} />
                     <div>
                       <p className="font-semibold">{product.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{price?.creditsGranted ?? 0} credits</p>
-                      {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">Selected from pricing/search</p> : null}
+                      <p className="mt-1 text-sm text-zinc-500">{price?.creditsGranted ?? 0} {spanishCart ? "creditos" : "credits"}</p>
+                      {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">{spanishCart ? "Seleccionado desde precios/busqueda" : "Selected from pricing/search"}</p> : null}
                     </div>
                     <p className="font-mono">{price ? formatCurrency(price.amountCents, price.currency) : ""}</p>
                   </div>
                 );
               })}
               {!productsForCart.length ? (
-                <div className="p-8 text-sm text-zinc-500">Open pricing to select a subscription or credit pack.</div>
+                <div className="p-8 text-sm text-zinc-500">{spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack."}</div>
               ) : null}
             </div>
           </div>
           <aside className="h-fit rounded-[1.4rem] border border-black/10 bg-zinc-950 p-6 text-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.34)]">
             <ShoppingCart className="h-6 w-6 text-white/70" strokeWidth={1.8} />
-            <h3 className="mt-5 text-2xl font-semibold">Checkout summary</h3>
+            <h3 className="mt-5 text-2xl font-semibold">{spanishCart ? "Resumen de pago" : "Checkout summary"}</h3>
             <p className="mt-2 text-sm leading-6 text-stone-300">
-              Credits are added after payment confirmation, so the account balance stays accurate.
+              {spanishCart ? "Los creditos se agregan despues de confirmar el pago, para mantener exacto el saldo." : "Credits are added after payment confirmation, so the account balance stays accurate."}
             </p>
             <div className="mt-6 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4">
               <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Items</span>
+                <span className="text-white/64">{spanishCart ? "Articulos" : "Items"}</span>
                 <span>{productsForCart.length}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Credits</span>
+                <span className="text-white/64">{spanishCart ? "Creditos" : "Credits"}</span>
                 <span>{estimatedCredits}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Amount</span>
+                <span className="text-white/64">{spanishCart ? "Importe" : "Amount"}</span>
                 <span>{estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}</span>
               </div>
             </div>
             <Link className="mt-6 inline-flex w-full justify-center rounded-full bg-white px-4 py-3 text-sm font-medium text-zinc-950" href={hrefFor(site, "/pricing")}>
-              Back to pricing
+              {spanishCart ? "Volver a precios" : "Back to pricing"}
             </Link>
           </aside>
         </div>
@@ -4814,6 +5223,8 @@ function renderLegacySaasSection({
   if (type === "header_plus") {
     const blocks = sectionBlocks(section);
     const promoBlocks = blocks.filter((block) => block.type === "ads");
+    const readableSiteBrand = storefrontBrandName(site);
+    const visibleShopLogo = setting(section, "shop_logo", site.branding.logoText);
     return (
       <section className="border-b border-black/10 bg-white px-5 py-5" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-5">
@@ -4823,8 +5234,11 @@ function renderLegacySaasSection({
             </div>
           ) : null}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link className="font-mono text-sm uppercase tracking-[0.22em]" href={hrefFor(site, "/")}>
-              {setting(section, "shop_logo", site.branding.logoText)}
+            <Link aria-label={`${readableSiteBrand} home`} className="font-mono text-sm uppercase tracking-[0.22em]" href={hrefFor(site, "/")} title={readableSiteBrand}>
+              <span aria-label={readableSiteBrand} title={readableSiteBrand}>
+                <span aria-hidden={visibleShopLogo !== readableSiteBrand ? "true" : undefined}>{visibleShopLogo}</span>
+                {visibleShopLogo !== readableSiteBrand ? <span className="sr-only">{readableSiteBrand}</span> : null}
+              </span>
             </Link>
             <nav className="hidden items-center gap-5 text-sm text-zinc-600 md:flex">
               {["Home|/", "Pricing|/pricing", "Studio|/app"].map((item) => {
@@ -4852,12 +5266,17 @@ function renderLegacySaasSection({
     const menuBlocks = sectionBlocks(section, "menu");
     const infoBlocks = sectionBlocks(section, "info");
     const newsletterBlocks = sectionBlocks(section, "newsletter");
+    const readableSiteBrand = storefrontBrandName(site);
+    const visibleSiteBrand = site.branding.logoText;
     return (
       <section className="border-t border-black/10 px-5 py-12" data-saas-section-renderer={type} id={sectionAnchor(section, id)} style={{ background: setting(section, "footer_bg_color", "var(--site-bg)") }}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 md:grid-cols-[1fr_0.75fr_0.75fr]">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">Studio footer</p>
-            <h2 className="mt-4 text-2xl font-semibold">{site.branding.logoText}</h2>
+            <h2 aria-label={readableSiteBrand} className="mt-4 text-2xl font-semibold" title={readableSiteBrand}>
+              <span aria-hidden={visibleSiteBrand !== readableSiteBrand ? "true" : undefined}>{visibleSiteBrand}</span>
+              {visibleSiteBrand !== readableSiteBrand ? <span className="sr-only">{readableSiteBrand}</span> : null}
+            </h2>
             <div className="mt-4 text-sm leading-7 text-zinc-600" dangerouslySetInnerHTML={{ __html: blockValue(infoBlocks[0] ?? { id: "info", type: "info", settings: {} }, "richtext", site.branding.description) }} />
             <p className="mt-5 font-mono text-xs text-zinc-500">{setting(section, "copyright", "All rights reserved.")}</p>
           </div>
@@ -4866,7 +5285,7 @@ function renderLegacySaasSection({
             <div className="mt-4 grid gap-2 text-sm text-zinc-600">
               {["Pricing|/pricing", "Studio|/app", "Help|/policies/content"].map((item) => {
                 const [label, href] = item.split("|");
-                return <Link className="hover:text-zinc-950" href={hrefFor(site, href)} key={item}>{label}</Link>;
+                return <Link className="hover:text-zinc-950" href={hrefFor(site, href)} key={item} rel="nofollow">{label}</Link>;
               })}
             </div>
           </div>
@@ -5073,7 +5492,7 @@ function SectionView({
                   style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                 >
                   <StorefrontImage
-                    alt={manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `${motionHeroAltPrefix} ${index + 1}` })}
+                    alt={spanishXbyImageAlt(site, manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `${motionHeroAltPrefix} ${index + 1}` }))}
                     className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
                     fetchPriority="low"
                     loading="lazy"
@@ -5179,7 +5598,7 @@ function SectionView({
                   </Link>
                   <div className="hidden grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-white/54 sm:grid">
                     <span className="h-px bg-white/24" />
-                    or
+                    {isSpanishXbySite(site) ? "o" : "or"}
                     <span className="h-px bg-white/24" />
                   </div>
                   <form action={formActionFor(site, authEmailHref)} className="hidden gap-2 sm:grid">
@@ -5201,7 +5620,15 @@ function SectionView({
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
                   <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", aidreamcapes ? "Private route gallery customers" : "Private photo-package customers")}</p>
-                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">{isSpanishXbySite(site) ? "Creditos, paquetes, galerias privadas y pago permanecen dentro de tu cuenta." : aidreamcapes ? "Credits, route portrait packages, private destination galleries, and checkout stay inside your account." : "Credits, AI shoot packages, private albums, and checkout stay inside your account."}</p>
+                  <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">
+                    {isSpanishXbySite(site)
+                      ? aidreamcapes
+                        ? "Rutas, creditos, pagos y galerias privadas permanecen dentro de tu cuenta."
+                        : "Sets, creditos, pagos y albumes privados permanecen dentro de tu cuenta."
+                      : aidreamcapes
+                        ? "Credits, route portrait packages, private destination galleries, and checkout stay inside your account."
+                        : "Credits, AI shoot packages, private albums, and checkout stay inside your account."}
+                  </p>
                 </div>
                 </div>
               </div>
@@ -5742,8 +6169,18 @@ function SectionView({
     const tone = setting(section, "tone", "warm");
     const dark = tone === "dark";
     const aidreamcapes = isAidreamcapesSite(site);
+    const spanishXbyBanner = isSpanishXbySite(site);
+    const bannerCtaLabel = spanishXbyBanner
+      ? spanishAiFeatureLauncherLabel(setting(section, "ctaLabel", "Explorar"), aidreamcapes)
+      : setting(section, "ctaLabel", "Explore");
     const stats = sectionBlocks(section, "stat");
-    const displayStats = stats.length
+    const displayStats = spanishXbyBanner
+      ? [
+          { id: "banner_stat_outputs", type: "stat", settings: { value: "40", label: "imagenes editadas" } },
+          { id: "banner_stat_delivery", type: "stat", settings: { value: "Privado", label: "entrega en galeria" } },
+          { id: "banner_stat_credit", type: "stat", settings: { value: "Creditos", label: "historial claro" } }
+        ]
+      : stats.length
       ? stats
       : [
           { id: "banner_stat_outputs", type: "stat", settings: { value: "40", label: "edited frames" } },
@@ -5754,7 +6191,7 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-12 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-12 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <Link
-            aria-label={cardLinkLabel(setting(section, "ctaLabel", "Explore"), setting(section, "title", aidreamcapes ? "this route portrait package" : "this AI shoot package"))}
+            aria-label={cardLinkLabel(bannerCtaLabel, setting(section, "title", spanishXbyBanner ? aidreamcapes ? "este paquete de retratos de viaje" : "este paquete de fotos IA" : aidreamcapes ? "this route portrait package" : "this AI shoot package"))}
             className={dark ? "group grid overflow-hidden rounded-[32px] border border-white/10 bg-[#15171c] shadow-[0_34px_100px_-68px_rgba(0,0,0,0.86)] md:grid-cols-[0.92fr_1.08fr]" : "group grid overflow-hidden rounded-[32px] border border-[#ded5ca] bg-[#fffdf8]/90 shadow-[0_34px_100px_-76px_rgba(20,22,26,0.32)] md:grid-cols-[0.9fr_1.1fr]"}
             href={hrefFor(site, setting(section, "ctaHref", "#packages"))}
           >
@@ -5773,7 +6210,7 @@ function SectionView({
                 </div>
               </div>
               <span className={dark ? "mt-8 inline-flex w-fit items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition group-hover:-translate-y-0.5" : "mt-8 inline-flex w-fit items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition group-hover:-translate-y-0.5"}>
-                {setting(section, "ctaLabel", "Explore")}
+                {bannerCtaLabel}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </span>
             </div>
@@ -5781,9 +6218,9 @@ function SectionView({
               <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={image} alt={setting(section, "title")} />
               <div className={dark ? "absolute inset-0 bg-gradient-to-r from-[#15171c]/76 via-black/10 to-black/34" : "absolute inset-0 bg-gradient-to-r from-black/48 via-black/6 to-black/28"} />
               <div className={dark ? "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/14 bg-black/48 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.72)] backdrop-blur-md" : "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/24 bg-[#111114]/72 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.64)] backdrop-blur-md"}>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/62">featured collection</p>
-                <p className="mt-2 text-xl font-semibold leading-tight">{setting(section, "imageCaption", aidreamcapes ? "Private route gallery workflow" : "Private photo pack workflow")}</p>
-                <p className="mt-2 text-sm leading-6 text-white/74">{setting(section, "imageMeta", aidreamcapes ? "Upload, reserve credits, create, and receive your private destination gallery from one account." : "Upload, reserve credits, create, and receive your private photo pack from one account.")}</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/62">{spanishXbyBanner ? "coleccion destacada" : "featured collection"}</p>
+                <p className="mt-2 text-xl font-semibold leading-tight">{spanishXbyBanner ? aidreamcapes ? "Flujo de galeria de ruta privada" : "Flujo de paquete de fotos privado" : setting(section, "imageCaption", aidreamcapes ? "Private route gallery workflow" : "Private photo pack workflow")}</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">{spanishXbyBanner ? aidreamcapes ? "Sube fotos, reserva creditos, crea y recibe tu galeria de destino en una sola cuenta." : "Sube fotos, reserva creditos, crea y recibe tu paquete privado desde una sola cuenta." : setting(section, "imageMeta", aidreamcapes ? "Upload, reserve credits, create, and receive your private destination gallery from one account." : "Upload, reserve credits, create, and receive your private photo pack from one account.")}</p>
               </div>
             </div>
           </Link>
@@ -5832,6 +6269,7 @@ function SectionView({
   }
 
   if (section.type === "login_method_panel") {
+    const spanishXbyLogin = isSpanishXbySite(site);
     const methods = sectionBlocks(section, "login_method");
     const auth = runtime?.auth;
     const showRealLoginForm = Boolean(auth) && renderContext.pagePath === "/login" && mode !== "preview";
@@ -5839,25 +6277,56 @@ function SectionView({
     const initialAuthMode = requestedAuthMode === "register" || requestedAuthMode === "password_reset" ? requestedAuthMode : "login";
     const featureImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.upload));
     const secondaryImage = mediaAssetUrl(site, setting(section, "secondaryImageUrl", "/assets/dreamshoot/avatar-nora-gpt2-fast.png"));
-    const featureLabel = setting(section, "imageBadge", "Private customer access");
-    const featureCaption = setting(section, "imageCaption", "Magazine-grade photo delivery begins with a private sign-in.");
-    const featureMeta = setting(section, "imageMeta", "Keep uploads, scene packs, and delivery requests inside one elegant client workspace.");
+    const translateLoginText = (value: string, fallback: string) => {
+      if (!spanishXbyLogin) return value || fallback;
+      const normalized = (value || fallback).trim();
+      const copy: Record<string, string> = {
+        "Private customer access": "Acceso privado de cliente",
+        "Private uploads": "Subidas privadas",
+        "Magazine-grade photo delivery begins with a private sign-in.": "La entrega de fotos con calidad editorial empieza con una cuenta privada.",
+        "Keep uploads, scene packs, and delivery requests inside one elegant client workspace.": "Mantiene subidas, paquetes de escena y solicitudes de entrega dentro de tu espacio privado.",
+        "Use email access": "Usar acceso por email",
+        "Use email login": "Usar inicio por email",
+        "Log in, register, or reset your password from one private account page.": "Entra, registrate o restablece tu contrasena desde una pagina privada.",
+        "Password login is available for private album access.": "El acceso con contrasena esta disponible para albumes privados."
+      };
+      return copy[normalized] ?? normalized;
+    };
+    const featureLabel = translateLoginText(setting(section, "imageBadge", "Private customer access"), "Acceso privado de cliente");
+    const featureCaption = translateLoginText(setting(section, "imageCaption", "Magazine-grade photo delivery begins with a private sign-in."), "La entrega de fotos con calidad editorial empieza con una cuenta privada.");
+    const featureMeta = translateLoginText(setting(section, "imageMeta", "Keep uploads, scene packs, and delivery requests inside one elegant client workspace."), "Mantiene subidas, paquetes de escena y solicitudes de entrega dentro de tu espacio privado.");
+    const loginFeatures = spanishXbyLogin
+      ? [
+          ["Acceso por email", "Entra, registrate o restablece tu contrasena con el email de tu cuenta privada."],
+          ["Sesion privada", "Tus creditos, subidas, solicitudes y albumes permanecen dentro de tu cuenta."],
+          ["Entrega privada", "Vuelve cuando quieras para seguir el progreso y descargar los sets terminados."]
+        ]
+      : [
+          ["Email access", "Log in, register, or reset your password with the email on your private account."],
+          ["Email login", "Your credits, uploads, requests, and albums stay inside your private account."],
+          ["Private delivery", "Return anytime to track progress and download finished photo sets."]
+        ];
+    const fallbackMethods = spanishXbyLogin
+      ? [
+          { id: "email_access", type: "login_method", settings: { label: "Usar acceso por email", helper: "Entra, registrate o restablece tu contrasena desde una pagina privada.", kind: "email", href: "/login" } },
+          { id: "email", type: "login_method", settings: { label: "Usar inicio por email", helper: "El acceso con contrasena esta disponible para albumes privados.", kind: "email", href: "/login" } }
+        ]
+      : [
+          { id: "email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
+          { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
+        ];
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/login" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     return (
       <section className="bg-[#090a0e] px-4 py-6 text-white sm:px-5 md:py-10" id={sectionAnchor(section, "start")}>
         <div className="mx-auto grid min-w-0 max-w-[var(--site-content-width)] gap-6 rounded-[32px] border border-white/10 bg-[#0f1117] p-4 shadow-[0_40px_120px_-84px_rgba(0,0,0,0.88)] sm:p-5 md:p-6 lg:grid-cols-[0.44fr_0.56fr] lg:items-start">
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-white/[0.03] p-5 md:p-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/46">{setting(section, "eyebrow", "Customer login")}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/46">{setting(section, "eyebrow", spanishXbyLogin ? "Acceso cliente" : "Customer login")}</p>
             <HeadingTag className="mt-4 max-w-full text-[clamp(2.3rem,5.4vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance text-white [font-family:var(--site-title-font)]">
               {setting(section, "title")}
             </HeadingTag>
             <p className="mt-4 max-w-xl text-sm leading-7 text-white/64">{setting(section, "subtitle")}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              {[
-                ["Email access", "Log in, register, or reset your password with the email on your private account."],
-                ["Email login", "Your credits, uploads, requests, and albums stay inside your private account."],
-                ["Private delivery", "Return anytime to track progress and download finished photo sets."]
-              ].map(([label, detail]) => (
+              {loginFeatures.map(([label, detail]) => (
                 <div className="flex items-start gap-3 rounded-[18px] border border-white/10 bg-[#12141b] px-4 py-3" key={label}>
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8ae0b5]" strokeWidth={1.8} />
                   <span>
@@ -5895,6 +6364,7 @@ function SectionView({
                     defaultName={auth?.defaultName}
                     initialMode={initialAuthMode}
                     initialMessage={auth?.initialMessage}
+                    locale={spanishXbyLogin ? "es" : "en"}
                     returnTo={queryValue(renderContext.query.next)}
                     siteId={site.id}
                     storefrontBasePath={(site as RoutedSite).__storefrontBasePath}
@@ -5910,20 +6380,17 @@ function SectionView({
                       </Link>
                     </div>
                     <div className="mt-4 grid gap-2">
-                      {(methods.length ? methods : [
-                        { id: "email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
-                        { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
-                      ]).map((method, index) => (
+                      {(methods.length ? methods : fallbackMethods).map((method, index) => (
                         <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
-                                <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
+                                <img className="h-5 w-5" src={googleIconPath} alt={spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} />
                               </span>
                             ) : null}
                             <span className="min-w-0">
-                            <span className="block font-semibold text-white">{blockValue(method, "label")}</span>
-                            <span className="mt-1 block text-xs leading-5 text-white/54">{blockValue(method, "helper")}</span>
+                            <span className="block font-semibold text-white">{translateLoginText(blockValue(method, "label"), spanishXbyLogin ? "Usar acceso por email" : "Use email access")}</span>
+                            <span className="mt-1 block text-xs leading-5 text-white/54">{translateLoginText(blockValue(method, "helper"), spanishXbyLogin ? "Entra, registrate o restablece tu contrasena desde una pagina privada." : "Log in, register, or reset your password from one private account page.")}</span>
                             </span>
                           </span>
                           <ArrowRight className="h-4 w-4 text-white/62" strokeWidth={1.8} />
@@ -6126,7 +6593,9 @@ function SectionView({
   }
 
   if (section.type === "ai_feature_launcher") {
-    const features = settingListBlocks(
+    const spanishXbyLauncher = isSpanishXbySite(site);
+    const aidreamcapesLauncher = isAidreamcapesSite(site);
+    const rawFeatures = settingListBlocks(
       section,
       "items",
       [
@@ -6140,10 +6609,13 @@ function SectionView({
         return { id: `legacy_launcher_${index}`, type: "feature", settings: { title, description, meta, href } };
       }
     );
+    const features = spanishXbyLauncher ? spanishAiFeatureLauncherBlocks(rawFeatures, aidreamcapesLauncher) : rawFeatures;
     const icons = [UploadCloud, Sparkles, Clock3, Download, Camera, Layers3];
     const leadFeature = features[0];
     const workspaceImage = runtimeCollectionImage(site, section, undefined, `${site.slug}-${id}-workspace`);
-    const workspaceChips = listSetting(section, "chipList", ["Private customer account", "Album-ready workflow", "Live credits and delivery"]);
+    const workspaceChips = listSetting(section, "chipList", ["Private customer account", "Album-ready workflow", "Live credits and delivery"]).map((chip) =>
+      spanishXbyLauncher ? spanishAiFeatureLauncherLabel(chip, aidreamcapesLauncher) : chip
+    );
     const launcherSurface = sectionSurface(
       section,
       renderContext.pagePath === "/account"
@@ -6152,29 +6624,30 @@ function SectionView({
         ? "workspace"
         : "showcase"
     );
-    const ctaLabel = setting(section, "ctaLabel", launcherSurface === "account" ? "Upload photos" : isAidreamcapesSite(site) ? "Create travel portraits" : "Create my first photo set");
+    const rawCtaLabel = setting(section, "ctaLabel", launcherSurface === "account" ? "Upload photos" : isAidreamcapesSite(site) ? "Create travel portraits" : "Create my first photo set");
+    const ctaLabel = spanishXbyLauncher ? spanishAiFeatureLauncherLabel(rawCtaLabel, aidreamcapesLauncher) : rawCtaLabel;
     const ctaHref = hrefFor(site, setting(section, "ctaHref", "/app"));
     const customer = runtime?.customer;
     const workspaceSummary = [
       {
-        label: "Available",
+        label: spanishXbyLauncher ? "Disponibles" : "Available",
         value: customer ? String(customer.balance.available) : "0",
-        detail: "credits ready"
+        detail: spanishXbyLauncher ? "creditos listos" : "credits ready"
       },
       {
-        label: "Held",
+        label: spanishXbyLauncher ? "Reservados" : "Held",
         value: customer ? String(customer.balance.reserved) : "0",
-        detail: "credits in requests"
+        detail: spanishXbyLauncher ? "creditos en solicitudes" : "credits in requests"
       },
       {
-        label: "Uploads",
+        label: spanishXbyLauncher ? "Subidas" : "Uploads",
         value: String(runtime?.assets.filter((asset) => asset.role === "input").length ?? 0),
-        detail: "private source files"
+        detail: spanishXbyLauncher ? "archivos fuente privados" : "private source files"
       },
       {
-        label: "Albums",
+        label: spanishXbyLauncher ? "Albumes" : "Albums",
         value: String(runtime?.albums.length ?? 0),
-        detail: "delivered collections"
+        detail: spanishXbyLauncher ? "colecciones entregadas" : "delivered collections"
       }
     ];
 
@@ -6538,6 +7011,7 @@ function SectionView({
 
   if (section.type === "feature_grid") {
     const isPackGrid = setting(section, "source") === "creative_packs";
+    const spanishXbyFeatureGrid = isSpanishXbySite(site);
     const packItems = creativePacks.filter((pack) => pack.status === "active").slice(0, Number(setting(section, "max_count", "6")) || 6);
     const manualItems = settingListBlocks(
       section,
@@ -6565,7 +7039,7 @@ function SectionView({
             </div>
             {isPackGrid ? (
               <Link className="inline-flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium md:justify-self-start" href={hrefFor(site, "/login")}>
-                Create album
+                {spanishXbyFeatureGrid ? "Crear album" : "Create album"}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             ) : null}
@@ -6591,15 +7065,15 @@ function SectionView({
                       fetchPriority={index > 1 ? "low" : "auto"}
                     />
                   </div>
-                  <div className="p-5">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">Private gallery</span>
-                      <span className="font-mono text-xs text-zinc-500">{pack.creditCost} credits</span>
+                    <div className="p-5">
+                      <div className="flex items-center justify-between gap-3">
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">{spanishXbyFeatureGrid ? "Galeria privada" : "Private gallery"}</span>
+                      <span className="font-mono text-xs text-zinc-500">{pack.creditCost} {spanishXbyFeatureGrid ? "creditos" : "credits"}</span>
                     </div>
                     <h3 className="mt-4 text-xl font-semibold tracking-tight">{pack.name}</h3>
                     <p className="mt-2 text-sm leading-6 text-zinc-600">{pack.headline}</p>
                     <p className="mt-4 flex items-center gap-2 text-sm font-medium text-zinc-950">
-                      Open pack
+                      {spanishXbyFeatureGrid ? "Abrir paquete" : "Open pack"}
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </p>
                   </div>
@@ -6633,6 +7107,8 @@ function SectionView({
   }
 
   if (section.type === "photo_package_wall") {
+    const spanishXbyPackageWall = isSpanishXbySite(site);
+    const aidreamcapesPackageWall = isAidreamcapesSite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualItems = sectionBlocks(section, "package");
     const packWallLimit = Number(setting(section, "max_count", "12")) || 12;
@@ -6655,10 +7131,12 @@ function SectionView({
           id: pack.id,
           title: pack.name,
           description: pack.description || pack.headline,
-          meta: "Private gallery",
-          credits: `${pack.creditCost} credits`,
+          meta: spanishXbyPackageWall ? "Galeria privada" : "Private gallery",
+          credits: `${pack.creditCost} ${spanishXbyPackageWall ? "creditos" : "credits"}`,
           category: packCategoryLabelForStorefront(pack),
-          trainingLabel: pack.trainingRequired ? "Private model" : "Ready workflow",
+          trainingLabel: spanishXbyPackageWall
+            ? pack.trainingRequired ? "Modelo privado" : "Flujo listo"
+            : pack.trainingRequired ? "Private model" : "Ready workflow",
           imageUrl: packImage(site, pack),
           href: creativePackCollectionHref(pack)
         }))
@@ -6668,8 +7146,8 @@ function SectionView({
           description: blockValue(item, "description"),
           meta: blockValue(item, "meta"),
           credits: blockValue(item, "credits"),
-          category: blockValue(item, "category", "Photo package"),
-          trainingLabel: blockValue(item, "trainingLabel", "Ready workflow"),
+          category: blockValue(item, "category", spanishXbyPackageWall ? "Paquete de fotos" : "Photo package"),
+          trainingLabel: blockValue(item, "trainingLabel", spanishXbyPackageWall ? "Flujo listo" : "Ready workflow"),
         imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", isAidreamcapesSite(site) ? aidreamcapesFallbackHeroImages[0] : packImages.creator)),
           href: blockValue(item, "href", "/tools")
         }));
@@ -6678,24 +7156,28 @@ function SectionView({
       ? Array.from(new Set([packImage(site, selectedPack), ...(selectedPack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image))])).slice(0, 12)
       : [];
     const fallbackCards = [
-      isAidreamcapesSite(site) ? {
+      aidreamcapesPackageWall ? {
         id: "fallback_route_story",
-        title: "Route Story Kit",
-        description: "Route portraits, travel journal crops, postcard sets, and private gallery albums.",
-        meta: "Private gallery",
-        credits: "22 credits",
-        category: "Route",
-        trainingLabel: "Ready workflow",
+        title: spanishXbyPackageWall ? "Kit de historia de ruta" : "Route Story Kit",
+        description: spanishXbyPackageWall
+          ? "Retratos de ruta, recortes de diario de viaje, postales y albumes privados."
+          : "Route portraits, travel journal crops, postcard sets, and private gallery albums.",
+        meta: spanishXbyPackageWall ? "Galeria privada" : "Private gallery",
+        credits: spanishXbyPackageWall ? "22 creditos" : "22 credits",
+        category: spanishXbyPackageWall ? "Ruta" : "Route",
+        trainingLabel: spanishXbyPackageWall ? "Flujo listo" : "Ready workflow",
         imageUrl: aidreamcapesFallbackHeroImages[0],
         href: "/collections"
       } : {
         id: "fallback_creator",
-        title: "Creator Studio Pack",
-        description: "AI portraits for profile updates, gifts, creator posts, and private albums.",
-        meta: "Creator profiles",
-        credits: "24 credits",
-        category: "Creator",
-        trainingLabel: "Ready workflow",
+        title: spanishXbyPackageWall ? "Pack de estudio para creadores" : "Creator Studio Pack",
+        description: spanishXbyPackageWall
+          ? "Retratos IA para perfiles, regalos, publicaciones de creador y albumes privados."
+          : "AI portraits for profile updates, gifts, creator posts, and private albums.",
+        meta: spanishXbyPackageWall ? "Perfiles de creador" : "Creator profiles",
+        credits: spanishXbyPackageWall ? "24 creditos" : "24 credits",
+        category: spanishXbyPackageWall ? "Creador" : "Creator",
+        trainingLabel: spanishXbyPackageWall ? "Flujo listo" : "Ready workflow",
         imageUrl: packImages.creator,
         href: "/tools"
       }
@@ -6729,12 +7211,12 @@ function SectionView({
                   <h3 className="mt-4 text-[clamp(2rem,4vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white">{selectedPack.headline || selectedPack.name}</h3>
                   <p className="mt-5 text-sm leading-7 text-white/62">{selectedPack.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">Private gallery</span>
-                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.creditCost} credits</span>
-                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.trainingRequired ? "Private model" : "Ready workflow"}</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{spanishXbyPackageWall ? "Galeria privada" : "Private gallery"}</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{selectedPack.creditCost} {spanishXbyPackageWall ? "creditos" : "credits"}</span>
+                    <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/78">{spanishXbyPackageWall ? selectedPack.trainingRequired ? "Modelo privado" : "Flujo listo" : selectedPack.trainingRequired ? "Private model" : "Ready workflow"}</span>
                   </div>
                   <Link className="mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, creativePackCreateHref(selectedPack))} style={{ background: dreamshootBrandGradient }}>
-                    Start this package
+                    {spanishXbyPackageWall ? "Iniciar este paquete" : "Start this package"}
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
                 </div>
@@ -6750,26 +7232,29 @@ function SectionView({
           ) : null}
           {usePacks ? (
             <div className="mt-7 flex flex-wrap items-center gap-2 text-xs text-white/62">
-              <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-white/76">{displayCards.length} visible packs</span>
+              <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-white/76">{displayCards.length} {spanishXbyPackageWall ? "paquetes visibles" : "visible packs"}</span>
               <Link className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
-                All
+                {spanishXbyPackageWall ? "Todos" : "All"}
               </Link>
-              {categoryLinks.map((category) => (
-                <Link
-                  className={`rounded-full border px-3 py-1.5 transition hover:border-white/28 hover:text-white ${selectedCategory === dreamshootCategorySlug(category) ? "border-transparent text-white" : "border-white/14 bg-white/[0.08]"}`}
-                  href={hrefFor(site, collectionHref(category))}
-                  key={category}
-                  style={selectedCategory === dreamshootCategorySlug(category) ? { background: dreamshootBrandGradient } : undefined}
-                >
-                  {category}
-                </Link>
-              ))}
+              {categoryLinks.map((category) => {
+                const categorySlug = dreamshootCategorySlug(category);
+                return (
+                  <Link
+                    className={`rounded-full border px-3 py-1.5 transition hover:border-white/28 hover:text-white ${selectedCategory === categorySlug ? "border-transparent text-white" : "border-white/14 bg-white/[0.08]"}`}
+                    href={hrefFor(site, collectionHref(category))}
+                    key={category}
+                    style={selectedCategory === categorySlug ? { background: dreamshootBrandGradient } : undefined}
+                  >
+                    {spanishXbyPackageWall ? spanishXbyCategoryLinkLabel(category, isAidreamcapesSite(site)) : category}
+                  </Link>
+                );
+              })}
             </div>
           ) : null}
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {displayCards.map((card, index) => (
               <Link
-                aria-label={cardLinkLabel("Open package", card.title)}
+                aria-label={cardLinkLabel(spanishXbyPackageWall ? "Abrir paquete" : "Open package", card.title)}
                 className={`group relative flex min-h-[360px] overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.04] text-white shadow-[0_28px_70px_-58px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24 ${
                   index === 0 && renderContext.pagePath === "/" ? "sm:col-span-2 xl:col-span-2" : ""
                 }`}
@@ -6800,7 +7285,7 @@ function SectionView({
                     <h3 className="text-[clamp(1.35rem,2.1vw,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-balance text-white">{card.title}</h3>
                     <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/74" title={card.description}>{card.description}</p>
                     <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                      Open package
+                      {spanishXbyPackageWall ? "Abrir paquete" : "Open package"}
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </span>
                   </div>
@@ -6814,7 +7299,7 @@ function SectionView({
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5"
                 href={hrefFor(site, "/collections")}
               >
-                Explore all photo packages
+                {spanishXbyPackageWall ? "Explorar todos los paquetes" : "Explore all photo packages"}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -6826,6 +7311,7 @@ function SectionView({
 
   if (section.type === "dreamshoot_package_taxonomy") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const spanishXbyTaxonomy = isSpanishXbySite(site);
     const blocks = sectionBlocks(section, "taxonomy_card");
     const fallbackCards: SectionBlockInstance[] = [
       {
@@ -6896,22 +7382,33 @@ function SectionView({
         }));
     const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
       const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
+      const localizedKeywords = card.keywords
+        .filter((keyword): keyword is string => Boolean(keyword))
+        .map((keyword) => spanishXbyTaxonomy ? spanishXbyTaxonomyKeyword(keyword, aidreamcapes) : keyword)
+        .filter(Boolean);
       return {
         id: card.id,
         title: card.title,
         description: truncateText(card.description, 220),
-        meta: card.meta,
-        keywords: card.keywords.filter((keyword): keyword is string => Boolean(keyword)).slice(0, 5),
+        meta: spanishXbyTaxonomy ? spanishXbyCategoryLinkLabel(card.meta, aidreamcapes) : card.meta,
+        keywords: Array.from(new Set(localizedKeywords)).slice(0, 5),
         imageUrl: card.imageUrl,
         href: hrefFor(site, card.href),
         appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack)) : hrefFor(site, "/app/create"),
         chips: matchingPack
-          ? [
-              "Private gallery",
-              `${matchingPack.creditCost || 20} credits`,
-              dreamshootDefaultToolTitle(matchingPack.aiAppSlug || "image-studio"),
-              matchingPack.trainingRequired ? "Training required" : "Ready workflow"
-            ]
+          ? spanishXbyTaxonomy
+            ? [
+                "Galeria privada",
+                `${matchingPack.creditCost || 20} creditos`,
+                aidreamcapes ? "Retrato de viaje" : "Fotos IA",
+                matchingPack.trainingRequired ? "Modelo privado" : "Flujo listo"
+              ]
+            : [
+                "Private gallery",
+                `${matchingPack.creditCost || 20} credits`,
+                dreamshootDefaultToolTitle(matchingPack.aiAppSlug || "image-studio"),
+                matchingPack.trainingRequired ? "Training required" : "Ready workflow"
+              ]
           : []
       };
     });
@@ -6923,8 +7420,9 @@ function SectionView({
     const selectedCategory = selectedPack?.categoryRecord;
     const fallbackCollectionLabel = selectedCollectionSlug ? dreamshootCategoryLabel(selectedCollectionSlug) : "";
     const dynamicTitle = selectedPack?.name || selectedCategory?.heroTitle || selectedCategory?.label || fallbackCollectionLabel;
+    const localizedDynamicTitle = spanishXbyTaxonomy ? spanishPhotoPackageLabel(dynamicTitle, aidreamcapes) : dynamicTitle;
     const dynamicSubtitle = selectedPack?.description || selectedPack?.headline || selectedCategory?.heroSubtitle || selectedCategory?.description;
-    const isCollectionDetail = Boolean(selectedCollectionSlug && dynamicTitle);
+    const isCollectionDetail = Boolean(selectedCollectionSlug && localizedDynamicTitle);
     const selectedGalleryImages = selectedPack
       ? Array.from(new Set([
           packImage(site, selectedPack),
@@ -6932,12 +7430,19 @@ function SectionView({
         ].filter(Boolean))).slice(0, 4)
       : [];
     const detailChips = selectedPack
-      ? [
-          "Private gallery",
-          `${selectedPack.creditCost || 20} credits`,
-          dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio"),
-          selectedPack.trainingRequired ? "Training required" : "Ready workflow"
-        ]
+      ? spanishXbyTaxonomy
+        ? [
+            "Galeria privada",
+            `${selectedPack.creditCost || 20} creditos`,
+            aidreamcapes ? "Retrato de viaje" : "Fotos IA",
+            selectedPack.trainingRequired ? "Modelo privado" : "Flujo listo"
+          ]
+        : [
+            "Private gallery",
+            `${selectedPack.creditCost || 20} credits`,
+            dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio"),
+            selectedPack.trainingRequired ? "Training required" : "Ready workflow"
+          ]
       : [];
     const taxonomySectionClass = aidreamcapes
       ? "relative overflow-hidden border-y border-white/10 bg-[#05070E] px-5 py-16 text-white"
@@ -6968,7 +7473,7 @@ function SectionView({
             <div>
               <p className={taxonomyEyebrowClass}>{setting(section, "eyebrow", "Photo package library")}</p>
               <HeadingTag className="mt-4 max-w-3xl text-[clamp(2.1rem,4.4vw,4.65rem)] font-semibold leading-[0.98] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {dynamicTitle || setting(section, "title", "Package categories customers already understand.")}
+                {localizedDynamicTitle || setting(section, "title", "Package categories customers already understand.")}
               </HeadingTag>
             </div>
             <p className={taxonomySubtitleClass}>{dynamicSubtitle || setting(section, "subtitle")}</p>
@@ -6976,12 +7481,12 @@ function SectionView({
           {isCollectionDetail ? (
             <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
               <div className={selectedPanelClass}>
-                <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Selected package</p>
+                <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>{spanishXbyTaxonomy ? "Paquete seleccionado" : "Selected package"}</p>
                 <h3 className={aidreamcapes ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
-                  {dynamicTitle}
+                  {localizedDynamicTitle}
                 </h3>
                 <p className={aidreamcapes ? "mt-4 max-w-2xl text-sm leading-7 text-white/66" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
-                  {dynamicSubtitle || "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request."}
+                  {dynamicSubtitle || (spanishXbyTaxonomy ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y la experiencia de album privado antes de generar." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
                 </p>
                 {detailChips.length ? (
                   <div className="mt-6 flex flex-wrap gap-2">
@@ -6993,7 +7498,7 @@ function SectionView({
                   </div>
                 ) : null}
                 <Link className={aidreamcapes ? "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={hrefFor(site, selectedPack ? creativePackCreateHref(selectedPack) : "/app/create")}>
-                  Start this package
+                  {spanishXbyTaxonomy ? "Iniciar este paquete" : "Start this package"}
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
               </div>
@@ -7002,7 +7507,7 @@ function SectionView({
                   {selectedGalleryImages.map((image, index) => (
                     <div className={`relative overflow-hidden rounded-[18px] ${aidreamcapes ? "bg-zinc-900" : "bg-zinc-900"} ${index === 0 && selectedGalleryImages.length < 3 ? "sm:col-span-2" : ""}`} key={`${image}_${index}`}>
                       <StorefrontImage
-                        alt={`${dynamicTitle} preview ${index + 1}`}
+                        alt={spanishXbyTaxonomy ? `Vista previa de ${localizedDynamicTitle} ${index + 1}` : `${localizedDynamicTitle} preview ${index + 1}`}
                         className="h-full min-h-[170px] w-full object-cover"
                         sizes="(max-width: 1024px) 50vw, 25vw"
                         src={image}
@@ -7013,14 +7518,14 @@ function SectionView({
               ) : (
                 <div className={selectedFallbackClass}>
                   <div>
-                    <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>Package guide</p>
-                    <h3 className="mt-4 text-2xl font-semibold tracking-tight">What to expect from {dynamicTitle}</h3>
+                    <p className={aidreamcapes ? "text-xs font-semibold uppercase tracking-[0.18em] text-white/44" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>{spanishXbyTaxonomy ? "Guia del paquete" : "Package guide"}</p>
+                    <h3 className="mt-4 text-2xl font-semibold tracking-tight">{spanishXbyTaxonomy ? `Que esperar de ${localizedDynamicTitle}` : `What to expect from ${localizedDynamicTitle}`}</h3>
                     <p className={aidreamcapes ? "mt-3 text-sm leading-7 text-white/62" : "mt-3 text-sm leading-7 text-white/62"}>
-                      Review the source-photo guidance, expected credits, image count, and private gallery delivery before starting this package.
+                      {spanishXbyTaxonomy ? "Revisa la guia de fotos fuente, creditos esperados, cantidad de imagenes y entrega privada antes de iniciar este paquete." : "Review the source-photo guidance, expected credits, image count, and private gallery delivery before starting this package."}
                     </p>
                   </div>
                   <Link className={aidreamcapes ? "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" : "inline-flex w-fit items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white"} href={hrefFor(site, "/collections")}>
-                    Browse all packages
+                    {spanishXbyTaxonomy ? "Ver todos los paquetes" : "Browse all packages"}
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
                 </div>
@@ -7040,21 +7545,22 @@ function SectionView({
     const useCases = listLines(setting(section, "useCases", ""));
     const workflow = listLines(setting(section, "workflow", ""));
     const kind = setting(section, "kind", "collection");
+    const spanishXbyDirectory = isSpanishXbySite(site);
     return (
       <section className="bg-[#f8f3ea] px-5 py-14 text-[#14161a]" id={sectionAnchor(section, setting(section, "anchor", "directory-guide"))}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.62fr)_minmax(320px,0.38fr)] lg:items-start">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">{kind === "tool" ? "AI tool guide" : "Photo package directory"}</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">{spanishXbyDirectory ? kind === "tool" ? "Guia de herramienta IA" : "Directorio de paquetes" : kind === "tool" ? "AI tool guide" : "Photo package directory"}</p>
               <h2 className="mt-4 text-[clamp(2.15rem,4.8vw,4.4rem)] font-bold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", isAidreamcapesSite(site) ? "route portrait package" : "AI shoot package")}
+                {setting(section, "title", spanishXbyDirectory ? isAidreamcapesSite(site) ? "paquete de retratos de viaje" : "paquete de fotos IA" : isAidreamcapesSite(site) ? "route portrait package" : "AI shoot package")}
               </h2>
               <p className="mt-5 max-w-4xl text-[1.05rem] leading-8 text-[#555f6d]">{setting(section, "subtitle", site.branding.description)}</p>
               {details.length ? (
                 <div className="mt-8 grid gap-4">
                   {details.map((detail, index) => (
                     <article className="rounded-[18px] border border-[#e6d8c4] bg-white p-5 shadow-[0_24px_70px_-62px_rgba(20,22,26,0.28)]" key={`${detail}_${index}`}>
-                      <h3 className="text-lg font-bold tracking-tight">{h3List[index] ?? h3List[0] ?? "Directory details"}</h3>
+                      <h3 className="text-lg font-bold tracking-tight">{h3List[index] ?? h3List[0] ?? (spanishXbyDirectory ? "Detalles del directorio" : "Directory details")}</h3>
                       <p className="mt-2 text-sm leading-7 text-[#5d6572]">{detail}</p>
                     </article>
                   ))}
@@ -7062,10 +7568,10 @@ function SectionView({
               ) : null}
             </div>
             <aside className="rounded-[24px] border border-[#e0ceb6] bg-white p-6 shadow-[0_28px_90px_-68px_rgba(20,22,26,0.38)] lg:sticky lg:top-28">
-              <h3 className="text-xl font-bold tracking-tight">{setting(section, "label", "Directory")} guide</h3>
+              <h3 className="text-xl font-bold tracking-tight">{setting(section, "label", spanishXbyDirectory ? "Directorio" : "Directory")} {spanishXbyDirectory ? "guia" : "guide"}</h3>
               {useCases.length ? (
                 <div className="mt-5">
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">Use cases</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">{spanishXbyDirectory ? "Casos de uso" : "Use cases"}</p>
                   <ul className="mt-3 grid gap-2">
                     {useCases.map((item) => (
                       <li className="flex gap-2 text-sm leading-6 text-[#525b68]" key={item}>
@@ -7078,7 +7584,7 @@ function SectionView({
               ) : null}
               {workflow.length ? (
                 <div className="mt-6">
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">Workflow</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">{spanishXbyDirectory ? "Flujo" : "Workflow"}</p>
                   <ol className="mt-3 grid gap-2">
                     {workflow.map((item, index) => (
                       <li className="grid grid-cols-[28px_1fr] gap-2 text-sm leading-6 text-[#525b68]" key={item}>
@@ -7090,7 +7596,7 @@ function SectionView({
                 </div>
               ) : null}
               <Link className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
-                {setting(section, "ctaLabel", "Start creating")}
+                {setting(section, "ctaLabel", spanishXbyDirectory ? "Empezar" : "Start creating")}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </aside>
@@ -7113,7 +7619,7 @@ function SectionView({
     const cards = (blocks.length ? blocks : fallbackCards).slice(0, 5);
     const lead = cards[0];
     const tabs = listLines(setting(section, "tabs", "All|Couple|Seasonal|Headshots|Beauty|Creative|Video"));
-    const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes"));
+    const badges = listLines(setting(section, "badges", "Private model|Album-ready|15+ package themes")).map((badge) => isSpanishXbySite(site) ? spanishProofBadgeLabel(badge) : badge);
     return (
       <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-16" : "relative overflow-hidden bg-[#05070E] px-5 py-14 text-white md:py-16"} id={sectionAnchor(section, "proof-gallery")}>
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_10%,rgba(122,76,255,0.34),transparent_31%),radial-gradient(circle_at_85%_8%,rgba(22,220,240,0.22),transparent_34%),radial-gradient(circle_at_58%_100%,rgba(236,75,221,0.18),transparent_36%)]"} />
@@ -7164,7 +7670,7 @@ function SectionView({
               {...xfcartBlockAttrs(lead, 0, "visual_proof")}
             >
               <StorefrontImage
-                alt={manualBlockImageAlt(lead, isAidreamcapesSite(site) ? "Featured route portrait package" : "Featured AI shoot package")}
+                alt={spanishXbyImageAlt(site, manualBlockImageAlt(lead, isAidreamcapesSite(site) ? "Featured route portrait package" : "Featured AI shoot package"))}
                 className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                 sizes="(max-width: 1024px) 100vw, 49vw"
                 src={mediaAssetUrl(site, blockValue(lead, "imageUrl", packImages.creator))}
@@ -7191,7 +7697,7 @@ function SectionView({
                   {...xfcartBlockAttrs(card, index + 1, "visual_proof")}
                 >
                   <StorefrontImage
-                    alt={manualBlockImageAlt(card, "Photo result")}
+                    alt={spanishXbyImageAlt(site, manualBlockImageAlt(card, blockValue(card, "title", blockValue(card, "description", `Photo result ${index + 1}`))))}
                     className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     src={mediaAssetUrl(site, blockValue(card, "imageUrl", packImages.fashion))}
@@ -7216,6 +7722,7 @@ function SectionView({
 
   if (section.type === "dreamshoot_featured_pack") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const spanishXbyFeaturedPack = isSpanishXbySite(site);
     const images = sectionBlocks(section, "seasonal_image");
     const fallbackImages: SectionBlockInstance[] = [
       { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", shape: "tall" } },
@@ -7240,9 +7747,9 @@ function SectionView({
     })).filter((item) => item.title || item.body);
     const overlayChips = listLines(setting(section, "overlayChips", "fan poster|avatar|stadium|social-ready"));
     const metrics = [
-      { value: setting(section, "photos", "Private gallery"), label: "Customer album" },
-      { value: setting(section, "credits", "26 credits"), label: "Shown upfront" },
-      { value: setting(section, "privacy", "Private album"), label: "Identity-safe" }
+      { value: setting(section, "photos", spanishXbyFeaturedPack ? "Galeria privada" : "Private gallery"), label: spanishXbyFeaturedPack ? "Album del cliente" : "Customer album" },
+      { value: setting(section, "credits", spanishXbyFeaturedPack ? "26 creditos" : "26 credits"), label: spanishXbyFeaturedPack ? "Visible antes de generar" : "Shown upfront" },
+      { value: setting(section, "privacy", spanishXbyFeaturedPack ? "Album privado" : "Private album"), label: spanishXbyFeaturedPack ? "Identidad protegida" : "Identity-safe" }
     ];
     const collagePlacements = [
       "col-span-12 row-span-3 md:col-span-5 md:row-span-5",
@@ -7289,7 +7796,7 @@ function SectionView({
                 ))}
               </div>
               <div className={aidreamcapes ? "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5" : "mt-5 rounded-[24px] border border-white/12 bg-white/[0.05] p-5"}>
-                <p className={aidreamcapes ? "text-sm font-semibold tracking-[-0.01em] text-white" : "text-sm font-semibold tracking-[-0.01em] text-white"}>{setting(section, "includedTitle", "Included outputs")}</p>
+	                <p className={aidreamcapes ? "text-sm font-semibold tracking-[-0.01em] text-white" : "text-sm font-semibold tracking-[-0.01em] text-white"}>{setting(section, "includedTitle", spanishXbyFeaturedPack ? "Resultados incluidos" : "Included outputs")}</p>
                 <div className="mt-4 grid gap-3">
                   {(includedOutputs.length ? includedOutputs : [
                     { title: "Fan posters", body: "Large portrait graphics for match day" },
@@ -7300,8 +7807,8 @@ function SectionView({
                     <div className="grid grid-cols-[10px_1fr] gap-3" key={`${item.title}-${item.body}`}>
                       <span className="mt-2 h-2 w-2 rounded-full" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }} />
                       <div>
-                        <p className={aidreamcapes ? "text-sm font-semibold text-white/92" : "text-sm font-semibold text-white/92"}>{item.title}</p>
-                        {item.body ? <p className={aidreamcapes ? "mt-0.5 text-xs leading-5 text-white/52" : "mt-0.5 text-xs leading-5 text-white/52"}>{item.body}</p> : null}
+	                        <p className={aidreamcapes ? "text-sm font-semibold text-white/92" : "text-sm font-semibold text-white/92"}>{spanishXbyFeaturedPack ? spanishFeaturedPackLabel(item.title, aidreamcapes) : item.title}</p>
+	                        {item.body ? <p className={aidreamcapes ? "mt-0.5 text-xs leading-5 text-white/52" : "mt-0.5 text-xs leading-5 text-white/52"}>{spanishXbyFeaturedPack ? spanishFeaturedPackLabel(item.body, aidreamcapes) : item.body}</p> : null}
                       </div>
                     </div>
                   ))}
@@ -7321,14 +7828,14 @@ function SectionView({
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
                       <StorefrontImage
-                        alt={manualBlockImageAlt(item, "Featured pack image")}
+	                        alt={spanishXbyImageAlt(site, manualBlockImageAlt(item, spanishXbyFeaturedPack ? "Imagen de paquete destacado" : "Featured pack image"))}
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                         sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 18vw"
                         src={mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.sports))}
                       />
                       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/78 via-black/24 to-transparent p-3 opacity-100 md:p-4">
-                        <p className="text-xs font-semibold text-white">{blockValue(item, "label", "World Cup image")}</p>
-                        {blockValue(item, "meta", "") ? <p className="mt-0.5 hidden text-[11px] leading-4 text-white/58 sm:block">{blockValue(item, "meta", "")}</p> : null}
+	                        <p className="text-xs font-semibold text-white">{spanishXbyFeaturedPack ? spanishFeaturedPackLabel(blockValue(item, "label", "World Cup image"), aidreamcapes) : blockValue(item, "label", "World Cup image")}</p>
+	                        {blockValue(item, "meta", "") ? <p className="mt-0.5 hidden text-[11px] leading-4 text-white/58 sm:block">{spanishXbyFeaturedPack ? spanishFeaturedPackLabel(blockValue(item, "meta", ""), aidreamcapes) : blockValue(item, "meta", "")}</p> : null}
                       </div>
                     </div>
                   );
@@ -7340,14 +7847,14 @@ function SectionView({
                 <div className="mt-4 flex flex-wrap gap-2">
                   {overlayChips.map((chip, index) => (
                     <span className={aidreamcapes ? "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76" : "rounded-full border border-white/14 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/76"} key={chip} style={index === 0 ? { background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient, borderColor: "transparent", color: "white" } : undefined}>
-                      {chip}
+	                      {spanishXbyFeaturedPack ? spanishFeaturedPackLabel(chip, aidreamcapes) : chip}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
                 <p className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54" : "rounded-[18px] border border-white/10 bg-white/[0.045] px-4 py-3 text-xs leading-5 text-white/54"}>
-                  {setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and personal fan-photo moments.")}
+	                  {spanishXbyFeaturedPack ? spanishFeaturedPackLabel(setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and personal fan-photo moments."), aidreamcapes) : setting(section, "bottomNote", aidreamcapes ? "Travel packages rotate around coastlines, old cities, trail routes, cafe corners, and postcard-ready albums." : "Seasonal packs rotate around tournaments, holidays, and personal fan-photo moments.")}
                 </p>
                 <div className={aidreamcapes ? "rounded-[18px] border border-white/10 bg-white/[0.055] p-3" : "rounded-[18px] border border-white/10 bg-white/[0.055] p-3"}>
                   <p className={aidreamcapes ? "text-xs font-semibold text-white" : "text-xs font-semibold text-white"}>{setting(section, "campaignLabel", aidreamcapes ? "Current route: Coastal portrait sets" : "Current campaign: World Cup Fan Photos")}</p>
@@ -7366,6 +7873,7 @@ function SectionView({
 
   if (section.type === "dreamshoot_package_catalog" || section.type === "aidreamcapes_package_catalog") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const spanishXbyCatalog = isSpanishXbySite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
     const selectedCategory = dreamshootCategorySlug(queryValue(renderContext.query.category));
@@ -7405,32 +7913,41 @@ function SectionView({
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
     return (
       <DreamshootPackageCatalogClient
-        activePackageLabel={setting(section, "label", "Photo package catalog")}
+        activePackageLabel={setting(section, "label", spanishXbyCatalog ? "Catalogo de paquetes" : "Photo package catalog")}
         aidreamcapes={aidreamcapes}
         cards={displayCards}
-        creditLabel="Credit cost shown before generation"
-        directoryTitle="Browse all available photo packs."
+        creditLabel={spanishXbyCatalog ? "Coste en creditos visible antes de generar" : "Credit cost shown before generation"}
+        directoryTitle={spanishXbyCatalog ? "Explora todos los paquetes disponibles." : "Browse all available photo packs."}
         featuredCount={featuredCount}
         initialCategory={selectedCategory || "all"}
+        locale={spanishXbyCatalog ? "es" : "en"}
         openCollectionsHref={hrefFor(site, "/collections")}
         sectionId={sectionAnchor(section, "packages")}
         siteBasePath={routedSitePath(site, "")}
-        steps={steps}
+        steps={spanishXbyCatalog && steps.join("|") === "Pick pack|See credit cost|Generate album" ? ["Elige paquete", "Revisa creditos", "Genera album"] : steps}
         subtitle={setting(section, "subtitle", "Each package shows what it creates, who it is for, and the credit cost before you start.")}
         tabs={tabs}
-        title={setting(section, "title", aidreamcapes ? "Choose a route portrait package first." : "Choose an AI shoot package first.")}
+        title={setting(section, "title", spanishXbyCatalog ? aidreamcapes ? "Elige primero un paquete de retrato de ruta." : "Elige primero un paquete de fotos IA." : aidreamcapes ? "Choose a route portrait package first." : "Choose an AI shoot package first.")}
       />
     );
   }
 
   if (section.type === "dreamshoot_flow_bridge") {
+    const spanishXbyFlowBridge = isSpanishXbySite(site);
     const steps = sectionBlocks(section, "card");
-    const fallbackSteps: SectionBlockInstance[] = [
-      { id: "flow_upload", type: "card", settings: { title: "Upload clear photos", text: "Use photos you own or have permission to use, with the face or subject clearly visible.", meta: "01" } },
-      { id: "flow_package", type: "card", settings: { title: "Choose a package", text: "Pick the result you want before starting generation.", meta: "02" } },
-      { id: "flow_credits", type: "card", settings: { title: "Review credits", text: "See the credit cost before the request starts.", meta: "03" } },
-      { id: "flow_album", type: "card", settings: { title: "Download results", text: "Review and download finished images from your private workspace.", meta: "04" } }
-    ];
+    const fallbackSteps: SectionBlockInstance[] = spanishXbyFlowBridge
+      ? [
+          { id: "flow_upload", type: "card", settings: { title: "Sube fotos claras", text: "Usa fotos propias o autorizadas, con rostro o sujeto bien visible.", meta: "01" } },
+          { id: "flow_package", type: "card", settings: { title: "Elige un paquete", text: "Selecciona el resultado antes de iniciar la generacion.", meta: "02" } },
+          { id: "flow_credits", type: "card", settings: { title: "Revisa creditos", text: "Consulta el coste en creditos antes de empezar.", meta: "03" } },
+          { id: "flow_album", type: "card", settings: { title: "Descarga resultados", text: "Revisa y descarga imagenes terminadas desde tu espacio privado.", meta: "04" } }
+        ]
+      : [
+          { id: "flow_upload", type: "card", settings: { title: "Upload clear photos", text: "Use photos you own or have permission to use, with the face or subject clearly visible.", meta: "01" } },
+          { id: "flow_package", type: "card", settings: { title: "Choose a package", text: "Pick the result you want before starting generation.", meta: "02" } },
+          { id: "flow_credits", type: "card", settings: { title: "Review credits", text: "See the credit cost before the request starts.", meta: "03" } },
+          { id: "flow_album", type: "card", settings: { title: "Download results", text: "Review and download finished images from your private workspace.", meta: "04" } }
+        ];
     const displaySteps = (steps.length ? steps : fallbackSteps).slice(0, 4);
     const beforeImage = mediaAssetUrl(site, setting(section, "beforeImage", "/assets/dreamshoot/frames/workflow-upload-source.png"));
     const afterImage = mediaAssetUrl(site, setting(section, "afterImage", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"));
@@ -7446,14 +7963,14 @@ function SectionView({
           <div className="absolute inset-0 opacity-45 [background-image:radial-gradient(circle_at_center,rgba(184,110,54,0.22)_1px,transparent_1px)] [background-size:96px_96px]" />
           <div className="relative mx-auto max-w-[var(--site-content-width)] px-5 py-16 md:py-24">
             <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-[#8d725c]">
-              <span>{setting(section, "label", "Private album workflow")}</span>
+              <span>{setting(section, "label", spanishXbyFlowBridge ? "Flujo de album privado" : "Private album workflow")}</span>
             </div>
             <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)]">
               <h2 className="max-w-[45rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "From upload to private album.")}
+                {setting(section, "title", spanishXbyFlowBridge ? "De la subida al album privado." : "From upload to private album.")}
               </h2>
               <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-[#6f6257] lg:pt-4">
-                {setting(section, "subtitle", "Upload source photos, confirm the package and credits, then follow the request into a private gallery.")}
+                {setting(section, "subtitle", spanishXbyFlowBridge ? "Sube fotos fuente, confirma paquete y creditos, y sigue la solicitud hasta la galeria privada." : "Upload source photos, confirm the package and credits, then follow the request into a private gallery.")}
               </p>
             </div>
           </div>
@@ -7465,30 +7982,30 @@ function SectionView({
 	                    <div className="inline-grid h-9 min-w-[4.75rem] place-items-center whitespace-nowrap rounded-full px-3 text-xs font-bold text-white" style={{ background: index === 1 ? aidreamcapesAccent : aidreamcapesCopper }}>
 	                      {blockValue(step, "meta", `0${index + 1}`)}
 	                    </div>
-                    <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight">{blockValue(step, "title", "Workflow step")}</h3>
+                    <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight">{blockValue(step, "title", spanishXbyFlowBridge ? "Paso del flujo" : "Workflow step")}</h3>
                     <p className="mt-2 text-sm leading-6 text-[#6f6257]">{blockValue(step, "text", blockValue(step, "description", ""))}</p>
                   </article>
                 ))}
               </div>
               <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)]">
                 <div className="rounded-[28px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.28)]">
-                  <h3 className="text-[1.8rem] font-semibold leading-tight">Before / after proof</h3>
-                  <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">Show how a clear source upload becomes a finished route portrait.</p>
+                  <h3 className="text-[1.8rem] font-semibold leading-tight">{spanishXbyFlowBridge ? "Antes y despues" : "Before / after proof"}</h3>
+                  <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">{spanishXbyFlowBridge ? "Muestra como una foto fuente clara se convierte en un retrato de ruta terminado." : "Show how a clear source upload becomes a finished route portrait."}</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
                       <img className="h-full w-full object-cover" src={beforeImage} alt={manualImageAlt({ src: beforeImage, fallback: "Original source photo before AI photo generation" })} />
-                      <span className="absolute left-4 top-4 rounded-full bg-[#1e1712]/58 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
+                      <span className="absolute left-4 top-4 rounded-full bg-[#1e1712]/58 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{spanishXbyFlowBridge ? "Antes" : "Before"}</span>
                     </div>
                     <div className="hidden h-[104px] w-px bg-[#dfd0bd] sm:block" />
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
                       <img className="h-full w-full object-cover" src={afterImage} alt={manualImageAlt({ src: afterImage, fallback: "Generated AI photo result after processing" })} />
-                      <span className="absolute left-4 top-4 rounded-full bg-[#b86e36] px-3 py-1 text-xs font-semibold text-white">After</span>
+                      <span className="absolute left-4 top-4 rounded-full bg-[#b86e36] px-3 py-1 text-xs font-semibold text-white">{spanishXbyFlowBridge ? "Despues" : "After"}</span>
                     </div>
                   </div>
                 </div>
                 <div className="rounded-[28px] border border-[#eadfce] bg-[#fbf3e4] p-6 text-[#1e1712] shadow-[0_24px_78px_-64px_rgba(114,82,48,0.28)]">
-                  <h3 className="text-[1.8rem] font-semibold leading-tight">Private album workspace</h3>
-                  <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-[#6f6257]">One signed-in place for uploads, credit history, finished albums, and add-ons.</p>
+                  <h3 className="text-[1.8rem] font-semibold leading-tight">{spanishXbyFlowBridge ? "Espacio de album privado" : "Private album workspace"}</h3>
+                  <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-[#6f6257]">{spanishXbyFlowBridge ? "Un espacio con sesion iniciada para subidas, historial de creditos, albumes terminados y extras." : "One signed-in place for uploads, credit history, finished albums, and add-ons."}</p>
                   <div className="mt-5 flex flex-wrap items-center gap-3">
                     {albumImages.map((image, index) => (
                       <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white" key={image}>
@@ -7498,7 +8015,7 @@ function SectionView({
                     <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-[#eadfce] bg-white px-4 text-center">
                       <div>
                         <p className="text-2xl font-semibold">200</p>
-                        <p className="text-xs text-[#7b6a5b]">credits</p>
+                        <p className="text-xs text-[#7b6a5b]">{spanishXbyFlowBridge ? "creditos" : "credits"}</p>
                       </div>
                     </div>
                   </div>
@@ -7506,7 +8023,7 @@ function SectionView({
               </div>
               <div className="mt-6 flex justify-center">
                 <Link className="inline-flex w-full max-w-[560px] items-center justify-center gap-2 rounded-full bg-[#1e1712] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "bridgeHref", "/pricing"))}>
-                  {setting(section, "bridgeCta", "Choose a plan for your photo set")}
+                  {setting(section, "bridgeCta", spanishXbyFlowBridge ? "Elegir un plan para mi set" : "Choose a plan for your photo set")}
                   <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
               </div>
@@ -7521,14 +8038,14 @@ function SectionView({
         <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:96px_96px]" />
         <div className="relative mx-auto max-w-[var(--site-content-width)] px-5 py-16 md:py-24">
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-            <span>{setting(section, "label", "Private album workflow")}</span>
+            <span>{setting(section, "label", spanishXbyFlowBridge ? "Flujo de album privado" : "Private album workflow")}</span>
           </div>
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)]">
             <h2 className="max-w-[45rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
-              {setting(section, "title", "From upload to private album.")}
+              {setting(section, "title", spanishXbyFlowBridge ? "De la subida al album privado." : "From upload to private album.")}
             </h2>
             <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72 lg:pt-4">
-              {setting(section, "subtitle", "Upload source photos, confirm the package and credits, then follow the request into a private gallery.")}
+              {setting(section, "subtitle", spanishXbyFlowBridge ? "Sube fotos fuente, confirma paquete y creditos, y sigue la solicitud hasta la galeria privada." : "Upload source photos, confirm the package and credits, then follow the request into a private gallery.")}
             </p>
           </div>
         </div>
@@ -7540,30 +8057,30 @@ function SectionView({
                   <div className="grid h-14 w-14 place-items-center rounded-full text-lg font-bold" style={index === 1 ? { background: dreamshootBrandGradient, color: "white" } : index < 2 ? { background: "#EFEFEF", color: "#0C0D12" } : { background: "rgba(255,255,255,0.08)", color: "white" }}>
                     {blockValue(step, "meta", `0${index + 1}`)}
                   </div>
-                  <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight tracking-[-0.03em]">{blockValue(step, "title", "Workflow step")}</h3>
+                  <h3 className="mt-6 text-[1.35rem] font-semibold leading-tight tracking-[-0.03em]">{blockValue(step, "title", spanishXbyFlowBridge ? "Paso del flujo" : "Workflow step")}</h3>
                   <p className={index < 2 ? "mt-2 text-sm leading-6 text-[#586071]" : "mt-2 text-sm leading-6 text-white/64"}>{blockValue(step, "text", blockValue(step, "description", ""))}</p>
                 </article>
               ))}
             </div>
             <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)]">
               <div className="rounded-[28px] border border-[#D7D1C7] bg-white p-6 shadow-[0_24px_78px_-62px_rgba(10,10,12,0.35)]">
-                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">Before / after proof</h3>
-                <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#586071]">See how clear source photos become polished results while your model and album stay private.</p>
+                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">{spanishXbyFlowBridge ? "Antes y despues" : "Before / after proof"}</h3>
+                <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#586071]">{spanishXbyFlowBridge ? "Mira como fotos fuente claras se convierten en resultados pulidos mientras tu modelo y album siguen privados." : "See how clear source photos become polished results while your model and album stay private."}</p>
                 <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
                     <img className="h-full w-full object-cover" src={beforeImage} alt={manualImageAlt({ src: beforeImage, fallback: "Original source photo before AI photo generation" })} />
-                    <span className="absolute left-4 top-4 rounded-full bg-black/42 px-3 py-1 text-xs font-semibold text-white backdrop-blur">Before</span>
+                    <span className="absolute left-4 top-4 rounded-full bg-black/42 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{spanishXbyFlowBridge ? "Antes" : "Before"}</span>
                   </div>
                   <div className="hidden h-[104px] w-px bg-[#b8b2a9] sm:block" />
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
                     <img className="h-full w-full object-cover" src={afterImage} alt={manualImageAlt({ src: afterImage, fallback: "Generated AI photo result after processing" })} />
-                    <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: dreamshootBrandGradient }}>After</span>
+                    <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: dreamshootBrandGradient }}>{spanishXbyFlowBridge ? "Despues" : "After"}</span>
                   </div>
                 </div>
               </div>
               <div className="rounded-[28px] border border-[#11131B] bg-[#0D0F18] p-6 text-white shadow-[0_24px_78px_-62px_rgba(10,10,12,0.55)]">
-                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">Private album workspace</h3>
-                <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-white/68">One signed-in place for uploads, credit history, finished albums, and add-ons.</p>
+                <h3 className="text-[1.8rem] font-semibold leading-tight tracking-[-0.04em]">{spanishXbyFlowBridge ? "Espacio de album privado" : "Private album workspace"}</h3>
+                <p className="mt-2 max-w-2xl text-[1.05rem] leading-6 text-white/68">{spanishXbyFlowBridge ? "Un espacio con sesion iniciada para subidas, historial de creditos, albumes terminados y extras." : "One signed-in place for uploads, credit history, finished albums, and add-ons."}</p>
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   {albumImages.map((image, index) => (
                     <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white/[0.06]" key={image}>
@@ -7573,7 +8090,7 @@ function SectionView({
                   <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-white/12 bg-white/[0.06] px-4 text-center">
                     <div>
                       <p className="text-2xl font-semibold">200</p>
-                      <p className="text-xs text-white/62">credits</p>
+                      <p className="text-xs text-white/62">{spanishXbyFlowBridge ? "creditos" : "credits"}</p>
                     </div>
                   </div>
                 </div>
@@ -7581,7 +8098,7 @@ function SectionView({
             </div>
             <div className="mt-6 flex justify-center">
               <Link className="inline-flex w-full max-w-[560px] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "bridgeHref", "/pricing"))} style={{ background: dreamshootBrandGradient }}>
-                {setting(section, "bridgeCta", "Choose a plan for your photo set")}
+                {setting(section, "bridgeCta", spanishXbyFlowBridge ? "Elegir un plan para mi set" : "Choose a plan for your photo set")}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -7633,14 +8150,15 @@ function SectionView({
         }
       }
     ];
-    const tools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
+    const rawTools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
+    const spanishXbyTools = isSpanishXbySite(site);
+    const tools = spanishXbyTools ? spanishToolBlocks(rawTools, aidreamcapes) : rawTools;
     const configuredCategories = listLines(setting(section, "categories", aidreamcapes ? "Route Portrait Edit|Route Portrait|AI Video" : "Photo Package Edit|Photo AI|AI Video"));
     const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", aidreamcapes ? "Route Portrait" : "Photo AI"))));
     const rawCategories = Array.from(new Set([...configuredCategories, ...toolCategories]));
     const layout = setting(section, "layout", "directory");
     const dark = layout === "dark";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
-    const spanishXbyTools = isSpanishXbySite(site);
     const categories = spanishXbyTools ? Array.from(new Set(rawCategories.map((category) => spanishToolCategoryLabel(category, aidreamcapes)))) : rawCategories;
     const toolDirectoryTitle = spanishXbyTools
       ? aidreamcapes
@@ -7650,7 +8168,7 @@ function SectionView({
     const toolDirectorySubtitle = spanishXbyTools
       ? aidreamcapes
         ? "Elige una herramienta para retratos de destino, luz costera, rutas, postales y galerias privadas con creditos visibles."
-        : "Elige una herramienta para headshots, fondos, retoque, video, probador virtual y albumes privados con creditos visibles."
+        : "Elige una herramienta para retratos profesionales, fondos, retoque, video, probador virtual y albumes privados con creditos visibles."
       : "Discover paid AI tools for photo creation, background edits, video concepts, and private album workflows.";
     if (layout === "mega_menu") {
       return (
@@ -7660,7 +8178,7 @@ function SectionView({
               {tools.map((tool, index) => (
                 <div className={`relative overflow-hidden rounded-[16px] ${aidreamcapes ? "bg-zinc-900" : "bg-zinc-900"} ${index % 4 === 0 ? "translate-y-7" : ""}`} key={`mega_bg_${tool.id}_${index}`}>
                   <StorefrontImage
-                    alt=""
+                    alt={blockValue(tool, "title", aidreamcapes ? "AI travel portrait tool preview" : "AI photo tool preview")}
                     className="h-full min-h-[180px] w-full object-cover opacity-76"
                     sizes="(max-width: 768px) 33vw, 16vw"
                     src={mediaAssetUrl(site, blockValue(tool, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))}
@@ -7733,7 +8251,7 @@ function SectionView({
               <div className="grid grid-cols-3 gap-3">
                 {[
                   [`${tools.length}+`, spanishXbyTools ? "herramientas" : "paid tools"],
-                  [spanishXbyTools ? "vista" : "live", spanishXbyTools ? "preview" : "preview flow"],
+                  [spanishXbyTools ? "vista" : "live", spanishXbyTools ? "vista previa" : "preview flow"],
                   [spanishXbyTools ? "paginas" : "studio", spanishXbyTools ? "listas" : "ready pages"]
                 ].map(([value, label]) => (
                   <div className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#dbe8e4] bg-white p-4"} key={label}>
@@ -7777,6 +8295,7 @@ function SectionView({
   }
 
   if (section.type === "shoot_pack_marquee") {
+    const spanishXbyMarquee = isSpanishXbySite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
     const packItems = creativePacks.filter((pack) => pack.status === "active").slice(0, Number(setting(section, "max_count", "8")) || 8);
     const manualItems = sectionBlocks(section, "package");
@@ -7785,8 +8304,8 @@ function SectionView({
           id: pack.id,
           title: pack.name,
           description: pack.description || pack.headline,
-          meta: "Private gallery",
-          credits: `${pack.creditCost} credits`,
+          meta: spanishXbyMarquee ? "Galeria privada" : "Private gallery",
+          credits: `${pack.creditCost} ${spanishXbyMarquee ? "creditos" : "credits"}`,
           imageUrl: packImage(site, pack),
           href: creativePackCollectionHref(pack)
         }))
@@ -7800,9 +8319,15 @@ function SectionView({
           href: blockValue(item, "href", "/tools")
         }));
     const fallbackCards = [
-      { id: "worldcup", title: "World Cup Fan Photos", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
-      { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
-      { id: "gala", title: "Gala Photos", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
+      spanishXbyMarquee
+        ? { id: "worldcup", title: "Fotos de aficion mundial", description: "Retratos de fan, carteles de partido y avatares desde tus selfies.", meta: "Galeria privada", credits: "26 creditos", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" }
+        : { id: "worldcup", title: "World Cup Fan Photos", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
+      spanishXbyMarquee
+        ? { id: "creator_portraits", title: "Retratos de creador", description: "Fotos para perfil, pagina personal, boletin y kit de medios.", meta: "Perfiles de creador", credits: "16 creditos", imageUrl: packImages.creator, href: "/collections/creator-portraits" }
+        : { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
+      spanishXbyMarquee
+        ? { id: "gala", title: "Fotos de gala", description: "Retratos formales con estilo de noche, traje elegante e iluminacion de alfombra roja.", meta: "Retratos de noche", credits: "22 creditos", imageUrl: packImages.gala, href: "/collections/gala-photos" }
+        : { id: "gala", title: "Gala Photos", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -7810,8 +8335,8 @@ function SectionView({
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="grid gap-6 md:grid-cols-[0.72fr_1fr] md:items-end">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Popular packs")}</p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Customer photo stories")}</h2>
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", spanishXbyMarquee ? "Paquetes populares" : "Popular packs")}</p>
+              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, spanishXbyMarquee ? "Historias fotograficas del cliente" : "Customer photo stories")}</h2>
             </div>
             <p className="max-w-2xl text-sm leading-7 text-zinc-600 md:justify-self-end">{setting(section, "subtitle")}</p>
           </div>
@@ -7819,7 +8344,7 @@ function SectionView({
         <div className="mt-9 flex gap-4 overflow-hidden">
           <div className="flex min-w-max gap-4 animate-[sample-drift_42s_linear_infinite]">
             {displayCards.map((card, index) => (
-              <Link aria-label={cardLinkLabel("View package", card.title)} className="group w-[280px] shrink-0 overflow-hidden rounded-[1.35rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 md:w-[360px]" href={hrefFor(site, card.href)} key={`${card.id}_${index}`}>
+              <Link aria-label={cardLinkLabel(spanishXbyMarquee ? "Ver paquete" : "View package", card.title)} className="group w-[280px] shrink-0 overflow-hidden rounded-[1.35rem] border border-black/10 bg-white shadow-[0_24px_80px_-58px_rgba(24,24,27,0.55)] transition hover:-translate-y-1 md:w-[360px]" href={hrefFor(site, card.href)} key={`${card.id}_${index}`}>
                 <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={card.imageUrl} alt={card.title} loading="lazy" decoding="async" fetchPriority="low" />
                 </div>
@@ -8024,7 +8549,11 @@ function SectionView({
             </div>
           </div>
           <div className="grid border-t border-[#e4dfd4] bg-[#f5f2eb] md:border-l md:border-t-0">
-            {(stats.length ? stats : [
+            {(stats.length ? stats : isSpanishXbySite(site) ? [
+              { id: "metric_outputs", type: "stat", settings: { value: "40", label: "imagenes en paquetes premium" } },
+              { id: "metric_private", type: "stat", settings: { value: "Privado", label: "albumes de cliente" } },
+              { id: "metric_credits", type: "stat", settings: { value: "Creditos", label: "historial de pago claro" } }
+            ] : [
               { id: "metric_outputs", type: "stat", settings: { value: "40", label: "images in premium packs" } },
               { id: "metric_private", type: "stat", settings: { value: "Private", label: "customer albums" } },
               { id: "metric_credits", type: "stat", settings: { value: "Credits", label: "clear checkout history" } }
@@ -8042,6 +8571,7 @@ function SectionView({
 
   if (section.type === "pricing_table") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const spanishXbyPricing = isSpanishXbySite(site);
     const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
     const activeSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
     const displayProducts = (activeSubscriptionProducts.length ? activeSubscriptionProducts : activeProducts(products)).slice(0, 3);
@@ -8086,15 +8616,31 @@ function SectionView({
         const planSubtitle = priceMetaString(
           price,
           "planSubtitle",
-          product.name === "Starter"
-            ? "Start with one focused headshot, beauty, or profile set"
-            : product.name === "Pro" || product.name === "Popular"
-              ? "Compare several package styles with room for reruns"
-              : "More credits for premium packs, video add-ons, and repeat campaigns"
+          spanishXbyPricing
+            ? aidreamcapes
+              ? "Creditos para probar rutas, escenas y retratos de viaje privados."
+              : "Creditos para probar perfiles, retratos y albumes privados."
+            : product.name === "Starter"
+              ? "Start with one focused headshot, beauty, or profile set"
+              : product.name === "Pro" || product.name === "Popular"
+                ? "Compare several package styles with room for reruns"
+                : "More credits for premium packs, video add-ons, and repeat campaigns"
         );
-        const defaultFeatures = [
-          priceCreditsLabel(price),
-          creditsImageEstimateLabel(price),
+        const defaultFeatures = spanishXbyPricing ? [
+          localizedPriceCreditsLabel(site, price),
+          localizedCreditsImageEstimateLabel(site, price),
+          aidreamcapes ? "Crea albumes privados de retratos de viaje" : "Crea albumes privados despues de generar",
+          aidreamcapes ? "Editor de rutas con prompts" : "Editor de fotos con prompts",
+          "Filtros especiales con IA",
+          "Crea fotos escribiendo prompts en segundos",
+          "Crea videos con IA",
+          "Mejora magica para imagenes de alta resolucion",
+          "Sin marca de agua",
+          ...(product.name === "Premium" || product.name === "Deluxe" ? ["Salidas 4K de alta calidad"] : []),
+          ...(destinations >= 999 ? ["Direcciones de estilo ilimitadas"] : [])
+        ] : [
+          localizedPriceCreditsLabel(site, price),
+          localizedCreditsImageEstimateLabel(site, price),
           "Create private photo albums after generation completes",
           aidreamcapes ? "Route Portrait Editor with prompts" : "AI photo editor with prompts",
           "Special AI photo filters",
@@ -8105,9 +8651,9 @@ function SectionView({
           ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
           ...(destinations >= 999 ? ["Unlimited style directions"] : [])
         ].filter(Boolean);
-        const featureLines = priceMetaLines(price, "featuresText");
+        const featureLines = spanishXbyPricing ? [] : priceMetaLines(price, "featuresText");
         const features = featureLines.length ? featureLines : defaultFeatures;
-        const badgeLabel = priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
+        const badgeLabel = spanishXbyPricing ? bestValue ? "Mejor valor" : setting(section, "featuredBadgeLabel", "Mas elegido") : priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
         acc[cycle] = {
           id: price.id,
           formattedAmount: formatCurrency(price.amountCents, price.currency),
@@ -8120,7 +8666,7 @@ function SectionView({
           featured,
           bestValue,
           badgeLabel,
-          buttonLabel: priceMetaString(price, "buttonLabel", "Select plan"),
+	          buttonLabel: priceMetaString(price, "buttonLabel", isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
           cartHref: hrefFor(site, `/cart?product=${product.id}&price=${price.id}`)
         };
         return acc;
@@ -8148,26 +8694,36 @@ function SectionView({
       items: Array<readonly [string, string]>;
     }>>((acc, cycle) => {
       const featuredPrice = featuredPricesByCycle[cycle];
-      const configuredSideItems = priceMetaLines(featuredPrice, "sidePanelItemsText")
+      const configuredSideItems = (spanishXbyPricing ? [] : priceMetaLines(featuredPrice, "sidePanelItemsText"))
         .map((line) => {
           const [label, ...detailParts] = line.split("|").map((part) => part.trim());
           return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
         })
         .filter((item): item is readonly [string, string] => Boolean(item));
       acc[cycle] = {
-        eyebrow: priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
-        title: priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
-        body: priceMetaString(
-          featuredPrice,
-          "sidePanelBody",
-          setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-        ),
+        eyebrow: spanishXbyPricing ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos" : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
+        title: spanishXbyPricing ? aidreamcapes ? "Creditos claros para albumes de viaje flexibles." : "Creditos claros para paquetes privados flexibles." : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+        body: spanishXbyPricing
+          ? aidreamcapes
+            ? "Genera albumes privados de viaje tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas rutas."
+            : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
+          : priceMetaString(
+              featuredPrice,
+              "sidePanelBody",
+              setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
+            ),
         items: configuredSideItems.length
           ? configuredSideItems
-          : [
-              ["Starter", aidreamcapes ? "Best for quick route stories, cafe scenes, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
-              ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
-              ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
+          : spanishXbyPricing
+            ? [
+                [aidreamcapes ? "Inicial" : "Inicio", aidreamcapes ? "Ideal para historias de ruta, cafes y primeras pruebas de retrato." : "Ideal para retratos profesionales, perfiles y primeros albumes."],
+                ["Equilibrado", "Creditos equilibrados para varios albumes, ediciones por prompt y pruebas de estilo."],
+                ["Premium", "Mas creditos para video, mejora de resolucion, albumes repetidos y salidas de alta calidad."]
+              ]
+            : [
+                ["Starter", aidreamcapes ? "Best for quick route stories, cafe scenes, and travel portrait tests." : "Best for quick headshots, profile sets, and first photo albums."],
+                ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
+                ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
             ]
       };
       return acc;
@@ -8196,7 +8752,7 @@ function SectionView({
             <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {setting(section, "title", "Simple, Transparent Pricing")}
             </h2>
-            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{isSpanishXbySite(site) ? (aidreamcapes ? "Elige el plan de creditos adecuado para crear retratos de viaje privados con IA." : "Elige el plan de creditos adecuado para crear fotos privadas, headshots y albumes con IA.") : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private AI route portrait packages." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
+            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{isSpanishXbySite(site) ? (aidreamcapes ? "Elige el plan de creditos adecuado para crear retratos de viaje privados con IA." : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA.") : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private AI route portrait packages." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
             {!aidreamcapes && !isSpanishXbySite(site) ? (
               <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. MyDreamShoots keeps plan selection simple with monthly and yearly subscriptions.</p>
             ) : null}
@@ -8205,6 +8761,7 @@ function SectionView({
             aidreamcapes={aidreamcapes}
             canShowBillingSwitch={canShowBillingSwitch}
             initialBillingCycle={billingCycle}
+            locale={spanishXbyPricing ? "es" : "en"}
             plans={pricingPlans}
             sidePanels={sidePanels}
           />
@@ -8228,7 +8785,7 @@ function SectionView({
           <div className="mt-9 grid gap-4 md:grid-cols-[1fr_1.25fr]">
             {apps.map((app, index) => (
               <Link
-                aria-label={cardLinkLabel(isSpanishXbySite(site) ? "Abrir herramienta" : "Open tool", app.aiApp.name, isSpanishXbySite(site) ? "esta herramienta" : "this tool")}
+                aria-label={cardLinkLabel(isSpanishXbySite(site) ? "Abrir herramienta" : "Open tool", displayAiAppName(site, app), isSpanishXbySite(site) ? "esta herramienta" : "this tool")}
                 href={hrefFor(site, `/tools/${app.aiApp.slug}`)}
                 key={app.id}
                 className={`group rounded-[26px] border border-[#ded5ca] bg-[#f7f3ec] p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.24)] transition hover:-translate-y-1 hover:bg-white ${
@@ -8239,8 +8796,8 @@ function SectionView({
                   {app.aiApp.appType === "image" ? <Camera className="h-5 w-5" strokeWidth={1.8} /> : <ImageIcon className="h-5 w-5" strokeWidth={1.8} />}
                 </div>
                 <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-[#8a7a6d]">{isSpanishXbySite(site) ? "experiencia de album privado" : "private album experience"}</p>
-                <h3 className="mt-5 text-2xl font-semibold tracking-tight">{app.aiApp.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#625d56]">{app.aiApp.description}</p>
+                <h3 className="mt-5 text-2xl font-semibold tracking-tight">{displayAiAppName(site, app)}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#625d56]">{displayAiAppDescription(site, app)}</p>
                 <p className="mt-6 flex items-center gap-2 font-mono text-sm text-[#14161a]">
                   {app.creditCost} {isSpanishXbySite(site) ? "creditos por ejecucion" : "credits per run"}
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
@@ -8261,23 +8818,39 @@ function SectionView({
       siteAiApps[0];
     const customerSignedIn = Boolean(runtime?.customer) && !runtime?.isPreview;
     const isToolLanding = renderContext.pagePath.startsWith("/tools/");
+    const spanishXbyToolEntry = isSpanishXbySite(site);
     const actionHref = hrefFor(site, isToolLanding ? setting(section, "ctaHref", "/dashboard") : customerSignedIn ? setting(section, "ctaHref", "/app") : "/login");
-    const actionLabel = isToolLanding ? setting(section, "ctaLabel", "Start this photo set") : customerSignedIn ? setting(section, "ctaLabel", "Upload photos") : "Sign in to start";
+    const actionLabel = spanishXbyToolEntry
+      ? isToolLanding
+        ? "Crear set privado"
+        : customerSignedIn ? "Subir fotos" : "Iniciar sesion para empezar"
+      : isToolLanding
+        ? setting(section, "ctaLabel", "Start this photo set")
+        : customerSignedIn
+          ? setting(section, "ctaLabel", "Upload photos")
+          : "Sign in to start";
     const heroImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.entry));
+    const toolEntrySteps = spanishXbyToolEntry
+      ? [
+          ["Subir", "fotos fuente"],
+          ["Crear", `${boundApp?.creditCost ?? 0} creditos`],
+          ["Revisar", "galeria privada"]
+        ]
+      : [
+          ["Upload", "source photos"],
+          ["Create", `${boundApp?.creditCost ?? 0} credits`],
+          ["Review", "private gallery"]
+        ];
     return (
       <section className="grid-paper overflow-hidden bg-[#fffaf3] px-5 py-18 text-[#14161a]">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 md:grid-cols-[0.82fr_1.18fr] md:items-center">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]">{setting(section, "eyebrow", "Customer-facing tool")}</p>
-            <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{setting(section, "title", "AI tool")}</h1>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]">{setting(section, "eyebrow", spanishXbyToolEntry ? "Herramienta para clientes" : "Customer-facing tool")}</p>
+            <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{setting(section, "title", spanishXbyToolEntry ? "Herramienta IA" : "AI tool")}</h1>
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[#625d56]">{setting(section, "subtitle")}</p>
             <div className="mt-7 rounded-[30px] border border-[#e2d7ca] bg-white/88 p-5 shadow-[0_24px_72px_-56px_rgba(20,22,26,0.14)]">
               <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Upload", "source photos"],
-                  ["Create", `${boundApp?.creditCost ?? 0} credits`],
-                  ["Review", "private gallery"]
-                ].map(([label, detail]) => (
+                {toolEntrySteps.map(([label, detail]) => (
                   <div className="rounded-[20px] border border-[#ece2d7] bg-[#fcf8f2] px-4 py-4" key={label}>
                     <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">{label}</p>
                     <p className="mt-2 text-sm font-semibold text-[#171514]">{detail}</p>
@@ -8286,48 +8859,48 @@ function SectionView({
               </div>
               <div className="mt-4 grid gap-3 lg:grid-cols-[0.54fr_0.46fr]">
                 <div className="rounded-[22px] border border-[#ece2d7] bg-[#fbf6ef] px-4 py-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">what to prepare</p>
-                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">Bring clear source photos and a simple goal, such as a profile update, cleaner background, or short video concept.</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">{spanishXbyToolEntry ? "que preparar" : "what to prepare"}</p>
+                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">{spanishXbyToolEntry ? "Prepara fotos fuente claras y un objetivo simple, como actualizar un perfil, mejorar un fondo o probar un concepto visual." : "Bring clear source photos and a simple goal, such as a profile update, cleaner background, or short video concept."}</p>
                 </div>
                 <div className="rounded-[22px] border border-[#ece2d7] bg-white px-4 py-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">what you get</p>
-                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">Finished images stay in your private account so you can compare options and download the best results.</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9d8c7d]">{spanishXbyToolEntry ? "que recibes" : "what you get"}</p>
+                  <p className="mt-2 text-sm leading-6 text-[#6d665f]">{spanishXbyToolEntry ? "Las imagenes terminadas quedan en tu cuenta privada para comparar opciones y descargar los mejores resultados." : "Finished images stay in your private account so you can compare options and download the best results."}</p>
                 </div>
               </div>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link aria-label={cardLinkLabel(actionLabel, setting(section, "title", "AI tool"), "this photo tool")} className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={actionHref}>
+              <Link aria-label={cardLinkLabel(actionLabel, setting(section, "title", spanishXbyToolEntry ? "herramienta IA" : "AI tool"), spanishXbyToolEntry ? "esta herramienta" : "this photo tool")} className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={actionHref}>
                 {actionLabel}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9d8c7d]">
-                {boundApp ? `${boundApp.creditCost} credits per private request` : "Private request flow"}
+                {boundApp ? `${boundApp.creditCost} ${spanishXbyToolEntry ? "creditos por solicitud privada" : "credits per private request"}` : spanishXbyToolEntry ? "Flujo de solicitud privada" : "Private request flow"}
               </span>
             </div>
           </div>
           <div className="rounded-[34px] border border-[#ded5ca] bg-[#fffdf8]/92 p-4 shadow-[0_34px_100px_-72px_rgba(20,22,26,0.32)]">
             <div className="relative min-h-[500px] overflow-hidden rounded-[30px] bg-[#efe6d9]">
-              <img className="absolute inset-0 h-full w-full object-cover" src={heroImage} alt={setting(section, "title", "AI tool")} />
+              <img className="absolute inset-0 h-full w-full object-cover" src={heroImage} alt={setting(section, "title", spanishXbyToolEntry ? "Herramienta IA" : "AI tool")} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/8 to-transparent" />
               <div className="absolute left-5 top-5 max-w-[220px] rounded-[22px] border border-white/30 bg-white/18 p-4 text-white backdrop-blur">
                 <Sparkles className="h-7 w-7" strokeWidth={1.6} />
                 <div className="mt-1">
-                  <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-white/70">{boundApp ? `${boundApp.creditCost} credits per album request` : "Private request"}</p>
-                  <p className="mt-2 text-2xl font-semibold leading-tight">{boundApp?.aiApp.name ?? "Credits held before creation"}</p>
+                  <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-white/70">{boundApp ? `${boundApp.creditCost} ${spanishXbyToolEntry ? "creditos por solicitud" : "credits per album request"}` : spanishXbyToolEntry ? "Solicitud privada" : "Private request"}</p>
+                  <p className="mt-2 text-2xl font-semibold leading-tight">{boundApp ? displayAiAppName(site, boundApp) : spanishXbyToolEntry ? "Creditos reservados antes de crear" : "Credits held before creation"}</p>
                 </div>
               </div>
               <div className="absolute bottom-5 left-5 right-5 grid gap-4 rounded-[24px] border border-white/18 bg-black/34 p-5 text-white backdrop-blur lg:grid-cols-[0.62fr_0.38fr] lg:items-end">
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/56">your next step</p>
-                  <p className="mt-2 text-xl font-semibold">Upload source images, choose the result you want, then review finished options privately.</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/56">{spanishXbyToolEntry ? "siguiente paso" : "your next step"}</p>
+                  <p className="mt-2 text-xl font-semibold">{spanishXbyToolEntry ? "Sube imagenes fuente, elige el resultado que quieres y revisa opciones terminadas en privado." : "Upload source images, choose the result you want, then review finished options privately."}</p>
                   <p className="mt-3 max-w-xl text-sm leading-6 text-white/74">
-                    Review the source-photo guidance, expected result, and credit use before starting this private request.
+                    {spanishXbyToolEntry ? "Revisa la guia de fotos fuente, el resultado esperado y el uso de creditos antes de iniciar esta solicitud privada." : "Review the source-photo guidance, expected result, and credit use before starting this private request."}
                   </p>
                 </div>
                 <div className="rounded-[20px] border border-white/12 bg-white/[0.08] p-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/46">how it works</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/46">{spanishXbyToolEntry ? "como funciona" : "how it works"}</p>
                   <div className="mt-3 grid gap-2">
-                    {["Upload photos", "Create with credits", "Download favorites"].map((item) => (
+                    {(spanishXbyToolEntry ? ["Subir fotos", "Crear con creditos", "Descargar favoritos"] : ["Upload photos", "Create with credits", "Download favorites"]).map((item) => (
                       <div className="flex items-center justify-between gap-3 text-sm" key={item}>
                         <span className="text-white/76">{item}</span>
                         <ArrowRight className="h-3.5 w-3.5 text-white/44" strokeWidth={1.8} />
@@ -8356,18 +8929,19 @@ function SectionView({
       : enabledApps;
     const formApps = renderContext.pagePath === "/app" ? enabledApps : (boundApps.length ? boundApps : enabledApps);
     const visibleOutputAssets = assets.filter((asset) => asset.role === "output");
+    const spanishXbyWorkspaceSection = isSpanishXbySite(site);
     const previewCards = {
       upload_panel: assets.slice(0, 3).map((asset) => ({
         id: asset.id,
         title: asset.label,
         meta: asset.mimeType,
-        detail: asset.role === "input" ? "Private source photo" : "Private album image"
+        detail: spanishXbyWorkspaceSection ? asset.role === "input" ? "Foto fuente privada" : "Imagen de album privado" : asset.role === "input" ? "Private source photo" : "Private album image"
       })),
       generation_form: boundApps.slice(0, 2).map((app) => ({
         id: app.id,
-        title: app.aiApp.name,
-        meta: `${app.creditCost} credits`,
-        detail: "Ready for private album requests"
+        title: displayAiAppName(site, app),
+        meta: `${app.creditCost} ${spanishXbyWorkspaceSection ? "creditos" : "credits"}`,
+        detail: spanishXbyWorkspaceSection ? "Listo para solicitudes de album privado" : "Ready for private album requests"
       })),
       job_progress: jobs.slice(0, 3).map((job, index) => ({
         id: job.id,
@@ -8418,38 +8992,38 @@ function SectionView({
         : section.type === "job_progress"
         ? `${jobs.length} album requests`
         : `${(albums.length ? albums : visibleOutputAssets).length} gallery items`;
-    const workflowLabel =
-      section.type === "upload_panel"
-        ? "Step 01"
-        : section.type === "generation_form"
-        ? "Step 02"
-        : section.type === "job_progress"
-        ? "Step 03"
-        : "Step 04";
+	    const workflowLabel =
+	      section.type === "upload_panel"
+	        ? spanishXbyWorkspaceSection ? "Paso 01" : "Step 01"
+	        : section.type === "generation_form"
+	        ? spanishXbyWorkspaceSection ? "Paso 02" : "Step 02"
+	        : section.type === "job_progress"
+	        ? spanishXbyWorkspaceSection ? "Paso 03" : "Step 03"
+	        : spanishXbyWorkspaceSection ? "Paso 04" : "Step 04";
     const summaryCards =
       section.type === "upload_panel"
         ? [
-            { label: "Uploads", value: String(assets.length), detail: "source photos and references" },
-            { label: "Profiles", value: String(runtime?.customerModels?.length ?? 0), detail: "private looks prepared" },
-            { label: "Access", value: customer ? customer.status : "guest", detail: "private account" }
+            { label: spanishXbyWorkspaceSection ? "Subidas" : "Uploads", value: String(assets.length), detail: spanishXbyWorkspaceSection ? "fotos fuente y referencias" : "source photos and references" },
+            { label: spanishXbyWorkspaceSection ? "Perfiles" : "Profiles", value: String(runtime?.customerModels?.length ?? 0), detail: spanishXbyWorkspaceSection ? "looks privados preparados" : "private looks prepared" },
+            { label: spanishXbyWorkspaceSection ? "Acceso" : "Access", value: customer ? customer.status : "guest", detail: spanishXbyWorkspaceSection ? "cuenta privada" : "private account" }
           ]
         : section.type === "generation_form"
         ? [
-            { label: "Available", value: customer ? `${customer.balance.available}` : "0", detail: "credits ready to use" },
-            { label: "Held", value: customer ? `${customer.balance.reserved}` : "0", detail: "credits in active requests" },
-            { label: "Experience", value: boundApps[0]?.aiApp.name ?? enabledApps[0]?.aiApp.name ?? "Opening soon", detail: "album style enabled" }
+            { label: spanishXbyWorkspaceSection ? "Disponible" : "Available", value: customer ? `${customer.balance.available}` : "0", detail: spanishXbyWorkspaceSection ? "creditos listos para usar" : "credits ready to use" },
+            { label: spanishXbyWorkspaceSection ? "Reservado" : "Held", value: customer ? `${customer.balance.reserved}` : "0", detail: spanishXbyWorkspaceSection ? "creditos en solicitudes activas" : "credits in active requests" },
+            { label: spanishXbyWorkspaceSection ? "Experiencia" : "Experience", value: boundApps[0] ? displayAiAppName(site, boundApps[0]) : enabledApps[0] ? displayAiAppName(site, enabledApps[0]) : spanishXbyWorkspaceSection ? "Proximamente" : "Opening soon", detail: spanishXbyWorkspaceSection ? "estilo de album activo" : "album style enabled" }
           ]
-        : section.type === "job_progress"
-        ? [
-            { label: "Waiting", value: String(jobs.filter((job) => job.status === "queued").length), detail: "requests in line" },
-            { label: "Creating", value: String(jobs.filter((job) => job.status === "running").length), detail: "albums in progress" },
-            { label: "Delivered", value: String(jobs.filter((job) => job.status === "succeeded").length), detail: "albums ready" }
-          ]
-        : [
-            { label: "Albums", value: String(albums.length), detail: "private collections" },
-            { label: "Images", value: String(visibleOutputAssets.length), detail: "delivered files" },
-            { label: "Downloads", value: settingBool(section, "showDownloads", true) ? "On" : "Off", detail: "gallery actions" }
-          ];
+	        : section.type === "job_progress"
+	        ? [
+	            { label: spanishXbyWorkspaceSection ? "En espera" : "Waiting", value: String(jobs.filter((job) => job.status === "queued").length), detail: spanishXbyWorkspaceSection ? "solicitudes en cola" : "requests in line" },
+	            { label: spanishXbyWorkspaceSection ? "Creando" : "Creating", value: String(jobs.filter((job) => job.status === "running").length), detail: spanishXbyWorkspaceSection ? "albumes en progreso" : "albums in progress" },
+	            { label: spanishXbyWorkspaceSection ? "Entregado" : "Delivered", value: String(jobs.filter((job) => job.status === "succeeded").length), detail: spanishXbyWorkspaceSection ? "albumes listos" : "albums ready" }
+	          ]
+	        : [
+	            { label: spanishXbyWorkspaceSection ? "Albumes" : "Albums", value: String(albums.length), detail: spanishXbyWorkspaceSection ? "colecciones privadas" : "private collections" },
+	            { label: spanishXbyWorkspaceSection ? "Imagenes" : "Images", value: String(visibleOutputAssets.length), detail: spanishXbyWorkspaceSection ? "archivos entregados" : "delivered files" },
+	            { label: spanishXbyWorkspaceSection ? "Descargas" : "Downloads", value: settingBool(section, "showDownloads", true) ? spanishXbyWorkspaceSection ? "Activas" : "On" : spanishXbyWorkspaceSection ? "Inactivas" : "Off", detail: spanishXbyWorkspaceSection ? "acciones de galeria" : "gallery actions" }
+	          ];
     const sectionTheme =
       section.type === "upload_panel"
         ? {
@@ -8484,12 +9058,41 @@ function SectionView({
     const sectionShellText = darkSection ? "text-white/56" : "text-[#8a7a6d]";
     const guestSurface = sectionSurface(section, "workspace");
     const journeySurface = !customer && guestSurface === "journey";
-    const journeySteps = [
-      { type: "upload_panel", label: "Upload", detail: "Private intake" },
-      { type: "generation_form", label: "Configure", detail: "Reserve credits" },
-      { type: "job_progress", label: "Track", detail: "Live requests" },
-      { type: "album_gallery", label: "Deliver", detail: "Private album" }
-    ] as const;
+	    const journeySteps = [
+	      { type: "upload_panel", label: spanishXbyWorkspaceSection ? "Subir" : "Upload", detail: spanishXbyWorkspaceSection ? "Entrada privada" : "Private intake" },
+	      { type: "generation_form", label: spanishXbyWorkspaceSection ? "Configurar" : "Configure", detail: spanishXbyWorkspaceSection ? "Reservar creditos" : "Reserve credits" },
+	      { type: "job_progress", label: spanishXbyWorkspaceSection ? "Seguir" : "Track", detail: spanishXbyWorkspaceSection ? "Solicitudes activas" : "Live requests" },
+	      { type: "album_gallery", label: spanishXbyWorkspaceSection ? "Entregar" : "Deliver", detail: spanishXbyWorkspaceSection ? "Album privado" : "Private album" }
+	    ] as const;
+	    const guestSignInText = spanishXbyWorkspaceSection ? "Inicia sesion para continuar este flujo privado de fotos." : "Sign in to continue this private photo workflow.";
+	    const guestGalleryText = spanishXbyWorkspaceSection ? "Inicia sesion para ver imagenes de galeria privada y albumes entregados solo para esta cuenta." : "Sign in to view private gallery images and delivered albums for this account only.";
+	    const guestSignInLabel = spanishXbyWorkspaceSection ? "Iniciar sesion" : "Sign in";
+	    const guestChoosePlanLabel = spanishXbyWorkspaceSection ? "Elegir plan" : "Choose a plan";
+	    const privateAccountLabel = spanishXbyWorkspaceSection ? "cuenta privada" : "private account";
+	    const deliveredGalleryText = spanishXbyWorkspaceSection ? "Las imagenes de estilo, destino y editorial quedan dentro de una galeria privada premium." : "Finished lifestyle, destination, and editorial images stay inside one premium gallery.";
+	    const guestAlbumCards = spanishXbyWorkspaceSection
+	      ? [
+	          ["Privado", "revision solo del cliente"],
+	          ["Descarga", "listo cuando se entrega"],
+	          ["Seguro", "galeria protegida"]
+	        ]
+	      : [
+	          ["Private", "customer-only review"],
+	          ["Download", "ready when delivered"],
+	          ["Secure", "brand-safe gallery"]
+	        ];
+	    const collectSourceText = spanishXbyWorkspaceSection ? "Reune fotos fuente y referencias de estilo antes de iniciar la solicitud." : "Collect source photos and style references before the request starts.";
+	    const guestAlbumExamples = spanishXbyWorkspaceSection
+	      ? [
+	          ["Historia urbana de creador", "18 imagenes", "Listo"],
+	          ["Borrador editorial de viaje", "0 imagenes", "Preparando"]
+	        ]
+	      : [
+	          ["City creator story", "18 images", "Ready"],
+	          ["Editorial travel draft", "0 images", "Preparing"]
+	        ];
+	    const openGalleryLabel = spanishXbyWorkspaceSection ? "Abrir galeria" : "Open gallery";
+	    const openAlbumLabel = spanishXbyWorkspaceSection ? "Abrir album" : "Open album";
     const journeyStepIndex = journeySteps.findIndex((item) => item.type === section.type);
     const renderJourneyRail = (dark: boolean) => (
       <div className={dark ? "border-b border-white/10 bg-black/16 px-5 py-4" : "border-b border-[#eadfce] bg-white/46 px-5 py-4"}>
@@ -8582,7 +9185,7 @@ function SectionView({
                 <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
                   <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                   <h2 className={`mt-3 max-w-2xl text-3xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                     {setting(section, "helper", "Sign in first to upload private source photos for this customer account.")}
                   </p>
@@ -8600,11 +9203,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -8617,7 +9220,7 @@ function SectionView({
                     </div>
                     <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                       <p className="text-[1.9rem] font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                        Collect source photos and style references before the request starts.
+                        {collectSourceText}
                       </p>
                     </div>
                   </div>
@@ -8646,9 +9249,9 @@ function SectionView({
             <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
               <div className="grid gap-0 xl:grid-cols-[0.9fr_1.1fr]">
                 <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
-                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>private account</p>
+                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{privateAccountLabel}</p>
                   <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                     {setting(section, "helper", "Sign in first to upload private source photos for this customer account.")}
                   </p>
@@ -8666,11 +9269,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -8680,7 +9283,7 @@ function SectionView({
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.12)_0%,rgba(20,22,26,0.18)_36%,rgba(20,22,26,0.72)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
-                      <p className="mt-2 text-2xl font-semibold leading-tight">Collect source photos and style references before the request starts.</p>
+                      <p className="mt-2 text-2xl font-semibold leading-tight">{collectSourceText}</p>
                     </div>
                   </div>
                   <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -8711,7 +9314,7 @@ function SectionView({
                 <div className="border-b border-white/8 p-6 xl:border-b-0 xl:border-r xl:border-r-white/8 xl:p-8">
                   <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                   <h2 className={`mt-3 max-w-2xl text-3xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                     {setting(section, "helper", "Sign in first to reserve credits and start a private album request.")}
                   </p>
@@ -8729,11 +9332,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -8796,9 +9399,9 @@ function SectionView({
             <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
               <div className="grid gap-0 xl:grid-cols-[0.82fr_1.18fr]">
                 <div className="border-b border-white/8 p-6 xl:border-b-0 xl:border-r xl:border-r-white/8 xl:p-8">
-                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>private account</p>
+                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{privateAccountLabel}</p>
                   <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                     {setting(section, "helper", "Sign in first to reserve credits and start a private album request.")}
                   </p>
@@ -8816,11 +9419,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -8882,17 +9485,17 @@ function SectionView({
                 <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
                   <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                   <h2 className={`mt-3 max-w-2xl text-3xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                     Sign in to view waiting, creating, delivered, and review-needed album requests for this account only.
                   </p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -8922,7 +9525,7 @@ function SectionView({
                       <div className="absolute inset-0 bg-gradient-to-t from-black/56 via-black/10 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="text-[1.45rem] font-semibold leading-tight text-balance [font-family:var(--site-title-font)]">
-                          Show each customer exactly where every package request stands.
+                          {spanishXbyWorkspaceSection ? "Muestra exactamente en que estado esta cada solicitud de paquete." : "Show each customer exactly where every package request stands."}
                         </p>
                       </div>
                     </div>
@@ -8940,31 +9543,39 @@ function SectionView({
             <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
               <div className="grid gap-0 xl:grid-cols-[0.84fr_1.16fr]">
                 <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
-                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>private account</p>
+                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{privateAccountLabel}</p>
                   <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
-                    Sign in to view waiting, creating, delivered, and review-needed album requests for this account only.
+                    {spanishXbyWorkspaceSection
+                      ? "Inicia sesion para ver solicitudes en espera, en creacion, entregadas y pendientes de revision solo para esta cuenta."
+                      : "Sign in to view waiting, creating, delivered, and review-needed album requests for this account only."}
                   </p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-[#ded5ca] bg-white/58 px-5 py-3 text-sm font-semibold text-[#14161a]" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
                 <div className="p-6 xl:p-8">
                   <div className="rounded-[24px] border border-[#e4dace] bg-white/76 p-5 shadow-[0_18px_48px_-44px_rgba(20,22,26,0.12)]">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a7a6d]">sample request timeline</p>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a7a6d]">{spanishXbyWorkspaceSection ? "linea de progreso" : "sample request timeline"}</p>
                     <div className="mt-4 grid gap-3">
-                      {[
-                        ["01", "Queued", "The request is in line and waiting for generation to start."],
-                        ["02", "Creating", "Credits remain held while the scene pack is actively rendering."],
-                        ["03", "Delivered", "Finished images return to the private gallery once approved."]
-                      ].map(([step, label, detail]) => (
+                      {(spanishXbyWorkspaceSection
+                        ? [
+                            ["01", "En cola", "La solicitud esta en linea y espera que empiece la generacion."],
+                            ["02", "Creando", "Los creditos siguen reservados mientras el paquete se procesa."],
+                            ["03", "Entregado", "Las imagenes terminadas vuelven a la galeria privada al aprobarse."]
+                          ]
+                        : [
+                            ["01", "Queued", "The request is in line and waiting for generation to start."],
+                            ["02", "Creating", "Credits remain held while the scene pack is actively rendering."],
+                            ["03", "Delivered", "Finished images return to the private gallery once approved."]
+                          ]).map(([step, label, detail]) => (
                         <div className="grid gap-4 rounded-[18px] border border-[#e4dace] bg-[#fffaf3] px-4 py-4 md:grid-cols-[auto_1fr] md:items-start" key={step}>
                           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#f3e7d9] text-xs font-semibold text-[#9b7a57]">{step}</span>
                           <div>
@@ -8979,7 +9590,7 @@ function SectionView({
                       <div className="absolute inset-0 bg-gradient-to-t from-black/56 via-black/10 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
-                        <p className="mt-2 text-lg font-semibold">Show each customer exactly where every package request stands.</p>
+                    <p className="mt-2 text-lg font-semibold">{spanishXbyWorkspaceSection ? "Muestra exactamente en que estado esta cada solicitud de paquete." : "Show each customer exactly where every package request stands."}</p>
                       </div>
                     </div>
                   </div>
@@ -8999,15 +9610,13 @@ function SectionView({
                 <div className="border-b border-white/8 p-6 xl:border-b-0 xl:border-r xl:border-r-white/8 xl:p-8">
                   <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                   <h2 className={`mt-3 max-w-2xl text-3xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-4 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
-                    Sign in to view private gallery images and delivered albums for this account only.
+                    {guestGalleryText}
                   </p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-3">
                     {[
-                      ["Private", "customer-only review"],
-                      ["Download", "ready when delivered"],
-                      ["Secure", "brand-safe gallery"]
+                      ...guestAlbumCards
                     ].map(([label, detail]) => (
                       <div className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4" key={label}>
                         <p className="text-sm font-semibold text-white">{label}</p>
@@ -9017,11 +9626,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -9031,18 +9640,17 @@ function SectionView({
                       <img className="aspect-[4/5] w-full object-cover opacity-78" src={featureImage} alt={sectionTitle} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                       <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/82 backdrop-blur">
-                        Step 04 · deliver
+                        {spanishXbyWorkspaceSection ? "Paso 04 · entrega" : "Step 04 · deliver"}
                       </div>
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="text-[1.8rem] font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                          Finished lifestyle, destination, and editorial images stay inside one premium gallery.
+                          {deliveredGalleryText}
                         </p>
                       </div>
                     </div>
                     <div className="grid gap-3">
                       {[
-                        ["City creator story", "18 images", "Ready"],
-                        ["Editorial travel draft", "0 images", "Preparing"]
+                        ...guestAlbumExamples
                       ].map(([label, detail, status], index) => (
                         <div className="overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04]" key={label}>
                           <div className="aspect-[16/10] overflow-hidden bg-white/6">
@@ -9054,7 +9662,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open gallery" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? openGalleryLabel : openAlbumLabel}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -9076,17 +9684,15 @@ function SectionView({
             <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
               <div className="grid gap-0 xl:grid-cols-[0.8fr_1.2fr]">
                 <div className="border-b border-white/8 p-6 xl:border-b-0 xl:border-r xl:border-r-white/8 xl:p-8">
-                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>private account</p>
+                  <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{privateAccountLabel}</p>
                   <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Sign in to continue this private photo workflow."}</p>
+                  <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || guestSignInText}</p>
                   <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
-                    Sign in to view private gallery images and delivered albums for this account only.
+                    {guestGalleryText}
                   </p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-3">
                     {[
-                      ["Private", "customer-only review"],
-                      ["Download", "ready when delivered"],
-                      ["Secure", "brand-safe gallery"]
+                      ...guestAlbumCards
                     ].map(([label, detail]) => (
                       <div className="rounded-[18px] border border-white/10 bg-white/[0.04] p-4" key={label}>
                         <p className="text-sm font-semibold text-white">{label}</p>
@@ -9096,11 +9702,11 @@ function SectionView({
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex items-center gap-2 rounded-[16px] bg-white px-5 py-3 text-sm font-semibold text-[#14161a] transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                      Sign in
+                      {guestSignInLabel}
                       <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                     </Link>
                     <Link className="inline-flex items-center gap-2 rounded-[16px] border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, "/pricing")}>
-                      Choose a plan
+                      {guestChoosePlanLabel}
                     </Link>
                   </div>
                 </div>
@@ -9111,13 +9717,12 @@ function SectionView({
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/12 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
-                        <p className="mt-2 text-2xl font-semibold leading-tight">Finished lifestyle, destination, and editorial images stay inside one premium gallery.</p>
+                        <p className="mt-2 text-2xl font-semibold leading-tight">{deliveredGalleryText}</p>
                       </div>
                     </div>
                     <div className="grid gap-3">
                       {[
-                        ["City creator story", "18 images", "Ready"],
-                        ["Editorial travel draft", "0 images", "Preparing"]
+                        ...guestAlbumExamples
                       ].map(([label, detail, status], index) => (
                         <div className="overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04]" key={label}>
                           <div className="aspect-[16/10] overflow-hidden bg-white/6">
@@ -9129,7 +9734,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open gallery" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? openGalleryLabel : openAlbumLabel}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -9150,10 +9755,10 @@ function SectionView({
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.24)]`}>
             <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
               <div className="border-b border-black/5 p-6 lg:border-b-0 lg:border-r lg:border-r-black/5 xl:p-8">
-                <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>private account</p>
+                <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{privateAccountLabel}</p>
                 <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
                 <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>
-                  {sectionSubtitle || "Sign in to continue this private photo workflow."}
+                  {sectionSubtitle || guestSignInText}
                 </p>
                 <p className={`mt-4 max-w-2xl text-sm leading-6 ${sectionBody}`}>
                   {section.type === "upload_panel"
@@ -9162,15 +9767,15 @@ function SectionView({
                     ? setting(section, "helper", "Sign in first to reserve credits and start a private album request.")
                     : section.type === "job_progress"
                     ? "Sign in to view waiting, creating, delivered, and review-needed album requests for this account only."
-                    : "Sign in to view private gallery images and delivered albums for this account only."}
+                    : guestGalleryText}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Link className="inline-flex items-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, "/login")}>
-                    Sign in
+                    {guestSignInLabel}
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
                   <Link className={`inline-flex items-center gap-2 rounded-[16px] border px-5 py-3 text-sm font-semibold ${darkSection ? "border-white/12 bg-white/[0.05] text-white" : "border-[#ded5ca] bg-white/58 text-[#14161a]"}`} href={hrefFor(site, "/pricing")}>
-                    Choose a plan
+                    {guestChoosePlanLabel}
                   </Link>
                 </div>
               </div>
@@ -9378,7 +9983,7 @@ function SectionView({
               <div className="border-b border-black/5 p-6 xl:border-b-0 xl:border-r xl:border-r-black/5 xl:p-8">
                 <p className={`font-mono text-xs uppercase tracking-[0.22em] ${sectionTheme.accent}`}>{sectionEyebrow}</p>
                 <h2 className={`mt-3 text-3xl font-semibold tracking-tight [font-family:var(--site-title-font)] ${sectionText}`}>{sectionTitle}</h2>
-                <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || "Only album requests for the current signed-in customer are visible here."}</p>
+                <p className={`mt-3 max-w-xl text-sm leading-7 ${sectionBody}`}>{sectionSubtitle || (spanishXbyWorkspaceSection ? "Aqui solo se muestran las solicitudes del cliente que ha iniciado sesion." : "Only album requests for the current signed-in customer are visible here.")}</p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   {summaryCards.map((card) => (
                     <div className="rounded-[18px] border border-[#e4dace] bg-white p-4" key={card.label}>
@@ -9394,16 +9999,24 @@ function SectionView({
                     <div className="absolute inset-0 bg-gradient-to-t from-black/52 via-black/10 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
-                      <p className="mt-2 text-lg font-semibold">Show each customer exactly where every package request stands.</p>
+	                      <p className="mt-2 text-lg font-semibold">{spanishXbyWorkspaceSection ? "Muestra exactamente en que estado esta cada solicitud de paquete." : "Show each customer exactly where every package request stands."}</p>
                     </div>
                   </div>
                   <div className="rounded-[24px] border border-[#e4dace] bg-white/76 p-5 shadow-[0_18px_48px_-44px_rgba(20,22,26,0.12)]">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a7a6d]">timeline guide</p>
+	                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a7a6d]">{spanishXbyWorkspaceSection ? "guia de progreso" : "timeline guide"}</p>
                     <div className="mt-4 grid gap-3">
                       {[
-                        ["Waiting", "The request is queued and holding credits safely until rendering starts."],
-                        ["Creating", "The photo pack is generating and remains visible inside the private account."],
-                        ["Delivered", "Finished images move into the gallery without leaving your photo workspace."]
+	                        ...(spanishXbyWorkspaceSection
+	                          ? [
+	                              ["En espera", "La solicitud esta en cola y mantiene creditos reservados hasta empezar."],
+	                              ["Creando", "El paquete se esta generando y sigue visible en la cuenta privada."],
+	                              ["Entregado", "Las imagenes pasan a la galeria sin salir del espacio privado."]
+	                            ]
+	                          : [
+	                              ["Waiting", "The request is queued and holding credits safely until rendering starts."],
+	                              ["Creating", "The photo pack is generating and remains visible inside the private account."],
+	                              ["Delivered", "Finished images move into the gallery without leaving your photo workspace."]
+	                            ])
                       ].map(([label, detail]) => (
                         <div className="rounded-[18px] border border-[#e4dace] bg-[#fffaf3] px-4 py-3" key={label}>
                           <p className="text-sm font-semibold text-[#171514]">{label}</p>
@@ -9548,17 +10161,27 @@ function SectionView({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
-                    <p className="mt-2 text-lg font-semibold">Deliver private lifestyle, portrait, and editorial images without breaking the premium look.</p>
+                    <p className="mt-2 text-lg font-semibold">
+                      {spanishXbyWorkspaceSection
+                        ? "Entrega imagenes privadas de estilo, retrato y editorial sin romper la experiencia premium."
+                        : "Deliver private lifestyle, portrait, and editorial images without breaking the premium look."}
+                    </p>
                   </div>
                 </div>
                 <div className="rounded-[22px] border border-white/10 bg-white/[0.04] p-5">
                   <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/56">delivery standard</p>
                   <div className="mt-4 grid gap-3">
-                    {[
-                      ["Private review", "Only the signed-in account can open, review, and download the delivered album."],
-                      ["Download-ready files", "Albums stay grouped by pack so lifestyle, portrait, and editorial sets remain easy to download."],
-                      ["Consistent experience", "The gallery keeps the same polished style as pricing, login, and account pages."]
-                    ].map(([label, detail]) => (
+                      {(spanishXbyWorkspaceSection
+                        ? [
+                            ["Revision privada", "Solo la cuenta conectada puede abrir, revisar y descargar el album entregado."],
+                            ["Archivos listos", "Los albumes quedan agrupados por paquete para descargar facilmente cada set."],
+                            ["Experiencia consistente", "La galeria mantiene el mismo estilo pulido que las paginas de precios, acceso y cuenta."]
+                          ]
+                        : [
+                            ["Private review", "Only the signed-in account can open, review, and download the delivered album."],
+                            ["Download-ready files", "Albums stay grouped by pack so lifestyle, portrait, and editorial sets remain easy to download."],
+                            ["Consistent experience", "The gallery keeps the same polished style as pricing, login, and account pages."]
+                          ]).map(([label, detail]) => (
                       <div className="rounded-[18px] border border-white/10 bg-black/16 px-4 py-3" key={label}>
                         <p className="text-sm font-semibold text-white">{label}</p>
                         <p className="mt-1 text-xs leading-5 text-white/60">{detail}</p>
@@ -9571,11 +10194,15 @@ function SectionView({
             <div className="p-6 xl:p-8">
               <div className="mb-5 flex items-end justify-between gap-4">
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/56">private album gallery</p>
-                  <p className="mt-2 text-sm leading-6 text-white/68">Albums and gallery images stay private to this account and remain easy to revisit.</p>
+                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/56">{spanishXbyWorkspaceSection ? "galeria privada de albumes" : "private album gallery"}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/68">
+                    {spanishXbyWorkspaceSection
+                      ? "Los albumes e imagenes de galeria quedan privados para esta cuenta y faciles de volver a abrir."
+                      : "Albums and gallery images stay private to this account and remain easy to revisit."}
+                  </p>
                 </div>
                 <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-xs font-semibold text-white/74">
-                  {albums.length} albums
+                  {albums.length} {spanishXbyWorkspaceSection ? "albumes" : "albums"}
                 </span>
               </div>
               <div className="grid gap-4">
@@ -9585,7 +10212,12 @@ function SectionView({
                       ? (leadGalleryItem.sourceJobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.sourceJobId}`) : hrefFor(site, "/app"))
                       : (leadGalleryItem.jobId ? hrefFor(site, `/app/jobs/${leadGalleryItem.jobId}`) : hrefFor(site, "/app"));
                     const title = isRuntimeAlbum(leadGalleryItem) ? leadGalleryItem.title : leadGalleryItem.label;
-                    const detail = isRuntimeAlbum(leadGalleryItem) ? `${leadGalleryItem.outputCount} images` : "Private gallery image";
+                    const imageAlt = isRuntimeAlbum(leadGalleryItem)
+                      ? `${title} private generated album preview`
+                      : runtimeGeneratedAssetAlt(leadGalleryItem, title);
+                    const detail = isRuntimeAlbum(leadGalleryItem)
+                      ? `${leadGalleryItem.outputCount} ${spanishXbyWorkspaceSection ? "imagenes" : "images"}`
+                      : spanishXbyWorkspaceSection ? "Imagen de galeria privada" : "Private gallery image";
                     const status = isRuntimeAlbum(leadGalleryItem) ? customerAlbumStatusLabel(leadGalleryItem.status) : customerAssetReviewLabel(leadGalleryItem.reviewStatus);
                     const thumb =
                       isRuntimeAlbum(leadGalleryItem)
@@ -9594,7 +10226,7 @@ function SectionView({
                     return (
                       <Link className="group overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.04] transition hover:-translate-y-0.5 hover:bg-white/[0.06]" href={href}>
                         <div className="relative aspect-[16/9] overflow-hidden bg-white/6">
-                          <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={thumb} alt={title} />
+                          <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={thumb} alt={imageAlt} />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/12 to-transparent" />
                           <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -9620,7 +10252,12 @@ function SectionView({
                             ? hrefFor(site, `/app/jobs/${item.jobId}`)
                             : hrefFor(site, "/app");
                       const title = isRuntimeAlbum(item) ? item.title : item.label;
-                      const detail = isRuntimeAlbum(item) ? `${item.outputCount} images` : "Private gallery image";
+                      const imageAlt = isRuntimeAlbum(item)
+                        ? `${title} private generated album preview`
+                        : runtimeGeneratedAssetAlt(item, title);
+                      const detail = isRuntimeAlbum(item)
+                        ? `${item.outputCount} ${spanishXbyWorkspaceSection ? "imagenes" : "images"}`
+                        : spanishXbyWorkspaceSection ? "Imagen de galeria privada" : "Private gallery image";
                       const status = isRuntimeAlbum(item) ? customerAlbumStatusLabel(item.status) : customerAssetReviewLabel(item.reviewStatus);
                       const thumb =
                         isRuntimeAlbum(item)
@@ -9629,7 +10266,7 @@ function SectionView({
                       return (
                         <Link className="overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] transition hover:-translate-y-0.5 hover:bg-white/[0.06]" href={href} key={item.id}>
                           <div className="aspect-[4/3] overflow-hidden bg-white/6">
-                            <img className="h-full w-full object-cover" src={thumb} alt={title} />
+                            <img className="h-full w-full object-cover" src={thumb} alt={imageAlt} />
                           </div>
                           <div className="p-4">
                             <p className="font-semibold text-white">{title}</p>
@@ -9637,7 +10274,7 @@ function SectionView({
                             <div className="mt-4 flex items-center justify-between gap-3">
                               <span className="rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold text-white/72">{status}</span>
                               <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-                                {setting(section, "showDownloads", "true") === "true" ? "Open request" : "Open album"}
+                                {setting(section, "showDownloads", "true") === "true" ? spanishXbyWorkspaceSection ? "Abrir solicitud" : "Open request" : openAlbumLabel}
                                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                               </span>
                             </div>
@@ -9670,29 +10307,45 @@ function SectionView({
       searchTerm
     ).slice(0, resultLimit);
     const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
+    const spanishXbySearchResults = isSpanishXbySite(site);
+    const aidreamcapesSearchResults = isAidreamcapesSite(site);
     return (
       <section className="px-5 py-14" data-saas-section-renderer="search_results" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white p-5 shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Site search")}</p>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{spanishXbySearchResults ? "Busqueda del sitio" : setting(section, "eyebrow", "Site search")}</p>
             <HeadingTag className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-              {searchTerm ? `Results for "${searchTerm}"` : setting(section, "title", isAidreamcapesSite(site) ? "Search Aidreamcapes" : "Search MyDreamShoots")}
+              {searchTerm
+                ? spanishXbySearchResults ? `Resultados para "${searchTerm}"` : `Results for "${searchTerm}"`
+                : spanishXbySearchResults
+                  ? aidreamcapesSearchResults ? "Buscar en Aidreamcapes-xby" : "Buscar en MyDreamShoots-xby"
+                  : setting(section, "title", isAidreamcapesSite(site) ? "Search Aidreamcapes" : "Search MyDreamShoots")}
             </HeadingTag>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Search products, packs, tools, and content for this site.")}</p>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600">
+              {spanishXbySearchResults
+                ? aidreamcapesSearchResults
+                  ? "Busca paquetes de viaje, herramientas, precios, guias y politicas de este sitio."
+                  : "Busca paquetes de fotos, herramientas, precios, guias y politicas de este sitio."
+                : setting(section, "subtitle", "Search products, packs, tools, and content for this site.")}
+            </p>
             <div className="mt-5 flex items-center gap-3 rounded-full border border-black/10 bg-zinc-50 px-4 py-3">
               <Search className="h-5 w-5 text-zinc-400" strokeWidth={1.8} />
               <span className="text-sm text-zinc-500">
-                {searchTerm ? `${cards.length} matching results` : isAidreamcapesSite(site) ? "Search route portrait packages, tools, pricing, and help guides." : "Search photo packages, AI tools, pricing, and help guides."}
+                {searchTerm
+                  ? spanishXbySearchResults ? `${cards.length} resultados coincidentes` : `${cards.length} matching results`
+                  : spanishXbySearchResults
+                    ? aidreamcapesSearchResults ? "Busca paquetes de retrato de ruta, herramientas, precios y guias." : "Busca paquetes de fotos, herramientas IA, precios y guias."
+                    : isAidreamcapesSite(site) ? "Search route portrait packages, tools, pricing, and help guides." : "Search photo packages, AI tools, pricing, and help guides."}
               </span>
             </div>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{cards.length} results</span>
-            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">products, packs, tools, pages</span>
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{spanishXbySearchResults ? `${cards.length} resultados` : `${cards.length} results`}</span>
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5">{spanishXbySearchResults ? "productos, paquetes, herramientas, paginas" : "products, packs, tools, pages"}</span>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
-              <Link aria-label={cardLinkLabel("Open result", card.title)} className="rounded-[1.1rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, card.href)} key={`${card.kind}_${card.id}`}>
+              <Link aria-label={cardLinkLabel(spanishXbySearchResults ? "Abrir resultado" : "Open result", card.title)} className="rounded-[1.1rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, card.href)} key={`${card.kind}_${card.id}`}>
                 <img className="aspect-[4/3] w-full rounded-[0.8rem] object-cover" src={card.imageUrl} alt={card.title} />
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <h3 className="font-semibold">{card.title}</h3>
@@ -9732,20 +10385,22 @@ function SectionView({
     const currency = selectedPrice?.currency ?? productsForCart[0]?.prices[0]?.currency ?? site.currency;
     const returnHref = setting(section, "returnHref", "/pricing");
     const selectedLinePrice = selectedPrice ?? (selectedProduct ? productPrice(selectedProduct) : productsForCart[0] ? productPrice(productsForCart[0]) : undefined);
-    const selectedAmountLabel = selectedLinePrice ? priceAmountLabel(selectedLinePrice) : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--";
-    const customer = runtime?.customer;
-    const loginHref = hrefFor(site, `/login?next=${encodeURIComponent(`/cart?product=${selectedProduct?.id ?? ""}&price=${selectedLinePrice?.id ?? ""}`)}`);
+	    const selectedAmountLabel = selectedLinePrice ? priceAmountLabel(selectedLinePrice) : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--";
+	    const customer = runtime?.customer;
+	    const spanishCart = isSpanishXbySite(site);
+	    const cartSelectionHref = hrefFor(site, `/cart?product=${selectedProduct?.id ?? ""}&price=${selectedLinePrice?.id ?? ""}`);
+	    const loginHref = hrefFor(site, `/login?next=${encodeURIComponent(cartSelectionHref)}`);
     const HeadingTag = setting(section, "headingLevel", "h2") === "h1" ? "h1" : "h2";
     return (
       <section className="px-5 py-14" data-saas-section-renderer="cart_summary" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[1fr_360px]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", "Checkout summary")}</p>
-              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? setting(section, "title", "Your selected plan") : setting(section, "emptyTitle", "Choose a plan first")}</HeadingTag>
-              <p className="mt-2 text-sm leading-6 text-zinc-500">
-                {productsForCart.length ? setting(section, "subtitle", "Products, prices, credits, and checkout details stay connected to your account.") : setting(section, "emptyBody", "Open pricing to select a subscription or credit pack.")}
-              </p>
+	              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", spanishCart ? "Revision de creditos" : "Checkout summary")}</p>
+	              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? setting(section, "title", spanishCart ? "Tu plan seleccionado" : "Your selected plan") : setting(section, "emptyTitle", spanishCart ? "Elige un plan primero" : "Choose a plan first")}</HeadingTag>
+	              <p className="mt-2 text-sm leading-6 text-zinc-500">
+	                {productsForCart.length ? setting(section, "subtitle", spanishCart ? "Productos, precios, creditos y pago permanecen conectados a tu cuenta." : "Products, prices, credits, and checkout details stay connected to your account.") : setting(section, "emptyBody", spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack.")}
+	              </p>
             </div>
             <div className="divide-y divide-black/10">
               {productsForCart.map((product, index) => {
@@ -9755,37 +10410,37 @@ function SectionView({
                     <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={product.name} />
                     <div>
                       <p className="font-semibold">{product.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{priceCreditsLabel(price)}</p>
-                      {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">Selected from pricing/search</p> : null}
+	                      <p className="mt-1 text-sm text-zinc-500">{spanishCart ? localizedPriceCreditsLabel(site, price) : priceCreditsLabel(price)}</p>
+	                      {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">{spanishCart ? "Seleccionado desde precios/busqueda" : "Selected from pricing/search"}</p> : null}
                     </div>
                     <p className="font-mono">{priceAmountLabel(price)}</p>
                   </div>
                 );
               })}
               {!productsForCart.length ? (
-                <div className="p-8 text-sm text-zinc-500">{setting(section, "emptyBody", "Open pricing to select a subscription or credit pack.")}</div>
+	                <div className="p-8 text-sm text-zinc-500">{setting(section, "emptyBody", spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack.")}</div>
               ) : null}
             </div>
           </div>
           <aside className="h-fit rounded-[1.4rem] border border-black/10 bg-zinc-950 p-6 text-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.34)]">
             <ShoppingCart className="h-6 w-6 text-white/70" strokeWidth={1.8} />
-            <h3 className="mt-5 text-2xl font-semibold">Checkout summary</h3>
-            <p className="mt-2 text-sm leading-6 text-stone-300">
-              {settingBool(section, "showCheckoutNote", true)
-                ? "Credits appear only after a completed checkout action, so the account balance stays accurate."
-                : "Review selected items before checkout."}
-            </p>
+	            <h3 className="mt-5 text-2xl font-semibold">{spanishCart ? "Resumen de pago" : "Checkout summary"}</h3>
+	            <p className="mt-2 text-sm leading-6 text-stone-300">
+	              {settingBool(section, "showCheckoutNote", true)
+	                ? spanishCart ? "Los creditos aparecen solo despues de completar el pago, para mantener exacto el saldo de cuenta." : "Credits appear only after a completed checkout action, so the account balance stays accurate."
+	                : spanishCart ? "Revisa los articulos seleccionados antes del pago." : "Review selected items before checkout."}
+	            </p>
             <div className="mt-6 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4">
               <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Items</span>
+	                <span className="text-white/64">{spanishCart ? "Articulos" : "Items"}</span>
                 <span>{productsForCart.length}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Credits</span>
+	                <span className="text-white/64">{spanishCart ? "Creditos" : "Credits"}</span>
                 <span>{estimatedCredits}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
-                <span className="text-white/64">Amount</span>
+	                <span className="text-white/64">{spanishCart ? "Importe" : "Amount"}</span>
                 <span>{hasExplicitSelection ? selectedAmountLabel : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--"}</span>
               </div>
             </div>
@@ -9794,10 +10449,11 @@ function SectionView({
               loginHref={loginHref}
               returnHref={hrefFor(site, returnHref)}
               selectedAmountLabel={selectedAmountLabel}
-              selectedCredits={estimatedCredits}
-              selectedPriceId={selectedLinePrice?.id}
-              siteId={site.id}
-            />
+	              selectedCredits={estimatedCredits}
+	              selectedPriceId={selectedLinePrice?.id}
+	              siteId={site.id}
+	              locale={isSpanishXbySite(site) ? "es" : "en"}
+	            />
           </aside>
         </div>
       </section>
@@ -9901,7 +10557,7 @@ function SectionView({
                       {jobDetail.assets.length ? jobDetail.assets.map((asset) => (
                         <div className="overflow-hidden rounded-[1rem] border border-black/10 bg-[#fbfaf7]" key={asset.id}>
                           {asset.previewUrl ? (
-                            <img alt={asset.label} className="aspect-[4/3] w-full bg-zinc-100 object-cover" src={asset.previewUrl} />
+                            <img alt={runtimeGeneratedAssetAlt(asset, customerRequestTitle(jobDetail.job, 0))} className="aspect-[4/3] w-full bg-zinc-100 object-cover" src={asset.previewUrl} />
                           ) : (
                             <div className="flex aspect-[4/3] w-full items-center justify-center bg-zinc-100 px-4 text-center text-sm text-zinc-500">Image preview unavailable</div>
                           )}
@@ -10155,7 +10811,15 @@ function SectionView({
   }
 
   if (section.type === "rich_text") {
-    const eyebrow = setting(section, "eyebrow", "");
+    const spanishXbyRichText = isSpanishXbySite(site);
+    const rawEyebrow = setting(section, "eyebrow", "");
+    const eyebrow = spanishXbyRichText
+      ? rawEyebrow
+          .replace(/^ABOUT$/i, "Sobre")
+          .replace(/^CONTACT$/i, "Contacto")
+          .replace(/^POLICY$/i, "Politica")
+          .replace(/^Delivery policy$/i, "Politica de entrega")
+      : rawEyebrow;
     const body = storefrontPaidToolText(stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.")));
     const image = mediaAssetUrl(site, setting(section, "imageUrl", firstImage(section)));
     const cards = sectionBlocks(section);
@@ -10171,6 +10835,10 @@ function SectionView({
     const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath)) === "h1" ? "h1" : "h2";
     const dark = tone === "dark";
     const compact = layout === "compact";
+    const rawHeading = sectionHeading(section, storefrontSectionLabel(section.type));
+    const localizedHeading = spanishXbyRichText
+      ? rawHeading.replace(/^About\b/i, "Sobre").replace(/^Contact\b/i, "Contacto")
+      : rawHeading;
     return (
       <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -10178,7 +10846,7 @@ function SectionView({
             <div>
               {eyebrow ? <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{eyebrow}</p> : null}
               <HeadingTag className={`${compact ? "mt-4 max-w-3xl text-3xl md:text-5xl" : "mt-4 max-w-4xl text-4xl md:text-6xl"} font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]`}>
-                {sectionHeading(section, storefrontSectionLabel(section.type))}
+                {localizedHeading}
               </HeadingTag>
               <p className={dark ? "mt-5 max-w-3xl text-base leading-8 text-white/68" : "mt-5 max-w-3xl text-base leading-8 text-[#625d56]"}>{body}</p>
               {primaryCta || secondaryCta ? (
@@ -10241,11 +10909,17 @@ function SectionView({
                         blockValue(card, "description", blockValue(card, "text", "A clear step in the private photo pack journey."))
                       ])
                     : isSpanishXbySite(site)
-                      ? [
-                          ["Elige una coleccion", "Compara paquetes, creditos, alcance de entrega y el estilo que quieres crear."],
-                          ["Sube fotos privadas", "Agrega fotos fuente, referencias de estilo e ideas dentro de una sola cuenta."],
-                          ["Recibe el album", "Sigue el pedido y revisa los resultados entregados en una galeria privada."]
-                        ]
+                      ? isAidreamcapesSite(site)
+                        ? [
+                            ["Marca el destino", "Elige una ruta visual, define ambiente, luz y tipo de recuerdo antes de reservar creditos."],
+                            ["Adjunta fotos fuente", "Guarda retratos y referencias de estilo en la cuenta para mantener la escena ordenada."],
+                            ["Abre la galeria", "Revisa el progreso de la ruta y descarga las imagenes finales desde el espacio privado."]
+                          ]
+                        : [
+                            ["Elige el set", "Compara paquetes de perfil, pareja o creador con creditos y alcance visibles."],
+                            ["Sube selfies privadas", "Anade fotos claras, referencias de look e instrucciones dentro de tu cuenta."],
+                            ["Descarga favoritos", "Sigue la solicitud y guarda los resultados terminados en tu album privado."]
+                          ]
                       : [
                           ["Choose a collection", "Compare packages, credits, delivery scope, and the photo style you want to create."],
                           ["Upload privately", "Add source portraits, style references, wardrobe ideas, and scene inspiration inside one account."],
@@ -10306,12 +10980,12 @@ function SectionView({
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-4">
             {(packs.length ? packs : creativePacks).slice(0, Number(setting(section, "max_count", "4")) || 4).map((pack) => (
-              <Link aria-label={cardLinkLabel("View collection", pack.name, "this collection")} className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, creativePackCollectionHref(pack))} key={pack.id}>
+              <Link aria-label={cardLinkLabel(isSpanishXbySite(site) ? "Ver coleccion" : "View collection", pack.name, isSpanishXbySite(site) ? "esta coleccion" : "this collection")} className="group rounded-[1.2rem] border border-black/10 bg-white p-4 transition hover:-translate-y-1" href={hrefFor(site, creativePackCollectionHref(pack))} key={pack.id}>
                 <div className="aspect-[4/5] overflow-hidden rounded-[0.9rem] bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={packImages[pack.category] ?? packImages.fashion} alt={pack.name} />
                 </div>
                 <h3 className="mt-4 font-semibold">{pack.name}</h3>
-                <p className="mt-1 text-xs leading-5 text-zinc-500">{pack.creditCost} credits / private gallery</p>
+                <p className="mt-1 text-xs leading-5 text-zinc-500">{isSpanishXbySite(site) ? `${pack.creditCost} creditos / galeria privada` : `${pack.creditCost} credits / private gallery`}</p>
               </Link>
             ))}
           </div>
@@ -10373,7 +11047,30 @@ function SectionView({
   if (section.type === "header") return null;
 
   if (section.type === "policy_content") {
-    const title = setting(section, "title", "Policy");
+    const spanishXbyPolicy = isSpanishXbySite(site);
+    const rawTitle = setting(section, "title", "Policy");
+    const title = spanishXbyPolicy
+      ? rawTitle
+          .replace(/^Delivery policy$/i, "Politica de entrega digital")
+          .replace(/^Privacy Policy$/i, "Politica de privacidad")
+          .replace(/^Terms of Service$/i, "Terminos del servicio")
+          .replace(/^Cookie Policy$/i, "Politica de cookies")
+          .replace(/^Content policy$/i, "Politica de contenido")
+          .replace(/^Refund Policy$/i, "Politica de reembolsos")
+          .replace(/^Policy$/i, "Politica")
+      : rawTitle;
+    const rawEyebrow = setting(section, "eyebrow", spanishXbyPolicy ? "Politica" : "Policy");
+    const policyEyebrow = spanishXbyPolicy
+      ? rawEyebrow
+          .replace(/^Delivery policy$/i, "Politica de entrega")
+          .replace(/^Privacy Policy$/i, "Privacidad")
+          .replace(/^Terms of Service$/i, "Terminos")
+          .replace(/^Cookie Policy$/i, "Cookies")
+          .replace(/^Content policy$/i, "Contenido")
+          .replace(/^Refund Policy$/i, "Reembolsos")
+          .replace(/^POLICY$/i, "Politica")
+          .replace(/^Policy$/i, "Politica")
+      : rawEyebrow;
     const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
     const contactEmail = setting(section, "contactEmail", isAidreamcapesSite(site) ? "support@aidreamcapes.com" : "support@mydreamshoots.com");
     const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
@@ -10383,14 +11080,14 @@ function SectionView({
       <section className="bg-[#f6f5f1] px-4 py-8 text-[#16181d] sm:px-5 md:py-12" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#7a746b]">{setting(section, "eyebrow", "Policy")}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#7a746b]">{policyEyebrow}</p>
             <HeadingTag className="mt-4 text-[clamp(2.1rem,5vw,4.3rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
               {title}
             </HeadingTag>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#6f685f]">
-              <span>Last updated: {lastUpdated}</span>
+              <span>{spanishXbyPolicy ? "Actualizado" : "Last updated"}: {lastUpdated}</span>
               <span>
-                Contact:{" "}
+                {spanishXbyPolicy ? "Contacto" : "Contact"}:{" "}
                 <a className="text-[#14161a] underline decoration-[#14161a]/25 underline-offset-4" href={`mailto:${contactEmail}`}>
                   {contactEmail}
                 </a>
@@ -10405,16 +11102,16 @@ function SectionView({
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy")}>
-              Privacy Policy
+              {spanishXbyPolicy ? "Politica de privacidad" : "Privacy Policy"}
             </Link>
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms")}>
-              Terms of Service
+              {spanishXbyPolicy ? "Terminos del servicio" : "Terms of Service"}
             </Link>
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/cookies")}>
-              Cookie Policy
+              {spanishXbyPolicy ? "Politica de cookies" : "Cookie Policy"}
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/help")}>
-              Help center
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")}>
+              {spanishXbyPolicy ? "Centro de ayuda" : "Help center"}
             </Link>
           </div>
         </div>
@@ -10423,15 +11120,22 @@ function SectionView({
   }
 
   if (section.type === "blog_list") {
-    const guideType = setting(section, "guideType", "AI photo guide");
+    const spanishBlog = isSpanishXbySite(site);
+    const aidreamcapesBlog = isAidreamcapesSite(site);
+    const guideType = setting(section, "guideType", spanishBlog ? aidreamcapesBlog ? "Nota de viaje IA" : "Guia de fotos IA" : "AI photo guide");
+    const fallbackArticles = spanishBlog
+      ? aidreamcapesBlog
+        ? ["Como preparar fotos fuente", "Creditos y entrega de ruta", "Planificar un destino visual"]
+        : ["Como elegir selfies fuente", "Creditos y entrega del album", "Planificar un set tematico IA"]
+      : ["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"];
     const defaultHeadingLevel = renderContext.page.pageType === "article" ? "h2" : "h1";
     const HeadingTag = setting(section, "headingLevel", defaultHeadingLevel) === "h2" ? "h2" : "h1";
     return (
       <section className="px-5 py-10">
         <div className="mx-auto max-w-[var(--site-content-width)] rounded-[1.4rem] border border-black/10 bg-white p-6">
-          <HeadingTag className="text-2xl font-semibold">{setting(section, "title", "Guides")}</HeadingTag>
+          <HeadingTag className="text-2xl font-semibold">{setting(section, "title", spanishBlog ? aidreamcapesBlog ? "Notas de campo" : "Guias" : "Guides")}</HeadingTag>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"].map((title) => (
+            {fallbackArticles.map((title) => (
               <article className="rounded-xl border border-black/10 p-4" key={title}>
                 <p className="font-medium">{title}</p>
                 <p className="mt-2 text-xs leading-5 text-zinc-500">{guideType}</p>

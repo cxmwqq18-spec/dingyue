@@ -35,7 +35,6 @@ import {
   weddingStoryHouseTemplates
 } from "./theme/packages/wedding-story-house";
 import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplates } from "./theme/packages/dreamshoot-ai-studio";
-import type { MydreamShootsAiStudioTemplateKey } from "./theme/packages/dreamshoot-ai-studio/templates";
 import { canonicalSiteSlug, legacySiteSlugCandidates } from "./domain-routing";
 import { getMydreamshootsPolicySeo } from "./theme/policy-seo";
 import type { ThemePackageTemplateKey } from "./theme/packages/types";
@@ -62,7 +61,7 @@ const publishedSettings: ThemeSettings = {
   navigation: {
     headerLinks: [
       { label: "Packages", href: "#packages" },
-      { label: "How it works", href: "#workflow" },
+      { label: "How it works", href: "/workflow" },
       { label: "Pricing", href: "/pricing" },
       { label: "Studio", href: "/app" }
     ],
@@ -1015,6 +1014,78 @@ const helpJson: ThemePageJson = {
   }
 };
 
+const workflowJson: ThemePageJson = {
+  pageType: "content",
+  version: 1,
+  sectionsOrder: ["intro_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
+  sections: {
+    intro_1: section("rich_text", {
+      eyebrow: "How it works",
+      title: "How customers create a private AI photo set.",
+      body: "Use this page to explain the full workflow as a standalone route: upload source photos, choose a package, review credits, start generation, and download the finished private gallery.",
+      headingLevel: "h1",
+      tone: "dark",
+      imageUrl: "/assets/dreamshoot/frames/workflow-upload-source.png",
+      primaryCta: "Browse packages",
+      primaryHref: "/collections",
+      secondaryCta: "View pricing",
+      secondaryHref: "/pricing"
+    }),
+    workflow_1: section("studio_steps", {
+      anchor: "workflow",
+      eyebrow: "Photo set workflow",
+      title: "Upload, choose, review, generate.",
+      subtitle: "Each step is designed so customers understand what happens before credits are reserved and where finished results appear."
+    }, [
+      { id: "workflow_upload", type: "card", settings: { title: "Upload clear photos", text: "Add source photos you own or have permission to use inside the signed-in customer account.", meta: "01" } },
+      { id: "workflow_choose", type: "card", settings: { title: "Choose a package", text: "Pick the outcome you want, such as headshots, creator portraits, fan photos, or themed albums.", meta: "02" } },
+      { id: "workflow_credits", type: "card", settings: { title: "Review credits", text: "The request shows the credit cost before generation starts so the account history stays understandable.", meta: "03" } },
+      { id: "workflow_gallery", type: "card", settings: { title: "Download favorites", text: "Finished images return to the private gallery for review, download, and future account access.", meta: "04" } }
+    ]),
+    rules_1: section("rich_text", {
+      eyebrow: "Before you generate",
+      title: "Source photos, credits, and albums stay tied to one account.",
+      body: "The workflow is built around private uploads, visible credit use, secure checkout, account-scoped jobs, and downloadable galleries. Customers should upload only photos they own or have permission to use.",
+      imageUrl: "/assets/dreamshoot/frames/faq-intro-portrait.png",
+      primaryCta: "Start creating",
+      primaryHref: "/login",
+      secondaryCta: "Read FAQ",
+      secondaryHref: "/faq"
+    }, [
+      { id: "workflow_rule_private", type: "rich_text_card", settings: { meta: "Private", title: "Account-scoped uploads", description: "Source photos and generated outputs stay connected to the signed-in customer account." } },
+      { id: "workflow_rule_credit", type: "rich_text_card", settings: { meta: "Credits", title: "Visible credit cost", description: "Customers see the credit cost before each package request begins." } },
+      { id: "workflow_rule_delivery", type: "rich_text_card", settings: { meta: "Gallery", title: "Private delivery", description: "Finished results appear in the customer gallery instead of a public showcase." } }
+    ]),
+    faq_1: section("faq", {
+      title: "Workflow questions"
+    }, [
+      { id: "workflow_faq_uploads", type: "faq_item", settings: { question: "What photos should customers upload?", answer: "Use clear recent photos where the face or subject is visible. Customers should only upload photos they own or have permission to use." } },
+      { id: "workflow_faq_credits", type: "faq_item", settings: { question: "When are credits used?", answer: "Credits are shown before generation starts, then reserved or settled through the account credit history based on the job result." } },
+      { id: "workflow_faq_delivery", type: "faq_item", settings: { question: "Where do finished images appear?", answer: "Finished images appear in the signed-in customer's private gallery for review and download." } }
+    ]),
+    conversion_1: section("conversion_panel", {
+      eyebrow: "Start the workflow",
+      title: "Choose a photo package and create a private set.",
+      subtitle: "Browse packages, compare credit costs, then sign in to upload photos and start the generation request.",
+      primaryCta: "Browse packages",
+      primaryHref: "/collections",
+      secondaryCta: "View pricing",
+      secondaryHref: "/pricing"
+    }),
+    footer_1: section("footer", {
+      title: "How it works",
+      body: "The workflow route is a standalone page for source photos, credits, generation, and private gallery delivery."
+    })
+  },
+  seo: {
+    title: "How AI photo generation works",
+    description: "Learn how customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+    keywords: "AI photo workflow, private AI photo generation, source photo upload, AI photo credits",
+    canonicalPath: "/workflow",
+    robots: { index: true, follow: true }
+  }
+};
+
 const termsJson: ThemePageJson = {
   pageType: "policy",
   version: 1,
@@ -1156,6 +1227,16 @@ const sharedPages = (siteId: string): ThemePage[] => [
     publishedJson: cloneSeed(helpJson)
   },
   {
+    id: `${siteId}_workflow`,
+    siteId,
+    pageType: "content",
+    templateKey: "workflow",
+    slug: "/workflow",
+    title: "How it works",
+    draftJson: cloneSeed(workflowJson),
+    publishedJson: cloneSeed(workflowJson)
+  },
+  {
     id: `${siteId}_blog`,
     siteId,
     pageType: "blog",
@@ -1257,9 +1338,12 @@ const sharedPages = (siteId: string): ThemePage[] => [
   }
 ];
 
+type WeddingTemplateKey = ThemePackageTemplateKey | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
+type WeddingDreamshootTemplateKey = Extract<WeddingTemplateKey, "creators-circle" | "partner-registration" | "about-us" | "contact-us">;
+
 type WeddingPageMapping = {
   idSuffix: string;
-  packageTemplate: MydreamShootsAiStudioTemplateKey;
+  packageTemplate: WeddingTemplateKey;
   templateKey: string;
   slug: string;
   title: string;
@@ -1297,6 +1381,10 @@ const weddingPageMappings: WeddingPageMapping[] = [
   { idSuffix: "cart", packageTemplate: "cart", templateKey: "cart", slug: "/cart", title: "Cart", pageType: "cart" },
   { idSuffix: "404", packageTemplate: "404", templateKey: "404", slug: "/404", title: "404", pageType: "404" }
 ];
+
+function isWeddingDreamshootTemplateKey(packageTemplate: WeddingTemplateKey): packageTemplate is WeddingDreamshootTemplateKey {
+  return packageTemplate === "creators-circle" || packageTemplate === "partner-registration" || packageTemplate === "about-us" || packageTemplate === "contact-us";
+}
 
 function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: string, templateKey: string): ThemePageJson {
   const pageJson = cloneSeed(weddingStoryHouseTemplates[packageTemplate]);
@@ -1356,10 +1444,7 @@ function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: str
 const weddingPages = (siteId: string): ThemePage[] =>
   weddingPageMappings.map((mapping) => {
     const pageJson =
-      mapping.packageTemplate === "creators-circle" ||
-      mapping.packageTemplate === "partner-registration" ||
-      mapping.packageTemplate === "about-us" ||
-      mapping.packageTemplate === "contact-us"
+      isWeddingDreamshootTemplateKey(mapping.packageTemplate)
         ? cloneSeed(dreamshootAiStudioTemplates[mapping.packageTemplate])
         : weddingPageJson(mapping.packageTemplate, mapping.pageType, mapping.templateKey);
     return {
@@ -2351,7 +2436,12 @@ export function getPage(site: Site, slug: string): ThemePage {
 }
 
 export function findPage(site: Site, slug: string): ThemePage | undefined {
-  return site.pages.find((page) => page.slug === slug);
+  const directPage = site.pages.find((page) => page.slug === slug);
+  if (directPage) return directPage;
+  if (slug === "/faq" && /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`)) {
+    return site.pages.find((page) => page.slug === "/help");
+  }
+  return undefined;
 }
 
 export function formatCurrency(amountCents: number, currency = "usd"): string {

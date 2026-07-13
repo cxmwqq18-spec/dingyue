@@ -44,7 +44,7 @@ function shouldResolveHostSite(hosts: Array<string | null>): boolean {
 }
 
 function isLocalDevelopmentHost(host: string): boolean {
-  return host === "localhost" || host === "127.0.0.1" || host.endsWith(".localhost");
+  return host === "localhost" || host === "127.0.0.1" || host === "::1";
 }
 
 async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {

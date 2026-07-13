@@ -1,5 +1,6 @@
 import "server-only";
 
+import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
 import { readPlatformState } from "@/lib/server-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -86,8 +87,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       emailAssignments,
       cloudflareAccounts,
       aiProviders
-    ] = await Promise.all([
-      prisma.site.findMany({
+    ] = await runDbTasks([
+      () => prisma.site.findMany({
         orderBy: { createdAt: "asc" },
         include: {
           domains: { orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] },
@@ -96,36 +97,36 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
           connect: true
         }
       }),
-      prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
-      prisma.siteAdmin.findMany({ orderBy: [{ siteId: "asc" }, { role: "asc" }, { createdAt: "asc" }] }),
-      prisma.siteAdminSession.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.customer.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { balance: true } }),
-      prisma.customerSession.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.product.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { prices: true } }),
-      prisma.subscription.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.order.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.paymentEvent.findMany({ orderBy: { processedAt: "desc" } }),
-      prisma.aiApp.findMany({ orderBy: { slug: "asc" } }),
-      prisma.siteAiApp.findMany({ orderBy: [{ siteId: "asc" }, { routeKey: "asc" }], include: { aiApp: true } }),
-      prisma.aiGatewayGroup.findMany({ orderBy: [{ siteId: "asc" }, { name: "asc" }] }),
-      prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
-      prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
-      prisma.themeCopy.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
-      prisma.customerModel.findMany({ orderBy: { updatedAt: "desc" } }),
-      prisma.album.findMany({ orderBy: { updatedAt: "desc" } }),
-      prisma.auditLog.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.generationJob.findMany({ orderBy: { updatedAt: "desc" } }),
-      prisma.assetUpload.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.creditLedger.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.platformAdmin.findMany({ orderBy: { createdAt: "asc" } }),
-      prisma.platformSession.findMany({ orderBy: { createdAt: "desc" } }),
-      prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
-      prisma.platformEmailConfig.findMany({ orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }] }),
-      prisma.siteEmailConfigAssignment.findMany({ orderBy: [{ siteId: "asc" }] }),
-      prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
-      prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+      () => prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
+      () => prisma.siteAdmin.findMany({ orderBy: [{ siteId: "asc" }, { role: "asc" }, { createdAt: "asc" }] }),
+      () => prisma.siteAdminSession.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.customer.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { balance: true } }),
+      () => prisma.customerSession.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.product.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { prices: true } }),
+      () => prisma.subscription.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.order.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.paymentEvent.findMany({ orderBy: { processedAt: "desc" } }),
+      () => prisma.aiApp.findMany({ orderBy: { slug: "asc" } }),
+      () => prisma.siteAiApp.findMany({ orderBy: [{ siteId: "asc" }, { routeKey: "asc" }], include: { aiApp: true } }),
+      () => prisma.aiGatewayGroup.findMany({ orderBy: [{ siteId: "asc" }, { name: "asc" }] }),
+      () => prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      () => prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      () => prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
+      () => prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
+      () => prisma.themeCopy.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
+      () => prisma.customerModel.findMany({ orderBy: { updatedAt: "desc" } }),
+      () => prisma.album.findMany({ orderBy: { updatedAt: "desc" } }),
+      () => prisma.auditLog.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.generationJob.findMany({ orderBy: { updatedAt: "desc" } }),
+      () => prisma.assetUpload.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.creditLedger.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.platformAdmin.findMany({ orderBy: { createdAt: "asc" } }),
+      () => prisma.platformSession.findMany({ orderBy: { createdAt: "desc" } }),
+      () => prisma.platformEmailSettings.findUnique({ where: { id: "platform_email_settings" } }),
+      () => prisma.platformEmailConfig.findMany({ orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }] }),
+      () => prisma.siteEmailConfigAssignment.findMany({ orderBy: [{ siteId: "asc" }] }),
+      () => prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
+      () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
     ]);
 
     const mappedMediaAssets = mediaAssets.map(toMediaAsset);

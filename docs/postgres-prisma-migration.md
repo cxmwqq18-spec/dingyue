@@ -92,6 +92,12 @@ DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public'
 
 The relational importer flattens `products[].prices`, creates `CreditBalance` rows from `customers[].balance`, imports nested `site.pages` and `site.themeSettings`, converts `site.connect` to `StripeConnectAccount`, and maps `siteAiApps[].aiApp.id` to `aiAppId`. It uses id-based upserts in small transactions so repeated imports update rows instead of failing on duplicates. Duplicate or missing legacy IDs are reported in the JSON summary and skipped.
 
+`--replace` deletes all imported relational rows before rebuilding them, including customer accounts, sessions, credits, generation jobs, and asset metadata. Run `--dry-run` first and create a verified database backup. A destructive replacement is rejected unless both `--replace` and `--allow-data-loss` are passed explicitly:
+
+```bash
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --replace --allow-data-loss --verify
+```
+
 If a normalized model has not been merged into `prisma/schema.prisma` yet, that section reports `missing_prisma_model`; regenerate Prisma Client after the schema worker lands the remaining models and rerun the same command.
 
 ## Run App Against Postgres

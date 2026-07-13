@@ -287,7 +287,7 @@
                         <label for="{{ optIdx }}-{{ forloop.index0 }}-{{product.id}}" data-variants-value="{{ value | escape }}" class="mb-0" data-options-order="{{ forloop.index0 }}" data-click="select">
 						  {% for img in opt.optimg %}
 							{% if img[0] == value %}
-							<img width="60" height="60" src="{{img[1]}}"/><br/>
+							<img width="60" height="60" src="{{img[1]}}" alt="Product thumbnail"/><br/>
 							{% endif %}
 						  {% endfor %}
                           {{ value }}
@@ -380,12 +380,12 @@
             {% endif %}
             {% if settings.additional_image_pc %}
               <div class="common__img-wrapper_lazy d-none d-md-block" style="padding-bottom: 20%;">
-                <img class="lazyload w-100" data-src="{{ settings.additional_image_pc | img_url }}" src="{{shop.default_img}}"/>
+                <img class="lazyload w-100" data-src="{{ settings.additional_image_pc | img_url }}" src="{{shop.default_img}}" alt="Additional product image"/>
               </div>
             {% endif %}
             {% if settings.additional_image_mobile %}
               <div class="common__img-wrapper_lazy d-md-none" style="padding-bottom: 40%;">
-                <img class="lazyload w-100" data-src="{{ settings.additional_image_mobile | img_url }}" src="{{shop.default_img}}"/>
+                <img class="lazyload w-100" data-src="{{ settings.additional_image_mobile | img_url }}" src="{{shop.default_img}}" alt="Additional mobile product image"/>
               </div>
             {% endif %}
           </div>

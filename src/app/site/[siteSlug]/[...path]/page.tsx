@@ -10,16 +10,21 @@ import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
-function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
-  return /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
+  return /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
 }
 
-function storefrontPolicySeoForSite(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
-  const identity = `${site.slug} ${site.name} ${site.branding.logoText}`;
+function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
+  return !isSpanishXbyStorefrontSite(site) && /dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
+}
+
+function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
+  const identity = `${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`;
+  if (isSpanishXbyStorefrontSite(site)) return getSpanishXbyPolicySeo(site, slug);
   if (/aidreamcapes/i.test(identity)) return getAidreamcapesPolicySeo(slug);
   if (/dreamshoot/i.test(identity)) return getMydreamshootsPolicySeo(slug);
   return undefined;
@@ -42,7 +47,9 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const requestedSlug = `/${path.join("/")}`;
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
   const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
-  if (slug === "/account") return { title: "Workspace", robots: { index: false, follow: false } };
+  if (slug === "/account") {
+    return { title: /(?:-xby|_xby)/i.test(siteSlug) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
+  }
   const state = collectionCategory
     ? await readCollectionRouteState(siteSlug, collectionCategory)
     : slug === "/collections"
@@ -54,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     if (!canResolveCollectionSlugForSite(state, site, collectionCategory)) return {};
     return metadataForSeoDirectory(site, "collection", collectionCategory);
   }
-  if (dreamshootPartnerTemplateSlugs.has(slug) && isDreamshootPartnerTemplateSite(site)) {
+  if (dreamshootPartnerTemplateSlugs.has(slug) && (isSpanishXbyStorefrontSite(site) || isDreamshootPartnerTemplateSite(site))) {
     return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), slug, {
       primaryDomain: site.primaryDomain,
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
@@ -92,8 +99,10 @@ export default async function SiteCatchAllPage({
   const publicSlug = publicSiteSlug(siteSlug);
   if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
   if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
-  if (slug === "/how-it-works") redirect(`/site/${publicSlug}#workflow`);
+  if (slug === "/help" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(`/site/${publicSlug}/faq`);
+  if (slug === "/how-it-works" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(`/site/${publicSlug}/workflow`);
   if (slug === "/examples") redirect(`/site/${publicSlug}/collections`);
+  if (slug === "/packages") redirect(`/site/${publicSlug}/collections`);
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);

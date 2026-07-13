@@ -110,7 +110,7 @@
         {% endif %}
         {% include 'lazyimg',src: image.src,style: "margin: auto;",class: class%}
       {% else %}
-        <img src="{{ defaultImage }}" class="{% if section.settings.is_width_across_screen %}position-static{% endif %} "/>
+        <img src="{{ defaultImage }}" class="{% if section.settings.is_width_across_screen %}position-static{% endif %} " alt="Image with text visual"/>
       {% endif %}
     </a>
   </div>

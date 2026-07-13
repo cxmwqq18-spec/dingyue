@@ -15,7 +15,7 @@ export const creativePackCategoryPromptDirections: Record<CreativePack["category
   creative: "cinematic creative portrait photography, dramatic atmosphere, stylized scene design, bold editorial lighting, premium AI photo package look",
   sports: "sports fan editorial portrait, stadium energy, team-color styling, dynamic match-day atmosphere, social poster ready",
   creator: "creator personal brand portrait, modern lifestyle setting, social profile ready framing, clean commercial polish, newsletter and landing page use",
-  avatar: "stylized avatar portrait concept, recognizable identity preservation, polished character direction, social profile icon readability",
+  avatar: "stylized avatar portrait concept, reference-informed character direction, polished profile icon readability, expressive but original illustration",
   video: "motion-ready cinematic portrait frame, clear subject separation, dynamic composition, reel and short-video storyboard energy",
   utility: "clean AI photo utility preview, before-after friendly composition, sharp detail, neutral background, practical enhancement outcome",
   boudoir: "tasteful private portrait photography, elegant intimate studio mood, soft directional light, confident styling, non-explicit premium album delivery",
@@ -61,11 +61,12 @@ export function suggestedCreativePackPrompt(pack: CreativePackSuggestionInput) {
     `Purpose: ${pack.description}`,
     "Use the uploaded customer reference photos as visual anchors for broad subject, pose, color, styling, and composition cues without verifying or recreating a real person's identity.",
     `Visual direction: ${creativePackCategoryPromptDirections[pack.category]}.`,
+    "Prompt builder structure: specify camera framing, pose or expression, wardrobe styling, scene or background, lighting direction, mood, and final finish before generation.",
     "Create one standalone image for one package slot. The package may contain multiple outputs, but each generated file must contain exactly one finished portrait image.",
     pack.trainingRequired
       ? "If a trained personal model is available, prioritize consistent styling from that model for this single output."
       : "If no trained model is available, use the uploaded references conservatively and keep the result broadly aligned with the source.",
-    "Photography language: photorealistic editorial quality, clean lens rendering, natural skin texture, controlled highlights, believable shadows, high-end commercial finish.",
+    "Photography language: photorealistic editorial quality, clear lens rendering, natural skin texture, controlled highlights, believable shadows, balanced depth of field, high-end commercial finish.",
     "Composition requirements: subject remains the hero, no text overlays, no logos, no watermarks, no UI elements, no collage, no grid, no contact sheet, no split panels.",
     "Safety and quality constraints: avoid distorted hands, extra limbs, duplicated faces, melted accessories, overly plastic skin, explicit nudity, minors, medical claims, celebrity imitation, or brand-trademark misuse.",
     "Output should feel like a curated DreamShootAI paid package, ready for private gallery delivery and frontend package previews."

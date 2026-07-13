@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo } from "@/lib/theme/policy-seo";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
@@ -100,6 +100,7 @@ function siteBaseUrl(site: Site): string {
 
 function policySeoForSite(site: Site, slug: string) {
   const siteToken = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name}`.toLowerCase();
+  if (isSpanishXbySeoSite(site)) return getSpanishXbyPolicySeo(site, slug);
   if (siteToken.includes("aidreamcapes")) return getAidreamcapesPolicySeo(slug);
   if (!siteToken.includes("mydreamshoots") && !siteToken.includes("dreamshoot")) return undefined;
   return getMydreamshootsPolicySeo(slug);
@@ -134,73 +135,102 @@ function spanishXbyBrandName(site: Site): string {
 function spanishXbySeoOverride(site: Site, slug: string): Partial<PageSeo> | undefined {
   const brand = spanishXbyBrandName(site);
   const aidreamcapes = isSpanishAidreamcapesXbySeoSite(site);
+  const supportKeywords = aidreamcapes
+    ? `soporte ${brand}, retratos de viaje IA, creditos IA, galeria privada`
+    : `soporte ${brand}, fotos IA privadas, creditos IA, galeria privada`;
+  const policyKeywords = aidreamcapes
+    ? `politica ${brand}, privacidad retratos IA, creditos IA, galeria privada`
+    : `politica ${brand}, privacidad fotos IA, creditos IA, galeria privada`;
   const common: Record<string, Partial<PageSeo>> = {
     "/pricing": {
       title: `${brand} precios - planes y creditos con IA`,
-      description: `Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega privada antes de crear imagenes con ${brand}.`
+      description: `Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega privada antes de crear imagenes con ${brand}.`,
+      keywords: aidreamcapes
+        ? `precios ${brand}, creditos retratos de viaje, planes IA, pago seguro`
+        : `precios ${brand}, creditos fotos IA, planes retratos IA, pago seguro`
     },
     "/tools": {
       title: aidreamcapes ? `${brand} herramientas de retratos de viaje con IA` : `${brand} herramientas de fotos con IA`,
       description: aidreamcapes
         ? `Explora herramientas de ${brand} para retratos de ruta, luz costera, escenas de viaje, postales y galerias privadas.`
-        : `Explora herramientas de ${brand} para headshots, fondos, retoque, video, probador virtual, paquetes privados y galerias con creditos visibles.`
+        : `Explora herramientas de ${brand} para retratos profesionales, fondos, retoque, video, probador virtual, paquetes privados y galerias con creditos visibles.`,
+      keywords: aidreamcapes
+        ? `herramientas ${brand}, retratos de viaje IA, escenas de destino, galeria privada`
+        : `herramientas ${brand}, fotos IA, retratos profesionales IA, probador virtual`
     },
     "/collections": {
       title: aidreamcapes ? `Paquetes de retratos de viaje con IA | ${brand}` : `Paquetes privados de fotos con IA | ${brand}`,
       description: aidreamcapes
         ? `Explora paquetes de ${brand} para costa, ciudad, ruta, balcones, retiros, postales y albumes privados de viaje.`
-        : `Explora paquetes de ${brand} para headshots, pareja, belleza, creador, deporte, bodas y albumes privados con IA.`
+        : `Explora paquetes de ${brand} para retratos profesionales, pareja, belleza, creador, deporte, bodas y albumes privados con IA.`,
+      keywords: aidreamcapes
+        ? `paquetes ${brand}, retratos de viaje IA, albumes destino, galeria privada`
+        : `paquetes ${brand}, fotos IA privadas, retratos profesionales IA, album privado`
     },
     "/about-us": {
       title: `Sobre ${brand}`,
-      description: `${brand} ofrece una experiencia privada para subir fotos, revisar creditos, crear imagenes con IA y recibir galerias de cliente.`
+      description: `${brand} ofrece una experiencia privada para subir fotos, revisar creditos, crear imagenes con IA y recibir galerias de cliente.`,
+      keywords: aidreamcapes
+        ? `sobre ${brand}, retratos de viaje IA, albumes privados, fotos destino`
+        : `sobre ${brand}, fotos IA privadas, retratos IA, albumes privados`
     },
     "/contact-us": {
       title: `Contacto | ${brand}`,
-      description: `Contacta con ${brand} para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.`
+      description: `Contacta con ${brand} para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.`,
+      keywords: supportKeywords
     },
     "/help": {
       title: `Centro de ayuda | ${brand}`,
-      description: `Resuelve dudas sobre fotos fuente, creditos, checkout, privacidad, reembolsos, paquetes y entrega privada en ${brand}.`
+      description: `Resuelve dudas sobre fotos fuente, creditos, pago, privacidad, reembolsos, paquetes y entrega privada en ${brand}.`,
+      keywords: supportKeywords,
+      canonicalPath: "/faq"
     },
     "/terms": {
       title: `Terminos de servicio | ${brand}`,
-      description: `Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`
+      description: `Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`,
+      keywords: policyKeywords
     },
     "/policies/terms": {
       title: `Terminos de servicio | ${brand}`,
-      description: `Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`,
+      description: `Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`,
+      keywords: policyKeywords,
       canonicalPath: "/terms"
     },
     "/privacy": {
       title: `Politica de privacidad | ${brand}`,
-      description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago y galerias privadas.`
+      description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago y galerias privadas.`,
+      keywords: policyKeywords
     },
     "/policies/privacy": {
       title: `Politica de privacidad | ${brand}`,
       description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago y galerias privadas.`,
+      keywords: policyKeywords,
       canonicalPath: "/privacy"
     },
     "/cookies": {
       title: `Politica de cookies | ${brand}`,
-      description: `Consulta como ${brand} usa cookies para sesiones, checkout, seguridad, preferencias y analitica operativa.`
+      description: `Consulta como ${brand} usa cookies para sesiones, pago, seguridad, preferencias y analitica operativa.`,
+      keywords: policyKeywords
     },
     "/policies/cookies": {
       title: `Politica de cookies | ${brand}`,
-      description: `Consulta como ${brand} usa cookies para sesiones, checkout, seguridad, preferencias y analitica operativa.`,
+      description: `Consulta como ${brand} usa cookies para sesiones, pago, seguridad, preferencias y analitica operativa.`,
+      keywords: policyKeywords,
       canonicalPath: "/cookies"
     },
     "/content": {
       title: `Politica de contenido | ${brand}`,
-      description: `Revisa las reglas de contenido, consentimiento, fotos fuente, seguridad creativa y uso aceptable de ${brand}.`
+      description: `Revisa las reglas de contenido, consentimiento, fotos fuente, seguridad creativa y uso aceptable de ${brand}.`,
+      keywords: policyKeywords
     },
     "/policies/content": {
       title: `Politica de contenido | ${brand}`,
       description: `Revisa las reglas de contenido, consentimiento, fotos fuente, seguridad creativa y uso aceptable de ${brand}.`,
+      keywords: policyKeywords,
       canonicalPath: "/content"
     }
   };
-  return common[slug];
+  return common[slug] ?? (slug === "/faq" ? common["/help"] : undefined);
 }
 
 function storefrontLaunchChecklistSeo(
@@ -222,7 +252,7 @@ function storefrontLaunchChecklistSeo(
       title: "MyDreamShoots-xby - generador de fotos con IA online",
       description:
         "Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con MyDreamShoots-xby. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.",
-      keywords: "generador de fotos IA,retratos IA,fotos de pareja IA,headshots IA,album privado IA,selfies,MyDreamShoots-xby"
+      keywords: "generador de fotos IA,retratos profesionales IA,fotos de pareja IA,album privado IA,selfies,MyDreamShoots-xby"
     };
   }
   if (isAidreamcapesSeoSite(site)) {
@@ -255,6 +285,11 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
         title: "Aidreamcapes AI Tools - route portraits and scenic travel builders",
         description: "Explore Aidreamcapes tools for route portraits, coastal light scenes, alpine trail frames, old quarter walks, route moodboards, and private travel gallery delivery."
       },
+      "/help": {
+        title: "Aidreamcapes FAQ",
+        description: "Find answers about source photos, route portrait packages, credits, private galleries, delivery, privacy, and support.",
+        canonicalPath: "/faq"
+      },
       "/terms": {
         title: "Aidreamcapes Terms of Service",
         description: "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms."
@@ -265,7 +300,7 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
         canonicalPath: "/terms"
       }
     };
-    return overrides[slug];
+    return overrides[slug] ?? (slug === "/faq" ? overrides["/help"] : undefined);
   }
   const overrides: Record<string, Partial<PageSeo>> = {
     "/collections": {
@@ -293,11 +328,12 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
       description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
     },
     "/help": {
-      title: "MyDreamShoots Help Center",
-      description: "Get help with source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery."
+      title: "MyDreamShoots FAQ",
+      description: "Get FAQ answers for source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery.",
+      canonicalPath: "/faq"
     }
   };
-  return overrides[slug];
+  return overrides[slug] ?? (slug === "/faq" ? overrides["/help"] : undefined);
 }
 
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {

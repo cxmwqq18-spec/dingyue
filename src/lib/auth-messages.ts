@@ -27,7 +27,7 @@ const authMessageMap: Record<string, string> = {
   rate_limited: "Please wait before trying again.",
   password_min_6_chars: "Password must be at least 6 characters.",
   password_required: "Enter a password.",
-  password_complexity_required: "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.",
+  password_complexity_required: "Password must be at least 6 characters.",
   password_confirmation_required: "Enter the password again to confirm it.",
   password_confirmation_mismatch: "The two passwords do not match.",
   site_not_found: "This site does not exist or has been removed.",

@@ -103,6 +103,15 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
 };
 
 export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/workflow": {
+    title: "How MyDreamShoots works - private AI photo generation workflow",
+    description:
+      "Learn how MyDreamShoots customers upload source photos, choose AI photo packages, review visible credits, generate private results, and download finished galleries.",
+    keywords: "MyDreamShoots workflow, AI photo generation workflow, private AI photo packages, AI photo credits",
+    canonicalPath: "/workflow",
+    index: true,
+    follow: true
+  },
   "/creators-circle": {
     title: "MyDreamShoots Creators Circle - affiliate and creator AI photo program",
     description:
@@ -183,7 +192,7 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
 const spanishMydreamshootsPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/about-us": {
     title: "Sobre MyDreamShoots-xby",
-    description: "Conoce MyDreamShoots-xby, una tienda privada para crear retratos, headshots, fotos de pareja, albumes y galerias con IA desde selfies.",
+    description: "Conoce MyDreamShoots-xby, una tienda privada para crear retratos profesionales, fotos de pareja, albumes y galerias con IA desde selfies.",
     keywords: "sobre MyDreamShoots-xby, fotos IA privadas, retratos IA, galerias privadas",
     canonicalPath: "/about-us",
     index: true,
@@ -297,7 +306,7 @@ const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteM
   },
   "/pricing": {
     title: "Precios MyDreamShoots-xby - creditos y planes de fotos IA",
-    description: "Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega de galerias privadas antes de crear fotos con IA.",
+    description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega de galerias privadas antes de crear fotos con IA.",
     keywords: "precios MyDreamShoots-xby, creditos IA, planes fotos IA",
     canonicalPath: "/pricing",
     index: true,
@@ -305,8 +314,8 @@ const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteM
   },
   "/tools": {
     title: "Herramientas de fotos con IA | MyDreamShoots-xby",
-    description: "Explora herramientas para headshots, fondos, retoque, video corto, probador virtual, paquetes privados y galerias con creditos visibles.",
-    keywords: "herramientas IA, fotos IA, headshot IA, cambiador de fondo",
+    description: "Explora herramientas para retratos profesionales, fondos, retoque, video corto, probador virtual, paquetes privados y galerias con creditos visibles.",
+    keywords: "herramientas IA, fotos IA, retratos profesionales IA, cambiador de fondo",
     canonicalPath: "/tools",
     index: true,
     follow: true
@@ -324,7 +333,7 @@ const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMe
   },
   "/pricing": {
     title: "Precios Aidreamcapes-xby - creditos para retratos de viaje",
-    description: "Compara planes, creditos mensuales, recargas puntuales, checkout seguro y entrega privada antes de crear retratos de viaje con IA.",
+    description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega privada antes de crear retratos de viaje con IA.",
     keywords: "precios Aidreamcapes-xby, creditos IA, retratos de viaje IA",
     canonicalPath: "/pricing",
     index: true,
@@ -340,7 +349,7 @@ const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMe
   },
   "/terms": {
     title: "Terminos de servicio | Aidreamcapes-xby",
-    description: "Revisa los terminos de cuenta, creditos, subidas, checkout, generacion, galerias privadas, reembolsos y uso aceptable.",
+    description: "Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable.",
     keywords: "terminos Aidreamcapes-xby, politica creditos IA, galeria privada",
     canonicalPath: "/terms",
     index: true,
@@ -552,6 +561,60 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
 };
 
 const toolDirectory: Record<string, SeoDirectorySeed> = {
+  "photo-ai": {
+    label: "Photo AI",
+    title: "Photo AI Tools - portraits, headshots, and creator photos | MyDreamShoots",
+    description: "Explore MyDreamShoots Photo AI tools for private headshots, creator portraits, themed scenes, sports fan photos, avatar concepts, and album-ready image packages.",
+    keywords: "Photo AI, AI photo tools, AI portrait generator, AI headshot tools, MyDreamShoots Photo AI",
+    h2: "photo ai tools",
+    h3: ["Portrait and headshot tools", "Private source photo workflow", "Creator-ready photo outputs"],
+    intro: "Photo AI groups the MyDreamShoots tools for creating private portraits, profile images, fan photos, creator visuals, and themed photo sets from source images you own.",
+    details: [
+      "Start with clear source photos, then choose the portrait, avatar, sports, creator, or scene direction that fits the result you need.",
+      "Credits are shown before generation, and finished images stay in the signed-in customer workspace for review and download.",
+      "Use these tools for profile refreshes, creator campaigns, private albums, and package-ready photo concepts."
+    ],
+    useCases: ["Professional headshots", "Creator portraits", "Avatar concepts", "Themed private albums"],
+    workflow: ["Choose a Photo AI direction.", "Upload clear source photos.", "Review credit use before generation.", "Download favorites from the private gallery."],
+    ctaLabel: "Start Photo AI",
+    ctaHref: "/app/create?tool_id=photo-ai"
+  },
+  "video-ai": {
+    label: "Video AI",
+    title: "Video AI Tools - image to video and creator clips | MyDreamShoots",
+    description: "Use MyDreamShoots Video AI tools to turn finished visuals into private motion concepts, short clips, creator intros, product teasers, and album story videos.",
+    keywords: "Video AI, image to video AI, AI video tools, creator intro video, MyDreamShoots Video AI",
+    h2: "video ai tools",
+    h3: ["Image to video concepts", "Creator and social clips", "Private motion previews"],
+    intro: "Video AI collects motion tools for turning finished images into short, private video concepts for social posts, creator intros, product teasers, and album recaps.",
+    details: [
+      "Start with a strong still image or finished generated visual that has a clear subject and use case.",
+      "Choose a short-form motion direction, review visible credit use, then keep the output inside your private account.",
+      "Use Video AI when a still photo set needs a lightweight motion preview or share-ready clip."
+    ],
+    useCases: ["Image to video drafts", "Profile clips", "Creator intro videos", "Product teaser clips"],
+    workflow: ["Choose a Video AI format.", "Upload or select a finished visual.", "Generate a private short motion draft.", "Download or continue with a larger set."],
+    ctaLabel: "Start Video AI",
+    ctaHref: "/app/create#step-video"
+  },
+  "ai-photo-edit": {
+    label: "AI Photo Edit",
+    title: "AI Photo Edit Tools - retouch, restore, and clean up photos | MyDreamShoots",
+    description: "Use MyDreamShoots AI Photo Edit tools to change backgrounds, remove distractions, enhance soft images, retouch portraits, restore old photos, and prepare better source images.",
+    keywords: "AI Photo Edit, AI photo editor, background changer, magic eraser, photo enhancer, MyDreamShoots editor",
+    h2: "ai photo edit tools",
+    h3: ["Photo cleanup tools", "Source image repair", "Private edited outputs"],
+    intro: "AI Photo Edit groups the cleanup and repair tools that help prepare stronger source images or polish private outputs before delivery.",
+    details: [
+      "Use edit tools for background changes, object cleanup, enhancement, color correction, restoration, and prompt-based image edits.",
+      "Upload only images you own or have permission to edit, then review the edited result inside your private account.",
+      "These tools are useful before starting a full photo package or when a single source image needs cleanup."
+    ],
+    useCases: ["Background replacement", "Portrait retouching", "Old photo restoration", "Source photo cleanup"],
+    workflow: ["Choose an edit tool.", "Upload the image you want to improve.", "Review credit use before editing.", "Save the private edited result."],
+    ctaLabel: "Start AI Photo Edit",
+    ctaHref: "/app/create?tool_id=ai-photo-edit"
+  },
   headshot: {
     label: "Headshot",
     title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
@@ -808,23 +871,24 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
 };
 
 const aidreamcapesCollectionAliases: Record<string, string> = {
-  adventure: "cinematic-travel",
-  city: "cafe-corner-stories",
+  adventure: "road-trip-frames",
+  city: "old-quarter-walks",
   coastal: "coastal-light-sets",
+  costero: "coastal-light-sets",
   destination: "route-portrait-albums",
-  postcard: "social-keepsakes",
-  "cafe-street-journals": "cafe-corner-stories",
+  destino: "route-portrait-albums",
+  postcard: "postcard-story-sets",
+  postal: "postcard-story-sets",
+  "cafe-street-journals": "cafe-street-stories",
   "destination-portrait-albums": "route-portrait-albums",
   "coastal-getaways": "coastal-light-sets",
-  "old-city-walks": "cafe-corner-stories",
-  "cafe-street-stories": "cafe-corner-stories",
+  "old-city-walks": "old-quarter-walks",
   "scenic-overlooks": "golden-hour-route-stories",
-  "mountain-trails": "cinematic-travel",
-  "road-trip-frames": "cinematic-travel",
-  "itinerary-moodboards": "route-moodboard",
-  "postcard-social-sets": "social-keepsakes",
-  "travel-profile-stories": "celestial-profile-stories",
-  "lagoon-route-studys": "coastal-light-sets"
+  "mountain-trails": "alpine-trail-frames",
+  "itinerary-moodboards": "route-moodboards",
+  "postcard-social-sets": "postcard-story-sets",
+  "travel-profile-stories": "solo-traveler-profiles",
+  "lagoon-route-studys": "lagoon-route-studies"
 };
 
 export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug: string): string {
@@ -833,7 +897,15 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
 }
 
 const dreamshootCollectionAliases: Record<string, string> = {
-  lifestyle: "travel",
+  deportes: "world-cup-fan-photos",
+  seasonal: "holiday",
+  sports: "world-cup-fan-photos",
+  travel: "travel-scene-pack",
+  viaje: "travel-scene-pack",
+  video: "ai-video-add-ons",
+  creator: "creator-portraits",
+  nature: "travel-scene-pack",
+  lifestyle: "travel-scene-pack",
   "professional-headshots": "headshots"
 };
 
@@ -1153,6 +1225,108 @@ function singularTopicLabel(label: string): string {
     .trim();
 }
 
+function spanishDirectoryLabel(kind: SeoDirectoryKind, slug: string, aidreamcapes: boolean): string {
+  const normalized = normalizeDirectorySlug(slug);
+  const common: Record<string, string> = {
+    "anime-avatar": "Avatar anime",
+    beauty: "Belleza",
+    "christmas-couple": "Pareja navidena",
+    "christmas-photos": "Fotos de Navidad",
+    couple: "Pareja",
+    creative: "Creativo",
+    creator: "Creador",
+    "creator-portrait": "Retratos para creadores",
+    "cyberpunk-portrait": "Retrato cyberpunk",
+    "edit-by-prompt": "Edicion por instrucciones",
+    engagement: "Compromiso",
+    "fashion-editorial": "Editorial de moda",
+    "gala-photo": "Fotos de gala",
+    "gala-photos": "Fotos de gala",
+    headshot: "Retratos profesionales",
+    headshots: "Retratos profesionales",
+    "headshot-generator": "Retratos profesionales",
+    "image-to-video": "Imagen a video",
+    "magic-eraser": "Borrador magico",
+    "magic-upscaler": "Escalado magico",
+    "nature-adventure": "Aventura natural",
+    "noir-portrait": "Retrato noir",
+    "old-photo-restoration": "Restauracion de fotos",
+    "photo-enhancer": "Mejora de foto",
+    "portrait-retouch": "Retoque de retrato",
+    "product-lifestyle": "Producto lifestyle",
+    "profile-clip": "Clip de perfil",
+    sports: "Deportes",
+    "travel-scene-pack": "Pack de escenas de viaje",
+    "unblur-image": "Enfoque de imagen",
+    valentine: "San Valentin",
+    "valentine-photos": "Fotos de San Valentin",
+    "virtual-try-on": "Probador virtual",
+    "wedding-portraits": "Retratos de boda",
+    "world-cup-fan-photos": "Fotos de hincha del Mundial"
+  };
+  const aidreamcapesLabels: Record<string, string> = {
+    "alpine-trail-frame": "Marcos de sendero alpino",
+    "alpine-trail-frames": "Marcos de sendero alpino",
+    "cafe-street-story": "Historias de cafe y calle",
+    "cafe-street-stories": "Historias de cafe y calle",
+    "coastal-light-set": "Sets de luz costera",
+    "coastal-light-sets": "Sets de luz costera",
+    "desert-road-story": "Historias de carretera desertica",
+    "desert-road-stories": "Historias de carretera desertica",
+    "family-travel-keepsake": "Recuerdos de viaje familiar",
+    "family-travel-keepsakes": "Recuerdos de viaje familiar",
+    "golden-hour-route-story": "Historias de ruta en hora dorada",
+    "golden-hour-route-stories": "Historias de ruta en hora dorada",
+    "island-resort-scene": "Escenas de balcon isleno",
+    "island-balcony-scenes": "Escenas de balcon isleno",
+    "lagoon-route-study": "Estudios de ruta en laguna",
+    "lagoon-route-studies": "Estudios de ruta en laguna",
+    "lake-house-weekend": "Fines de semana en casa del lago",
+    "lake-house-weekends": "Fines de semana en casa del lago",
+    "market-morning-walk": "Paseos de mercado matinal",
+    "market-morning-walks": "Paseos de mercado matinal",
+    "old-quarter-walk": "Paseos por casco antiguo",
+    "old-quarter-walks": "Paseos por casco antiguo",
+    "postcard-story-set": "Sets de postal narrativa",
+    "postcard-story-sets": "Sets de postal narrativa",
+    "private-villa-stay": "Estancias en villa privada",
+    "private-villa-stays": "Estancias en villa privada",
+    "rail-journey-portrait": "Retratos de viaje en tren",
+    "rail-journey-portraits": "Retratos de viaje en tren",
+    "rainy-city-break": "Escapadas de ciudad lluviosa",
+    "rainy-city-breaks": "Escapadas de ciudad lluviosa",
+    "road-trip-frame": "Escapadas de carretera",
+    "road-trip-frames": "Escapadas de carretera",
+    "rooftop-city-night": "Noches urbanas en azotea",
+    "rooftop-city-nights": "Noches urbanas en azotea",
+    "route-moodboard": "Moodboards de ruta",
+    "route-portrait-album": "Albumes de retrato de ruta",
+    "route-portrait-albums": "Albumes de retrato de ruta",
+    "route-portrait-engine": "Motor de retratos de ruta",
+    "route-portrait-package": "Paquetes de retratos de ruta",
+    "route-portrait-packages": "Paquetes de retratos de ruta",
+    "scenic-overlook": "Miradores escenicos",
+    "scenic-outlooks": "Miradores escenicos",
+    "shared-route-album": "Albumes de ruta compartida",
+    "shared-route-albums": "Albumes de ruta compartida",
+    "snow-lodge-escape": "Escapadas en refugio de nieve",
+    "snow-lodge-escapes": "Escapadas en refugio de nieve",
+    "solo-traveler-profile": "Perfiles de viajero solo",
+    "solo-traveler-profiles": "Perfiles de viajero solo",
+    "travel-journal-cover": "Portadas de diario de viaje",
+    "travel-journal-covers": "Portadas de diario de viaje",
+    "wellness-retreat-scene": "Escenas de retiro wellness",
+    "wellness-retreat-scenes": "Escenas de retiro wellness"
+  };
+  if (aidreamcapesLabels[normalized]) return aidreamcapesLabels[normalized];
+  if (common[normalized]) return common[normalized];
+  if (kind === "tool") return aidreamcapes ? "Herramienta de retrato de viaje" : "Herramienta de fotos IA";
+  const fallback = cleanDirectoryLabel(normalized);
+  return aidreamcapes
+    ? fallback.replace(/\bRoute\b/gi, "Ruta").replace(/\bTravel\b/gi, "Viaje")
+    : fallback;
+}
+
 function lowerTopic(label: string): string {
   return label.toLowerCase().replace(/\bai\b/g, "AI");
 }
@@ -1279,7 +1453,7 @@ function fallbackTool(slug: string, brandName = "MyDreamShoots"): SeoDirectorySe
 }
 
 function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: string, aidreamcapes: boolean): SeoDirectorySeed {
-  const label = cleanDirectoryLabel(slug);
+  const label = spanishDirectoryLabel(kind, slug, aidreamcapes);
   const lower = label.toLowerCase();
   if (kind === "collection") {
     return {
@@ -1316,7 +1490,7 @@ function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: s
     title: aidreamcapes ? `Herramienta ${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`,
     description: aidreamcapes
       ? `Usa ${label} en ${brandName} para preparar retratos de viaje, escenas de destino, creditos visibles y galerias privadas.`
-      : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, previews y albumes listos para descargar.`,
+      : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, vistas previas y albumes listos para descargar.`,
     keywords: aidreamcapes
       ? `${lower} IA, herramienta de viaje IA, ${brandName}, galeria privada`
       : `${lower} IA, herramienta de fotos IA, ${brandName}, editor IA`,
@@ -1330,7 +1504,7 @@ function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: s
     ],
     useCases: aidreamcapes
       ? ["Retratos de ruta", "Escenas de viaje", "Conceptos de destino", "Galerias privadas"]
-      : ["Fotos de perfil", "Previews creativos", "Ediciones rapidas", "Albumes privados"],
+      : ["Fotos de perfil", "Vistas previas creativas", "Ediciones rapidas", "Albumes privados"],
     workflow: ["Revisa el uso recomendado.", "Sube fotos claras.", "Elige el estilo o destino.", "Genera y descarga desde tu galeria privada."],
     ctaLabel: "Empezar ahora",
     ctaHref: `/app/create?tool_id=${slug}`
@@ -1345,6 +1519,16 @@ function normalizeRouteMetadataPath(value: string): string {
 
 function dreamshootFallbackMetadataCanonical(siteSlug: string, primaryDomain: string | undefined, canonicalPath: string): string {
   return publicSiteUrlFromParts({ slug: siteSlug, primaryDomain: primaryDomain ?? "" }, canonicalPath);
+}
+
+function seoDirectoryCanonicalUrl(site: Site, canonicalPath: string): string {
+  const normalizedPath = !canonicalPath || canonicalPath === "/" ? "/" : canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
+  const domain = String(site.primaryDomain ?? "").trim().replace(/^https?:\/\//i, "").replace(/\/$/, "");
+  if (domain) {
+    const protocol = domain.includes("localhost") || domain.startsWith("127.0.0.1") ? "http" : "https";
+    return `${protocol}://${domain}${normalizedPath === "/" ? "" : normalizedPath}`;
+  }
+  return publicSiteUrlFromParts({ slug: site.slug, primaryDomain: "" }, normalizedPath);
 }
 
 function fallbackRouteSiteName(siteSlug: string, options: { primaryDomain?: string; siteName?: string }): string {
@@ -1404,7 +1588,7 @@ export function metadataForDreamshootFallbackRoute(
   return {
     title: seed.title,
     description: seed.description,
-    keywords: undefined,
+    keywords: seed.keywords || undefined,
     alternates: { canonical },
     robots: {
       index: seed.index,
@@ -1456,18 +1640,18 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 
 export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawSlug: string): Metadata {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
-  const canonicalPath = kind === "tool" && !item.explicit ? "/tools" : item.canonicalPath;
-  const base = site.primaryDomain && !site.primaryDomain.includes("localhost") ? `https://${site.primaryDomain}` : "";
-  const canonical = base ? `${base}${canonicalPath}` : canonicalPath;
+  const spanishXby = isSpanishXbySite(site);
+  const canonicalPath = kind === "tool" && !item.explicit && !spanishXby ? "/tools" : item.canonicalPath;
+  const canonical = seoDirectoryCanonicalUrl(site, canonicalPath);
   const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
   const siteName = fallbackRouteSiteName(site.slug, { primaryDomain: site.primaryDomain, siteName: site.branding.logoText || site.name });
   return {
     title: item.title,
     description: item.description,
-    keywords: undefined,
+    keywords: item.keywords,
     alternates: { canonical },
     robots: {
-      index: item.explicit,
+      index: spanishXby || item.explicit,
       follow: true
     },
 	    openGraph: {

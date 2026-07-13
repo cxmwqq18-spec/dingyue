@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
+import { ensureCustomerCsrfCookie } from "@/lib/customer-csrf";
 import {
   getCustomerWorkspaceBootstrapRelational,
   getCustomerWorkspaceSiteShellRelational,
@@ -84,7 +85,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
     }
 
-    return NextResponse.json(
+    return ensureCustomerCsrfCookie(NextResponse.json(
       {
         ok: true,
         site,
@@ -93,7 +94,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         creativePacks: []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
-    );
+    ), request, siteId, current);
   }
 
   if (includeMode === "account") {
@@ -113,7 +114,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       ? getThemeRuntimeForCustomer(accountState, site.id, current.customer.id)
       : undefined;
 
-    return NextResponse.json(
+    return ensureCustomerCsrfCookie(NextResponse.json(
       {
         ok: true,
         site,
@@ -123,7 +124,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
-    );
+    ), request, siteId, current);
   }
 
   const [bootstrap, workspaceState, adminAccess] = await Promise.all([
@@ -142,7 +143,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     ? getThemeRuntimeForCustomer(workspaceState, siteId, current.customer.id)
     : emptyRuntime({ customer: current.customer });
 
-  return NextResponse.json(
+  return ensureCustomerCsrfCookie(NextResponse.json(
     {
       ok: true,
       site: bootstrap.site,
@@ -156,5 +157,5 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       }
     },
     { headers: { "Cache-Control": "private, max-age=8" } }
-  );
+  ), request, siteId, current);
 }

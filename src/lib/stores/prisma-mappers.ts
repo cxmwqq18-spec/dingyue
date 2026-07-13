@@ -26,6 +26,7 @@ import type {
   VideoThemeCategory
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
+import { normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
 type CustomerWithBalance = Prisma.CustomerGetPayload<{ include: { balance: true } }>;
@@ -770,7 +771,7 @@ export function toVideoTheme(record: {
     status: record.status as VideoTheme["status"],
     creditCost: record.creditCost,
     durationSeconds: record.durationSeconds,
-    maxFrames: record.maxFrames,
+    maxFrames: normalizeVideoFrameLimit(record.maxFrames),
     generationCount: record.generationCount,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     imageUrl: record.imageUrl ?? undefined,

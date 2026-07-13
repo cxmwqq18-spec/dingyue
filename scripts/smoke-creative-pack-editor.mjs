@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import { config as loadEnv } from "dotenv";
 
@@ -9,9 +9,14 @@ const base = process.env.SITE_ADMIN_BASE_URL ?? process.env.SMOKE_BASE_URL ?? "h
 const siteId = process.env.SITE_ADMIN_SITE_ID ?? "site_dreamshoot";
 const username = process.env.SITE_ADMIN_USER;
 const prisma = new PrismaClient();
+let temporaryAdminId = "";
+
+function hashPassword(value) {
+  return `sha256:${createHash("sha256").update(value).digest("hex")}`;
+}
 
 async function createSmokeAdminSession() {
-  const admin = username
+  let admin = username
     ? await prisma.siteAdmin.findUnique({
         where: { siteId_email: { siteId, email: username.trim().toLowerCase() } },
         select: { id: true }
@@ -21,7 +26,21 @@ async function createSmokeAdminSession() {
         orderBy: [{ role: "asc" }, { createdAt: "asc" }],
         select: { id: true }
       });
-  if (!admin) throw new Error(`missing_site_admin:${siteId}${username ? `:${username}` : ""}`);
+  if (!admin && username) throw new Error(`missing_site_admin:${siteId}:${username}`);
+  if (!admin) {
+    admin = await prisma.siteAdmin.create({
+      data: {
+        id: `smoke_sa_${randomUUID()}`,
+        siteId,
+        email: `smoke-creative-pack-${Date.now()}@example.test`,
+        passwordHash: hashPassword("SmokePass1!"),
+        displayName: "Creative Pack Smoke Admin",
+        role: "admin"
+      },
+      select: { id: true }
+    });
+    temporaryAdminId = admin.id;
+  }
   const session = await prisma.siteAdminSession.create({
     data: {
       id: `smoke_sasess_${randomUUID()}`,
@@ -96,5 +115,6 @@ try {
     await jsonFetch(`/api/sites/${siteId}/creative-packs/${packId}`, { method: "DELETE" }, cookie).catch(() => undefined);
   }
   await prisma.siteAdminSession.deleteMany({ where: { id: smokeSession.id } }).catch(() => undefined);
+  if (temporaryAdminId) await prisma.siteAdmin.deleteMany({ where: { id: temporaryAdminId } }).catch(() => undefined);
   await prisma.$disconnect();
 }

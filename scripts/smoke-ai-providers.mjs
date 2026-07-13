@@ -23,8 +23,26 @@ function cookieFrom(response, name) {
   return match[1];
 }
 
+function cookiesFrom(response, names) {
+  return names.map((name) => cookieFrom(response, name)).join("; ");
+}
+
 function cookieValue(cookie, name) {
   return cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function pollAsyncJob(jobId, cookie) {
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    const current = await request(`/api/platform/async-jobs/${jobId}`, { cookie });
+    const job = current.json.job;
+    if (job?.status === "succeeded" || job?.status === "failed") return job;
+    await sleep(250);
+  }
+  throw new Error(`async job did not finish: ${jobId}`);
 }
 
 const anonymous = await request("/api/platform/ai-providers", { allowFailure: true });
@@ -32,19 +50,15 @@ if (anonymous.response.status !== 401 || anonymous.json.error !== "platform_logi
   throw new Error(`ai provider API did not require auth: ${anonymous.response.status} ${JSON.stringify(anonymous.json)}`);
 }
 
-await request("/api/platform/state", {
-  method: "POST",
-  headers: { "x-smoke-reset": "true" },
-  body: { reset: true }
-});
-
 const login = await request("/api/platform/auth/login", {
   method: "POST",
   body: { email: "platform@local.test", password: "platform123" }
 });
-const csrfCookie = cookieFrom(login.response, "platform_csrf");
-const csrfToken = cookieValue(csrfCookie, "platform_csrf");
-const cookie = [cookieFrom(login.response, "platform_session"), csrfCookie].join("; ");
+const cookie = cookiesFrom(login.response, ["platform_session", "platform_csrf"]);
+const csrfToken = cookieValue(cookie, "platform_csrf");
+const before = await request("/api/platform/ai-providers", { cookie });
+const previousCurrentProviderId = before.json.currentProviderId || before.json.providers?.[0]?.id || "";
+let providerId = "";
 
 const page = await request("/platform?module=gateway", { cookie });
 const html = await page.text();
@@ -66,10 +80,18 @@ const saved = await request("/api/platform/ai-providers", {
   method: "PUT",
   cookie,
   headers: { "x-csrf-token": csrfToken },
-  body: { label: "Smoke AI", aiUrl: "https://example.com/v1/models", apiKey: "sk_smoke_secret", modelType: "gpt-image-2", makeCurrent: true }
+  body: {
+    label: `Smoke AI ${Date.now()}`,
+    aiUrl: "https://example.com/v1/models",
+    apiKey: "sk_smoke_secret",
+    modelType: "gpt-image-2",
+    makeCurrent: true,
+    maxImagesPerRequest: 7
+  }
 });
 const provider = saved.json.providers.find((item) => item.id === saved.json.currentProviderId);
-if (!provider?.isCurrent || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
+providerId = provider?.id ?? "";
+if (!provider?.isCurrent || provider.maxImagesPerRequest !== 7 || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
   throw new Error(`ai provider save/mask failed: ${JSON.stringify(saved.json)}`);
 }
 
@@ -79,13 +101,17 @@ const tested = await request("/api/platform/ai-providers", {
   headers: { "x-csrf-token": csrfToken },
   body: { action: "test", id: provider.id, aiUrl: provider.aiUrl, modelType: provider.modelType }
 });
-if (!tested.json.test?.ok || tested.json.test.message !== "mock provider reachable") {
-  throw new Error(`ai provider mock test failed: ${JSON.stringify(tested.json.test)}`);
+if (tested.response.status !== 202 || !tested.json.jobId) {
+  throw new Error(`ai provider test did not return an async job: ${tested.response.status} ${JSON.stringify(tested.json)}`);
+}
+const testJob = await pollAsyncJob(tested.json.jobId, cookie);
+if (testJob.status !== "succeeded" || !testJob.result?.ok || testJob.result.message !== "mock provider reachable") {
+  throw new Error(`ai provider mock test failed: ${JSON.stringify(testJob)}`);
 }
 
 const fetched = await request("/api/platform/ai-providers", { cookie });
 const fetchedProvider = fetched.json.providers.find((item) => item.id === provider.id);
-if (!fetchedProvider?.status.apiKeyConfigured || JSON.stringify(fetched.json).includes("sk_smoke_secret")) {
+if (!fetchedProvider?.status.apiKeyConfigured || fetchedProvider.maxImagesPerRequest !== 7 || JSON.stringify(fetched.json).includes("sk_smoke_secret")) {
   throw new Error(`ai provider GET did not preserve masked key state: ${JSON.stringify(fetched.json)}`);
 }
 
@@ -99,11 +125,31 @@ if (JSON.stringify(fallback).includes("sk_smoke_secret")) {
   throw new Error("generation worker payload leaked AI provider API key");
 }
 
+if (previousCurrentProviderId && previousCurrentProviderId !== providerId) {
+  await request("/api/platform/ai-providers", {
+    method: "POST",
+    cookie,
+    headers: { "x-csrf-token": csrfToken },
+    body: { action: "current", providerId: previousCurrentProviderId }
+  });
+}
+const deleted = await request("/api/platform/ai-providers", {
+  method: "DELETE",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: { providerId },
+  allowFailure: true
+});
+if (!deleted.response.ok && deleted.json.error !== "ai_provider_delete_last") {
+  throw new Error(`ai provider cleanup failed: ${deleted.response.status} ${JSON.stringify(deleted.json)}`);
+}
+
 console.log(JSON.stringify({
   ok: true,
   providerId: provider.id,
-  currentProviderId: saved.json.currentProviderId,
+  restoredProviderId: previousCurrentProviderId || deleted.json.currentProviderId || "",
   preview: provider.status.apiKeyPreview,
   modelType: provider.modelType,
+  maxImagesPerRequest: provider.maxImagesPerRequest,
   fallbackProviders: fallback.length
 }, null, 2));

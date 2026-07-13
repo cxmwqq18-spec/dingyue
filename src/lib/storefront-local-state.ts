@@ -7,7 +7,7 @@ import {
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import type { PlatformState } from "@/lib/types";
+import type { CreativePackCategory, PlatformState, ToolCategory } from "@/lib/types";
 
 const localPlatformStateFile = path.join(process.cwd(), "data", "platform-state.json");
 let localJsonStateCache: { mtimeMs: number; state: PlatformState } | null = null;
@@ -32,10 +32,61 @@ function stateWithSiteFirst(state: PlatformState, siteSlug: string): PlatformSta
   const canonicalSlug = publicSiteSlug(siteSlug);
   const site = state.sites.find((item) => publicSiteSlug(item.slug) === canonicalSlug || item.slug === siteSlug);
   if (!site) return undefined;
+  const stateWithRelations = hydrateLocalStateRelationsForSite(state, site.id);
   const clonedSite = cloneJson(site);
   return {
+    ...stateWithRelations,
+    sites: [clonedSite, ...stateWithRelations.sites.filter((item) => item.id !== site.id)]
+  };
+}
+
+function hydrateCategoryParents<T extends CreativePackCategory | ToolCategory>(categories: T[]): Map<string, T> {
+  const source = new Map(categories.map((category) => [category.id, cloneJson(category)]));
+  const hydrated = new Map<string, T>();
+  const visiting = new Set<string>();
+
+  const hydrate = (category: T | undefined): T | undefined => {
+    if (!category) return undefined;
+    const cached = hydrated.get(category.id);
+    if (cached) return cached;
+    if (visiting.has(category.id)) {
+      const selfReferenceSafe = { ...category, parent: undefined } as T;
+      hydrated.set(category.id, selfReferenceSafe);
+      return selfReferenceSafe;
+    }
+    visiting.add(category.id);
+    const parentId = category.parentId;
+    const parent = parentId && parentId !== category.id ? hydrate(source.get(parentId) as T | undefined) : undefined;
+    const next = { ...category, parent } as T;
+    visiting.delete(category.id);
+    hydrated.set(category.id, next);
+    return next;
+  };
+
+  for (const category of source.values()) hydrate(category as T);
+  return hydrated;
+}
+
+function hydrateLocalStateRelationsForSite(state: PlatformState, siteId: string): PlatformState {
+  const creativePackCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === siteId);
+  const toolCategories = (state.toolCategories ?? []).filter((category) => category.siteId === siteId);
+  if (!creativePackCategories.length && !toolCategories.length) return state;
+
+  const creativeCategoryById = hydrateCategoryParents(creativePackCategories);
+  const toolCategoryById = hydrateCategoryParents(toolCategories);
+
+  return {
     ...state,
-    sites: [clonedSite, ...state.sites.filter((item) => item.id !== site.id)]
+    creativePacks: (state.creativePacks ?? []).map((pack) => {
+      if (pack.siteId !== siteId) return pack;
+      const categoryRecord = pack.categoryId ? creativeCategoryById.get(pack.categoryId) : pack.categoryRecord;
+      return categoryRecord ? { ...pack, categoryRecord } : pack;
+    }),
+    toolMenuItems: (state.toolMenuItems ?? []).map((item) => {
+      if (item.siteId !== siteId) return item;
+      const category = item.categoryId ? toolCategoryById.get(item.categoryId) : item.category;
+      return category ? { ...item, category } : item;
+    })
   };
 }
 
@@ -49,6 +100,11 @@ export function preferLocalPathModeState(): boolean {
   return process.env.STOREFRONT_PATH_MODE_READS !== "database" && process.env.NODE_ENV !== "production";
 }
 
+function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | undefined {
+  if (pageSlug !== "/faq") return undefined;
+  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(siteSlug) ? "/help" : undefined;
+}
+
 export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug: string, contextSlug?: string): Promise<PlatformState | undefined> {
   if (preferLocalPathModeState()) return readLocalState(siteSlug);
   try {
@@ -56,6 +112,11 @@ export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug:
       ? await readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase(siteSlug)
       : await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug, contextSlug);
     if (state?.sites[0]) return state;
+    const legacyPageSlug = legacyPageSlugForSite(siteSlug, pageSlug);
+    if (legacyPageSlug) {
+      const legacyState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, legacyPageSlug, contextSlug);
+      if (legacyState?.sites[0]) return legacyState;
+    }
   } catch {
     // Local development can exhaust or cold-start relational reads; JSON state keeps /site previews responsive.
   }
@@ -67,6 +128,11 @@ export async function readPathModePublicMetadataState(siteSlug: string, pageSlug
   try {
     const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, pageSlug);
     if (state?.sites[0]) return state;
+    const legacyPageSlug = legacyPageSlugForSite(siteSlug, pageSlug);
+    if (legacyPageSlug) {
+      const legacyState = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, legacyPageSlug);
+      if (legacyState?.sites[0]) return legacyState;
+    }
   } catch {
     // Fall back to the local storefront preview state.
   }

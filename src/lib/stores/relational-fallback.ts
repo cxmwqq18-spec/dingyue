@@ -9,7 +9,10 @@ export function shouldFallbackRelationalRead(error: unknown): boolean {
   return (
     message.includes("Can't reach database server") ||
     message.includes("ECONNREFUSED") ||
-    message.includes("P1001")
+    message.includes("P1001") ||
+    message.includes("P2024") ||
+    message.includes("connection pool") ||
+    message.includes("Timed out fetching a new connection")
   );
 }
 

@@ -236,6 +236,58 @@ function fallbackSourcePageJson(templateKey) {
       }
     };
   }
+  if (templateKey === "workflow") {
+    return {
+      version: 1,
+      pageType: "content",
+      sectionsOrder: ["workflow_intro_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"],
+      sections: {
+        workflow_intro_1: {
+          id: "workflow_intro_1",
+          type: "rich_text",
+          settings: {
+            eyebrow: "How it works",
+            title: "How MyDreamShoots turns uploads into private AI photo sets.",
+            body: "Upload photos you own, choose the photo package you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.",
+            headingLevel: "h1",
+            tone: "dark",
+            primaryCta: "Browse packages",
+            primaryHref: "/collections",
+            secondaryCta: "View pricing",
+            secondaryHref: "/pricing"
+          },
+          blocks: []
+        },
+        workflow_1: {
+          id: "workflow_1",
+          type: "studio_steps",
+          settings: {
+            anchor: "workflow",
+            eyebrow: "Workflow",
+            title: "Upload, choose, review, generate.",
+            subtitle: "Each step keeps the customer journey clear before credits are reserved and after results are delivered."
+          },
+          blocks: []
+        },
+        plan_rules_1: {
+          id: "plan_rules_1",
+          type: "rich_text",
+          settings: {
+            eyebrow: "Before generation",
+            title: "Source photos, credits, and albums stay organized in one account.",
+            body: "The workflow is built around private uploads, visible credit use, secure checkout, account-scoped jobs, and downloadable galleries.",
+            primaryCta: "Start creating",
+            primaryHref: "/login",
+            secondaryCta: "Read FAQ",
+            secondaryHref: "/faq"
+          },
+          blocks: []
+        },
+        faq_1: { id: "faq_1", type: "faq", settings: { title: "Workflow questions" }, blocks: [] },
+        conversion_1: { id: "conversion_1", type: "conversion_panel", settings: {}, blocks: [] }
+      }
+    };
+  }
   return undefined;
 }
 
@@ -432,6 +484,14 @@ const aidreamcapesSeoPages = {
     description: "Explore Aidreamcapes tools for route portraits, coastal light scenes, alpine trail frame albums, old quarter walks, route moodboards, and private travel gallery delivery.",
     keywords: "Aidreamcapes tools, AI travel portrait tool, route portrait builder, coastal portrait generator, route moodboard AI",
     canonicalPath: "/tools",
+    index: true,
+    follow: true
+  },
+  workflow: {
+    title: "How Aidreamcapes works - private AI travel portrait workflow",
+    description: "Learn how Aidreamcapes customers plan destination moods, upload source photos, review credits, generate private travel portraits, and download finished galleries.",
+    keywords: "Aidreamcapes workflow, AI travel portrait workflow, private destination gallery, route portrait credits",
+    canonicalPath: "/workflow",
     index: true,
     follow: true
   },
@@ -883,7 +943,7 @@ function buildThemeSettings() {
   globalSections.header.blocks = [
     { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections" } },
     { id: "aidreamcapes_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
-    { id: "aidreamcapes_header_how", type: "menu_link", settings: { label: "How it works", href: "#workflow" } },
+    { id: "aidreamcapes_header_how", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
     { id: "aidreamcapes_header_examples", type: "menu_link", settings: { label: "Examples", href: "/collections" } },
     { id: "aidreamcapes_header_help", type: "menu_link", settings: { label: "Help", href: "/help" } },
     ...clone(aidreamcapesTools),
@@ -908,6 +968,7 @@ function buildThemeSettings() {
   globalSections.footer.blocks = [
     { id: "aidreamcapes_footer_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections", group: "product" } },
     { id: "aidreamcapes_footer_tools", type: "menu_link", settings: { label: "Route Portrait Engine", href: "/tools/route-portrait-engine", group: "product" } },
+    { id: "aidreamcapes_footer_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow", group: "product" } },
     { id: "aidreamcapes_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
     { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Field Notes", href: "/blog", group: "company" } },
     { id: "aidreamcapes_footer_about", type: "menu_link", settings: { label: "About the Studio", href: "/about-us", group: "company" } },
@@ -1041,6 +1102,7 @@ const pageMappings = [
   { idSuffix: "pricing", packageTemplate: "pricing", templateKey: "page", slug: "/pricing", title: "Pricing", pageType: "pricing", seoKey: "pricing" },
   { idSuffix: "collections", packageTemplate: "packages", templateKey: "collection", slug: "/collections", title: "Travel packages", pageType: "collection", seoKey: "collections" },
   { idSuffix: "tools", packageTemplate: "tools", templateKey: "tools", slug: "/tools", title: "AI travel tools", pageType: "tools", seoKey: "tools" },
+  { idSuffix: "workflow", packageTemplate: "workflow", templateKey: "workflow", slug: "/workflow", title: "How it works", pageType: "content", seoKey: "workflow" },
   { idSuffix: "tool_destination", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/route-portrait-engine", title: "Route Portrait Engine", pageType: "ai_tool" },
   { idSuffix: "login", packageTemplate: "login", templateKey: "login", slug: "/login", title: "Customer login", pageType: "login", seoKey: "login" },
   { idSuffix: "app", packageTemplate: "app-home", templateKey: "app-home", slug: "/app", title: "Customer workspace", pageType: "workspace", seoKey: "app" },
@@ -1080,6 +1142,10 @@ const pageCopy = {
   "/tools": {
     title: "Aidreamcapes travel tools",
     subtitle: "Start with a focused tool for route portraits, coastal light sets, old quarter walks, alpine trail frames, itinerary moodboards, and postcard visuals."
+  },
+  "/workflow": {
+    title: "How Aidreamcapes turns source photos into private travel portraits.",
+    subtitle: "Plan the destination mood, attach source photos, review route credits, generate a private travel portrait request, and collect finished images in your account gallery."
   },
   "/help": {
     title: "Aidreamcapes help for travel uploads, credits, and private albums.",
@@ -1400,6 +1466,52 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
     pageJson.sectionsOrder = pageJson.sectionsOrder
       .filter((sectionId) => sectionId !== "flow_bridge_1")
       .flatMap((sectionId) => (sectionId === "package_catalog_1" ? ["flow_bridge_1", sectionId] : [sectionId]));
+  }
+  if (mapping.slug === "/workflow") {
+    if (pageJson.sections.workflow_intro_1?.settings) {
+      pageJson.sections.workflow_intro_1.settings = {
+        ...pageJson.sections.workflow_intro_1.settings,
+        eyebrow: "How it works",
+        title: "How Aidreamcapes turns source photos into private travel portraits.",
+        body: "Plan the destination mood, attach source photos you own, review route credits, generate a private travel portrait request, and collect finished images in your account gallery.",
+        primaryCta: "Browse travel packages",
+        primaryHref: "/collections",
+        secondaryCta: "View pricing",
+        secondaryHref: "/pricing"
+      };
+      pageJson.sections.workflow_intro_1.blocks = [
+        { id: "workflow_intro_route", type: "rich_text_card", settings: { meta: "Route", title: "Destination mood first", description: "Customers choose a coast, city, resort, trail, cafe, or postcard direction before a private request starts." } },
+        { id: "workflow_intro_credits", type: "rich_text_card", settings: { meta: "Credits", title: "Route credit review", description: "Each request shows its credit cost before a private travel generation begins." } },
+        { id: "workflow_intro_gallery", type: "rich_text_card", settings: { meta: "Gallery", title: "Destination album delivery", description: "Finished travel portraits return to the signed-in account gallery." } }
+      ];
+    }
+    if (pageJson.sections.workflow_1?.settings) {
+      pageJson.sections.workflow_1.settings = {
+        ...pageJson.sections.workflow_1.settings,
+        eyebrow: "Travel portrait workflow",
+        title: "Plan, upload, review, generate.",
+        subtitle: "Each step keeps the destination brief, source photos, credits, and private gallery delivery clear."
+      };
+      pageJson.sections.workflow_1.blocks = [
+        { id: "workflow_step_route", type: "card", settings: { title: "Plan the route mood", text: "Choose a coastal, city, resort, trail, cafe, or postcard direction before starting the request.", meta: "01" } },
+        { id: "workflow_step_upload", type: "card", settings: { title: "Attach source photos", text: "Upload clear portraits and optional travel references that you own or have permission to use.", meta: "02" } },
+        { id: "workflow_step_credits", type: "card", settings: { title: "Review route credits", text: "Confirm the credit cost before the private travel portrait request starts.", meta: "03" } },
+        { id: "workflow_step_gallery", type: "card", settings: { title: "Collect the gallery", text: "Finished destination portraits return to the private gallery for review and download.", meta: "04" } }
+      ];
+    }
+    if (pageJson.sections.plan_rules_1?.settings) {
+      pageJson.sections.plan_rules_1.settings = {
+        ...pageJson.sections.plan_rules_1.settings,
+        eyebrow: "Before generation",
+        title: "Route mood, source photos, credits, and delivery stay organized.",
+        body: "Aidreamcapes keeps destination planning, source-photo permission, credit review, private requests, and finished travel portrait galleries inside one account.",
+        primaryCta: "Start a travel set",
+        primaryHref: "/login",
+        secondaryCta: "Read FAQ",
+        secondaryHref: "/help"
+      };
+      pageJson.sections.plan_rules_1.blocks = clone(aidreamcapesPlanRuleBlocks);
+    }
   }
   updateSections(pageJson, (section) => section.type === "hero", (section) => {
     syncSectionCopy(section, {

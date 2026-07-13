@@ -15,8 +15,12 @@ const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
 const FALLBACK_INDEXABLE_PATHS = [
   "/",
   "/pricing",
+  "/workflow",
   "/collections",
   "/tools",
+  "/tools/photo-ai",
+  "/tools/video-ai",
+  "/tools/ai-photo-edit",
   "/tools/headshot",
   "/tools/background-changer",
   "/tools/image-to-video",
@@ -26,13 +30,14 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/refunds",
   "/content",
   "/shipping",
-  "/help",
+  "/faq",
   "/blog",
   "/blog/preparing-source-photos"
 ];
 const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/",
   "/pricing",
+  "/workflow",
   "/collections",
   "/tools",
   "/privacy",
@@ -41,14 +46,14 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/refunds",
   "/content",
   "/shipping",
-  "/help"
+  "/faq"
 ];
 
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
 const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits"]);
-const REQUIRED_INDEXABLE_TOOL_PATHS = ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"];
+const REQUIRED_INDEXABLE_TOOL_PATHS = ["/tools/photo-ai", "/tools/video-ai", "/tools/ai-photo-edit", "/tools/headshot", "/tools/background-changer", "/tools/image-to-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"];
 const PUBLIC_HOST_FALLBACK_PATHS = Array.from(new Set([...FALLBACK_INDEXABLE_PATHS, ...AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS]));
 const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;

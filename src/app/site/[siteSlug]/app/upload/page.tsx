@@ -3,8 +3,9 @@ import { headers } from "next/headers";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 
-export async function generateMetadata(): Promise<Metadata> {
-  return { title: "Upload photos", robots: { index: false, follow: false } };
+export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
+  const { siteSlug } = await params;
+  return { title: /(?:-xby|_xby)/i.test(siteSlug) ? "Subir fotos" : "Upload photos", robots: { index: false, follow: false } };
 }
 
 export default async function CustomerWorkspaceUploadPage({

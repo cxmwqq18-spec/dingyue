@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { loadRuntimeEnv } from "./load-runtime-env.mjs";
 
@@ -12,7 +14,8 @@ const password = "SmokePass1!";
 const createdIds = {
   adminId: undefined,
   customerId: undefined,
-  assetId: undefined
+  assetId: undefined,
+  storageKey: undefined
 };
 
 function assert(condition, message) {
@@ -25,6 +28,35 @@ function hashPassword(value) {
 
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
+}
+
+function customerAssetRoot() {
+  return path.resolve(process.env.CUSTOMER_ASSET_STORAGE_ROOT || path.join(process.cwd(), "data", "customer-assets"));
+}
+
+function normalizedStorageKey(storageKey) {
+  return storageKey.replace(/\\/g, "/").replace(/^\/+/, "").replace(/^customer-assets\//, "");
+}
+
+function assetPath(storageKey) {
+  const root = customerAssetRoot();
+  const filePath = path.join(root, normalizedStorageKey(storageKey));
+  assert(filePath.startsWith(`${root}${path.sep}`), "unsafe_asset_storage_key");
+  return filePath;
+}
+
+function extensionForMime(mimeType) {
+  if (mimeType?.includes("png")) return "png";
+  if (mimeType?.includes("webp")) return "webp";
+  if (mimeType?.includes("gif")) return "gif";
+  return "jpg";
+}
+
+function smokePngBytes() {
+  return Buffer.from(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=",
+    "base64"
+  );
 }
 
 function cookieHeader(headers) {
@@ -44,21 +76,6 @@ function cookieValue(cookie, name) {
 }
 
 async function createSmokeIdentity() {
-  const sourceAsset = await prisma.assetUpload.findFirst({
-    where: {
-      siteId,
-      role: { in: ["input", "training_input"] },
-      deletedAt: null
-    },
-    orderBy: { createdAt: "desc" },
-    select: {
-      storageKey: true,
-      mimeType: true,
-      label: true
-    }
-  });
-  assert(sourceAsset, "missing_source_asset_for_workspace_smoke");
-
   const siteAiApp = await prisma.siteAiApp.findFirst({
     where: { siteId, enabled: true, aiApp: { slug: "image_generator" } },
     include: { aiApp: true }
@@ -78,6 +95,11 @@ async function createSmokeIdentity() {
   createdIds.customerId = customerId;
   createdIds.adminId = adminId;
   createdIds.assetId = assetId;
+  const mimeType = "image/png";
+  const storageKey = `sites/${siteId}/customers/${customerId}/assets/${assetId}-source.${extensionForMime(mimeType)}`;
+  createdIds.storageKey = storageKey;
+  fs.mkdirSync(path.dirname(assetPath(storageKey)), { recursive: true });
+  fs.writeFileSync(assetPath(storageKey), smokePngBytes());
 
   await prisma.customer.create({
     data: {
@@ -112,9 +134,9 @@ async function createSmokeIdentity() {
       id: assetId,
       siteId,
       customerId,
-      label: sourceAsset.label || "Smoke source photo",
-      storageKey: sourceAsset.storageKey,
-      mimeType: sourceAsset.mimeType || "image/jpeg",
+      label: "Smoke source photo",
+      storageKey,
+      mimeType,
       role: "input",
       visibility: "private",
       reviewStatus: "approved",
@@ -198,6 +220,7 @@ async function createAdminJob(cookie, identity) {
 async function cleanup() {
   await prisma.siteAdmin.deleteMany({ where: { id: createdIds.adminId } }).catch(() => undefined);
   await prisma.customer.deleteMany({ where: { id: createdIds.customerId } }).catch(() => undefined);
+  if (createdIds.storageKey) fs.rmSync(assetPath(createdIds.storageKey), { force: true });
 }
 
 try {

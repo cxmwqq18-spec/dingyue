@@ -31,7 +31,7 @@
         <div class="footer-plus__list {{navClass}}">
           {% for link in links %}
             <div class="footer-plus__list_item text-truncate {% if forloop.index0 == smMarginIndex %}footer-plus__list_bar {% endif %}">
-              <a {% if link.url %} href="{{link.url}}" {% endif %} {% unless link.type != "web" or link.url contains shop.domain %} target="_blank" {% endunless %} class="xf_skin_link">
+              <a {% if link.url %} href="{{link.url}}" rel="nofollow" {% endif %} {% unless link.type != "web" or link.url contains shop.domain %} target="_blank" {% endunless %} class="xf_skin_link">
                 {{link.name}}
               </a>
             </div>
@@ -46,6 +46,7 @@
                   {% if settings.instagram_url %}
                     href="{{settings.instagram_url}}"
                     target="_blank"
+                    rel="nofollow noopener noreferrer"
                   {% endif %}
                   class="xf_skin_link"
                 >
@@ -59,6 +60,7 @@
                   {% if settings.facebook_url %}
                     href="{{settings.facebook_url}}"
                     target="_blank"
+                    rel="nofollow noopener noreferrer"
                   {% endif %}
                   class="xf_skin_link"
                 >
@@ -72,6 +74,7 @@
                   {% if settings.twitter_url %}
                     href="{{settings.twitter_url}}"
                     target="_blank"
+                    rel="nofollow noopener noreferrer"
                   {% endif %}
                   class="xf_skin_link"
                 >
@@ -85,6 +88,7 @@
                   {% if settings.pinterest_url %}
                     href="{{settings.pinterest_url}}"
                     target="_blank"
+                    rel="nofollow noopener noreferrer"
                   {% endif %}
                   class="xf_skin_link"
                 >
@@ -98,6 +102,7 @@
                   {% if settings.youtube_url %}
                     href="{{settings.youtube_url}}"
                     target="_blank"
+                    rel="nofollow noopener noreferrer"
                   {% endif %}
                   class="xf_skin_link"
                 >

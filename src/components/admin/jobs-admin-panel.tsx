@@ -23,6 +23,59 @@ function tone(status: string): "good" | "warn" | "bad" | "neutral" {
   return "neutral";
 }
 
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function stringValue(value: unknown): string {
+  return typeof value === "string" ? value : "";
+}
+
+function jobKindLabel(job: GenerationJob): string {
+  const request = recordValue(job.requestJson);
+  const fields = recordValue(request.fields);
+  const flow = recordValue(request.flow);
+  const isVideo =
+    stringValue(flow.aiAppSlug) === "video_generator" ||
+    stringValue(request.mode) === "video" ||
+    stringValue(request.outputType) === "video" ||
+    stringValue(fields.mode) === "video" ||
+    stringValue(fields.outputType) === "video" ||
+    Boolean(recordValue(request.videoTheme).id);
+  return isVideo ? "视频" : "图片";
+}
+
+function jobDetailLabel(job: GenerationJob, appName: string): string {
+  const request = recordValue(job.requestJson);
+  const fields = recordValue(request.fields);
+  const flow = recordValue(request.flow);
+  const creativePack = recordValue(request.creativePack);
+  const videoTheme = recordValue(request.videoTheme);
+  return (
+    stringValue(videoTheme.name) ||
+    stringValue(creativePack.name) ||
+    stringValue(fields.creativePackName) ||
+    stringValue(flow.flowName) ||
+    appName
+  );
+}
+
+function outputSlotSummary(job: GenerationJob): string {
+  const result = recordValue(job.resultJson);
+  const slots = Array.isArray(result.outputSlots) ? result.outputSlots.filter((slot) => slot && typeof slot === "object") : [];
+  if (!slots.length) return "";
+  const counts = slots.reduce(
+    (summary, slot) => {
+      const status = stringValue((slot as Record<string, unknown>).status);
+      if (status === "succeeded") summary.succeeded += 1;
+      if (status === "failed") summary.failed += 1;
+      return summary;
+    },
+    { succeeded: 0, failed: 0 }
+  );
+  return `输出 ${counts.succeeded}/${slots.length}${counts.failed ? `，失败 ${counts.failed}` : ""}`;
+}
+
 export function JobsAdminPanel({
   siteId,
   jobs,
@@ -98,10 +151,14 @@ export function JobsAdminPanel({
               const customer = customers.find((item) => item.id === job.customerId);
               const app = aiApps.find((item) => item.id === job.aiAppId);
               const canRerun = job.status === "failed" || job.status === "refunded";
+              const appName = app?.name ?? job.aiAppId;
+              const detail = jobDetailLabel(job, appName);
+              const slotSummary = outputSlotSummary(job);
               return (
                 <tr key={job.id}>
                   <td className="aleft">
-                    <span className="block font-medium text-[#333]">{app?.name ?? job.aiAppId}</span>
+                    <span className="block font-medium text-[#333]">{jobKindLabel(job)} · {detail}</span>
+                    <span className="block text-[11px] text-[#777]">{appName}{slotSummary ? ` · ${slotSummary}` : ""}</span>
                     <span className="font-mono text-[11px] text-[#999]">{job.id}</span>
                   </td>
                   <td className="aleft truncate text-[#666]">{customer?.email ?? job.customerId}</td>

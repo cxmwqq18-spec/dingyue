@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import { hostAwareSitePath } from "@/lib/domain-routing";
+import { hostAwareSitePath, publicSiteUrl } from "@/lib/domain-routing";
 import type { CreativePack, PublicCustomer, Site } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 
@@ -13,6 +13,8 @@ type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | 
 type MenuGroupItem = { label: string; href: string };
 type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: MenuGroupItem[] };
 type MenuGroup = MenuGroupEntry[];
+type ToolMenuGroupEntry = MenuGroupEntry & { href?: string };
+type ToolMenuGroup = ToolMenuGroupEntry[];
 
 const packageGroups = [
   { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
@@ -57,9 +59,10 @@ const aidreamcapesPackageGroups = [
   }
 ];
 
-const toolGroups = [
+const toolGroups: ToolMenuGroup = [
   {
-    label: "Portrait makers",
+    label: "Photo AI",
+    href: "/tools/photo-ai",
     accent: "#c958f2",
     icon: Camera,
     items: [
@@ -71,7 +74,21 @@ const toolGroups = [
     ]
   },
   {
-    label: "Cleanup tools",
+    label: "Video AI",
+    href: "/tools/video-ai",
+    accent: "#38a8ff",
+    icon: PlayCircle,
+    items: [
+      { label: "Album story video", href: "/tools/album-story-video" },
+      { label: "Profile Clip Maker", href: "/tools/profile-clip" },
+      { label: "Creator Intro Video", href: "/tools/creator-intro-video" },
+      { label: "Fashion reel starter", href: "/tools/fashion-reel" },
+      { label: "Product teaser clip", href: "/tools/product-teaser-clip" }
+    ]
+  },
+  {
+    label: "AI Photo Edit",
+    href: "/tools/ai-photo-edit",
     accent: "#ff7b2f",
     icon: Sparkles,
     items: [
@@ -83,22 +100,10 @@ const toolGroups = [
       { label: "Unblur Image", href: "/tools/unblur-image" },
       { label: "Color Correction", href: "/tools/color-correction" }
     ]
-  },
-  {
-    label: "Motion builders",
-    accent: "#38a8ff",
-    icon: PlayCircle,
-    items: [
-      { label: "Album story video", href: "/app/create#step-video" },
-      { label: "Profile Clip Maker", href: "/app/create#step-video" },
-      { label: "Creator Intro Video", href: "/app/create#step-video" },
-      { label: "Fashion reel starter", href: "/app/create#step-video" },
-      { label: "Product teaser clip", href: "/app/create#step-video" }
-    ]
   }
 ];
 
-const aidreamcapesToolGroups = [
+const aidreamcapesToolGroups: ToolMenuGroup = [
   {
     label: "Route Builders",
     accent: "#38bdf8",
@@ -220,14 +225,14 @@ function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo pac
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]">
                   <Icon className="h-4 w-4" strokeWidth={1.9} />
                 </span>
-                <span className="min-w-0 truncate">{group.label}</span>
+                <h2 className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</h2>
                 <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
               </summary>
               <div className="mt-3 grid gap-2">
                 {group.items.map((item, itemIndex) => (
                   <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${itemIndex}`}>
-                    <span>{item.label}</span>
+                    <h2 className="text-[0.94rem] font-semibold leading-6">{item.label}</h2>
                     <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
                   </StorefrontInstantLink>
                 ))}
@@ -246,21 +251,21 @@ function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo pac
   );
 }
 
-function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: typeof toolGroups }) {
+function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: ToolMenuGroup }) {
   const icons = [Camera, ImageIcon, Sparkles, Users, Scissors, BadgeCheck, Sun, MapIcon];
   return (
     <div className="overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
-      <div className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</div>
+      <h2 className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</h2>
       <div className="grid gap-3 sm:grid-cols-3">
         {groups.map((group) => {
           const Icon = group.icon;
           return (
-            <StorefrontInstantLink className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]" href={`${basePath}${group.items[0]?.href ?? "/tools"}`} key={group.label}>
+            <StorefrontInstantLink className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]" href={`${basePath}${group.href ?? group.items[0]?.href ?? "/tools"}`} key={group.label}>
               <span className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white" style={{ background: `linear-gradient(135deg, ${group.accent}, #2f6fed)` }}>
                 <Icon className="h-5.5 w-5.5" strokeWidth={2} />
               </span>
               <span className="min-w-0">
-                <span className="block text-[1.04rem] font-semibold leading-tight text-white">{group.label}</span>
+                <h3 className="block text-[1.04rem] font-semibold leading-tight text-white">{group.label}</h3>
                 <span className="mt-2 block text-[0.92rem] leading-6 text-white/72">Open the right workflow before creating a private album.</span>
               </span>
             </StorefrontInstantLink>
@@ -277,7 +282,7 @@ function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; g
                 return (
                   <StorefrontInstantLink className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${index}`}>
                     <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white" strokeWidth={1.8} />
-                    <span>{item.label}</span>
+                    <h3 className="text-[0.94rem] font-semibold leading-6">{item.label}</h3>
                   </StorefrontInstantLink>
                 );
               })}
@@ -315,6 +320,7 @@ export function CustomerShellHeader({
   const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
   const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
+  const workflowHref = publicSiteUrl(site, "/workflow");
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
   const logoAlt = isSpanishXby
     ? isAidreamcapes
@@ -323,7 +329,7 @@ export function CustomerShellHeader({
     : isAidreamcapes
       ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
       : isMyDreamShoots
-        ? "MyDreamShoots heart camera logo"
+        ? "MyDreamShoots heart camera logo for AI photo packages and private galleries"
         : `${readableLogoText} logo`;
   const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
@@ -358,7 +364,9 @@ export function CustomerShellHeader({
               <img className="h-12 w-12 object-contain" src={logoSrc} alt={logoAlt} width={48} height={48} />
             </span>
             <span className="min-w-0">
-              <span className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} aria-hidden="true">{logoText}</span>
+              <span aria-label={readableLogoText} className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} title={readableLogoText}>
+                <span aria-hidden="true">{logoText}</span>
+              </span>
               <span className="sr-only">{readableLogoText}</span>
             </span>
           </StorefrontInstantLink>
@@ -384,7 +392,7 @@ export function CustomerShellHeader({
             >
               <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
             </ClickMegaMenu>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#workflow`}>
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`}>
@@ -393,8 +401,8 @@ export function CustomerShellHeader({
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>
               {isSpanishXby ? "Precios" : "Pricing"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/#faq`}>
-              FAQ
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/faq`}>
+              {isSpanishXby ? "Preguntas" : "FAQ"}
             </StorefrontInstantLink>
           </nav>
 
@@ -408,7 +416,7 @@ export function CustomerShellHeader({
                 <span className={`block max-w-[10rem] truncate text-xs ${dark ? "text-white/72" : "text-[#706961]"}`}>{customer.email}</span>
               </span>
             </StorefrontInstantLink>
-            <CustomerSignOutButton className={`rounded-full border px-5 py-3 text-sm font-semibold transition ${dark ? "border-white/55 bg-transparent text-white hover:bg-white/8" : "border-[#171514] bg-[#171514] text-white hover:bg-black"}`} logoutHref={`/api/sites/${site.id}/auth/logout`} redirectHref={`${basePath}/login`} siteId={site.id} />
+            <CustomerSignOutButton className={`rounded-full border px-5 py-3 text-sm font-semibold transition ${dark ? "border-white/55 bg-transparent text-white hover:bg-white/8" : "border-[#171514] bg-[#171514] text-white hover:bg-black"}`} label={isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
           </div>
         </div>
       </div>

@@ -40,13 +40,15 @@ export function PricingBillingTable({
   initialBillingCycle,
   plans,
   sidePanels,
-  aidreamcapes
+  aidreamcapes,
+  locale = "en"
 }: {
   canShowBillingSwitch: boolean;
   initialBillingCycle: BillingCycle;
   plans: PricingPlan[];
   sidePanels: Record<BillingCycle, PricingSidePanel>;
   aidreamcapes: boolean;
+  locale?: "en" | "es";
 }) {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(initialBillingCycle);
   const activeSidePanel = sidePanels[billingCycle] ?? sidePanels.month;
@@ -68,7 +70,7 @@ export function PricingBillingTable({
                 onClick={() => setBillingCycle(cycle)}
                 type="button"
               >
-                {cycle === "month" ? "Monthly" : "Yearly"}
+                {cycle === "month" ? locale === "es" ? "Mensual" : "Monthly" : locale === "es" ? "Anual" : "Yearly"}
               </button>
             ))}
           </div>
@@ -96,7 +98,7 @@ export function PricingBillingTable({
                   <p className="pb-2 text-[0.88rem] text-[#7f786f]">{price.periodLabel}</p>
                 </div>
                 {billingCycle === "year" && price.formattedEquivalentMonthly ? (
-                  <p className="mt-2 text-sm font-medium text-[#7f786f]">Equivalent to {price.formattedEquivalentMonthly} / month</p>
+                  <p className="mt-2 text-sm font-medium text-[#7f786f]">{locale === "es" ? `Equivale a ${price.formattedEquivalentMonthly} / mes` : `Equivalent to ${price.formattedEquivalentMonthly} / month`}</p>
                 ) : null}
                 {price.formattedOriginalAmount ? (
                   <div className="mt-3 flex flex-wrap items-center gap-2">

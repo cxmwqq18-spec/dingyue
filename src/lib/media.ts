@@ -27,6 +27,10 @@ export function findSiteMediaAsset(site: Site, value: string | undefined): Media
 
 function customerAssetPublicUrl(storageKey: string): string {
   const normalized = storageKey.replace(/^customer-assets\//, "").replace(/^\/+/, "");
+  const path = `/api/local-assets/${normalized}`;
+  if (process.env.NODE_ENV !== "production" || process.env.CUSTOMER_ASSET_FORCE_LOCAL_PUBLIC_URL === "1") {
+    return path;
+  }
   const rawBaseUrl = process.env.NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL || process.env.CUSTOMER_ASSET_READ_BASE_URL || process.env.CUSTOMER_ASSET_SHARED_BASE_URL || "";
   let baseUrl = "";
   try {
@@ -34,7 +38,6 @@ function customerAssetPublicUrl(storageKey: string): string {
   } catch {
     baseUrl = "";
   }
-  const path = `/api/local-assets/${normalized}`;
   return baseUrl ? `${baseUrl}${path}` : path;
 }
 

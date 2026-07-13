@@ -44,7 +44,7 @@ export interface WorkerResultPayload {
   status: "succeeded" | "failed";
   outputs?: Array<{ storageKey: string; mimeType?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
-  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }> };
+  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }>; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
   error?: string;
 }
 
@@ -57,6 +57,9 @@ export interface WorkerOutputSlot {
   storageKey?: string;
   mimeType?: string;
   error?: string;
+  referenceFrameCount?: number;
+  requestedReferenceFrameCount?: number;
+  providerReferenceLimit?: number;
   updatedAt?: string;
 }
 
@@ -96,6 +99,38 @@ export function signWorkerAssetDownload(params: {
     .digest("hex");
 }
 
+export function signWorkerLocalAssetDownload(params: {
+  storageKey: string;
+  expiresAt: string;
+  secret?: string;
+}): string {
+  const secret = params.secret ?? process.env.AI_WORKER_SECRET ?? "dev-worker-secret";
+  return crypto
+    .createHmac("sha256", secret)
+    .update(`${params.storageKey}:${params.expiresAt}`)
+    .digest("hex");
+}
+
+export function verifyWorkerLocalAssetDownload(params: {
+  storageKey: string;
+  expiresAt: string;
+  signature: string;
+  secret?: string;
+}): boolean {
+  const expiresAtMs = Date.parse(params.expiresAt);
+  if (!params.expiresAt || !params.signature || !Number.isFinite(expiresAtMs) || expiresAtMs <= Date.now()) return false;
+  const expected = signWorkerLocalAssetDownload({
+    storageKey: params.storageKey,
+    expiresAt: params.expiresAt,
+    secret: params.secret
+  });
+  try {
+    return crypto.timingSafeEqual(Buffer.from(params.signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
 export function verifyWorkerCallbackSignature(payload: Record<string, unknown>, secret = process.env.AI_WORKER_SECRET ?? "dev-worker-secret"): boolean {
   if (typeof payload.signature !== "string") return process.env.AI_WORKER_REQUIRE_SIGNATURE !== "1";
   const expected = signWorkerCallback(payload, secret);
@@ -120,6 +155,40 @@ function isLoopbackHost(hostname: string) {
   return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname === "[::1]";
 }
 
+export function isLoopbackBaseUrl(value: string): boolean {
+  try {
+    return isLoopbackHost(new URL(value).hostname);
+  } catch {
+    return true;
+  }
+}
+
+function normalizedOrigin(value: string | undefined): string {
+  const candidate = value?.trim();
+  if (!candidate) return "";
+  try {
+    return new URL(candidate).origin.replace(/\/$/, "");
+  } catch {
+    return "";
+  }
+}
+
+export function configuredWorkerPublicBaseUrl(): string {
+  return normalizedOrigin(
+    process.env.AI_WORKER_PUBLIC_BASE_URL ||
+      process.env.PUBLIC_ASSET_BASE_URL ||
+      process.env.CUSTOMER_ASSET_PUBLIC_BASE_URL ||
+      process.env.CUSTOMER_ASSET_READ_BASE_URL ||
+      process.env.NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL ||
+      process.env.CUSTOMER_ASSET_SHARED_BASE_URL ||
+      process.env.NEXT_PUBLIC_CUSTOMER_ASSET_SHARED_BASE_URL ||
+      process.env.APP_PUBLIC_URL ||
+      process.env.PUBLIC_APP_URL ||
+      process.env.NEXT_PUBLIC_APP_URL ||
+      process.env.NEXT_PUBLIC_SITE_URL
+  );
+}
+
 export function resolveWorkerDispatchEndpoint(payload: Pick<WorkerPayload, "callbackUrl">): string {
   const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
   if (configuredEndpoint) return configuredEndpoint;
@@ -129,9 +198,10 @@ export function resolveWorkerDispatchEndpoint(payload: Pick<WorkerPayload, "call
 }
 
 export function resolveWorkerBaseUrls(publicBaseUrl: string): WorkerBaseUrls {
-  const normalizedPublicBaseUrl = publicBaseUrl.replace(/\/$/, "");
+  const requestBaseUrl = publicBaseUrl.replace(/\/$/, "");
+  const normalizedPublicBaseUrl = configuredWorkerPublicBaseUrl() || publicBaseUrl.replace(/\/$/, "");
   const configuredEndpoint = process.env.AI_WORKER_DISPATCH_URL?.trim();
-  if (!configuredEndpoint) return { publicBaseUrl: normalizedPublicBaseUrl };
+  if (!configuredEndpoint) return { publicBaseUrl: normalizedPublicBaseUrl, callbackBaseUrl: requestBaseUrl };
   try {
     const endpoint = new URL(configuredEndpoint);
     if (isLoopbackHost(endpoint.hostname)) {
@@ -141,14 +211,35 @@ export function resolveWorkerBaseUrls(publicBaseUrl: string): WorkerBaseUrls {
       };
     }
   } catch {
-    return { publicBaseUrl: normalizedPublicBaseUrl };
+    return { publicBaseUrl: normalizedPublicBaseUrl, callbackBaseUrl: requestBaseUrl };
   }
   return { publicBaseUrl: normalizedPublicBaseUrl };
 }
 
-function requestedAssetIds(job: GenerationJob): string[] {
-  const value = job.requestJson.assetIds;
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function stringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
+}
+
+function isVideoWorkerJob(job: GenerationJob): boolean {
+  const fields = recordValue(job.requestJson.fields);
+  return job.requestJson.mode === "video" ||
+    job.requestJson.outputType === "video" ||
+    typeof job.requestJson.videoThemeId === "string" ||
+    fields.mode === "video" ||
+    fields.outputType === "video" ||
+    typeof fields.videoThemeId === "string";
+}
+
+function requestedAssetIds(job: GenerationJob): string[] {
+  const fields = recordValue(job.requestJson.fields);
+  return Array.from(new Set([
+    ...stringArray(job.requestJson.assetIds),
+    ...(isVideoWorkerJob(job) ? stringArray(fields.frameAssetIds) : [])
+  ]));
 }
 
 async function buildInputAssets(params: {
@@ -180,7 +271,9 @@ async function buildInputAssets(params: {
       };
     })
   );
-  return assets.length ? assets : [{
+  if (assets.length) return assets;
+  if (isVideoWorkerJob(params.job)) throw new Error("video_frames_required");
+  return [{
     assetId: "asset_demo",
     signedUrl: `${assetBaseUrl}/api/demo-assets/input.jpg`,
     publicUrl: `${publicAssetBaseUrl}/api/demo-assets/input.jpg`

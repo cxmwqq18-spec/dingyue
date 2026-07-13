@@ -15,6 +15,7 @@ import {
 } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
 import type { VideoTheme, VideoThemeCategory } from "@/lib/types";
+import { DEFAULT_VIDEO_FRAME_LIMIT, MAX_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 
 type Status = VideoTheme["status"];
 
@@ -78,7 +79,7 @@ function newThemeDraft(categoryId?: string): Omit<VideoTheme, "id" | "siteId" | 
     status: "draft",
     creditCost: 24,
     durationSeconds: 6,
-    maxFrames: 4,
+    maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
     imageUrl: "",
     galleryImages: []
   };
@@ -214,7 +215,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       status: theme.status ?? "draft",
       creditCost: Math.max(1, Math.trunc(Number(theme.creditCost) || 1)),
       durationSeconds: Math.min(15, Math.max(1, Math.trunc(Number(theme.durationSeconds) || 6))),
-      maxFrames: Math.min(4, Math.max(1, Math.trunc(Number(theme.maxFrames) || 1))),
+      maxFrames: normalizeVideoFrameLimit(theme.maxFrames),
       imageUrl: theme.imageUrl || "",
       galleryImages: theme.galleryImages ?? []
     };
@@ -455,7 +456,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       </div>
 
       <div className="rounded-[10px] border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
-        当前筛选共 {total} 个主题。前台只展示状态为“已启用”的主题；时长会作为供应商入参，最大帧图数上限固定为 4。
+        当前筛选共 {total} 个主题。前台只展示状态为“已启用”的主题；时长会作为供应商入参，最大帧图数上限固定为 {MAX_VIDEO_FRAME_LIMIT}。
       </div>
 
       {editingTheme ? (
@@ -541,8 +542,8 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         <ErpField label="视频时长（秒）">
           <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 6} />
         </ErpField>
-        <ErpField hint="当前供应商最多传 4 张，超过会被后端拒绝。" label="最大帧图数">
-          <ErpInput max={4} min={1} onChange={(event) => onChange("maxFrames" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.maxFrames ?? 4} />
+        <ErpField hint={`最多可传 ${MAX_VIDEO_FRAME_LIMIT} 张，前台和后端会按此上限统一校验。`} label="最大帧图数">
+          <ErpInput max={MAX_VIDEO_FRAME_LIMIT} min={1} onChange={(event) => onChange("maxFrames" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.maxFrames ?? DEFAULT_VIDEO_FRAME_LIMIT} />
         </ErpField>
         <ErpField label="封面 URL">
           <ErpInput onChange={(event) => onChange("imageUrl" as keyof T, event.target.value as T[keyof T])} value={theme.imageUrl ?? ""} />

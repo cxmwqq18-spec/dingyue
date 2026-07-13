@@ -22,7 +22,7 @@ import {
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -78,11 +78,16 @@ function isAidreamcapesSite(site: { slug: string; name: string; branding: { logo
   return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
 }
 
-function canUseStorefrontPartnerTemplate(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): boolean {
-  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isMydreamshootsSite(site) || isAidreamcapesSite(site));
+function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
+  return /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
 }
 
-function storefrontPolicySeoForSite(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
+function canUseStorefrontPartnerTemplate(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): boolean {
+  return !isSpanishXbyStorefrontSite(site) && DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isMydreamshootsSite(site) || isAidreamcapesSite(site));
+}
+
+function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
+  if (isSpanishXbyStorefrontSite(site)) return getSpanishXbyPolicySeo(site, slug);
   if (isAidreamcapesSite(site)) return getAidreamcapesPolicySeo(slug);
   if (isMydreamshootsSite(site)) return getMydreamshootsPolicySeo(slug);
   return undefined;
@@ -172,9 +177,6 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
-  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
-    return { title: "Workspace" };
-  }
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
     return {};
   }
@@ -184,6 +186,9 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
+  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
+    return { title: isSpanishXbyStorefrontSite(site) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
+  }
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
@@ -194,7 +199,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     if (!canResolveCollectionSlugForSite(state, site, path[1])) return {};
     return metadataForSeoDirectory(site, "collection", path[1]);
   }
-  if (canUseStorefrontPartnerTemplate(site, slug)) {
+  if (DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isSpanishXbyStorefrontSite(site) || canUseStorefrontPartnerTemplate(site, slug))) {
     return metadataForDreamshootFallbackRoute(site.slug, slug, {
       primaryDomain: site.primaryDomain,
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
@@ -240,14 +245,15 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
-    if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "collections" || firstSegment === "pricing" || firstSegment === "help") {
+    if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "collections" || firstSegment === "pricing" || firstSegment === "help" || firstSegment === "faq" || firstSegment === "workflow") {
       const query = searchParams ? await searchParams : {};
-      redirect(`/site/${defaultSiteSlug}${slug}${searchParamsSuffix(query)}`);
+      redirect(`/site/${defaultSiteSlug}${firstSegment === "help" ? "/faq" : slug}${searchParamsSuffix(query)}`);
     }
   }
   if (slug === "/about") redirect("/about-us");
   if (slug === "/contact") redirect("/contact-us");
   if (slug === "/examples") redirect("/collections");
+  if (slug === "/packages") redirect("/collections");
   if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect("/privacy");
   if (slug === "/terms-of-service" || slug === "/policies/terms") redirect("/terms");
   if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect("/cookies");
@@ -275,6 +281,8 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
+  if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
   const resolvedToolPage = firstSegment === "tools" && path[1]
     ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
     : undefined;

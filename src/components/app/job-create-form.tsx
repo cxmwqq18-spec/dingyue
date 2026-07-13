@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CheckCircle2, Play, Sparkles, Trash2, UploadCloud } from "lucide-react";
+import { Camera, CheckCircle2, Lightbulb, MapPin, Play, Sparkles, Trash2, UploadCloud, WandSparkles } from "lucide-react";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
@@ -9,6 +9,8 @@ import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/c
 type CreateMode = "theme" | "tool";
 type PackageAudience = "self" | "partner" | "both";
 type UploadTarget = "primary" | "partner";
+type JobCreateLocale = "en" | "es";
+type PromptBuilderKey = "shot" | "scene" | "lighting" | "finish";
 type OperationContext = {
   action?: string;
   note?: string;
@@ -21,11 +23,17 @@ type CreatedJobFeedback = {
     status?: "skipped" | "sent" | "failed";
     error?: string;
   };
+  customerBalance?: PublicCustomer["balance"];
   note?: string;
 };
 
+function jobT(spanish: boolean, english: string, spanishText: string): string {
+  return spanish ? spanishText : english;
+}
+
 const DEFAULT_THEME_OUTPUT_COUNT = 1;
 const DEFAULT_MAX_SOURCE_ASSETS = 15;
+const LEGACY_WORKFLOW_MAX_SOURCE_ASSETS = 4;
 const COLLAPSED_CATEGORY_LIMIT = Number.POSITIVE_INFINITY;
 const COLLAPSED_THEME_CARD_LIMIT = Number.POSITIVE_INFINITY;
 const COLLAPSED_TOOL_CARD_LIMIT = Number.POSITIVE_INFINITY;
@@ -249,10 +257,199 @@ const STANDALONE_VIDEO_TOOL_IDS = new Set([
   "travel-motion-concept"
 ]);
 
+const PROMPT_BUILDER_GROUPS: Array<{
+  id: PromptBuilderKey;
+  label: string;
+  spanishLabel: string;
+  options: string[];
+  spanishOptions: string[];
+}> = [
+  {
+    id: "shot",
+    label: "Shot",
+    spanishLabel: "Plano",
+    options: ["Close-up portrait", "Waist-up portrait", "Three-quarter body", "Full-body editorial"],
+    spanishOptions: ["Retrato cercano", "Retrato medio", "Tres cuartos", "Editorial cuerpo completo"]
+  },
+  {
+    id: "scene",
+    label: "Scene",
+    spanishLabel: "Escena",
+    options: ["Clean studio", "City street", "Travel landmark", "Warm indoor set"],
+    spanishOptions: ["Estudio limpio", "Calle urbana", "Destino de viaje", "Interior calido"]
+  },
+  {
+    id: "lighting",
+    label: "Lighting",
+    spanishLabel: "Luz",
+    options: ["Soft window light", "Golden hour", "Cinematic rim light", "Bright editorial flash"],
+    spanishOptions: ["Luz suave de ventana", "Hora dorada", "Contraluz cinematica", "Flash editorial brillante"]
+  },
+  {
+    id: "finish",
+    label: "Finish",
+    spanishLabel: "Acabado",
+    options: ["Photorealistic", "Premium headshot", "Magazine editorial", "Social profile ready"],
+    spanishOptions: ["Fotorrealista", "Headshot premium", "Editorial de revista", "Listo para perfil social"]
+  }
+];
+
 function isStandaloneVideoToolPreset(preset: Pick<ToolPreset, "id" | "title" | "category">) {
   const text = `${preset.id} ${preset.title} ${preset.category}`.toLowerCase();
   return STANDALONE_VIDEO_TOOL_IDS.has(preset.id) || /\b(video|motion|clip|reel)\b/i.test(text);
 }
+
+const SPANISH_TOOL_PRESET_COPY: Record<string, Partial<Pick<ToolPreset, "title" | "description" | "category" | "prompt">>> = {
+  "headshot-generator": {
+    title: "Generador de retratos profesionales",
+    description: "Crea perfiles de trabajo, retratos de equipo y fotos de fundador a partir de selfies claras.",
+    category: "Creadores de retrato",
+    prompt: "Crea un retrato profesional pulido con luz natural, fondo limpio y expresion segura."
+  },
+  "anime-avatar": {
+    title: "Creador de avatar anime",
+    description: "Convierte una selfie clara en conceptos de avatar estilizado para perfiles, redes y campanas.",
+    category: "Creadores de retrato",
+    prompt: "Crea un avatar anime inspirado en el retrato subido, conservando rasgos faciales reconocibles."
+  },
+  "wedding-portraits": {
+    title: "Retratos de boda",
+    description: "Crea conceptos elegantes de pareja, ceremonia y celebracion antes de montar un album completo.",
+    category: "Creadores de retrato",
+    prompt: "Crea conceptos de retrato de boda con luz romantica, estilo elegante y composicion lista para album."
+  },
+  "gala-photo": {
+    title: "Creador de foto de gala",
+    description: "Previsualiza retratos formales con luz de alfombra roja, vestuario pulido y recortes listos para redes.",
+    category: "Creadores de retrato",
+    prompt: "Crea un retrato formal de gala con luz nocturna, atuendo pulido y composicion editorial."
+  },
+  "nature-adventure": {
+    title: "Fotos de aventura natural",
+    description: "Coloca al cliente en escenas de exterior, senderismo y retrato inspirado en viajes.",
+    category: "Creadores de retrato",
+    prompt: "Crea un retrato de aventura al aire libre en un paisaje natural con luz cinematica pero realista."
+  },
+  "edit-by-prompt": {
+    title: "Editar con instrucciones",
+    description: "Describe una edicion concreta y previsualizala antes de gastar creditos del paquete.",
+    category: "Herramientas de retoque"
+  },
+  "background-changer": {
+    title: "Cambiador de fondo",
+    description: "Sustituye el fondo de una selfie antes de pedir un paquete completo.",
+    category: "Herramientas de retoque",
+    prompt: "Sustituye el fondo por un estudio limpio manteniendo al sujeto natural y realista."
+  },
+  "background-remover": {
+    title: "Eliminador de fondo",
+    description: "Recorta fondos de producto o retrato para fotos privadas mas limpias.",
+    category: "Herramientas de retoque",
+    prompt: "Elimina el fondo de forma limpia y conserva los bordes del sujeto para un resultado transparente o neutro."
+  },
+  "magic-eraser": {
+    title: "Borrador magico",
+    description: "Elimina pequenas distracciones de retratos, tarjetas y escenas generadas.",
+    category: "Herramientas de retoque",
+    prompt: "Elimina objetos distractores manteniendo la imagen circundante realista y natural."
+  },
+  "photo-enhancer": {
+    title: "Mejorador de foto",
+    description: "Mejora subidas con poca luz antes de usarlas para entrenar un modelo privado.",
+    category: "Herramientas de retoque",
+    prompt: "Mejora nitidez, exposicion y balance de color conservando un aspecto fotografico realista."
+  },
+  "portrait-retouch": {
+    title: "Retoque de retrato",
+    description: "Limpia piel, cabellos sueltos e iluminacion sin cambiar la identidad del cliente.",
+    category: "Herramientas de retoque",
+    prompt: "Retoca el retrato de forma ligera con textura natural de piel, luz equilibrada y sin cambio de identidad."
+  },
+  "unblur-image": {
+    title: "Enfocar imagen",
+    description: "Recupera fotos suaves del telefono antes de entrar en un flujo de generacion pagado.",
+    category: "Herramientas de retoque",
+    prompt: "Mejora la claridad y reduce el desenfoque manteniendo la imagen realista."
+  },
+  "color-correction": {
+    title: "Correccion de color",
+    description: "Equilibra tonos para fotos de perfil, carteles y vistas previas de paquetes.",
+    category: "Herramientas de retoque",
+    prompt: "Corrige balance de color, exposicion y contraste para un resultado limpio y natural."
+  },
+  "old-photo-restoration": {
+    title: "Restauracion de foto antigua",
+    description: "Repara fotos desvanecidas y preparalas para entrega en album privado.",
+    category: "Herramientas de retoque",
+    prompt: "Restaura la foto antigua reduciendo rayones, mejorando contraste y conservando la identidad original."
+  },
+  "image-to-video": {
+    title: "Concepto de imagen a video",
+    description: "Convierte una imagen terminada del paquete en un breve concepto con movimiento.",
+    category: "Creadores de movimiento",
+    prompt: "Crea un concepto corto con movimiento a partir de la imagen subida, camara sutil y animacion natural."
+  },
+  "profile-clip": {
+    title: "Creador de clip de perfil",
+    description: "Crea movimiento para redes a partir de retratos profesionales o de creador.",
+    category: "Creadores de movimiento",
+    prompt: "Crea un clip breve de perfil usando el retrato subido con movimiento sutil y encuadre pulido."
+  },
+  "creator-intro-video": {
+    title: "Video intro de creador",
+    description: "Convierte retratos de creador en clips intro breves para perfiles y reels.",
+    category: "Creadores de movimiento",
+    prompt: "Crea un concepto compacto de intro con ritmo pulido y encuadre listo para perfil."
+  },
+  "fan-poster-motion": {
+    title: "Movimiento de poster fan",
+    description: "Anima posters de fans y escenas de perfil para dias de partido.",
+    category: "Creadores de movimiento",
+    prompt: "Crea un concepto corto de poster deportivo con movimiento energico pero realista."
+  },
+  "product-teaser-clip": {
+    title: "Clip teaser de producto",
+    description: "Crea ideas simples de movimiento para resultados con estilo de producto.",
+    category: "Creadores de movimiento",
+    prompt: "Crea un teaser breve de producto con encuadre limpio y movimiento comercial sutil."
+  },
+  "route-portrait-composer": {
+    title: "Compositor de retrato de ruta",
+    description: "Crea retratos de viaje escenicos desde fotos cotidianas de referencia y notas de destino.",
+    category: "Herramientas de retrato de viaje",
+    prompt: "Crea un retrato de viaje realista con estilo listo para ruta, luz natural y ambiente de destino."
+  },
+  "city-walk-editor": {
+    title: "Editor de paseo urbano",
+    description: "Da forma a escenas de calle, cafe, plaza y casco antiguo sin planear una sesion fisica.",
+    category: "Herramientas de retrato de viaje",
+    prompt: "Crea un retrato de paseo por casco antiguo con luz natural, vestuario creible y encuadre editorial de viaje."
+  },
+  "coastal-light-maker": {
+    title: "Creador de luz costera",
+    description: "Previsualiza luz de playa, acantilado, marina y resort para albumes privados.",
+    category: "Herramientas de destino",
+    prompt: "Crea un retrato costero de viaje con luz calida, profundidad realista y estilo relajado de vacaciones."
+  },
+  "scenic-overlook-story": {
+    title: "Historia de mirador escenico",
+    description: "Convierte retratos privados en escenas de montana, terraza y mirador con encuadre de postal.",
+    category: "Herramientas de destino",
+    prompt: "Crea un retrato en mirador con paisaje panoramico, pose natural y luz cinematica pero realista."
+  },
+  "postcard-crop-set": {
+    title: "Set de recortes tipo postal",
+    description: "Prepara recortes para perfil, historia y tarjeta de recuerdo desde retratos de ruta.",
+    category: "Herramientas de entrega",
+    prompt: "Crea un set de recortes de postal de viaje con color consistente, composicion limpia y encuadre listo para redes."
+  },
+  "travel-motion-concept": {
+    title: "Concepto de movimiento de viaje",
+    description: "Crea ideas breves de historia en movimiento desde retratos de viaje terminados.",
+    category: "Herramientas de entrega",
+    prompt: "Crea un concepto corto de retrato de viaje con movimiento sutil de camara y atmosfera natural de destino."
+  }
+};
 
 function normalizeToolId(value: string | undefined): string {
   return (value ?? "").trim().toLowerCase().replace(/_/g, "-");
@@ -296,7 +493,7 @@ function defaultWorkflow(app: SiteAiApp): AiWorkflowConfig {
     submitLabel: "Start generation",
     materialRules: [
       "Use clear private photos where the face or product is visible.",
-      "Attach 1-4 private uploads before starting the request.",
+      `Attach at least one private upload and use up to ${DEFAULT_MAX_SOURCE_ASSETS} source photos.`,
       "Only files in this signed-in customer account are available here."
     ],
     steps: [
@@ -305,7 +502,7 @@ function defaultWorkflow(app: SiteAiApp): AiWorkflowConfig {
         title: "Select private photos",
         description: "Choose private uploads for this request.",
         kind: "asset_select",
-        assetRules: { min: 1, max: 4, roles: ["input"], accept: ["image/*"], required: true }
+        assetRules: { min: 1, max: DEFAULT_MAX_SOURCE_ASSETS, roles: ["input"], accept: ["image/*"], required: true }
       },
       {
         id: "generation_options",
@@ -344,12 +541,15 @@ function workflowFields(workflow?: AiWorkflowConfig): AiWorkflowField[] {
 }
 
 function assetRules(workflow?: AiWorkflowConfig) {
-  return workflow?.steps.find((step) => step.kind === "asset_select")?.assetRules ?? { min: 1, max: 4, roles: ["input"] };
+  return workflow?.steps.find((step) => step.kind === "asset_select")?.assetRules ?? { min: 1, max: DEFAULT_MAX_SOURCE_ASSETS, roles: ["input"] };
 }
 
 function maxAssetsForWorkflow(workflow?: AiWorkflowConfig): number {
   const configuredMax = assetRules(workflow).max;
-  return Math.min(configuredMax && configuredMax > 0 ? configuredMax : DEFAULT_MAX_SOURCE_ASSETS, DEFAULT_MAX_SOURCE_ASSETS);
+  if (!configuredMax || configuredMax <= 0 || configuredMax === LEGACY_WORKFLOW_MAX_SOURCE_ASSETS) {
+    return DEFAULT_MAX_SOURCE_ASSETS;
+  }
+  return Math.min(configuredMax, DEFAULT_MAX_SOURCE_ASSETS);
 }
 
 function valuesFor(app?: SiteAiApp): Record<string, string | number | boolean> {
@@ -358,7 +558,7 @@ function valuesFor(app?: SiteAiApp): Record<string, string | number | boolean> {
 
 function assetsForRules(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig): ThemeRuntimeAsset[] {
   const roles = assetRules(workflow).roles ?? ["input"];
-  return assets.filter((asset) => roles.includes(asset.role));
+  return assets.filter((asset) => roles.includes(asset.role) && asset.subjectRole !== "video_frame");
 }
 
 function initialSelectedAssets(assets: ThemeRuntimeAsset[], workflow?: AiWorkflowConfig): string[] {
@@ -367,8 +567,9 @@ function initialSelectedAssets(assets: ThemeRuntimeAsset[], workflow?: AiWorkflo
 }
 
 function mergeAssetLists(primary: ThemeRuntimeAsset[], secondary: ThemeRuntimeAsset[]): ThemeRuntimeAsset[] {
-  const seen = new Set(primary.map((asset) => asset.id));
-  return [...primary, ...secondary.filter((asset) => !seen.has(asset.id))];
+  const filteredPrimary = primary.filter((asset) => asset.subjectRole !== "video_frame");
+  const seen = new Set(filteredPrimary.map((asset) => asset.id));
+  return [...filteredPrimary, ...secondary.filter((asset) => asset.subjectRole !== "video_frame" && !seen.has(asset.id))];
 }
 
 function packsForApp(packs: CreativePack[], aiAppSlug: string): CreativePack[] {
@@ -430,58 +631,89 @@ function uploadLabelForFile(file: File, index: number, total: number): string {
   return total > 1 ? `${base} ${index + 1}` : base;
 }
 
-function jobErrorMessage(error?: string, status?: number): string {
-  if (status === 401 || error === "customer_login_required") {
-    return "Please sign in again before starting this photo set.";
-  }
-  if (status === 403 || error?.includes("csrf")) {
-    return "Your secure session expired. Refresh the page, then try again.";
-  }
-  if (error === "asset_not_found_for_customer") {
-    return "One selected private photo is no longer available in this account. Reselect your photos and try again.";
-  }
-  if (error === "not_enough_source_assets") {
-    return "Select the required private photos before starting this request.";
-  }
-  if (error === "too_many_source_assets") {
-    return "Too many private photos are selected for this package. Reduce the selection and try again.";
-  }
-  if (error === "missing_required_prompt_input") {
-    return "This tool is missing a required setting. Reopen the tool or choose a photo package and try again.";
-  }
-  if (error === "insufficient_credits") {
-    return "You do not have enough credits for this request. Please add credits or choose a smaller package.";
-  }
-  if (error === "subscription_required") {
-    return "Choose an active subscription before starting generation. Credits are your monthly balance, but generation also requires a current plan.";
-  }
-  if (error === "generation_job_already_running") {
-    return "One photo request is already running. Wait for it to finish before starting a new one.";
-  }
-  if (error === "customer_past_due") {
-    return "Your account needs billing attention before starting a new request.";
-  }
-  if (error === "customer_blocked") {
-    return "This account cannot start new requests right now. Contact support for help.";
-  }
-  if (error === "site_ai_app_not_found" || error === "ai_app_not_found" || error === "ai_app_not_enabled_for_site") {
-    return "This AI tool is no longer available. Choose another tool and try again.";
-  }
-  if (error === "creative_pack_not_found_for_site" || error === "creative_pack_tool_mismatch") {
-    return "This photo package is no longer available for the selected tool. Choose the package again and retry.";
-  }
-  if (error === "job_create_timeout") {
-    return "The job service timed out while creating this request. Please try again in a moment.";
-  }
-  return "We could not start this photo set. Please check your selection and try again.";
+function localizeToolPreset(preset: ToolPreset, spanish: boolean): ToolPreset {
+  if (!spanish) return preset;
+  const copy = SPANISH_TOOL_PRESET_COPY[preset.id];
+  return copy ? { ...preset, ...copy } : preset;
 }
 
-function displayMaterialRule(rule: string): string {
-  return rule
+function statusLabel(status: string, spanish: boolean): string {
+  if (!spanish) return status.replace(/_/g, " ");
+  if (status === "ready") return "listo";
+  if (status === "training") return "entrenando";
+  if (status === "failed") return "fallido";
+  if (status === "queued") return "en cola";
+  return status.replace(/_/g, " ");
+}
+
+function imageCountLabel(count: number, spanish: boolean): string {
+  return spanish ? `${count} imagen${count === 1 ? "" : "es"}` : `${count} image${count === 1 ? "" : "s"}`;
+}
+
+function photoCountLabel(count: number, spanish: boolean): string {
+  return spanish ? `${count} foto${count === 1 ? "" : "s"}` : `${count} photo${count === 1 ? "" : "s"}`;
+}
+
+function jobErrorMessage(error?: string, status?: number, spanish = false): string {
+  if (status === 401 || error === "customer_login_required") {
+    return jobT(spanish, "Please sign in again before starting this photo set.", "Vuelve a iniciar sesion antes de empezar este set de fotos.");
+  }
+  if (status === 403 || error?.includes("csrf")) {
+    return jobT(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.");
+  }
+  if (error === "asset_not_found_for_customer") {
+    return jobT(spanish, "One selected private photo is no longer available in this account. Reselect your photos and try again.", "Una foto privada seleccionada ya no esta disponible en esta cuenta. Vuelve a seleccionar tus fotos e intentalo de nuevo.");
+  }
+  if (error === "not_enough_source_assets") {
+    return jobT(spanish, "Select the required private photos before starting this request.", "Selecciona las fotos privadas requeridas antes de iniciar esta solicitud.");
+  }
+  if (error === "too_many_source_assets") {
+    return jobT(spanish, "Too many private photos are selected for this package. Reduce the selection and try again.", "Hay demasiadas fotos privadas seleccionadas para este paquete. Reduce la seleccion e intentalo de nuevo.");
+  }
+  if (error === "missing_required_prompt_input") {
+    return jobT(spanish, "This tool is missing a required setting. Reopen the tool or choose a photo package and try again.", "A esta herramienta le falta un ajuste obligatorio. Abrela de nuevo o elige un paquete e intentalo otra vez.");
+  }
+  if (error === "insufficient_credits") {
+    return jobT(spanish, "You do not have enough credits for this request. Please add credits or choose a smaller package.", "No tienes creditos suficientes para esta solicitud. Anade creditos o elige un paquete mas pequeno.");
+  }
+  if (error === "subscription_required") {
+    return jobT(spanish, "Choose an active subscription before starting generation. Credits are your monthly balance, but generation also requires a current plan.", "Elige una suscripcion activa antes de generar. Los creditos son tu saldo mensual, pero la generacion tambien requiere un plan vigente.");
+  }
+  if (error === "generation_job_already_running") {
+    return jobT(spanish, "One photo request is already running. Wait for it to finish before starting a new one.", "Ya hay una solicitud de fotos en curso. Espera a que termine antes de iniciar otra.");
+  }
+  if (error === "customer_past_due") {
+    return jobT(spanish, "Your account needs billing attention before starting a new request.", "Tu cuenta necesita revisar la facturacion antes de iniciar una nueva solicitud.");
+  }
+  if (error === "customer_blocked") {
+    return jobT(spanish, "This account cannot start new requests right now. Contact support for help.", "Esta cuenta no puede iniciar nuevas solicitudes ahora. Contacta con soporte para recibir ayuda.");
+  }
+  if (error === "site_ai_app_not_found" || error === "ai_app_not_found" || error === "ai_app_not_enabled_for_site") {
+    return jobT(spanish, "This AI tool is no longer available. Choose another tool and try again.", "Esta herramienta IA ya no esta disponible. Elige otra e intentalo de nuevo.");
+  }
+  if (error === "creative_pack_not_found_for_site" || error === "creative_pack_tool_mismatch") {
+    return jobT(spanish, "This photo package is no longer available for the selected tool. Choose the package again and retry.", "Este paquete de fotos ya no esta disponible para la herramienta seleccionada. Vuelve a elegir el paquete e intentalo de nuevo.");
+  }
+  if (error === "job_create_timeout") {
+    return jobT(spanish, "The job service timed out while creating this request. Please try again in a moment.", "El servicio tardo demasiado al crear esta solicitud. Intentalo de nuevo en un momento.");
+  }
+  return jobT(spanish, "We could not start this photo set. Please check your selection and try again.", "No pudimos iniciar este set de fotos. Revisa tu seleccion e intentalo de nuevo.");
+}
+
+function displayMaterialRule(rule: string, spanish = false): string {
+  const normalized = rule
     .replace(/source photos/gi, "private photos")
     .replace(/Attach\s+1[-–]4\s+private uploads before starting the request\./i, "Attach the private photos you want to use before starting the request.")
     .replace(/1[-–]4\s+private upload files/i, "one or more private upload files")
     .replace(/1\s*[-–]\s*4\s+uploaded images/i, "one or more uploaded images");
+  if (!spanish) return normalized;
+  return normalized
+    .replace(/Use clear private photos where the face or product is visible\./i, "Usa fotos privadas claras donde el rostro o el producto sea visible.")
+    .replace(/Attach the private photos you want to use before starting the request\./i, "Adjunta las fotos privadas que quieres usar antes de iniciar la solicitud.")
+    .replace(/Only files in this signed-in customer account are available here\./i, "Aqui solo estan disponibles los archivos de esta cuenta con sesion iniciada.")
+    .replace(/one or more private upload files/i, "uno o mas archivos privados subidos")
+    .replace(/one or more uploaded images/i, "una o mas imagenes subidas")
+    .replace(/private photos/gi, "fotos privadas");
 }
 
 function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset[] {
@@ -504,11 +736,28 @@ function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset
   return Array.from(new Map([...realTools, ...library].map((preset) => [preset.id, preset])).values());
 }
 
-const packageAudienceOptions: Array<{ id: PackageAudience; title: string; description: string; helper: string }> = [
-  { id: "self", title: "For Myself", description: "Generate photos of the primary person in this model.", helper: "Uses your selected photos as the main subject." },
-  { id: "partner", title: "For My Partner", description: "Generate photos focused on the partner profile.", helper: "Uses partner photos as the main subject when partner samples are selected." },
-  { id: "both", title: "For Both of Us", description: "Generate couple-style photos using both profiles.", helper: "Combines your photos and partner photos for couple-style outputs." }
-];
+function packageAudienceOptionsForLocale(spanish: boolean): Array<{ id: PackageAudience; title: string; description: string; helper: string }> {
+  return [
+    {
+      id: "self",
+      title: jobT(spanish, "For Myself", "Para mi"),
+      description: jobT(spanish, "Generate photos of the primary person in this model.", "Genera fotos de la persona principal de este modelo."),
+      helper: jobT(spanish, "Uses your selected photos as the main subject.", "Usa tus fotos seleccionadas como sujeto principal.")
+    },
+    {
+      id: "partner",
+      title: jobT(spanish, "For My Partner", "Para mi pareja"),
+      description: jobT(spanish, "Generate photos focused on the partner profile.", "Genera fotos centradas en el perfil de la pareja."),
+      helper: jobT(spanish, "Uses partner photos as the main subject when partner samples are selected.", "Usa las fotos de pareja como sujeto principal cuando hay muestras seleccionadas.")
+    },
+    {
+      id: "both",
+      title: jobT(spanish, "For Both of Us", "Para ambos"),
+      description: jobT(spanish, "Generate couple-style photos using both profiles.", "Genera fotos de estilo pareja usando ambos perfiles."),
+      helper: jobT(spanish, "Combines your photos and partner photos for couple-style outputs.", "Combina tus fotos y las de tu pareja para resultados de pareja.")
+    }
+  ];
+}
 
 export function JobCreateForm({
   siteId,
@@ -529,9 +778,11 @@ export function JobCreateForm({
   preferProvidedAssets = false,
   preferredMode,
   preferredModeRequest,
+  preferredToolId,
   operationContext,
   subscriptionStatus = "active",
   trainingMode = "single",
+  locale = "en",
   onJobCreated,
   onContinueToSources,
   onReviewCurrentRequest,
@@ -555,16 +806,20 @@ export function JobCreateForm({
   preferProvidedAssets?: boolean;
   preferredMode?: CreateMode;
   preferredModeRequest?: number;
+  preferredToolId?: string;
   operationContext?: OperationContext;
   subscriptionStatus?: SubscriptionStatus;
   trainingMode?: "single" | "couple";
+  locale?: JobCreateLocale;
   onJobCreated?: (jobId: string, feedback?: CreatedJobFeedback) => void;
   onContinueToSources?: () => void;
   onReviewCurrentRequest?: () => void;
   onOpenUploadManager?: () => void;
 }) {
+  const spanish = locale === "es";
   const normalizedInitialToolId = normalizeToolId(initialToolId);
-  const toolPresets = useMemo(() => buildToolPresets(siteAiApps, siteSlug), [siteAiApps, siteSlug]);
+  const toolPresets = useMemo(() => buildToolPresets(siteAiApps, siteSlug).map((preset) => localizeToolPreset(preset, spanish)), [siteAiApps, siteSlug, spanish]);
+  const packageAudienceOptions = useMemo(() => packageAudienceOptionsForLocale(spanish), [spanish]);
   const initialPack =
     creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId) ??
     creativePacks.find((pack) => pack.status === "active" && (normalizeToolId(pack.aiAppSlug) === normalizedInitialToolId || pack.id === initialToolId));
@@ -581,19 +836,21 @@ export function JobCreateForm({
   const [themeCategory, setThemeCategory] = useState("all");
   const [formValues, setFormValues] = useState<Record<string, string | number | boolean>>(() => valuesForMode(initialApp, initialMode));
   const [themeOutputCount, setThemeOutputCount] = useState(DEFAULT_THEME_OUTPUT_COUNT);
+  const [themeOutputCountDraft, setThemeOutputCountDraft] = useState(String(DEFAULT_THEME_OUTPUT_COUNT));
   const initialAvailableAssets = externalSourceAssets?.length ? mergeAssetLists(externalSourceAssets, assets) : assets;
   const [availableAssets, setAvailableAssets] = useState(initialAvailableAssets);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(() => externalPrimaryAssetIds ?? initialSelectedAssets(initialAvailableAssets, workflowFor(initialApp)));
   const [partnerSelectedAssetIds, setPartnerSelectedAssetIds] = useState<string[]>(() => externalPartnerAssetIds ?? []);
   const [selectedCustomerModelId, setSelectedCustomerModelId] = useState(() => customerModels.find((model) => model.status === "ready")?.id ?? customerModels[0]?.id ?? "");
   const [packageAudience, setPackageAudience] = useState<PackageAudience>(() => customerModels[0]?.modelType === "couple" ? "both" : "self");
-  const [message, setMessage] = useState("Choose a package, upload or select selfies, then review your private AI photoshoot.");
+  const [message, setMessage] = useState(() => jobT(spanish, "Choose a package, upload or select selfies, then review your private AI photoshoot.", "Elige un paquete, sube o selecciona selfies y revisa tu sesion privada con IA."));
   const [dialogMessage, setDialogMessage] = useState("");
   const [dialogTone, setDialogTone] = useState<"info" | "success" | "error">("info");
   const [pending, setPending] = useState(false);
   const [uploadingSources, setUploadingSources] = useState(false);
   const [packageDialogOpen, setPackageDialogOpen] = useState(false);
   const [packagePromptDraft, setPackagePromptDraft] = useState("");
+  const [promptBuilderSelections, setPromptBuilderSelections] = useState<Partial<Record<PromptBuilderKey, string>>>({});
   const [deletingAssetIds, setDeletingAssetIds] = useState<string[]>([]);
   const [loadingAssets, setLoadingAssets] = useState(() => !preferProvidedAssets && assets.length === 0);
   const [showAllCategories, setShowAllCategories] = useState(false);
@@ -620,49 +877,53 @@ export function JobCreateForm({
   const selectedWorkflow = workflowFor(selectedApp);
   const selectedToolPreset = toolPresets.find((preset) => preset.id === selectedToolId);
   const selectionPreviewImage = createMode === "theme" ? selectedPack?.imageUrl : undefined;
-  const selectionTitle = createMode === "theme" ? selectedPack?.name ?? "Photo package" : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? "AI tool";
+  const selectionTitle = createMode === "theme" ? selectedPack?.name ?? jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
   const selectionDescription = createMode === "theme"
-    ? selectedPack?.description || selectedPack?.headline || "Choose this package, attach selfies, then review credits before generation."
-    : selectedToolPreset?.description ?? "Choose this focused tool, attach selfies, then review credits before generation.";
+    ? selectedPack?.description || selectedPack?.headline || jobT(spanish, "Choose this package, attach selfies, then review credits before generation.", "Elige este paquete, adjunta selfies y revisa los creditos antes de generar.")
+    : selectedToolPreset?.description ?? jobT(spanish, "Choose this focused tool, attach selfies, then review credits before generation.", "Elige esta herramienta, adjunta selfies y revisa los creditos antes de generar.");
   const sourceAssets = assetsForRules(availableAssets, selectedWorkflow);
   const selectedCustomerModel = customerModels.find((model) => model.id === selectedCustomerModelId) ?? customerModels[0];
   const selectedFields = workflowFields(selectedWorkflow);
   const selectedAssetRules = assetRules(selectedWorkflow);
-  const minAssets = 0;
+  const minAssets = Math.max(1, selectedAssetRules.min ?? 1);
   const effectiveMaxAssets = maxAssetsForWorkflow(selectedWorkflow);
   const materialRules = selectedWorkflow?.materialRules?.length ? selectedWorkflow.materialRules : selectedApp ? defaultWorkflow(selectedApp).materialRules ?? [] : [];
   const modeFields = fieldsForMode(selectedFields, createMode);
-  const modeSubmitLabel = createMode === "theme" ? "Start photo package" : "Start tool";
+  const modeSubmitLabel = createMode === "theme" ? jobT(spanish, "Start photo package", "Iniciar paquete") : jobT(spanish, "Start tool", "Iniciar herramienta");
   const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
   const unitCreditCost = createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedToolPreset?.creditCost ?? selectedApp?.creditCost ?? 0;
   const billableOutputCount = createMode === "theme" ? Math.max(1, requestOutputCount) : 1;
   const selectionCreditCost = unitCreditCost * billableOutputCount;
-  const selectionUnitCostLabel = createMode === "theme" ? `${unitCreditCost} per image` : `${unitCreditCost} per request`;
-  const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : "Tool result";
-  const configureSelectionLabel = createMode === "theme" ? "Configure package" : "Configure tool";
+  const selectionUnitCostLabel = createMode === "theme" ? jobT(spanish, `${unitCreditCost} per image`, `${unitCreditCost} por imagen`) : jobT(spanish, `${unitCreditCost} per request`, `${unitCreditCost} por solicitud`);
+  const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : jobT(spanish, "Tool result", "Resultado de herramienta");
+  const configureSelectionLabel = createMode === "theme" ? jobT(spanish, "Configure package", "Configurar paquete") : jobT(spanish, "Configure tool", "Configurar herramienta");
   const selectedRequestAssetIds = Array.from(new Set([...selectedAssetIds, ...partnerSelectedAssetIds])).slice(0, effectiveMaxAssets);
   const light = tone === "light";
   const pricingHref = `/site/${siteSlug}/pricing`;
   const subscriptionGateMessage = subscriptionStatus === "loading"
-    ? "Checking your subscription before generation. You can keep preparing photos while this loads."
+    ? jobT(spanish, "Checking your subscription before generation. You can keep preparing photos while this loads.", "Revisando tu suscripcion antes de generar. Puedes seguir preparando fotos mientras carga.")
     : subscriptionStatus === "required"
-      ? "Start a subscription before generating. Credits are your monthly balance; a current plan unlocks workspace requests."
+      ? selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available
+        ? jobT(spanish, "No active subscription is attached, but your available credits can start this paid request.", "No hay una suscripcion activa, pero tus creditos disponibles pueden iniciar esta solicitud pagada.")
+        : jobT(spanish, "Start a subscription or add enough credits before generating.", "Activa una suscripcion o anade creditos suficientes antes de generar.")
       : subscriptionStatus === "admin"
-        ? "Site admin access is active. Subscription is not required, and credits will still be reserved for this request."
+        ? jobT(spanish, "Site admin access is active. Subscription is not required, and credits will still be reserved for this request.", "El acceso de administrador esta activo. No se requiere suscripcion y los creditos se reservaran igualmente.")
       : "";
   const subscriptionBypassActive = subscriptionStatus === "admin";
+  const hasCreditsForRequest = selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available;
+  const subscriptionHardGate = subscriptionStatus === "required" && !hasCreditsForRequest;
   const creditsUsageNote = createMode === "theme"
-    ? `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`
-    : `${selectionCreditCost} credits are spent for this tool request.`;
-  const subscriptionGateClass = subscriptionStatus === "required"
+    ? jobT(spanish, `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`, `Se gastan ${unitCreditCost} creditos por cada imagen generada. Esta solicitud gastara ${selectionCreditCost} creditos por ${requestOutputCount} imagen${requestOutputCount === 1 ? "" : "es"}.`)
+    : jobT(spanish, `${selectionCreditCost} credits are spent for this tool request.`, `Esta solicitud de herramienta gastara ${selectionCreditCost} creditos.`);
+  const subscriptionGateClass = subscriptionHardGate
     ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
     : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/68");
-  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive));
+  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length >= minAssets && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive || hasCreditsForRequest));
   const selectedSourceAssets = sourceAssets.filter((asset) => selectedRequestAssetIds.includes(asset.id));
   const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
   const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
   const isCoupleFlow = trainingMode === "couple" || selectedCustomerModel?.modelType === "couple" || packageAudience === "both";
-  const selectedModelLabel = selectedCustomerModel?.label ?? (selectedSourceAssets.length ? "Uploaded selfies" : "No model selected");
+  const selectedModelLabel = selectedCustomerModel?.label ?? (selectedSourceAssets.length ? jobT(spanish, "Uploaded selfies", "Selfies subidas") : jobT(spanish, "No model selected", "Ningun modelo seleccionado"));
   const textClass = light ? "text-[#171514]" : "text-white";
   const mutedClass = light ? "text-[#6f675e]" : "text-white/62";
   const eyebrowClass = light ? "text-[#9b6b42]" : "text-white/48";
@@ -684,6 +945,22 @@ export function JobCreateForm({
   const selectedPillClass = light ? "bg-[#132329] text-white" : "bg-[#14161a] text-white";
   const selectedSoftPillClass = light ? "bg-white text-[#c65f32] ring-1 ring-[#ffd0b8]" : "bg-[#14161a]/10 text-[#14161a]";
   const neutralPillClass = light ? "bg-[#f1eadf] text-[#5f574f]" : "bg-white/[0.08] text-white/74";
+  const promptBuilderSummary = PROMPT_BUILDER_GROUPS
+    .map((group) => promptBuilderSelections[group.id])
+    .filter((value): value is string => Boolean(value?.trim()))
+    .join(", ");
+
+  useEffect(() => {
+    if (createMode === "theme" && selectedPack) {
+      setPackagePromptDraft(selectedPack.prompt?.trim() || selectedPack.description || selectedPack.headline || "");
+      setPromptBuilderSelections({});
+    }
+  }, [createMode, selectedPack?.id]);
+
+  useEffect(() => {
+    if (createMode !== "tool" || !selectedToolPreset) return;
+    setPackagePromptDraft((current) => current || String(formValues[TOOL_PROMPT_FIELD_ID] || selectedToolPreset.prompt || ""));
+  }, [createMode, selectedToolPreset?.id]);
 
   useEffect(() => {
     setAvailableAssets((current) => mergeAssetLists(current, assets));
@@ -789,9 +1066,51 @@ export function JobCreateForm({
     setFormValues((current) => ({ ...current, [id]: value }));
   }
 
+  function normalizeThemeOutputCount(value: string): number {
+    const parsed = Math.trunc(Number(value));
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_THEME_OUTPUT_COUNT;
+  }
+
+  function updateThemeOutputCountDraft(value: string) {
+    setThemeOutputCountDraft(value);
+    setThemeOutputCount(value.trim() ? normalizeThemeOutputCount(value) : DEFAULT_THEME_OUTPUT_COUNT);
+  }
+
+  function commitThemeOutputCountDraft() {
+    const nextCount = themeOutputCountDraft.trim() ? normalizeThemeOutputCount(themeOutputCountDraft) : DEFAULT_THEME_OUTPUT_COUNT;
+    setThemeOutputCount(nextCount);
+    setThemeOutputCountDraft(String(nextCount));
+  }
+
+  function setPromptBuilderOption(groupId: PromptBuilderKey, value: string) {
+    setPromptBuilderSelections((current) => ({
+      ...current,
+      [groupId]: current[groupId] === value ? undefined : value
+    }));
+  }
+
+  function applyPromptBuilderDirection() {
+    const builderText = promptBuilderSummary
+      ? jobT(spanish, `Shot plan: ${promptBuilderSummary}.`, `Plan visual: ${promptBuilderSummary}.`)
+      : "";
+    const selectionText = selectionTitle
+      ? jobT(spanish, `Selected style: ${selectionTitle}.`, `Estilo seleccionado: ${selectionTitle}.`)
+      : "";
+    const nextDirection = [selectionText, builderText].filter(Boolean).join("\n");
+    if (!nextDirection) return;
+    const currentPrompt = packagePromptDraft.trim();
+    const nextPrompt = currentPrompt.includes(nextDirection)
+      ? currentPrompt
+      : [currentPrompt, nextDirection].filter(Boolean).join("\n\n");
+    setPackagePromptDraft(nextPrompt);
+    if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, nextPrompt);
+  }
+
   function updateCreateMode(nextMode: CreateMode) {
     setCreateMode(nextMode);
-    setMessage(nextMode === "theme" ? "Choose a package, upload or select selfies, then review your private AI photoshoot." : "Describe the result you want, attach selfies, then review this tool request.");
+    setMessage(nextMode === "theme"
+      ? jobT(spanish, "Choose a package, upload or select selfies, then review your private AI photoshoot.", "Elige un paquete, sube o selecciona selfies y revisa tu sesion privada con IA.")
+      : jobT(spanish, "Describe the result you want, attach selfies, then review this tool request.", "Describe el resultado que quieres, adjunta selfies y revisa esta solicitud."));
     setFormValues((current) => {
       if (nextMode === "theme") {
         const next: Record<string, string | number | boolean> = { ...current, outputCount: themeOutputCount };
@@ -824,7 +1143,7 @@ export function JobCreateForm({
       ...current,
       [TOOL_PROMPT_FIELD_ID]: String(current[TOOL_PROMPT_FIELD_ID] || preset.prompt)
     }));
-    setMessage("Describe the result you want, attach selfies, then review this tool request.");
+    setMessage(jobT(spanish, "Describe the result you want, attach selfies, then review this tool request.", "Describe el resultado que quieres, adjunta selfies y revisa esta solicitud."));
   }
 
   function openPackageDialog() {
@@ -897,23 +1216,31 @@ export function JobCreateForm({
   }, []);
 
   useEffect(() => {
-    if (!preferredMode || preferredMode === createMode) return;
-    if (preferredMode === "tool") {
-      const nextPreset = toolPresets.find((preset) => preset.id === selectedToolId) ?? toolPresets[0];
+    if (!preferredMode && !preferredToolId) return;
+    const normalizedPreferredToolId = preferredToolId ? normalizeToolId(preferredToolId) : "";
+    if (preferredMode === "tool" || normalizedPreferredToolId) {
+      const nextPreset =
+        toolPresets.find((preset) => preset.id === normalizedPreferredToolId) ??
+        toolPresets.find((preset) => preset.id === selectedToolId) ??
+        toolPresets[0];
       updateCreateMode("tool");
       if (nextPreset) updateToolPreset(nextPreset);
       return;
     }
+    if (preferredMode === createMode) return;
     const nextPack = activeCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? activeCreativePacks[0];
     updateCreateMode("theme");
     if (nextPack) updateCreativePack(nextPack);
-  }, [preferredMode, preferredModeRequest]);
+  }, [preferredMode, preferredModeRequest, preferredToolId]);
 
   useEffect(() => {
     const action = operationContext?.action?.trim();
     const note = operationContext?.note?.trim();
     if (!action && !note) return;
-    const summary = [action ? `Selected operation: ${action}.` : "", note ? `Direction: ${note}` : ""].filter(Boolean).join(" ");
+    const summary = [
+      action ? jobT(spanish, `Selected operation: ${action}.`, `Operacion seleccionada: ${action}.`) : "",
+      note ? jobT(spanish, `Direction: ${note}`, `Direccion: ${note}`) : ""
+    ].filter(Boolean).join(" ");
     if (createMode === "tool" && summary) {
       setFormValues((current) => {
         const currentPrompt = String(current[TOOL_PROMPT_FIELD_ID] ?? "").trim();
@@ -929,11 +1256,11 @@ export function JobCreateForm({
   async function uploadSourceFiles(files: FileList | null) {
     const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
     if (!imageFiles.length) {
-      setMessage("Choose one or more image files before uploading.");
+      setMessage(jobT(spanish, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
       return;
     }
     setUploadingSources(true);
-    setMessage(`Uploading ${imageFiles.length} private photo${imageFiles.length === 1 ? "" : "s"}...`);
+    setMessage(jobT(spanish, `Uploading ${imageFiles.length} private photo${imageFiles.length === 1 ? "" : "s"}...`, `Subiendo ${imageFiles.length} foto${imageFiles.length === 1 ? "" : "s"} privada${imageFiles.length === 1 ? "" : "s"}...`));
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of imageFiles.entries()) {
       const formData = new FormData();
@@ -947,7 +1274,7 @@ export function JobCreateForm({
       });
       const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
       if (!response.ok || !result.asset) {
-        setMessage(`We could not upload ${file.name}. Please check the file and try again.`);
+        setMessage(jobT(spanish, `We could not upload ${file.name}. Please check the file and try again.`, `No pudimos subir ${file.name}. Revisa el archivo e intentalo de nuevo.`));
         setUploadingSources(false);
         return;
       }
@@ -966,16 +1293,16 @@ export function JobCreateForm({
     }
     const keepIds = Array.from(new Set([...nextPrimaryIds, ...nextPartnerIds])).slice(0, DEFAULT_MAX_SOURCE_ASSETS * 2);
     void syncCurrentSourceAssets(keepIds);
-    setMessage(`${createdAssets.length} private photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the selfies you want to use.`);
+    setMessage(jobT(spanish, `${createdAssets.length} private photo${createdAssets.length === 1 ? "" : "s"} uploaded. Select the selfies you want to use.`, `${createdAssets.length} foto${createdAssets.length === 1 ? "" : "s"} privada${createdAssets.length === 1 ? "" : "s"} subida${createdAssets.length === 1 ? "" : "s"}. Selecciona las selfies que quieres usar.`));
     setUploadingSources(false);
   }
 
   async function deleteSourceAsset(asset: ThemeRuntimeAsset) {
     if (deletingAssetIds.includes(asset.id)) return;
-    const confirmed = window.confirm(`Delete "${asset.label}" from your private model photos?`);
+    const confirmed = window.confirm(jobT(spanish, `Delete "${asset.label}" from your private model photos?`, `Eliminar "${asset.label}" de tus fotos privadas del modelo?`));
     if (!confirmed) return;
     setDeletingAssetIds((current) => [...current, asset.id]);
-    setMessage("Deleting private photo...");
+    setMessage(jobT(spanish, "Deleting private photo...", "Eliminando foto privada..."));
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${asset.id}`, {
       method: "DELETE",
       headers: csrfHeader(`customer_csrf_${siteId}`)
@@ -983,7 +1310,9 @@ export function JobCreateForm({
     const result = (await response.json().catch(() => ({}))) as { error?: string };
     setDeletingAssetIds((current) => current.filter((id) => id !== asset.id));
     if (!response.ok) {
-      setMessage(result.error?.includes("csrf") ? "Your secure session expired. Refresh the page, then try again." : "We could not delete this private photo. Please try again.");
+      setMessage(result.error?.includes("csrf")
+        ? jobT(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.")
+        : jobT(spanish, "We could not delete this private photo. Please try again.", "No pudimos eliminar esta foto privada. Intentalo de nuevo."));
       return;
     }
     invalidateCustomerAssets(siteId, customer.id);
@@ -991,16 +1320,18 @@ export function JobCreateForm({
     setAvailableAssets((current) => current.filter((item) => item.id !== asset.id));
     setSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
     setPartnerSelectedAssetIds((current) => current.filter((id) => id !== asset.id));
-    setMessage("Private photo deleted.");
+    setMessage(jobT(spanish, "Private photo deleted.", "Foto privada eliminada."));
   }
 
   async function deleteSelectedSourceAssets(assetIds: string[]) {
     const remoteIds = Array.from(new Set(assetIds.filter(Boolean))).filter((assetId) => !deletingAssetIds.includes(assetId));
     if (!remoteIds.length) return;
-    const confirmed = window.confirm(`Delete ${remoteIds.length} selected private photo${remoteIds.length === 1 ? "" : "s"}?`);
+    const confirmed = window.confirm(jobT(spanish, `Delete ${remoteIds.length} selected private photo${remoteIds.length === 1 ? "" : "s"}?`, `Eliminar ${remoteIds.length} foto${remoteIds.length === 1 ? "" : "s"} privada${remoteIds.length === 1 ? "" : "s"} seleccionada${remoteIds.length === 1 ? "" : "s"}?`));
     if (!confirmed) return;
     setDeletingAssetIds((current) => Array.from(new Set([...current, ...remoteIds])));
-    setMessage(remoteIds.length === 1 ? "Deleting private photo..." : `Deleting ${remoteIds.length} private photos...`);
+    setMessage(remoteIds.length === 1
+      ? jobT(spanish, "Deleting private photo...", "Eliminando foto privada...")
+      : jobT(spanish, `Deleting ${remoteIds.length} private photos...`, `Eliminando ${remoteIds.length} fotos privadas...`));
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
       method: "DELETE",
       headers: {
@@ -1011,7 +1342,7 @@ export function JobCreateForm({
     });
     setDeletingAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
     if (!response.ok) {
-      setMessage("We could not delete every selected private photo. Please refresh and try again.");
+      setMessage(jobT(spanish, "We could not delete every selected private photo. Please refresh and try again.", "No pudimos eliminar todas las fotos privadas seleccionadas. Actualiza e intentalo de nuevo."));
       return;
     }
     invalidateCustomerAssets(siteId, customer.id);
@@ -1019,7 +1350,7 @@ export function JobCreateForm({
     setAvailableAssets((current) => current.filter((item) => !remoteIds.includes(item.id)));
     setSelectedAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
     setPartnerSelectedAssetIds((current) => current.filter((id) => !remoteIds.includes(id)));
-    setMessage(`${remoteIds.length} private photo${remoteIds.length === 1 ? "" : "s"} deleted.`);
+    setMessage(jobT(spanish, `${remoteIds.length} private photo${remoteIds.length === 1 ? "" : "s"} deleted.`, `${remoteIds.length} foto${remoteIds.length === 1 ? "" : "s"} privada${remoteIds.length === 1 ? "" : "s"} eliminada${remoteIds.length === 1 ? "" : "s"}.`));
   }
 
   async function syncCurrentSourceAssets(keepAssetIds: string[]) {
@@ -1041,35 +1372,39 @@ export function JobCreateForm({
       setMessage(text);
     };
     if (createMode === "theme" && !selectedPack) {
-      showDialogError("Choose a photo package before starting.");
+      showDialogError(jobT(spanish, "Choose a photo package before starting.", "Elige un paquete de fotos antes de empezar."));
       return;
     }
     if (subscriptionStatus === "loading") {
-      showDialogError("We are still checking your subscription. Try again in a moment.");
+      showDialogError(jobT(spanish, "We are still checking your subscription. Try again in a moment.", "Aun estamos revisando tu suscripcion. Intentalo en un momento."));
       return;
     }
-    if (subscriptionStatus === "required") {
-      showDialogError("Choose a subscription before starting generation. Your workspace setup stays saved.");
+    if (subscriptionHardGate) {
+      showDialogError(jobT(spanish, "Choose a subscription or add enough credits before starting generation. Your workspace setup stays saved.", "Elige una suscripcion o anade creditos suficientes antes de generar. La configuracion de tu espacio queda guardada."));
+      return;
+    }
+    if (selectedRequestAssetIds.length < minAssets) {
+      showDialogError(jobT(spanish, `Select at least ${minAssets} private photo before starting this request.`, `Selecciona al menos ${minAssets} foto privada antes de iniciar esta solicitud.`));
       return;
     }
     if (selectedRequestAssetIds.length > effectiveMaxAssets) {
-      showDialogError(`Use up to ${effectiveMaxAssets} private photos for this photo set.`);
+      showDialogError(jobT(spanish, `Use up to ${effectiveMaxAssets} private photos for this photo set.`, `Usa hasta ${effectiveMaxAssets} fotos privadas para este set.`));
       return;
     }
     if (selectionCreditCost > customer.balance.available) {
-      showDialogError(`This request needs ${selectionCreditCost} credits, but ${customer.balance.available} are available. Add credits or choose a smaller package.`);
+      showDialogError(jobT(spanish, `This request needs ${selectionCreditCost} credits, but ${customer.balance.available} are available. Add credits or choose a smaller package.`, `Esta solicitud necesita ${selectionCreditCost} creditos, pero tienes ${customer.balance.available}. Anade creditos o elige un paquete menor.`));
       return;
     }
     const missingField = modeFields.find((field) => field.required && (formValues[field.id] === "" || formValues[field.id] === undefined || formValues[field.id] === null));
     if (missingField) {
-      showDialogError(`Complete ${missingField.label} before starting.`);
+      showDialogError(jobT(spanish, `Complete ${missingField.label} before starting.`, `Completa ${missingField.label} antes de empezar.`));
       return;
     }
     if (createMode === "tool") {
       const prompt = String(formValues[TOOL_PROMPT_FIELD_ID] ?? "").trim();
       const blockedTerm = blockedPromptTerm(prompt);
       if (blockedTerm) {
-        showDialogError("This prompt includes unsafe or disallowed content. Please revise it before starting.");
+        showDialogError(jobT(spanish, "This prompt includes unsafe or disallowed content. Please revise it before starting.", "Estas instrucciones incluyen contenido no permitido. Revisalas antes de empezar."));
         return;
       }
     }
@@ -1081,6 +1416,8 @@ export function JobCreateForm({
       requestFields.creativePackName = selectedPack?.name ?? "";
       requestFields.creativePackPrompt = selectedPack?.prompt ?? "";
       requestFields.packagePrompt = packagePromptDraft.trim();
+      requestFields.userDirection = packagePromptDraft.trim();
+      requestFields.promptBuilder = promptBuilderSummary;
       requestFields.primaryAssetIds = selectedAssetIds;
       requestFields.partnerAssetIds = isCoupleFlow ? partnerSelectedAssetIds : [];
       requestFields.trainingMode = trainingMode;
@@ -1090,6 +1427,7 @@ export function JobCreateForm({
       requestFields.toolPresetTitle = toolPresets.find((preset) => preset.id === selectedToolId)?.title ?? "";
       requestFields.customerModelLabel = selectedModelLabel;
       requestFields.prompt = packagePromptDraft.trim() || String(formValues[TOOL_PROMPT_FIELD_ID] ?? "");
+      requestFields.promptBuilder = promptBuilderSummary;
       requestFields.primaryAssetIds = selectedAssetIds;
       requestFields.partnerAssetIds = isCoupleFlow ? partnerSelectedAssetIds : [];
       requestFields.trainingMode = trainingMode;
@@ -1097,9 +1435,11 @@ export function JobCreateForm({
     setPending(true);
     setDialogTone("info");
     setDialogMessage(subscriptionBypassActive
-      ? "Creating the admin job and reserving credits. Keep this window open until the request status page opens."
-      : "Creating the job and reserving credits. Keep this window open until the request status page opens.");
-    setMessage(subscriptionBypassActive ? "Starting your admin photo set and holding credits..." : "Starting your photo set and holding credits...");
+      ? jobT(spanish, "Creating the admin job and reserving credits. Keep this window open until the request status page opens.", "Creando la solicitud de administrador y reservando creditos. Manten esta ventana abierta hasta que se abra el estado.")
+      : jobT(spanish, "Creating the job and reserving credits. Keep this window open until the request status page opens.", "Creando la solicitud y reservando creditos. Manten esta ventana abierta hasta que se abra el estado."));
+    setMessage(subscriptionBypassActive
+      ? jobT(spanish, "Starting your admin photo set and holding credits...", "Iniciando tu set de administrador y reservando creditos...")
+      : jobT(spanish, "Starting your photo set and holding credits...", "Iniciando tu set de fotos y reservando creditos..."));
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 30_000);
     let response: Response;
@@ -1128,33 +1468,33 @@ export function JobCreateForm({
       window.clearTimeout(timeout);
       setPending(false);
       const text = error instanceof DOMException && error.name === "AbortError"
-        ? "This request is taking longer than expected. Refresh the All tab before retrying so you do not duplicate a request that may have started."
-        : "The network failed while starting this request. Please check the connection and try again.";
+        ? jobT(spanish, "This request is taking longer than expected. Refresh the All tab before retrying so you do not duplicate a request that may have started.", "Esta solicitud esta tardando mas de lo esperado. Actualiza la pestana Todo antes de reintentar para no duplicarla.")
+        : jobT(spanish, "The network failed while starting this request. Please check the connection and try again.", "La red fallo al iniciar esta solicitud. Revisa la conexion e intentalo de nuevo.");
       showDialogError(text);
       return;
     }
     window.clearTimeout(timeout);
-    const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string }; workerDispatch?: CreatedJobFeedback["workerDispatch"]; note?: string };
+    const result = (await response.json().catch(() => ({}))) as { error?: string; job?: { id: string }; customerBalance?: PublicCustomer["balance"]; workerDispatch?: CreatedJobFeedback["workerDispatch"]; note?: string };
     if (!response.ok || !result.job) {
       setPending(false);
-      showDialogError(jobErrorMessage(result.error, response.status));
+      showDialogError(jobErrorMessage(result.error, response.status, spanish));
       return;
     }
     const dispatchStatus = result.workerDispatch?.status;
     const dispatchMessage =
       dispatchStatus === "failed"
-        ? `Job created, but the generator did not accept it: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Opening the request status page.`
+        ? jobT(spanish, `Job created, but the generator did not accept it: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Opening the request status page.`, `Solicitud creada, pero el generador no la acepto: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Abriendo la pagina de estado.`)
         : dispatchStatus === "skipped"
           ? subscriptionBypassActive
-            ? "Admin job created and credits are held, but no generator is configured for this environment. Opening the request status page."
-            : "Job created and credits are held, but no generator is configured for this environment. Opening the request status page."
-          : "Job created. Opening the request status page so you can follow generation progress.";
+            ? jobT(spanish, "Admin job created and credits are held, but no generator is configured for this environment. Opening the request status page.", "Solicitud de administrador creada y creditos reservados, pero no hay generador configurado en este entorno. Abriendo estado.")
+            : jobT(spanish, "Job created and credits are held, but no generator is configured for this environment. Opening the request status page.", "Solicitud creada y creditos reservados, pero no hay generador configurado en este entorno. Abriendo estado.")
+          : jobT(spanish, "Job created. Opening the request status page so you can follow generation progress.", "Solicitud creada. Abriendo la pagina de estado para seguir el progreso.");
     setDialogTone("success");
     setDialogMessage(dispatchMessage);
     setMessage(dispatchMessage);
     setPending(false);
     setPackageDialogOpen(false);
-    onJobCreated?.(result.job.id, { workerDispatch: result.workerDispatch, note: result.note });
+    onJobCreated?.(result.job.id, { customerBalance: result.customerBalance, workerDispatch: result.workerDispatch, note: result.note });
   }
 
   function renderPhotoPicker(title: string, description: string, target: "primary" | "partner", selectedIds: string[]) {
@@ -1168,7 +1508,7 @@ export function JobCreateForm({
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${light ? "border-[#eadfce] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
-              {selectedIds.length} selected
+              {jobT(spanish, `${selectedIds.length} selected`, `${selectedIds.length} seleccionadas`)}
             </span>
             {selectedIds.length ? (
               <button
@@ -1177,7 +1517,7 @@ export function JobCreateForm({
                 onClick={() => void deleteSelectedSourceAssets(selectedIds)}
                 type="button"
               >
-                {deletingSelected ? "Deleting" : "Delete selected"}
+                {deletingSelected ? jobT(spanish, "Deleting", "Eliminando") : jobT(spanish, "Delete selected", "Eliminar seleccionadas")}
               </button>
             ) : null}
           </div>
@@ -1190,7 +1530,7 @@ export function JobCreateForm({
               <div className={`group relative overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")} ${deleting ? "opacity-55" : ""}`} key={`${target}_${asset.id}`}>
                 <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
                 <button
-                  aria-label={`Delete ${asset.label}`}
+                  aria-label={jobT(spanish, `Delete ${asset.label}`, `Eliminar ${asset.label}`)}
                   className="absolute left-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/62 text-white opacity-90 shadow-sm transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-45"
                   disabled={deleting}
                   onClick={(event) => {
@@ -1198,7 +1538,7 @@ export function JobCreateForm({
                     event.stopPropagation();
                     void deleteSourceAsset(asset);
                   }}
-                  title="Delete private photo"
+                  title={jobT(spanish, "Delete private photo", "Eliminar foto privada")}
                   type="button"
                 >
                   <Trash2 className="h-3.5 w-3.5" strokeWidth={2} />
@@ -1210,15 +1550,97 @@ export function JobCreateForm({
                   onClick={() => toggleAsset(asset.id, target)}
                   type="button"
                 >
-                  <span className="sr-only">{checked ? "Deselect" : "Select"} {asset.label}</span>
+                  <span className="sr-only">{checked ? jobT(spanish, "Deselect", "Quitar seleccion") : jobT(spanish, "Select", "Seleccionar")} {asset.label}</span>
                 </button>
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/76 to-transparent p-2 text-white">
                   <span className="block truncate text-xs font-semibold">{asset.label}</span>
                 </span>
-                <input aria-label={`Use ${asset.label}`} checked={checked} className="absolute right-2 top-2 z-10 h-4 w-4" disabled={deleting} onChange={() => toggleAsset(asset.id, target)} type="checkbox" />
+                <input aria-label={jobT(spanish, `Use ${asset.label}`, `Usar ${asset.label}`)} checked={checked} className="absolute right-2 top-2 z-10 h-4 w-4" disabled={deleting} onChange={() => toggleAsset(asset.id, target)} type="checkbox" />
               </div>
             );
           })}
+        </div>
+      </div>
+    );
+  }
+
+  function renderPromptBuilderPanel(compact = false) {
+    return (
+      <div className={`grid gap-4 rounded-[16px] border p-4 ${panelClass}`}>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>
+              {jobT(spanish, "Step 03 · Advanced direction", "Paso 03 · Direccion avanzada")}
+            </p>
+            <h4 className={`mt-2 text-base font-semibold ${textClass}`}>{jobT(spanish, "Build a clearer image prompt", "Construye un prompt mas claro")}</h4>
+            <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+              {jobT(spanish, "Choose a shot plan or write your own note. We combine this with the selected package prompt and source photos.", "Elige un plan visual o escribe tu nota. Lo combinamos con el paquete seleccionado y las fotos fuente.")}
+            </p>
+          </div>
+          <WandSparkles className={`h-5 w-5 shrink-0 ${light ? "text-[#c65f32]" : "text-[#31d4ff]"}`} strokeWidth={1.8} />
+        </div>
+        <div className={compact ? "grid gap-3" : "grid gap-3 md:grid-cols-2 xl:grid-cols-4"}>
+          {PROMPT_BUILDER_GROUPS.map((group) => (
+            <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`} key={group.id}>
+              <div className="flex items-center gap-2">
+                {group.id === "shot" ? <Camera className="h-4 w-4 text-[#31d4ff]" strokeWidth={1.8} /> : null}
+                {group.id === "scene" ? <MapPin className="h-4 w-4 text-[#75d89a]" strokeWidth={1.8} /> : null}
+                {group.id === "lighting" ? <Lightbulb className="h-4 w-4 text-[#ffd166]" strokeWidth={1.8} /> : null}
+                {group.id === "finish" ? <Sparkles className="h-4 w-4 text-[#ff5ebd]" strokeWidth={1.8} /> : null}
+                <p className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{spanish ? group.spanishLabel : group.label}</p>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {(spanish ? group.spanishOptions : group.options).map((option, index) => {
+                  const canonicalOption = group.options[index] ?? option;
+                  const active = promptBuilderSelections[group.id] === canonicalOption;
+                  return (
+                    <button
+                      className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold transition ${
+                        active
+                          ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#b9542d]" : "border-white bg-white text-[#14161a]")
+                          : (light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.05] text-white/62 hover:bg-white/[0.09] hover:text-white")
+                      }`}
+                      key={canonicalOption}
+                      onClick={() => setPromptBuilderOption(group.id, canonicalOption)}
+                      type="button"
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+        <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
+          {jobT(spanish, "Your creative direction", "Tu direccion creativa")}
+          <textarea
+            className={`${compact ? "min-h-[96px]" : "min-h-[118px]"} rounded-[14px] border px-4 py-3 ${fieldClass}`}
+            onChange={(event) => {
+              setPackagePromptDraft(event.target.value);
+              if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, event.target.value);
+            }}
+            placeholder={jobT(spanish, "Example: waist-up portrait, basketball court energy, natural motion, sharp face detail, soft background depth.", "Ejemplo: retrato medio, energia de cancha, movimiento natural, rostro nitido, fondo suave.")}
+            value={packagePromptDraft}
+          />
+        </label>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className={`text-xs leading-5 ${mutedClass}`}>
+            {promptBuilderSummary
+              ? jobT(spanish, `Selected prompt cues: ${promptBuilderSummary}`, `Senales seleccionadas: ${promptBuilderSummary}`)
+              : jobT(spanish, "Use the chips for fast structure, then edit the final text freely.", "Usa los chips para estructurar rapido y edita el texto final libremente.")}
+          </p>
+          <button
+            className={`inline-flex items-center justify-center gap-2 rounded-[14px] border px-4 py-2.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-45 ${
+              light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/[0.1] hover:text-white"
+            }`}
+            disabled={!promptBuilderSummary}
+            onClick={applyPromptBuilderDirection}
+            type="button"
+          >
+            <WandSparkles className="h-4 w-4" strokeWidth={1.8} />
+            {jobT(spanish, "Apply cues", "Aplicar senales")}
+          </button>
         </div>
       </div>
     );
@@ -1239,29 +1661,29 @@ export function JobCreateForm({
         <div className="grid gap-3">
         {operationContext?.action || operationContext?.note ? (
           <div className={`rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-[#31d4ff]/35 bg-[#31d4ff]/8"}`}>
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Applied workspace action</p>
-            <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? "Custom operation"}</p>
+            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Applied workspace action", "Accion aplicada del espacio")}</p>
+            <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? jobT(spanish, "Custom operation", "Operacion personalizada")}</p>
             {operationContext.source ? <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{operationContext.source}</p> : null}
             {operationContext.note ? (
               <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>{operationContext.note}</p>
             ) : (
-              <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>Choose a package or tool using the operation selected in the left panel.</p>
+              <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>{jobT(spanish, "Choose a package or tool using the operation selected in the left panel.", "Elige un paquete o herramienta con la operacion seleccionada en el panel izquierdo.")}</p>
             )}
           </div>
         ) : null}
         <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 01</p>
-          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{createMode === "theme" ? "Choose a photo package" : "Choose a tool"}</h3>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Step 01", "Paso 01")}</p>
+          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{createMode === "theme" ? jobT(spanish, "Choose a photo package", "Elige un paquete de fotos") : jobT(spanish, "Choose a tool", "Elige una herramienta")}</h3>
           <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
             {createMode === "theme"
-              ? "Photo packages set the style direction, estimated outputs, credit use, and selfie needs before you upload or select images."
-              : "Tools use your selfies and notes to create a focused private result."}
+              ? jobT(spanish, "Photo packages set the style direction, estimated outputs, credit use, and selfie needs before you upload or select images.", "Los paquetes definen estilo, resultados estimados, uso de creditos y selfies necesarias antes de subir o elegir imagenes.")
+              : jobT(spanish, "Tools use your selfies and notes to create a focused private result.", "Las herramientas usan tus selfies y notas para crear un resultado privado concreto.")}
           </p>
         </div>
         <div className={`inline-flex w-fit max-w-full rounded-full border p-1 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#f8f1e6]" : "border-white/10 bg-white/[0.04]"}`}>
           {[
-            { mode: "theme" as const, label: "Photo packages" },
-            { mode: "tool" as const, label: "Tools" }
+            { mode: "theme" as const, label: jobT(spanish, "Photo packages", "Paquetes de fotos") },
+            { mode: "tool" as const, label: jobT(spanish, "Tools", "Herramientas") }
           ].map((item) => {
             const active = createMode === item.mode;
             return (
@@ -1303,7 +1725,7 @@ export function JobCreateForm({
                   onClick={() => updateThemeCategory(category)}
                   type="button"
                 >
-                  {category === "all" ? "All packages" : category}
+                  {category === "all" ? jobT(spanish, "All packages", "Todos los paquetes") : category}
                 </button>
               );
             })}
@@ -1313,7 +1735,7 @@ export function JobCreateForm({
                 onClick={() => setShowAllCategories((current) => !current)}
                 type="button"
               >
-                {showAllCategories ? "Show less" : `View ${categoryOptions.length - displayedCategoryOptions.length} more`}
+                {showAllCategories ? jobT(spanish, "Show less", "Mostrar menos") : jobT(spanish, `View ${categoryOptions.length - displayedCategoryOptions.length} more`, `Ver ${categoryOptions.length - displayedCategoryOptions.length} mas`)}
               </button>
             ) : null}
             </div>
@@ -1330,45 +1752,45 @@ export function JobCreateForm({
                 </div>
               )}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Current selection</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">{jobT(spanish, "Current selection", "Seleccion actual")}</p>
                 <p className="mt-2 text-lg font-semibold leading-tight">{selectionTitle}</p>
               </div>
             </div>
           ) : null}
           <div className="grid content-between gap-5 p-4">
             <div>
-              <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? "Selected package" : "Selected tool"}</p>
+              <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{createMode === "theme" ? jobT(spanish, "Selected package", "Paquete seleccionado") : jobT(spanish, "Selected tool", "Herramienta seleccionada")}</p>
               <h4 className={`mt-3 text-xl font-semibold ${textClass}`}>{selectionTitle}</h4>
               <p className={`mt-3 text-sm leading-6 ${mutedClass}`}>{selectionDescription}</p>
               {createMode === "tool" ? (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolPreset?.category ?? "Tool"}</span>
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedApp?.aiApp.name ?? "AI tool"}</span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolPreset?.category ?? jobT(spanish, "Tool", "Herramienta")}</span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA")}</span>
                 </div>
               ) : null}
             </div>
             <div className="grid gap-2 sm:grid-cols-3">
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
-                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Required credits</p>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Required credits", "Creditos requeridos")}</p>
                 <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectionCreditCost}</p>
                 <p className={`mt-1 text-[11px] leading-4 ${mutedClass}`}>{selectionUnitCostLabel}</p>
               </div>
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
-                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selfies</p>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Selfies", "Selfies")}</p>
                 <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectedRequestAssetIds.length}/{effectiveMaxAssets}</p>
               </div>
               <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
-                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Output</p>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Output", "Resultado")}</p>
                 <p className={`mt-2 text-xl font-semibold ${textClass}`}>{selectionOutputLabel}</p>
               </div>
             </div>
             <p className={`text-xs leading-5 ${mutedClass}`}>{creditsUsageNote}</p>
             {subscriptionGateMessage ? (
-              <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+              <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>
                 <span>{subscriptionGateMessage}</span>
-                {subscriptionStatus === "required" ? (
+                {subscriptionHardGate ? (
                   <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
-                    Choose a plan
+                    {jobT(spanish, "Choose a plan", "Elegir plan")}
                   </a>
                 ) : null}
               </div>
@@ -1389,7 +1811,7 @@ export function JobCreateForm({
                 onClick={openPackageDialog}
                 type="button"
               >
-                Review and start
+                {jobT(spanish, "Review and start", "Revisar e iniciar")}
               </button>
             </div>
           </div>
@@ -1430,10 +1852,10 @@ export function JobCreateForm({
                   </span>
                   <span className="mt-3 flex flex-wrap gap-2">
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
-                      {pack.creditCost} credits per image
+                      {jobT(spanish, `${pack.creditCost} credits per image`, `${pack.creditCost} creditos por imagen`)}
                     </span>
                     <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
-                      {pack.outputCount} outputs
+                      {jobT(spanish, `${pack.outputCount} outputs`, `${pack.outputCount} resultados`)}
                     </span>
                   </span>
                 </span>
@@ -1465,10 +1887,10 @@ export function JobCreateForm({
                     {preset.category}
                   </span>
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
-                    {presetCreditCost} credits
+                    {jobT(spanish, `${presetCreditCost} credits`, `${presetCreditCost} creditos`)}
                   </span>
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
-                    Tool result
+                    {jobT(spanish, "Tool result", "Resultado de herramienta")}
                   </span>
                 </span>
               </button>
@@ -1482,7 +1904,9 @@ export function JobCreateForm({
               onClick={() => setShowAllOptions((current) => !current)}
               type="button"
             >
-              {showAllOptions ? "Show fewer options" : `View ${hiddenOptionCount} more ${createMode === "theme" ? "packages" : "tools"}`}
+              {showAllOptions
+                ? jobT(spanish, "Show fewer options", "Mostrar menos opciones")
+                : jobT(spanish, `View ${hiddenOptionCount} more ${createMode === "theme" ? "packages" : "tools"}`, `Ver ${hiddenOptionCount} ${createMode === "theme" ? "paquetes" : "herramientas"} mas`)}
             </button>
           </div>
         ) : null}
@@ -1490,20 +1914,21 @@ export function JobCreateForm({
       <div className={`grid gap-4 rounded-[16px] border p-4 ${panelClass}`}>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Request setup</p>
+            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Request setup", "Configuracion")}</p>
             <h4 className={`mt-2 text-base font-semibold ${textClass}`}>
-              {createMode === "theme" ? "Confirm the package rules before uploading selfies." : "Confirm the tool rules before uploading selfies."}
+              {createMode === "theme" ? jobT(spanish, "Confirm the package rules before uploading selfies.", "Confirma las reglas del paquete antes de subir selfies.") : jobT(spanish, "Confirm the tool rules before uploading selfies.", "Confirma las reglas de la herramienta antes de subir selfies.")}
             </h4>
           </div>
           {createMode === "theme" ? (
             <label className={`grid min-w-[150px] gap-2 text-sm font-medium ${textClass}`}>
-              Estimated outputs
+              {jobT(spanish, "Estimated outputs", "Resultados estimados")}
               <input
                 className={`rounded-[14px] border px-4 py-2.5 ${fieldClass}`}
                 min={1}
-                onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
+                onBlur={commitThemeOutputCountDraft}
+                onChange={(event) => updateThemeOutputCountDraft(event.target.value)}
                 type="number"
-                value={themeOutputCount}
+                value={themeOutputCountDraft}
               />
             </label>
           ) : null}
@@ -1518,17 +1943,20 @@ export function JobCreateForm({
           {materialRules.map((rule) => (
             <div className={`flex gap-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`} key={rule}>
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#75d89a]" strokeWidth={1.8} />
-              <span>{displayMaterialRule(rule)}</span>
+              <span>{displayMaterialRule(rule, spanish)}</span>
             </div>
           ))}
         </div>
         <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
-          {createMode === "theme" ? "Default is 5 images. Adjust this number if you want a different delivery estimate." : "Tool requests use one focused result type. Add clear notes and selected selfies before review."}
+          {createMode === "theme"
+            ? jobT(spanish, `Default is ${DEFAULT_THEME_OUTPUT_COUNT} image. Adjust this number if you want a different delivery estimate.`, `El valor predeterminado es ${DEFAULT_THEME_OUTPUT_COUNT} imagen. Ajusta el numero si quieres otra estimacion.`)
+            : jobT(spanish, "Tool requests use one focused result type. Add clear notes and selected selfies before review.", "Las herramientas usan un resultado concreto. Anade notas claras y selfies seleccionadas antes de revisar.")}
         </p>
       </div>
+      {renderPromptBuilderPanel()}
       {createMode === "tool" ? (
       <div className="grid gap-4 md:grid-cols-2">
-        {modeFields.map((field) => (
+        {modeFields.filter((field) => field.id !== TOOL_PROMPT_FIELD_ID).map((field) => (
           <label className={`grid gap-2 text-sm font-medium ${textClass}`} key={field.id}>
             {field.label}
             {field.type === "select" || field.type === "radio" ? (
@@ -1563,7 +1991,7 @@ export function JobCreateForm({
             ) : field.type === "boolean" ? (
               <span className={`inline-flex items-center gap-2 rounded-[18px] border px-4 py-3 ${fieldClass}`}>
                 <input checked={Boolean(formValues[field.id])} onChange={(event) => updateField(field.id, event.target.checked)} type="checkbox" />
-                <span>{field.helpText ?? "Enabled"}</span>
+                <span>{field.helpText ?? jobT(spanish, "Enabled", "Activado")}</span>
               </span>
             ) : field.type === "text" ? (
               <input
@@ -1592,14 +2020,14 @@ export function JobCreateForm({
       </div>
       <div className="hidden" id="legacy-source-photos">
         <div>
-          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 02 · Private model</p>
-          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Upload selfies for your private model</h3>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Step 02 · Private model", "Paso 02 · Modelo privado")}</p>
+          <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{jobT(spanish, "Upload selfies for your private model", "Sube selfies para tu modelo privado")}</h3>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#625d56]" : "text-white/68"}`}>
-            Add clear selfies or reference photos when available. There is no minimum photo count; each request can use up to {effectiveMaxAssets} photos inside this signed-in workspace.
+            {jobT(spanish, `Add at least one clear selfie or reference photo. Each request can use up to ${effectiveMaxAssets} photos inside this signed-in workspace.`, `Anade al menos una selfie clara o foto de referencia. Cada solicitud puede usar hasta ${effectiveMaxAssets} fotos dentro de este espacio.`)}
           </p>
           <label className={`mt-3 inline-flex cursor-pointer items-center gap-2 rounded-[14px] px-4 py-2 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass} ${uploadingSources ? "pointer-events-none opacity-55" : ""}`}>
             <UploadCloud className="h-4 w-4" strokeWidth={1.8} />
-            {uploadingSources ? "Uploading selfies" : "Upload selfies in batch"}
+            {uploadingSources ? jobT(spanish, "Uploading selfies", "Subiendo selfies") : jobT(spanish, "Upload selfies in batch", "Subir selfies en lote")}
             <input
               accept="image/*"
               className="sr-only"
@@ -1612,22 +2040,22 @@ export function JobCreateForm({
             />
           </label>
           <p className={`mt-2 text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
-            Select multiple image files at once. Uploaded photos appear below for browsing, selection, and removal before generation.
+            {jobT(spanish, "Select multiple image files at once. Uploaded photos appear below for browsing, selection, and removal before generation.", "Selecciona varias imagenes a la vez. Las fotos subidas aparecen abajo para revisar, seleccionar y eliminar antes de generar.")}
           </p>
         </div>
         {sourceAssets.length ? (
           <div className="grid gap-3">
             {isCoupleFlow ? (
               <>
-                {renderPhotoPicker("Your photos", "Select photos for the primary person. Use any number up to the 15-photo request limit.", "primary", selectedAssetIds)}
-                {renderPhotoPicker("Partner photos", "Select photos for the partner. These are combined with your photos before generation.", "partner", partnerSelectedAssetIds)}
+                {renderPhotoPicker(jobT(spanish, "Your photos", "Tus fotos"), jobT(spanish, `Select photos for the primary person. Use 1-${effectiveMaxAssets} photos for this request.`, `Selecciona fotos de la persona principal. Usa 1-${effectiveMaxAssets} fotos para esta solicitud.`), "primary", selectedAssetIds)}
+                {renderPhotoPicker(jobT(spanish, "Partner photos", "Fotos de pareja"), jobT(spanish, "Select photos for the partner. These are combined with your photos before generation.", "Selecciona fotos de la pareja. Se combinan con tus fotos antes de generar."), "partner", partnerSelectedAssetIds)}
               </>
             ) : (
-              renderPhotoPicker("Browse uploaded photos", `${sourceAssets.length} private photos are ready. Select any images that should drive this request, up to 15 total.`, "primary", selectedAssetIds)
+              renderPhotoPicker(jobT(spanish, "Browse uploaded photos", "Explorar fotos subidas"), jobT(spanish, `${sourceAssets.length} private photos are ready. Select 1-${effectiveMaxAssets} images that should drive this request.`, `${sourceAssets.length} fotos privadas listas. Selecciona 1-${effectiveMaxAssets} imagenes que guiaran esta solicitud.`), "primary", selectedAssetIds)
             )}
           </div>
         ) : loadingAssets ? (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" aria-busy="true" aria-label="Loading private photos">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6" aria-busy="true" aria-label={jobT(spanish, "Loading private photos", "Cargando fotos privadas")}>
             {[0, 1, 2, 3].map((item) => (
               <div className={`overflow-hidden rounded-[14px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/18"}`} key={item}>
                 <div className={`aspect-[4/5] animate-pulse ${light ? "bg-[#f1eadf]" : "bg-white/[0.07]"}`} />
@@ -1639,17 +2067,17 @@ export function JobCreateForm({
           </div>
         ) : (
           <div className={`rounded-[18px] border border-dashed p-4 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/16 text-white/68"}`}>
-            <p>No selfies are ready yet. Upload private photos here to keep this request in one flow.</p>
+            <p>{jobT(spanish, "No selfies are ready yet. Upload private photos here to keep this request in one flow.", "Aun no hay selfies listas. Sube fotos privadas aqui para mantener la solicitud en un solo flujo.")}</p>
             <p className={`mt-3 text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
-              Use the Upload selfies button above to stay in this generation flow.
+              {jobT(spanish, "Use the Upload selfies button above to stay in this generation flow.", "Usa el boton de subir selfies de arriba para seguir en este flujo.")}
             </p>
           </div>
         )}
         <div className={`flex flex-wrap items-center justify-between gap-3 rounded-[16px] border p-4 ${subtlePanelClass}`}>
           <div>
-            <p className={`text-sm font-semibold ${textClass}`}>Selected model photos</p>
+            <p className={`text-sm font-semibold ${textClass}`}>{jobT(spanish, "Selected model photos", "Fotos seleccionadas del modelo")}</p>
             <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
-              {selectedRequestAssetIds.length} selected, no minimum required, up to {effectiveMaxAssets} for this request.
+              {jobT(spanish, `${selectedRequestAssetIds.length} selected, ${minAssets} required, up to ${effectiveMaxAssets} for this request.`, `${selectedRequestAssetIds.length} seleccionadas, ${minAssets} requeridas, hasta ${effectiveMaxAssets} para esta solicitud.`)}
             </p>
           </div>
           <button
@@ -1658,30 +2086,30 @@ export function JobCreateForm({
             onClick={reviewCurrentRequest}
             type="button"
           >
-            Continue to review
+            {jobT(spanish, "Continue to review", "Continuar a revision")}
           </button>
         </div>
       </div>
       <div className="hidden" id="review-current-request">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>Step 03 · Confirm package</p>
-            <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>Choose model, audience, credits, then generate.</h3>
+            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Step 03 · Confirm package", "Paso 03 · Confirmar paquete")}</p>
+            <h3 className={`mt-2 text-xl font-semibold ${textClass}`}>{jobT(spanish, "Choose model, audience, credits, then generate.", "Elige modelo, audiencia y creditos, luego genera.")}</h3>
             <p className={`mt-2 max-w-2xl text-sm leading-6 ${mutedClass}`}>
-              Match the target Studio flow: select the model that should drive this request, choose who the package is for, confirm credits and outputs, then start generation.
+              {jobT(spanish, "Match the target Studio flow: select the model that should drive this request, choose who the package is for, confirm credits and outputs, then start generation.", "Sigue el flujo del estudio: selecciona el modelo, define para quien es el paquete, confirma creditos y resultados, y empieza a generar.")}
             </p>
           </div>
           <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#eadfce] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/62"}`}>
-            {customer.balance.available} credits available
+            {jobT(spanish, `${customer.balance.available} credits available`, `${customer.balance.available} creditos disponibles`)}
           </span>
         </div>
 
         <div className="grid gap-4 xl:grid-cols-[minmax(0,0.9fr)_minmax(340px,0.75fr)]">
           <div className={`grid gap-4 rounded-[16px] border p-4 ${subtlePanelClass}`}>
             <div>
-              <p className={`text-sm font-semibold ${textClass}`}>Select your model</p>
+              <p className={`text-sm font-semibold ${textClass}`}>{jobT(spanish, "Select your model", "Selecciona tu modelo")}</p>
               <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
-                Use a trained model when available, or continue with the uploaded selfies selected in this request.
+                {jobT(spanish, "Use a trained model when available, or continue with the uploaded selfies selected in this request.", "Usa un modelo entrenado si esta disponible o continua con las selfies seleccionadas en esta solicitud.")}
               </p>
             </div>
             {customerModels.length ? (
@@ -1692,13 +2120,13 @@ export function JobCreateForm({
               >
                 {customerModels.map((model) => (
                   <option key={model.id} value={model.id}>
-                    {model.label} · {model.status.replace(/_/g, " ")} · {model.inputAssetCount}/{model.minInputAssets} photos
+                    {model.label} · {statusLabel(model.status, spanish)} · {model.inputAssetCount}/{model.minInputAssets} {jobT(spanish, "photos", "fotos")}
                   </option>
                 ))}
               </select>
             ) : (
               <div className={`rounded-[14px] border border-dashed p-3 text-sm leading-6 ${light ? "border-[#d8cab9] bg-white text-[#706961]" : "border-white/12 bg-black/18 text-white/64"}`}>
-                No trained model is ready yet. This request will use the selected private selfies.
+                {jobT(spanish, "No trained model is ready yet. This request will use the selected private selfies.", "Aun no hay modelo entrenado listo. Esta solicitud usara las selfies privadas seleccionadas.")}
               </div>
             )}
             <div className="grid gap-2 sm:grid-cols-3">
@@ -1726,7 +2154,7 @@ export function JobCreateForm({
             </div>
             {selectedSourceAssets.length ? (
               <div className="grid gap-2">
-                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selected selfies</p>
+                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Selected selfies", "Selfies seleccionadas")}</p>
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
                   {selectedSourceAssets.slice(0, 10).map((asset) => (
                     <div className={`overflow-hidden rounded-[12px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/18"}`} key={asset.id}>
@@ -1741,17 +2169,17 @@ export function JobCreateForm({
           <div className={`grid content-between gap-4 rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/24"}`}>
             <div className="grid gap-3">
               <div>
-                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{createMode === "theme" ? "Package" : "Tool"}</p>
+                <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{createMode === "theme" ? jobT(spanish, "Package", "Paquete") : jobT(spanish, "Tool", "Herramienta")}</p>
                 <p className={`mt-2 text-lg font-semibold ${textClass}`}>{selectionTitle}</p>
                 <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{selectionDescription}</p>
               </div>
               {[
-                { label: "Model", value: selectedModelLabel },
-                { label: "Audience", value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? "For Myself" },
-                { label: "Selfies", value: `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected` },
-                { label: "Required credits", value: `${selectionCreditCost}` },
-                { label: "Price per image", value: `${unitCreditCost}` },
-                { label: "Output", value: createMode === "theme" ? `${requestOutputCount} images` : "Tool result" }
+                { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
+                { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
+                { label: jobT(spanish, "Selfies", "Selfies"), value: jobT(spanish, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected`, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} seleccionadas`) },
+                { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
+                { label: jobT(spanish, "Price per image", "Precio por imagen"), value: `${unitCreditCost}` },
+                { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : jobT(spanish, "Tool result", "Resultado de herramienta") }
               ].map((item) => (
                 <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
                   <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
@@ -1761,22 +2189,24 @@ export function JobCreateForm({
               <p className={`text-xs leading-5 ${mutedClass}`}>{creditsUsageNote}</p>
               {operationContext?.action || operationContext?.note ? (
                 <div className={`rounded-[12px] border p-3 ${subtlePanelClass}`}>
-                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Workspace action</p>
-                  <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? "Custom operation"}</p>
+                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Workspace action", "Accion del espacio")}</p>
+                  <p className={`mt-2 text-sm font-semibold ${textClass}`}>{operationContext.action ?? jobT(spanish, "Custom operation", "Operacion personalizada")}</p>
                   {operationContext.note ? <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{operationContext.note}</p> : null}
                 </div>
               ) : null}
             </div>
             <div className="grid gap-3">
               <p className={`text-xs leading-5 ${mutedClass}`}>
-                {selectedRequestAssetIds.length > effectiveMaxAssets ? `Use up to ${effectiveMaxAssets} private photos before starting.` : "You can start without a minimum photo count, or add photos for stronger results."}
+                {selectedRequestAssetIds.length > effectiveMaxAssets
+                  ? jobT(spanish, `Use up to ${effectiveMaxAssets} private photos before starting.`, `Usa hasta ${effectiveMaxAssets} fotos privadas antes de empezar.`)
+                  : jobT(spanish, `Select at least ${minAssets} private photo before starting. Add more angles for stronger results.`, `Selecciona al menos ${minAssets} foto privada antes de empezar. Anade mas angulos para mejores resultados.`)}
               </p>
               {subscriptionGateMessage ? (
-                <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+                <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>
                   <span>{subscriptionGateMessage}</span>
-                  {subscriptionStatus === "required" ? (
+                  {subscriptionHardGate ? (
                     <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
-                      Choose a plan
+                      {jobT(spanish, "Choose a plan", "Elegir plan")}
                     </a>
                   ) : null}
                 </div>
@@ -1788,7 +2218,7 @@ export function JobCreateForm({
                 type="button"
               >
                 <Play className="h-4 w-4" strokeWidth={1.8} />
-                Review and start
+                {jobT(spanish, "Review and start", "Revisar e iniciar")}
               </button>
             </div>
           </div>
@@ -1796,104 +2226,95 @@ export function JobCreateForm({
       </div>
       </div>
       {packageDialogOpen ? (
-        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/72 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Photo package generation settings">
-          <div className={`max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[18px] border p-5 shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] ${light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/14 bg-[#121821] text-white"}`}>
-            <div className="flex items-start justify-between gap-4">
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/72 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label={jobT(spanish, "Photo package generation settings", "Ajustes de generacion del paquete")}>
+          <div className={`flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-[18px] border shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] ${light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/14 bg-[#121821] text-white"}`}>
+            <div className={`flex shrink-0 items-start justify-between gap-4 border-b p-5 ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-[#121821]"}`}>
               <div>
-                <p className={`font-mono text-[10px] uppercase tracking-[0.18em] ${eyebrowClass}`}>{createMode === "theme" ? "Photo package" : "AI tool"}</p>
+                <p className={`font-mono text-[10px] uppercase tracking-[0.18em] ${eyebrowClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package", "Paquete de fotos") : jobT(spanish, "AI tool", "Herramienta IA")}</p>
                 <h3 className={`mt-2 text-2xl font-semibold ${textClass}`}>{selectionTitle}</h3>
-                <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>{selectionDescription}</p>
               </div>
               <button
                 className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${light ? "border-[#dfd3c4] text-[#706961] hover:bg-[#fffaf3]" : "border-white/12 text-white/64 hover:bg-white/[0.06] hover:text-white"}`}
                 onClick={() => setPackageDialogOpen(false)}
                 type="button"
               >
-                Close
+                {jobT(spanish, "Close", "Cerrar")}
               </button>
             </div>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_260px]">
-              <div className="grid gap-4">
-                <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
-                  Select your model
-                  {customerModels.length ? (
-                    <select
-                      className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
-                      onChange={(event) => setSelectedCustomerModelId(event.target.value)}
-                      value={selectedCustomerModelId}
-                    >
-                      {customerModels.map((model) => (
-                        <option key={model.id} value={model.id}>
-                          {model.label} · {model.status.replace(/_/g, " ")}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <span className={`rounded-[14px] border border-dashed p-3 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/18 text-white/64"}`}>
-                      No trained model is ready yet. This request will use the selected uploaded selfies.
-                    </span>
-                  )}
-                </label>
-
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {packageAudienceOptions.map((option) => {
-                    const active = packageAudience === option.id;
-                    return (
-                      <button
-                        className={`min-h-[112px] rounded-[14px] border p-3 text-left transition ${active ? selectedCardClass : neutralCardClass}`}
-                        key={option.id}
-                        onClick={() => setPackageAudience(option.id)}
-                        type="button"
-                      >
-                        <span className="flex items-start justify-between gap-2">
-                          <span className="text-sm font-semibold">{option.title}</span>
-                          {active ? <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.8} /> : null}
-                        </span>
-                        <span className={`mt-2 block text-xs leading-5 ${active ? (light ? "text-[#5f5a54]" : "text-[#30343a]") : mutedClass}`}>
-                          {option.description}
-                        </span>
-                        <span className={`mt-2 block text-[11px] leading-4 ${active ? (light ? "text-[#756b63]" : "text-[#4b525c]") : mutedClass}`}>
-                          {option.helper}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {createMode === "theme" ? (
+            <div className="overflow-y-auto px-5 pb-5 pt-4">
+              <p className={`text-sm leading-6 ${mutedClass}`}>{selectionDescription}</p>
+              <div className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_300px]">
+                <div className="grid gap-4">
                   <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
-                    Estimated outputs
-                    <input
-                      className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
-                      min={1}
-                      onChange={(event) => setThemeOutputCount(Math.max(1, Number(event.target.value) || DEFAULT_THEME_OUTPUT_COUNT))}
-                      type="number"
-                      value={themeOutputCount}
-                    />
+                    {jobT(spanish, "Select your model", "Selecciona tu modelo")}
+                    {customerModels.length ? (
+                      <select
+                        className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
+                        onChange={(event) => setSelectedCustomerModelId(event.target.value)}
+                        value={selectedCustomerModelId}
+                      >
+                        {customerModels.map((model) => (
+                          <option key={model.id} value={model.id}>
+                            {model.label} · {statusLabel(model.status, spanish)}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <span className={`rounded-[14px] border border-dashed p-3 text-sm leading-6 ${light ? "border-[#d8cab9] bg-[#fffaf3] text-[#706961]" : "border-white/12 bg-black/18 text-white/64"}`}>
+                        {jobT(spanish, "No trained model is ready yet. This request will use the selected uploaded selfies.", "Aun no hay modelo entrenado listo. Esta solicitud usara las selfies subidas seleccionadas.")}
+                      </span>
+                    )}
                   </label>
-                ) : null}
 
-                <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
-                  Generation prompt and package notes
-                  <textarea
-                    className={`min-h-[120px] rounded-[14px] border px-4 py-3 ${fieldClass}`}
-                    onChange={(event) => {
-                      setPackagePromptDraft(event.target.value);
-                      if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, event.target.value);
-                    }}
-                    placeholder="Confirm the package prompt, styling notes, or generation direction."
-                    value={packagePromptDraft}
-                  />
-                </label>
+                  <div className="grid gap-2 sm:grid-cols-3">
+                    {packageAudienceOptions.map((option) => {
+                      const active = packageAudience === option.id;
+                      return (
+                        <button
+                          className={`min-h-[112px] rounded-[14px] border p-3 text-left transition ${active ? selectedCardClass : neutralCardClass}`}
+                          key={option.id}
+                          onClick={() => setPackageAudience(option.id)}
+                          type="button"
+                        >
+                          <span className="flex items-start justify-between gap-2">
+                            <span className="text-sm font-semibold">{option.title}</span>
+                            {active ? <CheckCircle2 className="h-4 w-4 shrink-0" strokeWidth={1.8} /> : null}
+                          </span>
+                          <span className={`mt-2 block text-xs leading-5 ${active ? (light ? "text-[#5f5a54]" : "text-[#30343a]") : mutedClass}`}>
+                            {option.description}
+                          </span>
+                          <span className={`mt-2 block text-[11px] leading-4 ${active ? (light ? "text-[#756b63]" : "text-[#4b525c]") : mutedClass}`}>
+                            {option.helper}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {createMode === "theme" ? (
+                    <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
+                      {jobT(spanish, "Estimated outputs", "Resultados estimados")}
+                      <input
+                        className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
+                        min={1}
+                        onBlur={commitThemeOutputCountDraft}
+                        onChange={(event) => updateThemeOutputCountDraft(event.target.value)}
+                        type="number"
+                        value={themeOutputCountDraft}
+                      />
+                    </label>
+                  ) : null}
+
+                  {renderPromptBuilderPanel(true)}
 
                 <div className={`grid gap-3 rounded-[14px] border p-3 ${subtlePanelClass}`}>
-                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>Selected uploads</p>
+                  <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${eyebrowClass}`}>{jobT(spanish, "Selected uploads", "Subidas seleccionadas")}</p>
                   {isCoupleFlow ? (
                     <div className="grid gap-3 sm:grid-cols-2">
                       {[
-                        { title: "Your photos", assets: primarySourceAssets },
-                        { title: "Partner photos", assets: partnerSourceAssets }
+                        { title: jobT(spanish, "Your photos", "Tus fotos"), assets: primarySourceAssets },
+                        { title: jobT(spanish, "Partner photos", "Fotos de pareja"), assets: partnerSourceAssets }
                       ].map((group) => (
                         <div key={group.title}>
                           <p className={`text-sm font-semibold ${textClass}`}>{group.title} · {group.assets.length}</p>
@@ -1913,7 +2334,7 @@ export function JobCreateForm({
                     </div>
                   )}
                   {!selectedRequestAssetIds.length ? (
-                    <p className={`text-xs leading-5 ${mutedClass}`}>No photos are selected. You can still start without a minimum, or upload samples from the left panel for stronger results.</p>
+                    <p className={`text-xs leading-5 ${mutedClass}`}>{jobT(spanish, `Select at least ${minAssets} private photo, or upload samples from the left panel for stronger results.`, `Selecciona al menos ${minAssets} foto privada o sube muestras desde el panel izquierdo para mejores resultados.`)}</p>
                   ) : null}
                 </div>
               </div>
@@ -1921,13 +2342,13 @@ export function JobCreateForm({
               <div className={`grid content-between gap-4 rounded-[16px] border p-4 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/24"}`}>
                 <div className="grid gap-3">
                   {[
-                    { label: "Model", value: selectedModelLabel },
-                    { label: "Audience", value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? "For Myself" },
-                    { label: "Primary", value: `${selectedAssetIds.length} photos` },
-                    { label: "Partner", value: isCoupleFlow ? `${partnerSelectedAssetIds.length} photos` : "Not used" },
-                    { label: "Required credits", value: `${selectionCreditCost}` },
-                    { label: "Price per image", value: `${unitCreditCost}` },
-                    { label: "Output", value: createMode === "theme" ? `${requestOutputCount} images` : "Tool result" }
+                    { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
+                    { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
+                    { label: jobT(spanish, "Primary", "Principal"), value: photoCountLabel(selectedAssetIds.length, spanish) },
+                    { label: jobT(spanish, "Partner", "Pareja"), value: isCoupleFlow ? photoCountLabel(partnerSelectedAssetIds.length, spanish) : jobT(spanish, "Not used", "No usado") },
+                    { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
+                    { label: jobT(spanish, "Price per image", "Precio por imagen"), value: `${unitCreditCost}` },
+                    { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : jobT(spanish, "Tool result", "Resultado de herramienta") }
                   ].map((item) => (
                     <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
                       <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
@@ -1938,14 +2359,14 @@ export function JobCreateForm({
                 </div>
                 <div className="grid gap-3">
                   <p className={`text-xs leading-5 ${mutedClass}`}>
-                    The request sends the selected package, prompt notes, primary photos, partner photos, audience, model, and output count to the generation job.
+                    {jobT(spanish, "The request sends the selected package, prompt notes, primary photos, partner photos, audience, model, and output count to the generation job.", "La solicitud envia al trabajo de generacion el paquete, notas, fotos principales, fotos de pareja, audiencia, modelo y cantidad de resultados.")}
                   </p>
                   {subscriptionGateMessage ? (
-                    <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionStatus === "required" ? "alert" : "status"}>
+                    <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>
                       <span>{subscriptionGateMessage}</span>
-                      {subscriptionStatus === "required" ? (
+                      {subscriptionHardGate ? (
                         <a className="ml-2 inline-flex font-semibold underline underline-offset-4" href={pricingHref}>
-                          Choose a plan
+                          {jobT(spanish, "Choose a plan", "Elegir plan")}
                         </a>
                       ) : null}
                     </div>
@@ -1965,9 +2386,10 @@ export function JobCreateForm({
                     type="button"
                   >
                     <Play className="h-4 w-4" strokeWidth={1.8} />
-                    {pending ? "Creating job..." : modeSubmitLabel}
+                    {pending ? jobT(spanish, "Creating job...", "Creando solicitud...") : modeSubmitLabel}
                   </button>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -1976,18 +2398,18 @@ export function JobCreateForm({
 
       <div className={`flex flex-wrap items-center justify-between gap-3 rounded-[16px] border p-4 ${panelClass}`}>
         <div>
-          <p className={`text-sm font-semibold ${textClass}`}>{createMode === "theme" ? "Photo package mode" : "Tool mode"}</p>
+          <p className={`text-sm font-semibold ${textClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package mode", "Modo paquete de fotos") : jobT(spanish, "Tool mode", "Modo herramienta")}</p>
           <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{message}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
-            {selectionCreditCost} credits
+            {jobT(spanish, `${selectionCreditCost} credits`, `${selectionCreditCost} creditos`)}
           </span>
           <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
-            {customer.balance.available} available
+            {jobT(spanish, `${customer.balance.available} available`, `${customer.balance.available} disponibles`)}
           </span>
           <button className={`rounded-[14px] px-4 py-2.5 text-xs font-semibold active:scale-[0.98] ${primaryButtonClass}`} onClick={continueToReviewOrSelfies} type="button">
-            Review request
+            {jobT(spanish, "Review request", "Revisar solicitud")}
           </button>
         </div>
       </div>

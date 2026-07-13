@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertRelationalReplaceSafety } from "./relational-import-safety.mjs";
 
 const prisma = new PrismaClient();
 const documentId = "platform";
@@ -9,7 +10,7 @@ const batchSize = 50;
 
 function usage() {
   console.log(
-    "Usage: node scripts/db-import-relational-state.mjs [--source data/platform-state.json] [--dry-run] [--verify] [--replace]\n" +
+    "Usage: node scripts/db-import-relational-state.mjs [--source data/platform-state.json] [--dry-run] [--verify] [--replace --allow-data-loss]\n" +
       "       node scripts/verify-relational-state.mjs [--source data/platform-state.json]"
   );
 }
@@ -845,8 +846,10 @@ async function main() {
 
   const dryRun = process.argv.includes("--dry-run");
   const replace = process.argv.includes("--replace");
+  const allowDataLoss = process.argv.includes("--allow-data-loss");
   const verifyOnly = path.basename(process.argv[1] ?? "") === "verify-relational-state.mjs";
   const shouldVerify = verifyOnly || process.argv.includes("--verify");
+  assertRelationalReplaceSafety({ replace, dryRun, allowDataLoss });
   const { state, source } = await loadState();
   const plan = buildPlan(state);
 

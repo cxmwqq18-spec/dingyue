@@ -54,18 +54,20 @@ function reviewStatusLabel(status: AssetUpload["reviewStatus"]) {
   }[status];
 }
 
-function assetRoleLabel(role: AssetUpload["role"]) {
-  return {
-    input: "客户上传源图",
-    training_input: "训练图",
-    output: "AI 输出图"
-  }[role];
+function isVideoAsset(asset: Pick<AssetUpload, "mimeType">): boolean {
+  return asset.mimeType.startsWith("video/");
 }
 
-function assetRoleHint(role: AssetUpload["role"]) {
-  if (role === "output") return "这是 AI 生成后的结果图，可用于相册交付。";
-  if (role === "training_input") return "这是用于训练或参考的客户素材，不是最终生成结果。";
-  return "这是客户上传给 AI 参考的原始图片，不是生成结果。生成结果请查看类型为“AI 输出图”的记录。";
+function assetRoleLabel(asset: Pick<AssetUpload, "role" | "mimeType">) {
+  if (asset.role === "output") return isVideoAsset(asset) ? "AI 输出视频" : "AI 输出图";
+  if (asset.role === "training_input") return "训练图";
+  return isVideoAsset(asset) ? "客户上传视频" : "客户上传源图";
+}
+
+function assetRoleHint(asset: Pick<AssetUpload, "role" | "mimeType">) {
+  if (asset.role === "output") return isVideoAsset(asset) ? "这是 AI 生成后的视频结果，可用于视频工作台交付。" : "这是 AI 生成后的结果图，可用于相册交付。";
+  if (asset.role === "training_input") return "这是用于训练或参考的客户素材，不是最终生成结果。";
+  return "这是客户上传给 AI 参考的原始素材，不是生成结果。生成结果请查看类型为“AI 输出图/视频”的记录。";
 }
 
 function assetRoleTone(role: AssetUpload["role"]): string {
@@ -193,10 +195,12 @@ function AssetThumb({ asset }: { asset: ReviewAsset }) {
   const previewUrl = assetPreviewUrl(asset);
   return (
     <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-zinc-200 bg-zinc-50">
-      {previewUrl ? (
-        <img alt="" className="h-full w-full object-cover" src={previewUrl} />
+      {previewUrl && isVideoAsset(asset) ? (
+        <video className="h-full w-full object-cover" muted playsInline preload="metadata" src={previewUrl} />
+      ) : previewUrl ? (
+        <img alt={`${assetRoleLabel(asset)}预览`} className="h-full w-full object-cover" src={previewUrl} />
       ) : (
-        <span className="text-[10px] text-zinc-400">无图</span>
+        <span className="text-[10px] text-zinc-400">无预览</span>
       )}
     </span>
   );
@@ -207,16 +211,18 @@ function AssetDetailCard({ asset }: { asset: ReviewAsset }) {
   return (
     <div className="grid gap-3 rounded-[12px] border border-zinc-200 bg-white p-3">
       <div className="overflow-hidden rounded-[10px] border border-zinc-200 bg-zinc-50">
-        {previewUrl ? (
+        {previewUrl && isVideoAsset(asset) ? (
+          <video className="h-44 w-full bg-black object-contain" controls playsInline preload="metadata" src={previewUrl} />
+        ) : previewUrl ? (
           <img alt={asset.label} className="h-44 w-full object-cover" src={previewUrl} />
         ) : (
-          <div className="flex h-44 items-center justify-center text-sm text-zinc-400">无可预览图片</div>
+          <div className="flex h-44 items-center justify-center text-sm text-zinc-400">无可预览资源</div>
         )}
       </div>
       <div className="min-w-0">
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span className={`inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium ${assetRoleTone(asset.role)}`}>
-            {assetRoleLabel(asset.role)}
+            {assetRoleLabel(asset)}
           </span>
           <StatusPill label={reviewStatusLabel(asset.reviewStatus)} tone={reviewTone(asset.reviewStatus)} />
           {asset.isFavorite ? (
@@ -232,7 +238,7 @@ function AssetDetailCard({ asset }: { asset: ReviewAsset }) {
       <div className="flex flex-wrap gap-2">
         {previewUrl ? (
           <a className="rounded-[8px] border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700" href={previewUrl} rel="noreferrer" target="_blank">
-            打开图片
+            {isVideoAsset(asset) ? "打开视频" : "打开图片"}
           </a>
         ) : null}
         {asset.downloadUrl ? (
@@ -258,7 +264,7 @@ function GroupAssetSection({
     <section className="grid gap-3">
       <div className="flex items-center justify-between gap-3">
         <h4 className="text-sm font-semibold text-zinc-950">{title}</h4>
-        <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs text-zinc-500">{assets.length} 张</span>
+        <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs text-zinc-500">{assets.length} 项</span>
       </div>
       {assets.length ? (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -289,7 +295,7 @@ export function CustomerAssetReviewPanel({
   const [roleFilter, setRoleFilter] = useState<AssetUpload["role"] | "">("");
   const [reviewFilter, setReviewFilter] = useState<AssetUpload["reviewStatus"] | "">("");
   const [favoriteFilter, setFavoriteFilter] = useState<"" | "favorite">("");
-  const [message, setMessage] = useState("源图、训练图和输出图进入任务队列前都需要在当前站点内完成审核。");
+  const [message, setMessage] = useState("源图、训练图和输出结果进入任务队列前都需要在当前站点内完成审核。");
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
   const [reviewingAssetId, setReviewingAssetId] = useState<string | null>(null);
   const [favoritingAssetId, setFavoritingAssetId] = useState<string | null>(null);
@@ -340,7 +346,7 @@ export function CustomerAssetReviewPanel({
           记录ID: group.id,
           顾客邮箱: customer?.email ?? asset.customerId,
           源图: group.sourceAssets.map((item) => item.label).join("；"),
-          生成图: group.outputAssets.map((item) => item.label).join("；"),
+          生成结果: group.outputAssets.map((item) => item.label).join("；"),
           审核状态: reviewStatusLabel(asset.reviewStatus),
           模型: model?.label ?? "",
           任务ID: asset.jobId ?? "",
@@ -349,7 +355,7 @@ export function CustomerAssetReviewPanel({
           创建时间: asset.createdAt
         };
       }),
-      ["记录ID", "顾客邮箱", "源图", "生成图", "审核状态", "模型", "任务ID", "任务状态", "失败原因", "创建时间"]
+      ["记录ID", "顾客邮箱", "源图", "生成结果", "审核状态", "模型", "任务ID", "任务状态", "失败原因", "创建时间"]
     );
     setMessage(`已导出 ${groupedItems.length} 条素材记录。`);
   }
@@ -363,7 +369,7 @@ export function CustomerAssetReviewPanel({
 
   async function toggleFavoriteAsset(asset: ReviewAsset) {
     if (asset.role !== "output") {
-      setMessage("只有 AI 输出图可以加入收藏。");
+      setMessage("只有 AI 输出结果可以加入收藏。");
       return;
     }
     const nextFavorite = !asset.isFavorite;
@@ -426,10 +432,10 @@ export function CustomerAssetReviewPanel({
 
   function deleteConfirmText(group: AssetGroup): string {
     if (group.job) {
-      return `确定删除这条生成任务吗？将同时清理该任务的输出图、相册记录、任务记录和相关额度流水；未被其他任务复用的源图也会删除。任务 ID：${group.job.id}`;
+      return `确定删除这条生成任务吗？将同时清理该任务的输出结果、相册记录、任务记录和相关额度流水；未被其他任务复用的源图也会删除。任务 ID：${group.job.id}`;
     }
     if (group.primaryAsset.role === "output") {
-      return `确定删除这张 AI 输出图吗？如果它被相册封面引用，相册会被隐藏并取消封面。素材 ID：${group.primaryAsset.id}`;
+      return `确定删除这个 AI 输出结果吗？如果它被相册封面引用，相册会被隐藏并取消封面。素材 ID：${group.primaryAsset.id}`;
     }
     return `确定删除这张客户源图/训练图吗？素材 ID：${group.primaryAsset.id}`;
   }
@@ -480,7 +486,7 @@ export function CustomerAssetReviewPanel({
           <p className="text-xs font-medium text-clay">素材审核</p>
           <h2 className="mt-2 text-xl font-semibold">客户素材审核</h2>
           <p className="mt-2 text-sm leading-6 text-zinc-500">{message}</p>
-          <p className="mt-1 text-xs leading-5 text-zinc-500">用途说明：这里审核客户上传的源图、训练图和任务输出图，避免未授权或质量不合格的素材进入训练、生成和相册交付流程。</p>
+          <p className="mt-1 text-xs leading-5 text-zinc-500">用途说明：这里审核客户上传的源图、训练图和任务输出结果，避免未授权或质量不合格的素材进入训练、生成和相册交付流程。</p>
         </div>
         <button className="inline-flex shrink-0 items-center whitespace-nowrap rounded-[8px] border border-black/10 px-4 py-2 text-sm active:scale-[0.98]" onClick={exportAssets} type="button">
           <Download className="mr-2 inline h-4 w-4" strokeWidth={1.8} />
@@ -491,7 +497,7 @@ export function CustomerAssetReviewPanel({
         <div className="flex flex-wrap gap-2 text-xs">
           <span className="whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-zinc-500">共 {items.length} 条</span>
           <button className="whitespace-nowrap rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-sky-700" onClick={() => setRoleFilter("output")} type="button">
-            {items.filter((asset) => asset.role === "output").length} AI 输出图
+            {items.filter((asset) => asset.role === "output").length} AI 输出结果
           </button>
           <button className="whitespace-nowrap rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700" onClick={() => setRoleFilter("input")} type="button">
             {items.filter((asset) => asset.role === "input").length} 客户上传源图
@@ -510,7 +516,7 @@ export function CustomerAssetReviewPanel({
             <option value="">全部类型</option>
             <option value="input">源图</option>
             <option value="training_input">训练图</option>
-            <option value="output">输出图</option>
+            <option value="output">输出结果</option>
           </select>
           <select className="rounded-[8px] border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setReviewFilter(event.target.value as AssetUpload["reviewStatus"] | "")} value={reviewFilter}>
             <option value="">全部审核状态</option>
@@ -560,7 +566,7 @@ export function CustomerAssetReviewPanel({
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <span className={`inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium ${assetRoleTone(asset.role)}`}>
-                              {assetRoleLabel(asset.role)}
+                              {assetRoleLabel(asset)}
                             </span>
                             {asset.isFavorite ? <Heart className="h-3.5 w-3.5 shrink-0 fill-rose-500 text-rose-500" strokeWidth={1.8} /> : null}
                           </div>
@@ -573,7 +579,7 @@ export function CustomerAssetReviewPanel({
                       <div className="flex min-w-0 items-center gap-2">
                         {firstSource ? <AssetThumb asset={firstSource} /> : <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无</span>}
                         <span className="min-w-0 flex-1 overflow-hidden">
-                          <span className="block truncate text-sm font-medium text-zinc-700">{group.sourceAssets.length ? `${group.sourceAssets.length} 张源图` : "未关联源图"}</span>
+                          <span className="block truncate text-sm font-medium text-zinc-700">{group.sourceAssets.length ? `${group.sourceAssets.length} 项源素材` : "未关联源素材"}</span>
                           <span className="block truncate font-mono text-[11px] text-zinc-400" title={firstSource?.id ?? ""}>{firstSource?.id ?? ""}</span>
                         </span>
                       </div>
@@ -582,7 +588,7 @@ export function CustomerAssetReviewPanel({
                       <div className="flex min-w-0 items-center gap-2">
                         {firstOutput ? <AssetThumb asset={firstOutput} /> : <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border border-dashed border-zinc-200 bg-zinc-50 text-[10px] text-zinc-400">无</span>}
                         <span className="min-w-0 flex-1 overflow-hidden">
-                          <span className="block truncate text-sm font-medium text-zinc-700">{group.outputAssets.length ? `${group.outputAssets.length} 张输出图` : group.job ? `${jobStatusLabel(group.job.status)}，暂无输出` : "暂无生成结果"}</span>
+                          <span className="block truncate text-sm font-medium text-zinc-700">{group.outputAssets.length ? `${group.outputAssets.length} 项输出结果` : group.job ? `${jobStatusLabel(group.job.status)}，暂无输出` : "暂无生成结果"}</span>
                           <span className="block truncate text-[11px] text-rose-600" title={group.job?.error ?? ""}>{group.job?.error ?? ""}</span>
                         </span>
                       </div>
@@ -642,7 +648,7 @@ export function CustomerAssetReviewPanel({
                   <td className="text-left text-zinc-600" colSpan={8}>
                     <div className="rounded-[10px] border border-dashed border-zinc-300 bg-zinc-50 p-5">
                       <p className="font-semibold text-zinc-900">当前筛选下没有客户素材。</p>
-                      <p className="mt-2 leading-6">操作手册：客户上传图片后会出现在这里。源图和训练图用于模型训练，输出图用于相册交付。运维需要查看素材详情，确认顾客、模型、文件类型和路径无误后点击“通过”；不合规素材点击“拒绝”，拒绝后不要进入训练或交付流程。</p>
+                      <p className="mt-2 leading-6">操作手册：客户上传素材后会出现在这里。源图和训练图用于模型训练，输出结果用于相册或视频交付。运维需要查看素材详情，确认顾客、模型、文件类型和路径无误后点击“通过”；不合规素材点击“拒绝”，拒绝后不要进入训练或交付流程。</p>
                     </div>
                   </td>
                 </tr>
@@ -674,7 +680,7 @@ export function CustomerAssetReviewPanel({
                 ["任务 ID", selectedGroup.job?.id ?? asset.jobId ?? "未关联"],
                 ["任务状态", selectedGroup.job ? jobStatusLabel(selectedGroup.job.status) : "未关联"],
                 ["源图数量", String(selectedGroup.sourceAssets.length)],
-                ["生成图数量", String(selectedGroup.outputAssets.length)],
+                ["生成结果数量", String(selectedGroup.outputAssets.length)],
                 ["创建时间", formatDate(asset.createdAt)],
                 ["更新时间", selectedGroup.job ? formatDate(selectedGroup.job.updatedAt) : "未关联"],
                 ["审核状态", reviewStatusLabel(asset.reviewStatus)],
@@ -688,7 +694,7 @@ export function CustomerAssetReviewPanel({
                       <p className="mt-1 text-xl font-semibold text-zinc-950">{selectedGroup.sourceAssets.length}</p>
                     </div>
                     <div className="rounded-[10px] bg-white p-3">
-                      <p className="text-xs text-zinc-500">生成图</p>
+                      <p className="text-xs text-zinc-500">生成结果</p>
                       <p className="mt-1 text-xl font-semibold text-zinc-950">{selectedGroup.outputAssets.length}</p>
                     </div>
                     <div className="rounded-[10px] bg-white p-3">
@@ -712,7 +718,7 @@ export function CustomerAssetReviewPanel({
                     </div>
                   ) : null}
                   <div className={`rounded-[10px] border px-4 py-3 text-sm leading-6 ${assetRoleTone(asset.role)}`}>
-                    {assetRoleHint(asset.role)}
+                    {assetRoleHint(asset)}
                   </div>
                   <div className="grid gap-2 rounded-[10px] border border-zinc-200 bg-zinc-50 p-4 text-sm">
                     {detailRows.map(([label, value]) => (
@@ -722,8 +728,8 @@ export function CustomerAssetReviewPanel({
                       </div>
                     ))}
                   </div>
-                  <GroupAssetSection assets={selectedGroup.sourceAssets} emptyText="当前记录未关联源图。" title="源图 / 客户上传图" />
-                  <GroupAssetSection assets={selectedGroup.outputAssets} emptyText={selectedGroup.job ? `${jobStatusLabel(selectedGroup.job.status)}，暂无生成图。` : "当前记录暂无生成图。"} title="生成图 / AI 输出图" />
+                  <GroupAssetSection assets={selectedGroup.sourceAssets} emptyText="当前记录未关联源素材。" title="源素材 / 客户上传" />
+                  <GroupAssetSection assets={selectedGroup.outputAssets} emptyText={selectedGroup.job ? `${jobStatusLabel(selectedGroup.job.status)}，暂无生成结果。` : "当前记录暂无生成结果。"} title="生成结果 / AI 输出" />
                   <div className="flex flex-wrap justify-end gap-2 border-t border-zinc-200 pt-4">
                     {selectedGroup.outputAssets.map((outputAsset) => (
                       <button
@@ -733,7 +739,7 @@ export function CustomerAssetReviewPanel({
                         onClick={() => toggleFavoriteAsset(outputAsset)}
                         type="button"
                       >
-                        {outputAsset.isFavorite ? "取消收藏" : "收藏输出图"}
+                        {outputAsset.isFavorite ? "取消收藏" : "收藏输出结果"}
                       </button>
                     ))}
                     <button

@@ -13,7 +13,7 @@
     {% assign src = block.settings.src | default: defaultImg %}
     {% assign mobile_src = block.settings.mobile_src | default: src %}
     <div class="slide_plus__image-wrapper">
-      <img src="{{shop.default_img}}" class="{% unless forloop.index0 == 0 %}lazy-{% endunless %}lazyload imglazy slide_plus__image" data-srcs="{{mobile_src | img_url: '{width}' }},{{src | img_url: '{width}' }}" data-sizes="auto" alt=""/>	  
+      <img src="{{shop.default_img}}" class="{% unless forloop.index0 == 0 %}lazy-{% endunless %}lazyload imglazy slide_plus__image" data-srcs="{{mobile_src | img_url: '{width}' }},{{src | img_url: '{width}' }}" data-sizes="auto" alt="Slide image"/>
       {% include 'slider_plus_text_content' sub_title: block.settings.sub_title, title: block.settings.title, slide_cta: block.settings.slide_cta, url: block.settings.url.url, link_type: block.settings.url.type, id: block.id, image_overlay_color: block.settings.image_overlay_color, image_overlay_opacity: block.settings.image_overlay_opacity, text_position:block.settings.text_position, slide_button_label_color:slide_button_label_color, slide_text_color:slide_text_color, slide_button_background_color:slide_button_background_color %}
     </div>
   {% endfor %}

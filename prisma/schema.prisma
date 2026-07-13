@@ -728,7 +728,7 @@ model VideoTheme {
   status          String              @default("draft")
   creditCost      Int
   durationSeconds Int                 @default(6)
-  maxFrames       Int                 @default(4)
+  maxFrames       Int                 @default(30)
   generationCount Int                 @default(0)
   imageUrl        String?
   galleryImages   Json?

@@ -12,6 +12,12 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
 
+function resourcePreviewAlt(title: ReactNode, fallback = "Resource preview") {
+  if (typeof title === "string" && title.trim()) return `${title.trim()} preview`;
+  if (typeof title === "number") return `${title} preview`;
+  return fallback;
+}
+
 export function DesignerResourceTrigger({
   icon,
   preview,
@@ -38,7 +44,7 @@ export function DesignerResourceTrigger({
     >
       <span className="flex min-w-0 flex-1 items-center">
         <span className="widget-selected-line__img mr-[5px] grid h-8 w-7 shrink-0 place-items-center overflow-hidden bg-transparent text-[#6b7282]">
-            {preview ? <img alt="" className="h-full w-full object-cover" src={preview} /> : icon}
+            {preview ? <img alt={resourcePreviewAlt(title, "Selected resource preview")} className="h-full w-full object-cover" src={preview} /> : icon}
         </span>
         <span className="widget-selected-line__title min-w-0 flex-1 truncate text-sm text-[#212121]">
           <span className="widget-selected-line__font-family mr-2.5">{title}</span>
@@ -237,7 +243,7 @@ export function DesignerResourceCard({
     >
       <span className="grid min-w-0 gap-2 grid-cols-[54px_1fr_auto]">
         <span className="grid h-[46px] w-[54px] place-items-center overflow-hidden rounded-[2px] border border-[#d7dce4] bg-[#f2f3f5]">
-          {preview ? <img alt="" className="h-full w-full object-cover" src={preview} /> : icon}
+          {preview ? <img alt={resourcePreviewAlt(title)} className="h-full w-full object-cover" src={preview} /> : icon}
         </span>
         <span className="min-w-0">
           <span className="flex items-start justify-between gap-3">

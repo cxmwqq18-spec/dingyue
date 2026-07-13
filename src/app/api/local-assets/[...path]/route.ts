@@ -2,6 +2,7 @@ import { readFile, stat } from "fs/promises";
 import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
 import { contentTypeForCustomerAssetPath, customerAssetFilePathFromSegments, hasRemoteCustomerAssetReadSource, readCustomerAssetFileRemote } from "@/lib/customer-asset-storage";
+import { verifyWorkerLocalAssetDownload } from "@/lib/worker";
 
 const missingAssetPlaceholder = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Asset unavailable">
@@ -12,7 +13,46 @@ const missingAssetPlaceholder = Buffer.from(
 </svg>`
 );
 
-async function resolveAsset(params: Promise<{ path: string[] }>) {
+type ResolvedAsset = {
+  filePath?: string;
+  size: number;
+  contentType: string;
+  bytes?: Buffer;
+  placeholder?: boolean;
+};
+
+function parseByteRange(header: string | null, size: number): { start: number; end: number } | "unsatisfiable" | undefined {
+  if (!header?.startsWith("bytes=") || size <= 0) return undefined;
+  const range = header.slice("bytes=".length).split(",")[0]?.trim();
+  if (!range || !range.includes("-")) return undefined;
+  const [startValue, endValue] = range.split("-", 2);
+  if (!startValue) {
+    const suffixLength = Number(endValue);
+    if (!Number.isFinite(suffixLength) || suffixLength <= 0) return "unsatisfiable";
+    const start = Math.max(size - Math.trunc(suffixLength), 0);
+    return { start, end: size - 1 };
+  }
+  const start = Number(startValue);
+  const end = endValue ? Number(endValue) : size - 1;
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return "unsatisfiable";
+  const normalizedStart = Math.trunc(start);
+  const normalizedEnd = Math.min(Math.trunc(end), size - 1);
+  if (normalizedStart < 0 || normalizedStart >= size || normalizedEnd < normalizedStart) return "unsatisfiable";
+  return { start: normalizedStart, end: normalizedEnd };
+}
+
+function assetHeaders(asset: ResolvedAsset, contentLength: number, extra?: HeadersInit): HeadersInit {
+  return {
+    "Content-Type": asset.contentType,
+    "Content-Length": String(contentLength),
+    "Accept-Ranges": "bytes",
+    "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
+    ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {}),
+    ...extra
+  };
+}
+
+async function resolveAsset(request: Request, params: Promise<{ path: string[] }>) {
   const { path: segments } = await params;
   const safeSegments = segments.filter((segment) => segment && segment !== ".." && !segment.includes("\\"));
   if (safeSegments.length !== segments.length) {
@@ -29,8 +69,15 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
   if (siteIndex >= 0 && customerIndex >= 0) {
     const siteId = safeSegments[siteIndex + 1];
     const customerId = safeSegments[customerIndex + 1];
+    const storageKey = safeSegments.join("/");
+    const url = new URL(request.url);
+    const workerSignatureValid = url.searchParams.get("worker") === "1" && verifyWorkerLocalAssetDownload({
+      storageKey,
+      expiresAt: url.searchParams.get("expiresAt") ?? "",
+      signature: url.searchParams.get("signature") ?? ""
+    });
     const hasAccess = siteId && customerId
-      ? (await hasCustomerSession(siteId, customerId)) || (await hasSiteAdminSession(siteId))
+      ? workerSignatureValid || (await hasCustomerSession(siteId, customerId)) || (await hasSiteAdminSession(siteId))
       : false;
     if (!hasAccess) {
       return { error: "customer_login_required", status: 401 as const };
@@ -71,7 +118,7 @@ async function resolveAsset(params: Promise<{ path: string[] }>) {
 
 export async function GET(_request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   try {
-    const asset = await resolveAsset(params);
+    const asset = await resolveAsset(_request, params);
     if ("error" in asset) {
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
@@ -79,13 +126,27 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
     const bytes = "bytes" in asset && asset.bytes
       ? new Uint8Array(asset.bytes)
       : new Uint8Array(await readFile(asset.filePath));
+    const range = parseByteRange(_request.headers.get("range"), asset.size);
+    if (range === "unsatisfiable") {
+      return new Response(null, {
+        status: 416,
+        headers: {
+          "Content-Range": `bytes */${asset.size}`,
+          "Accept-Ranges": "bytes"
+        }
+      });
+    }
+    if (range) {
+      const chunk = bytes.subarray(range.start, range.end + 1);
+      return new Response(chunk, {
+        status: 206,
+        headers: assetHeaders(asset, chunk.byteLength, {
+          "Content-Range": `bytes ${range.start}-${range.end}/${asset.size}`
+        })
+      });
+    }
     return new Response(bytes, {
-      headers: {
-        "Content-Type": asset.contentType,
-        "Content-Length": String(asset.size),
-        "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
-        ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {})
-      }
+      headers: assetHeaders(asset, asset.size)
     });
   } catch (error) {
     return NextResponse.json(
@@ -97,18 +158,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
 
 export async function HEAD(_request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   try {
-    const asset = await resolveAsset(params);
+    const asset = await resolveAsset(_request, params);
     if ("error" in asset) {
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return new Response(null, { status: asset.status, headers });
     }
     return new Response(null, {
-      headers: {
-        "Content-Type": asset.contentType,
-        "Content-Length": String(asset.size),
-        "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
-        ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {})
-      }
+      headers: assetHeaders(asset, asset.size)
     });
   } catch {
     return new Response(null, { status: 500 });

@@ -40,9 +40,15 @@ function legacyToolRedirectPath(siteSlug: string, toolSlug: string): string | un
   return undefined;
 }
 
+function findPublicSiteInState<TSite extends { slug: string }>(state: { sites: TSite[] } | undefined, siteSlug: string): TSite | undefined {
+  if (!state) return undefined;
+  const publicSlug = normalizePublicSiteSlug(siteSlug);
+  return state.sites.find((site) => normalizePublicSiteSlug(site.slug) === publicSlug);
+}
+
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
   const toolsState = await readPathModePublicRuntimeState(siteSlug, "/tools");
-  const toolsSite = toolsState?.sites[0];
+  const toolsSite = findPublicSiteInState(toolsState, siteSlug);
   if (toolsState && toolsSite) {
     const resolved = resolveToolPageForSite(toolsState, toolsSite, toolSlug);
     if (resolved.matched) return { state: toolsState, site: toolsSite, ...resolved };
@@ -50,7 +56,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
   const detailState = preferLocalPathModeState()
     ? undefined
     : await readPathModePublicRuntimeState(siteSlug, `/tools/${toolSlug}`, toolSlug);
-  const detailSite = detailState?.sites[0];
+  const detailSite = findPublicSiteInState(detailState, siteSlug);
   if (detailState && detailSite) {
     const resolved = resolveToolPageForSite(detailState, detailSite, toolSlug);
     if (resolved.matched) return { state: detailState, site: detailSite, ...resolved };
@@ -59,7 +65,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
     toolsState ??
     detailState ??
     await readPathModePublicRuntimeState(siteSlug, "/");
-  const site = state?.sites[0];
+  const site = findPublicSiteInState(state, siteSlug);
   if (!state || !site) return { state, site, siteAiApps: [], page: undefined, app: undefined, matched: false };
   return { state, site, ...resolveToolPageForSite(state, site, toolSlug) };
 });

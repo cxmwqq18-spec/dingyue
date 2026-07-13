@@ -188,6 +188,104 @@ async function postWorkerStatus(identity) {
   assert(response.ok && data.accepted, `worker_status_callback_failed:${response.status}:${data.error ?? "unknown"}`);
 }
 
+async function createReservedSmokeJob(customerId) {
+  const aiApp = await prisma.aiApp.findFirst({ where: { slug: "image_generator" } });
+  assert(aiApp, "missing_image_generator_ai_app");
+  const jobId = uid("job_failed_status_smoke");
+  await prisma.generationJob.create({
+    data: {
+      id: jobId,
+      siteId,
+      customerId,
+      aiAppId: aiApp.id,
+      status: "queued",
+      creditsReserved: 5,
+      requestJson: {
+        mode: "theme",
+        billing: { outputCount: 1, unitCreditCost: 5, creditsReserved: 5 }
+      }
+    }
+  });
+  await prisma.creditBalance.update({
+    where: { customerId },
+    data: { balance: { decrement: 5 }, reserved: { increment: 5 } }
+  });
+  await prisma.creditLedger.create({
+    data: {
+      id: uid("led_failed_status_smoke"),
+      siteId,
+      customerId,
+      amount: -5,
+      type: "reserve",
+      sourceType: "generation_job",
+      sourceId: jobId
+    }
+  });
+  return { customerId, jobId, requestId: `req_${jobId}` };
+}
+
+async function postWorkerFailedStatus(identity) {
+  const unsigned = {
+    siteId,
+    requestId: identity.requestId,
+    status: "failed",
+    stage: "provider_failed",
+    outputSlots: [{
+      index: 1,
+      status: "failed",
+      stage: "provider_failed",
+      error: "smoke_provider_failed"
+    }]
+  };
+  const response = await fetch(`${baseUrl}/api/internal/ai-worker/jobs/${identity.jobId}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ...unsigned,
+      signature: signWorkerCallback(unsigned)
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  assert(response.ok && data.accepted, `worker_failed_status_callback_failed:${response.status}:${data.error ?? "unknown"}`);
+}
+
+async function postWorkerFailedResult(identity) {
+  const unsigned = {
+    jobId: identity.jobId,
+    siteId,
+    requestId: identity.requestId,
+    status: "failed",
+    outputs: [],
+    error: "smoke_provider_failed"
+  };
+  const response = await fetch(`${baseUrl}/api/internal/ai-worker/jobs/${identity.jobId}/result`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ...unsigned,
+      signature: signWorkerCallback(unsigned)
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  assert(response.ok && data.accepted, `worker_failed_result_callback_failed:${response.status}:${data.error ?? "unknown"}`);
+  return data;
+}
+
+async function assertFailedStatusStillSettles(customerId) {
+  const identity = await createReservedSmokeJob(customerId);
+  await postWorkerFailedStatus(identity);
+  const afterStatus = await prisma.generationJob.findUniqueOrThrow({ where: { id: identity.jobId } });
+  assert(afterStatus.status !== "failed", `failed_status_finalized_job_before_result:${afterStatus.status}`);
+  const balanceAfterStatus = await prisma.creditBalance.findUniqueOrThrow({ where: { customerId } });
+  assert(balanceAfterStatus.balance === 15 && balanceAfterStatus.reserved === 5, `failed_status_changed_balance:${balanceAfterStatus.balance}:${balanceAfterStatus.reserved}`);
+  const result = await postWorkerFailedResult(identity);
+  assert(result.job?.status === "failed", `failed_result_did_not_finalize:${result.job?.status ?? "missing"}`);
+  assert(result.customerBalance?.available === 20, `failed_result_did_not_release_available:${result.customerBalance?.available}`);
+  assert(result.customerBalance?.reserved === 0, `failed_result_did_not_release_reserved:${result.customerBalance?.reserved}`);
+  assert(result.ledgerAction?.type === "release", `failed_result_missing_release:${result.ledgerAction?.type ?? "none"}`);
+  return result;
+}
+
 async function cleanup() {
   await prisma.customer.deleteMany({ where: { id: createdIds.customerId } }).catch(() => undefined);
 }
@@ -201,12 +299,18 @@ try {
   const event = await stream.event;
   stream.close();
   await stream.pump;
+  const failedSettlement = await assertFailedStatusStillSettles(identity.customerId);
   console.log(JSON.stringify({
     ok: true,
     jobId: event.jobId,
     status: event.status,
     type: event.type,
-    stage: event.stage
+    stage: event.stage,
+    failedStatusSettlement: {
+      jobId: failedSettlement.job.id,
+      status: failedSettlement.job.status,
+      ledgerAction: failedSettlement.ledgerAction.type
+    }
   }, null, 2));
 } finally {
   await cleanup();

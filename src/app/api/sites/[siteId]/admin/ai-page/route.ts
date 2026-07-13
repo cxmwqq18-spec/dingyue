@@ -47,6 +47,10 @@ function summarizeJobs(jobs: GenerationJob[]) {
   return { failedJobs, openJobs, completedJobs, jobCount: jobs.length };
 }
 
+function jsonRecord(value: unknown): Record<string, unknown> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
 function mapJobListItemForAdmin(row: {
   id: string;
   siteId: string;
@@ -54,6 +58,8 @@ function mapJobListItemForAdmin(row: {
   aiAppId: string;
   status: string;
   creditsReserved: number;
+  requestJson: unknown;
+  resultJson: unknown;
   createdAt: Date | string;
   updatedAt: Date | string;
 }): GenerationJob {
@@ -66,7 +72,8 @@ function mapJobListItemForAdmin(row: {
     creditsReserved: row.creditsReserved,
     createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : String(row.createdAt),
     updatedAt: row.updatedAt instanceof Date ? row.updatedAt.toISOString() : String(row.updatedAt),
-    requestJson: {}
+    requestJson: jsonRecord(row.requestJson) ?? {},
+    resultJson: jsonRecord(row.resultJson)
   };
 }
 
@@ -291,6 +298,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               aiAppId: true,
               status: true,
               creditsReserved: true,
+              requestJson: true,
+              resultJson: true,
               createdAt: true,
               updatedAt: true
             },

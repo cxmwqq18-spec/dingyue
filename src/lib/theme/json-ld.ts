@@ -32,16 +32,38 @@ function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
 
 function siteBrandName(site: Site): string {
   const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  if (/(?:-xby|_xby)/.test(token) && token.includes("aidreamcapes")) return "Aidreamcapes-xby";
+  if (/(?:-xby|_xby)/.test(token) && (token.includes("mydreamshoots") || token.includes("dreamshoot"))) return "MyDreamShoots-xby";
   if (token.includes("aidreamcapes")) return "Aidreamcapes";
   if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return "MyDreamShoots";
   return cleanText(site.branding.logoText, site.name);
 }
 
 function isAidreamcapesSite(site: Site): boolean {
-  return siteBrandName(site) === "Aidreamcapes";
+  return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+}
+
+function isSpanishXbySite(site: Site): boolean {
+  return /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+}
+
+function collapseSpanishXbyBrandRepeats(value: string): string {
+  return value
+    .replace(/\bMyDreamShoots-xby(?:-xby)+\b/g, "MyDreamShoots-xby")
+    .replace(/\bAidreamcapes-xby(?:-xby)+\b/g, "Aidreamcapes-xby");
 }
 
 function schemaServiceType(site: Site, pagePath: string): string {
+  if (isSpanishXbySite(site)) {
+    if (isAidreamcapesSite(site)) {
+      if (pagePath.includes("moodboard")) return "servicio de moodboard de viaje con IA";
+      if (pagePath.includes("postcard") || pagePath.includes("journal")) return "servicio de album y postal de viaje con IA";
+      return "servicio de retratos de viaje con IA";
+    }
+    if (pagePath.includes("video")) return "herramienta de imagen a video con IA";
+    if (pagePath.includes("headshot")) return "herramienta de retratos profesionales con IA";
+    return "herramienta de generacion y edicion de fotos con IA";
+  }
   if (isAidreamcapesSite(site)) {
     if (pagePath.includes("moodboard")) return "AI travel moodboard planning service";
     if (pagePath.includes("postcard") || pagePath.includes("journal")) return "AI travel album and postcard portrait service";
@@ -53,18 +75,56 @@ function schemaServiceType(site: Site, pagePath: string): string {
 }
 
 function itemListName(site: Site, title: string): string {
+  if (isSpanishXbySite(site)) return isAidreamcapesSite(site) ? `${title} opciones de album de viaje` : `${title} opciones de paquete`;
   if (isAidreamcapesSite(site)) return `${title} travel album options`;
   return `${title} package options`;
 }
 
 function cleanSchemaText(site: Site, value: unknown, fallback = ""): string {
   const brandName = siteBrandName(site);
-  return cleanPaidStorefrontText(value, fallback)
+  const text = cleanPaidStorefrontText(value, fallback)
     .replace(/\bMydreamShoots\b/g, "MyDreamShoots")
     .replace(/\bMydreamshoots\b/g, "MyDreamShoots")
     .replace(/\bDreamShootAI\b/g, brandName)
     .replace(/\s+/g, " ")
     .trim();
+  if (!isSpanishXbySite(site)) return text;
+  return collapseSpanishXbyBrandRepeats(text
+    .replace(/\bMyDreamShoots\b(?!-xby)/g, brandName.includes("MyDreamShoots") ? brandName : "MyDreamShoots")
+    .replace(/\bAidreamcapes\b(?!-xby)/g, brandName.includes("Aidreamcapes") ? brandName : "Aidreamcapes")
+    .replace(/\bWhen are creditos used\?/gi, "Cuando se usan los creditos?")
+    .replace(/\bWhen are credits used\?/gi, "Cuando se usan los creditos?")
+    .replace(/\bWhen are creditos spent\?/gi, "Cuando se gastan los creditos?")
+    .replace(/\bWhen are credits spent\?/gi, "Cuando se gastan los creditos?")
+    .replace(/\bWhat happens if I cancel a plan\?/gi, "Que ocurre si cancelo un plan?")
+    .replace(/\bCan unused creditos be reviewed\?/gi, "Se pueden revisar los creditos no usados?")
+    .replace(/\bCan unused credits be reviewed\?/gi, "Se pueden revisar los creditos no usados?")
+    .replace(/\bCredits are reserved when a generation starts, spent after successful delivery, and released or reviewed if a job cannot be completed\./gi, "Los creditos se reservan al iniciar una generacion, se consumen tras una entrega correcta y se liberan o revisan si el pedido no puede completarse.")
+    .replace(/\bCanceling stops future renewals\. You keep access to previous albums, and remaining creditos follow the account and refund policy\./gi, "La cancelacion detiene renovaciones futuras. Conservas acceso a albumes anteriores y los creditos restantes siguen la politica de cuenta y reembolsos.")
+    .replace(/\bUnused creditos can be reviewed from account history when a request fails, duplicates, or is canceled before rendering\./gi, "Los creditos no usados pueden revisarse desde el historial cuando una solicitud falla, se duplica o se cancela antes de renderizar.")
+    .trim());
+}
+
+function schemaPathLabel(site: Site, part: string): string {
+  if (!isSpanishXbySite(site)) return part.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const normalized = part.toLowerCase();
+  const labels: Record<string, string> = {
+    tools: "Herramientas",
+    collections: "Colecciones",
+    pricing: "Precios",
+    login: "Acceso",
+    cart: "Carrito",
+    privacy: "Privacidad",
+    terms: "Terminos",
+    cookies: "Cookies",
+    refunds: "Reembolsos",
+    content: "Contenido",
+    shipping: "Entrega",
+    help: "Ayuda",
+    "about-us": "Sobre nosotros",
+    "contact-us": "Contacto"
+  };
+  return labels[normalized] ?? part.replace(/[-_]+/g, " ");
 }
 
 function slugifySchemaPart(value: string): string {
@@ -153,7 +213,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     {
       "@type": "ListItem",
       position: 1,
-      name: "Home",
+      name: isSpanishXbySite(site) ? "Inicio" : "Home",
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/"))
     }
   ];
@@ -163,7 +223,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     items.push({
       "@type": "ListItem",
       position: index + 2,
-      name: index === parts.length - 1 ? title : part.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
+      name: index === parts.length - 1 ? title : schemaPathLabel(site, part),
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });
@@ -233,8 +293,12 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         price: (price.amountCents / 100).toFixed(2),
         priceCurrency: price.currency.toUpperCase(),
         availability: "https://schema.org/InStock",
-        category: product.type === "subscription" ? "AI photo subscription" : "AI photo credit pack",
-        description: `${price.creditsGranted} credits${price.interval === "one_time" ? "" : ` per ${price.interval}`}`,
+        category: isSpanishXbySite(input.site)
+          ? product.type === "subscription" ? "suscripcion de fotos IA" : "paquete de creditos IA"
+          : product.type === "subscription" ? "AI photo subscription" : "AI photo credit pack",
+        description: isSpanishXbySite(input.site)
+          ? `${price.creditsGranted} creditos${price.interval === "one_time" ? "" : ` por ${price.interval}`}`
+          : `${price.creditsGranted} credits${price.interval === "one_time" ? "" : ` per ${price.interval}`}`,
         url
       }))
     );
@@ -242,7 +306,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
       ? {
           "@type": "OfferCatalog",
           "@id": `${url}#offers`,
-          name: `${siteName} plans and credit packs`,
+          name: isSpanishXbySite(input.site) ? `${siteName} planes y paquetes de creditos` : `${siteName} plans and credit packs`,
           itemListElement: offers
         }
       : undefined;
@@ -252,7 +316,9 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         name: title,
         description,
         provider: { "@type": "Organization", name: siteName },
-        serviceType: isAidreamcapesSite(input.site) ? "AI travel portrait generation service" : "AI photo generation service",
+        serviceType: isSpanishXbySite(input.site)
+          ? isAidreamcapesSite(input.site) ? "servicio de retratos de viaje IA" : "servicio de generacion de fotos IA"
+          : isAidreamcapesSite(input.site) ? "AI travel portrait generation service" : "AI photo generation service",
         url,
         ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
       },
@@ -336,7 +402,9 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
     offers: {
       "@type": "OfferCatalog",
       "@id": `${siteBaseUrl(input.site, input.routeMode)}#plans`,
-      name: isAidreamcapesSite(input.site) ? "Aidreamcapes travel portrait packages and credits" : "MyDreamShoots photo packages and credits",
+      name: isSpanishXbySite(input.site)
+        ? isAidreamcapesSite(input.site) ? "Paquetes de retrato de viaje y creditos Aidreamcapes-xby" : "Paquetes de fotos y creditos MyDreamShoots-xby"
+        : isAidreamcapesSite(input.site) ? "Aidreamcapes travel portrait packages and credits" : "MyDreamShoots photo packages and credits",
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
     }
   };
@@ -407,7 +475,9 @@ export function buildToolDirectoryJsonLd({
       offers: {
         "@type": "Offer",
         availability: "https://schema.org/InStock",
-        category: isAidreamcapesSite(site) ? "AI travel portrait tool" : "AI photo tool",
+        category: isSpanishXbySite(site)
+          ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
+          : isAidreamcapesSite(site) ? "AI travel portrait tool" : "AI photo tool",
         url
       }
     },
@@ -486,7 +556,7 @@ export function buildCollectionDirectoryJsonLd({
     },
     {
       "@type": "ItemList",
-      name: `${item.label} photo options`,
+      name: isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
       description: item.intro,
       url,
       itemListElement

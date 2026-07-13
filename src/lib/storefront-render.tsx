@@ -35,7 +35,7 @@ import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { canonicalAidreamcapesDirectorySlug, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
+import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import type { CreativePack, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -568,8 +568,53 @@ function aidreamcapesPolicyBody(path: string): string {
   return "<p>Private uploads, account activity, credits, checkout status, generated portraits, and delivered galleries are handled according to this policy.</p>";
 }
 
+function isSpanishXbyStorefront(site: Site): boolean {
+  return /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+}
+
+function storefrontSupportEmail(site: Site, fallback: string): string {
+  const configuredEmail = site.themeSettings?.publishedJson?.globalSections?.footer?.settings?.contactEmail;
+  if (typeof configuredEmail === "string" && configuredEmail.includes("@")) return configuredEmail;
+  const host = String(site.primaryDomain ?? "").trim().replace(/^https?:\/\//i, "").split("/")[0].replace(/\/+$/, "");
+  if (isSpanishXbyStorefront(site) && host) return `support@${host}`;
+  return fallback;
+}
+
+function spanishXbyPolicyTitle(path: string, seo: PolicySeoCopy): string {
+  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
+  if (normalized.includes("cookie")) return "Politica de cookies";
+  if (normalized.includes("term")) return "Terminos de servicio";
+  if (normalized.includes("refund")) return "Revision de creditos y reembolsos";
+  if (normalized.includes("shipping") || normalized.includes("delivery")) return "Entrega digital";
+  if (normalized.includes("content")) return "Politica de contenido";
+  if (normalized.includes("privacy")) return "Politica de privacidad";
+  return seo.title.replace(/\s+\|\s+.*$/i, "");
+}
+
+function spanishXbyPolicyBody(site: Site, path: string, contactEmail: string): string {
+  const brand = site.branding.logoText || site.name;
+  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
+  if (normalized.includes("cookie")) {
+    return `<h3>1. Cookies esenciales y almacenamiento local</h3><p>${brand} usa cookies esenciales para mantener sesiones, carrito, creditos, pago, seguridad y acceso a galerias privadas.</p><h3>2. Proveedores de servicio</h3><p>Los proveedores de pago, infraestructura, correo, analitica operativa e IA pueden usar identificadores limitados cuando son necesarios para confirmar pagos, prevenir fraude, entregar el servicio o diagnosticar incidencias.</p><h3>3. Tus opciones</h3><p>Puedes borrar cookies o ajustar el navegador. Al hacerlo, puede que tengas que iniciar sesion de nuevo antes de abrir pedidos, creditos, descargas o galerias privadas.</p><h3>4. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> para preguntas sobre cookies, sesiones, pago o acceso privado.</p>`;
+  }
+  if (normalized.includes("term")) {
+    return `<h3>1. Aceptacion</h3><p>Al usar ${brand}, crear una cuenta, comprar creditos, subir fotos fuente, iniciar una generacion o abrir una galeria privada, aceptas estos terminos y la politica de privacidad.</p><h3>2. Cuentas y seguridad</h3><p>Debes proporcionar datos correctos, proteger tus credenciales y usar el servicio solo para flujos personales, creativos o comerciales permitidos.</p><h3>3. Creditos, paquetes y entrega</h3><p>Los creditos se muestran antes de generar, se reservan cuando inicia un pedido, se consumen al entregar resultados correctos y se liberan si una solicitud falla o expira.</p><h3>4. Fotos subidas y derechos</h3><p>Solo debes subir imagenes y referencias que sean tuyas o que tengas permiso para usar. Sigues siendo responsable del material fuente y del uso de los resultados.</p><h3>5. Seguridad creativa</h3><p>${brand} puede rechazar, revisar o limitar solicitudes que infrinjan la ley, derechos de terceros, normas de seguridad o politicas de contenido.</p><h3>6. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> para cuenta, facturacion, reembolsos, politicas, generacion o entrega de galerias.</p>`;
+  }
+  if (normalized.includes("refund")) {
+    return `<h3>1. Revision de creditos</h3><p>${brand} revisa incidencias de creditos, pedidos fallidos, duplicados, errores de pago y solicitudes de rerun desde el historial de la cuenta.</p><h3>2. Pedidos fallidos</h3><p>Cuando una generacion no puede completarse, los creditos se liberan o se devuelven segun el estado real del pedido y la confirmacion del sistema.</p><h3>3. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> con el correo de tu cuenta, pedido, plan o captura relevante.</p>`;
+  }
+  if (normalized.includes("content")) {
+    return `<h3>1. Fotos permitidas</h3><p>Debes subir fotos fuente que puedas usar legalmente y que representen a personas con consentimiento cuando corresponda.</p><h3>2. Solicitudes no permitidas</h3><p>${brand} puede bloquear contenido que infrinja derechos, seguridad, privacidad, identidad, abuso, acoso o cualquier uso no autorizado.</p><h3>3. Uso responsable</h3><p>Los resultados generados deben usarse de forma responsable y respetando a las personas representadas.</p>`;
+  }
+  if (normalized.includes("shipping") || normalized.includes("delivery")) {
+    return `<h3>1. Entrega digital</h3><p>${brand} entrega creditos, imagenes generadas, descargas y galerias privadas de forma digital dentro de la cuenta del cliente.</p><h3>2. Sin envio fisico</h3><p>No hay productos fisicos, tracking postal, aduanas ni transportistas para estos pedidos.</p><h3>3. Soporte</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> si no puedes abrir una galeria o descargar resultados.</p>`;
+  }
+  return `<p>${brand} gestiona subidas privadas, actividad de cuenta, creditos, pago, imagenes generadas y galerias de acuerdo con esta politica. Para preguntas, escribe a <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>`;
+}
+
 function storefrontPolicySeoForSite(site: Site, slug: string): PolicySeoCopy | undefined {
-  const identity = `${site.slug} ${site.name} ${site.branding.logoText}`;
+  const identity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
+  if (isSpanishXbyStorefront(site)) return getSpanishXbyPolicySeo(site, slug);
   if (/aidreamcapes/i.test(identity)) return getAidreamcapesPolicySeo(slug);
   if (/dreamshoot/i.test(identity)) return getMydreamshootsPolicySeo(slug);
   return undefined;
@@ -579,7 +624,10 @@ function syntheticStorefrontPolicyPage(site: Site, slug: string): ThemePage | un
   const seo = storefrontPolicySeoForSite(site, slug);
   if (!seo) return undefined;
   const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = isSpanishXbyStorefront(site);
+  const contactEmail = storefrontSupportEmail(site, isAidreamcapes ? "support@aidreamcapes.com" : "support@mydreamshoots.com");
   const title =
+    isSpanishXby ? spanishXbyPolicyTitle(slug, seo) :
     slug.includes("cookie") ? "Cookie Policy" :
     slug.includes("term") ? "Terms of Service" :
     seo.title.replace(/\s+\|\s+(MyDreamShoots|Aidreamcapes).*$/i, "");
@@ -591,10 +639,10 @@ function syntheticStorefrontPolicyPage(site: Site, slug: string): ThemePage | un
       policy_1: {
         type: "policy_content",
         settings: {
-          eyebrow: "Policy",
+          eyebrow: isSpanishXby ? "Politica" : "Policy",
           title,
-          body: isAidreamcapes ? aidreamcapesPolicyBody(slug) : mydreamshootsPolicyBody(slug),
-          contactEmail: isAidreamcapes ? "support@aidreamcapes.com" : "support@mydreamshoots.com",
+          body: isSpanishXby ? spanishXbyPolicyBody(site, slug, contactEmail) : isAidreamcapes ? aidreamcapesPolicyBody(slug) : mydreamshootsPolicyBody(slug),
+          contactEmail,
           headingLevel: "h1"
         },
         blocks: []
@@ -851,7 +899,7 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
           body: isSpanishXby
             ? isAidreamcapes
               ? "Explora retratos de ruta, sets de luz costera, paseos urbanos, escenas al aire libre y recuerdos privados antes de gastar creditos."
-              : "Compara headshots, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
+              : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
             : firstSection?.settings?.subtitle || (isAidreamcapes
               ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
               : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits."),
@@ -973,6 +1021,9 @@ function appSlugForToolCategory(category: string, siteAiApps: ReturnType<typeof 
 
 function titleFromToolSlug(toolSlug: string): string {
   const explicit: Record<string, string> = {
+    "photo-ai": "Photo AI",
+    "video-ai": "Video AI",
+    "ai-photo-edit": "AI Photo Edit",
     "background-changer": "Background Changer",
     "background-remover": "Image Background Remover",
     "magic-eraser": "Magic Eraser",
@@ -1035,6 +1086,35 @@ function aidreamcapesToolBlockForSlug(site: Site, toolSlug: string): SectionBloc
   };
 }
 
+function spanishXbyToolCategoryForSlug(site: Site, toolSlug: string): string {
+  if (isAidreamcapesStorefront(site)) return "Herramienta de viaje IA";
+  if (toolSlug.includes("video") || toolSlug.includes("clip") || toolSlug.includes("motion")) return "Video IA";
+  if (toolSlug.includes("background") || toolSlug.includes("eraser") || toolSlug.includes("enhancer") || toolSlug.includes("unblur") || toolSlug.includes("correction") || toolSlug.includes("restoration") || toolSlug.includes("prompt")) return "Edicion IA";
+  return "Foto IA";
+}
+
+function spanishXbyToolBlockForSite(site: Site, block: SectionBlockInstance): SectionBlockInstance {
+  if (!isSpanishXbyStorefront(site)) return block;
+  const toolSlug = toolSlugFromBlock(block);
+  const content = getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const category = spanishXbyToolCategoryForSlug(site, toolSlug);
+  return {
+    ...block,
+    settings: {
+      ...block.settings,
+      title: content.label,
+      description: content.intro,
+      category,
+      categoryTitle: category,
+      categoryDescription: isAidreamcapesStorefront(site)
+        ? "Herramientas mantenidas para retratos de viaje, rutas visuales y galerias privadas."
+        : "Herramientas mantenidas para fotos, retoques, vistas previas y albumes privados.",
+      badge: category,
+      href: `/tools/${toolSlug}`
+    }
+  };
+}
+
 function creativePackCollectionSlugs(pack: PlatformState["creativePacks"][number]): string[] {
   return [
     pack.categoryRecord?.slug,
@@ -1059,6 +1139,15 @@ function safeSectionId(page: ThemePageJson, preferredId: string): string {
   let next = 2;
   while (page.sections[`${preferredId}_${next}`]) next += 1;
   return `${preferredId}_${next}`;
+}
+
+function withToolEntryFirst(page: ThemePageJson): ThemePageJson {
+  const entrySectionId = page.sectionsOrder.find((sectionId) => page.sections[sectionId]?.type === "ai_tool_entry");
+  if (!entrySectionId || page.sectionsOrder[0] === entrySectionId) return page;
+  return {
+    ...page,
+    sectionsOrder: [entrySectionId, ...page.sectionsOrder.filter((sectionId) => sectionId !== entrySectionId)]
+  };
 }
 
 type CustomerToolCopy = {
@@ -1273,7 +1362,7 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
     const slug = toolSlugFromBlock(block);
     toolsBySlug.set(slug, block);
   }
-  const tools = Array.from(toolsBySlug.values());
+  const tools = Array.from(toolsBySlug.values()).map((tool) => isSpanishXby ? spanishXbyToolBlockForSite(site, tool) : tool);
   return {
     ...pageJson,
     sectionsOrder: ["tools_directory_1"],
@@ -1310,7 +1399,10 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
 }
 
 function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
-  const existingToolPage = page ?? site.pages.find((item) => item.pageType === "ai_tool") ?? site.pages.find((item) => item.slug === "/tools/image-studio");
+  const existingToolPage =
+    page ??
+    site.pages.find((item) => item.slug === "/tools/image-studio") ??
+    site.pages.find((item) => item.pageType === "ai_tool" && /^\/tools\/[^/]+$/.test(item.slug));
   if (existingToolPage) return existingToolPage;
   const template = clonePageJson(dreamshootAiStudioTemplates["tool-detail"]);
   return {
@@ -1377,16 +1469,32 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
     ? tool.settings.detailJson as ToolMenuItem["detailJson"]
     : undefined;
   const aidreamcapes = isAidreamcapesStorefront(site);
+  const spanishXby = isSpanishXbyStorefront(site);
   const directoryContent = getSeoDirectoryContentForSite(site, "tool", toolSlug);
-  const effectiveTitle = detailText(detail, "title", aidreamcapes ? directoryContent.label : title);
-  const effectiveDescription = detailText(detail, "subtitle", aidreamcapes ? directoryContent.intro : blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
-  const effectiveCta = detailText(detail, "ctaLabel", aidreamcapes ? directoryContent.ctaLabel : copy.primaryCta);
-  const guideTitle = detailText(detail, "guideTitle", aidreamcapes ? directoryContent.h3[0] ?? copy.guideTitle : copy.guideTitle);
-  const guideBody = detailText(detail, "guideBody", aidreamcapes ? directoryContent.workflow.join(" ") : copy.guideBody);
-  const detailTitle = detailText(detail, "detailTitle", aidreamcapes ? `How ${directoryContent.label} fits Aidreamcapes` : `What ${title} is used for`);
-  const detailBody = detailText(detail, "detailBody", aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody);
-  const workflowItems = detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
-  const useCaseItems = detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
+  const effectiveCategory = spanishXby ? aidreamcapes ? "Herramienta de viaje IA" : "Herramienta de fotos IA" : category;
+  const effectiveTitle = spanishXby ? directoryContent.label : detailText(detail, "title", aidreamcapes ? directoryContent.label : title);
+  const effectiveDescription = spanishXby ? directoryContent.intro : detailText(detail, "subtitle", aidreamcapes ? directoryContent.intro : blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
+  const effectiveCta = detailText(detail, "ctaLabel", spanishXby ? aidreamcapes ? "Crear ruta privada" : "Crear set privado" : aidreamcapes ? directoryContent.ctaLabel : copy.primaryCta);
+  const guideTitle = detailText(detail, "guideTitle", spanishXby ? `Guia de ${effectiveTitle}` : aidreamcapes ? directoryContent.h3[0] ?? copy.guideTitle : copy.guideTitle);
+  const guideBody = detailText(
+    detail,
+    "guideBody",
+    spanishXby
+      ? aidreamcapes
+        ? `Sube fotos fuente claras, elige una direccion de viaje, revisa creditos visibles y guarda resultados en la galeria privada de ${site.branding.logoText || site.name}.`
+        : `Sube fotos fuente claras, elige el estilo, revisa creditos visibles y guarda resultados en la galeria privada de ${site.branding.logoText || site.name}.`
+      : aidreamcapes ? directoryContent.workflow.join(" ") : copy.guideBody
+  );
+  const detailTitle = detailText(detail, "detailTitle", spanishXby ? `Detalles de ${effectiveTitle}` : aidreamcapes ? `How ${directoryContent.label} fits Aidreamcapes` : `What ${title} is used for`);
+  const detailBody = detailText(
+    detail,
+    "detailBody",
+    spanishXby
+      ? "Esta pagina resume el uso recomendado, las fotos fuente necesarias y el flujo privado antes de iniciar la generacion."
+      : aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody
+  );
+  const workflowItems = spanishXby ? directoryContent.workflow : detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
+  const useCaseItems = spanishXby ? directoryContent.useCases : detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
   const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? "/app/create#step-video" : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
@@ -1402,17 +1510,26 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   if (page.sections.tool_banner_1) {
     page.sections.tool_banner_1.settings = {
       ...page.sections.tool_banner_1.settings,
-      eyebrow: category,
+      eyebrow: effectiveCategory,
       title: effectiveTitle,
       subtitle: effectiveDescription,
       imageUrl
     };
   }
+  if (!page.sections.entry_1) {
+    page.sections.entry_1 = {
+      type: "ai_tool_entry",
+      settings: {}
+    };
+    if (!page.sectionsOrder.includes("entry_1")) {
+      page.sectionsOrder.splice(0, 0, "entry_1");
+    }
+  }
   if (page.sections.entry_1) {
     page.sections.entry_1.settings = {
       ...page.sections.entry_1.settings,
       aiAppSlug: appSlug,
-      eyebrow: detailText(detail, "eyebrow", category),
+      eyebrow: spanishXby ? effectiveCategory : detailText(detail, "eyebrow", category),
       title: effectiveTitle,
       subtitle: effectiveDescription,
       ctaLabel: effectiveCta,
@@ -1426,12 +1543,12 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   page.sections[guideSectionId] = {
     type: "rich_text",
     settings: {
-      eyebrow: category,
+      eyebrow: effectiveCategory,
       title: guideTitle,
       body: guideBody,
       primaryCta: effectiveCta,
       primaryHref: appCreateHref,
-      secondaryCta: "Choose a plan",
+      secondaryCta: spanishXby ? "Elegir un plan" : "Choose a plan",
       secondaryHref: "/pricing",
       layout: "compact"
     },
@@ -1439,14 +1556,14 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       ? workflowItems.slice(0, 3).map((description, index) => ({
           id: `tool_detail_step_${index + 1}`,
           type: "rich_text_card",
-          settings: { meta: `0${index + 1}`, title: directoryContent.h3[index] ?? `Step ${index + 1}`, description }
+          settings: { meta: `0${index + 1}`, title: directoryContent.h3[index] ?? `${spanishXby ? "Paso" : "Step"} ${index + 1}`, description }
         }))
       : toolDetailGuideBlocks(copy)
   };
   page.sections[useCaseSectionId] = {
     type: "rich_text",
     settings: {
-      eyebrow: "Tool details",
+      eyebrow: spanishXby ? "Detalles de herramienta" : "Tool details",
       title: detailTitle,
       body: detailBody,
       layout: "compact",
@@ -1456,18 +1573,45 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       ? useCaseItems.slice(0, 4).map((description, index) => ({
           id: `tool_detail_use_case_${index + 1}`,
           type: "rich_text_card",
-          settings: { meta: index === 0 ? "Best for" : "Use case", title: description, description }
+          settings: { meta: index === 0 ? spanishXby ? "Ideal para" : "Best for" : spanishXby ? "Caso de uso" : "Use case", title: description, description }
         }))
       : toolDetailUseCaseBlocks(copy)
   };
   if (aidreamcapes && page.sections.faq_1) {
     page.sections.faq_1.settings = {
       ...page.sections.faq_1.settings,
-      eyebrow: "Aidreamcapes tool questions",
-      title: `${directoryContent.label} FAQ`,
-      subtitle: "Answers about source photos, credits, private galleries, and delivery before you generate."
+      eyebrow: spanishXby ? "Preguntas de herramienta" : "Aidreamcapes tool questions",
+      title: spanishXby ? `FAQ de ${directoryContent.label}` : `${directoryContent.label} FAQ`,
+      subtitle: spanishXby ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar." : "Answers about source photos, credits, private galleries, and delivery before you generate."
     };
-    page.sections.faq_1.blocks = aidreamcapesToolFaqBlocks(directoryContent.label, directoryContent.workflow);
+    page.sections.faq_1.blocks = spanishXby
+      ? [
+          {
+            id: "faq_inputs",
+            type: "faq_item",
+            settings: {
+              question: `Que debo subir para ${directoryContent.label}?`,
+              answer: directoryContent.workflow[1] ?? "Sube retratos o referencias claras que coincidan con la direccion de viaje que quieres."
+            }
+          },
+          {
+            id: "faq_private",
+            type: "faq_item",
+            settings: {
+              question: "Los resultados son privados?",
+              answer: "Si. Fotos fuente, pedidos, creditos y galerias terminadas permanecen vinculados a la cuenta del cliente."
+            }
+          },
+          {
+            id: "faq_credits",
+            type: "faq_item",
+            settings: {
+              question: "Cuando se usan los creditos?",
+              answer: "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."
+            }
+          }
+        ]
+      : aidreamcapesToolFaqBlocks(directoryContent.label, directoryContent.workflow);
   }
   const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
   page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);
@@ -1475,6 +1619,9 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
 }
 
 const dreamshootImageStudioToolAliases = new Set([
+  "photo-ai",
+  "video-ai",
+  "ai-photo-edit",
   "headshot-generator",
   "headshot-maker",
   "professional-headshot",
@@ -1602,20 +1749,21 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const toolBlock = menuTool
     ? toolBlockFromMenuItem(menuTool)
     : themeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
+  const localizedToolBlock = toolBlock ? spanishXbyToolBlockForSite(site, toolBlock) : undefined;
   const basePage = baseToolDetailPageForSite(site, page);
-  const synthesizedPage = toolBlock
+  const synthesizedPage = localizedToolBlock
     ? synthesizeToolDetailPage(
         basePage.publishedJson,
-        toolBlock,
+        localizedToolBlock,
         canonicalToolSlug,
-        appSlugForToolCategory(blockString(toolBlock, "category", "AI Photo"), siteAiApps),
+        appSlugForToolCategory(blockString(toolBlock!, "category", "AI Photo"), siteAiApps),
         site,
       )
     : undefined;
   const matched = isAidreamcapes
     ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
     : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
-  return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(toolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
+  return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(localizedToolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
 
 function renderThemePage({
@@ -2239,7 +2387,25 @@ export async function renderToolPage({
   const toolRenderData = trimToolDetailRenderData(renderData);
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
-  const pageJson = withSeoDirectorySection(page.publishedJson, "tool", toolSlug, { site: currentSite });
+  const normalizedToolSlug = normalizeToolLookup(toolSlug);
+  const pageHasToolEntry = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_tool_entry");
+  const basePageJson = pageHasToolEntry
+    ? withToolEntryFirst(page.publishedJson)
+    : (() => {
+        const fallbackBlock = isAidreamcapesStorefront(currentSite)
+          ? aidreamcapesToolBlockForSlug(currentSite, normalizedToolSlug)
+          : fallbackToolBlockForSlug(normalizedToolSlug);
+        if (!fallbackBlock) return page.publishedJson;
+        const localizedBlock = spanishXbyToolBlockForSite(currentSite, fallbackBlock);
+        return withToolEntryFirst(synthesizeToolDetailPage(
+          page.publishedJson,
+          localizedBlock,
+          normalizedToolSlug,
+          appSlugForToolCategory(blockString(fallbackBlock, "category", "AI Photo"), renderData.siteAiApps),
+          currentSite
+        ));
+      })();
+  const pageJson = withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,

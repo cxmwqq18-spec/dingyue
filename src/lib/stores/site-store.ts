@@ -6,10 +6,12 @@ import { cache } from "react";
 import { canonicalSiteSlug, cleanHost, hostDomainCandidates, isPlatformHost, legacySiteSlugCandidates } from "@/lib/domain-routing";
 import { suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
+import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
+import { DEFAULT_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -82,6 +84,10 @@ function isMissingToolMenuTableError(error: unknown): boolean {
   const code = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
   const message = error instanceof Error ? error.message : String(error ?? "");
   return code === "P2021" || /ToolCategory|ToolMenuItem/.test(message) && /does not exist|findMany/i.test(message);
+}
+
+function prismaErrorCode(error: unknown): string {
+  return typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
 }
 
 async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?: boolean; take?: number } = {}) {
@@ -1265,7 +1271,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   const wantsOrders = !sectionedAccount || section === "summary" || section === "orders";
   const wantsJobs = !sectionedAccount || section === "summary" || section === "jobs";
   const wantsAssets = !sectionedAccount || section === "summary" || section === "albums";
-  const assetRoles = params.profile === "workspace" ? customerAssetRolesForSurface("workspace-gallery") : undefined;
+  const assetRoles = params.profile === "workspace" ? customerAssetRolesForSurface("workspace-runtime") : undefined;
   const wantsLedger = !sectionedAccount || section === "summary" || section === "albums" || section === "credits";
   const wantsModels = !sectionedAccount || section === "summary";
   const wantsAlbums = !sectionedAccount || section === "summary" || section === "albums";
@@ -1287,41 +1293,41 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
     ledger,
     customerModels,
     albums
-  ] = await Promise.all([
+  ] = await runDbTasks([
     limits.products
-      ? prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.products })
-      : Promise.resolve([]),
+      ? () => prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.products })
+      : () => Promise.resolve([]),
     limits.siteAiApps
-      ? prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }], take: limits.siteAiApps })
-      : Promise.resolve([]),
+      ? () => prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }], take: limits.siteAiApps })
+      : () => Promise.resolve([]),
     limits.creativePacks
-      ? prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.creativePacks })
-      : Promise.resolve([]),
+      ? () => prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }], take: limits.creativePacks })
+      : () => Promise.resolve([]),
     limits.mediaAssets
-      ? prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }], take: limits.mediaAssets })
-      : Promise.resolve([]),
-    prisma.customer.findFirst({ where: { id: customerId, siteId }, include: { balance: true } }),
+      ? () => prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }], take: limits.mediaAssets })
+      : () => Promise.resolve([]),
+    () => prisma.customer.findFirst({ where: { id: customerId, siteId }, include: { balance: true } }),
     wantsSubscriptions && limits.subscriptions
-      ? prisma.subscription.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.subscriptions })
-      : Promise.resolve([]),
+      ? () => prisma.subscription.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.subscriptions })
+      : () => Promise.resolve([]),
     wantsOrders && limits.orders
-      ? prisma.order.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.orders })
-      : Promise.resolve([]),
+      ? () => prisma.order.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.orders })
+      : () => Promise.resolve([]),
     wantsJobs && limits.jobs
-      ? prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs })
-      : Promise.resolve([]),
+      ? () => prisma.generationJob.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.jobs })
+      : () => Promise.resolve([]),
     wantsAssets && limits.assetUploads
-      ? prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null, role: assetRoles?.length ? { in: assetRoles } : undefined }, orderBy: { createdAt: "desc" }, take: limits.assetUploads })
-      : Promise.resolve([]),
+      ? () => prisma.assetUpload.findMany({ where: { siteId, customerId, deletedAt: null, role: assetRoles?.length ? { in: assetRoles } : undefined }, orderBy: { createdAt: "desc" }, take: limits.assetUploads })
+      : () => Promise.resolve([]),
     wantsLedger && limits.ledger
-      ? prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger })
-      : Promise.resolve([]),
+      ? () => prisma.creditLedger.findMany({ where: { siteId, customerId }, orderBy: { createdAt: "desc" }, take: limits.ledger })
+      : () => Promise.resolve([]),
     wantsModels && limits.customerModels
-      ? prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels })
-      : Promise.resolve([]),
+      ? () => prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels })
+      : () => Promise.resolve([]),
     wantsAlbums && limits.albums
-      ? prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
-      : Promise.resolve([])
+      ? () => prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
+      : () => Promise.resolve([])
   ]);
 
   if (!customer) return undefined;
@@ -3503,6 +3509,17 @@ const defaultVideoThemeCategories = [
 
 const defaultVideoThemes = [
   {
+    slug: "prompt-directed-motion",
+    categorySlug: "portrait-motion",
+    name: "Prompt Directed Motion",
+    headline: "A neutral image-to-video preset that follows the written direction.",
+    description: "Uses the selected frame order and customer prompt as the creative source without adding a themed setting.",
+    prompt: "Follow the selected ordered frame images and the customer's written direction exactly. Use this preset only as a neutral image-to-video container for duration, cost, and frame limits. Do not add a holiday, travel, wedding, studio, walking, seasonal, or lifestyle story unless the customer explicitly asks for it. Preserve the selected people and requested action, relationship, pose, camera transition, and story beat before any preset styling.",
+    creditCost: 24,
+    durationSeconds: 6,
+    imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
     slug: "cinematic-portrait-motion",
     categorySlug: "portrait-motion",
     name: "Cinematic Portrait Motion",
@@ -3518,7 +3535,7 @@ const defaultVideoThemes = [
     categorySlug: "travel-story",
     name: "Travel Route Story",
     headline: "A short travel scene that follows the uploaded frame order.",
-    description: "Turns 1-4 frames into a cohesive travel moment with natural scene motion.",
+    description: "Turns ordered frame images into a cohesive travel moment with natural scene motion.",
     prompt: "Create a realistic travel short video using the supplied image frames in their exact order as visual beats. Preserve all clear people and scene details represented across the frames, then blend them into one continuous travel moment with cinematic camera movement, natural wind, light, and environment motion. If different frames show different people, include every clear adult person as part of the final travel group unless the user note says otherwise.",
     creditCost: 28,
     durationSeconds: 6,
@@ -3595,7 +3612,7 @@ function defaultVideoWorkflowConfig(): AiWorkflowConfig {
         id: "video_frames",
         title: "Select video frames",
         kind: "asset_select",
-        assetRules: { min: 1, max: 4, roles: ["input", "training_input"], accept: ["image/*"], required: true }
+        assetRules: { min: 1, max: DEFAULT_VIDEO_FRAME_LIMIT, roles: ["input", "training_input"], accept: ["image/*"], required: true }
       },
       {
         id: "video_theme",
@@ -3610,6 +3627,8 @@ function defaultVideoWorkflowConfig(): AiWorkflowConfig {
     ]
   };
 }
+
+const ensureDefaultVideoThemesInFlight = new Map<string, Promise<void>>();
 
 export async function ensureVideoGeneratorAppForSiteRelational(siteId: string): Promise<{ siteAiApp: SiteAiApp }> {
   const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
@@ -3630,34 +3649,145 @@ export async function ensureVideoGeneratorAppForSiteRelational(siteId: string): 
       appType: "video"
     }
   });
-  const siteAiApp = await prisma.siteAiApp.upsert({
-    where: { siteId_aiAppId: { siteId, aiAppId: aiApp.id } },
-    create: {
-      id: uid("sai"),
-      siteId,
-      aiAppId: aiApp.id,
-      enabled: true,
-      creditCost: 24,
-      routeKey: "local.video.grok",
-      workflowConfig: defaultVideoWorkflowConfig() as unknown as Prisma.InputJsonValue,
-      providerConfig: { mode: "platform_fallback", fallbackEnabled: true } as Prisma.InputJsonValue
-    },
-    update: {
-      enabled: true,
-      routeKey: "local.video.grok",
-      workflowConfig: defaultVideoWorkflowConfig() as unknown as Prisma.InputJsonValue,
-      providerConfig: { mode: "platform_fallback", fallbackEnabled: true } as Prisma.InputJsonValue
-    },
-    include: { aiApp: true }
-  });
+  const siteAiAppData = {
+    enabled: true,
+    creditCost: 24,
+    routeKey: "local.video.grok",
+    workflowConfig: defaultVideoWorkflowConfig() as unknown as Prisma.InputJsonValue,
+    providerConfig: { mode: "platform_fallback", fallbackEnabled: true } as Prisma.InputJsonValue
+  };
+  const siteAiApp = await prisma.siteAiApp
+    .upsert({
+      where: { siteId_aiAppId: { siteId, aiAppId: aiApp.id } },
+      create: {
+        id: uid("sai"),
+        siteId,
+        aiAppId: aiApp.id,
+        ...siteAiAppData
+      },
+      update: siteAiAppData,
+      include: { aiApp: true }
+    })
+    .catch(async (error) => {
+      if (prismaErrorCode(error) !== "P2002") throw error;
+      const existingByApp = await prisma.siteAiApp.findUnique({
+        where: { siteId_aiAppId: { siteId, aiAppId: aiApp.id } },
+        include: { aiApp: true }
+      });
+      if (existingByApp) {
+        return prisma.siteAiApp.update({
+          where: { id: existingByApp.id },
+          data: siteAiAppData,
+          include: { aiApp: true }
+        });
+      }
+      const existingByRoute = await prisma.siteAiApp.findUnique({
+        where: { siteId_routeKey: { siteId, routeKey: "local.video.grok" } },
+        include: { aiApp: true }
+      });
+      if (!existingByRoute) throw error;
+      return prisma.siteAiApp.update({
+        where: { id: existingByRoute.id },
+        data: { aiAppId: aiApp.id, ...siteAiAppData },
+        include: { aiApp: true }
+      });
+    });
   clearSiteReadCache();
   return { siteAiApp: toSiteAiApp(siteAiApp) };
 }
 
 export async function ensureDefaultVideoThemesRelational(siteId: string): Promise<void> {
+  const inFlight = ensureDefaultVideoThemesInFlight.get(siteId);
+  if (inFlight) return inFlight;
+  const ensurePromise = ensureDefaultVideoThemesRelationalInner(siteId).finally(() => {
+    if (ensureDefaultVideoThemesInFlight.get(siteId) === ensurePromise) {
+      ensureDefaultVideoThemesInFlight.delete(siteId);
+    }
+  });
+  ensureDefaultVideoThemesInFlight.set(siteId, ensurePromise);
+  return ensurePromise;
+}
+
+async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): Promise<void> {
+  const theme = defaultVideoThemes.find((item) => item.slug === "prompt-directed-motion");
+  if (!theme) return;
+  const category = defaultVideoThemeCategories.find((item) => item.slug === theme.categorySlug) ?? defaultVideoThemeCategories[0];
+  const categoryRow = await prisma.videoThemeCategory.upsert({
+    where: { siteId_slug: { siteId, slug: category.slug } },
+    create: {
+      id: uid("video_cat"),
+      siteId,
+      slug: category.slug,
+      label: category.label,
+      description: category.description,
+      imageUrl: category.imageUrl,
+      sortOrder: 0,
+      status: "active"
+    },
+    update: {
+      label: category.label,
+      description: category.description,
+      imageUrl: category.imageUrl,
+      status: "active"
+    }
+  });
+  await prisma.videoTheme.upsert({
+    where: { siteId_slug: { siteId, slug: theme.slug } },
+    create: {
+      id: uid("video_theme"),
+      siteId,
+      categoryId: categoryRow.id,
+      slug: theme.slug,
+      name: theme.name,
+      headline: theme.headline,
+      description: theme.description,
+      prompt: theme.prompt,
+      status: "active",
+      creditCost: theme.creditCost,
+      durationSeconds: theme.durationSeconds,
+      maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
+      imageUrl: theme.imageUrl,
+      galleryImages: [theme.imageUrl]
+    },
+    update: {
+      categoryId: categoryRow.id,
+      name: theme.name,
+      headline: theme.headline,
+      description: theme.description,
+      prompt: theme.prompt,
+      status: "active",
+      creditCost: theme.creditCost,
+      durationSeconds: theme.durationSeconds,
+      maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
+      imageUrl: theme.imageUrl,
+      galleryImages: [theme.imageUrl]
+    }
+  });
+}
+
+async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<void> {
+  const existingTheme = await prisma.videoTheme.findFirst({ where: { siteId }, select: { id: true } });
+  if (existingTheme) {
+    const existingApp = await prisma.siteAiApp.findFirst({
+      where: { siteId, aiApp: { slug: "video_generator" } },
+      select: { id: true }
+    });
+    if (existingApp) {
+      await prisma.videoTheme.updateMany({
+        where: { siteId, maxFrames: { lt: DEFAULT_VIDEO_FRAME_LIMIT } },
+        data: { maxFrames: DEFAULT_VIDEO_FRAME_LIMIT }
+      });
+      await ensurePromptDirectedDefaultVideoThemeRelational(siteId);
+      clearSiteReadCache();
+      return;
+    }
+  }
   await ensureVideoGeneratorAppForSiteRelational(siteId);
-  const existing = await prisma.videoTheme.count({ where: { siteId } });
-  if (existing > 0) return;
+  if (existingTheme) {
+    await ensurePromptDirectedDefaultVideoThemeRelational(siteId);
+    clearSiteReadCache();
+    return;
+  }
   const categoriesBySlug = new Map<string, string>();
   for (const [index, category] of defaultVideoThemeCategories.entries()) {
     const row = await prisma.videoThemeCategory.upsert({
@@ -3698,7 +3828,7 @@ export async function ensureDefaultVideoThemesRelational(siteId: string): Promis
         status: "active",
         creditCost: theme.creditCost,
         durationSeconds: theme.durationSeconds,
-        maxFrames: 4,
+        maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
         imageUrl: theme.imageUrl,
         galleryImages: [theme.imageUrl]
       },
@@ -3783,7 +3913,7 @@ export async function upsertVideoThemeRelational(params: {
   if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
   const creditCost = clampInteger(Number(params.creditCost), 24, 0, 10000);
   const durationSeconds = clampInteger(Number(params.durationSeconds), 6, 1, 15);
-  const maxFrames = clampInteger(Number(params.maxFrames), 4, 1, 4);
+  const maxFrames = normalizeVideoFrameLimit(params.maxFrames, DEFAULT_VIDEO_FRAME_LIMIT);
   const galleryImages = Array.isArray(params.galleryImages) ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 12) : [];
   const imageUrl = params.imageUrl?.trim() || galleryImages[0] || null;
   const category = params.categoryId

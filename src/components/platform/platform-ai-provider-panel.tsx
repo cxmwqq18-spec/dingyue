@@ -115,7 +115,7 @@ function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGeneratio
   const maxImages = Math.max(1, Math.min(Math.trunc(Number(provider.maxImagesPerRequest) || 1), 20));
   const generation = provider.supportsGenerationN ? "文生图 n" : "文生图单张";
   const edit = provider.supportsEditN ? "图生图 n" : "图生图单张";
-  return `${generation} / ${edit} / 单次 ${maxImages}`;
+  return `${generation} / ${edit} / 单次参考图 ${maxImages}`;
 }
 
 export function PlatformAiProviderPanel({
@@ -406,7 +406,7 @@ export function PlatformAiProviderPanel({
               <ErpField label="扩展模型">
                 <ErpInput className="font-mono" onChange={(event) => setCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={customModelType} />
               </ErpField>
-              <ErpField label="单次最多返回">
+              <ErpField label="单次最多参考图">
                 <ErpInput
                   min={1}
                   max={20}
@@ -530,7 +530,7 @@ export function PlatformAiProviderPanel({
                 <ErpField label="扩展模型">
                   <ErpInput className="font-mono" onChange={(event) => setEditCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={editCustomModelType} />
                 </ErpField>
-                <ErpField label="单次最多返回">
+                <ErpField label="单次最多参考图">
                   <ErpInput
                     min={1}
                     max={20}

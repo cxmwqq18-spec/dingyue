@@ -77,7 +77,7 @@ function canHoverPrefetch(targetUrl: URL) {
 
 function canFocusPrefetch(targetUrl: URL) {
   const publicPathname = storefrontPublicPathname(targetUrl);
-  return publicPathname === "/" || publicPathname === "/help" || publicPathname.startsWith("/help/") || publicPathname === "/pricing";
+  return publicPathname === "/" || publicPathname === "/faq" || publicPathname.startsWith("/faq/") || publicPathname === "/help" || publicPathname.startsWith("/help/") || publicPathname === "/pricing";
 }
 
 function isInstantFilterAnchor(event: MouseEvent<HTMLAnchorElement> | FocusEvent<HTMLAnchorElement> | PointerEvent<HTMLAnchorElement>) {

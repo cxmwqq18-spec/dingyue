@@ -43,10 +43,13 @@ function walk(value, visit, pathSegments = []) {
 const seoIndexing = readText("src/lib/seo-indexing.ts");
 const jsonLd = readText("src/lib/theme/json-ld.ts");
 const robots = readText("src/app/robots.ts");
+const nextConfig = readText("next.config.mjs");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
 const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
 const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
+const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
+const storefrontRender = readText("src/lib/storefront-render.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
@@ -66,8 +69,28 @@ const duplicateSlugRows = Array.from(
   slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
 ).filter(([, rows]) => rows.length > 1);
 const headshotSlugOwner = slugRows.find((row) => row.slug === "/tools/headshot" && row.index === true);
+const mydreamshootsWorkflow = slugRows.find((row) => row.slug === "/workflow");
+const aidreamcapesWorkflow = aidreamcapesSite.pages.find((page) => normalizePath(page.slug) === "/workflow");
 
 assert(!duplicateSlugRows.length, "MyDreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
+assert(
+  Boolean(mydreamshootsWorkflow) && mydreamshootsWorkflow.pageType === "content",
+  "MyDreamShoots must expose a standalone /workflow content page",
+  { mydreamshootsWorkflow }
+);
+assert(
+  Boolean(aidreamcapesWorkflow) && aidreamcapesWorkflow.pageType === "content",
+  "Aidreamcapes must expose a standalone /workflow content page",
+  { aidreamcapesWorkflow: aidreamcapesWorkflow && { id: aidreamcapesWorkflow.id, slug: aidreamcapesWorkflow.slug, pageType: aidreamcapesWorkflow.pageType } }
+);
+assert(
+  !/requestedPath === "\/workflow"[\s\S]*return "\/"/.test(siteRouteCanonical),
+  "/workflow must not canonicalize to the homepage"
+);
+assert(
+  siteRouteCanonical.includes('requestedPath === "/how-it-works") return "/workflow"'),
+  "/how-it-works should canonicalize to /workflow for legacy compatibility"
+);
 assert(
   Boolean(headshotSlugOwner),
   "canonical headshot tool page must expose /tools/headshot and remain indexable"
@@ -90,8 +113,12 @@ assert(
 
 assert(
   templates.includes('href: "/creators-circle"') &&
-    hostCatchAllPage.includes("canUseMydreamshootsSyntheticPage(site, publicPageSlug)") &&
-    siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs"),
+    hostCatchAllPage.includes("canUseStorefrontPartnerTemplate(site, publicPageSlug)") &&
+    hostCatchAllPage.includes("!findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug)") &&
+    siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs.has(pageSlug)") &&
+    siteCatchAllPage.includes("isDreamshootPartnerTemplateSite(publicSite)") &&
+    storefrontRender.includes("function syntheticDreamShootPartnerPage") &&
+    storefrontRender.includes("dreamshootAiStudioTemplatesForSite(site)[templateKey]"),
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
@@ -109,8 +136,11 @@ for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/
 }
 
 assert(
-  robots.includes('"/search"') && robots.includes('"/site/*/search"') && !jsonLd.includes('"SearchAction"'),
-  "JSON-LD must not emit WebSite.SearchAction while /search is blocked and no indexable search page exists"
+  !/disallow|Disallow/.test(robots) &&
+    nextConfig.includes('source: "/search"') &&
+    nextConfig.includes('source: "/site/:siteSlug/search"') &&
+    !jsonLd.includes('"SearchAction"'),
+  "robots should allow noindex discovery, /search should receive X-Robots-Tag, and JSON-LD must not emit SearchAction without an indexable search page"
 );
 
 for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"]) {
@@ -188,7 +218,7 @@ console.log(JSON.stringify({
     cookies: "/cookies",
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
-  syntheticRoutes: ["/creators-circle", "/partner-registration"],
+  syntheticRoutes: ["/workflow", "/creators-circle", "/partner-registration"],
   sitemapStrategy: "dedupe merged static, dynamic, required, and policy canonical URLs per request host",
   hostAwareSitemaps: {
     mydreamshoots: "www.mydreamshoots.com only",

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_DIST_DIR=.next-dev next dev",
-    "dev:3002": "NEXT_DIST_DIR=.next-3002 next dev -p 3002",
+    "dev": "NODE_OPTIONS=--max-old-space-size=8192 __NEXT_DISABLE_MEMORY_WATCHER=1 NEXT_DIST_DIR=.next-dev next dev",
+    "dev:3002": "NODE_OPTIONS=--max-old-space-size=8192 __NEXT_DISABLE_MEMORY_WATCHER=1 NEXT_DIST_DIR=.next-3002 next dev -p 3002",
     "build": "rm -rf .next-build && NEXT_DIST_DIR=.next-build NEXT_PRIVATE_BUILD_WORKER=1 next build; status=$?; node scripts/restore-next-env.mjs; exit $status",
     "start": "NEXT_DIST_DIR=.next-build node server.mjs",
     "lint": "eslint .",
@@ -24,6 +24,7 @@
     "smoke:cart-translate-checkout": "node scripts/smoke-cart-translate-checkout.mjs",
     "smoke:aidreamcapes-admin-workspace": "node scripts/smoke-aidreamcapes-admin-workspace.mjs",
     "smoke:customer-job-events": "node scripts/smoke-customer-job-events.mjs",
+    "smoke:video-workspace": "node scripts/smoke-video-workspace-regression.mjs",
     "smoke:worker-provider-fallback": "node scripts/smoke-worker-provider-fallback.mjs",
     "smoke:dreamshoot-public-seo-templates": "node scripts/smoke-dreamshoot-public-seo-templates.mjs",
     "smoke:aidreamcapes-backend": "node scripts/smoke-aidreamcapes-backend-isolation.mjs",
@@ -49,6 +50,7 @@
     "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",
     "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
     "smoke:mydreamshoots-pricing-checkout": "node scripts/smoke-mydreamshoots-pricing-checkout.mjs",
+    "smoke:mydreamshoots-seo-indexing": "node scripts/smoke-mydreamshoots-seo-indexing.mjs",
     "smoke:mydreamshoots-login-redirect": "node scripts/smoke-mydreamshoots-login-redirect.mjs",
     "smoke:server": "node scripts/run-smoke-server.mjs",
     "smoke:security-baseline": "node scripts/smoke-security-baseline.mjs",
@@ -68,10 +70,12 @@
   },
   "dependencies": {
     "@prisma/client": "6.19.0",
+    "ffmpeg-static": "^5.3.0",
     "lucide-react": "^0.468.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "undici": "^6.27.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

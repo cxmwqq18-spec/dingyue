@@ -263,7 +263,8 @@ export function policyCanonicalUrlForSite(site: { primaryDomain?: string | null 
     .replace(/^https?:\/\//i, "")
     .split("/")[0]
     .replace(/\/+$/, "");
-  return host ? `https://${host}${normalizedPath}` : normalizedPath;
+  const protocol = host.includes("localhost") || host.startsWith("127.0.0.1") ? "http" : "https";
+  return host ? `${protocol}://${host}${normalizedPath}` : normalizedPath;
 }
 
 export function getMydreamshootsPolicySeo(path: string): PolicySeoCopy | undefined {
@@ -343,6 +344,98 @@ const AIDREAMCAPES_POLICY_ALIASES: Record<string, string> = {
 export function getAidreamcapesPolicySeo(path: string): PolicySeoCopy | undefined {
   const canonicalPath = AIDREAMCAPES_POLICY_ALIASES[normalizePolicyPath(path)];
   const copy = canonicalPath ? AIDREAMCAPES_POLICY_SEO_BY_CANONICAL[canonicalPath] : undefined;
+  if (!copy) return undefined;
+  return {
+    ...copy,
+    canonicalPath,
+    index: true,
+    follow: true
+  };
+}
+
+const SPANISH_XBY_POLICY_KEYWORDS = [
+  "politica tienda IA",
+  "privacidad fotos IA",
+  "terminos generador IA",
+  "creditos IA",
+  "galeria privada",
+  "fotos fuente"
+].join(", ");
+
+const SPANISH_XBY_POLICY_ALIASES: Record<string, string> = {
+  "/privacy": "/privacy",
+  "/privacy-policy": "/privacy",
+  "/policies/privacy": "/privacy",
+  "/terms": "/terms",
+  "/terms-of-service": "/terms",
+  "/policies/terms": "/terms",
+  "/cookies": "/cookies",
+  "/cookie-policy": "/cookies",
+  "/policies/cookies": "/cookies",
+  "/refunds": "/refunds",
+  "/refund-policy": "/refunds",
+  "/policies/refund": "/refunds",
+  "/policies/refunds": "/refunds",
+  "/content": "/content",
+  "/content-policy": "/content",
+  "/policies/content": "/content",
+  "/shipping": "/shipping",
+  "/shipping-policy": "/shipping",
+  "/delivery-policy": "/shipping",
+  "/policies/shipping": "/shipping"
+};
+
+function spanishXbyBrand(site: { name?: string | null; branding?: { logoText?: string | null } }): string {
+  return String(site.branding?.logoText || site.name || "Tienda IA").trim();
+}
+
+function isSpanishAidreamcapesXby(site: { id?: string | null; slug?: string | null; name?: string | null; primaryDomain?: string | null; branding?: { logoText?: string | null } }): boolean {
+  return `${site.id ?? ""} ${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase().includes("aidreamcapes");
+}
+
+export function getSpanishXbyPolicySeo(
+  site: { id?: string | null; slug?: string | null; name?: string | null; primaryDomain?: string | null; branding?: { logoText?: string | null } },
+  path: string
+): PolicySeoCopy | undefined {
+  const canonicalPath = SPANISH_XBY_POLICY_ALIASES[normalizePolicyPath(path)];
+  if (!canonicalPath) return undefined;
+
+  const brand = spanishXbyBrand(site);
+  const aidreamcapes = isSpanishAidreamcapesXby(site);
+  const subject = aidreamcapes ? "retratos de viaje con IA" : "fotos y retratos con IA";
+  const copies: Record<string, Omit<PolicySeoCopy, "canonicalPath" | "index" | "follow">> = {
+    "/privacy": {
+      title: `Politica de privacidad | ${brand}`,
+      description: `Consulta como ${brand} gestiona cuentas, fotos subidas, pedidos, creditos, datos de pago, solicitudes de ${subject} y galerias privadas.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    },
+    "/terms": {
+      title: `Terminos de servicio | ${brand}`,
+      description: `Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable de ${brand}.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    },
+    "/cookies": {
+      title: `Politica de cookies | ${brand}`,
+      description: `Consulta como ${brand} usa cookies y almacenamiento local para sesiones, pago, seguridad, preferencias, creditos y analitica operativa.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    },
+    "/refunds": {
+      title: `Revision de creditos y reembolsos | ${brand}`,
+      description: `Consulta como ${brand} revisa creditos sin usar, pedidos fallidos, cambios de plan, incidencias de facturacion, reruns y solicitudes elegibles.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    },
+    "/content": {
+      title: `Politica de contenido | ${brand}`,
+      description: `Revisa las reglas de ${brand} sobre fotos fuente, consentimiento, identidad, contenido permitido, moderacion y uso responsable de resultados generados.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    },
+    "/shipping": {
+      title: `Entrega digital | ${brand}`,
+      description: `Revisa como ${brand} entrega creditos, imagenes generadas, descargas y galerias privadas de forma digital, sin envio fisico ni tracking postal.`,
+      keywords: SPANISH_XBY_POLICY_KEYWORDS
+    }
+  };
+  const copy = copies[canonicalPath];
   if (!copy) return undefined;
   return {
     ...copy,

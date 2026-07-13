@@ -46,32 +46,48 @@ function fieldsFromJob(job: OutputLabelJob | undefined): Record<string, unknown>
   return fields && typeof fields === "object" && !Array.isArray(fields) ? fields as Record<string, unknown> : {};
 }
 
+function recordValue(value: unknown): Record<string, unknown> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
+function isVideoJob(job: OutputLabelJob | undefined): boolean {
+  const request = job?.requestJson ?? {};
+  const fields = fieldsFromJob(job);
+  const flow = recordValue(request.flow);
+  return (
+    textValue(flow?.aiAppSlug) === "video_generator" ||
+    textValue(request.mode) === "video" ||
+    textValue(request.outputType) === "video" ||
+    textValue(fields.mode) === "video" ||
+    textValue(fields.outputType) === "video" ||
+    Boolean(recordValue(request.videoTheme))
+  );
+}
+
 export function generationThemeLabel(job: OutputLabelJob | undefined): string {
   const request = job?.requestJson ?? {};
   const fields = fieldsFromJob(job);
-  const creativePack = request.creativePack && typeof request.creativePack === "object" && !Array.isArray(request.creativePack)
-    ? request.creativePack as Record<string, unknown>
-    : undefined;
-  const prompt = request.prompt && typeof request.prompt === "object" && !Array.isArray(request.prompt)
-    ? request.prompt as Record<string, unknown>
-    : undefined;
+  const creativePack = recordValue(request.creativePack);
+  const videoTheme = recordValue(request.videoTheme);
+  const prompt = recordValue(request.prompt);
   return (
+    textValue(fields.videoThemeName) ||
+    textValue(videoTheme?.name) ||
     textValue(fields.creativePackName) ||
     textValue(creativePack?.name) ||
     textValue(prompt?.themeName) ||
     textValue(fields.packageName) ||
     textValue(fields.toolPresetTitle) ||
-    "Photo Set"
+    (isVideoJob(job) ? "Video Set" : "Photo Set")
   );
 }
 
 export function generationCategoryLabel(job: OutputLabelJob | undefined): string {
   const request = job?.requestJson ?? {};
   const fields = fieldsFromJob(job);
-  const creativePack = request.creativePack && typeof request.creativePack === "object" && !Array.isArray(request.creativePack)
-    ? request.creativePack as Record<string, unknown>
-    : undefined;
-  const category = textValue(fields.creativePackCategory) || textValue(creativePack?.category);
+  const creativePack = recordValue(request.creativePack);
+  const videoTheme = recordValue(request.videoTheme);
+  const category = textValue(videoTheme?.categoryLabel) || textValue(videoTheme?.categorySlug) || textValue(fields.creativePackCategory) || textValue(creativePack?.category);
   return titleCase(category || generationThemeLabel(job));
 }
 
@@ -102,7 +118,13 @@ export function generationOptionSummary(job: OutputLabelJob | undefined): string
     "outputCount",
     "toolPresetId",
     "toolPresetTitle",
-    "trainingMode"
+    "trainingMode",
+    "frameAssetIds",
+    "videoThemeId",
+    "videoThemeName",
+    "videoThemePrompt",
+    "videoDuration",
+    "videoDurationSeconds"
   ]);
   const isToolRequest = job?.requestJson?.mode === "tool" || Boolean(textValue(fields.toolPresetTitle));
   const toolPrompt = humanizePrompt(fields.prompt);
@@ -139,11 +161,12 @@ export function generatedOutputCopy(params: {
   const runNumber = generationRunNumber(params.job, params.jobs);
   const optionSummary = generationOptionSummary(params.job);
   const optionTitle = optionSummary === "Default options" ? undefined : optionSummary;
+  const outputNoun = isVideoJob(params.job) ? "Video" : "Image";
   const title = compactParts([
     generationThemeLabel(params.job),
     generationTimeLabel(params.job),
     `Generation ${runNumber}`,
-    `Image ${params.imageIndex}`
+    `${outputNoun} ${params.imageIndex}`
   ]);
   const storedLabel = cleanStoredOutputLabel(params.asset?.label?.trim());
   const shouldUseStoredLabel = !params.job && storedLabel && !/^Output\s+\d+$/i.test(storedLabel);
@@ -155,7 +178,7 @@ export function generatedOutputCopy(params: {
       optionTitle,
       `Created ${generationTimeLabel(params.job)}`,
       `Generation ${runNumber}`,
-      `Image ${params.imageIndex}`
+      `${outputNoun} ${params.imageIndex}`
     ])
   };
 }

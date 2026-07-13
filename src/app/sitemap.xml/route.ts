@@ -38,8 +38,8 @@ export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
   const urls = await getStorefrontSitemapUrlsForHost([
-    host,
-    forwardedHost
+    forwardedHost,
+    host
   ]);
 
   return new Response(sitemapXml(urls), {

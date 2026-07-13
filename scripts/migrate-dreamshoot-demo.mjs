@@ -153,6 +153,7 @@ const pageMappings = [
   { idSuffix: "pricing", packageTemplate: "pricing", templateKey: "page", slug: "/pricing", title: "Pricing", pageType: "pricing" },
   { idSuffix: "collections", packageTemplate: "packages", templateKey: "collection", slug: "/collections", title: "Photo packages", pageType: "collection" },
   { idSuffix: "tools", packageTemplate: "tools", templateKey: "tools", slug: "/tools", title: "Free AI tools", pageType: "tools" },
+  { idSuffix: "workflow", packageTemplate: "workflow", templateKey: "workflow", slug: "/workflow", title: "How it works", pageType: "content" },
   { idSuffix: "tool_image", packageTemplate: "tool-detail", templateKey: "product", slug: "/tools/headshot", title: "Headshot Generator", pageType: "ai_tool" },
   { idSuffix: "login", packageTemplate: "login", templateKey: "login", slug: "/login", title: "Customer login", pageType: "login" },
   { idSuffix: "app", packageTemplate: "app-home", templateKey: "app-home", slug: "/app", title: "Customer workspace", pageType: "workspace" },
@@ -166,7 +167,7 @@ const pageMappings = [
   { idSuffix: "shipping", packageTemplate: "policy", templateKey: "shipping", slug: "/policies/shipping", title: "Shipping and Digital Delivery Policy", pageType: "policy" },
   { idSuffix: "terms_service", packageTemplate: "policy", templateKey: "terms", slug: "/terms-of-service", title: "Terms of Service", pageType: "policy" },
   { idSuffix: "content", packageTemplate: "policy", templateKey: "content", slug: "/policies/content", title: "Content policy", pageType: "policy" },
-  { idSuffix: "help", packageTemplate: "help", templateKey: "help", slug: "/help", title: "Help center", pageType: "help" },
+  { idSuffix: "help", packageTemplate: "help", templateKey: "help", slug: "/faq", title: "Help center", pageType: "help" },
   { idSuffix: "about_us", packageTemplate: "about-us", templateKey: "about-us", slug: "/about-us", title: "About Us", pageType: "content" },
   { idSuffix: "contact_us", packageTemplate: "contact-us", templateKey: "contact-us", slug: "/contact-us", title: "Contact Us", pageType: "content" },
   { idSuffix: "blog", packageTemplate: "blog-list", templateKey: "blog", slug: "/blog", title: "Guides", pageType: "blog" },
@@ -206,6 +207,14 @@ const dreamshootSeoPages = {
     description: "Use MyDreamShoots tools for headshots, background edits, retouching, upscaling, prompt edits, fan posters, and image-to-video concepts.",
     keywords: "MyDreamShoots tools, AI photo editor, headshot maker, background changer, AI video preview",
     canonicalPath: "/tools",
+    index: true,
+    follow: true
+  },
+  workflow: {
+    title: "How MyDreamShoots works - private AI photo generation workflow",
+    description: "Learn how MyDreamShoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+    keywords: "MyDreamShoots workflow, AI photo generation workflow, private AI photo packages, AI photo credits",
+    canonicalPath: "/workflow",
     index: true,
     follow: true
   },
@@ -306,10 +315,10 @@ const dreamshootSeoPages = {
     follow: true
   },
   help: {
-    title: "Help for uploads, credits, tools, and private albums",
-    description: "Get MyDreamShoots help for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery.",
-    keywords: "MyDreamShoots help, AI photo upload guide, photo package support",
-    canonicalPath: "/help",
+    title: "FAQ for uploads, credits, tools, and private albums",
+    description: "Get MyDreamShoots FAQ answers for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery.",
+    keywords: "MyDreamShoots FAQ, AI photo upload guide, photo package support",
+    canonicalPath: "/faq",
     index: true,
     follow: true
   },

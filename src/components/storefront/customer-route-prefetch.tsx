@@ -9,7 +9,7 @@ const prefetchPriority = [
   "/pricing",
   "/tools",
   "/collections",
-  "/help",
+  "/faq",
   "/blog"
 ];
 
@@ -19,7 +19,7 @@ const warmFetchPathPrefixes = [
   "/collections",
   "/tools",
   "/pricing",
-  "/help"
+  "/faq"
 ];
 
 function normalizedPublicPath(path: string) {
@@ -62,7 +62,7 @@ function warmDelayForPath(path: string, index: number) {
   if (pathname === "/collections" || pathname.startsWith("/collections/")) return 180;
   if (pathname === "/login") return 260;
   if (pathname === "/pricing") return 520;
-  if (pathname === "/help" || pathname.startsWith("/help/")) return 900;
+  if (pathname === "/faq" || pathname.startsWith("/faq/") || pathname === "/help" || pathname.startsWith("/help/")) return 900;
   return 1200 + index * 300;
 }
 

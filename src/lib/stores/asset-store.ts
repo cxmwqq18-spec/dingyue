@@ -191,6 +191,7 @@ export async function pruneCustomerInputAssetsRelational(
       customerId: params.customerId,
       deletedAt: null,
       role: { in: ["input", "training_input"] },
+      NOT: { subjectRole: "video_frame" },
       ...(protectedAssetIds.size ? { id: { notIn: Array.from(protectedAssetIds) } } : {})
     }
   });
@@ -322,6 +323,7 @@ export async function readCustomerAssetFileByStorageKey(params: {
 
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
+  const altText = typeof asset.validationReport?.altText === "string" ? asset.validationReport.altText : undefined;
   const previewUrl = customerAssetFileExists(storageKey) || hasRemoteCustomerAssetReadSource()
     ? customerAssetPreviewUrl(storageKey)
     : fallbackImageForSeed(`${asset.siteId}-${asset.id}-${storageKey}`);
@@ -329,6 +331,7 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     id: asset.id,
     jobId: asset.jobId,
     subjectRole: asset.subjectRole,
+    altText,
     label: asset.label,
     storageKey,
     previewUrl,

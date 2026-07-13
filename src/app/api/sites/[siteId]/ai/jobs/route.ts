@@ -5,7 +5,7 @@ import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { publicUrlForRequest } from "@/lib/session";
 import { createGenerationJobRelational, settleGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload, dispatchWorkerPayload, resolveWorkerBaseUrls } from "@/lib/worker";
+import { buildWorkerPayload, dispatchWorkerPayload, isLoopbackBaseUrl, resolveWorkerBaseUrls } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -17,6 +17,43 @@ export async function OPTIONS() {
     status: 204,
     headers: { Allow: "HEAD,POST,OPTIONS" }
   });
+}
+
+function isVideoJobRequest(body: { aiAppSlug?: string; params?: Record<string, unknown> }) {
+  const params = body.params ?? {};
+  const fields = params.fields && typeof params.fields === "object" && !Array.isArray(params.fields)
+    ? params.fields as Record<string, unknown>
+    : {};
+  return body.aiAppSlug === "video_generator" ||
+    params.mode === "video" ||
+    params.outputType === "video" ||
+    typeof params.videoThemeId === "string" ||
+    fields.mode === "video" ||
+    fields.outputType === "video" ||
+    typeof fields.videoThemeId === "string";
+}
+
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+function stringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : [];
+}
+
+function requestAssetIds(body: { aiAppSlug?: string; params?: Record<string, unknown> & { assetIds?: unknown } }): string[] {
+  const params = body.params ?? {};
+  const fields = recordValue(params.fields);
+  return Array.from(new Set([
+    ...stringArray(params.assetIds),
+    ...(isVideoJobRequest(body) ? stringArray(fields.frameAssetIds) : [])
+  ]));
+}
+
+function shouldRequireProviderReachableVideoFrames() {
+  if (process.env.ALLOW_LOOPBACK_VIDEO_FRAME_URLS === "1") return false;
+  if (process.env.REQUIRE_PUBLIC_VIDEO_FRAME_URLS === "1") return true;
+  return process.env.NODE_ENV === "production";
 }
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -32,7 +69,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.generation, key: `${siteId}:${body.customerId}:jobs` });
   if (!guard.ok) return guard.response;
   const workerBaseUrls = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
+  if (shouldRequireProviderReachableVideoFrames() && isVideoJobRequest(body) && isLoopbackBaseUrl(workerBaseUrls.publicBaseUrl)) {
+    return NextResponse.json({ error: "video_public_asset_url_required" }, { status: 400 });
+  }
   try {
+    const assetIds = requestAssetIds(body);
     const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
     const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
       siteId,
@@ -43,7 +84,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         : undefined,
       requestJson: {
         ...(body.params ?? {}),
-        assetIds: Array.isArray(body.params?.assetIds) ? body.params.assetIds.filter((item): item is string => typeof item === "string") : [],
+        assetIds,
         creativePackId: typeof body.params?.creativePackId === "string" ? body.params.creativePackId : undefined,
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
       }

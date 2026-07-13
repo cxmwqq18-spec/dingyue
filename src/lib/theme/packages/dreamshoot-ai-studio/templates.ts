@@ -2,7 +2,7 @@ import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } f
 import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
-export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
+export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "workflow" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -845,6 +845,40 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     },
     1
   ),
+  workflow: page(
+    "content",
+    ["workflow_intro_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"],
+    {
+      workflow_intro_1: section("rich_text", {
+        eyebrow: "How it works",
+        title: "How MyDreamShoots turns uploads into private AI photo sets.",
+        body: "Upload photos you own, choose the photo package you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: assets.flowPrivateAlbumWorkspace,
+        primaryCta: "Browse packages",
+        primaryHref: "/collections",
+        secondaryCta: "View pricing",
+        secondaryHref: "/pricing"
+      }, [
+        block("workflow_intro_private", "rich_text_card", { meta: "Private", title: "Account-scoped uploads", description: "Source photos, jobs, credits, and albums stay attached to the signed-in customer account." }),
+        block("workflow_intro_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the package cost before a private request reserves credits." }),
+        block("workflow_intro_gallery", "rich_text_card", { meta: "Gallery", title: "Finished albums", description: "Generated images return to a private gallery for review and download." })
+      ]),
+      workflow_1: homeSections.workflow_1,
+      plan_rules_1: homeSections.plan_rules_1,
+      faq_1: homeSections.faq_1,
+      conversion_1: homeSections.conversion_1
+    },
+    1,
+    {
+      title: "How MyDreamShoots AI photo generation works",
+      description: "Learn how MyDreamShoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+      keywords: "MyDreamShoots workflow, AI photo generation workflow, private AI photo packages, AI photo credits",
+      canonicalPath: "/workflow",
+      robots: { index: true, follow: true }
+    }
+  ),
   "package-detail": page(
     "package_detail",
     ["package_hero_1", "package_before_after_1", "packages_1", "packages_strip_1", "trust_1", "pricing_1", "faq_1", "conversion_1"],
@@ -1077,8 +1111,8 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         imageUrl: assets.flowPrivateAlbumWorkspace,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
-        secondaryCta: "Help center",
-        secondaryHref: "/help"
+        secondaryCta: "FAQ",
+        secondaryHref: "/faq"
       }, [
         block("about_value_transparency", "rich_text_card", { meta: "01", title: "Clear credit use", description: "Credit reservations, successful generations, returned credits, and billing events are visible in the customer account." }),
         block("about_value_support", "rich_text_card", { meta: "02", title: "Supportable workflow", description: "Customers can contact support for account, billing, privacy, upload, or album questions." }),
@@ -1200,6 +1234,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   pricing: "Pricing",
   packages: "Browse packages",
   tools: "Tools Directory",
+  workflow: "How It Works",
   "package-detail": "Package Detail",
   "tool-detail": "AI Tool Detail",
   login: "Login",
@@ -1246,16 +1281,16 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       headerLinks: [
         { label: "Browse packages", href: "/collections" },
         { label: "Tools", href: "/tools" },
-        { label: "How it works", href: "#workflow" },
+        { label: "How it works", href: "/workflow" },
         { label: "Pricing", href: "/pricing" },
-        { label: "FAQ", href: "#faq" }
+        { label: "FAQ", href: "/faq" }
       ],
       footerLinks: [
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
         { label: "Cookie Policy", href: "/cookies", group: "support" },
         { label: "Content policy", href: "/content", group: "support" },
-        { label: "Help center", href: "/help", group: "company" },
+        { label: "FAQ", href: "/faq", group: "company" },
         { label: "About us", href: "/about-us", group: "company" },
         { label: "Contact us", href: "/contact-us", group: "company" },
         { label: "Creators Circle", href: "/creators-circle", group: "company" },
@@ -1277,9 +1312,9 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         blocks: [
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Browse packages", href: "/collections" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
-          { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "#workflow" } },
+          { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
-          { id: "dreamshoot_header_faq", type: "menu_link", settings: { label: "FAQ", href: "#faq" } },
+          { id: "dreamshoot_header_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq" } },
           ...dreamshootMegaTools
         ]
       },
@@ -1312,7 +1347,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_packs", type: "menu_link", settings: { label: "Packs", href: "/collections", group: "product" } },
           { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "Tools", href: "/tools", group: "product" } },
           { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Headshot maker", href: toolHref("headshot"), group: "product" } },
-          { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "Help center", href: "/help", group: "company" } },
+          { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },

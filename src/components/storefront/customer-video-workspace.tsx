@@ -1,84 +1,123 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUp, CheckCircle2, Film, GripVertical, ImagePlus, Play, Trash2, Upload } from "lucide-react";
-import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
-import type { PublicCustomer, ThemeRuntimeAsset, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { Check, ChevronDown, Film, Monitor, Send, Sparkles } from "lucide-react";
+import { customerJsonHeaders } from "@/lib/client-csrf";
+import type { PublicCustomer, VideoTheme } from "@/lib/types";
+import {
+  DEFAULT_VIDEO_DURATION_SECONDS,
+  VIDEO_DURATION_OPTIONS,
+  normalizeVideoDurationSeconds,
+  normalizeVideoFrameLimit,
+  trimVideoFrameSelection,
+  videoDurationCreditCost,
+  type VideoDurationSeconds
+} from "@/lib/video-frame-config";
 
 type SubscriptionStatus = "loading" | "active" | "required" | "admin";
-type LocalFrameAsset = ThemeRuntimeAsset & { localStatus?: "uploading" | "failed" | "ready" };
+type VideoAspectRatio = "16:9" | "4:3" | "1:1" | "3:4" | "9:16";
+type VideoResolution = "720p" | "480p";
+type CreatedVideoJobFeedback = {
+  customerBalance?: PublicCustomer["balance"];
+};
+
+const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
+  { id: "16:9", label: "16:9", shape: "aspect-[16/9] w-7" },
+  { id: "4:3", label: "4:3", shape: "aspect-[4/3] w-6" },
+  { id: "1:1", label: "1:1", shape: "aspect-square w-5" },
+  { id: "3:4", label: "3:4", shape: "aspect-[3/4] h-6" },
+  { id: "9:16", label: "9:16", shape: "aspect-[9/16] h-7" }
+];
+
+const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string }> = [
+  { id: "720p", label: "720P" },
+  { id: "480p", label: "480P" }
+];
+
+const PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion";
 
 function vt(spanish: boolean, english: string, spanishText: string) {
   return spanish ? spanishText : english;
 }
 
-function uploadLabelFor(file: File, index: number) {
-  return file.name.replace(/\.[^.]+$/, "") || `video frame ${index + 1}`;
+function defaultVideoTheme(themes: VideoTheme[]): VideoTheme | undefined {
+  return themes.find((theme) => theme.slug === PROMPT_DIRECTED_VIDEO_THEME_SLUG) ??
+    themes.find((theme) => theme.slug === "cinematic-portrait-motion") ??
+    themes.find((theme) => theme.category?.slug === "portrait-motion") ??
+    themes[0];
 }
 
 function errorText(error: string | undefined, status: number, spanish: boolean) {
-  if (error === "subscription_required") return vt(spanish, "Choose a subscription before generating video.", "Elige una suscripcion antes de generar video.");
+  if (status === 401 || error === "customer_login_required") return vt(spanish, "Please sign in again before generating video.", "Vuelve a iniciar sesion antes de generar video.");
+  if (status === 403 || error?.includes("csrf")) return vt(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.");
+  if (error === "subscription_required") return vt(spanish, "Choose a subscription or use enough credits before generating video.", "Elige una suscripcion o usa creditos suficientes antes de generar video.");
   if (error === "insufficient_credits") return vt(spanish, "Not enough credits for this video theme.", "No hay creditos suficientes para este tema de video.");
-  if (error === "video_theme_required") return vt(spanish, "Choose a video theme before generating.", "Elige un tema de video antes de generar.");
+  if (error === "video_theme_required") return vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento.");
   if (error === "video_frames_required") return vt(spanish, "Select at least one frame image.", "Selecciona al menos una imagen de fotograma.");
   if (error === "too_many_video_frames") return vt(spanish, "This theme allows fewer frame images.", "Este tema permite menos imagenes de fotograma.");
+  if (error === "too_many_video_frames_for_provider") return vt(spanish, "This video preset allows fewer frame images. Remove extra frames and try again.", "Este ajuste de video permite menos fotogramas. Quita fotogramas extra e intentalo de nuevo.");
+  if (error === "video_frame_asset_required") return vt(spanish, "Use images uploaded in the video frame area before generating.", "Usa imagenes subidas en el area de fotogramas antes de generar.");
+  if (error === "video_public_asset_url_required") return vt(spanish, "Video generation needs a public asset URL so the provider can read the selected frame images.", "La generacion de video necesita una URL publica de recursos para que el proveedor lea los fotogramas seleccionados.");
   if (status === 409) return vt(spanish, "Another request is already running. Check the All tab before starting a new one.", "Ya hay otra solicitud en ejecucion. Revisa la pestana Todo antes de iniciar otra.");
   return vt(spanish, "Video generation could not start. Please check the frame images and try again.", "No se pudo iniciar el video. Revisa las imagenes e intentalo de nuevo.");
 }
 
+function isCsrfError(error: string | undefined, status: number) {
+  return status === 403 && (error === "csrf_token_required" || error === "csrf_token_mismatch" || Boolean(error?.includes("csrf")));
+}
+
 export function CustomerVideoWorkspace({
-  assets,
   customer,
   onJobCreated,
+  onOpenFrameManager,
+  readyFrameIds,
+  selectedFrameIds,
+  setSelectedFrameIds,
   siteId,
   spanish = false,
   subscriptionStatus
 }: {
-  assets: ThemeRuntimeAsset[];
   customer: PublicCustomer;
   siteId: string;
   subscriptionStatus: SubscriptionStatus;
   spanish?: boolean;
-  onJobCreated: (jobId: string) => void;
+  readyFrameIds?: string[];
+  selectedFrameIds: string[];
+  setSelectedFrameIds: Dispatch<SetStateAction<string[]>>;
+  onJobCreated: (jobId: string, feedback?: CreatedVideoJobFeedback) => void;
+  onOpenFrameManager: () => void;
 }) {
-  const [categories, setCategories] = useState<VideoThemeCategory[]>([]);
   const [themes, setThemes] = useState<VideoTheme[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedThemeId, setSelectedThemeId] = useState("");
-  const [frameAssets, setFrameAssets] = useState<LocalFrameAsset[]>(() => assets.filter((asset) => asset.mimeType.startsWith("image/")));
-  const [selectedFrameIds, setSelectedFrameIds] = useState<string[]>([]);
-  const [draggedFrameId, setDraggedFrameId] = useState<string | null>(null);
+  const [selectedDurationSeconds, setSelectedDurationSeconds] = useState<VideoDurationSeconds>(DEFAULT_VIDEO_DURATION_SECONDS);
+  const [selectedAspectRatio, setSelectedAspectRatio] = useState<VideoAspectRatio>("16:9");
+  const [selectedResolution, setSelectedResolution] = useState<VideoResolution>("720p");
+  const [formatPanelOpen, setFormatPanelOpen] = useState(false);
   const [promptNote, setPromptNote] = useState("");
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const uploadInputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    setFrameAssets((current) => {
-      const next = new Map(current.map((asset) => [asset.id, asset]));
-      assets.filter((asset) => asset.mimeType.startsWith("image/")).forEach((asset) => next.set(asset.id, asset));
-      return Array.from(next.values()).sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime());
-    });
-  }, [assets]);
 
   useEffect(() => {
     const controller = new AbortController();
     async function loadThemes() {
       try {
-        const [categoryResponse, themeResponse] = await Promise.all([
-          fetch(`/api/sites/${siteId}/video-theme-categories`, { cache: "no-store", signal: controller.signal }),
-          fetch(`/api/sites/${siteId}/video-themes`, { cache: "no-store", signal: controller.signal })
-        ]);
-        const categoryPayload = (await categoryResponse.json().catch(() => ({}))) as { categories?: VideoThemeCategory[] };
-        const themePayload = (await themeResponse.json().catch(() => ({}))) as { themes?: VideoTheme[] };
-        if (!categoryResponse.ok || !themeResponse.ok) throw new Error("video_themes_unavailable");
-        setCategories(categoryPayload.categories ?? []);
-        setThemes(themePayload.themes ?? []);
-        setSelectedThemeId((current) => current || themePayload.themes?.[0]?.id || "");
+        const response = await fetch(`/api/sites/${siteId}/video-themes?includeCategories=1&pageSize=100`, {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        const payload = (await response.json().catch(() => ({}))) as {
+          themes?: VideoTheme[];
+        };
+        if (!response.ok) throw new Error("video_themes_unavailable");
+        const nextThemes = payload.themes ?? [];
+        setThemes(nextThemes);
+        setSelectedThemeId(defaultVideoTheme(nextThemes)?.id || "");
+        if (!nextThemes.length) {
+          setMessage(vt(spanish, "No active video presets are available yet.", "Aun no hay ajustes de video activos."));
+        }
       } catch {
         if (!controller.signal.aborted) {
-          setMessage(vt(spanish, "Video themes could not load. Refresh this page and try again.", "No se pudieron cargar los temas de video. Actualiza la pagina e intentalo de nuevo."));
+          setMessage(vt(spanish, "Video presets could not load. Refresh this page and try again.", "No se pudieron cargar los ajustes de video. Actualiza la pagina e intentalo de nuevo."));
         }
       }
     }
@@ -86,109 +125,24 @@ export function CustomerVideoWorkspace({
     return () => controller.abort();
   }, [siteId, spanish]);
 
-  const selectedTheme = themes.find((theme) => theme.id === selectedThemeId);
-  const maxFrames = Math.min(4, Math.max(1, selectedTheme?.maxFrames ?? 4));
-  const visibleThemes = selectedCategory === "all"
-    ? themes
-    : themes.filter((theme) => theme.category?.slug === selectedCategory);
-  const availableFrames = frameAssets.filter((asset) => asset.localStatus !== "failed");
-  const selectedFrames = selectedFrameIds
-    .map((assetId) => availableFrames.find((asset) => asset.id === assetId))
-    .filter((asset): asset is LocalFrameAsset => Boolean(asset));
+  const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
+  const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames);
+  const providerMaxFrames = selectedTheme?.providerMaxFrames ? normalizeVideoFrameLimit(selectedTheme.providerMaxFrames) : undefined;
+  const providerFrameLimitMessage = providerMaxFrames && providerMaxFrames < maxFrames
+    ? vt(spanish, `Selected frames are first composed into one AI starter scene before the video provider receives it.`, `Los fotogramas seleccionados se componen primero en una escena inicial de IA antes de enviarla al proveedor de video.`)
+    : "";
+  const selectedCreditCost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, selectedDurationSeconds) : 0;
+  const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
+  const generationFrameIds = readyFrameIds ?? selectedFrameIds;
+  const hasPendingFrameUploads = generationFrameIds.length !== selectedFrameIds.length;
 
   useEffect(() => {
-    if (selectedFrameIds.length > maxFrames) setSelectedFrameIds((current) => current.slice(0, maxFrames));
-  }, [maxFrames, selectedFrameIds.length]);
+    if (selectedTheme) setSelectedDurationSeconds(normalizeVideoDurationSeconds(selectedTheme.durationSeconds));
+  }, [selectedTheme?.id, selectedTheme?.durationSeconds]);
 
-  function toggleFrame(asset: LocalFrameAsset) {
-    if (asset.localStatus === "uploading") return;
-    setSelectedFrameIds((current) => {
-      if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
-      if (current.length >= maxFrames) {
-        setMessage(vt(spanish, `This theme supports up to ${maxFrames} frame images.`, `Este tema permite hasta ${maxFrames} imagenes de fotograma.`));
-        return current;
-      }
-      return [...current, asset.id];
-    });
-  }
-
-  function moveFrame(assetId: string, direction: -1 | 1) {
-    setSelectedFrameIds((current) => {
-      const index = current.indexOf(assetId);
-      const nextIndex = index + direction;
-      if (index < 0 || nextIndex < 0 || nextIndex >= current.length) return current;
-      const next = [...current];
-      [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
-      return next;
-    });
-  }
-
-  function dropFrame(targetId: string) {
-    if (!draggedFrameId || draggedFrameId === targetId) return;
-    setSelectedFrameIds((current) => {
-      const sourceIndex = current.indexOf(draggedFrameId);
-      const targetIndex = current.indexOf(targetId);
-      if (sourceIndex < 0 || targetIndex < 0) return current;
-      const next = [...current];
-      const [item] = next.splice(sourceIndex, 1);
-      next.splice(targetIndex, 0, item);
-      return next;
-    });
-    setDraggedFrameId(null);
-  }
-
-  async function uploadFrameFiles(files: FileList | null) {
-    const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
-    if (!imageFiles.length) {
-      setMessage(vt(spanish, "Choose one or more image files before uploading.", "Elige una o mas imagenes antes de subir."));
-      return;
-    }
-    setUploading(true);
-    setMessage(vt(spanish, `Uploading ${imageFiles.length} frame image${imageFiles.length === 1 ? "" : "s"}...`, `Subiendo ${imageFiles.length} imagen${imageFiles.length === 1 ? "" : "es"} de fotograma...`));
-    const createdAssets: ThemeRuntimeAsset[] = [];
-    for (const [index, file] of imageFiles.entries()) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("label", uploadLabelFor(file, index));
-      formData.append("role", "input");
-      formData.append("subjectRole", "reference");
-      const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
-        method: "POST",
-        headers: csrfHeader(`customer_csrf_${siteId}`),
-        body: formData
-      });
-      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
-      if (!response.ok || !result.asset) {
-        setUploading(false);
-        setMessage(vt(spanish, `We could not upload ${file.name}. Please try again.`, `No pudimos subir ${file.name}. Intentalo de nuevo.`));
-        return;
-      }
-      createdAssets.push(result.asset);
-    }
-    setFrameAssets((current) => [...createdAssets, ...current.filter((asset) => !createdAssets.some((created) => created.id === asset.id))]);
-    setSelectedFrameIds((current) => Array.from(new Set([...current, ...createdAssets.map((asset) => asset.id)])).slice(0, maxFrames));
-    setMessage(vt(spanish, `${createdAssets.length} frame image${createdAssets.length === 1 ? "" : "s"} uploaded.`, `${createdAssets.length} imagen${createdAssets.length === 1 ? "" : "es"} subida${createdAssets.length === 1 ? "" : "s"}.`));
-    setUploading(false);
-    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-  }
-
-  async function deleteFrame(asset: LocalFrameAsset) {
-    const confirmed = window.confirm(vt(spanish, `Delete "${asset.label}" from your private frame images?`, `Eliminar "${asset.label}" de tus imagenes privadas?`));
-    if (!confirmed) return;
-    setFrameAssets((current) => current.filter((item) => item.id !== asset.id));
-    setSelectedFrameIds((current) => current.filter((id) => id !== asset.id));
-    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${asset.id}`, {
-      method: "DELETE",
-      headers: csrfHeader(`customer_csrf_${siteId}`)
-    });
-    if (!response.ok) {
-      setMessage(vt(spanish, "We could not delete that frame image. Refresh and try again.", "No pudimos eliminar esa imagen. Actualiza e intentalo de nuevo."));
-      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-      return;
-    }
-    setMessage(vt(spanish, "Frame image deleted.", "Imagen eliminada."));
-    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-  }
+  useEffect(() => {
+    if (selectedFrameIds.length > maxFrames) setSelectedFrameIds((current) => trimVideoFrameSelection(current, maxFrames));
+  }, [maxFrames, selectedFrameIds.length, setSelectedFrameIds]);
 
   async function generateVideo() {
     if (pending) return;
@@ -196,56 +150,83 @@ export function CustomerVideoWorkspace({
       setMessage(vt(spanish, "We are still checking your subscription. Try again in a moment.", "Aun estamos revisando tu suscripcion. Intentalo en un momento."));
       return;
     }
-    if (subscriptionStatus === "required") {
-      setMessage(vt(spanish, "Choose a subscription before generating video.", "Elige una suscripcion antes de generar video."));
+    if (subscriptionStatus === "required" && !hasCreditsForSelectedVideo) {
+      setMessage(vt(spanish, "Choose a subscription or add enough credits before generating video.", "Elige una suscripcion o anade creditos suficientes antes de generar video."));
       return;
     }
     if (!selectedTheme) {
-      setMessage(vt(spanish, "Choose a video theme before generating.", "Elige un tema de video antes de generar."));
+      setMessage(vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento."));
       return;
     }
     if (!selectedFrameIds.length) {
-      setMessage(vt(spanish, "Select at least one frame image.", "Selecciona al menos una imagen de fotograma."));
+      setMessage(vt(spanish, "Select at least one frame image on the left.", "Selecciona al menos una imagen de fotograma a la izquierda."));
+      onOpenFrameManager();
       return;
     }
-    if (selectedTheme.creditCost > customer.balance.available && subscriptionStatus !== "admin") {
-      setMessage(vt(spanish, `This theme needs ${selectedTheme.creditCost} credits, but ${customer.balance.available} are available.`, `Este tema necesita ${selectedTheme.creditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
+    if (hasPendingFrameUploads || !generationFrameIds.length) {
+      setMessage(vt(spanish, "Frame uploads are still finishing. Generate after every selected frame is ready.", "Las subidas de fotogramas aun estan terminando. Genera cuando todos los fotogramas seleccionados esten listos."));
+      return;
+    }
+    if (selectedCreditCost > customer.balance.available && subscriptionStatus !== "admin") {
+      setMessage(vt(spanish, `This duration needs ${selectedCreditCost} credits, but ${customer.balance.available} are available.`, `Esta duracion necesita ${selectedCreditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
       return;
     }
     setPending(true);
     setMessage(vt(spanish, "Creating your video request and reserving credits...", "Creando tu solicitud de video y reservando creditos..."));
-    const response = await fetch(`/api/sites/${siteId}/ai/jobs`, {
-      method: "POST",
-      headers: customerJsonHeaders(siteId),
-      body: JSON.stringify({
-        customerId: customer.id,
-        aiAppSlug: "video_generator",
-        params: {
+    const requestBody = {
+      customerId: customer.id,
+      aiAppSlug: "video_generator",
+      params: {
+        mode: "video",
+        outputType: "video",
+        videoThemeId: selectedTheme.id,
+        duration: String(selectedDurationSeconds),
+        videoDuration: String(selectedDurationSeconds),
+        durationSeconds: selectedDurationSeconds,
+        videoDurationSeconds: selectedDurationSeconds,
+        aspect_ratio: selectedAspectRatio,
+        aspectRatio: selectedAspectRatio,
+        resolution: selectedResolution,
+        estimatedCreditCost: selectedCreditCost,
+        assetIds: generationFrameIds,
+        fields: {
           mode: "video",
           outputType: "video",
           videoThemeId: selectedTheme.id,
-          assetIds: selectedFrameIds,
-          fields: {
-            mode: "video",
-            outputType: "video",
-            videoThemeId: selectedTheme.id,
-            videoThemeName: selectedTheme.name,
-            videoThemePrompt: selectedTheme.prompt,
-            frameAssetIds: selectedFrameIds,
-            duration: String(selectedTheme.durationSeconds),
-            promptNote: promptNote.trim()
-          }
+          videoThemeName: selectedTheme.name,
+          videoThemePrompt: selectedTheme.prompt,
+          frameAssetIds: generationFrameIds,
+          duration: String(selectedDurationSeconds),
+          videoDuration: String(selectedDurationSeconds),
+          durationSeconds: selectedDurationSeconds,
+          videoDurationSeconds: selectedDurationSeconds,
+          aspect_ratio: selectedAspectRatio,
+          aspectRatio: selectedAspectRatio,
+          resolution: selectedResolution,
+          estimatedCreditCost: selectedCreditCost,
+          promptNote: promptNote.trim()
         }
-      })
+      }
+    };
+    const submitRequest = () => fetch(`/api/sites/${siteId}/ai/jobs`, {
+      method: "POST",
+      headers: customerJsonHeaders(siteId),
+      body: JSON.stringify(requestBody)
     });
-    const result = (await response.json().catch(() => ({}))) as { job?: { id: string }; error?: string };
+    let response = await submitRequest();
+    let result = (await response.json().catch(() => ({}))) as { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
+    if (isCsrfError(result.error, response.status)) {
+      await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=csrf-${Date.now()}`, { cache: "no-store" }).catch(() => null);
+      response = await submitRequest();
+      result = (await response.json().catch(() => ({}))) as { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
+    }
     setPending(false);
     if (!response.ok || !result.job) {
       setMessage(errorText(result.error, response.status, spanish));
       return;
     }
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-    onJobCreated(result.job.id);
+    onJobCreated(result.job.id, { customerBalance: result.customerBalance });
   }
 
   return (
@@ -257,7 +238,7 @@ export function CustomerVideoWorkspace({
           </span>
           <div>
             <h2 className="text-base font-semibold">{vt(spanish, "Create an image-to-video clip", "Crear un clip de imagen a video")}</h2>
-            <p className="mt-1 text-xs text-white/50">{vt(spanish, "Choose ordered frame images, select a video theme, then generate one private MP4.", "Elige fotogramas ordenados, selecciona un tema y genera un MP4 privado.")}</p>
+            <p className="mt-1 text-xs text-white/50">{vt(spanish, "Manage frame images on the left, describe the motion here, then generate one private MP4.", "Gestiona los fotogramas a la izquierda, describe el movimiento aqui y genera un MP4 privado.")}</p>
           </div>
         </div>
         <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58">
@@ -265,180 +246,165 @@ export function CustomerVideoWorkspace({
         </span>
       </div>
 
-      <div className="grid gap-5 p-4 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] xl:p-5">
-        <div className="grid gap-4">
-          <div className="rounded-[18px] border border-white/10 bg-black/18 p-4">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Step 01", "Paso 01")}</p>
-                <h3 className="mt-2 text-lg font-semibold">{vt(spanish, "Select frame images", "Seleccionar fotogramas")}</h3>
-                <p className="mt-2 max-w-xl text-sm leading-6 text-white/58">
-                  {vt(spanish, `Use 1-${maxFrames} images. Drag selected frames to control the visual order.`, `Usa 1-${maxFrames} imagenes. Arrastra los fotogramas seleccionados para ordenar.`)}
-                </p>
-              </div>
-              <button
-                className="inline-flex min-h-10 items-center gap-2 rounded-[10px] border border-white/14 bg-white/[0.06] px-4 text-sm font-semibold text-white transition hover:bg-white/[0.1] disabled:cursor-wait disabled:opacity-55"
-                disabled={uploading}
-                onClick={() => uploadInputRef.current?.click()}
-                type="button"
-              >
-                <Upload className="h-4 w-4" strokeWidth={1.8} />
-                {uploading ? vt(spanish, "Uploading", "Subiendo") : vt(spanish, "Upload", "Subir")}
-              </button>
-              <input
-                accept="image/*"
-                className="sr-only"
-                multiple
-                onChange={(event) => {
-                  void uploadFrameFiles(event.target.files);
-                  event.target.value = "";
-                }}
-                ref={uploadInputRef}
-                type="file"
-              />
+      <div className="p-4 xl:p-5" id="video-step-generate">
+        <div className="rounded-[20px] border border-white/10 bg-[#11151d] p-4 shadow-[0_22px_70px_-55px_rgba(49,212,255,0.62)] sm:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Agent video composer", "Compositor de video")}</p>
+              <h3 className="mt-2 text-xl font-semibold">{vt(spanish, "Describe the clip you want", "Describe el clip que quieres")}</h3>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-white/56">
+                {vt(spanish, "Use the selected frame order, then add motion, mood, camera, or story direction in one place.", "Usa el orden de fotogramas seleccionado y agrega movimiento, ambiente, camara o direccion narrativa en un solo lugar.")}
+              </p>
             </div>
-
-            <div className="mt-4 grid gap-3">
-              {selectedFrames.length ? (
-                selectedFrames.map((asset, index) => (
-                  <div
-                    className="grid grid-cols-[88px_minmax(0,1fr)_auto] items-center gap-3 rounded-[12px] border border-white/12 bg-white/[0.035] p-2"
-                    draggable
-                    key={asset.id}
-                    onDragEnd={() => setDraggedFrameId(null)}
-                    onDragOver={(event) => event.preventDefault()}
-                    onDragStart={() => setDraggedFrameId(asset.id)}
-                    onDrop={() => dropFrame(asset.id)}
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[8px] bg-white/[0.06]">
-                      <img alt="" className="h-full w-full object-cover" src={asset.previewUrl} />
-                      <span className="absolute left-1.5 top-1.5 rounded-full bg-[#31d4ff] px-2 py-0.5 text-[10px] font-bold text-[#041014]">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-white">{asset.label}</p>
-                      <p className="mt-1 truncate text-xs text-white/42">{vt(spanish, "Frame order", "Orden")} {index + 1}</p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <GripVertical className="h-4 w-4 text-white/34" strokeWidth={1.8} />
-                      <button className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveFrame(asset.id, -1)} type="button"><ArrowUp className="h-4 w-4" /></button>
-                      <button className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveFrame(asset.id, 1)} type="button"><ArrowDown className="h-4 w-4" /></button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <button
-                  className="grid min-h-[132px] place-items-center rounded-[14px] border border-dashed border-white/18 bg-black/16 px-5 text-center text-sm leading-6 text-white/54 transition hover:border-[#31d4ff]/55 hover:text-white"
-                  onClick={() => uploadInputRef.current?.click()}
-                  type="button"
-                >
-                  <span className="grid gap-2 justify-items-center">
-                    <ImagePlus className="h-6 w-6" strokeWidth={1.8} />
-                    {vt(spanish, "Upload images or choose existing images below.", "Sube imagenes o elige imagenes existentes abajo.")}
-                  </span>
-                </button>
-              )}
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2 2xl:grid-cols-3">
-              {availableFrames.slice(0, 18).map((asset) => {
-                const selected = selectedFrameIds.includes(asset.id);
-                return (
-                  <div className={`group relative overflow-hidden rounded-[12px] border bg-black/20 transition ${selected ? "border-[#31d4ff] ring-2 ring-[#31d4ff]/30" : "border-white/10 hover:border-white/25"}`} key={asset.id}>
-                    <button className="block w-full text-left" onClick={() => toggleFrame(asset)} type="button">
-                      <span className="relative block aspect-square overflow-hidden">
-                        <img alt="" className="h-full w-full object-cover" src={asset.previewUrl} />
-                        <span className={`absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-full border ${selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#041014]" : "border-white/45 bg-black/58 text-white/60"}`}>
-                          {selected ? <CheckCircle2 className="h-4 w-4" strokeWidth={2.2} /> : null}
-                        </span>
-                      </span>
-                      <span className="block truncate px-2 py-2 text-xs font-semibold text-white/76">{asset.label}</span>
-                    </button>
-                    <button
-                      aria-label={`Delete ${asset.label}`}
-                      className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full border border-white/15 bg-black/58 text-white/70 opacity-0 transition hover:bg-rose-500/24 hover:text-rose-50 group-hover:opacity-100"
-                      onClick={() => void deleteFrame(asset)}
-                      type="button"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.9} />
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div className="grid content-start gap-4">
-          <div className="rounded-[18px] border border-white/10 bg-black/18 p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Step 02", "Paso 02")}</p>
-            <h3 className="mt-2 text-lg font-semibold">{vt(spanish, "Choose a video theme", "Elegir tema de video")}</h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedCategory === "all" ? "bg-white text-[#101114]" : "border border-white/12 bg-white/[0.04] text-white/62"}`} onClick={() => setSelectedCategory("all")} type="button">
-                {vt(spanish, "All themes", "Todos")}
-              </button>
-              {categories.map((category) => (
-                <button className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedCategory === category.slug ? "bg-white text-[#101114]" : "border border-white/12 bg-white/[0.04] text-white/62"}`} key={category.id} onClick={() => setSelectedCategory(category.slug)} type="button">
-                  {category.label}
-                </button>
-              ))}
-            </div>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
-              {visibleThemes.map((theme) => {
-                const selected = theme.id === selectedThemeId;
-                return (
-                  <button className={`overflow-hidden rounded-[14px] border text-left transition ${selected ? "border-[#31d4ff] bg-[#31d4ff]/8 ring-2 ring-[#31d4ff]/22" : "border-white/10 bg-white/[0.035] hover:border-white/24"}`} key={theme.id} onClick={() => setSelectedThemeId(theme.id)} type="button">
-                    <span className="block aspect-[16/9] bg-white/[0.06]">
-                      {theme.imageUrl ? <img alt="" className="h-full w-full object-cover" src={theme.imageUrl} /> : null}
-                    </span>
-                    <span className="block p-3">
-                      <span className="block truncate text-sm font-semibold text-white">{theme.name}</span>
-                      <span className="mt-1 line-clamp-2 block min-h-10 text-xs leading-5 text-white/52">{theme.description}</span>
-                      <span className="mt-3 flex flex-wrap gap-2">
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/70">{theme.creditCost} {vt(spanish, "credits", "creditos")}</span>
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/70">{theme.durationSeconds}s</span>
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/70">{vt(spanish, "Max", "Max")} {theme.maxFrames}</span>
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/62">
+              {selectedFrameIds.length}/{maxFrames} {vt(spanish, "frames", "fotogramas")}
             </div>
           </div>
 
-          <div className="rounded-[18px] border border-white/10 bg-black/18 p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Step 03", "Paso 03")}</p>
-            <h3 className="mt-2 text-lg font-semibold">{vt(spanish, "Confirm video", "Confirmar video")}</h3>
-            <div className="mt-3 grid gap-2 text-sm leading-6 text-white/62">
-              <p>{vt(spanish, "Theme", "Tema")}: <span className="font-semibold text-white">{selectedTheme?.name ?? vt(spanish, "None selected", "Sin seleccionar")}</span></p>
-              <p>{vt(spanish, "Frame images", "Fotogramas")}: <span className="font-semibold text-white">{selectedFrameIds.length}/{maxFrames}</span></p>
-              <p>{vt(spanish, "Credit cost", "Costo")}: <span className="font-semibold text-white">{selectedTheme?.creditCost ?? 0}</span></p>
-            </div>
-            <label className="mt-4 block">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Optional direction", "Direccion opcional")}</span>
+          <div className="mt-5 rounded-[20px] border border-white/10 bg-[#1a1d24] p-3 sm:p-4">
+            <label className="block">
+              <span className="sr-only">{vt(spanish, "Video direction", "Direccion de video")}</span>
               <textarea
-                className="mt-2 min-h-[92px] w-full resize-y rounded-[12px] border border-white/10 bg-black/30 px-3 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-white/28 focus:border-[#31d4ff]/70"
+                className="min-h-[156px] w-full resize-none rounded-[14px] border border-transparent bg-transparent px-2 py-2 text-base leading-7 text-white outline-none transition placeholder:text-white/28 focus:border-[#31d4ff]/55 focus:bg-black/14 sm:min-h-[172px]"
                 maxLength={600}
                 onChange={(event) => setPromptNote(event.target.value)}
-                placeholder={vt(spanish, "Add a motion note, mood, or camera direction.", "Anade movimiento, ambiente o direccion de camara.")}
+                placeholder={vt(
+                  spanish,
+                  `Select up to ${maxFrames} frame image${maxFrames === 1 ? "" : "s"} on the left, then describe the motion. Example: keep both people smiling while the cart moves forward, with soft handheld camera movement and warm daylight.`,
+                  `Selecciona hasta ${maxFrames} fotograma${maxFrames === 1 ? "" : "s"} a la izquierda y describe el movimiento. Ejemplo: conserva las sonrisas mientras el carrito avanza, con camara suave en mano y luz calida.`
+                )}
                 value={promptNote}
               />
             </label>
-            {selectedTheme ? (
-              <p className="mt-3 line-clamp-3 text-xs leading-5 text-white/42">{selectedTheme.prompt}</p>
-            ) : null}
-            <button
-              className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[12px] bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={pending || uploading || !selectedTheme || !selectedFrameIds.length}
-              onClick={() => void generateVideo()}
-              type="button"
-            >
-              <Play className="h-4 w-4" strokeWidth={1.8} />
-              {pending ? vt(spanish, "Starting video", "Iniciando video") : vt(spanish, "Generate video", "Generar video")}
-            </button>
-            <p className="mt-3 min-h-5 text-xs leading-5 text-white/52" role="status">{message}</p>
+
+            <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-[#31d4ff]/30 bg-[#31d4ff]/10 px-3 text-xs font-semibold text-[#31d4ff]">
+                  <Film className="h-4 w-4" strokeWidth={1.8} />
+                  {vt(spanish, "Image to video", "Imagen a video")}
+                </span>
+                <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-xs font-semibold text-white/66">
+                  <Sparkles className="h-4 w-4" strokeWidth={1.8} />
+                  {selectedTheme ? vt(spanish, "Auto motion", "Movimiento automatico") : vt(spanish, "Loading preset", "Cargando ajuste")}
+                </span>
+                <span className="inline-flex min-h-9 items-center rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-xs font-semibold text-white/66">
+                  {selectedFrameIds.length}/{maxFrames} {vt(spanish, "selected", "seleccionados")}
+                </span>
+                <div className="relative">
+                  <button
+                    aria-expanded={formatPanelOpen}
+                    className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-xs font-semibold text-white/66 transition hover:bg-white/[0.08] hover:text-white"
+                    onClick={() => setFormatPanelOpen((open) => !open)}
+                    type="button"
+                  >
+                    <Monitor className="h-4 w-4" strokeWidth={1.8} />
+                    {selectedAspectRatio} · {selectedResolution.toUpperCase()}
+                    <ChevronDown className={`h-3.5 w-3.5 transition ${formatPanelOpen ? "rotate-180" : ""}`} strokeWidth={1.8} />
+                  </button>
+                  {formatPanelOpen ? (
+                    <div className="absolute left-0 top-11 z-20 w-[310px] rounded-[16px] border border-white/10 bg-[#1b1f27] p-3 shadow-[0_24px_70px_-34px_rgba(0,0,0,0.95)]">
+                      <p className="px-1 text-[11px] font-semibold text-white/36">{vt(spanish, "Aspect ratio", "Relacion")}</p>
+                      <div className="mt-2 grid grid-cols-5 gap-1 rounded-[12px] bg-white/[0.035] p-1">
+                        {VIDEO_ASPECT_OPTIONS.map((option) => {
+                          const selected = selectedAspectRatio === option.id;
+                          return (
+                            <button
+                              className={`grid min-h-16 place-items-center rounded-[10px] px-2 text-xs font-semibold transition ${selected ? "bg-white/[0.08] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
+                              key={option.id}
+                              onClick={() => setSelectedAspectRatio(option.id)}
+                              type="button"
+                            >
+                              <span className={`inline-block rounded-[3px] border ${option.shape} ${selected ? "border-[#31d4ff]" : "border-white/68"}`} />
+                              <span>{option.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <p className="mt-4 px-1 text-[11px] font-semibold text-white/36">{vt(spanish, "Resolution", "Resolucion")}</p>
+                      <div className="mt-2 grid grid-cols-2 gap-1 rounded-[12px] bg-white/[0.035] p-1">
+                        {VIDEO_RESOLUTION_OPTIONS.map((option) => {
+                          const selected = selectedResolution === option.id;
+                          return (
+                            <button
+                              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-3 text-sm font-semibold transition ${selected ? "bg-white/[0.1] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
+                              key={option.id}
+                              onClick={() => {
+                                setSelectedResolution(option.id);
+                                setFormatPanelOpen(false);
+                              }}
+                              type="button"
+                            >
+                              {option.label}
+                              {selected ? <Check className="h-3.5 w-3.5 text-[#31d4ff]" strokeWidth={2} /> : null}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+                <div className="inline-flex rounded-[10px] border border-white/10 bg-black/16 p-1">
+                  {VIDEO_DURATION_OPTIONS.map((option) => {
+                    const selected = selectedDurationSeconds === option.seconds;
+                    const cost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, option.seconds) : 0;
+                    return (
+                      <button
+                        className={`min-h-7 rounded-[8px] px-3 text-xs font-semibold transition ${selected ? "bg-white text-[#101114]" : "text-white/56 hover:bg-white/[0.08] hover:text-white"}`}
+                        key={option.seconds}
+                        onClick={() => setSelectedDurationSeconds(option.seconds)}
+                        title={`${cost} ${vt(spanish, "credits", "creditos")}`}
+                        type="button"
+                      >
+                        {option.seconds}s
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-3 lg:justify-end">
+                <span className="text-xs font-semibold text-white/52">
+                  {selectedCreditCost} {vt(spanish, "credits", "creditos")}
+                </span>
+                <button
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45 sm:min-w-40"
+                  disabled={pending || !selectedTheme || !selectedFrameIds.length || hasPendingFrameUploads || !generationFrameIds.length}
+                  onClick={() => void generateVideo()}
+                  type="button"
+                >
+                  <Send className="h-4 w-4" strokeWidth={1.8} />
+                  {pending ? vt(spanish, "Starting", "Iniciando") : vt(spanish, "Generate video", "Generar video")}
+                </button>
+              </div>
+            </div>
           </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.42fr)]">
+            <div className="rounded-[16px] border border-white/10 bg-black/16 p-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Frame order", "Orden de fotogramas")}</p>
+                <p className="mt-1 text-sm text-white/62">
+                  {hasPendingFrameUploads
+                    ? vt(spanish, "Some selected frame uploads are still finishing.", "Algunos fotogramas seleccionados aun se estan subiendo.")
+                    : selectedFrameIds.length
+                      ? vt(spanish, "The selected frames on the left will drive the clip sequence.", "Los fotogramas seleccionados a la izquierda guiaran la secuencia.")
+                      : vt(spanish, "Select frame images on the left to unlock generation.", "Selecciona fotogramas a la izquierda para habilitar la generacion.")}
+                </p>
+                {providerFrameLimitMessage ? <p className="mt-2 text-xs leading-5 text-[#31d4ff]">{providerFrameLimitMessage}</p> : null}
+              </div>
+            </div>
+
+            <div className="rounded-[16px] border border-white/10 bg-black/16 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Generation setup", "Configuracion")}</p>
+              <div className="mt-3 grid gap-2 text-sm leading-6 text-white/62">
+                <p>{vt(spanish, "Preset", "Ajuste")}: <span className="font-semibold text-white">{selectedTheme ? vt(spanish, "Automatic motion", "Movimiento automatico") : vt(spanish, "Loading", "Cargando")}</span></p>
+                <p>{vt(spanish, "Duration", "Duracion")}: <span className="font-semibold text-white">{selectedDurationSeconds}s</span></p>
+                <p>{vt(spanish, "Cost", "Costo")}: <span className="font-semibold text-white">{selectedCreditCost}</span></p>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-3 min-h-5 text-xs font-semibold leading-5 text-red-400" role="status">{message}</p>
         </div>
       </div>
     </section>

@@ -288,7 +288,7 @@ export interface CustomerAdminAccess {
   siteAdminId?: string;
   role?: PublicSiteAdmin["role"];
   displayName?: string;
-  source?: "site_admin_session" | "site_admin_email";
+  source?: "platform_admin_session" | "site_admin_session" | "site_admin_email";
 }
 
 export type PartnerApplicationStatus = "pending" | "approved" | "rejected" | "archived";
@@ -671,6 +671,8 @@ export interface VideoTheme {
   creditCost: number;
   durationSeconds: number;
   maxFrames: number;
+  effectiveMaxFrames?: number;
+  providerMaxFrames?: number;
   generationCount: number;
   createdAt: string;
   imageUrl?: string;
@@ -835,6 +837,7 @@ export interface ThemeRuntimeAsset {
   id: string;
   jobId?: string;
   subjectRole?: string;
+  altText?: string;
   label: string;
   storageKey?: string;
   previewUrl: string;
@@ -943,6 +946,7 @@ export interface PlatformState {
   aiApps: AiApp[];
   siteAiApps: SiteAiApp[];
   aiGatewayGroups: AiGatewayGroup[];
+  creativePackCategories?: CreativePackCategory[];
   toolCategories: ToolCategory[];
   toolMenuItems: ToolMenuItem[];
   creativePacks: CreativePack[];

@@ -1,3 +1,8 @@
+import { execFile } from "node:child_process";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { promisify } from "node:util";
 import { NextResponse } from "next/server";
 import {
   customerAssetStorageKey,
@@ -7,14 +12,18 @@ import {
 } from "@/lib/customer-asset-storage";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
 import {
+  signWorkerLocalAssetDownload,
   signWorkerCallback,
   verifyWorkerPayloadSignature,
   type WorkerOutputSlot,
   type WorkerPayload
 } from "@/lib/worker";
+import { normalizeVideoDurationSeconds, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const execFileAsync = promisify(execFile);
 
 type SharpFactory = (input: Buffer) => {
   rotate: () => {
@@ -56,6 +65,8 @@ type ImageInputAsset = {
   publicUrl?: string;
 };
 
+type FetchInitWithDispatcher = RequestInit & { dispatcher?: unknown };
+
 type VideoGenerateResponse = {
   code?: number;
   data?: { task_id?: string | number };
@@ -89,6 +100,9 @@ type GeneratedOutput = {
   providerLabel: string;
   index: number;
   estimatedCostUsd?: number;
+  referenceFrameCount?: number;
+  requestedReferenceFrameCount?: number;
+  providerReferenceLimit?: number;
 };
 
 function normalizeBaseUrl(value: string) {
@@ -143,6 +157,38 @@ function safeImagePrompt(value: string) {
 function isVideoGenerationModel(model: string) {
   const normalized = model.trim().toLowerCase();
   return normalized.includes("video") || normalized.includes("grok-imagine-video");
+}
+
+function normalizeVideoGenerationModel(model: string) {
+  const normalized = model.trim();
+  if (normalized === "grok-imagine-video") return "grok-imagine-video-1.5-preview";
+  return normalized;
+}
+
+function videoProviderModelCandidates(model: string) {
+  const ordered = [
+    normalizeVideoGenerationModel(model),
+    "grok-video-3-pro",
+    "grok-video-3-max",
+    "grok-video-1.5-pro",
+    "grok-video-1.5-max",
+    "grok-imagine-video-1.5-preview",
+    "grok-imagine-video"
+  ];
+  return Array.from(new Set(ordered.filter(Boolean)));
+}
+
+function isVideoModelUnavailableError(error: unknown) {
+  const message = errorMessage(error).toLowerCase();
+  return message.includes("model_not_found") || message.includes("no available channel for model") || message.includes("no access to model");
+}
+
+function shouldTryNextVideoModel(error: unknown) {
+  if (isVideoModelUnavailableError(error)) return true;
+  const message = errorMessage(error).toLowerCase();
+  return message.includes("ai_provider_video_create_failed_502_") ||
+    message.includes("ai_provider_video_create_failed_503_") ||
+    message.includes("ai_provider_video_create_failed_504_");
 }
 
 function isImageGenerationModel(model: string) {
@@ -216,6 +262,16 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
   return [...preferredProviders, ...fallbackProviders];
 }
 
+function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
+  const selectedProviders = orderedImageProviders(payload);
+  if (selectedProviders.length) return selectedProviders;
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
+  const preferredProviders = imageProviders.filter((provider) => provider.preferred);
+  const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
+  const fallbackProviders = imageProviders.filter((provider) => !preferredIds.has(provider.id));
+  return [...preferredProviders, ...fallbackProviders];
+}
+
 function outputCount(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
   const raw =
@@ -244,7 +300,7 @@ function providerAttempts() {
 }
 
 function videoProviderAttempts() {
-  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "1") || 1, 3));
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "2") || 2, 3));
 }
 
 function errorMessage(error: unknown): string {
@@ -255,7 +311,22 @@ function errorMessage(error: unknown): string {
 
 function isRetryableProviderError(error: unknown): boolean {
   const message = errorMessage(error).toLowerCase();
+  if (isVideoModelUnavailableError(error) || message.includes("invalid request")) return false;
+  if (message.includes("failed_429") || message.includes("failed_502") || message.includes("failed_503") || message.includes("failed_504")) return true;
   return message.includes("fetch failed") || message.includes("timeout") || message.includes("socket") || message.includes("econnreset") || message.includes("terminated");
+}
+
+function shouldTryNextSceneImageProvider(error: unknown): boolean {
+  const message = errorMessage(error).toLowerCase();
+  if (message.includes("invalid request")) return false;
+  return isRetryableProviderError(error) ||
+    message.includes("failed_401") ||
+    message.includes("failed_403") ||
+    message.includes("insufficient_balance") ||
+    message.includes("insufficient account balance") ||
+    message.includes("quota") ||
+    message.includes("billing") ||
+    message.includes("credit");
 }
 
 function stringArray(value: unknown): string[] {
@@ -283,16 +354,31 @@ function referenceRoleLabel(role: string) {
   return "GENERAL_SOURCE_REFERENCE";
 }
 
+function videoFrameReferenceFileLabel(payload: WorkerPayload, assetId: string, fallback: string) {
+  const fields = recordValue(payload.params.fields);
+  const frameIds = stringArray(fields?.frameAssetIds);
+  const frameIndex = frameIds.indexOf(assetId);
+  if (frameIndex < 0) return fallback;
+  const characterLabel = frameIndex === 0 ? "character-a" : frameIndex === 1 ? "character-b" : `character-${frameIndex + 1}`;
+  return `video-frame-${frameIndex + 1}-${characterLabel}`;
+}
+
 function providerReferenceRolePriority(role: string) {
   if (role === "partner") return 0;
   if (role === "primary") return 1;
   return 2;
 }
 
+function providerImageReferenceLimit() {
+  const configured = Number(process.env.LOCAL_AI_WORKER_IMAGE_REFERENCE_LIMIT ?? "15");
+  if (!Number.isFinite(configured) || configured <= 0) return 15;
+  return Math.max(1, Math.min(Math.trunc(configured), 15));
+}
+
 function providerInputAssets(payload: WorkerPayload): ImageInputAsset[] {
   const roles = referenceRoles(payload);
   return inputAssets(payload)
-    .slice(0, 4)
+    .slice(0, providerImageReferenceLimit())
     .map((asset, originalIndex) => ({ asset, originalIndex, role: roles.roleFor(asset.assetId) }))
     .sort((left, right) => {
       const roleDelta = providerReferenceRolePriority(left.role) - providerReferenceRolePriority(right.role);
@@ -403,30 +489,133 @@ function promptForOutputSlot(prompt: string, slotIndex: number, totalCount: numb
   ].join("\n\n");
 }
 
-function buildVideoPrompt(payload: WorkerPayload) {
+function buildVideoQualitySystemPrompt(params: {
+  aspectRatio: string;
+  duration: string;
+  frameCount: number;
+  resolution: string;
+}) {
+  return [
+    "Internal video quality system: these rules are mandatory and have higher priority than the user direction when quality, identity, anatomy, continuity, or output cleanliness would otherwise degrade.",
+    `Provider contract: create exactly one ${params.duration}-second image-to-video MP4 at ${params.aspectRatio} ${params.resolution.toUpperCase()} from the ordered input reference image${params.frameCount === 1 ? "" : "s"}.`,
+    "Prompt hierarchy: ordered frame images and subject identity first; then continuity, anatomy, motion, and camera rules; then user direction; then theme style. If a user direction conflicts with identity preservation, natural anatomy, or clean output, keep the closest realistic interpretation instead.",
+    "Shot plan: generate one coherent continuous scene with a clear beginning, middle, and end beat. Use a single believable camera plan, natural acceleration and deceleration, and visible subject or environmental movement. Do not output a slideshow, static pan, or frozen still.",
+    "Reference discipline: preserve the people, faces, body proportions, hair, wardrobe, products, props, scene geometry, and lighting cues from the reference frames. Do not swap identities, change facial structure, invent extra people, duplicate subjects, or alter important product shapes.",
+    "Anatomy and motion guardrails: keep hands, eyes, limbs, shoulders, necks, and posture believable. Avoid melted faces, extra fingers, warped eyes, rubber limbs, jitter, floating objects, sudden teleporting, over-fast zooms, or physically impossible bends.",
+    params.frameCount > 1
+      ? "Multi-frame rule: use every ordered frame as an intentional reference beat in order. Transition smoothly between beats without abrupt morphing, identity resets, scene cuts, or ignoring later frames."
+      : "Single-frame rule: infer plausible preceding and following motion from pose, scene geometry, objects, wardrobe, lighting, and user direction while keeping the opening visual identity stable.",
+    "Composition and format: respect the selected aspect ratio, keep the main subject within safe margins, avoid unwanted cropping, and maintain coherent lighting and focus throughout the clip.",
+    "Clean output: no subtitles, captions, prompt text, watermarks, logos, UI, split screens, contact sheets, storyboard panels, collages, or multiple unrelated scenes.",
+    "Final quality checklist: stable identity, natural body proportions, smooth continuous motion, coherent camera movement, sharp focal subject, consistent lighting, no freeze frames, no looped stills, no ignored frames, no visible artifacts."
+  ].join("\n");
+}
+
+function buildVideoReferenceContractPrompt(params: {
+  frameAssets: ImageInputAsset[];
+  userNote: string;
+}) {
+  if (!params.frameAssets.length) return "";
+  return [
+    "Video reference contract: the selected frame images are binding source resources, not loose inspiration and not a generic style prompt.",
+    "Resource priority: frame image content defines visible source subjects and scene facts; explicit user direction wins over theme direction for action, relationship, subject interaction, pose, camera transition, and story beat.",
+    "If wording conflicts with what is visible in the frames for identity, wardrobe, props, or physical scene facts, follow the frames.",
+    params.frameAssets.length > 1
+      ? "Cast continuity is mandatory: treat the ordered frames as the cast list. Frame 1 subject is Character A, Frame 2 subject is Character B, and additional frames provide additional cast or scene cues. Keep those uploaded people as the visible people in the video; do not recast them as different-looking actors."
+      : "Cast continuity is mandatory: the main visible person or product must remain the uploaded subject, not a newly cast lookalike.",
+    "Preserve visible subject count, primary person or product, face shape, apparent age range, skin tone, hair color and hairstyle, wardrobe colors, props, background cues, lighting direction, camera angle, and orientation from the frame images.",
+    "Do not replace the source subject with a generic actor, change defining visible traits, change blonde hair to brunette, invent a couple or extra people, duplicate subjects, or move the result into an unrelated holiday, wedding, travel, studio, or lifestyle template unless the source frames show it or the user explicitly asks for it.",
+    "Theme direction may add motion texture, mood, camera behavior, and small scene dynamics only after the frame resources and explicit user direction are satisfied.",
+    params.userNote ? `Mandatory user direction inside this reference contract: ${params.userNote}` : ""
+  ].filter(Boolean).join("\n");
+}
+
+function buildExplicitUserDirectionPrompt(userNote: string, frameCount: number) {
+  if (!userNote) return "";
+  return [
+    `Highest priority user direction: ${userNote}`,
+    "Follow the explicit requested subject count, relationship, action, pose, camera transition, and story beat before any video theme wording.",
+    frameCount > 1
+      ? "When the user asks for a couple, kiss, embrace, side-profile interaction, conversation, handoff, group shot, or other relationship/action scene, combine the selected people from the ordered frames into one coherent scene. Do not output only one person."
+      : "",
+    "Do not replace the requested action with walking, generic portrait motion, holiday posing, or unrelated lifestyle action unless the user asked for it."
+  ].filter(Boolean).join("\n");
+}
+
+function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
   const fields = recordValue(payload.params.fields);
-  const frameAssets = videoFrameAssets(payload);
+  const frameAssets = referenceAssets;
+  const videoParams = videoProviderParams(payload);
+  const themeName = textValue(fields?.videoThemeName) || textValue(fields?.toolPresetTitle);
+  const themePrompt = textValue(fields?.videoThemePrompt);
+  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt);
   const frameManifest = frameAssets.length
     ? [
-        "Ordered frame manifest:",
+        `Use ${frameAssets.length} ordered frame image${frameAssets.length === 1 ? "" : "s"} as visual anchors:`,
         ...frameAssets.map((asset, index) => `Frame ${index + 1}: assetId=${asset.assetId}. ${index === 0 ? "Use as the opening frame anchor." : "Use as a later reference beat and preserve important people, product, wardrobe, prop, and scene cues."}`)
       ].join("\n")
     : "";
   const promptParts = [
-    promptText(payload.prompt),
-    promptText(payload.params.prompt),
-    textValue(fields?.videoThemePrompt) ? `Video theme prompt: ${textValue(fields?.videoThemePrompt)}` : "",
-    textValue(fields?.prompt),
-    textValue(fields?.promptNote) ? `User note: ${textValue(fields?.promptNote)}` : "",
+    buildVideoQualitySystemPrompt({
+      aspectRatio: videoParams.aspect_ratio,
+      duration: videoParams.duration,
+      frameCount: frameAssets.length,
+      resolution: videoParams.resolution
+    }),
+    buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
+    buildVideoReferenceContractPrompt({ frameAssets, userNote }),
+    "Create one polished realistic image-to-video MP4 from the supplied frame image.",
+    userNote ? `User direction: ${userNote}` : "",
+    themeName ? `Internal fallback video preset: ${themeName}` : "",
+    themePrompt ? `Optional preset style, ignore if it conflicts with the user direction or selected frames: ${themePrompt}` : "",
     textValue(payload.params.style) ? `Style: ${textValue(payload.params.style)}` : "",
-    textValue(fields?.videoThemeName) ? `Video theme: ${textValue(fields?.videoThemeName)}` : textValue(fields?.toolPresetTitle) ? `Tool: ${textValue(fields?.toolPresetTitle)}` : "",
-    subjectCompositionInstruction(payload),
     frameManifest,
-    "Animate the uploaded first frame into a short realistic video. Preserve the first-frame composition, subject continuity, clothing cues, and scene direction while adding natural motion and cinematic camera movement.",
+    frameAssets.length > 1 ? "Direct reference rule: use the supplied original frame images as the identity and cast source. The video may change pose, angle, and motion, but the people must remain recognizably the uploaded subjects from their respective frames." : "",
+    "Use the uploaded first frame as a visual anchor, not as a frozen still or slideshow source.",
+    "Match the output orientation to the selected video aspect ratio and source frame. Keep a horizontal landscape frame for landscape source images.",
+    "Preserve natural human body proportions, believable face and limb geometry, and sharp subject details. Do not stretch, squash, blur, or reshape the athlete.",
+    "Infer plausible preceding and following action beats from the user note, video theme prompt, body pose, object trajectory, scene geometry, wardrobe, lighting, and camera context.",
+    "Animate a complete continuous motion sequence with visible subject movement, object movement, acceleration, deceleration, and cinematic camera movement while preserving subject continuity, clothing cues, and scene direction.",
     "If more than one ordered frame is supplied, use every frame as an intentional visual reference. Do not silently ignore later frames or generate a clip that only reflects Frame 1.",
+    "Avoid freeze frames, repeated still loops, contact sheets, storyboard panels, split screens, abrupt morphing, or static pan-only output.",
     "Return one polished video clip with no text overlay, no watermark, and no UI."
   ].filter(Boolean);
-  return promptParts.join("\n\n");
+  return promptParts.join("\n\n").slice(0, 3600);
+}
+
+function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageInputAsset[]) {
+  const fields = recordValue(payload.params.fields);
+  const videoParams = videoProviderParams(payload);
+  const themeName = textValue(fields?.videoThemeName) || textValue(fields?.toolPresetTitle);
+  const themePrompt = textValue(fields?.videoThemePrompt);
+  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt);
+  const frameManifest = frameAssets.length
+    ? [
+        `Selected source frame order (${frameAssets.length} total):`,
+        ...frameAssets.map((asset, index) => `Frame ${index + 1}: assetId=${asset.assetId}. ${index === 0 ? "Use as the opening visual anchor." : "Represent its important subject, wardrobe, prop, scene, and lighting cues inside the new starter scene."}`)
+      ].join("\n")
+    : "";
+  return [
+    "Internal video scene compositor: create exactly one new photorealistic starter scene image that will be used as the only upstream image-to-video reference.",
+    buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
+    "Identity preservation is the highest requirement for this starter image. Use the uploaded frame images as binding character references, not as loose mood references.",
+    "Combine the selected user-uploaded frame images and the user direction into one coherent camera-ready scene. Use the internal theme direction only as a low-priority style fallback.",
+    "This must be a single finished scene image, not a collage, contact sheet, storyboard, split panel, grid, before/after layout, poster with text, UI, or watermark.",
+    `Target video format: ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}, ${videoParams.duration} seconds. Compose the still so it can naturally animate as one continuous clip.`,
+    userNote ? `User direction: ${userNote}` : "",
+    themeName ? `Internal fallback video preset: ${themeName}` : "",
+    themePrompt ? `Optional preset style, ignore if it conflicts with the user direction or selected frames: ${themePrompt}` : "",
+    frameManifest,
+    "Preserve the important visible people, face and body cues, apparent age range, skin tone, hair, wardrobe colors, products, props, lighting direction, camera angle, and background cues from the source frames.",
+    frameAssets.length > 1 ? "Cast continuity is mandatory: Frame 1 subject is Character A, Frame 2 subject is Character B. Keep those uploaded people as the people in the composed starter scene; do not recast them as different-looking actors." : "",
+    frameAssets.length > 1 ? "Do not average the two faces, swap genders, change hair color, change hairstyle, change apparent ethnicity, change apparent age range, or replace either character with a generic couple model." : "",
+    frameAssets.length > 1 ? "If the requested action is difficult, simplify the action while preserving the uploaded character identities. Identity preservation beats dramatic kissing pose, background, wardrobe changes, and preset style." : "",
+    "Starter scene must match the requested opening beat. If the user asks to begin with clear portraits and then transition to a side-profile interaction, compose a clear portrait-ready scene with the selected subjects present and staged for that transition.",
+    "When multiple frames show different people or objects, arrange them naturally in one believable scene when the selected frames or user direction imply they should coexist. Do not output only one person when the user requested a two-person scene.",
+    "If some frames represent later visual beats, blend those cues into the scene as environmental, pose, wardrobe, prop, or motion-ready details without creating multiple panels.",
+    "Do not replace the requested action with walking, generic portrait posing, holiday posing, or unrelated lifestyle action unless the user asked for it.",
+    "Create a clean starter frame with stable anatomy, natural hands, realistic face structure, sharp focal subject, coherent depth, and safe margins for the selected aspect ratio."
+  ].filter(Boolean).join("\n\n").slice(0, 3600);
 }
 
 function inputAssets(payload: WorkerPayload): ImageInputAsset[] {
@@ -434,11 +623,117 @@ function inputAssets(payload: WorkerPayload): ImageInputAsset[] {
 }
 
 function videoFrameAssets(payload: WorkerPayload): ImageInputAsset[] {
-  return inputAssets(payload).slice(0, 4);
+  const fields = recordValue(payload.params.fields);
+  const maxFrames = normalizeVideoFrameLimit(fields?.maxFrames ?? payload.params.maxFrames);
+  return inputAssets(payload).slice(0, maxFrames);
 }
 
 function providerReachableAssetUrl(asset: ImageInputAsset) {
   return textValue(asset.publicUrl) || asset.signedUrl;
+}
+
+function shouldUseVideoFrameDataUriFallback() {
+  const explicit = process.env.AI_WORKER_VIDEO_FRAME_DATA_URLS?.trim();
+  if (explicit === "1") return true;
+  if (explicit === "0") return false;
+  return process.env.NODE_ENV !== "production";
+}
+
+function shouldForceVideoFrameDataUris() {
+  return process.env.AI_WORKER_VIDEO_FRAME_DATA_URLS?.trim() === "1";
+}
+
+function videoFrameDataUriMaxBytes() {
+  const configured = Number(process.env.AI_WORKER_VIDEO_FRAME_DATA_URI_MAX_BYTES ?? "");
+  return Number.isFinite(configured) && configured > 0 ? configured : 8 * 1024 * 1024;
+}
+
+async function isProviderFrameUrlReadable(url: string, timeoutMs: number) {
+  try {
+    const response = await fetchWithTimeout(url, { method: "HEAD", cache: "no-store" }, Math.min(timeoutMs, 10_000), "ai_provider_video_frame_probe_timeout");
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
+  const response = await fetchWithTimeout(
+    asset.signedUrl,
+    { cache: "no-store" },
+    Math.min(timeoutMs, 30_000),
+    `ai_provider_video_frame_data_uri_timeout_${asset.assetId}`
+  );
+  if (!response.ok) throw new Error(`ai_provider_video_frame_data_uri_source_failed_${asset.assetId}_${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length) throw new Error(`ai_provider_video_frame_data_uri_empty_${asset.assetId}`);
+  const maxBytes = videoFrameDataUriMaxBytes();
+  if (bytes.length > maxBytes) throw new Error(`ai_provider_video_frame_data_uri_too_large_${asset.assetId}_${bytes.length}_${maxBytes}`);
+  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
+  return `data:${mimeType};base64,${bytes.toString("base64")}`;
+}
+
+async function videoProviderFrameUrls(params: {
+  referenceAssets: ImageInputAsset[];
+  timeoutMs: number;
+}) {
+  const urls = params.referenceAssets.map(providerReachableAssetUrl).filter(Boolean);
+  if (urls.length !== params.referenceAssets.length) return urls;
+  if (!shouldUseVideoFrameDataUriFallback()) return urls;
+  if (shouldForceVideoFrameDataUris()) {
+    return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+  }
+  const readableChecks = await Promise.all(urls.map((url) => isProviderFrameUrlReadable(url, params.timeoutMs)));
+  if (readableChecks.every(Boolean)) return urls;
+  return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+}
+
+function videoProviderDataUriFrameUrls(params: {
+  referenceAssets: ImageInputAsset[];
+  timeoutMs: number;
+}) {
+  return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+}
+
+function isDataUri(value: string) {
+  return value.startsWith("data:");
+}
+
+function shouldRetryVideoTaskWithDataUriFrames(params: {
+  error: unknown;
+  imageUrls: string[];
+  protocol: VideoProviderProtocol;
+}) {
+  if (params.protocol === "openai-videos") return false;
+  if (!params.imageUrls.length || params.imageUrls.every(isDataUri)) return false;
+  if (process.env.AI_WORKER_VIDEO_FRAME_DATA_URLS?.trim() === "0") return false;
+
+  const message = errorMessage(params.error).toLowerCase();
+  return message.includes("ai_provider_video_failed") ||
+    message.includes("ai_provider_video_create_failed") ||
+    message.includes("fetch failed") ||
+    message.includes("could not read") ||
+    message.includes("read the selected frame") ||
+    message.includes("public asset url") ||
+    (message.includes("image") && (message.includes("url") || message.includes("read") || message.includes("fetch")));
+}
+
+function shouldRetryOpenAiVideoTaskWithFirstFrame(params: {
+  error: unknown;
+  protocol: VideoProviderProtocol;
+  referenceAssets: ImageInputAsset[];
+}) {
+  if (params.protocol !== "openai-videos") return false;
+  if (params.referenceAssets.length <= 1) return false;
+  if (process.env.AI_WORKER_VIDEO_FIRST_FRAME_RETRY?.trim() === "0") return false;
+  const message = errorMessage(params.error).toLowerCase();
+  return isRetryableProviderError(params.error) ||
+    message.includes("multi_frame_payload_rejected") ||
+    message.includes("multipart") ||
+    message.includes("input_reference") ||
+    message.includes("payload too large") ||
+    message.includes("request entity too large") ||
+    message.includes("failed_413");
 }
 
 function isLoopbackUrl(value: string) {
@@ -450,19 +745,35 @@ function isLoopbackUrl(value: string) {
   }
 }
 
-const videoAspectRatios = new Set(["16:9", "9:16", "1:1", "3:2", "2:3"]);
+function shouldRejectLoopbackVideoFrameUrls() {
+  if (process.env.ALLOW_LOOPBACK_VIDEO_FRAME_URLS === "1") return false;
+  if (process.env.REQUIRE_PUBLIC_VIDEO_FRAME_URLS === "1") return true;
+  return process.env.NODE_ENV === "production";
+}
+
+const videoAspectRatios = new Set(["16:9", "4:3", "1:1", "3:4", "9:16", "3:2", "2:3"]);
 const videoResolutions = new Set(["720p", "480p"]);
 const videoDurations = new Set(Array.from({ length: 15 }, (_, index) => String(index + 1)));
+
+function videoSizeForParams(aspectRatio: string, resolution: string) {
+  const longEdge = resolution === "480p" ? 854 : 1280;
+  const shortEdge = resolution === "480p" ? 480 : 720;
+  if (aspectRatio === "4:3") return `${Math.round(shortEdge * 4 / 3)}x${shortEdge}`;
+  if (aspectRatio === "3:4") return `${shortEdge}x${Math.round(shortEdge * 4 / 3)}`;
+  if (aspectRatio === "9:16" || aspectRatio === "2:3") return `${shortEdge}x${longEdge}`;
+  if (aspectRatio === "1:1") return `${shortEdge}x${shortEdge}`;
+  return `${longEdge}x${shortEdge}`;
+}
 
 function videoProviderParams(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
   const rawAspectRatio = textValue(payload.params.aspect_ratio) || textValue(payload.params.aspectRatio) || textValue(fields?.aspect_ratio) || textValue(fields?.aspectRatio);
   const rawResolution = textValue(payload.params.resolution) || textValue(fields?.resolution);
-  const rawDuration = textValue(payload.params.duration) || textValue(payload.params.videoDuration) || textValue(fields?.duration) || textValue(fields?.videoDuration);
+  const rawDuration = textValue(payload.params.durationSeconds) || textValue(payload.params.videoDurationSeconds) || textValue(payload.params.duration) || textValue(payload.params.videoDuration) || textValue(fields?.durationSeconds) || textValue(fields?.videoDurationSeconds) || textValue(fields?.duration) || textValue(fields?.videoDuration);
   const aspect_ratio = videoAspectRatios.has(rawAspectRatio) ? rawAspectRatio : "16:9";
   const resolution = videoResolutions.has(rawResolution) ? rawResolution : "720p";
-  const duration = videoDurations.has(rawDuration) ? rawDuration : "6";
-  return { aspect_ratio, resolution, duration };
+  const duration = videoDurations.has(rawDuration) ? String(normalizeVideoDurationSeconds(rawDuration)) : String(normalizeVideoDurationSeconds(undefined));
+  return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio, resolution) };
 }
 
 function extensionForMime(mimeType: string) {
@@ -470,6 +781,25 @@ function extensionForMime(mimeType: string) {
   if (mimeType.includes("webp")) return "webp";
   if (mimeType.includes("gif")) return "gif";
   return "png";
+}
+
+function imageMimeTypeFromBytes(bytes: Uint8Array, fallbackMimeType: string) {
+  const fallback = fallbackMimeType.split(";")[0]?.trim().toLowerCase() || "";
+  if (fallback.startsWith("image/") && fallback !== "image/svg+xml") return fallback;
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return "image/jpeg";
+  if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) return "image/png";
+  if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) return "image/gif";
+  if (
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x45 &&
+    bytes[10] === 0x42 &&
+    bytes[11] === 0x50
+  ) return "image/webp";
+  return "image/png";
 }
 
 async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
@@ -491,18 +821,96 @@ async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
   }
 }
 
+function shouldCompressVideoReferenceImages() {
+  const explicit = process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_COMPRESSION?.trim();
+  if (explicit === "0") return false;
+  return true;
+}
+
+async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
+  const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
+  if (!shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif")) {
+    return {
+      bytes: blobPartFromBytes(Buffer.from(bytes)),
+      mimeType: sourceMimeType
+    };
+  }
+  const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION ?? "1280") || 1280);
+  const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_QUALITY ?? "80") || 80, 95));
+  try {
+    const sharp = await loadSharp();
+    if (!sharp) throw new Error("sharp_unavailable");
+    const resized = await sharp(Buffer.from(bytes))
+      .rotate()
+      .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality, mozjpeg: true })
+      .toBuffer();
+    if (!resized.length) throw new Error("empty_video_reference_image");
+    return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
+  } catch {
+    return {
+      bytes: blobPartFromBytes(Buffer.from(bytes)),
+      mimeType: sourceMimeType
+    };
+  }
+}
+
 function blobPartFromBytes(bytes: Buffer): ArrayBuffer {
   return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
+}
+
+let providerProxyDispatcher:
+  | {
+    proxyUrl: string;
+    dispatcher: unknown;
+  }
+  | undefined;
+
+function providerProxyUrl() {
+  return (
+    process.env.AI_WORKER_HTTP_PROXY ||
+    process.env.AI_WORKER_HTTPS_PROXY ||
+    process.env.HTTPS_PROXY ||
+    process.env.https_proxy ||
+    process.env.HTTP_PROXY ||
+    process.env.http_proxy ||
+    ""
+  ).trim();
+}
+
+function shouldProxyFetch(resource: string) {
+  const proxyUrl = providerProxyUrl();
+  if (!proxyUrl) return false;
+  try {
+    const url = new URL(resource);
+    return url.protocol === "https:" && !["localhost", "127.0.0.1", "::1", "[::1]"].includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+async function getProviderProxyDispatcher() {
+  const proxyUrl = providerProxyUrl();
+  if (!proxyUrl) return undefined;
+  if (providerProxyDispatcher?.proxyUrl === proxyUrl) return providerProxyDispatcher.dispatcher;
+  const moduleName = "undici";
+  const { ProxyAgent } = (await import(/* webpackIgnore: true */ moduleName)) as typeof import("undici");
+  const dispatcher = new ProxyAgent(proxyUrl);
+  providerProxyDispatcher = { proxyUrl, dispatcher };
+  return dispatcher;
 }
 
 async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: number, timeoutError: string) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(resource, {
+    const dispatcher = shouldProxyFetch(resource) ? await getProviderProxyDispatcher() : undefined;
+    const fetchInit: FetchInitWithDispatcher = {
       ...init,
-      signal: controller.signal
-    });
+      signal: controller.signal,
+      ...(dispatcher ? { dispatcher } : {})
+    };
+    return await fetch(resource, fetchInit);
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       throw new Error(timeoutError);
@@ -526,6 +934,7 @@ async function buildImageEditForm(params: {
   prompt: string;
   timeoutMs: number;
   outputCount?: number;
+  assets?: ImageInputAsset[];
 }) {
   const form = new FormData();
   form.append("model", params.model);
@@ -537,7 +946,7 @@ async function buildImageEditForm(params: {
     form.append("n", String(params.outputCount));
   }
 
-  const assets = providerInputAssets(params.payload);
+  const assets = params.assets ?? providerInputAssets(params.payload);
   if (!assets.length) return undefined;
   const imageFieldName = imageEditFormFieldName(assets.length);
   const roles = referenceRoles(params.payload);
@@ -557,7 +966,172 @@ async function buildImageEditForm(params: {
     const bytes = new Uint8Array(await response.arrayBuffer());
     const prepared = await prepareProviderImage(bytes, mimeType);
     const roleLabel = referenceRoleLabel(role).toLowerCase();
-    form.append(imageFieldName, new Blob([prepared.bytes], { type: prepared.mimeType }), `reference-${index + 1}-${roleLabel}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
+    const fileLabel = videoFrameReferenceFileLabel(params.payload, asset.assetId, roleLabel);
+    form.append(imageFieldName, new Blob([prepared.bytes], { type: prepared.mimeType }), `reference-${index + 1}-${fileLabel}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
+  }
+  return form;
+}
+
+function originFromUrl(value: string | undefined): string {
+  if (!value) return "";
+  try {
+    return new URL(value).origin;
+  } catch {
+    return "";
+  }
+}
+
+function workerCallbackOrigin(payload: WorkerPayload): string {
+  return originFromUrl(payload.callbackUrl) || originFromUrl(payload.statusCallbackUrl);
+}
+
+function workerPublicOrigin(payload: WorkerPayload, sourceAssets: ImageInputAsset[]): string {
+  return sourceAssets.map((asset) => originFromUrl(asset.publicUrl)).find(Boolean) || workerCallbackOrigin(payload);
+}
+
+function signedLocalAssetUrl(origin: string, storageKey: string, expiresAt: string): string {
+  const normalizedStorageKey = storageKey.replace(/^\/+/, "");
+  const signature = signWorkerLocalAssetDownload({ storageKey: normalizedStorageKey, expiresAt });
+  return `${origin.replace(/\/$/, "")}/api/local-assets/${normalizedStorageKey}?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`;
+}
+
+async function composeVideoSceneReference(params: {
+  payload: WorkerPayload;
+  requestedReferenceAssets: ImageInputAsset[];
+}) {
+  const sceneProviders = orderedVideoSceneImageProviders(params.payload);
+  if (!sceneProviders.length) throw new Error("ai_provider_video_scene_image_provider_missing");
+  const timeoutMs = providerTimeoutMs();
+  const sceneInputAssets = params.requestedReferenceAssets.slice(0, providerImageReferenceLimit());
+  const prompt = buildVideoSceneImagePrompt(params.payload, sceneInputAssets);
+  await postWorkerStatus(params.payload, "running", "video_scene_composition_started");
+  await postWorkerSlotStatus(params.payload, "running", "video_scene_composition_started", {
+    index: 1,
+    status: "running",
+    stage: "video_scene_composition_started",
+    error: "",
+    requestedReferenceFrameCount: params.requestedReferenceAssets.length,
+    providerReferenceLimit: 1,
+    updatedAt: new Date().toISOString()
+  });
+
+  let lastError: unknown;
+  for (const provider of sceneProviders) {
+    const record = await getPlatformAiProviderRelational(provider.id);
+    if (!record?.apiKey?.trim()) {
+      lastError = new Error("ai_provider_api_key_missing");
+      continue;
+    }
+    const requestedModel = textValue(params.payload.params.sceneImageModelOverride) || textValue(params.payload.params.imageModelOverride);
+    const model = requestedModel && isImageGenerationModel(requestedModel) ? requestedModel : record.modelType;
+    if (!isImageGenerationModel(model)) {
+      lastError = new Error(`ai_provider_not_image_model_${record.label || record.id}_${model}`);
+      continue;
+    }
+    try {
+      const form = await buildImageEditForm({
+        payload: params.payload,
+        model,
+        prompt,
+        timeoutMs,
+        assets: sceneInputAssets
+      });
+      if (!form) throw new Error("ai_provider_video_scene_image_edit_missing_input");
+      const response = await fetchWithTimeout(
+        `${normalizeBaseUrl(record.aiUrl)}/v1/images/edits`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${record.apiKey}`
+          },
+          body: form,
+          cache: "no-store"
+        },
+        timeoutMs,
+        `ai_provider_video_scene_image_timeout_${timeoutMs}`
+      );
+      const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
+      if (!response.ok) {
+        throw new Error(`ai_provider_video_scene_image_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+      }
+      const [b64] = imageBase64List(body);
+      if (!b64) throw new Error("ai_provider_video_scene_image_empty_payload");
+      const preparedScene = prepareCompressedCustomerImage({
+        bytes: Buffer.from(b64, "base64"),
+        mimeType: "image/png",
+        fileName: `${params.payload.jobId}-video-scene-reference.png`,
+        purpose: "input"
+      });
+      const storageKey = customerAssetStorageKey({
+        siteId: params.payload.siteId,
+        customerId: params.payload.customerId,
+        fileName: `${params.payload.jobId}-video-scene-reference.${extensionForCustomerAssetMime(preparedScene.mimeType)}`
+      });
+      await writeCustomerAssetFileShared({
+        storageKey,
+        bytes: preparedScene.bytes,
+        mimeType: preparedScene.mimeType,
+        purpose: "input"
+      });
+      await postWorkerSlotStatus(params.payload, "running", "video_scene_reference_ready", {
+        index: 1,
+        status: "running",
+        stage: "video_scene_reference_ready",
+        storageKey,
+        mimeType: preparedScene.mimeType,
+        error: "",
+        referenceFrameCount: 1,
+        requestedReferenceFrameCount: params.requestedReferenceAssets.length,
+        providerReferenceLimit: 1,
+        updatedAt: new Date().toISOString()
+      });
+      const callbackOrigin = workerCallbackOrigin(params.payload);
+      const publicOrigin = workerPublicOrigin(params.payload, params.requestedReferenceAssets);
+      const signedUrlExpiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
+      return {
+        storageKey,
+        mimeType: preparedScene.mimeType,
+        providerLabel: record.label,
+        asset: {
+          assetId: `video_scene_reference:${params.payload.jobId}`,
+          signedUrl: signedLocalAssetUrl(callbackOrigin, storageKey, signedUrlExpiresAt),
+          publicUrl: signedLocalAssetUrl(publicOrigin, storageKey, signedUrlExpiresAt)
+        } satisfies ImageInputAsset
+      };
+    } catch (error) {
+      lastError = error;
+      if (!shouldTryNextSceneImageProvider(error)) break;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("ai_provider_video_scene_image_failed");
+}
+
+async function buildVideoReferenceForm(params: {
+  referenceAssets: ImageInputAsset[];
+  model: string;
+  prompt: string;
+  videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
+  timeoutMs: number;
+}) {
+  const form = new FormData();
+  form.append("model", params.model);
+  form.append("prompt", params.prompt);
+  form.append("seconds", params.videoParams.duration);
+  form.append("size", params.videoParams.size);
+  const referenceAssets = params.referenceAssets.length ? params.referenceAssets : [];
+  if (!referenceAssets.length) throw new Error("ai_provider_video_first_frame_required");
+  for (const [index, asset] of referenceAssets.entries()) {
+    const response = await fetchWithTimeout(
+      asset.signedUrl,
+      { cache: "no-store" },
+      Math.min(params.timeoutMs, 30_000),
+      `ai_provider_video_reference_image_timeout_${asset.assetId}`
+    );
+    if (!response.ok) throw new Error(`ai_provider_video_reference_image_failed_${asset.assetId}_${response.status}`);
+    const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    const prepared = await prepareVideoReferenceImage(bytes, mimeType);
+    form.append("input_reference", new Blob([prepared.bytes], { type: prepared.mimeType }), `input-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
   }
   return form;
 }
@@ -601,7 +1175,7 @@ async function postWorkerResult(
     status: "succeeded" | "failed";
     outputs?: Array<{ storageKey: string; mimeType?: string }>;
     providerTrace?: Array<{ provider: string; attempts: number }>;
-    costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }> };
+    costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }>; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
     error?: string;
   }
 ) {
@@ -649,24 +1223,34 @@ async function createVideoTask(params: {
   model: string;
   prompt: string;
   imageUrls: string[];
-  videoParams: { aspect_ratio: string; resolution: string; duration: string };
+  referenceAssets: ImageInputAsset[];
+  videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
   protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
   const firstImageUrl = params.imageUrls[0];
-  if (!firstImageUrl) throw new Error("ai_provider_video_first_frame_required");
+  if (!firstImageUrl && !params.referenceAssets.length) throw new Error("ai_provider_video_first_frame_required");
   const endpoint = params.protocol === "openai-videos"
     ? `${params.baseUrl}/v1/videos`
     : `${params.baseUrl}/v1/media/generate`;
+  const openAiVideosForm = params.protocol === "openai-videos"
+    ? await buildVideoReferenceForm({
+        referenceAssets: params.referenceAssets,
+        model: params.model,
+        prompt: params.prompt,
+        videoParams: params.videoParams,
+        timeoutMs: params.timeoutMs
+      })
+    : undefined;
   const payload = params.protocol === "openai-videos"
     ? {
         model: params.model,
         prompt: params.prompt,
         seconds: params.videoParams.duration,
-        duration: Number(params.videoParams.duration),
-        image: firstImageUrl,
-        images: params.imageUrls,
-        input_reference: params.imageUrls
+        size: params.videoParams.size,
+        ...(params.imageUrls.length > 1
+          ? { reference_images: params.imageUrls }
+          : { image: firstImageUrl })
       }
     : {
         model: params.model,
@@ -678,18 +1262,30 @@ async function createVideoTask(params: {
       };
   const response = await fetchWithTimeout(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${params.apiKey}`
-    },
-    body: JSON.stringify(payload),
+    headers: openAiVideosForm
+      ? { Authorization: `Bearer ${params.apiKey}` }
+      : {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${params.apiKey}`
+        },
+    body: openAiVideosForm ?? JSON.stringify(payload),
     cache: "no-store"
   }, Math.min(params.timeoutMs, 60_000), `ai_provider_video_create_timeout_${Math.min(params.timeoutMs, 60_000)}`);
   const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
   const taskId = videoTaskId(body);
   if (!response.ok || !taskId) {
-    const multiFrameHint = params.imageUrls.length > 1 ? "multi_frame_payload_rejected_" : "";
-    throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+    const referenceCount = params.protocol === "openai-videos" ? params.referenceAssets.length : params.imageUrls.length;
+    const multiFrameHint = referenceCount > 1 ? "multi_frame_payload_rejected_" : "";
+    const requestSummary = {
+      model: params.model,
+      protocol: params.protocol,
+      seconds: params.videoParams.duration,
+      size: params.videoParams.size,
+      imageCount: referenceCount,
+      imageKind: params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
+      promptLength: params.prompt.length
+    };
+    throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
   }
   return taskId;
 }
@@ -768,6 +1364,107 @@ async function downloadVideoResult(params: {
   return { bytes, mimeType };
 }
 
+function shouldUseLocalVideoFallback() {
+  const explicit = process.env.LOCAL_AI_WORKER_VIDEO_FALLBACK?.trim();
+  if (explicit === "1") return true;
+  return false;
+}
+
+async function ffmpegPath() {
+  const moduleName = "ffmpeg-static";
+  const mod = (await import(/* webpackIgnore: true */ moduleName)) as { default?: string } | string | null;
+  const candidate = typeof mod === "string" ? mod : mod?.default;
+  if (!candidate) throw new Error("local_video_fallback_ffmpeg_unavailable");
+  return candidate;
+}
+
+async function readVideoFrameBytes(asset: ImageInputAsset, timeoutMs: number) {
+  const response = await fetchWithTimeout(
+    asset.signedUrl,
+    { cache: "no-store" },
+    Math.min(timeoutMs, 30_000),
+    `local_video_fallback_frame_timeout_${asset.assetId}`
+  );
+  if (!response.ok) throw new Error(`local_video_fallback_frame_failed_${asset.assetId}_${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length) throw new Error(`local_video_fallback_frame_empty_${asset.assetId}`);
+  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
+  return { bytes, mimeType };
+}
+
+async function generateLocalFallbackVideo(payload: WorkerPayload) {
+  const referenceAsset = videoFrameAssets(payload)[0];
+  if (!referenceAsset) throw new Error("local_video_fallback_first_frame_required");
+  const timeoutMs = videoProviderTimeoutMs();
+  const videoParams = videoProviderParams(payload);
+  const duration = Math.max(1, Math.min(Number(videoParams.duration) || 6, 15));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dreamshoot-video-"));
+  try {
+    const frame = await readVideoFrameBytes(referenceAsset, timeoutMs);
+    const inputPath = path.join(tempDir, `frame.${extensionForMime(frame.mimeType)}`);
+    const outputPath = path.join(tempDir, "output.mp4");
+    await fs.writeFile(inputPath, frame.bytes);
+    const frameCount = Math.max(24, duration * 24);
+    const filter = [
+      "scale=854:480:force_original_aspect_ratio=increase",
+      "crop=854:480",
+      `zoompan=z='min(zoom+0.0012,1.08)':d=${frameCount}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=854x480:fps=24`,
+      "format=yuv420p"
+    ].join(",");
+    await execFileAsync(await ffmpegPath(), [
+      "-y",
+      "-framerate",
+      "1",
+      "-i",
+      inputPath,
+      "-vf",
+      filter,
+      "-frames:v",
+      String(frameCount),
+      "-c:v",
+      "libx264",
+      "-preset",
+      "veryfast",
+      "-crf",
+      "30",
+      "-an",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      outputPath
+    ], { timeout: Math.min(timeoutMs, 120_000) });
+    const videoBytes = await fs.readFile(outputPath);
+    if (!videoBytes.length) throw new Error("local_video_fallback_empty_output");
+    const storageKey = customerAssetStorageKey({
+      siteId: payload.siteId,
+      customerId: payload.customerId,
+      fileName: `${payload.jobId}-local-video-1.mp4`
+    });
+    await writeCustomerAssetFileShared({
+      storageKey,
+      bytes: videoBytes,
+      mimeType: "video/mp4",
+      purpose: "output"
+    });
+    await postWorkerSlotStatus(payload, "running", "video_result_received", {
+      index: 1,
+      status: "succeeded",
+      stage: "video_result_received",
+      storageKey,
+      mimeType: "video/mp4",
+      error: "",
+      referenceFrameCount: 1,
+      requestedReferenceFrameCount: videoFrameAssets(payload).length,
+      providerReferenceLimit: 1,
+      updatedAt: new Date().toISOString()
+    });
+    return { storageKey, mimeType: "video/mp4", providerLabel: "Local video fallback", index: 1, estimatedCostUsd: 0, referenceFrameCount: 1, requestedReferenceFrameCount: videoFrameAssets(payload).length, providerReferenceLimit: 1 };
+  } finally {
+    await fs.rm(tempDir, { recursive: true, force: true }).catch(() => undefined);
+  }
+}
+
 async function generateVideoWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
@@ -776,23 +1473,40 @@ async function generateVideoWithProvider(params: {
   if (!provider?.apiKey?.trim()) {
     throw new Error("ai_provider_api_key_missing");
   }
+  const providerApiKey = provider.apiKey;
   const requestedModel = requestedModelOverride(params.payload);
-  const model = requestedModel && isVideoGenerationModel(requestedModel) ? requestedModel : provider.modelType;
+  const model = normalizeVideoGenerationModel(requestedModel && isVideoGenerationModel(requestedModel) ? requestedModel : provider.modelType);
   if (!isVideoGenerationModel(model)) {
     throw new Error(`ai_provider_not_video_model_${provider.label || provider.id}_${model}`);
   }
-  const referenceAssets = videoFrameAssets(params.payload);
-  const referenceAsset = referenceAssets[0];
-  if (!referenceAsset) throw new Error("ai_provider_video_first_frame_required");
-  const imageUrls = referenceAssets.map(providerReachableAssetUrl).filter(Boolean);
-  if (imageUrls.length !== referenceAssets.length || imageUrls.some(isLoopbackUrl)) {
-    throw new Error("ai_provider_video_frame_public_urls_required");
-  }
-
+  const requestedReferenceAssets = videoFrameAssets(params.payload);
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
   const protocol = videoProviderProtocol(baseUrl);
+  const configuredProviderReferenceLimit = Math.max(1, Math.trunc(provider.maxImagesPerRequest || 1));
+  const providerReferenceLimit = 1;
+  const shouldComposeSceneReference = requestedReferenceAssets.length > providerReferenceLimit;
+  const composedScene = shouldComposeSceneReference
+    ? await composeVideoSceneReference({ payload: params.payload, requestedReferenceAssets })
+    : undefined;
+  const referenceAssets = composedScene ? [composedScene.asset] : requestedReferenceAssets.slice(0, providerReferenceLimit);
+  const referenceAsset = referenceAssets[0];
+  if (!referenceAsset) throw new Error("ai_provider_video_first_frame_required");
+
   const timeoutMs = videoProviderTimeoutMs();
-  const prompt = buildVideoPrompt(params.payload);
+  const imageUrls = protocol === "openai-videos"
+    ? []
+    : await videoProviderFrameUrls({ referenceAssets, timeoutMs });
+  if (protocol !== "openai-videos" && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
+    throw new Error("ai_provider_video_frame_public_urls_required");
+  }
+  const prompt = composedScene
+    ? [
+        "A single AI starter scene has already been generated from all selected user frame images. Use only the supplied starter scene image as the upstream video reference.",
+        "The starter scene is the identity source for the video. Preserve the people, broad face structure, hair, skin tone, wardrobe cues, pose setup, and relationship staging from that starter image; do not recast or replace the people.",
+        `Original selected frame count: ${requestedReferenceAssets.length}. Provider reference image count: 1. Configured provider image capacity: ${configuredProviderReferenceLimit}.`,
+        buildVideoPrompt(params.payload, referenceAssets)
+      ].join("\n\n").slice(0, 3600)
+    : buildVideoPrompt(params.payload, referenceAssets);
   const videoParams = videoProviderParams(params.payload);
   await postWorkerStatus(params.payload, "running", "source_images_ready");
   await postWorkerStatus(params.payload, "running", "video_provider_request_started");
@@ -801,40 +1515,96 @@ async function generateVideoWithProvider(params: {
     status: "running",
     stage: "video_provider_request_started",
     error: "",
+    referenceFrameCount: referenceAssets.length,
+    requestedReferenceFrameCount: requestedReferenceAssets.length,
+    providerReferenceLimit,
     updatedAt: new Date().toISOString()
   });
 
-  const taskId = await createVideoTask({
-    baseUrl,
-    apiKey: provider.apiKey,
-    model,
-    prompt,
-    imageUrls,
-    videoParams,
-    protocol,
-    timeoutMs
-  });
-  await postWorkerSlotStatus(params.payload, "running", "video_task_created", {
-    index: 1,
-    status: "running",
-    stage: "video_task_created",
-    error: "",
-    updatedAt: new Date().toISOString()
-  });
-  const status = await pollVideoTask({
-    payload: params.payload,
-    baseUrl,
-    apiKey: provider.apiKey,
-    taskId,
-    protocol,
-    timeoutMs
-  });
+  const runVideoProviderTask = async (frameImageUrls: string[], taskReferenceAssets = referenceAssets) => {
+    let taskId = "";
+    let createError: unknown;
+    for (const modelCandidate of videoProviderModelCandidates(model)) {
+      try {
+        taskId = await createVideoTask({
+          baseUrl,
+          apiKey: providerApiKey,
+          model: modelCandidate,
+          prompt,
+          imageUrls: frameImageUrls,
+          referenceAssets: taskReferenceAssets,
+          videoParams,
+          protocol,
+          timeoutMs
+        });
+        break;
+      } catch (error) {
+        createError = error;
+        if (!shouldTryNextVideoModel(error)) break;
+      }
+    }
+    if (!taskId) throw createError instanceof Error ? createError : new Error("ai_provider_video_create_failed");
+    await postWorkerSlotStatus(params.payload, "running", "video_task_created", {
+      index: 1,
+      status: "running",
+      stage: "video_task_created",
+      error: "",
+      updatedAt: new Date().toISOString()
+    });
+    const status = await pollVideoTask({
+      payload: params.payload,
+      baseUrl,
+      apiKey: providerApiKey,
+      taskId,
+      protocol,
+      timeoutMs
+    });
+    return { status, taskId, referenceFrameCount: taskReferenceAssets.length };
+  };
+
+  let status: VideoStatusResponse;
+  let taskId = "";
+  let usedReferenceFrameCount = referenceAssets.length;
+  try {
+    const result = await runVideoProviderTask(imageUrls);
+    status = result.status;
+    taskId = result.taskId;
+    usedReferenceFrameCount = result.referenceFrameCount;
+  } catch (error) {
+    if (shouldRetryOpenAiVideoTaskWithFirstFrame({ error, protocol, referenceAssets })) {
+      await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_first_frame", {
+        index: 1,
+        status: "running",
+        stage: "video_provider_retry_first_frame",
+        error: errorMessage(error).slice(0, 240),
+        updatedAt: new Date().toISOString()
+      });
+      const result = await runVideoProviderTask([], referenceAssets.slice(0, 1));
+      status = result.status;
+      taskId = result.taskId;
+      usedReferenceFrameCount = result.referenceFrameCount;
+    } else {
+      if (!shouldRetryVideoTaskWithDataUriFrames({ error, imageUrls, protocol })) throw error;
+      await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_data_uri_frames", {
+        index: 1,
+        status: "running",
+        stage: "video_provider_retry_data_uri_frames",
+        error: errorMessage(error).slice(0, 240),
+        updatedAt: new Date().toISOString()
+      });
+      const dataUriImageUrls = await videoProviderDataUriFrameUrls({ referenceAssets, timeoutMs });
+      const result = await runVideoProviderTask(dataUriImageUrls);
+      status = result.status;
+      taskId = result.taskId;
+      usedReferenceFrameCount = result.referenceFrameCount;
+    }
+  }
   const resultUrl = textValue(status.result_url);
   if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const video = await downloadVideoResult({
     resultUrl,
     baseUrl,
-    apiKey: provider.apiKey,
+    apiKey: providerApiKey,
     taskId,
     protocol,
     timeoutMs
@@ -857,6 +1627,9 @@ async function generateVideoWithProvider(params: {
     storageKey,
     mimeType: video.mimeType,
     error: "",
+    referenceFrameCount: usedReferenceFrameCount,
+    requestedReferenceFrameCount: requestedReferenceAssets.length,
+    providerReferenceLimit,
     updatedAt: new Date().toISOString()
   });
   return {
@@ -864,7 +1637,10 @@ async function generateVideoWithProvider(params: {
     mimeType: video.mimeType,
     providerLabel: provider.label,
     index: 1,
-    estimatedCostUsd: typeof status.cost === "number" ? status.cost : undefined
+    estimatedCostUsd: typeof status.cost === "number" ? status.cost : undefined,
+    referenceFrameCount: usedReferenceFrameCount,
+    requestedReferenceFrameCount: requestedReferenceAssets.length,
+    providerReferenceLimit
   };
 }
 
@@ -1017,19 +1793,43 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
             status: "succeeded",
             outputs: [{ storageKey: output.storageKey, mimeType: output.mimeType }],
             providerTrace,
-            costTrace: { estimatedCostUsd: output.estimatedCostUsd ?? 0 }
+            costTrace: { estimatedCostUsd: output.estimatedCostUsd ?? 0, referenceFrameCount: output.referenceFrameCount, requestedReferenceFrameCount: output.requestedReferenceFrameCount, providerReferenceLimit: output.providerReferenceLimit }
           });
           return;
         } catch (error) {
           lastError = errorMessage(error);
           if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
-          await new Promise((resolve) => setTimeout(resolve, 1_500 * attempt));
+          await new Promise((resolve) => setTimeout(resolve, 10_000 * attempt));
         }
       }
       throw new Error(lastError || "local_video_worker_generation_failed");
     } catch (error) {
       lastError = errorMessage(error);
       providerErrors.push({ provider: provider.label || provider.id, error: lastError });
+      await postWorkerSlotStatus(payload, "running", "video_provider_failed", {
+        index: 1,
+        status: "failed",
+        stage: "video_provider_failed",
+        error: lastError.slice(0, 240),
+        updatedAt: new Date().toISOString()
+      });
+    }
+  }
+
+  if (shouldUseLocalVideoFallback()) {
+    try {
+      await postWorkerStatus(payload, "running", "local_video_fallback_started");
+      const output = await generateLocalFallbackVideo(payload);
+      await postWorkerResult(payload, {
+        status: "succeeded",
+        outputs: [{ storageKey: output.storageKey, mimeType: output.mimeType }],
+        providerTrace: [...providerTrace, { provider: output.providerLabel, attempts: 1 }],
+        costTrace: { estimatedCostUsd: output.estimatedCostUsd, providerErrors, referenceFrameCount: output.referenceFrameCount, requestedReferenceFrameCount: output.requestedReferenceFrameCount, providerReferenceLimit: output.providerReferenceLimit }
+      });
+      return;
+    } catch (error) {
+      lastError = errorMessage(error);
+      providerErrors.push({ provider: "Local video fallback", error: lastError });
       await postWorkerSlotStatus(payload, "running", "video_provider_failed", {
         index: 1,
         status: "failed",

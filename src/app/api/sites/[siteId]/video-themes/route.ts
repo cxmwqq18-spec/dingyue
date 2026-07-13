@@ -3,12 +3,42 @@ import type { Prisma } from "@prisma/client";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
-import { toVideoTheme } from "@/lib/stores/prisma-mappers";
+import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
+import { toVideoTheme, toVideoThemeCategory } from "@/lib/stores/prisma-mappers";
 import {
   ensureDefaultVideoThemesRelational,
   upsertVideoThemeRelational
 } from "@/lib/stores/site-store";
 import type { VideoTheme } from "@/lib/types";
+import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
+
+const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
+const publicVideoThemeDefaultsEnsured = new Set<string>();
+const PUBLIC_VIDEO_THEME_CACHE_MS = 60_000;
+
+function publicCacheKey(params: {
+  category?: string;
+  includeCategories: boolean;
+  pageSize: number;
+  query?: string;
+  siteId: string;
+  status?: string;
+}) {
+  return [
+    params.siteId,
+    params.includeCategories ? "with-categories" : "themes-only",
+    params.pageSize,
+    params.query || "",
+    params.status || "",
+    params.category || ""
+  ].join(":");
+}
+
+function clearPublicVideoThemeCache(siteId: string) {
+  for (const key of publicVideoThemeCache.keys()) {
+    if (key.startsWith(`${siteId}:`)) publicVideoThemeCache.delete(key);
+  }
+}
 
 function numberParam(value: string | null, fallback: number, min: number, max: number) {
   if (!value) return fallback;
@@ -48,25 +78,104 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
   };
 }
 
+async function videoThemeProviderFrameLimits() {
+  const providers = await getPlatformAiProviderFallbackQueueRelational();
+  return {
+    effectiveMaxFrames: (theme: Pick<VideoTheme, "maxFrames">) => effectiveVideoFrameLimit(providers, theme.maxFrames),
+    providerMaxFrames: configuredVideoProviderFrameLimit(providers)
+  };
+}
+
+async function ensurePublicVideoThemeDefaults(siteId: string, shouldEnsure: boolean) {
+  if (!shouldEnsure || publicVideoThemeDefaultsEnsured.has(siteId)) return true;
+  const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
+  if (!site) return false;
+  await ensureDefaultVideoThemesRelational(siteId);
+  publicVideoThemeDefaultsEnsured.add(siteId);
+  clearPublicVideoThemeCache(siteId);
+  return true;
+}
+
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const url = new URL(request.url);
   const adminRequested = url.searchParams.get("admin") === "1";
   const admin = adminRequested && await hasSiteAdminSession(siteId);
+  const includeCategories = url.searchParams.get("includeCategories") === "1";
+  const withCounts = admin || url.searchParams.get("withCounts") === "1";
   const page = numberParam(url.searchParams.get("page"), 1, 1, 10000);
   const pageSize = numberParam(url.searchParams.get("pageSize"), admin ? 20 : 100, 1, 100);
   const query = url.searchParams.get("q")?.trim();
   const status = url.searchParams.get("status")?.trim();
   const category = url.searchParams.get("category")?.trim();
-  const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
-  if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
-  await ensureDefaultVideoThemesRelational(siteId);
   const where: Prisma.VideoThemeWhereInput = {
     siteId,
     status: admin && status ? status : admin ? undefined : "active",
     category: category ? { is: { slug: category } } : undefined,
     AND: [searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
   };
+
+  if (!withCounts) {
+    if (!(await ensurePublicVideoThemeDefaults(siteId, !category && !query))) {
+      return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    }
+    const cacheKey = publicCacheKey({ category, includeCategories, pageSize, query, siteId, status });
+    const cached = publicVideoThemeCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) return NextResponse.json(cached.payload);
+    let themes = await prisma.videoTheme.findMany({
+      where,
+      include: { category: true },
+      orderBy: [{ createdAt: "desc" }],
+      take: pageSize
+    });
+    if (!themes.length) {
+      const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
+      if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+    }
+    if (!themes.length && !category && !query) {
+      await ensureDefaultVideoThemesRelational(siteId);
+      themes = await prisma.videoTheme.findMany({
+        where,
+        include: { category: true },
+        orderBy: [{ createdAt: "desc" }],
+        take: pageSize
+      });
+    }
+    const categories = includeCategories
+      ? await prisma.videoThemeCategory.findMany({
+          where: { siteId, status: "active" },
+          orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+        })
+      : [];
+    const frameLimits = await videoThemeProviderFrameLimits();
+    const payload = {
+      ok: true,
+      themes: themes.map((theme) => {
+        const mapped = toVideoTheme(theme);
+        return {
+          ...mapped,
+          effectiveMaxFrames: frameLimits.effectiveMaxFrames(mapped),
+          providerMaxFrames: frameLimits.providerMaxFrames
+        };
+      }),
+      categories: categories.map(toVideoThemeCategory),
+      total: themes.length,
+      page,
+      pageSize,
+      counts: {
+        all: themes.length,
+        active: themes.length,
+        draft: 0,
+        paused: 0
+      }
+    };
+    publicVideoThemeCache.set(cacheKey, { expiresAt: Date.now() + PUBLIC_VIDEO_THEME_CACHE_MS, payload });
+    return NextResponse.json(payload);
+  }
+
+  const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
+  if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
+  await ensureDefaultVideoThemesRelational(siteId);
   const [themes, total, activeCount, draftCount, pausedCount] = await prisma.$transaction([
     prisma.videoTheme.findMany({
       where,
@@ -80,9 +189,17 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     prisma.videoTheme.count({ where: { siteId, status: "draft" } }),
     prisma.videoTheme.count({ where: { siteId, status: "paused" } })
   ]);
+  const frameLimits = await videoThemeProviderFrameLimits();
   return NextResponse.json({
     ok: true,
-    themes: themes.map(toVideoTheme),
+    themes: themes.map((theme) => {
+      const mapped = toVideoTheme(theme);
+      return {
+        ...mapped,
+        effectiveMaxFrames: frameLimits.effectiveMaxFrames(mapped),
+        providerMaxFrames: frameLimits.providerMaxFrames
+      };
+    }),
     total,
     page,
     pageSize,
@@ -91,7 +208,15 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       active: activeCount,
       draft: draftCount,
       paused: pausedCount
-    }
+    },
+    ...(includeCategories
+      ? {
+          categories: (await prisma.videoThemeCategory.findMany({
+            where: { siteId, status: admin ? undefined : "active" },
+            orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+          })).map(toVideoThemeCategory)
+        }
+      : {})
   });
 }
 
@@ -117,6 +242,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       imageUrl: body.imageUrl,
       galleryImages: body.galleryImages
     });
+    clearPublicVideoThemeCache(siteId);
     return NextResponse.json({ ok: true, theme: result.theme, created: result.created });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

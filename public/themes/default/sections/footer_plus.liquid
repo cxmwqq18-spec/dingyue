@@ -81,6 +81,9 @@
                   {% unless firstLinks.type != 'web' or firstLinks.url contains shop.domain %}
                     target="{{ firstLinks.target }}"
                   {% endunless %}
+                  {% if firstLinks.url %}
+                    rel="nofollow"
+                  {% endif %}
                   data-track-event="jumpAddress"
                   data-track-href= "{{ firstLinks.url }}"
                 >
@@ -116,6 +119,7 @@
                 {% if instagram %}
                   href="{{ instagram }}"
                   target="_blank"
+                  rel="nofollow noopener noreferrer"
                   data-track-href= "{{ instagram }}"
                 {% endif %}
                 data-track-event="jumpAddress"
@@ -130,6 +134,7 @@
                 {% if facebook %}
                   href="{{ facebook }}"
                   target="_blank"
+                  rel="nofollow noopener noreferrer"
                   data-track-href= "{{ facebook }}"
                 {% endif %}
                 data-track-event="jumpAddress"
@@ -144,6 +149,7 @@
                 {% if twitter %}
                   href="{{ twitter }}"
                   target="_blank"
+                  rel="nofollow noopener noreferrer"
                   data-track-href= "{{ twitter }}"
                 {% endif %}
                 data-track-event="jumpAddress"
@@ -158,6 +164,7 @@
                 {% if pinterest %}
                   href="{{ pinterest }}"
                   target="_blank"
+                  rel="nofollow noopener noreferrer"
                   data-track-href= "{{ pinterest }}"
                 {% endif %}
                 data-track-event="jumpAddress"
@@ -172,6 +179,7 @@
                 {% if youtube %}
                   href="{{ youtube }}"
                   target="_blank"
+                  rel="nofollow noopener noreferrer"
                   data-track-href= "{{ youtube }}"
                 {% endif %}
                 data-track-event="jumpAddress"
