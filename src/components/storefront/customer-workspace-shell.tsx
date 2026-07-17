@@ -1,21 +1,23 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, Trash2, Upload, X, UserRound, Users } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
+import { invalidateCustomerAssets } from "@/components/app/customer-assets-client-cache";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
-import { CustomerVideoWorkspace } from "@/components/storefront/customer-video-workspace";
+import { CustomerVideoWorkspace, type VideoRetryDraft } from "@/components/storefront/customer-video-workspace";
 import { csrfHeader } from "@/lib/client-csrf";
 import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
-import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData } from "@/lib/types";
-import { DEFAULT_VIDEO_FRAME_LIMIT, MAX_VIDEO_FRAME_LIMIT } from "@/lib/video-frame-config";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
+import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerWorkspacePanel = "overview" | "create" | "upload" | "video";
@@ -28,12 +30,13 @@ type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-ph
 type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
 type SampleTarget = "primary" | "partner";
+type LocalUploadStatus = "uploading" | "ready" | "failed";
 type SampleAsset = ThemeRuntimeAsset & {
-  localStatus?: "uploading" | "ready" | "failed";
+  localStatus?: LocalUploadStatus;
   localTarget?: SampleTarget;
 };
 type VideoFrameAsset = ThemeRuntimeAsset & {
-  localStatus?: "uploading" | "ready" | "failed";
+  localStatus?: LocalUploadStatus;
 };
 type WorkspaceRuntimeState =
   | { status: "idle"; runtime?: undefined; error?: undefined }
@@ -46,6 +49,9 @@ type OutputCopyJob = {
   requestJson?: Record<string, unknown>;
 };
 const myDreamShootsDisplayName = "myᕲreamshoots";
+const VIDEO_FRAME_UPLOAD_LIMIT = MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT;
+const LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS = 120_000;
+const VIDEO_PREVIEW_INTERSECTION_MARGIN = "160px";
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
 
 type RuntimeOutputSlot = {
@@ -71,8 +77,7 @@ type WorkspaceOutputRecord = {
 };
 
 function isSpanishXbyWorkspaceSite(site: CustomerWorkspaceSite): boolean {
-  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
-  return identity.includes("-xby") || identity.includes("_xby");
+  return isSpanishStorefrontSite(site);
 }
 
 function t(spanish: boolean, english: string, spanishText: string): string {
@@ -125,6 +130,65 @@ function videoJobFrameIds(job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob |
   ]));
 }
 
+function videoJobPromptText(job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob | undefined): string {
+  const request = recordValue(job?.requestJson);
+  const fields = recordValue(request.fields);
+  return stringRequestValue(fields.promptNote, fields.prompt, request.promptNote, request.prompt) ?? "";
+}
+
+function videoPromptRequiresFrameImages(prompt: string): boolean {
+  const text = prompt.trim().toLowerCase();
+  if (!text) return false;
+  return /上传.{0,12}(图片|照片|图像|素材|参考图)|根据.{0,12}(图片|照片|图像|素材|参考图)|这(张|个|些).{0,8}(图片|照片|图像|素材|参考图)|图中|照片中|uploaded.{0,24}(image|photo|frame|picture)|selected.{0,24}(image|photo|frame|picture)|reference.{0,24}(image|photo|frame|picture)|source.{0,24}(image|photo|frame|picture)/i.test(text);
+}
+
+function videoJobMissingRequiredFrames(job: RuntimeJob): boolean {
+  return isVideoRuntimeJob(job) && !videoJobFrameIds(job).length && videoPromptRequiresFrameImages(videoJobPromptText(job));
+}
+
+function stringRequestValue(...values: unknown[]): string | undefined {
+  for (const value of values) {
+    if (typeof value !== "string") continue;
+    const trimmed = value.trim();
+    if (trimmed) return trimmed;
+  }
+  return undefined;
+}
+
+function numberRequestValue(...values: unknown[]): number | undefined {
+  for (const value of values) {
+    const parsed = typeof value === "number" || typeof value === "string" ? Number(value) : Number.NaN;
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return undefined;
+}
+
+function videoRetryDraftFromJob(job: RuntimeJob): Omit<VideoRetryDraft, "key"> | undefined {
+  if (!isVideoRuntimeJob(job)) return undefined;
+  const request = recordValue(job.requestJson);
+  const fields = recordValue(request.fields);
+  const frameAssetIds = videoJobFrameIds(job);
+  if (!frameAssetIds.length) return undefined;
+  return {
+    sourceJobId: job.id,
+    frameAssetIds,
+    videoThemeId: stringRequestValue(fields.videoThemeId, request.videoThemeId),
+    promptNote: stringRequestValue(fields.promptNote, request.promptNote),
+    durationSeconds: numberRequestValue(
+      fields.durationSeconds,
+      fields.videoDurationSeconds,
+      fields.videoDuration,
+      fields.duration,
+      request.durationSeconds,
+      request.videoDurationSeconds,
+      request.videoDuration,
+      request.duration
+    ),
+    aspectRatio: stringRequestValue(fields.aspectRatio, fields.aspect_ratio, request.aspectRatio, request.aspect_ratio),
+    resolution: stringRequestValue(fields.resolution, request.resolution)
+  };
+}
+
 function workspaceJobTitle(job: RuntimeJob, spanish = false): string {
   const fields = jobFields(job);
   const title = fields.videoThemeName ?? fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
@@ -153,7 +217,7 @@ function workspaceJobStageLabel(job: RuntimeJob, spanish = false, slots?: Runtim
 function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutputSlot[]): string {
   const result = jobResult(job);
   const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
-  if (isVideoRuntimeJob(job) && !videoJobFrameIds(job).length) {
+  if (videoJobMissingRequiredFrames(job)) {
     return t(spanish, "This video request did not include selected frame images, so it cannot be trusted as a reference-based result. Start a new video after selecting frame images on the left.", "Esta solicitud de video no incluyo fotogramas seleccionados, por lo que no debe usarse como resultado basado en referencias. Crea un video nuevo despues de seleccionar fotogramas a la izquierda.");
   }
   if (effectiveStatus === "failed") {
@@ -161,7 +225,11 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
     const error = typeof result.error === "string" && result.error ? result.error : slotError ?? "";
     const lowerError = error.toLowerCase();
     const isVideoRequest = isVideoRuntimeJob(job);
+    if (error.includes("generation_job_expired")) return isVideoRequest
+      ? t(spanish, "The video generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador de video se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.")
+      : t(spanish, "The generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
     if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
+    if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "The video provider timed out while creating the video task. The starter image was created correctly, credits were returned automatically, and you can retry after the provider recovers.", "El proveedor de video agoto el tiempo al crear la tarea. La imagen inicial se creo correctamente, los creditos se devolvieron automaticamente y puedes reintentar cuando el proveedor se recupere.");
     if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) return t(spanish, "The video provider connection was interrupted before it returned a video. Credits were returned automatically, and you can retry after a short wait.", "La conexion con el proveedor de video se interrumpio antes de devolver el video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
     if (isVideoRequest && error.includes("ai_provider_video_failed")) return t(spanish, "The video provider could not finish this video. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de video no pudo terminar este video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
     if (error.includes("timeout") || error.includes("UND_ERR_CONNECT_TIMEOUT")) return isVideoRequest
@@ -288,7 +356,7 @@ function workspaceJobOutputSlots(job: RuntimeJob, outputAssets: ThemeRuntimeAsse
 }
 
 function workspaceJobEffectiveStatus(job: RuntimeJob, slots?: RuntimeOutputSlot[]): RuntimeJob["status"] | "partial" {
-  if (isVideoRuntimeJob(job) && !videoJobFrameIds(job).length) return "failed";
+  if (videoJobMissingRequiredFrames(job)) return "failed";
   if (job.status === "succeeded" || job.status === "failed") return job.status;
   const outputSlots = slots ?? workspaceJobOutputSlots(job, []);
   if (outputSlots.length > 0 && outputSlots.every((slot) => slot.status === "failed")) return "failed";
@@ -309,6 +377,7 @@ function workspaceSlotProgress(slot: RuntimeOutputSlot): number {
   if (slot.stage === "provider_response_received") return 88;
   if (slot.stage === "video_task_created") return 68;
   if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return 74;
+  if (slot.stage === "video_scene_image_generation_started") return 52;
   if (slot.stage === "video_provider_request_started") return 62;
   if (slot.stage === "provider_request_started") return 62;
   if (slot.stage === "source_images_ready") return 42;
@@ -325,6 +394,7 @@ function workspaceSlotProgressText(slot: RuntimeOutputSlot, spanish = false): st
   if (slot.stage === "provider_response_received") return t(spanish, "Saving output", "Guardando resultado");
   if (slot.stage === "video_task_created") return t(spanish, "Video task created", "Tarea de video creada");
   if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
+  if (slot.stage === "video_scene_image_generation_started") return t(spanish, "Preparing starter image", "Preparando imagen inicial");
   if (slot.stage === "video_provider_request_started") return t(spanish, "Generating video", "Generando video");
   if (slot.stage === "provider_request_started") return t(spanish, "Generating output", "Generando resultado");
   if (slot.stage === "source_images_ready") return t(spanish, "Preparing photos", "Preparando fotos");
@@ -382,6 +452,10 @@ function workspaceAssetPreviewUrl(asset: Pick<ThemeRuntimeAsset, "previewUrl" | 
   return asset.previewUrl;
 }
 
+function assetPreviewIsLoading(asset: Pick<ThemeRuntimeAsset, "previewStatus"> & { localStatus?: LocalUploadStatus }): boolean {
+  return asset.localStatus === "uploading" || asset.previewStatus === "loading";
+}
+
 function isVideoFrameCandidateAsset(asset: Pick<ThemeRuntimeAsset, "mimeType" | "role" | "subjectRole">): boolean {
   return asset.mimeType.startsWith("image/") && asset.role === "input" && asset.subjectRole === "video_frame";
 }
@@ -408,6 +482,90 @@ function isSameLocalDay(value: string, reference: Date): boolean {
 
 function isVideoAsset(asset: Pick<ThemeRuntimeAsset, "mimeType">): boolean {
   return asset.mimeType.startsWith("video/");
+}
+
+function WorkspaceVideoPreviewButton({
+  compact = false,
+  disabled,
+  label,
+  loaded,
+  mediaKey,
+  onLoaded,
+  onOpen,
+  renderLoading,
+  src,
+  spanish
+}: {
+  compact?: boolean;
+  disabled?: boolean;
+  label: string;
+  loaded: boolean;
+  mediaKey: string;
+  onLoaded: (key: string) => void;
+  onOpen?: () => void;
+  renderLoading: (compact?: boolean) => ReactNode;
+  src: string;
+  spanish: boolean;
+}) {
+  const rootRef = useRef<HTMLButtonElement | null>(null);
+  const [shouldLoad, setShouldLoad] = useState(loaded);
+
+  useEffect(() => {
+    if (shouldLoad) return;
+    const element = rootRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: VIDEO_PREVIEW_INTERSECTION_MARGIN }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  return (
+    <button
+      aria-label={label}
+      className="group/video relative block w-full bg-black text-left disabled:cursor-default"
+      disabled={disabled}
+      onClick={onOpen}
+      ref={rootRef}
+      title={label}
+      type="button"
+    >
+      <div className="relative aspect-video w-full overflow-hidden bg-[#080c12]">
+        {!loaded ? renderLoading(compact) : null}
+        {shouldLoad ? (
+          <video
+            aria-label={label}
+            className={`absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
+            autoPlay
+            loop
+            muted
+            onCanPlay={() => onLoaded(mediaKey)}
+            onLoadedData={() => onLoaded(mediaKey)}
+            playsInline
+            preload="metadata"
+            src={src}
+            title={label}
+          />
+        ) : null}
+      </div>
+      {!disabled ? (
+        <span className={`absolute ${compact ? "bottom-2 left-2 px-2.5 py-1 text-[10px]" : "bottom-3 left-3 px-3 py-1.5 text-[11px]"} inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14`}>
+          <Eye className={compact ? "h-3 w-3" : "h-3.5 w-3.5"} strokeWidth={1.8} />
+          {t(spanish, "Open preview", "Abrir vista previa")}
+        </span>
+      ) : null}
+    </button>
+  );
 }
 
 function mediaLabel(value: string | undefined): string {
@@ -462,6 +620,9 @@ function workspaceGenerationErrorText(error: string, spanish = false): string {
   if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) {
     return t(spanish, "Frame images need a public URL before the video provider can read them.", "Los fotogramas necesitan una URL publica antes de que el proveedor de video pueda leerlos.");
   }
+  if (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504")) {
+    return t(spanish, "The video provider timed out while creating the video task.", "El proveedor de video agoto el tiempo al crear la tarea.");
+  }
   if (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated")) {
     return t(spanish, "The video provider connection was interrupted.", "La conexion con el proveedor de video se interrumpio.");
   }
@@ -481,7 +642,11 @@ function useWorkspaceRuntime(siteId: string, refreshKey = 0, enabled = true): Wo
     }
     const controller = new AbortController();
     const refreshParam = refreshKey > 0 ? `&refresh=${refreshKey}` : "";
-    setState((current) => current.status === "ready" ? { status: "loading", refreshKey, runtime: current.runtime } : { status: "loading", refreshKey });
+    setState((current) => ({
+      status: "loading",
+      refreshKey,
+      ...(current.runtime ? { runtime: current.runtime } : {})
+    }));
     fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace${refreshParam}`, {
       cache: "no-store",
       credentials: "same-origin",
@@ -557,21 +722,25 @@ export function CustomerWorkspaceShell({
   customer,
   assets,
   siteAiApps,
+  creativePackCategories = [],
   creativePacks,
   initialCreativePackId,
   initialToolId,
   initialRuntime,
-  initialPanel = "overview"
+  initialPanel = "overview",
+  toolMenuItems = []
 }: {
   site: CustomerWorkspaceSite;
   customer: PublicCustomer;
   assets: ThemeRuntimeAsset[];
   siteAiApps: SiteAiApp[];
+  creativePackCategories?: CreativePackCategory[];
   creativePacks: CreativePack[];
   initialCreativePackId?: string;
   initialToolId?: string;
   initialRuntime?: ThemeRuntimeData;
   initialPanel?: CustomerWorkspacePanel;
+  toolMenuItems?: ToolMenuItem[];
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -584,7 +753,7 @@ export function CustomerWorkspaceShell({
     [basePath]
   );
   const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
-  const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(false);
+  const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(() => !initialRuntime);
   const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
   const runtime = runtimeState.runtime ?? initialRuntime;
   const [currentCustomerBalance, setCurrentCustomerBalance] = useState<PublicCustomer["balance"]>(() => customer.balance);
@@ -611,6 +780,7 @@ export function CustomerWorkspaceShell({
   const [primaryGender, setPrimaryGender] = useState("nonbinary");
   const [partnerGender, setPartnerGender] = useState("nonbinary");
   const [selectedPreviewAssetId, setSelectedPreviewAssetId] = useState<string | null>(null);
+  const [loadedVideoPreviewKeys, setLoadedVideoPreviewKeys] = useState<Set<string>>(() => new Set());
   const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter(isSampleCandidateAsset));
   const [primarySampleIds, setPrimarySampleIds] = useState<string[]>([]);
   const [partnerSampleIds, setPartnerSampleIds] = useState<string[]>([]);
@@ -618,8 +788,9 @@ export function CustomerWorkspaceShell({
   const [selectedVideoFrameIds, setSelectedVideoFrameIds] = useState<string[]>([]);
   const [draggedVideoFrameId, setDraggedVideoFrameId] = useState<string | null>(null);
   const [uploadingVideoFrames, setUploadingVideoFrames] = useState(false);
-  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame images. New uploads are selected automatically.`, `Elige hasta ${DEFAULT_VIDEO_FRAME_LIMIT} fotogramas. Las subidas nuevas se seleccionan automaticamente.`));
+  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} frame images. New uploads are selected automatically.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} fotogramas. Las subidas nuevas se seleccionan automaticamente.`));
   const [videoWorkspaceTab, setVideoWorkspaceTab] = useState<VideoWorkspaceTab>("generate");
+  const [retryVideoDraft, setRetryVideoDraft] = useState<VideoRetryDraft | null>(null);
   const [preferredToolId, setPreferredToolId] = useState<string | undefined>(undefined);
   const [uploadingSampleTarget, setUploadingSampleTarget] = useState<SampleTarget | null>(null);
   const [sampleUploadMessage, setSampleUploadMessage] = useState(() => t(spanishXby, "Upload samples to preview them here before generation.", "Sube muestras para verlas aqui antes de generar."));
@@ -628,19 +799,23 @@ export function CustomerWorkspaceShell({
   const [manualRefreshPending, setManualRefreshPending] = useState(false);
   const [manualRefreshKey, setManualRefreshKey] = useState<number | null>(null);
   const eventRefreshKeyRef = useRef<number | null>(null);
+  const pendingEventRefreshRef = useRef(false);
+  const runtimeLoadingRef = useRef(false);
   const [focusedJobId, setFocusedJobId] = useState<string | null>(null);
+  const [pendingCreatedVideoJobId, setPendingCreatedVideoJobId] = useState<string | null>(null);
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
   const [sampleDeleteConfirm, setSampleDeleteConfirm] = useState<{ assets: SampleAsset[]; label: string } | null>(null);
   const videoFrameUploadInputRef = useRef<HTMLInputElement | null>(null);
   const deletedVideoFrameIdsRef = useRef<Set<string>>(new Set());
+  const locallyCreatedVideoFrameIdsRef = useRef<Map<string, number>>(new Map());
   const videoFrameBlobUrlsRef = useRef<Set<string>>(new Set());
   const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
   const restoredSampleSelectionRef = useRef(false);
   const syncedInitialSamplesRef = useRef(false);
-  const sampleSelectionStorageKey = useMemo(() => `dreamshoot:workspace:${site.id}:${customer.id}:sample-selection:v1`, [customer.id, site.id]);
+  const sampleSelectionStorageKey = useMemo(() => `dreamshoot:workspace:${site.id}:${customer.id}:sample-selection:v2`, [customer.id, site.id]);
   const tabItems: Array<{ id: WorkspaceResourceTab; label: string }> = useMemo(
     () => [
       { id: "all", label: t(spanishXby, "All", "Todo") },
@@ -660,7 +835,7 @@ export function CustomerWorkspaceShell({
   );
   const galleryAssets = hydratedAssets.filter((asset) => shouldShowAssetOnSurface(asset, "workspace-gallery"));
   const sourceAssets = sampleAssets;
-  const readySourceAssets = sourceAssets.filter((asset) => !asset.id.startsWith("local:") && asset.localStatus !== "uploading" && asset.localStatus !== "failed");
+  const readySourceAssets = sourceAssets.filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset) && asset.localStatus !== "failed");
   const readyPrimarySampleIds = primarySampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
   const readyPartnerSampleIds = partnerSampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
   const previewSamples = sourceAssets.filter((asset) => asset.localStatus !== "failed");
@@ -676,13 +851,14 @@ export function CustomerWorkspaceShell({
   );
   const readySelectedVideoFrameIds = useMemo(
     () => selectedVideoFrames
-      .filter((asset) => !asset.id.startsWith("local:") && asset.localStatus !== "uploading")
+      .filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset))
       .map((asset) => asset.id),
     [selectedVideoFrames]
   );
-  const maxVideoFrameCount = MAX_VIDEO_FRAME_LIMIT;
+  const maxVideoFrameCount = VIDEO_FRAME_UPLOAD_LIMIT;
   const resourceStatusJobs = recentJobs.filter((job) => !isVideoRuntimeJob(job));
   const videoRuntimeJobs = recentJobs.filter(isVideoRuntimeJob);
+  const pendingCreatedVideoJob = pendingCreatedVideoJobId ? videoRuntimeJobs.find((job) => job.id === pendingCreatedVideoJobId) : undefined;
   const resourceJobStatuses = resourceStatusJobs.map((job) => workspaceJobEffectiveStatus(job));
   const videoJobStatuses = videoRuntimeJobs.map((job) => workspaceJobEffectiveStatus(job));
   const activeJobs = resourceJobStatuses.filter((status) => status === "queued" || status === "running").length;
@@ -690,7 +866,8 @@ export function CustomerWorkspaceShell({
   const activeVideoJobs = videoJobStatuses.filter((status) => status === "queued" || status === "running").length;
   const failedVideoJobs = videoJobStatuses.filter((status) => status === "failed" || status === "partial").length;
   const runtimeIsLoading = runtimeState.status === "loading";
-  const runtimeIsInitializing = !runtime && (runtimeState.status === "idle" || runtimeState.status === "loading");
+  const waitingForCreatedVideoJob = Boolean(pendingCreatedVideoJobId && !pendingCreatedVideoJob && runtimeState.status !== "error");
+  const runtimeIsInitializing = !workspaceNotice && !focusedJobId && !runtime && (runtimeState.status === "idle" || (runtimeState.status === "loading" && runtimeState.refreshKey === 0));
   const completedRuntimeRefreshKey = runtimeState.status === "ready" || runtimeState.status === "error" ? runtimeState.refreshKey : null;
   const resourceTitleByTab: Record<WorkspaceResourceTab, string> = {
     all: t(spanishXby, "All assets", "Todos los recursos"),
@@ -709,7 +886,7 @@ export function CustomerWorkspaceShell({
   };
 
   useEffect(() => {
-    if (runtimeFetchEnabled) return;
+    if (runtimeFetchEnabled || initialRuntime) return;
     const startRuntimeFetch = () => setRuntimeFetchEnabled(true);
     let idleId: number | undefined;
     const timeoutId = window.setTimeout(() => {
@@ -723,7 +900,16 @@ export function CustomerWorkspaceShell({
       window.clearTimeout(timeoutId);
       if (idleId !== undefined && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
     };
-  }, [runtimeFetchEnabled]);
+  }, [initialRuntime, runtimeFetchEnabled]);
+
+  useEffect(() => {
+    runtimeLoadingRef.current = runtimeState.status === "loading";
+  }, [runtimeState.status]);
+
+  useEffect(() => {
+    if (!pendingCreatedVideoJobId) return;
+    if (pendingCreatedVideoJob || runtimeState.status === "error") setPendingCreatedVideoJobId(null);
+  }, [pendingCreatedVideoJob, pendingCreatedVideoJobId, runtimeState.status]);
 
   useEffect(() => {
     const jobStatus = searchParams.get("job_status");
@@ -766,6 +952,10 @@ export function CustomerWorkspaceShell({
           ? t(spanishXby, "Generator callback received. Refreshing workspace.", "Callback del generador recibido. Actualizando espacio.")
           : t(spanishXby, "Generator progress received. Refreshing workspace.", "Progreso del generador recibido. Actualizando espacio.")
       );
+      if (runtimeLoadingRef.current) {
+        pendingEventRefreshRef.current = true;
+        return;
+      }
       setRuntimeRefreshKey((current) => {
         const next = current + 1;
         eventRefreshKeyRef.current = next;
@@ -794,18 +984,49 @@ export function CustomerWorkspaceShell({
   }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
   useEffect(() => {
     const eventRefreshKey = eventRefreshKeyRef.current;
-    if (eventRefreshKey === null || completedRuntimeRefreshKey !== eventRefreshKey) return;
-    eventRefreshKeyRef.current = null;
-    if (runtimeState.status === "ready") {
-      setRuntimeRefreshMessage(spanishXby ? `Actualizado por callback del generador ${workspaceJobTime(new Date().toISOString())}` : `Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
+    if (eventRefreshKey !== null && completedRuntimeRefreshKey === eventRefreshKey) {
+      eventRefreshKeyRef.current = null;
+      if (runtimeState.status === "ready") {
+        setRuntimeRefreshMessage(spanishXby ? `Actualizado por callback del generador ${workspaceJobTime(new Date().toISOString())}` : `Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
+      }
+      if (runtimeState.status === "error") {
+        setRuntimeRefreshMessage(t(spanishXby, "Generator callback received, but workspace refresh failed. Use Check now.", "Callback recibido, pero fallo la actualizacion. Usa Revisar ahora."));
+      }
     }
-    if (runtimeState.status === "error") {
-      setRuntimeRefreshMessage(t(spanishXby, "Generator callback received, but workspace refresh failed. Use Check now.", "Callback recibido, pero fallo la actualizacion. Usa Revisar ahora."));
+    if ((runtimeState.status === "ready" || runtimeState.status === "error") && pendingEventRefreshRef.current) {
+      pendingEventRefreshRef.current = false;
+      setRuntimeFetchEnabled(true);
+      setRuntimeRefreshKey((current) => {
+        const next = current + 1;
+        eventRefreshKeyRef.current = next;
+        return next;
+      });
     }
   }, [completedRuntimeRefreshKey, runtimeState.status]);
   useEffect(() => {
-    setRuntimeAssets(runtime?.assets ?? initialRuntime?.assets ?? assets);
-  }, [assets, initialRuntime?.assets, runtime?.assets]);
+    const nextAssets = runtime?.assets ?? initialRuntime?.assets ?? assets;
+    setRuntimeAssets((current) => {
+      if (!runtime?.assets && runtimeState.status === "loading" && current.length) return current;
+      const nextAssetIds = new Set(nextAssets.map((asset) => asset.id));
+      nextAssetIds.forEach((assetId) => locallyCreatedVideoFrameIdsRef.current.delete(assetId));
+      const now = Date.now();
+      const protectedVideoFrames = current.filter((asset) => {
+        const keepUntil = locallyCreatedVideoFrameIdsRef.current.get(asset.id);
+        if (keepUntil === undefined) return false;
+        if (keepUntil <= now || deletedVideoFrameIdsRef.current.has(asset.id)) {
+          locallyCreatedVideoFrameIdsRef.current.delete(asset.id);
+          return false;
+        }
+        return isVideoFrameCandidateAsset(asset) && !nextAssetIds.has(asset.id);
+      });
+      if (!protectedVideoFrames.length) return nextAssets;
+      const protectedIds = new Set(protectedVideoFrames.map((asset) => asset.id));
+      return [
+        ...protectedVideoFrames,
+        ...nextAssets.filter((asset) => !protectedIds.has(asset.id))
+      ].sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime());
+    });
+  }, [assets, initialRuntime?.assets, runtime?.assets, runtimeState.status]);
   useEffect(() => {
     const hydratedFrameAssets = hydratedAssets.filter((asset) => isVideoFrameCandidateAsset(asset) && !deletedVideoFrameIdsRef.current.has(asset.id));
     const hydratedFrameIds = new Set(hydratedFrameAssets.map((asset) => asset.id));
@@ -825,11 +1046,16 @@ export function CustomerWorkspaceShell({
   useEffect(() => {
     const availableFrameIds = new Set(readyVideoFrameAssets.map((asset) => asset.id));
     setSelectedVideoFrameIds((current) => {
-      const next = current.filter((id) => availableFrameIds.has(id)).slice(0, maxVideoFrameCount);
+      const next = trimVideoFrameSelection(current.filter((id) => availableFrameIds.has(id)), maxVideoFrameCount);
       return next.length === current.length && next.every((id, index) => id === current[index]) ? current : next;
     });
   }, [maxVideoFrameCount, readyVideoFrameAssets]);
   const videoResourceAssets = galleryAssets.filter(isVideoAsset);
+  const videoWorkspaceSummary = waitingForCreatedVideoJob
+    ? t(spanishXby, "New video request created · refreshing status", "Nueva solicitud de video creada · actualizando estado")
+    : spanishXby
+      ? `${activeVideoJobs} trabajos activos · ${failedVideoJobs} requieren atencion · ${videoResourceAssets.length} videos generados`
+      : `${activeVideoJobs} active jobs · ${failedVideoJobs} need attention · ${videoResourceAssets.length} generated videos`;
   const imageResourceAssets = galleryAssets.filter((asset) => !isVideoAsset(asset));
   const allResourceAssets = imageResourceAssets;
   const tryOnJobIds = new Set(
@@ -872,12 +1098,91 @@ export function CustomerWorkspaceShell({
   }, [galleryAssets]);
   const workspaceSlotPreviewUrl = (storageKey: string) =>
     outputPreviewUrlByStorageKey.get(normalizedWorkspaceStorageKey(storageKey)) ?? workspaceStoragePreviewUrl(storageKey);
-  const videoPosterUrlForJob = (job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob | undefined): string | undefined => {
-    const frameAsset = videoJobFrameIds(job)
-      .map((assetId) => assetById.get(assetId))
-      .find((asset): asset is ThemeRuntimeAsset => Boolean(asset?.mimeType.startsWith("image/")));
-    return frameAsset ? workspaceAssetPreviewUrl(frameAsset) : undefined;
+  const markVideoPreviewLoaded = (key: string) => {
+    setLoadedVideoPreviewKeys((current) => {
+      if (current.has(key)) return current;
+      const next = new Set(current);
+      next.add(key);
+      return next;
+    });
   };
+  function renderVideoPreviewLoading(compact = false) {
+    return (
+      <div className="absolute inset-0 grid place-items-center bg-[#080c12]">
+        <div className={`grid place-items-center rounded-full border border-cyan-300/24 bg-cyan-300/10 text-cyan-100/86 ${compact ? "h-11 w-11" : "h-14 w-14"}`}>
+          <Film className={compact ? "h-5 w-5" : "h-6 w-6"} strokeWidth={1.8} />
+        </div>
+      </div>
+    );
+  }
+  function renderVideoPreviewButton(params: {
+    mediaKey: string;
+    label: string;
+    src: string;
+    compact?: boolean;
+    disabled?: boolean;
+    onOpen?: () => void;
+  }) {
+    const loaded = loadedVideoPreviewKeys.has(params.mediaKey);
+    return (
+      <WorkspaceVideoPreviewButton
+        compact={params.compact}
+        disabled={params.disabled}
+        label={params.label}
+        loaded={loaded}
+        mediaKey={params.mediaKey}
+        onLoaded={markVideoPreviewLoaded}
+        onOpen={params.onOpen}
+        renderLoading={renderVideoPreviewLoading}
+        spanish={spanishXby}
+        src={params.src}
+      />
+    );
+  }
+  function renderFrameImagePreview(params: {
+    asset: VideoFrameAsset;
+    alt: string;
+    className: string;
+    compact?: boolean;
+  }) {
+    const loading = assetPreviewIsLoading(params.asset);
+    if (params.asset.localStatus === "uploading" && params.asset.previewUrl) {
+      const statusLabel = t(spanishXby, "Uploading", "Subiendo");
+      return (
+        <div
+          aria-label={`${params.alt}. ${statusLabel}`}
+          className={`${params.className} relative overflow-hidden bg-[#08131d]`}
+          role="img"
+          title={statusLabel}
+        >
+          <img alt={params.alt} className="h-full w-full object-cover opacity-72" decoding="async" src={params.asset.previewUrl} />
+          <span className="absolute inset-x-1.5 bottom-1.5 rounded-full border border-white/15 bg-black/62 px-2 py-1 text-center text-[10px] font-semibold text-white">
+            {statusLabel}
+          </span>
+        </div>
+      );
+    }
+    if (!loading) {
+      return <img alt={params.alt} className={params.className} decoding="async" loading="lazy" src={params.asset.previewUrl} />;
+    }
+    const statusLabel = params.asset.localStatus === "uploading"
+      ? t(spanishXby, "Uploading preview", "Subiendo vista previa")
+      : t(spanishXby, "Preparing preview", "Preparando vista previa");
+    const compact = params.compact === true;
+    return (
+      <div
+        aria-label={`${params.alt}. ${statusLabel}`}
+        className={`${params.className} grid place-items-center bg-[#08131d] text-[#31d4ff]`}
+        role="img"
+        title={statusLabel}
+      >
+        <span className="grid justify-items-center gap-1.5">
+          <span className={`${compact ? "h-4 w-4" : "h-6 w-6"} rounded-full border-2 border-[#31d4ff]/24 border-t-[#31d4ff] animate-spin`} />
+          {compact ? null : <span className="max-w-[92%] truncate text-[10px] font-semibold text-cyan-100/86">{statusLabel}</span>}
+        </span>
+      </div>
+    );
+  }
   const visibleStatusJobs = useMemo(() => {
     const scopedJobs = recentJobs.filter((job) => !isVideoRuntimeJob(job));
     const focusedJob = focusedJobId ? scopedJobs.find((job) => job.id === focusedJobId) : undefined;
@@ -889,14 +1194,17 @@ export function CustomerWorkspaceShell({
     return [activeJob ?? scopedJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
   }, [focusedJobId, recentJobs]);
   const visibleVideoStatusJobs = useMemo(() => {
-    const focusedJob = focusedJobId ? videoRuntimeJobs.find((job) => job.id === focusedJobId) : undefined;
-    if (focusedJob) return [focusedJob];
+    if (focusedJobId) {
+      const focusedJob = videoRuntimeJobs.find((job) => job.id === focusedJobId);
+      if (focusedJob) return [focusedJob];
+      if (pendingCreatedVideoJobId === focusedJobId) return [];
+    }
     const activeJob = videoRuntimeJobs.find((job) => {
       const status = workspaceJobEffectiveStatus(job);
       return status === "queued" || status === "running";
     });
     return [activeJob ?? videoRuntimeJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
-  }, [focusedJobId, videoRuntimeJobs]);
+  }, [focusedJobId, pendingCreatedVideoJobId, videoRuntimeJobs]);
   const outputIndexByAssetId = useMemo(() => {
     const counts = new Map<string, number>();
     return new Map(galleryAssets.map((asset) => {
@@ -919,36 +1227,17 @@ export function CustomerWorkspaceShell({
     const assetLabel = generatedAssetLabel(asset, outputCopy);
     const video = isVideoAsset(asset);
     const previewUrl = workspaceAssetPreviewUrl(asset);
-    const videoPosterUrl = video ? videoPosterUrlForJob(asset.jobId ? jobById.get(asset.jobId) : undefined) : undefined;
     return (
       <div className="group grid h-full min-h-[390px] overflow-hidden rounded-[12px] border border-white/8 bg-[#0d1118] transition hover:border-white/20" key={asset.id}>
         <div className="relative self-start">
           {video ? (
             <div className="relative">
-                <button
-                  aria-label={assetLabel}
-                  className="group/video relative block w-full bg-black text-left"
-                  onClick={() => setSelectedPreviewAssetId(asset.id)}
-                  title={assetLabel}
-                  type="button"
-                >
-                  <video
-                    aria-label={assetLabel}
-                    className="aspect-video w-full bg-black object-contain"
-                    autoPlay
-                    loop
-                    muted
-                    poster={videoPosterUrl}
-                    playsInline
-                    preload="auto"
-                    src={previewUrl}
-                    title={assetLabel}
-                  />
-                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
-                  <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />
-                  {t(spanishXby, "Open preview", "Abrir vista previa")}
-                </span>
-              </button>
+              {renderVideoPreviewButton({
+                mediaKey: `asset:${asset.id}`,
+                label: assetLabel,
+                src: previewUrl,
+                onOpen: () => setSelectedPreviewAssetId(asset.id)
+              })}
             </div>
           ) : (
             <button className="block w-full text-left" onClick={() => setSelectedPreviewAssetId(asset.id)} type="button">
@@ -1020,6 +1309,41 @@ export function CustomerWorkspaceShell({
     window.setTimeout(() => {
       document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
+  }
+
+  function retryVideoJob(job: RuntimeJob) {
+    const draft = videoRetryDraftFromJob(job);
+    if (!draft) {
+      setRuntimeRefreshMessage(t(spanishXby, "This failed video request cannot be restored because its frame selection is missing.", "No se puede restaurar esta solicitud porque falta su seleccion de fotogramas."));
+      chooseVideoWorkspaceTab("generate");
+      return;
+    }
+    const availableFrameIds = new Set(
+      readyVideoFrameAssets
+        .filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset))
+        .map((asset) => asset.id)
+    );
+    const restoredFrameCount = draft.frameAssetIds.filter((assetId) => availableFrameIds.has(assetId)).length;
+    const missingFrameCount = Math.max(0, draft.frameAssetIds.length - restoredFrameCount);
+    setRetryVideoDraft({ ...draft, key: `${job.id}:${Date.now()}` });
+    setFocusedJobId(job.id);
+    setWorkspaceNotice(t(
+      spanishXby,
+      "Previous failed video request restored. Review the form, then submit it again when ready.",
+      "Solicitud de video fallida restaurada. Revisa el formulario y vuelve a enviarlo cuando este listo."
+    ));
+    setVideoFrameMessage(missingFrameCount > 0
+      ? t(
+          spanishXby,
+          `Restored ${restoredFrameCount} of ${draft.frameAssetIds.length} frame images. Upload or select replacements for the missing frames before generating.`,
+          `Se restauraron ${restoredFrameCount} de ${draft.frameAssetIds.length} fotogramas. Sube o elige reemplazos antes de generar.`
+        )
+      : t(
+          spanishXby,
+          `Restored ${restoredFrameCount} video frame image${restoredFrameCount === 1 ? "" : "s"} in the previous order.`,
+          `Se restauraron ${restoredFrameCount} fotograma${restoredFrameCount === 1 ? "" : "s"} en el orden anterior.`
+        ));
+    chooseVideoWorkspaceTab("generate");
   }
 
   function focusVideoFrameManager() {
@@ -1095,7 +1419,7 @@ export function CustomerWorkspaceShell({
   }
 
   function toggleVideoFrame(asset: VideoFrameAsset) {
-    if (asset.localStatus === "uploading" || asset.localStatus === "failed") return;
+    if (assetPreviewIsLoading(asset) || asset.localStatus === "failed") return;
     setSelectedVideoFrameIds((current) => {
       if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
       if (current.length >= maxVideoFrameCount) {
@@ -1138,13 +1462,22 @@ export function CustomerWorkspaceShell({
 
   function replaceVideoFrameAsset(localId: string, nextAsset: ThemeRuntimeAsset) {
     const readyAsset: VideoFrameAsset = { ...nextAsset, subjectRole: "video_frame", role: "input", localStatus: "ready" };
-    setVideoFrameAssets((current) => current.map((asset) => {
-      if (asset.id !== localId) return asset;
-      releaseVideoFramePreviewUrl(asset);
-      return readyAsset;
-    }));
-    setRuntimeAssets((current) => current.map((asset) => asset.id === localId ? readyAsset : asset));
-    setSelectedVideoFrameIds((current) => Array.from(new Set(current.map((assetId) => assetId === localId ? nextAsset.id : assetId))).slice(0, maxVideoFrameCount));
+    locallyCreatedVideoFrameIdsRef.current.set(readyAsset.id, Date.now() + LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS);
+    setVideoFrameAssets((current) => {
+      let replaced = false;
+      const next = current.map((asset) => {
+        if (asset.id !== localId) return asset;
+        replaced = true;
+        releaseVideoFramePreviewUrl(asset);
+        return readyAsset;
+      });
+      return replaced ? next : [readyAsset, ...current.filter((asset) => asset.id !== readyAsset.id)];
+    });
+    setRuntimeAssets((current) => [
+      readyAsset,
+      ...current.filter((asset) => asset.id !== localId && asset.id !== readyAsset.id)
+    ]);
+    setSelectedVideoFrameIds((current) => trimVideoFrameSelection(Array.from(new Set(current.map((assetId) => assetId === localId ? nextAsset.id : assetId))), maxVideoFrameCount));
   }
 
   async function uploadVideoFrameFiles(files: FileList | null) {
@@ -1153,8 +1486,10 @@ export function CustomerWorkspaceShell({
       setVideoFrameMessage(t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
       return;
     }
+    const uploadFiles = imageFiles.slice(0, maxVideoFrameCount);
+    const skippedCount = imageFiles.length - uploadFiles.length;
     const now = Date.now();
-    const optimisticAssets: VideoFrameAsset[] = imageFiles.map((file, index) => ({
+    const optimisticAssets: VideoFrameAsset[] = uploadFiles.map((file, index) => ({
       id: `local:video:${now}:${index}`,
       label: uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")),
       previewUrl: URL.createObjectURL(file),
@@ -1174,11 +1509,11 @@ export function CustomerWorkspaceShell({
       ...optimisticAssets,
       ...current.filter((asset) => !optimisticAssets.some((created) => created.id === asset.id))
     ]);
-    setSelectedVideoFrameIds((current) => Array.from(new Set([...current, ...optimisticAssets.map((asset) => asset.id)])).slice(0, maxVideoFrameCount));
+    setSelectedVideoFrameIds((current) => trimVideoFrameSelection(Array.from(new Set([...current, ...optimisticAssets.map((asset) => asset.id)])), maxVideoFrameCount));
     setUploadingVideoFrames(true);
-    setVideoFrameMessage(spanishXby ? `Subiendo ${imageFiles.length} fotograma${imageFiles.length === 1 ? "" : "s"}...` : `Uploading ${imageFiles.length} frame image${imageFiles.length === 1 ? "" : "s"}...`);
+    setVideoFrameMessage(spanishXby ? `Subiendo ${uploadFiles.length} fotograma${uploadFiles.length === 1 ? "" : "s"}...` : `Uploading ${uploadFiles.length} frame image${uploadFiles.length === 1 ? "" : "s"}...`);
     const createdAssets: ThemeRuntimeAsset[] = [];
-    for (const [index, file] of imageFiles.entries()) {
+    for (const [index, file] of uploadFiles.entries()) {
       const optimisticAsset = optimisticAssets[index];
       const formData = new FormData();
       formData.append("file", file);
@@ -1203,10 +1538,14 @@ export function CustomerWorkspaceShell({
       createdAssets.push({ ...result.asset, subjectRole: "video_frame", role: "input" });
       replaceVideoFrameAsset(optimisticAsset.id, result.asset);
     }
+    const limitNotice = skippedCount > 0
+      ? t(spanishXby, ` Only the first ${maxVideoFrameCount} images were uploaded.`, ` Solo se subieron las primeras ${maxVideoFrameCount} imagenes.`)
+      : "";
     setVideoFrameMessage(spanishXby
-      ? `${createdAssets.length} fotograma${createdAssets.length === 1 ? "" : "s"} subido${createdAssets.length === 1 ? "" : "s"} y seleccionado${createdAssets.length === 1 ? "" : "s"}.`
-      : `${createdAssets.length} frame image${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
+      ? `${createdAssets.length} fotograma${createdAssets.length === 1 ? "" : "s"} subido${createdAssets.length === 1 ? "" : "s"} y seleccionado${createdAssets.length === 1 ? "" : "s"}.${limitNotice}`
+      : `${createdAssets.length} frame image${createdAssets.length === 1 ? "" : "s"} uploaded and selected.${limitNotice}`);
     setUploadingVideoFrames(false);
+    invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
 
@@ -1216,6 +1555,7 @@ export function CustomerWorkspaceShell({
     if (!confirmed) return;
     releaseVideoFramePreviewUrl(asset);
     deletedVideoFrameIdsRef.current.add(asset.id);
+    locallyCreatedVideoFrameIdsRef.current.delete(asset.id);
     setSelectedVideoFrameIds((current) => current.filter((id) => id !== asset.id));
     setVideoFrameAssets((current) => current.filter((item) => item.id !== asset.id));
     setRuntimeAssets((current) => current.filter((item) => item.id !== asset.id));
@@ -1233,6 +1573,7 @@ export function CustomerWorkspaceShell({
       return;
     }
     setVideoFrameMessage(t(spanishXby, "Frame image deleted.", "Fotograma eliminado."));
+    invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
 
@@ -1247,7 +1588,10 @@ export function CustomerWorkspaceShell({
     if (!confirmed) return;
     const deleteIds = assetsToDelete.map((asset) => asset.id);
     assetsToDelete.forEach((asset) => releaseVideoFramePreviewUrl(asset));
-    deleteIds.forEach((assetId) => deletedVideoFrameIdsRef.current.add(assetId));
+    deleteIds.forEach((assetId) => {
+      deletedVideoFrameIdsRef.current.add(assetId);
+      locallyCreatedVideoFrameIdsRef.current.delete(assetId);
+    });
     setSelectedVideoFrameIds((current) => current.filter((id) => !deleteIds.includes(id)));
     setVideoFrameAssets((current) => current.filter((asset) => !deleteIds.includes(asset.id)));
     setRuntimeAssets((current) => current.filter((asset) => !deleteIds.includes(asset.id)));
@@ -1270,6 +1614,7 @@ export function CustomerWorkspaceShell({
       return;
     }
     setVideoFrameMessage(t(spanishXby, "Selected frame images deleted.", "Fotogramas seleccionados eliminados."));
+    invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
 
@@ -1288,7 +1633,9 @@ export function CustomerWorkspaceShell({
 
   function showVideoJobStatus(jobId: string, feedback?: CreatedWorkspaceJobFeedback) {
     applyCreatedJobFeedback(feedback);
+    setRetryVideoDraft(null);
     setFocusedJobId(jobId);
+    setPendingCreatedVideoJobId(jobId);
     setRuntimeFetchEnabled(true);
     setRuntimeRefreshKey((current) => current + 1);
     setWorkspaceNotice(t(spanishXby, `Video request ${jobId} was created. Your video workspace is refreshing so you can follow the latest status here.`, `Solicitud de video ${jobId} creada. Tu espacio de video se esta actualizando para seguir el estado aqui.`));
@@ -1335,7 +1682,7 @@ export function CustomerWorkspaceShell({
     return sourceAssets.filter((asset) => {
       if (primarySampleIds.includes(asset.id)) return target === "primary";
       if (partnerSampleIds.includes(asset.id)) return target === "partner";
-      if (!asset.subjectRole && !asset.localTarget) return true;
+      if (!asset.subjectRole && !asset.localTarget) return target === "primary";
       return sampleTargetFor(asset) === target;
     });
   }
@@ -1593,7 +1940,12 @@ export function CustomerWorkspaceShell({
                   onDrop={() => dropVideoFrame(asset.id)}
                 >
                   <div className="relative aspect-square overflow-hidden rounded-[8px] bg-white/[0.06]">
-                    <img alt={videoFrameLabel(asset, index)} className="h-full w-full object-cover" decoding="async" src={asset.previewUrl} />
+                    {renderFrameImagePreview({
+                      asset,
+                      alt: videoFrameLabel(asset, index),
+                      className: "h-full w-full object-cover",
+                      compact: true
+                    })}
                     <span className="absolute left-1.5 top-1.5 rounded-full bg-[#31d4ff] px-1.5 py-0.5 text-[10px] font-bold text-[#041014]">
                       {index + 1}
                     </span>
@@ -1642,9 +1994,9 @@ export function CustomerWorkspaceShell({
               </div>
             </div>
             <div className="grid max-h-[520px] grid-cols-2 gap-2 overflow-y-auto pr-1">
-              {readyVideoFrameAssets.slice(0, 30).map((asset) => {
+              {readyVideoFrameAssets.slice(0, maxVideoFrameCount).map((asset) => {
                 const selected = selectedVideoFrameIds.includes(asset.id);
-                const selectable = asset.localStatus !== "uploading" && asset.localStatus !== "failed";
+                const selectable = !assetPreviewIsLoading(asset) && asset.localStatus !== "failed";
                 return (
                   <div className={`group/frame relative overflow-hidden rounded-[12px] border bg-black/30 transition ${selected ? "border-[#31d4ff] ring-2 ring-[#31d4ff]/30" : "border-white/10 hover:border-white/28"}`} key={asset.id}>
                     <button
@@ -1655,7 +2007,11 @@ export function CustomerWorkspaceShell({
                       title={selected ? t(spanishXby, "Selected for video", "Seleccionada para video") : t(spanishXby, "Select for video", "Seleccionar para video")}
                       type="button"
                     >
-                      <img alt={videoFrameLabel(asset)} className={`aspect-square w-full object-cover transition group-hover/frame:scale-[1.03] ${selected ? "brightness-105" : "opacity-76"}`} decoding="async" loading="lazy" src={asset.previewUrl} />
+                      {renderFrameImagePreview({
+                        asset,
+                        alt: videoFrameLabel(asset),
+                        className: `aspect-square w-full object-cover transition group-hover/frame:scale-[1.03] ${selected ? "brightness-105" : "opacity-76"}`
+                      })}
                       <span className={`absolute left-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full border shadow-[0_8px_22px_-14px_rgba(0,0,0,0.8)] ${selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#051016]" : "border-white/45 bg-black/56 text-white"}`}>
                         {selected ? <CheckCircle2 className="h-4 w-4" strokeWidth={2.2} /> : null}
                       </span>
@@ -1764,6 +2120,8 @@ export function CustomerWorkspaceShell({
       })());
       nextPrimaryIds = stringArray(parsed.primarySampleIds).filter((id) => availableIds.has(id)).slice(0, 15);
       nextPartnerIds = stringArray(parsed.partnerSampleIds).filter((id) => availableIds.has(id)).slice(0, 15);
+      const restoredPrimarySet = new Set(nextPrimaryIds);
+      nextPartnerIds = nextPartnerIds.filter((id) => !restoredPrimarySet.has(id));
       if (parsed.studioTrainingMode === "single" || parsed.studioTrainingMode === "couple") setStudioTrainingMode(parsed.studioTrainingMode);
       if (typeof parsed.primaryGender === "string" && parsed.primaryGender) setPrimaryGender(parsed.primaryGender);
       if (typeof parsed.partnerGender === "string" && parsed.partnerGender) setPartnerGender(parsed.partnerGender);
@@ -1786,6 +2144,8 @@ export function CustomerWorkspaceShell({
         const fields = jobFields(recentJobWithSources);
         nextPrimaryIds = stringArray(fields.primaryAssetIds).filter((id) => availableIds.has(id)).slice(0, 15);
         nextPartnerIds = stringArray(fields.partnerAssetIds).filter((id) => availableIds.has(id)).slice(0, 15);
+        const jobPrimarySet = new Set(nextPrimaryIds);
+        nextPartnerIds = nextPartnerIds.filter((id) => !jobPrimarySet.has(id));
         if (fields.trainingMode === "single" || fields.trainingMode === "couple") setStudioTrainingMode(fields.trainingMode);
       }
     }
@@ -1807,9 +2167,12 @@ export function CustomerWorkspaceShell({
 
   useEffect(() => {
     if (typeof window === "undefined" || !restoredSampleSelectionRef.current) return;
+    const savedPrimaryIds = primarySampleIds.slice(0, 15);
+    const savedPrimarySet = new Set(savedPrimaryIds);
+    const savedPartnerIds = partnerSampleIds.filter((id) => !savedPrimarySet.has(id)).slice(0, 15);
     window.localStorage.setItem(sampleSelectionStorageKey, JSON.stringify({
-      primarySampleIds,
-      partnerSampleIds,
+      primarySampleIds: savedPrimaryIds,
+      partnerSampleIds: savedPartnerIds,
       studioTrainingMode,
       primaryGender,
       partnerGender,
@@ -1829,6 +2192,7 @@ export function CustomerWorkspaceShell({
 
   useEffect(() => {
     const handleAssetsUpdated = () => {
+      setRuntimeFetchEnabled(true);
       setRuntimeRefreshKey((current) => current + 1);
     };
     window.addEventListener("customer-assets:updated", handleAssetsUpdated);
@@ -1853,7 +2217,7 @@ export function CustomerWorkspaceShell({
     <div className="min-h-screen bg-[#07090d] font-sans text-white">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader creativePacks={creativePacks} customer={workspaceCustomer} site={site} tone="dark" />
+      <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={workspaceCustomer} site={site} tone="dark" toolMenuItems={toolMenuItems} />
 
       <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[430px_minmax(0,1fr)] xl:grid-cols-[450px_minmax(0,1fr)]">
         <aside className="border-b border-white/10 bg-[#0b0c0f] px-3 py-4 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r xl:px-4">
@@ -2248,7 +2612,9 @@ export function CustomerWorkspaceShell({
                   customer={workspaceCustomer}
                   onJobCreated={showVideoJobStatus}
                   onOpenFrameManager={focusVideoFrameManager}
+                  onRetryDraftApplied={() => setRetryVideoDraft(null)}
                   readyFrameIds={readySelectedVideoFrameIds}
+                  retryDraft={retryVideoDraft}
                   selectedFrameIds={selectedVideoFrameIds}
                   setSelectedFrameIds={setSelectedVideoFrameIds}
                   siteId={site.id}
@@ -2264,9 +2630,7 @@ export function CustomerWorkspaceShell({
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{t(spanishXby, "Videos", "Videos")}</p>
                       <h2 className="mt-2 text-lg font-semibold">{t(spanishXby, "Generated video workspace", "Espacio de videos generados")}</h2>
                       <p className="mt-1 text-xs text-white/46">
-                        {spanishXby
-                          ? `${activeVideoJobs} trabajos activos · ${failedVideoJobs} requieren atencion · ${videoResourceAssets.length} videos generados`
-                          : `${activeVideoJobs} active jobs · ${failedVideoJobs} need attention · ${videoResourceAssets.length} generated videos`}
+                        {videoWorkspaceSummary}
                       </p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
@@ -2295,7 +2659,7 @@ export function CustomerWorkspaceShell({
                     <div className="py-5"><WorkspaceInlineLoading label={t(spanishXby, "Loading video workspace.", "Cargando espacio de video.")} /></div>
                   ) : null}
 
-                  {visibleVideoStatusJobs.length ? (
+                  {waitingForCreatedVideoJob || visibleVideoStatusJobs.length ? (
                     <div className="grid gap-3 border-b border-white/8 py-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Video request progress", "Progreso de video")}</p>
@@ -2309,11 +2673,36 @@ export function CustomerWorkspaceShell({
                         </button>
                       </div>
                       <div className="grid gap-3 lg:grid-cols-2">
-                        {visibleVideoStatusJobs.map((job) => {
+                        {waitingForCreatedVideoJob ? (
+                          <div className="rounded-[14px] border border-amber-300/18 bg-amber-300/8 p-4" role="status">
+                            <div className="flex flex-wrap items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <p className="truncate text-sm font-semibold text-white">{t(spanishXby, "Video request created", "Solicitud de video creada")}</p>
+                                <p className="mt-1 text-xs font-semibold text-amber-100">{t(spanishXby, "Loading latest status", "Cargando estado actualizado")}</p>
+                              </div>
+                              <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
+                                {t(spanishXby, "SYNCING", "SINCRONIZANDO")}
+                              </span>
+                            </div>
+                            <p className="mt-3 text-xs leading-5 text-white/54">
+                              {t(spanishXby, "The new video request is being loaded. Previous failed requests are hidden until the latest status arrives.", "La nueva solicitud de video se esta cargando. Las solicitudes fallidas anteriores se ocultan hasta que llegue el estado actualizado.")}
+                            </p>
+                            <div className="mt-3 overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.035]">
+                              <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
+                                <span className="text-xs font-semibold text-white/44">{t(spanishXby, "Refreshing video status", "Actualizando estado del video")}</span>
+                              </div>
+                              <div className="px-3 py-3">
+                                <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                                  <div className="h-full w-1/2 rounded-full bg-[#31d4ff]" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ) : visibleVideoStatusJobs.map((job) => {
                           const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
                           const slots = workspaceJobOutputSlots(job, outputAssets);
                           const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
-                          const videoPosterUrl = videoPosterUrlForJob(job);
+                          const retryDraft = failed ? videoRetryDraftFromJob(job) : undefined;
                           return (
                             <div
                               className={`rounded-[14px] border p-4 ${
@@ -2332,6 +2721,22 @@ export function CustomerWorkspaceShell({
                                 </span>
                               </div>
                               <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                              {failed ? (
+                                <div className="mt-3 flex flex-wrap items-center gap-2">
+                                  <button
+                                    className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-rose-200/24 bg-rose-100/10 px-3 text-xs font-semibold text-rose-50 transition hover:bg-rose-100/16 disabled:cursor-not-allowed disabled:opacity-45"
+                                    disabled={!retryDraft}
+                                    onClick={() => retryVideoJob(job)}
+                                    title={retryDraft
+                                      ? t(spanishXby, "Restore the previous inputs and generate again", "Restaurar entradas anteriores y volver a generar")
+                                      : t(spanishXby, "This request no longer has saved frame inputs", "Esta solicitud ya no tiene fotogramas guardados")}
+                                    type="button"
+                                  >
+                                    <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+                                    {t(spanishXby, "Retry video", "Reintentar video")}
+                                  </button>
+                                </div>
+                              ) : null}
                               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                                 {slots.map((slot) => {
                                   const slotSucceeded = slot.status === "succeeded";
@@ -2360,35 +2765,16 @@ export function CustomerWorkspaceShell({
                                     >
                                       {slot.storageKey ? (
                                         slotVideo ? (
-                                          <button
-                                            aria-label={slotMediaLabel}
-                                            className="group/video relative block w-full bg-black text-left disabled:cursor-default"
-                                            disabled={!slotAsset}
-                                            onClick={() => {
+                                          renderVideoPreviewButton({
+                                            mediaKey: `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}`,
+                                            label: slotMediaLabel,
+                                            src: workspaceSlotPreviewUrl(slot.storageKey),
+                                            compact: true,
+                                            disabled: !slotAsset,
+                                            onOpen: () => {
                                               if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
-                                            }}
-                                            title={slotMediaLabel}
-                                            type="button"
-                                          >
-                                            <video
-                                              aria-label={slotMediaLabel}
-                                              className="aspect-video w-full bg-black object-contain"
-                                              autoPlay
-                                              loop
-                                              muted
-                                              poster={videoPosterUrl}
-                                              playsInline
-                                              preload="auto"
-                                              src={workspaceSlotPreviewUrl(slot.storageKey)}
-                                              title={slotMediaLabel}
-                                            />
-                                            {slotAsset ? (
-                                              <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
-                                                <Eye className="h-3 w-3" strokeWidth={1.8} />
-                                                {t(spanishXby, "Open preview", "Abrir vista previa")}
-                                              </span>
-                                            ) : null}
-                                          </button>
+                                            }
+                                          })
                                         ) : (
                                           <img
                                             alt={slotMediaLabel}
@@ -2586,7 +2972,6 @@ export function CustomerWorkspaceShell({
                         const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
                         const slots = workspaceJobOutputSlots(job, outputAssets);
                         const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
-                        const videoPosterUrl = videoPosterUrlForJob(job);
                         return (
                           <div
                             className={`rounded-[14px] border p-4 ${
@@ -2633,35 +3018,16 @@ export function CustomerWorkspaceShell({
                                   >
                                     {slot.storageKey ? (
                                       slotVideo ? (
-                                        <button
-                                          aria-label={slotMediaLabel}
-                                          className="group/video relative block w-full bg-black text-left disabled:cursor-default"
-                                          disabled={!slotAsset}
-                                          onClick={() => {
+                                        renderVideoPreviewButton({
+                                          mediaKey: `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}`,
+                                          label: slotMediaLabel,
+                                          src: workspaceSlotPreviewUrl(slot.storageKey),
+                                          compact: true,
+                                          disabled: !slotAsset,
+                                          onOpen: () => {
                                             if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
-                                          }}
-                                          title={slotMediaLabel}
-                                          type="button"
-                                        >
-                                          <video
-                                            aria-label={slotMediaLabel}
-                                            className="aspect-video w-full bg-black object-contain"
-                                            autoPlay
-                                            loop
-                                            muted
-                                            poster={videoPosterUrl}
-                                            playsInline
-                                            preload="auto"
-                                            src={workspaceSlotPreviewUrl(slot.storageKey)}
-                                            title={slotMediaLabel}
-                                          />
-                                          {slotAsset ? (
-                                            <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/video:bg-white/14">
-                                              <Eye className="h-3 w-3" strokeWidth={1.8} />
-                                              {t(spanishXby, "Open preview", "Abrir vista previa")}
-                                            </span>
-                                          ) : null}
-                                        </button>
+                                          }
+                                        })
                                       ) : (
                                         <img
                                           alt={slotMediaLabel}

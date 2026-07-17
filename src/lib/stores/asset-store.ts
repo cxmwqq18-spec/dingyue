@@ -10,7 +10,6 @@ import {
   readCustomerAssetFileRemote,
   shouldAssumeRemoteCustomerAssetsReadable
 } from "@/lib/customer-asset-storage";
-import { fallbackImageForSeed } from "@/lib/media";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import type { Album, AssetUpload, CustomerModel, ThemeRuntimeAsset } from "@/lib/types";
@@ -324,9 +323,7 @@ export async function readCustomerAssetFileByStorageKey(params: {
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
   const altText = typeof asset.validationReport?.altText === "string" ? asset.validationReport.altText : undefined;
-  const previewUrl = customerAssetFileExists(storageKey) || hasRemoteCustomerAssetReadSource()
-    ? customerAssetPreviewUrl(storageKey)
-    : fallbackImageForSeed(`${asset.siteId}-${asset.id}-${storageKey}`);
+  const hasReadablePreview = customerAssetFileExists(storageKey) || hasRemoteCustomerAssetReadSource();
   return {
     id: asset.id,
     jobId: asset.jobId,
@@ -334,7 +331,8 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     altText,
     label: asset.label,
     storageKey,
-    previewUrl,
+    previewUrl: customerAssetPreviewUrl(storageKey),
+    previewStatus: hasReadablePreview ? "ready" : "loading",
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,

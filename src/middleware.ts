@@ -1,11 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
-const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)(?:-xby)?(?:\/|$)/i;
-const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots)\.com)(?::\d+)?$/i;
+const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?(?:\/|$)/i;
+const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots)(?:-xby)?\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
@@ -21,20 +23,24 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   "destination-portrait-albums": "route-portrait-albums",
   "coastal-getaways": "coastal-light-sets",
   "old-city-walks": "old-quarter-walks",
-  "scenic-overlooks": "golden-hour-route-stories",
   "mountain-trails": "alpine-trail-frames",
   "itinerary-moodboards": "route-moodboards",
   "postcard-social-sets": "postcard-story-sets",
   "travel-profile-stories": "solo-traveler-profiles",
-  "lagoon-route-studys": "lagoon-route-studies"
+  "lagoon-route-studys": "lagoon-route-studies",
+  nature: "nature-portrait-studio",
+  boudoir: "boudoir-editorial-portraits",
+  hairstyle: "hairstyle-try-on-stories",
+  headshot: "professional-headshot-studio",
+  headshots: "professional-headshot-studio",
+  holiday: "holiday-couple-cards",
+  gala: "gala-night-portraits",
+  heritage: "heritage-celebration-portraits"
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
-  creator: "creator-portraits",
   deportes: "world-cup-fan-photos",
   lifestyle: "travel-scene-pack",
-  nature: "travel-scene-pack",
   "professional-headshots": "headshots",
-  seasonal: "holiday",
   sports: "world-cup-fan-photos",
   travel: "travel-scene-pack",
   viaje: "travel-scene-pack",
@@ -97,6 +103,12 @@ const AIDREAMCAPES_LOGO_IMG_RE =
 const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260708c";
 const AIDREAMCAPES_ICON_SVG = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260708c";
+const AIDREAMCAPES_EU_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-192.png?v=20260717a";
+const AIDREAMCAPES_EU_ICON_SVG = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260717a";
+const AIDREAMCAPES_EU_APPLE_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png?v=20260717a";
+const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-192.png?v=20260717a";
+const AIDREAMSHOOTS_ICON_SVG = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a";
+const AIDREAMSHOOTS_APPLE_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-180.png?v=20260717a";
 const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702";
 const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702";
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
@@ -122,7 +134,7 @@ function normalizePathSlug(value: string): string {
 function aidreamcapesCollectionRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/(aidreamcapes(?:-xby)?)\/collections\/([^/]+)(\/)?$/i);
+  const pathMatch = pathname.match(/^\/site\/(aidreamcapes(?:-xby|-eu)?)\/collections\/([^/]+)(\/)?$/i);
   const hostMatch = TARGET_HOST_RE.test(host) && /aidreamcapes/i.test(host)
     ? pathname.match(/^\/collections\/([^/]+)(\/)?$/i)
     : undefined;
@@ -142,7 +154,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
 
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots)(?:-xby)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
   const hostMatch = TARGET_HOST_RE.test(host)
     ? pathname.match(/^\/(collections|tools)\/([^/]+)(\/)?$/i)
     : undefined;
@@ -179,7 +191,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
 function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots)(?:-xby)?)(\/.*)$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)$/i);
   const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
   const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
   const targetPath = LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
@@ -197,6 +209,8 @@ function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | un
     LOCAL_DEFAULT_STOREFRONT_PATHS.has(normalizedPath) ||
     LOCAL_DEFAULT_STOREFRONT_PREFIXES.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
   if (!shouldRedirect) return undefined;
+  const forwardedHost = request.headers.get("x-forwarded-host") ?? "";
+  if (TARGET_HOST_RE.test(forwardedHost)) return undefined;
   const host = (request.headers.get("host") ?? "").toLowerCase();
   if (!host.startsWith("localhost") && !host.startsWith("127.0.0.1")) return undefined;
 
@@ -210,10 +224,15 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   if (!TARGET_HOST_RE.test(host)) return undefined;
-  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots)(?:-xby)?)(\/.*)?$/i);
+  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)?$/i);
   if (!match) return undefined;
   const siteSlug = match[1]?.toLowerCase() ?? "";
-  if (!host.toLowerCase().includes(siteSlug)) return undefined;
+  const normalizedHost = host.toLowerCase();
+  const hostMatchesSite =
+    normalizedHost.includes(siteSlug) ||
+    (normalizedHost.includes("aidreamshoots") && /^(?:aidreamshoots|mydreamshoots)(?:-xby|-eu)?$/.test(siteSlug)) ||
+    (normalizedHost.includes("aidreamcapes") && /^aidreamcapes(?:-xby|-eu)?$/.test(siteSlug));
+  if (!hostMatchesSite) return undefined;
   const scopedPath = match[2] || "/";
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = scopedPath === "/" ? "/" : scopedPath;
@@ -236,7 +255,7 @@ function shouldReorderStorefrontHead(request: NextRequest): boolean {
 
 function isSpanishXbyRequest(request: NextRequest): boolean {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
-  return /\b(?:aidreamcapes|mydreamshoots)-xby\b/.test(identity);
+  return isSpanishStorefrontRequestIdentity(identity);
 }
 
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
@@ -253,10 +272,17 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
 
 function withStorefrontLocale(html: string, request: NextRequest): string {
   if (!isSpanishXbyRequest(request)) return html;
-  return html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
+  const withSpanishLang = html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
     if (/\slang=(["']).*?\1/i.test(tag)) return tag.replace(/\slang=(["']).*?\1/i, ' lang="es"');
     return `<html lang="es"${attrs}>`;
   });
+  if (/<meta\b(?=[^>]*http-equiv=(["'])Content-Language\1)[^>]*>/i.test(withSpanishLang)) {
+    return withSpanishLang.replace(/<meta\b(?=[^>]*http-equiv=(["'])Content-Language\1)[^>]*>/i, (tag) => {
+      if (/\scontent=(["']).*?\1/i.test(tag)) return tag.replace(/\scontent=(["']).*?\1/i, ' content="es"');
+      return tag.replace(/\/?>$/, ' content="es">');
+    });
+  }
+  return withSpanishLang.replace(/<head\b[^>]*>/i, (tag) => `${tag}<meta http-equiv="Content-Language" content="es">`);
 }
 
 function titleFirstSeoTags(tags: string[]): string[] {
@@ -305,6 +331,10 @@ type StorefrontIconSet = {
 
 function siteIconForRequest(request: NextRequest): StorefrontIconSet | undefined {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
+  if (isSpanishXbyRequest(request)) {
+    if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_EU_ICON, svg: AIDREAMCAPES_EU_ICON_SVG, apple: AIDREAMCAPES_EU_APPLE_ICON };
+    return { png: AIDREAMSHOOTS_ICON, svg: AIDREAMSHOOTS_ICON_SVG, apple: AIDREAMSHOOTS_APPLE_ICON };
+  }
   if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_ICON, svg: AIDREAMCAPES_ICON_SVG, apple: AIDREAMCAPES_APPLE_ICON };
   if (identity.includes("mydreamshoots")) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
   if (BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
@@ -349,6 +379,24 @@ function sameServerUrl(request: NextRequest): URL {
   return upstreamUrl;
 }
 
+function storefrontSlugForHost(host: string | null | undefined): string | undefined {
+  const normalized = String(host ?? "").toLowerCase();
+  if (!TARGET_HOST_RE.test(normalized)) return undefined;
+  if (normalized.includes("aidreamshoots")) return "aidreamshoots";
+  if (normalized.includes("aidreamcapes.eu")) return "aidreamcapes-eu";
+  if (normalized.includes("aidreamcapes")) return "aidreamcapes";
+  if (normalized.includes("mydreamshoots")) return "mydreamshoots";
+  return undefined;
+}
+
+function sameServerStorefrontUrl(request: NextRequest): URL {
+  const upstreamUrl = sameServerUrl(request);
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
+  upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
+  return upstreamUrl;
+}
+
 async function storefrontIconResponse(request: NextRequest): Promise<Response | undefined> {
   if (request.method !== "GET" || !BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return undefined;
 
@@ -381,15 +429,31 @@ export async function middleware(request: NextRequest) {
   const iconResponse = await storefrontIconResponse(request);
   if (iconResponse) return iconResponse;
 
-  const redirectResponse = canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
+  const redirectResponse = skipInternalRewrite ? undefined : canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return redirectResponse;
   if (!shouldRewriteStorefrontHtml(request)) return nextWithPathname(request);
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
   upstreamHeaders.set("x-pathname", request.nextUrl.pathname || "/");
+  const upstreamUrl = sameServerStorefrontUrl(request);
+  const usesInternalSitePath = upstreamUrl.pathname.startsWith("/site/") && !request.nextUrl.pathname.startsWith("/site/");
+  if (usesInternalSitePath) {
+    const publicHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+    if (TARGET_HOST_RE.test(publicHost)) upstreamHeaders.set(STOREFRONT_PUBLIC_HOST_HEADER, publicHost);
+    upstreamHeaders.set("x-forwarded-host", `127.0.0.1:${process.env.PORT || "3000"}`);
+  } else {
+    const requestHost = request.headers.get("host") ?? "";
+    const forwardedHost = upstreamHeaders.get("x-forwarded-host") ?? "";
+    if (TARGET_HOST_RE.test(requestHost) && !TARGET_HOST_RE.test(forwardedHost)) {
+      upstreamHeaders.set("x-forwarded-host", requestHost);
+    } else if (!forwardedHost && requestHost) {
+      upstreamHeaders.set("x-forwarded-host", requestHost);
+    }
+  }
 
-  const upstreamResponse = await fetch(sameServerUrl(request), {
+  const upstreamResponse = await fetch(upstreamUrl, {
     headers: upstreamHeaders,
     redirect: "manual"
   });
@@ -412,7 +476,10 @@ export async function middleware(request: NextRequest) {
   headers.delete("content-length");
   headers.set("cache-control", "no-store, max-age=0");
   if (shouldReorder) headers.set("x-storefront-head-seo-reordered", "1");
-  if (isSpanishXbyRequest(request)) headers.set("x-storefront-locale", "es");
+  if (isSpanishXbyRequest(request)) {
+    headers.set("x-storefront-locale", "es");
+    headers.set("content-language", "es");
+  }
 
   return new Response(rewrittenHtml, {
     status: upstreamResponse.status,

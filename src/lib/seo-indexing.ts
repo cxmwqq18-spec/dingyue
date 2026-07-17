@@ -1,5 +1,5 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
-import { getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -172,13 +172,15 @@ function collectionPathForPack(pack: CreativePack): string {
 
 function addCollectionPath(site: Site, paths: Set<string>, path: string): void {
   const normalized = normalizePath(path);
-  if (normalized.startsWith("/collections/") && isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) paths.add(normalized);
+  if (normalized.startsWith("/collections/") && isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) {
+    paths.add(canonicalSeoDirectoryPathForSite(site, "collection", normalized));
+  }
 }
 
 function collectExplicitSeoDirectoryPaths(site: Site): string[] {
-  const collections = getExplicitSeoDirectorySlugsForSite(site, "collection").map((slug) => `/collections/${slug}`);
+  const collections = getExplicitSeoDirectorySlugsForSite(site, "collection").map((slug) => canonicalSeoDirectoryPathForSite(site, "collection", slug));
   const tools = getExplicitSeoDirectorySlugsForSite(site, "tool").map((slug) => `/tools/${slug}`);
-  return [...collections, ...tools];
+  return Array.from(new Set([...collections, ...tools]));
 }
 
 function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[] {

@@ -1,20 +1,21 @@
 "use client";
 
-import { ArrowRight, BadgeCheck, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Route, Scissors, Sparkles, Sun, UserCircle, Users, Waves } from "lucide-react";
+import { ArrowRight, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, UserCircle, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
+import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath, publicSiteUrl } from "@/lib/domain-routing";
-import type { CreativePack, PublicCustomer, Site } from "@/lib/types";
+import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 
 type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 type MenuGroupItem = { label: string; href: string };
 type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: MenuGroupItem[] };
 type MenuGroup = MenuGroupEntry[];
-type ToolMenuGroupEntry = MenuGroupEntry & { href?: string };
-type ToolMenuGroup = ToolMenuGroupEntry[];
 
 const packageGroups = [
   { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
@@ -33,7 +34,7 @@ const aidreamcapesPackageGroups = [
     items: [
       { label: "Route Portrait Albums", href: "/collections/route-portrait-albums" },
       { label: "Coastal Light Sets", href: "/collections/coastal-light-sets" },
-      { label: "Old Quarter Walks", href: "/collections/cafe-corner-stories" },
+      { label: "Old Quarter Walks", href: "/collections/old-quarter-walks" },
       { label: "Island Balcony Scenes", href: "/collections/island-resort-scenes" }
     ]
   },
@@ -42,9 +43,9 @@ const aidreamcapesPackageGroups = [
     accent: "#c084fc",
     icon: Mountain,
     items: [
-      { label: "Alpine Trail Frames", href: "/collections/cinematic-travel" },
-      { label: "Roadside Escape Frames", href: "/collections/cinematic-travel" },
-      { label: "Scenic Outlooks", href: "/collections/golden-hour-route-stories" }
+      { label: "Alpine Trail Frames", href: "/collections/alpine-trail-frames" },
+      { label: "Roadside Escape Frames", href: "/collections/road-trip-frames" },
+      { label: "Scenic Outlooks", href: "/collections/scenic-overlooks" }
     ]
   },
   {
@@ -52,86 +53,9 @@ const aidreamcapesPackageGroups = [
     accent: "#34d399",
     icon: Coffee,
     items: [
-      { label: "Cafe & Street Stories", href: "/collections/cafe-corner-stories" },
-      { label: "Route Moodboards", href: "/collections/route-moodboard" },
-      { label: "Postcard Story Sets", href: "/collections/social-keepsakes" }
-    ]
-  }
-];
-
-const toolGroups: ToolMenuGroup = [
-  {
-    label: "Photo AI",
-    href: "/tools/photo-ai",
-    accent: "#c958f2",
-    icon: Camera,
-    items: [
-      { label: "Professional headshot maker", href: "/tools/headshot" },
-      { label: "Anime avatar builder", href: "/tools/anime-avatar" },
-      { label: "Wedding Portraits", href: "/tools/wedding-portraits" },
-      { label: "Gala photo maker", href: "/tools/gala-photo" },
-      { label: "Nature adventure photos", href: "/tools/nature-adventure" }
-    ]
-  },
-  {
-    label: "Video AI",
-    href: "/tools/video-ai",
-    accent: "#38a8ff",
-    icon: PlayCircle,
-    items: [
-      { label: "Album story video", href: "/tools/album-story-video" },
-      { label: "Profile Clip Maker", href: "/tools/profile-clip" },
-      { label: "Creator Intro Video", href: "/tools/creator-intro-video" },
-      { label: "Fashion reel starter", href: "/tools/fashion-reel" },
-      { label: "Product teaser clip", href: "/tools/product-teaser-clip" }
-    ]
-  },
-  {
-    label: "AI Photo Edit",
-    href: "/tools/ai-photo-edit",
-    accent: "#ff7b2f",
-    icon: Sparkles,
-    items: [
-      { label: "Edit by prompt", href: "/tools/edit-by-prompt" },
-      { label: "Background Changer", href: "/tools/background-changer" },
-      { label: "Image Background Remover", href: "/tools/background-remover" },
-      { label: "Magic Eraser", href: "/tools/magic-eraser" },
-      { label: "Photo Enhancer", href: "/tools/photo-enhancer" },
-      { label: "Unblur Image", href: "/tools/unblur-image" },
-      { label: "Color Correction", href: "/tools/color-correction" }
-    ]
-  }
-];
-
-const aidreamcapesToolGroups: ToolMenuGroup = [
-  {
-    label: "Route Builders",
-    accent: "#38bdf8",
-    icon: MapIcon,
-    items: [
-      { label: "Route Portrait Engine", href: "/tools/route-portrait-engine" },
-      { label: "Coastal Light Composer", href: "/tools/coastal-portrait" },
-      { label: "Island Resort Scene Studio", href: "/tools/island-resort-scenes" }
-    ]
-  },
-  {
-    label: "Scene Notes",
-    accent: "#c084fc",
-    icon: Route,
-    items: [
-      { label: "Scenic Overlook Story Maker", href: "/tools/golden-hour-route-story" },
-      { label: "Alpine Trail Frame Scene Tool", href: "/tools/cinematic-travel" },
-      { label: "Old Quarter Walk Portrait Tool", href: "/tools/cafe-street-story" }
-    ]
-  },
-  {
-    label: "Travel Keepsakes",
-    accent: "#34d399",
-    icon: Waves,
-    items: [
-      { label: "Cafe Corner Story Tool", href: "/tools/cafe-street-story" },
-      { label: "Route Moodboard Tool", href: "/tools/route-moodboard" },
-      { label: "Postcard Story Set Maker", href: "/tools/social-keepsake" }
+      { label: "Cafe & Street Stories", href: "/collections/cafe-street-stories" },
+      { label: "Route Moodboards", href: "/collections/route-moodboards" },
+      { label: "Postcard Story Sets", href: "/collections/postcard-story-sets" }
     ]
   }
 ];
@@ -140,23 +64,6 @@ const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.sv
 const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const myDreamShootsDisplayName = "myᕲreamshoots";
 const aidreamcapesDisplayName = "ልiጋreamርapes";
-
-function slugifyMenuLabel(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, " and ")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function titleCaseMenuLabel(value: string) {
-  return value
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-    .join(" ");
-}
 
 function iconForMenuGroup(seed: string): LucideIcon {
   const normalized = seed.toLowerCase();
@@ -171,75 +78,62 @@ function iconForMenuGroup(seed: string): LucideIcon {
   return Camera;
 }
 
-function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[]): MenuGroup {
-  const groups: Array<MenuGroupEntry & { slug: string }> = [];
-  (creativePacks ?? [])
-    .filter((pack) => pack.status === "active")
-    .forEach((pack) => {
-      const parent = pack.categoryRecord?.parent;
-      const groupLabel = parent?.label || titleCaseMenuLabel(pack.categoryRecord?.slug || pack.category || "Photo packages");
-      const groupSlug = parent?.slug || slugifyMenuLabel(groupLabel);
-      const itemLabel = pack.categoryRecord?.label || pack.name;
-      const itemSlug = pack.categoryRecord?.slug || slugifyMenuLabel(pack.name);
-      let group = groups.find((item) => item.slug === groupSlug);
-      if (!group) {
-        group = {
-          slug: groupSlug,
-          label: groupLabel,
-          accent: packageGroups[groups.length % packageGroups.length]?.accent ?? "#38a8ff",
-          icon: iconForMenuGroup(`${groupSlug} ${groupLabel}`),
-          items: []
-        };
-        groups.push(group);
-      }
-      if (!group.items.some((item) => item.href === `/collections/${itemSlug}`)) {
-        group.items.push({ label: itemLabel, href: `/collections/${itemSlug}` });
-      }
-    });
-
-  return groups
-    .map((group) => ({
+function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[], creativePackCategories?: CreativePackCategory[]): MenuGroup {
+  return getPhotoPackageMegaGroups(creativePacks ?? [], creativePackCategories ?? [])
+    .map((group, index) => ({
       label: group.label,
-      accent: group.accent,
-      icon: group.icon,
-      items: group.items.sort((a, b) => a.label.localeCompare(b.label))
+      accent: packageGroups[index % packageGroups.length]?.accent ?? "#38a8ff",
+      icon: iconForMenuGroup(`${group.slug} ${group.label} ${group.icon ?? ""}`),
+      items: group.items.map((item) => ({ label: item.label, href: item.href }))
     }))
-    .filter((group) => group.items.length > 0)
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .filter((group) => group.items.length > 0);
+}
+
+function packageMegaColumns(groups: MenuGroup): MenuGroup[] {
+  const columns: MenuGroup[] = [[], [], []];
+  groups.forEach((group, index) => {
+    columns[index % columns.length]?.push(group);
+  });
+  return columns;
 }
 
 function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo package studios" }: { basePath: string; groups?: MenuGroup; title?: string }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const columns = packageMegaColumns(groups);
   return (
-    <div className="max-h-[min(76vh,760px)] overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
+    <div className="flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
       <div className="mb-4 text-center">
-        <h2 className="text-[1.02rem] font-semibold tracking-tight">{title}</h2>
+        <span className="block text-[1.02rem] font-semibold tracking-tight">{title}</span>
         <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{groups.length} categories · {totalItems} themes</p>
       </div>
-      <div className="grid max-h-[min(58vh,600px)] gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
-        {groups.map((group) => {
-          const Icon = group.icon;
-          return (
-            <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.label} open>
-              <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2" style={{ color: group.accent }}>
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]">
-                  <Icon className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <h2 className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</h2>
-                <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
-                <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
-              </summary>
-              <div className="mt-3 grid gap-2">
-                {group.items.map((item, itemIndex) => (
-                  <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${itemIndex}`}>
-                    <h2 className="text-[0.94rem] font-semibold leading-6">{item.label}</h2>
-                    <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
-                  </StorefrontInstantLink>
-                ))}
-              </div>
-            </details>
-          );
-        })}
+      <div className="grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
+        {columns.map((column, columnIndex) => (
+          <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
+            {column.map((group) => {
+              const Icon = group.icon;
+              return (
+                <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.label} open>
+                  <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2" style={{ color: group.accent }}>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]">
+                      <Icon className="h-4 w-4" strokeWidth={1.9} />
+                    </span>
+                    <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</span>
+                    <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
+                    <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
+                  </summary>
+                  <div className="mt-3 grid gap-2">
+                    {group.items.map((item, itemIndex) => (
+                      <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${itemIndex}`}>
+                        <span className="text-[0.94rem] font-semibold leading-6">{item.label}</span>
+                        <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
+                      </StorefrontInstantLink>
+                    ))}
+                  </div>
+                </details>
+              );
+            })}
+          </div>
+        ))}
       </div>
       <div className="mt-5 border-t border-[#263247] pt-3 text-center">
         <StorefrontInstantLink className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={`${basePath}/collections`}>
@@ -251,71 +145,26 @@ function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo pac
   );
 }
 
-function ToolsMegaPanel({ basePath, groups = toolGroups }: { basePath: string; groups?: ToolMenuGroup }) {
-  const icons = [Camera, ImageIcon, Sparkles, Users, Scissors, BadgeCheck, Sun, MapIcon];
-  return (
-    <div className="overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
-      <h2 className="mb-4 text-center text-[1.02rem] font-semibold tracking-tight">Studio tools</h2>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {groups.map((group) => {
-          const Icon = group.icon;
-          return (
-            <StorefrontInstantLink className="group flex min-h-[110px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]" href={`${basePath}${group.href ?? group.items[0]?.href ?? "/tools"}`} key={group.label}>
-              <span className="mt-0.5 grid h-12 w-12 shrink-0 place-items-center rounded-full text-white" style={{ background: `linear-gradient(135deg, ${group.accent}, #2f6fed)` }}>
-                <Icon className="h-5.5 w-5.5" strokeWidth={2} />
-              </span>
-              <span className="min-w-0">
-                <h3 className="block text-[1.04rem] font-semibold leading-tight text-white">{group.label}</h3>
-                <span className="mt-2 block text-[0.92rem] leading-6 text-white/72">Open the right workflow before creating a private album.</span>
-              </span>
-            </StorefrontInstantLink>
-          );
-        })}
-      </div>
-      <div className="mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-3">
-        {groups.map((group, groupIndex) => (
-          <div key={group.label}>
-            <h3 className="mb-3 text-[0.94rem] font-semibold" style={{ color: group.accent }}>{group.label}</h3>
-            <div className="grid gap-3">
-              {group.items.map((item, index) => {
-                const Icon = icons[(groupIndex + index) % icons.length];
-                return (
-                  <StorefrontInstantLink className="group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${index}`}>
-                    <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white" strokeWidth={1.8} />
-                    <h3 className="text-[0.94rem] font-semibold leading-6">{item.label}</h3>
-                  </StorefrontInstantLink>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-5 border-t border-[#263247] pt-3 text-center">
-        <StorefrontInstantLink className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={`${basePath}/tools`}>
-          View all tools
-          <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
-        </StorefrontInstantLink>
-      </div>
-    </div>
-  );
-}
-
 export function CustomerShellHeader({
   site,
   customer,
   tone = "dark",
-  creativePacks = []
+  creativePackCategories = [],
+  creativePacks = [],
+  toolMenuItems = []
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
   tone?: "light" | "dark";
+  creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
+  toolMenuItems?: ToolMenuItem[];
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const isSpanishXby = /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const isSpanishXby = isSpanishStorefrontSite(site);
   const isMyDreamShoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
   const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
@@ -331,17 +180,18 @@ export function CustomerShellHeader({
       : isMyDreamShoots
         ? "MyDreamShoots heart camera logo for AI photo packages and private galleries"
         : `${readableLogoText} logo`;
-  const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks);
+  const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks, creativePackCategories);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
-  const activeToolGroups = isAidreamcapes ? aidreamcapesToolGroups : toolGroups;
+  const menuSite = { ...site, __storefrontBasePath: basePath };
+  const activeToolBlocks = getToolBlocksForMenu(menuSite, toolMenuItems);
   const packagePrefetchPaths = Array.from(new Set([
     `${basePath}/collections`,
     ...activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
   ])).slice(0, 10);
   const toolPrefetchPaths = Array.from(new Set([
     `${basePath}/tools`,
-    ...activeToolGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
+    ...activeToolBlocks.map((tool) => `${basePath}${String(tool.settings.href ?? "/tools")}`)
   ])).slice(0, 8);
   const dark = tone === "dark";
   const navClass = dark
@@ -381,7 +231,7 @@ export function CustomerShellHeader({
               <PackageMegaPanel
                 basePath={basePath}
                 groups={activePackageGroups}
-                title={isSpanishXby ? isAidreamcapes ? "Estudios de rutas de viaje" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Travel route studios" : "Photo package studios"}
+                title={isSpanishXby ? isAidreamcapes ? "Estudios de rutas de viaje" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Travel route studios" : "AI photo package studios"}
               />
             </ClickMegaMenu>
             <ClickMegaMenu
@@ -390,7 +240,14 @@ export function CustomerShellHeader({
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
             >
-              <ToolsMegaPanel basePath={basePath} groups={activeToolGroups} />
+              <DreamShootMegaToolsPanel
+                ctaHref="/tools"
+                ctaLabel={isSpanishXby ? "Ver todas las herramientas" : "View all tools"}
+                site={menuSite}
+                tools={activeToolBlocks}
+                variant="popover"
+                variantTone="dark"
+              />
             </ClickMegaMenu>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}

@@ -1,16 +1,16 @@
 "use client";
 
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Film, Monitor, Send, Sparkles } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme } from "@/lib/types";
 import {
   DEFAULT_VIDEO_DURATION_SECONDS,
-  VIDEO_DURATION_OPTIONS,
-  normalizeVideoDurationSeconds,
+  normalizeVideoDurationSecondsForFrameCount,
   normalizeVideoFrameLimit,
   trimVideoFrameSelection,
   videoDurationCreditCost,
+  videoDurationOptionsForFrameCount,
   type VideoDurationSeconds
 } from "@/lib/video-frame-config";
 
@@ -19,6 +19,16 @@ type VideoAspectRatio = "16:9" | "4:3" | "1:1" | "3:4" | "9:16";
 type VideoResolution = "720p" | "480p";
 type CreatedVideoJobFeedback = {
   customerBalance?: PublicCustomer["balance"];
+};
+export type VideoRetryDraft = {
+  key: string;
+  sourceJobId: string;
+  frameAssetIds: string[];
+  videoThemeId?: string;
+  promptNote?: string;
+  durationSeconds?: number;
+  aspectRatio?: string;
+  resolution?: string;
 };
 
 const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
@@ -53,7 +63,8 @@ function errorText(error: string | undefined, status: number, spanish: boolean) 
   if (error === "subscription_required") return vt(spanish, "Choose a subscription or use enough credits before generating video.", "Elige una suscripcion o usa creditos suficientes antes de generar video.");
   if (error === "insufficient_credits") return vt(spanish, "Not enough credits for this video theme.", "No hay creditos suficientes para este tema de video.");
   if (error === "video_theme_required") return vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento.");
-  if (error === "video_frames_required") return vt(spanish, "Select at least one frame image.", "Selecciona al menos una imagen de fotograma.");
+  if (error === "video_frames_required" || error === "video_prompt_required") return vt(spanish, "Describe the video or select at least one frame image.", "Describe el video o selecciona al menos una imagen de fotograma.");
+  if (error === "video_frame_selection_required") return vt(spanish, "Your prompt refers to uploaded images. Select frame images on the left before generating image-to-video.", "Tu prompt menciona imagenes subidas. Selecciona fotogramas a la izquierda antes de generar imagen a video.");
   if (error === "too_many_video_frames") return vt(spanish, "This theme allows fewer frame images.", "Este tema permite menos imagenes de fotograma.");
   if (error === "too_many_video_frames_for_provider") return vt(spanish, "This video preset allows fewer frame images. Remove extra frames and try again.", "Este ajuste de video permite menos fotogramas. Quita fotogramas extra e intentalo de nuevo.");
   if (error === "video_frame_asset_required") return vt(spanish, "Use images uploaded in the video frame area before generating.", "Usa imagenes subidas en el area de fotogramas antes de generar.");
@@ -66,11 +77,20 @@ function isCsrfError(error: string | undefined, status: number) {
   return status === 403 && (error === "csrf_token_required" || error === "csrf_token_mismatch" || Boolean(error?.includes("csrf")));
 }
 
+function isVideoAspectRatio(value: string | undefined): value is VideoAspectRatio {
+  return VIDEO_ASPECT_OPTIONS.some((option) => option.id === value);
+}
+
+function isVideoResolution(value: string | undefined): value is VideoResolution {
+  return VIDEO_RESOLUTION_OPTIONS.some((option) => option.id === value);
+}
+
 export function CustomerVideoWorkspace({
   customer,
   onJobCreated,
-  onOpenFrameManager,
+  onRetryDraftApplied,
   readyFrameIds,
+  retryDraft,
   selectedFrameIds,
   setSelectedFrameIds,
   siteId,
@@ -86,6 +106,8 @@ export function CustomerVideoWorkspace({
   setSelectedFrameIds: Dispatch<SetStateAction<string[]>>;
   onJobCreated: (jobId: string, feedback?: CreatedVideoJobFeedback) => void;
   onOpenFrameManager: () => void;
+  onRetryDraftApplied?: () => void;
+  retryDraft?: VideoRetryDraft | null;
 }) {
   const [themes, setThemes] = useState<VideoTheme[]>([]);
   const [selectedThemeId, setSelectedThemeId] = useState("");
@@ -95,7 +117,10 @@ export function CustomerVideoWorkspace({
   const [formatPanelOpen, setFormatPanelOpen] = useState(false);
   const [promptNote, setPromptNote] = useState("");
   const [message, setMessage] = useState("");
+  const [textToVideoConfirmArmed, setTextToVideoConfirmArmed] = useState(false);
   const [pending, setPending] = useState(false);
+  const appliedRetryDraftKeyRef = useRef<string | null>(null);
+  const retryDurationThemeIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -111,7 +136,7 @@ export function CustomerVideoWorkspace({
         if (!response.ok) throw new Error("video_themes_unavailable");
         const nextThemes = payload.themes ?? [];
         setThemes(nextThemes);
-        setSelectedThemeId(defaultVideoTheme(nextThemes)?.id || "");
+        setSelectedThemeId((current) => current || defaultVideoTheme(nextThemes)?.id || "");
         if (!nextThemes.length) {
           setMessage(vt(spanish, "No active video presets are available yet.", "Aun no hay ajustes de video activos."));
         }
@@ -127,22 +152,76 @@ export function CustomerVideoWorkspace({
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
   const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames);
-  const providerMaxFrames = selectedTheme?.providerMaxFrames ? normalizeVideoFrameLimit(selectedTheme.providerMaxFrames) : undefined;
-  const providerFrameLimitMessage = providerMaxFrames && providerMaxFrames < maxFrames
-    ? vt(spanish, `Selected frames are first composed into one AI starter scene before the video provider receives it.`, `Los fotogramas seleccionados se componen primero en una escena inicial de IA antes de enviarla al proveedor de video.`)
+  const availableDurationOptions = videoDurationOptionsForFrameCount(selectedFrameIds.length);
+  const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(selectedDurationSeconds, selectedFrameIds.length);
+  const providerFrameLimitMessage = maxFrames > 1
+    ? vt(spanish, `Selected frames are treated as ordered reference images for image-to-video.`, `Los fotogramas seleccionados se tratan como imagenes de referencia ordenadas para imagen a video.`)
     : "";
-  const selectedCreditCost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, selectedDurationSeconds) : 0;
+  const selectedCreditCost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, effectiveDurationSeconds) : 0;
   const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
   const generationFrameIds = readyFrameIds ?? selectedFrameIds;
   const hasPendingFrameUploads = generationFrameIds.length !== selectedFrameIds.length;
+  const trimmedPromptNote = promptNote.trim();
+  const hasReadyFrameInput = generationFrameIds.length > 0;
+  const isTextToVideo = selectedFrameIds.length === 0;
+  const needsTextToVideoConfirmation = isTextToVideo && trimmedPromptNote.length > 0;
+  const textToVideoConfirmationMessage = vt(
+    spanish,
+    "No frame images are selected. This will run as text-to-video and follow only your written prompt. Select frames on the left for image-to-video, or click Generate text-to-video to continue.",
+    "No hay fotogramas seleccionados. Esto se ejecutara como texto a video y seguira solo tu prompt escrito. Selecciona fotogramas a la izquierda para imagen a video, o haz clic en Generar texto a video para continuar."
+  );
+  const generateButtonLabel = pending
+    ? vt(spanish, "Starting", "Iniciando")
+    : textToVideoConfirmArmed && needsTextToVideoConfirmation
+      ? vt(spanish, "Generate text-to-video", "Generar texto a video")
+      : vt(spanish, "Generate video", "Generar video");
+  const canGenerateCurrentVideo = Boolean(selectedTheme) && !hasPendingFrameUploads && (hasReadyFrameInput || trimmedPromptNote.length > 0);
 
   useEffect(() => {
-    if (selectedTheme) setSelectedDurationSeconds(normalizeVideoDurationSeconds(selectedTheme.durationSeconds));
-  }, [selectedTheme?.id, selectedTheme?.durationSeconds]);
+    if (!retryDraft || appliedRetryDraftKeyRef.current === retryDraft.key) return;
+    const restoredTheme = retryDraft.videoThemeId
+      ? themes.find((theme) => theme.id === retryDraft.videoThemeId)
+      : undefined;
+    const restoredThemeId = restoredTheme?.id ?? retryDraft.videoThemeId;
+    const restoredMaxFrames = normalizeVideoFrameLimit(restoredTheme?.effectiveMaxFrames ?? restoredTheme?.maxFrames);
+    const restoredFrameIds = trimVideoFrameSelection(retryDraft.frameAssetIds, restoredMaxFrames);
+    setSelectedFrameIds(restoredFrameIds);
+    if (restoredThemeId) setSelectedThemeId(restoredThemeId);
+    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(retryDraft.durationSeconds, restoredFrameIds.length));
+    if (retryDraft.durationSeconds !== undefined && restoredThemeId) retryDurationThemeIdRef.current = restoredThemeId;
+    if (isVideoAspectRatio(retryDraft.aspectRatio)) setSelectedAspectRatio(retryDraft.aspectRatio);
+    if (isVideoResolution(retryDraft.resolution)) setSelectedResolution(retryDraft.resolution);
+    setPromptNote(retryDraft.promptNote ?? "");
+    setFormatPanelOpen(false);
+    setMessage(vt(spanish, "Previous video request restored. Review it, then generate again.", "Solicitud de video anterior restaurada. Revisala y vuelve a generar."));
+    appliedRetryDraftKeyRef.current = retryDraft.key;
+    onRetryDraftApplied?.();
+  }, [onRetryDraftApplied, retryDraft, setSelectedFrameIds, spanish, themes]);
+
+  useEffect(() => {
+    if (!selectedTheme) return;
+    if (retryDurationThemeIdRef.current === selectedTheme.id) {
+      retryDurationThemeIdRef.current = null;
+      return;
+    }
+    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(selectedTheme.durationSeconds, selectedFrameIds.length));
+  }, [selectedFrameIds.length, selectedTheme]);
 
   useEffect(() => {
     if (selectedFrameIds.length > maxFrames) setSelectedFrameIds((current) => trimVideoFrameSelection(current, maxFrames));
   }, [maxFrames, selectedFrameIds.length, setSelectedFrameIds]);
+
+  useEffect(() => {
+    if (needsTextToVideoConfirmation) return;
+    setTextToVideoConfirmArmed(false);
+    setMessage((current) => current === textToVideoConfirmationMessage ? "" : current);
+  }, [needsTextToVideoConfirmation, textToVideoConfirmationMessage]);
+
+  useEffect(() => {
+    if (selectedDurationSeconds !== effectiveDurationSeconds) {
+      setSelectedDurationSeconds(effectiveDurationSeconds);
+    }
+  }, [effectiveDurationSeconds, selectedDurationSeconds]);
 
   async function generateVideo() {
     if (pending) return;
@@ -158,17 +237,21 @@ export function CustomerVideoWorkspace({
       setMessage(vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento."));
       return;
     }
-    if (!selectedFrameIds.length) {
-      setMessage(vt(spanish, "Select at least one frame image on the left.", "Selecciona al menos una imagen de fotograma a la izquierda."));
-      onOpenFrameManager();
+    if (!selectedFrameIds.length && !trimmedPromptNote) {
+      setMessage(vt(spanish, "Describe the video you want, or select frame images on the left for image-to-video.", "Describe el video que quieres o selecciona fotogramas a la izquierda para imagen a video."));
       return;
     }
-    if (hasPendingFrameUploads || !generationFrameIds.length) {
+    if (selectedFrameIds.length && (hasPendingFrameUploads || !generationFrameIds.length)) {
       setMessage(vt(spanish, "Frame uploads are still finishing. Generate after every selected frame is ready.", "Las subidas de fotogramas aun estan terminando. Genera cuando todos los fotogramas seleccionados esten listos."));
       return;
     }
     if (selectedCreditCost > customer.balance.available && subscriptionStatus !== "admin") {
       setMessage(vt(spanish, `This duration needs ${selectedCreditCost} credits, but ${customer.balance.available} are available.`, `Esta duracion necesita ${selectedCreditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
+      return;
+    }
+    if (needsTextToVideoConfirmation && !textToVideoConfirmArmed) {
+      setTextToVideoConfirmArmed(true);
+      setMessage(textToVideoConfirmationMessage);
       return;
     }
     setPending(true);
@@ -180,10 +263,10 @@ export function CustomerVideoWorkspace({
         mode: "video",
         outputType: "video",
         videoThemeId: selectedTheme.id,
-        duration: String(selectedDurationSeconds),
-        videoDuration: String(selectedDurationSeconds),
-        durationSeconds: selectedDurationSeconds,
-        videoDurationSeconds: selectedDurationSeconds,
+        duration: String(effectiveDurationSeconds),
+        videoDuration: String(effectiveDurationSeconds),
+        durationSeconds: effectiveDurationSeconds,
+        videoDurationSeconds: effectiveDurationSeconds,
         aspect_ratio: selectedAspectRatio,
         aspectRatio: selectedAspectRatio,
         resolution: selectedResolution,
@@ -192,19 +275,20 @@ export function CustomerVideoWorkspace({
         fields: {
           mode: "video",
           outputType: "video",
+          videoInputMode: hasReadyFrameInput ? "image_to_video" : "text_to_video",
           videoThemeId: selectedTheme.id,
           videoThemeName: selectedTheme.name,
           videoThemePrompt: selectedTheme.prompt,
           frameAssetIds: generationFrameIds,
-          duration: String(selectedDurationSeconds),
-          videoDuration: String(selectedDurationSeconds),
-          durationSeconds: selectedDurationSeconds,
-          videoDurationSeconds: selectedDurationSeconds,
+          duration: String(effectiveDurationSeconds),
+          videoDuration: String(effectiveDurationSeconds),
+          durationSeconds: effectiveDurationSeconds,
+          videoDurationSeconds: effectiveDurationSeconds,
           aspect_ratio: selectedAspectRatio,
           aspectRatio: selectedAspectRatio,
           resolution: selectedResolution,
           estimatedCreditCost: selectedCreditCost,
-          promptNote: promptNote.trim()
+          promptNote: trimmedPromptNote
         }
       }
     };
@@ -237,8 +321,8 @@ export function CustomerVideoWorkspace({
             <Film className="h-5 w-5" strokeWidth={1.8} />
           </span>
           <div>
-            <h2 className="text-base font-semibold">{vt(spanish, "Create an image-to-video clip", "Crear un clip de imagen a video")}</h2>
-            <p className="mt-1 text-xs text-white/50">{vt(spanish, "Manage frame images on the left, describe the motion here, then generate one private MP4.", "Gestiona los fotogramas a la izquierda, describe el movimiento aqui y genera un MP4 privado.")}</p>
+            <h2 className="text-base font-semibold">{vt(spanish, "Create an AI video clip", "Crear un clip de video con IA")}</h2>
+            <p className="mt-1 text-xs text-white/50">{vt(spanish, "Use frame images for image-to-video, or leave them empty and describe a text-to-video clip.", "Usa fotogramas para imagen a video, o dejalos vacios y describe un clip de texto a video.")}</p>
           </div>
         </div>
         <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/58">
@@ -253,7 +337,7 @@ export function CustomerVideoWorkspace({
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Agent video composer", "Compositor de video")}</p>
               <h3 className="mt-2 text-xl font-semibold">{vt(spanish, "Describe the clip you want", "Describe el clip que quieres")}</h3>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-white/56">
-                {vt(spanish, "Use the selected frame order, then add motion, mood, camera, or story direction in one place.", "Usa el orden de fotogramas seleccionado y agrega movimiento, ambiente, camara o direccion narrativa en un solo lugar.")}
+                {vt(spanish, "Use selected frames when you want image-to-video, or write a standalone prompt when you want text-to-video.", "Usa fotogramas seleccionados para imagen a video, o escribe un prompt independiente para texto a video.")}
               </p>
             </div>
             <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/62">
@@ -267,11 +351,15 @@ export function CustomerVideoWorkspace({
               <textarea
                 className="min-h-[156px] w-full resize-none rounded-[14px] border border-transparent bg-transparent px-2 py-2 text-base leading-7 text-white outline-none transition placeholder:text-white/28 focus:border-[#31d4ff]/55 focus:bg-black/14 sm:min-h-[172px]"
                 maxLength={600}
-                onChange={(event) => setPromptNote(event.target.value)}
+                onChange={(event) => {
+                  setPromptNote(event.target.value);
+                  setTextToVideoConfirmArmed(false);
+                  setMessage((current) => current === textToVideoConfirmationMessage ? "" : current);
+                }}
                 placeholder={vt(
                   spanish,
-                  `Select up to ${maxFrames} frame image${maxFrames === 1 ? "" : "s"} on the left, then describe the motion. Example: keep both people smiling while the cart moves forward, with soft handheld camera movement and warm daylight.`,
-                  `Selecciona hasta ${maxFrames} fotograma${maxFrames === 1 ? "" : "s"} a la izquierda y describe el movimiento. Ejemplo: conserva las sonrisas mientras el carrito avanza, con camara suave en mano y luz calida.`
+                  `Describe the video. Add frame images on the left when you want the clip to follow uploaded subjects; leave frames empty for text-to-video.`,
+                  `Describe el video. Agrega fotogramas a la izquierda si quieres que el clip siga sujetos subidos; dejalos vacios para texto a video.`
                 )}
                 value={promptNote}
               />
@@ -281,7 +369,7 @@ export function CustomerVideoWorkspace({
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-[#31d4ff]/30 bg-[#31d4ff]/10 px-3 text-xs font-semibold text-[#31d4ff]">
                   <Film className="h-4 w-4" strokeWidth={1.8} />
-                  {vt(spanish, "Image to video", "Imagen a video")}
+                  {isTextToVideo ? vt(spanish, "Text to video", "Texto a video") : vt(spanish, "Image to video", "Imagen a video")}
                 </span>
                 <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-xs font-semibold text-white/66">
                   <Sparkles className="h-4 w-4" strokeWidth={1.8} />
@@ -344,8 +432,8 @@ export function CustomerVideoWorkspace({
                   ) : null}
                 </div>
                 <div className="inline-flex rounded-[10px] border border-white/10 bg-black/16 p-1">
-                  {VIDEO_DURATION_OPTIONS.map((option) => {
-                    const selected = selectedDurationSeconds === option.seconds;
+                  {availableDurationOptions.map((option) => {
+                    const selected = effectiveDurationSeconds === option.seconds;
                     const cost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, option.seconds) : 0;
                     return (
                       <button
@@ -368,12 +456,12 @@ export function CustomerVideoWorkspace({
                 </span>
                 <button
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45 sm:min-w-40"
-                  disabled={pending || !selectedTheme || !selectedFrameIds.length || hasPendingFrameUploads || !generationFrameIds.length}
+                  disabled={pending || !canGenerateCurrentVideo}
                   onClick={() => void generateVideo()}
                   type="button"
                 >
                   <Send className="h-4 w-4" strokeWidth={1.8} />
-                  {pending ? vt(spanish, "Starting", "Iniciando") : vt(spanish, "Generate video", "Generar video")}
+                  {generateButtonLabel}
                 </button>
               </div>
             </div>
@@ -388,9 +476,9 @@ export function CustomerVideoWorkspace({
                     ? vt(spanish, "Some selected frame uploads are still finishing.", "Algunos fotogramas seleccionados aun se estan subiendo.")
                     : selectedFrameIds.length
                       ? vt(spanish, "The selected frames on the left will drive the clip sequence.", "Los fotogramas seleccionados a la izquierda guiaran la secuencia.")
-                      : vt(spanish, "Select frame images on the left to unlock generation.", "Selecciona fotogramas a la izquierda para habilitar la generacion.")}
+                      : vt(spanish, "No frames selected. This request will run as text-to-video and follow only your written prompt.", "No hay fotogramas seleccionados. Esta solicitud se ejecutara como texto a video y seguira solo tu prompt escrito.")}
                 </p>
-                {providerFrameLimitMessage ? <p className="mt-2 text-xs leading-5 text-[#31d4ff]">{providerFrameLimitMessage}</p> : null}
+                {providerFrameLimitMessage && selectedFrameIds.length ? <p className="mt-2 text-xs leading-5 text-[#31d4ff]">{providerFrameLimitMessage}</p> : null}
               </div>
             </div>
 
@@ -398,7 +486,7 @@ export function CustomerVideoWorkspace({
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Generation setup", "Configuracion")}</p>
               <div className="mt-3 grid gap-2 text-sm leading-6 text-white/62">
                 <p>{vt(spanish, "Preset", "Ajuste")}: <span className="font-semibold text-white">{selectedTheme ? vt(spanish, "Automatic motion", "Movimiento automatico") : vt(spanish, "Loading", "Cargando")}</span></p>
-                <p>{vt(spanish, "Duration", "Duracion")}: <span className="font-semibold text-white">{selectedDurationSeconds}s</span></p>
+                <p>{vt(spanish, "Duration", "Duracion")}: <span className="font-semibold text-white">{effectiveDurationSeconds}s</span></p>
                 <p>{vt(spanish, "Cost", "Costo")}: <span className="font-semibold text-white">{selectedCreditCost}</span></p>
               </div>
             </div>

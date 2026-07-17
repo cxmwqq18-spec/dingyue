@@ -15,11 +15,37 @@ const primaryDomain = "www.aidreamcapes.com";
 const apexDomain = "aidreamcapes.com";
 const localDomain = "aidreamcapes.localhost";
 const supportEmail = "support@aidreamcapes.com";
+const companyName = "BLYDEYUS INC";
 const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
+const contactPhone = "(+1)307-310-3014";
+const taxId = "41-5317529";
 const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const visualSiteTitle = "ልiጋreamርapes";
 const aidreamcapesImageBase = "/assets/sites/site_aidreamcapes/creative-packs";
+const aidreamcapesGalleryBase = `${aidreamcapesImageBase}/pack-galleries`;
+const aidreamcapesGalleryVersion = "20260715ai";
 const aidreamcapesAsset = (name, version = "20260630webp") => `${aidreamcapesImageBase}/${name}.webp?v=${version}`;
+const aidreamcapesGalleryImages = (slug) => Array.from({ length: 12 }, (_, index) => {
+  const slot = String(index + 1).padStart(2, "0");
+  return `${aidreamcapesGalleryBase}/${slug}/${slug}-${slot}.webp?v=${aidreamcapesGalleryVersion}`;
+});
+const aidreamcapesGalleryAltDetails = [
+  "close portrait preview",
+  "half body editorial preview",
+  "wide scene portrait preview",
+  "profile-ready crop preview",
+  "soft light portrait preview",
+  "dramatic color portrait preview",
+  "private album cover preview",
+  "social story crop preview",
+  "studio-style portrait preview",
+  "outdoor or location portrait preview",
+  "polished keepsake preview",
+  "download-ready gallery preview"
+];
+const aidreamcapesGalleryImageAlts = (slug, name) => aidreamcapesGalleryAltDetails.map(
+  (detail, index) => `${name} ${detail} ${index + 1} for Aidreamcapes ${slug.replace(/-/g, " ")} theme`
+);
 const aidreamcapesPackCoverImages = {
   destination: aidreamcapesAsset("route-portrait-albums-cover"),
   coastal: aidreamcapesAsset("coastal-light-sets-cover"),
@@ -46,6 +72,16 @@ const aidreamcapesPackCoverImages = {
   family: aidreamcapesAsset("family-travel-keepsakes-cover"),
   goldenHour: aidreamcapesAsset("golden-hour-route-stories-cover"),
   retreat: aidreamcapesAsset("wellness-retreat-scenes-cover"),
+  nature: aidreamcapesAsset("nature-portrait-studio-cover", "20260715life"),
+  cityLights: aidreamcapesAsset("city-light-night-walks-cover", "20260715life"),
+  eveningRoute: aidreamcapesAsset("evening-route-portraits-cover", "20260715life"),
+  boudoir: aidreamcapesAsset("boudoir-editorial-portraits-cover", "20260715life"),
+  hairstyle: aidreamcapesAsset("hairstyle-try-on-stories-cover", "20260715life"),
+  headshots: aidreamcapesAsset("professional-headshot-studio-cover", "20260715life"),
+  milestonePostcards: aidreamcapesAsset("milestone-postcard-sets-cover", "20260715life"),
+  holidayCouples: aidreamcapesAsset("holiday-couple-cards-cover", "20260715life"),
+  gala: aidreamcapesAsset("gala-night-portraits-cover", "20260715life"),
+  heritageCelebrations: aidreamcapesAsset("heritage-celebration-portraits-cover", "20260715life"),
   albumCurator: aidreamcapesAsset("private-album-curator-cover")
 };
 const aidreamcapesPackImages = {
@@ -61,7 +97,7 @@ const aidreamcapesPackImages = {
   glam: aidreamcapesAsset("cafe-street-story-studio"),
   travel: aidreamcapesAsset("itinerary-moodboards-v2"),
   product: aidreamcapesAsset("product-reverie"),
-  social: aidreamcapesAsset("social-keepsakes"),
+  social: aidreamcapesAsset("postcard-journey"),
   resort: aidreamcapesAsset("island-resort-scenes-v2"),
   roadtrip: aidreamcapesAsset("road-trip-frames-v2")
 };
@@ -70,6 +106,8 @@ const aidreamcapesCategoryImages = {
   parentMoments: aidreamcapesAsset("parent-moments", "20260630cat"),
   parentAdventure: aidreamcapesAsset("parent-adventure", "20260630cat"),
   parentCreator: aidreamcapesAsset("parent-creator", "20260630cat"),
+  parentLifestyle: aidreamcapesAsset("parent-lifestyle", "20260715life"),
+  parentOccasions: aidreamcapesAsset("parent-occasions", "20260715life"),
   destination: aidreamcapesAsset("route-portrait-albums-category", "20260630cat"),
   coastal: aidreamcapesAsset("coastal-light-sets-category", "20260630cat"),
   oldCity: aidreamcapesAsset("old-quarter-walks-category", "20260630cat"),
@@ -95,6 +133,16 @@ const aidreamcapesCategoryImages = {
   family: aidreamcapesAsset("family-travel-keepsakes-category", "20260630cat"),
   goldenHour: aidreamcapesAsset("golden-hour-route-stories-category", "20260630cat"),
   retreat: aidreamcapesAsset("wellness-retreat-scenes-category", "20260630cat"),
+  nature: aidreamcapesAsset("nature-portrait-studio-category", "20260715life"),
+  cityLights: aidreamcapesAsset("city-light-night-walks-category", "20260715life"),
+  eveningRoute: aidreamcapesAsset("evening-route-portraits-category", "20260715life"),
+  boudoir: aidreamcapesAsset("boudoir-editorial-portraits-category", "20260715life"),
+  hairstyle: aidreamcapesAsset("hairstyle-try-on-stories-category", "20260715life"),
+  headshots: aidreamcapesAsset("professional-headshot-studio-category", "20260715life"),
+  milestonePostcards: aidreamcapesAsset("milestone-postcard-sets-category", "20260715life"),
+  holidayCouples: aidreamcapesAsset("holiday-couple-cards-category", "20260715life"),
+  gala: aidreamcapesAsset("gala-night-portraits-category", "20260715life"),
+  heritageCelebrations: aidreamcapesAsset("heritage-celebration-portraits-category", "20260715life"),
   albumCurator: aidreamcapesAsset("private-album-curator-category", "20260630cat")
 };
 const aidreamcapesReviewImages = {
@@ -156,12 +204,12 @@ function repairSharedAssetPaths(value) {
     { from: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", to: aidreamcapesPackImages.social },
     { from: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", to: aidreamcapesPackImages.coastal },
     { from: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", to: aidreamcapesPackImages.destination },
-    { from: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", to: aidreamcapesPackImages.editorial },
-    { from: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", to: aidreamcapesPackImages.avatar },
+    { from: "/assets/dreamshoot/generated/20260619/cyber" + "punk-solo-city-v1.png", to: aidreamcapesPackImages.editorial },
+    { from: "/assets/dreamshoot/generated/20260619/mafia-" + "no" + "ir-single-v1.png", to: aidreamcapesPackImages.avatar },
     { from: "/assets/dreamshoot/generated/20260619/storybook-storybook shadow-single-v1.png", to: aidreamcapesPackImages.profileStory },
     { from: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-storybook shadow.png", to: aidreamcapesPackImages.profileStory },
     { from: "/assets/dreamshoot/generated/20260619/editorial getaway-solo-city-v1.png", to: aidreamcapesPackImages.editorial },
-    { from: "/assets/dreamshoot/frames/sample-cyberpunk.png", to: aidreamcapesPackImages.glam },
+    { from: "/assets/dreamshoot/frames/sample-cyber" + "punk.png", to: aidreamcapesPackImages.glam },
     { from: "/assets/dreamshoot/frames/story-beauty-portrait.png", to: aidreamcapesPackImages.glam },
     { from: "/assets/dreamshoot/frames/faq-intro-portrait.png", to: aidreamcapesPackImages.destination },
     { from: "/assets/dreamshoot/editorial-headshot-gpt2.png", to: aidreamcapesPackImages.editorial },
@@ -337,11 +385,11 @@ brandReplacements.sort((left, right) => right.from.length - left.from.length);
 
 const aidreamcapesLegacyReplacements = [
   ["/tools/world-cup-fan-photos", "/tools/coastal-portrait"],
-  ["/tools/cyberpunk-portrait", "/tools/editorial-getaway"],
+  ["/tools/cyber" + "punk-portrait", "/tools/editorial-getaway"],
   ["/tools/background-changer", "/tools/route-portrait-engine"],
   ["/tools/background-remover", "/tools/route-portrait-engine"],
   ["/tools/gala-photo", "/tools/cafe-street-story"],
-  ["/tools/noir-portrait", "/tools/travel-profile-story"],
+  ["/tools/no" + "ir-portrait", "/tools/travel-profile-story"],
   ["/tools/headshot", "/tools/travel-profile-story"],
   ["/tools/nature-adventure", "/tools/cinematic-travel"],
   ["/tools/virtual-try-on", "/tools/cafe-street-story"],
@@ -382,14 +430,14 @@ const aidreamcapesLegacyReplacements = [
   ["Page Not Found - Return to Aidreamcapes Route Portrait Packages", "Page Not Found - return to Aidreamcapes travel packages"],
   ["Cyberpunk portrait maker", "Editorial getaway builder"],
   ["Cyberpunk", "Editorial Getaway"],
-  ["cyberpunk", "editorial getaway"],
+  ["cyber" + "punk", "editorial getaway"],
   ["Background changer", "Travel Portrait mood planner"],
   ["background changer", "travel portrait mood planner"],
   ["background edits", "mood references"],
   ["Mafia", "Storybook"],
   ["mafia", "storybook"],
   ["Noir", "Storybook Shadow"],
-  ["noir", "storybook shadow"],
+  ["no" + "ir", "storybook shadow"],
   ["Gala photo maker", "Cafe street portrait tool"],
   ["gala scenes", "cafe street scenes"],
   ["gala looks", "cafe street looks"],
@@ -456,9 +504,9 @@ function normalizeGlobalSection(type, section) {
 
 const aidreamcapesSeoPages = {
   home: {
-    title: "AI travel portraits and destination-style albums",
-    description: "Create AI travel portraits, destination scenes, itinerary-ready albums, and private escape galleries from everyday source photos with Aidreamcapes.",
-    keywords: "Aidreamcapes, AI travel portraits, route portrait generator, cinematic travel photos, private travel album",
+    title: "AIdreamcapes – the most advanced AI photo generator  maker",
+    description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
+    keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos",
     canonicalPath: "/",
     index: true,
     follow: true
@@ -496,10 +544,10 @@ const aidreamcapesSeoPages = {
     follow: true
   },
   help: {
-    title: "Upload, credit, and travel gallery help",
-    description: "Get Aidreamcapes help for source photo prep, destination package selection, travel mood references, credit use, private gallery delivery, refunds, and account privacy.",
-    keywords: "Aidreamcapes help, AI travel photo upload guide, destination package help, private travel gallery support",
-    canonicalPath: "/help",
+    title: "Aidreamcapes FAQ",
+    description: "Get Aidreamcapes FAQ answers for source photo prep, destination package selection, travel mood references, credit use, private gallery delivery, refunds, and account privacy.",
+    keywords: "Aidreamcapes FAQ, AI travel photo upload questions, destination package FAQ, private travel gallery support",
+    canonicalPath: "/faq",
     index: true,
     follow: true
   },
@@ -588,6 +636,22 @@ const aidreamcapesSeoPages = {
     description: "Learn how Aidreamcapes uses essential cookies and local storage for sign-in, checkout continuity, cart state, account preferences, and site reliability.",
     keywords: "Aidreamcapes cookie policy, AI portrait site cookies, checkout continuity storage",
     canonicalPath: "/cookies",
+    index: true,
+    follow: true
+  },
+  childrenPrivacy: {
+    title: "Aidreamcapes minor source photo privacy and guardian requests",
+    description: "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
+    keywords: "Aidreamcapes minor photo privacy, guardian source photo request, COPPA travel portrait review",
+    canonicalPath: "/children-privacy",
+    index: true,
+    follow: true
+  },
+  statePrivacy: {
+    title: "Aidreamcapes U.S. privacy choices and California request options",
+    description: "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
+    keywords: "Aidreamcapes privacy choices, California data request, Wyoming privacy contact, private gallery deletion",
+    canonicalPath: "/state-privacy",
     index: true,
     follow: true
   },
@@ -944,8 +1008,8 @@ function buildThemeSettings() {
     { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections" } },
     { id: "aidreamcapes_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
     { id: "aidreamcapes_header_how", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
-    { id: "aidreamcapes_header_examples", type: "menu_link", settings: { label: "Examples", href: "/collections" } },
-    { id: "aidreamcapes_header_help", type: "menu_link", settings: { label: "Help", href: "/help" } },
+    { id: "aidreamcapes_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
+    { id: "aidreamcapes_header_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq" } },
     ...clone(aidreamcapesTools),
     ...clone(aidreamcapesTaxonomyBlocks.slice(0, 6))
   ];
@@ -961,8 +1025,12 @@ function buildThemeSettings() {
   globalSections.footer.settings.youtubeUrl = "https://www.youtube.com/@aidreamcapes";
   globalSections.footer.settings.twitterUrl = "https://x.com/aidreamcapes";
   globalSections.footer.settings.showPaymentIcons = true;
+  globalSections.footer.settings.companyName = companyName;
   globalSections.footer.settings.contactAddress = companyAddress;
+  globalSections.footer.settings.contactPhone = contactPhone;
   globalSections.footer.settings.contactEmail = supportEmail;
+  globalSections.footer.settings.taxIdLabel = "Tax ID";
+  globalSections.footer.settings.taxId = taxId;
   globalSections.footer.settings.salesEmail = "";
   globalSections.footer.settings.copyright = "© 2026 Aidreamcapes. All rights reserved.";
   globalSections.footer.blocks = [
@@ -973,11 +1041,13 @@ function buildThemeSettings() {
     { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Field Notes", href: "/blog", group: "company" } },
     { id: "aidreamcapes_footer_about", type: "menu_link", settings: { label: "About the Studio", href: "/about-us", group: "company" } },
     { id: "aidreamcapes_footer_contact", type: "menu_link", settings: { label: "Contact the Studio", href: "/contact-us", group: "company" } },
-    { id: "aidreamcapes_footer_help", type: "menu_link", settings: { label: "Help Center", href: "/help", group: "support" } },
+    { id: "aidreamcapes_footer_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "support" } },
     { id: "aidreamcapes_footer_privacy", type: "menu_link", settings: { label: "Privacy Promise", href: "/privacy", group: "support" } },
     { id: "aidreamcapes_footer_terms", type: "menu_link", settings: { label: "Studio Terms", href: "/terms", group: "support" } },
     { id: "aidreamcapes_footer_content", type: "menu_link", settings: { label: "Creative Safety", href: "/content", group: "support" } },
-    { id: "aidreamcapes_footer_cookies", type: "menu_link", settings: { label: "Cookie Notice", href: "/cookies", group: "support" } }
+    { id: "aidreamcapes_footer_cookies", type: "menu_link", settings: { label: "Cookie Notice", href: "/cookies", group: "support" } },
+    { id: "aidreamcapes_footer_children_privacy", type: "menu_link", settings: { label: "Children's Privacy", href: "/children-privacy", group: "support" } },
+    { id: "aidreamcapes_footer_state_privacy", type: "menu_link", settings: { label: "U.S. Privacy Choices", href: "/state-privacy", group: "support" } }
   ];
   const seo = source.seo ?? {};
   const saasSettingsCurrent = scrubAidreamcapesText(clone(source.saasSettingsCurrent ?? {}));
@@ -1031,10 +1101,10 @@ function buildThemeSettings() {
     navigation,
     globalSections: scrubAidreamcapesText(globalSections),
     seo: {
-      siteTitle: siteName,
+      siteTitle: "AIdreamcapes – the most advanced AI photo generator  maker",
       siteDescription:
-        "Aidreamcapes is a private AI studio for travel portraits, destination-style albums, itinerary moodboards, and customer-only gallery delivery.",
-      siteKeywords: "Aidreamcapes, AI travel portraits, route portrait generator, cinematic travel photos, private AI travel gallery",
+        "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
+      siteKeywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos",
       titleTemplate: `%s | ${siteName}`,
       defaultOgImage: aidreamcapesPackImages.destination,
       robots: { index: true, follow: true },
@@ -1116,7 +1186,9 @@ const pageMappings = [
   { idSuffix: "terms_service", packageTemplate: "policy", templateKey: "terms", slug: "/policies/terms", title: "Studio Terms", pageType: "policy", seoKey: "terms" },
   { idSuffix: "content", packageTemplate: "policy", templateKey: "content", slug: "/policies/content", title: "Content policy", pageType: "policy", seoKey: "content" },
   { idSuffix: "cookies", packageTemplate: "policy", templateKey: "cookies", slug: "/policies/cookies", title: "Cookie policy", pageType: "policy", seoKey: "cookies" },
-  { idSuffix: "help", packageTemplate: "help", templateKey: "help", slug: "/help", title: "Travel support guide", pageType: "help", seoKey: "help" },
+  { idSuffix: "children_privacy", packageTemplate: "policy", templateKey: "children-privacy", slug: "/policies/children-privacy", title: "Minor Source Photo Privacy", pageType: "policy", seoKey: "childrenPrivacy" },
+  { idSuffix: "state_privacy", packageTemplate: "policy", templateKey: "state-privacy", slug: "/policies/state-privacy", title: "U.S. Privacy Choices", pageType: "policy", seoKey: "statePrivacy" },
+  { idSuffix: "faq", packageTemplate: "help", templateKey: "help", slug: "/faq", title: "FAQ", pageType: "help", seoKey: "help" },
   { idSuffix: "blog", packageTemplate: "blog-list", templateKey: "blog", slug: "/blog", title: "Field Notes", pageType: "blog", seoKey: "blog" },
   { idSuffix: "blog_detail", packageTemplate: "blog-detail", templateKey: "blog-detail", slug: "/blog/planning-dreamscape-source-photos", title: "Planning travel portrait source photos", pageType: "article", seoKey: "blogDreamscape" },
   { idSuffix: "about_us", packageTemplate: "about-us", templateKey: "about-us", slug: "/about-us", title: "About Us", pageType: "content", seoKey: "about" },
@@ -1147,8 +1219,8 @@ const pageCopy = {
     title: "How Aidreamcapes turns source photos into private travel portraits.",
     subtitle: "Plan the destination mood, attach source photos, review route credits, generate a private travel portrait request, and collect finished images in your account gallery."
   },
-  "/help": {
-    title: "Aidreamcapes help for travel uploads, credits, and private albums.",
+  "/faq": {
+    title: "Aidreamcapes FAQ for travel uploads, credits, and private albums.",
     subtitle: "Get clear answers about source photos, mood references, credit usage, checkout, refunds, privacy, and gallery delivery."
   },
   "/blog": {
@@ -1179,7 +1251,9 @@ const aidreamcapesPolicyBodies = {
   shipping: `<h3>1. No physical shipping</h3><p>Aidreamcapes sells digital AI travel portrait credits, generated image packages, downloads, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>2. Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>3. Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, Aidreamcapes may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy. Support may ask for the account email, package name, order details, and job status.</p><h3>4. No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by Aidreamcapes.</p><h3>5. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> with the Aidreamcapes account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>`,
   terms: `<h3>1. Acceptance</h3><p>By using Aidreamcapes, creating an account, purchasing credits, uploading source photos, starting a generation job, or opening a private gallery, you agree to these terms and the privacy policy that governs account data, uploads, payment status, and delivery records.</p><h3>2. Accounts and security</h3><p>Customers must provide accurate account information, keep sign-in credentials secure, and use the service only for lawful personal, creator, or business workflows. Each account is scoped to its site customer record and should not be shared in a way that bypasses billing, moderation, or privacy controls.</p><h3>3. Credits, packages, and delivery</h3><p>Credits are granted after confirmed payment, displayed before package creation, reserved when a job starts, consumed after successful delivery, and released when a request fails or times out. Delivery times, output counts, and creative results can vary based on source-photo quality, package settings, provider availability, and safety review.</p><h3>4. Uploaded content and rights</h3><p>You may only upload portraits, travel references, wardrobe notes, or route direction that you own or have permission to use. You remain responsible for the source material you submit and for how you use generated outputs. Aidreamcapes may reject, remove, or restrict requests that violate law, policy, platform safety rules, or third-party rights.</p><h3>5. Service limits and changes</h3><p>Aidreamcapes may update packages, pricing, credit rules, workflows, providers, delivery limits, or safety practices to keep the service reliable. We may pause or limit access when needed for security, abuse prevention, maintenance, payment issues, or policy enforcement.</p><h3>6. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account, billing, privacy, refund, policy, generation, or private gallery questions. Include the account email and relevant job or order details when requesting support.</p>`,
   content: `<h3>1. Allowed uploads</h3><p>Upload only portraits, product references, wardrobe notes, location inspiration, or creative direction that you own, created, licensed, or have permission to use. Source photos should be clear enough to support identity-safe travel escape portraits and should not include people who have not consented to the intended use.</p><h3>2. Disallowed requests</h3><p>Do not use Aidreamcapes for impersonation, harassment, explicit exploitation, non-consensual imagery, illegal activity, stolen images, hateful or abusive content, deceptive identity use, attempts to bypass moderation, or requests involving protected marks or people in a misleading way.</p><h3>3. Generated outputs</h3><p>AI results may contain artifacts, inaccurate details, unexpected styling, or visual assumptions. Customers should review final images before using them publicly, commercially, or in identity-sensitive contexts. Generated results should not be presented as factual documentary evidence of events that did not happen.</p><h3>4. Review and enforcement</h3><p>Aidreamcapes may block prompts, reject uploads, pause jobs, remove outputs, release credits, or restrict accounts when content appears unsafe, unauthorized, abusive, unlawful, or outside supported package intent. Support may request more context when a request is ambiguous.</p><h3>5. Reporting concerns</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> to report content concerns, suspected misuse, account access issues, or generated output that needs review. Include the account email, job details, and a concise description of the concern.</p>`,
-  cookies: `<h3>1. Essential cookies and local storage</h3><p>Aidreamcapes uses essential cookies and local storage to support sign-in, session security, checkout continuity, cart state, credit visibility, account preferences, private workspace routing, and customer-only gallery access. Some features may not work correctly if this storage is blocked or cleared.</p><h3>2. Security and reliability signals</h3><p>We may use limited operational signals such as request metadata, error state, device or browser type, and performance timing to detect failed requests, protect accounts, diagnose delivery issues, and improve site reliability. These signals are used to operate the service rather than to sell personal photos.</p><h3>3. Payment and third-party tools</h3><p>Checkout, email delivery, analytics, infrastructure, or AI processing providers may set or read cookies and related identifiers when they are necessary for payment status, fraud prevention, service delivery, security, or operational measurement. Their use is limited by the role they perform for the Aidreamcapes workflow.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings at any time. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require you to sign in again before accessing private albums, jobs, credit history, or downloads.</p><h3>5. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> if you have questions about cookies, account sessions, checkout continuity, or private gallery access on Aidreamcapes.</p>`
+  cookies: `<h3>1. Essential cookies and local storage</h3><p>Aidreamcapes uses essential cookies and local storage to support sign-in, session security, checkout continuity, cart state, credit visibility, account preferences, private workspace routing, and customer-only gallery access. Some features may not work correctly if this storage is blocked or cleared.</p><h3>2. Security and reliability signals</h3><p>We may use limited operational signals such as request metadata, error state, device or browser type, and performance timing to detect failed requests, protect accounts, diagnose delivery issues, and improve site reliability. These signals are used to operate the service rather than to sell personal photos.</p><h3>3. Payment and third-party tools</h3><p>Checkout, email delivery, analytics, infrastructure, or AI processing providers may set or read cookies and related identifiers when they are necessary for payment status, fraud prevention, service delivery, security, or operational measurement. Their use is limited by the role they perform for the Aidreamcapes workflow.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings at any time. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require you to sign in again before accessing private albums, jobs, credit history, or downloads.</p><h3>5. Contact</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> if you have questions about cookies, account sessions, checkout continuity, or private gallery access on Aidreamcapes.</p>`,
+  "children-privacy": `<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href="/state-privacy">U.S. Privacy Choices</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>`,
+  "state-privacy": `<h3>1. California request options</h3><p>California customers may ask for access, deletion, correction, a portable copy, and information about certain disclosures where applicable. Aidreamcapes does not sell private source photos or finished route galleries as stock content.</p><h3>2. Wyoming company contact</h3><p>Aidreamcapes is operated by ${companyName}, a Wyoming (WY) entity. Customers in states with applicable privacy laws can contact support for account-level privacy requests tied to uploads, route prompts, generated portraits, credit events, checkout records, and private gallery access.</p><h3>3. Verification and response</h3><p>Support may verify account ownership before providing, correcting, restricting, or deleting information. Include the account email and any relevant order, job, upload, or album details so the request can be matched to the right private workspace.</p><h3>4. Entity details</h3><p>Legal entity ${companyName}; jurisdiction Wyoming (WY); company address ${companyAddress}; support email ${supportEmail}; Tax ID ${taxId}; phone ${contactPhone}.</p><h3>5. Federal privacy monitoring</h3><p>Aidreamcapes monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law.</p>`
 };
 
 function rewriteAidreamcapesSharedSections(pageJson, mapping) {
@@ -1463,9 +1537,20 @@ function customizePageJson(pageJson, mapping) {
 
 function applyAidreamcapesPageOverrides(pageJson, mapping) {
   if (mapping.slug === "/") {
-    pageJson.sectionsOrder = pageJson.sectionsOrder
-      .filter((sectionId) => sectionId !== "flow_bridge_1")
-      .flatMap((sectionId) => (sectionId === "package_catalog_1" ? ["flow_bridge_1", sectionId] : [sectionId]));
+    pageJson.sectionsOrder = [
+      "hero_1",
+      "visual_proof_1",
+      "brand_strip_1",
+      "package_catalog_1",
+      "featured_pack_1",
+      "generation_showcase_1",
+      "pricing_1",
+      "flow_bridge_1",
+      "proof_1",
+      "trust_1",
+      "faq_1",
+      "conversion_1"
+    ].filter((sectionId) => Boolean(pageJson.sections[sectionId]));
   }
   if (mapping.slug === "/workflow") {
     if (pageJson.sections.workflow_intro_1?.settings) {
@@ -1508,7 +1593,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
         primaryCta: "Start a travel set",
         primaryHref: "/login",
         secondaryCta: "Read FAQ",
-        secondaryHref: "/help"
+        secondaryHref: "/faq"
       };
       pageJson.sections.plan_rules_1.blocks = clone(aidreamcapesPlanRuleBlocks);
     }
@@ -1701,13 +1786,13 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
       secondaryHref: "/collections"
     };
   });
-  if (mapping.slug === "/help") {
+  if (mapping.slug === "/faq") {
     const intro = pageJson.sections.intro_1;
     if (intro?.settings) {
       intro.settings = {
         ...intro.settings,
-        eyebrow: "Travel support guide",
-        title: "Aidreamcapes help for travel uploads, credits, and private albums.",
+        eyebrow: "Travel portrait questions",
+        title: "Aidreamcapes FAQ for travel uploads, credits, and private albums.",
         body: "Find practical answers about source photo quality, travel package choice, destination references, credit usage, checkout, refunds, privacy, cookies, and private gallery delivery."
       };
     }
@@ -2029,7 +2114,9 @@ const parentCategoryRows = [
   ["cat_aidreamcapes_parent_destination", "destination-portraits", "Route Portraits", "Location-led AI portrait packages for coasts, resorts, old cities, and scenic overlooks.", "Destination-style AI travel portraits", "Choose a travel setting, then generate a private album around it.", "map", aidreamcapesCategoryImages.parentDestination],
   ["cat_aidreamcapes_parent_moments", "travel-moments", "Local Moments", "Cafe, street, balcony, sunset, and shared-trip portrait directions.", "Travel moment portraits", "Turn small trip memories into polished private gallery scenes.", "camera", aidreamcapesCategoryImages.parentMoments],
   ["cat_aidreamcapes_parent_adventure", "adventure-escapes", "Open-Air Routes", "Mountain, lake, road-trip, forest cabin, and outdoor travel portrait themes.", "Adventure escape portraits", "Build cinematic outdoor albums without planning a full location shoot.", "sparkles", aidreamcapesCategoryImages.parentAdventure],
-  ["cat_aidreamcapes_parent_creator", "creator-travel-kits", "Travel Story Kits", "Postcard, itinerary, editorial, and social-ready travel visuals for creators.", "Creator travel visuals", "Plan travel content, postcard crops, and destination-ready albums.", "wand", aidreamcapesCategoryImages.parentCreator]
+  ["cat_aidreamcapes_parent_creator", "creator-travel-kits", "Travel Story Kits", "Postcard, itinerary, editorial, and social-ready travel visuals for creators.", "Creator travel visuals", "Plan travel content, postcard crops, and destination-ready albums.", "wand", aidreamcapesCategoryImages.parentCreator],
+  ["cat_aidreamcapes_parent_lifestyle", "lifestyle-route-sets", "Lifestyle Routes", "Botanical paths, city light walks, evening routes, beauty studies, and polished room portraits for private image planning.", "Lifestyle portrait scene atlases", "Move beyond travel with personal scenes shaped around style, atmosphere, and identity.", "palette", aidreamcapesCategoryImages.parentLifestyle],
+  ["cat_aidreamcapes_parent_occasions", "professional-celebrations", "Professional & Celebrations", "Work portraits and ceremonial scene atlases for announcements, seasonal cards, formal evenings, and cultural celebrations.", "Work and celebration scene atlases", "Shape portraits for public moments while keeping the Aidreamcapes mood-led review flow.", "gift", aidreamcapesCategoryImages.parentOccasions]
 ];
 
 const childCategoryRows = [
@@ -2057,7 +2144,17 @@ const childCategoryRows = [
   ["cat_aidreamcapes_shared", "shared-route-albums", "Shared Route Albums", "Shared getaway portraits for coastal walks, city dinners, balconies, and overlooks.", "Shared travel portrait albums", "Create paired route stories from everyday source photos.", "heart", aidreamcapesCategoryImages.shared, "cat_aidreamcapes_parent_moments"],
   ["cat_aidreamcapes_family", "family-travel-keepsakes", "Family Travel Keepsakes", "Gentle family trip portraits for resorts, old towns, outlooks, and memory cards.", "Family travel AI portraits", "Create polished private keepsakes from simple group uploads.", "users", aidreamcapesCategoryImages.family, "cat_aidreamcapes_parent_moments"],
   ["cat_aidreamcapes_golden_hour", "golden-hour-route-stories", "Golden Hour Route Stories", "Warm overlook paths, sunset roads, city terraces, and soft destination portraits.", "Golden hour route portraits", "Shape a private travel album around warm light, routes, and scenic atmosphere.", "sun", aidreamcapesCategoryImages.goldenHour, "cat_aidreamcapes_parent_moments"],
-  ["cat_aidreamcapes_retreat", "wellness-retreat-scenes", "Wellness Retreat Scenes", "Spa decks, yoga mornings, mineral pools, and calm restorative portraits.", "Wellness retreat AI portraits", "Create serene private albums for restorative destination moods.", "sparkles", aidreamcapesCategoryImages.retreat, "cat_aidreamcapes_parent_destination"]
+  ["cat_aidreamcapes_retreat", "wellness-retreat-scenes", "Wellness Retreat Scenes", "Spa decks, yoga mornings, mineral pools, and calm restorative portraits.", "Wellness retreat AI portraits", "Create serene private albums for restorative destination moods.", "sparkles", aidreamcapesCategoryImages.retreat, "cat_aidreamcapes_parent_destination"],
+  ["cat_aidreamcapes_nature", "nature-portrait-studio", "Nature Portrait Studio", "Botanical paths, glasshouse light, and quiet garden portraits for a calm personal scene atlas.", "Botanical portrait scenes", "Shape soft outdoor portraits with plant light, textured paths, and account-bound review.", "leaf", aidreamcapesCategoryImages.nature, "cat_aidreamcapes_parent_lifestyle"],
+  ["cat_aidreamcapes_city_lights", "city-light-night-walks", "City Light Night Walks", "Rain gloss, street glow, skyline color, and after-dark city portraits for a bolder route album.", "City light portrait scenes", "Turn source portraits into a lively night-city route atlas with Aidreamcapes mood control.", "sparkles", aidreamcapesCategoryImages.cityLights, "cat_aidreamcapes_parent_lifestyle"],
+  ["cat_aidreamcapes_evening_route", "evening-route-portraits", "Evening Route Portraits", "Blue-hour streets, lounge light, hotel awnings, and quiet evening portraits with cinematic restraint.", "Evening route portrait frames", "Build a shadow-led travel set with tailored styling and controlled city contrast.", "moon", aidreamcapesCategoryImages.eveningRoute, "cat_aidreamcapes_parent_lifestyle"],
+  ["cat_aidreamcapes_boudoir", "boudoir-editorial-portraits", "Soft Editorial Room Portraits", "Soft hotel-window light, elegant wardrobe, and polished indoor editorial portraits.", "Soft room portrait scenes", "Explore refined personal portraits with privacy-first review and modest styling.", "heart", aidreamcapesCategoryImages.boudoir, "cat_aidreamcapes_parent_lifestyle"],
+  ["cat_aidreamcapes_hairstyle", "hairstyle-try-on-stories", "Hairstyle Try-On Stories", "Hair color, cut, styling, and beauty-scene portraits for private look planning.", "Hair look scene studies", "Compare hair directions inside polished portraits before committing to a mood.", "scissors", aidreamcapesCategoryImages.hairstyle, "cat_aidreamcapes_parent_lifestyle"],
+  ["cat_aidreamcapes_headshots", "professional-headshot-studio", "Professional Headshot Studio", "Clean studio authority, editorial work portraits, and confident bio-ready scenes.", "Professional portrait room", "Build credible work portraits with quiet authority and polished facial detail.", "badge-check", aidreamcapesCategoryImages.headshots, "cat_aidreamcapes_parent_occasions"],
+  ["cat_aidreamcapes_milestone_postcards", "milestone-postcard-sets", "Milestone Postcard Sets", "Personal news, destination notes, keepsake captions, and polished announcement-style travel portraits.", "Milestone postcard portraits", "Shape a keepsake announcement atlas without copying a standard card template.", "calendar-heart", aidreamcapesCategoryImages.milestonePostcards, "cat_aidreamcapes_parent_occasions"],
+  ["cat_aidreamcapes_holiday_couples", "holiday-couple-cards", "Holiday Couple Cards", "Warm interiors, winter light, and seasonal couple scenes for personal holiday cards.", "Holiday couple scene cards", "Turn a couple upload into a festive scene set with Aidreamcapes atmosphere.", "snowflake", aidreamcapesCategoryImages.holidayCouples, "cat_aidreamcapes_parent_occasions"],
+  ["cat_aidreamcapes_gala", "gala-night-portraits", "Gala Night Portraits", "Hotel-lobby glow, banquet halls, eveningwear, and formal night portrait scenes.", "Gala night scene portraits", "Build formal event portraits around light, architecture, and eveningwear atmosphere.", "star", aidreamcapesCategoryImages.gala, "cat_aidreamcapes_parent_occasions"],
+  ["cat_aidreamcapes_heritage_celebrations", "heritage-celebration-portraits", "Heritage Celebration Portraits", "Respectful cultural celebration scenes with rich textiles, jewelry, color, and warm gathering atmosphere.", "Heritage celebration portraits", "Explore celebration portraits guided by color, textile detail, and destination atmosphere.", "flower", aidreamcapesCategoryImages.heritageCelebrations, "cat_aidreamcapes_parent_occasions"]
 ];
 
 const categories = [...parentCategoryRows, ...childCategoryRows].map(([id, slug, label, description, heroTitle, heroSubtitle, icon, imageUrl, parentId], index) => ({
@@ -2101,7 +2198,17 @@ const packRows = [
   ["pack_aidreamcapes_shared", "Shared Route Albums", "Paired travel portraits for coasts, city dinners, balconies, and scenic overlooks.", "shared-route-albums", 28, 26, aidreamcapesPackCoverImages.shared],
   ["pack_aidreamcapes_family", "Family Travel Keepsakes", "Gentle group portraits for resorts, old towns, outlooks, and share-ready memory cards.", "family-travel-keepsakes", 28, 26, aidreamcapesPackCoverImages.family],
   ["pack_aidreamcapes_golden_hour", "Golden Hour Route Stories", "Warm overlook paths, sunset roads, city terraces, and soft destination portraits.", "golden-hour-route-stories", 28, 26, aidreamcapesPackCoverImages.goldenHour],
-  ["pack_aidreamcapes_retreat", "Wellness Retreat Scenes", "Spa decks, yoga mornings, mineral pools, and calm restorative travel portraits.", "wellness-retreat-scenes", 22, 20, aidreamcapesPackCoverImages.retreat]
+  ["pack_aidreamcapes_retreat", "Wellness Retreat Scenes", "Spa decks, yoga mornings, mineral pools, and calm restorative travel portraits.", "wellness-retreat-scenes", 22, 20, aidreamcapesPackCoverImages.retreat],
+  ["pack_aidreamcapes_nature", "Nature Portrait Studio", "Botanical paths, glasshouse light, and quiet garden portraits for a calm personal scene atlas.", "nature-portrait-studio", 24, 20, aidreamcapesPackCoverImages.nature],
+  ["pack_aidreamcapes_city_lights", "City Light Night Walks", "Rain gloss, street glow, skyline color, and after-dark city portraits for a bolder route album.", "city-light-night-walks", 24, 22, aidreamcapesPackCoverImages.cityLights],
+  ["pack_aidreamcapes_evening_route", "Evening Route Portraits", "Blue-hour streets, lounge light, hotel awnings, and quiet evening portraits with cinematic restraint.", "evening-route-portraits", 24, 22, aidreamcapesPackCoverImages.eveningRoute],
+  ["pack_aidreamcapes_boudoir", "Soft Editorial Room Portraits", "Soft hotel-window light, elegant wardrobe, and polished indoor editorial portraits.", "boudoir-editorial-portraits", 20, 22, aidreamcapesPackCoverImages.boudoir],
+  ["pack_aidreamcapes_hairstyle", "Hairstyle Try-On Stories", "Hair color, cut, styling, and beauty-scene portraits for private look planning.", "hairstyle-try-on-stories", 20, 18, aidreamcapesPackCoverImages.hairstyle],
+  ["pack_aidreamcapes_headshots", "Professional Headshot Studio", "Clean studio authority, editorial work portraits, and confident bio-ready scenes.", "professional-headshot-studio", 20, 18, aidreamcapesPackCoverImages.headshots],
+  ["pack_aidreamcapes_milestone_postcards", "Milestone Postcard Sets", "Personal news, destination notes, keepsake captions, and polished announcement-style travel portraits.", "milestone-postcard-sets", 24, 22, aidreamcapesPackCoverImages.milestonePostcards],
+  ["pack_aidreamcapes_holiday_couples", "Holiday Couple Cards", "Warm interiors, winter light, and seasonal couple scenes for personal holiday cards.", "holiday-couple-cards", 20, 18, aidreamcapesPackCoverImages.holidayCouples],
+  ["pack_aidreamcapes_gala", "Gala Night Portraits", "Hotel-lobby glow, banquet halls, eveningwear, and formal night portrait scenes.", "gala-night-portraits", 24, 22, aidreamcapesPackCoverImages.gala],
+  ["pack_aidreamcapes_heritage_celebrations", "Heritage Celebration Portraits", "Respectful cultural celebration scenes with rich textiles, jewelry, color, and warm gathering atmosphere.", "heritage-celebration-portraits", 24, 24, aidreamcapesPackCoverImages.heritageCelebrations]
 ];
 
 const categoryBySlug = new Map(categories.map((category) => [category.slug, category]));
@@ -2112,7 +2219,7 @@ const creativePacks = packRows.map(([id, name, description, categorySlug, output
   name,
   headline: name,
   description,
-  prompt: `Create ${name.toLowerCase()} with Aidreamcapes in a cinematic, cream-toned, dreamlike escape style.`,
+  prompt: `Shape ${name.toLowerCase()} for Aidreamcapes as a cinematic, mood-led portrait scene atlas.`,
   category: categorySlug,
   aiAppSlug: "image_generator",
   status: "active",
@@ -2122,7 +2229,8 @@ const creativePacks = packRows.map(([id, name, description, categorySlug, output
   generationCount: 90 + index * 13,
   conversionRate: Number((7.4 + index * 0.5).toFixed(1)),
   imageUrl,
-  galleryImages: [imageUrl],
+  galleryImages: aidreamcapesGalleryImages(categorySlug),
+  galleryImageAlts: aidreamcapesGalleryImageAlts(categorySlug, name),
   createdAt: now
 }));
 

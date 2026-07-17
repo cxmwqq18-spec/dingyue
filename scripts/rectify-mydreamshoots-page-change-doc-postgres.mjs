@@ -53,10 +53,14 @@ const replacements = new Map([
 ]);
 
 const useCaseCards = new Map([
-  ["Ava Mercer", ["LinkedIn refresh", "Create a private set of professional headshots for LinkedIn, resumes, founder bios, and company profiles.", "Work profiles", "Professional headshots"]],
-  ["Lucas Bennett", ["Match-day fan posts", "Turn your selfies into tournament-style fan posters and profile avatars for personal social posts.", "Fan posts", "Sports portraits"]],
-  ["Mia Collins", ["Creator profile update", "Generate fresh portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator pages", "Profile portraits"]],
-  ["Noah Reed", ["Private style preview", "Try hairstyle, outfit, or themed portrait directions before downloading your favorites.", "Style previews", "Beauty and try-on"]]
+  ["Ava Mercer", ["Daily creator content", "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.", "Creator workflow", "Photos and short videos"]],
+  ["LinkedIn refresh", ["Daily creator content", "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.", "Creator workflow", "Photos and short videos"]],
+  ["Lucas Bennett", ["Wedding website visuals", "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.", "Wedding stories", "Albums and video clips"]],
+  ["Match-day fan posts", ["Wedding website visuals", "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.", "Wedding stories", "Albums and video clips"]],
+  ["Mia Collins", ["Family memory album", "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.", "Keepsake scenes", "Private family gallery"]],
+  ["Creator profile update", ["Family memory album", "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.", "Keepsake scenes", "Private family gallery"]],
+  ["Noah Reed", ["Prompt-led video scene", "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.", "Video previews", "6-10 second clips"]],
+  ["Private style preview", ["Prompt-led video scene", "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.", "Video previews", "6-10 second clips"]]
 ]);
 
 function rewriteString(value) {
@@ -80,7 +84,11 @@ function rewriteJson(value) {
   }
 
   if (value.summaryRating) value.summaryRating = "";
-  if (value.summaryMeta === "Realistic customer stories for AI photo package buyers") value.summaryMeta = "Example use cases";
+  if (value.summaryMeta === "Realistic customer stories for AI photo package buyers" || value.summaryMeta === "Example use cases") {
+    value.subtitle = "Real stories for social content, wedding pages, family keepsakes, and short AI videos.";
+    value.summaryBody = "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.";
+    value.summaryMeta = "Narrative examples";
+  }
   if (value.title === "What Our Customers Say" || value.title === "Realistic customer stories") value.title = "Ways people use MyDreamShoots";
 
   for (const key of Object.keys(value)) {
@@ -104,12 +112,13 @@ function removeStateCaches() {
   }
 }
 
-function setPageSeo(page, title, description) {
+function setPageSeo(page, title, description, keywords) {
   const update = structuredClone(page);
   update.seo ??= {};
   update.seo.title = title;
   update.seo.description = description;
-  delete update.seo.keywords;
+  if (keywords) update.seo.keywords = keywords;
+  else delete update.seo.keywords;
   return update;
 }
 
@@ -136,9 +145,14 @@ async function main() {
       if (!seo) continue;
       seo.siteTitle = "MyDreamShoots";
       seo.titleTemplate = "%s | MyDreamShoots";
-      seo.siteDescription = "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.";
-      seo.siteKeywords = "";
+      seo.siteDescription = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
+      seo.siteKeywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
       for (const pageSeo of Object.values(seo.pages ?? {})) delete pageSeo.keywords;
+      if (seo.pages?.site_dreamshoot_home) {
+        seo.pages.site_dreamshoot_home.title = "Professional AI Photo Generator Online - MyDreamShoots";
+        seo.pages.site_dreamshoot_home.description = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
+        seo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+      }
     }
     if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
       await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
@@ -150,8 +164,8 @@ async function main() {
     let draftJson = rewriteJson(structuredClone(page.draftJson));
     let publishedJson = rewriteJson(structuredClone(page.publishedJson));
     if (page.slug === "/") {
-      draftJson = setPageSeo(draftJson, "AI Headshot & Portrait Generator | Private Photo Sets from Selfies | MyDreamShoots", "Create private AI headshots, creator portraits, fan posters, beauty previews, and themed photo albums from selfies with credit costs shown before generation.");
-      publishedJson = setPageSeo(publishedJson, "AI Headshot & Portrait Generator | Private Photo Sets from Selfies | MyDreamShoots", "Create private AI headshots, creator portraits, fan posters, beauty previews, and themed photo albums from selfies with credit costs shown before generation.");
+      draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
+      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
     }
     if (page.slug === "/pricing") {
       draftJson = setPageSeo(draftJson, "MyDreamShoots Pricing | Credits for Private AI Photo Packages", "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.");

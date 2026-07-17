@@ -1,15 +1,26 @@
-import { readFile, stat } from "fs/promises";
+import { open, readFile, stat } from "fs/promises";
 import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
-import { contentTypeForCustomerAssetPath, customerAssetFilePathFromSegments, hasRemoteCustomerAssetReadSource, readCustomerAssetFileRemote } from "@/lib/customer-asset-storage";
+import {
+  contentTypeForCustomerAssetPath,
+  customerAssetFilePathFromSegments,
+  hasRemoteCustomerAssetReadSource,
+  readCustomerAssetFileRemote,
+  writeCustomerAssetFile
+} from "@/lib/customer-asset-storage";
+import { customerSessionCookie, siteAdminSessionCookie } from "@/lib/session";
 import { verifyWorkerLocalAssetDownload } from "@/lib/worker";
 
 const missingAssetPlaceholder = Buffer.from(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Asset unavailable">
-  <rect width="320" height="320" rx="28" fill="#f4f7f6"/>
-  <path d="M78 219l52-63 39 47 25-31 48 47H78z" fill="#cbd8d4"/>
-  <circle cx="215" cy="112" r="23" fill="#dbe5e2"/>
-  <rect x="65" y="65" width="190" height="190" rx="22" fill="none" stroke="#b9cbc6" stroke-width="10"/>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Loading preview">
+  <rect width="320" height="320" rx="28" fill="#071018"/>
+  <rect x="24" y="24" width="272" height="272" rx="24" fill="#0d1722" stroke="#1f3344" stroke-width="2"/>
+  <circle cx="160" cy="128" r="36" fill="none" stroke="#173348" stroke-width="10"/>
+  <circle cx="160" cy="128" r="36" fill="none" stroke="#31d4ff" stroke-linecap="round" stroke-width="10" stroke-dasharray="82 226">
+    <animateTransform attributeName="transform" dur="0.9s" from="0 160 128" repeatCount="indefinite" to="360 160 128" type="rotate"/>
+  </circle>
+  <text x="160" y="194" fill="#e8f8ff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Loading preview</text>
+  <text x="160" y="222" fill="#8aa2b4" font-family="Arial, Helvetica, sans-serif" font-size="13" text-anchor="middle">Preparing your upload</text>
 </svg>`
 );
 
@@ -20,6 +31,62 @@ type ResolvedAsset = {
   bytes?: Buffer;
   placeholder?: boolean;
 };
+
+const remoteAssetInflight = new Map<string, Promise<ResolvedAsset>>();
+const assetAccessCache = new Map<string, { ok: boolean; expiresAt: number }>();
+const assetAccessCacheTtlMs = 30_000;
+
+function cachedAssetAccess(cacheKey: string): boolean | undefined {
+  const cached = assetAccessCache.get(cacheKey);
+  if (!cached) return undefined;
+  if (cached.expiresAt <= Date.now()) {
+    assetAccessCache.delete(cacheKey);
+    return undefined;
+  }
+  return cached.ok;
+}
+
+function setCachedAssetAccess(cacheKey: string, ok: boolean): void {
+  const now = Date.now();
+  assetAccessCache.set(cacheKey, { ok, expiresAt: now + assetAccessCacheTtlMs });
+  if (assetAccessCache.size <= 500) return;
+  for (const [key, entry] of assetAccessCache) {
+    if (entry.expiresAt <= now || assetAccessCache.size > 500) assetAccessCache.delete(key);
+  }
+}
+
+function cookieValue(request: Request, name: string): string {
+  const cookies = request.headers.get("cookie") ?? "";
+  const prefix = `${name}=`;
+  return cookies
+    .split(";")
+    .map((item) => item.trim())
+    .find((item) => item.startsWith(prefix))
+    ?.slice(prefix.length) ?? "";
+}
+
+async function hasCachedCustomerAssetAccess(request: Request, siteId: string, customerId: string, workerSignatureValid: boolean): Promise<boolean> {
+  if (workerSignatureValid) return true;
+  const sessionId = cookieValue(request, customerSessionCookie(siteId));
+  if (!sessionId) return false;
+  const cacheKey = `customer:${siteId}:${customerId}:${sessionId}`;
+  const cached = cachedAssetAccess(cacheKey);
+  if (cached !== undefined) return cached;
+  const ok = await hasCustomerSession(siteId, customerId);
+  setCachedAssetAccess(cacheKey, ok);
+  return ok;
+}
+
+async function hasCachedSiteAdminAssetAccess(request: Request, siteId: string): Promise<boolean> {
+  const sessionId = cookieValue(request, siteAdminSessionCookie(siteId));
+  if (!sessionId) return false;
+  const cacheKey = `site-admin:${siteId}:${sessionId}`;
+  const cached = cachedAssetAccess(cacheKey);
+  if (cached !== undefined) return cached;
+  const ok = await hasSiteAdminSession(siteId);
+  setCachedAssetAccess(cacheKey, ok);
+  return ok;
+}
 
 function parseByteRange(header: string | null, size: number): { start: number; end: number } | "unsatisfiable" | undefined {
   if (!header?.startsWith("bytes=") || size <= 0) return undefined;
@@ -46,10 +113,61 @@ function assetHeaders(asset: ResolvedAsset, contentLength: number, extra?: Heade
     "Content-Type": asset.contentType,
     "Content-Length": String(contentLength),
     "Accept-Ranges": "bytes",
-    "Cache-Control": asset.placeholder ? "private, max-age=300" : "private, max-age=60",
-    ...(asset.placeholder ? { "X-Asset-Placeholder": "missing" } : {}),
+    "Cache-Control": asset.placeholder ? "private, no-store" : "private, max-age=600, immutable",
+    ...(asset.placeholder ? { "X-Asset-Placeholder": "loading" } : {}),
     ...extra
   };
+}
+
+async function readAssetBytes(asset: ResolvedAsset, range?: { start: number; end: number }) {
+  if ("bytes" in asset && asset.bytes) {
+    const bytes = new Uint8Array(asset.bytes);
+    return range ? bytes.subarray(range.start, range.end + 1) : bytes;
+  }
+  if (!asset.filePath) throw new Error("asset_file_missing");
+  if (!range) return new Uint8Array(await readFile(asset.filePath));
+  const length = range.end - range.start + 1;
+  const handle = await open(asset.filePath, "r");
+  try {
+    const buffer = Buffer.allocUnsafe(length);
+    const { bytesRead } = await handle.read(buffer, 0, length, range.start);
+    return new Uint8Array(buffer.subarray(0, bytesRead));
+  } finally {
+    await handle.close();
+  }
+}
+
+async function readRemoteAssetIntoLocalCache(storageKey: string, filePath: string): Promise<ResolvedAsset> {
+  const existing = remoteAssetInflight.get(storageKey);
+  if (existing) return existing;
+  const promise = (async () => {
+    const remote = await readCustomerAssetFileRemote({ storageKey });
+    try {
+      writeCustomerAssetFile({ storageKey, bytes: remote.bytes });
+      const fileStat = await stat(filePath).catch(() => null);
+      if (fileStat?.isFile()) {
+        return {
+          filePath,
+          size: fileStat.size,
+          contentType: contentTypeForCustomerAssetPath(filePath)
+        };
+      }
+    } catch {
+      // Keep serving the verified remote bytes even if the local cache write fails.
+    }
+    return {
+      filePath: undefined,
+      size: remote.bytes.length,
+      contentType: remote.mimeType,
+      bytes: remote.bytes
+    };
+  })();
+  remoteAssetInflight.set(storageKey, promise);
+  try {
+    return await promise;
+  } finally {
+    remoteAssetInflight.delete(storageKey);
+  }
 }
 
 async function resolveAsset(request: Request, params: Promise<{ path: string[] }>) {
@@ -77,7 +195,7 @@ async function resolveAsset(request: Request, params: Promise<{ path: string[] }
       signature: url.searchParams.get("signature") ?? ""
     });
     const hasAccess = siteId && customerId
-      ? workerSignatureValid || (await hasCustomerSession(siteId, customerId)) || (await hasSiteAdminSession(siteId))
+      ? (await hasCachedCustomerAssetAccess(request, siteId, customerId, workerSignatureValid)) || (await hasCachedSiteAdminAssetAccess(request, siteId))
       : false;
     if (!hasAccess) {
       return { error: "customer_login_required", status: 401 as const };
@@ -88,13 +206,7 @@ async function resolveAsset(request: Request, params: Promise<{ path: string[] }
     if (siteIndex >= 0 && customerIndex >= 0) {
       if (hasRemoteCustomerAssetReadSource()) {
         try {
-          const remote = await readCustomerAssetFileRemote({ storageKey: safeSegments.join("/") });
-          return {
-            filePath: undefined,
-            size: remote.bytes.length,
-            contentType: remote.mimeType,
-            bytes: remote.bytes
-          };
+          return await readRemoteAssetIntoLocalCache(safeSegments.join("/"), filePath);
         } catch {
           // Fall through to the placeholder so broken remote assets do not crash the workspace.
         }
@@ -123,9 +235,6 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
     }
-    const bytes = "bytes" in asset && asset.bytes
-      ? new Uint8Array(asset.bytes)
-      : new Uint8Array(await readFile(asset.filePath));
     const range = parseByteRange(_request.headers.get("range"), asset.size);
     if (range === "unsatisfiable") {
       return new Response(null, {
@@ -137,7 +246,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       });
     }
     if (range) {
-      const chunk = bytes.subarray(range.start, range.end + 1);
+      const chunk = await readAssetBytes(asset, range);
       return new Response(chunk, {
         status: 206,
         headers: assetHeaders(asset, chunk.byteLength, {
@@ -145,6 +254,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
         })
       });
     }
+    const bytes = await readAssetBytes(asset);
     return new Response(bytes, {
       headers: assetHeaders(asset, asset.size)
     });

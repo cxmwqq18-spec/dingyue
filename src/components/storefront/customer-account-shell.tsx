@@ -7,7 +7,7 @@ import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-pr
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import type { CreativePack, PublicCustomer, Site, ThemeRuntimeData } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
 
 type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 const accountNavItems = [
@@ -27,12 +27,16 @@ export function CustomerAccountShell({
   site,
   customer,
   initialRuntime,
-  creativePacks = []
+  creativePackCategories = [],
+  creativePacks = [],
+  toolMenuItems = []
 }: {
   site: CustomerAccountSite;
   customer: PublicCustomer;
   initialRuntime?: ThemeRuntimeData;
+  creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
+  toolMenuItems?: ToolMenuItem[];
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/app`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
@@ -56,7 +60,7 @@ export function CustomerAccountShell({
     <div className="min-h-screen bg-[#f6f1e8] text-[#171514]">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader creativePacks={creativePacks} customer={customer} site={site} tone="light" />
+      <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={customer} site={site} tone="light" toolMenuItems={toolMenuItems} />
 
       <main className="mx-auto grid w-full max-w-[1920px] gap-5 px-4 py-6 sm:px-6 xl:px-8">
         <section className="rounded-[20px] border border-[#eadfce] bg-[#fffaf3] p-5 shadow-[0_14px_36px_-30px_rgba(20,22,26,0.45)] md:p-6">

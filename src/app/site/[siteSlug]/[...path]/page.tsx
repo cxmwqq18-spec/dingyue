@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
@@ -11,11 +12,13 @@ import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, m
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
-const dreamshootPartnerTemplateSlugs = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
-  return /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
+  return isSpanishStorefrontSite(site);
 }
 
 function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
@@ -31,7 +34,7 @@ function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryD
 }
 
 async function readCollectionRouteState(siteSlug: string, collectionCategory: string) {
-  if (preferLocalPathModeState()) return readPathModePublicRuntimeState(siteSlug, "/collections");
+  if (preferLocalPathModeState(siteSlug)) return readPathModePublicRuntimeState(siteSlug, "/collections");
   try {
     const detailState = await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory);
     const detailSite = detailState?.sites[0];
@@ -48,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
   const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
   if (slug === "/account") {
-    return { title: /(?:-xby|_xby)/i.test(siteSlug) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
+    return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
   }
   const state = collectionCategory
     ? await readCollectionRouteState(siteSlug, collectionCategory)
@@ -97,18 +100,23 @@ export default async function SiteCatchAllPage({
   const { siteSlug, path } = await params;
   const slug = `/${path.join("/")}`;
   const publicSlug = publicSiteSlug(siteSlug);
-  if (slug === "/about") redirect(`/site/${publicSlug}/about-us`);
-  if (slug === "/contact") redirect(`/site/${publicSlug}/contact-us`);
-  if (slug === "/help" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(`/site/${publicSlug}/faq`);
-  if (slug === "/how-it-works" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(`/site/${publicSlug}/workflow`);
-  if (slug === "/examples") redirect(`/site/${publicSlug}/collections`);
-  if (slug === "/packages") redirect(`/site/${publicSlug}/collections`);
-  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(`/site/${publicSlug}/privacy`);
-  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(`/site/${publicSlug}/terms`);
-  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(`/site/${publicSlug}/cookies`);
-  if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(`/site/${publicSlug}/refunds`);
-  if (slug === "/content-policy" || slug === "/policies/content") redirect(`/site/${publicSlug}/content`);
-  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(`/site/${publicSlug}/shipping`);
+  const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
+  const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (slug === "/about") redirect(routePath("/about-us"));
+  if (slug === "/contact") redirect(routePath("/contact-us"));
+  if (slug === "/help" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(routePath("/faq"));
+  if (slug === "/how-it-works" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(routePath("/workflow"));
+  if (slug === "/examples") redirect(routePath("/collections"));
+  if (slug === "/packages") redirect(routePath("/collections"));
+  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(routePath("/privacy"));
+  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(routePath("/terms"));
+  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(routePath("/cookies"));
+  if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(routePath("/refunds"));
+  if (slug === "/content-policy" || slug === "/policies/content") redirect(routePath("/content"));
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(routePath("/shipping"));
+  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect(routePath("/children-privacy"));
+  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect(routePath("/state-privacy"));
   if (slug === "/checkout") {
     const query = new URLSearchParams();
     for (const [key, value] of Object.entries(searchParams ? await searchParams : {})) {
@@ -117,19 +125,19 @@ export default async function SiteCatchAllPage({
         for (const item of value) query.append(key, item);
       }
     }
-    redirect(`/site/${publicSlug}/cart${query.size ? `?${query.toString()}` : ""}`);
+    redirect(`${routePath("/cart")}${query.size ? `?${query.toString()}` : ""}`);
   }
-  if (slug === "/tool") redirect(`/site/${publicSlug}/tools`);
+  if (slug === "/tool") redirect(routePath("/tools"));
   if (slug === "/dashboard") {
-    redirect(`/site/${publicSlug}/app/create`);
+    redirect(routePath("/app/create"));
   }
-  if (slug === "/account") redirect(`/site/${publicSlug}/app/create`);
+  if (slug === "/account") redirect(routePath("/app/create"));
   if (path[0] === "app") {
-    if (slug === "/app") redirect(`/site/${publicSlug}/app/create`);
+    if (slug === "/app") redirect(routePath("/app/create"));
     const query = searchParams ? await searchParams : {};
-    return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode: "path" });
+    return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
   }
-  if (path[0] === "job" && path[1]) redirect(`/site/${publicSlug}/app/jobs/${path[1]}`);
+  if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
   const query = {
     ...(searchParams ? await searchParams : {}),
@@ -143,13 +151,13 @@ export default async function SiteCatchAllPage({
   if (!state || !publicSite) notFound();
   if (collectionCategory) {
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(publicSite, "collection", collectionCategory);
-    if (canonicalCollectionPath !== `/collections/${collectionCategory}`) redirect(`/site/${publicSlug}${canonicalCollectionPath}`);
+    if (canonicalCollectionPath !== `/collections/${collectionCategory}`) redirect(routePath(canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
-    isDreamshootPartnerTemplateSite(publicSite);
+    (isSpanishXbyStorefrontSite(publicSite) || isDreamshootPartnerTemplateSite(publicSite));
   const canUseStorefrontPolicy = Boolean(storefrontPolicySeoForSite(publicSite, pageSlug));
   if (!collectionCategory && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate && !canUseStorefrontPolicy) notFound();
-  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, state, deferCustomerRuntime: pageSlug !== "/cart" });
+  return renderStorefrontPage({ site: publicSite, slug: pageSlug, query, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }

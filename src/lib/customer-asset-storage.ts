@@ -200,9 +200,12 @@ export async function writeCustomerAssetFileRemote(params: {
     }),
     cache: "no-store"
   });
-  const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; url?: string; size?: number };
+  const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; url?: string; size?: number; maxBytes?: number };
   if (!response.ok || result.ok === false) {
-    throw new CustomerAssetStorageError(result.error || `customer_asset_remote_write_failed_${response.status}`, response.status || 500);
+    const sizeHint = result.error === "asset_data_too_large" && typeof result.size === "number" && typeof result.maxBytes === "number"
+      ? `_${result.size}_${result.maxBytes}`
+      : "";
+    throw new CustomerAssetStorageError((result.error ? `${result.error}${sizeHint}` : "") || `customer_asset_remote_write_failed_${response.status}`, response.status || 500);
   }
   return { storageKey, size: Number(result.size ?? params.bytes.length), url: result.url };
 }

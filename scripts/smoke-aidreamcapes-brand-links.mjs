@@ -4,8 +4,18 @@ import path from "path";
 const workspaceRoot = process.cwd();
 const statePath = path.join(workspaceRoot, "data", "platform-state.json");
 const themeRendererPath = path.join(workspaceRoot, "src", "components", "theme-renderer.tsx");
+const dreamshootTemplatePath = path.join(workspaceRoot, "src", "lib", "theme", "packages", "dreamshoot-ai-studio", "templates.ts");
+const themeSeoPath = path.join(workspaceRoot, "src", "lib", "theme", "seo.ts");
+const aidreamcapesMigrationPath = path.join(workspaceRoot, "scripts", "migrate-aidreamcapes-demo.mjs");
+const aidreamcapesGalleryGeneratorPath = path.join(workspaceRoot, "scripts", "generate-aidreamcapes-theme-galleries.mjs");
+const aidreamcapesAssetRoot = path.join(workspaceRoot, "public", "assets", "sites", "site_aidreamcapes");
+const mydreamshootsAssetRoot = path.join(workspaceRoot, "public", "assets", "dreamshoot");
 const state = JSON.parse(await fs.readFile(statePath, "utf8"));
 const themeRendererSource = await fs.readFile(themeRendererPath, "utf8");
+const dreamshootTemplateSource = await fs.readFile(dreamshootTemplatePath, "utf8");
+const themeSeoSource = await fs.readFile(themeSeoPath, "utf8");
+const aidreamcapesMigrationSource = await fs.readFile(aidreamcapesMigrationPath, "utf8");
+const aidreamcapesGalleryGeneratorSource = await fs.readFile(aidreamcapesGalleryGeneratorPath, "utf8");
 
 const aidreamcapesSite = (state.sites ?? []).find((site) => site.id === "site_aidreamcapes" || site.slug === "aidreamcapes");
 const mydreamshootsSite = (state.sites ?? []).find((site) => site.id === "site_dreamshoot" || site.slug === "mydreamshoots");
@@ -15,6 +25,11 @@ const forbiddenPatterns = [
   /MyDreamShoots/i,
   /mydreamshoots/i,
   /support@mydreamshoots\.com/i,
+  /Fashion Editorial/i,
+  /Creator Portraits/i,
+  /pack_dreamshoot/i,
+  /sai_dreamshoot/i,
+  /n8n\.image\.dreamshoot/i,
   /World Cup/i,
   /cyberpunk/i,
   /background changer/i,
@@ -40,6 +55,14 @@ const forbiddenPatterns = [
   /romantic/i
 ];
 
+const forbiddenMydreamshootsPatterns = [
+  /Aidreamcapes/i,
+  /aidreamcapes/i,
+  /support@aidreamcapes\.com/i,
+  /aidreamcapes\.com/i,
+  /\/assets\/sites\/site_aidreamcapes/i
+];
+
 const forbiddenAidreamcapesImageNames = [
   "cinematic-travel",
   "coastal-escapes",
@@ -49,6 +72,8 @@ const forbiddenAidreamcapesImageNames = [
   "proof-couple-engagement",
   "social-keepsakes"
 ];
+
+const aidreamcapesLaunchKeywords = "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos";
 
 const allowedAidreamcapesRoutes = new Set([
   "/",
@@ -104,6 +129,10 @@ const allowedAidreamcapesRoutes = new Set([
   "/collections/itinerary-moodboards",
   "/collections/postcard-social-sets",
   "/help",
+  "/workflow",
+  "/creators-circle",
+  "/partner-registration",
+  "/faq",
   "/about-us",
   "/contact-us",
   "/blog",
@@ -120,12 +149,16 @@ const allowedAidreamcapesRoutes = new Set([
   "/refunds",
   "/content",
   "/cookies",
+  "/children-privacy",
+  "/state-privacy",
   "/policies/privacy",
   "/policies/shipping",
   "/policies/refunds",
   "/policies/terms",
   "/policies/content",
   "/policies/cookies",
+  "/policies/children-privacy",
+  "/policies/state-privacy",
   "/tools/destination-portrait-engine",
   "/tools/soft-glam",
   "/tools/product-reverie",
@@ -151,6 +184,10 @@ function stableStringify(value) {
   return JSON.stringify(value, null, 2);
 }
 
+function stripAllowedAidreamcapesLaunchSeo(value) {
+  return String(value ?? "").split(aidreamcapesLaunchKeywords).join("");
+}
+
 function collectText(value, out = []) {
   if (typeof value === "string") {
     const trimmed = value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
@@ -163,6 +200,23 @@ function collectText(value, out = []) {
   }
   if (value && typeof value === "object") {
     for (const entry of Object.values(value)) collectText(entry, out);
+  }
+  return out;
+}
+
+function collectAssetUrls(value, out = []) {
+  if (typeof value === "string") {
+    for (const part of value.split("|").map((item) => item.trim()).filter(Boolean)) {
+      if (part.startsWith("/assets/")) out.push(part);
+    }
+    return out;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) collectAssetUrls(item, out);
+    return out;
+  }
+  if (value && typeof value === "object") {
+    for (const entry of Object.values(value)) collectAssetUrls(entry, out);
   }
   return out;
 }
@@ -221,6 +275,45 @@ function extractHrefs(value, out = []) {
   return out;
 }
 
+async function listFiles(root, out = []) {
+  let entries = [];
+  try {
+    entries = await fs.readdir(root, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const entry of entries) {
+    const fullPath = path.join(root, entry.name);
+    if (entry.isDirectory()) {
+      await listFiles(fullPath, out);
+    } else {
+      out.push(path.relative(workspaceRoot, fullPath));
+    }
+  }
+  return out;
+}
+
+async function referencedAssetExists(url) {
+  const cleanUrl = String(url || "").split("?")[0];
+  if (!cleanUrl.startsWith("/assets/")) return true;
+  try {
+    const stat = await fs.stat(path.join(workspaceRoot, "public", cleanUrl.slice(1)));
+    return stat.isFile() && stat.size > 0;
+  } catch {
+    return false;
+  }
+}
+
+async function assertReferencedAssetsExist(scope, value, failures) {
+  const seen = new Set();
+  for (const url of collectAssetUrls(value)) {
+    const cleanUrl = String(url).split("?")[0];
+    if (seen.has(cleanUrl)) continue;
+    seen.add(cleanUrl);
+    if (!await referencedAssetExists(cleanUrl)) failures.push(`missing_asset:${scope}:${url}`);
+  }
+}
+
 function collectCollectionImageCards(value, out = []) {
   if (Array.isArray(value)) {
     for (const item of value) collectCollectionImageCards(item, out);
@@ -240,16 +333,40 @@ function collectCollectionImageCards(value, out = []) {
 }
 
 const failures = [];
-const aidreamcapesJson = stableStringify({
+const aidreamcapesBundle = {
   site: aidreamcapesSite,
   packs: (state.creativePacks ?? []).filter((pack) => pack.siteId === aidreamcapesSite.id),
   categories: (state.creativePackCategories ?? []).filter((category) => category.siteId === aidreamcapesSite.id),
   toolCategories: (state.toolCategories ?? []).filter((category) => category.siteId === aidreamcapesSite.id),
-  toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === aidreamcapesSite.id)
-});
+  toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === aidreamcapesSite.id),
+  jobs: (state.jobs ?? []).filter((job) => job.siteId === aidreamcapesSite.id),
+  assetUploads: (state.assetUploads ?? []).filter((asset) => asset.siteId === aidreamcapesSite.id),
+  mediaAssets: (state.mediaAssets ?? []).filter((asset) => asset.siteId === aidreamcapesSite.id)
+};
+const aidreamcapesJson = stableStringify(aidreamcapesBundle);
+const aidreamcapesBrandScanJson = stripAllowedAidreamcapesLaunchSeo(aidreamcapesJson);
 
 for (const pattern of forbiddenPatterns) {
-  if (pattern.test(aidreamcapesJson)) failures.push(`forbidden_content:${pattern}`);
+  if (pattern.test(aidreamcapesBrandScanJson)) failures.push(`forbidden_content:${pattern}`);
+}
+await assertReferencedAssetsExist("aidreamcapes", aidreamcapesBundle, failures);
+
+if (mydreamshootsSite) {
+  const mydreamshootsBundle = {
+    site: mydreamshootsSite,
+    packs: (state.creativePacks ?? []).filter((pack) => pack.siteId === mydreamshootsSite.id),
+    categories: (state.creativePackCategories ?? []).filter((category) => category.siteId === mydreamshootsSite.id),
+    toolCategories: (state.toolCategories ?? []).filter((category) => category.siteId === mydreamshootsSite.id),
+    toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === mydreamshootsSite.id),
+    jobs: (state.jobs ?? []).filter((job) => job.siteId === mydreamshootsSite.id),
+    assetUploads: (state.assetUploads ?? []).filter((asset) => asset.siteId === mydreamshootsSite.id),
+    mediaAssets: (state.mediaAssets ?? []).filter((asset) => asset.siteId === mydreamshootsSite.id)
+  };
+  const mydreamshootsJson = stableStringify(mydreamshootsBundle);
+  for (const pattern of forbiddenMydreamshootsPatterns) {
+    if (pattern.test(mydreamshootsJson)) failures.push(`mydreamshoots_forbidden_content:${pattern}`);
+  }
+  await assertReferencedAssetsExist("mydreamshoots", mydreamshootsBundle, failures);
 }
 
 const aidreamcapesPacks = (state.creativePacks ?? []).filter(
@@ -290,13 +407,29 @@ for (const [imageUrl, items] of duplicateGroups(aidreamcapesToolMenuItems, (item
   failures.push(`duplicate_tool_menu_image:${imageUrl}:${items.map((item) => `${item.title}(${item.href})`).join(" | ")}`);
 }
 
+for (const assetPath of await listFiles(aidreamcapesAssetRoot)) {
+  for (const forbiddenName of forbiddenAidreamcapesImageNames) {
+    if (assetPath.toLowerCase().includes(forbiddenName)) failures.push(`forbidden_asset_filename:${assetPath}`);
+  }
+  for (const pattern of [/cyberpunk/i, /noir/i, /wedding/i, /engagement/i, /romantic/i, /honeymoon/i]) {
+    if (pattern.test(assetPath)) failures.push(`forbidden_asset_filename:${assetPath}`);
+  }
+}
+
+for (const assetPath of await listFiles(mydreamshootsAssetRoot)) {
+  for (const pattern of forbiddenMydreamshootsPatterns) {
+    if (pattern.test(assetPath)) failures.push(`mydreamshoots_forbidden_asset_filename:${assetPath}`);
+  }
+}
+
 const fallbackSeedMatch = themeRendererSource.match(/const aidreamcapesFallbackCatalogCardsSeed:[\s\S]*?\n\];/);
 if (!fallbackSeedMatch) {
   failures.push("missing_aidreamcapes_fallback_catalog_seed");
 } else {
   const fallbackSeedSource = fallbackSeedMatch[0];
+  const fallbackBrandScanSource = stripAllowedAidreamcapesLaunchSeo(fallbackSeedSource);
   for (const pattern of forbiddenPatterns) {
-    if (pattern.test(fallbackSeedSource)) failures.push(`forbidden_fallback_content:${pattern}`);
+    if (pattern.test(fallbackBrandScanSource)) failures.push(`forbidden_fallback_content:${pattern}`);
   }
 
   const fallbackCards = [...fallbackSeedSource.matchAll(/title:\s*"([^"]+)"[\s\S]*?imageUrl:\s*"([^"]+)"/g)]
@@ -308,6 +441,49 @@ if (!fallbackSeedMatch) {
   for (const [imageUrl, cards] of duplicateGroups(fallbackCards, (card) => normalizeImageUrl(card.imageUrl))) {
     failures.push(`duplicate_fallback_image:${imageUrl}:${cards.map((card) => card.title).join(" | ")}`);
   }
+}
+
+const aidreamcapesSyntheticTemplateMatch = dreamshootTemplateSource.match(/const aidreamcapesPublicAssets[\s\S]*?\nexport function dreamshootAiStudioTemplatesForSite/);
+if (!aidreamcapesSyntheticTemplateMatch) {
+  failures.push("missing_aidreamcapes_synthetic_template_copy");
+} else {
+  const aidreamcapesSyntheticTemplateSource = aidreamcapesSyntheticTemplateMatch[0];
+  const syntheticBrandScanSource = stripAllowedAidreamcapesLaunchSeo(aidreamcapesSyntheticTemplateSource);
+  for (const pattern of forbiddenPatterns) {
+    if (pattern.test(syntheticBrandScanSource)) failures.push(`forbidden_synthetic_template_content:${pattern}`);
+  }
+  if (!/partner-registration/.test(aidreamcapesSyntheticTemplateSource) || !/support@aidreamcapes\.com/.test(aidreamcapesSyntheticTemplateSource)) {
+    failures.push("missing_aidreamcapes_partner_template_routes_or_email");
+  }
+}
+
+const aidreamcapesSeoMatch = themeSeoSource.match(/if \(isAidreamcapesSeoSite\(site\)\) \{\s*return \{[\s\S]*?\n\s*\};\n\s*\}/);
+if (!aidreamcapesSeoMatch) {
+  failures.push("missing_aidreamcapes_launch_seo_override");
+} else {
+  const seoBrandScanSource = stripAllowedAidreamcapesLaunchSeo(aidreamcapesSeoMatch[0]);
+  for (const pattern of forbiddenPatterns) {
+    if (pattern.test(seoBrandScanSource)) failures.push(`forbidden_aidreamcapes_seo_source:${pattern}`);
+  }
+}
+if (/\/assets\/dreamshoot\/brand\/aidreamcapes/i.test(themeSeoSource)) {
+  failures.push("forbidden_cross_store_brand_asset_source:theme_seo");
+}
+
+const aidreamcapesMigrationSeedMatch = aidreamcapesMigrationSource.match(/const parentCategoryRows = \[[\s\S]*?\nconst categoryBySlug = new Map/);
+if (!aidreamcapesMigrationSeedMatch) {
+  failures.push("missing_aidreamcapes_migration_seed");
+} else {
+  const migrationBrandScanSource = stripAllowedAidreamcapesLaunchSeo(aidreamcapesMigrationSeedMatch[0]);
+  for (const pattern of forbiddenPatterns) {
+    if (pattern.test(migrationBrandScanSource)) failures.push(`forbidden_aidreamcapes_migration_seed:${pattern}`);
+  }
+  for (const requiredSlug of ["city-light-night-walks", "evening-route-portraits", "milestone-postcard-sets", "heritage-celebration-portraits"]) {
+    if (!aidreamcapesMigrationSeedMatch[0].includes(requiredSlug)) failures.push(`missing_aidreamcapes_migration_seed_slug:${requiredSlug}`);
+  }
+}
+for (const pattern of forbiddenPatterns) {
+  if (pattern.test(stripAllowedAidreamcapesLaunchSeo(aidreamcapesGalleryGeneratorSource))) failures.push(`forbidden_aidreamcapes_gallery_generator:${pattern}`);
 }
 
 const hrefs = [...new Set(extractHrefs(aidreamcapesSite).map((href) => href.split("#")[0].split("?")[0]).filter((href) => href.startsWith("/")))];

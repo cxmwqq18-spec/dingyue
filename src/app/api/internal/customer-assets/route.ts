@@ -12,7 +12,8 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const maxTransferBytes = 25 * 1024 * 1024;
+const defaultMaxTransferBytes = 25 * 1024 * 1024;
+const defaultMaxVideoTransferBytes = 250 * 1024 * 1024;
 
 function transferSecret(): string {
   return process.env.CUSTOMER_ASSET_TRANSFER_SECRET?.trim() || process.env.AI_WORKER_SECRET?.trim() || "";
@@ -43,6 +44,26 @@ function safeMimeType(value: unknown): string {
   return value.trim().slice(0, 120);
 }
 
+function configuredTransferLimit(envName: string, fallback: number): number {
+  const configured = Number(process.env[envName] ?? "");
+  return Number.isFinite(configured) && configured > 0 ? Math.trunc(configured) : fallback;
+}
+
+function isVideoAsset(params: { mimeType?: unknown; storageKey?: string }): boolean {
+  const mimeType = safeMimeType(params.mimeType).toLowerCase();
+  const storageKey = params.storageKey?.toLowerCase() ?? "";
+  return mimeType.startsWith("video/") || /\.(m4v|mov|mp4|webm)$/.test(storageKey);
+}
+
+function maxTransferBytesFor(params: { mimeType?: unknown; storageKey?: string }): number {
+  const defaultLimit = configuredTransferLimit("CUSTOMER_ASSET_TRANSFER_MAX_BYTES", defaultMaxTransferBytes);
+  if (!isVideoAsset(params)) return defaultLimit;
+  return Math.max(
+    defaultLimit,
+    configuredTransferLimit("CUSTOMER_ASSET_VIDEO_TRANSFER_MAX_BYTES", defaultMaxVideoTransferBytes)
+  );
+}
+
 export async function POST(request: Request) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ ok: false, error: "customer_asset_transfer_unauthorized" }, { status: 401 });
@@ -62,8 +83,12 @@ export async function POST(request: Request) {
     if (!bytes.length) {
       return NextResponse.json({ ok: false, error: "asset_data_required" }, { status: 400 });
     }
+    const maxTransferBytes = maxTransferBytesFor({ mimeType: body.mimeType, storageKey });
     if (bytes.length > maxTransferBytes) {
-      return NextResponse.json({ ok: false, error: "asset_data_too_large" }, { status: 413 });
+      return NextResponse.json(
+        { ok: false, error: "asset_data_too_large", size: bytes.length, maxBytes: maxTransferBytes },
+        { status: 413 }
+      );
     }
     writeCustomerAssetFile({ storageKey, bytes });
     return NextResponse.json({

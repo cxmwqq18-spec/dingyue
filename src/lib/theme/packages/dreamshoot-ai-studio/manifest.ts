@@ -1,5 +1,7 @@
 import type { ThemePackageManifest, ThemePackageTemplateKey } from "../types";
-import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplateLabels, dreamshootAiStudioTemplates, type MydreamShootsAiStudioTemplateKey } from "./templates";
+import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplateLabels, dreamshootAiStudioTemplatesForSite, type MydreamShootsAiStudioTemplateKey } from "./templates";
+
+const dreamshootAiStudioManifestTemplates = dreamshootAiStudioTemplatesForSite();
 
 export const dreamshootAiStudioPackage: ThemePackageManifest = {
   key: "dreamshoot-ai-studio",
@@ -26,7 +28,7 @@ export const dreamshootAiStudioPackage: ThemePackageManifest = {
     "testimonial_wall",
     "faq"
   ],
-  templates: (Object.entries(dreamshootAiStudioTemplates).filter(([key]) => !["tools", "creators-circle", "partner-registration", "about-us", "contact-us"].includes(key)) as Array<[ThemePackageTemplateKey, typeof dreamshootAiStudioTemplates[ThemePackageTemplateKey]]>).map(
+  templates: (Object.entries(dreamshootAiStudioManifestTemplates).filter(([key]) => !["tools", "creators-circle", "partner-registration", "about-us", "contact-us"].includes(key)) as Array<[ThemePackageTemplateKey, typeof dreamshootAiStudioManifestTemplates[ThemePackageTemplateKey]]>).map(
     ([key, template]) => ({
       key,
       label: dreamshootAiStudioTemplateLabels[key],

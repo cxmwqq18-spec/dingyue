@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const requestedLimit = Number(process.env.VIDEO_PROVIDER_MAX_IMAGES_PER_REQUEST ?? "1");
-const targetLimit = Math.max(1, Math.min(Math.trunc(Number.isFinite(requestedLimit) ? requestedLimit : 1), 1));
+const targetLimit = Math.max(1, Math.min(Math.trunc(Number.isFinite(requestedLimit) ? requestedLimit : 1), 30));
 
 function isVideoModel(modelType) {
   return typeof modelType === "string" && modelType.trim().toLowerCase().includes("video");

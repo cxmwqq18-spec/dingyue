@@ -6,7 +6,7 @@ import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerE
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
-import { normalizeVideoDurationSeconds, normalizeVideoFrameLimit, videoDurationCreditCost } from "@/lib/video-frame-config";
+import { normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, videoDurationCreditCost } from "@/lib/video-frame-config";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import type { WorkerOutputSlot } from "@/lib/worker";
 
@@ -21,6 +21,7 @@ const jobStoreTransactionOptions = { timeout: jobStoreTimeoutMs, maxWait: Math.m
 const DEFAULT_MAX_SOURCE_ASSETS = 15;
 const LEGACY_WORKFLOW_MAX_SOURCE_ASSETS = 4;
 const ACTIVE_SUBSCRIPTION_STATUSES = ["active", "trialing"];
+const MIN_ACTIVE_JOB_STALE_MS = 5 * 60_000;
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
@@ -118,6 +119,20 @@ function isVideoModeRequest(requestJson?: Record<string, unknown>): boolean {
     fields.mode === "video" ||
     fields.outputType === "video" ||
     typeof fields.videoThemeId === "string";
+}
+
+function activeJobStaleMs(jobRequest?: Record<string, unknown>): number {
+  const genericStaleMs = Math.max(MIN_ACTIVE_JOB_STALE_MS, Number(process.env.AI_JOB_ACTIVE_STALE_MS ?? "480000") || 480_000);
+  if (!isVideoModeRequest(jobRequest)) return genericStaleMs;
+  const videoWorkerTimeoutMs = Math.max(60_000, Number(process.env.LOCAL_AI_WORKER_VIDEO_TIMEOUT_MS ?? "900000") || 900_000);
+  const videoCreateTimeoutMs = Math.max(60_000, Number(process.env.LOCAL_AI_WORKER_VIDEO_CREATE_TIMEOUT_MS ?? "180000") || 180_000);
+  const configuredVideoStaleMs = Number(process.env.AI_VIDEO_JOB_ACTIVE_STALE_MS ?? "");
+  const defaultVideoStaleMs = videoWorkerTimeoutMs + videoCreateTimeoutMs + 5 * 60_000;
+  return Math.max(
+    genericStaleMs,
+    defaultVideoStaleMs,
+    Number.isFinite(configuredVideoStaleMs) && configuredVideoStaleMs > 0 ? Math.trunc(configuredVideoStaleMs) : 0
+  );
 }
 
 function isThemeManagedField(field: AiWorkflowField): boolean {
@@ -274,6 +289,25 @@ function videoReferenceContractInstruction(requestJson: Record<string, unknown> 
   ].filter(Boolean).join("\n");
 }
 
+function videoPromptText(requestJson: Record<string, unknown> | undefined): string {
+  const fields = fieldRecord(requestJson);
+  const fieldPrompt = typeof fields.promptNote === "string" && fields.promptNote.trim()
+    ? fields.promptNote.trim()
+    : typeof fields.prompt === "string" && fields.prompt.trim()
+      ? fields.prompt.trim()
+      : "";
+  if (fieldPrompt) return fieldPrompt;
+  if (typeof requestJson?.promptNote === "string" && requestJson.promptNote.trim()) return requestJson.promptNote.trim();
+  if (typeof requestJson?.prompt === "string" && requestJson.prompt.trim()) return requestJson.prompt.trim();
+  return "";
+}
+
+function videoPromptRequiresFrameImages(prompt: string): boolean {
+  const text = prompt.trim().toLowerCase();
+  if (!text) return false;
+  return /上传.{0,12}(图片|照片|图像|素材|参考图)|根据.{0,12}(图片|照片|图像|素材|参考图)|这(张|个|些).{0,8}(图片|照片|图像|素材|参考图)|图中|照片中|uploaded.{0,24}(image|photo|frame|picture)|selected.{0,24}(image|photo|frame|picture)|reference.{0,24}(image|photo|frame|picture)|source.{0,24}(image|photo|frame|picture)/i.test(text);
+}
+
 function isRenderablePromptField(key: string) {
   return ![
     "assetIds",
@@ -356,8 +390,8 @@ function resolveGenerationRequest(params: {
   );
   if (missingField) throw new StoreError("missing_required_prompt_input", 400);
   const rules = assetRules(workflow);
-  const minAssets = rules.min ?? 1;
-  const maxAssets = maxAssetsForWorkflow(workflow);
+  const minAssets = videoMode ? 0 : rules.min ?? 1;
+  const maxAssets = videoMode ? normalizeVideoFrameLimit(rules.max) : maxAssetsForWorkflow(workflow);
   if (params.requestedAssetIds.length < minAssets) throw new StoreError("not_enough_source_assets", 400);
   if (params.requestedAssetIds.length > maxAssets) throw new StoreError("too_many_source_assets", 400);
   const flowName = workflow.flowName ?? params.siteAiApp.aiApp.name;
@@ -440,7 +474,8 @@ async function reserveCreditsForJob(tx: Tx, job: { id: string; siteId: string; c
 }
 
 async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customerId: string }) {
-  const staleBefore = new Date(Date.now() - Math.max(5 * 60_000, Number(process.env.AI_JOB_ACTIVE_STALE_MS ?? "480000") || 480_000));
+  const nowMs = Date.now();
+  const staleBefore = new Date(nowMs - activeJobStaleMs());
   const staleJobs = await tx.generationJob.findMany({
     where: {
       siteId: params.siteId,
@@ -450,8 +485,29 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
     }
   });
   for (const job of staleJobs) {
+    const jobRequest = jsonObject<Record<string, unknown>>(job.requestJson) ?? {};
+    const staleMs = activeJobStaleMs(jobRequest);
+    if (job.updatedAt.getTime() > nowMs - staleMs) continue;
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const reserved = Math.max(0, Math.min(job.creditsReserved, customer.balance?.reserved ?? 0));
+    const previousResult = jsonObject<Record<string, unknown>>(job.resultJson) ?? {};
+    const previousSlots = Array.isArray(previousResult.outputSlots)
+      ? previousResult.outputSlots.filter((slot): slot is Record<string, unknown> => Boolean(slot) && typeof slot === "object" && !Array.isArray(slot))
+      : [];
+    const now = new Date().toISOString();
+    const failedSlots = (previousSlots.length ? previousSlots : [{ index: 1 }]).map((slot, index) => ({
+      ...slot,
+      index: Number.isFinite(Number(slot.index)) ? Number(slot.index) : index + 1,
+      status: "failed",
+      stage: "generation_job_expired",
+      error: typeof slot.error === "string" && slot.error.trim() ? slot.error : "Generation stopped before the worker returned a result.",
+      updatedAt: now
+    }));
+    const billing = jobRequest.billing && typeof jobRequest.billing === "object" && !Array.isArray(jobRequest.billing)
+      ? jobRequest.billing as Record<string, unknown>
+      : {};
+    const requestedOutputs = Math.max(1, Math.trunc(Number(billing.outputCount) || failedSlots.length || 1));
+    const unitCreditCost = Math.max(0, Math.trunc(Number(billing.unitCreditCost) || Math.ceil(job.creditsReserved / requestedOutputs)));
     if (reserved > 0) {
       await tx.creditBalance.update({
         where: { id: customer.balance!.id },
@@ -474,10 +530,22 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
       data: {
         status: "failed",
         resultJson: toPrismaJson({
-          ...jsonObject<Record<string, unknown>>(job.resultJson),
+          ...previousResult,
+          requestId: typeof previousResult.requestId === "string" ? previousResult.requestId : `stale:${job.id}`,
+          lastWorkerStatus: "failed",
+          lastWorkerStage: "generation_job_expired",
+          outputSlots: failedSlots,
           error: "generation_job_expired",
           outputs: [],
-          settledAt: new Date().toISOString()
+          billingSettlement: {
+            requestedOutputs,
+            deliveredOutputs: 0,
+            unitCreditCost,
+            creditsReserved: job.creditsReserved,
+            creditsConsumed: 0,
+            creditsReleased: reserved
+          },
+          settledAt: now
         })
       }
     });
@@ -564,7 +632,10 @@ async function createGenerationJobInTx(tx: Tx, params: {
     videoProviderMaxFrames = configuredVideoProviderFrameLimit(videoProviders);
     effectiveVideoMaxFrames = effectiveVideoFrameLimit(videoProviders, videoTheme.maxFrames);
     const maxFrames = effectiveVideoMaxFrames;
-    if (requestedAssetIds.length < 1) throw new StoreError("video_frames_required", 400);
+    if (requestedAssetIds.length < 1 && !videoPromptText(params.requestJson)) throw new StoreError("video_prompt_required", 400);
+    if (requestedAssetIds.length < 1 && videoPromptRequiresFrameImages(videoPromptText(params.requestJson))) {
+      throw new StoreError("video_frame_selection_required", 400);
+    }
     if (requestedAssetIds.length > maxFrames) throw new StoreError("too_many_video_frames_for_provider", 400);
   }
 
@@ -587,7 +658,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   if (creativePackId && !creativePack) throw new StoreError("creative_pack_not_found_for_site", 404);
   if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
   const requestedVideoDurationSeconds = videoTheme
-    ? normalizeVideoDurationSeconds(
+    ? normalizeVideoDurationSecondsForFrameCount(
         fields.durationSeconds ??
         fields.videoDurationSeconds ??
         fields.duration ??
@@ -596,6 +667,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
         params.requestJson?.videoDurationSeconds ??
         params.requestJson?.duration ??
         params.requestJson?.videoDuration,
+        requestedAssetIds.length,
         videoTheme.durationSeconds
       )
     : undefined;
@@ -765,6 +837,7 @@ export async function updateGenerationJobStatusRelational(params: {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const alreadyFinal = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
+    if (alreadyFinal) return { job: mapGenerationJob(job), alreadyFinal };
     const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
     const previousSlots = Array.isArray(previousResult.outputSlots) ? previousResult.outputSlots : [];
     const slotsByIndex = new Map<number, WorkerOutputSlot>();
@@ -814,10 +887,16 @@ export async function settleGenerationJobRelational(params: {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
-    const alreadyProcessed = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
-    if (alreadyProcessed) return { job: mapGenerationJob(job), alreadyProcessed, customer: mapCustomer(customer) };
-
+    const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
     const outputs = params.outputs ?? [];
+    const alreadyProcessed = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
+    const canRecoverExpiredSuccess = alreadyProcessed &&
+      job.status === "failed" &&
+      params.status === "succeeded" &&
+      outputs.length > 0 &&
+      previousResult.error === "generation_job_expired";
+    if (alreadyProcessed && !canRecoverExpiredSuccess) return { job: mapGenerationJob(job), alreadyProcessed, customer: mapCustomer(customer) };
+
     const requestJson = job.requestJson && typeof job.requestJson === "object" && !Array.isArray(job.requestJson)
       ? job.requestJson as Record<string, unknown>
       : {};
@@ -827,10 +906,15 @@ export async function settleGenerationJobRelational(params: {
     const requestedOutputs = Math.max(1, Math.trunc(Number(billing.outputCount) || outputs.length || 1));
     const unitCreditCost = Math.max(0, Math.trunc(Number(billing.unitCreditCost) || Math.ceil(job.creditsReserved / requestedOutputs)));
     const deliveredOutputs = params.status === "succeeded" ? outputs.length : 0;
-    const consumeAmount = Math.min(job.creditsReserved, deliveredOutputs * unitCreditCost);
-    const releaseAmount = Math.max(0, job.creditsReserved - consumeAmount);
+    const previousBilling = previousResult.billingSettlement && typeof previousResult.billingSettlement === "object" && !Array.isArray(previousResult.billingSettlement)
+      ? previousResult.billingSettlement as Record<string, unknown>
+      : {};
+    const consumeAmount = canRecoverExpiredSuccess ? 0 : Math.min(job.creditsReserved, deliveredOutputs * unitCreditCost);
+    const releaseAmount = canRecoverExpiredSuccess
+      ? Math.max(0, Math.trunc(Number(previousBilling.creditsReleased) || job.creditsReserved))
+      : Math.max(0, job.creditsReserved - consumeAmount);
     let ledger: Prisma.CreditLedgerGetPayload<object> | undefined;
-    if (job.creditsReserved > 0 && params.status === "succeeded" && consumeAmount > 0) {
+    if (!canRecoverExpiredSuccess && job.creditsReserved > 0 && params.status === "succeeded" && consumeAmount > 0) {
       const updated = await tx.creditBalance.updateMany({
         where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
         data: {
@@ -863,7 +947,7 @@ export async function settleGenerationJobRelational(params: {
           }
         });
       }
-    } else if (job.creditsReserved > 0) {
+    } else if (!canRecoverExpiredSuccess && job.creditsReserved > 0) {
       const updated = await tx.creditBalance.updateMany({
         where: { siteId: job.siteId, customerId: job.customerId, reserved: { gte: job.creditsReserved } },
         data: { balance: { increment: job.creditsReserved }, reserved: { decrement: job.creditsReserved } }
@@ -886,8 +970,10 @@ export async function settleGenerationJobRelational(params: {
       data: {
         status: params.status,
         resultJson: toPrismaJson({
-          ...((job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>),
+          ...previousResult,
           requestId: params.requestId,
+          lastWorkerStatus: params.status,
+          lastWorkerStage: typeof previousResult.lastWorkerStage === "string" ? previousResult.lastWorkerStage : params.status,
           outputs,
           billingSettlement: {
             requestedOutputs,

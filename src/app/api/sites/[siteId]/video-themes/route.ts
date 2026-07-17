@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
@@ -59,6 +60,18 @@ function searchWhere(query?: string): Prisma.VideoThemeWhereInput | undefined {
   };
 }
 
+function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefined {
+  const rawCategory = category?.trim();
+  if (!rawCategory) return undefined;
+  const normalizedCategory = photoPackageSlug(rawCategory);
+  return {
+    OR: [
+      { category: { is: { slug: normalizedCategory } } },
+      { category: { is: { label: { equals: rawCategory, mode: "insensitive" } } } }
+    ]
+  };
+}
+
 function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
   return {
     categoryId: typeof body.categoryId === "string" && body.categoryId.trim() ? body.categoryId.trim() : undefined,
@@ -111,8 +124,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const where: Prisma.VideoThemeWhereInput = {
     siteId,
     status: admin && status ? status : admin ? undefined : "active",
-    category: category ? { is: { slug: category } } : undefined,
-    AND: [searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
+    AND: [categoryWhere(category), searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
   };
 
   if (!withCounts) {

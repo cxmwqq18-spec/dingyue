@@ -13,7 +13,6 @@ import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agen
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { StoreError } from "@/lib/server-store";
 import {
-  customerAssetHasReadableFile,
   createAssetUploadRelational,
   deleteAssetUploadsRelational,
   getCustomerAssetsRelational,
@@ -102,10 +101,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
   const url = new URL(_request.url);
   const requestedLimit = Number(url.searchParams.get("limit") ?? "100");
   const result = await getCustomerAssetsRelational({ siteId, customerId, roles: assetRolesFromParam(url.searchParams.get("role")), take: requestedLimit });
-  const readableAssets = result.assets.filter((asset) => customerAssetHasReadableFile(asset));
   return NextResponse.json({
     ok: true,
-    assets: readableAssets.map(toThemeRuntimeAssetRelational)
+    assets: result.assets.map(toThemeRuntimeAssetRelational)
   });
 }
 

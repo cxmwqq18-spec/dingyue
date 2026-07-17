@@ -1,11 +1,13 @@
 export const DEFAULT_VIDEO_FRAME_LIMIT = 30;
 export const MAX_VIDEO_FRAME_LIMIT = 30;
+export const MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT = 7;
+export const MAX_VIDEO_DURATION_SECONDS = 10;
 export const VIDEO_DURATION_OPTIONS = [
   { seconds: 6, creditMultiplier: 1 },
-  { seconds: 10, creditMultiplier: 1.6 },
-  { seconds: 15, creditMultiplier: 2.2 }
+  { seconds: 10, creditMultiplier: 1.6 }
 ] as const;
 export const DEFAULT_VIDEO_DURATION_SECONDS = VIDEO_DURATION_OPTIONS[0].seconds;
+export const MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
 
 export type VideoDurationSeconds = typeof VIDEO_DURATION_OPTIONS[number]["seconds"];
 
@@ -28,7 +30,24 @@ export function normalizeVideoDurationSeconds(value: unknown, fallback: unknown 
   const parsed = typeof value === "number" || typeof value === "string" ? Number(value) : Number.NaN;
   if (!Number.isFinite(parsed)) return fallbackOption.seconds;
   const seconds = Math.trunc(parsed);
+  if (seconds > MAX_VIDEO_DURATION_SECONDS) return MAX_VIDEO_DURATION_SECONDS;
   return VIDEO_DURATION_OPTIONS.find((option) => option.seconds === seconds)?.seconds ?? fallbackOption.seconds;
+}
+
+export function videoDurationOptionsForFrameCount(frameCount: unknown): typeof VIDEO_DURATION_OPTIONS[number][] {
+  void frameCount;
+  return VIDEO_DURATION_OPTIONS.filter((option) => option.seconds <= MAX_VIDEO_DURATION_SECONDS);
+}
+
+export function normalizeVideoDurationSecondsForFrameCount(
+  value: unknown,
+  frameCount: unknown,
+  fallback: unknown = DEFAULT_VIDEO_DURATION_SECONDS
+): VideoDurationSeconds {
+  const normalized = normalizeVideoDurationSeconds(value, fallback);
+  const options = videoDurationOptionsForFrameCount(frameCount);
+  if (options.some((option) => option.seconds === normalized)) return normalized;
+  return options[options.length - 1]?.seconds ?? DEFAULT_VIDEO_DURATION_SECONDS;
 }
 
 export function videoDurationCreditCost(baseCreditCost: unknown, seconds: unknown): number {

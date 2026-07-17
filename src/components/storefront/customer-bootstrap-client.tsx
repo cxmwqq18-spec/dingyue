@@ -6,7 +6,7 @@ import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
-import type { CreativePack, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {
@@ -14,7 +14,9 @@ export type CustomerBootstrap = {
   site?: CustomerBootstrapSite;
   customer?: PublicCustomer;
   siteAiApps: SiteAiApp[];
+  creativePackCategories?: CreativePackCategory[];
   creativePacks: CreativePack[];
+  toolMenuItems?: ToolMenuItem[];
   accountRuntime?: ThemeRuntimeData;
   workspaceRuntime?: ThemeRuntimeData;
 };
@@ -71,7 +73,9 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         const bootstrap = {
           authenticated: false,
           siteAiApps: data.siteAiApps ?? [],
-          creativePacks: data.creativePacks ?? []
+          creativePackCategories: data.creativePackCategories ?? [],
+          creativePacks: data.creativePacks ?? [],
+          toolMenuItems: data.toolMenuItems ?? []
         };
         bootstrapCache.set(cacheKey, bootstrap);
         return bootstrap;
@@ -87,7 +91,9 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         site: data.site,
         customer: data.customer,
         siteAiApps: data.siteAiApps,
+        creativePackCategories: data.creativePackCategories ?? [],
         creativePacks: data.creativePacks,
+        toolMenuItems: data.toolMenuItems ?? [],
         accountRuntime: data.accountRuntime,
         workspaceRuntime: data.workspaceRuntime
       };
@@ -339,25 +345,29 @@ export function CustomerHeaderBootstrapControls({
 
 export function CustomerAccountClientPage({
   initialCustomer,
+  initialCreativePackCategories = [],
   initialRuntime,
   initialSite,
   initialCreativePacks = [],
+  initialToolMenuItems = [],
   siteSlug
 }: {
   initialCustomer?: PublicCustomer;
+  initialCreativePackCategories?: CreativePackCategory[];
   initialRuntime?: ThemeRuntimeData;
   initialSite?: CustomerBootstrapSite;
   initialCreativePacks?: CreativePack[];
+  initialToolMenuItems?: ToolMenuItem[];
   siteSlug: string;
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
   const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
-  if (initialCustomer && initialSite) return <CustomerAccountShell creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} site={initialSite} />;
+  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} site={initialSite} toolMenuItems={initialToolMenuItems} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
   if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
-  return <CustomerAccountShell creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} />;
+  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} toolMenuItems={state.data.toolMenuItems} />;
 }
 
 export function CustomerWorkspaceClientPage({
@@ -378,6 +388,7 @@ export function CustomerWorkspaceClientPage({
     return (
       <CustomerWorkspaceShell
         assets={initialBootstrap.workspaceRuntime?.assets ?? []}
+        creativePackCategories={initialBootstrap.creativePackCategories}
         creativePacks={initialBootstrap.creativePacks}
         customer={initialBootstrap.customer}
         initialCreativePackId={initialCreativePackId}
@@ -386,6 +397,7 @@ export function CustomerWorkspaceClientPage({
         initialToolId={initialToolId}
         site={initialBootstrap.site}
         siteAiApps={initialBootstrap.siteAiApps}
+        toolMenuItems={initialBootstrap.toolMenuItems}
       />
     );
   }
@@ -396,6 +408,7 @@ export function CustomerWorkspaceClientPage({
   return (
     <CustomerWorkspaceShell
       assets={state.data.workspaceRuntime?.assets ?? []}
+      creativePackCategories={state.data.creativePackCategories}
       creativePacks={state.data.creativePacks}
       customer={state.data.customer}
       initialCreativePackId={initialCreativePackId}
@@ -404,6 +417,7 @@ export function CustomerWorkspaceClientPage({
       initialToolId={initialToolId}
       site={state.data.site}
       siteAiApps={state.data.siteAiApps}
+      toolMenuItems={state.data.toolMenuItems}
     />
   );
 }

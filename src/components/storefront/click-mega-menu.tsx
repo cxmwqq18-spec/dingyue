@@ -1,8 +1,7 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
-import { flushSync } from "react-dom";
-import { useRouter } from "next/navigation";
+import { type CSSProperties, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronRight, X } from "lucide-react";
 
 type ClickMegaMenuProps = {
@@ -14,9 +13,15 @@ type ClickMegaMenuProps = {
   prefetchPaths?: string[];
 };
 
+const storefrontMegaPanelMaxHeight = 760;
+const storefrontMegaPanelViewportRatio = 0.72;
+
 export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, panelClassName, prefetchPaths = [] }: ClickMegaMenuProps) {
   const [open, setOpen] = useState(false);
+  const [panelMetrics, setPanelMetrics] = useState<{ maxHeight: number; top: number } | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const menuRef = useRef<HTMLDivElement>(null);
   const prefetchedRef = useRef(false);
   const prefetchTimerRefs = useRef<number[]>([]);
@@ -26,6 +31,27 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   const warmFetchControllersRef = useRef<Set<AbortController>>(new Set());
   const panelId = useId();
   const prefetchKey = prefetchPaths.filter(Boolean).join("|");
+  const routeKey = `${pathname}?${searchParams.toString()}`;
+  const panelStyle = panelMetrics
+    ? ({
+        "--storefront-mega-panel-max-height": `${panelMetrics.maxHeight}px`,
+        maxHeight: `${panelMetrics.maxHeight}px`,
+        top: `${panelMetrics.top}px`
+      } as CSSProperties)
+    : undefined;
+
+  const updatePanelMetrics = useCallback(() => {
+    const source = menuRef.current?.closest("header") ?? menuRef.current;
+    if (!source) return;
+    const rect = source.getBoundingClientRect();
+    const top = Math.max(8, Math.ceil(rect.bottom + 12));
+    const availableHeight = Math.max(180, Math.floor(window.innerHeight - top - 16));
+    const responsiveHeight = Math.max(260, Math.floor(window.innerHeight * storefrontMegaPanelViewportRatio));
+    setPanelMetrics({
+      maxHeight: Math.min(storefrontMegaPanelMaxHeight, responsiveHeight, availableHeight),
+      top
+    });
+  }, []);
 
   const cancelWarmFetches = useCallback(() => {
     warmFetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
@@ -98,6 +124,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
 
   useEffect(() => {
     if (!open) return;
+    updatePanelMetrics();
     function handlePointerDown(event: PointerEvent) {
       if (menuRef.current?.contains(event.target as Node)) return;
       setOpen(false);
@@ -107,11 +134,15 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
     }
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", updatePanelMetrics);
+    window.addEventListener("scroll", updatePanelMetrics, true);
     return () => {
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", updatePanelMetrics);
+      window.removeEventListener("scroll", updatePanelMetrics, true);
     };
-  }, [open]);
+  }, [open, updatePanelMetrics]);
 
   useEffect(() => {
     if (!open || process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
@@ -123,6 +154,11 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
     };
   }, [cancelWarmFetches, open, prefetchMenuPaths]);
 
+  useEffect(() => {
+    setOpen(false);
+    cancelWarmFetches();
+  }, [cancelWarmFetches, routeKey]);
+
   return (
     <div
       className="relative"
@@ -130,12 +166,14 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         const target = event.target instanceof Element ? event.target : null;
         const anchor = target?.closest<HTMLAnchorElement>("a[href]");
         if (!anchor) return;
-        flushSync(() => setOpen(false));
-        cancelWarmFetches();
         const href = anchor.getAttribute("href");
         if (href && !href.startsWith("#") && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) {
           window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
         }
+        window.setTimeout(() => {
+          setOpen(false);
+          cancelWarmFetches();
+        }, 0);
       }}
       onPointerOverCapture={(event) => {
         if (event.pointerType !== "touch") prefetchHoveredAnchor(event.target);
@@ -147,13 +185,20 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         aria-expanded={open}
         aria-haspopup="dialog"
         className={buttonClassName}
-        onFocus={prefetchMenuPaths}
+        onFocus={() => {
+          updatePanelMetrics();
+          prefetchMenuPaths();
+        }}
         onClick={() => {
           prefetchMenuPaths();
+          if (!open) updatePanelMetrics();
           setOpen((current) => !current);
         }}
         onPointerEnter={(event) => {
-          if (event.pointerType !== "touch") prefetchMenuPaths();
+          if (event.pointerType !== "touch") {
+            updatePanelMetrics();
+            prefetchMenuPaths();
+          }
         }}
         type="button"
         {...blockAttrs}
@@ -168,6 +213,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         id={panelId}
         inert={!open ? true : undefined}
         role="dialog"
+        style={panelStyle}
       >
         <button
           aria-label={`Close ${label} menu`}

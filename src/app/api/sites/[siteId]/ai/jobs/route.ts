@@ -69,11 +69,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const guard = await requireCustomerMutation(request, siteId, body.customerId, { rateLimit: RATE_LIMITS.generation, key: `${siteId}:${body.customerId}:jobs` });
   if (!guard.ok) return guard.response;
   const workerBaseUrls = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
-  if (shouldRequireProviderReachableVideoFrames() && isVideoJobRequest(body) && isLoopbackBaseUrl(workerBaseUrls.publicBaseUrl)) {
+  const assetIds = requestAssetIds(body);
+  if (shouldRequireProviderReachableVideoFrames() && isVideoJobRequest(body) && assetIds.length > 0 && isLoopbackBaseUrl(workerBaseUrls.publicBaseUrl)) {
     return NextResponse.json({ error: "video_public_asset_url_required" }, { status: 400 });
   }
   try {
-    const assetIds = requestAssetIds(body);
     const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
     const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
       siteId,

@@ -23,6 +23,8 @@ export function shortPolicyPath(pathname: string): string {
     requestedPath === "/policies/refunds" || requestedPath === "/policies/refund" || requestedPath === "/refund-policy" ? "/refunds" :
     requestedPath === "/policies/content" || requestedPath === "/content-policy" ? "/content" :
     requestedPath === "/policies/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/shipping" :
+    requestedPath === "/policies/children-privacy" || requestedPath === "/children-privacy-policy" || requestedPath === "/childrens-privacy" ? "/children-privacy" :
+    requestedPath === "/policies/state-privacy" || requestedPath === "/state-privacy-rights" || requestedPath === "/california-privacy" || requestedPath === "/ccpa" ? "/state-privacy" :
     requestedPath;
 }
 
@@ -34,6 +36,8 @@ export function policyPageSlug(pathname: string): string {
     requestedPath === "/refunds" || requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
     requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :
     requestedPath === "/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/policies/shipping" :
+    requestedPath === "/children-privacy" || requestedPath === "/children-privacy-policy" || requestedPath === "/childrens-privacy" ? "/policies/children-privacy" :
+    requestedPath === "/state-privacy" || requestedPath === "/state-privacy-rights" || requestedPath === "/california-privacy" || requestedPath === "/ccpa" ? "/policies/state-privacy" :
     requestedPath;
 }
 

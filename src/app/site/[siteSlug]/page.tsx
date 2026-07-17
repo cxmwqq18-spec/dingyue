@@ -5,6 +5,8 @@ import { renderStorefrontPage } from "@/lib/storefront-render";
 import { readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
+import { headers } from "next/headers";
+import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -24,9 +26,11 @@ export default async function SiteFrontPage({
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
   const query = searchParams ? await searchParams : {};
+  const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const state = await readPathModePublicRuntimeState(publicSlug, "/");
   const site = state?.sites[0];
   if (!state) notFound();
   if (!site) notFound();
-  return renderStorefrontPage({ site, slug: "/", query, state, deferCustomerRuntime: true });
+  return renderStorefrontPage({ site, slug: "/", query, routeMode, state, deferCustomerRuntime: true });
 }

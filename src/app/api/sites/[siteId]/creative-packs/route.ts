@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { clearPublicCreativePacksCache, publicCreativePacksCache } from "@/lib/creative-pack-api-cache";
+import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { toCreativePack } from "@/lib/stores/prisma-mappers";
@@ -58,12 +59,17 @@ function numberParam(value: string | null, fallback: number, min: number, max: n
 }
 
 function categoryWhere(category?: string): Prisma.CreativePackWhereInput | undefined {
-  if (!category) return undefined;
+  const rawCategory = category?.trim();
+  if (!rawCategory) return undefined;
+  const normalizedCategory = photoPackageSlug(rawCategory);
   return {
     OR: [
-      { category },
-      { categoryRecord: { is: { slug: category } } },
-      { categoryRecord: { is: { parent: { is: { slug: category } } } } }
+      { category: { equals: rawCategory, mode: "insensitive" } },
+      { category: normalizedCategory },
+      { categoryRecord: { is: { slug: normalizedCategory } } },
+      { categoryRecord: { is: { label: { equals: rawCategory, mode: "insensitive" } } } },
+      { categoryRecord: { is: { parent: { is: { slug: normalizedCategory } } } } },
+      { categoryRecord: { is: { parent: { is: { label: { equals: rawCategory, mode: "insensitive" } } } } } }
     ]
   };
 }

@@ -1,4 +1,5 @@
 import type { PlatformState, Site } from "@/lib/types";
+import { SPANISH_STOREFRONT_SLUG_ALIASES } from "@/lib/spanish-storefronts";
 
 type SiteRoutingIdentity = Pick<Site, "slug" | "primaryDomain">;
 
@@ -11,7 +12,8 @@ const SITE_ADMIN_DOMAINS: Record<string, string> = {
   "aidreamcapes.xyz": "aidreamcapes"
 };
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
-  dreamshoot: "mydreamshoots"
+  dreamshoot: "mydreamshoots",
+  ...SPANISH_STOREFRONT_SLUG_ALIASES
 };
 
 export function cleanHost(host: string | null | undefined): string {

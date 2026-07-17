@@ -18,6 +18,7 @@ import type {
   AiWorkflowConfig,
   AuditLogEntry,
   CreativePack,
+  CreativePackCategory,
   GenerationJob,
   MediaAsset,
   PlatformState,
@@ -30,6 +31,7 @@ import type {
   ThemePageJson,
   ThemePage,
   ThemePublication,
+  ToolMenuItem,
   VideoTheme,
   VideoThemeCategory
 } from "@/lib/types";
@@ -63,6 +65,7 @@ import {
   toSiteAdmin,
   toSiteAdminSessionRelational,
   toCustomerSessionRelational,
+  toCreativePackCategory,
   toSiteAiApp,
   toSiteDomain,
   toToolCategory,
@@ -101,7 +104,7 @@ async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?:
           where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
           include: { parent: true },
           orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }],
-          ...(options.take ? { take: options.take } : {})
+          ...(typeof options.take === "number" ? { take: options.take } : {})
         });
       } catch (error) {
         if (isMissingToolMenuTableError(error)) return [];
@@ -123,7 +126,7 @@ async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: 
           where: { siteId, ...(options.activeOnly ? { status: "active" } : {}) },
           include: { category: { include: { parent: true } } },
           orderBy: options.activeOnly ? [{ sortOrder: "asc" }, { title: "asc" }] : [{ status: "asc" }, { sortOrder: "asc" }, { title: "asc" }],
-          ...(options.take ? { take: options.take } : {})
+          ...(typeof options.take === "number" ? { take: options.take } : {})
         });
       } catch (error) {
         if (isMissingToolMenuTableError(error)) return [];
@@ -133,6 +136,42 @@ async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: 
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
 }
+
+function isSynchronizedDreamshootNavigationSite(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> } | { slug: string; name: string; branding: unknown; domains?: Array<{ domain: string; isPrimary: boolean }> }): boolean {
+  const branding = typeof site.branding === "object" && site.branding ? site.branding as { logoText?: unknown } : {};
+  const primaryDomain = "primaryDomain" in site
+    ? site.primaryDomain
+    : site.domains?.find((domain) => domain.isPrimary)?.domain ?? site.domains?.[0]?.domain ?? "";
+  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${primaryDomain ?? ""} ${String(branding.logoText ?? "")}`);
+}
+
+type StorefrontPublicNavigationData = {
+  creativePackCategories: NonNullable<PlatformState["creativePackCategories"]>;
+  creativePacks: NonNullable<PlatformState["creativePacks"]>;
+  toolCategories: NonNullable<PlatformState["toolCategories"]>;
+  toolMenuItems: NonNullable<PlatformState["toolMenuItems"]>;
+};
+
+export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: string): Promise<StorefrontPublicNavigationData> => {
+  return siteReadCache.get(
+    `public-navigation:${siteId}`,
+    async () => {
+      const [creativePacks, creativePackCategories, toolCategories, toolMenuItems] = await Promise.all([
+        getStorefrontPublicCreativePacksForSite(siteId),
+        getStorefrontPublicCreativePackCategoriesForSite(siteId),
+        loadToolCategoriesForSite(siteId, { activeOnly: true }),
+        loadToolMenuItemsForSite(siteId, { activeOnly: true })
+      ]);
+      return {
+        creativePackCategories,
+        creativePacks,
+        toolCategories: toolCategories.map(toToolCategory),
+        toolMenuItems: toolMenuItems.map(toToolMenuItem)
+      };
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
+});
 const collectionDetailSiteSelect = {
   id: true,
   name: true,
@@ -427,10 +466,12 @@ const publicRuntimeCreativePackSelect = {
   generationCount: true,
   conversionRate: true,
   imageUrl: true,
+  galleryImages: true,
   createdAt: true,
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
 type PublicRuntimeCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicRuntimeCreativePackSelect }>;
+const publicRuntimeCreativePackCategorySelect = collectionDetailCreativePackSelect.categoryRecord.select satisfies Prisma.CreativePackCategorySelect;
 const publicRuntimeSiteAiAppSelect = {
   id: true,
   siteId: true,
@@ -607,6 +648,7 @@ function emptyPlatformState(overrides: Partial<PlatformState> = {}): PlatformSta
     toolCategories: [],
     toolMenuItems: [],
     aiGatewayGroups: [],
+    creativePackCategories: [],
     creativePacks: [],
     videoThemeCategories: [],
     videoThemes: [],
@@ -749,7 +791,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
     siteAiApps: isHome || isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
     mediaAssets: isHome || isWorkspace,
-    toolMenus: isHome || isTools || isWorkspace,
+    toolMenus: true,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
 }
@@ -758,7 +800,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
   return {
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
-    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 48 : 24,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? undefined : 24,
     mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
   };
 }
@@ -819,7 +861,9 @@ function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): C
   return {
     ...pack,
     prompt: undefined,
-    galleryImages: [],
+    galleryImages: Array.isArray(pack.galleryImages)
+      ? pack.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0).slice(0, 12)
+      : [],
     categoryRecord
   };
 }
@@ -843,14 +887,46 @@ export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: strin
   );
 });
 
-export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: string, take = 48) => {
-  const rows = await prisma.creativePack.findMany({
+export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: string, take?: number) => {
+  const takeKey = typeof take === "number" ? String(take) : "all";
+  return siteReadCache.get(
+    `public-creative-packs:${siteId}:${takeKey}`,
+    async () => {
+      const rows = await prisma.creativePack.findMany({
+        where: { siteId, status: "active" },
+        select: publicRuntimeCreativePackSelect,
+        orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+        ...(typeof take === "number" ? { take } : {})
+      });
+      return rows.map(toPublicRuntimeCreativePack);
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
+});
+
+export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (siteId: string) => {
+  const rows = await prisma.creativePackCategory.findMany({
     where: { siteId, status: "active" },
-    select: publicRuntimeCreativePackSelect,
-    orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-    take
+    select: publicRuntimeCreativePackCategorySelect,
+    orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
   });
-  return rows.map(toPublicRuntimeCreativePack);
+  return rows.map(toCreativePackCategory);
+});
+
+export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string, take = 32) => {
+  return siteReadCache.get(
+    `public-video-themes:${siteId}:${take}`,
+    async () => {
+      const rows = await prisma.videoTheme.findMany({
+        where: { siteId, status: "active" },
+        include: { category: true },
+        orderBy: [{ createdAt: "asc" }],
+        take
+      });
+      return rows.map(toVideoTheme);
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
 });
 
 export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug: string, collectionSlug: string): Promise<PlatformState | undefined> => {
@@ -911,14 +987,28 @@ async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promi
   const startedAt = Date.now();
   const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
   if (!site) return undefined;
-  const creativePacks = await getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks);
-  storefrontPerfMark("collection-directory-shell:packs", startedAt, { creativePacks: creativePacks.length });
+  const navigationData = isSynchronizedDreamshootNavigationSite(site)
+    ? await getStorefrontPublicNavigationDataForSite(site.id)
+    : {
+        creativePackCategories: await getStorefrontPublicCreativePackCategoriesForSite(site.id),
+        creativePacks: await getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks),
+        toolCategories: [],
+        toolMenuItems: []
+      };
+  storefrontPerfMark("collection-directory-shell:navigation", startedAt, {
+    creativePacks: navigationData.creativePacks.length,
+    creativePackCategories: navigationData.creativePackCategories.length,
+    toolMenuItems: navigationData.toolMenuItems.length
+  });
   const mediaAssets: MediaAsset[] = [];
   const mappedSite = toPublicSiteShell(site, mediaAssets);
   return emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),
-    creativePacks,
+    creativePackCategories: navigationData.creativePackCategories,
+    creativePacks: navigationData.creativePacks,
+    toolCategories: navigationData.toolCategories,
+    toolMenuItems: navigationData.toolMenuItems,
     mediaAssets
   });
 }
@@ -931,29 +1021,43 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
   const mappedSite = toPublicSiteShell(site, []);
   const explicitSeoCollection = isExplicitSeoDirectoryContentForSite(mappedSite, "collection", collectionSlug);
 
-  const [selectedPacks, menuPacks] = await Promise.all([
+  const [selectedPacks, navigationData] = await Promise.all([
     explicitSeoCollection
       ? Promise.resolve([])
       : loadStorefrontPublicCollectionSelectedPacks(site.id, collectionSlug),
-    getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks)
+    isSynchronizedDreamshootNavigationSite(site)
+      ? getStorefrontPublicNavigationDataForSite(site.id)
+      : Promise.all([
+          getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks),
+          getStorefrontPublicCreativePackCategoriesForSite(site.id)
+        ]).then(([creativePacks, creativePackCategories]) => ({
+          creativePackCategories,
+          creativePacks,
+          toolCategories: [],
+          toolMenuItems: []
+        }))
   ]);
   const creativePacks = Array.from(
     new Map([
       ...selectedPacks.map((pack) => toCreativePack(pack)),
-      ...menuPacks
+      ...navigationData.creativePacks
     ].map((pack) => [pack.id, pack])).values()
   );
   storefrontPerfMark("collection-shell:packs", startedAt, {
     selectedPacks: selectedPacks.length,
-    menuPacks: menuPacks.length,
-    creativePacks: creativePacks.length
+    menuPacks: navigationData.creativePacks.length,
+    creativePacks: creativePacks.length,
+    toolMenuItems: navigationData.toolMenuItems.length
   });
 
   const mediaAssets: MediaAsset[] = [];
   const state = emptyPlatformState({
     sites: [{ ...mappedSite, mediaAssets }],
     siteDomains: site.domains.map(toSiteDomain),
+    creativePackCategories: navigationData.creativePackCategories,
     creativePacks,
+    toolCategories: navigationData.toolCategories,
+    toolMenuItems: navigationData.toolMenuItems,
     mediaAssets
   });
   storefrontPerfMark("collection-shell:done", startedAt);
@@ -1034,14 +1138,17 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
   storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
   const siteId = site.id;
   const limits = publicRuntimeLimits(needs.profile);
+  const useSharedNavigationData = isSynchronizedDreamshootNavigationSite(site);
 
   const [
     products,
     siteAiApps,
     creativePacks,
+    creativePackCategories,
     mediaAssets,
     toolCategories,
-    toolMenuItems
+    toolMenuItems,
+    navigationData
   ] = await Promise.all([
     needs.products
       ? prisma.product.findMany({
@@ -1059,7 +1166,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
           take: limits.siteAiApps
         })
       : Promise.resolve([]),
-    needs.creativePacks
+    needs.creativePacks && !useSharedNavigationData
       ? prisma.creativePack.findMany({
           where: needs.contextSlug
             ? {
@@ -1074,9 +1181,10 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
             : { siteId, status: "active" },
           select: publicRuntimeCreativePackSelect,
           orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-          take: limits.creativePacks
+          ...(typeof limits.creativePacks === "number" ? { take: limits.creativePacks } : {})
         })
       : Promise.resolve([]),
+    needs.creativePacks && !useSharedNavigationData ? getStorefrontPublicCreativePackCategoriesForSite(siteId) : Promise.resolve([]),
     needs.mediaAssets
       ? prisma.mediaAsset.findMany({
           where: { siteId, usageType: { in: ["theme", "package", "sample"] } },
@@ -1085,15 +1193,21 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
           take: limits.mediaAssets
         })
       : Promise.resolve([]),
-    needs.toolMenus ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
-    needs.toolMenus ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([])
+    needs.toolMenus && !useSharedNavigationData ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
+    needs.toolMenus && !useSharedNavigationData ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
+    useSharedNavigationData ? getStorefrontPublicNavigationDataForSite(siteId) : Promise.resolve(undefined)
   ]);
+  const runtimeCreativePackCategories = navigationData?.creativePackCategories ?? creativePackCategories;
+  const runtimeCreativePacks = navigationData?.creativePacks ?? creativePacks.map(toPublicRuntimeCreativePack);
+  const runtimeToolCategories = navigationData?.toolCategories ?? toolCategories.map(toToolCategory);
+  const runtimeToolMenuItems = navigationData?.toolMenuItems ?? toolMenuItems.map(toToolMenuItem);
   storefrontPerfMark("collections", startedAt, {
     products: products.length,
     siteAiApps: siteAiApps.length,
-    creativePacks: creativePacks.length,
+    creativePacks: runtimeCreativePacks.length,
+    creativePackCategories: runtimeCreativePackCategories.length,
     mediaAssets: mediaAssets.length,
-    toolMenuItems: toolMenuItems.length
+    toolMenuItems: runtimeToolMenuItems.length
   });
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
@@ -1104,9 +1218,10 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     siteDomains: site.domains.map(toSiteDomain),
     products: products.map(mapProduct),
     siteAiApps: siteAiApps.map(toPublicRuntimeSiteAiApp),
-    toolCategories: toolCategories.map(toToolCategory),
-    toolMenuItems: toolMenuItems.map(toToolMenuItem),
-    creativePacks: creativePacks.map(toPublicRuntimeCreativePack),
+    toolCategories: runtimeToolCategories,
+    toolMenuItems: runtimeToolMenuItems,
+    creativePackCategories: runtimeCreativePackCategories,
+    creativePacks: runtimeCreativePacks,
     mediaAssets: mappedMediaAssets
   });
   storefrontPerfMark("done", startedAt);
@@ -1432,6 +1547,7 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     siteAiApps,
     toolCategories,
     toolMenuItems,
+    creativePackCategories,
     creativePacks,
     mediaAssets,
     customers,
@@ -1449,6 +1565,7 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }] }),
     loadToolCategoriesForSite(siteId),
     loadToolMenuItemsForSite(siteId),
+    prisma.creativePackCategory.findMany({ where: { siteId }, include: { parent: true }, orderBy: [{ status: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
     prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
     prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }] }),
     prisma.customer.findMany({ where: { siteId }, include: { balance: true }, orderBy: [{ createdAt: "asc" }], take: fullSiteRuntimeLimits.customers }),
@@ -1475,6 +1592,7 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     siteAiApps: siteAiApps.map(toSiteAiApp),
     toolCategories: toolCategories.map(toToolCategory),
     toolMenuItems: toolMenuItems.map(toToolMenuItem),
+    creativePackCategories: creativePackCategories.map(toCreativePackCategory),
     creativePacks: creativePacks.map(toCreativePack),
     mediaAssets: mappedMediaAssets,
     customers: customers.map(mapCustomer),
@@ -1780,7 +1898,9 @@ export async function getSiteIdBySlugRelational(slug: string): Promise<string | 
 export type CustomerWorkspaceBootstrapRelational = {
   site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain">;
   siteAiApps: SiteAiApp[];
+  creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
+  toolMenuItems: ToolMenuItem[];
 };
 
 export async function getCustomerWorkspaceSiteShellRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational["site"] | undefined> {
@@ -1815,19 +1935,14 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
-    const [siteAiApps, creativePacks] = await Promise.all([
+    const [siteAiApps, navigationData] = await Promise.all([
       prisma.siteAiApp.findMany({
         where: { siteId: site.id, enabled: true },
         include: { aiApp: true },
         orderBy: [{ routeKey: "asc" }],
         take: workspaceCustomerRuntimeLimits.siteAiApps
       }),
-      prisma.creativePack.findMany({
-        where: { siteId: site.id, status: "active" },
-        include: { categoryRecord: { include: { parent: true } } },
-        orderBy: [{ createdAt: "asc" }],
-        take: workspaceCustomerRuntimeLimits.creativePacks
-      })
+      getStorefrontPublicNavigationDataForSite(site.id)
     ]);
 
     return {
@@ -1839,7 +1954,9 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         branding: site.branding
       },
       siteAiApps: siteAiApps.map(toSiteAiApp),
-      creativePacks: creativePacks.map(toCreativePack)
+      creativePackCategories: navigationData.creativePackCategories,
+      creativePacks: navigationData.creativePacks,
+      toolMenuItems: navigationData.toolMenuItems
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
@@ -3604,7 +3721,7 @@ function defaultVideoWorkflowConfig(): AiWorkflowConfig {
   return {
     version: 1,
     flowName: "Image to Video",
-    description: "Upload or select ordered image frames, choose a video theme, and generate one private video clip.",
+    description: "Upload optional ordered image frames or write a text-only prompt, choose a video theme, and generate one private video clip.",
     submitLabel: "Generate video",
     promptTemplate: "Create one private video for {{flowName}} using the selected video theme and {{assetCount}} ordered frame images.",
     steps: [
@@ -3612,7 +3729,7 @@ function defaultVideoWorkflowConfig(): AiWorkflowConfig {
         id: "video_frames",
         title: "Select video frames",
         kind: "asset_select",
-        assetRules: { min: 1, max: DEFAULT_VIDEO_FRAME_LIMIT, roles: ["input", "training_input"], accept: ["image/*"], required: true }
+        assetRules: { min: 0, max: DEFAULT_VIDEO_FRAME_LIMIT, roles: ["input", "training_input"], accept: ["image/*"], required: false }
       },
       {
         id: "video_theme",
@@ -3712,6 +3829,13 @@ async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): 
   const theme = defaultVideoThemes.find((item) => item.slug === "prompt-directed-motion");
   if (!theme) return;
   const category = defaultVideoThemeCategories.find((item) => item.slug === theme.categorySlug) ?? defaultVideoThemeCategories[0];
+  const existingTheme = await prisma.videoTheme.findUnique({
+    where: { siteId_slug: { siteId, slug: theme.slug } },
+    select: { imageUrl: true, galleryImages: true }
+  });
+  const existingGalleryImages = Array.isArray(existingTheme?.galleryImages)
+    ? existingTheme.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
   const categoryRow = await prisma.videoThemeCategory.upsert({
     where: { siteId_slug: { siteId, slug: category.slug } },
     create: {
@@ -3759,8 +3883,8 @@ async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): 
       creditCost: theme.creditCost,
       durationSeconds: theme.durationSeconds,
       maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
-      imageUrl: theme.imageUrl,
-      galleryImages: [theme.imageUrl]
+      imageUrl: existingTheme?.imageUrl || theme.imageUrl,
+      galleryImages: existingGalleryImages.length ? existingGalleryImages : [theme.imageUrl]
     }
   });
 }

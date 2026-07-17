@@ -247,6 +247,70 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     canonicalPath: "/shipping",
     index: true,
     follow: true
+  },
+  "/policies/children-privacy": {
+    title: "Children's Privacy Notice for MyDreamShoots AI Photo Uploads",
+    description:
+      "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "children privacy notice",
+      "COPPA AI photo policy",
+      "minor photo upload privacy",
+      "parent deletion request"
+    ].join(", "),
+    canonicalPath: "/children-privacy",
+    index: true,
+    follow: true
+  },
+  "/children-privacy": {
+    title: "Children's Privacy Notice for MyDreamShoots AI Photo Uploads",
+    description:
+      "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "children privacy notice",
+      "COPPA AI photo policy",
+      "minor photo upload privacy",
+      "parent deletion request"
+    ].join(", "),
+    canonicalPath: "/children-privacy",
+    index: true,
+    follow: true
+  },
+  "/policies/state-privacy": {
+    title: "State Privacy Rights for California, Delaware, and U.S. Customers",
+    description:
+      "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "California privacy rights",
+      "CCPA privacy request",
+      "state privacy law",
+      "Delaware company privacy contact",
+      "SECURE Data Act privacy monitoring",
+      "GUARD Financial Data Act privacy monitoring"
+    ].join(", "),
+    canonicalPath: "/state-privacy",
+    index: true,
+    follow: true
+  },
+  "/state-privacy": {
+    title: "State Privacy Rights for California, Delaware, and U.S. Customers",
+    description:
+      "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
+    keywords: [
+      POLICY_KEYWORDS,
+      "California privacy rights",
+      "CCPA privacy request",
+      "state privacy law",
+      "Delaware company privacy contact",
+      "SECURE Data Act privacy monitoring",
+      "GUARD Financial Data Act privacy monitoring"
+    ].join(", "),
+    canonicalPath: "/state-privacy",
+    index: true,
+    follow: true
   }
 };
 
@@ -316,6 +380,31 @@ const AIDREAMCAPES_POLICY_SEO_BY_CANONICAL: Record<string, Omit<PolicySeoCopy, "
     description:
       "Review how Aidreamcapes delivers credits, generated portraits, downloads, and private galleries digitally without physical shipping, tracking numbers, or customs fees.",
     keywords: AIDREAMCAPES_POLICY_KEYWORDS
+  },
+  "/children-privacy": {
+    title: "Aidreamcapes Minor Source Photo Privacy",
+    description:
+      "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
+    keywords: [
+      AIDREAMCAPES_POLICY_KEYWORDS,
+      "minor source photo privacy",
+      "guardian source photo request",
+      "COPPA travel portrait review",
+      "private gallery removal"
+    ].join(", ")
+  },
+  "/state-privacy": {
+    title: "Aidreamcapes U.S. Privacy Choices",
+    description:
+      "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
+    keywords: [
+      AIDREAMCAPES_POLICY_KEYWORDS,
+      "California data request",
+      "CCPA privacy option",
+      "Wyoming privacy contact",
+      "private gallery deletion",
+      "Aidreamcapes privacy choices"
+    ].join(", ")
   }
 };
 
@@ -338,7 +427,16 @@ const AIDREAMCAPES_POLICY_ALIASES: Record<string, string> = {
   "/shipping": "/shipping",
   "/shipping-policy": "/shipping",
   "/delivery-policy": "/shipping",
-  "/policies/shipping": "/shipping"
+  "/policies/shipping": "/shipping",
+  "/children-privacy": "/children-privacy",
+  "/children-privacy-policy": "/children-privacy",
+  "/childrens-privacy": "/children-privacy",
+  "/policies/children-privacy": "/children-privacy",
+  "/state-privacy": "/state-privacy",
+  "/state-privacy-rights": "/state-privacy",
+  "/california-privacy": "/state-privacy",
+  "/ccpa": "/state-privacy",
+  "/policies/state-privacy": "/state-privacy"
 };
 
 export function getAidreamcapesPolicySeo(path: string): PolicySeoCopy | undefined {

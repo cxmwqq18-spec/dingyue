@@ -1025,7 +1025,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           ["carousel", "Horizontal shelf"]
         ],
         "editorial"
-      )
+      ),
+      text("maxCount", "Maximum visible packages", "12")
     ],
     blocks: [
       {
@@ -1433,6 +1434,44 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           block("proof_creative", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, gala, noir, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections/creative" }),
           block("proof_engagement", "proof_card", { title: "Engagement looks", description: "Announcement-ready portraits, proposal scenes, and romantic album ideas.", category: "Couple", badge: "Couple", imageUrl: "/assets/dreamshoot/frames/sample-engagement.png", href: "/collections/couple" })
         ]
+      }
+    ]
+  },
+  dreamshoot_generation_showcase: {
+    type: "dreamshoot_generation_showcase",
+    label: "Generated Image and Video Showcase",
+    category: "Storefront",
+    description: "Lazy-loaded homepage proof module with generated image cases and real short video cases.",
+    maxBlocks: 0,
+    settings: [
+      text("anchor", "Anchor", "generated-showcase"),
+      text("eyebrow", "Eyebrow", "Customer-created examples"),
+      text("title", "Title", "Browse image and video themes customers have already created."),
+      textarea("subtitle", "Subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set."),
+      text("imageTitle", "Image heading", "Customer image themes"),
+      text("videoTitle", "Video heading", "Customer video themes"),
+      textarea("imageSlugs", "Image package slugs", "professional-headshots|world-cup-fan-photos|hairstyle|cyberpunk|gala-photos|nature|creator-portraits|wedding-portraits"),
+      textarea("videoSlugs", "Video theme slugs", "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"),
+      range("itemLimit", "Items per group", 8, 1, 8),
+      text("primaryCta", "Primary CTA", "Start with your photos"),
+      url("primaryHref", "Primary link", "/login")
+    ],
+    presets: [
+      {
+        label: "Generated image and video showcase",
+        settings: {
+          anchor: "generated-showcase",
+          eyebrow: "Customer-created examples",
+          title: "Browse image and video themes customers have already created.",
+          subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+          imageTitle: "Customer image themes",
+          videoTitle: "Customer video themes",
+          imageSlugs: "professional-headshots|world-cup-fan-photos|hairstyle|cyberpunk|gala-photos|nature|creator-portraits|wedding-portraits",
+          videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+          itemLimit: 8,
+          primaryCta: "Start with your photos",
+          primaryHref: "/login"
+        }
       }
     ]
   },
@@ -2023,9 +2062,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("title", "Title", "Common ways people use MyDreamShoots"),
       textarea("subtitle", "Subtitle"),
       text("summaryTitle", "Summary title", "Ways people use MyDreamShoots"),
-      textarea("summaryBody", "Summary body", "Choose the kind of private photo set you need before uploading source photos or spending credits."),
+      textarea("summaryBody", "Summary body", "Plan creator content, wedding albums, family keepsakes, and 6-10 second AI video scenes before spending credits."),
       text("summaryRating", "Summary rating", ""),
-      text("summaryMeta", "Summary meta", "Example use cases")
+      text("summaryMeta", "Summary meta", "Narrative examples")
     ],
     blocks: [testimonialBlock],
     presets: [
@@ -2034,45 +2073,45 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "reviews",
           title: "Common ways people use MyDreamShoots",
-          subtitle: "Choose the kind of private photo set you need before uploading source photos or spending credits.",
+          subtitle: "Real stories for social content, wedding pages, family keepsakes, and short AI videos.",
           summaryTitle: "Ways people use MyDreamShoots",
-          summaryBody: "Compare ordinary phone photos with finished private results before choosing a package.",
+          summaryBody: "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.",
           summaryRating: "",
-          summaryMeta: "Example use cases"
+          summaryMeta: "Narrative examples"
         },
         blocks: [
           block("proof_sophia_liam", "testimonial", {
-            quote: "Create a private set of professional headshots for LinkedIn, resumes, founder bios, and company profiles.",
-            name: "LinkedIn refresh",
-            role: "Work profiles",
-            location: "Professional headshots",
+            quote: "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.",
+            name: "Daily creator content",
+            role: "Creator workflow",
+            location: "Photos and short videos",
             rating: "",
             avatarUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
             resultImageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
           }),
           block("proof_aisha_omar", "testimonial", {
-            quote: "Try hairstyle, outfit, or themed portrait directions before downloading your favorites.",
-            name: "Private style preview",
-            role: "Style previews",
-            location: "Beauty and try-on",
+            quote: "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.",
+            name: "Wedding website visuals",
+            role: "Wedding stories",
+            location: "Albums and video clips",
             rating: "",
             avatarUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png",
             resultImageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"
           }),
           block("proof_emily_james", "testimonial", {
-            quote: "Turn your selfies into tournament-style fan posters and profile avatars for personal social posts.",
-            name: "Match-day fan posts",
-            role: "Fan posts",
-            location: "Sports portraits",
+            quote: "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.",
+            name: "Family memory album",
+            role: "Keepsake scenes",
+            location: "Private family gallery",
             rating: "",
             avatarUrl: "/assets/dreamshoot/editorial-headshot-gpt2.png",
             resultImageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"
           }),
           block("proof_priya_arjun", "testimonial", {
-            quote: "Use quick previews first, then choose a full photo package after reviewing the credit cost.",
-            name: "Package preview",
-            role: "Credit planning",
-            location: "Photo set workflow",
+            quote: "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.",
+            name: "Prompt-led video scene",
+            role: "Video previews",
+            location: "6-10 second clips",
             rating: "",
             avatarUrl: "/assets/dreamshoot/avatar-nora-gpt2-fast.png",
             resultImageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"

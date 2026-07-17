@@ -7,8 +7,9 @@ import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
+import { releaseStaleActiveGenerationJobsRelational } from "@/lib/stores/job-store";
 import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
-import { customerAssetHasReadableFile, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { cookies } from "next/headers";
 import type { CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
@@ -265,8 +266,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
   const customer = publicCustomerFromWorkspaceRow(customerRow);
   const jobs = rowsFromJson(row?.jobs);
   const assets = rowsFromJson(row?.assets)
-    .map((asset) => toAssetUploadRelational(asset))
-    .filter((asset) => customerAssetHasReadableFile(asset));
+    .map((asset) => toAssetUploadRelational(asset));
   const subscriptions = rowsFromJson(row?.subscriptions);
   const customerModels = rowsFromJson(row?.customerModels);
   return {
@@ -707,6 +707,17 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const section = normalizeSection(searchParams.get("section"));
   const refreshToken = searchParams.get("refresh") ?? "";
   const normalizedProfile = profile === "workspace" ? "workspace" : profile === "account" ? "account" : "full";
+  const currentForRefresh = normalizedProfile === "workspace" || refreshToken
+    ? await getCurrentCustomerForSite(siteId)
+    : undefined;
+  if (currentForRefresh) {
+    await releaseStaleActiveGenerationJobsRelational({
+      siteId,
+      customerId: currentForRefresh.customer.id
+    }).catch((error) => {
+      console.error("customer_runtime_stale_job_release_failed", error);
+    });
+  }
   const result = await customerRuntimeCache.get(
     `${siteId}:${sessionId}:${normalizedProfile}:${section}:${refreshToken}`,
     async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
@@ -742,7 +753,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   const [adminAccess, current] = await Promise.all([
     getCustomerAdminAccessForSite({ siteId, customer: result.customer }),
-    getCurrentCustomerForSite(siteId)
+    currentForRefresh ? Promise.resolve(currentForRefresh) : getCurrentCustomerForSite(siteId)
   ]);
   const response = NextResponse.json({
     ok: true,

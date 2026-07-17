@@ -1,4 +1,5 @@
 import "./load-runtime-env.mjs";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
@@ -8,6 +9,10 @@ const brand = "MyDreamShoots";
 const slug = "mydreamshoots";
 const siteId = "site_dreamshoot";
 const oldToolPaths = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image_generator"]);
+
+function hashPassword(password) {
+  return `sha256:${crypto.createHash("sha256").update(password).digest("hex")}`;
+}
 
 function replaceBrandText(value) {
   if (typeof value !== "string") return value;
@@ -110,7 +115,12 @@ async function main() {
 
   await prisma.siteAdmin.updateMany({
     where: { siteId, email: "owner@dreamshoot.localhost" },
-    data: { email: "owner@mydreamshoots.localhost", displayName: `${brand} Owner` }
+    data: { email: "owner@mydreamshoots.localhost", displayName: `${brand} Owner`, passwordHash: hashPassword("mydreamshoots123") }
+  });
+
+  await prisma.siteAdmin.updateMany({
+    where: { siteId, email: "owner@mydreamshoots.localhost" },
+    data: { displayName: `${brand} Owner`, passwordHash: hashPassword("mydreamshoots123") }
   });
 
   const legacyCustomer = await prisma.customer.findFirst({

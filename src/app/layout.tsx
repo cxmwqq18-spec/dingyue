@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning translate="yes">
-      <body>
+      <head>
+        <meta httpEquiv="Content-Language" content="en" />
+      </head>
+      <body translate="yes">
         <HtmlLangSync />
         {children}
       </body>

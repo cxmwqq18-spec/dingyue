@@ -4,6 +4,7 @@ import { readStorefrontPublicPageMetadataStateBySlugFromDatabase } from "@/lib/s
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -19,10 +20,11 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
 export default async function CustomerJobProgressPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSlug = redirectPublicSitePathToCanonicalHost({
     host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
     pathname: "/app/jobs/progress",
     siteSlug
   });
-  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/jobs/progress", routeMode: "path" });
+  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/jobs/progress", routeMode });
 }

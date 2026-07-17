@@ -1,8 +1,3 @@
-import { execFile } from "node:child_process";
-import fs from "node:fs/promises";
-import os from "node:os";
-import path from "node:path";
-import { promisify } from "node:util";
 import { NextResponse } from "next/server";
 import {
   customerAssetStorageKey,
@@ -18,22 +13,25 @@ import {
   type WorkerOutputSlot,
   type WorkerPayload
 } from "@/lib/worker";
-import { normalizeVideoDurationSeconds, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
+import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const execFileAsync = promisify(execFile);
-
-type SharpFactory = (input: Buffer) => {
-  rotate: () => {
-    resize: (options: { width: number; height: number; fit: "inside"; withoutEnlargement: boolean }) => {
-      jpeg: (options: { quality: number; mozjpeg: boolean }) => {
-        toBuffer: () => Promise<Buffer>;
-      };
-    };
-  };
+type SharpResizeOptions = {
+  width?: number;
+  height?: number;
+  fit?: "cover" | "inside";
+  position?: "attention" | "centre" | "center";
+  withoutEnlargement?: boolean;
 };
+type SharpInstance = {
+  rotate: () => SharpInstance;
+  resize: (options: SharpResizeOptions) => SharpInstance;
+  jpeg: (options: { quality: number; mozjpeg: boolean }) => SharpInstance;
+  toBuffer: () => Promise<Buffer>;
+};
+type SharpFactory = (input: Buffer) => SharpInstance;
 
 async function loadSharp(): Promise<SharpFactory | undefined> {
   try {
@@ -71,6 +69,7 @@ type VideoGenerateResponse = {
   code?: number;
   data?: { task_id?: string | number };
   id?: string | number;
+  request_id?: string | number;
   task_id?: string | number;
   msg?: string;
   error?: unknown;
@@ -86,6 +85,7 @@ type VideoStatusResponse = {
   progress?: string;
   result_url?: string;
   result_type?: string;
+  video?: { url?: string; duration?: number };
   error?: unknown;
   message?: string;
   cost?: number;
@@ -104,6 +104,16 @@ type GeneratedOutput = {
   requestedReferenceFrameCount?: number;
   providerReferenceLimit?: number;
 };
+type VideoSceneReference = {
+  storageKey: string;
+  mimeType: string;
+  providerLabel: string;
+  asset: ImageInputAsset;
+};
+type VideoSceneReferenceGetter = (params: {
+  payload: WorkerPayload;
+  requestedReferenceAssets: ImageInputAsset[];
+}) => Promise<VideoSceneReference>;
 
 function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
@@ -160,20 +170,69 @@ function isVideoGenerationModel(model: string) {
 }
 
 function normalizeVideoGenerationModel(model: string) {
-  const normalized = model.trim();
-  if (normalized === "grok-imagine-video") return "grok-imagine-video-1.5-preview";
-  return normalized;
+  return model.trim();
 }
 
-function videoProviderModelCandidates(model: string) {
+function isImageToVideoModel(model: string) {
+  const normalized = model.trim().toLowerCase();
+  return normalized.includes("grok-imagine-video") || normalized.includes("image-to-video") || normalized.includes("i2v");
+}
+
+function isSmartPickLidBaseUrl(baseUrl: string) {
+  try {
+    return new URL(baseUrl).hostname.toLowerCase().includes("smartpicklid");
+  } catch {
+    return false;
+  }
+}
+
+function isMagic666BaseUrl(baseUrl: string) {
+  try {
+    return new URL(baseUrl).hostname.toLowerCase().includes("magic666");
+  } catch {
+    return false;
+  }
+}
+
+function usesProxyOpenAiVideoEndpoint(baseUrl: string) {
+  return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl);
+}
+
+function openAiVideoCreateEndpoint(baseUrl: string) {
+  return `${baseUrl}${usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"}`;
+}
+
+function isGrokImagineVideoModel(model: string) {
+  return model.trim().toLowerCase().includes("grok-imagine-video");
+}
+
+function videoProviderModelCandidates(model: string, params?: { protocol?: VideoProviderProtocol; referenceAssetCount?: number; baseUrl?: string }) {
+  const normalizedModel = normalizeVideoGenerationModel(model);
+  const protocol = params?.protocol;
+  const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
+  if (protocol === "openai-videos" && referenceAssetCount > 1) {
+    return Array.from(new Set([
+      isGrokImagineVideoModel(normalizedModel) && !normalizedModel.includes("1.5") ? normalizedModel : "",
+      "grok-imagine-video"
+    ].filter(Boolean)));
+  }
+  const shouldPreferSmartPickLidJsonModel = protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "");
+  const imageToVideoCandidates = [
+    ...(isImageToVideoModel(normalizedModel) ? [normalizedModel] : []),
+    "grok-imagine-video-1.5-preview",
+    "grok-imagine-video-1.5",
+    "grok-imagine-video"
+  ];
+  if (protocol === "openai-videos" && (referenceAssetCount > 0 || shouldPreferSmartPickLidJsonModel)) {
+    return Array.from(new Set(imageToVideoCandidates.filter(Boolean)));
+  }
   const ordered = [
-    normalizeVideoGenerationModel(model),
+    normalizedModel,
     "grok-video-3-pro",
     "grok-video-3-max",
     "grok-video-1.5-pro",
     "grok-video-1.5-max",
-    "grok-imagine-video-1.5-preview",
-    "grok-imagine-video"
+    ...imageToVideoCandidates
   ];
   return Array.from(new Set(ordered.filter(Boolean)));
 }
@@ -188,7 +247,14 @@ function shouldTryNextVideoModel(error: unknown) {
   const message = errorMessage(error).toLowerCase();
   return message.includes("ai_provider_video_create_failed_502_") ||
     message.includes("ai_provider_video_create_failed_503_") ||
-    message.includes("ai_provider_video_create_failed_504_");
+    message.includes("ai_provider_video_create_failed_504_") ||
+    message.includes("ai_provider_video_create_failed_524_") ||
+    message.includes("fetch failed") ||
+    message.includes("econnreset") ||
+    message.includes("socket") ||
+    message.includes("terminated") ||
+    message.includes("connection reset") ||
+    message.includes("read reset");
 }
 
 function isImageGenerationModel(model: string) {
@@ -263,12 +329,20 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const selectedProviders = orderedImageProviders(payload);
-  if (selectedProviders.length) return selectedProviders;
   const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
-  const preferredProviders = imageProviders.filter((provider) => provider.preferred);
+  const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN);
+  const candidateProviders = editCapableProviders.length ? editCapableProviders : imageProviders;
+  const fields = recordValue(payload.params.fields);
+  const selectedProviderId = textValue(payload.params.sceneImageProviderId) || textValue(fields?.sceneImageProviderId) || textValue(payload.params.imageProviderId) || textValue(fields?.imageProviderId);
+  const selectedProvider = selectedProviderId
+    ? imageProviders.find((provider) => provider.id === selectedProviderId)
+    : undefined;
+  const preferredProviders = Array.from(new Map([
+    ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
+    ...candidateProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
+  ]).values());
   const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
-  const fallbackProviders = imageProviders.filter((provider) => !preferredIds.has(provider.id));
+  const fallbackProviders = candidateProviders.filter((provider) => !preferredIds.has(provider.id));
   return [...preferredProviders, ...fallbackProviders];
 }
 
@@ -287,8 +361,17 @@ function providerTimeoutMs() {
   return Math.max(10_000, Number(process.env.LOCAL_AI_WORKER_PROVIDER_TIMEOUT_MS ?? "300000") || 300_000);
 }
 
+function videoSceneImageProviderAttempts() {
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_SCENE_IMAGE_ATTEMPTS ?? "3") || 3, 4));
+}
+
 function videoProviderTimeoutMs() {
   return Math.max(60_000, Number(process.env.LOCAL_AI_WORKER_VIDEO_TIMEOUT_MS ?? "900000") || 900_000);
+}
+
+function videoProviderCreateTimeoutMs(timeoutMs: number) {
+  const configured = Number(process.env.LOCAL_AI_WORKER_VIDEO_CREATE_TIMEOUT_MS ?? "180000") || 180_000;
+  return Math.max(60_000, Math.min(configured, timeoutMs));
 }
 
 function videoProviderPollIntervalMs() {
@@ -312,7 +395,7 @@ function errorMessage(error: unknown): string {
 function isRetryableProviderError(error: unknown): boolean {
   const message = errorMessage(error).toLowerCase();
   if (isVideoModelUnavailableError(error) || message.includes("invalid request")) return false;
-  if (message.includes("failed_429") || message.includes("failed_502") || message.includes("failed_503") || message.includes("failed_504")) return true;
+  if (message.includes("failed_429") || message.includes("failed_502") || message.includes("failed_503") || message.includes("failed_504") || message.includes("failed_524")) return true;
   return message.includes("fetch failed") || message.includes("timeout") || message.includes("socket") || message.includes("econnreset") || message.includes("terminated");
 }
 
@@ -320,6 +403,7 @@ function shouldTryNextSceneImageProvider(error: unknown): boolean {
   const message = errorMessage(error).toLowerCase();
   if (message.includes("invalid request")) return false;
   return isRetryableProviderError(error) ||
+    message.includes("failed_404") ||
     message.includes("failed_401") ||
     message.includes("failed_403") ||
     message.includes("insufficient_balance") ||
@@ -499,6 +583,9 @@ function buildVideoQualitySystemPrompt(params: {
     "Internal video quality system: these rules are mandatory and have higher priority than the user direction when quality, identity, anatomy, continuity, or output cleanliness would otherwise degrade.",
     `Provider contract: create exactly one ${params.duration}-second image-to-video MP4 at ${params.aspectRatio} ${params.resolution.toUpperCase()} from the ordered input reference image${params.frameCount === 1 ? "" : "s"}.`,
     "Prompt hierarchy: ordered frame images and subject identity first; then continuity, anatomy, motion, and camera rules; then user direction; then theme style. If a user direction conflicts with identity preservation, natural anatomy, or clean output, keep the closest realistic interpretation instead.",
+    params.frameCount > 0
+      ? "Reference lock: uploaded frame images are binding visual evidence. The video must visibly derive from those images; if motion is difficult, simplify the action instead of replacing the subjects, setting, or requested interaction."
+      : "Text-to-video mode: no frame image was uploaded. Follow the written customer direction as the source of truth and do not borrow unrelated preset scenes.",
     "Shot plan: generate one coherent continuous scene with a clear beginning, middle, and end beat. Use a single believable camera plan, natural acceleration and deceleration, and visible subject or environmental movement. Do not output a slideshow, static pan, or frozen still.",
     "Reference discipline: preserve the people, faces, body proportions, hair, wardrobe, products, props, scene geometry, and lighting cues from the reference frames. Do not swap identities, change facial structure, invent extra people, duplicate subjects, or alter important product shapes.",
     "Anatomy and motion guardrails: keep hands, eyes, limbs, shoulders, necks, and posture believable. Avoid melted faces, extra fingers, warped eyes, rubber limbs, jitter, floating objects, sudden teleporting, over-fast zooms, or physically impossible bends.",
@@ -525,6 +612,7 @@ function buildVideoReferenceContractPrompt(params: {
       : "Cast continuity is mandatory: the main visible person or product must remain the uploaded subject, not a newly cast lookalike.",
     "Preserve visible subject count, primary person or product, face shape, apparent age range, skin tone, hair color and hairstyle, wardrobe colors, props, background cues, lighting direction, camera angle, and orientation from the frame images.",
     "Do not replace the source subject with a generic actor, change defining visible traits, change blonde hair to brunette, invent a couple or extra people, duplicate subjects, or move the result into an unrelated holiday, wedding, travel, studio, or lifestyle template unless the source frames show it or the user explicitly asks for it.",
+    "If the provider cannot complete the exact requested action from the references, keep the uploaded subjects and simplify the motion. Never solve a difficult request by ignoring the reference images.",
     "Theme direction may add motion texture, mood, camera behavior, and small scene dynamics only after the frame resources and explicit user direction are satisfied.",
     params.userNote ? `Mandatory user direction inside this reference contract: ${params.userNote}` : ""
   ].filter(Boolean).join("\n");
@@ -540,6 +628,34 @@ function buildExplicitUserDirectionPrompt(userNote: string, frameCount: number) 
       : "",
     "Do not replace the requested action with walking, generic portrait motion, holiday posing, or unrelated lifestyle action unless the user asked for it."
   ].filter(Boolean).join("\n");
+}
+
+function userRequestsOpeningPortraitSequence(userNote: string) {
+  const normalized = userNote.trim().toLowerCase();
+  if (!normalized) return false;
+  const hasOpeningCue = /start|begin|opening|first|initial|at the beginning|首帧|开头|开始|起始|一开始|先|首先|第一/.test(normalized);
+  const hasPortraitCue = /portrait|front[-\s]?facing|frontal|face[-\s]?forward|faces? visible|正面|肖像|人物肖像|头像|面向镜头|看向镜头/.test(normalized);
+  const hasTransitionCue = /then|after|transition|turn|later|kiss|embrace|interaction|然后|随后|再|之后|转向|转身|接吻|亲吻|拥抱/.test(normalized);
+  return hasOpeningCue && hasPortraitCue && hasTransitionCue;
+}
+
+function buildOpeningPortraitStarterScenePrompt(userNote: string, frameCount: number) {
+  if (!userRequestsOpeningPortraitSequence(userNote)) return "";
+  return [
+    "Opening-beat lock for the starter scene: this starter image represents only the first visible moment requested by the user, not a summary of the full sequence.",
+    frameCount > 1
+      ? "Show the selected people together with both faces portrait-readable and front-facing enough to identify Character A and Character B."
+      : "Show the selected subject in a portrait-readable and front-facing opening pose.",
+    "Do not depict the later interaction in the starter image. If the note says they later turn, kiss, embrace, or interact, stage them before that action starts, with natural spacing and pose cues that can animate into it."
+  ].join("\n");
+}
+
+function buildOpeningPortraitVideoPrompt(userNote: string) {
+  if (!userRequestsOpeningPortraitSequence(userNote)) return "";
+  return [
+    "Opening sequence lock: begin with the opening portrait beat requested by the user. The first visible moments should show clear portrait-readable and front-facing faces before any turn, kiss, embrace, or side-profile interaction.",
+    "Treat the turn, kiss, embrace, or interaction as the later motion beat, not as the first frame."
+  ].join("\n");
 }
 
 function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
@@ -563,6 +679,7 @@ function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAs
       resolution: videoParams.resolution
     }),
     buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
+    buildOpeningPortraitVideoPrompt(userNote),
     buildVideoReferenceContractPrompt({ frameAssets, userNote }),
     "Create one polished realistic image-to-video MP4 from the supplied frame image.",
     userNote ? `User direction: ${userNote}` : "",
@@ -583,6 +700,51 @@ function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAs
   return promptParts.join("\n\n").slice(0, 3600);
 }
 
+function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
+  const fields = recordValue(payload.params.fields);
+  const videoParams = videoProviderParams(payload);
+  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt);
+  const frameManifest = referenceAssets.length
+    ? [
+        `Reference image count: ${referenceAssets.length}. Use every uploaded reference image as a mandatory visual source.`,
+        ...referenceAssets.map((asset, index) => {
+          const characterLabel = index === 0 ? "Character A" : index === 1 ? "Character B" : `Character ${index + 1}`;
+          return `Reference image ${index + 1}: assetId=${asset.assetId}; ${characterLabel}. Preserve this uploaded subject's face shape, hair, skin tone, apparent age range, wardrobe cues, and visual identity.`;
+        })
+      ].join("\n")
+    : "";
+  const openingBeat = userRequestsOpeningPortraitSequence(userNote)
+    ? "Opening beat: begin with the uploaded people portrait-readable and front-facing enough to identify them. Then animate the later requested motion naturally, such as turning toward each other, kissing, and looking at each other if requested."
+    : "";
+  return [
+    `Image-to-video task: create exactly one ${videoParams.duration}-second realistic MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
+    "The uploaded images are the source of truth. The video must feature the same uploaded people, not newly cast people and not an unrelated location or crowd scene.",
+    referenceAssets.length > 1
+      ? "Cast requirement: combine the uploaded people from the ordered reference images into one coherent scene. Keep exactly those selected people as the main visible subjects."
+      : "Identity requirement: keep the uploaded subject as the main visible subject.",
+    frameManifest,
+    userNote ? `Customer direction, highest priority: ${userNote}` : "",
+    openingBeat,
+    "Use a simple close portrait or couple composition unless the customer explicitly requests a different location. Keep the camera focused on the uploaded subjects and their requested interaction.",
+    "Make the action continuous and natural. Preserve recognizable faces, hair, wardrobe cues, body proportions, and lighting continuity throughout.",
+    "Return only one clean video clip: no captions, no UI, no watermark, no split screen, no collage, no storyboard panels."
+  ].filter(Boolean).join("\n\n").slice(0, 2200);
+}
+
+function buildTextToVideoPrompt(payload: WorkerPayload) {
+  const fields = recordValue(payload.params.fields);
+  const videoParams = videoProviderParams(payload);
+  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt) || promptText(payload.prompt);
+  return [
+    `Text-to-video task: create exactly one ${videoParams.duration}-second realistic MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
+    "No reference images were uploaded. Use the customer's written direction as the source of truth for subject, setting, style, action, camera motion, and story beat.",
+    userNote ? `Customer direction, highest priority: ${userNote}` : "",
+    "Create a coherent single scene with a clear beginning, middle, and end. Keep motion natural, physically plausible, and visually stable.",
+    "Do not introduce unrelated preset scenes, random crowds, stock travel footage, captions, UI, watermarks, split screens, collages, or storyboard panels.",
+    "Return one polished clean video clip."
+  ].filter(Boolean).join("\n\n").slice(0, 1800);
+}
+
 function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageInputAsset[]) {
   const fields = recordValue(payload.params.fields);
   const videoParams = videoProviderParams(payload);
@@ -597,6 +759,7 @@ function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageIn
     : "";
   return [
     "Internal video scene compositor: create exactly one new photorealistic starter scene image that will be used as the only upstream image-to-video reference.",
+    buildOpeningPortraitStarterScenePrompt(userNote, frameAssets.length),
     buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
     "Identity preservation is the highest requirement for this starter image. Use the uploaded frame images as binding character references, not as loose mood references.",
     "Combine the selected user-uploaded frame images and the user direction into one coherent camera-ready scene. Use the internal theme direction only as a low-priority style fallback.",
@@ -673,6 +836,24 @@ async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
   return `data:${mimeType};base64,${bytes.toString("base64")}`;
 }
 
+async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: number, targetSize: string) {
+  const response = await fetchWithTimeout(
+    asset.signedUrl,
+    { cache: "no-store" },
+    Math.min(timeoutMs, 30_000),
+    `ai_provider_video_frame_data_uri_timeout_${asset.assetId}`
+  );
+  if (!response.ok) throw new Error(`ai_provider_video_frame_data_uri_source_failed_${asset.assetId}_${response.status}`);
+  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  if (!bytes.length) throw new Error(`ai_provider_video_frame_data_uri_empty_${asset.assetId}`);
+  const prepared = await prepareVideoReferenceImage(bytes, mimeType, targetSize);
+  const preparedBytes = Buffer.from(prepared.bytes);
+  const maxBytes = videoFrameDataUriMaxBytes();
+  if (preparedBytes.length > maxBytes) throw new Error(`ai_provider_video_frame_data_uri_too_large_${asset.assetId}_${preparedBytes.length}_${maxBytes}`);
+  return `data:${prepared.mimeType};base64,${preparedBytes.toString("base64")}`;
+}
+
 async function videoProviderFrameUrls(params: {
   referenceAssets: ImageInputAsset[];
   timeoutMs: number;
@@ -693,6 +874,14 @@ function videoProviderDataUriFrameUrls(params: {
   timeoutMs: number;
 }) {
   return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+}
+
+function videoProviderPreparedDataUriFrameUrls(params: {
+  referenceAssets: ImageInputAsset[];
+  timeoutMs: number;
+  targetSize: string;
+}) {
+  return Promise.all(params.referenceAssets.map((asset) => videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)));
 }
 
 function isDataUri(value: string) {
@@ -716,24 +905,6 @@ function shouldRetryVideoTaskWithDataUriFrames(params: {
     message.includes("read the selected frame") ||
     message.includes("public asset url") ||
     (message.includes("image") && (message.includes("url") || message.includes("read") || message.includes("fetch")));
-}
-
-function shouldRetryOpenAiVideoTaskWithFirstFrame(params: {
-  error: unknown;
-  protocol: VideoProviderProtocol;
-  referenceAssets: ImageInputAsset[];
-}) {
-  if (params.protocol !== "openai-videos") return false;
-  if (params.referenceAssets.length <= 1) return false;
-  if (process.env.AI_WORKER_VIDEO_FIRST_FRAME_RETRY?.trim() === "0") return false;
-  const message = errorMessage(params.error).toLowerCase();
-  return isRetryableProviderError(params.error) ||
-    message.includes("multi_frame_payload_rejected") ||
-    message.includes("multipart") ||
-    message.includes("input_reference") ||
-    message.includes("payload too large") ||
-    message.includes("request entity too large") ||
-    message.includes("failed_413");
 }
 
 function isLoopbackUrl(value: string) {
@@ -763,6 +934,34 @@ function videoSizeForParams(aspectRatio: string, resolution: string) {
   if (aspectRatio === "9:16" || aspectRatio === "2:3") return `${shortEdge}x${longEdge}`;
   if (aspectRatio === "1:1") return `${shortEdge}x${shortEdge}`;
   return `${longEdge}x${shortEdge}`;
+}
+
+function openAiVideoProviderSize(params: { aspect_ratio: string; resolution: string; size: string }) {
+  const supportedExactSizes = new Set(["720x1280", "1280x720", "1024x1792", "1792x1024"]);
+  if (supportedExactSizes.has(params.size)) return params.size;
+  return params.resolution;
+}
+
+function smartPickLidJsonVideoResolution(resolution: string) {
+  return resolution.trim().toUpperCase();
+}
+
+function openAiVideoRequestSize(params: { aspect_ratio: string; resolution: string; size: string }, options?: { smartPickLidJson?: boolean }) {
+  return options?.smartPickLidJson ? params.size : openAiVideoProviderSize(params);
+}
+
+function openAiVideoReferenceTargetSize(params: { aspect_ratio: string; resolution: string; size: string }, options?: { smartPickLidJson?: boolean }) {
+  const requestSize = openAiVideoRequestSize(params, options);
+  return parseVideoPixelSize(requestSize) ? requestSize : params.size;
+}
+
+function parseVideoPixelSize(value: string) {
+  const match = /^(\d{2,5})x(\d{2,5})$/.exec(value.trim());
+  if (!match) return undefined;
+  const width = Number(match[1]);
+  const height = Number(match[2]);
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return undefined;
+  return { width, height };
 }
 
 function videoProviderParams(payload: WorkerPayload) {
@@ -827,9 +1026,10 @@ function shouldCompressVideoReferenceImages() {
   return true;
 }
 
-async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
+async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, targetSize?: string) {
   const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
-  if (!shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif")) {
+  const target = targetSize ? parseVideoPixelSize(targetSize) : undefined;
+  if (!target && (!shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif"))) {
     return {
       bytes: blobPartFromBytes(Buffer.from(bytes)),
       mimeType: sourceMimeType
@@ -839,15 +1039,23 @@ async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
   const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_QUALITY ?? "80") || 80, 95));
   try {
     const sharp = await loadSharp();
-    if (!sharp) throw new Error("sharp_unavailable");
+    if (!sharp) {
+      if (target) throw new Error("sharp_unavailable");
+      throw new Error("sharp_unavailable");
+    }
     const resized = await sharp(Buffer.from(bytes))
       .rotate()
-      .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
+      .resize(target
+        ? { width: target.width, height: target.height, fit: "cover", position: "attention" }
+        : { width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
       .jpeg({ quality, mozjpeg: true })
       .toBuffer();
     if (!resized.length) throw new Error("empty_video_reference_image");
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
-  } catch {
+  } catch (error) {
+    if (target) {
+      throw error instanceof Error ? new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}_${error.message}`) : new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}`);
+    }
     return {
       bytes: blobPartFromBytes(Buffer.from(bytes)),
       mimeType: sourceMimeType
@@ -865,6 +1073,13 @@ let providerProxyDispatcher:
     dispatcher: unknown;
   }
   | undefined;
+let providerProxyAvailability:
+  | {
+    proxyUrl: string;
+    checkedAt: number;
+    reachable: boolean;
+  }
+  | undefined;
 
 function providerProxyUrl() {
   return (
@@ -878,8 +1093,7 @@ function providerProxyUrl() {
   ).trim();
 }
 
-function shouldProxyFetch(resource: string) {
-  const proxyUrl = providerProxyUrl();
+function shouldProxyFetch(resource: string, proxyUrl = providerProxyUrl()) {
   if (!proxyUrl) return false;
   try {
     const url = new URL(resource);
@@ -900,24 +1114,117 @@ async function getProviderProxyDispatcher() {
   return dispatcher;
 }
 
+function loopbackProxyHost(value: string) {
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.replace(/^\[(.*)\]$/, "$1");
+    if (!["localhost", "127.0.0.1", "::1"].includes(hostname)) return undefined;
+    const port = Number(url.port || (url.protocol === "https:" ? 443 : 80));
+    return Number.isFinite(port) && port > 0 ? { hostname, port } : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function isLoopbackProxyUrl(value: string) {
+  return Boolean(loopbackProxyHost(value));
+}
+
+async function isConfiguredLoopbackProxyReachable(proxyUrl: string) {
+  const target = loopbackProxyHost(proxyUrl);
+  if (!target) return true;
+  const now = Date.now();
+  const cacheMs = Math.max(1_000, Math.min(Number(process.env.AI_WORKER_PROXY_PROBE_CACHE_MS ?? "10000") || 10_000, 60_000));
+  if (providerProxyAvailability?.proxyUrl === proxyUrl && now - providerProxyAvailability.checkedAt < cacheMs) {
+    return providerProxyAvailability.reachable;
+  }
+  const timeoutMs = Math.max(50, Math.min(Number(process.env.AI_WORKER_PROXY_PROBE_TIMEOUT_MS ?? "250") || 250, 2_000));
+  const { connect } = await import("node:net");
+  const reachable = await new Promise<boolean>((resolve) => {
+    const socket = connect({ host: target.hostname, port: target.port });
+    let settled = false;
+    const finish = (value: boolean) => {
+      if (settled) return;
+      settled = true;
+      socket.destroy();
+      resolve(value);
+    };
+    socket.setTimeout(timeoutMs);
+    socket.once("connect", () => finish(true));
+    socket.once("timeout", () => finish(false));
+    socket.once("error", () => finish(false));
+  });
+  providerProxyAvailability = { proxyUrl, checkedAt: now, reachable };
+  return reachable;
+}
+
+function shouldRetryProviderFetchWithoutProxy(error: unknown, proxyUrl: string) {
+  if (process.env.AI_WORKER_DISABLE_PROXY_FALLBACK === "1" || !isLoopbackProxyUrl(proxyUrl)) return false;
+  let proxy: URL;
+  try {
+    proxy = new URL(proxyUrl);
+  } catch {
+    return false;
+  }
+  const message = errorMessage(error).toLowerCase();
+  const proxyHost = proxy.hostname.toLowerCase();
+  const proxyPort = proxy.port;
+  const pointsAtProxy = message.includes(proxyHost) || Boolean(proxyPort && message.includes(proxyPort));
+  const connectionInterrupted = message.includes("econnrefused") ||
+    message.includes("econnreset") ||
+    message.includes("fetch failed") ||
+    message.includes("socket") ||
+    message.includes("terminated") ||
+    message.includes("socket hang up") ||
+    message.includes("read reset") ||
+    message.includes("connection reset");
+  return connectionInterrupted && (pointsAtProxy || isLoopbackProxyUrl(proxyUrl));
+}
+
 async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: number, timeoutError: string) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const dispatcher = shouldProxyFetch(resource) ? await getProviderProxyDispatcher() : undefined;
+  const proxyUrl = providerProxyUrl();
+  const runFetch = async (dispatcher?: unknown) => {
     const fetchInit: FetchInitWithDispatcher = {
       ...init,
       signal: controller.signal,
       ...(dispatcher ? { dispatcher } : {})
     };
-    return await fetch(resource, fetchInit);
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      return await Promise.race([
+        fetch(resource, fetchInit),
+        new Promise<Response>((_, reject) => {
+          timeout = setTimeout(() => {
+            controller.abort();
+            reject(new Error(timeoutError));
+          }, timeoutMs);
+        })
+      ]);
+    } finally {
+      if (timeout) clearTimeout(timeout);
+    }
+  };
+  try {
+    const dispatcher = shouldProxyFetch(resource, proxyUrl) && await isConfiguredLoopbackProxyReachable(proxyUrl)
+      ? await getProviderProxyDispatcher()
+      : undefined;
+    try {
+      return await runFetch(dispatcher);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        throw new Error(timeoutError);
+      }
+      if (dispatcher && shouldRetryProviderFetchWithoutProxy(error, proxyUrl)) {
+        return await runFetch();
+      }
+      throw error;
+    }
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       throw new Error(timeoutError);
     }
     throw error;
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
@@ -995,6 +1302,97 @@ function signedLocalAssetUrl(origin: string, storageKey: string, expiresAt: stri
   return `${origin.replace(/\/$/, "")}/api/local-assets/${normalizedStorageKey}?worker=1&expiresAt=${encodeURIComponent(expiresAt)}&signature=${signature}`;
 }
 
+async function saveVideoSceneReference(params: {
+  payload: WorkerPayload;
+  requestedReferenceAssets: ImageInputAsset[];
+  b64: string;
+  providerLabel: string;
+  mimeType?: string;
+}): Promise<VideoSceneReference> {
+  const mimeType = params.mimeType ?? "image/png";
+  const preparedScene = prepareCompressedCustomerImage({
+    bytes: Buffer.from(params.b64, "base64"),
+    mimeType,
+    fileName: `${params.payload.jobId}-video-scene-reference.${extensionForMime(mimeType)}`,
+    purpose: "input"
+  });
+  const storageKey = customerAssetStorageKey({
+    siteId: params.payload.siteId,
+    customerId: params.payload.customerId,
+    fileName: `${params.payload.jobId}-video-scene-reference.${extensionForCustomerAssetMime(preparedScene.mimeType)}`
+  });
+  await writeCustomerAssetFileShared({
+    storageKey,
+    bytes: preparedScene.bytes,
+    mimeType: preparedScene.mimeType,
+    purpose: "input"
+  });
+  await postWorkerSlotStatus(params.payload, "running", "video_scene_reference_ready", {
+    index: 1,
+    status: "running",
+    stage: "video_scene_reference_ready",
+    storageKey,
+    mimeType: preparedScene.mimeType,
+    error: "",
+    referenceFrameCount: 1,
+    requestedReferenceFrameCount: params.requestedReferenceAssets.length,
+    providerReferenceLimit: 1,
+    updatedAt: new Date().toISOString()
+  });
+  const callbackOrigin = workerCallbackOrigin(params.payload);
+  const publicOrigin = workerPublicOrigin(params.payload, params.requestedReferenceAssets);
+  const signedUrlExpiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
+  return {
+    storageKey,
+    mimeType: preparedScene.mimeType,
+    providerLabel: params.providerLabel,
+    asset: {
+      assetId: `video_scene_reference:${params.payload.jobId}`,
+      signedUrl: signedLocalAssetUrl(callbackOrigin, storageKey, signedUrlExpiresAt),
+      publicUrl: signedLocalAssetUrl(publicOrigin, storageKey, signedUrlExpiresAt)
+    } satisfies ImageInputAsset
+  };
+}
+
+async function generateVideoSceneImageWithEdit(params: {
+  payload: WorkerPayload;
+  model: string;
+  prompt: string;
+  timeoutMs: number;
+  sceneInputAssets: ImageInputAsset[];
+  baseUrl: string;
+  apiKey: string;
+}) {
+  const form = await buildImageEditForm({
+    payload: params.payload,
+    model: params.model,
+    prompt: params.prompt,
+    timeoutMs: params.timeoutMs,
+    assets: params.sceneInputAssets
+  });
+  if (!form) throw new Error("ai_provider_video_scene_image_edit_missing_input");
+  const response = await fetchWithTimeout(
+    `${params.baseUrl}/v1/images/edits`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${params.apiKey}`
+      },
+      body: form,
+      cache: "no-store"
+    },
+    params.timeoutMs,
+    `ai_provider_video_scene_image_edit_timeout_${params.timeoutMs}`
+  );
+  const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
+  if (!response.ok) {
+    throw new Error(`ai_provider_video_scene_image_edit_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+  }
+  const [b64] = imageBase64List(body);
+  if (!b64) throw new Error("ai_provider_video_scene_image_edit_empty_payload");
+  return b64;
+}
+
 async function composeVideoSceneReference(params: {
   payload: WorkerPayload;
   requestedReferenceAssets: ImageInputAsset[];
@@ -1028,82 +1426,42 @@ async function composeVideoSceneReference(params: {
       lastError = new Error(`ai_provider_not_image_model_${record.label || record.id}_${model}`);
       continue;
     }
-    try {
-      const form = await buildImageEditForm({
-        payload: params.payload,
-        model,
-        prompt,
-        timeoutMs,
-        assets: sceneInputAssets
-      });
-      if (!form) throw new Error("ai_provider_video_scene_image_edit_missing_input");
-      const response = await fetchWithTimeout(
-        `${normalizeBaseUrl(record.aiUrl)}/v1/images/edits`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${record.apiKey}`
-          },
-          body: form,
-          cache: "no-store"
-        },
-        timeoutMs,
-        `ai_provider_video_scene_image_timeout_${timeoutMs}`
-      );
-      const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
-      if (!response.ok) {
-        throw new Error(`ai_provider_video_scene_image_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+    const baseUrl = normalizeBaseUrl(record.aiUrl);
+    const maxAttempts = videoSceneImageProviderAttempts();
+    for (const attempt of Array.from({ length: maxAttempts }, (_, attemptIndex) => attemptIndex + 1)) {
+      try {
+        const b64 = await generateVideoSceneImageWithEdit({
+          payload: params.payload,
+          model,
+          prompt,
+          timeoutMs,
+          sceneInputAssets,
+          baseUrl,
+          apiKey: record.apiKey
+        });
+        return await saveVideoSceneReference({
+          payload: params.payload,
+          requestedReferenceAssets: params.requestedReferenceAssets,
+          b64,
+          providerLabel: record.label
+        });
+      } catch (error) {
+        lastError = error;
+        if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
+        await new Promise((resolve) => setTimeout(resolve, 2_500 * attempt));
       }
-      const [b64] = imageBase64List(body);
-      if (!b64) throw new Error("ai_provider_video_scene_image_empty_payload");
-      const preparedScene = prepareCompressedCustomerImage({
-        bytes: Buffer.from(b64, "base64"),
-        mimeType: "image/png",
-        fileName: `${params.payload.jobId}-video-scene-reference.png`,
-        purpose: "input"
-      });
-      const storageKey = customerAssetStorageKey({
-        siteId: params.payload.siteId,
-        customerId: params.payload.customerId,
-        fileName: `${params.payload.jobId}-video-scene-reference.${extensionForCustomerAssetMime(preparedScene.mimeType)}`
-      });
-      await writeCustomerAssetFileShared({
-        storageKey,
-        bytes: preparedScene.bytes,
-        mimeType: preparedScene.mimeType,
-        purpose: "input"
-      });
-      await postWorkerSlotStatus(params.payload, "running", "video_scene_reference_ready", {
-        index: 1,
-        status: "running",
-        stage: "video_scene_reference_ready",
-        storageKey,
-        mimeType: preparedScene.mimeType,
-        error: "",
-        referenceFrameCount: 1,
-        requestedReferenceFrameCount: params.requestedReferenceAssets.length,
-        providerReferenceLimit: 1,
-        updatedAt: new Date().toISOString()
-      });
-      const callbackOrigin = workerCallbackOrigin(params.payload);
-      const publicOrigin = workerPublicOrigin(params.payload, params.requestedReferenceAssets);
-      const signedUrlExpiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
-      return {
-        storageKey,
-        mimeType: preparedScene.mimeType,
-        providerLabel: record.label,
-        asset: {
-          assetId: `video_scene_reference:${params.payload.jobId}`,
-          signedUrl: signedLocalAssetUrl(callbackOrigin, storageKey, signedUrlExpiresAt),
-          publicUrl: signedLocalAssetUrl(publicOrigin, storageKey, signedUrlExpiresAt)
-        } satisfies ImageInputAsset
-      };
-    } catch (error) {
-      lastError = error;
-      if (!shouldTryNextSceneImageProvider(error)) break;
     }
+    if (!shouldTryNextSceneImageProvider(lastError)) break;
   }
   throw lastError instanceof Error ? lastError : new Error("ai_provider_video_scene_image_failed");
+}
+
+function _createSharedVideoSceneReferenceGetter(): VideoSceneReferenceGetter {
+  let referencePromise: Promise<VideoSceneReference> | undefined;
+  return (params) => {
+    referencePromise ??= composeVideoSceneReference(params);
+    return referencePromise;
+  };
 }
 
 async function buildVideoReferenceForm(params: {
@@ -1117,7 +1475,7 @@ async function buildVideoReferenceForm(params: {
   form.append("model", params.model);
   form.append("prompt", params.prompt);
   form.append("seconds", params.videoParams.duration);
-  form.append("size", params.videoParams.size);
+  form.append("size", openAiVideoRequestSize(params.videoParams));
   const referenceAssets = params.referenceAssets.length ? params.referenceAssets : [];
   if (!referenceAssets.length) throw new Error("ai_provider_video_first_frame_required");
   for (const [index, asset] of referenceAssets.entries()) {
@@ -1130,7 +1488,7 @@ async function buildVideoReferenceForm(params: {
     if (!response.ok) throw new Error(`ai_provider_video_reference_image_failed_${asset.assetId}_${response.status}`);
     const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
     const bytes = new Uint8Array(await response.arrayBuffer());
-    const prepared = await prepareVideoReferenceImage(bytes, mimeType);
+    const prepared = await prepareVideoReferenceImage(bytes, mimeType, params.videoParams.size);
     form.append("input_reference", new Blob([prepared.bytes], { type: prepared.mimeType }), `input-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
   }
   return form;
@@ -1144,7 +1502,7 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
     status,
     stage
   };
-  await fetch(payload.statusCallbackUrl, {
+  await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ...body, signature: signWorkerCallback(body) }),
@@ -1161,12 +1519,54 @@ async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | 
     stage,
     outputSlots: [slot]
   };
-  await fetch(payload.statusCallbackUrl, {
+  await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ...body, signature: signWorkerCallback(body) }),
     cache: "no-store"
   }).catch(() => null);
+}
+
+function workerCallbackRetryAttempts() {
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_CALLBACK_RETRY_ATTEMPTS ?? "4") || 4, 8));
+}
+
+function workerCallbackRetryDelayMs(attempt: number) {
+  return Math.max(500, Math.min(1_500 * attempt, 10_000));
+}
+
+function workerCallbackTimeoutMs() {
+  const configured = Number(process.env.LOCAL_AI_WORKER_CALLBACK_TIMEOUT_MS ?? "30000");
+  if (!Number.isFinite(configured) || configured <= 0) return 30_000;
+  return Math.max(1_000, Math.min(Math.trunc(configured), 120_000));
+}
+
+async function fetchWorkerCallbackWithTimeout(resource: string, init: RequestInit) {
+  const timeoutMs = workerCallbackTimeoutMs();
+  const controller = new AbortController();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      fetch(resource, { ...init, signal: controller.signal }),
+      new Promise<Response>((_, reject) => {
+        timeout = setTimeout(() => {
+          controller.abort();
+          reject(new Error(`worker_callback_timeout_${timeoutMs}`));
+        }, timeoutMs);
+      })
+    ]);
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`worker_callback_timeout_${timeoutMs}`);
+    }
+    throw error;
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+}
+
+function shouldRetryWorkerCallbackStatus(status: number) {
+  return status === 408 || status === 409 || status === 429 || status >= 500;
 }
 
 async function postWorkerResult(
@@ -1185,19 +1585,35 @@ async function postWorkerResult(
     requestId: payload.requestId,
     ...body
   };
-  const response = await fetch(payload.callbackUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...resultBody, signature: signWorkerCallback(resultBody) }),
-    cache: "no-store"
-  });
-  if (!response.ok) {
-    throw new Error(`worker_result_callback_failed_${response.status}`);
+  const signedBody = JSON.stringify({ ...resultBody, signature: signWorkerCallback(resultBody) });
+  let lastStatus = 0;
+  let lastError = "";
+  const attempts = workerCallbackRetryAttempts();
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetchWorkerCallbackWithTimeout(payload.callbackUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: signedBody,
+        cache: "no-store"
+      });
+      if (response.ok) return;
+      lastStatus = response.status;
+      lastError = (await response.text().catch(() => "")).slice(0, 240);
+      if (!shouldRetryWorkerCallbackStatus(response.status) || attempt >= attempts) break;
+    } catch (error) {
+      lastStatus = 0;
+      lastError = errorMessage(error).slice(0, 240);
+      if (attempt >= attempts) break;
+    }
+    console.warn("worker_result_callback_retry", { attempt, lastStatus: lastStatus || "network", error: lastError });
+    await new Promise((resolve) => setTimeout(resolve, workerCallbackRetryDelayMs(attempt)));
   }
+  throw new Error(`worker_result_callback_failed_${lastStatus || "network"}${lastError ? `_${lastError}` : ""}`);
 }
 
 function videoTaskId(body: VideoGenerateResponse) {
-  const taskId = body.data?.task_id ?? body.task_id ?? body.id;
+  const taskId = body.request_id ?? body.data?.task_id ?? body.task_id ?? body.id;
   return typeof taskId === "number" || typeof taskId === "string" ? String(taskId) : "";
 }
 
@@ -1210,11 +1626,55 @@ function normalizedVideoMimeType(value: string) {
 function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
-    if (hostname.includes("smartpicklid")) return "openai-videos";
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
   } catch {
     return "lk888-media";
   }
   return "lk888-media";
+}
+
+function shouldUseOpenAiVideoJsonReference(params: {
+  baseUrl: string;
+  model: string;
+  protocol: VideoProviderProtocol;
+}) {
+  if (params.protocol !== "openai-videos" || !isGrokImagineVideoModel(params.model)) return false;
+  const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
+  if (explicitMode === "multipart" || explicitMode === "form") return false;
+  return true;
+}
+
+function shouldPreferOpenAiJsonVideoRequest(params: {
+  baseUrl: string;
+  model: string;
+  protocol: VideoProviderProtocol;
+}) {
+  if (params.protocol !== "openai-videos") return false;
+  const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
+  if (explicitMode === "multipart" || explicitMode === "form") return false;
+  return isGrokImagineVideoModel(params.model) || isSmartPickLidBaseUrl(params.baseUrl);
+}
+
+function shouldPreferDirectOpenAiJsonVideoReferences(params: {
+  baseUrl: string;
+  model: string;
+  protocol: VideoProviderProtocol;
+  referenceAssetCount: number;
+}) {
+  if (params.referenceAssetCount <= 1) return false;
+  return shouldPreferOpenAiJsonVideoRequest(params);
+}
+
+function openAiJsonVideoReferenceLimit() {
+  const configured = Number(process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_LIMIT ?? String(MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT));
+  if (!Number.isFinite(configured) || configured <= 0) return MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT;
+  return Math.max(1, Math.min(Math.trunc(configured), MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT));
+}
+
+function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string) {
+  if (urls.length > 1) return { reference_images: urls.map((url) => ({ url })) };
+  const imageUrl = urls[0] ?? fallbackImageUrl;
+  return imageUrl ? { image: imageUrl } : {};
 }
 
 async function createVideoTask(params: {
@@ -1229,11 +1689,21 @@ async function createVideoTask(params: {
   timeoutMs: number;
 }) {
   const firstImageUrl = params.imageUrls[0];
-  if (!firstImageUrl && !params.referenceAssets.length) throw new Error("ai_provider_video_first_frame_required");
   const endpoint = params.protocol === "openai-videos"
-    ? `${params.baseUrl}/v1/videos`
+    ? openAiVideoCreateEndpoint(params.baseUrl)
     : `${params.baseUrl}/v1/media/generate`;
-  const openAiVideosForm = params.protocol === "openai-videos"
+  const useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params);
+  const providerRequestSize = openAiVideoRequestSize(params.videoParams, { smartPickLidJson: useOpenAiJsonReference });
+  const providerReferenceTargetSize = openAiVideoReferenceTargetSize(params.videoParams, { smartPickLidJson: useOpenAiJsonReference });
+  const openAiJsonImageUrls = useOpenAiJsonReference
+    ? await videoProviderPreparedDataUriFrameUrls({
+        referenceAssets: params.referenceAssets,
+        timeoutMs: params.timeoutMs,
+        targetSize: providerReferenceTargetSize
+      })
+    : [];
+  const openAiJsonReferencePayload = useOpenAiJsonReference ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl) : {};
+  const openAiVideosForm = params.protocol === "openai-videos" && !useOpenAiJsonReference && params.referenceAssets.length
     ? await buildVideoReferenceForm({
         referenceAssets: params.referenceAssets,
         model: params.model,
@@ -1246,11 +1716,19 @@ async function createVideoTask(params: {
     ? {
         model: params.model,
         prompt: params.prompt,
-        seconds: params.videoParams.duration,
-        size: params.videoParams.size,
-        ...(params.imageUrls.length > 1
-          ? { reference_images: params.imageUrls }
-          : { image: firstImageUrl })
+        duration: Number(params.videoParams.duration),
+        ...(useOpenAiJsonReference
+          ? {
+              aspect_ratio: params.videoParams.aspect_ratio,
+              resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution),
+              ...openAiJsonReferencePayload
+            }
+          : {
+              size: providerRequestSize,
+              ...(params.imageUrls.length > 1
+                ? { reference_images: params.imageUrls }
+                : { image: firstImageUrl })
+            })
       }
     : {
         model: params.model,
@@ -1260,6 +1738,7 @@ async function createVideoTask(params: {
         },
         prompt: params.prompt
       };
+  const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
   const response = await fetchWithTimeout(endpoint, {
     method: "POST",
     headers: openAiVideosForm
@@ -1267,10 +1746,10 @@ async function createVideoTask(params: {
       : {
           "Content-Type": "application/json",
           Authorization: `Bearer ${params.apiKey}`
-        },
+    },
     body: openAiVideosForm ?? JSON.stringify(payload),
     cache: "no-store"
-  }, Math.min(params.timeoutMs, 60_000), `ai_provider_video_create_timeout_${Math.min(params.timeoutMs, 60_000)}`);
+  }, createTimeoutMs, `ai_provider_video_create_timeout_${createTimeoutMs}`);
   const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
   const taskId = videoTaskId(body);
   if (!response.ok || !taskId) {
@@ -1279,10 +1758,11 @@ async function createVideoTask(params: {
     const requestSummary = {
       model: params.model,
       protocol: params.protocol,
-      seconds: params.videoParams.duration,
-      size: params.videoParams.size,
+      endpoint: endpoint.replace(params.baseUrl, ""),
+      duration: params.videoParams.duration,
+      size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : params.videoParams.size,
       imageCount: referenceCount,
-      imageKind: params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
+      imageKind: useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
       promptLength: params.prompt.length
     };
     throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
@@ -1324,7 +1804,7 @@ async function pollVideoTask(params: {
       updatedAt: new Date().toISOString()
     });
     if (params.protocol === "openai-videos") {
-      if (body.status === "completed") return body;
+      if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
       if (body.status === "failed") {
         throw new Error(`ai_provider_video_failed_failed_${textValue(body.error) || textValue(body.message) || "no_result"}`);
       }
@@ -1347,7 +1827,7 @@ async function downloadVideoResult(params: {
   timeoutMs: number;
 }) {
   const resultUrl = params.protocol === "openai-videos"
-    ? `${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId ?? "")}/content`
+    ? params.resultUrl || `${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId ?? "")}/content`
     : params.resultUrl;
   if (!resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const headers = params.protocol === "openai-videos" && params.apiKey
@@ -1362,107 +1842,6 @@ async function downloadVideoResult(params: {
   const bytes = Buffer.from(await response.arrayBuffer());
   if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
   return { bytes, mimeType };
-}
-
-function shouldUseLocalVideoFallback() {
-  const explicit = process.env.LOCAL_AI_WORKER_VIDEO_FALLBACK?.trim();
-  if (explicit === "1") return true;
-  return false;
-}
-
-async function ffmpegPath() {
-  const moduleName = "ffmpeg-static";
-  const mod = (await import(/* webpackIgnore: true */ moduleName)) as { default?: string } | string | null;
-  const candidate = typeof mod === "string" ? mod : mod?.default;
-  if (!candidate) throw new Error("local_video_fallback_ffmpeg_unavailable");
-  return candidate;
-}
-
-async function readVideoFrameBytes(asset: ImageInputAsset, timeoutMs: number) {
-  const response = await fetchWithTimeout(
-    asset.signedUrl,
-    { cache: "no-store" },
-    Math.min(timeoutMs, 30_000),
-    `local_video_fallback_frame_timeout_${asset.assetId}`
-  );
-  if (!response.ok) throw new Error(`local_video_fallback_frame_failed_${asset.assetId}_${response.status}`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length) throw new Error(`local_video_fallback_frame_empty_${asset.assetId}`);
-  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
-  return { bytes, mimeType };
-}
-
-async function generateLocalFallbackVideo(payload: WorkerPayload) {
-  const referenceAsset = videoFrameAssets(payload)[0];
-  if (!referenceAsset) throw new Error("local_video_fallback_first_frame_required");
-  const timeoutMs = videoProviderTimeoutMs();
-  const videoParams = videoProviderParams(payload);
-  const duration = Math.max(1, Math.min(Number(videoParams.duration) || 6, 15));
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "dreamshoot-video-"));
-  try {
-    const frame = await readVideoFrameBytes(referenceAsset, timeoutMs);
-    const inputPath = path.join(tempDir, `frame.${extensionForMime(frame.mimeType)}`);
-    const outputPath = path.join(tempDir, "output.mp4");
-    await fs.writeFile(inputPath, frame.bytes);
-    const frameCount = Math.max(24, duration * 24);
-    const filter = [
-      "scale=854:480:force_original_aspect_ratio=increase",
-      "crop=854:480",
-      `zoompan=z='min(zoom+0.0012,1.08)':d=${frameCount}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=854x480:fps=24`,
-      "format=yuv420p"
-    ].join(",");
-    await execFileAsync(await ffmpegPath(), [
-      "-y",
-      "-framerate",
-      "1",
-      "-i",
-      inputPath,
-      "-vf",
-      filter,
-      "-frames:v",
-      String(frameCount),
-      "-c:v",
-      "libx264",
-      "-preset",
-      "veryfast",
-      "-crf",
-      "30",
-      "-an",
-      "-pix_fmt",
-      "yuv420p",
-      "-movflags",
-      "+faststart",
-      outputPath
-    ], { timeout: Math.min(timeoutMs, 120_000) });
-    const videoBytes = await fs.readFile(outputPath);
-    if (!videoBytes.length) throw new Error("local_video_fallback_empty_output");
-    const storageKey = customerAssetStorageKey({
-      siteId: payload.siteId,
-      customerId: payload.customerId,
-      fileName: `${payload.jobId}-local-video-1.mp4`
-    });
-    await writeCustomerAssetFileShared({
-      storageKey,
-      bytes: videoBytes,
-      mimeType: "video/mp4",
-      purpose: "output"
-    });
-    await postWorkerSlotStatus(payload, "running", "video_result_received", {
-      index: 1,
-      status: "succeeded",
-      stage: "video_result_received",
-      storageKey,
-      mimeType: "video/mp4",
-      error: "",
-      referenceFrameCount: 1,
-      requestedReferenceFrameCount: videoFrameAssets(payload).length,
-      providerReferenceLimit: 1,
-      updatedAt: new Date().toISOString()
-    });
-    return { storageKey, mimeType: "video/mp4", providerLabel: "Local video fallback", index: 1, estimatedCostUsd: 0, referenceFrameCount: 1, requestedReferenceFrameCount: videoFrameAssets(payload).length, providerReferenceLimit: 1 };
-  } finally {
-    await fs.rm(tempDir, { recursive: true, force: true }).catch(() => undefined);
-  }
 }
 
 async function generateVideoWithProvider(params: {
@@ -1483,14 +1862,15 @@ async function generateVideoWithProvider(params: {
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
   const protocol = videoProviderProtocol(baseUrl);
   const configuredProviderReferenceLimit = Math.max(1, Math.trunc(provider.maxImagesPerRequest || 1));
-  const providerReferenceLimit = 1;
-  const shouldComposeSceneReference = requestedReferenceAssets.length > providerReferenceLimit;
-  const composedScene = shouldComposeSceneReference
-    ? await composeVideoSceneReference({ payload: params.payload, requestedReferenceAssets })
-    : undefined;
-  const referenceAssets = composedScene ? [composedScene.asset] : requestedReferenceAssets.slice(0, providerReferenceLimit);
-  const referenceAsset = referenceAssets[0];
-  if (!referenceAsset) throw new Error("ai_provider_video_first_frame_required");
+  const preferJsonVideoRequest = shouldPreferOpenAiJsonVideoRequest({ baseUrl, model, protocol });
+  const directJsonReferences = shouldPreferDirectOpenAiJsonVideoReferences({
+    baseUrl,
+    model,
+    protocol,
+    referenceAssetCount: requestedReferenceAssets.length
+  });
+  const providerReferenceLimit = directJsonReferences ? openAiJsonVideoReferenceLimit() : configuredProviderReferenceLimit;
+  const referenceAssets = requestedReferenceAssets.slice(0, providerReferenceLimit);
 
   const timeoutMs = videoProviderTimeoutMs();
   const imageUrls = protocol === "openai-videos"
@@ -1499,15 +1879,24 @@ async function generateVideoWithProvider(params: {
   if (protocol !== "openai-videos" && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
     throw new Error("ai_provider_video_frame_public_urls_required");
   }
-  const prompt = composedScene
-    ? [
-        "A single AI starter scene has already been generated from all selected user frame images. Use only the supplied starter scene image as the upstream video reference.",
-        "The starter scene is the identity source for the video. Preserve the people, broad face structure, hair, skin tone, wardrobe cues, pose setup, and relationship staging from that starter image; do not recast or replace the people.",
-        `Original selected frame count: ${requestedReferenceAssets.length}. Provider reference image count: 1. Configured provider image capacity: ${configuredProviderReferenceLimit}.`,
-        buildVideoPrompt(params.payload, referenceAssets)
-      ].join("\n\n").slice(0, 3600)
-    : buildVideoPrompt(params.payload, referenceAssets);
   const videoParams = videoProviderParams(params.payload);
+  const videoPromptForReferenceAssets = (assets: ImageInputAsset[]) => !assets.length
+      ? buildTextToVideoPrompt(params.payload)
+      : preferJsonVideoRequest && assets.length > 1
+      ? buildDirectJsonVideoPrompt(params.payload, assets)
+      : buildVideoPrompt(params.payload, assets);
+  const prompt = videoPromptForReferenceAssets(referenceAssets);
+  await postWorkerSlotStatus(params.payload, "running", "video_reference_format_ready", {
+    index: 1,
+    status: "running",
+    stage: "video_reference_format_ready",
+    error: "",
+    referenceFrameCount: referenceAssets.length,
+    requestedReferenceFrameCount: requestedReferenceAssets.length,
+    providerReferenceLimit,
+    providerReferenceSize: videoParams.size,
+    updatedAt: new Date().toISOString()
+  });
   await postWorkerStatus(params.payload, "running", "source_images_ready");
   await postWorkerStatus(params.payload, "running", "video_provider_request_started");
   await postWorkerSlotStatus(params.payload, "running", "video_provider_request_started", {
@@ -1521,16 +1910,16 @@ async function generateVideoWithProvider(params: {
     updatedAt: new Date().toISOString()
   });
 
-  const runVideoProviderTask = async (frameImageUrls: string[], taskReferenceAssets = referenceAssets) => {
+  const runVideoProviderTask = async (frameImageUrls: string[], taskReferenceAssets = referenceAssets, taskPrompt = prompt) => {
     let taskId = "";
     let createError: unknown;
-    for (const modelCandidate of videoProviderModelCandidates(model)) {
+    for (const modelCandidate of videoProviderModelCandidates(model, { protocol, referenceAssetCount: taskReferenceAssets.length, baseUrl })) {
       try {
         taskId = await createVideoTask({
           baseUrl,
           apiKey: providerApiKey,
           model: modelCandidate,
-          prompt,
+          prompt: taskPrompt,
           imageUrls: frameImageUrls,
           referenceAssets: taskReferenceAssets,
           videoParams,
@@ -1562,7 +1951,7 @@ async function generateVideoWithProvider(params: {
     return { status, taskId, referenceFrameCount: taskReferenceAssets.length };
   };
 
-  let status: VideoStatusResponse;
+  let status: VideoStatusResponse | undefined;
   let taskId = "";
   let usedReferenceFrameCount = referenceAssets.length;
   try {
@@ -1571,35 +1960,23 @@ async function generateVideoWithProvider(params: {
     taskId = result.taskId;
     usedReferenceFrameCount = result.referenceFrameCount;
   } catch (error) {
-    if (shouldRetryOpenAiVideoTaskWithFirstFrame({ error, protocol, referenceAssets })) {
-      await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_first_frame", {
-        index: 1,
-        status: "running",
-        stage: "video_provider_retry_first_frame",
-        error: errorMessage(error).slice(0, 240),
-        updatedAt: new Date().toISOString()
-      });
-      const result = await runVideoProviderTask([], referenceAssets.slice(0, 1));
-      status = result.status;
-      taskId = result.taskId;
-      usedReferenceFrameCount = result.referenceFrameCount;
-    } else {
-      if (!shouldRetryVideoTaskWithDataUriFrames({ error, imageUrls, protocol })) throw error;
-      await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_data_uri_frames", {
-        index: 1,
-        status: "running",
-        stage: "video_provider_retry_data_uri_frames",
-        error: errorMessage(error).slice(0, 240),
-        updatedAt: new Date().toISOString()
-      });
-      const dataUriImageUrls = await videoProviderDataUriFrameUrls({ referenceAssets, timeoutMs });
-      const result = await runVideoProviderTask(dataUriImageUrls);
-      status = result.status;
-      taskId = result.taskId;
-      usedReferenceFrameCount = result.referenceFrameCount;
-    }
+    if (!shouldRetryVideoTaskWithDataUriFrames({ error, imageUrls, protocol })) throw error;
+    await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_data_uri_frames", {
+      index: 1,
+      status: "running",
+      stage: "video_provider_retry_data_uri_frames",
+      error: errorMessage(error).slice(0, 240),
+      updatedAt: new Date().toISOString()
+    });
+    const dataUriImageUrls = await videoProviderDataUriFrameUrls({ referenceAssets, timeoutMs });
+    const result = await runVideoProviderTask(dataUriImageUrls);
+    status = result.status;
+    taskId = result.taskId;
+    usedReferenceFrameCount = result.referenceFrameCount;
   }
-  const resultUrl = textValue(status.result_url);
+  if (!status) throw new Error("ai_provider_video_empty_status");
+  const statusVideo = recordValue(status.video) ?? {};
+  const resultUrl = textValue(status.result_url) || textValue(statusVideo?.url);
   if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const video = await downloadVideoResult({
     resultUrl,
@@ -1806,30 +2183,6 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     } catch (error) {
       lastError = errorMessage(error);
       providerErrors.push({ provider: provider.label || provider.id, error: lastError });
-      await postWorkerSlotStatus(payload, "running", "video_provider_failed", {
-        index: 1,
-        status: "failed",
-        stage: "video_provider_failed",
-        error: lastError.slice(0, 240),
-        updatedAt: new Date().toISOString()
-      });
-    }
-  }
-
-  if (shouldUseLocalVideoFallback()) {
-    try {
-      await postWorkerStatus(payload, "running", "local_video_fallback_started");
-      const output = await generateLocalFallbackVideo(payload);
-      await postWorkerResult(payload, {
-        status: "succeeded",
-        outputs: [{ storageKey: output.storageKey, mimeType: output.mimeType }],
-        providerTrace: [...providerTrace, { provider: output.providerLabel, attempts: 1 }],
-        costTrace: { estimatedCostUsd: output.estimatedCostUsd, providerErrors, referenceFrameCount: output.referenceFrameCount, requestedReferenceFrameCount: output.requestedReferenceFrameCount, providerReferenceLimit: output.providerReferenceLimit }
-      });
-      return;
-    } catch (error) {
-      lastError = errorMessage(error);
-      providerErrors.push({ provider: "Local video fallback", error: lastError });
       await postWorkerSlotStatus(payload, "running", "video_provider_failed", {
         index: 1,
         status: "failed",

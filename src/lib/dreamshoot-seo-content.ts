@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { publicSiteUrlFromParts } from "@/lib/domain-routing";
+import { isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -42,16 +43,43 @@ function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryD
 }
 
 function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
-  if (!site) return false;
-  const value = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return value.includes("-xby") || value.includes("_xby");
+  return isSpanishStorefrontSite(site);
 }
 
 function spanishXbyBrandName(site?: Pick<Site, "name"> & { branding?: Pick<Site["branding"], "logoText"> }): string {
   return site?.branding?.logoText || site?.name || "Tienda IA";
 }
 
+function withSpanishBrand(
+  metadata: DreamshootRouteMetadataSeed | undefined,
+  brand: string,
+  aidreamcapes: boolean
+): DreamshootRouteMetadataSeed | undefined {
+  if (!metadata) return undefined;
+  const previousBrand = aidreamcapes ? "AIdreamcapes" : "AIdreamshoots";
+  return {
+    ...metadata,
+    title: metadata.title.replaceAll(previousBrand, brand),
+    description: metadata.description.replaceAll(previousBrand, brand),
+    keywords: metadata.keywords.replaceAll(previousBrand, brand)
+  };
+}
+
 function seoDirectoryIcons(site: Site): Metadata["icons"] {
+  if (isSpanishXbySite(site)) {
+    const aidreamcapes = isAidreamcapesSite(site);
+    const basePath = aidreamcapes ? "/assets/sites/site_aidreamcapes_eu/brand" : "/assets/sites/site_aidreamshoots/brand";
+    const iconPrefix = aidreamcapes ? "aidreamcapes" : "aidreamshoots";
+    const logo = aidreamcapes ? "aidreamcapes-logo-refined.svg" : "aidreamshoots-logo-refined.svg";
+    return {
+      icon: [
+        { url: `${basePath}/${iconPrefix}-icon-192.png?v=20260717a`, type: "image/png", sizes: "192x192" },
+        { url: `${basePath}/${logo}?v=20260717a`, type: "image/svg+xml" }
+      ],
+      shortcut: `${basePath}/${iconPrefix}-icon-192.png?v=20260717a`,
+      apple: [{ url: `${basePath}/${iconPrefix}-icon-180.png?v=20260717a`, sizes: "180x180", type: "image/png" }]
+    };
+  }
   if (isAidreamcapesSite(site)) {
     return {
       icon: [
@@ -147,10 +175,28 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     canonicalPath: "/contact-us",
     index: true,
     follow: true
+  },
+  "/faq": {
+    title: "MyDreamShoots FAQ",
+    description:
+      "Find MyDreamShoots FAQ answers about source photo quality, package choice, visible credit costs, checkout, refunds, privacy, cookies, and private gallery delivery.",
+    keywords: "MyDreamShoots FAQ, AI photo upload questions, AI photo package FAQ, private AI gallery support",
+    canonicalPath: "/faq",
+    index: true,
+    follow: true
   }
 };
 
 export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/workflow": {
+    title: "How Aidreamcapes works - private AI travel portrait workflow",
+    description:
+      "Learn how Aidreamcapes customers upload source photos, choose travel portrait routes, review visible credits, generate private results, and download finished galleries.",
+    keywords: "Aidreamcapes workflow, AI travel portrait workflow, private destination portraits, AI travel gallery credits",
+    canonicalPath: "/workflow",
+    index: true,
+    follow: true
+  },
   "/about-us": {
     title: "About Aidreamcapes",
     description:
@@ -166,6 +212,15 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
       "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
     keywords: "Contact Aidreamcapes, Aidreamcapes support, AI travel portrait support, Aidreamcapes sales, private gallery help",
     canonicalPath: "/contact-us",
+    index: true,
+    follow: true
+  },
+  "/faq": {
+    title: "Aidreamcapes FAQ",
+    description:
+      "Find practical Aidreamcapes FAQ answers about source photo quality, travel package choice, destination references, credit usage, checkout, refunds, privacy, cookies, and private gallery delivery.",
+    keywords: "Aidreamcapes FAQ, AI travel photo upload questions, destination package FAQ, private travel gallery support",
+    canonicalPath: "/faq",
     index: true,
     follow: true
   },
@@ -190,34 +245,50 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
 };
 
 const spanishMydreamshootsPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/workflow": {
+    title: "Como funciona AIdreamshoots",
+    description: "Revisa el flujo de AIdreamshoots: sube selfies claros, elige un paquete, confirma creditos y descarga resultados desde una galeria privada.",
+    keywords: "como funciona AIdreamshoots, flujo fotos IA, creditos fotos IA, galeria privada",
+    canonicalPath: "/workflow",
+    index: true,
+    follow: true
+  },
+  "/faq": {
+    title: "Preguntas frecuentes AIdreamshoots",
+    description: "Encuentra respuestas sobre selfies fuente, paquetes de fotos IA, creditos, pago, privacidad, reintentos y entrega de albumes privados.",
+    keywords: "FAQ AIdreamshoots, preguntas fotos IA, ayuda creditos, galeria privada",
+    canonicalPath: "/faq",
+    index: true,
+    follow: true
+  },
   "/about-us": {
-    title: "Sobre MyDreamShoots-xby",
-    description: "Conoce MyDreamShoots-xby, una tienda privada para crear retratos profesionales, fotos de pareja, albumes y galerias con IA desde selfies.",
-    keywords: "sobre MyDreamShoots-xby, fotos IA privadas, retratos IA, galerias privadas",
+    title: "Sobre AIdreamshoots",
+    description: "Conoce AIdreamshoots, una tienda privada para crear retratos profesionales, fotos de pareja, albumes y galerias con IA desde selfies.",
+    keywords: "sobre AIdreamshoots, fotos IA privadas, retratos IA, galerias privadas",
     canonicalPath: "/about-us",
     index: true,
     follow: true
   },
   "/contact-us": {
-    title: "Contacto MyDreamShoots-xby",
-    description: "Contacta con MyDreamShoots-xby para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.",
-    keywords: "contacto MyDreamShoots-xby, soporte fotos IA, ayuda creditos",
+    title: "Contacto AIdreamshoots",
+    description: "Contacta con AIdreamshoots para soporte de cuenta, creditos, facturacion, privacidad, paquetes y entrega de galerias.",
+    keywords: "contacto AIdreamshoots, soporte fotos IA, ayuda creditos",
     canonicalPath: "/contact-us",
     index: true,
     follow: true
   },
   "/creators-circle": {
-    title: "Circulo de creadores MyDreamShoots-xby",
-    description: "Unete al programa de creadores de MyDreamShoots-xby para campanas de fotos con IA, galerias privadas y colaboraciones.",
-    keywords: "creadores MyDreamShoots-xby, programa de creadores IA, colaboracion fotos IA",
+    title: "Circulo de creadores AIdreamshoots",
+    description: "Unete al programa de creadores de AIdreamshoots para campanas de fotos con IA, galerias privadas y colaboraciones.",
+    keywords: "creadores AIdreamshoots, programa de creadores IA, colaboracion fotos IA",
     canonicalPath: "/creators-circle",
     index: true,
     follow: true
   },
   "/partner-registration": {
-    title: "Registro de partners MyDreamShoots-xby",
-    description: "Solicita colaborar con MyDreamShoots-xby y comparte tu audiencia, canales, objetivos y encaje para campanas de fotos con IA.",
-    keywords: "partners MyDreamShoots-xby, colaboracion IA, registro creadores",
+    title: "Registro de partners AIdreamshoots",
+    description: "Solicita colaborar con AIdreamshoots y comparte tu audiencia, canales, objetivos y encaje para campanas de fotos con IA.",
+    keywords: "partners AIdreamshoots, colaboracion IA, registro creadores",
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
@@ -225,34 +296,50 @@ const spanishMydreamshootsPublicSeoPageMetadata: Record<string, DreamshootRouteM
 };
 
 const spanishAidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/workflow": {
+    title: "Como funciona AIdreamcapes",
+    description: "Revisa el flujo de AIdreamcapes: prepara fotos fuente, elige una ruta visual, confirma creditos y recibe retratos de viaje privados.",
+    keywords: "como funciona AIdreamcapes, retratos de viaje IA, creditos ruta, galeria privada",
+    canonicalPath: "/workflow",
+    index: true,
+    follow: true
+  },
+  "/faq": {
+    title: "Preguntas frecuentes AIdreamcapes",
+    description: "Consulta respuestas sobre fotos fuente, rutas visuales, destinos, creditos, privacidad y entrega de galerias de viaje.",
+    keywords: "FAQ AIdreamcapes, preguntas retratos de viaje, ayuda creditos, galerias privadas",
+    canonicalPath: "/faq",
+    index: true,
+    follow: true
+  },
   "/about-us": {
-    title: "Sobre Aidreamcapes-xby",
-    description: "Conoce Aidreamcapes-xby, una tienda privada para crear retratos de viaje, escenas de destino y galerias cinematicas con IA.",
-    keywords: "sobre Aidreamcapes-xby, retratos de viaje IA, galerias privadas",
+    title: "Sobre AIdreamcapes",
+    description: "Conoce AIdreamcapes, una tienda privada para crear retratos de viaje, escenas de destino y galerias cinematicas con IA.",
+    keywords: "sobre AIdreamcapes, retratos de viaje IA, galerias privadas",
     canonicalPath: "/about-us",
     index: true,
     follow: true
   },
   "/contact-us": {
-    title: "Contacto Aidreamcapes-xby",
-    description: "Contacta con Aidreamcapes-xby para soporte de cuenta, fotos fuente, creditos, facturacion, privacidad o entrega de galerias.",
-    keywords: "contacto Aidreamcapes-xby, soporte retratos IA, ayuda creditos",
+    title: "Contacto AIdreamcapes",
+    description: "Contacta con AIdreamcapes para soporte de cuenta, fotos fuente, creditos, facturacion, privacidad o entrega de galerias.",
+    keywords: "contacto AIdreamcapes, soporte retratos IA, ayuda creditos",
     canonicalPath: "/contact-us",
     index: true,
     follow: true
   },
   "/creators-circle": {
-    title: "Circulo de creadores Aidreamcapes-xby",
-    description: "Unete al programa de creadores de Aidreamcapes-xby para campanas de retratos de viaje, galerias privadas y colaboraciones.",
-    keywords: "creadores Aidreamcapes-xby, retratos de viaje IA, colaboracion creadores",
+    title: "Circulo de creadores AIdreamcapes",
+    description: "Unete al programa de creadores de AIdreamcapes para campanas de retratos de viaje, galerias privadas y colaboraciones.",
+    keywords: "creadores AIdreamcapes, retratos de viaje IA, colaboracion creadores",
     canonicalPath: "/creators-circle",
     index: true,
     follow: true
   },
   "/partner-registration": {
-    title: "Registro de partners Aidreamcapes-xby",
-    description: "Solicita colaborar con Aidreamcapes-xby y comparte tu audiencia, canales, objetivos y encaje para retratos de viaje con IA.",
-    keywords: "partners Aidreamcapes-xby, colaboracion retratos IA, registro creadores",
+    title: "Registro de partners AIdreamcapes",
+    description: "Solicita colaborar con AIdreamcapes y comparte tu audiencia, canales, objetivos y encaje para retratos de viaje con IA.",
+    keywords: "partners AIdreamcapes, colaboracion retratos IA, registro creadores",
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
@@ -267,9 +354,9 @@ export function getDreamshootPublicSeoPageMetadataForSite(
 ): DreamshootRouteMetadataSeed | undefined {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   if (isSpanishXbySite(site)) {
-    return isAidreamcapesSite(site)
+    return withSpanishBrand(isAidreamcapesSite(site)
       ? spanishAidreamcapesPublicSeoPageMetadata[normalizedPath]
-      : spanishMydreamshootsPublicSeoPageMetadata[normalizedPath];
+      : spanishMydreamshootsPublicSeoPageMetadata[normalizedPath], spanishXbyBrandName(site), isAidreamcapesSite(site));
   }
   return isAidreamcapesSite(site) ? aidreamcapesPublicSeoPageMetadata[normalizedPath] : dreamshootPublicSeoPageMetadata[normalizedPath];
 }
@@ -297,23 +384,23 @@ const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataS
 
 const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/login": {
-    title: "Iniciar sesion en MyDreamShoots-xby",
-    description: "Accede a MyDreamShoots-xby para gestionar subidas privadas, creditos, pedidos de fotos con IA, albumes y descargas.",
-    keywords: "MyDreamShoots-xby login, cuenta fotos IA, galeria privada",
+    title: "Iniciar sesion en AIdreamshoots",
+    description: "Accede a AIdreamshoots para gestionar subidas privadas, creditos, pedidos de fotos con IA, albumes y descargas.",
+    keywords: "AIdreamshoots login, cuenta fotos IA, galeria privada",
     canonicalPath: "/login",
     index: false,
     follow: true
   },
   "/pricing": {
-    title: "Precios MyDreamShoots-xby - creditos y planes de fotos IA",
+    title: "Precios AIdreamshoots - creditos y planes de fotos IA",
     description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega de galerias privadas antes de crear fotos con IA.",
-    keywords: "precios MyDreamShoots-xby, creditos IA, planes fotos IA",
+    keywords: "precios AIdreamshoots, creditos IA, planes fotos IA",
     canonicalPath: "/pricing",
     index: true,
     follow: true
   },
   "/tools": {
-    title: "Herramientas de fotos con IA | MyDreamShoots-xby",
+    title: "Herramientas de fotos con IA | AIdreamshoots",
     description: "Explora herramientas para retratos profesionales, fondos, retoque, video corto, probador virtual, paquetes privados y galerias con creditos visibles.",
     keywords: "herramientas IA, fotos IA, retratos profesionales IA, cambiador de fondo",
     canonicalPath: "/tools",
@@ -324,23 +411,23 @@ const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteM
 
 const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/login": {
-    title: "Iniciar sesion en Aidreamcapes-xby",
-    description: "Accede a Aidreamcapes-xby para gestionar subidas privadas, creditos, pedidos de retratos de viaje, galerias y descargas.",
-    keywords: "Aidreamcapes-xby login, cuenta retratos IA, galeria privada",
+    title: "Iniciar sesion en AIdreamcapes",
+    description: "Accede a AIdreamcapes para gestionar subidas privadas, creditos, pedidos de retratos de viaje, galerias y descargas.",
+    keywords: "AIdreamcapes login, cuenta retratos IA, galeria privada",
     canonicalPath: "/login",
     index: false,
     follow: true
   },
   "/pricing": {
-    title: "Precios Aidreamcapes-xby - creditos para retratos de viaje",
+    title: "Precios AIdreamcapes - creditos para retratos de viaje",
     description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega privada antes de crear retratos de viaje con IA.",
-    keywords: "precios Aidreamcapes-xby, creditos IA, retratos de viaje IA",
+    keywords: "precios AIdreamcapes, creditos IA, retratos de viaje IA",
     canonicalPath: "/pricing",
     index: true,
     follow: true
   },
   "/tools": {
-    title: "Herramientas de retratos de viaje | Aidreamcapes-xby",
+    title: "Herramientas de retratos de viaje | AIdreamcapes",
     description: "Explora herramientas para retratos de ruta, luz costera, escenas de viaje, postales y galerias privadas con IA.",
     keywords: "herramientas viaje IA, retratos de ruta, fotos de destino IA",
     canonicalPath: "/tools",
@@ -348,9 +435,9 @@ const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMe
     follow: true
   },
   "/terms": {
-    title: "Terminos de servicio | Aidreamcapes-xby",
+    title: "Terminos de servicio | AIdreamcapes",
     description: "Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable.",
-    keywords: "terminos Aidreamcapes-xby, politica creditos IA, galeria privada",
+    keywords: "terminos AIdreamcapes, politica creditos IA, galeria privada",
     canonicalPath: "/terms",
     index: true,
     follow: true
@@ -361,7 +448,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
     label: "Beauty",
     title: "AI Beauty Photo Packages - polished portraits and soft glam albums",
-    description: "Create polished AI beauty photos with MyDreamShoots: beauty portraits, skincare-ready profile images, soft glam looks, editorial crops, private albums, and optional video-ready outputs from everyday uploads.",
+    description: "Create polished AI beauty photos with MyDreamShoots: beauty portraits, soft glam looks, hairstyle previews, editorial crops, and private albums from everyday uploads.",
     keywords: "AI Beauty Photo Maker, AI beauty photos, beauty portrait generator, glam AI photos, MyDreamShoots beauty",
     h2: "beauty",
     h3: ["AI beauty portrait styles", "Private beauty photo workflow", "Beauty photos and video-ready outputs"],
@@ -396,7 +483,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
   },
   headshots: {
     label: "Headshots",
-    title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+    title: "AI Headshot Generator for LinkedIn & Team Photos | MyDreamShoots",
     description: "Generate AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private MyDreamShoots uploads and credit costs shown before generation.",
     keywords: "AI Headshot Maker, professional AI headshots, LinkedIn photo generator, business portrait AI, MyDreamShoots headshots",
     h2: "headshots",
@@ -449,6 +536,60 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     workflow: ["Upload strong source portraits.", "Select a cinematic or creator direction.", "Generate a private themed album.", "Choose final images for profile, campaign, or gallery use."],
     ctaLabel: "Create Cinematic Photos",
     ctaHref: "/tools/cyberpunk-portrait"
+  },
+  creator: {
+    label: "Creator",
+    title: "AI Creator Photo Packages - portraits, cards, and social images",
+    description: "Browse AI creator photo packages for portraits, profile cards, product-style scenes, social cards, and private brand-ready albums with visible credits.",
+    keywords: "AI creator photos, creator portrait generator, profile card maker, social image AI, MyDreamShoots creator",
+    h2: "creator",
+    h3: ["Creator profile packages", "Private brand image workflow", "Social-ready photo directions"],
+    intro: "The Creator collection groups private photo packages for personal-brand images, social cards, profile refreshes, product-led scenes, and campaign-ready portraits.",
+    details: [
+      "Creator packages help customers compare profile cards, creator portraits, product-style scenes, fashion editorial images, and social cards before spending credits.",
+      "Each package keeps source-photo guidance, credit expectations, and private delivery visible before generation starts.",
+      "The collection is designed for profile pages, newsletters, media kits, social posts, lightweight campaigns, and creator storefront assets."
+    ],
+    useCases: ["Creator portraits and profile cards", "Social announcements and banners", "Product-style lifestyle images", "Newsletter and media-kit visuals"],
+    workflow: ["Upload source photos you own.", "Choose the creator package direction.", "Review credit cost and image count.", "Generate a private album and download favorites."],
+    ctaLabel: "Browse Creator Packages",
+    ctaHref: "/collections/creator"
+  },
+  nature: {
+    label: "Nature",
+    title: "AI Nature Photo Maker - outdoor portraits and adventure scenes",
+    description: "Create AI nature photos with outdoor portraits, trails, forests, cliffs, lakes, golden-hour light, and private adventure albums from customer uploads.",
+    keywords: "AI Nature Photo Maker, outdoor portrait generator, adventure AI photos, nature portrait AI, MyDreamShoots nature",
+    h2: "nature",
+    h3: ["Outdoor portrait direction", "Adventure scene planning", "Private nature album delivery"],
+    intro: "The Nature package focuses on outdoor portraits and adventure scenes instead of generic travel imagery. It keeps mountain, forest, lake, trail, and golden-hour directions together in one private workflow.",
+    details: [
+      "Nature outputs should feel grounded in outdoor settings such as forests, trails, mountains, cliffs, lakes, and warm natural light.",
+      "The package works best with clear portraits and simple guidance about the preferred outdoor mood.",
+      "Customers can compare example images, credit cost, image count, and source-photo expectations before opening the creation flow."
+    ],
+    useCases: ["Outdoor profile photos", "Adventure portraits", "Lifestyle and travel-adjacent galleries", "Creator nature scenes"],
+    workflow: ["Upload clear portraits.", "Choose the nature or adventure direction.", "Generate a private outdoor album.", "Download favorites for profiles or campaigns."],
+    ctaLabel: "Create Nature Photos",
+    ctaHref: "/tools/nature-adventure"
+  },
+  seasonal: {
+    label: "Seasonal",
+    title: "AI Seasonal Photo Packages - holiday portraits and festive albums",
+    description: "Browse seasonal AI photo packages for holiday portraits, Christmas cards, festive profile images, and private keepsake albums.",
+    keywords: "AI seasonal photos, holiday AI portraits, Christmas photo generator, festive portrait AI, MyDreamShoots seasonal",
+    h2: "seasonal",
+    h3: ["Holiday photo packages", "Festive private gallery workflow", "Cards, profiles, and keepsakes"],
+    intro: "The Seasonal collection groups holiday, Christmas, and festive portrait packages so customers can compare warm card-ready visuals before spending credits.",
+    details: [
+      "Seasonal packages cover holiday portraits, Christmas cards, cozy couple scenes, festive solo photos, and private keepsake galleries.",
+      "Each option shows source-photo guidance, visible credits, image count, and private delivery expectations.",
+      "The collection helps customers pick the right seasonal mood without mixing unrelated creative or utility packages into the page."
+    ],
+    useCases: ["Holiday cards", "Christmas portraits", "Festive profile images", "Private seasonal keepsakes"],
+    workflow: ["Upload clear source photos.", "Choose a holiday or Christmas package.", "Review credits and image count.", "Generate a private festive album."],
+    ctaLabel: "Browse Seasonal Packages",
+    ctaHref: "/collections/seasonal"
   },
   hairstyle: {
     label: "Hairstyle",
@@ -867,6 +1008,186 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     workflow: ["Upload the source portrait or reference.", "Choose a keepsake format.", "Generate private card options.", "Download the strongest social-ready image."],
     ctaLabel: "Create Social Keepsakes",
     ctaHref: "/tools/social-keepsake"
+  },
+  "nature-portrait-studio": {
+    label: "Nature Portrait Studio",
+    title: "Botanical Portrait Scenes - Aidreamcapes nature image atlas",
+    description: "Explore Aidreamcapes botanical portrait scenes with glasshouse light, garden paths, soft green textures, and account-bound review for personal nature-led images.",
+    keywords: "Aidreamcapes nature portrait studio, botanical AI portraits, garden portrait scenes, private nature image atlas",
+    h2: "botanical portrait scenes",
+    h3: ["Glasshouse and garden moods", "Quiet outdoor source planning", "Account-bound review flow"],
+    intro: "Nature Portrait Studio is framed as a calm scene atlas: plant-filtered light, textured paths, and natural expressions instead of a generic outdoor adventure package.",
+    details: [
+      "The visual language favors botanical depth, soft green surfaces, and measured editorial composition.",
+      "Source photos work best when the face is clear and the requested mood is described through light, setting, and wardrobe rather than a copied template.",
+      "Finished options stay connected to the Aidreamcapes account so customers can compare atmosphere before using a final image."
+    ],
+    useCases: ["Botanical profile scenes", "Garden portrait studies", "Soft personal brand images", "Nature-led keepsake sets"],
+    workflow: ["Bring a clear source portrait.", "Name the plant-light mood.", "Review the botanical atlas.", "Keep the scene that feels most natural."],
+    ctaLabel: "Open Nature Portrait Studio",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_nature&tool_id=image_generator"
+  },
+  "city-light-night-walks": {
+    label: "City Light Night Walks",
+    title: "City Light Night Walks - Aidreamcapes night route atlas",
+    description: "Build city light night walks with Aidreamcapes: rain gloss, street glow, skyline color, and private route portrait review.",
+    keywords: "Aidreamcapes city light portraits, night route AI portraits, skyline portrait scenes, private travel portrait atlas",
+    h2: "city light night walks",
+    h3: ["Street glow direction", "After-dark route framing", "Private night route review"],
+    intro: "City Light Night Walks turn the page into a lively night route atlas, using color, rain reflection, and wardrobe energy without borrowing from a poster-maker pattern.",
+    details: [
+      "Street reflections, skyline edges, and side-lane framing carry the theme.",
+      "Customers can steer the mood toward polished fashion, cinematic solitude, or brighter night-market energy.",
+      "The set is useful when the desired result is atmosphere-led and recognizably separate from ordinary studio portraits."
+    ],
+    useCases: ["Night profile images", "City creator scenes", "After-dark portraits", "Travel keepsake crops"],
+    workflow: ["Start with a face-clear upload.", "Choose the night color temperature.", "Generate the private city-light atlas.", "Select the strongest evening crop."],
+    ctaLabel: "Open City Light Night Walks",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_city_lights&tool_id=image_generator"
+  },
+  "evening-route-portraits": {
+    label: "Evening Route Portraits",
+    title: "Evening Route Portraits - Aidreamcapes shadow atlas",
+    description: "Shape evening route portraits with Aidreamcapes using blue-hour streets, lounge light, hotel awnings, and tailored cinematic contrast.",
+    keywords: "Aidreamcapes evening portraits, blue hour AI portraits, hotel awning portrait scenes, private evening route atlas",
+    h2: "evening route portrait frames",
+    h3: ["Shadow-led styling", "Blue-hour atmosphere", "Tailored evening contrast"],
+    intro: "Evening Route Portraits keep the drama in lighting and composition: shadow, glass, eveningwear, and quiet travel atmosphere.",
+    details: [
+      "The direction avoids costume-copy sameness by treating evening light as mood architecture rather than a character preset.",
+      "Good inputs include relaxed expressions, clean facial detail, and a wardrobe note if the customer wants black-tie polish.",
+      "Outputs can be compared as a private sequence before one image is used for a profile, invitation, or keepsake."
+    ],
+    useCases: ["Evening profile scenes", "Black-tie portraits", "Moody invitation images", "Film-grain keepsakes"],
+    workflow: ["Upload a source portrait.", "Choose shadow, lounge, or blue-hour mood.", "Review the evening route sequence.", "Download the frame with the best contrast."],
+    ctaLabel: "Open Evening Route Portraits",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_evening_route&tool_id=image_generator"
+  },
+  "boudoir-editorial-portraits": {
+    label: "Soft Editorial Room Portraits",
+    title: "Soft Room Portrait Scenes - Aidreamcapes private atlas",
+    description: "Explore polished indoor editorial portraits with Aidreamcapes: soft hotel-window light, elegant wardrobe, seated room compositions, and privacy-first review.",
+    keywords: "Aidreamcapes soft editorial portraits, indoor AI portrait scenes, elegant room portrait atlas, private portrait review",
+    h2: "soft room portrait scenes",
+    h3: ["Restrained hotel light", "Elegant wardrobe direction", "Privacy-first image review"],
+    intro: "Soft Editorial Room Portraits is a restrained scene atlas where room light, wardrobe, posture, and quiet confidence do the visual work.",
+    details: [
+      "The page emphasizes modest wardrobe, soft window light, and quiet indoor composition.",
+      "Customers should upload only photos they own or have permission to use, with styling notes focused on mood, light, and room setting.",
+      "The Aidreamcapes review flow lets customers compare soft editorial scenes privately before saving any final image."
+    ],
+    useCases: ["Soft personal portraits", "Indoor editorial scenes", "Private confidence studies", "Elegant gift images"],
+    workflow: ["Begin with a clear source portrait.", "Describe room light and wardrobe restraint.", "Review the private soft-room set.", "Save only the image that feels right."],
+    ctaLabel: "Open Soft Editorial Room Portraits",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_boudoir&tool_id=image_generator"
+  },
+  "hairstyle-try-on-stories": {
+    label: "Hairstyle Try-On Stories",
+    title: "Hair Look Scene Studies - Aidreamcapes hairstyle atlas",
+    description: "Compare hair look scene studies with Aidreamcapes: cut, color, salon light, realistic texture, and beauty-editorial framing for private style planning.",
+    keywords: "Aidreamcapes hairstyle try-on, AI hair look portraits, hairstyle scene studies, private beauty planning atlas",
+    h2: "hair look scene studies",
+    h3: ["Cut and color direction", "Salon-light portrait framing", "Private beauty planning"],
+    intro: "Hairstyle Try-On Stories turns hair planning into a portrait atlas, pairing realistic texture with controlled lighting and face-framing composition.",
+    details: [
+      "Customers can compare cut length, color temperature, volume, fringe, and styling mood without treating the result as a real-world guarantee.",
+      "Source images should keep the face clear and avoid heavy filters that hide the hairline.",
+      "The theme is useful for deciding a visual direction before asking a stylist or starting a broader beauty set."
+    ],
+    useCases: ["Hair color studies", "Cut preview portraits", "Beauty scene planning", "Personal style refreshes"],
+    workflow: ["Upload a clear portrait.", "Describe the cut or color direction.", "Review hair look studies.", "Keep the reference that best communicates the mood."],
+    ctaLabel: "Open Hairstyle Try-On Stories",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_hairstyle&tool_id=image_generator"
+  },
+  "professional-headshot-studio": {
+    label: "Professional Headshot Studio",
+    title: "Professional Portrait Room - Aidreamcapes work image atlas",
+    description: "Build credible work portraits with Aidreamcapes using quiet studio authority, architectural backdrops, business-casual styling, and polished facial detail.",
+    keywords: "Aidreamcapes professional portraits, AI work portrait room, business portrait scene atlas, private professional image review",
+    h2: "professional portrait room",
+    h3: ["Quiet studio authority", "Bio-ready face detail", "Architectural backdrop options"],
+    intro: "Professional Headshot Studio avoids the stiff headshot factory feel by treating work portraits as a controlled room: posture, light, background, and calm authority.",
+    details: [
+      "Use it for public bios, speaker pages, team introductions, and professional profile refreshes.",
+      "The direction favors credible lighting over heavy glamour or travel fantasy.",
+      "Customers can compare several rooms and crops before choosing the image that matches their professional tone."
+    ],
+    useCases: ["Founder portraits", "Team bio images", "Speaker page photos", "Professional profile refreshes"],
+    workflow: ["Upload a clear face-forward image.", "Choose the room tone.", "Review credible portrait variants.", "Use the crop that feels most trustworthy."],
+    ctaLabel: "Open Professional Headshot Studio",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_headshots&tool_id=image_generator"
+  },
+  "milestone-postcard-sets": {
+    label: "Milestone Postcard Sets",
+    title: "Milestone Postcard Sets - Aidreamcapes keepsake atlas",
+    description: "Shape milestone postcard sets with Aidreamcapes: personal news, destination notes, keepsake captions, and polished announcement-style travel portraits.",
+    keywords: "Aidreamcapes milestone postcards, AI travel announcement scenes, keepsake postcard portraits, private milestone image atlas",
+    h2: "milestone postcard portraits",
+    h3: ["Personal news mood", "Destination-note atmosphere", "Announcement-style crops"],
+    intro: "Milestone Postcard Sets are written as destination notes: polished, personal, and keepsake-ready without falling into a standard card template.",
+    details: [
+      "The image direction can lean garden, terrace, candlelit, or city-evening while keeping the personal update central.",
+      "Clear references and a short note about formality help the set keep a consistent tone.",
+      "Customers can keep the results private until they are ready to share an announcement."
+    ],
+    useCases: ["Milestone announcements", "Travel keepsakes", "Personal update scenes", "Destination social crops"],
+    workflow: ["Upload source references.", "Name the postcard mood.", "Review keepsake variants.", "Save the announcement frame."],
+    ctaLabel: "Open Milestone Postcard Sets",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_milestone_postcards&tool_id=image_generator"
+  },
+  "holiday-couple-cards": {
+    label: "Holiday Couple Cards",
+    title: "Holiday Couple Scene Cards - Aidreamcapes seasonal atlas",
+    description: "Create atmospheric holiday couple scene cards with Aidreamcapes using warm interiors, winter light, seasonal decor, and private card review.",
+    keywords: "Aidreamcapes holiday couple cards, AI seasonal couple portraits, winter card scene atlas, private holiday image review",
+    h2: "holiday couple scene cards",
+    h3: ["Warm seasonal interiors", "Couple card composition", "Private holiday review"],
+    intro: "Holiday Couple Cards uses the Aidreamcapes atmosphere-first approach: warmth, room light, wardrobe, and seasonal setting before any card-like crop.",
+    details: [
+      "Customers can guide the card toward cozy, formal, snowy, candlelit, or modern winter styling.",
+      "The set avoids relying on in-image text, so the finished portrait can be used across different card layouts.",
+      "A private account review keeps drafts separate until the couple chooses a final seasonal image."
+    ],
+    useCases: ["Holiday card portraits", "Winter couple scenes", "Seasonal keepsake images", "Festive social posts"],
+    workflow: ["Upload a couple photo.", "Choose seasonal warmth and formality.", "Review the card-scene atlas.", "Use the best image in the final card layout."],
+    ctaLabel: "Open Holiday Couple Cards",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_holiday_couples&tool_id=image_generator"
+  },
+  "gala-night-portraits": {
+    label: "Gala Night Portraits",
+    title: "Gala Night Scene Portraits - Aidreamcapes formal atlas",
+    description: "Build formal gala night portraits with Aidreamcapes around hotel-lobby glow, banquet halls, eveningwear, and architectural event atmosphere.",
+    keywords: "Aidreamcapes gala portraits, AI formal night portraits, eveningwear portrait scenes, private gala image atlas",
+    h2: "gala night scene portraits",
+    h3: ["Hotel-lobby glow", "Formal eveningwear mood", "Architectural event framing"],
+    intro: "Gala Night Portraits focuses on formal atmosphere rather than red-carpet imitation: glass light, polished rooms, eveningwear, and poised expression.",
+    details: [
+      "Customers can specify black-tie, banquet, reception, terrace, or lobby mood.",
+      "The best results come from clear face references and a note about wardrobe formality.",
+      "Finished scenes support invitations, event pages, profile updates, and private keepsake sets."
+    ],
+    useCases: ["Formal event portraits", "Invitation imagery", "Eveningwear profile scenes", "Private gala keepsakes"],
+    workflow: ["Upload a clear portrait.", "Choose the event room mood.", "Review formal night variants.", "Keep the most elegant frame."],
+    ctaLabel: "Open Gala Night Portraits",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_gala&tool_id=image_generator"
+  },
+  "heritage-celebration-portraits": {
+    label: "Heritage Celebration Portraits",
+    title: "Heritage Celebration Portraits - Aidreamcapes cultural atlas",
+    description: "Explore respectful heritage celebration portraits with Aidreamcapes, guided by textile detail, jewelry, warm gathering atmosphere, and vibrant color.",
+    keywords: "Aidreamcapes heritage portraits, cultural AI portrait scenes, celebration portrait atlas, respectful cultural travel images",
+    h2: "heritage celebration portraits",
+    h3: ["Textile and jewelry detail", "Gathering-color atmosphere", "Respectful celebration review"],
+    intro: "Heritage Celebration Portraits is a culture-aware scene atlas that treats attire, color, and setting as meaningful details rather than decorative shortcuts.",
+    details: [
+      "The direction can include traditional attire, jewelry, warm room light, floral color, and family-gathering atmosphere.",
+      "Customers should provide respectful source photos and notes about attire or cultural mood when those details matter.",
+      "The review flow keeps variations private while customers choose images that feel elegant and culturally considerate."
+    ],
+    useCases: ["Celebration portraits", "Cultural gathering scenes", "Heritage keepsake images", "Travel profile visuals"],
+    workflow: ["Upload respectful source portraits.", "Describe attire, color, and gathering mood.", "Review the celebration atlas.", "Save the image with the right sense of occasion."],
+    ctaLabel: "Open Heritage Celebration Portraits",
+    ctaHref: "/app/create?pack=pack_aidreamcapes_heritage_celebrations&tool_id=image_generator"
   }
 };
 
@@ -883,12 +1204,23 @@ const aidreamcapesCollectionAliases: Record<string, string> = {
   "destination-portrait-albums": "route-portrait-albums",
   "coastal-getaways": "coastal-light-sets",
   "old-city-walks": "old-quarter-walks",
-  "scenic-overlooks": "golden-hour-route-stories",
   "mountain-trails": "alpine-trail-frames",
   "itinerary-moodboards": "route-moodboards",
   "postcard-social-sets": "postcard-story-sets",
   "travel-profile-stories": "solo-traveler-profiles",
-  "lagoon-route-studys": "lagoon-route-studies"
+  "lagoon-route-studys": "lagoon-route-studies",
+  nature: "nature-portrait-studio",
+  "city-light": "city-light-night-walks",
+  night: "city-light-night-walks",
+  evening: "evening-route-portraits",
+  boudoir: "boudoir-editorial-portraits",
+  hairstyle: "hairstyle-try-on-stories",
+  headshot: "professional-headshot-studio",
+  headshots: "professional-headshot-studio",
+  milestone: "milestone-postcard-sets",
+  holiday: "holiday-couple-cards",
+  gala: "gala-night-portraits",
+  heritage: "heritage-celebration-portraits"
 };
 
 export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug: string): string {
@@ -898,13 +1230,10 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
 
 const dreamshootCollectionAliases: Record<string, string> = {
   deportes: "world-cup-fan-photos",
-  seasonal: "holiday",
   sports: "world-cup-fan-photos",
   travel: "travel-scene-pack",
   viaje: "travel-scene-pack",
   video: "ai-video-add-ons",
-  creator: "creator-portraits",
-  nature: "travel-scene-pack",
   lifestyle: "travel-scene-pack",
   "professional-headshots": "headshots"
 };
@@ -1368,8 +1697,8 @@ function fallbackCollection(slug: string, brandName = "MyDreamShoots"): SeoDirec
   const subject = stripTrailingMediaNoun(label);
   const lower = lowerTopic(subject);
   const pluralLabel = pluralTopicLabel(label);
-  const packageTopic = collectionTitleTopic(label);
   if (isAidreamcapesBrand(brandName)) {
+    const packageTopic = collectionTitleTopic(label);
     return {
       label,
       title: `AI ${subject} Travel Gallery | ${brandName}`,
@@ -1391,7 +1720,7 @@ function fallbackCollection(slug: string, brandName = "MyDreamShoots"): SeoDirec
   }
   return {
     label,
-    title: `AI ${packageTopic} | ${brandName}`,
+    title: `AI ${subject} Photo Packages | ${brandName}`,
     description: `Plan private ${subject} shoots with ${brandName}: upload source photos, choose a creator-ready package direction, review credit use, and download polished gallery images.`,
     keywords: `AI ${subject} photo package, ${lower} portrait package, ${brandName} ${lower}, private creator photo gallery`,
     h2: `${lower} photo packages`,
@@ -1449,6 +1778,31 @@ function fallbackTool(slug: string, brandName = "MyDreamShoots"): SeoDirectorySe
     workflow: ["Review the result this tool is best for.", "Upload clear source photos.", "Choose the look or use case you need.", "Create and download the private result."],
     ctaLabel: `Start ${label}`,
     ctaHref: `/app/create?tool_id=${slug}`
+  };
+}
+
+function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDirectorySeed {
+  const aidreamcapes = isAidreamcapesBrand(brandName);
+  const subject = stripTrailingMediaNoun(seed.label);
+  const lower = lowerTopic(subject);
+  const guideHeadings = aidreamcapes
+    ? ["Source-photo checklist", "Destination and mood planning", "Private gallery review"]
+    : ["Source-photo checklist", "Credit and delivery review", "Private gallery review"];
+  const guideDetails = aidreamcapes
+    ? [
+        `For stronger ${lower} results, use clear portraits that show the subject naturally and add route, outfit, light, or atmosphere references when the destination scene needs a specific story.`,
+        `Before starting, compare the scene examples, destination mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`
+      ]
+    : [
+        `For stronger ${lower} results, upload several clear photos you own or have permission to use, with natural lighting, visible subject detail, and enough angle variety for a consistent private gallery.`,
+        `Before starting, compare the sample gallery, expected output, visible credit cost, and download goal so the ${lower} direction fits the profile, post, campaign, or album you have in mind.`
+      ];
+  const details = Array.from(new Set([...seed.details, ...guideDetails])).slice(0, 5);
+  const h3 = Array.from(new Set([...seed.h3, ...guideHeadings])).slice(0, details.length);
+  return {
+    ...seed,
+    h3,
+    details
   };
 }
 
@@ -1533,7 +1887,7 @@ function seoDirectoryCanonicalUrl(site: Site, canonicalPath: string): string {
 
 function fallbackRouteSiteName(siteSlug: string, options: { primaryDomain?: string; siteName?: string }): string {
   const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
-  if (siteIdentity.includes("-xby") || siteIdentity.includes("_xby")) return options.siteName?.trim() || siteSlug;
+  if (isSpanishStorefrontRequestIdentity(siteIdentity)) return options.siteName?.trim() || siteSlug;
   if (siteIdentity.includes("aidreamcapes")) return "Aidreamcapes";
   if (siteIdentity.includes("mydreamshoots") || siteIdentity.includes("dreamshoot")) return "MyDreamShoots";
   return options.siteName?.trim() || "MyDreamShoots";
@@ -1547,7 +1901,8 @@ export function metadataForDreamshootFallbackRoute(
   const normalizedPath = normalizeRouteMetadataPath(path);
   const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
   const aidreamcapes = siteIdentity.includes("aidreamcapes");
-  const spanishXby = siteIdentity.includes("-xby") || siteIdentity.includes("_xby");
+  const spanishXby = isSpanishStorefrontRequestIdentity(siteIdentity);
+  const spanishBrand = options.siteName?.trim() || (aidreamcapes ? "AIdreamcapes" : "AIdreamshoots");
   const publicMetadata = spanishXby
     ? aidreamcapes
       ? spanishAidreamcapesPublicSeoPageMetadata
@@ -1564,24 +1919,32 @@ export function metadataForDreamshootFallbackRoute(
       : dreamshootFallbackRouteMetadata;
   const defaultSeed = spanishXby
     ? {
-        title: aidreamcapes ? "Aidreamcapes-xby" : "MyDreamShoots-xby",
+        title: spanishBrand,
         description: aidreamcapes
-          ? "Aidreamcapes-xby es una tienda privada para retratos de viaje con IA, creditos, subidas privadas y galerias de cliente."
-          : "MyDreamShoots-xby es una tienda privada para fotos con IA, creditos, paquetes creativos y galerias de cliente.",
-        keywords: aidreamcapes ? "Aidreamcapes-xby, retratos de viaje IA, galeria privada" : "MyDreamShoots-xby, fotos IA, galeria privada",
+          ? `${spanishBrand} es una tienda privada para retratos de viaje con IA, creditos, subidas privadas y galerias de cliente.`
+          : `${spanishBrand} es una tienda privada para fotos con IA, creditos, paquetes creativos y galerias de cliente.`,
+        keywords: aidreamcapes ? `${spanishBrand}, retratos de viaje IA, galeria privada` : `${spanishBrand}, fotos IA, galeria privada`,
         canonicalPath: normalizedPath,
         index: false,
         follow: true
       }
     : {
-    title: "MyDreamShoots",
-    description: "MyDreamShoots is a private AI photo workspace for uploads, credits, creator photo packages, AI tools, and customer-only galleries.",
-    keywords: "MyDreamShoots, AI photo workspace, AI creator photo packages, private photo gallery",
-    canonicalPath: normalizedPath,
-    index: false,
-    follow: true
-  };
-  const seed = publicMetadata[normalizedPath] ?? fallbackMetadata[normalizedPath] ?? dreamshootPublicSeoPageMetadata[normalizedPath] ?? dreamshootFallbackRouteMetadata[normalizedPath] ?? defaultSeed;
+        title: aidreamcapes ? "Aidreamcapes" : "MyDreamShoots",
+        description: aidreamcapes
+          ? "Aidreamcapes is a private AI travel portrait workspace for route scenes, destination-style albums, visible credits, and customer-only galleries."
+          : "MyDreamShoots is a private AI photo workspace for uploads, credits, creator photo packages, AI tools, and customer-only galleries.",
+        keywords: aidreamcapes ? "Aidreamcapes, AI travel portraits, private destination gallery" : "MyDreamShoots, AI photo workspace, AI creator photo packages, private photo gallery",
+        canonicalPath: normalizedPath,
+        index: false,
+        follow: true
+      };
+  const selectedSeed =
+    publicMetadata[normalizedPath] ??
+    fallbackMetadata[normalizedPath] ??
+    (!aidreamcapes ? dreamshootPublicSeoPageMetadata[normalizedPath] : undefined) ??
+    (!aidreamcapes ? dreamshootFallbackRouteMetadata[normalizedPath] : undefined) ??
+    defaultSeed;
+  const seed = spanishXby ? withSpanishBrand(selectedSeed, spanishBrand, aidreamcapes) ?? defaultSeed : selectedSeed;
   const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
   const ogImage = absoluteRouteSeoImageUrl(options);
   const siteName = fallbackRouteSiteName(siteSlug, options);
@@ -1628,13 +1991,16 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
     : kind === "collection"
       ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName)
       : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
+  const enrichedSource = kind === "collection" && !spanishXby
+    ? enrichCollectionGuide(source, brandName)
+    : source;
   const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
   return {
-    ...source,
+    ...enrichedSource,
     slug: canonicalSlug,
     explicit,
     canonicalPath,
-    ctaHref: kind === "collection" ? `/app/create?tool_id=${canonicalSlug}` : source.ctaHref
+    ctaHref: kind === "collection" ? `/app/create?tool_id=${canonicalSlug}` : enrichedSource.ctaHref
   };
 }
 
@@ -1674,6 +2040,13 @@ export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawS
 export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean; site?: Site } = {}): ThemePageJson {
   const item = getSeoDirectoryContentForSite(options.site, kind, rawSlug);
   const sectionId = `seo_${kind}_${item.slug}`;
+  const themeCtaSectionId = `theme_cta_${kind}_${item.slug}`;
+  const themeFaqSectionId = `theme_faq_${kind}_${item.slug}`;
+  const relatedSectionId = `related_${kind}_${item.slug}`;
+  const detailSectionIds = kind === "collection"
+    ? [sectionId, themeCtaSectionId, themeFaqSectionId]
+    : [sectionId];
+  const injectedSectionIds = [...detailSectionIds, relatedSectionId];
   const seoSection: SectionInstance = {
     type: "seo_directory_content",
     settings: {
@@ -1691,10 +2064,45 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     },
     blocks: []
   };
+  const relatedSection: SectionInstance = {
+    type: "dreamshoot_related_packages",
+    settings: {
+      anchor: `related-${item.slug}`,
+      kind,
+      label: item.label,
+      title: "Related photo packages",
+      subtitle: "Keep exploring adjacent package themes before you upload source photos or spend credits.",
+      ctaLabel: "View all packages",
+      ctaHref: "/collections"
+    },
+    blocks: []
+  };
+  const themeCtaSection: SectionInstance = {
+    type: "dreamshoot_theme_cta",
+    settings: {
+      anchor: `start-${item.slug}`,
+      kind,
+      label: item.label,
+      eyebrow: "Start this theme",
+      ctaLabel: `Create ${item.label}`,
+      ctaHref: item.ctaHref
+    },
+    blocks: []
+  };
+  const themeFaqSection: SectionInstance = {
+    type: "dreamshoot_theme_faq",
+    settings: {
+      anchor: `faq-${item.slug}`,
+      kind,
+      label: item.label,
+      eyebrow: "Theme FAQ"
+    },
+    blocks: []
+  };
   const [firstSection, ...rest] = pageJson.sectionsOrder;
   const sectionsOrder = options.focused
-    ? (firstSection ? [firstSection, sectionId] : [sectionId])
-    : (firstSection ? [firstSection, sectionId, ...rest.filter((id) => id !== sectionId)] : [sectionId]);
+    ? (firstSection ? [firstSection, ...detailSectionIds, relatedSectionId] : injectedSectionIds)
+    : (firstSection ? [firstSection, ...detailSectionIds, ...rest.filter((id) => !injectedSectionIds.includes(id)), relatedSectionId] : injectedSectionIds);
   const focusedFirstSection = firstSection && pageJson.sections[firstSection]
     ? {
         ...pageJson.sections[firstSection],
@@ -1717,7 +2125,9 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     sectionsOrder,
     sections: {
       ...existingSections,
-      [sectionId]: seoSection
+      [sectionId]: seoSection,
+      ...(kind === "collection" ? { [themeCtaSectionId]: themeCtaSection, [themeFaqSectionId]: themeFaqSection } : {}),
+      [relatedSectionId]: relatedSection
     }
   };
 }

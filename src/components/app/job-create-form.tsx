@@ -1,16 +1,24 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Camera, CheckCircle2, Lightbulb, MapPin, Play, Sparkles, Trash2, UploadCloud, WandSparkles } from "lucide-react";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
+import { creativePackCategoryOption, creativePackMatchesCategory, photoPackageCategoryOptions } from "@/lib/photo-package-taxonomy";
 
 type CreateMode = "theme" | "tool";
 type PackageAudience = "self" | "partner" | "both";
 type UploadTarget = "primary" | "partner";
 type JobCreateLocale = "en" | "es";
 type PromptBuilderKey = "shot" | "scene" | "lighting" | "finish";
+type PromptBuilderGroup = {
+  id: PromptBuilderKey;
+  label: string;
+  spanishLabel: string;
+  options: string[];
+  spanishOptions: string[];
+};
 type OperationContext = {
   action?: string;
   note?: string;
@@ -54,6 +62,18 @@ const TOOL_PROMPT_BLOCKLIST = [
   "bomb making",
   "kill yourself"
 ];
+const FOUR_LINE_CLAMP_STYLE: CSSProperties = {
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 4,
+  overflow: "hidden"
+};
+const THREE_LINE_CLAMP_STYLE: CSSProperties = {
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 3,
+  overflow: "hidden"
+};
 
 type ToolPreset = {
   id: string;
@@ -257,13 +277,11 @@ const STANDALONE_VIDEO_TOOL_IDS = new Set([
   "travel-motion-concept"
 ]);
 
-const PROMPT_BUILDER_GROUPS: Array<{
-  id: PromptBuilderKey;
-  label: string;
-  spanishLabel: string;
-  options: string[];
-  spanishOptions: string[];
-}> = [
+function promptGroup(id: PromptBuilderKey, label: string, spanishLabel: string, options: string[], spanishOptions = options): PromptBuilderGroup {
+  return { id, label: id === "shot" && label === "Shot" ? "Framing" : label, spanishLabel, options, spanishOptions };
+}
+
+const DEFAULT_PROMPT_BUILDER_GROUPS: PromptBuilderGroup[] = [
   {
     id: "shot",
     label: "Shot",
@@ -293,6 +311,189 @@ const PROMPT_BUILDER_GROUPS: Array<{
     spanishOptions: ["Fotorrealista", "Headshot premium", "Editorial de revista", "Listo para perfil social"]
   }
 ];
+
+const CATEGORY_PROMPT_BUILDER_GROUPS: Record<string, PromptBuilderGroup[]> = {
+  headshots: [
+    promptGroup("shot", "Shot", "Plano", ["LinkedIn headshot", "Founder portrait", "Team page crop", "Speaker bio portrait"]),
+    promptGroup("scene", "Scene", "Escena", ["Modern office", "Neutral studio wall", "Conference green room", "Brand-color backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Soft corporate light", "Clean studio key light", "Natural window light", "Polished editorial flash"]),
+    promptGroup("finish", "Finish", "Acabado", ["Resume-ready crop", "Founder profile polish", "Team directory consistent", "Professional retouch"])
+  ],
+  wedding: [
+    promptGroup("shot", "Shot", "Plano", ["Ceremony couple portrait", "Bride or groom solo", "Invitation cover frame", "Album storytelling portrait"]),
+    promptGroup("scene", "Scene", "Escena", ["Ceremony aisle", "Garden reception", "Destination terrace", "Elegant bridal suite"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Romantic window light", "Golden ceremony glow", "Soft candlelight", "Reception flash polish"]),
+    promptGroup("finish", "Finish", "Acabado", ["Fine-art wedding editorial", "Album-ready romance", "Invitation-ready crop", "Luxury ceremony retouch"])
+  ],
+  couple: [
+    promptGroup("shot", "Shot", "Plano", ["Natural couple portrait", "Close embrace", "Walking hand-in-hand", "Candid laugh frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Cozy cafe corner", "City date night", "Garden path", "Home lifestyle set"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Warm evening glow", "Soft lifestyle light", "String-light ambience", "Natural outdoor shade"]),
+    promptGroup("finish", "Finish", "Acabado", ["Romantic album look", "Lifestyle couple polish", "Keepsake print finish", "Soft cinematic color"])
+  ],
+  dating: [
+    promptGroup("shot", "Shot", "Plano", ["Friendly profile portrait", "Candid lifestyle frame", "Outdoor smile shot", "Smart casual portrait"]),
+    promptGroup("scene", "Scene", "Escena", ["Coffee shop table", "Bookstore aisle", "City park path", "Weekend street corner"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Flattering daylight", "Warm cafe light", "Soft shade", "Gentle golden hour"]),
+    promptGroup("finish", "Finish", "Acabado", ["Approachable profile ready", "Natural skin texture", "Authentic dating crop", "Clean social polish"])
+  ],
+  fashion: [
+    promptGroup("shot", "Shot", "Plano", ["Runway-inspired full body", "Editorial half body", "Lookbook pose", "Accessory detail frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Minimal fashion studio", "Backstage dressing area", "Urban editorial wall", "Luxury fitting room"]),
+    promptGroup("lighting", "Lighting", "Luz", ["High-fashion flash", "Softbox studio light", "Dramatic side light", "Glossy magazine highlights"]),
+    promptGroup("finish", "Finish", "Acabado", ["Magazine cover finish", "Lookbook color grade", "Luxury wardrobe polish", "Editorial retouch"])
+  ],
+  beauty: [
+    promptGroup("shot", "Shot", "Plano", ["Hair detail portrait", "Makeup close-up", "Salon preview frame", "Beauty editorial crop"]),
+    promptGroup("scene", "Scene", "Escena", ["Salon chair", "Vanity mirror setup", "Clean beauty studio", "Soft bathroom light"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Soft glam light", "Mirror glow", "Clean complexion light", "Glossy beauty flash"]),
+    promptGroup("finish", "Finish", "Acabado", ["Natural skin texture", "Hair color preview", "Makeup campaign polish", "Beauty retouch"])
+  ],
+  travel: [
+    promptGroup("shot", "Shot", "Plano", ["Destination portrait", "Walking travel frame", "Scenic overlook pose", "Postcard crop"]),
+    promptGroup("scene", "Scene", "Escena", ["Coastal village", "Old-city street", "Mountain overlook", "Boutique hotel terrace"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Sunset travel glow", "Clear morning light", "Cafe window light", "Soft vacation shade"]),
+    promptGroup("finish", "Finish", "Acabado", ["Postcard-ready color", "Private route album look", "Travel editorial polish", "Natural vacation texture"])
+  ],
+  seasonal: [
+    promptGroup("shot", "Shot", "Plano", ["Holiday card portrait", "Gift-ready solo frame", "Festive couple crop", "Family keepsake style"]),
+    promptGroup("scene", "Scene", "Escena", ["Christmas tree corner", "Warm fireplace room", "Snowy street lights", "Gift wrapping table"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Twinkle light glow", "Warm indoor candlelight", "Soft snowy daylight", "Cozy evening ambience"]),
+    promptGroup("finish", "Finish", "Acabado", ["Greeting-card ready", "Warm festive color", "Keepsake album polish", "Seasonal social crop"])
+  ],
+  sports: [
+    promptGroup("shot", "Shot", "Plano", ["Match-day fan poster", "Stadium portrait", "Jersey hero shot", "Victory celebration frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Stadium stands", "Fan zone lights", "Locker-room tunnel", "Match poster backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Stadium floodlights", "Energetic poster glow", "Night-game contrast", "Sharp sports flash"]),
+    promptGroup("finish", "Finish", "Acabado", ["Fan avatar ready", "Poster-style crop", "Dynamic sports editorial", "Social banner polish"])
+  ],
+  creator: [
+    promptGroup("shot", "Shot", "Plano", ["Profile hero portrait", "Newsletter author shot", "Creator workspace frame", "Personal brand cover"]),
+    promptGroup("scene", "Scene", "Escena", ["Creator desk", "Podcast corner", "Minimal lifestyle studio", "City creator backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Clean creator light", "Soft screen glow", "Modern studio light", "Natural brand daylight"]),
+    promptGroup("finish", "Finish", "Acabado", ["Profile update ready", "Landing-page polish", "Social header crop", "Personal brand consistency"])
+  ],
+  creative: [
+    promptGroup("shot", "Shot", "Plano", ["Cinematic hero portrait", "Noir close-up", "Cyberpunk city frame", "Fantasy editorial pose"]),
+    promptGroup("scene", "Scene", "Escena", ["Neon rain street", "Moody noir alley", "Dramatic studio set", "Surreal poster backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Neon edge light", "Low-key noir contrast", "Colored rim light", "Poster-grade spotlight"]),
+    promptGroup("finish", "Finish", "Acabado", ["Cinematic poster finish", "Stylized but realistic", "High-contrast color grade", "Gallery hero crop"])
+  ],
+  cyberpunk: [
+    promptGroup("shot", "Shot", "Plano", ["Neon city portrait", "Futuristic street crop", "Rain-lit profile frame", "Techwear editorial pose"]),
+    promptGroup("scene", "Scene", "Escena", ["Neon rain street", "Futuristic city alley", "Holographic sign backdrop", "Night market light spill"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Neon edge light", "Magenta cyan contrast", "Wet pavement reflections", "Colored rim light"]),
+    promptGroup("finish", "Finish", "Acabado", ["Cyberpunk poster finish", "High-contrast neon grade", "Sharp futuristic portrait", "Cinematic city crop"])
+  ],
+  gala: [
+    promptGroup("shot", "Shot", "Plano", ["Formal gala portrait", "Red-carpet half body", "Black-tie profile crop", "Evening editorial pose"]),
+    promptGroup("scene", "Scene", "Escena", ["Grand event entrance", "Luxury ballroom corner", "Velvet backdrop", "Champagne reception setting"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Polished event flash", "Warm chandelier glow", "Soft red-carpet key light", "Elegant rim light"]),
+    promptGroup("finish", "Finish", "Acabado", ["Luxury evening polish", "Magazine gala finish", "Black-tie retouch", "Formal album hero"])
+  ],
+  noir: [
+    promptGroup("shot", "Shot", "Plano", ["Vintage noir portrait", "Tailored suit close-up", "Classic character half body", "Film-still profile frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Smoky jazz-club interior", "Rainy old-city street", "Shadowed private office", "Vintage lounge backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Low-key noir contrast", "Venetian blind shadows", "Warm practical lamp glow", "Soft rim light"]),
+    promptGroup("finish", "Finish", "Acabado", ["Classic noir polish", "Elegant character styling", "Black-and-white film mood", "Cinematic album hero"])
+  ],
+  nature: [
+    promptGroup("shot", "Shot", "Plano", ["Outdoor adventure portrait", "Scenic trail profile", "Mountain overlook pose", "Golden-hour lifestyle crop"]),
+    promptGroup("scene", "Scene", "Escena", ["Forest path", "Mountain overlook", "Lakeside clearing", "Open meadow backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Golden-hour sunlight", "Soft forest shade", "Natural backlight", "Clear outdoor contrast"]),
+    promptGroup("finish", "Finish", "Acabado", ["Natural adventure polish", "Travel-ready landscape color", "Realistic outdoor texture", "Scenic profile finish"])
+  ],
+  avatar: [
+    promptGroup("shot", "Shot", "Plano", ["Profile icon portrait", "Character bust", "Mascot-inspired crop", "Expressive avatar frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Clean icon background", "Soft gradient studio", "Gaming profile backdrop", "Sticker-ready frame"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Readable face light", "Soft illustrated glow", "Crisp icon contrast", "Profile badge shine"]),
+    promptGroup("finish", "Finish", "Acabado", ["Avatar-ready silhouette", "Profile icon clarity", "Stylized original look", "Small-size readability"])
+  ],
+  video: [
+    promptGroup("shot", "Shot", "Plano", ["Motion keyframe portrait", "Intro clip frame", "Reel cover image", "Storyboard hero shot"]),
+    promptGroup("scene", "Scene", "Escena", ["Clean motion backdrop", "Creator intro set", "Product teaser stage", "Social reel frame"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Motion-friendly key light", "Soft animated glow", "Clean separation light", "Reel cover contrast"]),
+    promptGroup("finish", "Finish", "Acabado", ["Video cover ready", "Smooth motion staging", "Storyboard clarity", "Short-form social polish"])
+  ],
+  utility: [
+    promptGroup("shot", "Shot", "Plano", ["Before-after portrait", "Cleanup preview crop", "Retouch detail frame", "Background replacement view"]),
+    promptGroup("scene", "Scene", "Escena", ["Neutral backdrop", "Clean studio replacement", "Simple product surface", "Plain profile background"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Balanced correction light", "Even studio light", "Natural restored exposure", "Clean shadow control"]),
+    promptGroup("finish", "Finish", "Acabado", ["Practical enhancement", "Realistic cleanup", "Natural detail recovery", "Ready-to-use export"])
+  ],
+  boudoir: [
+    promptGroup("shot", "Shot", "Plano", ["Tasteful private portrait", "Elegant seated pose", "Soft robe editorial", "Confident studio frame"]),
+    promptGroup("scene", "Scene", "Escena", ["Private studio set", "Soft bedroom corner", "Elegant lounge chair", "Minimal fabric backdrop"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Soft directional light", "Warm intimate glow", "Gentle window shadow", "Low-key elegant contrast"]),
+    promptGroup("finish", "Finish", "Acabado", ["Tasteful album polish", "Non-explicit elegance", "Soft luxury retouch", "Private gallery finish"])
+  ],
+  cultural: [
+    promptGroup("shot", "Shot", "Plano", ["Ceremony portrait", "Traditional outfit detail", "Family keepsake frame", "Formal celebration pose"]),
+    promptGroup("scene", "Scene", "Escena", ["Ceremony hall", "Textile-rich backdrop", "Garden celebration", "Formal portrait studio"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Warm ceremony light", "Soft textile detail light", "Elegant indoor glow", "Natural celebration daylight"]),
+    promptGroup("finish", "Finish", "Acabado", ["Respectful editorial polish", "Album-ready tradition", "Detailed fabric clarity", "Formal keepsake finish"])
+  ],
+  copy: [
+    promptGroup("shot", "Shot", "Plano", ["Campaign hero image", "Product story portrait", "Ad concept frame", "Landing-page visual"]),
+    promptGroup("scene", "Scene", "Escena", ["Brand moodboard set", "Clean campaign backdrop", "Product-friendly table", "Commercial lifestyle scene"]),
+    promptGroup("lighting", "Lighting", "Luz", ["Commercial softbox", "Clean ad lighting", "Bright product light", "Brand-color accent glow"]),
+    promptGroup("finish", "Finish", "Acabado", ["Campaign-ready polish", "Copy-safe clean frame", "Ad layout friendly", "Brand story consistency"])
+  ]
+};
+
+function normalizePromptCategoryToken(value: string): string {
+  return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+function promptBuilderCategoryForPack(pack: CreativePack): string {
+  const identityText = [
+    pack.id,
+    pack.name,
+    pack.aiAppSlug,
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label
+  ].filter(Boolean).join(" ").toLowerCase();
+  if (/\b(mafia|noir|noir-portrait|film-noir)\b/.test(identityText)) return "noir";
+  if (/\b(cyberpunk|neon-city)\b/.test(identityText)) return "cyberpunk";
+  if (/\b(gala|black-tie|red-carpet)\b/.test(identityText)) return "gala";
+  if (/\b(nature|nature-adventure|outdoor-adventure)\b/.test(identityText)) return "nature";
+
+  const candidateTokens = [
+    pack.category,
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.categoryRecord?.parent?.slug,
+    pack.categoryRecord?.parent?.label
+  ]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .map(normalizePromptCategoryToken);
+  for (const token of candidateTokens) {
+    if (CATEGORY_PROMPT_BUILDER_GROUPS[token]) return token;
+  }
+  const text = `${candidateTokens.join(" ")} ${pack.name} ${pack.headline} ${pack.description}`.toLowerCase();
+  if (/\b(christmas|holiday|santa|snow-lodge)\b/.test(text)) return "seasonal";
+  if (/\b(world-cup|fan-photo|match-day|stadium|jersey)\b/.test(text)) return "sports";
+  if (/\b(hairstyle|haircut|hair|makeup|beauty)\b/.test(text)) return "beauty";
+  if (/\b(cyberpunk|noir|mafia)\b/.test(text)) return "creative";
+  if (/\b(wedding|bridal|groom|bride|desi-wedding|indian-wedding)\b/.test(text)) return "wedding";
+  if (/\b(valentine|engagement|couple)\b/.test(text)) return "couple";
+  if (/\b(professional-headshot|headshot)\b/.test(text)) return "headshots";
+  if (/\b(creator|profile-card|social-card|personal-brand)\b/.test(text)) return "creator";
+  if (/\b(fashion|gala|virtual-try-on|lookbook)\b/.test(text)) return "fashion";
+  if (/\b(anime|avatar)\b/.test(text)) return "avatar";
+  if (/\b(video|motion|reel|clip)\b/.test(text)) return "video";
+  if (/\b(upscaler|enhance|utility|background|retouch)\b/.test(text)) return "utility";
+  if (/\b(product-style|product|copy|campaign)\b/.test(text)) return "copy";
+  if (/\b(route|travel|coastal|old-quarter|island|resort|cafe|street|scenic|overlook|alpine|trail|road|trip|postcard|lagoon|villa|rooftop|market|rainy|desert|lake|rail|journal|traveler|wellness|retreat|journey)\b/.test(text)) return "travel";
+  if (/\b(boudoir)\b/.test(text)) return "boudoir";
+  return "";
+}
+
+function promptBuilderGroupsForPack(pack?: CreativePack): PromptBuilderGroup[] {
+  if (!pack) return DEFAULT_PROMPT_BUILDER_GROUPS;
+  const category = promptBuilderCategoryForPack(pack);
+  return category ? CATEGORY_PROMPT_BUILDER_GROUPS[category] : DEFAULT_PROMPT_BUILDER_GROUPS;
+}
 
 function isStandaloneVideoToolPreset(preset: Pick<ToolPreset, "id" | "title" | "category">) {
   const text = `${preset.id} ${preset.title} ${preset.category}`.toLowerCase();
@@ -860,11 +1061,11 @@ export function JobCreateForm({
   const pendingUploadTargetRef = useRef<UploadTarget>("primary");
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
   const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
-  const themeCategories = Array.from(new Set(activeCreativePacks.map((pack) => pack.categoryRecord?.label || pack.category).filter(Boolean)));
+  const themeCategories = photoPackageCategoryOptions(activeCreativePacks);
   const visibleCreativePacks = themeCategory === "all"
     ? activeCreativePacks
-    : activeCreativePacks.filter((pack) => (pack.categoryRecord?.label || pack.category) === themeCategory);
-  const categoryOptions = ["all", ...themeCategories];
+    : activeCreativePacks.filter((pack) => creativePackMatchesCategory(pack, themeCategory));
+  const categoryOptions = [{ slug: "all", label: jobT(spanish, "All packages", "Todos los paquetes") }, ...themeCategories];
   const displayedCategoryOptions = showAllCategories ? categoryOptions : categoryOptions.slice(0, COLLAPSED_CATEGORY_LIMIT);
   const hasMoreCategories = categoryOptions.length > COLLAPSED_CATEGORY_LIMIT;
   const displayedCreativePacks = showAllOptions ? visibleCreativePacks : visibleCreativePacks.slice(0, COLLAPSED_THEME_CARD_LIMIT);
@@ -945,10 +1146,21 @@ export function JobCreateForm({
   const selectedPillClass = light ? "bg-[#132329] text-white" : "bg-[#14161a] text-white";
   const selectedSoftPillClass = light ? "bg-white text-[#c65f32] ring-1 ring-[#ffd0b8]" : "bg-[#14161a]/10 text-[#14161a]";
   const neutralPillClass = light ? "bg-[#f1eadf] text-[#5f574f]" : "bg-white/[0.08] text-white/74";
-  const promptBuilderSummary = PROMPT_BUILDER_GROUPS
+  const selectedPromptBuilderGroups = useMemo(() => promptBuilderGroupsForPack(selectedPack), [selectedPack?.id, selectedPack?.category, selectedPack?.name, selectedPack?.headline, selectedPack?.description]);
+  const promptBuilderSummary = selectedPromptBuilderGroups
     .map((group) => promptBuilderSelections[group.id])
     .filter((value): value is string => Boolean(value?.trim()))
     .join(", ");
+  const promptBuilderDirectionText = useMemo(() => {
+    const builderText = promptBuilderSummary
+      ? jobT(spanish, `Visual plan: ${promptBuilderSummary}.`, `Plan visual: ${promptBuilderSummary}.`)
+      : "";
+    const selectionText = selectionTitle
+      ? jobT(spanish, `Selected style: ${selectionTitle}.`, `Estilo seleccionado: ${selectionTitle}.`)
+      : "";
+    return [selectionText, builderText].filter(Boolean).join("\n");
+  }, [promptBuilderSummary, selectionTitle, spanish]);
+  const promptBuilderApplied = Boolean(promptBuilderDirectionText && packagePromptDraft.includes(promptBuilderDirectionText));
 
   useEffect(() => {
     if (createMode === "theme" && selectedPack) {
@@ -1053,9 +1265,10 @@ export function JobCreateForm({
 
   function updateCreativePack(pack: CreativePack) {
     setCreateMode("theme");
-    setThemeCategory(pack.categoryRecord?.label || pack.category || "all");
+    setThemeCategory(creativePackCategoryOption(pack).slug || "all");
     setCreativePackId(pack.id);
     setPackagePromptDraft(pack.prompt?.trim() || pack.description || pack.headline || "");
+    setPromptBuilderSelections({});
     if (pack.aiAppSlug !== aiAppSlug) {
       updateAiApp(pack.aiAppSlug, "theme");
       setCreativePackId(pack.id);
@@ -1090,18 +1303,11 @@ export function JobCreateForm({
   }
 
   function applyPromptBuilderDirection() {
-    const builderText = promptBuilderSummary
-      ? jobT(spanish, `Shot plan: ${promptBuilderSummary}.`, `Plan visual: ${promptBuilderSummary}.`)
-      : "";
-    const selectionText = selectionTitle
-      ? jobT(spanish, `Selected style: ${selectionTitle}.`, `Estilo seleccionado: ${selectionTitle}.`)
-      : "";
-    const nextDirection = [selectionText, builderText].filter(Boolean).join("\n");
-    if (!nextDirection) return;
+    if (!promptBuilderDirectionText) return;
     const currentPrompt = packagePromptDraft.trim();
-    const nextPrompt = currentPrompt.includes(nextDirection)
+    const nextPrompt = currentPrompt.includes(promptBuilderDirectionText)
       ? currentPrompt
-      : [currentPrompt, nextDirection].filter(Boolean).join("\n\n");
+      : [currentPrompt, promptBuilderDirectionText].filter(Boolean).join("\n\n");
     setPackagePromptDraft(nextPrompt);
     if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, nextPrompt);
   }
@@ -1133,6 +1339,7 @@ export function JobCreateForm({
     if (!preset.backendSlug) return;
     setCreateMode("tool");
     setSelectedToolId(preset.id);
+    setPromptBuilderSelections({});
     if (preset.backendSlug !== aiAppSlug) {
       setAiAppSlug(preset.backendSlug);
       const nextApp = siteAiApps.find((app) => app.aiApp.slug === preset.backendSlug);
@@ -1178,7 +1385,7 @@ export function JobCreateForm({
     setThemeCategory(nextCategory);
     const nextPacks = nextCategory === "all"
       ? activeCreativePacks
-      : activeCreativePacks.filter((pack) => (pack.categoryRecord?.label || pack.category) === nextCategory);
+      : activeCreativePacks.filter((pack) => creativePackMatchesCategory(pack, nextCategory));
     if (nextPacks.length && !nextPacks.some((pack) => pack.id === creativePackId)) {
       updateCreativePack(nextPacks[0]);
       setThemeCategory(nextCategory);
@@ -1580,7 +1787,7 @@ export function JobCreateForm({
           <WandSparkles className={`h-5 w-5 shrink-0 ${light ? "text-[#c65f32]" : "text-[#31d4ff]"}`} strokeWidth={1.8} />
         </div>
         <div className={compact ? "grid gap-3" : "grid gap-3 md:grid-cols-2 xl:grid-cols-4"}>
-          {PROMPT_BUILDER_GROUPS.map((group) => (
+          {selectedPromptBuilderGroups.map((group) => (
             <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`} key={group.id}>
               <div className="flex items-center gap-2">
                 {group.id === "shot" ? <Camera className="h-4 w-4 text-[#31d4ff]" strokeWidth={1.8} /> : null}
@@ -1627,19 +1834,21 @@ export function JobCreateForm({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className={`text-xs leading-5 ${mutedClass}`}>
             {promptBuilderSummary
-              ? jobT(spanish, `Selected prompt cues: ${promptBuilderSummary}`, `Senales seleccionadas: ${promptBuilderSummary}`)
+              ? promptBuilderApplied
+                ? jobT(spanish, `Applied prompt cues: ${promptBuilderSummary}`, `Senales aplicadas: ${promptBuilderSummary}`)
+                : jobT(spanish, `Selected prompt cues: ${promptBuilderSummary}`, `Senales seleccionadas: ${promptBuilderSummary}`)
               : jobT(spanish, "Use the chips for fast structure, then edit the final text freely.", "Usa los chips para estructurar rapido y edita el texto final libremente.")}
           </p>
           <button
             className={`inline-flex items-center justify-center gap-2 rounded-[14px] border px-4 py-2.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-45 ${
               light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/[0.1] hover:text-white"
             }`}
-            disabled={!promptBuilderSummary}
+            disabled={!promptBuilderSummary || promptBuilderApplied}
             onClick={applyPromptBuilderDirection}
             type="button"
           >
             <WandSparkles className="h-4 w-4" strokeWidth={1.8} />
-            {jobT(spanish, "Apply cues", "Aplicar senales")}
+            {promptBuilderApplied ? jobT(spanish, "Cues applied", "Senales aplicadas") : jobT(spanish, "Apply cues", "Aplicar senales")}
           </button>
         </div>
       </div>
@@ -1715,17 +1924,17 @@ export function JobCreateForm({
           <div className={`rounded-[18px] border p-2 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/10"}`}>
             <div className="flex flex-wrap gap-2">
             {displayedCategoryOptions.map((category) => {
-              const active = themeCategory === category;
+              const active = themeCategory === category.slug;
               return (
                 <button
                   className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${
                     active ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#b9542d] shadow-[0_10px_28px_-22px_rgba(255,138,92,0.8)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white")
                   }`}
-                  key={category}
-                  onClick={() => updateThemeCategory(category)}
+                  key={category.slug}
+                  onClick={() => updateThemeCategory(category.slug)}
                   type="button"
                 >
-                  {category === "all" ? jobT(spanish, "All packages", "Todos los paquetes") : category}
+                  {category.label}
                 </button>
               );
             })}
@@ -1819,8 +2028,10 @@ export function JobCreateForm({
         <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" : "grid gap-3 md:grid-cols-2 xl:grid-cols-3"}>
           {createMode === "theme" ? displayedCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
+            const packageCardCopy = pack.description.trim() || (pack.headline.trim() !== pack.name.trim() ? pack.headline.trim() : "");
             return (
               <button
+                aria-label={packageCardCopy ? `${pack.name}. ${packageCardCopy}` : pack.name}
                 className={`grid min-h-[268px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
@@ -1841,12 +2052,16 @@ export function JobCreateForm({
                   <span className="flex items-start justify-between gap-2">
                     <span className="min-w-0">
                       <span className="block text-base font-semibold leading-5">{pack.name}</span>
-                      <span className={active ? "mt-2 line-clamp-2 block text-sm leading-5 text-[#5f5a54]" : `mt-2 line-clamp-2 block text-sm leading-5 ${mutedClass}`}>
-                        {pack.headline}
-                      </span>
-                      <span className={active ? "mt-2 line-clamp-3 block text-xs leading-5 text-[#6b655f]" : `mt-2 line-clamp-3 block text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/54"}`}>
-                        {pack.description}
-                      </span>
+                      {packageCardCopy ? (
+                        <span
+                          aria-label={packageCardCopy}
+                          className={active ? "mt-2 block text-sm leading-5 text-[#5f5a54]" : `mt-2 block text-sm leading-5 ${mutedClass}`}
+                          style={THREE_LINE_CLAMP_STYLE}
+                          title={packageCardCopy}
+                        >
+                          {packageCardCopy}
+                        </span>
+                      ) : null}
                     </span>
                     {active ? <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={1.8} /> : null}
                   </span>
@@ -1876,7 +2091,12 @@ export function JobCreateForm({
                 <span className="flex items-start justify-between gap-3">
                   <span className="min-w-0">
                     <span className="block text-base font-semibold leading-5">{preset.title}</span>
-                    <span className={active ? "mt-2 line-clamp-2 block text-sm leading-6 text-[#5f5a54]" : `mt-2 line-clamp-2 block text-sm leading-6 ${mutedClass}`}>
+                    <span
+                      aria-label={preset.description}
+                      className={active ? "mt-2 block text-sm leading-6 text-[#5f5a54]" : `mt-2 block text-sm leading-6 ${mutedClass}`}
+                      style={FOUR_LINE_CLAMP_STYLE}
+                      title={preset.description}
+                    >
                       {preset.description}
                     </span>
                   </span>

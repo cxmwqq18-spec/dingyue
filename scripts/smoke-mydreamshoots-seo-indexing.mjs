@@ -157,10 +157,12 @@ assert(
 );
 assert(
   seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&
+    seoIndexing.includes("canonicalSeoDirectoryPathForSite") &&
     seoIndexing.includes("collectExplicitSeoDirectoryPaths(site)") &&
-    seoIndexing.includes('`/collections/${slug}`') &&
+    seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", slug)') &&
+    seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", normalized)') &&
     seoIndexing.includes('`/tools/${slug}`'),
-  "sitemap URL expansion must include all explicit SEO collection and tool directory pages"
+  "sitemap URL expansion must include explicit SEO directory pages using canonical collection paths"
 );
 assert(
   sitemapRoute.includes('export const dynamic = "force-dynamic"') &&

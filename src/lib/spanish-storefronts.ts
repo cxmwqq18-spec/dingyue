@@ -1,0 +1,73 @@
+type SpanishStorefrontIdentity = {
+  id?: string | null;
+  slug?: string | null;
+  name?: string | null;
+  primaryDomain?: string | null;
+  branding?: {
+    logoText?: string | null;
+  } | null;
+};
+
+export const SPANISH_STOREFRONT_SITE_IDS = new Set([
+  "site_mydreamshoots_xby",
+  "site_aidreamcapes_xby"
+]);
+
+export const SPANISH_STOREFRONT_SLUGS = new Set([
+  "aidreamshoots",
+  "aidreamshoots-eu",
+  "aidreamcapes-eu",
+  "mydreamshoots-xby",
+  "aidreamcapes-xby"
+]);
+
+export const SPANISH_STOREFRONT_DOMAINS = new Set([
+  "aidreamshoots.eu",
+  "www.aidreamshoots.eu",
+  "aidreamcapes.eu",
+  "www.aidreamcapes.eu"
+]);
+
+export const SPANISH_STOREFRONT_SLUG_ALIASES: Record<string, string> = {
+  "mydreamshoots-xby": "aidreamshoots",
+  "aidreamshoots-eu": "aidreamshoots",
+  "aidreamcapes-xby": "aidreamcapes-eu"
+};
+
+export function cleanStorefrontHost(value: string | null | undefined): string {
+  return String(value ?? "")
+    .split(",")[0]
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .split("/")[0]
+    .split(":")[0]
+    .toLowerCase();
+}
+
+export function spanishStorefrontIdentity(site: SpanishStorefrontIdentity | undefined): string {
+  if (!site) return "";
+  return `${site.id ?? ""} ${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase();
+}
+
+export function isSpanishStorefrontSite(site: SpanishStorefrontIdentity | undefined): boolean {
+  if (!site) return false;
+  const host = cleanStorefrontHost(site.primaryDomain);
+  const identity = spanishStorefrontIdentity(site);
+  return (
+    Boolean(site.id && SPANISH_STOREFRONT_SITE_IDS.has(site.id)) ||
+    Boolean(site.slug && SPANISH_STOREFRONT_SLUGS.has(site.slug.toLowerCase())) ||
+    SPANISH_STOREFRONT_DOMAINS.has(host) ||
+    /(?:-xby|_xby)/i.test(identity)
+  );
+}
+
+export function isSpanishStorefrontRequestIdentity(identity: string): boolean {
+  const normalized = identity.toLowerCase();
+  return (
+    /\b(?:aidreamcapes|mydreamshoots)-xby\b/.test(normalized) ||
+    /(?:^|[\s/])aidreamshoots(?:-eu)?(?:[\s/]|$)/.test(normalized) ||
+    /(?:^|[\s/])aidreamcapes-eu(?:[\s/]|$)/.test(normalized) ||
+    /\baidreamshoots(?:\.eu|\.localhost)\b/.test(normalized) ||
+    /\baidreamcapes\.eu\b/.test(normalized)
+  );
+}

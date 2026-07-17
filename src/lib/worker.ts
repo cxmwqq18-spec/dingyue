@@ -60,6 +60,7 @@ export interface WorkerOutputSlot {
   referenceFrameCount?: number;
   requestedReferenceFrameCount?: number;
   providerReferenceLimit?: number;
+  providerReferenceSize?: string;
   updatedAt?: string;
 }
 
@@ -272,7 +273,7 @@ async function buildInputAssets(params: {
     })
   );
   if (assets.length) return assets;
-  if (isVideoWorkerJob(params.job)) throw new Error("video_frames_required");
+  if (isVideoWorkerJob(params.job)) return [];
   return [{
     assetId: "asset_demo",
     signedUrl: `${assetBaseUrl}/api/demo-assets/input.jpg`,

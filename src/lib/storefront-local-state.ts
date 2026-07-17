@@ -96,8 +96,21 @@ async function readLocalState(siteSlug: string): Promise<PlatformState | undefin
   return stateWithSiteFirst(await readStorefrontPlatformState(), siteSlug);
 }
 
-export function preferLocalPathModeState(): boolean {
-  return process.env.STOREFRONT_PATH_MODE_READS !== "database" && process.env.NODE_ENV !== "production";
+function pathModeReadPreference(): string {
+  return (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase();
+}
+
+function isSynchronizedDreamshootSite(siteSlug?: string): boolean {
+  if (!siteSlug) return false;
+  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSiteSlug(siteSlug));
+}
+
+export function preferLocalPathModeState(siteSlug?: string): boolean {
+  if (process.env.NODE_ENV === "production") return false;
+  const preference = pathModeReadPreference();
+  if (["database", "db", "relational"].includes(preference)) return false;
+  if (["local", "json", "legacy", "file"].includes(preference)) return true;
+  return !isSynchronizedDreamshootSite(siteSlug);
 }
 
 function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | undefined {
@@ -106,7 +119,7 @@ function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | und
 }
 
 export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug: string, contextSlug?: string): Promise<PlatformState | undefined> {
-  if (preferLocalPathModeState()) return readLocalState(siteSlug);
+  if (preferLocalPathModeState(siteSlug)) return readLocalState(siteSlug);
   try {
     const state = pageSlug === "/collections"
       ? await readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase(siteSlug)
@@ -124,7 +137,7 @@ export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug:
 }
 
 export async function readPathModePublicMetadataState(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
-  if (preferLocalPathModeState()) return readLocalState(siteSlug);
+  if (preferLocalPathModeState(siteSlug)) return readLocalState(siteSlug);
   try {
     const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, pageSlug);
     if (state?.sites[0]) return state;

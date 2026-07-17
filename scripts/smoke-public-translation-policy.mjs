@@ -25,6 +25,7 @@ const blockedPatterns = [
   { label: "translate={'no'} attribute", pattern: /\btranslate\s*=\s*\{\s*["']no["']\s*\}/i },
   { label: "google notranslate meta", pattern: /name\s*=\s*["']google["'][\s\S]{0,160}content\s*=\s*["']notranslate["']/i }
 ];
+const focusedCollectionTranslateBudgetBytes = 850_000;
 
 const runtimeRoutesBySite = {
   aidreamcapes: [
@@ -52,6 +53,7 @@ const runtimeRoutesBySite = {
     "/pricing",
     "/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly",
     "/collections",
+    "/collections/product-style",
     "/collections/travel",
     "/tools",
     "/tools/headshot",
@@ -98,15 +100,21 @@ const files = publicSurfaceRoots
   .flatMap(walk)
   .filter((file) => allowedExtensions.has(path.extname(file)));
 
+function isAllowedTranslationGuardHit(relativeFile) {
+  return relativeFile === "src/components/storefront/html-lang-sync.tsx";
+}
+
 const violations = [];
 for (const file of files) {
   const source = fs.readFileSync(file, "utf8");
   const lines = source.split(/\r?\n/);
+  const relativeFile = path.relative(root, file);
   for (const rule of blockedPatterns) {
     lines.forEach((line, index) => {
       if (rule.pattern.test(line)) {
+        if (isAllowedTranslationGuardHit(relativeFile)) return;
         violations.push({
-          file: path.relative(root, file),
+          file: relativeFile,
           line: index + 1,
           rule: rule.label,
           text: line.trim()
@@ -162,6 +170,14 @@ function validateRuntimeHtml(siteSlug, routePath, response, html) {
       line: 0,
       rule: "runtime browser translation blocker",
       text: "translate=no or notranslate found in rendered HTML"
+    });
+  }
+  if (/^\/collections\/[^/?#]+/i.test(routePath) && Buffer.byteLength(html) > focusedCollectionTranslateBudgetBytes) {
+    violations.push({
+      file: routeLabel,
+      line: 0,
+      rule: "runtime translation payload budget",
+      text: `${Buffer.byteLength(html)} bytes exceeds ${focusedCollectionTranslateBudgetBytes} bytes`
     });
   }
 }

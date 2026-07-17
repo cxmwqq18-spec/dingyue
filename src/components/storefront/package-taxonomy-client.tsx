@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type MouseEvent } from "react";
+import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 
 export type PackageTaxonomyCard = {
@@ -29,14 +29,6 @@ function slugFromHref(href: string) {
   return clean.split("/").filter(Boolean).pop() ?? "";
 }
 
-function updateBrowserUrl(href: string) {
-  if (!href || typeof window === "undefined") return;
-  const target = new URL(href, window.location.href);
-  if (target.origin !== window.location.origin) return;
-  window.history.pushState({}, "", `${target.pathname}${target.search}${target.hash}`);
-  window.dispatchEvent(new PopStateEvent("popstate"));
-}
-
 export function PackageTaxonomyClient({
   cards,
   initialSlug = "",
@@ -51,17 +43,7 @@ export function PackageTaxonomyClient({
     if (!normalized) return null;
     return cards.find((card) => slugFromHref(card.href).toLowerCase() === normalized) ?? null;
   }, [cards, initialSlug]);
-  const [selected, setSelected] = useState<PackageTaxonomyCard | null>(initialCard);
-
-  function openCard(card: PackageTaxonomyCard, event: MouseEvent<HTMLAnchorElement>) {
-    if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
-    event.preventDefault();
-    setSelected(card);
-    updateBrowserUrl(card.href);
-    requestAnimationFrame(() => {
-      document.getElementById("package-taxonomy")?.scrollIntoView({ block: "start" });
-    });
-  }
+  const selected = initialCard;
 
   if (selected) {
     const spanish = isSpanishCard(selected);
@@ -76,9 +58,9 @@ export function PackageTaxonomyClient({
       <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" data-package-taxonomy-client="ready">
         <div className={selectedPanelClass}>
           <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>{spanish ? "Paquete seleccionado" : "Selected package"}</p>
-          <h3 className={variant === "cream" ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
+          <h2 className={variant === "cream" ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
             {selected.title}
-          </h3>
+          </h2>
           <p className={variant === "cream" ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
             {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
           </p>
@@ -150,7 +132,6 @@ export function PackageTaxonomyClient({
             className={cardClass}
             href={card.href}
             key={card.id}
-            onClick={(event) => openCard(card, event)}
           >
             <img
               alt={card.title}
@@ -168,7 +149,7 @@ export function PackageTaxonomyClient({
                 <ArrowRight className="h-4 w-4 shrink-0 text-white/78 transition group-hover:translate-x-1 group-hover:text-white" strokeWidth={1.8} />
               </div>
               <div className="mt-auto">
-                <h3 className="text-[clamp(1.35rem,2.1vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-balance">{card.title}</h3>
+                <h2 className="text-[clamp(1.35rem,2.1vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-balance">{card.title}</h2>
                 <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-white/78">{card.description}</p>
                 {card.keywords.length ? (
                   <div className="mt-5 flex flex-wrap gap-2">

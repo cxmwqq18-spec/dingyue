@@ -44,7 +44,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           authenticated: false,
           site: undefined,
           siteAiApps: [],
-          creativePacks: []
+          creativePackCategories: [],
+          creativePacks: [],
+          toolMenuItems: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -68,7 +70,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           authenticated: false,
           site: undefined,
           siteAiApps: [],
-          creativePacks: []
+          creativePackCategories: [],
+          creativePacks: [],
+          toolMenuItems: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -80,7 +84,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 
   if (includeMode === "shell") {
-    const site = await getCustomerWorkspaceSiteShellRelational(siteSlug);
+    const [site, bootstrap] = await Promise.all([
+      getCustomerWorkspaceSiteShellRelational(siteSlug),
+      getCustomerWorkspaceBootstrapRelational(siteSlug)
+    ]);
     if (!site) {
       return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
     }
@@ -90,8 +97,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         ok: true,
         site,
         customer: current.customer,
-        siteAiApps: [],
-        creativePacks: []
+        siteAiApps: bootstrap?.siteAiApps ?? [],
+        creativePackCategories: bootstrap?.creativePackCategories ?? [],
+        creativePacks: bootstrap?.creativePacks ?? [],
+        toolMenuItems: bootstrap?.toolMenuItems ?? []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
     ), request, siteId, current);
@@ -120,7 +129,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         site,
         customer: current.customer,
         siteAiApps: [],
+        creativePackCategories: bootstrap?.creativePackCategories ?? [],
         creativePacks: bootstrap?.creativePacks ?? [],
+        toolMenuItems: bootstrap?.toolMenuItems ?? [],
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -149,7 +160,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       site: bootstrap.site,
       customer: current.customer,
       siteAiApps: bootstrap.siteAiApps,
+      creativePackCategories: bootstrap.creativePackCategories,
       creativePacks: bootstrap.creativePacks,
+      toolMenuItems: bootstrap.toolMenuItems,
       workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,

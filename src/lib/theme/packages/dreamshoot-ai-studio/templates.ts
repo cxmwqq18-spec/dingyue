@@ -2,7 +2,7 @@ import type { SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } f
 import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
-export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "workflow" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
+export type MydreamShootsAiStudioTemplateKey = ThemePackageTemplateKey | "tools" | "workflow" | "help" | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -45,6 +45,10 @@ function seoForPublicPage(path: DreamshootPublicSeoPath, site?: DreamshootPublic
 
 function pickSections(source: ThemePageJson["sections"], order: string[]): ThemePageJson["sections"] {
   return Object.fromEntries(order.map((id) => [id, source[id]]).filter(([, section]) => Boolean(section))) as ThemePageJson["sections"];
+}
+
+function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean {
+  return /aidreamcapes/i.test(`${site?.slug ?? ""} ${site?.name ?? ""} ${site?.primaryDomain ?? ""} ${site?.branding?.logoText ?? ""}`);
 }
 
 const assets = {
@@ -283,6 +287,22 @@ const homeSections: ThemePageJson["sections"] = {
       block("catalog_boudoir", "catalog_pack", { title: "Boudoir", description: "Create a private boudoir-inspired portrait set from photos you own or have permission to use. Adult, consensual, non-explicit use only; no minors, non-consenting people, stolen images, or unauthorized portraits.", category: "Boudoir", meta: "Adult consent", credits: "24 credits", imageUrl: assets.womanPortrait, href: "/collections/boudoir" })
     ]
   ),
+  generation_showcase_1: section(
+    "dreamshoot_generation_showcase",
+    {
+      anchor: "generated-showcase",
+      eyebrow: "Customer-created examples",
+      title: "Browse image and video themes customers have already created.",
+      subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      imageTitle: "Customer image themes",
+      videoTitle: "Customer video themes",
+      imageSlugs: "professional-headshots|world-cup-fan-photos|hairstyle|cyberpunk|gala-photos|nature|creator-portraits|wedding-portraits",
+      videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+      itemLimit: 8,
+      primaryCta: "Start with your photos",
+      primaryHref: "/login"
+    }
+  ),
   flow_bridge_1: section(
     "dreamshoot_flow_bridge",
     {
@@ -505,63 +525,63 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "reviews",
       title: "Ways people use MyDreamShoots.",
-      subtitle: "Choose the kind of private photo set you need before uploading source photos or spending credits.",
+      subtitle: "Real stories for social content, wedding pages, family keepsakes, and short AI videos.",
       summaryTitle: "Ways people use MyDreamShoots",
-      summaryBody: "Compare ordinary phone photos with finished private results before choosing a package.",
+      summaryBody: "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.",
       summaryRating: "",
-      summaryMeta: "Example use cases"
+      summaryMeta: "Narrative examples"
     },
     [
       block("review_ava", "testimonial", {
-        quote: "Create a private set of professional headshots for LinkedIn, resumes, founder bios, and company profiles.",
-        name: "LinkedIn refresh",
-        role: "Work profiles",
-        location: "Professional headshots",
+        quote: "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.",
+        name: "Daily creator content",
+        role: "Creator workflow",
+        location: "Photos and short videos",
         rating: "",
         avatarUrl: assets.reviewAvaAvatar,
         resultImageUrl: assets.reviewAvaResultGala
       }),
       block("review_lucas", "testimonial", {
-        quote: "Turn your selfies into tournament-style fan posters and profile avatars for personal social posts.",
-        name: "Match-day fan posts",
-        role: "Fan posts",
-        location: "Sports portraits",
+        quote: "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.",
+        name: "Wedding website visuals",
+        role: "Wedding stories",
+        location: "Albums and video clips",
         rating: "",
         avatarUrl: assets.reviewLucasAvatar,
         resultImageUrl: assets.reviewLucasResultHeadshot
       }),
       block("review_mia", "testimonial", {
-        quote: "Generate fresh portraits for newsletters, landing pages, thumbnails, and social profiles.",
-        name: "Creator profile update",
-        role: "Creator pages",
-        location: "Profile portraits",
+        quote: "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.",
+        name: "Family memory album",
+        role: "Keepsake scenes",
+        location: "Private family gallery",
         rating: "",
         avatarUrl: assets.reviewMiaAvatar,
         resultImageUrl: assets.reviewMiaResultBeautySports
       }),
       block("review_noah", "testimonial", {
-        quote: "Try hairstyle, outfit, or themed portrait directions before downloading your favorites.",
-        name: "Private style preview",
-        role: "Style previews",
-        location: "Beauty and try-on",
+        quote: "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.",
+        name: "Prompt-led video scene",
+        role: "Video previews",
+        location: "6-10 second clips",
         rating: "",
         avatarUrl: assets.reviewNoahAvatar,
         resultImageUrl: assets.reviewNoahResultSocialCard
       }),
       block("review_elena", "testimonial", {
-        quote: "Create themed portraits for a personal page while keeping uploads and results private to the account.",
-        name: "Themed portrait set",
-        role: "Private albums",
-        location: "Creative portraits",
+        quote: "Preview hairstyles, outfits, and themed portrait directions before committing credits to a full package.",
+        name: "Private style preview",
+        role: "Style planning",
+        location: "Beauty and try-on",
         rating: "",
         avatarUrl: assets.womanPortrait,
         resultImageUrl: assets.cyberpunk
       }),
       block("review_ryan", "testimonial", {
-        quote: "Use quick previews first, then choose a full photo package after reviewing the credit cost.",
-        name: "Package preview",
+        quote: "Compare finished examples, confirm the credit cost before generation, and download only the private results you want to keep.",
+        name: "Gallery delivery",
         role: "Credit planning",
-        location: "Photo set workflow",
+        location: "Private workflow",
         rating: "",
         avatarUrl: assets.selfie,
         resultImageUrl: assets.travelScene
@@ -794,12 +814,379 @@ const templateSections = {
   ])
 };
 
+const aidreamcapesPublicAssets = {
+  hero: "/assets/sites/site_aidreamcapes/creative-packs/route-portrait-albums-cover.webp?v=20260630webp",
+  route: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260630webp",
+  city: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.webp?v=20260630webp",
+  gallery: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.webp?v=20260630webp",
+  profile: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp"
+} as const;
+
+function aidreamcapesTrustSection(): SectionInstance {
+  return section(
+    "trust_signal_bar",
+    { anchor: "trust", title: "Private travel portraits, visible credits, and account-only delivery." },
+    [
+      block("aidream_trust_private", "stat", { value: "Private", label: "source photos and galleries stay in the signed-in customer account" }),
+      block("aidream_trust_credits", "stat", { value: "Credits", label: "route costs are shown before each request reserves credits" }),
+      block("aidream_trust_routes", "stat", { value: "Routes", label: "coast, city, resort, trail, and postcard directions are clearly scoped" }),
+      block("aidream_trust_delivery", "stat", { value: "Gallery", label: "finished portraits return to a private review and download space" })
+    ]
+  );
+}
+
+function aidreamcapesFaqSection(): SectionInstance {
+  return section(
+    "faq",
+    {
+      anchor: "faq",
+      eyebrow: "Questions before upload",
+      title: "FAQ",
+      subtitle: "Answers to source photos, travel portrait requests, credits, privacy, refunds, and gallery delivery.",
+      journeyTitle: "Your travel portrait flow",
+      journeyTitles: "Upload|Choose Route|Generate|Download",
+      journeyDescriptions: "Add clear source photos.|Pick a destination mood.|AI builds the private set.|Download from your gallery."
+    },
+    [
+      block("aidream_faq_trial", "faq_item", {
+        question: "Can I preview Aidreamcapes before buying?",
+        answer: "Some lightweight guidance can be explored before a full request. Premium route portrait albums require credits because they use dedicated generation capacity."
+      }),
+      block("aidream_faq_credits", "faq_item", {
+        question: "When are credits used?",
+        answer: "The route cost is shown before generation. Credits are reserved when a private request starts, used after successful delivery, or released when a failed request returns the reservation."
+      }),
+      block("aidream_faq_private", "faq_item", {
+        question: "Are my uploaded photos private?",
+        answer: "Yes. Source photos, route briefs, generation jobs, albums, orders, and credits stay connected to your signed-in Aidreamcapes account and are not public by default."
+      }),
+      block("aidream_faq_uploads", "faq_item", {
+        question: "What photos should I upload?",
+        answer: "Recent, clear portraits work best. Use varied angles, expressions, lighting, and wardrobe notes so the private workflow has enough range for travel scenes."
+      }),
+      block("aidream_faq_delete", "faq_item", {
+        question: "Can I delete my photos?",
+        answer: "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required."
+      }),
+      block("aidream_faq_refunds", "faq_item", {
+        question: "What is the refund policy?",
+        answer: "Refund eligibility follows the site policy and checkout terms. Credits spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status."
+      })
+    ]
+  );
+}
+
+function aidreamcapesPlanRulesSection(): SectionInstance {
+  return section(
+    "rich_text",
+    {
+      anchor: "plan-rules",
+      eyebrow: "Plans and credits",
+      title: "How Aidreamcapes credits work",
+      body: "Credits are shown before a route portrait request starts, reserved while generation runs, used after successful delivery, and returned when a failed request releases the reservation. Your source photos, route briefs, albums, downloads, and credit history stay inside your signed-in Aidreamcapes account.",
+      imageUrl: aidreamcapesPublicAssets.route,
+      primaryCta: "Choose a plan",
+      primaryHref: "/pricing",
+      secondaryCta: "Explore travel tools",
+      secondaryHref: "/tools",
+      tone: "dark",
+      layout: "commerce_intro"
+    },
+    [
+      block("aidream_plan_source", "card", { meta: "source prep", title: "Prepare better source photos", description: "Upload clear portraits and optional destination notes before starting a full travel album." }),
+      block("aidream_plan_routes", "card", { meta: "route direction", title: "Pick a travel mood", description: "Choose coastal light, old quarter walks, alpine trails, resort stays, or postcard-style keepsakes before spending credits." }),
+      block("aidream_plan_credits", "card", { meta: "credit ledger", title: "Review credits first", description: "Reservations, successful generations, releases, and top-ups remain visible in the customer account." }),
+      block("aidream_plan_gallery", "card", { meta: "private delivery", title: "Download from your gallery", description: "Finished travel portraits return to an account-only gallery for review and download." })
+    ]
+  );
+}
+
+function aidreamcapesConversionSection(): SectionInstance {
+  return section(
+    "conversion_panel",
+    {
+      anchor: "start",
+      eyebrow: "Start creating",
+      title: "Open your private Aidreamcapes travel studio.",
+      subtitle: "Choose a route portrait package, upload clear source photos, review credits, and keep finished destination images in one private workspace.",
+      primaryCta: "Create travel portraits",
+      primaryHref: "/login",
+      secondaryCta: "Choose a plan",
+      secondaryHref: "/pricing"
+    },
+    [
+      block("aidream_cta_metric_credits", "stat", { value: "Credits", label: "shown before generation" }),
+      block("aidream_cta_metric_routes", "stat", { value: "20+", label: "travel portrait paths" }),
+      block("aidream_cta_metric_private", "stat", { value: "Private", label: "uploads and galleries" })
+    ]
+  );
+}
+
+function aidreamcapesWorkflowStepsSection(): SectionInstance {
+  return section(
+    "studio_steps",
+    {
+      anchor: "workflow",
+      eyebrow: "How it works",
+      title: "Upload, choose a route, review credits, generate.",
+      subtitle: "Use photos you own or have permission to use. Choose a destination direction, review the credit cost, generate private results, and download favorites.",
+      imageUrl: aidreamcapesPublicAssets.profile
+    },
+    [
+      block("aidream_step_upload", "card", { title: "Upload clear photos", text: "Use recent portraits where the face or subject is visible. Only upload photos you own or have permission to use.", meta: "01" }),
+      block("aidream_step_route", "card", { title: "Choose a travel route", text: "Pick the outcome you want, such as coastal light, city walks, alpine trails, resort scenes, or postcard keepsakes.", meta: "02" }),
+      block("aidream_step_credits", "card", { title: "Review the credit cost", text: "The request shows the credit cost before generation starts so you know what the route will reserve.", meta: "03" }),
+      block("aidream_step_gallery", "card", { title: "Download from your gallery", text: "Finished sets land in your private gallery where you can review, approve, and download results.", meta: "04" })
+    ]
+  );
+}
+
+function aidreamcapesGenerationShowcaseSection(): SectionInstance {
+  return section("dreamshoot_generation_showcase", {
+    anchor: "generated-showcase",
+    eyebrow: "Customer travel examples",
+    title: "Browse destination image and video themes customers have created.",
+    subtitle: "These examples use private customer-created travel materials. Scan the labels for route, coastal, profile, and keepsake directions.",
+    imageTitle: "Customer destination themes",
+    videoTitle: "Customer travel video themes",
+    imageSlugs: "route-portrait-albums|coastal-light-sets|old-quarter-walks|island-resort-scenes|scenic-overlooks|alpine-trail-frames|solo-traveler-profiles|heritage-celebration-portraits",
+    videoSlugs: "route-atlas-motion|coastal-memory-clip|old-quarter-walkthrough|resort-balcony-motion|scenic-overlook-pan|alpine-trail-motion|solo-traveler-profile-clip|heritage-celebration-film",
+    itemLimit: 8,
+    primaryCta: "Start a route gallery",
+    primaryHref: "/login"
+  });
+}
+
+function aidreamcapesWorkflowPage(): ThemePageJson {
+  return page(
+    "content",
+    ["workflow_intro_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"],
+    {
+      workflow_intro_1: section("rich_text", {
+        eyebrow: "How it works",
+        title: "How Aidreamcapes turns source photos into private travel portraits.",
+        body: "Upload photos you own, choose the destination mood you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.hero,
+        primaryCta: "Browse travel packages",
+        primaryHref: "/collections",
+        secondaryCta: "View pricing",
+        secondaryHref: "/pricing"
+      }, [
+        block("aidream_workflow_private", "rich_text_card", { meta: "Private", title: "Account-scoped uploads", description: "Source photos, route briefs, jobs, credits, and albums stay attached to the signed-in customer account." }),
+        block("aidream_workflow_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the route cost before a private request reserves credits." }),
+        block("aidream_workflow_gallery", "rich_text_card", { meta: "Gallery", title: "Finished albums", description: "Generated travel portraits return to a private gallery for review and download." })
+      ]),
+      workflow_1: aidreamcapesWorkflowStepsSection(),
+      plan_rules_1: aidreamcapesPlanRulesSection(),
+      faq_1: aidreamcapesFaqSection(),
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    {
+      title: "How Aidreamcapes works - private AI travel portrait workflow",
+      description: "Learn how Aidreamcapes customers upload source photos, choose travel portrait routes, review credits, generate private results, and download finished galleries.",
+      keywords: "Aidreamcapes workflow, AI travel portrait workflow, private destination portraits, AI travel gallery credits",
+      canonicalPath: "/workflow",
+      robots: { index: true, follow: true }
+    }
+  );
+}
+
+function aidreamcapesCreatorsCirclePage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
+  return page(
+    "content",
+    ["creators_intro_1", "creators_fit_1", "creators_steps_1", "pricing_1", "conversion_1"],
+    {
+      creators_intro_1: section("rich_text", {
+        eyebrow: "Creator channel",
+        title: "Share AI travel portrait stories your audience can actually try.",
+        body: "Aidreamcapes partners with travel creators, itinerary writers, photographers, lifestyle editors, and community builders who can introduce private AI travel portrait packages in a useful, trustworthy way. Share route moods, source-photo tips, before-and-after stories, and seasonal destination ideas while your audience keeps uploads, credits, and galleries inside their own account.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.city,
+        primaryCta: "Apply as a partner",
+        primaryHref: "/partner-registration",
+        secondaryCta: "Explore travel packages",
+        secondaryHref: "/collections"
+      }, [
+        block("aidream_creator_campaigns", "rich_text_card", { meta: "Channel", title: "Route-ready campaigns", description: "Launch content around coastal light, city walks, resort stays, profile stories, and seasonal travel portrait paths." }),
+        block("aidream_creator_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside Aidreamcapes, so you promote the experience without handling personal photos." }),
+        block("aidream_creator_assets", "rich_text_card", { meta: "Assets", title: "Story angles included", description: "Use page links, route themes, upload tips, and destination talking points that match the Aidreamcapes catalog." }),
+        block("aidream_creator_growth", "rich_text_card", { meta: "Growth", title: "Room for paid channels", description: "We can reserve partner routes for creators, newsletters, paid media tests, travel communities, and niche collaborations." })
+      ]),
+      creators_fit_1: section("rich_text", {
+        eyebrow: "Who fits",
+        title: "Built for creators who explain travel mood, identity, and visual storytelling.",
+        body: "The strongest partners show real use cases: a solo traveler refreshing profile images, a planner testing destination moods, a creator building route content, or a small team preparing campaign visuals. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
+        imageUrl: aidreamcapesPublicAssets.route,
+        primaryCta: "Start the application",
+        primaryHref: "/partner-registration",
+        secondaryCta: "View pricing",
+        secondaryHref: "/pricing"
+      }, [
+        block("aidream_fit_social", "rich_text_card", { meta: "Social", title: "Short-form creators", description: "Reels, TikTok, Shorts, and carousel creators who can demonstrate route portrait ideas clearly." }),
+        block("aidream_fit_newsletter", "rich_text_card", { meta: "Community", title: "Newsletter and group owners", description: "Operators with engaged audiences around travel planning, lifestyle storytelling, creator tools, or personal branding." }),
+        block("aidream_fit_photo", "rich_text_card", { meta: "Studio", title: "Photographers and consultants", description: "Professionals who want an AI add-on for route mood boards, destination portraits, and campaign concepts." }),
+        block("aidream_fit_paid", "rich_text_card", { meta: "Media", title: "Performance partners", description: "Paid media, SEO, and affiliate teams that can test a dedicated travel portrait channel with clean attribution." })
+      ]),
+      creators_steps_1: section("rich_text", {
+        eyebrow: "How it works",
+        title: "A simple path from application to live campaign.",
+        body: "Tell us about your audience, preferred channels, publishing cadence, and the travel portrait angles you want to test. Approved partners receive a dedicated Aidreamcapes route, campaign notes, and a way to coordinate launch timing with the Aidreamcapes team.",
+        tone: "warm"
+      }, [
+        block("aidream_step_apply", "rich_text_card", { meta: "01", title: "Apply", description: "Submit your creator profile, social links, audience notes, and the kind of travel portrait campaign you want to run." }),
+        block("aidream_step_match", "rich_text_card", { meta: "02", title: "Match", description: "We review fit, confirm the channel, and suggest route portrait packages that make sense for your audience." }),
+        block("aidream_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner route that sends customers to Aidreamcapes packages, pricing, or a specific offer." }),
+        block("aidream_step_learn", "rich_text_card", { meta: "04", title: "Learn", description: "Track what resonates, refine the story, and plan follow-up drops around seasonal destinations or niche travel moods." })
+      ]),
+      pricing_1: homeSections.pricing_1,
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    seoForPublicPage("/creators-circle", site)
+  );
+}
+
+function aidreamcapesPartnerRegistrationPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
+  return page(
+    "content",
+    ["partner_form_1", "partner_expectations_1", "trust_1", "conversion_1"],
+    {
+      partner_form_1: section("rich_text", {
+        eyebrow: "Partner application",
+        title: "Apply for a reserved Aidreamcapes creator channel.",
+        body: "Tell us who you reach, how you publish, and which Aidreamcapes travel portrait experiences would fit your audience. Approved partners can send customers to route portrait packages, pricing, or a specific private gallery offer.",
+        headingLevel: "h1",
+        layout: "application_form",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.profile,
+        primaryCta: "Email partnership details",
+        primaryHref: "mailto:support@aidreamcapes.com?subject=Aidreamcapes%20partner%20application",
+        secondaryCta: "Back to Creators Circle",
+        secondaryHref: "/creators-circle"
+      }, [
+        block("aidream_partner_field_name", "form_field", { label: "Full name", placeholder: "Your name", fieldType: "text", required: true }),
+        block("aidream_partner_field_email", "form_field", { label: "Email address", placeholder: "you@example.com", fieldType: "email", required: true }),
+        block("aidream_partner_field_website", "form_field", { label: "Website", placeholder: "https://your-site.com", fieldType: "text", required: false }),
+        block("aidream_partner_field_channels", "form_field", { label: "Primary channel links", placeholder: "Instagram, TikTok, YouTube, newsletter, website, or community links", fieldType: "textarea", required: true }),
+        block("aidream_partner_field_audience", "form_field", { label: "Audience and niche", placeholder: "Tell us who follows you and why AI travel portraits fit them.", fieldType: "textarea", required: true }),
+        block("aidream_partner_field_cadence", "form_field", { label: "Publishing cadence", placeholder: "Weekly videos, newsletter drops, paid campaigns, community posts...", fieldType: "text", required: false }),
+        block("aidream_partner_field_ideas", "form_field", { label: "Campaign ideas", placeholder: "Which route portraits, stories, or seasonal destination angles would you promote first?", fieldType: "textarea", required: false }),
+        block("aidream_partner_field_terms", "form_field", { label: "I confirm that my promotions will respect privacy, platform rules, and truthful AI disclosure.", fieldType: "checkbox", required: true })
+      ]),
+      partner_expectations_1: section("rich_text", {
+        eyebrow: "Before you submit",
+        title: "What we look for in partner channels.",
+        body: "Great applications are specific. Include real channel links, the audience problem you solve, the content format you prefer, and how you would explain private AI travel portraits without overstating results.",
+        imageUrl: aidreamcapesPublicAssets.gallery
+      }, [
+        block("aidream_partner_fit", "rich_text_card", { meta: "Audience", title: "Clear audience fit", description: "Travel, lifestyle, creator, photography, itinerary, wellness, and personal-brand communities usually map well to the Aidreamcapes catalog." }),
+        block("aidream_partner_quality", "rich_text_card", { meta: "Quality", title: "Helpful creative framing", description: "We prefer educational demos, honest results, and practical route examples over hype-only promotions." }),
+        block("aidream_partner_compliance", "rich_text_card", { meta: "Rules", title: "Privacy and disclosure", description: "Partners should disclose AI use where appropriate and avoid collecting customer uploads outside Aidreamcapes." }),
+        block("aidream_partner_launch", "rich_text_card", { meta: "Launch", title: "A testable plan", description: "Share when you can publish, what format you will use, and which route or offer would make the campaign easy to measure." })
+      ]),
+      trust_1: aidreamcapesTrustSection(),
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    seoForPublicPage("/partner-registration", site)
+  );
+}
+
+function aidreamcapesAboutPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
+  return page(
+    "content",
+    ["about_intro_1", "about_values_1", "trust_1", "conversion_1"],
+    {
+      about_intro_1: section("rich_text", {
+        eyebrow: "About Aidreamcapes",
+        title: "Private AI travel portraits with route planning and account-only delivery.",
+        body: "Aidreamcapes helps customers turn everyday source photos into cinematic route portraits, coastal light sets, city walks, resort scenes, and private galleries without planning a real destination shoot.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.hero,
+        primaryCta: "Explore travel packages",
+        primaryHref: "/collections",
+        secondaryCta: "Contact us",
+        secondaryHref: "/contact-us"
+      }, [
+        block("aidream_about_route", "rich_text_card", { meta: "Route context", title: "Destination briefs first", description: "Customers choose a coast, city, trail, resort, or postcard direction before the album request begins." }),
+        block("aidream_about_ledger", "rich_text_card", { meta: "Credit ledger", title: "Travel credit holds", description: "Each package shows its credit cost, reservation state, and delivery outcome inside the account history." }),
+        block("aidream_about_album", "rich_text_card", { meta: "Album delivery", title: "Trip-ready selections", description: "Delivered portraits can be compared, downloaded, and kept as a private destination album." })
+      ]),
+      about_values_1: section("rich_text", {
+        eyebrow: "What we focus on",
+        title: "Source photos, destination planning, visible credits, and private albums.",
+        body: "Each Aidreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.",
+        imageUrl: aidreamcapesPublicAssets.route,
+        primaryCta: "View pricing",
+        primaryHref: "/pricing",
+        secondaryCta: "FAQ",
+        secondaryHref: "/faq"
+      }, [
+        block("aidream_value_workspace", "rich_text_card", { meta: "Scoped workspace", title: "Account-bound albums", description: "Source photos, route briefs, generated portraits, and downloads remain tied to the signed-in Aidreamcapes account." }),
+        block("aidream_value_credits", "rich_text_card", { meta: "Ledger clarity", title: "Route credit visibility", description: "Plan costs, reservations, releases, top-ups, and delivery states are visible before and after each destination request." }),
+        block("aidream_value_scenes", "rich_text_card", { meta: "Travel direction", title: "Destination-led guidance", description: "Coastal light, old quarter, alpine trail, villa, cafe, and postcard packages each carry their own upload notes." })
+      ]),
+      trust_1: aidreamcapesTrustSection(),
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    seoForPublicPage("/about-us", site)
+  );
+}
+
+function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
+  const supportEmail = "support@aidreamcapes.com";
+  const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
+  return page(
+    "content",
+    ["contact_intro_1", "contact_details_1", "faq_1", "conversion_1"],
+    {
+      contact_intro_1: section("rich_text", {
+        eyebrow: "Contact us",
+        title: "Contact Aidreamcapes support.",
+        body: "Reach Aidreamcapes support for source photo guidance, travel request status, account access, billing review, privacy questions, plan fit, or creator and business use cases.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.city,
+        primaryCta: "Email support",
+        primaryHref: `mailto:${supportEmail}`,
+        secondaryCta: "View FAQ",
+        secondaryHref: "/faq"
+      }, [
+        block("aidream_contact_support", "rich_text_card", { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and private travel gallery delivery support." }),
+        block("aidream_contact_account", "rich_text_card", { meta: "Account help", title: supportEmail, description: "For plan questions, creator use cases, billing review, credits, and route portrait delivery help." }),
+        block("aidream_contact_address", "rich_text_card", { meta: "Address", title: companyAddress, description: "Company mailing address for Aidreamcapes business correspondence." })
+      ]),
+      contact_details_1: section("policy_content", {
+        title: "Contact information",
+        headingLevel: "h2",
+        lastUpdated: "June 28, 2026",
+        contactEmail: supportEmail,
+        body: `<h3>Support</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account access, source photo guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, business inquiries, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>${companyAddress}</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>`
+      }),
+      faq_1: aidreamcapesFaqSection(),
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    seoForPublicPage("/contact-us", site)
+  );
+}
+
 export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSiteSeed): Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> {
-  return {
+  const generationShowcaseSection = isAidreamcapesTemplateSite(site) ? aidreamcapesGenerationShowcaseSection() : homeSections.generation_showcase_1;
+  const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
-    pickSections(homeSections, ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
+    ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "generation_showcase_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
+    {
+      ...pickSections(homeSections, ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
+      generation_showcase_1: generationShowcaseSection
+    },
     1
   ),
   pricing: page(
@@ -1142,14 +1529,14 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       }, [
         block("contact_support", "rich_text_card", { meta: "Support", title: "support@mydreamshoots.com", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
         block("contact_account", "rich_text_card", { meta: "Account help", title: "support@mydreamshoots.com", description: "For plan questions, creator use cases, billing review, credits, and private album delivery help." }),
-        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B, DOVER, DE 19901", description: "Company mailing address for MyDreamShoots business correspondence." })
+        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B,DOVER,DE 19901", description: "Company mailing address for MRNARUEBET LLC business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
         title: "Contact information",
         headingLevel: "h2",
         lastUpdated: "June 28, 2026",
         contactEmail: "support@mydreamshoots.com",
-        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private album delivery help.</p><h3>Company address</h3><p>8 THE GREEN STE B, DOVER, DE 19901</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private album delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
       }),
       faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
@@ -1225,6 +1612,15 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     1
   )
   };
+  if (!isAidreamcapesTemplateSite(site)) return templates;
+  return {
+    ...templates,
+    workflow: aidreamcapesWorkflowPage(),
+    "creators-circle": aidreamcapesCreatorsCirclePage(site),
+    "partner-registration": aidreamcapesPartnerRegistrationPage(site),
+    "about-us": aidreamcapesAboutPage(site),
+    "contact-us": aidreamcapesContactPage(site)
+  };
 }
 
 export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = dreamshootAiStudioTemplatesForSite();
@@ -1289,6 +1685,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
         { label: "Cookie Policy", href: "/cookies", group: "support" },
+        { label: "Children's Privacy", href: "/children-privacy", group: "support" },
+        { label: "State Privacy Rights", href: "/state-privacy", group: "support" },
         { label: "Content policy", href: "/content", group: "support" },
         { label: "FAQ", href: "/faq", group: "company" },
         { label: "About us", href: "/about-us", group: "company" },
@@ -1336,8 +1734,12 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           youtubeUrl: "https://www.youtube.com/@mydreamshoots",
           twitterUrl: "https://x.com/mydreamshoots",
           showPaymentIcons: true,
-          contactAddress: "8 THE GREEN STE B, DOVER, DE 19901",
+          companyName: "MRNARUEBET LLC",
+          contactAddress: "8 THE GREEN STE B,DOVER,DE 19901",
+          contactPhone: "(+1)302-200-5780",
           contactEmail: "support@mydreamshoots.com",
+          taxIdLabel: "EIN / Tax ID",
+          taxId: "98-1926243",
           salesEmail: "",
           bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
           copyright: "© 2026 MyDreamShoots. All rights reserved."
@@ -1351,6 +1753,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },
+          { id: "dreamshoot_footer_children_privacy", type: "menu_link", settings: { label: "Children's Privacy", href: "/children-privacy", group: "support" } },
+          { id: "dreamshoot_footer_state_privacy", type: "menu_link", settings: { label: "State Privacy Rights", href: "/state-privacy", group: "support" } },
           { id: "dreamshoot_footer_content", type: "menu_link", settings: { label: "Content policy", href: "/content", group: "support" } },
           { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },
           { id: "dreamshoot_footer_contact", type: "menu_link", settings: { label: "Contact us", href: "/contact-us", group: "company" } },

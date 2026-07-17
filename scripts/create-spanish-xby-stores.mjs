@@ -17,34 +17,34 @@ const specs = [
     sourceSlug: "mydreamshoots",
     targetSiteId: "site_mydreamshoots_xby",
     targetToken: "mydreamshoots_xby",
-    targetSlug: "mydreamshoots-xby",
-    targetDomain: "mydreamshoots-xby.localhost",
-    name: "MyDreamShoots-xby",
-    readableBrand: "MyDreamShoots-xby",
-    supportEmail: "support@mydreamshoots-xby.localhost",
+    targetSlug: "aidreamshoots",
+    targetDomain: "aidreamshoots.eu",
+    name: "AIdreamshoots",
+    readableBrand: "AIdreamshoots",
+    supportEmail: "support@aidreamshoots.eu",
     market: "Paquetes de fotos con IA, modelos privados, herramientas creativas, creditos y galerias privadas",
     description:
-      "MyDreamShoots-xby es una tienda en espanol para crear retratos profesionales, fotos de pareja y albumes privados con IA desde tus selfies.",
-    homeTitle: "MyDreamShoots-xby - generador de fotos con IA online",
+      "AIdreamshoots es una tienda en espanol para crear retratos profesionales, fotos de pareja y albumes privados con IA desde tus selfies.",
+    homeTitle: "AIdreamshoots - generador de fotos con IA online",
     homeDescription:
-      "Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con MyDreamShoots-xby. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.",
+      "Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con AIdreamshoots. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.",
     homeKeywords:
-      "generador de fotos IA,retratos profesionales IA,fotos de pareja IA,album privado IA,selfies,MyDreamShoots-xby",
-    defaultOgImage: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-    logoImageUrl: "/assets/sites/site_mydreamshoots_xby/brand/mydreamshoots-xby-logo-refined.svg?v=20260711a",
+      "generador de fotos IA,retratos profesionales IA,fotos de pareja IA,album privado IA,selfies,AIdreamshoots",
+    defaultOgImage: "/assets/sites/site_aidreamshoots/og/aidreamshoots-og.png",
+    logoImageUrl: "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a",
     headerLinks: [
       ["Ver paquetes", "/collections"],
       ["Herramientas", "/tools"],
       ["Como funciona", "/workflow"],
       ["Precios", "/pricing"],
-      ["Preguntas", "#faq"]
+      ["Preguntas", "/faq"]
     ],
     footerLinks: [
       ["Ver paquetes", "/collections", "product"],
       ["Herramientas", "/tools", "product"],
       ["Como funciona", "/workflow", "product"],
       ["Precios", "/pricing", "product"],
-      ["Centro de ayuda", "/help", "company"],
+      ["Centro de ayuda", "/faq", "company"],
       ["Guias", "/blog", "company"],
       ["Sobre nosotros", "/about-us", "company"],
       ["Contacto", "/contact-us", "company"],
@@ -61,27 +61,27 @@ const specs = [
     sourceSlug: "aidreamcapes",
     targetSiteId: "site_aidreamcapes_xby",
     targetToken: "aidreamcapes_xby",
-    targetSlug: "aidreamcapes-xby",
-    targetDomain: "aidreamcapes-xby.localhost",
-    name: "Aidreamcapes-xby",
-    readableBrand: "Aidreamcapes-xby",
-    supportEmail: "support@aidreamcapes-xby.localhost",
+    targetSlug: "aidreamcapes-eu",
+    targetDomain: "aidreamcapes.eu",
+    name: "AIdreamcapes",
+    readableBrand: "AIdreamcapes",
+    supportEmail: "support@aidreamcapes.eu",
     market: "Retratos de viaje con IA, escenas de destino, paquetes cinematograficos, creditos y galerias privadas",
     description:
-      "Aidreamcapes-xby es una tienda en espanol para crear retratos de viaje, escenas de destino, albumes cinematicos y recuerdos privados con IA.",
-    homeTitle: "Aidreamcapes-xby - generador de retratos de viaje con IA",
+      "AIdreamcapes es una tienda en espanol para crear retratos de viaje, escenas de destino, albumes cinematicos y recuerdos privados con IA.",
+    homeTitle: "AIdreamcapes - generador de retratos de viaje con IA",
     homeDescription:
-      "Transforma tus fotos favoritas en retratos de viaje profesionales con Aidreamcapes-xby. Elige destino, ambiente y estilo desde casa con galerias privadas.",
+      "Transforma tus fotos favoritas en retratos de viaje profesionales con AIdreamcapes. Elige destino, ambiente y estilo desde casa con galerias privadas.",
     homeKeywords:
-      "retratos de viaje IA,fotos de viaje IA,generador de fotos IA,albumes de destino,retratos cinematicos,Aidreamcapes-xby",
-    defaultOgImage: "/assets/sites/site_aidreamcapes/creative-packs/destination-story.webp?v=20260630webp",
-    logoImageUrl: "/assets/sites/site_aidreamcapes_xby/brand/aidreamcapes-xby-logo-refined.svg?v=20260711a",
+      "retratos de viaje IA,fotos de viaje IA,generador de fotos IA,albumes de destino,retratos cinematicos,AIdreamcapes",
+    defaultOgImage: "/assets/sites/site_aidreamcapes_eu/creative-packs/destination-story.webp?v=20260717a",
+    logoImageUrl: "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260717a",
     headerLinks: [
       ["Paquetes de viaje", "/collections"],
       ["Herramientas", "/tools"],
       ["Como funciona", "/workflow"],
       ["Ejemplos", "/collections"],
-      ["Ayuda", "/help"]
+      ["Ayuda", "/faq"]
     ],
     footerLinks: [
       ["Paquetes de viaje", "/collections", "product"],
@@ -90,7 +90,7 @@ const specs = [
       ["Notas de viaje", "/blog", "company"],
       ["Sobre el estudio", "/about-us", "company"],
       ["Contacto del estudio", "/contact-us", "company"],
-      ["Centro de ayuda", "/help", "support"],
+      ["Centro de ayuda", "/faq", "support"],
       ["Promesa de privacidad", "/privacy", "support"],
       ["Terminos del estudio", "/terms", "support"],
       ["Seguridad creativa", "/content", "support"],
@@ -178,6 +178,18 @@ const titleTranslations = new Map(
     "creator travel kits": "Kits de viaje para creadores",
     "local moments": "Momentos locales",
     "open-air routes": "Rutas al aire libre",
+    "lifestyle routes": "Rutas lifestyle",
+    "professional celebrations": "Celebraciones profesionales",
+    "nature portrait studio": "Estudio de retrato natural",
+    "city light night walks": "Paseos nocturnos con luz urbana",
+    "evening route portraits": "Retratos de ruta al atardecer",
+    "soft editorial room portraits": "Retratos editoriales de interior",
+    "hairstyle try on stories": "Historias de prueba de peinado",
+    "professional headshot studio": "Estudio de retratos profesionales",
+    "milestone postcard sets": "Sets de postal para hitos",
+    "holiday couple cards": "Tarjetas festivas de pareja",
+    "gala night portraits": "Retratos de noche de gala",
+    "heritage celebration portraits": "Retratos de celebracion familiar",
     "travel story kits": "Kits de historia de viaje",
     "route portrait packages": "Paquetes de retratos de ruta",
     "route portrait albums": "Albumes de retrato de ruta",
@@ -230,6 +242,8 @@ const titleTranslations = new Map(
     "solo traveler profile set": "Set de perfil de viajero solo",
     "travel journal cover maker": "Creador de portada de diario de viaje",
     "private album curator": "Curador de album privado",
+    "workflow": "Como funciona",
+    "how it works": "Como funciona",
     "professional headshot maker": "Creador de retratos profesionales",
     "creator portrait studio": "Estudio de retratos para creadores",
     "world cup fan photos": "Fotos de hincha del Mundial",
@@ -312,40 +326,40 @@ const titleTranslations = new Map(
     "destino pack": "Pack de destino",
     "match-day avatar": "Avatar de partido",
     "costero": "Costero",
-    "mydreamshoots hairstyle preview": "Vista previa de peinado MyDreamShoots-xby",
-    "mydreamshoots headshot": "Retrato profesional MyDreamShoots-xby",
-    "mydreamshoots world cup match day avatar": "Avatar de partido del Mundial MyDreamShoots-xby",
-    "mydreamshoots world cup banner cover": "Portada del Mundial MyDreamShoots-xby",
-    "mydreamshoots world cup friend fan photos": "Fotos de hinchas del Mundial MyDreamShoots-xby",
-    "mydreamshoots world cup fan poster": "Poster de hincha del Mundial MyDreamShoots-xby",
-    "mydreamshoots world cup stadium portrait": "Retrato de estadio del Mundial MyDreamShoots-xby",
-    "mydreamshoots world cup social story": "Historia para redes del Mundial MyDreamShoots-xby",
+    "mydreamshoots hairstyle preview": "Vista previa de peinado AIdreamshoots",
+    "mydreamshoots headshot": "Retrato profesional AIdreamshoots",
+    "mydreamshoots world cup match day avatar": "Avatar de partido del Mundial AIdreamshoots",
+    "mydreamshoots world cup banner cover": "Portada del Mundial AIdreamshoots",
+    "mydreamshoots world cup friend fan photos": "Fotos de hinchas del Mundial AIdreamshoots",
+    "mydreamshoots world cup fan poster": "Poster de hincha del Mundial AIdreamshoots",
+    "mydreamshoots world cup stadium portrait": "Retrato de estadio del Mundial AIdreamshoots",
+    "mydreamshoots world cup social story": "Historia para redes del Mundial AIdreamshoots",
     "private album workspace": "Espacio de album privado",
     "flow before upload": "Antes de subir fotos",
     "adventure tools": "Herramientas de aventura",
-    "mydreamshoots nature adventure": "Aventura natural MyDreamShoots-xby",
-    "aidreamcapes cafe street portrait cover": "Portada de retrato de cafe y calle Aidreamcapes-xby",
-    "mydreamshoots beauty portrait": "Retrato de belleza MyDreamShoots-xby",
-    "mydreamshoots creator portrait": "Retrato de creador MyDreamShoots-xby",
-    "mydreamshoots holiday portrait": "Retrato festivo MyDreamShoots-xby",
-    "mydreamshoots social cards": "Tarjetas para redes MyDreamShoots-xby",
-    "mydreamshoots travel scene": "Escena de viaje MyDreamShoots-xby",
+    "mydreamshoots nature adventure": "Aventura natural AIdreamshoots",
+    "aidreamcapes cafe street portrait cover": "Portada de retrato de cafe y calle AIdreamcapes",
+    "mydreamshoots beauty portrait": "Retrato de belleza AIdreamshoots",
+    "mydreamshoots creator portrait": "Retrato de creador AIdreamshoots",
+    "mydreamshoots holiday portrait": "Retrato festivo AIdreamshoots",
+    "mydreamshoots social cards": "Tarjetas para redes AIdreamshoots",
+    "mydreamshoots travel scene": "Escena de viaje AIdreamshoots",
     "hero credit studio card": "Tarjeta de creditos del estudio",
     "hero package wall": "Muro de paquetes del inicio",
     "pricing credits visual": "Visual de creditos y precios",
-    "aidreamcapes coastal escape portrait cover": "Portada de escapada costera Aidreamcapes-xby",
-    "aidreamcapes editorial getaway portrait cover": "Portada de escapada editorial Aidreamcapes-xby",
-    "aidreamcapes island resort scene cover": "Portada de resort isleno Aidreamcapes-xby",
-    "aidreamcapes cinematic travel portrait hero": "Heroe cinematico de retrato de viaje Aidreamcapes-xby"
+    "aidreamcapes coastal escape portrait cover": "Portada de escapada costera AIdreamcapes",
+    "aidreamcapes editorial getaway portrait cover": "Portada de escapada editorial AIdreamcapes",
+    "aidreamcapes island resort scene cover": "Portada de resort isleno AIdreamcapes",
+    "aidreamcapes cinematic travel portrait hero": "Heroe cinematico de retrato de viaje AIdreamcapes"
   })
 );
 
 const phrasePairs = [
-  ["MyDreamShoots", "MyDreamShoots-xby"],
-  ["MydreamShoots", "MyDreamShoots-xby"],
-  ["Mydreamshoots", "MyDreamShoots-xby"],
-  ["DreamShootAI", "MyDreamShoots-xby"],
-  ["Aidreamcapes", "Aidreamcapes-xby"],
+  ["MyDreamShoots", "AIdreamshoots"],
+  ["MydreamShoots", "AIdreamshoots"],
+  ["Mydreamshoots", "AIdreamshoots"],
+  ["DreamShootAI", "AIdreamshoots"],
+  ["Aidreamcapes", "AIdreamcapes"],
   ["Browse packages", "Ver paquetes"],
   ["Free tools preview. Credits generate.", "Herramientas incluidas para vista previa. Los creditos se consumen al generar."],
   ["Free tools vista previa. Creditos generate.", "Herramientas incluidas para vista previa. Los creditos se consumen al generar."],
@@ -353,6 +367,14 @@ const phrasePairs = [
   ["Viaje portrait credit plans", "Planes de creditos para retratos de viaje"],
   ["From source photos to a private travel gallery.", "De fotos fuente a una galeria privada de viaje."],
   ["From fotos fuente to a private travel gallery.", "De fotos fuente a una galeria privada de viaje."],
+  ["Upload photos you own, choose the photo package you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.", "Sube fotos propias o autorizadas, elige el paquete, revisa el coste visible en creditos, genera la solicitud privada y descarga los resultados desde tu galeria."],
+  ["Subir fotos you own, choose the photo package you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.", "Sube fotos propias o autorizadas, elige el paquete, revisa el coste visible en creditos, genera la solicitud privada y descarga los resultados desde tu galeria."],
+  ["Upload clear photos you own or have permission to use.|Choose headshots, fan posters, creator portraits, beauty previews, and themed albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.", "Sube fotos claras propias o autorizadas.|Elige retratos profesionales, posters de hincha, retratos de creador, vistas de belleza y albumes tematicos.|Revisa el coste en creditos antes de generar.|Descarga resultados desde tu galeria privada."],
+  ["Subir fotos you own or have permission to use.|Choose headshots, fan posters, creator portraits, beauty previews, and themed albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.", "Sube fotos claras propias o autorizadas.|Elige retratos profesionales, posters de hincha, retratos de creador, vistas de belleza y albumes tematicos.|Revisa el coste en creditos antes de generar.|Descarga resultados desde tu galeria privada."],
+  ["Use photos you own or have permission to use. Choose a package, review the credit cost, generate private results, and download favorites.", "Usa fotos propias o autorizadas. Elige un paquete, revisa el coste en creditos, genera resultados privados y descarga tus favoritos."],
+  ["Use fotos you own or have permission to use. Choose a package, review the credit cost, generate private results, and download favorites.", "Usa fotos propias o autorizadas. Elige un paquete, revisa el coste en creditos, genera resultados privados y descarga tus favoritos."],
+  ["Plan the destination mood, attach source photos you own, review route credits, generate a private travel portrait request, and collect finished images in your account gallery.", "Define el ambiente de destino, adjunta retratos fuente propios o autorizados, revisa creditos de ruta, genera una solicitud privada y recoge las imagenes en tu galeria."],
+  ["Plan the destination mood, attach fotos fuente you own, review creditos de ruta, generate a private travel portrait request, and collect finished images in your account gallery.", "Define el ambiente de destino, adjunta retratos fuente propios o autorizados, revisa creditos de ruta, genera una solicitud privada y recoge las imagenes en tu galeria."],
   ["Starter, Pro, and Premium map to real product prices, credits, and checkout records.", "Inicial, Pro y Premium se conectan con precios reales, creditos y registros de pago."],
   ["Starter, Pro, and Premium map to real product prices, creditos, and checkout records.", "Inicial, Pro y Premium se conectan con precios reales, creditos y registros de pago."],
   ["Upload your selfies, choose a style, review the credit cost, and download a private photo set.", "Sube tus selfies, elige un estilo, revisa el coste en creditos y descarga un set privado."],
@@ -370,9 +392,9 @@ const phrasePairs = [
   ["Credit cost is shown before generation.", "El coste en creditos se muestra antes de generar."],
   ["Turn source photos into train-window, platform, and slow travel portrait scenes.", "Convierte fotos fuente en escenas de tren, anden y viaje pausado."],
   ["Turn fotos fuente into train-window, platform, and slow travel portrait scenes.", "Convierte fotos fuente en escenas de tren, anden y viaje pausado."],
-  ["Each Aidreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.", "Cada pagina de Aidreamcapes-xby se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
-  ["Each Aidreamcapes-xby page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.", "Cada pagina de Aidreamcapes-xby se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
-  ["Each Aidreamcapes-xby page is designed around a clear travel portrait outcome so customers know what to upload, what creditos are reserved, and where finished images will arrive.", "Cada pagina de Aidreamcapes-xby se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
+  ["Each Aidreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.", "Cada pagina de AIdreamcapes se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
+  ["Each AIdreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.", "Cada pagina de AIdreamcapes se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
+  ["Each AIdreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what creditos are reserved, and where finished images will arrive.", "Cada pagina de AIdreamcapes se orienta a un resultado claro de retrato de viaje para que el cliente sepa que subir, que creditos se reservan y donde llegaran las imagenes finales."],
   ["Travel Packages", "Paquetes de viaje"],
   ["Tools", "Herramientas"],
   ["How it works", "Como funciona"],
@@ -380,6 +402,23 @@ const phrasePairs = [
   ["Examples", "Ejemplos"],
   ["Help", "Ayuda"],
   ["FAQ", "Preguntas"],
+  ["All|Sports|Headshots|Beauty|Creative|Lifestyle|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Estilo de vida|Temporada|Video"],
+  ["All|Sports|Headshots|Beauty|Creative|Travel|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Viaje|Temporada|Video"],
+  ["All|Sports|Headshots|Beauty|Creative|Wedding|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Boda|Temporada|Video"],
+  ["All|Deportes|Retratos profesionales|Beauty|Creative|Lifestyle|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Estilo de vida|Temporada|Video"],
+  ["All|Deportes|Retratos profesionales|Beauty|Creative|Viaje|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Viaje|Temporada|Video"],
+  ["All|Deportes|Retratos profesionales|Beauty|Creative|Wedding|Seasonal|Video", "Todo|Deportes|Retratos profesionales|Belleza|Creativo|Boda|Temporada|Video"],
+  ["All|", "Todo|"],
+  ["|Beauty|", "|Belleza|"],
+  ["|Creative|", "|Creativo|"],
+  ["|Wedding|", "|Boda|"],
+  ["|Seasonal|", "|Temporada|"],
+  ["Beauty set", "Set de belleza"],
+  ["Login Method Panel", "Panel de acceso"],
+  ["Customer image themes", "Temas de imagen del cliente"],
+  ["Customer temas de destino", "Temas de destino del cliente"],
+  ["Customer travel video themes", "Temas de video de viaje del cliente"],
+  ["Optional note", "Nota opcional"],
   ["See examples of what your selfies can become: headshots, fan posters, creator portraits, style previews, and seasonal albums.", "Mira ejemplos de lo que tus selfies pueden convertirse: retratos profesionales, carteles de hincha, retratos de creador, vistas previas de estilo y albumes de temporada."],
   ["Sign in", "Iniciar sesion"],
   ["Sign out", "Cerrar sesion"],
@@ -665,6 +704,7 @@ const dreamshootCollectionHrefAliases = {
   deportes: "world-cup-fan-photos",
   lifestyle: "travel-scene-pack",
   nature: "travel-scene-pack",
+  "professional-headshots": "headshots",
   seasonal: "holiday",
   sports: "world-cup-fan-photos",
   travel: "travel-scene-pack",
@@ -738,6 +778,9 @@ function mapId(id, spec, prefix, slug) {
     next = next.replaceAll(sourceSlugToken, spec.targetToken);
   } else if (next.includes(spec.sourceToken)) {
     next = next.replaceAll(spec.sourceToken, spec.targetToken);
+  }
+  if (spec.sourceSiteId === "site_dreamshoot") {
+    next = next.replaceAll("professional-headshots", "headshots").replaceAll("professional_headshots", "headshots");
   }
   if (next !== sourceId) return next;
   return `${prefix}_${spec.targetToken}_${safeSlug(slug ?? sourceId)}`;
@@ -827,8 +870,8 @@ function rewriteFunctionalHref(value, spec) {
 
 function collapseBrandRepeats(value) {
   return String(value ?? "")
-    .replace(/\bMyDreamShoots-xby(?:-xby)+\b/g, "MyDreamShoots-xby")
-    .replace(/\bAidreamcapes-xby(?:-xby)+\b/g, "Aidreamcapes-xby");
+    .replace(/\bAIdreamshoots(?:-xby)+\b/g, "AIdreamshoots")
+    .replace(/\bAIdreamcapes(?:-xby)+\b/g, "AIdreamcapes");
 }
 
 function normalizeXbyArtifacts(value, spec) {
@@ -838,10 +881,35 @@ function normalizeXbyArtifacts(value, spec) {
     .replaceAll(`${spec.targetSlug}-xby`, spec.targetSlug)
     .replaceAll(`${spec.readableBrand}-xby`, spec.readableBrand)
     .replaceAll(`${spec.readableBrand.toLowerCase()}-xby`, spec.readableBrand.toLowerCase());
+  if (spec.targetSiteId === "site_aidreamcapes_xby") {
+    next = next
+      .replaceAll("/assets/sites/site_aidreamcapes_xby/", "/assets/sites/site_aidreamcapes_eu/")
+      .replaceAll("/assets/sites/site_aidreamcapes/", "/assets/sites/site_aidreamcapes_eu/")
+      .replaceAll("aidreamcapes-xby-logo-refined.svg", "aidreamcapes-logo-refined.svg");
+  }
+  if (spec.targetSiteId === "site_mydreamshoots_xby") {
+    next = next
+      .replaceAll("/assets/dreamshoot/generated/pack-galleries/", "/assets/sites/site_aidreamshoots/creative-packs/pack-galleries/")
+      .replaceAll("/assets/dreamshoot/generated/category-covers/mydreamshoots/", "/assets/sites/site_aidreamshoots/creative-packs/category-covers/")
+      .replaceAll("/assets/dreamshoot/brand/dreamshootai-icon-180.png", "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-180.png")
+      .replaceAll("/assets/dreamshoot/brand/dreamshootai-icon-192.png", "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-192.png")
+      .replaceAll("/assets/dreamshoot/brand/dreamshootai-icon-512.png", "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-512.png")
+      .replaceAll("/assets/dreamshoot/brand/dreamshootai-logo-refined.svg", "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg")
+      .replaceAll("/assets/sites/site_mydreamshoots_xby/brand/mydreamshoots-xby-logo-refined.svg", "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg")
+      .replaceAll("/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", "/assets/sites/site_aidreamshoots/og/aidreamshoots-og.png")
+      .replaceAll("/assets/dreamshoot/", "/assets/sites/site_aidreamshoots/visuals/");
+  }
   if (/\/assets\/sites\/[^"'\s]+\/brand\/[^"'\s]*logo-refined\.svg/i.test(next)) {
     next = spec.logoImageUrl;
   }
   return next;
+}
+
+function spanishMediaStorageKey(asset, spec) {
+  const raw = String(asset.storageKey || asset.label || asset.id || "media").replace(/\\/g, "/");
+  const ext = path.extname(raw).toLowerCase() || ".png";
+  const name = path.basename(raw, ext) || asset.label || asset.id || "media";
+  return `sites/${spec.targetSiteId}/theme/${safeSlug(`${spec.readableBrand}-${name}`)}${ext}`;
 }
 
 function spanishizeString(value, spec, idMap) {
@@ -937,6 +1005,12 @@ function spanishPriceMetadata(metadata, spec, idMap) {
   return next;
 }
 
+function spanishCreativePackPrompt(name, spec) {
+  return spec.sourceSiteId === "site_dreamshoot"
+    ? `Crea ${name.toLowerCase()} para ${spec.readableBrand} con fotos fuente autorizadas, estilo claro, creditos visibles y entrega en album privado.`
+    : `Crea ${name.toLowerCase()} para ${spec.readableBrand} con ambiente de destino, retratos fuente autorizados, creditos visibles y entrega en galeria privada.`;
+}
+
 function spanishSiteSeo(spec, pages) {
   return {
     siteTitle: spec.readableBrand,
@@ -972,6 +1046,97 @@ function patchSiteSeoContainers(value, spec, pages) {
       node.settings_data.draft.seo = { ...(node.settings_data.draft.seo ?? {}), ...seo };
     }
     for (const child of Object.values(node)) visit(child);
+  };
+  visit(value);
+  return value;
+}
+
+function spanishHeaderSettings(spec) {
+  return {
+    title: spec.readableBrand,
+    logoImageUrl: spec.logoImageUrl,
+    ctaLabel: spec.sourceSiteId === "site_dreamshoot" ? "Crear mi primer set" : "Empezar un paquete",
+    ctaHref: "/login",
+    mobileLabel: "Menu",
+    announcement:
+      spec.sourceSiteId === "site_dreamshoot"
+        ? "Crea sets privados de fotos con IA desde selfies cotidianos."
+        : "Crea retratos de viaje con IA desde tus fotos cotidianas."
+  };
+}
+
+function spanishFooterSettings(spec) {
+  return {
+    title: spec.readableBrand,
+    logoImageUrl: spec.logoImageUrl,
+    tagline: spec.sourceSiteId === "site_dreamshoot"
+      ? "Sets privados de fotos con IA, creditos visibles y galerias seguras."
+      : "Retratos de viaje con IA y albumes privados desde tus fotos.",
+    body: spec.description,
+    productHeading: "Explorar",
+    companyHeading: "Contenido",
+    supportHeading: "Soporte",
+    socialHeading: "Por que funciona",
+    socialBody: "Subidas privadas, creditos visibles, pago claro y entrega dentro de una sola cuenta.",
+    contactEmail: spec.supportEmail,
+    companyName: "",
+    contactAddress: "",
+    contactPhone: "",
+    taxId: "",
+    taxIdLabel: "",
+    salesEmail: "",
+    instagramUrl: "",
+    facebookUrl: "",
+    pinterestUrl: "",
+    youtubeUrl: "",
+    twitterUrl: "",
+    bottomLine: "Creditos, generacion y galerias privadas en un solo espacio.",
+    copyright: `© 2026 ${spec.readableBrand}. Todos los derechos reservados.`
+  };
+}
+
+function spanishHeaderBlocks(blocks, spec) {
+  const my = spec.sourceSiteId === "site_dreamshoot";
+  return (blocks ?? []).map((block, index) => {
+    const settings = block.settings ?? {};
+    const href = typeof settings.href === "string" ? settings.href : "";
+    const description = typeof settings.description === "string" ? settings.description : "";
+    const looksLikeToolCard = href.startsWith("/tools") || /Input:|Output:|Cost:|you own/i.test(description);
+    if (!looksLikeToolCard) {
+      const label = spec.headerLinks.find(([, linkHref]) => settings.href === linkHref)?.[0];
+      return label ? { ...block, settings: { ...settings, label } } : block;
+    }
+    const title = spanishTitle(settings.title ?? settings.label ?? `Herramienta ${index + 1}`);
+    return {
+      ...block,
+      settings: {
+        ...settings,
+        title,
+        label: settings.label ? spanishTitle(settings.label) : title,
+        description: spanishToolCardDescription(title, spec),
+        category: my ? "Fotos IA" : "Retratos de viaje",
+        badge: spanishTitle(settings.badge ?? (my ? "Herramienta" : "Ruta"))
+      }
+    };
+  });
+}
+
+function patchSpanishGlobalSections(value, spec) {
+  const visit = (node, key = "") => {
+    if (!node || typeof node !== "object") return;
+    if (Array.isArray(node)) {
+      node.forEach((item) => visit(item));
+      return;
+    }
+    const type = String(node.type ?? key).toLowerCase();
+    if ((type === "header" || type === "header_plus") && node.settings && typeof node.settings === "object" && !Array.isArray(node.settings)) {
+      node.settings = { ...node.settings, ...spanishHeaderSettings(spec) };
+      node.blocks = spanishHeaderBlocks(node.blocks, spec);
+    }
+    if ((type === "footer" || type === "footer_plus") && node.settings && typeof node.settings === "object" && !Array.isArray(node.settings)) {
+      node.settings = { ...node.settings, ...spanishFooterSettings(spec) };
+    }
+    for (const [childKey, child] of Object.entries(node)) visit(child, childKey);
   };
   visit(value);
   return value;
@@ -1022,6 +1187,19 @@ function spanishAiApp(app, spec, idMap) {
     spec.sourceSiteId === "site_dreamshoot"
       ? "Generacion privada de fotos con entrega en album firmado."
       : "Generacion privada de retratos de viaje con entrega en galeria firmada.";
+  return next;
+}
+
+function spanishWorkflowConfig(config, spec, idMap, app) {
+  const next = spanishizeJson(config, spec, idMap);
+  if (!next || typeof next !== "object" || Array.isArray(next)) return next;
+  const identity = `${app?.routeKey ?? ""} ${app?.aiApp?.name ?? ""} ${app?.aiApp?.appType ?? ""}`.toLowerCase();
+  if (identity.includes("video") && typeof next.description === "string") {
+    next.description =
+      spec.sourceSiteId === "site_dreamshoot"
+        ? "Ordena imagenes de un set, elige movimiento y genera un clip privado para revisar dentro del album."
+        : "Prepara fotogramas de viaje, marca el ritmo de la ruta y crea una pieza privada para la galeria.";
+  }
   return next;
 }
 
@@ -1183,11 +1361,45 @@ function pageSuffix(page) {
   return safeSlug(page.slug === "/" ? "home" : page.slug);
 }
 
+function spanishPageSlug(slug) {
+  return slug === "/help" ? "/faq" : slug;
+}
+
+function spanishDreamshootCategorySlug(slug, spec) {
+  const raw = String(slug ?? "");
+  if (spec.sourceSiteId !== "site_dreamshoot") return raw;
+  const normalized = raw.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return normalized === "professional-headshots" ? "headshots" : raw;
+}
+
+function spanishDreamshootPackCategory(category, spec) {
+  const raw = String(category ?? "");
+  if (spec.sourceSiteId !== "site_dreamshoot") return raw;
+  const normalized = raw.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return normalized === "professional-headshots" || normalized === "professional-headshot" ? "headshots" : raw;
+}
+
+function normalizeSpanishCollectionReferences(value, spec) {
+  const visit = (node) => {
+    if (typeof node === "string") {
+      return spec.sourceSiteId === "site_dreamshoot"
+        ? node.replace(/\/collections\/professional-headshots\b/g, "/collections/headshots")
+        : node;
+    }
+    if (Array.isArray(node)) return node.map(visit);
+    if (!node || typeof node !== "object") return node;
+    for (const [key, child] of Object.entries(node)) node[key] = visit(child);
+    return node;
+  };
+  return visit(value);
+}
+
 function targetPageId(page, spec, idMap) {
   return idMap.get(page.id) ?? `${spec.targetSiteId}_${pageSuffix(page)}`;
 }
 
 function pageTitleForSlug(slug, spec) {
+  slug = spanishPageSlug(slug);
   const my = spec.sourceSiteId === "site_dreamshoot";
   const titles = my
     ? {
@@ -1195,6 +1407,7 @@ function pageTitleForSlug(slug, spec) {
         "/pricing": "Precios",
         "/collections": "Paquetes de fotos",
         "/tools": "Herramientas de fotos IA",
+        "/workflow": "Como funciona",
         "/tools/headshot": "Generador de retratos profesionales",
         "/login": "Acceso de cliente",
         "/app": "Espacio privado",
@@ -1202,7 +1415,7 @@ function pageTitleForSlug(slug, spec) {
         "/app/jobs/detail": "Detalle del pedido",
         "/album": "Album privado",
         "/account": "Cuenta y facturacion",
-        "/help": "Centro de ayuda",
+        "/faq": "Centro de ayuda",
         "/about-us": "Sobre nosotros",
         "/contact-us": "Contacto",
         "/blog": "Guias",
@@ -1215,6 +1428,7 @@ function pageTitleForSlug(slug, spec) {
         "/pricing": "Precios",
         "/collections": "Paquetes de viaje",
         "/tools": "Herramientas de viaje IA",
+        "/workflow": "Flujo de viaje",
         "/tools/route-portrait-engine": "Motor de retratos de ruta",
         "/login": "Acceso de cliente",
         "/app": "Espacio privado",
@@ -1222,7 +1436,7 @@ function pageTitleForSlug(slug, spec) {
         "/app/jobs/detail": "Detalle del pedido",
         "/album": "Album privado",
         "/account": "Cuenta y facturacion",
-        "/help": "Guia de soporte",
+        "/faq": "Guia de soporte",
         "/about-us": "Sobre el estudio",
         "/contact-us": "Contacto",
         "/blog": "Notas de viaje",
@@ -1241,7 +1455,89 @@ function pageTitleForSlug(slug, spec) {
   return titleCaseFromSlug(slug);
 }
 
+function fallbackSeoDescriptionForSlug(slug, spec) {
+  const my = spec.sourceSiteId === "site_dreamshoot";
+  const page = pageTitleForSlug(slug, spec).toLowerCase();
+  if (slug.includes("privacy")) {
+    return my
+      ? `${spec.readableBrand} explica como protege selfies, pedidos, creditos, albumes privados y solicitudes de datos de clientes.`
+      : `${spec.readableBrand} resume privacidad para retratos fuente, rutas visuales, pagos, galerias y soporte de cuenta.`;
+  }
+  if (slug.includes("refund")) {
+    return my
+      ? `Revisa como ${spec.readableBrand} evalua creditos no usados, fallos tecnicos, pedidos entregados y solicitudes de reembolso.`
+      : `Consulta el proceso de ${spec.readableBrand} para revisar creditos de ruta, entregas incompletas y reembolsos de viaje.`;
+  }
+  if (slug.includes("shipping")) {
+    return my
+      ? `${spec.readableBrand} entrega resultados digitales dentro de una galeria privada, sin envios fisicos ni mezcla con otros escaparates.`
+      : `${spec.readableBrand} entrega albumes de destino en la cuenta privada, con tiempos ligados a cola, fotos fuente y proveedor.`;
+  }
+  if (slug.includes("terms")) {
+    return my
+      ? `Terminos de ${spec.readableBrand} para cuenta, fotos autorizadas, creditos, paquetes, seguridad y descarga privada.`
+      : `Terminos de ${spec.readableBrand} para rutas visuales, retratos autorizados, creditos, pedidos y uso responsable.`;
+  }
+  if (slug.includes("content")) {
+    return my
+      ? `Politica de contenido de ${spec.readableBrand} para selfies permitidos, instrucciones seguras, paquetes creativos y revision.`
+      : `Politica creativa de ${spec.readableBrand} para fotos fuente, escenas de destino, seguridad y limites de publicacion.`;
+  }
+  if (slug.includes("cookie")) {
+    return my
+      ? `${spec.readableBrand} usa cookies esenciales para sesion, seguridad, pagos, galeria privada y continuidad de pedidos.`
+      : `${spec.readableBrand} usa cookies necesarias para acceso, creditos, rutas guardadas, soporte y entrega de galerias.`;
+  }
+  if (slug.includes("account")) {
+    return my
+      ? `Abre cuenta en ${spec.readableBrand} para revisar saldo, pedidos, albumes, sesiones y ajustes privados.`
+      : `Gestiona en ${spec.readableBrand} rutas guardadas, creditos, pedidos, galerias de viaje y datos de cuenta.`;
+  }
+  if (slug.includes("album")) {
+    return my
+      ? `Los albumes de ${spec.readableBrand} reunen resultados descargables, favoritos y entregas privadas por cliente.`
+      : `Las galerias de ${spec.readableBrand} guardan retratos de destino, favoritos y descargas dentro de la cuenta.`;
+  }
+  if (slug.includes("job")) {
+    return my
+      ? `Sigue en ${spec.readableBrand} el estado de generacion, reservas de creditos, entregas y revisiones de cada pedido.`
+      : `Comprueba en ${spec.readableBrand} el progreso de ruta, la reserva de creditos y la entrega de cada galeria.`;
+  }
+  if (slug.includes("upload")) {
+    return my
+      ? `Sube selfies claros a ${spec.readableBrand} antes de elegir paquete, coste en creditos y album privado.`
+      : `Sube retratos fuente a ${spec.readableBrand} para preparar destino, ambiente, creditos y galeria privada.`;
+  }
+  if (slug.includes("/blog/")) {
+    return my
+      ? `Guia de ${spec.readableBrand} sobre preparacion de selfies, creditos, estilos y resultados privados para fotos IA.`
+      : `Nota de ${spec.readableBrand} para preparar fotos fuente, destino, luz, ruta y revision de galeria.`;
+  }
+  const variants = my
+    ? [
+        `${spec.readableBrand} presenta ${page} con orientacion para selfies autorizados, paquetes de fotos IA y entrega privada.`,
+        `Usa ${page} en ${spec.readableBrand} para planificar creditos, fotos fuente y resultados descargables sin mezclar tiendas.`,
+        `${spec.readableBrand} organiza ${page} alrededor de cuenta privada, seguridad de subidas y albumes listos para revisar.`
+      ]
+    : [
+        `${spec.readableBrand} presenta ${page} con foco en retratos de viaje, destino elegido y galeria privada.`,
+        `Usa ${page} en ${spec.readableBrand} para preparar ruta visual, creditos claros y entrega de album de destino.`,
+        `${spec.readableBrand} organiza ${page} para fotos fuente autorizadas, escenas de viaje y descarga privada.`
+      ];
+  const index = [...slug].reduce((sum, char) => sum + char.charCodeAt(0), 0) % variants.length;
+  return variants[index];
+}
+
+function fallbackSeoKeywordsForSlug(slug, spec) {
+  const my = spec.sourceSiteId === "site_dreamshoot";
+  const topic = pageTitleForSlug(slug, spec).toLowerCase();
+  return my
+    ? `${spec.readableBrand},${topic},fotos IA,creditos privados,album digital`
+    : `${spec.readableBrand},${topic},retratos de viaje,creditos de ruta,galeria privada`;
+}
+
 function seoForSlug(slug, spec) {
+  slug = spanishPageSlug(slug);
   const my = spec.sourceSiteId === "site_dreamshoot";
   const common = {
     "/": [spec.homeTitle, spec.homeDescription, spec.homeKeywords],
@@ -1280,9 +1576,18 @@ function seoForSlug(slug, spec) {
         : `${spec.readableBrand} acceso,bitacora viaje IA,galeria de ruta`
     ],
     "/app": [
-      `Espacio privado | ${spec.readableBrand}`,
-      `Gestiona fotos fuente, creditos, paquetes, generacion con IA y resultados privados desde tu espacio de ${spec.readableBrand}.`,
-      `workspace IA,album privado,creditos IA`
+      my ? `Estudio privado de fotos | ${spec.readableBrand}` : `Panel privado de rutas | ${spec.readableBrand}`,
+      my
+        ? `Gestiona selfies fuente, paquetes elegidos, saldo de creditos, pedidos y albumes descargables dentro de ${spec.readableBrand}.`
+        : `Organiza retratos fuente, rutas visuales, creditos reservados, pedidos y galerias de destino dentro de ${spec.readableBrand}.`,
+      my ? `estudio privado IA,album privado,creditos fotos` : `panel rutas IA,galeria viaje,creditos destino`
+    ],
+    "/workflow": [
+      my ? `Como funciona ${spec.readableBrand}` : `Flujo de retratos de viaje | ${spec.readableBrand}`,
+      my
+        ? `Sigue el flujo de ${spec.readableBrand}: sube fotos autorizadas, elige paquete, revisa creditos y descarga tu album privado.`
+        : `Conoce el flujo de ${spec.readableBrand}: define destino, sube retratos fuente, confirma creditos y recibe una galeria privada.`,
+      my ? `flujo fotos IA,como funciona,album privado` : `flujo viaje IA,retratos de ruta,galeria privada`
     ],
     "/cart": [
       my ? `Revision de creditos para fotos | ${spec.readableBrand}` : `Revision de creditos de ruta | ${spec.readableBrand}`,
@@ -1309,7 +1614,7 @@ function seoForSlug(slug, spec) {
         ? `contacto ${spec.readableBrand},soporte sets IA,ayuda album`
         : `contacto ${spec.readableBrand},soporte viaje IA,ayuda rutas`
     ],
-    "/help": [
+    "/faq": [
       my ? `Ayuda para crear fotos IA | ${spec.readableBrand}` : `Guia de rutas visuales | ${spec.readableBrand}`,
       my
         ? `Encuentra respuestas sobre selfies fuente, paquetes, creditos, pago, privacidad, reintentos y albumes privados en ${spec.readableBrand}.`
@@ -1330,10 +1635,8 @@ function seoForSlug(slug, spec) {
   };
   const fallback = common[slug] ?? [
     `${pageTitleForSlug(slug, spec)} | ${spec.readableBrand}`,
-    my
-      ? `Consulta ${pageTitleForSlug(slug, spec).toLowerCase()} en ${spec.readableBrand}: fotos fuente privadas, creditos visibles y entrega de albumes en cuenta.`
-      : `Consulta ${pageTitleForSlug(slug, spec).toLowerCase()} en ${spec.readableBrand}: rutas visuales, retratos fuente, creditos claros y galerias de viaje.`,
-    `${spec.readableBrand},fotos IA,creditos IA,galeria privada`
+    fallbackSeoDescriptionForSlug(slug, spec),
+    fallbackSeoKeywordsForSlug(slug, spec)
   ];
   return {
     title: fallback[0],
@@ -1370,6 +1673,7 @@ function patchBlocksByHref(pageJson, spec) {
 }
 
 function xbyPageCopy(slug, spec) {
+  slug = spanishPageSlug(slug);
   const brand = spec.readableBrand;
   const my = spec.sourceSiteId === "site_dreamshoot";
   const copy = {
@@ -1425,12 +1729,12 @@ function xbyPageCopy(slug, spec) {
           subtitle: `Escribe a ${spec.supportEmail} si necesitas revisar creditos, rutas, privacidad o una galeria de viaje.`,
           body: "Cuanto mas claro sea el destino, la luz y el pedido, mas rapido podremos ubicar la solicitud."
         },
-    "/help": my
+    "/faq": my
       ? {
           eyebrow: "Ayuda practica",
           title: "Respuestas para crear fotos IA sin friccion.",
           subtitle: "Prepara selfies claras, entiende creditos, revisa reintentos y encuentra tu album privado.",
-          body: "Esta guia cubre el flujo de MyDreamShoots-xby desde la subida hasta la descarga, con foco en privacidad y control de saldo."
+          body: "Esta guia cubre el flujo de AIdreamshoots desde la subida hasta la descarga, con foco en privacidad y control de saldo."
         }
       : {
           eyebrow: "Guia de viaje IA",
@@ -1859,6 +2163,33 @@ function testimonialBlocks(spec) {
       ];
 }
 
+function spanishToolCardDescription(title, spec) {
+  const my = spec.sourceSiteId === "site_dreamshoot";
+  const lower = title.toLowerCase();
+  return my
+    ? `Usa ${lower} con fotos propias o autorizadas. Revisa el resultado esperado, el coste en creditos y continua hacia un album privado de ${spec.readableBrand}.`
+    : `Usa ${lower} con retratos fuente autorizados. Define destino, ambiente y creditos antes de guardar resultados en una galeria privada de ${spec.readableBrand}.`;
+}
+
+function patchSpanishToolCollectionBlocks(section, spec) {
+  const my = spec.sourceSiteId === "site_dreamshoot";
+  section.blocks = (section.blocks ?? []).map((block, index) => {
+    const settings = block.settings ?? {};
+    const title = spanishTitle(settings.title ?? `Herramienta ${index + 1}`);
+    return {
+      ...block,
+      settings: {
+        ...settings,
+        title,
+        description: spanishToolCardDescription(title, spec),
+        category: my ? "Fotos IA" : "Retratos de viaje",
+        badge: spanishTitle(settings.badge ?? (my ? "Herramienta" : "Ruta")),
+        primaryCta: my ? "Abrir herramienta" : "Abrir ruta"
+      }
+    };
+  });
+}
+
 function patchSpanishXbyCommonSections(next, slug, spec) {
   const my = spec.sourceSiteId === "site_dreamshoot";
   for (const [sectionId, section] of Object.entries(next.sections ?? {})) {
@@ -1885,6 +2216,13 @@ function patchSpanishXbyCommonSections(next, slug, spec) {
           : "Las rutas conectan fotos fuente, ambiente, creditos visibles y una galeria privada."
       });
       patchSectionObjectBlocks(section, journeyCardsForSlug(slug, spec));
+    }
+    if (section.type === "free_tools" || section.type === "free_tools_grid" || section.type === "dreamshoot_tool_collection" || section.type === "aidreamcapes_tool_collection" || /free_tools/i.test(sectionId)) {
+      patchSectionObject(section, {
+        categories: my ? "Fotos IA|Edicion IA|Video IA" : "Edicion de ruta|Retratos de ruta|Video IA",
+        primaryCta: my ? "Abrir herramienta" : "Abrir motor de retratos de ruta"
+      });
+      patchSpanishToolCollectionBlocks(section, spec);
     }
     if (section.type === "photo_package_wall") {
       section.settings = {
@@ -2102,7 +2440,7 @@ function patchSpanishXbyCommonSections(next, slug, spec) {
     }
     if (section.type === "search_results") {
       patchSectionObject(section, {
-        title: my ? "Buscar MyDreamShoots-xby" : "Buscar Aidreamcapes-xby",
+        title: my ? "Buscar AIdreamshoots" : "Buscar AIdreamcapes",
         eyebrow: "Buscar",
         emptyTitle: "Aun no hay resultados coincidentes.",
         emptyBody: my
@@ -2155,8 +2493,8 @@ function patchSpanishXbyCommonSections(next, slug, spec) {
         eyebrow: my ? "Enfoque del estudio" : "Enfoque de ruta",
         title: my ? "Fotos fuente, creditos visibles y albumes privados." : "Fotos fuente, destino claro y albumes privados.",
         subtitle: my
-          ? "Cada pagina de MyDreamShoots-xby ayuda a saber que subir, que creditos se usan y donde llegan los resultados."
-          : "Cada pagina de Aidreamcapes-xby ayuda a saber que subir, que ruta elegir y donde llegan las imagenes finales."
+          ? "Cada pagina de AIdreamshoots ayuda a saber que subir, que creditos se usan y donde llegan los resultados."
+          : "Cada pagina de AIdreamcapes ayuda a saber que subir, que ruta elegir y donde llegan las imagenes finales."
       });
       patchSectionObjectBlocks(section, ruleCardsForSlug(slug, spec));
     }
@@ -2212,12 +2550,19 @@ function policyCopyForKind(kind, spec) {
           intro: "Reglas para crear retratos de viaje, usar creditos y recibir galerias privadas.",
           body: `<h3>1. Aceptacion</h3><p>Al usar ${brand}, comprar creditos, subir fotos fuente o confirmar una ruta visual aceptas estos terminos.</p><h3>2. Uso permitido</h3><p>Debes tener derecho sobre las fotos que subes y no solicitar escenas que vulneren privacidad, derechos de terceros, seguridad o propiedad intelectual.</p><h3>3. Creditos de ruta</h3><p>Los costes se muestran antes de enviar una escena. Las reservas, gastos y devoluciones se reflejan en el historial de la cuenta.</p><h3>4. Entrega</h3><p>Las galerias se entregan digitalmente en el espacio privado. El resultado depende de fotos fuente, direccion de destino, notas y disponibilidad tecnica.</p><h3>5. Contacto</h3><p>Para revisar terminos, pedidos o cuenta, escribe a <a href="mailto:${support}">${support}</a>.</p>`
         },
-    cookies: {
-      title: "Politica de cookies",
-      eyebrow: "Cookies y sesion",
-      intro: `Cookies necesarias para acceso, seguridad, pago y continuidad de ${brand}.`,
-      body: `<h3>1. Cookies necesarias</h3><p>${brand} usa cookies y almacenamiento local para iniciar sesion, mantener seguridad, recordar preferencias, proteger formularios y continuar pagos o pedidos.</p><h3>2. Diagnostico</h3><p>Podemos usar senales tecnicas limitadas para medir fallos, rendimiento, intentos de abuso y estado de generacion.</p><h3>3. Control</h3><p>Puedes gestionar cookies desde el navegador. Bloquear cookies esenciales puede impedir el acceso a cuenta, pago o galeria privada.</p><h3>4. Contacto</h3><p>Escribe a <a href="mailto:${support}">${support}</a> para preguntas sobre cookies.</p>`
-    },
+    cookies: my
+      ? {
+          title: "Politica de cookies",
+          eyebrow: "Cookies del estudio",
+          intro: `Cookies para sesion, checkout, seguridad y continuidad de sets en ${brand}.`,
+          body: `<h3>1. Sesion del estudio</h3><p>${brand} usa cookies esenciales y almacenamiento local para mantener acceso, proteger el checkout, recordar el paquete elegido y conservar el avance de pedidos de fotos IA.</p><h3>2. Senales de fiabilidad</h3><p>Podemos leer datos tecnicos limitados para detectar fallos de carga, abuso, errores de pago y estado de generacion dentro del estudio.</p><h3>3. Gestion del navegador</h3><p>Puedes borrar o bloquear cookies desde tu navegador. Si bloqueas las esenciales, puede fallar el acceso a cuenta, carrito, pago, album o descarga.</p><h3>4. Soporte</h3><p>Para dudas sobre cookies del estudio escribe a <a href="mailto:${support}">${support}</a>.</p>`
+        }
+      : {
+          title: "Aviso de cookies",
+          eyebrow: "Cookies de ruta",
+          intro: `Cookies para mantener rutas visuales, cuenta, saldo y entrega privada en ${brand}.`,
+          body: `<h3>1. Continuidad de ruta</h3><p>${brand} usa cookies necesarias y almacenamiento local para reconocer la sesion, conservar elecciones de destino, proteger formularios y mantener pagos o galerias de viaje en curso.</p><h3>2. Diagnostico operativo</h3><p>Usamos senales tecnicas acotadas para revisar rendimiento, intentos de abuso, errores de ruta, estado de credito y disponibilidad de entrega.</p><h3>3. Preferencias del cliente</h3><p>La gestion se realiza desde el navegador. Al desactivar cookies esenciales, algunas rutas, pagos, accesos o galerias privadas pueden dejar de funcionar.</p><h3>4. Contacto</h3><p>Para consultas sobre cookies de AIdreamcapes escribe a <a href="mailto:${support}">${support}</a>.</p>`
+        },
     refunds: my
       ? {
           title: "Politica de reembolsos",
@@ -2282,6 +2627,7 @@ function patchPolicyPage(next, slug, spec) {
 }
 
 function patchPageJson(pageJson, slug, spec) {
+  slug = spanishPageSlug(slug);
   const next = clone(pageJson) ?? {};
   next.locale = "es-ES";
   next.seo = seoForSlug(slug, spec);
@@ -2367,7 +2713,9 @@ function patchPageJson(pageJson, slug, spec) {
     patchSection(next, "free_tools_1", {
       eyebrow: "Herramientas",
       title: my ? "Herramientas de IA para editar, probar y crear fotos." : "Herramientas de IA para preparar retratos de viaje.",
-      subtitle: "Empieza con una herramienta, revisa el resultado esperado y continua al espacio privado."
+      subtitle: my
+        ? "Elige una herramienta de foto, confirma que tipo de resultado crea y sigue al album privado."
+        : "Abre una herramienta de ruta, revisa ambiente y destino, y continua hacia la galeria privada."
     });
   }
   if (slug === "/login") {
@@ -2431,7 +2779,7 @@ function patchPageJson(pageJson, slug, spec) {
       contactEmail: spec.supportEmail
     });
   }
-  if (slug === "/help") {
+  if (slug === "/faq") {
     patchSection(next, "intro_1", {
       eyebrow: copy?.eyebrow,
       title: copy?.title,
@@ -2618,7 +2966,7 @@ function patchPageJson(pageJson, slug, spec) {
   patchBlocksByType(next, "rich_text", ruleCardsForSlug(slug, spec));
   patchBlocksByHref(next, spec);
   patchSpanishXbyVisibleResiduals(next, slug, spec);
-  return scrubEnglishJson(next, spec, { slug });
+  return normalizeSpanishCollectionReferences(scrubEnglishJson(next, spec, { slug }), spec);
 }
 
 function templateSlugFromKey(key) {
@@ -2632,7 +2980,7 @@ function templateSlugFromKey(key) {
     tools: "/tools",
     login: "/login",
     cart: "/cart",
-    help: "/help",
+    help: "/faq",
     blog: "/blog",
     "blog-detail": "/blog/preparing-source-photos",
     search: "/search",
@@ -2680,16 +3028,20 @@ function patchThemeTemplates(templates, spec) {
 function patchPublicationSnapshot(snapshot, spec, idMap, pages) {
   const next = clone(snapshot) ?? {};
   if (Array.isArray(next.pages)) {
-    next.pages = next.pages.map((page) => ({
-      ...page,
-      publishedJson: patchPageJson(page.publishedJson, page.slug, spec)
-    }));
+    next.pages = next.pages.map((page) => {
+      const pageSlug = spanishPageSlug(page.slug);
+      return {
+        ...page,
+        slug: pageSlug,
+        publishedJson: patchPageJson(page.publishedJson, pageSlug, spec)
+      };
+    });
   }
   if (next.saasTheme?.templates) next.saasTheme.templates = patchThemeTemplates(next.saasTheme.templates, spec);
   if (next.saasTheme?.settings) next.saasTheme.settings = patchSettingsJson(next.saasTheme.settings, spec, idMap, pages);
   if (next.themeSettings) next.themeSettings = patchSettingsJson(next.themeSettings, spec, idMap, pages);
   if (next.settings) next.settings = patchSettingsJson(next.settings, spec, idMap, pages);
-  return next;
+  return patchSpanishGlobalSections(next, spec);
 }
 
 function patchSettingsJson(settings, spec, idMap, pages) {
@@ -2703,15 +3055,7 @@ function patchSettingsJson(settings, spec, idMap, pages) {
   next.globalSections.header = next.globalSections.header ?? { type: "header", settings: {}, blocks: [] };
   next.globalSections.header.settings = {
     ...(next.globalSections.header.settings ?? {}),
-    title: spec.readableBrand,
-    logoImageUrl: spec.logoImageUrl,
-    ctaLabel: spec.sourceSiteId === "site_dreamshoot" ? "Crear mi primer set" : "Empezar un paquete",
-    ctaHref: "/login",
-    mobileLabel: "Menu",
-    announcement:
-      spec.sourceSiteId === "site_dreamshoot"
-        ? "Crea sets privados de fotos con IA desde selfies cotidianos."
-        : "Crea retratos de viaje con IA desde tus fotos cotidianas."
+    ...spanishHeaderSettings(spec)
   };
   next.globalSections.header.blocks = (next.globalSections.header.blocks ?? []).map((block) => {
     const label = spec.headerLinks.find(([, href]) => block.settings?.href === href)?.[0];
@@ -2720,33 +3064,14 @@ function patchSettingsJson(settings, spec, idMap, pages) {
   next.globalSections.footer = next.globalSections.footer ?? { type: "footer", settings: {}, blocks: [] };
   next.globalSections.footer.settings = {
     ...(next.globalSections.footer.settings ?? {}),
-    title: spec.readableBrand,
-    logoImageUrl: spec.logoImageUrl,
-    tagline: spec.sourceSiteId === "site_dreamshoot"
-      ? "Sets privados de fotos con IA, creditos visibles y galerias seguras."
-      : "Retratos de viaje con IA y albumes privados desde tus fotos.",
-    body: spec.description,
-    productHeading: "Explorar",
-    companyHeading: "Contenido",
-    supportHeading: "Soporte",
-	    socialHeading: "Por que funciona",
-	    socialBody: "Subidas privadas, creditos visibles, pago claro y entrega dentro de una sola cuenta.",
-	    contactEmail: spec.supportEmail,
-	    salesEmail: "",
-	    instagramUrl: "",
-	    facebookUrl: "",
-	    pinterestUrl: "",
-	    youtubeUrl: "",
-	    twitterUrl: "",
-	    bottomLine: "Creditos, generacion y galerias privadas en un solo espacio.",
-    copyright: `© 2026 ${spec.readableBrand}. Todos los derechos reservados.`
+    ...spanishFooterSettings(spec)
   };
   next.globalSections.footer.blocks = spec.footerLinks.map(([label, href, group], index) => ({
     id: `${spec.targetToken}_footer_${group}_${index + 1}`,
     type: "menu_link",
     settings: { label, href, group }
   }));
-  return scrubEnglishJson(patchSiteSeoContainers(next, spec, pages), spec, { slug: "/settings" });
+  return scrubEnglishJson(patchSpanishGlobalSections(patchSiteSeoContainers(next, spec, pages), spec), spec, { slug: "/settings" });
 }
 
 function sortByParent(rows) {
@@ -2857,15 +3182,16 @@ function buildDataset(source, spec) {
     .slice()
     .sort((a, b) => a.slug.localeCompare(b.slug))
     .map((page) => {
-      const draftJson = patchPageJson(spanishizeJson(page.draftJson, spec, idMap), page.slug, spec);
-      const publishedJson = patchPageJson(spanishizeJson(page.publishedJson, spec, idMap), page.slug, spec);
+      const pageSlug = spanishPageSlug(page.slug);
+      const draftJson = patchPageJson(spanishizeJson(page.draftJson, spec, idMap), pageSlug, spec);
+      const publishedJson = patchPageJson(spanishizeJson(page.publishedJson, spec, idMap), pageSlug, spec);
       return {
         id: targetPageId(page, spec, idMap),
         siteId: spec.targetSiteId,
         pageType: page.pageType,
         templateKey: page.templateKey,
-        slug: page.slug,
-        title: pageTitleForSlug(page.slug, spec),
+        slug: pageSlug,
+        title: pageTitleForSlug(pageSlug, spec),
         draftJson,
         publishedJson
       };
@@ -2906,7 +3232,7 @@ function buildDataset(source, spec) {
       id: idMap.get(category.id),
       siteId: spec.targetSiteId,
       parentId: category.parentId ? idMap.get(category.parentId) : null,
-      slug: category.slug,
+      slug: spanishDreamshootCategorySlug(category.slug, spec),
       label,
       description:
         spec.sourceSiteId === "site_dreamshoot"
@@ -2918,7 +3244,7 @@ function buildDataset(source, spec) {
           ? "Elige el estilo, revisa creditos y genera un album privado."
           : "Elige la ruta visual, revisa creditos y genera una galeria privada.",
       icon: category.icon,
-      imageUrl: category.imageUrl,
+      imageUrl: category.imageUrl ? spanishizeString(category.imageUrl, spec, idMap) : null,
       sortOrder: category.sortOrder,
       status: category.status
     };
@@ -2935,8 +3261,8 @@ function buildDataset(source, spec) {
         spec.sourceSiteId === "site_dreamshoot"
           ? `Crea ${name.toLowerCase()} con ${spec.readableBrand}: sube fotos claras, revisa creditos y recibe resultados en un album privado.`
           : `Crea ${name.toLowerCase()} con ${spec.readableBrand}: elige ambiente de destino, revisa creditos y recibe una galeria privada.`,
-      prompt: spanishizeString(pack.prompt ?? "", spec, idMap) || null,
-      category: pack.category,
+      prompt: spanishCreativePackPrompt(name, spec),
+      category: spanishDreamshootPackCategory(pack.category, spec),
       aiAppSlug: pack.aiAppSlug,
       status: pack.status,
       creditCost: pack.creditCost,
@@ -2944,7 +3270,7 @@ function buildDataset(source, spec) {
       trainingRequired: pack.trainingRequired,
       generationCount: pack.generationCount,
       conversionRate: pack.conversionRate,
-      imageUrl: pack.imageUrl,
+      imageUrl: pack.imageUrl ? spanishizeString(pack.imageUrl, spec, idMap) : null,
       galleryImages: spanishizeJson(pack.galleryImages, spec, idMap)
     };
   });
@@ -2979,8 +3305,8 @@ function buildDataset(source, spec) {
           : `Usa ${title.toLowerCase()} para preparar retratos de viaje, escenas de destino y galerias privadas.`,
       badge: spanishizeString(item.badge ?? "", spec, idMap) || null,
       icon: item.icon,
-      imageUrl: item.imageUrl,
-      href: item.href,
+      imageUrl: item.imageUrl ? spanishizeString(item.imageUrl, spec, idMap) : null,
+      href: spanishizeString(item.href, spec, idMap),
       detailJson: spanishToolDetailJson(item, title, spec, idMap),
       sortOrder: item.sortOrder,
       status: item.status
@@ -2990,12 +3316,12 @@ function buildDataset(source, spec) {
     id: idMap.get(asset.id),
     siteId: spec.targetSiteId,
     label: spanishizeString(spanishTitle(asset.label || asset.storageKey), spec, idMap),
-    storageKey: asset.storageKey,
+    storageKey: spanishMediaStorageKey(asset, spec),
     mimeType: asset.mimeType,
     usageType: asset.usageType,
     sourceType: asset.sourceType,
-    previewUrl: asset.previewUrl,
-    originUrl: asset.originUrl,
+    previewUrl: asset.previewUrl ? spanishizeString(asset.previewUrl, spec, idMap) : null,
+    originUrl: asset.originUrl ? spanishizeString(asset.originUrl, spec, idMap) : null,
     altText: asset.altText ? spanishizeString(asset.altText, spec, idMap) : null,
     notes: asset.notes ? spanishizeString(asset.notes, spec, idMap) : null
   }));
@@ -3007,7 +3333,7 @@ function buildDataset(source, spec) {
     enabled: app.enabled,
     creditCost: app.creditCost,
     routeKey: app.routeKey,
-    workflowConfig: spanishizeJson(app.workflowConfig, spec, idMap),
+    workflowConfig: spanishWorkflowConfig(app.workflowConfig, spec, idMap, app),
     providerConfig: spanishizeJson(app.providerConfig, spec, idMap)
   }));
   const gatewayGroups = source.gatewayGroups.map((group) => ({

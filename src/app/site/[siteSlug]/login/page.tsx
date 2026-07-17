@@ -9,6 +9,7 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -33,6 +34,7 @@ export default async function SiteLoginPage({
 }) {
   const { siteSlug } = await params;
   const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSlug = redirectPublicSitePathToCanonicalHost({
     host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
     pathname: "/login",
@@ -44,10 +46,15 @@ export default async function SiteLoginPage({
   const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
   const relationalCustomer = sessionId ? await getCustomerBySessionRelational({ siteId: site.id, sessionId }) : undefined;
   const query = await searchParams;
-  const basePath = `/site/${publicSiteSlug(site.slug)}`;
-  const nextPath = typeof query?.next === "string" && (query.next === basePath || query.next.startsWith(`${basePath}/`)) ? query.next : "";
+  const basePath = storefrontPathForRouteMode(publicSiteSlug(site.slug), "/", routeMode).replace(/\/$/, "") || "/";
+  const isSafeNextPath = typeof query?.next === "string" && (
+    basePath === "/"
+      ? query.next.startsWith("/") && !query.next.startsWith("//")
+      : query.next === basePath || query.next.startsWith(`${basePath}/`)
+  );
+  const nextPath = isSafeNextPath ? query?.next ?? "" : "";
   if (relationalCustomer) {
-    redirect(nextPath || `${basePath}/app`);
+    redirect(nextPath || storefrontPathForRouteMode(publicSiteSlug(site.slug), "/app", routeMode));
   }
-  return renderStorefrontLoginPage({ site, query, routeMode: "path", state });
+  return renderStorefrontLoginPage({ site, query, routeMode, state });
 }

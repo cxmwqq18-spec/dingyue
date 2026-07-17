@@ -179,9 +179,9 @@ const pageMappings = [
 
 const dreamshootSeoPages = {
   index: {
-    title: "AI photo packages for private creator albums",
-    description: "Create headshots, creator portraits, fan photos, gala looks, beauty edits, and private AI photo albums from everyday selfies with MyDreamShoots.",
-    keywords: "MyDreamShoots, AI photo packages, private AI portraits, creator photo albums, AI headshots",
+    title: "Professional AI Photo Generator Online - MyDreamShoots",
+    description: "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.",
+    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
     canonicalPath: "/",
     index: true,
     follow: true
@@ -797,7 +797,7 @@ state.siteAdmins = replaceWhere(state.siteAdmins ?? [], (item) => item.siteId ==
     id: "admin_dreamshoot_owner",
     siteId,
     email: "owner@mydreamshoots.localhost",
-    passwordHash: hashPassword("dreamshoot123"),
+    passwordHash: hashPassword("mydreamshoots123"),
     displayName: "MyDreamShoots Owner",
     role: "owner",
     createdAt: now

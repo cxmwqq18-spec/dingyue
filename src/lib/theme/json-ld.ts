@@ -1,5 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
-import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -32,8 +33,7 @@ function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
 
 function siteBrandName(site: Site): string {
   const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
-  if (/(?:-xby|_xby)/.test(token) && token.includes("aidreamcapes")) return "Aidreamcapes-xby";
-  if (/(?:-xby|_xby)/.test(token) && (token.includes("mydreamshoots") || token.includes("dreamshoot"))) return "MyDreamShoots-xby";
+  if (isSpanishStorefrontSite(site)) return site.branding.logoText || site.name;
   if (token.includes("aidreamcapes")) return "Aidreamcapes";
   if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return "MyDreamShoots";
   return cleanText(site.branding.logoText, site.name);
@@ -44,7 +44,7 @@ function isAidreamcapesSite(site: Site): boolean {
 }
 
 function isSpanishXbySite(site: Site): boolean {
-  return /(?:-xby|_xby)/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  return isSpanishStorefrontSite(site);
 }
 
 function collapseSpanishXbyBrandRepeats(value: string): string {
@@ -89,9 +89,11 @@ function cleanSchemaText(site: Site, value: unknown, fallback = ""): string {
     .replace(/\s+/g, " ")
     .trim();
   if (!isSpanishXbySite(site)) return text;
+  const spanishBrandForDreamshoot = isAidreamcapesSite(site) ? "MyDreamShoots" : brandName;
+  const spanishBrandForAidreamcapes = isAidreamcapesSite(site) ? brandName : "Aidreamcapes";
   return collapseSpanishXbyBrandRepeats(text
-    .replace(/\bMyDreamShoots\b(?!-xby)/g, brandName.includes("MyDreamShoots") ? brandName : "MyDreamShoots")
-    .replace(/\bAidreamcapes\b(?!-xby)/g, brandName.includes("Aidreamcapes") ? brandName : "Aidreamcapes")
+    .replace(/\bMyDreamShoots\b(?!-xby)/g, spanishBrandForDreamshoot)
+    .replace(/\bAidreamcapes\b(?!-xby)/g, spanishBrandForAidreamcapes)
     .replace(/\bWhen are creditos used\?/gi, "Cuando se usan los creditos?")
     .replace(/\bWhen are credits used\?/gi, "Cuando se usan los creditos?")
     .replace(/\bWhen are creditos spent\?/gi, "Cuando se gastan los creditos?")
@@ -186,6 +188,140 @@ function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): s
   if (value.startsWith("http://") || value.startsWith("https://")) return value;
   const base = siteOriginUrl(site).replace(/\/$/, "");
   return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+type StorefrontCompanyProfile = {
+  legalName?: string;
+  address?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  addressRegionName?: string;
+  postalCode?: string;
+  addressCountry?: string;
+  phone?: string;
+  email?: string;
+  taxId?: string;
+  taxIdLabel?: string;
+  entityType?: string;
+};
+
+function storefrontCompanyProfile(site: Site): StorefrontCompanyProfile {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
+  if (/aidreamcapes/i.test(identity) && !isSpanishStorefrontSite(site)) {
+    return {
+      legalName: "BLYDEYUS INC",
+      address: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
+      streetAddress: "30 N GOULD ST STE R",
+      addressLocality: "SHERIDAN",
+      addressRegion: "WY",
+      addressRegionName: "Wyoming",
+      postalCode: "82801",
+      addressCountry: "US",
+      phone: "+1-307-310-3014",
+      email: "support@aidreamcapes.com",
+      taxId: "41-5317529",
+      taxIdLabel: "Tax ID",
+      entityType: "Wyoming (WY) entity"
+    };
+  }
+  if (/(mydreamshoots|dreamshoot)/i.test(identity) && !isSpanishStorefrontSite(site)) {
+    return {
+      legalName: "MRNARUEBET LLC",
+      address: "8 THE GREEN STE B,DOVER,DE 19901",
+      streetAddress: "8 THE GREEN STE B",
+      addressLocality: "DOVER",
+      addressRegion: "DE",
+      addressRegionName: "Delaware",
+      postalCode: "19901",
+      addressCountry: "US",
+      phone: "+1-302-200-5780",
+      email: "support@mydreamshoots.com",
+      taxId: "98-1926243",
+      taxIdLabel: "EIN / Tax ID",
+      entityType: "Delaware (DE) limited liability company"
+    };
+  }
+  const footerSettings = site.themeSettings?.publishedJson?.globalSections?.footer?.settings as Record<string, unknown> | undefined;
+  return {
+    legalName: cleanText(footerSettings?.companyName),
+    address: cleanText(footerSettings?.contactAddress),
+    phone: cleanText(footerSettings?.contactPhone),
+    email: cleanText(footerSettings?.contactEmail),
+    taxId: cleanText(footerSettings?.taxId),
+    taxIdLabel: cleanText(footerSettings?.taxIdLabel)
+  };
+}
+
+function companyAddressSchema(profile: StorefrontCompanyProfile): JsonLdNode | string | undefined {
+  if (profile.streetAddress && profile.addressLocality && profile.addressRegion && profile.postalCode) {
+    return {
+      "@type": "PostalAddress",
+      streetAddress: profile.streetAddress,
+      addressLocality: profile.addressLocality,
+      addressRegion: profile.addressRegion,
+      postalCode: profile.postalCode,
+      addressCountry: profile.addressCountry || "US"
+    };
+  }
+  return profile.address;
+}
+
+function companyIdentifiers(profile: StorefrontCompanyProfile): JsonLdNode[] {
+  const identifiers: JsonLdNode[] = [];
+  if (profile.legalName) {
+    identifiers.push({
+      "@type": "PropertyValue",
+      propertyID: "Legal entity",
+      name: "Legal entity",
+      value: profile.legalName
+    });
+  }
+  if (profile.taxId) {
+    const taxIdLabel = profile.taxIdLabel || "Tax ID";
+    identifiers.push({
+      "@type": "PropertyValue",
+      propertyID: taxIdLabel,
+      name: taxIdLabel,
+      value: profile.taxId
+    });
+  }
+  if (profile.addressRegionName && profile.addressRegion) {
+    identifiers.push({
+      "@type": "PropertyValue",
+      propertyID: "U.S. state entity jurisdiction",
+      name: "U.S. state entity jurisdiction",
+      value: `${profile.addressRegionName} (${profile.addressRegion})`
+    });
+  }
+  if (profile.entityType) {
+    identifiers.push({
+      "@type": "PropertyValue",
+      propertyID: "Entity type",
+      name: "Entity type",
+      value: profile.entityType
+    });
+  }
+  return identifiers;
+}
+
+function organizationSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
+  const profile = storefrontCompanyProfile(site);
+  const address = companyAddressSchema(profile);
+  const identifiers = companyIdentifiers(profile);
+  return {
+    "@type": "Organization",
+    "@id": `${siteBaseUrl(site, routeMode)}#organization`,
+    name: siteBrandName(site),
+    ...(profile.legalName ? { legalName: profile.legalName } : {}),
+    url: siteBaseUrl(site, routeMode),
+    description: cleanSchemaText(site, site.branding.description),
+    ...(profile.email ? { email: profile.email } : {}),
+    ...(profile.phone ? { telephone: profile.phone } : {}),
+    ...(address ? { address } : {}),
+    ...(profile.taxId ? { taxID: profile.taxId } : {}),
+    ...(identifiers.length ? { identifier: identifiers } : {})
+  };
 }
 
 function schemaPagePath(site: Site, routeMode: "host" | "path", pagePath: string): string {
@@ -350,7 +486,11 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
       "@type": "Service",
 	      name: cleanSchemaText(input.site, pack.name, title),
 	      description: cleanSchemaText(input.site, pack.description, description),
-      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, `/collections/${slugifySchemaPart(pack.categoryRecord?.slug || pack.category || pack.name)}`)),
+      url: absoluteUrl(
+        input.site,
+        input.routeMode,
+        schemaPagePath(input.site, input.routeMode, canonicalSeoDirectoryPathForSite(input.site, "collection", slugifySchemaPart(pack.categoryRecord?.slug || pack.category || pack.name)))
+      ),
       ...(pack.imageUrl ? { image: absoluteUrl(input.site, input.routeMode, pack.imageUrl) } : {})
     }
   }));
@@ -403,7 +543,7 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
       "@type": "OfferCatalog",
       "@id": `${siteBaseUrl(input.site, input.routeMode)}#plans`,
       name: isSpanishXbySite(input.site)
-        ? isAidreamcapesSite(input.site) ? "Paquetes de retrato de viaje y creditos Aidreamcapes-xby" : "Paquetes de fotos y creditos MyDreamShoots-xby"
+        ? isAidreamcapesSite(input.site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
         : isAidreamcapesSite(input.site) ? "Aidreamcapes travel portrait packages and credits" : "MyDreamShoots photo packages and credits",
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
     }
@@ -415,15 +555,8 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const description = pageDescription(input.site, input.page);
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
-  const siteName = siteBrandName(input.site);
   const graph: Array<JsonLdNode | undefined> = [
-    {
-      "@type": "Organization",
-      "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization`,
-      name: siteName,
-      url: siteBaseUrl(input.site, input.routeMode),
-      description: cleanSchemaText(input.site, input.site.branding.description)
-    },
+    organizationSchema(input.site, input.routeMode),
     websiteSchema(input.site, input.routeMode),
     storefrontApplicationSchema(input, title, description),
     breadcrumbs(input.site, input.routeMode, input.pagePath, title),
@@ -451,13 +584,7 @@ export function buildToolDirectoryJsonLd({
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
   const graph: JsonLdNode[] = [
-    {
-	      "@type": "Organization",
-	      "@id": `${siteBaseUrl(site, routeMode)}#organization`,
-	      name: siteName,
-	      url: siteBaseUrl(site, routeMode),
-	      description: cleanSchemaText(site, site.branding.description)
-	    },
+    organizationSchema(site, routeMode),
     websiteSchema(site, routeMode),
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
@@ -517,13 +644,14 @@ export function buildCollectionDirectoryJsonLd({
   const matchingPacks = creativePacks
     .filter((pack) => pack.status === "active")
     .filter((pack) => {
-      const candidates = [pack.categoryRecord?.slug, pack.category, pack.name]
+      const candidates = [pack.categoryRecord?.slug, pack.categoryRecord?.parent?.slug, pack.category, pack.name]
         .map((value) => cleanText(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""))
         .filter(Boolean);
       return candidates.includes(item.slug);
     })
     .slice(0, 12);
-  const itemListElement = (matchingPacks.length ? matchingPacks : item.useCases.map((useCase, index) => ({
+  const hasMatchingPacks = matchingPacks.length > 0;
+  const itemListElement = (hasMatchingPacks ? matchingPacks : item.useCases.map((useCase, index) => ({
     id: `${item.slug}_${index}`,
     name: useCase,
     description: item.description,
@@ -532,6 +660,9 @@ export function buildCollectionDirectoryJsonLd({
     const pack = entry as CreativePack;
     const name = cleanText(pack.name, item.useCases[index] ?? item.label);
     const image = cleanText(pack.imageUrl);
+    const entrySlug = cleanText(pack.categoryRecord?.slug || pack.category || pack.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const entryPagePath = hasMatchingPacks && entrySlug ? getSeoDirectoryContentForSite(site, "collection", entrySlug).canonicalPath : pagePath;
+    const entryPath = schemaPagePath(site, routeMode, entryPagePath);
     return {
       "@type": "ListItem",
       position: index + 1,
@@ -539,7 +670,7 @@ export function buildCollectionDirectoryJsonLd({
         "@type": "Service",
         name,
         description: cleanText(pack.description, item.description),
-        url,
+        url: absoluteUrl(site, routeMode, entryPath),
         ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
       }
     };

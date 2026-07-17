@@ -23,6 +23,7 @@ import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, m
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +52,7 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   headshot: "/tools/route-portrait-engine"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
-const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
@@ -79,11 +80,11 @@ function isAidreamcapesSite(site: { slug: string; name: string; branding: { logo
 }
 
 function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
-  return /(?:-xby|_xby)/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`);
+  return isSpanishStorefrontSite(site);
 }
 
 function canUseStorefrontPartnerTemplate(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): boolean {
-  return !isSpanishXbyStorefrontSite(site) && DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isMydreamshootsSite(site) || isAidreamcapesSite(site));
+  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isSpanishXbyStorefrontSite(site) || isMydreamshootsSite(site) || isAidreamcapesSite(site));
 }
 
 function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
@@ -260,6 +261,8 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
+  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect("/children-privacy");
+  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect("/state-privacy");
   if (slug === "/tool") redirect("/tools");
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};

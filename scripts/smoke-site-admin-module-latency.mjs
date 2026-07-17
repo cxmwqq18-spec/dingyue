@@ -3,7 +3,7 @@ import { chromium } from "playwright";
 const baseUrl = process.env.SITE_ADMIN_BASE_URL ?? process.env.SMOKE_BASE_URL ?? "http://localhost:3002";
 const siteSlug = process.env.SITE_ADMIN_SITE_SLUG ?? "mydreamshoots";
 const username = process.env.SITE_ADMIN_USER ?? "owner@mydreamshoots.localhost";
-const password = process.env.SITE_ADMIN_PASSWORD ?? "dreamshoot123";
+const password = process.env.SITE_ADMIN_PASSWORD ?? "mydreamshoots123";
 const warnMs = Number(process.env.SITE_ADMIN_MODULE_WARN_MS ?? 2500);
 
 const modules = [

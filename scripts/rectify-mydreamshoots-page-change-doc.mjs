@@ -57,10 +57,14 @@ const replacements = new Map([
 ]);
 
 const useCaseCards = new Map([
-  ["Ava Mercer", ["LinkedIn refresh", "Create a private set of professional headshots for LinkedIn, resumes, founder bios, and company profiles.", "Work profiles", "Professional headshots"]],
-  ["Lucas Bennett", ["Match-day fan posts", "Turn your selfies into tournament-style fan posters and profile avatars for personal social posts.", "Fan posts", "Sports portraits"]],
-  ["Mia Collins", ["Creator profile update", "Generate fresh portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator pages", "Profile portraits"]],
-  ["Noah Reed", ["Private style preview", "Try hairstyle, outfit, or themed portrait directions before downloading your favorites.", "Style previews", "Beauty and try-on"]]
+  ["Ava Mercer", ["Daily creator content", "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.", "Creator workflow", "Photos and short videos"]],
+  ["LinkedIn refresh", ["Daily creator content", "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.", "Creator workflow", "Photos and short videos"]],
+  ["Lucas Bennett", ["Wedding website visuals", "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.", "Wedding stories", "Albums and video clips"]],
+  ["Match-day fan posts", ["Wedding website visuals", "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.", "Wedding stories", "Albums and video clips"]],
+  ["Mia Collins", ["Family memory album", "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.", "Keepsake scenes", "Private family gallery"]],
+  ["Creator profile update", ["Family memory album", "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.", "Keepsake scenes", "Private family gallery"]],
+  ["Noah Reed", ["Prompt-led video scene", "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.", "Video previews", "6-10 second clips"]],
+  ["Private style preview", ["Prompt-led video scene", "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.", "Video previews", "6-10 second clips"]]
 ]);
 
 function rewriteString(value) {
@@ -84,7 +88,11 @@ function walk(value) {
   }
 
   if (value.summaryRating) value.summaryRating = "";
-  if (value.summaryMeta === "Realistic customer stories for AI photo package buyers") value.summaryMeta = "Example use cases";
+  if (value.summaryMeta === "Realistic customer stories for AI photo package buyers" || value.summaryMeta === "Example use cases") {
+    value.subtitle = "Real stories for social content, wedding pages, family keepsakes, and short AI videos.";
+    value.summaryBody = "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.";
+    value.summaryMeta = "Narrative examples";
+  }
   if (value.title === "What Our Customers Say" || value.title === "Realistic customer stories") value.title = "Ways people use MyDreamShoots";
 
   for (const key of Object.keys(value)) {
@@ -97,12 +105,13 @@ function walk(value) {
   return value;
 }
 
-function setSeo(page, title, description) {
+function setSeo(page, title, description, keywords) {
   page.publishedJson ??= {};
   page.publishedJson.seo ??= {};
   page.publishedJson.seo.title = title;
   page.publishedJson.seo.description = description;
-  delete page.publishedJson.seo.keywords;
+  if (keywords) page.publishedJson.seo.keywords = keywords;
+  else delete page.publishedJson.seo.keywords;
 }
 
 let changedSites = 0;
@@ -117,15 +126,20 @@ for (const site of state.sites ?? []) {
   if (themeSeo) {
     themeSeo.siteTitle = "MyDreamShoots";
     themeSeo.titleTemplate = "%s | MyDreamShoots";
-    themeSeo.siteDescription = "Create private AI headshots, portraits, fan posters, beauty previews, and themed photo albums from selfies with visible credit costs.";
-    themeSeo.siteKeywords = "";
+    themeSeo.siteDescription = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
+    themeSeo.siteKeywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
     for (const pageSeo of Object.values(themeSeo.pages ?? {})) delete pageSeo.keywords;
+    if (themeSeo.pages?.site_dreamshoot_home) {
+      themeSeo.pages.site_dreamshoot_home.title = "Professional AI Photo Generator Online - MyDreamShoots";
+      themeSeo.pages.site_dreamshoot_home.description = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
+      themeSeo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+    }
   }
 
   for (const page of site.pages ?? []) {
     delete page.publishedJson?.seo?.keywords;
     if (page.slug === "/") {
-      setSeo(page, "AI Headshot & Portrait Generator | Private Photo Sets from Selfies | MyDreamShoots", "Create private AI headshots, creator portraits, fan posters, beauty previews, and themed photo albums from selfies with credit costs shown before generation.");
+      setSeo(page, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
       const hero = page.publishedJson?.sections?.hero_1;
       if (hero?.blocks) {
         const primary = hero.blocks.find((block) => block.id === "hero_cta_primary");

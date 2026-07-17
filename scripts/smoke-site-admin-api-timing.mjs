@@ -1,7 +1,7 @@
 const base = process.env.SITE_ADMIN_BASE_URL ?? process.env.SMOKE_BASE_URL ?? "http://127.0.0.1:3210";
 const siteId = process.env.SITE_ADMIN_SITE_ID ?? "site_dreamshoot";
 const username = process.env.SITE_ADMIN_USER ?? "owner@mydreamshoots.localhost";
-const password = process.env.SITE_ADMIN_PASSWORD ?? "dreamshoot123";
+const password = process.env.SITE_ADMIN_PASSWORD ?? "mydreamshoots123";
 const timeoutMs = Number(process.env.SITE_ADMIN_API_TIMEOUT_MS ?? 12_000);
 const slowMs = Number(process.env.SITE_ADMIN_API_SLOW_MS ?? 1_500);
 const repeat = Math.max(1, Math.floor(Number(process.env.SITE_ADMIN_API_REPEAT ?? 2)));

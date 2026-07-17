@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
+import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
 
 export type DreamshootPackageCatalogCard = {
   id: string;
@@ -9,28 +10,19 @@ export type DreamshootPackageCatalogCard = {
   description: string;
   category: string;
   meta: string;
-  credits: string;
+  credits?: string;
   imageUrl: string;
   href: string;
   filterTokens?: string[];
+  kind?: "package" | "collection";
 };
 
 function categorySlug(value: string): string {
-  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "all";
+  return photoPackageSlug(value);
 }
 
 function categoryLabel(value: string): string {
-  const normalized = value.toLowerCase().replace(/[_-]+/g, " ");
-  if (normalized === "headshots") return "Headshots";
-  if (normalized === "sports") return "Sports";
-  if (normalized === "creator") return "Creator";
-  if (normalized === "creative") return "Creative";
-  if (normalized === "beauty") return "Beauty";
-  if (normalized === "avatar") return "Avatar";
-  if (normalized === "seasonal") return "Seasonal";
-  if (normalized === "couple") return "Couple";
-  if (normalized === "wedding") return "Wedding";
-  return normalized.replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return photoPackageLabel(value);
 }
 
 function categoryLabelForLocale(value: string, locale: "en" | "es"): string {
@@ -57,6 +49,11 @@ function categoryLabelForLocale(value: string, locale: "en" | "es"): string {
 function cardLinkLabel(action: string, title: string) {
   const cleanTitle = title.replace(/\s+/g, " ").trim() || "this package";
   return `${action} ${cleanTitle}`;
+}
+
+function cardActionLabel(card: DreamshootPackageCatalogCard, packageAction: string, locale: "en" | "es") {
+  if (card.kind === "collection") return locale === "es" ? "Abrir coleccion" : "Open collection";
+  return packageAction;
 }
 
 function imageAlt(card: DreamshootPackageCatalogCard) {
@@ -100,25 +97,6 @@ function inferredGroupTokens(token: string): string[] {
   return groups;
 }
 
-function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
-  return event.metaKey || event.altKey || event.ctrlKey || event.shiftKey || event.button !== 0;
-}
-
-function updateBrowserUrl(href: string) {
-  if (!href || typeof window === "undefined") return;
-  const target = new URL(href, window.location.href);
-  if (target.origin !== window.location.origin) return;
-  window.history.pushState({}, "", `${target.pathname}${target.search}${target.hash}`);
-}
-
-function categoryFromLocation() {
-  if (typeof window === "undefined") return "";
-  const parts = window.location.pathname.split("/").filter(Boolean);
-  const collectionsIndex = parts.indexOf("collections");
-  if (collectionsIndex < 0) return "";
-  return parts[collectionsIndex + 1] ?? "all";
-}
-
 export function DreamshootPackageCatalogClient({
   activePackageLabel,
   aidreamcapes = false,
@@ -152,7 +130,7 @@ export function DreamshootPackageCatalogClient({
   tabs: string[];
   title: string;
 }) {
-  const [selectedCategory, setSelectedCategory] = useState(() => categorySlug(initialCategory || "all"));
+  const selectedCategory = categorySlug(initialCategory || "all");
   const visibleCards = useMemo(
     () => cards.filter((card) => categoryMatches(card, selectedCategory)),
     [cards, selectedCategory]
@@ -161,6 +139,9 @@ export function DreamshootPackageCatalogClient({
   const featured = displayCards.slice(0, featuredCount);
   const directory = displayCards;
   const activeCount = displayCards.length;
+  const activeCountLabel = displayCards.some((card) => card.kind === "collection")
+    ? locale === "es" ? "temas" : "themes"
+    : locale === "es" ? "paquetes activos" : "active packages";
   const brandGradient = aidreamcapes
     ? "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)"
     : "linear-gradient(90deg,#ff9f43 0%,#ff5ebd 45%,#16dcf0 100%)";
@@ -168,36 +149,6 @@ export function DreamshootPackageCatalogClient({
     ? "linear-gradient(90deg,#16dcf0,#D88A4B)"
     : brandGradient;
   const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
-
-  useEffect(() => {
-    function handlePopState() {
-      setSelectedCategory(categorySlug(categoryFromLocation() || "all"));
-    }
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  function chooseCategory(tab: string, event: MouseEvent<HTMLAnchorElement>) {
-    if (isModifiedClick(event)) return;
-    event.preventDefault();
-    const nextCategory = categorySlug(tab);
-    setSelectedCategory(nextCategory);
-    updateBrowserUrl(hrefForCategory(siteBasePath, tab));
-    requestAnimationFrame(() => {
-      document.getElementById(sectionId)?.scrollIntoView({ block: "start", behavior: "smooth" });
-    });
-  }
-
-  function chooseCard(card: DreamshootPackageCatalogCard, event: MouseEvent<HTMLAnchorElement>) {
-    if (isModifiedClick(event)) return;
-    event.preventDefault();
-    const nextCategory = categorySlug(card.category);
-    setSelectedCategory(nextCategory);
-    updateBrowserUrl(cardHref(siteBasePath, card.href));
-    requestAnimationFrame(() => {
-      document.getElementById(sectionId)?.scrollIntoView({ block: "start", behavior: "smooth" });
-    });
-  }
 
   return (
     <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionId} data-dreamshoot-catalog-count={directory.length}>
@@ -218,10 +169,8 @@ export function DreamshootPackageCatalogClient({
                 return (
                   <a
                     className="rounded-full border border-white/18 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/35 hover:text-white"
-                    data-storefront-instant-filter="true"
                     href={hrefForCategory(siteBasePath, tab)}
                     key={tab}
-                    onClick={(event) => chooseCategory(tab, event)}
                     style={active ? { background: brandGradient, borderColor: "transparent", color: "white" } : undefined}
                   >
                     {categoryLabelForLocale(tab, locale)}
@@ -234,7 +183,7 @@ export function DreamshootPackageCatalogClient({
             <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.55rem)] leading-[1.25] text-white/72">{subtitle}</p>
             <div className="mt-5 flex flex-wrap gap-2">
               <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
-                {activeCount} {locale === "es" ? "paquetes activos" : "active packages"}
+                {activeCount} {activeCountLabel}
               </span>
               <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-white/72">
                 {creditLabel}
@@ -255,12 +204,10 @@ export function DreamshootPackageCatalogClient({
         <div className={aidreamcapes ? "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" : "mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-5"}>
           {featured.map((card, index) => (
             <a
-              aria-label={cardLinkLabel(choosePackageLabel, card.title)}
+              aria-label={cardLinkLabel(cardActionLabel(card, choosePackageLabel, locale), card.title)}
               className="group flex min-h-[386px] flex-col overflow-hidden rounded-[26px] border border-white/14 bg-[#11121C]/80 shadow-[0_34px_105px_-72px_rgba(0,0,0,0.98)] transition hover:-translate-y-1 hover:border-white/24"
-              data-storefront-instant-filter="true"
               href={cardHref(siteBasePath, card.href)}
               key={card.id}
-              onClick={(event) => chooseCard(card, event)}
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.04]">
                 <img
@@ -276,11 +223,11 @@ export function DreamshootPackageCatalogClient({
                 {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: accentGradient }} /> : null}
               </div>
               <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h3>
+                <h2 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h2>
                 <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/62" title={card.description}>{card.description}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
                   <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.meta}</span>
-                  <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.credits}</span>
+                  {card.credits ? <span className="rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/82">{card.credits}</span> : null}
                   <ArrowRight className="ml-auto h-5 w-5 text-white/82 transition group-hover:translate-x-1" strokeWidth={1.8} />
                 </div>
               </div>
@@ -292,7 +239,7 @@ export function DreamshootPackageCatalogClient({
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">{locale === "es" ? "Directorio completo" : "Full directory"}</p>
-                <h3 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">{directoryTitle}</h3>
+                <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">{directoryTitle}</h2>
               </div>
               <a className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
                 {locale === "es" ? "Abrir colecciones" : "Open collections"}
@@ -302,12 +249,10 @@ export function DreamshootPackageCatalogClient({
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {directory.map((card, index) => (
                 <a
-                  aria-label={cardLinkLabel(choosePackageLabel, card.title)}
+                  aria-label={cardLinkLabel(cardActionLabel(card, choosePackageLabel, locale), card.title)}
                   className="group overflow-hidden rounded-[22px] border border-white/10 bg-[#10121a]/74 shadow-[0_24px_74px_-64px_rgba(0,0,0,0.96)] transition hover:-translate-y-0.5 hover:border-white/24 hover:bg-white/[0.075]"
-                  data-storefront-instant-filter="true"
                   href={cardHref(siteBasePath, card.href)}
                   key={`rest_${card.id}`}
-                  onClick={(event) => chooseCard(card, event)}
                 >
                   <div className="relative aspect-[1.42] overflow-hidden bg-white/[0.04]">
                     <img
@@ -325,14 +270,14 @@ export function DreamshootPackageCatalogClient({
                   <div className="p-4">
                     <div className="flex items-start gap-3">
                       <div className="min-w-0">
-                        <h3 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h3>
+                        <h2 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h2>
                         <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56" title={card.description}>{card.description}</p>
                       </div>
                       <ArrowRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" strokeWidth={1.8} />
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.meta}</span>
-                      <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.credits}</span>
+                      {card.credits ? <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/76">{card.credits}</span> : null}
                     </div>
                   </div>
                 </a>

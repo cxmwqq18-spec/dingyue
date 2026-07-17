@@ -7,6 +7,7 @@ import { preferLocalPathModeState, readPathModePublicRuntimeState } from "@/lib/
 import { canonicalSeoDirectoryPathForSite, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
@@ -53,7 +54,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
     const resolved = resolveToolPageForSite(toolsState, toolsSite, toolSlug);
     if (resolved.matched) return { state: toolsState, site: toolsSite, ...resolved };
   }
-  const detailState = preferLocalPathModeState()
+  const detailState = preferLocalPathModeState(siteSlug)
     ? undefined
     : await readPathModePublicRuntimeState(siteSlug, `/tools/${toolSlug}`, toolSlug);
   const detailSite = findPublicSiteInState(detailState, siteSlug);
@@ -87,18 +88,19 @@ export default async function ToolPage({
 }) {
   const { siteSlug, toolSlug } = await params;
   const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSiteSlug = redirectPublicSitePathToCanonicalHost({
     host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
     pathname: `/tools/${toolSlug}`,
     siteSlug
   });
   const redirectPath = legacyToolRedirectPath(publicSiteSlug, toolSlug);
-  if (redirectPath) permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`);
+  if (redirectPath) permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, redirectPath, routeMode));
   const query = searchParams ? await searchParams : {};
   const { state, site, page, matched } = await resolveToolPage(publicSiteSlug, toolSlug);
   if (!site || !page) notFound();
   if (!matched) notFound();
   const canonicalToolPath = canonicalSeoDirectoryPathForSite(site, "tool", toolSlug);
-  if (canonicalToolPath !== `/tools/${toolSlug}`) permanentRedirect(`/site/${publicSiteSlug}${canonicalToolPath}`);
-  return renderToolPage({ site, toolSlug, query, routeMode: "path", state, resolvedPage: page });
+  if (canonicalToolPath !== `/tools/${toolSlug}`) permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, canonicalToolPath, routeMode));
+  return renderToolPage({ site, toolSlug, query, routeMode, state, resolvedPage: page });
 }

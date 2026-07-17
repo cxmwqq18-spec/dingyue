@@ -1507,11 +1507,9 @@ export function toThemeRuntimeJob(job: GenerationJob): ThemeRuntimeJob {
 export function toThemeRuntimeAsset(state: PlatformState, asset: AssetUpload): ThemeRuntimeAsset {
   const site = runtimeSiteForState(state, asset.siteId);
   const storageKey = asset.storageKey?.trim();
-  const previewUrl = site
-    ? isCustomerAssetStorageKey(storageKey) && !customerAssetFileExists(storageKey)
-      ? fallbackImageForSeed(`${site.slug}-${asset.id}-${storageKey}`)
-      : resolveMediaAssetUrl(site, storageKey)
-    : "";
+  const isCustomerAsset = isCustomerAssetStorageKey(storageKey);
+  const hasReadablePreview = !isCustomerAsset || customerAssetFileExists(storageKey);
+  const previewUrl = site ? resolveMediaAssetUrl(site, storageKey) : "";
   return {
     id: asset.id,
     jobId: asset.jobId,
@@ -1519,6 +1517,7 @@ export function toThemeRuntimeAsset(state: PlatformState, asset: AssetUpload): T
     label: asset.label,
     storageKey,
     previewUrl,
+    previewStatus: hasReadablePreview ? "ready" : "loading",
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,
     role: asset.role,

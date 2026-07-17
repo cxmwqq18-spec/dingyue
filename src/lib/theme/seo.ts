@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo } from "@/lib/theme/policy-seo";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
@@ -33,7 +34,7 @@ function normalizeTitleToken(value: string): string {
 
 function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain" | "branding">): string {
   const token = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText ?? ""}`.toLowerCase();
-  if (token.includes("-xby") || token.includes("_xby")) return site.branding.logoText || site.name;
+  if (isSpanishStorefrontSite(site)) return site.branding.logoText || site.name;
   if (token.includes("aidreamcapes")) return "Aidreamcapes";
   if (token.includes("mydreamshoots") || token.includes("dreamshoot")) return myDreamShootsSeoName;
   return site.branding.logoText || site.name;
@@ -42,7 +43,7 @@ function storefrontSeoBrandName(site: Pick<Site, "id" | "slug" | "name" | "prima
 function normalizeStorefrontBrandText(site: Site, value: string | undefined, fallback = ""): string {
   const brandName = storefrontSeoBrandName(site);
   const text = cleanText(value, fallback);
-  if ((brandName.includes("-xby") || brandName.includes("_xby")) && text.toLowerCase().includes(brandName.toLowerCase())) {
+  if (isSpanishStorefrontSite(site) && text.toLowerCase().includes(brandName.toLowerCase())) {
     return text;
   }
   return text
@@ -116,8 +117,7 @@ function isMyDreamShootsSeoSite(site: Site): boolean {
 }
 
 function isSpanishXbySeoSite(site: Site): boolean {
-  const token = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase();
-  return token.includes("-xby") || token.includes("_xby");
+  return isSpanishStorefrontSite(site);
 }
 
 function isSpanishAidreamcapesXbySeoSite(site: Site): boolean {
@@ -240,19 +240,21 @@ function storefrontLaunchChecklistSeo(
 ): Pick<PageSeo, "title" | "description" | "keywords"> {
   if (slug !== "/") return seo;
   if (isSpanishAidreamcapesXbySeoSite(site)) {
+    const brand = spanishXbyBrandName(site);
     return {
-      title: "Aidreamcapes-xby - generador de retratos de viaje con IA",
+      title: `${brand} - generador de retratos de viaje con IA`,
       description:
-        "Transforma tus fotos favoritas en retratos de viaje profesionales con Aidreamcapes-xby. Elige destino, ambiente y estilo desde casa con galerias privadas.",
-      keywords: "retratos de viaje IA,fotos de viaje IA,generador de fotos IA,albumes de destino,retratos cinematicos,Aidreamcapes-xby"
+        `Transforma tus fotos favoritas en retratos de viaje profesionales con ${brand}. Elige destino, ambiente y estilo desde casa con galerias privadas.`,
+      keywords: `retratos de viaje IA,fotos de viaje IA,generador de fotos IA,albumes de destino,retratos cinematicos,${brand}`
     };
   }
   if (isSpanishMyDreamShootsXbySeoSite(site)) {
+    const brand = spanishXbyBrandName(site);
     return {
-      title: "MyDreamShoots-xby - generador de fotos con IA online",
+      title: `${brand} - generador de fotos con IA online`,
       description:
-        "Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con MyDreamShoots-xby. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.",
-      keywords: "generador de fotos IA,retratos profesionales IA,fotos de pareja IA,album privado IA,selfies,MyDreamShoots-xby"
+        `Convierte tus selfies en retratos profesionales, fotos de pareja y albumes privados con ${brand}. Sube tus fotos, revisa creditos y crea resultados con IA desde casa.`,
+      keywords: `generador de fotos IA,retratos profesionales IA,fotos de pareja IA,album privado IA,selfies,${brand}`
     };
   }
   if (isAidreamcapesSeoSite(site)) {
@@ -365,9 +367,6 @@ function localAssetUrl(pathOrUrl: string | undefined): string | undefined {
   } catch {
     return undefined;
   }
-  if (normalized.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
-  }
   if (normalized.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
     return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
   }
@@ -385,6 +384,21 @@ function siteIconUrl(site: Site): string | undefined {
 
 function siteIcons(site: Site): Metadata["icons"] | undefined {
   const slug = site.slug.toLowerCase();
+  if (isSpanishStorefrontSite(site)) {
+    const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText ?? ""}`.toLowerCase();
+    const aidreamcapes = identity.includes("aidreamcapes");
+    const basePath = aidreamcapes ? "/assets/sites/site_aidreamcapes_eu/brand" : "/assets/sites/site_aidreamshoots/brand";
+    const prefix = aidreamcapes ? "aidreamcapes" : "aidreamshoots";
+    const logo = aidreamcapes ? "aidreamcapes-logo-refined.svg" : "aidreamshoots-logo-refined.svg";
+    return {
+      icon: [
+        { url: `${basePath}/${prefix}-icon-192.png?v=20260717a`, type: "image/png", sizes: "192x192" },
+        { url: `${basePath}/${logo}?v=20260717a`, type: "image/svg+xml" }
+      ],
+      shortcut: `${basePath}/${prefix}-icon-192.png?v=20260717a`,
+      apple: [{ url: `${basePath}/${prefix}-icon-180.png?v=20260717a`, sizes: "180x180", type: "image/png" }]
+    };
+  }
   if (slug.includes("aidreamcapes")) {
     return {
       icon: [

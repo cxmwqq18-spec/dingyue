@@ -82,7 +82,7 @@ export function DreamshootToolDirectoryClient({
                         </span>
                       ))}
                     </div>
-                    <h4 className="mt-6 text-[1.18rem] font-bold leading-tight">{tool.title}</h4>
+                    <h3 className="mt-6 text-[1.18rem] font-bold leading-tight">{tool.title}</h3>
                     <p className={dark ? "mt-4 line-clamp-4 text-sm leading-6 text-white/64" : "mt-4 line-clamp-4 text-sm leading-6 text-[#56636b]"}>
                       {tool.description}
                     </p>

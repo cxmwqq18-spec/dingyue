@@ -43,14 +43,13 @@ const nextConfig = {
         ]
       },
       {
-        source: "/api/:path*",
+        source: "/api/:path((?!local-assets(?:/|$)).*)",
         headers: noindexPrivateHeaders
       },
       {
         source: "/api/local-assets/:path*",
         headers: [
           ...securityHeaders,
-          { key: "Cache-Control", value: "private, max-age=60" },
           { key: "X-Robots-Tag", value: "noindex, nofollow" }
         ]
       },

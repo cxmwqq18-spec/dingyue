@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
+import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  return { title: /(?:-xby|_xby)/i.test(siteSlug) ? "Subir fotos" : "Upload photos", robots: { index: false, follow: false } };
+  return { title: isSpanishStorefrontRequestIdentity(siteSlug) ? "Subir fotos" : "Upload photos", robots: { index: false, follow: false } };
 }
 
 export default async function CustomerWorkspaceUploadPage({
@@ -17,11 +19,12 @@ export default async function CustomerWorkspaceUploadPage({
 }) {
   const { siteSlug } = await params;
   const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSlug = redirectPublicSitePathToCanonicalHost({
     host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
     pathname: "/app/upload",
     siteSlug
   });
   const query = searchParams ? await searchParams : {};
-  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/upload", query, routeMode: "path" });
+  return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/upload", query, routeMode });
 }

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { readStorefrontPublicPageMetadataStateBySlugFromDatabase } from "@/lib/storefront-state";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 const jobDetailSlug = "/app/jobs/detail";
 
@@ -27,5 +29,7 @@ export default async function JobDetailPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, jobId } = await params;
-  redirect(`/site/${publicSiteSlug(siteSlug)}/app?job_status=workspace&job_id=${encodeURIComponent(jobId)}`);
+  const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
+  redirect(`${storefrontPathForRouteMode(publicSiteSlug(siteSlug), "/app", routeMode)}?job_status=workspace&job_id=${encodeURIComponent(jobId)}`);
 }

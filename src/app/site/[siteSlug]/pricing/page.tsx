@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { metadataForDreamshootFallbackRoute } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -29,10 +31,12 @@ export default async function PricingPage({
 }) {
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
+  const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const query = searchParams ? await searchParams : {};
   const state = await readPathModePublicRuntimeState(publicSlug, "/pricing");
   const site = state?.sites[0];
   if (!state) notFound();
   if (!site) notFound();
-  return renderStorefrontPage({ site, slug: "/pricing", query, routeMode: "path", state, deferCustomerRuntime: true });
+  return renderStorefrontPage({ site, slug: "/pricing", query, routeMode, state, deferCustomerRuntime: true });
 }

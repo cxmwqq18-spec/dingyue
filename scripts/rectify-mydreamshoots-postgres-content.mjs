@@ -66,48 +66,59 @@ const replacements = new Map([
 
 const useCaseCards = {
   "Ava Mercer": {
-    quote: "Create a private set of professional headshots for LinkedIn, resumes, founder bios, and company profiles.",
-    name: "LinkedIn refresh",
-    role: "Work profiles",
-    location: "Professional headshots",
+    quote: "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.",
+    name: "Daily creator content",
+    role: "Creator workflow",
+    location: "Photos and short videos",
     rating: ""
   },
   "Lucas Bennett": {
-    quote: "Turn your selfies into tournament-style fan posters and profile avatars for personal social posts.",
-    name: "Match-day fan posts",
-    role: "Fan posts",
-    location: "Sports portraits",
+    quote: "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.",
+    name: "Wedding website visuals",
+    role: "Wedding stories",
+    location: "Albums and video clips",
     rating: ""
   },
   "Mia Collins": {
-    quote: "Generate fresh portraits for newsletters, landing pages, thumbnails, and social profiles.",
-    name: "Creator profile update",
-    role: "Creator pages",
-    location: "Profile portraits",
+    quote: "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.",
+    name: "Family memory album",
+    role: "Keepsake scenes",
+    location: "Private family gallery",
     rating: ""
   },
   "Noah Reed": {
-    quote: "Try hairstyle, outfit, or themed portrait directions before downloading your favorites.",
-    name: "Private style preview",
-    role: "Style previews",
-    location: "Beauty and try-on",
+    quote: "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.",
+    name: "Prompt-led video scene",
+    role: "Video previews",
+    location: "6-10 second clips",
     rating: ""
   },
   "Elena Fischer": {
-    quote: "Create themed portraits for a personal page while keeping uploads and results private to the account.",
-    name: "Themed portrait set",
-    role: "Private albums",
-    location: "Creative portraits",
+    quote: "Preview hairstyles, outfits, and themed portrait directions before committing credits to a full package.",
+    name: "Private style preview",
+    role: "Style planning",
+    location: "Beauty and try-on",
     rating: ""
   },
   "Ryan Cole": {
-    quote: "Use quick previews first, then choose a full photo package after reviewing the credit cost.",
-    name: "Package preview",
+    quote: "Compare finished examples, confirm the credit cost before generation, and download only the private results you want to keep.",
+    name: "Gallery delivery",
     role: "Credit planning",
-    location: "Photo set workflow",
+    location: "Private workflow",
     rating: ""
   }
 };
+
+for (const [alias, source] of [
+  ["LinkedIn refresh", "Ava Mercer"],
+  ["Match-day fan posts", "Lucas Bennett"],
+  ["Creator profile update", "Mia Collins"],
+  ["Private style preview", "Noah Reed"],
+  ["Themed portrait set", "Elena Fischer"],
+  ["Package preview", "Ryan Cole"]
+]) {
+  useCaseCards[alias] = useCaseCards[source];
+}
 
 function rewriteString(value) {
   let next = value;
@@ -124,11 +135,11 @@ function rewriteJson(value) {
 
   if (value.summaryMeta === "Realistic customer stories for AI photo package buyers" || value.summaryMeta === "Example use cases") {
     value.title = "Ways people use MyDreamShoots.";
-    value.subtitle = "Choose the kind of private photo set you need before uploading source photos or spending credits.";
+    value.subtitle = "Real stories for social content, wedding pages, family keepsakes, and short AI videos.";
     value.summaryTitle = "Ways people use MyDreamShoots";
-    value.summaryBody = "Compare ordinary phone photos with finished private results before choosing a package.";
+    value.summaryBody = "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.";
     value.summaryRating = "";
-    value.summaryMeta = "Example use cases";
+    value.summaryMeta = "Narrative examples";
   }
 
   if (typeof value.name === "string" && useCaseCards[value.name]) {

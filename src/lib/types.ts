@@ -11,6 +11,7 @@ export type SectionType =
   | "email_start_panel"
   | "feature_grid"
   | "photo_package_wall"
+  | "dreamshoot_generation_showcase"
   | "occasion_showcase"
   | "ai_feature_launcher"
   | "sample_strip"
@@ -624,6 +625,7 @@ export interface CreativePack {
   createdAt: string;
   imageUrl?: string;
   galleryImages?: string[];
+  galleryImageAlts?: string[];
   categoryRecord?: CreativePackCategory;
 }
 
@@ -841,6 +843,7 @@ export interface ThemeRuntimeAsset {
   label: string;
   storageKey?: string;
   previewUrl: string;
+  previewStatus?: "ready" | "loading";
   downloadUrl?: string;
   mimeType: string;
   role: AssetUpload["role"];
