@@ -4,6 +4,7 @@ import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react"
 import { Camera, CheckCircle2, Lightbulb, MapPin, Play, Sparkles, Trash2, UploadCloud, WandSparkles } from "lucide-react";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
 import { creativePackCategoryOption, creativePackMatchesCategory, photoPackageCategoryOptions } from "@/lib/photo-package-taxonomy";
 
@@ -1470,8 +1471,9 @@ export function JobCreateForm({
     setMessage(jobT(spanish, `Uploading ${imageFiles.length} private photo${imageFiles.length === 1 ? "" : "s"}...`, `Subiendo ${imageFiles.length} foto${imageFiles.length === 1 ? "" : "s"} privada${imageFiles.length === 1 ? "" : "s"}...`));
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of imageFiles.entries()) {
+      const preparedUpload = await prepareCustomerImageUploadFile(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", preparedUpload.file);
       formData.append("label", uploadLabelForFile(file, index, imageFiles.length));
       formData.append("role", "input");
       const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
@@ -1481,7 +1483,7 @@ export function JobCreateForm({
       });
       const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
       if (!response.ok || !result.asset) {
-        setMessage(jobT(spanish, `We could not upload ${file.name}. Please check the file and try again.`, `No pudimos subir ${file.name}. Revisa el archivo e intentalo de nuevo.`));
+        setMessage(customerImageUploadErrorMessage(file.name, result.error, spanish));
         setUploadingSources(false);
         return;
       }

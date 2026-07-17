@@ -4,10 +4,10 @@ import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
 import {
   cleanCustomerAssetFileName,
   customerAssetStorageKey,
-  deleteCustomerAssetFileShared,
+  deleteCustomerAssetFile,
   extensionForCustomerAssetMime,
   prepareCompressedCustomerImage,
-  writeCustomerAssetFileShared
+  writeCustomerAssetFile
 } from "@/lib/customer-asset-storage";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
@@ -30,6 +30,13 @@ type SharpFactory = (input: Buffer) => {
     };
   };
 };
+
+const defaultMaxUploadBytes = 32 * 1024 * 1024;
+
+function maxCustomerUploadBytes(): number {
+  const configured = Number(process.env.CUSTOMER_UPLOAD_MAX_BYTES ?? "");
+  return Number.isFinite(configured) && configured > 0 ? Math.trunc(configured) : defaultMaxUploadBytes;
+}
 
 async function loadSharp(): Promise<SharpFactory | undefined> {
   try {
@@ -80,7 +87,11 @@ async function prepareUploadedImage(file: File): Promise<{ bytes: Buffer; mimeTy
 
 function removeWrittenAssetFile(storageKey: string | undefined) {
   if (!storageKey) return;
-  void deleteCustomerAssetFileShared(storageKey).catch(() => null);
+  try {
+    deleteCustomerAssetFile(storageKey);
+  } catch {
+    // Keep the upload response focused on the metadata failure.
+  }
 }
 
 function assetRolesFromParam(value: string | null): Array<"input" | "output" | "training_input"> | undefined {
@@ -140,8 +151,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       if (!body.file.type.startsWith("image/")) {
         return NextResponse.json({ ok: false, error: "asset_file_must_be_image" }, { status: 400 });
       }
-      if (body.file.size > 10 * 1024 * 1024) {
-        return NextResponse.json({ ok: false, error: "asset_file_too_large" }, { status: 413 });
+      const maxUploadBytes = maxCustomerUploadBytes();
+      if (body.file.size > maxUploadBytes) {
+        return NextResponse.json({ ok: false, error: "asset_file_too_large", maxBytes: maxUploadBytes }, { status: 413 });
       }
       body.label = body.label || body.file.name.replace(/\.[^.]+$/, "");
     } else {
@@ -174,11 +186,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       : undefined;
     let writtenStorageKey: string | undefined;
     if (compressedFile && storageKey) {
-      await writeCustomerAssetFileShared({
+      writeCustomerAssetFile({
         storageKey,
-        bytes: compressedFile.bytes,
-        mimeType: compressedFile.mimeType,
-        purpose: "input"
+        bytes: compressedFile.bytes
       });
       writtenStorageKey = storageKey;
     }

@@ -170,6 +170,8 @@ assert(!workspaceShell.includes("isVideoRuntimeJob(job) && !videoJobFrameIds(job
 assert(workspaceShell.includes("This video request did not include selected frame images"), "workspace shell should warn when an image-reference video prompt has no frame references");
 assert(workspaceShell.includes("URL.createObjectURL(file)"), "video frame uploads should use optimistic local previews");
 assert(workspaceShell.includes('params.asset.localStatus === "uploading" && params.asset.previewUrl'), "video frame uploads should render the local image preview while the file is still uploading");
+assert(workspaceShell.includes("prepareCustomerImageUploadFile(file)"), "video frame uploads should compress large images before sending them to the server");
+assert(workspaceShell.includes("customerImageUploadErrorMessage(file.name, result.error, spanishXby)"), "video frame upload failures should surface server error details");
 assert(workspaceShell.includes("local:video:"), "video frame uploads should create local optimistic asset ids");
 assert(workspaceShell.includes("uploaded and selected"), "video frame uploads should auto-select successful uploads");
 assert(workspaceShell.includes("LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS"), "video frame uploads should protect newly created remote ids from stale runtime refreshes");
@@ -290,6 +292,18 @@ const assetStore = read("src/lib/stores/asset-store.ts");
 assert(assetStore.includes("previewUrl: customerAssetPreviewUrl(storageKey)"), "relational customer assets should keep their own preview URL");
 assert(assetStore.includes('previewStatus: hasReadablePreview ? "ready" : "loading"'), "relational customer assets should expose loading preview status");
 assert(!assetStore.includes("fallbackImageForSeed"), "relational customer assets should not use stock fallback images for uploaded media");
+
+const clientImageUpload = read("src/lib/client-image-upload.ts");
+assert(clientImageUpload.includes("prepareCustomerImageUploadFile"), "customer image uploads should have a shared client-side preparation helper");
+assert(clientImageUpload.includes("canvas.toBlob"), "large customer image uploads should be compressed in the browser before POST");
+assert(clientImageUpload.includes("customerImageUploadErrorMessage"), "customer image uploads should map server errors to customer-facing messages");
+
+const customerAssetsRoute = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/route.ts");
+assert(customerAssetsRoute.includes("CUSTOMER_UPLOAD_MAX_BYTES"), "customer asset upload size should be configurable for production");
+assert(customerAssetsRoute.includes("defaultMaxUploadBytes = 32 * 1024 * 1024"), "customer asset upload route should accept modern phone photos before compression");
+assert(customerAssetsRoute.includes("writeCustomerAssetFile({"), "customer asset uploads should write directly to shared local storage");
+assert(!customerAssetsRoute.includes("writeCustomerAssetFileShared"), "customer asset uploads should not route same-server uploads through base64 HTTP transfer");
+assert(!customerAssetsRoute.includes("body.file.size > 10 * 1024 * 1024"), "customer asset upload route should not keep the old hard-coded 10MB rejection");
 
 const serverStore = read("src/lib/server-store.ts");
 assert(serverStore.includes("const isCustomerAsset = isCustomerAssetStorageKey(storageKey)"), "JSON runtime customer assets should detect customer-owned storage keys");

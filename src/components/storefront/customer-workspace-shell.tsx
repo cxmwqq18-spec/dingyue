@@ -12,6 +12,7 @@ import { StorefrontNavigationFeedback } from "@/components/storefront/navigation
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
 import { CustomerVideoWorkspace, type VideoRetryDraft } from "@/components/storefront/customer-video-workspace";
 import { csrfHeader } from "@/lib/client-csrf";
+import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
@@ -1515,8 +1516,9 @@ export function CustomerWorkspaceShell({
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of uploadFiles.entries()) {
       const optimisticAsset = optimisticAssets[index];
+      const preparedUpload = await prepareCustomerImageUploadFile(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", preparedUpload.file);
       formData.append("label", uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")));
       formData.append("role", "input");
       formData.append("subjectRole", "video_frame");
@@ -1531,7 +1533,7 @@ export function CustomerWorkspaceShell({
         setRuntimeAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
         setSelectedVideoFrameIds((current) => current.filter((assetId) => assetId !== optimisticAsset.id));
         setUploadingVideoFrames(false);
-        setVideoFrameMessage(spanishXby ? `No pudimos subir ${file.name}. Intentalo de nuevo.` : `We could not upload ${file.name}. Please try again.`);
+        setVideoFrameMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby));
         return;
       }
       deletedVideoFrameIdsRef.current.delete(result.asset.id);
@@ -1817,8 +1819,9 @@ export function CustomerWorkspaceShell({
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of imageFiles.entries()) {
       const optimisticId = optimisticAssets[index].id;
+      const preparedUpload = await prepareCustomerImageUploadFile(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", preparedUpload.file);
       formData.append("label", file.name.replace(/\.[^.]+$/, "") || (spanishXby ? `muestra ${index + 1}` : `sample ${index + 1}`));
       formData.append("role", "input");
       formData.append("subjectRole", target);
@@ -1832,7 +1835,7 @@ export function CustomerWorkspaceShell({
         setSampleAssets((current) => current.map((asset) => asset.id === optimisticId ? { ...asset, localStatus: "failed" } : asset));
         removeSampleId(optimisticId);
         setUploadingSampleTarget(null);
-        setSampleUploadMessage(spanishXby ? `No pudimos subir ${file.name}. Intentalo de nuevo.` : `We could not upload ${file.name}. Please try again.`);
+        setSampleUploadMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby));
         return;
       }
       createdAssets.push(result.asset);

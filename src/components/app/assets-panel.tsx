@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Download, Trash2, UploadCloud } from "lucide-react";
 import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
 
 const PAGE_SIZE = 8;
@@ -103,8 +104,9 @@ export function AssetsPanel({
     setMessage(files.length === 1 ? "Uploading the private source photo..." : `Uploading ${files.length} private source photos...`);
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, currentFile] of files.entries()) {
+      const preparedUpload = await prepareCustomerImageUploadFile(currentFile);
       const formData = new FormData();
-      formData.append("file", currentFile);
+      formData.append("file", preparedUpload.file);
       formData.append("label", files.length === 1 ? label || currentFile.name.replace(/\.[^.]+$/, "") : currentFile.name.replace(/\.[^.]+$/, "") || `source photo ${index + 1}`);
       formData.append("role", "input");
       const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
@@ -114,7 +116,7 @@ export function AssetsPanel({
       });
       const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
       if (!response.ok || !result.asset) {
-        setMessage(`We could not upload ${currentFile.name}. Please check the file and try again.`);
+        setMessage(customerImageUploadErrorMessage(currentFile.name, result.error));
         setPending(false);
         return;
       }
