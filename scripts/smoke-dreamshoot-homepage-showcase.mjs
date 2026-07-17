@@ -108,6 +108,8 @@ assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase rails shou
 assert(showcaseRenderer.includes("<figure"), "showcase material cards should render as display-only figures");
 assert(showcaseRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should use dedicated AI-generated homepage image assets");
 assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image example"), "showcase images should have customer-created alt text");
+assert(showcaseRenderer.includes('fetchPriority={card.index < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image cards");
+assert(showcaseRenderer.includes('loading={card.index < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image cards");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
 assert(showcaseRenderer.includes("customer-created video example"), "showcase videos should have accessible labels");
 assert(!showcaseRenderer.includes("[...imageCards, ...imageCards]"), "showcase image rail must not duplicate the data array");
@@ -121,7 +123,10 @@ assert(!showcaseRenderer.includes("Make a clip"), "showcase material cards shoul
 const showcaseVideoComponent = fs.readFileSync(path.join(repoRoot, "src/components/storefront/dreamshoot-showcase-video.tsx"), "utf8");
 assert(showcaseVideoComponent.includes("video.play()"), "showcase video component should actively start muted playback");
 assert(showcaseVideoComponent.includes("IntersectionObserver"), "showcase video component should play visible videos and pause offscreen videos");
-assert(showcaseVideoComponent.includes("autoPlay") && showcaseVideoComponent.includes("loop") && showcaseVideoComponent.includes("muted") && showcaseVideoComponent.includes("playsInline") && showcaseVideoComponent.includes('preload="auto"'), "showcase video component should keep browser autoplay attributes");
+assert(showcaseVideoComponent.includes("autoPlay={shouldLoad}") && showcaseVideoComponent.includes("loop") && showcaseVideoComponent.includes("muted") && showcaseVideoComponent.includes("playsInline"), "showcase video component should keep gated autoplay attributes");
+assert(showcaseVideoComponent.includes('preload="metadata"') && showcaseVideoComponent.includes("src={shouldLoad ? src : undefined}"), "showcase video component should delay mp4 requests until near the viewport");
+assert(showcaseVideoComponent.includes("SHOWCASE_VIDEO_LOAD_DELAY_MS") && showcaseVideoComponent.includes('rootMargin: "0px"'), "showcase video component should defer mp4 loading until visible images can render first");
+assert(!showcaseVideoComponent.includes('preload="auto"'), "showcase video component must not eagerly download all mp4 assets");
 
 const generatorScript = fs.readFileSync(path.join(repoRoot, "scripts/generate-dreamshoot-homepage-videos.mjs"), "utf8");
 assert(generatorScript.includes("/v1/videos"), "showcase video generation should call internal video providers");

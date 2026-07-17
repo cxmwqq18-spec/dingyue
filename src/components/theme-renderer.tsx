@@ -5862,8 +5862,9 @@ function SectionView({
                   <StorefrontImage
                     alt={spanishXbyImageAlt(site, manualImageAlt({ src: gridImages[index % gridImages.length] ?? primaryImage, fallback: `${motionHeroAltPrefix} ${index + 1}` }))}
                     className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-                    fetchPriority="low"
-                    loading="lazy"
+                    fetchPriority={index < 4 ? "high" : "low"}
+                    loading={index < 4 ? "eager" : "lazy"}
+                    priority={index < 4}
                     sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
                     src={gridImages[index % gridImages.length] ?? primaryImage}
                   />
@@ -8670,7 +8671,15 @@ function SectionView({
                 {imageRailCards.map((card) => (
                 <figure className={`group w-[min(74vw,22rem)] shrink-0 overflow-hidden rounded-[22px] border bg-[#0a0c12] shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`} key={card.railKey}>
                   <div className="relative aspect-square overflow-hidden bg-zinc-200">
-                    <StorefrontImage alt={`${card.meta} customer-created image example from ${card.title}`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]" sizes="(max-width: 640px) 74vw, 22rem" src={mediaAssetUrl(site, card.imageUrl)} />
+                    <StorefrontImage
+                      alt={`${card.meta} customer-created image example from ${card.title}`}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
+                      fetchPriority={card.index < 4 ? "high" : "low"}
+                      loading={card.index < 4 ? "eager" : "lazy"}
+                      priority={card.index < 4}
+                      sizes="(max-width: 640px) 74vw, 22rem"
+                      src={mediaAssetUrl(site, card.imageUrl)}
+                    />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.04)_54%,rgba(0,0,0,0.58)_100%)]" />
                     <div className="absolute inset-x-3 top-3 flex justify-between gap-3">
                       <span className="rounded-full border border-white/50 bg-white/74 px-3 py-1.5 text-[11px] font-bold text-zinc-900 backdrop-blur">{String(card.index + 1).padStart(2, "0")}</span>
