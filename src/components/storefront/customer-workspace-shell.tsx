@@ -552,6 +552,7 @@ function WorkspaceVideoPreviewButton({
             muted
             onCanPlay={() => onLoaded(mediaKey)}
             onLoadedData={() => onLoaded(mediaKey)}
+            onLoadedMetadata={() => onLoaded(mediaKey)}
             playsInline
             preload="metadata"
             src={src}

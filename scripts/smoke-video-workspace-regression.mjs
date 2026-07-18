@@ -225,6 +225,7 @@ assert(workspaceShell.includes('className="relative aspect-video w-full overflow
 assert(workspaceShell.includes("autoPlay"), "video thumbnails should autoplay muted so cards do not render as black frames");
 assert(workspaceShell.includes("loadedVideoPreviewKeys"), "video cards should track whether the real video preview has loaded");
 assert(workspaceShell.includes("renderVideoPreviewLoading"), "video cards should use one unified loading preview instead of a source-frame poster");
+assert(workspaceShell.includes("onLoadedMetadata"), "video cards should clear the loading cover once browser metadata is available");
 assert(!workspaceShell.includes("videoPosterUrlForJob"), "video cards should not use source frames as loading posters");
 assert(!workspaceShell.includes("poster={"), "video thumbnails should not show stale poster images while media loads");
 assert(workspaceShell.includes("WorkspaceVideoPreviewButton"), "video thumbnails should use a dedicated preview component");
@@ -329,6 +330,8 @@ assert(dispatchRoute.includes("ai_provider_video_frame_data_uri_source_failed"),
 assert(dispatchRoute.includes("videoProviderDataUriFrameUrls"), "video worker should be able to force frame data URI URLs");
 assert(dispatchRoute.includes("shouldRetryVideoTaskWithDataUriFrames"), "video worker should retry video providers with data URI frames when URL-based frame reads fail");
 assert(dispatchRoute.includes("shouldCompressVideoReferenceImages"), "video worker should compress multipart video reference images before provider dispatch");
+assert(dispatchRoute.includes("shouldFallbackUnresizedVideoReferenceImage"), "video worker should fall back to original reference images when optional resizing is unavailable");
+assert(dispatchRoute.includes("video_reference_resize_fallback"), "video worker should log optional reference resize fallback instead of failing silently");
 assert(dispatchRoute.includes("LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION"), "video worker should bound video reference image dimensions");
 assert(!dispatchRoute.includes("shouldRetryOpenAiVideoTaskWithFirstFrame"), "OpenAI-compatible video worker should not degrade multi-frame failures to first-frame retries");
 assert(!dispatchRoute.includes("video_provider_retry_first_frame"), "video worker should not report first-frame retry progress for multi-frame requests");

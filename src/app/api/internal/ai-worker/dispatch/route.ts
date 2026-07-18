@@ -1030,6 +1030,10 @@ function shouldAllowUnresizedVideoReferenceFallback() {
   return process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_REQUIRE_RESIZE?.trim() !== "1";
 }
 
+function shouldFallbackUnresizedVideoReferenceImage(_error: unknown) {
+  return shouldAllowUnresizedVideoReferenceFallback();
+}
+
 function originalVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
   return {
     bytes: blobPartFromBytes(Buffer.from(bytes)),
@@ -1059,7 +1063,11 @@ async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, t
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
   } catch (error) {
     if (target) {
-      if (shouldAllowUnresizedVideoReferenceFallback() && errorMessage(error).includes("sharp_unavailable")) {
+      if (shouldFallbackUnresizedVideoReferenceImage(error)) {
+        console.warn("video_reference_resize_fallback", {
+          targetSize: `${target.width}x${target.height}`,
+          error: errorMessage(error).slice(0, 160)
+        });
         return originalVideoReferenceImage(bytes, sourceMimeType);
       }
       throw error instanceof Error ? new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}_${error.message}`) : new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}`);
