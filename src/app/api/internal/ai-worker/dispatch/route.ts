@@ -1026,23 +1026,28 @@ function shouldCompressVideoReferenceImages() {
   return true;
 }
 
+function shouldAllowUnresizedVideoReferenceFallback() {
+  return process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_REQUIRE_RESIZE?.trim() !== "1";
+}
+
+function originalVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
+  return {
+    bytes: blobPartFromBytes(Buffer.from(bytes)),
+    mimeType
+  };
+}
+
 async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, targetSize?: string) {
   const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
   const target = targetSize ? parseVideoPixelSize(targetSize) : undefined;
   if (!target && (!shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif"))) {
-    return {
-      bytes: blobPartFromBytes(Buffer.from(bytes)),
-      mimeType: sourceMimeType
-    };
+    return originalVideoReferenceImage(bytes, sourceMimeType);
   }
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION ?? "1280") || 1280);
   const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_QUALITY ?? "80") || 80, 95));
   try {
     const sharp = await loadSharp();
-    if (!sharp) {
-      if (target) throw new Error("sharp_unavailable");
-      throw new Error("sharp_unavailable");
-    }
+    if (!sharp) throw new Error("sharp_unavailable");
     const resized = await sharp(Buffer.from(bytes))
       .rotate()
       .resize(target
@@ -1054,12 +1059,12 @@ async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, t
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
   } catch (error) {
     if (target) {
+      if (shouldAllowUnresizedVideoReferenceFallback() && errorMessage(error).includes("sharp_unavailable")) {
+        return originalVideoReferenceImage(bytes, sourceMimeType);
+      }
       throw error instanceof Error ? new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}_${error.message}`) : new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}`);
     }
-    return {
-      bytes: blobPartFromBytes(Buffer.from(bytes)),
-      mimeType: sourceMimeType
-    };
+    return originalVideoReferenceImage(bytes, sourceMimeType);
   }
 }
 

@@ -1075,9 +1075,6 @@ export function CustomerWorkspaceShell({
       : resourceTab === "favorites"
         ? imageResourceAssets.filter((asset) => asset.isFavorite)
         : allResourceAssets;
-  const previewableAssets = activePanel === "video" && videoWorkspaceTab === "videos" ? videoResourceAssets : visibleResourceAssets;
-  const selectedPreviewIndex = selectedPreviewAssetId ? previewableAssets.findIndex((asset) => asset.id === selectedPreviewAssetId) : -1;
-  const selectedPreviewAsset = selectedPreviewIndex >= 0 ? previewableAssets[selectedPreviewIndex] : undefined;
   const outputCopyJobs = useMemo(() => recentJobs.map(outputCopyJob).filter((job): job is OutputCopyJob => Boolean(job)), [recentJobs]);
   const jobById = useMemo(() => new Map(outputCopyJobs.map((job) => [job.id, job])), [outputCopyJobs]);
   const assetById = useMemo(() => new Map(hydratedAssets.map((asset) => [asset.id, asset])), [hydratedAssets]);
@@ -1221,6 +1218,40 @@ export function CustomerWorkspaceShell({
     job: asset.jobId ? jobById.get(asset.jobId) : undefined,
     jobs: outputCopyJobs
   });
+  function outputAssetForSlot(slotStorageKey: string, outputAssets: ThemeRuntimeAsset[]) {
+    return outputAssets.find((asset) => asset.storageKey && normalizedWorkspaceStorageKey(asset.storageKey) === normalizedWorkspaceStorageKey(slotStorageKey));
+  }
+  function slotPreviewAssetFor(job: RuntimeJob, slot: RuntimeOutputSlot, outputAssets: ThemeRuntimeAsset[], fallbackLabel?: string): ThemeRuntimeAsset | undefined {
+    const slotStorageKey = slot.storageKey;
+    if (!slotStorageKey || !slot.mimeType?.startsWith("video/")) return undefined;
+    const existingAsset = outputAssetForSlot(slotStorageKey, outputAssets);
+    if (existingAsset) return existingAsset;
+    const label = fallbackLabel ?? `${workspaceJobTitle(job, false)} video ${slot.index}`;
+    return {
+      id: `slot:${normalizedWorkspaceStorageKey(slotStorageKey)}`,
+      jobId: job.id,
+      previewUrl: workspaceSlotPreviewUrl(slotStorageKey),
+      storageKey: slotStorageKey,
+      mimeType: slot.mimeType ?? "video/mp4",
+      role: "output",
+      reviewStatus: "approved",
+      label,
+      altText: label,
+      createdAt: slot.updatedAt ?? job.updatedAt ?? job.createdAt
+    };
+  }
+  const videoPreviewableAssetsById = new Map(videoResourceAssets.map((asset) => [asset.id, asset] as const));
+  videoRuntimeJobs.forEach((job) => {
+    const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
+    workspaceJobOutputSlots(job, outputAssets).forEach((slot) => {
+      const slotAsset = slotPreviewAssetFor(job, slot, outputAssets);
+      if (slotAsset && !videoPreviewableAssetsById.has(slotAsset.id)) videoPreviewableAssetsById.set(slotAsset.id, slotAsset);
+    });
+  });
+  const videoPreviewableAssets = Array.from(videoPreviewableAssetsById.values());
+  const previewableAssets = activePanel === "video" ? videoPreviewableAssets : visibleResourceAssets;
+  const selectedPreviewIndex = selectedPreviewAssetId ? previewableAssets.findIndex((asset) => asset.id === selectedPreviewAssetId) : -1;
+  const selectedPreviewAsset = selectedPreviewIndex >= 0 ? previewableAssets[selectedPreviewIndex] : undefined;
   const selectedPreviewCopy = selectedPreviewAsset ? outputCopyForAsset(selectedPreviewAsset) : undefined;
   const selectedPreviewLabel = selectedPreviewAsset ? generatedAssetLabel(selectedPreviewAsset, selectedPreviewCopy) : "";
   function renderResourceAssetCard(asset: ThemeRuntimeAsset) {
@@ -1384,6 +1415,14 @@ export function CustomerWorkspaceShell({
       return;
     }
     choosePanel(section.panel, section.anchor);
+  }
+
+  function handleStudioConsoleSectionClick(section: typeof studioConsoleSections[number], expanded: boolean) {
+    if (expanded) {
+      setActiveStudioSection(null);
+      return;
+    }
+    chooseStudioConsoleSection(section);
   }
 
   function requestWorkspaceRefresh() {
@@ -2245,9 +2284,7 @@ export function CustomerWorkspaceShell({
                     aria-controls={`studio-console-${section.id}`}
                     aria-expanded={expanded}
                     className="flex min-h-[58px] w-full items-center justify-between gap-3 px-1 py-4 text-left text-sm font-semibold text-white/82 transition hover:text-white"
-                    onClick={() => {
-                      chooseStudioConsoleSection(section);
-                    }}
+                    onClick={() => handleStudioConsoleSectionClick(section, expanded)}
                     type="button"
                   >
                     <span>{studioConsoleLabel(section.id, spanishXby)}</span>
@@ -2746,13 +2783,12 @@ export function CustomerWorkspaceShell({
                                   const slotFailed = slot.status === "failed";
                                   const slotVideo = slot.mimeType?.startsWith("video/");
                                   const slotStorageKey = slot.storageKey;
-                                  const slotAsset = slotStorageKey
-                                    ? outputAssets.find((asset) => asset.storageKey && normalizedWorkspaceStorageKey(asset.storageKey) === normalizedWorkspaceStorageKey(slotStorageKey))
-                                    : undefined;
+                                  const slotAsset = slotStorageKey ? outputAssetForSlot(slotStorageKey, outputAssets) : undefined;
                                   const slotAssetCopy = slotAsset ? outputCopyForAsset(slotAsset) : undefined;
                                   const slotMediaLabel = slotAsset
                                     ? generatedAssetLabel(slotAsset, slotAssetCopy)
                                     : `${workspaceJobTitle(job, false)} ${slotVideo ? "video" : "image"} ${slot.index}`;
+                                  const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                   const slotProgress = workspaceSlotProgress(slot);
                                   const slotErrorText = slot.error ? workspaceGenerationErrorText(slot.error, spanishXby) : "";
                                   return (
@@ -2773,9 +2809,9 @@ export function CustomerWorkspaceShell({
                                             label: slotMediaLabel,
                                             src: workspaceSlotPreviewUrl(slot.storageKey),
                                             compact: true,
-                                            disabled: !slotAsset,
+                                            disabled: !slotPreviewAsset,
                                             onOpen: () => {
-                                              if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
+                                              if (slotPreviewAsset) setSelectedPreviewAssetId(slotPreviewAsset.id);
                                             }
                                           })
                                         ) : (
@@ -2999,13 +3035,12 @@ export function CustomerWorkspaceShell({
                                 const slotFailed = slot.status === "failed";
                                 const slotVideo = slot.mimeType?.startsWith("video/");
                                 const slotStorageKey = slot.storageKey;
-                                const slotAsset = slotStorageKey
-                                  ? outputAssets.find((asset) => asset.storageKey && normalizedWorkspaceStorageKey(asset.storageKey) === normalizedWorkspaceStorageKey(slotStorageKey))
-                                  : undefined;
+                                const slotAsset = slotStorageKey ? outputAssetForSlot(slotStorageKey, outputAssets) : undefined;
                                 const slotAssetCopy = slotAsset ? outputCopyForAsset(slotAsset) : undefined;
                                 const slotMediaLabel = slotAsset
                                   ? generatedAssetLabel(slotAsset, slotAssetCopy)
                                   : `${workspaceJobTitle(job, false)} ${slotVideo ? "video" : "image"} ${slot.index}`;
+                                const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                 const slotProgress = workspaceSlotProgress(slot);
                                 const slotErrorText = slot.error ? workspaceGenerationErrorText(slot.error, spanishXby) : "";
                                 return (
@@ -3026,9 +3061,9 @@ export function CustomerWorkspaceShell({
                                           label: slotMediaLabel,
                                           src: workspaceSlotPreviewUrl(slot.storageKey),
                                           compact: true,
-                                          disabled: !slotAsset,
+                                          disabled: !slotPreviewAsset,
                                           onOpen: () => {
-                                            if (slotAsset) setSelectedPreviewAssetId(slotAsset.id);
+                                            if (slotPreviewAsset) setSelectedPreviewAssetId(slotPreviewAsset.id);
                                           }
                                         })
                                       ) : (
