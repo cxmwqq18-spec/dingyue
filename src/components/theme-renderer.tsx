@@ -617,6 +617,7 @@ function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: strin
   }
   if (pagePath === "/") {
     return sectionType === "dreamshoot_visual_proof" ||
+      sectionType === "brand_logo_strip" ||
       sectionType === "dreamshoot_featured_pack" ||
       sectionType === "dreamshoot_package_catalog" ||
       sectionType === "dreamshoot_generation_showcase" ||
