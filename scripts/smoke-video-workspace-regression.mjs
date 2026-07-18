@@ -66,8 +66,14 @@ assert(videoWorkspace.includes("Describe the video you want, or select frame ima
 assert(videoWorkspace.includes("isTextToVideo ? vt(spanish, \"Text to video\""), "video workspace should show text-to-video mode in the composer");
 assert(!videoWorkspace.includes("!selectedFrameIds.length || hasPendingFrameUploads"), "video generation button should not require selected frames when a prompt is present");
 assert(videoWorkspace.includes("textToVideoConfirmArmed"), "text-to-video requests without selected frames should require an explicit confirmation click");
+assert(videoWorkspace.includes("textToVideoConfirmOpen"), "no-frame text-to-video confirmation should open a visible dialog");
 assert(videoWorkspace.includes("No frame images are selected. This will run as text-to-video"), "text-to-video confirmation should explain that no frames are selected");
 assert(videoWorkspace.includes("Generate text-to-video"), "the confirm-state button should identify text-to-video generation");
+assert(videoWorkspace.includes("No frame images selected"), "the no-frame warning should have an obvious dialog title");
+assert(videoWorkspace.includes("Select frame images"), "the no-frame dialog should offer a frame-selection action");
+assert(videoWorkspace.includes("Continue text-to-video"), "the no-frame dialog should require an explicit text-to-video continuation");
+assert(videoWorkspace.includes("role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"text-to-video-confirm-title\""), "the no-frame warning should render as an accessible modal dialog");
+assert(videoWorkspace.includes("onOpenFrameManager()"), "the no-frame dialog should be able to send customers back to the frame picker");
 assert(videoWorkspace.includes("video_frame_selection_required"), "video workspace should explain backend image-reference prompt guard failures");
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
@@ -133,7 +139,10 @@ assert(customerRuntimeRoute.includes("releaseStaleActiveGenerationJobsRelational
 assert(customerRuntimeRoute.includes("customer_runtime_stale_job_release_failed"), "stale job release failures should be logged without breaking workspace refresh");
 
 const nextConfig = read("next.config.mjs");
-assert(nextConfig.includes('/api/:path((?!local-assets(?:/|$)).*)'), "local asset reads should be excluded from the generic no-store API headers");
+assert(
+  nextConfig.split("\n").some((line) => line.includes('source: "/api/:path((?!') && line.includes("local-assets(?:/|$)")),
+  "local asset reads should be excluded from the generic no-store API headers"
+);
 assert(!nextConfig.includes('{ key: "Cache-Control", value: "private, max-age=60" }'), "local asset cache headers should not be hard-coded in next.config");
 assert(!/source:\s*"\/api\/local-assets\/:path\*"[\s\S]{0,240}Cache-Control/.test(nextConfig), "local asset route should control cache headers per response");
 
