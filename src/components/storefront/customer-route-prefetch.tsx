@@ -58,6 +58,7 @@ function shouldWarmFetch(path: string) {
 
 function warmDelayForPath(path: string, index: number) {
   const pathname = normalizedPublicPath(path);
+  if (pathname === "/") return 40;
   if (pathname === "/tools" || pathname.startsWith("/tools/")) return 80;
   if (pathname === "/collections" || pathname.startsWith("/collections/")) return 180;
   if (pathname === "/login") return 260;

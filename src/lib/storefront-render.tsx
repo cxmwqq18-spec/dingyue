@@ -2306,6 +2306,168 @@ export async function renderStorefrontSectionNode({
   );
 }
 
+export async function renderStorefrontSectionPayloads({
+  siteSlug,
+  slug,
+  sectionIds,
+  query = {},
+  routeMode = "path"
+}: {
+  siteSlug: string;
+  slug: string;
+  sectionIds: string[];
+  query?: Record<string, string | string[] | undefined>;
+  routeMode?: "host" | "path";
+}): Promise<StorefrontSectionPayload[]> {
+  const requestedSectionIds = Array.from(new Set(sectionIds.map((sectionId) => sectionId.trim()).filter(Boolean)));
+  if (!requestedSectionIds.length) return [];
+  const publicSlug = publicSiteSlug(siteSlug);
+  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
+  const state = routeMode === "path"
+    ? await readPathModePublicRuntimeState(publicSlug, slug)
+    : (await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, slug).catch(() => undefined)) ?? await readStorefrontPlatformState();
+  if (!state) return [];
+  const currentSite = state.sites.find((item) =>
+    item.slug === siteSlug ||
+    publicSiteSlug(item.slug) === publicSlug ||
+    canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
+  );
+  if (!currentSite) return [];
+  const sectionState = state;
+  const sectionSite = currentSite;
+
+  const collectionCategory = typeof query.category === "string" ? query.category : "";
+  const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
+  const renderData = getSiteRenderData(state, currentSite.id);
+  currentSite.mediaAssets = renderData.mediaAssets;
+  const toolDetailSlug = slug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
+  const resolvedToolDetail = toolDetailSlug
+    ? resolveToolPageForSite(state, currentSite, toolDetailSlug, renderData.siteAiApps, renderData.creativePacks)
+    : undefined;
+  const directPage = resolvedToolDetail?.matched
+    ? resolvedToolDetail.page
+    : findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
+  if (!directPage) return [];
+  if (isFocusedCollectionPage) {
+    currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
+  }
+
+  const usesDreamShootToolsDirectory =
+    slug === "/tools" &&
+    (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+  const pageJson: ThemePageJson = slug === "/account"
+    ? withAccountDashboardPage(directPage.publishedJson)
+    : toolDetailSlug && resolvedToolDetail?.matched
+    ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
+    : usesDreamShootToolsDirectory
+    ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
+    : isFocusedCollectionPage
+    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
+    : slug === "/collections"
+    ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
+    : directPage.publishedJson;
+
+  const settings = currentSite.themeSettings.publishedJson;
+  const runtimeByMode = new Map<"empty" | "full" | "light", Promise<ThemeRuntimeData>>();
+  let sectionSessionId: string | undefined;
+  async function runtimeForSection(singleSectionPageJson: ThemePageJson, section: SectionInstance): Promise<ThemeRuntimeData | undefined> {
+    if (toolDetailSlug) {
+      runtimeByMode.set("empty", runtimeByMode.get("empty") ?? Promise.resolve(runtimeWithEmptyCollections()));
+      return runtimeByMode.get("empty");
+    }
+    const needsCustomerRuntime = customerRuntimeSectionTypes.has(section.type) || slug === "/account" || slug.startsWith("/app/");
+    if (!needsCustomerRuntime) return undefined;
+    sectionSessionId ??= await readCustomerSessionId(sectionSite.id);
+    if (pageNeedsFullCustomerRuntime(singleSectionPageJson, slug)) {
+      runtimeByMode.set("full", runtimeByMode.get("full") ?? getFullCustomerRuntime(sectionState, sectionSite.id, sectionSessionId));
+      return runtimeByMode.get("full");
+    }
+    runtimeByMode.set("light", runtimeByMode.get("light") ?? getLightCustomerRuntime(sectionState, sectionSite.id, sectionSessionId));
+    return runtimeByMode.get("light");
+  }
+
+  const payloads: StorefrontSectionPayload[] = [];
+  for (const sectionId of requestedSectionIds) {
+    const section = (pageJson.sections as Record<string, SectionInstance>)[sectionId];
+    if (!section || !pageJson.sectionsOrder.includes(sectionId)) continue;
+    const singleSectionPageJson: ThemePageJson = {
+      ...pageJson,
+      sectionsOrder: [sectionId],
+      sections: { [sectionId]: section }
+    };
+    let pageRenderData = withPageMediaAssets(
+      currentSite,
+      singleSectionPageJson,
+      settings,
+      trimRenderDataForSection(
+        toolDetailSlug
+          ? trimToolDetailRenderData(renderData)
+          : renderData,
+        pageJson,
+        slug,
+        sectionId
+      )
+    );
+    if (shouldCompletePublicPacks && (slug === "/" || (slug === "/collections" && !isFocusedCollectionPage)) && pageRenderData.creativePacks.length > 0) {
+      const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
+      pageRenderData = {
+        ...pageRenderData,
+        creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
+      };
+    }
+    if (section.type === "dreamshoot_generation_showcase" && pageRenderData.videoThemes.length) {
+      pageRenderData = {
+        ...pageRenderData,
+        videoThemes: trimVideoThemesForStorefront({ ...emptySiteRenderData(), videoThemes: pageRenderData.videoThemes }, 8, section)
+      };
+    }
+    if (section.type === "dreamshoot_generation_showcase" && !pageRenderData.videoThemes.length) {
+      pageRenderData = {
+        ...pageRenderData,
+        videoThemes: trimVideoThemesForStorefront(
+          { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite.id, 32) },
+          8,
+          section
+        )
+      };
+    }
+    pageRenderData = withPageMediaAssets(currentSite, singleSectionPageJson, settings, pageRenderData);
+    currentSite.mediaAssets = pageRenderData.mediaAssets;
+
+    const runtime = await runtimeForSection(singleSectionPageJson, section);
+    const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, slug) as Site & { __storefrontBasePath?: string };
+    routedSite.__storefrontBasePath = routeMode === "host" ? "" : `/site/${publicSiteSlug(currentSite.slug)}`;
+    const renderContext = {
+      pagePath: slug,
+      query,
+      page: pageJson,
+      pages: pageNeedsSearchEntries(pageJson) ? searchPageEntriesForSite(routedSite) : []
+    };
+
+    payloads.push({
+      clientSite: routedSite as RoutedSite,
+      component: "ThemeSectionFrame",
+      id: sectionId,
+      mode: "published",
+      pagePath: slug,
+      renderData: {
+        creativePackCategories: pageRenderData.creativePackCategories,
+        creativePacks: pageRenderData.creativePacks,
+        products: pageRenderData.products,
+        siteAiApps: pageRenderData.siteAiApps,
+        toolMenuItems: pageRenderData.toolMenuItems,
+        videoThemes: pageRenderData.videoThemes
+      },
+      renderContext,
+      routeMode,
+      runtime,
+      section,
+      site: routedSite as RoutedSite
+    });
+  }
+  return payloads;
+}
+
 export async function renderStorefrontSectionPayload({
   siteSlug,
   slug,

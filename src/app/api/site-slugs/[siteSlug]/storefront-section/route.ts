@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { renderStorefrontSectionPayload } from "@/lib/storefront-render";
+import { renderStorefrontSectionPayload, renderStorefrontSectionPayloads } from "@/lib/storefront-render";
 
 export const dynamic = "force-dynamic";
 
@@ -36,15 +36,23 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
   const slug = pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
   const query = queryRecord(searchParams);
-  const payloads = (await Promise.all(sectionIds.map((sectionId) =>
-    renderStorefrontSectionPayload({
-      siteSlug,
-      slug,
-      sectionId,
-      query,
-      routeMode
-    })
-  ))).filter((payload): payload is NonNullable<typeof payload> => Boolean(payload));
+  const payloads = sectionIds.length > 1
+    ? await renderStorefrontSectionPayloads({
+        siteSlug,
+        slug,
+        sectionIds,
+        query,
+        routeMode
+      })
+    : (await Promise.all(sectionIds.map((sectionId) =>
+        renderStorefrontSectionPayload({
+          siteSlug,
+          slug,
+          sectionId,
+          query,
+          routeMode
+        })
+      ))).filter((payload): payload is NonNullable<typeof payload> => Boolean(payload));
 
   if (sectionIds.length > 1) {
     if (!payloads.length) {
