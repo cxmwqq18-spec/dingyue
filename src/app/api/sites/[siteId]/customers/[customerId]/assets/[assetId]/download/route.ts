@@ -32,6 +32,7 @@ export async function GET(
   const { siteId, customerId, assetId } = await params;
   const url = new URL(request.url);
   const isWorkerDownload = url.searchParams.get("worker") === "1";
+  const isInlinePreview = url.searchParams.get("preview") === "1";
   const expiresAt = url.searchParams.get("expiresAt") ?? "";
   const signature = url.searchParams.get("signature") ?? "";
   const workerSignatureValid = Boolean(
@@ -46,7 +47,7 @@ export async function GET(
   }
   const token = url.searchParams.get("token");
   try {
-    if (!token && !workerSignatureValid) {
+    if (!token && !workerSignatureValid && !isInlinePreview) {
       return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
     }
     const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
@@ -56,7 +57,8 @@ export async function GET(
     return new Response(new Uint8Array(result.bytes), {
       headers: {
         "Content-Type": mimeType,
-        "Content-Disposition": `attachment; filename="${result.asset.id}.${extension}"`
+        "Content-Disposition": `${isInlinePreview ? "inline" : "attachment"}; filename="${result.asset.id}.${extension}"`,
+        ...(isInlinePreview ? { "Cache-Control": "private, max-age=600" } : {})
       }
     });
   } catch (error) {

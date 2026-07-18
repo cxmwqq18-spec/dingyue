@@ -1096,6 +1096,10 @@ export function CustomerWorkspaceShell({
   }, [galleryAssets]);
   const workspaceSlotPreviewUrl = (storageKey: string) =>
     outputPreviewUrlByStorageKey.get(normalizedWorkspaceStorageKey(storageKey)) ?? workspaceStoragePreviewUrl(storageKey);
+  const sourceSamplePreviewUrl = (asset: Pick<ThemeRuntimeAsset, "id" | "previewUrl"> & { localStatus?: LocalUploadStatus }) =>
+    asset.id.startsWith("local:") || asset.localStatus === "uploading"
+      ? asset.previewUrl
+      : `/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}/download?preview=1`;
   const markVideoPreviewLoaded = (key: string) => {
     setLoadedVideoPreviewKeys((current) => {
       if (current.has(key)) return current;
@@ -2442,7 +2446,7 @@ export function CustomerWorkspaceShell({
                                           title={selected ? t(spanishXby, "Selected for this request", "Seleccionada para esta solicitud") : t(spanishXby, "Select this sample", "Seleccionar esta muestra")}
                                           type="button"
                                         >
-                                          <img alt={uploadedSampleLabel(asset, group.id)} className={`aspect-square w-full object-cover transition group-hover/sample:scale-[1.03] ${selected ? "brightness-105" : "opacity-72"}`} src={asset.previewUrl} />
+                                          <img alt={uploadedSampleLabel(asset, group.id)} className={`aspect-square w-full object-cover transition group-hover/sample:scale-[1.03] ${selected ? "brightness-105" : "opacity-72"}`} src={sourceSamplePreviewUrl(asset)} />
                                           <span className={`absolute left-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full border text-white shadow-[0_8px_22px_-14px_rgba(0,0,0,0.8)] ${
                                             selected ? "border-[#31d4ff] bg-[#31d4ff] text-[#051016]" : "border-white/45 bg-black/56"
                                           }`}>
@@ -3281,7 +3285,7 @@ export function CustomerWorkspaceShell({
               <X className="h-4 w-4" strokeWidth={1.8} />
             </button>
             <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
-              <img alt={uploadedSampleLabel(previewSample)} className="max-h-[82vh] w-full object-contain" src={previewSample.previewUrl} />
+              <img alt={uploadedSampleLabel(previewSample)} className="max-h-[82vh] w-full object-contain" src={sourceSamplePreviewUrl(previewSample)} />
             </div>
             <aside className="grid content-between gap-4 p-2 pr-10 md:pr-2">
               <div>
