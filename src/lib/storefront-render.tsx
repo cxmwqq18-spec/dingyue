@@ -1192,6 +1192,54 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
   };
 }
 
+function withDreamShootCollectionsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
+  const page = withLightweightCollectionIntroPage(pageJson, site);
+  const hasPackageTaxonomy = page.sectionsOrder.some((sectionId) => {
+    const type = page.sections[sectionId]?.type;
+    return type === "dreamshoot_package_taxonomy" || type === "aidreamcapes_package_taxonomy";
+  });
+  if (hasPackageTaxonomy) return page;
+
+  const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = isSpanishXbyStorefront(site);
+  const taxonomySectionId = safeSectionId(page, "package_taxonomy_1");
+  const insertAfterIntro = page.sectionsOrder.indexOf("collections_intro_1");
+  const sectionsOrder = [...page.sectionsOrder];
+  sectionsOrder.splice(insertAfterIntro >= 0 ? insertAfterIntro + 1 : Math.min(1, sectionsOrder.length), 0, taxonomySectionId);
+
+  return {
+    ...page,
+    sectionsOrder,
+    sections: {
+      ...page.sections,
+      [taxonomySectionId]: {
+        type: "dreamshoot_package_taxonomy",
+        settings: {
+          anchor: "package-taxonomy",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de paquetes de viaje" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Travel package library" : "Photo package library",
+          title: isSpanishXby
+            ? isAidreamcapes
+              ? "Paquetes de retratos de viaje por ruta, escena y recuerdo."
+              : "Paquetes de fotos con IA por estilo, uso y entrega."
+            : isAidreamcapes
+              ? "AI travel portrait packages by route, scene, and keepsake goal."
+              : "AI photo packages by style, use case, and delivery goal.",
+          subtitle: isSpanishXby
+            ? isAidreamcapes
+              ? "Explora rutas, luz costera, paseos urbanos, escenas al aire libre y recuerdos privados antes de gastar creditos."
+              : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
+            : isAidreamcapes
+              ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
+              : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits.",
+          layout: "editorial",
+          headingLevel: "h2"
+        },
+        blocks: []
+      }
+    }
+  };
+}
+
 export function getSiteBySlugFromState(state: PlatformState, siteSlug: string): Site | undefined {
   const canonicalSlug = canonicalSiteSlug(siteSlug);
   return state.sites.find((item) => item.slug === canonicalSlug);
@@ -2154,7 +2202,7 @@ export async function renderStorefrontPage({
     : isFocusedCollectionPage
     ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
     : slug === "/collections"
-    ? withLightweightCollectionIntroPage(page.publishedJson, currentSite)
+    ? withDreamShootCollectionsDirectoryPage(page.publishedJson, currentSite)
     : page.publishedJson;
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : renderData;
   let pageRenderData = withPageMediaAssets(
@@ -2312,7 +2360,7 @@ export async function renderStorefrontSectionPayload({
     : isFocusedCollectionPage
     ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
     : slug === "/collections"
-    ? withLightweightCollectionIntroPage(directPage.publishedJson, currentSite)
+    ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
     : directPage.publishedJson;
   const section = (pageJson.sections as Record<string, SectionInstance>)[sectionId];
   if (!section || !pageJson.sectionsOrder.includes(sectionId)) return undefined;

@@ -1,7 +1,7 @@
 "use client";
 
 import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, Film, Monitor, Send, Sparkles } from "lucide-react";
+import { AlertTriangle, Check, ChevronDown, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme } from "@/lib/types";
 import {
@@ -88,6 +88,7 @@ function isVideoResolution(value: string | undefined): value is VideoResolution 
 export function CustomerVideoWorkspace({
   customer,
   onJobCreated,
+  onOpenFrameManager,
   onRetryDraftApplied,
   readyFrameIds,
   retryDraft,
@@ -118,6 +119,7 @@ export function CustomerVideoWorkspace({
   const [promptNote, setPromptNote] = useState("");
   const [message, setMessage] = useState("");
   const [textToVideoConfirmArmed, setTextToVideoConfirmArmed] = useState(false);
+  const [textToVideoConfirmOpen, setTextToVideoConfirmOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const appliedRetryDraftKeyRef = useRef<string | null>(null);
   const retryDurationThemeIdRef = useRef<string | null>(null);
@@ -167,8 +169,8 @@ export function CustomerVideoWorkspace({
   const needsTextToVideoConfirmation = isTextToVideo && trimmedPromptNote.length > 0;
   const textToVideoConfirmationMessage = vt(
     spanish,
-    "No frame images are selected. This will run as text-to-video and follow only your written prompt. Select frames on the left for image-to-video, or click Generate text-to-video to continue.",
-    "No hay fotogramas seleccionados. Esto se ejecutara como texto a video y seguira solo tu prompt escrito. Selecciona fotogramas a la izquierda para imagen a video, o haz clic en Generar texto a video para continuar."
+    "No frame images are selected. This will run as text-to-video and follow only your written prompt. Select frame images on the left for image-to-video, or continue only if you want a prompt-only result.",
+    "No hay fotogramas seleccionados. Esto se ejecutara como texto a video y seguira solo tu prompt escrito. Selecciona fotogramas a la izquierda para imagen a video, o continua solo si quieres un resultado solo con prompt."
   );
   const generateButtonLabel = pending
     ? vt(spanish, "Starting", "Iniciando")
@@ -214,6 +216,7 @@ export function CustomerVideoWorkspace({
   useEffect(() => {
     if (needsTextToVideoConfirmation) return;
     setTextToVideoConfirmArmed(false);
+    setTextToVideoConfirmOpen(false);
     setMessage((current) => current === textToVideoConfirmationMessage ? "" : current);
   }, [needsTextToVideoConfirmation, textToVideoConfirmationMessage]);
 
@@ -223,7 +226,14 @@ export function CustomerVideoWorkspace({
     }
   }, [effectiveDurationSeconds, selectedDurationSeconds]);
 
-  async function generateVideo() {
+  function chooseFrameImagesForVideo() {
+    setTextToVideoConfirmOpen(false);
+    setTextToVideoConfirmArmed(false);
+    setMessage(vt(spanish, "Select frame images on the left, then generate image-to-video.", "Selecciona fotogramas a la izquierda y luego genera imagen a video."));
+    onOpenFrameManager();
+  }
+
+  async function generateVideo(options: { confirmedTextToVideo?: boolean } = {}) {
     if (pending) return;
     if (subscriptionStatus === "loading") {
       setMessage(vt(spanish, "We are still checking your subscription. Try again in a moment.", "Aun estamos revisando tu suscripcion. Intentalo en un momento."));
@@ -249,11 +259,13 @@ export function CustomerVideoWorkspace({
       setMessage(vt(spanish, `This duration needs ${selectedCreditCost} credits, but ${customer.balance.available} are available.`, `Esta duracion necesita ${selectedCreditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
       return;
     }
-    if (needsTextToVideoConfirmation && !textToVideoConfirmArmed) {
+    if (needsTextToVideoConfirmation && !options.confirmedTextToVideo) {
       setTextToVideoConfirmArmed(true);
+      setTextToVideoConfirmOpen(true);
       setMessage(textToVideoConfirmationMessage);
       return;
     }
+    setTextToVideoConfirmOpen(false);
     setPending(true);
     setMessage(vt(spanish, "Creating your video request and reserving credits...", "Creando tu solicitud de video y reservando creditos..."));
     const requestBody = {
@@ -354,6 +366,7 @@ export function CustomerVideoWorkspace({
                 onChange={(event) => {
                   setPromptNote(event.target.value);
                   setTextToVideoConfirmArmed(false);
+                  setTextToVideoConfirmOpen(false);
                   setMessage((current) => current === textToVideoConfirmationMessage ? "" : current);
                 }}
                 placeholder={vt(
@@ -495,6 +508,63 @@ export function CustomerVideoWorkspace({
           <p className="mt-3 min-h-5 text-xs font-semibold leading-5 text-red-400" role="status">{message}</p>
         </div>
       </div>
+      {textToVideoConfirmOpen ? (
+        <div className="fixed inset-0 z-[120] grid place-items-center bg-black/78 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="text-to-video-confirm-title">
+          <div className="w-full max-w-lg overflow-hidden rounded-[22px] border border-white/14 bg-[#111720] text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
+            <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
+              <div className="flex items-start gap-3">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] border border-amber-300/30 bg-amber-300/12 text-amber-200">
+                  <AlertTriangle className="h-5 w-5" strokeWidth={1.9} />
+                </span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-200/80">{vt(spanish, "Frame check", "Revision de fotogramas")}</p>
+                  <h3 className="mt-1 text-xl font-semibold" id="text-to-video-confirm-title">{vt(spanish, "No frame images selected", "No hay fotogramas seleccionados")}</h3>
+                </div>
+              </div>
+              <button
+                aria-label={vt(spanish, "Close text-to-video warning", "Cerrar aviso de texto a video")}
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/12 text-white/62 transition hover:bg-white/[0.08] hover:text-white"
+                onClick={() => {
+                  setTextToVideoConfirmArmed(false);
+                  setTextToVideoConfirmOpen(false);
+                }}
+                type="button"
+              >
+                <X className="h-4 w-4" strokeWidth={1.9} />
+              </button>
+            </div>
+            <div className="p-5">
+              <p className="text-sm leading-6 text-white/72">{textToVideoConfirmationMessage}</p>
+              <p className="mt-3 rounded-[14px] border border-amber-300/18 bg-amber-300/10 p-3 text-sm font-semibold leading-6 text-amber-100">
+                {vt(spanish, "Uploaded images on the left will not guide this clip unless you select them first.", "Las imagenes subidas a la izquierda no guiaran este clip a menos que las selecciones primero.")}
+              </p>
+              <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                <button
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/14 px-5 text-sm font-semibold text-white/78 transition hover:bg-white/[0.08] hover:text-white"
+                  onClick={chooseFrameImagesForVideo}
+                  type="button"
+                >
+                  <ImagePlus className="h-4 w-4" strokeWidth={1.9} />
+                  {vt(spanish, "Select frame images", "Seleccionar fotogramas")}
+                </button>
+                <button
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45"
+                  disabled={pending}
+                  onClick={() => {
+                    setTextToVideoConfirmArmed(true);
+                    setTextToVideoConfirmOpen(false);
+                    void generateVideo({ confirmedTextToVideo: true });
+                  }}
+                  type="button"
+                >
+                  <Send className="h-4 w-4" strokeWidth={1.8} />
+                  {vt(spanish, "Continue text-to-video", "Continuar texto a video")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

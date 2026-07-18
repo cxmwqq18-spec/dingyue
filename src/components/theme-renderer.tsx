@@ -235,9 +235,11 @@ export function ThemeRenderer({
       <main data-theme-sections-root="">
         {entries.map(([id, section], index) => {
           const sectionType = canonicalSectionType(section.type);
+          const shouldServerRenderPublicSeo = shouldServerRenderPublicSeoSection(normalizedPath, sectionType);
           const shouldLazyRender = mode === "published" &&
             index > 0 &&
             sectionType !== "policy_content" &&
+            !shouldServerRenderPublicSeo &&
             (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
           return shouldLazyRender ? (
             <LazyStorefrontSection
@@ -603,6 +605,27 @@ function shouldServerRenderFocusedCollectionSection(sectionType: string): boolea
     sectionType === "dreamshoot_theme_cta" ||
     sectionType === "dreamshoot_theme_faq" ||
     sectionType === "policy_content";
+}
+
+function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: string): boolean {
+  if (pagePath === "/collections") {
+    return sectionType === "rich_text" ||
+      sectionType === "dreamshoot_package_taxonomy" ||
+      sectionType === "dreamshoot_package_catalog" ||
+      sectionType === "photo_package_wall" ||
+      sectionType === "collection_list_plus";
+  }
+  if (pagePath === "/") {
+    return sectionType === "dreamshoot_visual_proof" ||
+      sectionType === "dreamshoot_featured_pack" ||
+      sectionType === "dreamshoot_package_catalog" ||
+      sectionType === "dreamshoot_generation_showcase" ||
+      sectionType === "dreamshoot_flow_bridge" ||
+      sectionType === "dreamshoot_package_taxonomy" ||
+      sectionType === "photo_package_wall" ||
+      sectionType === "feature_grid";
+  }
+  return false;
 }
 
 function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: string } | undefined, sectionId: string) {
