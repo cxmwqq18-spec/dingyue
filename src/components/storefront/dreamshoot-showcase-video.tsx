@@ -33,7 +33,7 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
     let cancelled = false;
     let revealTimer: number | undefined;
     const playWhenAllowed = () => {
-      if (cancelled) return;
+      if (cancelled || !shouldLoadRef.current) return;
       void video.play().catch(() => {
         // Muted autoplay is allowed in modern browsers, but failures are non-fatal.
       });
@@ -53,14 +53,16 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
     };
     const handleCanPlay = () => playWhenAllowed();
 
+    video.addEventListener("loadedmetadata", handleCanPlay);
     video.addEventListener("loadeddata", handleCanPlay);
     video.addEventListener("canplay", handleCanPlay);
 
+    const observeTarget = video.closest(".dreamshoot-showcase-rail") ?? video;
     const observer = typeof IntersectionObserver === "undefined"
       ? undefined
       : new IntersectionObserver(
           (entries) => {
-            const visible = entries.some((entry) => entry.isIntersecting);
+            const visible = entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0);
             if (visible) {
               revealAndPlay();
             } else {
@@ -68,22 +70,50 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
                 window.clearTimeout(revealTimer);
                 revealTimer = undefined;
               }
-              video.pause();
+              if (video.readyState >= 2) video.pause();
             }
           },
-          { rootMargin: "0px" }
+          { rootMargin: "360px 0px" }
         );
-    observer?.observe(video);
+    observer?.observe(observeTarget);
     if (!observer) revealAndPlay();
 
     return () => {
       cancelled = true;
       if (revealTimer !== undefined) window.clearTimeout(revealTimer);
       observer?.disconnect();
+      video.removeEventListener("loadedmetadata", handleCanPlay);
       video.removeEventListener("loadeddata", handleCanPlay);
       video.removeEventListener("canplay", handleCanPlay);
     };
   }, [src]);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+
+    let cancelled = false;
+    const playWhenReady = () => {
+      if (cancelled) return;
+      void video.play().catch(() => {
+        // A later media event or visibility pass will retry muted playback.
+      });
+    };
+    const frame = window.requestAnimationFrame(playWhenReady);
+    const retryTimer = window.setTimeout(playWhenReady, 350);
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(retryTimer);
+    };
+  }, [shouldLoad, src]);
 
   return (
     <video
@@ -95,7 +125,7 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
       muted
       playsInline
       poster={poster}
-      preload="metadata"
+      preload={shouldLoad ? "auto" : "none"}
       src={shouldLoad ? src : undefined}
       title={label}
     />

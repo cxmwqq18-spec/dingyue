@@ -16,7 +16,7 @@
 ### AIdreamcapes
 
 - [ ] `title` 正确：
-  `AIdreamcapes – the most advanced AI photo generator  maker`
+  `AIdreamcapes – the most advanced AI photo generator maker`
 - [ ] `description` 正确：
   `Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.`
 - [ ] `keywords` 正确：
@@ -27,7 +27,7 @@
 - [ ] `title` 正确：
   `Professional AI Photo Generator Online - MyDreamShoots`
 - [ ] `description` 正确：
-  `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.`
+  `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
 - [ ] `keywords` 正确：
   `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot`
 

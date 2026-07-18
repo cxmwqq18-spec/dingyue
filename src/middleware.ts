@@ -7,9 +7,11 @@ const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoot
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
-const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
+const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
+const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   adventure: "road-trip-frames",
   city: "old-quarter-walks",
@@ -270,6 +272,19 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
   return shouldReorderStorefrontHead(request) || isSpanishXbyRequest(request);
 }
 
+function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
+  const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname));
+}
+
+function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Headers): string {
+  if (isPrivateStorefrontHtmlRequest(request)) return PRIVATE_STOREFRONT_CACHE_CONTROL;
+  const upstreamCache = upstreamHeaders.get("cache-control") ?? "";
+  if (upstreamCache && !/(?:no-store|private)/i.test(upstreamCache)) return upstreamCache;
+  return PUBLIC_STOREFRONT_CACHE_CONTROL;
+}
+
 function withStorefrontLocale(html: string, request: NextRequest): string {
   if (!isSpanishXbyRequest(request)) return html;
   const withSpanishLang = html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
@@ -474,7 +489,7 @@ export async function middleware(request: NextRequest) {
   );
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
-  headers.set("cache-control", "no-store, max-age=0");
+  headers.set("cache-control", storefrontHtmlCacheControl(request, upstreamResponse.headers));
   if (shouldReorder) headers.set("x-storefront-head-seo-reordered", "1");
   if (isSpanishXbyRequest(request)) {
     headers.set("x-storefront-locale", "es");

@@ -29,6 +29,10 @@ const nextConfig = {
       privateStorefrontCache,
       { key: "X-Robots-Tag", value: "noindex, nofollow" }
     ];
+    const publicApiHeaders = [
+      ...securityHeaders,
+      { key: "X-Robots-Tag", value: "noindex, nofollow" }
+    ];
     const publicStorefrontHeaders = [
       ...securityHeaders,
       publicStorefrontCache
@@ -43,7 +47,11 @@ const nextConfig = {
         ]
       },
       {
-        source: "/api/:path((?!local-assets(?:/|$)).*)",
+        source: "/api/site-slugs/:siteSlug/storefront-section",
+        headers: publicApiHeaders
+      },
+      {
+        source: "/api/:path((?!local-assets(?:/|$)|site-slugs/[^/]+/storefront-section(?:/|$)).*)",
         headers: noindexPrivateHeaders
       },
       {

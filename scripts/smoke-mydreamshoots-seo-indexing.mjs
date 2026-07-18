@@ -199,7 +199,8 @@ for (const { site, ownHost, forbiddenHost } of sitemapDomains) {
   );
 }
 assert(
-  siteToolPage.includes("permanentRedirect(`/site/${publicSiteSlug}${redirectPath}`)") &&
+  siteToolPage.includes("legacyToolRedirectPath(publicSiteSlug, toolSlug)") &&
+    siteToolPage.includes("permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, redirectPath, routeMode))") &&
     hostCatchAllPage.includes("permanentRedirect(redirectPath)") &&
     siteToolPage.includes('"ai-image-studio": "/tools"') &&
     hostCatchAllPage.includes('"ai-image-studio": "/tools"'),

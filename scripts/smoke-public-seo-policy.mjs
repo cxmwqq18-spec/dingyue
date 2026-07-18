@@ -101,8 +101,8 @@ assertMetadataSource("/partner-registration");
 await assertHeaders();
 assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
 assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
-assertRedirectSource(siteCatchAll, "/refund-policy", "redirect(`/site/${publicSlug}/refunds`)");
-assertRedirectSource(siteCatchAll, "/content-policy", "redirect(`/site/${publicSlug}/content`)");
+assertRedirectSource(siteCatchAll, "/refund-policy", 'redirect(routePath("/refunds"))');
+assertRedirectSource(siteCatchAll, "/content-policy", 'redirect(routePath("/content"))');
 assert.doesNotMatch(
   robotsRoute,
   /disallow|Disallow/,
