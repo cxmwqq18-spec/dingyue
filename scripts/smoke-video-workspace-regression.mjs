@@ -197,6 +197,8 @@ assert(!workspaceShell.includes("Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame
 assert(!workspaceShell.includes("const maxVideoFrameCount = MAX_VIDEO_FRAME_LIMIT"), "workspace frame manager should not expose the shared historical 30-frame cap");
 assert(!workspaceShell.includes("readyVideoFrameAssets.slice(0, 30)"), "uploaded frame list should not be hard-coded to 30");
 assert(workspaceShell.includes("const videoResourceAssets = galleryAssets.filter(isVideoAsset);"), "videos should be split from image resources");
+assert(workspaceShell.includes("loadPreview = false"), "video result cards should not autoplay-load MP4 files by default");
+assert(workspaceShell.includes("useState(loadPreview && loaded)"), "video result cards should keep MP4 previews unloaded until explicitly enabled");
 assert(workspaceShell.includes("const imageResourceAssets = galleryAssets.filter((asset) => !isVideoAsset(asset));"), "image resource tabs should exclude videos");
 assert(workspaceShell.includes('type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "packages";'), "resource tabs should not expose a separate Videos tab");
 assert(workspaceShell.includes('type VideoWorkspaceTab = "generate" | "videos";'), "the video workspace should expose only input and result tabs");

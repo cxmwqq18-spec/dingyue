@@ -490,6 +490,7 @@ function WorkspaceVideoPreviewButton({
   disabled,
   label,
   loaded,
+  loadPreview = false,
   mediaKey,
   onLoaded,
   onOpen,
@@ -501,6 +502,7 @@ function WorkspaceVideoPreviewButton({
   disabled?: boolean;
   label: string;
   loaded: boolean;
+  loadPreview?: boolean;
   mediaKey: string;
   onLoaded: (key: string) => void;
   onOpen?: () => void;
@@ -509,9 +511,10 @@ function WorkspaceVideoPreviewButton({
   spanish: boolean;
 }) {
   const rootRef = useRef<HTMLButtonElement | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(loaded);
+  const [shouldLoad, setShouldLoad] = useState(loadPreview && loaded);
 
   useEffect(() => {
+    if (!loadPreview) return;
     if (shouldLoad) return;
     const element = rootRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {
@@ -529,7 +532,7 @@ function WorkspaceVideoPreviewButton({
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [shouldLoad]);
+  }, [loadPreview, shouldLoad]);
 
   return (
     <button
@@ -543,7 +546,7 @@ function WorkspaceVideoPreviewButton({
     >
       <div className="relative aspect-video w-full overflow-hidden bg-[#080c12]">
         {!loaded ? renderLoading(compact) : null}
-        {shouldLoad ? (
+        {loadPreview && shouldLoad ? (
           <video
             aria-label={label}
             className={`absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
