@@ -489,11 +489,11 @@ function WorkspaceVideoPreviewButton({
   compact = false,
   disabled,
   label,
-  loaded,
-  loadPreview = false,
+  loadPreview = true,
   mediaKey,
-  onLoaded,
   onOpen,
+  onPosterReady,
+  posterUrl,
   renderLoading,
   src,
   spanish
@@ -501,21 +501,29 @@ function WorkspaceVideoPreviewButton({
   compact?: boolean;
   disabled?: boolean;
   label: string;
-  loaded: boolean;
   loadPreview?: boolean;
   mediaKey: string;
-  onLoaded: (key: string) => void;
   onOpen?: () => void;
+  onPosterReady: (key: string, posterUrl: string) => void;
+  posterUrl?: string | null;
   renderLoading: (compact?: boolean) => ReactNode;
   src: string;
   spanish: boolean;
 }) {
   const rootRef = useRef<HTMLButtonElement | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(loadPreview && loaded);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const posterCaptureRequestedRef = useRef(false);
+  const [shouldLoad, setShouldLoad] = useState(Boolean(posterUrl));
 
   useEffect(() => {
-    if (!loadPreview) return;
-    if (shouldLoad) return;
+    posterCaptureRequestedRef.current = false;
+    if (posterUrl) {
+      setShouldLoad(true);
+    }
+  }, [mediaKey, posterUrl, src]);
+
+  useEffect(() => {
+    if (!loadPreview || shouldLoad || posterUrl) return;
     const element = rootRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {
       setShouldLoad(true);
@@ -532,7 +540,35 @@ function WorkspaceVideoPreviewButton({
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [loadPreview, shouldLoad]);
+  }, [loadPreview, posterUrl, shouldLoad]);
+
+  const capturePosterFrame = () => {
+    if (posterUrl || posterCaptureRequestedRef.current) return;
+    const video = videoRef.current;
+    if (!video || !video.videoWidth || !video.videoHeight) return;
+    posterCaptureRequestedRef.current = true;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      posterCaptureRequestedRef.current = false;
+      return;
+    }
+    try {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    } catch {
+      posterCaptureRequestedRef.current = false;
+      return;
+    }
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        posterCaptureRequestedRef.current = false;
+        return;
+      }
+      onPosterReady(mediaKey, URL.createObjectURL(blob));
+    }, "image/jpeg", 0.86);
+  };
 
   return (
     <button
@@ -545,21 +581,23 @@ function WorkspaceVideoPreviewButton({
       type="button"
     >
       <div className="relative aspect-video w-full overflow-hidden bg-[#080c12]">
-        {!loaded ? renderLoading(compact) : null}
-        {loadPreview && shouldLoad ? (
+        {posterUrl ? (
+          <img alt={label} className="absolute inset-0 h-full w-full object-cover" decoding="async" src={posterUrl} />
+        ) : (
+          renderLoading(compact)
+        )}
+        {loadPreview && shouldLoad && !posterUrl ? (
           <video
-            aria-label={label}
-            className={`absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
-            autoPlay
-            loop
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+            controls={false}
+            data-media-key={mediaKey}
             muted
-            onCanPlay={() => onLoaded(mediaKey)}
-            onLoadedData={() => onLoaded(mediaKey)}
-            onLoadedMetadata={() => onLoaded(mediaKey)}
+            onCanPlay={capturePosterFrame}
+            onLoadedData={capturePosterFrame}
             playsInline
             preload="metadata"
             src={src}
-            title={label}
           />
         ) : null}
       </div>
@@ -785,7 +823,7 @@ export function CustomerWorkspaceShell({
   const [primaryGender, setPrimaryGender] = useState("nonbinary");
   const [partnerGender, setPartnerGender] = useState("nonbinary");
   const [selectedPreviewAssetId, setSelectedPreviewAssetId] = useState<string | null>(null);
-  const [loadedVideoPreviewKeys, setLoadedVideoPreviewKeys] = useState<Set<string>>(() => new Set());
+  const [, setVideoPosterCacheRevision] = useState(0);
   const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter(isSampleCandidateAsset));
   const [primarySampleIds, setPrimarySampleIds] = useState<string[]>([]);
   const [partnerSampleIds, setPartnerSampleIds] = useState<string[]>([]);
@@ -815,6 +853,7 @@ export function CustomerWorkspaceShell({
   const deletedVideoFrameIdsRef = useRef<Set<string>>(new Set());
   const locallyCreatedVideoFrameIdsRef = useRef<Map<string, number>>(new Map());
   const videoFrameBlobUrlsRef = useRef<Set<string>>(new Set());
+  const videoPosterUrlsRef = useRef<Map<string, string>>(new Map());
   const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
@@ -1104,13 +1143,12 @@ export function CustomerWorkspaceShell({
     asset.id.startsWith("local:") || asset.localStatus === "uploading"
       ? asset.previewUrl
       : `/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}/download?preview=1`;
-  const markVideoPreviewLoaded = (key: string) => {
-    setLoadedVideoPreviewKeys((current) => {
-      if (current.has(key)) return current;
-      const next = new Set(current);
-      next.add(key);
-      return next;
-    });
+  const storeVideoPosterUrl = (key: string, posterUrl: string) => {
+    const currentPosterUrl = videoPosterUrlsRef.current.get(key);
+    if (currentPosterUrl === posterUrl) return;
+    if (currentPosterUrl) URL.revokeObjectURL(currentPosterUrl);
+    videoPosterUrlsRef.current.set(key, posterUrl);
+    setVideoPosterCacheRevision((current) => current + 1);
   };
   function renderVideoPreviewLoading(compact = false) {
     return (
@@ -1129,16 +1167,16 @@ export function CustomerWorkspaceShell({
     disabled?: boolean;
     onOpen?: () => void;
   }) {
-    const loaded = loadedVideoPreviewKeys.has(params.mediaKey);
+    const posterUrl = videoPosterUrlsRef.current.get(params.mediaKey) ?? null;
     return (
       <WorkspaceVideoPreviewButton
         compact={params.compact}
         disabled={params.disabled}
         label={params.label}
-        loaded={loaded}
         mediaKey={params.mediaKey}
-        onLoaded={markVideoPreviewLoaded}
         onOpen={params.onOpen}
+        onPosterReady={storeVideoPosterUrl}
+        posterUrl={posterUrl}
         renderLoading={renderVideoPreviewLoading}
         spanish={spanishXby}
         src={params.src}
@@ -2254,6 +2292,8 @@ export function CustomerWorkspaceShell({
     sampleBlobUrlsRef.current.clear();
     videoFrameBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     videoFrameBlobUrlsRef.current.clear();
+    videoPosterUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    videoPosterUrlsRef.current.clear();
   }, []);
 
   useEffect(() => {
