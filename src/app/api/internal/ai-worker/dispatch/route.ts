@@ -1022,7 +1022,7 @@ async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
 function shouldCompressVideoReferenceImages() {
   const explicit = process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_COMPRESSION?.trim();
   if (explicit === "0") return false;
-  return true;
+  return shouldUseSharpForWorkerImages();
 }
 
 function shouldAllowUnresizedVideoReferenceFallback() {
@@ -1043,7 +1043,7 @@ function originalVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
 async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, targetSize?: string) {
   const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
   const target = targetSize ? parseVideoPixelSize(targetSize) : undefined;
-  if (!target && (!shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif"))) {
+  if (!target || !shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif")) {
     return originalVideoReferenceImage(bytes, sourceMimeType);
   }
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION ?? "1280") || 1280);

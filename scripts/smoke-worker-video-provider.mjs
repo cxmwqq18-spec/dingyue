@@ -106,6 +106,8 @@ const checks = [
   {
     label: "video provider compresses references and does not drop direct JSON multi-reference requests to the first frame",
     pass: files.dispatch.includes("shouldCompressVideoReferenceImages") &&
+      files.dispatch.includes("return shouldUseSharpForWorkerImages();") &&
+      files.dispatch.includes("if (!target || !shouldCompressVideoReferenceImages() || sourceMimeType.includes(\"gif\"))") &&
       files.dispatch.includes("LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION") &&
       !files.dispatch.includes("shouldRetryOpenAiVideoTaskWithFirstFrame") &&
       !files.dispatch.includes("directJsonReferences?: boolean") &&
