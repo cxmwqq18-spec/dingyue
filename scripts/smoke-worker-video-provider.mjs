@@ -16,6 +16,7 @@ const files = {
 };
 
 const directJsonPromptFunction = files.dispatch.match(/function buildDirectJsonVideoPrompt[\s\S]*?\n}\n\nfunction buildVideoSceneImagePrompt/)?.[0] ?? "";
+const orderedVideoProvidersFunction = files.dispatch.match(/function orderedVideoProviders[\s\S]*?\n}\n\nfunction orderedVideoSceneImageProviders/)?.[0] ?? "";
 
 const checks = [
   {
@@ -43,6 +44,13 @@ const checks = [
       files.dispatch.includes("body.status === \"completed\"") &&
       files.dispatch.includes("body.status === \"succeeded\"") &&
       files.dispatch.includes("/content")
+  },
+  {
+    label: "preferred video providers keep fallback providers available for transient outages",
+    pass: orderedVideoProvidersFunction.includes('selection?.mode === "fixed_provider"') &&
+      orderedVideoProvidersFunction.includes("selectedProvider") &&
+      orderedVideoProvidersFunction.includes("fallbackProviders") &&
+      !orderedVideoProvidersFunction.includes('selection?.mode === "preferred_provider" && selection.fallbackEnabled === false')
   },
   {
     label: "video worker sends SmartPickLid Grok Imagine multi-frame uploads directly without scene composition fallback",

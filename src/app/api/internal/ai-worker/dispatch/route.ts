@@ -317,7 +317,6 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
     : undefined;
 
   if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
-  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false) return selectedProvider ? [selectedProvider] : [];
 
   const preferredProviders = Array.from(new Map([
     ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
