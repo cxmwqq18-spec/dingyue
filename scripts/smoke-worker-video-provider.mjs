@@ -144,7 +144,8 @@ const checks = [
       files.dispatch.includes("duration: Number(params.videoParams.duration)") &&
       files.dispatch.includes("image: firstImageUrl") &&
       files.dispatch.includes("images: params.imageUrls") &&
-      files.dispatch.includes("input_reference: params.imageUrls") &&
+      files.dispatch.includes("input_reference: firstImageUrl") &&
+      !files.dispatch.includes("input_reference: params.imageUrls") &&
       files.dispatch.includes("aspect_ratio: params.videoParams.aspect_ratio") &&
       files.dispatch.includes("resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution)") &&
       files.dispatch.includes("openAiJsonVideoReferencePayload") &&

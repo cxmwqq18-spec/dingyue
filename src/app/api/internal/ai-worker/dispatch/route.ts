@@ -1758,7 +1758,7 @@ async function createVideoTask(params: {
               duration: Number(params.videoParams.duration),
               image: firstImageUrl,
               images: params.imageUrls,
-              input_reference: params.imageUrls
+              input_reference: firstImageUrl
             }
           : useOpenAiJsonReference
           ? {
