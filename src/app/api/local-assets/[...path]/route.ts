@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { execFile } from "child_process";
-import { mkdir, open, readFile, rename, stat, unlink } from "fs/promises";
+import { access, mkdir, open, readFile, rename, stat, unlink } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 import ffmpegPath from "ffmpeg-static";
@@ -148,9 +148,24 @@ function videoPosterPathFor(filePath: string): string {
   return `${filePath}.${fileKey}.poster.jpg`;
 }
 
+async function ffmpegExecutablePath(): Promise<string> {
+  const candidates = [
+    typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "",
+    path.join(process.cwd(), "node_modules", "ffmpeg-static", "ffmpeg")
+  ].filter(Boolean);
+  for (const candidate of candidates) {
+    try {
+      await access(candidate);
+      return candidate;
+    } catch {
+      // Try the next location. Next production builds can rewrite ffmpeg-static to a non-copied route chunk path.
+    }
+  }
+  throw new Error("ffmpeg_static_unavailable");
+}
+
 async function generateVideoPoster(sourcePath: string, posterPath: string): Promise<void> {
-  const executable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
-  if (!executable) throw new Error("ffmpeg_static_unavailable");
+  const executable = await ffmpegExecutablePath();
   const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.tmp`;
   await mkdir(path.dirname(posterPath), { recursive: true });
   try {
