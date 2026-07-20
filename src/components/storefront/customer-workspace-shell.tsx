@@ -485,6 +485,10 @@ function isVideoAsset(asset: Pick<ThemeRuntimeAsset, "mimeType">): boolean {
   return asset.mimeType.startsWith("video/");
 }
 
+function workspaceVideoPosterUrl(src: string): string {
+  return `${src}${src.includes("?") ? "&" : "?"}poster=1`;
+}
+
 function WorkspaceVideoPreviewButton({
   compact = false,
   disabled,
@@ -492,8 +496,6 @@ function WorkspaceVideoPreviewButton({
   loadPreview = true,
   mediaKey,
   onOpen,
-  onPosterReady,
-  posterUrl,
   renderLoading,
   src,
   spanish
@@ -504,26 +506,24 @@ function WorkspaceVideoPreviewButton({
   loadPreview?: boolean;
   mediaKey: string;
   onOpen?: () => void;
-  onPosterReady: (key: string, posterUrl: string) => void;
-  posterUrl?: string | null;
   renderLoading: (compact?: boolean) => ReactNode;
   src: string;
   spanish: boolean;
 }) {
   const rootRef = useRef<HTMLButtonElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const posterCaptureRequestedRef = useRef(false);
-  const [shouldLoad, setShouldLoad] = useState(Boolean(posterUrl));
+  const posterSrc = useMemo(() => workspaceVideoPosterUrl(src), [src]);
+  const [shouldLoad, setShouldLoad] = useState(!loadPreview);
+  const [posterLoaded, setPosterLoaded] = useState(false);
+  const [posterFailed, setPosterFailed] = useState(false);
 
   useEffect(() => {
-    posterCaptureRequestedRef.current = false;
-    if (posterUrl) {
-      setShouldLoad(true);
-    }
-  }, [mediaKey, posterUrl, src]);
+    setShouldLoad(!loadPreview);
+    setPosterLoaded(false);
+    setPosterFailed(false);
+  }, [loadPreview, mediaKey, src]);
 
   useEffect(() => {
-    if (!loadPreview || shouldLoad || posterUrl) return;
+    if (!loadPreview || shouldLoad) return;
     const element = rootRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {
       setShouldLoad(true);
@@ -540,51 +540,9 @@ function WorkspaceVideoPreviewButton({
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [loadPreview, posterUrl, shouldLoad]);
+  }, [loadPreview, shouldLoad]);
 
-  const capturePosterFrame = () => {
-    if (posterUrl || posterCaptureRequestedRef.current) return;
-    const video = videoRef.current;
-    if (!video || !video.videoWidth || !video.videoHeight) return;
-    posterCaptureRequestedRef.current = true;
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const context = canvas.getContext("2d");
-    if (!context) {
-      posterCaptureRequestedRef.current = false;
-      return;
-    }
-    try {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    } catch {
-      posterCaptureRequestedRef.current = false;
-      return;
-    }
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        posterCaptureRequestedRef.current = false;
-        return;
-      }
-      onPosterReady(mediaKey, URL.createObjectURL(blob));
-    }, "image/jpeg", 0.86);
-  };
-
-  const requestPosterFrame = () => {
-    if (posterUrl || posterCaptureRequestedRef.current) return;
-    const video = videoRef.current;
-    if (!video) return;
-    const targetTime = Number.isFinite(video.duration) && video.duration > 0 ? Math.min(0.05, video.duration / 2) : 0;
-    if (Math.abs(video.currentTime - targetTime) < 0.001) {
-      capturePosterFrame();
-      return;
-    }
-    try {
-      video.currentTime = targetTime;
-    } catch {
-      capturePosterFrame();
-    }
-  };
+  const showPosterImage = shouldLoad && !posterFailed;
 
   return (
     <button
@@ -597,26 +555,19 @@ function WorkspaceVideoPreviewButton({
       type="button"
     >
       <div className="relative aspect-video w-full overflow-hidden bg-[#080c12]">
-        {posterUrl ? (
-          <img alt={label} className="absolute inset-0 h-full w-full object-cover" decoding="async" src={posterUrl} />
-        ) : (
+        {!posterLoaded ? (
           renderLoading(compact)
-        )}
-        {loadPreview && shouldLoad && !posterUrl ? (
-          <video
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 h-full w-full opacity-0"
-            controls={false}
+        ) : null}
+        {showPosterImage ? (
+          <img
+            alt={label}
+            className={`absolute inset-0 h-full w-full object-cover transition duration-300 ${posterLoaded ? "opacity-100" : "opacity-0"}`}
             data-media-key={mediaKey}
-            muted
-            onLoadedMetadata={requestPosterFrame}
-            onCanPlay={capturePosterFrame}
-            onLoadedData={capturePosterFrame}
-            onSeeked={capturePosterFrame}
-            playsInline
-            preload="metadata"
-            ref={videoRef}
-            src={src}
+            decoding="async"
+            loading="lazy"
+            onError={() => setPosterFailed(true)}
+            onLoad={() => setPosterLoaded(true)}
+            src={posterSrc}
           />
         ) : null}
       </div>
@@ -844,7 +795,6 @@ export function CustomerWorkspaceShell({
   const [primaryGender, setPrimaryGender] = useState("nonbinary");
   const [partnerGender, setPartnerGender] = useState("nonbinary");
   const [selectedPreviewAssetId, setSelectedPreviewAssetId] = useState<string | null>(null);
-  const [, setVideoPosterCacheRevision] = useState(0);
   const [sampleAssets, setSampleAssets] = useState<SampleAsset[]>(() => hydratedAssets.filter(isSampleCandidateAsset));
   const [primarySampleIds, setPrimarySampleIds] = useState<string[]>([]);
   const [partnerSampleIds, setPartnerSampleIds] = useState<string[]>([]);
@@ -874,7 +824,6 @@ export function CustomerWorkspaceShell({
   const deletedVideoFrameIdsRef = useRef<Set<string>>(new Set());
   const locallyCreatedVideoFrameIdsRef = useRef<Map<string, number>>(new Map());
   const videoFrameBlobUrlsRef = useRef<Set<string>>(new Set());
-  const videoPosterUrlsRef = useRef<Map<string, string>>(new Map());
   const sampleUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingSampleTargetRef = useRef<SampleTarget>("primary");
   const sampleBlobUrlsRef = useRef<Set<string>>(new Set());
@@ -1164,13 +1113,6 @@ export function CustomerWorkspaceShell({
     asset.id.startsWith("local:") || asset.localStatus === "uploading"
       ? asset.previewUrl
       : `/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}/download?preview=1`;
-  const storeVideoPosterUrl = (key: string, posterUrl: string) => {
-    const currentPosterUrl = videoPosterUrlsRef.current.get(key);
-    if (currentPosterUrl === posterUrl) return;
-    if (currentPosterUrl) URL.revokeObjectURL(currentPosterUrl);
-    videoPosterUrlsRef.current.set(key, posterUrl);
-    setVideoPosterCacheRevision((current) => current + 1);
-  };
   function renderVideoPreviewLoading(compact = false) {
     return (
       <div className="absolute inset-0 grid place-items-center bg-[#080c12]">
@@ -1188,7 +1130,6 @@ export function CustomerWorkspaceShell({
     disabled?: boolean;
     onOpen?: () => void;
   }) {
-    const posterUrl = videoPosterUrlsRef.current.get(params.mediaKey) ?? null;
     return (
       <WorkspaceVideoPreviewButton
         compact={params.compact}
@@ -1196,8 +1137,6 @@ export function CustomerWorkspaceShell({
         label={params.label}
         mediaKey={params.mediaKey}
         onOpen={params.onOpen}
-        onPosterReady={storeVideoPosterUrl}
-        posterUrl={posterUrl}
         renderLoading={renderVideoPreviewLoading}
         spanish={spanishXby}
         src={params.src}
@@ -2313,8 +2252,6 @@ export function CustomerWorkspaceShell({
     sampleBlobUrlsRef.current.clear();
     videoFrameBlobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     videoFrameBlobUrlsRef.current.clear();
-    videoPosterUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
-    videoPosterUrlsRef.current.clear();
   }, []);
 
   useEffect(() => {

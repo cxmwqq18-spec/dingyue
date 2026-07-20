@@ -171,6 +171,7 @@ assert(videoProviderLimits.includes("MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT"), "v
 assert(videoProviderLimits.includes("Math.min(themeLimit, providerLimit)"), "effective video frame limit should not exceed provider capacity");
 
 const workspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
+const localAssetsRoute = read("src/app/api/local-assets/[...path]/route.ts");
 assert(workspaceShell.includes("useState(() => !initialRuntime)"), "workspace shell should fetch runtime immediately only when no initial runtime is available");
 assert(workspaceShell.includes("if (runtimeFetchEnabled || initialRuntime) return;"), "workspace shell should not auto-refresh over server-hydrated workspace data on first paint");
 assert(workspaceShell.includes("...(current.runtime ? { runtime: current.runtime } : {})"), "workspace runtime refresh should keep existing runtime while a new request is loading");
@@ -207,8 +208,8 @@ assert(!workspaceShell.includes("Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame
 assert(!workspaceShell.includes("const maxVideoFrameCount = MAX_VIDEO_FRAME_LIMIT"), "workspace frame manager should not expose the shared historical 30-frame cap");
 assert(!workspaceShell.includes("readyVideoFrameAssets.slice(0, 30)"), "uploaded frame list should not be hard-coded to 30");
 assert(workspaceShell.includes("const videoResourceAssets = galleryAssets.filter(isVideoAsset);"), "videos should be split from image resources");
-assert(workspaceShell.includes("loadPreview = true"), "video result cards should allow lightweight poster capture when they approach the viewport");
-assert(workspaceShell.includes("useState(Boolean(posterUrl))"), "video result cards should reuse cached posters instead of reloading MP4 previews");
+assert(workspaceShell.includes("loadPreview = true"), "video result cards should allow lightweight poster loading when they approach the viewport");
+assert(workspaceShell.includes("workspaceVideoPosterUrl") && workspaceShell.includes("poster=1"), "video result cards should use server-generated poster images instead of MP4 metadata probes");
 assert(workspaceShell.includes("initialThemes={videoThemes}"), "video composer should receive server-hydrated video presets");
 assert(workspaceShell.includes("const imageResourceAssets = galleryAssets.filter((asset) => !isVideoAsset(asset));"), "image resource tabs should exclude videos");
 assert(workspaceShell.includes('type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "packages";'), "resource tabs should not expose a separate Videos tab");
@@ -234,23 +235,21 @@ assert(workspaceShell.includes("Previous failed requests are hidden until the la
 assert(workspaceShell.includes("text-xs font-semibold leading-5 text-red-400"), "video frame sidebar operation messages should render in red for visibility");
 assert(workspaceShell.includes("group/video relative block w-full bg-black text-left"), "video resource cards should use the app preview entry instead of native thumbnail controls");
 assert(workspaceShell.indexOf("{selectedPreviewAsset ? (") > workspaceShell.indexOf("</main>"), "generated asset preview dialog should render outside panel-specific branches");
-assert(workspaceShell.includes('className="relative aspect-video w-full overflow-hidden') && workspaceShell.includes("canvas.toBlob"), "video result cards should capture a static first-frame poster");
-assert(workspaceShell.includes('className="absolute inset-0 h-full w-full object-cover" decoding="async" src={posterUrl}'), "video result cards should render the captured poster as an image");
+assert(workspaceShell.includes('className="relative aspect-video w-full overflow-hidden'), "video result cards should keep a stable aspect-ratio preview frame");
+assert(workspaceShell.includes('src={posterSrc}') && workspaceShell.includes('loading="lazy"'), "video result cards should render lazy poster images");
 assert(!workspaceShell.includes("autoPlay"), "video result cards should not autoplay in the results grid");
 assert(!workspaceShell.includes("loop"), "video result cards should not loop in the results grid");
-assert(workspaceShell.includes("videoPosterUrlsRef"), "video cards should cache generated poster image URLs across tab switches");
-assert(workspaceShell.includes("URL.revokeObjectURL(currentPosterUrl)") && workspaceShell.includes("videoPosterUrlsRef.current.forEach"), "video poster blob URLs should be revoked when replaced or when the workspace unmounts");
 assert(workspaceShell.includes("renderVideoPreviewLoading"), "video cards should keep one unified loading cover while the first frame poster is captured");
-assert(workspaceShell.includes("onLoadedData={capturePosterFrame}") && !workspaceShell.includes("onLoadedMetadata={capturePosterFrame}"), "video cards should wait for decoded frame data before capturing the poster");
-assert(workspaceShell.includes("ref={videoRef}"), "video poster capture should attach the hidden video element to the capture ref");
-assert(workspaceShell.includes("onLoadedMetadata={requestPosterFrame}"), "video poster capture should request the first frame after metadata arrives");
-assert(workspaceShell.includes("onSeeked={capturePosterFrame}"), "video poster capture should use the decoded first-frame seek to build the poster");
+assert(!workspaceShell.includes("capturePosterFrame") && !workspaceShell.includes("requestPosterFrame"), "video result cards should not extract posters in the browser");
 assert(!workspaceShell.includes("videoPosterUrlForJob"), "video cards should not use source frames as loading posters");
 assert(!workspaceShell.includes("poster={"), "video thumbnails should not show stale poster images while media loads");
 assert(workspaceShell.includes("WorkspaceVideoPreviewButton"), "video thumbnails should use a dedicated preview component");
 assert(workspaceShell.includes("IntersectionObserver"), "video thumbnails should lazy-load when they approach the viewport");
 assert(workspaceShell.includes("VIDEO_PREVIEW_INTERSECTION_MARGIN"), "video thumbnail lazy-loading should use an explicit viewport margin");
-assert(workspaceShell.includes('preload="metadata"'), "video thumbnails should avoid eager full-video preloading across the whole workspace");
+assert(!workspaceShell.includes('preload="metadata"'), "video thumbnails should not preload MP4 metadata in the results grid");
+assert(localAssetsRoute.includes("wantsVideoPoster") && localAssetsRoute.includes('searchParams.get("poster") === "1"'), "local asset route should expose authenticated video poster requests");
+assert(localAssetsRoute.includes("ffmpeg-static") && localAssetsRoute.includes("generateVideoPoster"), "local asset route should generate cached video posters server-side");
+assert(localAssetsRoute.includes("videoPosterInflight"), "local asset route should dedupe concurrent poster generation");
 assert(workspaceShell.includes("function assetPreviewIsLoading"), "workspace shell should recognize server-side preview loading status");
 assert(workspaceShell.includes('previewStatus === "loading"'), "workspace shell should treat preparing asset previews as not ready");
 assert(workspaceShell.includes("Preparing preview"), "video frame cards should show an explicit loading preview instead of a stock cover");
@@ -292,14 +291,13 @@ assert(jobCreateForm.includes("const subscriptionHardGate = subscriptionStatus =
 assert(videoWorkspace.includes("const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available"), "video workspace should allow paid video requests to start from available credits");
 assert(videoWorkspace.includes("subscriptionStatus === \"required\" && !hasCreditsForSelectedVideo"), "video workspace should only hard-gate subscription when credits cannot cover the video");
 
-const localAssetsRoute = read("src/app/api/local-assets/[...path]/route.ts");
 assert(localAssetsRoute.includes("parseByteRange"), "local asset proxy should parse browser Range requests for video playback");
 assert(localAssetsRoute.includes("status: 206"), "local asset proxy should return partial content for ranged video requests");
 assert(localAssetsRoute.includes('"Content-Range"'), "local asset proxy should send Content-Range for ranged video requests");
 assert(localAssetsRoute.includes('"Accept-Ranges": "bytes"'), "local asset proxy should advertise byte range support");
 assert(localAssetsRoute.includes("async function readAssetBytes"), "local asset proxy should centralize byte reads for full and ranged responses");
 assert(localAssetsRoute.includes('await open(asset.filePath, "r")'), "local asset proxy should read only the requested byte range from local video files");
-assert(localAssetsRoute.includes("max-age=600, immutable"), "local asset proxy should let immutable customer assets stay cached across quick refreshes");
+assert(localAssetsRoute.includes("max-age=86400, immutable"), "local asset proxy should let immutable customer assets stay cached across refreshes");
 assert(localAssetsRoute.includes("assetAccessCache"), "local asset proxy should cache short-lived asset access checks for video Range bursts");
 assert(localAssetsRoute.includes("customerSessionCookie(siteId)"), "customer asset access cache should be scoped to the customer session cookie");
 assert(localAssetsRoute.includes("siteAdminSessionCookie(siteId)"), "site admin asset access cache should be scoped to the site admin session cookie");

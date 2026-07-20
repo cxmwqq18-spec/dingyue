@@ -1,4 +1,9 @@
-import { open, readFile, stat } from "fs/promises";
+import crypto from "crypto";
+import { execFile } from "child_process";
+import { mkdir, open, readFile, rename, stat, unlink } from "fs/promises";
+import path from "path";
+import { promisify } from "util";
+import ffmpegPath from "ffmpeg-static";
 import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
 import {
@@ -10,6 +15,10 @@ import {
 } from "@/lib/customer-asset-storage";
 import { customerSessionCookie, siteAdminSessionCookie } from "@/lib/session";
 import { verifyWorkerLocalAssetDownload } from "@/lib/worker";
+
+export const runtime = "nodejs";
+
+const execFileAsync = promisify(execFile);
 
 const missingAssetPlaceholder = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-label="Loading preview">
@@ -33,8 +42,11 @@ type ResolvedAsset = {
 };
 
 const remoteAssetInflight = new Map<string, Promise<ResolvedAsset>>();
+const videoPosterInflight = new Map<string, Promise<{ filePath: string; size: number }>>();
 const assetAccessCache = new Map<string, { ok: boolean; expiresAt: number }>();
 const assetAccessCacheTtlMs = 30_000;
+const assetCacheControl = "private, max-age=86400, immutable";
+const videoPosterCacheControl = "private, max-age=86400, immutable";
 
 function cachedAssetAccess(cacheKey: string): boolean | undefined {
   const cached = assetAccessCache.get(cacheKey);
@@ -113,10 +125,85 @@ function assetHeaders(asset: ResolvedAsset, contentLength: number, extra?: Heade
     "Content-Type": asset.contentType,
     "Content-Length": String(contentLength),
     "Accept-Ranges": "bytes",
-    "Cache-Control": asset.placeholder ? "private, no-store" : "private, max-age=600, immutable",
+    "Cache-Control": asset.placeholder ? "private, no-store" : assetCacheControl,
     ...(asset.placeholder ? { "X-Asset-Placeholder": "loading" } : {}),
     ...extra
   };
+}
+
+function videoPosterHeaders(contentLength: number): HeadersInit {
+  return {
+    "Content-Type": "image/jpeg",
+    "Content-Length": String(contentLength),
+    "Cache-Control": videoPosterCacheControl
+  };
+}
+
+function wantsVideoPoster(request: Request): boolean {
+  return new URL(request.url).searchParams.get("poster") === "1";
+}
+
+function videoPosterPathFor(filePath: string): string {
+  const fileKey = crypto.createHash("sha256").update(filePath).digest("hex").slice(0, 16);
+  return `${filePath}.${fileKey}.poster.jpg`;
+}
+
+async function generateVideoPoster(sourcePath: string, posterPath: string): Promise<void> {
+  const executable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
+  if (!executable) throw new Error("ffmpeg_static_unavailable");
+  const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.tmp`;
+  await mkdir(path.dirname(posterPath), { recursive: true });
+  try {
+    await execFileAsync(
+      executable,
+      [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-ss",
+        "0.1",
+        "-i",
+        sourcePath,
+        "-frames:v",
+        "1",
+        "-vf",
+        "scale=960:-2:force_original_aspect_ratio=decrease",
+        "-q:v",
+        "4",
+        tmpPath
+      ],
+      { timeout: 20_000, maxBuffer: 1024 * 1024 }
+    );
+    await rename(tmpPath, posterPath);
+  } catch (error) {
+    await unlink(tmpPath).catch(() => {});
+    throw error;
+  }
+}
+
+async function resolveVideoPoster(asset: ResolvedAsset): Promise<{ filePath: string; size: number }> {
+  if (!asset.contentType.startsWith("video/")) throw new Error("asset_is_not_video");
+  if (!asset.filePath) throw new Error("video_asset_file_missing");
+  const sourceStat = await stat(asset.filePath);
+  const posterPath = videoPosterPathFor(asset.filePath);
+  const existingPoster = await stat(posterPath).catch(() => null);
+  if (existingPoster?.isFile() && existingPoster.size > 0 && existingPoster.mtimeMs >= sourceStat.mtimeMs) {
+    return { filePath: posterPath, size: existingPoster.size };
+  }
+  const existing = videoPosterInflight.get(posterPath);
+  if (existing) return existing;
+  const promise = (async () => {
+    await generateVideoPoster(asset.filePath!, posterPath);
+    const posterStat = await stat(posterPath);
+    return { filePath: posterPath, size: posterStat.size };
+  })();
+  videoPosterInflight.set(posterPath, promise);
+  try {
+    return await promise;
+  } finally {
+    videoPosterInflight.delete(posterPath);
+  }
 }
 
 async function readAssetBytes(asset: ResolvedAsset, range?: { start: number; end: number }) {
@@ -235,6 +322,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
     }
+    if (wantsVideoPoster(_request)) {
+      const poster = await resolveVideoPoster(asset);
+      const bytes = await readFile(poster.filePath);
+      return new Response(new Uint8Array(bytes), {
+        headers: videoPosterHeaders(poster.size)
+      });
+    }
     const range = parseByteRange(_request.headers.get("range"), asset.size);
     if (range === "unsatisfiable") {
       return new Response(null, {
@@ -272,6 +366,12 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
     if ("error" in asset) {
       const headers = asset.status === 404 ? { "Cache-Control": "private, max-age=30" } : undefined;
       return new Response(null, { status: asset.status, headers });
+    }
+    if (wantsVideoPoster(_request)) {
+      const poster = await resolveVideoPoster(asset);
+      return new Response(null, {
+        headers: videoPosterHeaders(poster.size)
+      });
     }
     return new Response(null, {
       headers: assetHeaders(asset, asset.size)
