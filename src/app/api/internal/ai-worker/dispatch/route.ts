@@ -210,6 +210,12 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
   const normalizedModel = normalizeVideoGenerationModel(model);
   const protocol = params?.protocol;
   const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
+  if (protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "")) {
+    return Array.from(new Set([
+      isGrokImagineVideoModel(normalizedModel) ? normalizedModel : "",
+      "grok-imagine-video"
+    ].filter(Boolean)));
+  }
   if (protocol === "openai-videos" && referenceAssetCount > 1) {
     return Array.from(new Set([
       isGrokImagineVideoModel(normalizedModel) && !normalizedModel.includes("1.5") ? normalizedModel : "",
@@ -1656,6 +1662,18 @@ function shouldUseOpenAiVideoJsonReference(params: {
   return true;
 }
 
+function shouldUseSmartPickLidLegacyVideoReferences(params: {
+  baseUrl: string;
+  model: string;
+  protocol: VideoProviderProtocol;
+  referenceAssetCount: number;
+}) {
+  return params.referenceAssetCount > 0 &&
+    params.protocol === "openai-videos" &&
+    isSmartPickLidBaseUrl(params.baseUrl) &&
+    isGrokImagineVideoModel(params.model);
+}
+
 function shouldPreferOpenAiJsonVideoRequest(params: {
   baseUrl: string;
   model: string;
@@ -1704,7 +1722,13 @@ async function createVideoTask(params: {
   const endpoint = params.protocol === "openai-videos"
     ? openAiVideoCreateEndpoint(params.baseUrl)
     : `${params.baseUrl}/v1/media/generate`;
-  const useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params);
+  const useSmartPickLidLegacyReferences = shouldUseSmartPickLidLegacyVideoReferences({
+    baseUrl: params.baseUrl,
+    model: params.model,
+    protocol: params.protocol,
+    referenceAssetCount: params.referenceAssets.length
+  });
+  const useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params) && !useSmartPickLidLegacyReferences;
   const providerRequestSize = openAiVideoRequestSize(params.videoParams, { smartPickLidJson: useOpenAiJsonReference });
   const providerReferenceTargetSize = openAiVideoReferenceTargetSize(params.videoParams, { smartPickLidJson: useOpenAiJsonReference });
   const openAiJsonImageUrls = useOpenAiJsonReference
@@ -1715,7 +1739,7 @@ async function createVideoTask(params: {
       })
     : [];
   const openAiJsonReferencePayload = useOpenAiJsonReference ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl) : {};
-  const openAiVideosForm = params.protocol === "openai-videos" && !useOpenAiJsonReference && params.referenceAssets.length
+  const openAiVideosForm = params.protocol === "openai-videos" && !useOpenAiJsonReference && !useSmartPickLidLegacyReferences && params.referenceAssets.length
     ? await buildVideoReferenceForm({
         referenceAssets: params.referenceAssets,
         model: params.model,
@@ -1728,14 +1752,23 @@ async function createVideoTask(params: {
     ? {
         model: params.model,
         prompt: params.prompt,
-        duration: Number(params.videoParams.duration),
-        ...(useOpenAiJsonReference
+        ...(useSmartPickLidLegacyReferences
           ? {
+              seconds: params.videoParams.duration,
+              duration: Number(params.videoParams.duration),
+              image: firstImageUrl,
+              images: params.imageUrls,
+              input_reference: params.imageUrls
+            }
+          : useOpenAiJsonReference
+          ? {
+              duration: Number(params.videoParams.duration),
               aspect_ratio: params.videoParams.aspect_ratio,
               resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution),
               ...openAiJsonReferencePayload
             }
           : {
+              duration: Number(params.videoParams.duration),
               size: providerRequestSize,
               ...(params.imageUrls.length > 1
                 ? { reference_images: params.imageUrls }
@@ -1774,7 +1807,7 @@ async function createVideoTask(params: {
       duration: params.videoParams.duration,
       size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : params.videoParams.size,
       imageCount: referenceCount,
-      imageKind: useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
+      imageKind: useSmartPickLidLegacyReferences ? "smartpicklid_url_reference" : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
       promptLength: params.prompt.length
     };
     throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
@@ -1885,10 +1918,16 @@ async function generateVideoWithProvider(params: {
   const referenceAssets = requestedReferenceAssets.slice(0, providerReferenceLimit);
 
   const timeoutMs = videoProviderTimeoutMs();
-  const imageUrls = protocol === "openai-videos"
-    ? []
-    : await videoProviderFrameUrls({ referenceAssets, timeoutMs });
-  if (protocol !== "openai-videos" && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
+  const useProviderFrameUrls = protocol !== "openai-videos" || shouldUseSmartPickLidLegacyVideoReferences({
+    baseUrl,
+    model,
+    protocol,
+    referenceAssetCount: referenceAssets.length
+  });
+  const imageUrls = useProviderFrameUrls
+    ? await videoProviderFrameUrls({ referenceAssets, timeoutMs })
+    : [];
+  if (useProviderFrameUrls && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
     throw new Error("ai_provider_video_frame_public_urls_required");
   }
   const videoParams = videoProviderParams(params.payload);
