@@ -1307,12 +1307,12 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
       : title || readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
-  const companyNameFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "BLYDEYUS INC" : isDreamShootFooter ? "MRNARUEBET LLC" : "";
+  const companyNameFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "Aidreamcapes.com" : isDreamShootFooter ? "myDreamshoots.com" : "";
   const contactAddressFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "30 N GOULD ST STE R,SHERIDAN,WY 82801" : isDreamShootFooter ? "8 THE GREEN STE B,DOVER,DE 19901" : "";
-  const contactPhoneFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "(+1)307-310-3014" : isDreamShootFooter ? "(+1)302-200-5780" : "";
+  const contactPhoneFallback = "";
   const configuredContactEmail = footer ? setting(footer, "contactEmail", "") : "";
   const contactEmailFallback = spanishXbyFooter ? spanishStorefrontSupportEmail(site, configuredContactEmail) : isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
-  const taxIdFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "41-5317529" : isDreamShootFooter ? "98-1926243" : "";
+  const taxIdFallback = "";
   const taxIdLabel = isDreamShootFooter ? "EIN / Tax ID" : "Tax ID";
   const salesEmailFallback = "";
   const companyName = spanishXbyFooter
@@ -1333,9 +1333,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const salesEmail = spanishXbyFooter || isDreamShootFooter || isAidreamcapesFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
   const contactItems = [
     companyName ? { label: spanishXbyFooter ? "Empresa" : "Company", value: companyName, href: "" } : null,
-    contactAddress ? { label: spanishXbyFooter ? "Direccion de empresa" : "Company address", value: contactAddress, href: "" } : null,
+    contactAddress ? { label: spanishXbyFooter ? "Direccion de empresa" : isDreamShootFooter || isAidreamcapesFooter ? "Address" : "Company address", value: contactAddress, href: "" } : null,
     contactPhone ? { label: spanishXbyFooter ? "Telefono" : "Phone", value: contactPhone, href: `tel:${contactPhone.replace(/[^+\d]/g, "")}` } : null,
-    contactEmail ? { label: spanishXbyFooter ? "Soporte" : "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
+    contactEmail ? { label: spanishXbyFooter ? "Soporte" : isDreamShootFooter || isAidreamcapesFooter ? "Contact Us" : "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
     taxId ? { label: taxIdLabel, value: taxId, href: "" } : null,
     salesEmail ? { label: spanishXbyFooter ? "Ventas" : "Sales", value: salesEmail, href: `mailto:${salesEmail}` } : null
   ].filter(Boolean) as Array<{ label: string; value: string; href: string }>;
@@ -1585,14 +1585,17 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
 	    if (normalizedHref === "/privacy") return "Privacy Policy";
 	    if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
+    if (normalizedHref === "/children-privacy" && (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) return "KIDS Act";
+    if (normalizedHref === "/state-privacy" && isDreamShootFooter && !spanishXbyFooter) return "DPDPA";
+    if (normalizedHref === "/state-privacy" && isAidreamcapesFooter && !spanishXbyFooter) return "CISA";
     if (normalizedHref === "/children-privacy") return "Children's Privacy";
     if (normalizedHref === "/state-privacy") return "State Privacy Rights";
     return label;
   };
   const bottomPolicyLinks = (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter
     ? [
-        { label: "Children's Privacy", href: "/children-privacy" },
-        { label: "State Privacy Rights", href: "/state-privacy" }
+        { label: "KIDS Act", href: "/children-privacy" },
+        { label: isAidreamcapesFooter ? "CISA" : "DPDPA", href: "/state-privacy" }
       ]
     : [];
   const rawCopyright = footer ? setting(footer, "copyright", "All rights reserved.") : "All rights reserved.";
@@ -12167,12 +12170,12 @@ function SectionView({
             </Link>
             {!spanishXbyPolicy ? (
               <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/children-privacy")}>
-                Children's Privacy
+                KIDS Act
               </Link>
             ) : null}
             {!spanishXbyPolicy ? (
               <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/state-privacy")}>
-                State Privacy Rights
+                {isAidreamcapesSite(site) ? "CISA" : "DPDPA"}
               </Link>
             ) : null}
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")}>

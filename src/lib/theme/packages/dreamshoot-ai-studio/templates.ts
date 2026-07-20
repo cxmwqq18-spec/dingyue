@@ -1160,14 +1160,14 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
       }, [
         block("aidream_contact_support", "rich_text_card", { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and private travel gallery delivery support." }),
         block("aidream_contact_account", "rich_text_card", { meta: "Account help", title: supportEmail, description: "For plan questions, creator use cases, billing review, credits, and route portrait delivery help." }),
-        block("aidream_contact_address", "rich_text_card", { meta: "Address", title: companyAddress, description: "Company mailing address for Aidreamcapes business correspondence." })
+        block("aidream_contact_address", "rich_text_card", { meta: "Address", title: companyAddress, description: "Address for Aidreamcapes.com business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
         title: "Contact information",
         headingLevel: "h2",
         lastUpdated: "June 28, 2026",
         contactEmail: supportEmail,
-        body: `<h3>Support</h3><p>Email <a href="mailto:${supportEmail}">${supportEmail}</a> for account access, source photo guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, business inquiries, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>${companyAddress}</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>`
+        body: `<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>${companyAddress}</p><h3>Contact Us</h3><p><a href="mailto:${supportEmail}">${supportEmail}</a></p>`
       }),
       faq_1: aidreamcapesFaqSection(),
       conversion_1: aidreamcapesConversionSection()
@@ -1529,14 +1529,14 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       }, [
         block("contact_support", "rich_text_card", { meta: "Support", title: "support@mydreamshoots.com", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
         block("contact_account", "rich_text_card", { meta: "Account help", title: "support@mydreamshoots.com", description: "For plan questions, creator use cases, billing review, credits, and private album delivery help." }),
-        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B,DOVER,DE 19901", description: "Company mailing address for MRNARUEBET LLC business correspondence." })
+        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B,DOVER,DE 19901", description: "Address for myDreamshoots.com business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
         title: "Contact information",
         headingLevel: "h2",
         lastUpdated: "June 28, 2026",
         contactEmail: "support@mydreamshoots.com",
-        body: "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private album delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+        body: "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
       }),
       faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
@@ -1685,8 +1685,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
         { label: "Cookie Policy", href: "/cookies", group: "support" },
-        { label: "Children's Privacy", href: "/children-privacy", group: "support" },
-        { label: "State Privacy Rights", href: "/state-privacy", group: "support" },
+        { label: "KIDS Act", href: "/children-privacy", group: "support" },
+        { label: "DPDPA", href: "/state-privacy", group: "support" },
         { label: "Content policy", href: "/content", group: "support" },
         { label: "FAQ", href: "/faq", group: "company" },
         { label: "About us", href: "/about-us", group: "company" },
@@ -1734,12 +1734,12 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           youtubeUrl: "https://www.youtube.com/@mydreamshoots",
           twitterUrl: "https://x.com/mydreamshoots",
           showPaymentIcons: true,
-          companyName: "MRNARUEBET LLC",
+          companyName: "myDreamshoots.com",
           contactAddress: "8 THE GREEN STE B,DOVER,DE 19901",
-          contactPhone: "(+1)302-200-5780",
+          contactPhone: "",
           contactEmail: "support@mydreamshoots.com",
-          taxIdLabel: "EIN / Tax ID",
-          taxId: "98-1926243",
+          taxIdLabel: "",
+          taxId: "",
           salesEmail: "",
           bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
           copyright: "© 2026 MyDreamShoots. All rights reserved."
@@ -1753,8 +1753,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },
-          { id: "dreamshoot_footer_children_privacy", type: "menu_link", settings: { label: "Children's Privacy", href: "/children-privacy", group: "support" } },
-          { id: "dreamshoot_footer_state_privacy", type: "menu_link", settings: { label: "State Privacy Rights", href: "/state-privacy", group: "support" } },
+          { id: "dreamshoot_footer_children_privacy", type: "menu_link", settings: { label: "KIDS Act", href: "/children-privacy", group: "support" } },
+          { id: "dreamshoot_footer_state_privacy", type: "menu_link", settings: { label: "DPDPA", href: "/state-privacy", group: "support" } },
           { id: "dreamshoot_footer_content", type: "menu_link", settings: { label: "Content policy", href: "/content", group: "support" } },
           { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },
           { id: "dreamshoot_footer_contact", type: "menu_link", settings: { label: "Contact us", href: "/contact-us", group: "company" } },

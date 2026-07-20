@@ -210,36 +210,26 @@ function storefrontCompanyProfile(site: Site): StorefrontCompanyProfile {
   const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
   if (/aidreamcapes/i.test(identity) && !isSpanishStorefrontSite(site)) {
     return {
-      legalName: "BLYDEYUS INC",
+      legalName: "Aidreamcapes.com",
       address: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
       streetAddress: "30 N GOULD ST STE R",
       addressLocality: "SHERIDAN",
       addressRegion: "WY",
-      addressRegionName: "Wyoming",
       postalCode: "82801",
       addressCountry: "US",
-      phone: "+1-307-310-3014",
-      email: "support@aidreamcapes.com",
-      taxId: "41-5317529",
-      taxIdLabel: "Tax ID",
-      entityType: "Wyoming (WY) entity"
+      email: "support@aidreamcapes.com"
     };
   }
   if (/(mydreamshoots|dreamshoot)/i.test(identity) && !isSpanishStorefrontSite(site)) {
     return {
-      legalName: "MRNARUEBET LLC",
+      legalName: "myDreamshoots.com",
       address: "8 THE GREEN STE B,DOVER,DE 19901",
       streetAddress: "8 THE GREEN STE B",
       addressLocality: "DOVER",
       addressRegion: "DE",
-      addressRegionName: "Delaware",
       postalCode: "19901",
       addressCountry: "US",
-      phone: "+1-302-200-5780",
-      email: "support@mydreamshoots.com",
-      taxId: "98-1926243",
-      taxIdLabel: "EIN / Tax ID",
-      entityType: "Delaware (DE) limited liability company"
+      email: "support@mydreamshoots.com"
     };
   }
   const footerSettings = site.themeSettings?.publishedJson?.globalSections?.footer?.settings as Record<string, unknown> | undefined;

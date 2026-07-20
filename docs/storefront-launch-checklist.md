@@ -239,27 +239,35 @@
 | --- | --- | --- | --- |
 | 儿童隐私页面 | [x] `/children-privacy` | [x] `/children-privacy` | `/policies/children-privacy`、`/children-privacy-policy`、`/childrens-privacy` 均归一到短路径。 |
 | 州隐私页面 | [x] `/state-privacy` | [x] `/state-privacy` | `/policies/state-privacy`、`/state-privacy-rights`、`/california-privacy`、`/ccpa` 均归一到短路径。 |
-| Footer 最底部链接 | [x] | [x] | 在版权行附近新增 `Children's Privacy` 与 `State Privacy Rights`，链接带 `rel="nofollow"`。 |
-| Policy 页面互链 | [x] | [x] | Policy 内容页底部提供儿童隐私和州隐私互链；儿童隐私正文也明确指向 `State Privacy Rights`，覆盖 California 与其他美国州隐私请求入口。 |
+| Footer 最底部链接 | [x] | [x] | 在版权行附近保留儿童隐私与州隐私入口，显示为 AIdreamcapes：`KIDS Act`、`CISA`；MyDreamShoots：`KIDS Act`、`DPDPA`，链接带 `rel="nofollow"`。 |
+| Policy 页面互链 | [x] | [x] | Policy 内容页底部提供 `KIDS Act` 与对应州隐私入口；儿童隐私正文也明确指向 AIdreamcapes 的 `CISA`、MyDreamShoots 的 `DPDPA`。 |
 | Policy 正文 SSR | [x] | [x] | `policy_content` 不再走懒加载；儿童隐私 / 州隐私正文可在首屏 HTML/DOM 中直接读取，便于 Google 和 AI 理解。 |
-| 结构化公司信息 | [x] | [x] | Organization JSON-LD 已写入 legalName、email、telephone、PostalAddress、taxID，并增加 Legal entity、Tax ID、U.S. state entity jurisdiction、Entity type 标识。 |
-| 实体清单 / Google-AI 理解提示 | [x] | [x] | 州隐私页和本文档均写入公司主体、州全称、州缩写、地址、电话、邮箱、税号，便于搜索引擎和 AI 系统识别运营实体。 |
+| 结构化公司信息 | [x] | [x] | Organization JSON-LD 只保留 company / address / contact email：legalName、email、PostalAddress，不再输出电话和税号。 |
+| 实体清单 / Google-AI 理解提示 | [x] | [x] | 州隐私页和本文档均只记录公司名称、地址、邮箱三项，便于搜索引擎和 AI 系统识别对外联系信息。 |
 | SECURE / GUARD 联邦法案监测 | [x] | [x] | SECURE Data Act 与 GUARD Financial Data Act 记录为拟议联邦隐私法案监测项；若后续生效，再更新为强制执行政策。 |
 | 合规来源记录 | [x] | [x] | 参考 FTC COPPA、California OAG / CPPA privacy rights、USPS 州缩写、House Financial Services Committee 2026-04-22 法案介绍；WY = Wyoming，DE = Delaware。 |
 
-公司资料记录：
+2026-07-20 页脚公司资料与隐私入口校正记录：
 
-| 站点 | 公司 | 地址 | 州名说明 | 电话 | 邮箱 | 企业税号 |
-| --- | --- | --- | --- | --- | --- | --- |
-| `www.aidreamcapes.com` | `BLYDEYUS INC` | `30 N GOULD ST STE R,SHERIDAN,WY 82801` | `WY` = `Wyoming` | `(+1)307-310-3014` | `support@aidreamcapes.com` | `41-5317529` |
-| `www.mydreamshoots.com` | `MRNARUEBET LLC` | `8 THE GREEN STE B,DOVER,DE 19901` | `DE` = `Delaware` | `(+1)302-200-5780` | `support@mydreamshoots.com` | `98-1926243` |
+| 站点 | Footer 公司名称 | Address | Contact Us | 儿童隐私入口 | 州隐私入口 |
+| --- | --- | --- | --- | --- | --- |
+| `www.aidreamcapes.com` | `Aidreamcapes.com` | `30 N GOULD ST STE R,SHERIDAN,WY 82801` | `support@aidreamcapes.com` | `KIDS Act` | `CISA` |
+| `www.mydreamshoots.com` | `myDreamshoots.com` | `8 THE GREEN STE B,DOVER,DE 19901` | `support@mydreamshoots.com` | `KIDS Act` | `DPDPA` |
+
+上线检查要求：
+
+- Footer 公司资料只显示 `Company`、`Address`、`Contact Us` 三项。
+- Footer 和 Policy 互链中 `/children-privacy` 显示 `KIDS Act`。
+- `www.mydreamshoots.com` 的 `/state-privacy` 显示 `DPDPA`。
+- `www.aidreamcapes.com` 的 `/state-privacy` 显示 `CISA`。
+- 不再在 Footer 或公司资料结构化数据中展示 `Phone`、`Tax ID`、`EIN / Tax ID`。
 
 实体清单 / Entity inventory:
 
-| Domain | Brand | Legal entity | Entity type / jurisdiction | Address | Phone | Support email | Tax identifier | Customer policy pages |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `www.aidreamcapes.com` | `Aidreamcapes` | `BLYDEYUS INC` | `Wyoming (WY) entity` | `30 N GOULD ST STE R,SHERIDAN,WY 82801` | `(+1)307-310-3014` | `support@aidreamcapes.com` | `Tax ID: 41-5317529` | `/children-privacy`, `/state-privacy` |
-| `www.mydreamshoots.com` | `MyDreamShoots` | `MRNARUEBET LLC` | `Delaware (DE) limited liability company` | `8 THE GREEN STE B,DOVER,DE 19901` | `(+1)302-200-5780` | `support@mydreamshoots.com` | `EIN / Tax ID: 98-1926243` | `/children-privacy`, `/state-privacy` |
+| Domain | Brand | Company | Address | Contact Us | Children policy label | State policy label |
+| --- | --- | --- | --- | --- | --- | --- |
+| `www.aidreamcapes.com` | `Aidreamcapes` | `Aidreamcapes.com` | `30 N GOULD ST STE R,SHERIDAN,WY 82801` | `support@aidreamcapes.com` | `KIDS Act` | `CISA` |
+| `www.mydreamshoots.com` | `MyDreamShoots` | `myDreamshoots.com` | `8 THE GREEN STE B,DOVER,DE 19901` | `support@mydreamshoots.com` | `KIDS Act` | `DPDPA` |
 
 SECURE Data Act / GUARD Financial Data Act 监测记录：
 

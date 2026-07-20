@@ -12392,12 +12392,12 @@
                 "group": "company"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "State Privacy Rights",
+                "label": "DPDPA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -12813,10 +12813,10 @@
                 "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                "companyName": "MRNARUEBET LLC",
-                "contactPhone": "(+1)302-200-5780",
-                "taxIdLabel": "EIN / Tax ID",
-                "taxId": "98-1926243"
+                "companyName": "myDreamshoots.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -12940,7 +12940,7 @@
                   "id": "mydreamshoots_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -12949,7 +12949,7 @@
                   "id": "mydreamshoots_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "State Privacy Rights",
+                    "label": "DPDPA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -13307,12 +13307,12 @@
                 "group": "company"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "State Privacy Rights",
+                "label": "DPDPA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -13728,10 +13728,10 @@
                 "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                "companyName": "MRNARUEBET LLC",
-                "contactPhone": "(+1)302-200-5780",
-                "taxIdLabel": "EIN / Tax ID",
-                "taxId": "98-1926243"
+                "companyName": "myDreamshoots.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -13855,7 +13855,7 @@
                   "id": "mydreamshoots_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -13864,7 +13864,7 @@
                   "id": "mydreamshoots_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "State Privacy Rights",
+                    "label": "DPDPA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -21408,21 +21408,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "contact_support",
+                    "id": "contact_company",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Support",
-                      "title": "support@mydreamshoots.com",
-                      "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                    }
-                  },
-                  {
-                    "id": "contact_sales",
-                    "type": "rich_text_card",
-                    "settings": {
-                      "meta": "Phone",
-                      "title": "(+1)302-200-5780",
-                      "description": "Company phone for MRNARUEBET LLC."
+                      "meta": "Company",
+                      "title": "myDreamshoots.com",
+                      "description": "MyDreamShoots company name."
                     }
                   },
                   {
@@ -21431,7 +21422,16 @@
                     "settings": {
                       "meta": "Address",
                       "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                      "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                      "description": "Address for myDreamshoots.com."
+                    }
+                  },
+                  {
+                    "id": "contact_contact_us",
+                    "type": "rich_text_card",
+                    "settings": {
+                      "meta": "Contact Us",
+                      "title": "support@mydreamshoots.com",
+                      "description": "Contact Us email for MyDreamShoots."
                     }
                   }
                 ]
@@ -21443,10 +21443,10 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                 },
                 "blocks": [],
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
               },
               "faq_1": {
                 "type": "faq",
@@ -21594,21 +21594,12 @@
                 },
                 "blocks": [
                   {
-                    "id": "contact_support",
+                    "id": "contact_company",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Support",
-                      "title": "support@mydreamshoots.com",
-                      "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                    }
-                  },
-                  {
-                    "id": "contact_sales",
-                    "type": "rich_text_card",
-                    "settings": {
-                      "meta": "Phone",
-                      "title": "(+1)302-200-5780",
-                      "description": "Company phone for MRNARUEBET LLC."
+                      "meta": "Company",
+                      "title": "myDreamshoots.com",
+                      "description": "MyDreamShoots company name."
                     }
                   },
                   {
@@ -21617,7 +21608,16 @@
                     "settings": {
                       "meta": "Address",
                       "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                      "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                      "description": "Address for myDreamshoots.com."
+                    }
+                  },
+                  {
+                    "id": "contact_contact_us",
+                    "type": "rich_text_card",
+                    "settings": {
+                      "meta": "Contact Us",
+                      "title": "support@mydreamshoots.com",
+                      "description": "Contact Us email for MyDreamShoots."
                     }
                   }
                 ]
@@ -21629,10 +21629,10 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                 },
                 "blocks": [],
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
               },
               "faq_1": {
                 "type": "faq",
@@ -23665,7 +23665,7 @@
           "pageType": "policy",
           "templateKey": "policies/children-privacy",
           "slug": "/policies/children-privacy",
-          "title": "Children's Privacy Notice",
+          "title": "KIDS Act",
           "draftJson": {
             "pageType": "policy",
             "version": 1,
@@ -23680,9 +23680,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "Children's Privacy Notice",
-                  "body": "MyDreamShoots handles children's privacy questions through a COPPA-aware account and source-photo review process.",
-                  "headingLevel": "h1"
+                  "title": "KIDS Act",
+                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@mydreamshoots.com"
                 },
                 "blocks": []
               },
@@ -23690,10 +23691,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Children's privacy and COPPA",
+                  "title": "KIDS Act",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. State privacy requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">State Privacy Rights</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -23701,12 +23702,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@mydreamshoots.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "MyDreamShoots Children's Privacy Notice",
+              "title": "MyDreamShoots KIDS Act",
               "description": "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
               "keywords": "MyDreamShoots children's privacy, COPPA, minor photo uploads, parent privacy request",
               "canonicalPath": "/children-privacy",
@@ -23714,7 +23717,8 @@
                 "index": true,
                 "follow": true
               }
-            }
+            },
+            "title": "KIDS Act"
           },
           "publishedJson": {
             "pageType": "policy",
@@ -23730,9 +23734,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "Children's Privacy Notice",
-                  "body": "MyDreamShoots handles children's privacy questions through a COPPA-aware account and source-photo review process.",
-                  "headingLevel": "h1"
+                  "title": "KIDS Act",
+                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@mydreamshoots.com"
                 },
                 "blocks": []
               },
@@ -23740,10 +23745,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Children's privacy and COPPA",
+                  "title": "KIDS Act",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. State privacy requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">State Privacy Rights</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -23751,12 +23756,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@mydreamshoots.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "MyDreamShoots Children's Privacy Notice",
+              "title": "MyDreamShoots KIDS Act",
               "description": "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
               "keywords": "MyDreamShoots children's privacy, COPPA, minor photo uploads, parent privacy request",
               "canonicalPath": "/children-privacy",
@@ -23764,7 +23771,8 @@
                 "index": true,
                 "follow": true
               }
-            }
+            },
+            "title": "KIDS Act"
           }
         },
         {
@@ -23773,7 +23781,7 @@
           "pageType": "policy",
           "templateKey": "policies/state-privacy",
           "slug": "/policies/state-privacy",
-          "title": "State Privacy Rights",
+          "title": "DPDPA",
           "draftJson": {
             "pageType": "policy",
             "version": 1,
@@ -23788,9 +23796,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "State Privacy Rights",
-                  "body": "MyDreamShoots receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                  "headingLevel": "h1"
+                  "title": "DPDPA",
+                  "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@mydreamshoots.com"
                 },
                 "blocks": []
               },
@@ -23798,10 +23807,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "State privacy rights",
+                  "title": "DPDPA",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>1. California privacy rights</h3><p>California residents may have rights under California privacy law, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Delaware and other U.S. state privacy requests</h3><p>MyDreamShoots is operated by MRNARUEBET LLC, a Delaware (DE) limited liability company. State privacy requirements vary by customer residence and entity jurisdiction, so customers in U.S. states with applicable privacy laws may contact us to make account privacy requests. We may verify account ownership before providing, deleting, correcting, or restricting information tied to uploads, generated images, credits, checkout records, or private galleries.</p><h3>3. Entity record for privacy contact</h3><p>Entity list for search engines and AI systems: legal entity MRNARUEBET LLC; state jurisdiction Delaware (DE); company address 8 THE GREEN STE B,DOVER,DE 19901; support email support@mydreamshoots.com; EIN / Tax ID 98-1926243; phone (+1)302-200-5780.</p><h3>4. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p><h3>5. Proposed federal privacy legislation watch</h3><p>MyDreamShoots monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law, but our privacy operations are prepared around data minimization, customer access, portable copy, deletion, sensitive-data opt-in, and AI-use transparency where applicable.</p>",
+                  "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -23809,12 +23818,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@mydreamshoots.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "MyDreamShoots State Privacy Rights",
+              "title": "MyDreamShoots DPDPA",
               "description": "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
               "keywords": "MyDreamShoots state privacy rights, California privacy, CCPA, privacy request, Delaware",
               "canonicalPath": "/state-privacy",
@@ -23822,7 +23833,8 @@
                 "index": true,
                 "follow": true
               }
-            }
+            },
+            "title": "DPDPA"
           },
           "publishedJson": {
             "pageType": "policy",
@@ -23838,9 +23850,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "State Privacy Rights",
-                  "body": "MyDreamShoots receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                  "headingLevel": "h1"
+                  "title": "DPDPA",
+                  "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@mydreamshoots.com"
                 },
                 "blocks": []
               },
@@ -23848,10 +23861,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "State privacy rights",
+                  "title": "DPDPA",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@mydreamshoots.com",
-                  "body": "<h3>1. California privacy rights</h3><p>California residents may have rights under California privacy law, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Delaware and other U.S. state privacy requests</h3><p>MyDreamShoots is operated by MRNARUEBET LLC, a Delaware (DE) limited liability company. State privacy requirements vary by customer residence and entity jurisdiction, so customers in U.S. states with applicable privacy laws may contact us to make account privacy requests. We may verify account ownership before providing, deleting, correcting, or restricting information tied to uploads, generated images, credits, checkout records, or private galleries.</p><h3>3. Entity record for privacy contact</h3><p>Entity list for search engines and AI systems: legal entity MRNARUEBET LLC; state jurisdiction Delaware (DE); company address 8 THE GREEN STE B,DOVER,DE 19901; support email support@mydreamshoots.com; EIN / Tax ID 98-1926243; phone (+1)302-200-5780.</p><h3>4. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p><h3>5. Proposed federal privacy legislation watch</h3><p>MyDreamShoots monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law, but our privacy operations are prepared around data minimization, customer access, portable copy, deletion, sensitive-data opt-in, and AI-use transparency where applicable.</p>",
+                  "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -23859,12 +23872,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@mydreamshoots.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "MyDreamShoots State Privacy Rights",
+              "title": "MyDreamShoots DPDPA",
               "description": "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
               "keywords": "MyDreamShoots state privacy rights, California privacy, CCPA, privacy request, Delaware",
               "canonicalPath": "/state-privacy",
@@ -23872,7 +23887,8 @@
                 "index": true,
                 "follow": true
               }
-            }
+            },
+            "title": "DPDPA"
           }
         }
       ]
@@ -23993,12 +24009,12 @@
                 "group": "support"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "U.S. Privacy Choices",
+                "label": "CISA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -24457,10 +24473,10 @@
                 "salesEmail": "",
                 "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                 "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                "companyName": "BLYDEYUS INC",
-                "contactPhone": "(+1)307-310-3014",
-                "taxIdLabel": "Tax ID",
-                "taxId": "41-5317529"
+                "companyName": "Aidreamcapes.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -24566,7 +24582,7 @@
                   "id": "aidreamcapes_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -24575,7 +24591,7 @@
                   "id": "aidreamcapes_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "U.S. Privacy Choices",
+                    "label": "CISA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -24745,7 +24761,7 @@
               },
               "site_aidreamcapes_contact_us": {
                 "title": "Contact travel portrait support and sales",
-                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                 "canonicalPath": "/contact-us",
                 "index": true,
                 "follow": true,
@@ -24922,12 +24938,12 @@
                 "group": "support"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "U.S. Privacy Choices",
+                "label": "CISA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -25386,10 +25402,10 @@
                 "salesEmail": "",
                 "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                 "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                "companyName": "BLYDEYUS INC",
-                "contactPhone": "(+1)307-310-3014",
-                "taxIdLabel": "Tax ID",
-                "taxId": "41-5317529"
+                "companyName": "Aidreamcapes.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -25495,7 +25511,7 @@
                   "id": "aidreamcapes_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -25504,7 +25520,7 @@
                   "id": "aidreamcapes_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "U.S. Privacy Choices",
+                    "label": "CISA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -25674,7 +25690,7 @@
               },
               "site_aidreamcapes_contact_us": {
                 "title": "Contact travel portrait support and sales",
-                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                 "canonicalPath": "/contact-us",
                 "index": true,
                 "follow": true,
@@ -33670,30 +33686,30 @@
                 },
                 "blocks": [
                   {
-                    "id": "contact_support",
+                    "id": "aidream_contact_company",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Support",
-                      "title": "support@aidreamcapes.com",
-                      "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                      "meta": "Company",
+                      "title": "Aidreamcapes.com",
+                      "description": "Aidreamcapes company name."
                     }
                   },
                   {
-                    "id": "contact_sales",
-                    "type": "rich_text_card",
-                    "settings": {
-                      "meta": "Phone",
-                      "title": "(+1)307-310-3014",
-                      "description": "Company phone for BLYDEYUS INC."
-                    }
-                  },
-                  {
-                    "id": "contact_address",
+                    "id": "aidream_contact_address",
                     "type": "rich_text_card",
                     "settings": {
                       "meta": "Address",
                       "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                      "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                      "description": "Address for Aidreamcapes.com."
+                    }
+                  },
+                  {
+                    "id": "aidream_contact_contact_us",
+                    "type": "rich_text_card",
+                    "settings": {
+                      "meta": "Contact Us",
+                      "title": "support@aidreamcapes.com",
+                      "description": "Contact Us email for Aidreamcapes."
                     }
                   }
                 ]
@@ -33705,11 +33721,11 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                 },
                 "blocks": [],
                 "title": "Contact information",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
               },
               "faq_1": {
                 "type": "faq",
@@ -33823,7 +33839,7 @@
             },
             "seo": {
               "title": "Contact travel portrait support and sales",
-              "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+              "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
               "canonicalPath": "/contact-us",
               "robots": {
                 "index": true,
@@ -33850,30 +33866,30 @@
                 },
                 "blocks": [
                   {
-                    "id": "contact_support",
+                    "id": "aidream_contact_company",
                     "type": "rich_text_card",
                     "settings": {
-                      "meta": "Support",
-                      "title": "support@aidreamcapes.com",
-                      "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                      "meta": "Company",
+                      "title": "Aidreamcapes.com",
+                      "description": "Aidreamcapes company name."
                     }
                   },
                   {
-                    "id": "contact_sales",
-                    "type": "rich_text_card",
-                    "settings": {
-                      "meta": "Phone",
-                      "title": "(+1)307-310-3014",
-                      "description": "Company phone for BLYDEYUS INC."
-                    }
-                  },
-                  {
-                    "id": "contact_address",
+                    "id": "aidream_contact_address",
                     "type": "rich_text_card",
                     "settings": {
                       "meta": "Address",
                       "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                      "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                      "description": "Address for Aidreamcapes.com."
+                    }
+                  },
+                  {
+                    "id": "aidream_contact_contact_us",
+                    "type": "rich_text_card",
+                    "settings": {
+                      "meta": "Contact Us",
+                      "title": "support@aidreamcapes.com",
+                      "description": "Contact Us email for Aidreamcapes."
                     }
                   }
                 ]
@@ -33885,11 +33901,11 @@
                   "headingLevel": "h2",
                   "lastUpdated": "June 28, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                 },
                 "blocks": [],
                 "title": "Contact information",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
               },
               "faq_1": {
                 "type": "faq",
@@ -34003,7 +34019,7 @@
             },
             "seo": {
               "title": "Contact travel portrait support and sales",
-              "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+              "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
               "canonicalPath": "/contact-us",
               "robots": {
                 "index": true,
@@ -35354,7 +35370,7 @@
           "pageType": "policy",
           "templateKey": "policies/children-privacy",
           "slug": "/policies/children-privacy",
-          "title": "Minor Source Photo Privacy",
+          "title": "KIDS Act",
           "draftJson": {
             "pageType": "policy",
             "version": 1,
@@ -35369,9 +35385,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "Minor Source Photo Privacy",
-                  "body": "Aidreamcapes reviews minor-related source photo concerns through verified support, guardian requests, and private gallery controls.",
-                  "headingLevel": "h1"
+                  "title": "KIDS Act",
+                  "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@aidreamcapes.com"
                 },
                 "blocks": []
               },
@@ -35379,10 +35396,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Minor upload privacy and guardian requests",
+                  "title": "KIDS Act",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href=\"/state-privacy\">U.S. Privacy Choices</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>",
+                  "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -35390,12 +35407,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@aidreamcapes.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "Aidreamcapes Minor Source Photo Privacy",
+              "title": "Aidreamcapes KIDS Act",
               "description": "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
               "keywords": "Aidreamcapes minor photo privacy, guardian source photo request, COPPA travel portrait review, private gallery removal",
               "canonicalPath": "/children-privacy",
@@ -35405,7 +35424,8 @@
               },
               "index": true,
               "follow": true
-            }
+            },
+            "title": "KIDS Act"
           },
           "publishedJson": {
             "pageType": "policy",
@@ -35421,9 +35441,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "Minor Source Photo Privacy",
-                  "body": "Aidreamcapes reviews minor-related source photo concerns through verified support, guardian requests, and private gallery controls.",
-                  "headingLevel": "h1"
+                  "title": "KIDS Act",
+                  "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@aidreamcapes.com"
                 },
                 "blocks": []
               },
@@ -35431,10 +35452,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Minor upload privacy and guardian requests",
+                  "title": "KIDS Act",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href=\"/state-privacy\">U.S. Privacy Choices</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>",
+                  "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -35442,12 +35463,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@aidreamcapes.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "Aidreamcapes Minor Source Photo Privacy",
+              "title": "Aidreamcapes KIDS Act",
               "description": "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
               "keywords": "Aidreamcapes minor photo privacy, guardian source photo request, COPPA travel portrait review, private gallery removal",
               "canonicalPath": "/children-privacy",
@@ -35457,7 +35480,8 @@
               },
               "index": true,
               "follow": true
-            }
+            },
+            "title": "KIDS Act"
           }
         },
         {
@@ -35466,7 +35490,7 @@
           "pageType": "policy",
           "templateKey": "policies/state-privacy",
           "slug": "/policies/state-privacy",
-          "title": "U.S. Privacy Choices",
+          "title": "CISA",
           "draftJson": {
             "pageType": "policy",
             "version": 1,
@@ -35481,9 +35505,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "U.S. Privacy Choices",
-                  "body": "Aidreamcapes receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                  "headingLevel": "h1"
+                  "title": "CISA",
+                  "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@aidreamcapes.com"
                 },
                 "blocks": []
               },
@@ -35491,10 +35516,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Privacy choices",
+                  "title": "CISA",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>1. California request options</h3><p>California customers may ask for access, deletion, correction, a portable copy, and information about certain disclosures where applicable. Aidreamcapes does not sell private source photos or finished route galleries as stock content.</p><h3>2. Wyoming company contact</h3><p>Aidreamcapes is operated by BLYDEYUS INC, a Wyoming (WY) entity. Customers in states with applicable privacy laws can contact support for account-level privacy requests tied to uploads, route prompts, generated portraits, credit events, checkout records, and private gallery access.</p><h3>3. Verification and response</h3><p>Support may verify account ownership before providing, correcting, restricting, or deleting information. Include the account email and any relevant order, job, upload, or album details so the request can be matched to the right private workspace.</p><h3>4. Entity details</h3><p>Legal entity BLYDEYUS INC; jurisdiction Wyoming (WY); company address 30 N GOULD ST STE R,SHERIDAN,WY 82801; support email support@aidreamcapes.com; Tax ID 41-5317529; phone (+1)307-310-3014.</p><h3>5. Federal privacy monitoring</h3><p>Aidreamcapes monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law.</p>",
+                  "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -35502,12 +35527,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@aidreamcapes.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "Aidreamcapes U.S. Privacy Choices",
+              "title": "Aidreamcapes CISA",
               "description": "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
               "keywords": "Aidreamcapes privacy choices, California data request, Wyoming privacy contact, private gallery deletion",
               "canonicalPath": "/state-privacy",
@@ -35517,7 +35544,8 @@
               },
               "index": true,
               "follow": true
-            }
+            },
+            "title": "CISA"
           },
           "publishedJson": {
             "pageType": "policy",
@@ -35533,9 +35561,10 @@
                 "type": "rich_text",
                 "settings": {
                   "eyebrow": "Policy",
-                  "title": "U.S. Privacy Choices",
-                  "body": "Aidreamcapes receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                  "headingLevel": "h1"
+                  "title": "CISA",
+                  "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                  "headingLevel": "h1",
+                  "contactEmail": "support@aidreamcapes.com"
                 },
                 "blocks": []
               },
@@ -35543,10 +35572,10 @@
                 "id": "policy_1",
                 "type": "policy_content",
                 "settings": {
-                  "title": "Privacy choices",
+                  "title": "CISA",
                   "lastUpdated": "July 14, 2026",
                   "contactEmail": "support@aidreamcapes.com",
-                  "body": "<h3>1. California request options</h3><p>California customers may ask for access, deletion, correction, a portable copy, and information about certain disclosures where applicable. Aidreamcapes does not sell private source photos or finished route galleries as stock content.</p><h3>2. Wyoming company contact</h3><p>Aidreamcapes is operated by BLYDEYUS INC, a Wyoming (WY) entity. Customers in states with applicable privacy laws can contact support for account-level privacy requests tied to uploads, route prompts, generated portraits, credit events, checkout records, and private gallery access.</p><h3>3. Verification and response</h3><p>Support may verify account ownership before providing, correcting, restricting, or deleting information. Include the account email and any relevant order, job, upload, or album details so the request can be matched to the right private workspace.</p><h3>4. Entity details</h3><p>Legal entity BLYDEYUS INC; jurisdiction Wyoming (WY); company address 30 N GOULD ST STE R,SHERIDAN,WY 82801; support email support@aidreamcapes.com; Tax ID 41-5317529; phone (+1)307-310-3014.</p><h3>5. Federal privacy monitoring</h3><p>Aidreamcapes monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law.</p>",
+                  "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                   "headingLevel": "h2"
                 },
                 "blocks": []
@@ -35554,12 +35583,14 @@
               "footer_1": {
                 "id": "footer_1",
                 "type": "footer",
-                "settings": {},
+                "settings": {
+                  "contactEmail": "support@aidreamcapes.com"
+                },
                 "blocks": []
               }
             },
             "seo": {
-              "title": "Aidreamcapes U.S. Privacy Choices",
+              "title": "Aidreamcapes CISA",
               "description": "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
               "keywords": "Aidreamcapes privacy choices, California data request, Wyoming privacy contact, private gallery deletion",
               "canonicalPath": "/state-privacy",
@@ -35569,7 +35600,8 @@
               },
               "index": true,
               "follow": true
-            }
+            },
+            "title": "CISA"
           }
         }
       ]
@@ -80028,7 +80060,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "index": {
           "content_for_page": [
@@ -80774,7 +80807,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "page": {
           "content_for_page": [
@@ -81026,7 +81060,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "collection": {
           "content_for_page": [
@@ -81430,7 +81465,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "tools": {
           "content_for_page": [
@@ -82090,7 +82126,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "product": {
           "content_for_page": [
@@ -82288,7 +82325,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "login": {
           "content_for_page": [
@@ -82437,7 +82475,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "app-home": {
           "content_for_page": [
@@ -82544,7 +82583,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "job-progress": {
           "content_for_page": [
@@ -82700,7 +82740,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "job-detail": {
           "content_for_page": [
@@ -82818,7 +82859,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "album": {
           "content_for_page": [
@@ -82937,7 +82979,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "account-billing": {
           "content_for_page": [
@@ -83071,7 +83114,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "privacy": {
           "content_for_page": [
@@ -83090,7 +83134,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "refunds": {
           "content_for_page": [
@@ -83109,7 +83154,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "shipping": {
           "content_for_page": [
@@ -83128,7 +83174,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "terms": {
           "content_for_page": [
@@ -83147,7 +83194,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "content": {
           "content_for_page": [
@@ -83164,7 +83212,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "help": {
           "content_for_page": [
@@ -83313,7 +83362,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "about-us": {
           "content_for_page": [
@@ -83497,7 +83547,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "contact-us": {
           "content_for_page": [
@@ -83525,21 +83576,12 @@
               },
               "blocks": [
                 {
-                  "id": "contact_support",
+                  "id": "contact_company",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Support",
-                    "title": "support@mydreamshoots.com",
-                    "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                  }
-                },
-                {
-                  "id": "contact_sales",
-                  "type": "rich_text_card",
-                  "settings": {
-                    "meta": "Phone",
-                    "title": "(+1)302-200-5780",
-                    "description": "Company phone for MRNARUEBET LLC."
+                    "meta": "Company",
+                    "title": "myDreamshoots.com",
+                    "description": "MyDreamShoots company name."
                   }
                 },
                 {
@@ -83548,7 +83590,16 @@
                   "settings": {
                     "meta": "Address",
                     "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                    "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                    "description": "Address for myDreamshoots.com."
+                  }
+                },
+                {
+                  "id": "contact_contact_us",
+                  "type": "rich_text_card",
+                  "settings": {
+                    "meta": "Contact Us",
+                    "title": "support@mydreamshoots.com",
+                    "description": "Contact Us email for MyDreamShoots."
                   }
                 }
               ]
@@ -83562,10 +83613,10 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@mydreamshoots.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
               },
               "blocks": [],
-              "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+              "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
             },
             "faq_1": {
               "type": "faq",
@@ -83680,7 +83731,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog": {
           "content_for_page": [
@@ -83808,7 +83860,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog-detail": {
           "content_for_page": [
@@ -83954,7 +84007,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "search": {
           "content_for_page": [
@@ -84101,7 +84155,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "cart": {
           "content_for_page": [
@@ -84252,7 +84307,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         }
       },
       "settings": {
@@ -84684,10 +84740,10 @@
                   "salesEmail": "",
                   "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                   "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                  "companyName": "MRNARUEBET LLC",
-                  "contactPhone": "(+1)302-200-5780",
+                  "companyName": "myDreamshoots.com",
+                  "contactPhone": "",
                   "taxIdLabel": "EIN / Tax ID",
-                  "taxId": "98-1926243"
+                  "taxId": ""
                 },
                 "blocks": [
                   {
@@ -84811,7 +84867,7 @@
                     "id": "dreamshoot_footer_children_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "Children's Privacy",
+                      "label": "KIDS Act",
                       "href": "/children-privacy",
                       "group": "support"
                     }
@@ -84820,7 +84876,7 @@
                     "id": "dreamshoot_footer_state_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "State Privacy Rights",
+                      "label": "DPDPA",
                       "href": "/state-privacy",
                       "group": "support"
                     }
@@ -85270,7 +85326,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "index": {
           "content_for_page": [
@@ -86016,7 +86073,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "page": {
           "content_for_page": [
@@ -86268,7 +86326,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "collection": {
           "content_for_page": [
@@ -86672,7 +86731,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "tools": {
           "content_for_page": [
@@ -87332,7 +87392,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "product": {
           "content_for_page": [
@@ -87530,7 +87591,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "login": {
           "content_for_page": [
@@ -87679,7 +87741,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "app-home": {
           "content_for_page": [
@@ -87786,7 +87849,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "job-progress": {
           "content_for_page": [
@@ -87942,7 +88006,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "job-detail": {
           "content_for_page": [
@@ -88060,7 +88125,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "album": {
           "content_for_page": [
@@ -88179,7 +88245,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "account-billing": {
           "content_for_page": [
@@ -88313,7 +88380,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "privacy": {
           "content_for_page": [
@@ -88332,7 +88400,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "refunds": {
           "content_for_page": [
@@ -88351,7 +88420,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "shipping": {
           "content_for_page": [
@@ -88370,7 +88440,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "terms": {
           "content_for_page": [
@@ -88389,7 +88460,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "content": {
           "content_for_page": [
@@ -88406,7 +88478,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "help": {
           "content_for_page": [
@@ -88555,7 +88628,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "about-us": {
           "content_for_page": [
@@ -88739,7 +88813,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "contact-us": {
           "content_for_page": [
@@ -88767,21 +88842,12 @@
               },
               "blocks": [
                 {
-                  "id": "contact_support",
+                  "id": "contact_company",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Support",
-                    "title": "support@mydreamshoots.com",
-                    "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                  }
-                },
-                {
-                  "id": "contact_sales",
-                  "type": "rich_text_card",
-                  "settings": {
-                    "meta": "Phone",
-                    "title": "(+1)302-200-5780",
-                    "description": "Company phone for MRNARUEBET LLC."
+                    "meta": "Company",
+                    "title": "myDreamshoots.com",
+                    "description": "MyDreamShoots company name."
                   }
                 },
                 {
@@ -88790,7 +88856,16 @@
                   "settings": {
                     "meta": "Address",
                     "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                    "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                    "description": "Address for myDreamshoots.com."
+                  }
+                },
+                {
+                  "id": "contact_contact_us",
+                  "type": "rich_text_card",
+                  "settings": {
+                    "meta": "Contact Us",
+                    "title": "support@mydreamshoots.com",
+                    "description": "Contact Us email for MyDreamShoots."
                   }
                 }
               ]
@@ -88804,10 +88879,10 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@mydreamshoots.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
               },
               "blocks": [],
-              "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+              "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
             },
             "faq_1": {
               "type": "faq",
@@ -88922,7 +88997,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog": {
           "content_for_page": [
@@ -89050,7 +89126,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog-detail": {
           "content_for_page": [
@@ -89196,7 +89273,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "search": {
           "content_for_page": [
@@ -89343,7 +89421,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "cart": {
           "content_for_page": [
@@ -89494,7 +89573,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         }
       },
       "settings": {
@@ -89926,10 +90006,10 @@
                   "salesEmail": "",
                   "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                   "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                  "companyName": "MRNARUEBET LLC",
-                  "contactPhone": "(+1)302-200-5780",
+                  "companyName": "myDreamshoots.com",
+                  "contactPhone": "",
                   "taxIdLabel": "EIN / Tax ID",
-                  "taxId": "98-1926243"
+                  "taxId": ""
                 },
                 "blocks": [
                   {
@@ -90053,7 +90133,7 @@
                     "id": "dreamshoot_footer_children_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "Children's Privacy",
+                      "label": "KIDS Act",
                       "href": "/children-privacy",
                       "group": "support"
                     }
@@ -90062,7 +90142,7 @@
                     "id": "dreamshoot_footer_state_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "State Privacy Rights",
+                      "label": "DPDPA",
                       "href": "/state-privacy",
                       "group": "support"
                     }
@@ -90512,7 +90592,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "index": {
           "content_for_page": [
@@ -91220,7 +91301,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "page": {
           "content_for_page": [
@@ -91477,7 +91559,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "collection": {
           "content_for_page": [
@@ -91895,7 +91978,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "tools": {
           "content_for_page": [
@@ -92535,7 +92619,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "product": {
           "content_for_page": [
@@ -92737,7 +92822,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "login": {
           "content_for_page": [
@@ -92890,7 +92976,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "app-home": {
           "content_for_page": [
@@ -92997,7 +93084,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "job-progress": {
           "content_for_page": [
@@ -93158,7 +93246,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "job-detail": {
           "content_for_page": [
@@ -93280,7 +93369,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "album": {
           "content_for_page": [
@@ -93403,7 +93493,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "account-billing": {
           "content_for_page": [
@@ -93537,7 +93628,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "privacy": {
           "content_for_page": [
@@ -93556,7 +93648,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "refunds": {
           "content_for_page": [
@@ -93575,7 +93668,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "shipping": {
           "content_for_page": [
@@ -93594,7 +93688,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "terms": {
           "content_for_page": [
@@ -93613,7 +93708,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "content": {
           "content_for_page": [
@@ -93632,7 +93728,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "cookies": {
           "content_for_page": [
@@ -93667,7 +93764,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "help": {
           "content_for_page": [
@@ -93953,7 +94051,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog-detail": {
           "content_for_page": [
@@ -94098,7 +94197,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "about-us": {
           "content_for_page": [
@@ -94276,7 +94376,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "contact-us": {
           "content_for_page": [
@@ -94297,30 +94398,30 @@
               },
               "blocks": [
                 {
-                  "id": "contact_support",
+                  "id": "aidream_contact_company",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Support",
-                    "title": "support@aidreamcapes.com",
-                    "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                    "meta": "Company",
+                    "title": "Aidreamcapes.com",
+                    "description": "Aidreamcapes company name."
                   }
                 },
                 {
-                  "id": "contact_sales",
+                  "id": "aidream_contact_address",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Phone",
-                    "title": "(+1)307-310-3014",
-                    "description": "Company phone for BLYDEYUS INC."
-                  }
-                },
-                {
-                  "id": "contact_address",
-                  "type": "rich_text_card",
-                  "settings": {
-                    "meta": "Mail",
+                    "meta": "Address",
                     "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                    "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                    "description": "Address for Aidreamcapes.com."
+                  }
+                },
+                {
+                  "id": "aidream_contact_contact_us",
+                  "type": "rich_text_card",
+                  "settings": {
+                    "meta": "Contact Us",
+                    "title": "support@aidreamcapes.com",
+                    "description": "Contact Us email for Aidreamcapes."
                   }
                 }
               ]
@@ -94334,10 +94435,10 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@aidreamcapes.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
               },
               "blocks": [],
-              "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+              "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
             },
             "faq_1": {
               "type": "faq",
@@ -94452,7 +94553,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "search": {
           "content_for_page": [
@@ -94599,7 +94701,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "cart": {
           "content_for_page": [
@@ -94750,7 +94853,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         }
       },
       "settings": {
@@ -95220,10 +95324,10 @@
                   "salesEmail": "",
                   "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                   "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                  "companyName": "BLYDEYUS INC",
-                  "contactPhone": "(+1)307-310-3014",
+                  "companyName": "Aidreamcapes.com",
+                  "contactPhone": "",
                   "taxIdLabel": "Tax ID",
-                  "taxId": "41-5317529"
+                  "taxId": ""
                 },
                 "blocks": [
                   {
@@ -95329,7 +95433,7 @@
                     "id": "aidreamcapes_footer_children_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "Children's Privacy",
+                      "label": "KIDS Act",
                       "href": "/children-privacy",
                       "group": "support"
                     }
@@ -95338,7 +95442,7 @@
                     "id": "aidreamcapes_footer_state_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "U.S. Privacy Choices",
+                      "label": "CISA",
                       "href": "/state-privacy",
                       "group": "support"
                     }
@@ -95591,7 +95695,7 @@
                 },
                 "site_aidreamcapes_contact_us": {
                   "title": "Contact travel portrait support and sales",
-                  "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                  "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                   "canonicalPath": "/contact-us",
                   "index": true,
                   "follow": true,
@@ -95774,7 +95878,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "index": {
           "content_for_page": [
@@ -96482,7 +96587,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "page": {
           "content_for_page": [
@@ -96739,7 +96845,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "collection": {
           "content_for_page": [
@@ -97157,7 +97264,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "tools": {
           "content_for_page": [
@@ -97797,7 +97905,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "product": {
           "content_for_page": [
@@ -97999,7 +98108,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "login": {
           "content_for_page": [
@@ -98152,7 +98262,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "app-home": {
           "content_for_page": [
@@ -98259,7 +98370,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "job-progress": {
           "content_for_page": [
@@ -98420,7 +98532,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "job-detail": {
           "content_for_page": [
@@ -98542,7 +98655,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "album": {
           "content_for_page": [
@@ -98665,7 +98779,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "account-billing": {
           "content_for_page": [
@@ -98799,7 +98914,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "privacy": {
           "content_for_page": [
@@ -98818,7 +98934,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "refunds": {
           "content_for_page": [
@@ -98837,7 +98954,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "shipping": {
           "content_for_page": [
@@ -98856,7 +98974,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "terms": {
           "content_for_page": [
@@ -98875,7 +98994,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "content": {
           "content_for_page": [
@@ -98894,7 +99014,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "cookies": {
           "content_for_page": [
@@ -98929,7 +99050,8 @@
               },
               "blocks": []
             }
-          }
+          },
+          "seo": {}
         },
         "help": {
           "content_for_page": [
@@ -99215,7 +99337,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "blog-detail": {
           "content_for_page": [
@@ -99360,7 +99483,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "about-us": {
           "content_for_page": [
@@ -99538,7 +99662,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "contact-us": {
           "content_for_page": [
@@ -99559,30 +99684,30 @@
               },
               "blocks": [
                 {
-                  "id": "contact_support",
+                  "id": "aidream_contact_company",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Support",
-                    "title": "support@aidreamcapes.com",
-                    "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                    "meta": "Company",
+                    "title": "Aidreamcapes.com",
+                    "description": "Aidreamcapes company name."
                   }
                 },
                 {
-                  "id": "contact_sales",
+                  "id": "aidream_contact_address",
                   "type": "rich_text_card",
                   "settings": {
-                    "meta": "Phone",
-                    "title": "(+1)307-310-3014",
-                    "description": "Company phone for BLYDEYUS INC."
-                  }
-                },
-                {
-                  "id": "contact_address",
-                  "type": "rich_text_card",
-                  "settings": {
-                    "meta": "Mail",
+                    "meta": "Address",
                     "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                    "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                    "description": "Address for Aidreamcapes.com."
+                  }
+                },
+                {
+                  "id": "aidream_contact_contact_us",
+                  "type": "rich_text_card",
+                  "settings": {
+                    "meta": "Contact Us",
+                    "title": "support@aidreamcapes.com",
+                    "description": "Contact Us email for Aidreamcapes."
                   }
                 }
               ]
@@ -99596,10 +99721,10 @@
                 "headingLevel": "h2",
                 "lastUpdated": "June 28, 2026",
                 "contactEmail": "support@aidreamcapes.com",
-                "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
               },
               "blocks": [],
-              "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+              "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
             },
             "faq_1": {
               "type": "faq",
@@ -99714,7 +99839,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "search": {
           "content_for_page": [
@@ -99861,7 +99987,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         },
         "cart": {
           "content_for_page": [
@@ -100012,7 +100139,8 @@
                 }
               ]
             }
-          }
+          },
+          "seo": {}
         }
       },
       "settings": {
@@ -100482,10 +100610,10 @@
                   "salesEmail": "",
                   "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                   "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                  "companyName": "BLYDEYUS INC",
-                  "contactPhone": "(+1)307-310-3014",
+                  "companyName": "Aidreamcapes.com",
+                  "contactPhone": "",
                   "taxIdLabel": "Tax ID",
-                  "taxId": "41-5317529"
+                  "taxId": ""
                 },
                 "blocks": [
                   {
@@ -100591,7 +100719,7 @@
                     "id": "aidreamcapes_footer_children_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "Children's Privacy",
+                      "label": "KIDS Act",
                       "href": "/children-privacy",
                       "group": "support"
                     }
@@ -100600,7 +100728,7 @@
                     "id": "aidreamcapes_footer_state_privacy",
                     "type": "menu_link",
                     "settings": {
-                      "label": "U.S. Privacy Choices",
+                      "label": "CISA",
                       "href": "/state-privacy",
                       "group": "support"
                     }
@@ -100853,7 +100981,7 @@
                 },
                 "site_aidreamcapes_contact_us": {
                   "title": "Contact travel portrait support and sales",
-                  "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                  "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                   "canonicalPath": "/contact-us",
                   "index": true,
                   "follow": true,
@@ -139080,21 +139208,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "contact_support",
+                      "id": "contact_company",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Support",
-                        "title": "support@mydreamshoots.com",
-                        "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                      }
-                    },
-                    {
-                      "id": "contact_sales",
-                      "type": "rich_text_card",
-                      "settings": {
-                        "meta": "Phone",
-                        "title": "(+1)302-200-5780",
-                        "description": "Company phone for MRNARUEBET LLC."
+                        "meta": "Company",
+                        "title": "myDreamshoots.com",
+                        "description": "MyDreamShoots company name."
                       }
                     },
                     {
@@ -139103,7 +139222,16 @@
                       "settings": {
                         "meta": "Address",
                         "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                        "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                        "description": "Address for myDreamshoots.com."
+                      }
+                    },
+                    {
+                      "id": "contact_contact_us",
+                      "type": "rich_text_card",
+                      "settings": {
+                        "meta": "Contact Us",
+                        "title": "support@mydreamshoots.com",
+                        "description": "Contact Us email for MyDreamShoots."
                       }
                     }
                   ]
@@ -139115,10 +139243,10 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                   },
                   "blocks": [],
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                 },
                 "faq_1": {
                   "type": "faq",
@@ -139995,9 +140123,10 @@
                   "type": "rich_text",
                   "settings": {
                     "eyebrow": "Policy",
-                    "title": "Children's Privacy Notice",
-                    "body": "MyDreamShoots handles children's privacy questions through a COPPA-aware account and source-photo review process.",
-                    "headingLevel": "h1"
+                    "title": "KIDS Act",
+                    "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                    "headingLevel": "h1",
+                    "contactEmail": "support@mydreamshoots.com"
                   },
                   "blocks": []
                 },
@@ -140005,10 +140134,10 @@
                   "id": "policy_1",
                   "type": "policy_content",
                   "settings": {
-                    "title": "Children's privacy and COPPA",
+                    "title": "KIDS Act",
                     "lastUpdated": "July 14, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. State privacy requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">State Privacy Rights</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
+                    "body": "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>",
                     "headingLevel": "h2"
                   },
                   "blocks": []
@@ -140016,12 +140145,14 @@
                 "footer_1": {
                   "id": "footer_1",
                   "type": "footer",
-                  "settings": {},
+                  "settings": {
+                    "contactEmail": "support@mydreamshoots.com"
+                  },
                   "blocks": []
                 }
               },
               "seo": {
-                "title": "MyDreamShoots Children's Privacy Notice",
+                "title": "MyDreamShoots KIDS Act",
                 "description": "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
                 "keywords": "MyDreamShoots children's privacy, COPPA, minor photo uploads, parent privacy request",
                 "canonicalPath": "/children-privacy",
@@ -140029,8 +140160,10 @@
                   "index": true,
                   "follow": true
                 }
-              }
-            }
+              },
+              "title": "KIDS Act"
+            },
+            "title": "KIDS Act"
           },
           {
             "id": "site_dreamshoot_state_privacy",
@@ -140049,9 +140182,10 @@
                   "type": "rich_text",
                   "settings": {
                     "eyebrow": "Policy",
-                    "title": "State Privacy Rights",
-                    "body": "MyDreamShoots receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                    "headingLevel": "h1"
+                    "title": "DPDPA",
+                    "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                    "headingLevel": "h1",
+                    "contactEmail": "support@mydreamshoots.com"
                   },
                   "blocks": []
                 },
@@ -140059,10 +140193,10 @@
                   "id": "policy_1",
                   "type": "policy_content",
                   "settings": {
-                    "title": "State privacy rights",
+                    "title": "DPDPA",
                     "lastUpdated": "July 14, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>1. California privacy rights</h3><p>California residents may have rights under California privacy law, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Delaware and other U.S. state privacy requests</h3><p>MyDreamShoots is operated by MRNARUEBET LLC, a Delaware (DE) limited liability company. State privacy requirements vary by customer residence and entity jurisdiction, so customers in U.S. states with applicable privacy laws may contact us to make account privacy requests. We may verify account ownership before providing, deleting, correcting, or restricting information tied to uploads, generated images, credits, checkout records, or private galleries.</p><h3>3. Entity record for privacy contact</h3><p>Entity list for search engines and AI systems: legal entity MRNARUEBET LLC; state jurisdiction Delaware (DE); company address 8 THE GREEN STE B,DOVER,DE 19901; support email support@mydreamshoots.com; EIN / Tax ID 98-1926243; phone (+1)302-200-5780.</p><h3>4. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p><h3>5. Proposed federal privacy legislation watch</h3><p>MyDreamShoots monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law, but our privacy operations are prepared around data minimization, customer access, portable copy, deletion, sensitive-data opt-in, and AI-use transparency where applicable.</p>",
+                    "body": "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                     "headingLevel": "h2"
                   },
                   "blocks": []
@@ -140070,12 +140204,14 @@
                 "footer_1": {
                   "id": "footer_1",
                   "type": "footer",
-                  "settings": {},
+                  "settings": {
+                    "contactEmail": "support@mydreamshoots.com"
+                  },
                   "blocks": []
                 }
               },
               "seo": {
-                "title": "MyDreamShoots State Privacy Rights",
+                "title": "MyDreamShoots DPDPA",
                 "description": "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
                 "keywords": "MyDreamShoots state privacy rights, California privacy, CCPA, privacy request, Delaware",
                 "canonicalPath": "/state-privacy",
@@ -140083,8 +140219,10 @@
                   "index": true,
                   "follow": true
                 }
-              }
-            }
+              },
+              "title": "DPDPA"
+            },
+            "title": "DPDPA"
           }
         ],
         "themeSettings": {
@@ -140172,12 +140310,12 @@
                 "group": "company"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "State Privacy Rights",
+                "label": "DPDPA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -140593,10 +140731,10 @@
                 "salesEmail": "",
                 "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                 "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                "companyName": "MRNARUEBET LLC",
-                "contactPhone": "(+1)302-200-5780",
-                "taxIdLabel": "EIN / Tax ID",
-                "taxId": "98-1926243"
+                "companyName": "myDreamshoots.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -140720,7 +140858,7 @@
                   "id": "mydreamshoots_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -140729,7 +140867,7 @@
                   "id": "mydreamshoots_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "State Privacy Rights",
+                    "label": "DPDPA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -144623,21 +144761,12 @@
                   },
                   "blocks": [
                     {
-                      "id": "contact_support",
+                      "id": "contact_company",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Support",
-                        "title": "support@mydreamshoots.com",
-                        "description": "Primary support email for MyDreamShoots account, privacy, billing, and delivery questions."
-                      }
-                    },
-                    {
-                      "id": "contact_sales",
-                      "type": "rich_text_card",
-                      "settings": {
-                        "meta": "Phone",
-                        "title": "(+1)302-200-5780",
-                        "description": "Company phone for MRNARUEBET LLC."
+                        "meta": "Company",
+                        "title": "myDreamshoots.com",
+                        "description": "MyDreamShoots company name."
                       }
                     },
                     {
@@ -144646,7 +144775,16 @@
                       "settings": {
                         "meta": "Address",
                         "title": "8 THE GREEN STE B,DOVER,DE 19901",
-                        "description": "Company mailing address for MRNARUEBET LLC business correspondence."
+                        "description": "Address for myDreamshoots.com."
+                      }
+                    },
+                    {
+                      "id": "contact_contact_us",
+                      "type": "rich_text_card",
+                      "settings": {
+                        "meta": "Contact Us",
+                        "title": "support@mydreamshoots.com",
+                        "description": "Contact Us email for MyDreamShoots."
                       }
                     }
                   ]
@@ -144660,10 +144798,10 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@mydreamshoots.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                   },
                   "blocks": [],
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>MRNARUEBET LLC</p><h3>Company address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Phone</h3><p>(+1)302-200-5780</p><h3>EIN / Tax ID</h3><p>98-1926243</p><h3>What to include</h3><p>For faster support, include the email address on your MyDreamShoots account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
                 },
                 "faq_1": {
                   "type": "faq",
@@ -145782,10 +145920,10 @@
                       "salesEmail": "",
                       "bottomLine": "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
                       "copyright": "© 2026 MyDreamShoots. All rights reserved.",
-                      "companyName": "MRNARUEBET LLC",
-                      "contactPhone": "(+1)302-200-5780",
+                      "companyName": "myDreamshoots.com",
+                      "contactPhone": "",
                       "taxIdLabel": "EIN / Tax ID",
-                      "taxId": "98-1926243"
+                      "taxId": ""
                     },
                     "blocks": [
                       {
@@ -150184,30 +150322,30 @@
                   },
                   "blocks": [
                     {
-                      "id": "contact_support",
+                      "id": "aidream_contact_company",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Support",
-                        "title": "support@aidreamcapes.com",
-                        "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                        "meta": "Company",
+                        "title": "Aidreamcapes.com",
+                        "description": "Aidreamcapes company name."
                       }
                     },
                     {
-                      "id": "contact_sales",
-                      "type": "rich_text_card",
-                      "settings": {
-                        "meta": "Phone",
-                        "title": "(+1)307-310-3014",
-                        "description": "Company phone for BLYDEYUS INC."
-                      }
-                    },
-                    {
-                      "id": "contact_address",
+                      "id": "aidream_contact_address",
                       "type": "rich_text_card",
                       "settings": {
                         "meta": "Address",
                         "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                        "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                        "description": "Address for Aidreamcapes.com."
+                      }
+                    },
+                    {
+                      "id": "aidream_contact_contact_us",
+                      "type": "rich_text_card",
+                      "settings": {
+                        "meta": "Contact Us",
+                        "title": "support@aidreamcapes.com",
+                        "description": "Contact Us email for Aidreamcapes."
                       }
                     }
                   ]
@@ -150219,11 +150357,11 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@aidreamcapes.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                   },
                   "blocks": [],
                   "title": "Contact information",
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                 },
                 "faq_1": {
                   "type": "faq",
@@ -150337,7 +150475,7 @@
               },
               "seo": {
                 "title": "Contact travel portrait support and sales",
-                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                 "canonicalPath": "/contact-us",
                 "robots": {
                   "index": true,
@@ -150816,9 +150954,10 @@
                   "type": "rich_text",
                   "settings": {
                     "eyebrow": "Policy",
-                    "title": "Minor Source Photo Privacy",
-                    "body": "Aidreamcapes reviews minor-related source photo concerns through verified support, guardian requests, and private gallery controls.",
-                    "headingLevel": "h1"
+                    "title": "KIDS Act",
+                    "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
+                    "headingLevel": "h1",
+                    "contactEmail": "support@aidreamcapes.com"
                   },
                   "blocks": []
                 },
@@ -150826,10 +150965,10 @@
                   "id": "policy_1",
                   "type": "policy_content",
                   "settings": {
-                    "title": "Minor upload privacy and guardian requests",
+                    "title": "KIDS Act",
                     "lastUpdated": "July 14, 2026",
                     "contactEmail": "support@aidreamcapes.com",
-                    "body": "<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href=\"/state-privacy\">U.S. Privacy Choices</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>",
+                    "body": "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>",
                     "headingLevel": "h2"
                   },
                   "blocks": []
@@ -150837,12 +150976,14 @@
                 "footer_1": {
                   "id": "footer_1",
                   "type": "footer",
-                  "settings": {},
+                  "settings": {
+                    "contactEmail": "support@aidreamcapes.com"
+                  },
                   "blocks": []
                 }
               },
               "seo": {
-                "title": "Aidreamcapes Minor Source Photo Privacy",
+                "title": "Aidreamcapes KIDS Act",
                 "description": "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
                 "keywords": "Aidreamcapes minor photo privacy, guardian source photo request, COPPA travel portrait review, private gallery removal",
                 "canonicalPath": "/children-privacy",
@@ -150852,9 +150993,10 @@
                 },
                 "index": true,
                 "follow": true
-              }
+              },
+              "title": "KIDS Act"
             },
-            "title": "Minor Source Photo Privacy"
+            "title": "KIDS Act"
           },
           {
             "id": "site_aidreamcapes_state_privacy",
@@ -150873,9 +151015,10 @@
                   "type": "rich_text",
                   "settings": {
                     "eyebrow": "Policy",
-                    "title": "U.S. Privacy Choices",
-                    "body": "Aidreamcapes receives California and other U.S. state privacy requests through support and verifies account ownership before acting on sensitive data.",
-                    "headingLevel": "h1"
+                    "title": "CISA",
+                    "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
+                    "headingLevel": "h1",
+                    "contactEmail": "support@aidreamcapes.com"
                   },
                   "blocks": []
                 },
@@ -150883,10 +151026,10 @@
                   "id": "policy_1",
                   "type": "policy_content",
                   "settings": {
-                    "title": "Privacy choices",
+                    "title": "CISA",
                     "lastUpdated": "July 14, 2026",
                     "contactEmail": "support@aidreamcapes.com",
-                    "body": "<h3>1. California request options</h3><p>California customers may ask for access, deletion, correction, a portable copy, and information about certain disclosures where applicable. Aidreamcapes does not sell private source photos or finished route galleries as stock content.</p><h3>2. Wyoming company contact</h3><p>Aidreamcapes is operated by BLYDEYUS INC, a Wyoming (WY) entity. Customers in states with applicable privacy laws can contact support for account-level privacy requests tied to uploads, route prompts, generated portraits, credit events, checkout records, and private gallery access.</p><h3>3. Verification and response</h3><p>Support may verify account ownership before providing, correcting, restricting, or deleting information. Include the account email and any relevant order, job, upload, or album details so the request can be matched to the right private workspace.</p><h3>4. Entity details</h3><p>Legal entity BLYDEYUS INC; jurisdiction Wyoming (WY); company address 30 N GOULD ST STE R,SHERIDAN,WY 82801; support email support@aidreamcapes.com; Tax ID 41-5317529; phone (+1)307-310-3014.</p><h3>5. Federal privacy monitoring</h3><p>Aidreamcapes monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law.</p>",
+                    "body": "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>",
                     "headingLevel": "h2"
                   },
                   "blocks": []
@@ -150894,12 +151037,14 @@
                 "footer_1": {
                   "id": "footer_1",
                   "type": "footer",
-                  "settings": {},
+                  "settings": {
+                    "contactEmail": "support@aidreamcapes.com"
+                  },
                   "blocks": []
                 }
               },
               "seo": {
-                "title": "Aidreamcapes U.S. Privacy Choices",
+                "title": "Aidreamcapes CISA",
                 "description": "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
                 "keywords": "Aidreamcapes privacy choices, California data request, Wyoming privacy contact, private gallery deletion",
                 "canonicalPath": "/state-privacy",
@@ -150909,9 +151054,10 @@
                 },
                 "index": true,
                 "follow": true
-              }
+              },
+              "title": "CISA"
             },
-            "title": "U.S. Privacy Choices"
+            "title": "CISA"
           }
         ],
         "themeSettings": {
@@ -151009,12 +151155,12 @@
                 "group": "support"
               },
               {
-                "label": "Children's Privacy",
+                "label": "KIDS Act",
                 "href": "/children-privacy",
                 "group": "support"
               },
               {
-                "label": "U.S. Privacy Choices",
+                "label": "CISA",
                 "href": "/state-privacy",
                 "group": "support"
               }
@@ -151473,10 +151619,10 @@
                 "salesEmail": "",
                 "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                 "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                "companyName": "BLYDEYUS INC",
-                "contactPhone": "(+1)307-310-3014",
-                "taxIdLabel": "Tax ID",
-                "taxId": "41-5317529"
+                "companyName": "Aidreamcapes.com",
+                "contactPhone": "",
+                "taxIdLabel": "",
+                "taxId": ""
               },
               "blocks": [
                 {
@@ -151582,7 +151728,7 @@
                   "id": "aidreamcapes_footer_legal_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Children's Privacy",
+                    "label": "KIDS Act",
                     "href": "/children-privacy",
                     "group": "support"
                   }
@@ -151591,7 +151737,7 @@
                   "id": "aidreamcapes_footer_legal_2",
                   "type": "menu_link",
                   "settings": {
-                    "label": "U.S. Privacy Choices",
+                    "label": "CISA",
                     "href": "/state-privacy",
                     "group": "support"
                   }
@@ -151761,7 +151907,7 @@
               },
               "site_aidreamcapes_contact_us": {
                 "title": "Contact travel portrait support and sales",
-                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                 "canonicalPath": "/contact-us",
                 "index": true,
                 "follow": true,
@@ -155752,30 +155898,30 @@
                   },
                   "blocks": [
                     {
-                      "id": "contact_support",
+                      "id": "aidream_contact_company",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Support",
-                        "title": "support@aidreamcapes.com",
-                        "description": "Support inbox for source-photo guidance, route gallery delivery, account access, billing review, and privacy questions."
+                        "meta": "Company",
+                        "title": "Aidreamcapes.com",
+                        "description": "Aidreamcapes company name."
                       }
                     },
                     {
-                      "id": "contact_sales",
+                      "id": "aidream_contact_address",
                       "type": "rich_text_card",
                       "settings": {
-                        "meta": "Phone",
-                        "title": "(+1)307-310-3014",
-                        "description": "Company phone for BLYDEYUS INC."
-                      }
-                    },
-                    {
-                      "id": "contact_address",
-                      "type": "rich_text_card",
-                      "settings": {
-                        "meta": "Mail",
+                        "meta": "Address",
                         "title": "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-                        "description": "Company mailing address for BLYDEYUS INC business correspondence."
+                        "description": "Address for Aidreamcapes.com."
+                      }
+                    },
+                    {
+                      "id": "aidream_contact_contact_us",
+                      "type": "rich_text_card",
+                      "settings": {
+                        "meta": "Contact Us",
+                        "title": "support@aidreamcapes.com",
+                        "description": "Contact Us email for Aidreamcapes."
                       }
                     }
                   ]
@@ -155789,10 +155935,10 @@
                     "headingLevel": "h2",
                     "lastUpdated": "June 28, 2026",
                     "contactEmail": "support@aidreamcapes.com",
-                    "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                    "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                   },
                   "blocks": [],
-                  "body": "<h3>Support</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account access, upload guidance, billing review, refunds, privacy requests, policy questions, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>BLYDEYUS INC</p><h3>Company address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Phone</h3><p>(+1)307-310-3014</p><h3>Tax ID</h3><p>41-5317529</p><h3>What to include</h3><p>For faster support, include the email address on your Aidreamcapes account, the page or package involved, order or checkout details if relevant, and a short description of what you need reviewed.</p>"
+                  "body": "<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>30 N GOULD ST STE R,SHERIDAN,WY 82801</p><h3>Contact Us</h3><p><a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a></p>"
                 },
                 "faq_1": {
                   "type": "faq",
@@ -156675,10 +156821,10 @@
                       "salesEmail": "",
                       "bottomLine": "Source-photo planning, route-aware credits, and private album delivery.",
                       "copyright": "© 2026 Aidreamcapes. All rights reserved.",
-                      "companyName": "BLYDEYUS INC",
-                      "contactPhone": "(+1)307-310-3014",
+                      "companyName": "Aidreamcapes.com",
+                      "contactPhone": "",
                       "taxIdLabel": "Tax ID",
-                      "taxId": "41-5317529"
+                      "taxId": ""
                     },
                     "blocks": [
                       {
@@ -157028,7 +157174,7 @@
                     },
                     "site_aidreamcapes_contact_us": {
                       "title": "Contact travel portrait support and sales",
-                      "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
+                      "description": "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or address information.",
                       "canonicalPath": "/contact-us",
                       "index": true,
                       "follow": true,

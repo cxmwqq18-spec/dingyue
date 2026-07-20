@@ -9,13 +9,15 @@ const brandProfiles = [
     matcher: /mydreamshoots|dreamshoot/i,
     brand: "MyDreamShoots",
     footerTitle: "MyDreamShoots",
-    companyName: "MRNARUEBET LLC",
+    companyName: "myDreamshoots.com",
     companyAddress: defaultCompanyAddress,
-    contactPhone: "(+1)302-200-5780",
-    taxIdLabel: "EIN / Tax ID",
-    taxId: "98-1926243",
+    contactPhone: "",
+    taxIdLabel: "",
+    taxId: "",
     stateName: "Delaware",
     stateAbbreviation: "DE",
+    childrenPrivacyTitle: "KIDS Act",
+    statePrivacyTitle: "DPDPA",
     footerLogoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
     footerLogoAlt: "MyDreamShoots heart camera logo",
     supportEmail: "support@mydreamshoots.com",
@@ -43,9 +45,9 @@ const brandProfiles = [
       ["Review the credit cost", "The request shows the credit cost before generation starts so the account history stays understandable.", "03"],
       ["Download favorites", "Finished sets land in the private gallery for review, download, and future account access.", "04"]
     ],
-    contactSeoTitle: "Contact MyDreamShoots - support and company address",
+    contactSeoTitle: "Contact MyDreamShoots - support and address",
     contactDescription:
-      "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or company address information.",
+      "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or address information.",
     footerLinks: [
       ["Browse packages", "/collections", "product"],
       ["Tools", "/tools", "product"],
@@ -60,21 +62,23 @@ const brandProfiles = [
       ["Content policy", "/content", "support"],
       ["Terms of Service", "/terms", "support"],
       ["Cookie Policy", "/cookies", "support"],
-      ["Children's Privacy", "/children-privacy", "support"],
-      ["State Privacy Rights", "/state-privacy", "support"]
+      ["KIDS Act", "/children-privacy", "support"],
+      ["DPDPA", "/state-privacy", "support"]
     ]
   },
   {
     matcher: /aidreamcapes/i,
     brand: "Aidreamcapes",
     footerTitle: "ልiጋreamርapes",
-    companyName: "BLYDEYUS INC",
+    companyName: "Aidreamcapes.com",
     companyAddress: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
-    contactPhone: "(+1)307-310-3014",
-    taxIdLabel: "Tax ID",
-    taxId: "41-5317529",
+    contactPhone: "",
+    taxIdLabel: "",
+    taxId: "",
     stateName: "Wyoming",
     stateAbbreviation: "WY",
+    childrenPrivacyTitle: "KIDS Act",
+    statePrivacyTitle: "CISA",
     footerLogoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c",
     footerLogoAlt: "Aidreamcapes logo for AI travel portraits and private destination galleries",
     supportEmail: "support@aidreamcapes.com",
@@ -102,9 +106,9 @@ const brandProfiles = [
       ["Review route credits", "Confirm the credit cost before the private travel portrait request starts.", "03"],
       ["Collect the gallery", "Finished destination portraits return to the private gallery for review and download.", "04"]
     ],
-    contactSeoTitle: "Contact Aidreamcapes - support and company address",
+    contactSeoTitle: "Contact Aidreamcapes - support and address",
     contactDescription:
-      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, billing review, privacy requests, or company address information.",
+      "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, billing review, privacy requests, or address information.",
     footerLinks: [
       ["Travel Packages", "/collections", "product"],
       ["Tools", "/tools", "product"],
@@ -119,8 +123,8 @@ const brandProfiles = [
       ["Creative Safety", "/content", "support"],
       ["Terms of Service", "/terms", "support"],
       ["Cookie Policy", "/cookies", "support"],
-      ["Children's Privacy", "/children-privacy", "support"],
-      ["U.S. Privacy Choices", "/state-privacy", "support"]
+      ["KIDS Act", "/children-privacy", "support"],
+      ["CISA", "/state-privacy", "support"]
     ]
   }
 ];
@@ -135,20 +139,18 @@ function proposedFederalPrivacyLegislationNotice(profile) {
 
 function childrenPrivacyBody(profile) {
   if (profile.brand === "Aidreamcapes") {
-    return `<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href="/state-privacy">U.S. Privacy Choices</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>`;
+    return `<h3>1. Who the studio is for</h3><p>Aidreamcapes is built for adults and customers who can responsibly manage private source-photo requests. We do not knowingly invite children under 13 to create accounts or submit personal information.</p><h3>2. Parent and guardian review</h3><p>If a parent or legal guardian believes a child supplied information or appeared in an uploaded source photo without the right permission, they can ask us to locate, restrict, or delete the related account data, upload, prompt, generated image, or support record.</p><h3>3. Minor source photos</h3><p>Customers may upload photos of minors only when they are the parent, legal guardian, or have the legal permission needed for the intended private portrait request. We may reject or remove material that appears unsafe, unauthorized, exploitative, or outside supported personal-use workflows.</p><h3>4. Privacy request path</h3><p>California and other U.S. privacy questions are handled through our <a href="/state-privacy">${profile.statePrivacyTitle}</a> page, including access, deletion, correction, opt-out, and appeal requests where those rights apply.</p><h3>5. Contact for minor-related concerns</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, the upload or gallery concern, and enough detail for support to review the request. Verification may be required before changes are made.</p>`;
   }
-  return `<h3>1. Service audience</h3><p>${profile.brand} is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. ${profile.brand} does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. State privacy requests</h3><p>California and other U.S. state privacy requests are handled in our <a href="/state-privacy">State Privacy Rights</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for children's privacy or COPPA-related questions.</p>`;
+  return `<h3>1. Service audience</h3><p>${profile.brand} is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. ${profile.brand} does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. ${profile.statePrivacyTitle} requests</h3><p>California and other U.S. state privacy requests are handled in our <a href="/state-privacy">${profile.statePrivacyTitle}</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for children's privacy or COPPA-related questions.</p>`;
 }
 
 function statePrivacyBody(profile) {
-  if (profile.brand === "Aidreamcapes") {
-    return `<h3>1. California request options</h3><p>California customers may ask for access, deletion, correction, a portable copy, and information about certain disclosures where applicable. Aidreamcapes does not sell private source photos or finished route galleries as stock content.</p><h3>2. Wyoming company contact</h3><p>Aidreamcapes is operated by ${profile.companyName}, a Wyoming (${profile.stateAbbreviation}) entity. Customers in states with applicable privacy laws can contact support for account-level privacy requests tied to uploads, route prompts, generated portraits, credit events, checkout records, and private gallery access.</p><h3>3. Verification and response</h3><p>Support may verify account ownership before providing, correcting, restricting, or deleting information. Include the account email and any relevant order, job, upload, or album details so the request can be matched to the right private workspace.</p><h3>4. Entity details</h3><p>Legal entity ${profile.companyName}; jurisdiction Wyoming (${profile.stateAbbreviation}); company address ${profile.companyAddress}; support email ${profile.supportEmail}; ${profile.taxIdLabel} ${profile.taxId}; phone ${profile.contactPhone}.</p><h3>5. Federal privacy monitoring</h3><p>Aidreamcapes monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law.</p>`;
-  }
-  return `<h3>1. California privacy rights</h3><p>California residents may have rights under California privacy law, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. ${profile.brand} does not sell personal source photos or generated private galleries as stock content.</p><h3>2. ${profile.stateName} and other U.S. state privacy requests</h3><p>${profile.brand} is operated by ${profile.companyName}, a ${profile.stateName} (${profile.stateAbbreviation}) entity. State privacy requirements vary by customer residence and entity jurisdiction, so customers in U.S. states with applicable privacy laws may contact us to make account privacy requests. We may verify account ownership before providing, deleting, correcting, or restricting information tied to uploads, generated images, credits, checkout records, or private galleries.</p><h3>3. Entity record for privacy contact</h3><p>Entity list for search engines and AI systems: legal entity ${profile.companyName}; state jurisdiction ${profile.stateName} (${profile.stateAbbreviation}); company address ${profile.companyAddress}; support email ${profile.supportEmail}; ${profile.taxIdLabel} ${profile.taxId}; phone ${profile.contactPhone}.</p><h3>4. How to submit a request</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>${proposedFederalPrivacyLegislationNotice(profile)}`;
+  return `<h3>1. ${profile.statePrivacyTitle}</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. ${profile.brand} does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: ${profile.companyName}; Address: ${profile.companyAddress}; Contact Us: ${profile.supportEmail}.</p><h3>3. How to submit a request</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>${proposedFederalPrivacyLegislationNotice(profile)}`;
 }
 
 function profileForSite(site) {
-  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`;
+  const identity = `${site.primaryDomain ?? ""} ${site.slug ?? ""}`.toLowerCase();
+  if (!identity.includes(".com")) return undefined;
   return brandProfiles.find((profile) => profile.matcher.test(identity));
 }
 
@@ -162,9 +164,9 @@ function pageJson(profile, page) {
   const title = isWorkflow
     ? profile.workflowTitle
     : isChildrenPrivacy
-      ? isAidreamcapes ? "Minor Source Photo Privacy" : "Children's Privacy Notice"
+      ? profile.childrenPrivacyTitle
     : isStatePrivacy
-        ? isAidreamcapes ? "U.S. Privacy Choices" : "State Privacy Rights"
+        ? profile.statePrivacyTitle
         : isShipping ? "Shipping and Digital Delivery Policy" : isContact ? `Contact ${profile.brand}` : profile.aboutTitle;
   if (isWorkflow) {
     return {
@@ -304,8 +306,8 @@ function pageJson(profile, page) {
     : isShipping
     ? `<h3>No physical shipping</h3><p>${profile.brand} sells digital AI photo credits, generated image packages, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by ${profile.brand}.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>`
     : isContact
-      ? `<h3>Support</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account access, upload guidance, billing review, refunds, privacy requests, credit history, generation status, plan questions, creator use cases, or private gallery delivery help.</p><h3>Company</h3><p>${profile.companyName}</p><h3>Company address</h3><p>${profile.companyAddress}</p><h3>Phone</h3><p>${profile.contactPhone}</p><h3>${profile.taxIdLabel}</h3><p>${profile.taxId}</p>`
-      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Contact</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> for account support, plan questions, or private gallery delivery help.</p><h3>Company</h3><p>${profile.companyName}</p><h3>Company address</h3><p>${profile.companyAddress}</p><h3>Phone</h3><p>${profile.contactPhone}</p><h3>${profile.taxIdLabel}</h3><p>${profile.taxId}</p>`;
+      ? `<h3>Company</h3><p>${profile.companyName}</p><h3>Address</h3><p>${profile.companyAddress}</p><h3>Contact Us</h3><p><a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a></p>`
+      : `<p>${profile.aboutBody}</p><h3>What customers can expect</h3><p>Private uploads, focused package pages, visible credit usage, secure checkout, and finished galleries connected to the same customer account.</p><h3>Company</h3><p>${profile.companyName}</p><h3>Address</h3><p>${profile.companyAddress}</p><h3>Contact Us</h3><p><a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a></p>`;
   return {
     version: 1,
     pageType: isShipping || isChildrenPrivacy || isStatePrivacy ? "policy" : "content",
@@ -341,8 +343,8 @@ function pageJson(profile, page) {
         type: "policy_content",
         settings: {
           title: isShipping ? "Digital delivery and shipping" : isContact ? "Contact information" : `About ${profile.brand}`,
-          ...(isChildrenPrivacy ? { title: isAidreamcapes ? "Minor upload privacy and guardian requests" : "Children's privacy and COPPA" } : {}),
-          ...(isStatePrivacy ? { title: isAidreamcapes ? "California and U.S. privacy request options" : "State privacy rights" } : {}),
+          ...(isChildrenPrivacy ? { title: profile.childrenPrivacyTitle } : {}),
+          ...(isStatePrivacy ? { title: profile.statePrivacyTitle } : {}),
           lastUpdated: isChildrenPrivacy || isStatePrivacy ? "July 14, 2026" : "June 28, 2026",
           contactEmail: profile.supportEmail,
           body
@@ -358,9 +360,9 @@ function pageJson(profile, page) {
     },
     seo: {
       title: isChildrenPrivacy
-        ? isAidreamcapes ? "Aidreamcapes Minor Source Photo Privacy" : `${profile.brand} Children's Privacy Notice`
+        ? `${profile.brand} ${profile.childrenPrivacyTitle}`
         : isStatePrivacy
-          ? isAidreamcapes ? "Aidreamcapes U.S. Privacy Choices" : `${profile.brand} State Privacy Rights`
+          ? `${profile.brand} ${profile.statePrivacyTitle}`
           : isShipping ? `${profile.brand} Shipping and Digital Delivery Policy` : isContact ? profile.contactSeoTitle : profile.aboutSeoTitle,
       description: isChildrenPrivacy
         ? isAidreamcapes
@@ -487,8 +489,8 @@ async function syncSite(site) {
     { slug: "/about-us", idSuffix: "about_us", title: "About Us", json: pageJson(profile, "about") },
     { slug: "/contact-us", idSuffix: "contact_us", title: "Contact Us", json: pageJson(profile, "contact") },
     { slug: "/policies/shipping", idSuffix: "shipping", title: "Shipping and Digital Delivery Policy", json: pageJson(profile, "shipping") },
-    { slug: "/policies/children-privacy", idSuffix: "children_privacy", title: "Children's Privacy Notice", json: pageJson(profile, "childrenPrivacy") },
-    { slug: "/policies/state-privacy", idSuffix: "state_privacy", title: "State Privacy Rights", json: pageJson(profile, "statePrivacy") }
+    { slug: "/policies/children-privacy", idSuffix: "children_privacy", title: profile.childrenPrivacyTitle, json: pageJson(profile, "childrenPrivacy") },
+    { slug: "/policies/state-privacy", idSuffix: "state_privacy", title: profile.statePrivacyTitle, json: pageJson(profile, "statePrivacy") }
   ];
   for (const page of pages) {
     await prisma.themePage.upsert({

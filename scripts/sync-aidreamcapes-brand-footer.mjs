@@ -5,11 +5,11 @@ const prisma = new PrismaClient();
 const siteId = "site_aidreamcapes";
 const visualTitle = "ልiጋreamርapes";
 const readableTitle = "Aidreamcapes";
-const companyName = "BLYDEYUS INC";
+const companyName = "Aidreamcapes.com";
 const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
-const contactPhone = "(+1)307-310-3014";
+const contactPhone = "";
 const supportEmail = "support@aidreamcapes.com";
-const taxId = "41-5317529";
+const taxId = "";
 const logoImageUrl = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const logoAlt = "Aidreamcapes logo for AI travel portraits and private destination galleries";
 
@@ -29,19 +29,19 @@ function syncSettingsJson(value) {
     logoImageUrl,
     logoAlt
   };
-  next.globalSections.footer.settings = {
-    ...(next.globalSections.footer.settings ?? {}),
-    title: visualTitle,
-    logoImageUrl,
-    logoAlt,
-    companyName,
-    contactAddress: companyAddress,
-    contactPhone,
-    contactEmail: supportEmail,
-    taxIdLabel: "Tax ID",
-    taxId,
-    salesEmail: ""
-  };
+    next.globalSections.footer.settings = {
+      ...(next.globalSections.footer.settings ?? {}),
+      title: visualTitle,
+      logoImageUrl,
+      logoAlt,
+      companyName,
+      contactAddress: companyAddress,
+      contactPhone,
+      contactEmail: supportEmail,
+      taxIdLabel: "",
+      taxId,
+      salesEmail: ""
+    };
   return next;
 }
 
