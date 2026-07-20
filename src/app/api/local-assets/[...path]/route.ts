@@ -166,7 +166,7 @@ async function ffmpegExecutablePath(): Promise<string> {
 
 async function generateVideoPoster(sourcePath: string, posterPath: string): Promise<void> {
   const executable = await ffmpegExecutablePath();
-  const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.tmp`;
+  const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.tmp.jpg`;
   await mkdir(path.dirname(posterPath), { recursive: true });
   try {
     await execFileAsync(
