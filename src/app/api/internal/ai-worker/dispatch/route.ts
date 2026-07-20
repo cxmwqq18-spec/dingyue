@@ -2244,10 +2244,14 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     }
   }
 
+  const firstProviderError = providerErrors[0]?.error || "";
+  const finalError = lastError.toLowerCase().includes("invalid token") || lastError.toLowerCase().includes("no access to model")
+    ? firstProviderError || lastError
+    : lastError;
   await postWorkerResult(payload, {
     status: "failed",
     providerTrace,
-    error: lastError || "local_video_worker_generation_failed",
+    error: finalError || "local_video_worker_generation_failed",
     costTrace: { providerErrors }
   });
 }
