@@ -78,6 +78,10 @@ assert(videoWorkspace.includes("video_frame_selection_required"), "video workspa
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
 assert(videoWorkspace.includes("retryDraft?: VideoRetryDraft | null"), "video workspace should accept a retry draft from the results panel");
+assert(videoWorkspace.includes("initialThemes?: VideoTheme[]"), "video workspace should accept server-hydrated video presets");
+assert(videoWorkspace.includes("useState<VideoTheme[]>(() => initialThemes)"), "video workspace should render immediately with initial video presets");
+assert(videoWorkspace.includes("defaultVideoTheme(initialThemes)?.id"), "video workspace should select the neutral preset from initial video presets");
+assert(videoWorkspace.includes("initialThemes.length ? current"), "video workspace should keep initial presets if the background preset refresh fails");
 assert(videoWorkspace.includes("Previous video request restored. Review it, then generate again."), "video workspace should confirm when a failed request has been restored");
 assert(videoWorkspace.includes("setPromptNote(retryDraft.promptNote ?? \"\")"), "video retry should restore the previous motion prompt");
 assert(videoWorkspace.includes("setSelectedAspectRatio(retryDraft.aspectRatio)"), "video retry should restore the previous aspect ratio");
@@ -132,6 +136,7 @@ assert(customerCsrf.includes("setCsrfCookie"), "customer CSRF self-heal should i
 
 const customerBootstrapRoute = read("src/app/api/site-slugs/[siteSlug]/customer/bootstrap/route.ts");
 assert(customerBootstrapRoute.includes("ensureCustomerCsrfCookie"), "customer bootstrap should refresh CSRF cookies for authenticated sessions");
+assert(customerBootstrapRoute.includes("videoThemes: bootstrap.videoThemes"), "workspace bootstrap should include video presets so video generation is not blocked by a slow client fetch");
 
 const customerRuntimeRoute = read("src/app/api/sites/[siteId]/customer/runtime/route.ts");
 assert(customerRuntimeRoute.includes("ensureCustomerCsrfCookie"), "customer runtime refresh should refresh CSRF cookies for authenticated sessions");
@@ -155,6 +160,11 @@ assert(storefrontRender.includes("const initialWorkspaceRuntime = await Promise.
 const videoThemesRoute = read("src/app/api/sites/[siteId]/video-themes/route.ts");
 assert(videoThemesRoute.includes("effectiveMaxFrames"), "video theme API should expose the usable preset frame limit");
 assert(videoThemesRoute.includes("providerMaxFrames"), "video theme API should expose provider frame capacity for UI messaging");
+
+const siteStore = read("src/lib/stores/site-store.ts");
+assert(siteStore.includes("getStorefrontPublicVideoThemesForSite(site.id, 32)"), "workspace bootstrap should hydrate public video themes with the shell data");
+assert(siteStore.includes("effectiveVideoFrameLimit(providers, theme.maxFrames)"), "server-hydrated video themes should include the usable provider-aware frame limit");
+assert(siteStore.includes("providerMaxFrames"), "server-hydrated video themes should include provider frame capacity");
 
 const videoProviderLimits = read("src/lib/video-provider-limits.ts");
 assert(videoProviderLimits.includes("MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT"), "video provider frame limits should account for upstream multi-reference limits");
@@ -199,6 +209,7 @@ assert(!workspaceShell.includes("readyVideoFrameAssets.slice(0, 30)"), "uploaded
 assert(workspaceShell.includes("const videoResourceAssets = galleryAssets.filter(isVideoAsset);"), "videos should be split from image resources");
 assert(workspaceShell.includes("loadPreview = true"), "video result cards should allow lightweight poster capture when they approach the viewport");
 assert(workspaceShell.includes("useState(Boolean(posterUrl))"), "video result cards should reuse cached posters instead of reloading MP4 previews");
+assert(workspaceShell.includes("initialThemes={videoThemes}"), "video composer should receive server-hydrated video presets");
 assert(workspaceShell.includes("const imageResourceAssets = galleryAssets.filter((asset) => !isVideoAsset(asset));"), "image resource tabs should exclude videos");
 assert(workspaceShell.includes('type WorkspaceResourceTab = "all" | "recent" | "favorites" | "try-on" | "packages";'), "resource tabs should not expose a separate Videos tab");
 assert(workspaceShell.includes('type VideoWorkspaceTab = "generate" | "videos";'), "the video workspace should expose only input and result tabs");
@@ -231,6 +242,9 @@ assert(workspaceShell.includes("videoPosterUrlsRef"), "video cards should cache 
 assert(workspaceShell.includes("URL.revokeObjectURL(currentPosterUrl)") && workspaceShell.includes("videoPosterUrlsRef.current.forEach"), "video poster blob URLs should be revoked when replaced or when the workspace unmounts");
 assert(workspaceShell.includes("renderVideoPreviewLoading"), "video cards should keep one unified loading cover while the first frame poster is captured");
 assert(workspaceShell.includes("onLoadedData={capturePosterFrame}") && !workspaceShell.includes("onLoadedMetadata={capturePosterFrame}"), "video cards should wait for decoded frame data before capturing the poster");
+assert(workspaceShell.includes("ref={videoRef}"), "video poster capture should attach the hidden video element to the capture ref");
+assert(workspaceShell.includes("onLoadedMetadata={requestPosterFrame}"), "video poster capture should request the first frame after metadata arrives");
+assert(workspaceShell.includes("onSeeked={capturePosterFrame}"), "video poster capture should use the decoded first-frame seek to build the poster");
 assert(!workspaceShell.includes("videoPosterUrlForJob"), "video cards should not use source frames as loading posters");
 assert(!workspaceShell.includes("poster={"), "video thumbnails should not show stale poster images while media loads");
 assert(workspaceShell.includes("WorkspaceVideoPreviewButton"), "video thumbnails should use a dedicated preview component");
@@ -429,7 +443,6 @@ assert(dispatchRoute.includes("Preserve natural human body proportions"), "video
 assert(dispatchRoute.includes(".slice(0, 3600)"), "video prompt should stay bounded while leaving room for system rules and user notes");
 assert(!dispatchRoute.includes("ffmpeg-static"), "video worker should not depend on ffmpeg for local fallback output");
 
-const siteStore = read("src/lib/stores/site-store.ts");
 assert(siteStore.includes("assetRules: { min: 0, max: DEFAULT_VIDEO_FRAME_LIMIT"), "default video workflow should allow text-to-video while using the shared frame limit");
 assert(siteStore.includes("maxFrames: DEFAULT_VIDEO_FRAME_LIMIT"), "default video themes should use shared frame limit");
 assert(siteStore.includes('slug: "prompt-directed-motion"'), "default video themes should include a neutral prompt-directed preset");

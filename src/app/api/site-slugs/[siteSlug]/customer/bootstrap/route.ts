@@ -46,7 +46,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           siteAiApps: [],
           creativePackCategories: [],
           creativePacks: [],
-          toolMenuItems: []
+          toolMenuItems: [],
+          videoThemes: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -72,7 +73,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           siteAiApps: [],
           creativePackCategories: [],
           creativePacks: [],
-          toolMenuItems: []
+          toolMenuItems: [],
+          videoThemes: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -100,7 +102,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         siteAiApps: bootstrap?.siteAiApps ?? [],
         creativePackCategories: bootstrap?.creativePackCategories ?? [],
         creativePacks: bootstrap?.creativePacks ?? [],
-        toolMenuItems: bootstrap?.toolMenuItems ?? []
+        toolMenuItems: bootstrap?.toolMenuItems ?? [],
+        videoThemes: bootstrap?.videoThemes ?? []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
     ), request, siteId, current);
@@ -132,6 +135,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         creativePackCategories: bootstrap?.creativePackCategories ?? [],
         creativePacks: bootstrap?.creativePacks ?? [],
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
+        videoThemes: bootstrap?.videoThemes ?? [],
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -163,6 +167,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       creativePackCategories: bootstrap.creativePackCategories,
       creativePacks: bootstrap.creativePacks,
       toolMenuItems: bootstrap.toolMenuItems,
+      videoThemes: bootstrap.videoThemes,
       workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,
