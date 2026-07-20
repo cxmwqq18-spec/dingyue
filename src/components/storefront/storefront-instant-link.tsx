@@ -72,7 +72,7 @@ function canHoverPrefetch(targetUrl: URL) {
   if (publicPathname === "/album" || publicPathname.startsWith("/album/")) return false;
   if (publicPathname === "/checkout" || publicPathname.startsWith("/checkout/")) return false;
   if (publicPathname === "/cart" || publicPathname.startsWith("/cart/")) return false;
-  return hoverPrefetchPathPrefixes.some((prefix) => publicPathname === prefix || publicPathname.startsWith(`${prefix}/`));
+  return hoverPrefetchPathPrefixes.some((prefix) => publicPathname === prefix);
 }
 
 function canFocusPrefetch(targetUrl: URL) {
@@ -142,7 +142,12 @@ export function StorefrontInstantLink({
   const forceDocumentNavigation = (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
 
   function prefetchTarget() {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH === "0") return;
+    if (
+      process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH !== "1" &&
+      process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH_ALL !== "1"
+    ) {
+      return;
+    }
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
     if (targetUrl.hash && targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return;
@@ -152,7 +157,7 @@ export function StorefrontInstantLink({
     if (prefetchedHrefs.has(nextHref)) return;
     prefetchedHrefs.add(nextHref);
     router.prefetch(nextHref);
-    if (storefrontPublicPathname(targetUrl) === "/") {
+    if (process.env.NEXT_PUBLIC_STOREFRONT_HOVER_WARM_FETCH === "1" && storefrontPublicPathname(targetUrl) === "/") {
       void fetch(nextHref, { cache: "force-cache", credentials: "same-origin" }).catch(() => undefined);
     }
   }
@@ -186,7 +191,7 @@ export function StorefrontInstantLink({
     if (isInstantFilterAnchor(event)) return;
     if (event.defaultPrevented || event.pointerType === "touch") return;
     if (hoverPrefetchTimer.current) clearTimeout(hoverPrefetchTimer.current);
-    hoverPrefetchTimer.current = setTimeout(prefetchTarget, 40);
+    hoverPrefetchTimer.current = setTimeout(prefetchTarget, 120);
   }
 
   function handlePointerDown(event: PointerEvent<HTMLAnchorElement>) {

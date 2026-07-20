@@ -16,6 +16,14 @@ type ClickMegaMenuProps = {
 const storefrontMegaPanelMaxHeight = 760;
 const storefrontMegaPanelViewportRatio = 0.72;
 
+function menuPrefetchEnabled() {
+  return process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "1";
+}
+
+function menuWarmFetchEnabled() {
+  return process.env.NEXT_PUBLIC_STOREFRONT_MENU_WARM_FETCH === "1";
+}
+
 export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, panelClassName, prefetchPaths = [] }: ClickMegaMenuProps) {
   const [open, setOpen] = useState(false);
   const [panelMetrics, setPanelMetrics] = useState<{ maxHeight: number; top: number } | null>(null);
@@ -61,6 +69,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, []);
 
   const warmFetchPath = useCallback((path: string, delayMs = 0) => {
+    if (!menuWarmFetchEnabled()) return;
     if (!path || warmFetchedRef.current.has(path)) return;
     if (path.includes("/app") || path.includes("/account") || path.includes("/cart") || path.includes("/checkout")) return;
     warmFetchedRef.current.add(path);
@@ -87,11 +96,11 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, []);
 
   const prefetchMenuPaths = useCallback(() => {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
+    if (!menuPrefetchEnabled()) return;
     if (prefetchedRef.current) return;
     prefetchedRef.current = true;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 8);
-    const uniquePaths = Array.from(new Set(prefetchKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 8);
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 2);
+    const uniquePaths = Array.from(new Set(prefetchKey.split("|").filter(Boolean))).slice(0, Number.isFinite(maxPrefetch) ? Math.max(maxPrefetch, 0) : 2);
     if (!uniquePaths.length) return;
     uniquePaths.slice(0, 2).forEach((path, index) => warmFetchPath(path, 90 + index * 180));
     prefetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
@@ -103,7 +112,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, [prefetchKey, router, warmFetchPath]);
 
   const prefetchHoveredAnchor = useCallback((target: EventTarget | null) => {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
+    if (!menuPrefetchEnabled() || process.env.NEXT_PUBLIC_STOREFRONT_MENU_HOVER_PREFETCH !== "1") return;
     const anchor = target instanceof Element ? target.closest<HTMLAnchorElement>("a[href]") : null;
     const href = anchor?.getAttribute("href");
     if (!href || href.startsWith("#") || anchor?.target && anchor.target !== "_self") return;
@@ -145,7 +154,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, [open, updatePanelMetrics]);
 
   useEffect(() => {
-    if (!open || process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH === "0") return;
+    if (!open || !menuPrefetchEnabled()) return;
     prefetchMenuPaths();
     return () => {
       prefetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));

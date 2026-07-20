@@ -38,8 +38,15 @@ function canIdlePrefetch(path: string) {
   if (pathname === "/checkout" || pathname.startsWith("/checkout/")) return false;
   if (pathname === "/cart" || pathname.startsWith("/cart/")) return false;
   if (pathname === window.location.pathname.replace(/^\/site\/[^/]+/, "")) return false;
+  if (
+    process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_DEEP !== "1" &&
+    pathname !== "/" &&
+    pathname.split("/").filter(Boolean).length > 1
+  ) {
+    return false;
+  }
   if (pathname === "/") return true;
-  return prefetchPriority.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  return prefetchPriority.some((prefix) => pathname === prefix);
 }
 
 function pathPriority(path: string) {
@@ -50,8 +57,6 @@ function pathPriority(path: string) {
 
 function shouldWarmFetch(path: string) {
   const pathname = normalizedPublicPath(path);
-  if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH === "0") return false;
-  if (pathname === "/login") return true;
   if (process.env.NEXT_PUBLIC_STOREFRONT_WARM_FETCH !== "1") return false;
   return warmFetchPathPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
@@ -72,11 +77,11 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
   const pathKey = paths.filter(Boolean).join("|");
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH === "0") return;
+    if (process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH !== "1") return;
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
     if (connection?.saveData) return;
-    if (connection?.effectiveType && /(^|-)2g$/.test(connection.effectiveType)) return;
-    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 4);
+    if (connection?.effectiveType && /(^|-)(2g|3g)$/.test(connection.effectiveType)) return;
+    const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_PREFETCH_LIMIT ?? 1);
     const uniquePaths = Array.from(new Set(pathKey.split("|").filter(Boolean)))
       .filter(canIdlePrefetch)
       .sort((left, right) => pathPriority(left) - pathPriority(right))
@@ -118,16 +123,15 @@ export function CustomerRoutePrefetch({ paths }: { paths: string[] }) {
       });
     };
 
-    const idleId = window.setTimeout(prefetch, 120);
+    const idleId = typeof window.requestIdleCallback === "function"
+      ? window.requestIdleCallback(prefetch, { timeout: 4000 })
+      : window.setTimeout(prefetch, 1600);
     window.addEventListener("storefront:navigation-start", cancelPendingPrefetch);
 
     return () => {
       window.removeEventListener("storefront:navigation-start", cancelPendingPrefetch);
       cancelPendingPrefetch();
-      if (typeof idleId === "number") {
-        window.clearTimeout(idleId);
-        return;
-      }
+      window.clearTimeout(idleId);
       window.cancelIdleCallback?.(idleId);
     };
   }, [pathKey, router]);

@@ -6,6 +6,7 @@ import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme } from "@/lib/types";
 import {
   DEFAULT_VIDEO_DURATION_SECONDS,
+  MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT,
   normalizeVideoDurationSecondsForFrameCount,
   normalizeVideoFrameLimit,
   trimVideoFrameSelection,
@@ -120,11 +121,18 @@ export function CustomerVideoWorkspace({
   const [formatPanelOpen, setFormatPanelOpen] = useState(false);
   const [promptNote, setPromptNote] = useState("");
   const [message, setMessage] = useState("");
+  const [themeReloadKey, setThemeReloadKey] = useState(0);
   const [textToVideoConfirmArmed, setTextToVideoConfirmArmed] = useState(false);
   const [textToVideoConfirmOpen, setTextToVideoConfirmOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const appliedRetryDraftKeyRef = useRef<string | null>(null);
   const retryDurationThemeIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!initialThemes.length) return;
+    setThemes((current) => current.length ? current : initialThemes);
+    setSelectedThemeId((current) => current || defaultVideoTheme(initialThemes)?.id || "");
+  }, [initialThemes]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -154,10 +162,10 @@ export function CustomerVideoWorkspace({
     }
     void loadThemes();
     return () => controller.abort();
-  }, [initialThemes.length, siteId, spanish]);
+  }, [initialThemes.length, siteId, spanish, themeReloadKey]);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
-  const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames);
+  const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT);
   const availableDurationOptions = videoDurationOptionsForFrameCount(selectedFrameIds.length);
   const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(selectedDurationSeconds, selectedFrameIds.length);
   const providerFrameLimitMessage = maxFrames > 1
@@ -181,7 +189,7 @@ export function CustomerVideoWorkspace({
     : textToVideoConfirmArmed && needsTextToVideoConfirmation
       ? vt(spanish, "Generate text-to-video", "Generar texto a video")
       : vt(spanish, "Generate video", "Generar video");
-  const canGenerateCurrentVideo = Boolean(selectedTheme) && !hasPendingFrameUploads && (hasReadyFrameInput || trimmedPromptNote.length > 0);
+  const canGenerateCurrentVideo = !hasPendingFrameUploads && (hasReadyFrameInput || trimmedPromptNote.length > 0);
 
   useEffect(() => {
     if (!retryDraft || appliedRetryDraftKeyRef.current === retryDraft.key) return;
@@ -248,6 +256,7 @@ export function CustomerVideoWorkspace({
       return;
     }
     if (!selectedTheme) {
+      setThemeReloadKey((current) => current + 1);
       setMessage(vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento."));
       return;
     }

@@ -148,53 +148,69 @@ function videoPosterPathFor(filePath: string): string {
   return `${filePath}.${fileKey}.poster.jpg`;
 }
 
-async function ffmpegExecutablePath(): Promise<string> {
+async function ffmpegExecutableCandidates(): Promise<string[]> {
   const candidates = [
+    process.env.CUSTOMER_ASSET_FFMPEG_BIN?.trim() ?? "",
     typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "",
-    path.join(process.cwd(), "node_modules", "ffmpeg-static", "ffmpeg")
+    path.join(process.cwd(), "node_modules", "ffmpeg-static", "ffmpeg"),
+    "/usr/bin/ffmpeg",
+    "/usr/local/bin/ffmpeg",
+    "ffmpeg"
   ].filter(Boolean);
-  for (const candidate of candidates) {
+  const uniqueCandidates = Array.from(new Set(candidates));
+  const available: string[] = [];
+  for (const candidate of uniqueCandidates) {
+    if (!path.isAbsolute(candidate)) {
+      available.push(candidate);
+      continue;
+    }
     try {
       await access(candidate);
-      return candidate;
+      available.push(candidate);
     } catch {
       // Try the next location. Next production builds can rewrite ffmpeg-static to a non-copied route chunk path.
     }
   }
+  if (available.length) return available;
   throw new Error("ffmpeg_static_unavailable");
 }
 
 async function generateVideoPoster(sourcePath: string, posterPath: string): Promise<void> {
-  const executable = await ffmpegExecutablePath();
-  const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.tmp.jpg`;
+  const candidates = await ffmpegExecutableCandidates();
+  let lastError: unknown;
   await mkdir(path.dirname(posterPath), { recursive: true });
-  try {
-    await execFileAsync(
-      executable,
-      [
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-y",
-        "-ss",
-        "0.1",
-        "-i",
-        sourcePath,
-        "-frames:v",
-        "1",
-        "-vf",
-        "scale=960:-2:force_original_aspect_ratio=decrease",
-        "-q:v",
-        "4",
-        tmpPath
-      ],
-      { timeout: 20_000, maxBuffer: 1024 * 1024 }
-    );
-    await rename(tmpPath, posterPath);
-  } catch (error) {
-    await unlink(tmpPath).catch(() => {});
-    throw error;
+  for (const candidate of candidates) {
+    const tmpPath = `${posterPath}.${process.pid}.${Date.now()}.${crypto.createHash("sha1").update(candidate).digest("hex").slice(0, 8)}.tmp.jpg`;
+    try {
+      await execFileAsync(
+        candidate,
+        [
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-y",
+          "-ss",
+          "0.1",
+          "-i",
+          sourcePath,
+          "-frames:v",
+          "1",
+          "-vf",
+          "scale=960:-2:force_original_aspect_ratio=decrease",
+          "-q:v",
+          "4",
+          tmpPath
+        ],
+        { timeout: 20_000, maxBuffer: 1024 * 1024 }
+      );
+      await rename(tmpPath, posterPath);
+      return;
+    } catch (error) {
+      lastError = error;
+      await unlink(tmpPath).catch(() => {});
+    }
   }
+  throw lastError instanceof Error ? lastError : new Error("ffmpeg_static_unavailable");
 }
 
 async function resolveVideoPoster(asset: ResolvedAsset): Promise<{ filePath: string; size: number }> {

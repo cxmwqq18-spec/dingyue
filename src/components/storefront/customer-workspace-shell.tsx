@@ -1,20 +1,18 @@
 "use client";
 
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { invalidateCustomerAssets } from "@/components/app/customer-assets-client-cache";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
-import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
 import { CustomerVideoWorkspace, type VideoRetryDraft } from "@/components/storefront/customer-video-workspace";
 import { csrfHeader } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
-import { hostAwareSitePath } from "@/lib/domain-routing";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
@@ -492,6 +490,7 @@ function workspaceVideoPosterUrl(src: string): string {
 function WorkspaceVideoPreviewButton({
   compact = false,
   disabled,
+  fallbackPosterSrc,
   label,
   loadPreview = true,
   mediaKey,
@@ -502,6 +501,7 @@ function WorkspaceVideoPreviewButton({
 }: {
   compact?: boolean;
   disabled?: boolean;
+  fallbackPosterSrc?: string;
   label: string;
   loadPreview?: boolean;
   mediaKey: string;
@@ -515,12 +515,14 @@ function WorkspaceVideoPreviewButton({
   const [shouldLoad, setShouldLoad] = useState(!loadPreview);
   const [posterLoaded, setPosterLoaded] = useState(false);
   const [posterFailed, setPosterFailed] = useState(false);
+  const [fallbackPosterFailed, setFallbackPosterFailed] = useState(false);
 
   useEffect(() => {
     setShouldLoad(!loadPreview);
     setPosterLoaded(false);
     setPosterFailed(false);
-  }, [loadPreview, mediaKey, src]);
+    setFallbackPosterFailed(false);
+  }, [fallbackPosterSrc, loadPreview, mediaKey, src]);
 
   useEffect(() => {
     if (!loadPreview || shouldLoad) return;
@@ -542,6 +544,7 @@ function WorkspaceVideoPreviewButton({
     return () => observer.disconnect();
   }, [loadPreview, shouldLoad]);
 
+  const showFallbackPoster = shouldLoad && Boolean(fallbackPosterSrc) && !fallbackPosterFailed && !posterLoaded;
   const showPosterImage = shouldLoad && !posterFailed;
 
   return (
@@ -555,7 +558,18 @@ function WorkspaceVideoPreviewButton({
       type="button"
     >
       <div className="relative aspect-video w-full overflow-hidden bg-[#080c12]">
-        {!posterLoaded ? (
+        {showFallbackPoster ? (
+          <img
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-82"
+            decoding="async"
+            loading="lazy"
+            onError={() => setFallbackPosterFailed(true)}
+            src={fallbackPosterSrc}
+          />
+        ) : null}
+        {!posterLoaded && !showFallbackPoster ? (
           renderLoading(compact)
         ) : null}
         {showPosterImage ? (
@@ -757,16 +771,8 @@ export function CustomerWorkspaceShell({
   toolMenuItems?: ToolMenuItem[];
   videoThemes?: VideoTheme[];
 }) {
-  const pathname = usePathname();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const spanishXby = isSpanishXbyWorkspaceSite(site);
-  const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
-  const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
-  const prefetchPaths = useMemo(
-    () => [basePath || "/", `${basePath}/collections`, `${basePath}/tools`, `${basePath}/pricing`, `${basePath}/faq`, `${basePath}/app/create`],
-    [basePath]
-  );
   const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
   const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(() => !initialRuntime);
   const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
@@ -1126,6 +1132,7 @@ export function CustomerWorkspaceShell({
     mediaKey: string;
     label: string;
     src: string;
+    fallbackPosterSrc?: string;
     compact?: boolean;
     disabled?: boolean;
     onOpen?: () => void;
@@ -1134,6 +1141,7 @@ export function CustomerWorkspaceShell({
       <WorkspaceVideoPreviewButton
         compact={params.compact}
         disabled={params.disabled}
+        fallbackPosterSrc={params.fallbackPosterSrc}
         label={params.label}
         mediaKey={params.mediaKey}
         onOpen={params.onOpen}
@@ -1260,6 +1268,13 @@ export function CustomerWorkspaceShell({
   const selectedPreviewAsset = selectedPreviewIndex >= 0 ? previewableAssets[selectedPreviewIndex] : undefined;
   const selectedPreviewCopy = selectedPreviewAsset ? outputCopyForAsset(selectedPreviewAsset) : undefined;
   const selectedPreviewLabel = selectedPreviewAsset ? generatedAssetLabel(selectedPreviewAsset, selectedPreviewCopy) : "";
+  function fallbackVideoPosterForJob(jobId?: string): string | undefined {
+    if (!jobId) return undefined;
+    const job = videoRuntimeJobs.find((item) => item.id === jobId);
+    const frameId = videoJobFrameIds(job)[0];
+    const frameAsset = frameId ? assetById.get(frameId) : undefined;
+    return frameAsset?.previewUrl;
+  }
   function renderResourceAssetCard(asset: ThemeRuntimeAsset) {
     const outputCopy = outputCopyForAsset(asset);
     const assetLabel = generatedAssetLabel(asset, outputCopy);
@@ -1274,6 +1289,7 @@ export function CustomerWorkspaceShell({
                 mediaKey: `asset:${asset.id}`,
                 label: assetLabel,
                 src: previewUrl,
+                fallbackPosterSrc: fallbackVideoPosterForJob(asset.jobId),
                 onOpen: () => setSelectedPreviewAssetId(asset.id)
               })}
             </div>
@@ -2263,7 +2279,6 @@ export function CustomerWorkspaceShell({
 
   return (
     <div className="min-h-screen bg-[#07090d] font-sans text-white">
-      <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
       <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={workspaceCustomer} site={site} tone="dark" toolMenuItems={toolMenuItems} />
 
@@ -2815,6 +2830,7 @@ export function CustomerWorkspaceShell({
                                             mediaKey: `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}`,
                                             label: slotMediaLabel,
                                             src: workspaceSlotPreviewUrl(slot.storageKey),
+                                            fallbackPosterSrc: fallbackVideoPosterForJob(job.id),
                                             compact: true,
                                             disabled: !slotPreviewAsset,
                                             onOpen: () => {
