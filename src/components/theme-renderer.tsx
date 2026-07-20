@@ -608,6 +608,9 @@ function shouldServerRenderFocusedCollectionSection(sectionType: string): boolea
 }
 
 function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: string): boolean {
+  if (pagePath === "/pricing") {
+    return sectionType === "pricing_table";
+  }
   if (pagePath === "/collections") {
     return sectionType === "rich_text" ||
       sectionType === "dreamshoot_package_taxonomy" ||

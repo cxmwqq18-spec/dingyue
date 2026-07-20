@@ -87,6 +87,7 @@ function isVideoResolution(value: string | undefined): value is VideoResolution 
 
 export function CustomerVideoWorkspace({
   customer,
+  initialThemes = [],
   onJobCreated,
   onOpenFrameManager,
   onRetryDraftApplied,
@@ -101,6 +102,7 @@ export function CustomerVideoWorkspace({
   customer: PublicCustomer;
   siteId: string;
   subscriptionStatus: SubscriptionStatus;
+  initialThemes?: VideoTheme[];
   spanish?: boolean;
   readyFrameIds?: string[];
   selectedFrameIds: string[];
@@ -110,8 +112,8 @@ export function CustomerVideoWorkspace({
   onRetryDraftApplied?: () => void;
   retryDraft?: VideoRetryDraft | null;
 }) {
-  const [themes, setThemes] = useState<VideoTheme[]>([]);
-  const [selectedThemeId, setSelectedThemeId] = useState("");
+  const [themes, setThemes] = useState<VideoTheme[]>(() => initialThemes);
+  const [selectedThemeId, setSelectedThemeId] = useState(() => defaultVideoTheme(initialThemes)?.id || "");
   const [selectedDurationSeconds, setSelectedDurationSeconds] = useState<VideoDurationSeconds>(DEFAULT_VIDEO_DURATION_SECONDS);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<VideoAspectRatio>("16:9");
   const [selectedResolution, setSelectedResolution] = useState<VideoResolution>("720p");
@@ -137,20 +139,22 @@ export function CustomerVideoWorkspace({
         };
         if (!response.ok) throw new Error("video_themes_unavailable");
         const nextThemes = payload.themes ?? [];
-        setThemes(nextThemes);
-        setSelectedThemeId((current) => current || defaultVideoTheme(nextThemes)?.id || "");
+        if (nextThemes.length) {
+          setThemes(nextThemes);
+          setSelectedThemeId((current) => current || defaultVideoTheme(nextThemes)?.id || "");
+        }
         if (!nextThemes.length) {
-          setMessage(vt(spanish, "No active video presets are available yet.", "Aun no hay ajustes de video activos."));
+          setMessage((current) => initialThemes.length ? current : vt(spanish, "No active video presets are available yet.", "Aun no hay ajustes de video activos."));
         }
       } catch {
         if (!controller.signal.aborted) {
-          setMessage(vt(spanish, "Video presets could not load. Refresh this page and try again.", "No se pudieron cargar los ajustes de video. Actualiza la pagina e intentalo de nuevo."));
+          setMessage((current) => initialThemes.length ? current : vt(spanish, "Video presets could not load. Refresh this page and try again.", "No se pudieron cargar los ajustes de video. Actualiza la pagina e intentalo de nuevo."));
         }
       }
     }
     void loadThemes();
     return () => controller.abort();
-  }, [siteId, spanish]);
+  }, [initialThemes.length, siteId, spanish]);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
   const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames);

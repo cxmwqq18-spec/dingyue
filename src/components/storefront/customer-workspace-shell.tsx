@@ -17,7 +17,7 @@ import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
 import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
@@ -570,6 +570,22 @@ function WorkspaceVideoPreviewButton({
     }, "image/jpeg", 0.86);
   };
 
+  const requestPosterFrame = () => {
+    if (posterUrl || posterCaptureRequestedRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
+    const targetTime = Number.isFinite(video.duration) && video.duration > 0 ? Math.min(0.05, video.duration / 2) : 0;
+    if (Math.abs(video.currentTime - targetTime) < 0.001) {
+      capturePosterFrame();
+      return;
+    }
+    try {
+      video.currentTime = targetTime;
+    } catch {
+      capturePosterFrame();
+    }
+  };
+
   return (
     <button
       aria-label={label}
@@ -593,10 +609,13 @@ function WorkspaceVideoPreviewButton({
             controls={false}
             data-media-key={mediaKey}
             muted
+            onLoadedMetadata={requestPosterFrame}
             onCanPlay={capturePosterFrame}
             onLoadedData={capturePosterFrame}
+            onSeeked={capturePosterFrame}
             playsInline
             preload="metadata"
+            ref={videoRef}
             src={src}
           />
         ) : null}
@@ -771,7 +790,8 @@ export function CustomerWorkspaceShell({
   initialToolId,
   initialRuntime,
   initialPanel = "overview",
-  toolMenuItems = []
+  toolMenuItems = [],
+  videoThemes = []
 }: {
   site: CustomerWorkspaceSite;
   customer: PublicCustomer;
@@ -784,6 +804,7 @@ export function CustomerWorkspaceShell({
   initialRuntime?: ThemeRuntimeData;
   initialPanel?: CustomerWorkspacePanel;
   toolMenuItems?: ToolMenuItem[];
+  videoThemes?: VideoTheme[];
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -2701,6 +2722,7 @@ export function CustomerWorkspaceShell({
                   onJobCreated={showVideoJobStatus}
                   onOpenFrameManager={focusVideoFrameManager}
                   onRetryDraftApplied={() => setRetryVideoDraft(null)}
+                  initialThemes={videoThemes}
                   readyFrameIds={readySelectedVideoFrameIds}
                   retryDraft={retryVideoDraft}
                   selectedFrameIds={selectedVideoFrameIds}

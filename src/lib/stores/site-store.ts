@@ -10,7 +10,9 @@ import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
+import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 import type {
   AiGatewayGroup,
@@ -917,13 +919,31 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
   return siteReadCache.get(
     `public-video-themes:${siteId}:${take}`,
     async () => {
-      const rows = await prisma.videoTheme.findMany({
+      let rows = await prisma.videoTheme.findMany({
         where: { siteId, status: "active" },
         include: { category: true },
         orderBy: [{ createdAt: "asc" }],
         take
       });
-      return rows.map(toVideoTheme);
+      if (!rows.length) {
+        await ensureDefaultVideoThemesRelational(siteId);
+        rows = await prisma.videoTheme.findMany({
+          where: { siteId, status: "active" },
+          include: { category: true },
+          orderBy: [{ createdAt: "asc" }],
+          take
+        });
+      }
+      const providers = await getPlatformAiProviderFallbackQueueRelational();
+      const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
+      return rows.map((row) => {
+        const theme = toVideoTheme(row);
+        return {
+          ...theme,
+          effectiveMaxFrames: effectiveVideoFrameLimit(providers, theme.maxFrames),
+          providerMaxFrames
+        };
+      });
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
@@ -1901,6 +1921,7 @@ export type CustomerWorkspaceBootstrapRelational = {
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
   toolMenuItems: ToolMenuItem[];
+  videoThemes: VideoTheme[];
 };
 
 export async function getCustomerWorkspaceSiteShellRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational["site"] | undefined> {
@@ -1935,14 +1956,15 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
-    const [siteAiApps, navigationData] = await Promise.all([
+    const [siteAiApps, navigationData, videoThemes] = await Promise.all([
       prisma.siteAiApp.findMany({
         where: { siteId: site.id, enabled: true },
         include: { aiApp: true },
         orderBy: [{ routeKey: "asc" }],
         take: workspaceCustomerRuntimeLimits.siteAiApps
       }),
-      getStorefrontPublicNavigationDataForSite(site.id)
+      getStorefrontPublicNavigationDataForSite(site.id),
+      getStorefrontPublicVideoThemesForSite(site.id, 32)
     ]);
 
     return {
@@ -1956,7 +1978,8 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       siteAiApps: siteAiApps.map(toSiteAiApp),
       creativePackCategories: navigationData.creativePackCategories,
       creativePacks: navigationData.creativePacks,
-      toolMenuItems: navigationData.toolMenuItems
+      toolMenuItems: navigationData.toolMenuItems,
+      videoThemes
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }

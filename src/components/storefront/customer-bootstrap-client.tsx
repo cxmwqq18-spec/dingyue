@@ -6,7 +6,7 @@ import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {
@@ -17,6 +17,7 @@ export type CustomerBootstrap = {
   creativePackCategories?: CreativePackCategory[];
   creativePacks: CreativePack[];
   toolMenuItems?: ToolMenuItem[];
+  videoThemes?: VideoTheme[];
   accountRuntime?: ThemeRuntimeData;
   workspaceRuntime?: ThemeRuntimeData;
 };
@@ -75,7 +76,8 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
           siteAiApps: data.siteAiApps ?? [],
           creativePackCategories: data.creativePackCategories ?? [],
           creativePacks: data.creativePacks ?? [],
-          toolMenuItems: data.toolMenuItems ?? []
+          toolMenuItems: data.toolMenuItems ?? [],
+          videoThemes: data.videoThemes ?? []
         };
         bootstrapCache.set(cacheKey, bootstrap);
         return bootstrap;
@@ -94,6 +96,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         creativePackCategories: data.creativePackCategories ?? [],
         creativePacks: data.creativePacks,
         toolMenuItems: data.toolMenuItems ?? [],
+        videoThemes: data.videoThemes ?? [],
         accountRuntime: data.accountRuntime,
         workspaceRuntime: data.workspaceRuntime
       };
@@ -398,6 +401,7 @@ export function CustomerWorkspaceClientPage({
         site={initialBootstrap.site}
         siteAiApps={initialBootstrap.siteAiApps}
         toolMenuItems={initialBootstrap.toolMenuItems}
+        videoThemes={initialBootstrap.videoThemes}
       />
     );
   }
@@ -418,6 +422,7 @@ export function CustomerWorkspaceClientPage({
       site={state.data.site}
       siteAiApps={state.data.siteAiApps}
       toolMenuItems={state.data.toolMenuItems}
+      videoThemes={state.data.videoThemes}
     />
   );
 }
