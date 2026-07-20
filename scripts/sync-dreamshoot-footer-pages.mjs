@@ -370,8 +370,8 @@ function pageJson(profile, page) {
           : `Read the ${profile.brand} children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.`
         : isStatePrivacy
           ? isAidreamcapes
-            ? "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details."
-            : `Review ${profile.brand} state privacy rights information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.`
+            ? "Use Aidreamcapes CISA information for California and other U.S. requests involving account access, deletion, correction, private galleries, and company contact details."
+            : `Review ${profile.brand} ${profile.statePrivacyTitle} information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.`
           : isShipping ? `Review how ${profile.brand} delivers AI photo credits, generated images, downloads, and private galleries digitally without physical shipping.` : isContact ? profile.contactDescription : profile.aboutDescription,
       keywords: isShipping
         ? `${profile.brand} shipping policy, ${profile.brand} digital delivery, AI photo delivery, private gallery delivery`

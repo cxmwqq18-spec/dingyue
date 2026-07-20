@@ -249,9 +249,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/children-privacy": {
-    title: "Children's Privacy Notice for MyDreamShoots AI Photo Uploads",
+    title: "MyDreamShoots KIDS Act",
     description:
-      "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+      "Read the MyDreamShoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
     keywords: [
       POLICY_KEYWORDS,
       "children privacy notice",
@@ -264,9 +264,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/children-privacy": {
-    title: "Children's Privacy Notice for MyDreamShoots AI Photo Uploads",
+    title: "MyDreamShoots KIDS Act",
     description:
-      "Read the MyDreamShoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+      "Read the MyDreamShoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
     keywords: [
       POLICY_KEYWORDS,
       "children privacy notice",
@@ -279,9 +279,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/state-privacy": {
-    title: "State Privacy Rights for California, Delaware, and U.S. Customers",
+    title: "MyDreamShoots DPDPA",
     description:
-      "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
+      "Review MyDreamShoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
     keywords: [
       POLICY_KEYWORDS,
       "California privacy rights",
@@ -296,9 +296,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/state-privacy": {
-    title: "State Privacy Rights for California, Delaware, and U.S. Customers",
+    title: "MyDreamShoots DPDPA",
     description:
-      "Review MyDreamShoots state privacy rights information for California privacy requests, Delaware entity contact details, access, deletion, correction, opt-out choices, and proposed federal privacy legislation monitoring.",
+      "Review MyDreamShoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
     keywords: [
       POLICY_KEYWORDS,
       "California privacy rights",
@@ -382,9 +382,9 @@ const AIDREAMCAPES_POLICY_SEO_BY_CANONICAL: Record<string, Omit<PolicySeoCopy, "
     keywords: AIDREAMCAPES_POLICY_KEYWORDS
   },
   "/children-privacy": {
-    title: "Aidreamcapes Minor Source Photo Privacy",
+    title: "Aidreamcapes KIDS Act",
     description:
-      "Learn how Aidreamcapes reviews guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
+      "Learn how Aidreamcapes handles KIDS Act questions, guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
     keywords: [
       AIDREAMCAPES_POLICY_KEYWORDS,
       "minor source photo privacy",
@@ -394,9 +394,9 @@ const AIDREAMCAPES_POLICY_SEO_BY_CANONICAL: Record<string, Omit<PolicySeoCopy, "
     ].join(", ")
   },
   "/state-privacy": {
-    title: "Aidreamcapes U.S. Privacy Choices",
+    title: "Aidreamcapes CISA",
     description:
-      "Use Aidreamcapes privacy choices for California and other U.S. requests involving account access, deletion, correction, private galleries, and Wyoming company contact details.",
+      "Use Aidreamcapes CISA information for California and other U.S. requests involving account access, deletion, correction, private galleries, and company contact details.",
     keywords: [
       AIDREAMCAPES_POLICY_KEYWORDS,
       "California data request",
