@@ -175,7 +175,7 @@ function normalizeVideoGenerationModel(model: string) {
 
 function isImageToVideoModel(model: string) {
   const normalized = model.trim().toLowerCase();
-  return normalized.includes("grok-imagine-video") || normalized.includes("image-to-video") || normalized.includes("i2v");
+  return normalized.includes("grok-imagine-video") || normalized.includes("grok-video-") || normalized.includes("image-to-video") || normalized.includes("i2v");
 }
 
 function isSmartPickLidBaseUrl(baseUrl: string) {
@@ -211,9 +211,14 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
   const protocol = params?.protocol;
   const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
   if (protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "")) {
+    const multipartReferenceCandidates = referenceAssetCount > 0
+      ? ["grok-video-3-max", "grok-video-3-pro", "grok-video-1.5-max", "grok-video-1.5-pro"]
+      : [];
     return Array.from(new Set([
-      isGrokImagineVideoModel(normalizedModel) ? normalizedModel : "",
-      "grok-imagine-video"
+      normalizedModel,
+      ...multipartReferenceCandidates,
+      "grok-imagine-video",
+      "grok-imagine-video-1.5-preview"
     ].filter(Boolean)));
   }
   if (protocol === "openai-videos" && referenceAssetCount > 1) {
@@ -255,6 +260,8 @@ function shouldTryNextVideoModel(error: unknown) {
     message.includes("ai_provider_video_create_failed_503_") ||
     message.includes("ai_provider_video_create_failed_504_") ||
     message.includes("ai_provider_video_create_failed_524_") ||
+    message.includes("upstream_error") ||
+    message.includes("服务暂时不可用") ||
     message.includes("fetch failed") ||
     message.includes("econnreset") ||
     message.includes("socket") ||

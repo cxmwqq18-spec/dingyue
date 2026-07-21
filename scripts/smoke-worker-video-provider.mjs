@@ -156,6 +156,8 @@ const checks = [
       files.dispatch.includes('AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE') &&
       files.dispatch.includes("isSmartPickLidBaseUrl(params.baseUrl) &&") &&
       files.dispatch.includes("isGrokImagineVideoModel(params.model)") &&
+      files.dispatch.includes("multipartReferenceCandidates") &&
+      files.dispatch.includes('"grok-video-3-max"') &&
       files.dispatch.includes("const useProviderFrameUrls = protocol !== \"openai-videos\" || shouldUseSmartPickLidLegacyVideoReferences") &&
       files.dispatch.includes("await videoProviderFrameUrls({ referenceAssets, timeoutMs })") &&
       files.dispatch.includes("videoProviderPreparedDataUriFrameUrls") &&
@@ -168,6 +170,8 @@ const checks = [
     pass: files.dispatch.includes("function shouldTryNextVideoModel(") &&
       files.dispatch.includes('message.includes("ai_provider_video_create_failed_502_")') &&
       files.dispatch.includes('message.includes("ai_provider_video_create_failed_524_")') &&
+      files.dispatch.includes('message.includes("upstream_error")') &&
+      files.dispatch.includes('message.includes("服务暂时不可用")') &&
       files.dispatch.includes('message.includes("failed_524")') &&
       files.dispatch.includes("if (!shouldTryNextVideoModel(error)) break")
   },
@@ -176,7 +180,8 @@ const checks = [
     pass: files.dispatch.includes("function isImageToVideoModel(") &&
       files.dispatch.includes("const imageToVideoCandidates") &&
       files.dispatch.includes('protocol === "openai-videos" && isSmartPickLidBaseUrl') &&
-      files.dispatch.includes('isGrokImagineVideoModel(normalizedModel) ? normalizedModel : ""') &&
+      files.dispatch.includes("multipartReferenceCandidates") &&
+      files.dispatch.includes("normalizedModel,") &&
       files.dispatch.includes('protocol === "openai-videos" && referenceAssetCount > 1') &&
       files.dispatch.includes('!normalizedModel.includes("1.5")') &&
       files.dispatch.includes('protocol === "openai-videos" && (referenceAssetCount > 0 || shouldPreferSmartPickLidJsonModel)') &&
