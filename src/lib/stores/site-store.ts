@@ -1169,25 +1169,25 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     toolCategories,
     toolMenuItems,
     navigationData
-  ] = await Promise.all([
+  ] = await runDbTasks([
     needs.products
-      ? prisma.product.findMany({
+      ? () => prisma.product.findMany({
           where: { siteId, status: "active" },
           include: { prices: true },
           orderBy: [{ type: "asc" }, { createdAt: "asc" }],
           take: limits.products
         })
-      : Promise.resolve([]),
+      : () => Promise.resolve([]),
     needs.siteAiApps
-      ? prisma.siteAiApp.findMany({
+      ? () => prisma.siteAiApp.findMany({
           where: { siteId, enabled: true },
           select: publicRuntimeSiteAiAppSelect,
           orderBy: [{ routeKey: "asc" }],
           take: limits.siteAiApps
         })
-      : Promise.resolve([]),
+      : () => Promise.resolve([]),
     needs.creativePacks && !useSharedNavigationData
-      ? prisma.creativePack.findMany({
+      ? () => prisma.creativePack.findMany({
           where: needs.contextSlug
             ? {
                 siteId,
@@ -1203,19 +1203,19 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
           orderBy: [{ status: "asc" }, { createdAt: "asc" }],
           ...(typeof limits.creativePacks === "number" ? { take: limits.creativePacks } : {})
         })
-      : Promise.resolve([]),
-    needs.creativePacks && !useSharedNavigationData ? getStorefrontPublicCreativePackCategoriesForSite(siteId) : Promise.resolve([]),
+      : () => Promise.resolve([]),
+    needs.creativePacks && !useSharedNavigationData ? () => getStorefrontPublicCreativePackCategoriesForSite(siteId) : () => Promise.resolve([]),
     needs.mediaAssets
-      ? prisma.mediaAsset.findMany({
+      ? () => prisma.mediaAsset.findMany({
           where: { siteId, usageType: { in: ["theme", "package", "sample"] } },
           select: publicRuntimeMediaAssetSelect,
           orderBy: [{ createdAt: "desc" }, { id: "asc" }],
           take: limits.mediaAssets
         })
-      : Promise.resolve([]),
-    needs.toolMenus && !useSharedNavigationData ? loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
-    needs.toolMenus && !useSharedNavigationData ? loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : Promise.resolve([]),
-    useSharedNavigationData ? getStorefrontPublicNavigationDataForSite(siteId) : Promise.resolve(undefined)
+      : () => Promise.resolve([]),
+    needs.toolMenus && !useSharedNavigationData ? () => loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
+    needs.toolMenus && !useSharedNavigationData ? () => loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
+    useSharedNavigationData ? () => getStorefrontPublicNavigationDataForSite(siteId) : () => Promise.resolve(undefined)
   ]);
   const runtimeCreativePackCategories = navigationData?.creativePackCategories ?? creativePackCategories;
   const runtimeCreativePacks = navigationData?.creativePacks ?? creativePacks.map(toPublicRuntimeCreativePack);

@@ -137,6 +137,8 @@ function storefrontEdgeHtmlRewriteEnabled(request: NextRequest): boolean {
   const englishRewrite = envSwitch(process.env.STOREFRONT_ENGLISH_HTML_REWRITE);
   if (englishRewrite !== undefined && isEnglishPublicStorefrontHtmlRequest(request)) return englishRewrite;
 
+  if (isEnglishPublicStorefrontHtmlRequest(request)) return false;
+
   return true;
 }
 
