@@ -132,8 +132,9 @@ const checks = [
       files.dispatch.includes("size: providerRequestSize")
   },
   {
-    label: "OpenAI-compatible video references use JSON image objects and data URIs, not legacy URL-only fields",
+    label: "OpenAI-compatible video references use provider-compatible JSON fields and data URIs",
     pass: files.dispatch.includes("function shouldUseOpenAiVideoJsonReference(") &&
+      files.dispatch.includes("function shouldUseOpenAiVideoStringReference(") &&
       !files.dispatch.includes("function shouldUseSmartPickLidLegacyVideoReferences(") &&
       files.dispatch.includes("function smartPickLidJsonVideoResolution(") &&
       files.dispatch.includes("function openAiVideoCreateEndpoint(") &&
@@ -146,8 +147,9 @@ const checks = [
       files.dispatch.includes("aspect_ratio: params.videoParams.aspect_ratio") &&
       files.dispatch.includes("resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution)") &&
       files.dispatch.includes("openAiJsonVideoReferencePayload") &&
-      files.dispatch.includes("return imageUrl ? { image: { url: imageUrl } } : {}") &&
-      files.dispatch.includes("reference_images: urls.map((url) => ({ url }))") &&
+      files.dispatch.includes("stringReference ? urls : urls.map((url) => ({ url }))") &&
+      files.dispatch.includes("image: stringReference ? imageUrl : { url: imageUrl }") &&
+      files.dispatch.includes("shouldUseOpenAiVideoStringReference(params.baseUrl)") &&
       !createVideoTaskFunction.includes("image: firstImageUrl") &&
       !createVideoTaskFunction.includes("input_reference: firstImageUrl") &&
       !createVideoTaskFunction.includes('imageKind: useSmartPickLidLegacyReferences ? "smartpicklid_url_reference"') &&

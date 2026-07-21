@@ -1770,12 +1770,17 @@ function shouldUseOpenAiVideoJsonReference(params: {
   model: string;
   protocol: VideoProviderProtocol;
 }) {
-  void params.baseUrl;
   void params.model;
   if (params.protocol !== "openai-videos") return false;
   const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
   if (explicitMode === "multipart" || explicitMode === "form") return false;
   return true;
+}
+
+function shouldUseOpenAiVideoStringReference(baseUrl: string) {
+  // These proxy gateways expose a Go-compatible `image: string` field,
+  // unlike the official xAI API's `image: { url }` shape.
+  return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl);
 }
 
 function shouldPreferOpenAiJsonVideoRequest(params: {
@@ -1807,10 +1812,14 @@ function openAiJsonVideoReferenceLimit() {
   return Math.max(1, Math.min(Math.trunc(configured), MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT));
 }
 
-function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string) {
-  if (urls.length > 1) return { reference_images: urls.map((url) => ({ url })) };
+function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string, stringReference = false) {
+  if (urls.length > 1) {
+    return {
+      reference_images: stringReference ? urls : urls.map((url) => ({ url }))
+    };
+  }
   const imageUrl = urls[0] ?? fallbackImageUrl;
-  return imageUrl ? { image: { url: imageUrl } } : {};
+  return imageUrl ? { image: stringReference ? imageUrl : { url: imageUrl } } : {};
 }
 
 async function createVideoTask(params: {
@@ -1838,7 +1847,13 @@ async function createVideoTask(params: {
         targetSize: providerReferenceTargetSize
       })
     : [];
-  const openAiJsonReferencePayload = useOpenAiJsonReference ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl) : {};
+  const openAiJsonReferencePayload = useOpenAiJsonReference
+    ? openAiJsonVideoReferencePayload(
+        openAiJsonImageUrls,
+        firstImageUrl,
+        shouldUseOpenAiVideoStringReference(params.baseUrl)
+      )
+    : {};
   const openAiVideosForm = params.protocol === "openai-videos" && !useOpenAiJsonReference && params.referenceAssets.length
     ? await buildVideoReferenceForm({
         referenceAssets: params.referenceAssets,
