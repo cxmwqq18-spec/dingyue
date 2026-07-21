@@ -10,7 +10,6 @@ import {
 } from "@/lib/stores/site-store";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
-import { cookies } from "next/headers";
 import type { ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
@@ -18,8 +17,8 @@ export const dynamic = "force-dynamic";
 
 const PUBLIC_EMPTY_SHELL_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 
-async function hasAnyCustomerSessionCookie(): Promise<boolean> {
-  return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+function hasAnyCustomerSessionCookie(request: NextRequest): boolean {
+  return request.cookies.getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
 }
 
 function emptyRuntime(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
@@ -38,7 +37,7 @@ function emptyRuntime(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const includeMode = new URL(request.url).searchParams.get("include");
-  if (!(await hasAnyCustomerSessionCookie())) {
+  if (!hasAnyCustomerSessionCookie(request)) {
     if (includeMode === "shell") {
       return NextResponse.json(
         {
