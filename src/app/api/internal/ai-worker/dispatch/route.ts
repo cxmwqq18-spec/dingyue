@@ -222,9 +222,11 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
     const multipartReferenceCandidates = referenceAssetCount > 0
       ? ["grok-video-3-max", "grok-video-3-pro", "grok-video-1.5-max", "grok-video-1.5-pro"]
       : [];
+    const normalizedFirstCandidates = referenceAssetCount > 0 ? [] : [normalizedModel];
     return Array.from(new Set([
-      normalizedModel,
+      ...normalizedFirstCandidates,
       ...multipartReferenceCandidates,
+      normalizedModel,
       "grok-imagine-video",
       "grok-imagine-video-1.5-preview"
     ].filter(Boolean)));
@@ -265,6 +267,7 @@ function shouldTryNextVideoModel(error: unknown) {
   if (isVideoModelUnavailableError(error)) return true;
   const message = errorMessage(error).toLowerCase();
   return message.includes("ai_provider_video_create_failed_502_") ||
+    message.includes("ai_provider_video_create_failed_404_") ||
     message.includes("ai_provider_video_create_failed_503_") ||
     message.includes("ai_provider_video_create_failed_504_") ||
     message.includes("ai_provider_video_create_failed_524_") ||
@@ -738,15 +741,15 @@ function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = vi
     : "";
   return [
     `Image-to-video task: create exactly one ${videoParams.duration}-second realistic MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
-    "The uploaded images are the source of truth. The video must feature the same uploaded people, not newly cast people and not an unrelated location or crowd scene.",
+    "The uploaded images are the source of truth. The video must feature the same uploaded subject, pet, person, product, prop, and scene facts, not a newly cast subject and not an unrelated location or crowd scene.",
     referenceAssets.length > 1
       ? "Cast requirement: combine the uploaded people from the ordered reference images into one coherent scene. Keep exactly those selected people as the main visible subjects."
-      : "Identity requirement: keep the uploaded subject as the main visible subject.",
+      : "Reference requirement: keep the uploaded subject, pet, person, product, or prop as the main visible subject.",
     frameManifest,
     userNote ? `Customer direction, highest priority: ${userNote}` : "",
     openingBeat,
-    "Use a simple close portrait or couple composition unless the customer explicitly requests a different location. Keep the camera focused on the uploaded subjects and their requested interaction.",
-    "Make the action continuous and natural. Preserve recognizable faces, hair, wardrobe cues, body proportions, and lighting continuity throughout.",
+    "Use the uploaded image as the opening visual anchor. Keep the camera focused on that uploaded subject and the requested action.",
+    "Make the action continuous and natural. Preserve recognizable fur, face, body shape, wardrobe or object cues, props, background cues, and lighting continuity throughout.",
     "Return only one clean video clip: no captions, no UI, no watermark, no split screen, no collage, no storyboard panels."
   ].filter(Boolean).join("\n\n").slice(0, 2200);
 }
@@ -2043,7 +2046,7 @@ async function generateVideoWithProvider(params: {
   const videoParams = videoProviderParams(params.payload);
   const videoPromptForReferenceAssets = (assets: ImageInputAsset[]) => !assets.length
       ? buildTextToVideoPrompt(params.payload)
-      : preferJsonVideoRequest && assets.length > 1
+      : preferJsonVideoRequest
       ? buildDirectJsonVideoPrompt(params.payload, assets)
       : buildVideoPrompt(params.payload, assets);
   const prompt = videoPromptForReferenceAssets(referenceAssets);

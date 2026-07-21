@@ -160,6 +160,7 @@ const checks = [
       files.dispatch.includes("isGrokImagineVideoModel(params.model)") &&
       files.dispatch.includes("multipartReferenceCandidates") &&
       files.dispatch.includes('"grok-video-3-max"') &&
+      files.dispatch.includes("normalizedFirstCandidates") &&
       files.dispatch.includes("const useProviderFrameUrls = protocol !== \"openai-videos\" || shouldUseSmartPickLidLegacyVideoReferences") &&
       files.dispatch.includes("await videoProviderFrameUrls({ referenceAssets, timeoutMs })") &&
       files.dispatch.includes("videoProviderPreparedDataUriFrameUrls") &&
@@ -169,6 +170,7 @@ const checks = [
   {
     label: "video provider falls through to another model when a create channel returns a gateway error",
     pass: files.dispatch.includes("function shouldTryNextVideoModel(") &&
+      files.dispatch.includes('message.includes("ai_provider_video_create_failed_404_")') &&
       files.dispatch.includes('message.includes("ai_provider_video_create_failed_502_")') &&
       files.dispatch.includes('message.includes("ai_provider_video_create_failed_524_")') &&
       files.dispatch.includes('message.includes("upstream_error")') &&
@@ -183,9 +185,8 @@ const checks = [
       files.dispatch.includes("const imageToVideoCandidates") &&
       videoProviderModelCandidatesFunction.includes('protocol === "openai-videos" && isSmartPickLidBaseUrl') &&
       videoProviderModelCandidatesFunction.includes("multipartReferenceCandidates") &&
-      videoProviderModelCandidatesFunction.includes("normalizedModel,") &&
+      videoProviderModelCandidatesFunction.includes("normalizedFirstCandidates") &&
       videoProviderModelCandidatesFunction.includes("referenceAssetCount > 1") &&
-      videoProviderModelCandidatesFunction.includes('!normalizedModel.includes("1.5")') &&
       files.dispatch.includes('protocol === "openai-videos" && (referenceAssetCount > 0 || shouldPreferSmartPickLidJsonModel)') &&
       files.dispatch.includes("return Array.from(new Set(imageToVideoCandidates.filter(Boolean)))") &&
       files.dispatch.includes("videoProviderModelCandidates(model, { protocol, referenceAssetCount: taskReferenceAssets.length, baseUrl })")
