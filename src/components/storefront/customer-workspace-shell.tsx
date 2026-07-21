@@ -3214,7 +3214,17 @@ export function CustomerWorkspaceShell({
             </button>
             <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
               {isVideoAsset(selectedPreviewAsset) ? (
-                <video aria-label={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" controls playsInline src={workspaceAssetPreviewUrl(selectedPreviewAsset)} title={selectedPreviewLabel} />
+                <video
+                  aria-label={selectedPreviewLabel}
+                  className="max-h-[82vh] w-full object-contain"
+                  controls
+                  key={selectedPreviewAsset.id}
+                  playsInline
+                  poster={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
+                  preload="metadata"
+                  src={workspaceAssetPreviewUrl(selectedPreviewAsset)}
+                  title={selectedPreviewLabel}
+                />
               ) : (
                 <img alt={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" src={workspaceAssetPreviewUrl(selectedPreviewAsset)} />
               )}

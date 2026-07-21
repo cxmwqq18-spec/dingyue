@@ -17,6 +17,8 @@ const files = {
 
 const directJsonPromptFunction = files.dispatch.match(/function buildDirectJsonVideoPrompt[\s\S]*?\n}\n\nfunction buildVideoSceneImagePrompt/)?.[0] ?? "";
 const orderedVideoProvidersFunction = files.dispatch.match(/function orderedVideoProviders[\s\S]*?\n}\n\nfunction orderedVideoSceneImageProviders/)?.[0] ?? "";
+const videoProviderModelCandidatesFunction = files.dispatch.match(/function videoProviderModelCandidates[\s\S]*?\n}\n\nfunction isVideoModelUnavailableError/)?.[0] ?? "";
+const createVideoTaskFunction = files.dispatch.match(/async function createVideoTask[\s\S]*?\n}\n\nasync function pollVideoTask/)?.[0] ?? "";
 
 const checks = [
   {
@@ -127,43 +129,33 @@ const checks = [
       files.dispatch.includes("function openAiVideoRequestSize(") &&
       files.dispatch.includes('new Set(["720x1280", "1280x720", "1024x1792", "1792x1024"])') &&
       files.dispatch.includes("form.append(\"size\", openAiVideoRequestSize(params.videoParams))") &&
-      files.dispatch.includes("size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}`")
+      files.dispatch.includes("size: providerRequestSize")
   },
   {
-    label: "SmartPickLid Grok Imagine Video uses legacy URL JSON references through the proxy-supported create endpoint",
+    label: "OpenAI-compatible video references use JSON image objects and data URIs, not legacy URL-only fields",
     pass: files.dispatch.includes("function shouldUseOpenAiVideoJsonReference(") &&
-      files.dispatch.includes("function shouldUseSmartPickLidLegacyVideoReferences(") &&
+      !files.dispatch.includes("function shouldUseSmartPickLidLegacyVideoReferences(") &&
       files.dispatch.includes("function smartPickLidJsonVideoResolution(") &&
       files.dispatch.includes("function openAiVideoCreateEndpoint(") &&
       files.dispatch.includes('usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"') &&
       files.dispatch.includes("openAiVideoCreateEndpoint(params.baseUrl)") &&
       files.dispatch.includes("/v1/videos/generations") &&
-      files.dispatch.includes("useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params) && !useSmartPickLidLegacyReferences") &&
-      files.dispatch.includes('!useSmartPickLidLegacyReferences && params.referenceAssets.length') &&
-      files.dispatch.includes("seconds: params.videoParams.duration") &&
+      files.dispatch.includes("const useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params)") &&
       files.dispatch.includes("duration: Number(params.videoParams.duration)") &&
-      files.dispatch.includes("image: firstImageUrl") &&
-      files.dispatch.includes("images: params.imageUrls") &&
-      files.dispatch.includes("input_reference: firstImageUrl") &&
-      !files.dispatch.includes("input_reference: params.imageUrls") &&
+      files.dispatch.includes("seconds: params.videoParams.duration") &&
       files.dispatch.includes("aspect_ratio: params.videoParams.aspect_ratio") &&
       files.dispatch.includes("resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution)") &&
       files.dispatch.includes("openAiJsonVideoReferencePayload") &&
-      files.dispatch.includes("return imageUrl ? { image: imageUrl } : {}") &&
-      !files.dispatch.includes("image: { url: imageUrl }") &&
+      files.dispatch.includes("return imageUrl ? { image: { url: imageUrl } } : {}") &&
       files.dispatch.includes("reference_images: urls.map((url) => ({ url }))") &&
-      !files.dispatch.includes("? { images: openAiJsonImageUrls }") &&
+      !createVideoTaskFunction.includes("image: firstImageUrl") &&
+      !createVideoTaskFunction.includes("input_reference: firstImageUrl") &&
+      !createVideoTaskFunction.includes('imageKind: useSmartPickLidLegacyReferences ? "smartpicklid_url_reference"') &&
       files.dispatch.includes('AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE') &&
-      files.dispatch.includes("isSmartPickLidBaseUrl(params.baseUrl) &&") &&
-      files.dispatch.includes("isGrokImagineVideoModel(params.model)") &&
-      files.dispatch.includes("multipartReferenceCandidates") &&
-      files.dispatch.includes('"grok-video-3-max"') &&
-      files.dispatch.includes("const useProviderFrameUrls = protocol !== \"openai-videos\" || shouldUseSmartPickLidLegacyVideoReferences") &&
-      files.dispatch.includes("await videoProviderFrameUrls({ referenceAssets, timeoutMs })") &&
       files.dispatch.includes("videoProviderPreparedDataUriFrameUrls") &&
-      files.dispatch.includes('imageKind: useSmartPickLidLegacyReferences ? "smartpicklid_url_reference"') &&
+      files.dispatch.includes("useProviderFrameUrls = protocol !== \"openai-videos\"") &&
       files.dispatch.includes("json_reference_images") &&
-      files.dispatch.includes("shouldPreferSmartPickLidJsonModel")
+      files.dispatch.includes("json_image")
   },
   {
     label: "video provider falls through to another model when a create channel returns a gateway error",
@@ -177,16 +169,31 @@ const checks = [
   },
   {
     label: "OpenAI-compatible reference video prefers image-to-video models over text-to-video models",
-    pass: files.dispatch.includes("function isImageToVideoModel(") &&
+    pass: videoProviderModelCandidatesFunction.includes("function videoProviderModelCandidates(") &&
+      files.dispatch.includes("function isImageToVideoModel(") &&
       files.dispatch.includes("const imageToVideoCandidates") &&
-      files.dispatch.includes('protocol === "openai-videos" && isSmartPickLidBaseUrl') &&
-      files.dispatch.includes("multipartReferenceCandidates") &&
-      files.dispatch.includes("normalizedModel,") &&
-      files.dispatch.includes('protocol === "openai-videos" && referenceAssetCount > 1') &&
-      files.dispatch.includes('!normalizedModel.includes("1.5")') &&
+      videoProviderModelCandidatesFunction.includes('protocol === "openai-videos" && isSmartPickLidBaseUrl') &&
+      videoProviderModelCandidatesFunction.includes("singleReferenceCandidates") &&
+      videoProviderModelCandidatesFunction.includes("multiReferenceCandidates") &&
+      videoProviderModelCandidatesFunction.includes("referenceAssetCount > 1") &&
+      videoProviderModelCandidatesFunction.includes("referenceAssetCount === 1") &&
+      videoProviderModelCandidatesFunction.indexOf('"grok-imagine-video"') < videoProviderModelCandidatesFunction.indexOf('"grok-video-3-max"') &&
       files.dispatch.includes('protocol === "openai-videos" && (referenceAssetCount > 0 || shouldPreferSmartPickLidJsonModel)') &&
+      videoProviderModelCandidatesFunction.includes("return Array.from(new Set([") &&
       files.dispatch.includes("return Array.from(new Set(imageToVideoCandidates.filter(Boolean)))") &&
       files.dispatch.includes("videoProviderModelCandidates(model, { protocol, referenceAssetCount: taskReferenceAssets.length, baseUrl })")
+  },
+  {
+    label: "video worker optimizes generated video files for playback before storage",
+    pass: files.dispatch.includes("ffmpeg-static") &&
+      files.dispatch.includes("function optimizeGeneratedVideoForPlayback(") &&
+      files.dispatch.includes("AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS") &&
+      files.dispatch.includes("AI_WORKER_VIDEO_OPTIMIZE_CRF") &&
+      files.dispatch.includes('"-movflags"') &&
+      files.dispatch.includes('"+faststart"') &&
+      files.dispatch.includes("const downloadedVideo = await downloadVideoResult") &&
+      files.dispatch.includes("const video = await optimizeGeneratedVideoForPlayback(downloadedVideo)") &&
+      files.dispatch.includes("writeCustomerAssetFileShared")
   },
   {
     label: "video worker supports text-to-video requests without frame images",

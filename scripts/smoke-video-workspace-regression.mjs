@@ -172,6 +172,7 @@ assert(videoProviderLimits.includes("Math.min(themeLimit, providerLimit)"), "eff
 
 const workspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
 const localAssetsRoute = read("src/app/api/local-assets/[...path]/route.ts");
+const workspaceVideoPreviewButton = workspaceShell.match(/function WorkspaceVideoPreviewButton[\s\S]*?\n}\n\nfunction mediaLabel/)?.[0] ?? "";
 assert(workspaceShell.includes("useState(() => !initialRuntime)"), "workspace shell should fetch runtime immediately only when no initial runtime is available");
 assert(workspaceShell.includes("if (runtimeFetchEnabled || initialRuntime) return;"), "workspace shell should not auto-refresh over server-hydrated workspace data on first paint");
 assert(workspaceShell.includes("...(current.runtime ? { runtime: current.runtime } : {})"), "workspace runtime refresh should keep existing runtime while a new request is loading");
@@ -242,11 +243,15 @@ assert(!workspaceShell.includes("loop"), "video result cards should not loop in 
 assert(workspaceShell.includes("renderVideoPreviewLoading"), "video cards should keep one unified loading cover while the first frame poster is captured");
 assert(!workspaceShell.includes("capturePosterFrame") && !workspaceShell.includes("requestPosterFrame"), "video result cards should not extract posters in the browser");
 assert(!workspaceShell.includes("videoPosterUrlForJob"), "video cards should not use source frames as loading posters");
-assert(!workspaceShell.includes("poster={"), "video thumbnails should not show stale poster images while media loads");
+assert(workspaceVideoPreviewButton.includes("const posterSrc = useMemo(() => workspaceVideoPosterUrl(src), [src]);"), "video thumbnails should request server-generated posters instead of reading MP4 metadata");
+assert(workspaceVideoPreviewButton.includes("src={posterSrc}"), "video thumbnails should render server-generated poster images");
 assert(workspaceShell.includes("WorkspaceVideoPreviewButton"), "video thumbnails should use a dedicated preview component");
 assert(workspaceShell.includes("IntersectionObserver"), "video thumbnails should lazy-load when they approach the viewport");
 assert(workspaceShell.includes("VIDEO_PREVIEW_INTERSECTION_MARGIN"), "video thumbnail lazy-loading should use an explicit viewport margin");
-assert(!workspaceShell.includes('preload="metadata"'), "video thumbnails should not preload MP4 metadata in the results grid");
+assert(!workspaceVideoPreviewButton.includes('preload="metadata"'), "video thumbnails should not preload MP4 metadata in the results grid");
+assert(workspaceShell.includes("key={selectedPreviewAsset.id}"), "video preview dialog should remount the video element when switching assets");
+assert(workspaceShell.includes("poster={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}"), "video preview dialog should show the cached server poster while the MP4 loads");
+assert(workspaceShell.includes('preload="metadata"'), "video preview dialog should avoid preloading the entire MP4 before playback");
 assert(localAssetsRoute.includes("wantsVideoPoster") && localAssetsRoute.includes('searchParams.get("poster") === "1"'), "local asset route should expose authenticated video poster requests");
 assert(localAssetsRoute.includes("ffmpeg-static") && localAssetsRoute.includes("generateVideoPoster"), "local asset route should generate cached video posters server-side");
 assert(localAssetsRoute.includes("videoPosterInflight"), "local asset route should dedupe concurrent poster generation");
@@ -439,7 +444,12 @@ assert(dispatchRoute.includes("Clean output: no subtitles"), "video prompts shou
 assert(dispatchRoute.includes("Infer plausible preceding and following action beats"), "video prompt should ask the provider to infer motion beats from the frame and prompt");
 assert(dispatchRoute.includes("Preserve natural human body proportions"), "video prompt should protect body proportions and sharpness");
 assert(dispatchRoute.includes(".slice(0, 3600)"), "video prompt should stay bounded while leaving room for system rules and user notes");
-assert(!dispatchRoute.includes("ffmpeg-static"), "video worker should not depend on ffmpeg for local fallback output");
+assert(
+  !dispatchRoute.includes("generateLocalFallbackVideo") &&
+    !dispatchRoute.includes("local_video_fallback_started") &&
+    !dispatchRoute.includes("Local video fallback"),
+  "video worker should not depend on local fallback output"
+);
 
 assert(siteStore.includes("assetRules: { min: 0, max: DEFAULT_VIDEO_FRAME_LIMIT"), "default video workflow should allow text-to-video while using the shared frame limit");
 assert(siteStore.includes("maxFrames: DEFAULT_VIDEO_FRAME_LIMIT"), "default video themes should use shared frame limit");
