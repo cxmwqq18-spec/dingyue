@@ -205,7 +205,7 @@ export function ThemeRenderer({
       suppressHydrationWarning={mode === "published"}
     >
       {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
-      {runtime?.customer && mode === "published" ? (
+      {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" ? (
         <>
           <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
           <CustomerWorkspaceRuntimePrefetch siteId={site.id} siteSlug={publicSlug} />
