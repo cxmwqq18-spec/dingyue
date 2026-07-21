@@ -255,6 +255,10 @@ assert(workspaceShell.includes('preload="metadata"'), "video preview dialog shou
 assert(localAssetsRoute.includes("wantsVideoPoster") && localAssetsRoute.includes('searchParams.get("poster") === "1"'), "local asset route should expose authenticated video poster requests");
 assert(localAssetsRoute.includes("ffmpeg-static") && localAssetsRoute.includes("generateVideoPoster"), "local asset route should generate cached video posters server-side");
 assert(localAssetsRoute.includes("videoPosterInflight"), "local asset route should dedupe concurrent poster generation");
+assert(localAssetsRoute.includes("CUSTOMER_ASSET_X_ACCEL_PREFIX"), "local asset route should support an explicit X-Accel media delivery switch");
+assert(localAssetsRoute.includes('"X-Accel-Redirect": redirectPath'), "local asset route should let nginx send private media after app authorization");
+assert(localAssetsRoute.includes("xAccelPosterResponse(poster)"), "video posters should be eligible for nginx internal sendfile delivery");
+assert(localAssetsRoute.includes("xAccelAssetResponse(asset)"), "video assets should be eligible for nginx internal sendfile delivery");
 assert(workspaceShell.includes("function assetPreviewIsLoading"), "workspace shell should recognize server-side preview loading status");
 assert(workspaceShell.includes('previewStatus === "loading"'), "workspace shell should treat preparing asset previews as not ready");
 assert(workspaceShell.includes("Preparing preview"), "video frame cards should show an explicit loading preview instead of a stock cover");

@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 import { hasCustomerSession, hasSiteAdminSession } from "@/lib/api-auth";
 import {
   contentTypeForCustomerAssetPath,
+  customerAssetRoot,
   customerAssetFilePathFromSegments,
   hasRemoteCustomerAssetReadSource,
   readCustomerAssetFileRemote,
@@ -47,6 +48,12 @@ const assetAccessCache = new Map<string, { ok: boolean; expiresAt: number }>();
 const assetAccessCacheTtlMs = 30_000;
 const assetCacheControl = "private, max-age=86400, immutable";
 const videoPosterCacheControl = "private, max-age=86400, immutable";
+
+function customerAssetXAccelPrefix(): string {
+  const configured = process.env.CUSTOMER_ASSET_X_ACCEL_PREFIX?.trim();
+  if (!configured) return "";
+  return configured.endsWith("/") ? configured : `${configured}/`;
+}
 
 function cachedAssetAccess(cacheKey: string): boolean | undefined {
   const cached = assetAccessCache.get(cacheKey);
@@ -137,6 +144,42 @@ function videoPosterHeaders(contentLength: number): HeadersInit {
     "Content-Length": String(contentLength),
     "Cache-Control": videoPosterCacheControl
   };
+}
+
+function xAccelRedirectPathForFile(filePath: string | undefined): string | undefined {
+  const prefix = customerAssetXAccelPrefix();
+  if (!prefix || !filePath) return undefined;
+  const root = customerAssetRoot();
+  const relativePath = path.relative(root, filePath);
+  if (!relativePath || relativePath.startsWith("..") || path.isAbsolute(relativePath)) return undefined;
+  return `${prefix}${relativePath.split(path.sep).map(encodeURIComponent).join("/")}`;
+}
+
+function xAccelAssetResponse(asset: ResolvedAsset, extra?: HeadersInit): Response | undefined {
+  if (asset.placeholder || asset.bytes) return undefined;
+  const redirectPath = xAccelRedirectPathForFile(asset.filePath);
+  if (!redirectPath) return undefined;
+  return new Response(null, {
+    headers: {
+      "Content-Type": asset.contentType,
+      "Accept-Ranges": "bytes",
+      "Cache-Control": assetCacheControl,
+      "X-Accel-Redirect": redirectPath,
+      ...extra
+    }
+  });
+}
+
+function xAccelPosterResponse(poster: { filePath: string; size: number }): Response | undefined {
+  const redirectPath = xAccelRedirectPathForFile(poster.filePath);
+  if (!redirectPath) return undefined;
+  return new Response(null, {
+    headers: {
+      "Content-Type": "image/jpeg",
+      "Cache-Control": videoPosterCacheControl,
+      "X-Accel-Redirect": redirectPath
+    }
+  });
 }
 
 function wantsVideoPoster(request: Request): boolean {
@@ -355,6 +398,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
     }
     if (wantsVideoPoster(_request)) {
       const poster = await resolveVideoPoster(asset);
+      const accelResponse = xAccelPosterResponse(poster);
+      if (accelResponse) return accelResponse;
       const bytes = await readFile(poster.filePath);
       return new Response(new Uint8Array(bytes), {
         headers: videoPosterHeaders(poster.size)
@@ -371,6 +416,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       });
     }
     if (range) {
+      const accelResponse = xAccelAssetResponse(asset);
+      if (accelResponse) return accelResponse;
       const chunk = await readAssetBytes(asset, range);
       return new Response(chunk, {
         status: 206,
@@ -379,6 +426,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
         })
       });
     }
+    const accelResponse = xAccelAssetResponse(asset);
+    if (accelResponse) return accelResponse;
     const bytes = await readAssetBytes(asset);
     return new Response(bytes, {
       headers: assetHeaders(asset, asset.size)
@@ -400,10 +449,14 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
     }
     if (wantsVideoPoster(_request)) {
       const poster = await resolveVideoPoster(asset);
+      const accelResponse = xAccelPosterResponse(poster);
+      if (accelResponse) return accelResponse;
       return new Response(null, {
         headers: videoPosterHeaders(poster.size)
       });
     }
+    const accelResponse = xAccelAssetResponse(asset);
+    if (accelResponse) return accelResponse;
     return new Response(null, {
       headers: assetHeaders(asset, asset.size)
     });
