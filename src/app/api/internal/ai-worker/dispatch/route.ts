@@ -1787,6 +1787,17 @@ function shouldUseSmartPickLidLegacyVideoReferences(params: {
     isGrokImagineVideoModel(params.model);
 }
 
+function shouldBlockUnverifiedSmartPickLidReferenceVideo(params: {
+  baseUrl: string;
+  protocol: VideoProviderProtocol;
+  referenceAssetCount: number;
+}) {
+  if (process.env.AI_WORKER_ALLOW_UNVERIFIED_SMARTPICKLID_REFERENCE_VIDEO?.trim() === "1") return false;
+  return params.referenceAssetCount > 0 &&
+    params.protocol === "openai-videos" &&
+    isSmartPickLidBaseUrl(params.baseUrl);
+}
+
 function shouldPreferOpenAiJsonVideoRequest(params: {
   baseUrl: string;
   model: string;
@@ -2019,6 +2030,13 @@ async function generateVideoWithProvider(params: {
   const requestedReferenceAssets = videoFrameAssets(params.payload);
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
   const protocol = videoProviderProtocol(baseUrl);
+  if (shouldBlockUnverifiedSmartPickLidReferenceVideo({
+    baseUrl,
+    protocol,
+    referenceAssetCount: requestedReferenceAssets.length
+  })) {
+    throw new Error("ai_provider_video_reference_channel_unreliable_smartpicklid");
+  }
   const configuredProviderReferenceLimit = Math.max(1, Math.trunc(provider.maxImagesPerRequest || 1));
   const preferJsonVideoRequest = shouldPreferOpenAiJsonVideoRequest({ baseUrl, model, protocol });
   const directJsonReferences = shouldPreferDirectOpenAiJsonVideoReferences({

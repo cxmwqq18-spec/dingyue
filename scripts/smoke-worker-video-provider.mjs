@@ -135,6 +135,9 @@ const checks = [
     label: "SmartPickLid Grok Imagine Video uses proxy-supported legacy URL references",
     pass: files.dispatch.includes("function shouldUseOpenAiVideoJsonReference(") &&
       files.dispatch.includes("function shouldUseSmartPickLidLegacyVideoReferences(") &&
+      files.dispatch.includes("function shouldBlockUnverifiedSmartPickLidReferenceVideo(") &&
+      files.dispatch.includes("AI_WORKER_ALLOW_UNVERIFIED_SMARTPICKLID_REFERENCE_VIDEO") &&
+      files.dispatch.includes("ai_provider_video_reference_channel_unreliable_smartpicklid") &&
       files.dispatch.includes("function smartPickLidJsonVideoResolution(") &&
       files.dispatch.includes("function openAiVideoCreateEndpoint(") &&
       files.dispatch.includes('usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"') &&
