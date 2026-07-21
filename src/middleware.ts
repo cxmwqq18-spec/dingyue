@@ -116,6 +116,30 @@ const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refin
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
 const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries"><defs><linearGradient id="aidreamcapes-header-logo" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff0b8"/><stop offset="0.38" stop-color="#ff75b7"/><stop offset="1" stop-color="#8a7cff"/></linearGradient><radialGradient id="aidreamcapes-header-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="0.55" stop-color="#b8f7ff" stop-opacity="0.25"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient></defs><rect width="512" height="512" rx="118" fill="#080a12"/><circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="30"/><circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" stroke-width="23" opacity="0.95"/><circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-header-aura)"/><path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="13" stroke-linecap="round"/><path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" stroke-width="17" stroke-linecap="round" opacity="0.76"/></svg>`;
 
+function envSwitch(value: string | undefined): boolean | undefined {
+  const normalized = String(value ?? "").trim().toLowerCase();
+  if (["0", "false", "off", "no"].includes(normalized)) return false;
+  if (["1", "true", "on", "yes"].includes(normalized)) return true;
+  return undefined;
+}
+
+function isEnglishPublicStorefrontHtmlRequest(request: NextRequest): boolean {
+  if (isSpanishXbyRequest(request) || isPrivateStorefrontHtmlRequest(request)) return false;
+  const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  return TARGET_SITE_PATH_RE.test(pathname) || TARGET_HOST_RE.test(host);
+}
+
+function storefrontEdgeHtmlRewriteEnabled(request: NextRequest): boolean {
+  const globalRewrite = envSwitch(process.env.STOREFRONT_EDGE_HTML_REWRITE);
+  if (globalRewrite !== undefined) return globalRewrite;
+
+  const englishRewrite = envSwitch(process.env.STOREFRONT_ENGLISH_HTML_REWRITE);
+  if (englishRewrite !== undefined && isEnglishPublicStorefrontHtmlRequest(request)) return englishRewrite;
+
+  return true;
+}
+
 function normalizePathSlug(value: string): string {
   const decoded = (() => {
     try {
@@ -242,7 +266,7 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
 }
 
 function shouldReorderStorefrontHead(request: NextRequest): boolean {
-  if (process.env.STOREFRONT_EDGE_HTML_REWRITE === "0") return false;
+  if (!storefrontEdgeHtmlRewriteEnabled(request)) return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
@@ -261,7 +285,7 @@ function isSpanishXbyRequest(request: NextRequest): boolean {
 }
 
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
-  if (process.env.STOREFRONT_EDGE_HTML_REWRITE === "0") return false;
+  if (!storefrontEdgeHtmlRewriteEnabled(request)) return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   if (INTERNAL_PATH_RE.test(request.nextUrl.pathname)) return false;

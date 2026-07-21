@@ -16,6 +16,8 @@ import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+const PUBLIC_EMPTY_SHELL_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
+
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
 }
@@ -49,7 +51,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           toolMenuItems: [],
           videoThemes: []
         },
-        { headers: { "Cache-Control": "private, max-age=8" } }
+        { headers: { "Cache-Control": PUBLIC_EMPTY_SHELL_CACHE_CONTROL, Vary: "Cookie" } }
       );
     }
     return NextResponse.json(

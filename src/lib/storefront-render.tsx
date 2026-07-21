@@ -980,7 +980,7 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
 }
 
 function publicCustomerBootstrapEnabled(): boolean {
-  return process.env.STOREFRONT_PUBLIC_CLIENT_CUSTOMER_BOOTSTRAP !== "0";
+  return process.env.STOREFRONT_PUBLIC_CLIENT_CUSTOMER_BOOTSTRAP === "1";
 }
 
 async function readCustomerSessionId(siteId: string): Promise<string | undefined> {

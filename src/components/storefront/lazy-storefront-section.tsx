@@ -39,6 +39,18 @@ type PendingSectionBatch = {
 
 const sectionPayloadCache = new Map<string, StorefrontSectionPayload>();
 const pendingSectionBatches = new Map<string, PendingSectionBatch>();
+const lazySectionBatchWindowMs = Math.max(18, Number(process.env.NEXT_PUBLIC_STOREFRONT_SECTION_BATCH_WINDOW_MS ?? "180") || 180);
+const lazySectionBatchSize = Math.min(24, Math.max(4, Number(process.env.NEXT_PUBLIC_STOREFRONT_SECTION_BATCH_SIZE ?? "20") || 20));
+const fallbackLazySectionRootMargin = "480px 0px";
+const lazySectionRootMarginTokenRe = /^-?(?:\d+|\d*\.\d+)(?:px|%)$/;
+const configuredLazySectionRootMargin = process.env.NEXT_PUBLIC_STOREFRONT_SECTION_ROOT_MARGIN;
+const lazySectionRootMargin = (() => {
+  const value = String(configuredLazySectionRootMargin || fallbackLazySectionRootMargin).trim();
+  const tokens = value.split(/\s+/);
+  return tokens.length >= 1 && tokens.length <= 4 && tokens.every((token) => lazySectionRootMarginTokenRe.test(token))
+    ? value
+    : fallbackLazySectionRootMargin;
+})();
 let lazyMountComponent: LazyStorefrontSectionMountComponent | null = null;
 let lazyMountRequest: Promise<LazyStorefrontSectionMountComponent> | undefined;
 
@@ -147,12 +159,12 @@ function loadSectionPayload(apiPath: string, sectionId: string) {
     if (!batch) {
       batch = {
         requests: [],
-        timer: setTimeout(() => flushSectionBatch(key), 18)
+        timer: setTimeout(() => flushSectionBatch(key), lazySectionBatchWindowMs)
       };
       pendingSectionBatches.set(key, batch);
     }
     batch.requests.push({ apiPath, reject, resolve, sectionId });
-    if (batch.requests.length >= 12) flushSectionBatch(key);
+    if (batch.requests.length >= lazySectionBatchSize) flushSectionBatch(key);
   });
 }
 
@@ -192,7 +204,7 @@ export function LazyStorefrontSection({ apiPath, intrinsicSize, sectionId, secti
         observer.disconnect();
         void load();
       },
-      { rootMargin: "1500px 0px" }
+      { rootMargin: lazySectionRootMargin }
     );
     observer.observe(node);
     const cancelSectionLoad = () => {
