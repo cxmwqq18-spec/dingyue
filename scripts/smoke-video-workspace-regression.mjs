@@ -262,6 +262,7 @@ assert(localAssetsRoute.includes("wantsVideoPreview") && localAssetsRoute.includ
 assert(localAssetsRoute.includes("generateVideoPreview"), "local asset route should generate cached lightweight video previews server-side");
 assert(localAssetsRoute.includes("videoPreviewInflight"), "local asset route should dedupe concurrent lightweight video preview generation");
 assert(localAssetsRoute.includes("CUSTOMER_ASSET_VIDEO_PREVIEW_CRF"), "lightweight video preview quality should be configurable");
+assert(localAssetsRoute.includes("force_divisible_by=2"), "lightweight video previews should keep H.264 dimensions divisible by 2");
 assert(localAssetsRoute.includes("xAccelAssetResponse(servedAsset)"), "lightweight video previews should also be eligible for nginx internal sendfile delivery");
 assert(localAssetsRoute.includes("CUSTOMER_ASSET_X_ACCEL_PREFIX"), "local asset route should support an explicit X-Accel media delivery switch");
 assert(localAssetsRoute.includes('"X-Accel-Redirect": redirectPath'), "local asset route should let nginx send private media after app authorization");

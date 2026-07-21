@@ -297,7 +297,7 @@ async function generateVideoPreview(sourcePath: string, previewPath: string): Pr
           "-bufsize",
           process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_BUFSIZE?.trim() || "1400k",
           "-vf",
-          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_FILTER?.trim() || "scale=854:480:force_original_aspect_ratio=decrease",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_FILTER?.trim() || "scale=854:480:force_original_aspect_ratio=decrease:force_divisible_by=2",
           "-pix_fmt",
           "yuv420p",
           "-c:a",
