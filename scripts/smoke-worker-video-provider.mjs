@@ -136,7 +136,7 @@ const checks = [
     pass: files.dispatch.includes("function shouldUseOpenAiVideoJsonReference(") &&
       files.dispatch.includes("function shouldUseSmartPickLidJsonVideoRequest(") &&
       files.dispatch.includes("function shouldBlockSmartPickLidReferenceVideo(") &&
-      files.dispatch.includes("AI_WORKER_BLOCK_SMARTPICKLID_REFERENCE_VIDEO") &&
+      files.dispatch.includes("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") &&
       files.dispatch.includes("ai_provider_video_reference_channel_unreliable_smartpicklid") &&
       files.dispatch.includes("function smartPickLidJsonVideoResolution(") &&
       files.dispatch.includes("function openAiVideoCreateEndpoint(") &&

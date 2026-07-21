@@ -1799,7 +1799,7 @@ function shouldBlockSmartPickLidReferenceVideo(params: {
   protocol: VideoProviderProtocol;
   referenceAssetCount: number;
 }) {
-  if (process.env.AI_WORKER_BLOCK_SMARTPICKLID_REFERENCE_VIDEO?.trim() !== "1") return false;
+  if (process.env.AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO?.trim() === "1") return false;
   return params.referenceAssetCount > 0 &&
     params.protocol === "openai-videos" &&
     isSmartPickLidBaseUrl(params.baseUrl);
