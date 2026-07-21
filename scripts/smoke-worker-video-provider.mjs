@@ -132,42 +132,41 @@ const checks = [
       files.dispatch.includes("size: providerRequestSize")
   },
   {
-    label: "SmartPickLid Grok Imagine Video uses proxy-supported legacy URL references",
+    label: "SmartPickLid video requests follow the provider documented JSON and multipart schemas",
     pass: files.dispatch.includes("function shouldUseOpenAiVideoJsonReference(") &&
-      files.dispatch.includes("function shouldUseSmartPickLidLegacyVideoReferences(") &&
-      files.dispatch.includes("function shouldBlockUnverifiedSmartPickLidReferenceVideo(") &&
-      files.dispatch.includes("AI_WORKER_ALLOW_UNVERIFIED_SMARTPICKLID_REFERENCE_VIDEO") &&
+      files.dispatch.includes("function shouldUseSmartPickLidJsonVideoRequest(") &&
+      files.dispatch.includes("function shouldBlockSmartPickLidReferenceVideo(") &&
+      files.dispatch.includes("AI_WORKER_BLOCK_SMARTPICKLID_REFERENCE_VIDEO") &&
       files.dispatch.includes("ai_provider_video_reference_channel_unreliable_smartpicklid") &&
       files.dispatch.includes("function smartPickLidJsonVideoResolution(") &&
       files.dispatch.includes("function openAiVideoCreateEndpoint(") &&
       files.dispatch.includes('usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"') &&
       files.dispatch.includes("openAiVideoCreateEndpoint(params.baseUrl)") &&
       files.dispatch.includes("/v1/videos/generations") &&
-      files.dispatch.includes("useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params) && !useSmartPickLidLegacyReferences") &&
-      files.dispatch.includes('!useSmartPickLidLegacyReferences && params.referenceAssets.length') &&
+      files.dispatch.includes("useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params) && !useSmartPickLidJsonRequest") &&
+      files.dispatch.includes("const useJsonReference = useSmartPickLidJsonRequest || useOpenAiJsonReference") &&
+      files.dispatch.includes('!useJsonReference && params.referenceAssets.length') &&
       files.dispatch.includes("seconds: params.videoParams.duration") &&
-      files.dispatch.includes("duration: Number(params.videoParams.duration)") &&
-      files.dispatch.includes("image: firstImageUrl") &&
-      files.dispatch.includes("images: params.imageUrls") &&
-      files.dispatch.includes("input_reference: firstImageUrl") &&
-      !files.dispatch.includes("input_reference: params.imageUrls") &&
       files.dispatch.includes("aspect_ratio: params.videoParams.aspect_ratio") &&
       files.dispatch.includes("resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution)") &&
       files.dispatch.includes("openAiJsonVideoReferencePayload") &&
-      files.dispatch.includes("return imageUrl ? { image: imageUrl } : {}") &&
-      !files.dispatch.includes("image: { url: imageUrl }") &&
+      files.dispatch.includes("? { images: urls }") &&
+      files.dispatch.includes("return options?.smartPickLid ? { image: imageUrl } : { image: { url: imageUrl } };") &&
       files.dispatch.includes("reference_images: urls.map((url) => ({ url }))") &&
-      !files.dispatch.includes("? { images: openAiJsonImageUrls }") &&
+      files.dispatch.includes("form.append(\"input_reference\"") &&
+      files.dispatch.includes("form.append(\"aspect_ratio\", params.videoParams.aspect_ratio)") &&
+      files.dispatch.includes("form.append(\"resolution\", smartPickLidJsonVideoResolution(params.videoParams.resolution))") &&
       files.dispatch.includes('AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE') &&
       files.dispatch.includes("isSmartPickLidBaseUrl(params.baseUrl) &&") &&
       files.dispatch.includes("isGrokImagineVideoModel(params.model)") &&
-      files.dispatch.includes("multipartReferenceCandidates") &&
-      files.dispatch.includes('"grok-video-3-max"') &&
+      videoProviderModelCandidatesFunction.includes('"grok-imagine-video"') &&
+      videoProviderModelCandidatesFunction.includes('"grok-video-3-pro"') &&
+      videoProviderModelCandidatesFunction.includes('"grok-video-3-max"') &&
+      !videoProviderModelCandidatesFunction.includes("multipartReferenceCandidates") &&
       files.dispatch.includes("normalizedFirstCandidates") &&
-      files.dispatch.includes("const useProviderFrameUrls = protocol !== \"openai-videos\" || shouldUseSmartPickLidLegacyVideoReferences") &&
-      files.dispatch.includes("await videoProviderFrameUrls({ referenceAssets, timeoutMs })") &&
+      files.dispatch.includes("const useProviderFrameUrls = protocol !== \"openai-videos\" || !preferJsonVideoRequest") &&
       files.dispatch.includes("videoProviderPreparedDataUriFrameUrls") &&
-      files.dispatch.includes('imageKind: useSmartPickLidLegacyReferences ? "smartpicklid_url_reference"') &&
+      files.dispatch.includes("smartpicklid_json_data_uri_image") &&
       files.dispatch.includes("shouldPreferSmartPickLidJsonModel")
   },
   {
@@ -182,12 +181,14 @@ const checks = [
       files.dispatch.includes("if (!shouldTryNextVideoModel(error)) break")
   },
   {
-    label: "OpenAI-compatible reference video prefers image-to-video models over text-to-video models",
+    label: "OpenAI-compatible reference video uses provider-compatible image-to-video candidates",
     pass: videoProviderModelCandidatesFunction.includes("function videoProviderModelCandidates(") &&
       files.dispatch.includes("function isImageToVideoModel(") &&
       files.dispatch.includes("const imageToVideoCandidates") &&
       videoProviderModelCandidatesFunction.includes('protocol === "openai-videos" && isSmartPickLidBaseUrl') &&
-      videoProviderModelCandidatesFunction.includes("multipartReferenceCandidates") &&
+      videoProviderModelCandidatesFunction.includes('normalizedModel.startsWith("grok-video-3-")') &&
+      videoProviderModelCandidatesFunction.includes('"grok-imagine-video"') &&
+      videoProviderModelCandidatesFunction.includes('"grok-video-3-pro"') &&
       videoProviderModelCandidatesFunction.includes("normalizedFirstCandidates") &&
       videoProviderModelCandidatesFunction.includes("referenceAssetCount > 1") &&
       files.dispatch.includes('protocol === "openai-videos" && (referenceAssetCount > 0 || shouldPreferSmartPickLidJsonModel)') &&
