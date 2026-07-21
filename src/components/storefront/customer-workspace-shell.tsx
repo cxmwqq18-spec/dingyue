@@ -487,6 +487,10 @@ function workspaceVideoPosterUrl(src: string): string {
   return `${src}${src.includes("?") ? "&" : "?"}poster=1`;
 }
 
+function workspaceVideoPlaybackUrl(src: string): string {
+  return `${src}${src.includes("?") ? "&" : "?"}preview=1`;
+}
+
 function WorkspaceVideoPreviewButton({
   compact = false,
   disabled,
@@ -3222,7 +3226,7 @@ export function CustomerWorkspaceShell({
                   playsInline
                   poster={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
                   preload="metadata"
-                  src={workspaceAssetPreviewUrl(selectedPreviewAsset)}
+                  src={workspaceVideoPlaybackUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
                   title={selectedPreviewLabel}
                 />
               ) : (

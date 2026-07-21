@@ -44,6 +44,7 @@ type ResolvedAsset = {
 
 const remoteAssetInflight = new Map<string, Promise<ResolvedAsset>>();
 const videoPosterInflight = new Map<string, Promise<{ filePath: string; size: number }>>();
+const videoPreviewInflight = new Map<string, Promise<{ filePath: string; size: number }>>();
 const assetAccessCache = new Map<string, { ok: boolean; expiresAt: number }>();
 const assetAccessCacheTtlMs = 30_000;
 const assetCacheControl = "private, max-age=86400, immutable";
@@ -186,9 +187,18 @@ function wantsVideoPoster(request: Request): boolean {
   return new URL(request.url).searchParams.get("poster") === "1";
 }
 
+function wantsVideoPreview(request: Request): boolean {
+  return new URL(request.url).searchParams.get("preview") === "1";
+}
+
 function videoPosterPathFor(filePath: string): string {
   const fileKey = crypto.createHash("sha256").update(filePath).digest("hex").slice(0, 16);
   return `${filePath}.${fileKey}.poster.jpg`;
+}
+
+function videoPreviewPathFor(filePath: string): string {
+  const fileKey = crypto.createHash("sha256").update(filePath).digest("hex").slice(0, 16);
+  return `${filePath}.${fileKey}.preview.mp4`;
 }
 
 async function ffmpegExecutableCandidates(): Promise<string[]> {
@@ -256,6 +266,60 @@ async function generateVideoPoster(sourcePath: string, posterPath: string): Prom
   throw lastError instanceof Error ? lastError : new Error("ffmpeg_static_unavailable");
 }
 
+async function generateVideoPreview(sourcePath: string, previewPath: string): Promise<void> {
+  const candidates = await ffmpegExecutableCandidates();
+  let lastError: unknown;
+  await mkdir(path.dirname(previewPath), { recursive: true });
+  for (const candidate of candidates) {
+    const tmpPath = `${previewPath}.${process.pid}.${Date.now()}.${crypto.createHash("sha1").update(candidate).digest("hex").slice(0, 8)}.tmp.mp4`;
+    try {
+      await execFileAsync(
+        candidate,
+        [
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-y",
+          "-i",
+          sourcePath,
+          "-map",
+          "0:v:0",
+          "-map",
+          "0:a?",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "veryfast",
+          "-crf",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_CRF?.trim() || "32",
+          "-maxrate",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_MAXRATE?.trim() || "700k",
+          "-bufsize",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_BUFSIZE?.trim() || "1400k",
+          "-vf",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_FILTER?.trim() || "scale=854:480:force_original_aspect_ratio=decrease",
+          "-pix_fmt",
+          "yuv420p",
+          "-c:a",
+          "aac",
+          "-b:a",
+          process.env.CUSTOMER_ASSET_VIDEO_PREVIEW_AUDIO_BITRATE?.trim() || "64k",
+          "-movflags",
+          "+faststart",
+          tmpPath
+        ],
+        { timeout: 120_000, maxBuffer: 1024 * 1024 }
+      );
+      await rename(tmpPath, previewPath);
+      return;
+    } catch (error) {
+      lastError = error;
+      await unlink(tmpPath).catch(() => {});
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("ffmpeg_static_unavailable");
+}
+
 async function resolveVideoPoster(asset: ResolvedAsset): Promise<{ filePath: string; size: number }> {
   if (!asset.contentType.startsWith("video/")) throw new Error("asset_is_not_video");
   if (!asset.filePath) throw new Error("video_asset_file_missing");
@@ -277,6 +341,30 @@ async function resolveVideoPoster(asset: ResolvedAsset): Promise<{ filePath: str
     return await promise;
   } finally {
     videoPosterInflight.delete(posterPath);
+  }
+}
+
+async function resolveVideoPreview(asset: ResolvedAsset): Promise<{ filePath: string; size: number }> {
+  if (!asset.contentType.startsWith("video/")) throw new Error("asset_is_not_video");
+  if (!asset.filePath) throw new Error("video_asset_file_missing");
+  const sourceStat = await stat(asset.filePath);
+  const previewPath = videoPreviewPathFor(asset.filePath);
+  const existingPreview = await stat(previewPath).catch(() => null);
+  if (existingPreview?.isFile() && existingPreview.size > 0 && existingPreview.mtimeMs >= sourceStat.mtimeMs) {
+    return { filePath: previewPath, size: existingPreview.size };
+  }
+  const existing = videoPreviewInflight.get(previewPath);
+  if (existing) return existing;
+  const promise = (async () => {
+    await generateVideoPreview(asset.filePath!, previewPath);
+    const previewStat = await stat(previewPath);
+    return { filePath: previewPath, size: previewStat.size };
+  })();
+  videoPreviewInflight.set(previewPath, promise);
+  try {
+    return await promise;
+  } finally {
+    videoPreviewInflight.delete(previewPath);
   }
 }
 
@@ -405,32 +493,38 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
         headers: videoPosterHeaders(poster.size)
       });
     }
-    const range = parseByteRange(_request.headers.get("range"), asset.size);
+    const servedAsset = wantsVideoPreview(_request)
+      ? {
+          ...(await resolveVideoPreview(asset)),
+          contentType: "video/mp4"
+        }
+      : asset;
+    const range = parseByteRange(_request.headers.get("range"), servedAsset.size);
     if (range === "unsatisfiable") {
       return new Response(null, {
         status: 416,
         headers: {
-          "Content-Range": `bytes */${asset.size}`,
+          "Content-Range": `bytes */${servedAsset.size}`,
           "Accept-Ranges": "bytes"
         }
       });
     }
     if (range) {
-      const accelResponse = xAccelAssetResponse(asset);
+      const accelResponse = xAccelAssetResponse(servedAsset);
       if (accelResponse) return accelResponse;
-      const chunk = await readAssetBytes(asset, range);
+      const chunk = await readAssetBytes(servedAsset, range);
       return new Response(chunk, {
         status: 206,
-        headers: assetHeaders(asset, chunk.byteLength, {
-          "Content-Range": `bytes ${range.start}-${range.end}/${asset.size}`
+        headers: assetHeaders(servedAsset, chunk.byteLength, {
+          "Content-Range": `bytes ${range.start}-${range.end}/${servedAsset.size}`
         })
       });
     }
-    const accelResponse = xAccelAssetResponse(asset);
+    const accelResponse = xAccelAssetResponse(servedAsset);
     if (accelResponse) return accelResponse;
-    const bytes = await readAssetBytes(asset);
+    const bytes = await readAssetBytes(servedAsset);
     return new Response(bytes, {
-      headers: assetHeaders(asset, asset.size)
+      headers: assetHeaders(servedAsset, servedAsset.size)
     });
   } catch (error) {
     return NextResponse.json(
@@ -455,10 +549,16 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
         headers: videoPosterHeaders(poster.size)
       });
     }
-    const accelResponse = xAccelAssetResponse(asset);
+    const servedAsset = wantsVideoPreview(_request)
+      ? {
+          ...(await resolveVideoPreview(asset)),
+          contentType: "video/mp4"
+        }
+      : asset;
+    const accelResponse = xAccelAssetResponse(servedAsset);
     if (accelResponse) return accelResponse;
     return new Response(null, {
-      headers: assetHeaders(asset, asset.size)
+      headers: assetHeaders(servedAsset, servedAsset.size)
     });
   } catch {
     return new Response(null, { status: 500 });
