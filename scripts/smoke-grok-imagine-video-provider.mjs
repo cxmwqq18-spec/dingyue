@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { promisify } from "node:util";
+import ffmpegPath from "ffmpeg-static";
 
 const baseUrl = String(process.env.GROK_VIDEO_BASE_URL || "https://magic666.top").trim().replace(/\/+$/, "");
 const apiKey = String(process.env.GROK_VIDEO_API_KEY || "").trim();
@@ -9,6 +12,8 @@ const seconds = String(process.env.GROK_VIDEO_SECONDS || "6").trim();
 const aspectRatioText = String(process.env.GROK_VIDEO_ASPECT_RATIO || "16:9").trim();
 const resolution = String(process.env.GROK_VIDEO_RESOLUTION || "720P").trim();
 const imagePath = path.resolve(process.cwd(), process.env.GROK_VIDEO_IMAGE_PATH || "public/assets/dreamshoot/frames/sample-engagement.webp");
+const contentProbeEnabled = process.env.GROK_VIDEO_CONTENT_PROBE !== "0";
+const execFileAsync = promisify(execFile);
 
 if (!apiKey) {
   throw new Error("missing GROK_VIDEO_API_KEY");
@@ -90,10 +95,68 @@ async function downloadVideo(taskId, statusBody) {
   return { contentType, bytes };
 }
 
+async function firstFrameStats(bytes) {
+  if (!ffmpegPath) throw new Error("ffmpeg_static_missing");
+  const tmpDir = await fs.mkdtemp(path.join("/tmp", "grok-video-smoke-"));
+  const inputPath = path.join(tmpDir, "input.mp4");
+  try {
+    await fs.writeFile(inputPath, bytes);
+    const { stdout } = await execFileAsync(
+      ffmpegPath,
+      [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-ss",
+        "0",
+        "-i",
+        inputPath,
+        "-frames:v",
+        "1",
+        "-vf",
+        "scale=64:36",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-"
+      ],
+      { encoding: "buffer", maxBuffer: 64 * 36 * 3 + 1024 }
+    );
+    if (!stdout.length) throw new Error("first_frame_empty");
+    let red = 0;
+    let green = 0;
+    let blue = 0;
+    for (let index = 0; index < stdout.length; index += 3) {
+      red += stdout[index];
+      green += stdout[index + 1];
+      blue += stdout[index + 2];
+    }
+    const pixels = stdout.length / 3;
+    return {
+      red: Math.round(red / pixels),
+      green: Math.round(green / pixels),
+      blue: Math.round(blue / pixels)
+    };
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
 function textToVideoPayload() {
   return {
     model,
     prompt: "A small red robot walks across a clean studio floor and waves at the camera. Natural motion, no text or overlays.",
+    seconds,
+    aspect_ratio: aspectRatioText,
+    resolution
+  };
+}
+
+function redCardPayload() {
+  return {
+    model,
+    prompt: "The entire video is a flat solid bright red color card. No objects, no people, no animals, no scenery, no text, no camera movement. Every frame should be overwhelmingly red.",
     seconds,
     aspect_ratio: aspectRatioText,
     resolution
@@ -112,7 +175,7 @@ async function imageToVideoPayload() {
   };
 }
 
-async function runCase(name, payloadFactory) {
+async function runCase(name, payloadFactory, options = {}) {
   const payload = await payloadFactory();
   const created = await postVideo(payload);
   const createTaskId = taskIdFrom(created.json);
@@ -121,22 +184,34 @@ async function runCase(name, payloadFactory) {
   }
   const statusBody = await pollVideo(createTaskId);
   const downloaded = await downloadVideo(createTaskId, statusBody);
+  const frameStats = options.frameStats ? await firstFrameStats(downloaded.bytes) : undefined;
+  if (options.expectRedDominant) {
+    const stats = frameStats ?? await firstFrameStats(downloaded.bytes);
+    if (!(stats.red >= 130 && stats.red >= stats.green + 35 && stats.red >= stats.blue + 35)) {
+      throw new Error(`${name}_content_probe_failed_${JSON.stringify(stats)}`);
+    }
+  }
   return {
     taskId: createTaskId,
     status: statusFrom(statusBody),
     videoUrl: resultUrlFrom(statusBody, createTaskId),
     bytes: downloaded.bytes.length,
-    contentType: downloaded.contentType
+    contentType: downloaded.contentType,
+    ...(frameStats ? { frameStats } : {})
   };
 }
 
 const imageToVideo = await runCase("image_to_video", imageToVideoPayload);
 const textToVideo = await runCase("text_to_video", textToVideoPayload);
+const redCard = contentProbeEnabled
+  ? await runCase("red_card", redCardPayload, { frameStats: true, expectRedDominant: true })
+  : undefined;
 
 console.log(JSON.stringify({
   ok: true,
   baseUrl,
   model,
   imageToVideo,
-  textToVideo
+  textToVideo,
+  ...(redCard ? { redCard } : {})
 }, null, 2));
