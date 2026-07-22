@@ -207,6 +207,10 @@ function shouldAllowMagic666VideoProvider() {
   return process.env.AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO?.trim() === "1";
 }
 
+function shouldAllowSmartPickLidVideoProvider() {
+  return process.env.AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO?.trim() === "1";
+}
+
 function usesProxyOpenAiVideoEndpoint(baseUrl: string) {
   return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl);
 }
@@ -2049,6 +2053,9 @@ async function generateVideoWithProvider(params: {
   const requestedReferenceAssets = videoFrameAssets(params.payload);
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
   const protocol = videoProviderProtocol(baseUrl);
+  if (isSmartPickLidBaseUrl(baseUrl) && !shouldAllowSmartPickLidVideoProvider()) {
+    throw new Error("ai_provider_video_content_unverified_smartpicklid");
+  }
   if (isMagic666BaseUrl(baseUrl) && !shouldAllowMagic666VideoProvider()) {
     throw new Error("ai_provider_video_content_unverified_magic666");
   }

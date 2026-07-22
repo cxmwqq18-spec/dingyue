@@ -48,10 +48,13 @@ const checks = [
       files.dispatch.includes("/content")
   },
   {
-    label: "Magic666 video channel is guarded until content relevance is verified",
+    label: "Grok proxy video channels are guarded until content relevance is verified",
     pass: files.dispatch.includes("function shouldAllowMagic666VideoProvider()") &&
+      files.dispatch.includes("function shouldAllowSmartPickLidVideoProvider()") &&
       files.dispatch.includes("AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO") &&
-      files.dispatch.includes("ai_provider_video_content_unverified_magic666")
+      files.dispatch.includes("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") &&
+      files.dispatch.includes("ai_provider_video_content_unverified_magic666") &&
+      files.dispatch.includes("ai_provider_video_content_unverified_smartpicklid")
   },
   {
     label: "preferred video providers keep fallback providers available for transient outages",
