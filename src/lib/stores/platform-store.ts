@@ -853,7 +853,16 @@ async function loadPlatformAiProviderStatusRelational() {
     platformAiProviderStatus: {
       ok: true,
       currentProviderId: currentAiProvider?.id ?? "",
-      modelTypes: Array.from(new Set(["gpt-image-2", "gpt-5.5", ...aiProviders.map((provider) => provider.modelType).filter(Boolean)])),
+      modelTypes: Array.from(new Set([
+        "gpt-image-2",
+        "gpt-5.5",
+        "grok-video-3-pro",
+        "grok-video-3-max",
+        "grok-imagine-video",
+        "grok-imagine-video-1.5-preview",
+        "grok-imagine-video-1.5",
+        ...aiProviders.map((provider) => provider.modelType).filter(Boolean)
+      ])),
       providers: aiProviders.map((provider) => ({
         id: provider.id,
         label: provider.label,

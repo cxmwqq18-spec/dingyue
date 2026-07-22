@@ -157,7 +157,8 @@ const checks = [
       files.dispatch.includes("form.append(\"aspect_ratio\", params.videoParams.aspect_ratio)") &&
       files.dispatch.includes("form.append(\"resolution\", smartPickLidJsonVideoResolution(params.videoParams.resolution))") &&
       files.dispatch.includes('AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE') &&
-      files.dispatch.includes("isSmartPickLidBaseUrl(params.baseUrl) &&") &&
+      files.dispatch.includes("isSmartPickLidBaseUrl(params.baseUrl) || isMagic666BaseUrl(params.baseUrl)") &&
+      files.dispatch.includes("isMagic666BaseUrl(params.baseUrl)") &&
       files.dispatch.includes("isGrokImagineVideoModel(params.model)") &&
       videoProviderModelCandidatesFunction.includes('"grok-imagine-video"') &&
       videoProviderModelCandidatesFunction.includes('"grok-video-3-pro"') &&
@@ -283,8 +284,9 @@ const checks = [
       files.storage.includes("mimeType.includes(\"mp4\")")
   },
   {
-    label: "platform provider model picker includes the Grok video model",
+    label: "platform provider model picker includes the Grok video models",
     pass: files.providers.includes("grok-video-3-pro") &&
+      files.providers.includes("grok-imagine-video") &&
       files.providers.includes("grok-imagine-video-1.5-preview")
   },
   {

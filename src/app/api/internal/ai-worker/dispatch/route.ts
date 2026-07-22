@@ -92,6 +92,7 @@ type VideoStatusResponse = {
   is_final?: boolean;
   progress?: string;
   result_url?: string;
+  video_url?: string;
   result_type?: string;
   video?: { url?: string; duration?: number };
   error?: unknown;
@@ -1790,7 +1791,7 @@ function shouldUseSmartPickLidJsonVideoRequest(params: {
   protocol: VideoProviderProtocol;
 }) {
   return params.protocol === "openai-videos" &&
-    isSmartPickLidBaseUrl(params.baseUrl) &&
+    (isSmartPickLidBaseUrl(params.baseUrl) || isMagic666BaseUrl(params.baseUrl)) &&
     isGrokImagineVideoModel(params.model);
 }
 
@@ -1988,7 +1989,7 @@ async function pollVideoTask(params: {
     });
     if (params.protocol === "openai-videos") {
       if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
-      if (body.status === "failed") {
+      if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
         throw new Error(`ai_provider_video_failed_failed_${textValue(body.error) || textValue(body.message) || "no_result"}`);
       }
       continue;
@@ -2167,7 +2168,7 @@ async function generateVideoWithProvider(params: {
   }
   if (!status) throw new Error("ai_provider_video_empty_status");
   const statusVideo = recordValue(status.video) ?? {};
-  const resultUrl = textValue(status.result_url) || textValue(statusVideo?.url);
+  const resultUrl = textValue(status.result_url) || textValue(status.video_url) || textValue(statusVideo?.url);
   if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const downloadedVideo = await downloadVideoResult({
     resultUrl,

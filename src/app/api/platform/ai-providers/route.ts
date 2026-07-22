@@ -12,7 +12,15 @@ import {
 } from "@/lib/stores/platform-store";
 import type { PlatformAiProvider } from "@/lib/types";
 
-const defaultModelTypes = ["gpt-image-2", "gpt-5.5", "grok-video-3-pro", "grok-imagine-video-1.5-preview"];
+const defaultModelTypes = [
+  "gpt-image-2",
+  "gpt-5.5",
+  "grok-video-3-pro",
+  "grok-video-3-max",
+  "grok-imagine-video",
+  "grok-imagine-video-1.5-preview",
+  "grok-imagine-video-1.5"
+];
 
 async function requirePlatformRead() {
   const current = await getCurrentPlatformAdmin();
