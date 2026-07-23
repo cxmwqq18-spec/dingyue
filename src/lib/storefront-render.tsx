@@ -36,7 +36,7 @@ import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellR
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { canonicalAidreamcapesDirectorySlug, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
@@ -199,12 +199,23 @@ async function completePublicCreativePacksForSite(site: Site, existing: SiteRend
   return limitedCreativePacks(merged, limit);
 }
 
-async function loadStorefrontPublicVideoThemesForSection(siteId: string, limit = 32): Promise<VideoTheme[]> {
+function publicVideoThemesFromRenderData(siteId: string, existing: VideoTheme[], limit = 32): VideoTheme[] {
+  return existing
+    .filter((theme) => theme.siteId === siteId && theme.status === "active")
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
+    .slice(0, limit)
+    .map(lightweightVideoTheme);
+}
+
+async function loadStorefrontPublicVideoThemesForSection(site: Pick<Site, "id" | "slug">, existing: VideoTheme[], limit = 32): Promise<VideoTheme[]> {
+  const localThemes = publicVideoThemesFromRenderData(site.id, existing, limit);
+  if (preferLocalPathModeState(site.slug)) return localThemes;
+
   try {
-    const themes = await getCachedPublicVideoThemesForSite(siteId, limit);
-    return themes.map(lightweightVideoTheme);
+    const themes = (await getCachedPublicVideoThemesForSite(site.id, limit)).map(lightweightVideoTheme);
+    return themes.length ? themes : localThemes;
   } catch {
-    return [];
+    return localThemes;
   }
 }
 
@@ -2425,7 +2436,7 @@ export async function renderStorefrontSectionPayloads({
       pageRenderData = {
         ...pageRenderData,
         videoThemes: trimVideoThemesForStorefront(
-          { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite.id, 32) },
+          { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
           8,
           section
         )
@@ -2563,7 +2574,7 @@ export async function renderStorefrontSectionPayload({
     pageRenderData = {
       ...pageRenderData,
       videoThemes: trimVideoThemesForStorefront(
-        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite.id, 32) },
+        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
         8,
         section
       )

@@ -4,13 +4,14 @@ import { hasSiteAdminSession } from "@/lib/api-auth";
 import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
+import { readLocalJsonPlatformState } from "@/lib/storefront-local-state";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { toVideoTheme, toVideoThemeCategory } from "@/lib/stores/prisma-mappers";
 import {
   ensureDefaultVideoThemesRelational,
   upsertVideoThemeRelational
 } from "@/lib/stores/site-store";
-import type { VideoTheme } from "@/lib/types";
+import type { PlatformState, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 
 const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
@@ -72,6 +73,87 @@ function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefin
   };
 }
 
+function shouldUseLocalPublicVideoThemeReads(): boolean {
+  if (process.env.NODE_ENV === "production") return false;
+  const preference = (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase();
+  return ["local", "json", "legacy", "file"].includes(preference);
+}
+
+function localCategoryMap(state: PlatformState, siteId: string): Map<string, VideoThemeCategory> {
+  return new Map((state.videoThemeCategories ?? [])
+    .filter((category) => category.siteId === siteId)
+    .map((category) => [category.id, category]));
+}
+
+function localThemeMatchesQuery(theme: VideoTheme, category: VideoThemeCategory | undefined, query?: string): boolean {
+  const rawQuery = query?.trim().toLowerCase();
+  if (!rawQuery) return true;
+  return [
+    theme.name,
+    theme.headline,
+    theme.description,
+    theme.category?.label,
+    category?.label
+  ].some((value) => typeof value === "string" && value.toLowerCase().includes(rawQuery));
+}
+
+function localThemeMatchesCategory(theme: VideoTheme, category: VideoThemeCategory | undefined, rawCategory?: string): boolean {
+  const trimmedCategory = rawCategory?.trim();
+  if (!trimmedCategory) return true;
+  const normalizedCategory = photoPackageSlug(trimmedCategory);
+  return theme.category?.slug === normalizedCategory ||
+    category?.slug === normalizedCategory ||
+    theme.category?.label?.toLowerCase() === trimmedCategory.toLowerCase() ||
+    category?.label.toLowerCase() === trimmedCategory.toLowerCase();
+}
+
+async function localVideoThemePayload(params: {
+  category?: string;
+  includeCategories: boolean;
+  page: number;
+  pageSize: number;
+  query?: string;
+  siteId: string;
+}) {
+  const state = readLocalJsonPlatformState();
+  if (!state) return undefined;
+  if (!state.sites.some((site) => site.id === params.siteId)) return undefined;
+  const categoriesById = localCategoryMap(state, params.siteId);
+  const siteThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === params.siteId);
+  const themes = siteThemes
+    .filter((theme) => theme.status === "active")
+    .filter((theme) => localThemeMatchesCategory(theme, theme.categoryId ? categoriesById.get(theme.categoryId) : undefined, params.category))
+    .filter((theme) => localThemeMatchesQuery(theme, theme.categoryId ? categoriesById.get(theme.categoryId) : undefined, params.query))
+    .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt))
+    .slice(0, params.pageSize);
+  const providers = state.platformAiProviders ?? [];
+  const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
+  const categories = params.includeCategories
+    ? Array.from(categoriesById.values())
+        .filter((category) => category.status === "active")
+        .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label))
+    : [];
+  return {
+    ok: true,
+    themes: themes.map((theme) => ({
+      ...theme,
+      category: theme.category ?? (theme.categoryId ? categoriesById.get(theme.categoryId) : undefined),
+      effectiveMaxFrames: effectiveVideoFrameLimit(providers, theme.maxFrames),
+      providerMaxFrames
+    })),
+    categories,
+    total: themes.length,
+    page: params.page,
+    pageSize: params.pageSize,
+    counts: {
+      all: siteThemes.length,
+      active: siteThemes.filter((theme) => theme.status === "active").length,
+      draft: siteThemes.filter((theme) => theme.status === "draft").length,
+      paused: siteThemes.filter((theme) => theme.status === "paused").length
+    }
+  };
+}
+
 function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
   return {
     categoryId: typeof body.categoryId === "string" && body.categoryId.trim() ? body.categoryId.trim() : undefined,
@@ -126,6 +208,13 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     status: admin && status ? status : admin ? undefined : "active",
     AND: [categoryWhere(category), searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
   };
+
+  if (!admin && shouldUseLocalPublicVideoThemeReads()) {
+    const payload = await localVideoThemePayload({ category, includeCategories, page, pageSize, query, siteId });
+    return payload
+      ? NextResponse.json(payload)
+      : NextResponse.json({ error: "site_not_found" }, { status: 404 });
+  }
 
   if (!withCounts) {
     if (!(await ensurePublicVideoThemeDefaults(siteId, !category && !query))) {

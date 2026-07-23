@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { readStorefrontPublicPageMetadataStateBySlugFromDatabase } from "@/lib/storefront-state";
+import { readPathModePublicMetadataState } from "@/lib/storefront-local-state";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
@@ -10,7 +10,7 @@ const jobDetailSlug = "/app/jobs/detail";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; jobId: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, jobDetailSlug);
+  const state = await readPathModePublicMetadataState(siteSlug, jobDetailSlug);
   const site = state?.sites[0];
   const page =
     site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ??

@@ -9,6 +9,7 @@ import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agen
 import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma } from "@/lib/prisma";
+import { readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -110,6 +111,17 @@ async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?:
         });
       } catch (error) {
         if (isMissingToolMenuTableError(error)) return [];
+        if (shouldFallbackRelationalRead(error)) {
+          warnRelationalFallback("storefront tool categories", error);
+          const categories = readPlatformState().toolCategories
+            .filter((category) => category.siteId === siteId && (!options.activeOnly || category.status === "active"))
+            .sort((left, right) =>
+              String(left.parentId ?? "").localeCompare(String(right.parentId ?? "")) ||
+              left.sortOrder - right.sortOrder ||
+              left.label.localeCompare(right.label)
+            );
+          return typeof options.take === "number" ? categories.slice(0, options.take) : categories;
+        }
         throw error;
       }
     },
@@ -132,6 +144,22 @@ async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: 
         });
       } catch (error) {
         if (isMissingToolMenuTableError(error)) return [];
+        if (shouldFallbackRelationalRead(error)) {
+          warnRelationalFallback("storefront tool menu items", error);
+          const categoriesById = new Map(readPlatformState().toolCategories.map((category) => [category.id, category]));
+          const items = readPlatformState().toolMenuItems
+            .filter((item) => item.siteId === siteId && (!options.activeOnly || item.status === "active"))
+            .map((item) => ({
+              ...item,
+              category: item.category ?? (item.categoryId ? categoriesById.get(item.categoryId) : undefined)
+            }))
+            .sort((left, right) =>
+              (options.activeOnly ? 0 : left.status.localeCompare(right.status)) ||
+              left.sortOrder - right.sortOrder ||
+              left.title.localeCompare(right.title)
+            );
+          return typeof options.take === "number" ? items.slice(0, options.take) : items;
+        }
         throw error;
       }
     },
@@ -158,11 +186,11 @@ export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: str
   return siteReadCache.get(
     `public-navigation:${siteId}`,
     async () => {
-      const [creativePacks, creativePackCategories, toolCategories, toolMenuItems] = await Promise.all([
-        getStorefrontPublicCreativePacksForSite(siteId),
-        getStorefrontPublicCreativePackCategoriesForSite(siteId),
-        loadToolCategoriesForSite(siteId, { activeOnly: true }),
-        loadToolMenuItemsForSite(siteId, { activeOnly: true })
+      const [creativePacks, creativePackCategories, toolCategories, toolMenuItems] = await runDbTasks([
+        () => getStorefrontPublicCreativePacksForSite(siteId),
+        () => getStorefrontPublicCreativePackCategoriesForSite(siteId),
+        () => loadToolCategoriesForSite(siteId, { activeOnly: true }),
+        () => loadToolMenuItemsForSite(siteId, { activeOnly: true })
       ]);
       return {
         creativePackCategories,
@@ -870,6 +898,72 @@ function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): C
   };
 }
 
+function fallbackPublicCreativePackCategoriesForSite(siteId: string): CreativePackCategory[] {
+  const state = readPlatformState();
+  const categories = state.creativePackCategories ?? [];
+  const categoriesById = new Map(categories.map((category) => [category.id, category]));
+  return categories
+    .filter((category) => category.siteId === siteId && category.status === "active")
+    .map((category) => ({
+      ...category,
+      parent: category.parent ?? (category.parentId ? categoriesById.get(category.parentId) : undefined)
+    }))
+    .sort((left, right) =>
+      String(left.parentId ?? "").localeCompare(String(right.parentId ?? "")) ||
+      left.sortOrder - right.sortOrder ||
+      left.label.localeCompare(right.label)
+    );
+}
+
+function fallbackPublicCreativePacksForSite(siteId: string, take?: number): CreativePack[] {
+  const categoriesById = new Map(fallbackPublicCreativePackCategoriesForSite(siteId).map((category) => [category.id, category]));
+  const packs = (readPlatformState().creativePacks ?? [])
+    .filter((pack) => pack.siteId === siteId && pack.status === "active")
+    .map((pack) => toPublicRuntimeCreativePack({
+      ...pack,
+      categoryRecord: pack.categoryRecord ?? (pack.categoryId ? categoriesById.get(pack.categoryId) : undefined)
+    } as unknown as PublicRuntimeCreativePackRecord))
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt));
+  return typeof take === "number" ? packs.slice(0, take) : packs;
+}
+
+function fallbackSiteBySlug(slug: string): Site | undefined {
+  const candidates = new Set(legacySiteSlugCandidates(slug));
+  return readPlatformState().sites.find((site) => candidates.has(site.slug));
+}
+
+function fallbackCustomerWorkspaceSiteShell(slug: string): CustomerWorkspaceBootstrapRelational["site"] | undefined {
+  const site = fallbackSiteBySlug(slug);
+  if (!site) return undefined;
+  return {
+    id: site.id,
+    name: site.name,
+    slug: site.slug,
+    primaryDomain: site.primaryDomain,
+    branding: cloneJson(site.branding) as Site["branding"]
+  };
+}
+
+function fallbackCustomerWorkspaceSiteAiApps(siteId: string): SiteAiApp[] {
+  return (readPlatformState().siteAiApps ?? [])
+    .filter((siteAiApp) => siteAiApp.siteId === siteId && siteAiApp.enabled)
+    .sort((left, right) => left.routeKey.localeCompare(right.routeKey))
+    .slice(0, workspaceCustomerRuntimeLimits.siteAiApps);
+}
+
+function fallbackPublicVideoThemesForSite(siteId: string, take = 32): VideoTheme[] {
+  const themes = (readPlatformState().videoThemes ?? [])
+    .filter((theme) => theme.siteId === siteId && theme.status === "active")
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
+    .slice(0, take);
+  const providerMaxFrames = undefined;
+  return themes.map((theme) => ({
+    ...theme,
+    effectiveMaxFrames: normalizeVideoFrameLimit(theme.maxFrames),
+    providerMaxFrames
+  }));
+}
+
 function storefrontPerfMark(label: string, startedAt: number, meta: Record<string, unknown> = {}) {
   if (process.env.STOREFRONT_PROFILE !== "1") return;
   console.info("[storefront:public-runtime]", label, {
@@ -894,56 +988,80 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
   return siteReadCache.get(
     `public-creative-packs:${siteId}:${takeKey}`,
     async () => {
-      const rows = await prisma.creativePack.findMany({
-        where: { siteId, status: "active" },
-        select: publicRuntimeCreativePackSelect,
-        orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-        ...(typeof take === "number" ? { take } : {})
-      });
-      return rows.map(toPublicRuntimeCreativePack);
+      try {
+        const rows = await prisma.creativePack.findMany({
+          where: { siteId, status: "active" },
+          select: publicRuntimeCreativePackSelect,
+          orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+          ...(typeof take === "number" ? { take } : {})
+        });
+        return rows.map(toPublicRuntimeCreativePack);
+      } catch (error) {
+        if (!shouldFallbackRelationalRead(error)) throw error;
+        warnRelationalFallback("storefront public creative packs", error);
+        return fallbackPublicCreativePacksForSite(siteId, take);
+      }
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
 });
 
 export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (siteId: string) => {
-  const rows = await prisma.creativePackCategory.findMany({
-    where: { siteId, status: "active" },
-    select: publicRuntimeCreativePackCategorySelect,
-    orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
-  });
-  return rows.map(toCreativePackCategory);
+  return siteReadCache.get(
+    `public-creative-pack-categories:${siteId}`,
+    async () => {
+      try {
+        const rows = await prisma.creativePackCategory.findMany({
+          where: { siteId, status: "active" },
+          select: publicRuntimeCreativePackCategorySelect,
+          orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
+        });
+        return rows.map(toCreativePackCategory);
+      } catch (error) {
+        if (!shouldFallbackRelationalRead(error)) throw error;
+        warnRelationalFallback("storefront public creative pack categories", error);
+        return fallbackPublicCreativePackCategoriesForSite(siteId);
+      }
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
 });
 
 export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string, take = 32) => {
   return siteReadCache.get(
     `public-video-themes:${siteId}:${take}`,
     async () => {
-      let rows = await prisma.videoTheme.findMany({
-        where: { siteId, status: "active" },
-        include: { category: true },
-        orderBy: [{ createdAt: "asc" }],
-        take
-      });
-      if (!rows.length) {
-        await ensureDefaultVideoThemesRelational(siteId);
-        rows = await prisma.videoTheme.findMany({
+      try {
+        let rows = await prisma.videoTheme.findMany({
           where: { siteId, status: "active" },
           include: { category: true },
           orderBy: [{ createdAt: "asc" }],
           take
         });
+        if (!rows.length) {
+          await ensureDefaultVideoThemesRelational(siteId);
+          rows = await prisma.videoTheme.findMany({
+            where: { siteId, status: "active" },
+            include: { category: true },
+            orderBy: [{ createdAt: "asc" }],
+            take
+          });
+        }
+        const providers = await getPlatformAiProviderFallbackQueueRelational();
+        const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
+        return rows.map((row) => {
+          const theme = toVideoTheme(row);
+          return {
+            ...theme,
+            effectiveMaxFrames: effectiveVideoFrameLimit(providers, theme.maxFrames),
+            providerMaxFrames
+          };
+        });
+      } catch (error) {
+        if (!shouldFallbackRelationalRead(error)) throw error;
+        warnRelationalFallback("storefront public video themes", error);
+        return fallbackPublicVideoThemesForSite(siteId, take);
       }
-      const providers = await getPlatformAiProviderFallbackQueueRelational();
-      const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
-      return rows.map((row) => {
-        const theme = toVideoTheme(row);
-        return {
-          ...theme,
-          effectiveMaxFrames: effectiveVideoFrameLimit(providers, theme.maxFrames),
-          providerMaxFrames
-        };
-      });
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );
@@ -1894,24 +2012,36 @@ export async function getSiteAdminBridgeSiteRelational(siteId: string) {
 export async function getSiteBySlugRelational(slug: string): Promise<Site | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get(`slug:${canonicalSlug}`, async () => {
-    const site = await prisma.site.findFirst({
-      where: { slug: { in: legacySiteSlugCandidates(slug) } },
-      orderBy: { updatedAt: "desc" },
-      include: siteRuntimeInclude
-    });
-    return site ? toSite(site) : undefined;
+    try {
+      const site = await prisma.site.findFirst({
+        where: { slug: { in: legacySiteSlugCandidates(slug) } },
+        orderBy: { updatedAt: "desc" },
+        include: siteRuntimeInclude
+      });
+      return site ? toSite(site) : undefined;
+    } catch (error) {
+      if (!shouldFallbackRelationalRead(error)) throw error;
+      warnRelationalFallback("site lookup by slug", error);
+      return fallbackSiteBySlug(slug);
+    }
   });
 }
 
 export async function getSiteIdBySlugRelational(slug: string): Promise<string | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get(`slug-id:${canonicalSlug}`, async () => {
-    const site = await prisma.site.findFirst({
-      where: { slug: { in: legacySiteSlugCandidates(slug) } },
-      orderBy: { updatedAt: "desc" },
-      select: { id: true }
-    });
-    return site?.id;
+    try {
+      const site = await prisma.site.findFirst({
+        where: { slug: { in: legacySiteSlugCandidates(slug) } },
+        orderBy: { updatedAt: "desc" },
+        select: { id: true }
+      });
+      return site?.id;
+    } catch (error) {
+      if (!shouldFallbackRelationalRead(error)) throw error;
+      warnRelationalFallback("site id lookup by slug", error);
+      return fallbackSiteBySlug(slug)?.id;
+    }
   });
 }
 
@@ -1927,26 +2057,32 @@ export type CustomerWorkspaceBootstrapRelational = {
 export async function getCustomerWorkspaceSiteShellRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational["site"] | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get<CustomerWorkspaceBootstrapRelational["site"] | undefined>(`workspace-site-shell:${canonicalSlug}`, async () => {
-    const site = await prisma.site.findFirst({
-      where: { slug: { in: legacySiteSlugCandidates(slug) } },
-      orderBy: { updatedAt: "desc" },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        primaryDomain: true,
-        branding: true
-      }
-    });
-    return site
-      ? {
-          id: site.id,
-          name: site.name,
-          slug: site.slug,
-          primaryDomain: site.primaryDomain,
-          branding: cloneJson(site.branding) as Site["branding"]
+    try {
+      const site = await prisma.site.findFirst({
+        where: { slug: { in: legacySiteSlugCandidates(slug) } },
+        orderBy: { updatedAt: "desc" },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          primaryDomain: true,
+          branding: true
         }
-      : undefined;
+      });
+      return site
+        ? {
+            id: site.id,
+            name: site.name,
+            slug: site.slug,
+            primaryDomain: site.primaryDomain,
+            branding: cloneJson(site.branding) as Site["branding"]
+          }
+        : undefined;
+    } catch (error) {
+      if (!shouldFallbackRelationalRead(error)) throw error;
+      warnRelationalFallback("customer workspace site shell", error);
+      return fallbackCustomerWorkspaceSiteShell(slug);
+    }
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
 
@@ -1962,6 +2098,10 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         include: { aiApp: true },
         orderBy: [{ routeKey: "asc" }],
         take: workspaceCustomerRuntimeLimits.siteAiApps
+      }).then((rows) => rows.map(toSiteAiApp)).catch((error) => {
+        if (!shouldFallbackRelationalRead(error)) throw error;
+        warnRelationalFallback("customer workspace site AI apps", error);
+        return fallbackCustomerWorkspaceSiteAiApps(site.id);
       }),
       getStorefrontPublicNavigationDataForSite(site.id),
       getStorefrontPublicVideoThemesForSite(site.id, 32)
@@ -1975,7 +2115,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         primaryDomain: site.primaryDomain,
         branding: site.branding
       },
-      siteAiApps: siteAiApps.map(toSiteAiApp),
+      siteAiApps,
       creativePackCategories: navigationData.creativePackCategories,
       creativePacks: navigationData.creativePacks,
       toolMenuItems: navigationData.toolMenuItems,

@@ -16,7 +16,7 @@ function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
-function readLocalJsonPlatformState(): PlatformState | undefined {
+export function readLocalJsonPlatformState(): PlatformState | undefined {
   try {
     const stat = fs.statSync(localPlatformStateFile);
     if (localJsonStateCache?.mtimeMs === stat.mtimeMs) return localJsonStateCache.state;

@@ -8,7 +8,10 @@ export function shouldFallbackRelationalRead(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
   return (
     message.includes("Can't reach database server") ||
+    message.includes("Authentication failed against database server") ||
+    message.includes("provided database credentials") ||
     message.includes("ECONNREFUSED") ||
+    message.includes("P1000") ||
     message.includes("P1001") ||
     message.includes("P2024") ||
     message.includes("connection pool") ||

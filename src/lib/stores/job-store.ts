@@ -7,6 +7,7 @@ import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
 import { normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, videoDurationCreditCost } from "@/lib/video-frame-config";
+import { videoProviderAvailability } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import type { WorkerOutputSlot } from "@/lib/worker";
 
@@ -69,7 +70,13 @@ function isPrismaErrorCode(error: unknown, code: string): boolean {
 }
 
 async function lockCustomerGenerationSubmit(tx: Tx, params: { siteId: string; customerId: string }): Promise<void> {
-  await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`generation:${params.siteId}`}), hashtext(${params.customerId}))`;
+  // Keep the blocking lock out of the result set; Prisma cannot deserialize Postgres `void` columns.
+  await tx.$queryRaw<{ locked: boolean }[]>`
+    WITH lock_customer_generation AS (
+      SELECT pg_advisory_xact_lock(hashtext(${`generation:${params.siteId}`}), hashtext(${params.customerId}))
+    )
+    SELECT true AS locked FROM lock_customer_generation
+  `;
 }
 
 function cleanRerunRequest(value: Prisma.JsonValue): Record<string, unknown> {
@@ -594,6 +601,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   entryPoint?: GenerationEntryPoint;
   idempotencyKey?: string;
   requestHash?: string;
+  skipProviderAvailabilityCheck?: boolean;
 }) {
   await lockCustomerGenerationSubmit(tx, { siteId: params.siteId, customerId: params.customerId });
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
@@ -671,7 +679,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   if (videoTheme) {
     const videoProviders = await tx.platformAiProvider.findMany({
       where: { enabled: true },
-      select: { modelType: true, maxImagesPerRequest: true },
+      select: { id: true, label: true, aiUrl: true, apiKey: true, modelType: true, enabled: true, maxImagesPerRequest: true },
       orderBy: [{ preferred: "desc" }, { priority: "asc" }]
     });
     videoProviderMaxFrames = configuredVideoProviderFrameLimit(videoProviders);
@@ -680,6 +688,10 @@ async function createGenerationJobInTx(tx: Tx, params: {
     if (requestedAssetIds.length < 1 && !videoPromptText(params.requestJson)) throw new StoreError("video_prompt_required", 400);
     if (requestedAssetIds.length < 1 && videoPromptRequiresFrameImages(videoPromptText(params.requestJson))) {
       throw new StoreError("video_frame_selection_required", 400);
+    }
+    if (!params.skipProviderAvailabilityCheck) {
+      const availability = videoProviderAvailability(videoProviders, { referenceAssetCount: requestedAssetIds.length });
+      if (!availability.ok) throw new StoreError(availability.error, 503);
     }
     if (requestedAssetIds.length > maxFrames) throw new StoreError("too_many_video_frames_for_provider", 400);
   }
@@ -864,6 +876,7 @@ export async function createGenerationJobRelational(params: {
   entryPoint?: GenerationEntryPoint;
   idempotencyKey?: string;
   requestHash?: string;
+  skipProviderAvailabilityCheck?: boolean;
 }): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer; reused: boolean }> {
   try {
     return await withJobStoreTimeout(prisma.$transaction(async (tx) => {

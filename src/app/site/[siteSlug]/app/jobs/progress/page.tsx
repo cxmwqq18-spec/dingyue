@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { readStorefrontPublicPageMetadataStateBySlugFromDatabase } from "@/lib/storefront-state";
+import { readPathModePublicMetadataState } from "@/lib/storefront-local-state";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
@@ -8,7 +8,7 @@ import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, "/app/jobs/progress");
+  const state = await readPathModePublicMetadataState(siteSlug, "/app/jobs/progress");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/app/jobs/progress");
   return {
