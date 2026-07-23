@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
+import { submitGenerationJob } from "@/lib/generation-submit";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { publicUrlForRequest } from "@/lib/session";
-import { createGenerationJobRelational, settleGenerationJobRelational } from "@/lib/stores/job-store";
-import { buildWorkerPayload, dispatchWorkerPayload, isLoopbackBaseUrl, resolveWorkerBaseUrls } from "@/lib/worker";
+import { isLoopbackBaseUrl, resolveWorkerBaseUrls } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
 export async function HEAD() {
@@ -75,59 +75,46 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
   try {
     const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
-    const { job, siteAiApp, ledger, customer } = await createGenerationJobRelational({
+    const result = await submitGenerationJob({
       siteId,
       customerId: body.customerId,
       aiAppSlug: body.aiAppSlug,
+      entryPoint: adminAccess.canBypassBilling ? "site_admin" : "customer_workspace",
+      authContext: { kind: "customer", actorId: guard.current.customer.id },
+      baseUrls: workerBaseUrls,
       subscriptionBypass: adminAccess.canBypassBilling
         ? { enabled: true, reason: "site_admin", siteAdminId: adminAccess.siteAdminId }
         : undefined,
-      requestJson: {
+      params: {
         ...(body.params ?? {}),
         assetIds,
         creativePackId: typeof body.params?.creativePackId === "string" ? body.params.creativePackId : undefined,
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
-      }
+      },
+      skipWorkerDispatch: process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1",
+      includeWorkerPayload: true
     });
-    const workerPayload = await buildWorkerPayload({ job, siteAiApp, baseUrls: workerBaseUrls });
-    const shouldSkipWorkerDispatch = process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1";
-    const workerDispatch = shouldSkipWorkerDispatch
-      ? { status: "skipped" as const }
-      : await dispatchWorkerPayload(workerPayload);
-    if (!shouldSkipWorkerDispatch && workerDispatch.status !== "sent") {
-      const settled = await settleGenerationJobRelational({
-        jobId: job.id,
-        siteId,
-        requestId: workerPayload.requestId,
-        status: "failed",
-        error: workerDispatch.error ?? "worker_dispatch_failed"
-      });
+    if (!result.ok) {
       return NextResponse.json({
         ok: false,
-        error: workerDispatch.error ?? "worker_dispatch_failed",
-        job: settled.job,
-        customer: settled.customer,
-        customerBalance: settled.customer.balance,
-        workerDispatch,
-        note: "Worker dispatch was not accepted. The job was failed and reserved credits were released."
-      }, { status: workerDispatch.status === "skipped" ? 503 : 502 });
+        error: result.workerDispatch.error ?? "worker_dispatch_failed",
+        job: result.job,
+        customer: result.customer,
+        customerBalance: result.customerBalance,
+        workerDispatch: result.workerDispatch,
+        note: result.note
+      }, { status: result.workerDispatch.status === "skipped" ? 503 : 502 });
     }
     return NextResponse.json({
       ok: true,
-      job,
-      customer,
-      customerBalance: customer.balance,
+      job: result.job,
+      customer: result.customer,
+      customerBalance: result.customerBalance,
       adminAccess,
-      ledgerAction: ledger ?? null,
-      workerPayload,
-      workerDispatch,
-      note: workerDispatch.status === "skipped"
-        ? adminAccess.canBypassBilling
-          ? "Persisted admin job and reserved credits. Worker dispatch is not configured."
-          : "Persisted job and reserved credits. Worker dispatch is not configured."
-        : adminAccess.canBypassBilling
-          ? "Persisted admin job, reserved credits, and attempted worker dispatch."
-          : "Persisted job, reserved credits, and attempted worker dispatch."
+      ledgerAction: result.ledgerAction ?? null,
+      workerPayload: result.workerPayload,
+      workerDispatch: result.workerDispatch,
+      note: result.note
     });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

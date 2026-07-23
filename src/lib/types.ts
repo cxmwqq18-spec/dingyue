@@ -2,6 +2,7 @@ export type SiteStatus = "active" | "draft" | "suspended";
 export type ConnectStatus = "not_started" | "pending" | "enabled" | "restricted";
 export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "refunded";
 export type LedgerType = "grant" | "reserve" | "consume" | "release" | "adjustment";
+export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platform_admin" | "external_api" | "rerun";
 
 export type SectionType =
   | "hero"
@@ -507,6 +508,18 @@ export interface SiteAiApp {
   providerConfig?: AiProviderConfig;
 }
 
+export interface SiteApiKey {
+  id: string;
+  siteId: string;
+  label: string;
+  keyPreview: string;
+  scopes: string[];
+  enabled: boolean;
+  lastUsedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ToolCategory {
   id: string;
   siteId: string;
@@ -589,6 +602,9 @@ export interface GenerationJob {
   aiAppId: string;
   status: JobStatus;
   creditsReserved: number;
+  entryPoint?: GenerationEntryPoint;
+  idempotencyKey?: string;
+  requestHash?: string;
   createdAt: string;
   updatedAt: string;
   requestJson: Record<string, unknown>;

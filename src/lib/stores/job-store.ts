@@ -2,7 +2,7 @@ import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationJob, SiteAiApp } from "@/lib/types";
+import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationEntryPoint, GenerationJob, SiteAiApp } from "@/lib/types";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
@@ -43,6 +43,33 @@ async function withJobStoreTimeout<T>(operation: Promise<T>, message: string): P
 
 function toPrismaJson(value: Record<string, unknown>): Prisma.InputJsonValue {
   return JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
+}
+
+function stableJson(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  return `{${Object.entries(value as Record<string, unknown>)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, entry]) => `${JSON.stringify(key)}:${stableJson(entry)}`)
+    .join(",")}}`;
+}
+
+export function generationRequestHash(params: { aiAppSlug: string; requestJson?: Record<string, unknown> }): string {
+  return crypto
+    .createHash("sha256")
+    .update(stableJson({
+      aiAppSlug: params.aiAppSlug,
+      requestJson: params.requestJson ?? {}
+    }))
+    .digest("hex");
+}
+
+function isPrismaErrorCode(error: unknown, code: string): boolean {
+  return Boolean(error && typeof error === "object" && "code" in error && (error as { code?: unknown }).code === code);
+}
+
+async function lockCustomerGenerationSubmit(tx: Tx, params: { siteId: string; customerId: string }): Promise<void> {
+  await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`generation:${params.siteId}`}), hashtext(${params.customerId}))`;
 }
 
 function cleanRerunRequest(value: Prisma.JsonValue): Record<string, unknown> {
@@ -564,7 +591,11 @@ async function createGenerationJobInTx(tx: Tx, params: {
   aiAppSlug: string;
   requestJson?: Record<string, unknown>;
   subscriptionBypass?: JobSubscriptionBypass;
+  entryPoint?: GenerationEntryPoint;
+  idempotencyKey?: string;
+  requestHash?: string;
 }) {
+  await lockCustomerGenerationSubmit(tx, { siteId: params.siteId, customerId: params.customerId });
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
   if (customer.status === "past_due") throw new StoreError("customer_past_due", 402);
   if (customer.status === "blocked") throw new StoreError("customer_blocked", 403);
@@ -585,6 +616,19 @@ async function createGenerationJobInTx(tx: Tx, params: {
     include: { aiApp: true }
   });
   if (!siteAiApp) throw new StoreError("ai_app_not_enabled_for_site", 404);
+  const idempotencyKey = params.idempotencyKey?.trim() || undefined;
+  const requestHash = idempotencyKey ? params.requestHash || generationRequestHash({ aiAppSlug: params.aiAppSlug, requestJson: params.requestJson }) : undefined;
+  if (idempotencyKey) {
+    const existing = await tx.generationJob.findFirst({
+      where: { siteId: params.siteId, customerId: params.customerId, idempotencyKey },
+      orderBy: { createdAt: "desc" }
+    });
+    if (existing) {
+      const existingHash = typeof (existing as { requestHash?: string | null }).requestHash === "string" ? (existing as { requestHash?: string }).requestHash : undefined;
+      if (existingHash && existingHash !== requestHash) throw new StoreError("idempotency_key_conflict", 409);
+      return { job: existing, siteAiApp, customer, reused: true as const };
+    }
+  }
   await releaseStaleActiveJobs(tx, { siteId: params.siteId, customerId: params.customerId });
   const activeJob = await tx.generationJob.findFirst({
     where: { siteId: params.siteId, customerId: params.customerId, status: { in: ["queued", "running"] } },
@@ -726,6 +770,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
       aiAppId: siteAiApp.aiApp.id,
       status: "queued",
       creditsReserved,
+      entryPoint: params.entryPoint ?? "customer_workspace",
+      idempotencyKey,
+      requestHash,
       requestJson: toPrismaJson({
         ...(params.requestJson ?? {}),
         ...(videoTheme
@@ -805,7 +852,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   });
   const ledger = creditsReserved > 0 ? await reserveCreditsForJob(tx, job) : undefined;
   const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
-  return { job, siteAiApp, ledger, customer: updatedCustomer };
+  return { job, siteAiApp, ledger, customer: updatedCustomer, reused: false as const };
 }
 
 export async function createGenerationJobRelational(params: {
@@ -814,16 +861,83 @@ export async function createGenerationJobRelational(params: {
   aiAppSlug: string;
   requestJson?: Record<string, unknown>;
   subscriptionBypass?: JobSubscriptionBypass;
-}): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer }> {
-  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
-    const result = await createGenerationJobInTx(tx, params);
+  entryPoint?: GenerationEntryPoint;
+  idempotencyKey?: string;
+  requestHash?: string;
+}): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer; reused: boolean }> {
+  try {
+    return await withJobStoreTimeout(prisma.$transaction(async (tx) => {
+      const result = await createGenerationJobInTx(tx, params);
+      return {
+        job: mapGenerationJob(result.job),
+        siteAiApp: mapSiteAiApp(result.siteAiApp),
+        ledger: result.ledger ? mapCreditLedger(result.ledger) : undefined,
+        customer: mapCustomer(result.customer),
+        reused: result.reused
+      };
+    }, jobStoreTransactionOptions), "job_create_timeout");
+  } catch (error) {
+    const idempotencyKey = params.idempotencyKey?.trim();
+    if (!idempotencyKey || !isPrismaErrorCode(error, "P2002")) throw error;
+    const existing = await prisma.generationJob.findFirst({
+      where: { siteId: params.siteId, customerId: params.customerId, idempotencyKey },
+      orderBy: { createdAt: "desc" }
+    });
+    if (!existing) throw error;
+    const requestHash = params.requestHash || generationRequestHash({ aiAppSlug: params.aiAppSlug, requestJson: params.requestJson });
+    if (existing.requestHash && existing.requestHash !== requestHash) throw new StoreError("idempotency_key_conflict", 409);
+    const siteAiApp = await prisma.siteAiApp.findFirst({
+      where: { siteId: existing.siteId, aiAppId: existing.aiAppId },
+      include: { aiApp: true }
+    });
+    if (!siteAiApp) throw new StoreError("ai_app_not_enabled_for_site", 404);
+    const customer = await prisma.customer.findFirstOrThrow({ where: { id: existing.customerId, siteId: existing.siteId }, include: { balance: true } });
     return {
-      job: mapGenerationJob(result.job),
-      siteAiApp: mapSiteAiApp(result.siteAiApp),
-      ledger: result.ledger ? mapCreditLedger(result.ledger) : undefined,
-      customer: mapCustomer(result.customer)
+      job: mapGenerationJob(existing),
+      siteAiApp: mapSiteAiApp(siteAiApp),
+      customer: mapCustomer(customer),
+      reused: true
     };
-  }, jobStoreTransactionOptions), "job_create_timeout");
+  }
+}
+
+export async function getGenerationJobForCustomerRelational(params: {
+  siteId: string;
+  customerId: string;
+  jobId: string;
+}): Promise<{ job: GenerationJob }> {
+  const job = await prisma.generationJob.findFirst({
+    where: { id: params.jobId, siteId: params.siteId, customerId: params.customerId }
+  });
+  if (!job) throw new StoreError("job_not_found", 404);
+  return { job: mapGenerationJob(job) };
+}
+
+export async function listRecoverableQueuedGenerationJobsRelational(params: {
+  siteId?: string;
+  olderThanMs: number;
+  limit: number;
+}): Promise<Array<{ job: GenerationJob; siteAiApp: SiteAiApp }>> {
+  const updatedBefore = new Date(Date.now() - Math.max(30_000, params.olderThanMs));
+  const jobs = await prisma.generationJob.findMany({
+    where: {
+      ...(params.siteId ? { siteId: params.siteId } : {}),
+      status: "queued",
+      updatedAt: { lt: updatedBefore }
+    },
+    orderBy: [{ updatedAt: "asc" }, { id: "asc" }],
+    take: Math.max(1, Math.min(Math.trunc(params.limit), 100))
+  });
+  const results: Array<{ job: GenerationJob; siteAiApp: SiteAiApp }> = [];
+  for (const job of jobs) {
+    const siteAiApp = await prisma.siteAiApp.findFirst({
+      where: { siteId: job.siteId, aiAppId: job.aiAppId, enabled: true },
+      include: { aiApp: true }
+    });
+    if (!siteAiApp) continue;
+    results.push({ job: mapGenerationJob(job), siteAiApp: mapSiteAiApp(siteAiApp) });
+  }
+  return results;
 }
 
 export async function updateGenerationJobStatusRelational(params: {
@@ -1090,6 +1204,7 @@ export async function rerunGenerationJobRelational(params: {
       siteId: params.siteId,
       customerId: sourceJob.customerId,
       aiAppSlug: aiApp.slug,
+      entryPoint: "rerun",
       requestJson: {
         ...cleanRerunRequest(sourceJob.requestJson),
         rerunOf: sourceJob.id,

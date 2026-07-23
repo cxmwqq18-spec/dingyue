@@ -4142,6 +4142,7 @@ export function createGenerationJob(params: {
       aiAppId: siteAiApp.aiApp.id,
       status: "queued",
       creditsReserved: siteAiApp.creditCost,
+      entryPoint: "customer_workspace",
       createdAt: now,
       updatedAt: now,
       requestJson: {

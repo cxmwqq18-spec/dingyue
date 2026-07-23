@@ -20,6 +20,7 @@ import type {
   PublicPlatformAdmin,
   PublicSiteAdmin,
   SiteAiApp,
+  SiteApiKey,
   ToolCategory,
   ToolMenuItem,
   VideoTheme,
@@ -156,6 +157,11 @@ export function mapSiteAiApp(row: SiteAiAppWithAiApp): SiteAiApp {
 }
 
 export function mapGenerationJob(row: Prisma.GenerationJobGetPayload<object>): GenerationJob {
+  const record = row as Prisma.GenerationJobGetPayload<object> & {
+    entryPoint?: string | null;
+    idempotencyKey?: string | null;
+    requestHash?: string | null;
+  };
   return {
     id: row.id,
     siteId: row.siteId,
@@ -163,6 +169,9 @@ export function mapGenerationJob(row: Prisma.GenerationJobGetPayload<object>): G
     aiAppId: row.aiAppId,
     status: row.status as GenerationJob["status"],
     creditsReserved: row.creditsReserved,
+    entryPoint: (record.entryPoint ?? "customer_workspace") as GenerationJob["entryPoint"],
+    idempotencyKey: record.idempotencyKey ?? undefined,
+    requestHash: record.requestHash ?? undefined,
     createdAt: iso(row.createdAt),
     updatedAt: iso(row.updatedAt),
     requestJson: jsonRecord(row.requestJson) ?? {},
@@ -209,6 +218,20 @@ export function mapAssetUpload(row: Prisma.AssetUploadGetPayload<object>): Asset
     favoriteAt,
     deletedAt: row.deletedAt ? iso(row.deletedAt) : undefined,
     createdAt: iso(row.createdAt)
+  };
+}
+
+export function mapSiteApiKey(row: Prisma.SiteApiKeyGetPayload<object>): SiteApiKey {
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    label: row.label,
+    keyPreview: row.keyPreview,
+    scopes: row.scopes,
+    enabled: row.enabled,
+    lastUsedAt: row.lastUsedAt ? iso(row.lastUsedAt) : undefined,
+    createdAt: iso(row.createdAt),
+    updatedAt: iso(row.updatedAt)
   };
 }
 

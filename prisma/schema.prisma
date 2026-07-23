@@ -170,6 +170,7 @@ model Site {
   themeCopies            ThemeCopy[]
   connect                StripeConnectAccount?
   aiApps                 SiteAiApp[]
+  apiKeys                SiteApiKey[]
   gatewayGroups          AiGatewayGroup[]
   toolCategories         ToolCategory[]
   toolMenuItems          ToolMenuItem[]
@@ -478,6 +479,23 @@ model SiteAiApp {
   @@unique([siteId, routeKey])
   @@index([siteId, enabled])
   @@index([siteId, enabled, routeKey])
+}
+
+model SiteApiKey {
+  id         String   @id
+  siteId     String
+  label      String
+  keyHash    String   @unique
+  keyPreview String
+  scopes     String[] @default([])
+  enabled    Boolean  @default(true)
+  lastUsedAt DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, enabled])
+  @@index([siteId, createdAt])
 }
 
 model ToolCategory {
@@ -883,6 +901,9 @@ model GenerationJob {
   aiAppId         String
   status          String
   creditsReserved Int
+  entryPoint      String        @default("customer_workspace")
+  idempotencyKey  String?
+  requestHash     String?
   requestJson     Json
   resultJson      Json?
   createdAt       DateTime      @default(now())
@@ -897,9 +918,12 @@ model GenerationJob {
   @@index([siteId, customerId, updatedAt])
   @@index([siteId, status])
   @@index([siteId, aiAppId])
+  @@index([siteId, entryPoint, createdAt])
+  @@index([siteId, idempotencyKey])
   @@index([siteId, status, updatedAt])
   @@index([siteId, updatedAt])
   @@index([status, updatedAt])
+  @@unique([siteId, customerId, idempotencyKey])
 }
 
 model AuditLog {
