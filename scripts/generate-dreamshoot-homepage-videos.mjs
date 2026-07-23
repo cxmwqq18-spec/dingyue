@@ -76,7 +76,7 @@ function selectedShowcaseStores() {
 }
 
 function normalizeBaseUrl(value) {
-  return String(value || "").trim().replace(/\/+$/, "");
+  return String(value || "").trim().replace(/\/+$/, "").replace(/\/v1$/, "");
 }
 
 function providerProxyUrl() {
@@ -222,6 +222,10 @@ function shouldTryNextVideoModel(error) {
     message.includes("duplicate_video_hash") ||
     message.includes("no available channel for model") ||
     message.includes("no access to model") ||
+    message.includes("first_frame_required") ||
+    message.includes("reference image required") ||
+    message.includes("images required") ||
+    message.includes("input_reference") ||
     message.includes("create_failed_502") ||
     message.includes("create_failed_503") ||
     message.includes("create_failed_504") ||
@@ -301,8 +305,7 @@ function lk888Payload(model, prompt, dataUri, durationSeconds) {
       aspect_ratio: "1:1",
       resolution: "720p",
       duration: seconds,
-      size: "720x720",
-      images: [dataUri]
+      images: dataUri
     }
   };
 }
@@ -372,7 +375,8 @@ async function postJson(url, apiKey, payload, timeout, label) {
 
 async function createVideoTask(provider, model, protocol, prompt, dataUri, durationSeconds) {
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
-  const endpoint = protocol === "openai-videos" ? `${baseUrl}/v1/videos` : `${baseUrl}/v1/media/generate`;
+  const mediaBaseUrl = protocol === "lk888-media" ? baseUrl.replace(/\/api$/, "") : baseUrl;
+  const endpoint = protocol === "openai-videos" ? `${baseUrl}/v1/videos` : `${mediaBaseUrl}/v1/media/generate`;
   if (protocol === "openai-videos") {
     let lastError;
     for (const payload of openAiPayloadVariants(model, prompt, dataUri, durationSeconds)) {
@@ -400,13 +404,22 @@ async function pollVideoTask(provider, protocol, taskId) {
   while (Date.now() - startedAt < timeoutMs) {
     await new Promise((resolve) => setTimeout(resolve, pollMs));
     const baseUrl = normalizeBaseUrl(provider.aiUrl);
-    const url = protocol === "openai-videos"
-      ? `${baseUrl}/v1/videos/${encodeURIComponent(taskId)}`
-      : `${baseUrl}/v1/media/status?task_id=${encodeURIComponent(taskId)}`;
-    const response = await fetchWithTimeout(url, {
-      headers: { Authorization: `Bearer ${provider.apiKey}` }
-    }, Math.min(60_000, timeoutMs), "video_status");
-    const body = await response.json().catch(() => ({}));
+    const mediaBaseUrl = protocol === "lk888-media" ? baseUrl.replace(/\/api$/, "") : baseUrl;
+    const urls = protocol === "openai-videos"
+      ? [`${baseUrl}/v1/videos/${encodeURIComponent(taskId)}`]
+      : [
+          `${mediaBaseUrl}/v1/skills/task-status?task_id=${encodeURIComponent(taskId)}`,
+          `${mediaBaseUrl}/v1/media/status?task_id=${encodeURIComponent(taskId)}`
+        ];
+    let response;
+    let body = {};
+    for (const [index, url] of urls.entries()) {
+      response = await fetchWithTimeout(url, {
+        headers: { Authorization: `Bearer ${provider.apiKey}` }
+      }, Math.min(60_000, timeoutMs), "video_status");
+      body = await response.json().catch(() => ({}));
+      if (response.ok || protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
+    }
     if (!response.ok) throw new Error(`video_status_failed_${response.status}_${sanitizeProviderBody(body)}`);
 
     const status = extractStatus(body);

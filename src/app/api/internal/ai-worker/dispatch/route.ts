@@ -128,6 +128,15 @@ function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
 }
 
+function isLk888MediaBaseUrl(baseUrl: string) {
+  try {
+    const hostname = new URL(baseUrl).hostname.toLowerCase();
+    return hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai";
+  } catch {
+    return false;
+  }
+}
+
 function imageBase64(body: ImageGenerationResponse) {
   return body.data?.[0]?.b64_json ??
     body.data?.[0]?.image_base64 ??
@@ -249,6 +258,26 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
       "grok-imagine-video"
     ].filter(Boolean)));
   }
+  if (protocol === "lk888-media") {
+    const lk888Candidates = referenceAssetCount > 0
+      ? [
+          normalizedModel,
+          "grok-imagine-video-1.5-preview",
+          "grok-imagine-video-1.5",
+          "grok-imagine-video",
+          "grok-video-3.5-1015",
+          "grok-video-3"
+        ]
+      : [
+          normalizedModel,
+          "grok-video-3",
+          "grok-video-3.5-1015",
+          "grok-imagine-video-1.5-preview",
+          "grok-imagine-video-1.5",
+          "grok-imagine-video"
+        ];
+    return Array.from(new Set(lk888Candidates.filter(Boolean)));
+  }
   const shouldPreferSmartPickLidJsonModel = protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "");
   const imageToVideoCandidates = [
     ...(isImageToVideoModel(normalizedModel) ? [normalizedModel] : []),
@@ -278,6 +307,7 @@ function isVideoModelUnavailableError(error: unknown) {
 function shouldTryNextVideoModel(error: unknown) {
   if (isVideoModelUnavailableError(error)) return true;
   const message = errorMessage(error).toLowerCase();
+  if (message.includes("first_frame_required") || message.includes("reference image required") || message.includes("images required") || message.includes("input_reference")) return true;
   return message.includes("ai_provider_video_create_failed_502_") ||
     message.includes("ai_provider_video_create_failed_404_") ||
     message.includes("ai_provider_video_create_failed_503_") ||
@@ -979,6 +1009,31 @@ function openAiVideoProviderSize(params: { aspect_ratio: string; resolution: str
 
 function smartPickLidJsonVideoResolution(resolution: string) {
   return resolution.trim().toUpperCase();
+}
+
+function lk888MediaVideoResolution(resolution: string) {
+  const normalized = resolution.trim().toLowerCase();
+  return normalized === "480p" ? "480p" : "720p";
+}
+
+function lk888MediaVideoAspectRatio(aspectRatio: string) {
+  if (aspectRatio === "4:3") return "3:2";
+  if (aspectRatio === "3:4") return "2:3";
+  return new Set(["16:9", "9:16", "1:1", "3:2", "2:3"]).has(aspectRatio) ? aspectRatio : "16:9";
+}
+
+function lk888MediaImagesPayload(imageUrls: string[]) {
+  if (imageUrls.length <= 1) return imageUrls[0] ?? "";
+  return imageUrls;
+}
+
+function lk888MediaVideoParams(videoParams: { aspect_ratio: string; resolution: string; duration: string }, imageUrls: string[]) {
+  return {
+    ...(imageUrls.length ? { images: lk888MediaImagesPayload(imageUrls) } : {}),
+    aspect_ratio: lk888MediaVideoAspectRatio(videoParams.aspect_ratio),
+    resolution: lk888MediaVideoResolution(videoParams.resolution),
+    duration: videoParams.duration
+  };
 }
 
 function openAiVideoRequestSize(params: { aspect_ratio: string; resolution: string; size: string }, options?: { smartPickLidJson?: boolean }) {
@@ -1780,10 +1835,19 @@ function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
     if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
     return "lk888-media";
   }
   return "lk888-media";
+}
+
+function lk888MediaStatusUrls(baseUrl: string, taskId: string) {
+  const primary = new URL(`${baseUrl}/v1/skills/task-status`);
+  primary.searchParams.set("task_id", taskId);
+  const legacy = new URL(`${baseUrl}/v1/media/status`);
+  legacy.searchParams.set("task_id", taskId);
+  return [primary, legacy];
 }
 
 function shouldUseOpenAiVideoJsonReference(params: {
@@ -1868,9 +1932,10 @@ async function createVideoTask(params: {
   timeoutMs: number;
 }) {
   const firstImageUrl = params.imageUrls[0];
+  const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
   const endpoint = params.protocol === "openai-videos"
     ? openAiVideoCreateEndpoint(params.baseUrl)
-    : `${params.baseUrl}/v1/media/generate`;
+    : `${mediaBaseUrl}/v1/media/generate`;
   const useSmartPickLidJsonRequest = shouldUseSmartPickLidJsonVideoRequest({
     baseUrl: params.baseUrl,
     model: params.model,
@@ -1928,10 +1993,7 @@ async function createVideoTask(params: {
       }
     : {
         model: params.model,
-        params: {
-          ...params.videoParams,
-          images: params.imageUrls
-        },
+        params: lk888MediaVideoParams(params.videoParams, params.imageUrls),
         prompt: params.prompt
       };
   const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
@@ -1956,9 +2018,9 @@ async function createVideoTask(params: {
       protocol: params.protocol,
       endpoint: endpoint.replace(params.baseUrl, ""),
       duration: params.videoParams.duration,
-      size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : params.videoParams.size,
+      size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : `${lk888MediaVideoAspectRatio(params.videoParams.aspect_ratio)}/${lk888MediaVideoResolution(params.videoParams.resolution)}`,
       imageCount: referenceCount,
-      imageKind: useSmartPickLidJsonRequest ? (referenceCount > 1 ? "smartpicklid_json_data_uri_images" : "smartpicklid_json_data_uri_image") : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : firstImageUrl?.startsWith("data:") ? "data_uri" : "url",
+      imageKind: useSmartPickLidJsonRequest ? (referenceCount > 1 ? "smartpicklid_json_data_uri_images" : "smartpicklid_json_data_uri_image") : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : referenceCount > 1 ? "lk888_media_images_array" : firstImageUrl?.startsWith("data:") ? "lk888_media_images_data_uri" : "lk888_media_images_url",
       promptLength: params.prompt.length
     };
     throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
@@ -1979,15 +2041,21 @@ async function pollVideoTask(params: {
   let lastStatus = "";
   while (Date.now() - startedAt < params.timeoutMs) {
     await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
-    const url = params.protocol === "openai-videos"
-      ? new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)
-      : new URL(`${params.baseUrl}/v1/media/status`);
-    if (params.protocol === "lk888-media") url.searchParams.set("task_id", params.taskId);
-    const response = await fetchWithTimeout(url.toString(), {
-      headers: { Authorization: `Bearer ${params.apiKey}` },
-      cache: "no-store"
-    }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
-    const body = (await response.json().catch(() => ({}))) as VideoStatusResponse;
+    const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
+    const urls = params.protocol === "openai-videos"
+      ? [new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)]
+      : lk888MediaStatusUrls(mediaBaseUrl, params.taskId);
+    let response: Response | undefined;
+    let body: VideoStatusResponse = {};
+    for (const [index, url] of urls.entries()) {
+      response = await fetchWithTimeout(url.toString(), {
+        headers: { Authorization: `Bearer ${params.apiKey}` },
+        cache: "no-store"
+      }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
+      body = (await response.json().catch(() => ({}))) as VideoStatusResponse;
+      if (response.ok || params.protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
+    }
+    if (!response) throw new Error("ai_provider_video_status_empty_response");
     if (!response.ok) {
       throw new Error(`ai_provider_video_status_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
     }
@@ -2089,6 +2157,9 @@ async function generateVideoWithProvider(params: {
   const imageUrls = useProviderFrameUrls
     ? await videoProviderFrameUrls({ referenceAssets, timeoutMs })
     : [];
+  if (protocol === "lk888-media" && isGrokImagineVideoModel(model) && !referenceAssets.length) {
+    throw new Error("ai_provider_video_first_frame_required_lk888_media");
+  }
   if (useProviderFrameUrls && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
     throw new Error("ai_provider_video_frame_public_urls_required");
   }

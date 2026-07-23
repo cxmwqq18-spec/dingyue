@@ -49,6 +49,7 @@ type AiProviderRow = {
     label: string;
     aiUrl: string;
     modelType: string;
+    protocol: string;
   };
 };
 
@@ -123,6 +124,14 @@ function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGeneratio
   const generation = provider.supportsGenerationN ? "文生图 n" : "文生图单张";
   const edit = provider.supportsEditN ? "图生图 n" : "图生图单张";
   return `${generation} / ${edit} / 单次参考图 ${maxImages}`;
+}
+
+function providerProtocolText(provider: Pick<AiProviderRow, "status">) {
+  return {
+    "lk888-media": "LK888 media",
+    "openai-videos": "OpenAI videos",
+    "openai-compatible": "OpenAI compatible"
+  }[provider.status.protocol] ?? provider.status.protocol ?? "unknown";
 }
 
 function providerRunnable(provider?: AiProviderRow) {
@@ -453,6 +462,7 @@ export function PlatformAiProviderPanel({
                 { label: "模型类型", value: current?.modelType ?? "missing", tone: current?.modelType ? "good" : "warn" },
                 { label: "启用状态", value: current?.enabled ? "启用" : "未启用", tone: current?.enabled ? "good" : "warn" },
                 { label: "AI URL", value: current?.aiUrl ?? "missing", tone: current?.aiUrl ? "good" : "warn" },
+                { label: "接口协议", value: current ? providerProtocolText(current) : "missing", tone: current?.status.protocol ? "good" : "warn" },
                 { label: "API Key", value: current?.status.apiKeyConfigured ? current.status.apiKeyPreview : "missing", tone: current?.status.apiKeyConfigured ? "good" : "warn" }
               ]}
             />
@@ -530,7 +540,7 @@ export function PlatformAiProviderPanel({
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{provider.label}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{provider.modelType} / {provider.status.apiKeyPreview || "missing key"}</div>
-                  <div className="mt-1 truncate text-[11px] text-[#667085]">{providerCapabilityText(provider)}</div>
+                  <div className="mt-1 truncate text-[11px] text-[#667085]">{providerProtocolText(provider)} / {providerCapabilityText(provider)}</div>
                 </div>
                 <div className="truncate font-mono text-[12px] text-[#667085]">{provider.aiUrl}</div>
                 <div className="flex flex-wrap gap-2">

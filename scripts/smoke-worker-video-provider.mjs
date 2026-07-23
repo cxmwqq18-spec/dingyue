@@ -34,7 +34,11 @@ const checks = [
   {
     label: "video provider supports the LK888 media generate and status endpoints",
     pass: files.dispatch.includes("/v1/media/generate") &&
+      files.dispatch.includes("/v1/skills/task-status") &&
       files.dispatch.includes("/v1/media/status") &&
+      files.dispatch.includes("function lk888MediaVideoParams(") &&
+      files.dispatch.includes("images: lk888MediaImagesPayload(imageUrls)") &&
+      files.dispatch.includes("resolution: lk888MediaVideoResolution(videoParams.resolution)") &&
       files.dispatch.includes("is_final === true") &&
       files.dispatch.includes('body.state === "success"')
   },
@@ -296,7 +300,14 @@ const checks = [
     label: "platform provider model picker includes the Grok video models",
     pass: files.providers.includes("grok-video-3-pro") &&
       files.providers.includes("grok-imagine-video") &&
-      files.providers.includes("grok-imagine-video-1.5-preview")
+      files.providers.includes("grok-imagine-video-1.5-preview") &&
+      files.providers.includes("grok-video-3.5-1015")
+  },
+  {
+    label: "platform provider UI exposes the inferred provider protocol",
+    pass: files.providerPanel.includes("providerProtocolText") &&
+      files.providerPanel.includes("LK888 media") &&
+      files.providerPanel.includes("接口协议")
   },
   {
     label: "platform provider UI labels the request image limit as reference images",

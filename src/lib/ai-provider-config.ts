@@ -9,6 +9,19 @@ export function maskAiProviderKey(apiKey?: string): string {
   return `${value.slice(0, 6)}...${value.slice(-4)}`;
 }
 
+export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType">): "lk888-media" | "openai-videos" | "openai-compatible" {
+  const aiUrl = provider?.aiUrl?.trim() ?? "";
+  try {
+    const hostname = new URL(aiUrl).hostname.toLowerCase();
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
+  } catch {
+    // Keep unknown or in-progress URLs generic in the admin UI.
+  }
+  const model = provider?.modelType?.trim().toLowerCase() ?? "";
+  return model.includes("video") || model.includes("grok-imagine-video") ? "lk888-media" : "openai-compatible";
+}
+
 export function aiProviderStatus(provider?: PlatformAiProvider) {
   return {
     configured: Boolean(provider?.label?.trim() && provider?.aiUrl?.trim() && provider?.apiKey?.trim() && provider?.modelType?.trim()),
@@ -20,6 +33,7 @@ export function aiProviderStatus(provider?: PlatformAiProvider) {
     label: provider?.label ?? "",
     aiUrl: provider?.aiUrl ?? "",
     modelType: provider?.modelType ?? "",
+    protocol: aiProviderProtocol(provider),
     updatedAt: provider?.updatedAt,
     updatedBy: provider?.updatedBy
   };
@@ -40,6 +54,14 @@ export function assertValidAiProviderUrl(aiUrl: string): string {
 const aiProviderHeadTimeoutMs = Math.max(500, Number(process.env.AI_PROVIDER_HEAD_TIMEOUT_MS ?? "3000") || 3000);
 const aiProviderGetTimeoutMs = Math.max(1000, Number(process.env.AI_PROVIDER_GET_TIMEOUT_MS ?? "5000") || 5000);
 
+function lk888SkillsUrl(aiUrl: string) {
+  const parsed = new URL(aiUrl);
+  parsed.pathname = "/v1/skills";
+  parsed.search = "";
+  parsed.hash = "";
+  return parsed.toString();
+}
+
 export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey">): Promise<{
   ok: boolean;
   status?: number;
@@ -54,6 +76,12 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   }
 
   const headers = { Authorization: `Bearer ${apiKey}` };
+  const protocol = aiProviderProtocol({ ...provider, modelType: "" });
+  if (protocol === "lk888-media") {
+    const skills = await fetchWithTimeout(lk888SkillsUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
+    return { ok: skills.ok, status: skills.status, method: "GET", message: skills.ok ? "provider reachable" : `provider returned ${skills.status}` };
+  }
+
   const head = await fetchWithTimeout(aiUrl, { method: "HEAD", headers, cache: "no-store", timeoutMs: aiProviderHeadTimeoutMs }).catch((error) => error as Error);
   if (!(head instanceof Error) && head.status < 500) {
     return { ok: head.ok, status: head.status, method: "HEAD", message: head.ok ? "provider reachable" : `provider returned ${head.status}` };

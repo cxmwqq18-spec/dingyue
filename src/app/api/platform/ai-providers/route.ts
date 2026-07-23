@@ -20,7 +20,8 @@ const defaultModelTypes = [
   "grok-video-3-max",
   "grok-imagine-video",
   "grok-imagine-video-1.5-preview",
-  "grok-imagine-video-1.5"
+  "grok-imagine-video-1.5",
+  "grok-video-3.5-1015"
 ];
 
 async function requirePlatformRead() {
