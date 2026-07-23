@@ -626,6 +626,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   let effectiveVideoMaxFrames: number | undefined;
   if (videoTheme) {
     const videoProviders = await tx.platformAiProvider.findMany({
+      where: { enabled: true },
       select: { modelType: true, maxImagesPerRequest: true },
       orderBy: [{ preferred: "desc" }, { priority: "asc" }]
     });

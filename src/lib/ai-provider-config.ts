@@ -12,6 +12,8 @@ export function maskAiProviderKey(apiKey?: string): string {
 export function aiProviderStatus(provider?: PlatformAiProvider) {
   return {
     configured: Boolean(provider?.label?.trim() && provider?.aiUrl?.trim() && provider?.apiKey?.trim() && provider?.modelType?.trim()),
+    enabled: provider?.enabled ?? true,
+    runnable: Boolean((provider?.enabled ?? true) && provider?.label?.trim() && provider?.aiUrl?.trim() && provider?.apiKey?.trim() && provider?.modelType?.trim()),
     aiUrlConfigured: Boolean(provider?.aiUrl?.trim()),
     apiKeyConfigured: Boolean(provider?.apiKey?.trim()),
     apiKeyPreview: maskAiProviderKey(provider?.apiKey),

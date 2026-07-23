@@ -27,10 +27,11 @@ export function GatewayEditor({
 }: {
   siteId: string;
   group: AiGatewayGroup;
-  providers?: Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "preferred">>;
+  providers?: Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "preferred" | "enabled">>;
 }) {
   const [item, setItem] = useState(group);
   const [message, setMessage] = useState("平台 AI 中转默认对所有站点域名开放；这里仅保留兜底策略参数，不再作为域名访问开关。");
+  const enabledProviders = providers.filter((provider) => provider.enabled);
 
   useEffect(() => {
     setItem(group);
@@ -41,7 +42,7 @@ export function GatewayEditor({
   }
 
   const modelOptions = Array.from(new Set([
-    ...providers.map((provider) => provider.modelType).filter(Boolean),
+    ...enabledProviders.map((provider) => provider.modelType).filter(Boolean),
     ...item.modelAllowlist,
     ...fallbackModelOptions
   ])).filter(Boolean);
@@ -73,11 +74,11 @@ export function GatewayEditor({
   return (
     <div className="grid gap-3">
       <div className="tixing">{item.name}: {message}</div>
-      {providers.length ? (
+      {enabledProviders.length ? (
         <div className="rounded-[10px] border border-[#e7edf3] bg-[#f8fafd] px-4 py-3">
           <div className="text-[12px] font-semibold text-[#667085]">平台 AI URL</div>
           <div className="mt-2 grid gap-2 md:grid-cols-2">
-            {providers.map((provider) => (
+            {enabledProviders.map((provider) => (
               <div className="min-w-0 rounded-[8px] border border-[#e7edf3] bg-white px-3 py-2" key={provider.id}>
                 <div className="flex items-center gap-2 text-[12px] font-semibold text-[#18212f]">
                   {provider.label}

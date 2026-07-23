@@ -573,6 +573,7 @@ export interface PlatformAiProvider {
   modelType: "gpt-image-2" | "gpt-5.5" | string;
   priority: number;
   preferred: boolean;
+  enabled: boolean;
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;

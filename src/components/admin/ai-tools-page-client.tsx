@@ -49,8 +49,11 @@ export type PlatformAiProviderOption = {
   modelType: string;
   priority: number;
   preferred: boolean;
+  enabled: boolean;
   status: {
     configured: boolean;
+    enabled?: boolean;
+    runnable?: boolean;
     aiUrlConfigured: boolean;
     apiKeyConfigured: boolean;
     label: string;

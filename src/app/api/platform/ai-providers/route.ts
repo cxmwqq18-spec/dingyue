@@ -8,6 +8,7 @@ import {
   getPlatformAiProviderRelational,
   listPlatformAiProvidersRelational,
   setCurrentPlatformAiProviderRelational,
+  setPlatformAiProviderEnabledRelational,
   upsertPlatformAiProviderRelational
 } from "@/lib/stores/platform-store";
 import type { PlatformAiProvider } from "@/lib/types";
@@ -30,7 +31,8 @@ async function requirePlatformRead() {
 
 async function payload(extra: Record<string, unknown> = {}) {
   const providers = await listPlatformAiProvidersRelational();
-  const current = providers.find((provider) => provider.preferred) ?? providers[0];
+  const enabledProviders = providers.filter((provider) => provider.enabled);
+  const current = enabledProviders.find((provider) => provider.preferred) ?? enabledProviders[0];
   return {
     ok: true,
     currentProviderId: current?.id ?? "",
@@ -42,6 +44,7 @@ async function payload(extra: Record<string, unknown> = {}) {
       modelType: provider.modelType,
       priority: provider.priority,
       preferred: provider.preferred,
+      enabled: provider.enabled,
       supportsGenerationN: provider.supportsGenerationN,
       supportsEditN: provider.supportsEditN,
       maxImagesPerRequest: provider.maxImagesPerRequest,
@@ -53,8 +56,10 @@ async function payload(extra: Record<string, unknown> = {}) {
     })),
     summary: {
       totalProviders: providers.length,
+      enabledProviders: enabledProviders.length,
       configuredProviders: providers.filter((provider) => aiProviderStatus(provider).configured).length,
-      currentConfigured: aiProviderStatus(current).configured
+      runnableProviders: providers.filter((provider) => aiProviderStatus(provider).runnable).length,
+      currentConfigured: aiProviderStatus(current).runnable
     },
     ...extra
   };
@@ -86,6 +91,7 @@ export async function PUT(request: NextRequest) {
     apiKey?: string;
     modelType?: string;
     makeCurrent?: boolean;
+    enabled?: boolean;
     supportsGenerationN?: boolean;
     supportsEditN?: boolean;
     maxImagesPerRequest?: number;
@@ -108,6 +114,7 @@ export async function PUT(request: NextRequest) {
     apiKey: body.apiKey,
     modelType: body.modelType,
     makeCurrent: body.makeCurrent,
+    enabled: typeof body.enabled === "boolean" ? body.enabled : undefined,
     supportsGenerationN: Boolean(body.supportsGenerationN),
     supportsEditN: Boolean(body.supportsEditN),
     maxImagesPerRequest: body.maxImagesPerRequest,
@@ -121,8 +128,9 @@ export async function POST(request: NextRequest) {
   if (!permission.ok) return permission.response;
 
   const body = (await request.json().catch(() => ({}))) as {
-    action?: "current" | "test";
+    action?: "current" | "test" | "enabled";
     providerId?: string;
+    enabled?: boolean;
     id?: string;
     aiUrl?: string;
     apiKey?: string;
@@ -144,6 +152,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(toAsyncJobAcceptedPayload(job), { status: 202 });
     }
     if (!body.providerId) return NextResponse.json({ error: "missing_ai_provider" }, { status: 400 });
+    if (body.action === "enabled") {
+      await setPlatformAiProviderEnabledRelational({
+        providerId: body.providerId,
+        enabled: body.enabled !== false,
+        actor: permission.current.platformAdmin.id
+      });
+      return NextResponse.json(await payload());
+    }
     await setCurrentPlatformAiProviderRelational({ providerId: body.providerId, actor: permission.current.platformAdmin.id });
     return NextResponse.json(await payload());
   } catch (error) {

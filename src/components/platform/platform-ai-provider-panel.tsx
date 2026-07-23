@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Bot, PlugZap, Save, ShieldCheck, Trash2, X } from "lucide-react";
+import { Bot, PlugZap, Power, PowerOff, Save, ShieldCheck, Trash2, X } from "lucide-react";
 import {
   WorkbenchActionButton,
   WorkbenchSearchInput,
@@ -35,11 +35,14 @@ type AiProviderRow = {
   updatedBy?: string;
   isCurrent: boolean;
   preferred: boolean;
+  enabled: boolean;
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
   status: {
     configured: boolean;
+    enabled: boolean;
+    runnable: boolean;
     aiUrlConfigured: boolean;
     apiKeyConfigured: boolean;
     apiKeyPreview: string;
@@ -58,7 +61,9 @@ type AiProviderPayload = {
   providers: AiProviderRow[];
   summary: {
     totalProviders: number;
+    enabledProviders: number;
     configuredProviders: number;
+    runnableProviders: number;
     currentConfigured: boolean;
   };
   test?: {
@@ -76,6 +81,7 @@ type ProviderFormState = {
   apiKey: string;
   modelType: string;
   makeCurrent: boolean;
+  enabled: boolean;
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
@@ -88,6 +94,7 @@ const defaultProviderForm: ProviderFormState = {
   apiKey: "",
   modelType: "gpt-image-2",
   makeCurrent: true,
+  enabled: true,
   supportsGenerationN: false,
   supportsEditN: false,
   maxImagesPerRequest: 1
@@ -118,6 +125,20 @@ function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGeneratio
   return `${generation} / ${edit} / 单次参考图 ${maxImages}`;
 }
 
+function providerRunnable(provider?: AiProviderRow) {
+  return Boolean(provider?.enabled && provider.status.configured);
+}
+
+function providerSummary(providers: AiProviderRow[], currentProvider?: AiProviderRow): AiProviderPayload["summary"] {
+  return {
+    totalProviders: providers.length,
+    enabledProviders: providers.filter((provider) => provider.enabled).length,
+    configuredProviders: providers.filter((provider) => provider.status.configured).length,
+    runnableProviders: providers.filter(providerRunnable).length,
+    currentConfigured: providerRunnable(currentProvider)
+  };
+}
+
 export function PlatformAiProviderPanel({
   initialStatus
 }: {
@@ -135,8 +156,9 @@ export function PlatformAiProviderPanel({
   const [testing, setTesting] = useState(false);
   const [testingEdit, setTestingEdit] = useState(false);
   const [currentActionId, setCurrentActionId] = useState<string | null>(null);
+  const [enableActionId, setEnableActionId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [message, setMessage] = useState("维护平台级 AI 供应商，选择一个作为优先供应商。API Key 只显示掩码。");
+  const [message, setMessage] = useState("维护平台级 AI 供应商，只有启用的通道会进入生成队列。API Key 只显示掩码。");
   const [editMessage, setEditMessage] = useState("");
 
   const modelTypes = useMemo(() => Array.from(new Set(["gpt-image-2", "gpt-5.5", ...status.modelTypes])).filter(Boolean), [status.modelTypes]);
@@ -158,6 +180,7 @@ export function PlatformAiProviderPanel({
       apiKey: "",
       modelType: provider.modelType,
       makeCurrent: provider.isCurrent,
+      enabled: provider.enabled,
       supportsGenerationN: provider.supportsGenerationN,
       supportsEditN: provider.supportsEditN,
       maxImagesPerRequest: provider.maxImagesPerRequest || 1
@@ -282,19 +305,22 @@ export function PlatformAiProviderPanel({
   async function makeCurrent(providerId: string) {
     const previousStatus = status;
     setCurrentActionId(providerId);
-    setStatus((currentStatus) => ({
-      ...currentStatus,
-      currentProviderId: providerId,
-      providers: currentStatus.providers.map((provider) => ({
+    setStatus((currentStatus) => {
+      const providers = currentStatus.providers.map((provider) => ({
         ...provider,
         isCurrent: provider.id === providerId,
-        preferred: provider.id === providerId
-      })),
-      summary: {
-        ...currentStatus.summary,
-        currentConfigured: currentStatus.providers.find((provider) => provider.id === providerId)?.status.configured ?? currentStatus.summary.currentConfigured
-      }
-    }));
+        preferred: provider.id === providerId,
+        enabled: provider.id === providerId ? true : provider.enabled,
+        status: provider.id === providerId ? { ...provider.status, enabled: true, runnable: provider.status.configured } : provider.status
+      }));
+      const currentProvider = providers.find((provider) => provider.id === providerId);
+      return {
+        ...currentStatus,
+        currentProviderId: providerId,
+        providers,
+        summary: providerSummary(providers, currentProvider)
+      };
+    });
     setMessage("正在切换优先 AI 供应商...");
     try {
       const result = await request("/api/platform/ai-providers", {
@@ -311,6 +337,50 @@ export function PlatformAiProviderPanel({
     }
   }
 
+  async function setProviderEnabled(provider: AiProviderRow, enabled: boolean) {
+    const previousStatus = status;
+    setEnableActionId(provider.id);
+    setStatus((currentStatus) => {
+      const updatedProviders = currentStatus.providers.map((item) => {
+        if (item.id !== provider.id) return item;
+        return {
+          ...item,
+          enabled,
+          status: { ...item.status, enabled, runnable: enabled && item.status.configured }
+        };
+      });
+      const enabledCurrent = updatedProviders.find((item) => item.enabled && item.preferred) ?? updatedProviders.find((item) => item.enabled);
+      const nextProviders = updatedProviders.map((item) => ({
+        ...item,
+        isCurrent: item.id === enabledCurrent?.id,
+        preferred: item.enabled && item.id === enabledCurrent?.id
+      }));
+      return {
+        ...currentStatus,
+        currentProviderId: enabledCurrent?.id ?? "",
+        providers: nextProviders,
+        summary: providerSummary(nextProviders, enabledCurrent)
+      };
+    });
+    setMessage(`正在${enabled ? "启用" : "禁用"} AI 通道...`);
+    try {
+      const result = await request("/api/platform/ai-providers", {
+        method: "POST",
+        body: JSON.stringify({ action: "enabled", providerId: provider.id, enabled })
+      });
+      setStatus(result);
+      if (editForm?.id === provider.id) {
+        setEditForm((draft) => draft ? { ...draft, enabled } : draft);
+      }
+      setMessage(`AI 通道「${provider.label}」已${enabled ? "启用" : "禁用"}。`);
+    } catch (error) {
+      setStatus(previousStatus);
+      setMessage(`${enabled ? "启用" : "禁用"}失败：${error instanceof Error ? error.message : "unknown error"}`);
+    } finally {
+      setEnableActionId(null);
+    }
+  }
+
   async function deleteProvider(provider: AiProviderRow) {
     if (status.providers.length <= 1) {
       setMessage("至少需要保留一个 AI 供应商。");
@@ -322,20 +392,17 @@ export function PlatformAiProviderPanel({
     setDeletingId(provider.id);
     setStatus((currentStatus) => {
       const providers = currentStatus.providers.filter((item) => item.id !== provider.id);
-      const currentProvider = providers.find((item) => item.isCurrent) ?? providers[0];
+      const currentProvider = providers.find((item) => item.enabled && item.isCurrent) ?? providers.find((item) => item.enabled) ?? providers[0];
+      const nextProviders = providers.map((item) => ({
+        ...item,
+        isCurrent: item.id === currentProvider?.id,
+        preferred: item.id === currentProvider?.id
+      }));
       return {
         ...currentStatus,
         currentProviderId: currentProvider?.id ?? "",
-        providers: providers.map((item) => ({
-          ...item,
-          isCurrent: item.id === currentProvider?.id,
-          preferred: item.id === currentProvider?.id
-        })),
-        summary: {
-          totalProviders: providers.length,
-          configuredProviders: providers.filter((item) => item.status.configured).length,
-          currentConfigured: currentProvider?.status.configured ?? false
-        }
+        providers: nextProviders,
+        summary: providerSummary(nextProviders, currentProvider)
       };
     });
     setMessage("正在删除 AI 供应商...");
@@ -361,7 +428,7 @@ export function PlatformAiProviderPanel({
     <div className="grid gap-4">
       <ErpToolbar>
         <div className="flex flex-wrap gap-2">
-          <ErpToolbarField label="Providers" value={`${status.summary.configuredProviders}/${status.summary.totalProviders}`} />
+          <ErpToolbarField label="Providers" value={`${status.summary.enabledProviders}/${status.summary.totalProviders}`} />
           <ErpToolbarField label="Current" value={current?.label ?? "missing"} />
           <ErpToolbarField label="Model" value={current?.modelType ?? "missing"} />
           <ErpToolbarField label="API Key" value={current?.status.apiKeyConfigured ? current.status.apiKeyPreview : "missing"} />
@@ -372,18 +439,19 @@ export function PlatformAiProviderPanel({
         columns={3}
         items={[
           { label: "供应商数量", value: String(status.summary.totalProviders), detail: "平台级 AI provider", icon: Bot, tone: status.summary.totalProviders ? "good" : "warn" },
-          { label: "已配置", value: String(status.summary.configuredProviders), detail: "包含 URL、Key 与模型", icon: ShieldCheck, tone: status.summary.configuredProviders ? "good" : "warn" },
-          { label: "优先供应商", value: status.summary.currentConfigured ? "ready" : "missing", detail: current?.aiUrl ?? "未选择优先供应商", icon: PlugZap, tone: status.summary.currentConfigured ? "good" : "warn" }
+          { label: "已启用", value: String(status.summary.enabledProviders), detail: `${status.summary.runnableProviders} 个可运行通道`, icon: ShieldCheck, tone: status.summary.runnableProviders ? "good" : "warn" },
+          { label: "优先供应商", value: status.summary.currentConfigured ? "ready" : "missing", detail: current?.enabled ? current.aiUrl : "未选择已启用供应商", icon: PlugZap, tone: status.summary.currentConfigured ? "good" : "warn" }
         ]}
       />
 
       <div className="grid gap-4">
-        <ErpSection description="支持维护多个 AI 供应商，API Key 留空会保留原值。测试连通性会向 AI URL 发起 HEAD/GET，并携带 Authorization。" eyebrow="ai provider" title="AI 供应商配置">
+        <ErpSection description="支持维护多个 AI 供应商，只有启用通道会进入生成队列。API Key 留空会保留原值。测试连通性会向 AI URL 发起 HEAD/GET，并携带 Authorization。" eyebrow="ai provider" title="AI 供应商配置">
           <div className="grid gap-4">
             <ErpInfoList
               items={[
                 { label: "优先供应商", value: current?.label ?? "missing", tone: current ? "good" : "warn" },
                 { label: "模型类型", value: current?.modelType ?? "missing", tone: current?.modelType ? "good" : "warn" },
+                { label: "启用状态", value: current?.enabled ? "启用" : "未启用", tone: current?.enabled ? "good" : "warn" },
                 { label: "AI URL", value: current?.aiUrl ?? "missing", tone: current?.aiUrl ? "good" : "warn" },
                 { label: "API Key", value: current?.status.apiKeyConfigured ? current.status.apiKeyPreview : "missing", tone: current?.status.apiKeyConfigured ? "good" : "warn" }
               ]}
@@ -426,8 +494,12 @@ export function PlatformAiProviderPanel({
                 图生图支持 n 多图返回
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
-                <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked }))} type="checkbox" />
+                <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled }))} type="checkbox" />
                 保存后设为优先供应商
+              </label>
+              <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                <input checked={form.enabled} onChange={(event) => setForm((draft) => ({ ...draft, enabled: event.target.checked, makeCurrent: event.target.checked ? draft.makeCurrent : false }))} type="checkbox" />
+                保存后启用通道
               </label>
             </div>
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -446,15 +518,15 @@ export function PlatformAiProviderPanel({
           </div>
         </ErpSection>
 
-        <ErpSection description="选择平台优先使用的 AI 供应商。生成任务会把非敏感供应商队列带给 worker，按优先项再到其他配置 fallback。" eyebrow="providers" title="供应商列表">
+        <ErpSection description="选择平台优先使用的 AI 供应商。生成任务只会把已启用的非敏感供应商队列带给 worker，按优先项再到其他配置 fallback。" eyebrow="providers" title="供应商列表">
           <WorkbenchSearchRow
             controls={<WorkbenchSearchInput onChange={setQuery} placeholder="搜索名称、URL、模型、key 掩码" value={query} />}
             actions={<WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />}
           />
           <WorkbenchTableShell>
-            <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,0.75fr)_minmax(360px,1.45fr)_minmax(150px,0.45fr)_minmax(260px,0.7fr)]" columns={["供应商", "AI URL", "状态", "操作"]} />
+            <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,0.75fr)_minmax(320px,1.25fr)_minmax(180px,0.5fr)_minmax(330px,0.95fr)]" columns={["供应商", "AI URL", "状态", "操作"]} />
             {filtered.length ? filtered.map((provider) => (
-              <WorkbenchTableRow className="md:grid-cols-[minmax(180px,0.75fr)_minmax(360px,1.45fr)_minmax(150px,0.45fr)_minmax(260px,0.7fr)]" key={provider.id}>
+              <WorkbenchTableRow className="md:grid-cols-[minmax(180px,0.75fr)_minmax(320px,1.25fr)_minmax(180px,0.5fr)_minmax(330px,0.95fr)]" key={provider.id}>
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{provider.label}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{provider.modelType} / {provider.status.apiKeyPreview || "missing key"}</div>
@@ -462,13 +534,23 @@ export function PlatformAiProviderPanel({
                 </div>
                 <div className="truncate font-mono text-[12px] text-[#667085]">{provider.aiUrl}</div>
                 <div className="flex flex-wrap gap-2">
+                  <StatusPill label={provider.enabled ? "启用" : "禁用"} tone={provider.enabled ? "good" : "warn"} />
                   <StatusPill label={provider.status.configured ? "已配置" : "缺失"} tone={provider.status.configured ? "good" : "warn"} />
-                  {provider.isCurrent ? <StatusPill label="优先" tone="good" /> : null}
+                  {provider.isCurrent && provider.enabled ? <StatusPill label="优先" tone="good" /> : null}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button className="admin_btn inline-flex h-[32px] items-center justify-center whitespace-nowrap px-3 text-[12px]" onClick={() => edit(provider)} type="button">编辑</button>
                   <button className="admin_btn inline-flex h-[32px] items-center justify-center whitespace-nowrap px-3 text-[12px]" disabled={provider.isCurrent || currentActionId === provider.id} onClick={() => makeCurrent(provider.id)} type="button">
                     {currentActionId === provider.id ? "切换中" : "设为优先"}
+                  </button>
+                  <button
+                    className="admin_btn inline-flex h-[32px] items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
+                    disabled={enableActionId === provider.id}
+                    onClick={() => setProviderEnabled(provider, !provider.enabled)}
+                    type="button"
+                  >
+                    {provider.enabled ? <PowerOff className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} /> : <Power className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />}
+                    {enableActionId === provider.id ? "处理中" : provider.enabled ? "禁用" : "启用"}
                   </button>
                   <button
                     className="admin_btn inline-flex h-[32px] items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] text-[#b42318] disabled:opacity-55"
@@ -550,8 +632,12 @@ export function PlatformAiProviderPanel({
                   图生图支持 n 多图返回
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
-                  <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked } : draft)} type="checkbox" />
+                  <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled } : draft)} type="checkbox" />
                   保存后设为优先供应商
+                </label>
+                <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
+                  <input checked={editForm.enabled} onChange={(event) => setEditForm((draft) => draft ? { ...draft, enabled: event.target.checked, makeCurrent: event.target.checked ? draft.makeCurrent : false } : draft)} type="checkbox" />
+                  启用该通道
                 </label>
               </div>
               <div className="rounded-[8px] border border-[#e7edf3] bg-[#f8fafc] px-3 py-2 text-[12px] leading-5 text-[#667085]">

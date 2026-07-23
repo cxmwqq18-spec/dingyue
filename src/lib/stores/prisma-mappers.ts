@@ -1126,6 +1126,7 @@ export function toPlatformAiProvider(record: {
   modelType: string;
   priority: number;
   preferred: boolean;
+  enabled?: boolean | null;
   supportsGenerationN?: boolean | null;
   supportsEditN?: boolean | null;
   maxImagesPerRequest?: number | null;
@@ -1142,6 +1143,7 @@ export function toPlatformAiProvider(record: {
     modelType: record.modelType,
     priority: record.priority,
     preferred: record.preferred,
+    enabled: record.enabled ?? true,
     supportsGenerationN: Boolean(record.supportsGenerationN),
     supportsEditN: Boolean(record.supportsEditN),
     maxImagesPerRequest: Number.isFinite(maxImagesPerRequest) ? Math.max(1, Math.min(Math.trunc(maxImagesPerRequest), 20)) : 1,

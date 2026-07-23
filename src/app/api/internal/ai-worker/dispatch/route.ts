@@ -325,7 +325,7 @@ function isVideoGenerationRequest(payload: WorkerPayload) {
 }
 
 function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageGenerationModel(provider.modelType));
   const selection = recordValue(payload.providerSelection);
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
@@ -345,7 +345,7 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const videoProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isVideoGenerationModel(provider.modelType));
+  const videoProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isVideoGenerationModel(provider.modelType));
   const selection = recordValue(payload.providerSelection);
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
@@ -364,7 +364,7 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageGenerationModel(provider.modelType));
   const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN);
   const candidateProviders = editCapableProviders.length ? editCapableProviders : imageProviders;
   const fields = recordValue(payload.params.fields);
@@ -1464,6 +1464,10 @@ async function composeVideoSceneReference(params: {
   let lastError: unknown;
   for (const provider of sceneProviders) {
     const record = await getPlatformAiProviderRelational(provider.id);
+    if (record?.enabled === false) {
+      lastError = new Error("ai_provider_disabled");
+      continue;
+    }
     if (!record?.apiKey?.trim()) {
       lastError = new Error("ai_provider_api_key_missing");
       continue;
@@ -2041,6 +2045,9 @@ async function generateVideoWithProvider(params: {
   providerId: string;
 }) {
   const provider = await getPlatformAiProviderRelational(params.providerId);
+  if (provider?.enabled === false) {
+    throw new Error("ai_provider_disabled");
+  }
   if (!provider?.apiKey?.trim()) {
     throw new Error("ai_provider_api_key_missing");
   }
@@ -2235,6 +2242,9 @@ async function generateWithProvider(params: {
   totalCount: number;
 }) {
   const provider = await getPlatformAiProviderRelational(params.providerId);
+  if (provider?.enabled === false) {
+    throw new Error("ai_provider_disabled");
+  }
   if (!provider?.apiKey?.trim()) {
     throw new Error("ai_provider_api_key_missing");
   }

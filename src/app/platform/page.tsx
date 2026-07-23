@@ -442,7 +442,7 @@ async function PlatformModuleContent({
   if (activeModule === "gateway") {
     return (
       <div className="grid gap-4">
-        <ErpSection description="平台级 AI 供应商配置，供所有子站生图任务统一选择优先 provider，并在失败时按列表 fallback。" eyebrow="ai provider" title="AI 配置面板">
+        <ErpSection description="平台级 AI 供应商配置，供所有子站生图任务统一选择已启用的优先 provider，并在失败时按启用列表 fallback。" eyebrow="ai provider" title="AI 配置面板">
           <PlatformAiProviderPanel initialStatus={platformAiProviderStatus} />
         </ErpSection>
 
@@ -453,7 +453,7 @@ async function PlatformModuleContent({
                 <div className="flex flex-wrap gap-2">
                   <ErpToolbarField label="站点数量" value={String(snapshots.length)} />
                   <ErpToolbarField label="域名记录" value={String(platformDomains.length)} />
-                  <ErpToolbarField label="可用 AI URL" value={String(aiProviders.filter((provider) => provider.aiUrl).length)} />
+                  <ErpToolbarField label="启用 AI URL" value={String(aiProviders.filter((provider) => provider.enabled && provider.aiUrl).length)} />
                   <ErpToolbarField label="中转策略" value="全站可用" />
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -503,10 +503,10 @@ async function PlatformModuleContent({
                   },
                   {
                     label: "AI 中转",
-                    value: aiProviders.length ? "全站可用" : "未配置",
-                    detail: `${aiProviders.filter((provider) => provider.aiUrl).length} 个 AI URL`,
+                    value: aiProviders.some((provider) => provider.enabled) ? "全站可用" : "未启用",
+                    detail: `${aiProviders.filter((provider) => provider.enabled && provider.aiUrl).length} 个启用 AI URL`,
                     icon: Bot,
-                    tone: aiProviders.length ? "good" : "warn"
+                    tone: aiProviders.some((provider) => provider.enabled) ? "good" : "warn"
                   },
                   {
                     label: "当前策略站点",
@@ -623,7 +623,7 @@ export default async function PlatformPage({
         { label: "站点", href: platformModuleHref("sites"), icon: Building2, badge: String(shellSummary.sites.length), tone: "good" },
         { label: "新建", href: platformModuleHref("sites"), icon: Sparkles, badge: "克隆", tone: "good" },
         { label: "收款", href: platformModuleHref("billing"), icon: CreditCard, badge: `${chargesReadySites}/${shellSnapshots.length}`, tone: chargesReadySites === shellSnapshots.length ? "good" : "warn" },
-        { label: "网关", href: platformModuleHref("gateway", selectedSnapshot?.site.id), icon: Bot, badge: `${platformAiProviderStatus.summary.configuredProviders}/${aiProviders.length}`, tone: platformAiProviderStatus.summary.currentConfigured ? "good" : "warn" },
+        { label: "网关", href: platformModuleHref("gateway", selectedSnapshot?.site.id), icon: Bot, badge: `${platformAiProviderStatus.summary.enabledProviders}/${aiProviders.length}`, tone: platformAiProviderStatus.summary.currentConfigured ? "good" : "warn" },
         { label: "邮件", href: platformModuleHref("email"), icon: MailCheck, badge: "配置", tone: "neutral" },
         { label: "CF", href: platformModuleHref("cloudflare"), icon: Cloud, badge: "DNS", tone: "neutral" },
         { label: "审计", href: platformModuleHref("audit"), icon: ShieldCheck, badge: String(shellSummary.platformActivity.length), tone: "neutral" }
@@ -633,7 +633,7 @@ export default async function PlatformPage({
         { label: "平台总览", href: platformModuleHref("overview"), icon: LayoutDashboard, group: "平台运营", badge: `${averageHealth}%` },
         { label: "店铺管理", href: platformModuleHref("sites"), icon: Building2, group: "站点工厂", badge: String(shellSummary.sites.length) },
         { label: "收款订阅", href: platformModuleHref("billing"), icon: CreditCard, group: "站点工厂", badge: `${chargesReadySites}/${shellSnapshots.length}` },
-        { label: "AI 网关", href: platformModuleHref("gateway", selectedSnapshot?.site.id), icon: Bot, group: "AI 基础设施", badge: `${platformAiProviderStatus.summary.configuredProviders}/${aiProviders.length}` },
+        { label: "AI 网关", href: platformModuleHref("gateway", selectedSnapshot?.site.id), icon: Bot, group: "AI 基础设施", badge: `${platformAiProviderStatus.summary.enabledProviders}/${aiProviders.length}` },
         { label: "邮件配置", href: platformModuleHref("email"), icon: MailCheck, group: "平台基础设施", badge: "配置" },
         { label: "Cloudflare", href: platformModuleHref("cloudflare"), icon: Cloud, group: "平台基础设施", badge: "DNS" },
         { label: "审计风控", href: platformModuleHref("audit"), icon: ShieldCheck, group: "AI 基础设施" }

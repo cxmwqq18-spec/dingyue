@@ -5,11 +5,18 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const routePath = path.resolve(__dirname, "../src/app/api/internal/ai-worker/dispatch/route.ts");
 const source = fs.readFileSync(routePath, "utf8");
+const platformStorePath = path.resolve(__dirname, "../src/lib/stores/platform-store.ts");
+const platformStoreSource = fs.readFileSync(platformStorePath, "utf8");
 
 const checks = [
   {
     label: "worker builds an ordered image provider fallback queue",
     pass: /function orderedImageProviders\(/.test(source)
+  },
+  {
+    label: "worker ignores disabled providers in fallback queues",
+    pass: /provider\.enabled !== false/.test(source) &&
+      /providers\.filter\(\(provider\) => provider\.enabled\)\.map/.test(platformStoreSource)
   },
   {
     label: "preferred providers do not exclude non-preferred fallback providers",

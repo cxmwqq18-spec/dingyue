@@ -459,9 +459,9 @@ async function loadPlatformOverviewRelational(): Promise<{
     listSiteEmailConfigAssignmentsRelational(),
     prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
     prisma.platformSetting.findUnique({ where: { key: cloudflareCurrentAccountSettingKey } }),
-    prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+    prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
   ]);
-  const preferredProvider = aiProviders.find((provider) => provider.preferred);
+  const preferredProvider = aiProviders.find((provider) => provider.enabled && provider.preferred) ?? aiProviders.find((provider) => provider.enabled);
   const currentCloudflareAccountId = cloudflareCurrentAccountIdFromSetting(currentCloudflareSetting?.value);
   const validCurrentCloudflareAccountId = cloudflareAccounts.some((account) => account.id === currentCloudflareAccountId)
     ? currentCloudflareAccountId
@@ -844,10 +844,11 @@ export const getPlatformActivityRelational = cache((limit = 40) =>
 );
 
 async function loadPlatformAiProviderStatusRelational() {
-  const aiProviderRecords = await prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+  const aiProviderRecords = await prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
   const aiProviders = aiProviderRecords.map(toPlatformAiProvider);
-  const currentAiProviderId = aiProviders.find((provider) => provider.preferred)?.id;
-  const currentAiProvider = aiProviders.find((provider) => provider.id === currentAiProviderId) ?? aiProviders.find((provider) => provider.preferred) ?? aiProviders[0];
+  const enabledAiProviders = aiProviders.filter((provider) => provider.enabled);
+  const currentAiProviderId = enabledAiProviders.find((provider) => provider.preferred)?.id;
+  const currentAiProvider = enabledAiProviders.find((provider) => provider.id === currentAiProviderId) ?? enabledAiProviders.find((provider) => provider.preferred) ?? enabledAiProviders[0];
   return {
     aiProviders,
     platformAiProviderStatus: {
@@ -870,6 +871,7 @@ async function loadPlatformAiProviderStatusRelational() {
         modelType: provider.modelType,
         priority: provider.priority,
         preferred: provider.preferred,
+        enabled: provider.enabled,
         supportsGenerationN: provider.supportsGenerationN,
         supportsEditN: provider.supportsEditN,
         maxImagesPerRequest: provider.maxImagesPerRequest,
@@ -886,8 +888,10 @@ async function loadPlatformAiProviderStatusRelational() {
       })),
       summary: {
         totalProviders: aiProviders.length,
+        enabledProviders: enabledAiProviders.length,
         configuredProviders: aiProviders.filter((provider) => aiProviderStatus(provider).configured).length,
-        currentConfigured: aiProviderStatus(currentAiProvider).configured
+        runnableProviders: aiProviders.filter((provider) => aiProviderStatus(provider).runnable).length,
+        currentConfigured: aiProviderStatus(currentAiProvider).runnable
       }
     }
   };
@@ -1407,7 +1411,7 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
 
 function normalizeProviderMaxImagesPerRequest(value: unknown) {
   const numeric = Number(value);
@@ -1415,7 +1419,7 @@ function normalizeProviderMaxImagesPerRequest(value: unknown) {
 }
 
 export async function listPlatformAiProvidersRelational(): Promise<PlatformAiProvider[]> {
-  const records = await prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+  const records = await prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
   return records.map(toPlatformAiProvider);
 }
 
@@ -1427,13 +1431,14 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational();
-  return providers.map(({ id, label, aiUrl, modelType, priority, preferred, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+  return providers.filter((provider) => provider.enabled).map(({ id, label, aiUrl, modelType, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
     id,
     label,
     aiUrl,
     modelType,
     priority,
     preferred,
+    enabled,
     supportsGenerationN,
     supportsEditN,
     maxImagesPerRequest
@@ -1447,6 +1452,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   apiKey?: string;
   modelType: string;
   makeCurrent?: boolean;
+  enabled?: boolean;
   supportsGenerationN?: boolean;
   supportsEditN?: boolean;
   maxImagesPerRequest?: number;
@@ -1455,6 +1461,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
   const providerCount = await prisma.platformAiProvider.count();
   const shouldPrefer = Boolean(params.makeCurrent || providerCount === 0);
+  const enabled = shouldPrefer ? true : params.enabled;
   const aiUrl = params.aiUrl.trim() || existing?.aiUrl || "";
   const providerRecord = await prisma.$transaction(async (tx) => {
     if (shouldPrefer) await tx.platformAiProvider.updateMany({ data: { preferred: false } });
@@ -1467,6 +1474,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             apiKey: params.apiKey?.trim() || existing.apiKey,
             modelType: params.modelType.trim(),
             preferred: shouldPrefer || existing.preferred,
+            enabled: enabled ?? existing.enabled,
             supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
             supportsEditN: params.supportsEditN ?? existing.supportsEditN,
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest ?? existing.maxImagesPerRequest),
@@ -1482,6 +1490,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             modelType: params.modelType.trim(),
             priority: providerCount + 1,
             preferred: shouldPrefer,
+            enabled: enabled ?? true,
             supportsGenerationN: Boolean(params.supportsGenerationN),
             supportsEditN: Boolean(params.supportsEditN),
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest),
@@ -1505,8 +1514,66 @@ export async function setCurrentPlatformAiProviderRelational(params: {
     await tx.platformAiProvider.updateMany({ data: { preferred: false } });
     return tx.platformAiProvider.update({
       where: { id: params.providerId },
-      data: { preferred: true, updatedBy: params.actor }
+      data: { preferred: true, enabled: true, updatedBy: params.actor }
     });
+  });
+  clearPlatformReadCache();
+  return toPlatformAiProvider(provider);
+}
+
+export async function setPlatformAiProviderEnabledRelational(params: {
+  providerId: string;
+  enabled: boolean;
+  actor?: string;
+}): Promise<PlatformAiProvider> {
+  const provider = await prisma.$transaction(async (tx) => {
+    const existing = await tx.platformAiProvider.findUnique({ where: { id: params.providerId } });
+    if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
+
+    const updated = await tx.platformAiProvider.update({
+      where: { id: existing.id },
+      data: { enabled: params.enabled, updatedBy: params.actor }
+    });
+
+    if (params.enabled) {
+      const preferred = await tx.platformAiProvider.findFirst({ where: { enabled: true, preferred: true }, select: { id: true } });
+      if (!preferred) {
+        await tx.platformAiProvider.update({
+          where: { id: existing.id },
+          data: { preferred: true, updatedBy: params.actor }
+        });
+      }
+      return updated;
+    }
+
+    if (existing.preferred) {
+      await tx.platformAiProvider.updateMany({ data: { preferred: false } });
+      const fallback = await tx.platformAiProvider.findFirst({
+        where: { enabled: true, id: { not: existing.id } },
+        orderBy: [{ priority: "asc" }]
+      });
+      if (fallback) {
+        await tx.platformAiProvider.update({
+          where: { id: fallback.id },
+          data: { preferred: true, updatedBy: params.actor }
+        });
+      }
+    }
+
+    return updated;
+  });
+
+  await addAuditLogRelational(prisma, {
+    actorType: "platform_admin",
+    actorId: params.actor ?? "platform",
+    action: params.enabled ? "platform_ai_provider_enabled" : "platform_ai_provider_disabled",
+    targetType: "platform_ai_provider",
+    targetId: provider.id,
+    metadata: {
+      label: provider.label,
+      aiUrl: provider.aiUrl,
+      modelType: provider.modelType
+    }
   });
   clearPlatformReadCache();
   return toPlatformAiProvider(provider);
@@ -1517,7 +1584,7 @@ export async function deletePlatformAiProviderRelational(params: {
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const deleted = await prisma.$transaction(async (tx) => {
-    const providers = await tx.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] });
+    const providers = await tx.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
     const existing = providers.find((provider) => provider.id === params.providerId);
     if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
     if (providers.length <= 1) throw new RelationalStoreError("ai_provider_delete_last", 400);

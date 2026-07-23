@@ -31,10 +31,10 @@ export function DomainPanel({
   providers
 }: {
   domains: DomainPanelDomain[];
-  providers: Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "preferred">>;
+  providers: Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "preferred" | "enabled">>;
 }) {
   const [items, setItems] = useState(domains);
-  const configuredProviders = providers.filter((provider) => provider.aiUrl?.trim());
+  const configuredProviders = providers.filter((provider) => provider.enabled && provider.aiUrl?.trim());
 
   useEffect(() => {
     setItems(domains);

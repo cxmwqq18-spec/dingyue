@@ -90,11 +90,14 @@ function publicAiProvider(provider: PlatformAiProvider) {
     modelType: provider.modelType,
     priority: provider.priority,
     preferred: provider.preferred,
+    enabled: provider.enabled,
     createdAt: provider.createdAt,
     updatedAt: provider.updatedAt,
     updatedBy: provider.updatedBy,
     status: {
       configured: status.configured,
+      enabled: status.enabled,
+      runnable: status.runnable,
       aiUrlConfigured: status.aiUrlConfigured,
       apiKeyConfigured: status.apiKeyConfigured,
       label: status.label,
@@ -213,7 +216,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           },
           orderBy: [{ status: "asc" }, { name: "asc" }]
         }),
-        () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+        () => prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
       ], siteAdminReadConcurrency));
 
       const failedJobs = jobCounts
@@ -319,7 +322,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       detail === "jobs"
         ? () => prisma.aiApp.findMany({ orderBy: [{ appType: "asc" }, { name: "asc" }], take: adminAiAppListTake })
         : () => Promise.resolve([]),
-      () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+      () => prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
     ], siteAdminReadConcurrency));
 
     let toolCategories = initialToolCategories;

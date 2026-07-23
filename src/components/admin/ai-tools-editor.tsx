@@ -128,6 +128,7 @@ function configuredProviderLabel(provider?: PlatformAiProviderOption) {
   if (!provider) return "未选择链路";
   const tags = [
     provider.modelType,
+    provider.enabled ? "已启用" : "已禁用",
     provider.preferred ? "平台优先" : `优先级 ${provider.priority}`,
     provider.status.configured ? "已配置" : "未完整配置",
   ].filter(Boolean);
@@ -142,7 +143,7 @@ function selectedProvider(
 }
 
 function preferredProvider(providers: PlatformAiProviderOption[]) {
-  return providers.find((provider) => provider.preferred) ?? providers[0];
+  return providers.find((provider) => provider.enabled && provider.preferred) ?? providers.find((provider) => provider.enabled);
 }
 
 export function AiToolsEditor({
@@ -212,13 +213,16 @@ export function AiToolsEditor({
   }
 
   function updateProviderMode(id: string, mode: AiProviderConfig["mode"]) {
+    const enabledProvider = preferredProvider(platformAiProviders);
     updateProvider(id, (config) => ({
       ...config,
       mode,
       providerId:
         mode === "platform_fallback"
           ? undefined
-          : config.providerId || preferredProvider(platformAiProviders)?.id,
+          : config.providerId && platformAiProviders.some((provider) => provider.id === config.providerId && provider.enabled)
+            ? config.providerId
+            : enabledProvider?.id,
       fallbackEnabled: mode !== "fixed_provider",
     }));
   }
@@ -535,10 +539,10 @@ export function AiToolsEditor({
                       去平台 AI 网关
                     </Link>
                   </div>
-                  {!platformAiProviders.length ? (
+                  {!platformAiProviders.some((provider) => provider.enabled) ? (
                     <div className="rounded-[8px] border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] leading-5 text-amber-800">
-                      平台还没有可用 AI 中转链路。请先到平台后台 AI
-                      网关添加供应商，再回到这里选择。
+                      平台还没有已启用的 AI 中转链路。请先到平台后台 AI
+                      网关启用供应商，再回到这里选择。
                     </div>
                   ) : null}
                   <div className="grid items-start gap-3 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
@@ -566,7 +570,7 @@ export function AiToolsEditor({
                         平台 AI 中转链路
                         <select
                           className="selectmini"
-                          disabled={!platformAiProviders.length}
+                          disabled={!platformAiProviders.some((item) => item.enabled)}
                           onChange={(event) =>
                             updateProvider(app.id, (config) => ({
                               ...config,
@@ -576,7 +580,7 @@ export function AiToolsEditor({
                           value={provider.providerId ?? ""}
                         >
                           <option value="">请选择平台 AI URL</option>
-                          {platformAiProviders.map((item) => (
+                          {platformAiProviders.filter((item) => item.enabled).map((item) => (
                             <option key={item.id} value={item.id}>
                               {item.label} · {item.modelType}
                               {item.preferred ? " · 平台优先" : ""}

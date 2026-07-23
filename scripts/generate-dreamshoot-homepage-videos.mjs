@@ -566,8 +566,9 @@ async function refreshPosterFromShowcaseImage(task, posterFile) {
 async function readVideoProviders(prisma) {
   const providers = await prisma.platformAiProvider.findMany({
     where: providerId
-      ? { id: providerId }
+      ? { id: providerId, enabled: true }
       : {
+          enabled: true,
           OR: [
             { modelType: { contains: "video" } },
             { modelType: { contains: "i2v" } },

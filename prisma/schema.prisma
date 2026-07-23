@@ -107,6 +107,7 @@ model PlatformAiProvider {
   modelType           String
   priority            Int      @default(0)
   preferred           Boolean  @default(false)
+  enabled             Boolean  @default(true)
   supportsGenerationN Boolean  @default(false)
   supportsEditN       Boolean  @default(false)
   maxImagesPerRequest Int      @default(1)
@@ -115,6 +116,7 @@ model PlatformAiProvider {
   updatedAt           DateTime @updatedAt
 
   @@index([preferred, priority])
+  @@index([enabled, preferred, priority])
 }
 
 model PlatformAsyncJob {

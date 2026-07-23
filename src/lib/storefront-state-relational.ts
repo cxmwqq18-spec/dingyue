@@ -126,12 +126,12 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       () => prisma.platformEmailConfig.findMany({ orderBy: [{ isDefault: "desc" }, { updatedAt: "desc" }] }),
       () => prisma.siteEmailConfigAssignment.findMany({ orderBy: [{ siteId: "asc" }] }),
       () => prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
-      () => prisma.platformAiProvider.findMany({ orderBy: [{ preferred: "desc" }, { priority: "asc" }] })
+      () => prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
     ]);
 
     const mappedMediaAssets = mediaAssets.map(toMediaAsset);
     const mappedAiProviders = aiProviders.map(toPlatformAiProvider);
-    const preferredProvider = mappedAiProviders.find((provider) => provider.preferred);
+    const preferredProvider = mappedAiProviders.find((provider) => provider.enabled && provider.preferred) ?? mappedAiProviders.find((provider) => provider.enabled);
     const mappedEmailConfigs = emailConfigs.map(toPlatformEmailConfig);
     const currentCloudflareAccount = cloudflareAccounts[0];
     return {
