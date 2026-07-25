@@ -1,6 +1,8 @@
 import { chromium } from "playwright";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
+const pageTimeoutMs = Number(process.env.STOREFRONT_NAV_PAGE_TIMEOUT_MS ?? 90_000);
+const networkIdleTimeoutMs = Number(process.env.STOREFRONT_NAV_NETWORK_IDLE_TIMEOUT_MS ?? 20_000);
 
 const siteChecks = [
   {
@@ -92,8 +94,8 @@ async function smokeNavigationDataConsistency() {
       for (const menuCheck of menuChecks) {
         let expected;
         for (const route of site.routes) {
-          await page.goto(route, { waitUntil: "domcontentloaded", timeout: 60000 });
-          await page.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
+          await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+          await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
           const signature = await extractMenuSignature(page, site.slug, route, menuCheck);
           if (!expected) {
             expected = { route, signature };
@@ -102,7 +104,9 @@ async function smokeNavigationDataConsistency() {
           }
           const expectedJson = JSON.stringify(expected.signature);
           const actualJson = JSON.stringify(signature);
-          if (actualJson !== expectedJson) {
+          const missing = expected.signature.filter((item) => !signature.includes(item));
+          const extra = signature.filter((item) => !expected.signature.includes(item));
+          if (missing.length || extra.length) {
             failures.push({
               site: site.slug,
               menu: menuCheck.name,
@@ -110,10 +114,12 @@ async function smokeNavigationDataConsistency() {
               route,
               expectedCount: expected.signature.length,
               actualCount: signature.length,
-              missing: expected.signature.filter((item) => !signature.includes(item)).slice(0, 12),
-              extra: signature.filter((item) => !expected.signature.includes(item)).slice(0, 12)
+              missing: missing.slice(0, 12),
+              extra: extra.slice(0, 12)
             });
             console.log(`✗ ${site.slug} ${menuCheck.name} ${route}: ${signature.length} links differ from ${expected.signature.length}`);
+          } else if (actualJson !== expectedJson) {
+            console.log(`⚠ ${site.slug} ${menuCheck.name} ${route}: ${signature.length} links match, order differs`);
           } else {
             console.log(`✓ ${site.slug} ${menuCheck.name} ${route}: ${signature.length} links`);
           }

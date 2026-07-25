@@ -22,6 +22,7 @@ const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
 const showcaseSectionId = "generation_showcase_1";
 const workflowSectionId = "flow_bridge_1";
+const CUSTOMER_VIDEO_FRAME_LIMIT = 7;
 
 const rawArgs = process.argv.slice(2);
 const args = new Map();
@@ -272,7 +273,7 @@ function videoThemeRowsForStore(store, categories, state, now) {
       status: "active",
       creditCost: theme.creditCost,
       durationSeconds: theme.durationSeconds,
-      maxFrames: 1,
+      maxFrames: CUSTOMER_VIDEO_FRAME_LIMIT,
       generationCount: current?.generationCount ?? 0,
       createdAt: current?.createdAt ?? now,
       imageUrl: publicShowcasePosterPath(store, theme.slug),
@@ -391,7 +392,7 @@ async function updateDatabase(state, stores) {
             status: "active",
             creditCost: theme.creditCost,
             durationSeconds: theme.durationSeconds,
-            maxFrames: 1,
+            maxFrames: CUSTOMER_VIDEO_FRAME_LIMIT,
             generationCount: 0,
             imageUrl: publicShowcasePosterPath(store, theme.slug),
             galleryImages: [publicShowcaseVideoPath(store, theme.slug)]
@@ -405,7 +406,7 @@ async function updateDatabase(state, stores) {
             status: "active",
             creditCost: theme.creditCost,
             durationSeconds: theme.durationSeconds,
-            maxFrames: 1,
+            maxFrames: CUSTOMER_VIDEO_FRAME_LIMIT,
             imageUrl: publicShowcasePosterPath(store, theme.slug),
             galleryImages: [publicShowcaseVideoPath(store, theme.slug)]
           }

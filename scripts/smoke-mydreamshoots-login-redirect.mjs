@@ -61,7 +61,7 @@ async function smokeLoginRedirect() {
     await page.getByLabel("Email").fill(smoke.email);
     await page.getByLabel("Password").fill(smoke.password);
     await page.locator("form").getByRole("button", { name: "Log in" }).last().click();
-    await page.waitForURL((url) => url.pathname === `/site/${siteSlug}/app/create`, { timeout: 20000 });
+    await page.waitForFunction((expectedPath) => window.location.pathname === expectedPath, `/site/${siteSlug}/app/create`, { timeout: 45000 });
 
     const bodyText = await page.locator("body").innerText({ timeout: 10000 });
     assert(

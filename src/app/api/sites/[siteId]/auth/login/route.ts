@@ -34,6 +34,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return response;
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
-    return NextResponse.json({ error: error instanceof Error ? error.message : "login_failed" }, { status });
+    const code = error instanceof StoreError ? error.message : "customer_login_failed";
+    return NextResponse.json({ error: code }, { status });
   }
 }

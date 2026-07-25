@@ -5,6 +5,8 @@ const siteSlug = process.env.SITE_ADMIN_SITE_SLUG ?? "mydreamshoots";
 const username = process.env.SITE_ADMIN_USER ?? "owner@mydreamshoots.localhost";
 const password = process.env.SITE_ADMIN_PASSWORD ?? "mydreamshoots123";
 const warnMs = Number(process.env.SITE_ADMIN_MODULE_WARN_MS ?? 2500);
+const loginTimeoutMs = Number(process.env.SITE_ADMIN_LOGIN_TIMEOUT_MS ?? 30_000);
+const moduleTimeoutMs = Number(process.env.SITE_ADMIN_MODULE_TIMEOUT_MS ?? 30_000);
 
 const modules = [
   { path: `/site/${siteSlug}/admin`, h1: "概览工作台" },
@@ -29,17 +31,17 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const results = [];
 
 try {
-  await page.goto(`${baseUrl}/site/${siteSlug}/admin/login`, { waitUntil: "networkidle" });
+  await page.goto(`${baseUrl}/site/${siteSlug}/admin/login`, { waitUntil: "networkidle", timeout: loginTimeoutMs });
   const inputs = page.locator("input");
   await inputs.nth(0).fill(username);
   await inputs.nth(1).fill(password);
   await page.getByRole("button", { name: /进入站点后台|登录|Sign/i }).click();
-  await page.waitForURL((url) => url.pathname.includes(`/site/${siteSlug}/admin`) && !url.pathname.endsWith("/login"), { timeout: 15000 });
+  await page.waitForURL((url) => url.pathname.includes(`/site/${siteSlug}/admin`) && !url.pathname.endsWith("/login"), { timeout: loginTimeoutMs });
 
   for (const item of modules) {
     const startedAt = Date.now();
-    const response = await page.goto(`${baseUrl}${item.path}`, { waitUntil: "domcontentloaded", timeout: 20000 });
-    await page.waitForSelector("h1", { timeout: 15000 });
+    const response = await page.goto(`${baseUrl}${item.path}`, { waitUntil: "domcontentloaded", timeout: moduleTimeoutMs });
+    await page.waitForSelector("h1", { timeout: moduleTimeoutMs });
     await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => undefined);
     const elapsedMs = Date.now() - startedAt;
     const actualH1 = (await page.locator("h1").first().innerText()).trim();

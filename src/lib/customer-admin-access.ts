@@ -1,6 +1,6 @@
 import "server-only";
 import { getCurrentPlatformAdmin, getCurrentSiteAdmin } from "@/lib/api-auth";
-import { prisma } from "@/lib/prisma";
+import { isTransientPrismaConnectionError, prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import type { CustomerAdminAccess, PublicCustomer } from "@/lib/types";
 
 type SiteAdminRole = NonNullable<CustomerAdminAccess["role"]>;
@@ -14,7 +14,7 @@ function siteAdminRole(value: string): SiteAdminRole {
   return value === "owner" || value === "support" ? value : "admin";
 }
 
-export async function getCustomerAdminAccessForSite({
+async function getCustomerAdminAccessForSiteUnsafe({
   customer,
   siteId
 }: {
@@ -46,17 +46,20 @@ export async function getCustomerAdminAccessForSite({
 
   if (!customerEmail) return { canBypassBilling: false };
 
-  const siteAdmin = await prisma.siteAdmin.findFirst({
-    where: {
-      siteId,
-      email: { equals: customerEmail, mode: "insensitive" }
-    },
-    select: {
-      id: true,
-      displayName: true,
-      role: true
-    }
-  });
+  const siteAdmin = await runPrismaReadWithReconnect(
+    () => prisma.siteAdmin.findFirst({
+      where: {
+        siteId,
+        email: { equals: customerEmail, mode: "insensitive" }
+      },
+      select: {
+        id: true,
+        displayName: true,
+        role: true
+      }
+    }),
+    { label: "customer admin access site admin", retries: 2, timeoutMs: 10_000 }
+  );
   if (!siteAdmin) return { canBypassBilling: false };
 
   return {
@@ -66,4 +69,18 @@ export async function getCustomerAdminAccessForSite({
     displayName: siteAdmin.displayName,
     source: "site_admin_email"
   };
+}
+
+export async function getCustomerAdminAccessForSite(params: {
+  customer?: Pick<PublicCustomer, "email">;
+  siteId: string;
+}): Promise<CustomerAdminAccess> {
+  try {
+    return await getCustomerAdminAccessForSiteUnsafe(params);
+  } catch (error) {
+    if (!isTransientPrismaConnectionError(error)) throw error;
+    const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
+    console.warn("[customer-admin-access] transient DB lookup failed; continuing without admin bypass.", message);
+    return { canBypassBilling: false };
+  }
 }

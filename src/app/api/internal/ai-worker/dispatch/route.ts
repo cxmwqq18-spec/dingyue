@@ -6,15 +6,19 @@ import { promisify } from "util";
 import { NextResponse } from "next/server";
 import ffmpegPath from "ffmpeg-static";
 import {
+  contentTypeForCustomerAssetPath,
   customerAssetStorageKey,
+  customerAssetFilePath,
   extensionForCustomerAssetMime,
   prepareCompressedCustomerImage,
   writeCustomerAssetFileShared
 } from "@/lib/customer-asset-storage";
+import { settleGenerationJobRelational, updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
 import {
   signWorkerLocalAssetDownload,
   signWorkerCallback,
+  getCachedWorkerProviderSecret,
   verifyWorkerPayloadSignature,
   type WorkerOutputSlot,
   type WorkerPayload
@@ -69,21 +73,31 @@ type ImageInputAsset = {
   assetId: string;
   signedUrl: string;
   publicUrl?: string;
+  storageKey?: string;
+  mimeType?: string;
 };
 
 type FetchInitWithDispatcher = RequestInit & { dispatcher?: unknown };
 
 type VideoGenerateResponse = {
   code?: number;
-  data?: { task_id?: string | number };
+  data?: {
+    id?: string | number;
+    request_id?: string | number;
+    task_id?: string | number;
+    taskId?: string | number;
+    task?: { id?: string | number };
+  };
   id?: string | number;
   request_id?: string | number;
   task_id?: string | number;
+  taskId?: string | number;
   msg?: string;
   error?: unknown;
 };
 
 type VideoStatusResponse = {
+  data?: VideoStatusResponse | null;
   id?: string | number;
   task_id?: string | number;
   state?: string;
@@ -93,8 +107,11 @@ type VideoStatusResponse = {
   progress?: string;
   result_url?: string;
   video_url?: string;
+  url?: string;
   result_type?: string;
   video?: { url?: string; duration?: number };
+  result?: { url?: string; result_url?: string; video_url?: string };
+  output?: { url?: string; result_url?: string; video_url?: string } | Array<{ url?: string; result_url?: string; video_url?: string }>;
   error?: unknown;
   message?: string;
   cost?: number;
@@ -212,16 +229,32 @@ function isMagic666BaseUrl(baseUrl: string) {
   }
 }
 
+function is2KenBaseUrl(baseUrl: string) {
+  try {
+    return new URL(baseUrl).hostname.toLowerCase() === "apis.2ken.com";
+  } catch {
+    return false;
+  }
+}
+
+function envFlag(name: string): boolean | undefined {
+  const value = process.env[name]?.trim().toLowerCase();
+  if (!value) return undefined;
+  if (value === "1" || value === "true" || value === "yes" || value === "on") return true;
+  if (value === "0" || value === "false" || value === "no" || value === "off") return false;
+  return undefined;
+}
+
 function shouldAllowMagic666VideoProvider() {
-  return process.env.AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO?.trim() === "1";
+  return envFlag("AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO") === true;
 }
 
 function shouldAllowSmartPickLidVideoProvider() {
-  return process.env.AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO?.trim() === "1";
+  return envFlag("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") ?? true;
 }
 
 function usesProxyOpenAiVideoEndpoint(baseUrl: string) {
-  return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl);
+  return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl) || is2KenBaseUrl(baseUrl);
 }
 
 function openAiVideoCreateEndpoint(baseUrl: string) {
@@ -305,6 +338,7 @@ function isVideoModelUnavailableError(error: unknown) {
 }
 
 function shouldTryNextVideoModel(error: unknown) {
+  if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return false;
   if (isVideoModelUnavailableError(error)) return true;
   const message = errorMessage(error).toLowerCase();
   if (message.includes("first_frame_required") || message.includes("reference image required") || message.includes("images required") || message.includes("input_reference")) return true;
@@ -314,13 +348,7 @@ function shouldTryNextVideoModel(error: unknown) {
     message.includes("ai_provider_video_create_failed_504_") ||
     message.includes("ai_provider_video_create_failed_524_") ||
     message.includes("upstream_error") ||
-    message.includes("服务暂时不可用") ||
-    message.includes("fetch failed") ||
-    message.includes("econnreset") ||
-    message.includes("socket") ||
-    message.includes("terminated") ||
-    message.includes("connection reset") ||
-    message.includes("read reset");
+    message.includes("服务暂时不可用");
 }
 
 function isImageGenerationModel(model: string) {
@@ -355,7 +383,7 @@ function isVideoGenerationRequest(payload: WorkerPayload) {
 }
 
 function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
   const selection = recordValue(payload.providerSelection);
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
@@ -363,7 +391,7 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
     : undefined;
 
   if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
-  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false) return selectedProvider ? [selectedProvider] : [];
+  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && selectedProvider) return [selectedProvider];
 
   const preferredProviders = Array.from(new Map([
     ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
@@ -375,7 +403,7 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const videoProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isVideoGenerationModel(provider.modelType));
+  const videoProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "image" && isVideoGenerationModel(provider.modelType));
   const selection = recordValue(payload.providerSelection);
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
@@ -383,6 +411,7 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
     : undefined;
 
   if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
+  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && selectedProvider) return [selectedProvider];
 
   const preferredProviders = Array.from(new Map([
     ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
@@ -394,7 +423,7 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
   const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN);
   const candidateProviders = editCapableProviders.length ? editCapableProviders : imageProviders;
   const fields = recordValue(payload.params.fields);
@@ -448,7 +477,12 @@ function providerAttempts() {
 }
 
 function videoProviderAttempts() {
-  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "2") || 2, 3));
+  if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return 1;
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "1") || 1, 2));
+}
+
+function shouldAllowPaidVideoProviderFallback() {
+  return process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_PROVIDER_FALLBACK === "1";
 }
 
 function errorMessage(error: unknown): string {
@@ -765,6 +799,27 @@ function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAs
   return promptParts.join("\n\n").slice(0, 3600);
 }
 
+function buildLk888MediaVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
+  const fields = recordValue(payload.params.fields);
+  const videoParams = videoProviderParams(payload);
+  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt) || promptText(payload.prompt);
+  const themeName = textValue(fields?.videoThemeName) || textValue(fields?.toolPresetTitle);
+  const themePrompt = textValue(fields?.videoThemePrompt);
+  const frameSummary = referenceAssets.length
+    ? `Use ${referenceAssets.length} uploaded first-frame reference image${referenceAssets.length === 1 ? "" : "s"} as the visual source.`
+    : "";
+  return [
+    `Create one ${videoParams.duration}-second image-to-video MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
+    frameSummary,
+    "Keep the uploaded subject, pet, object, scene, lighting, and camera angle recognizable from the reference image.",
+    userNote ? `Customer direction: ${userNote}` : "",
+    themeName ? `Preset: ${themeName}` : "",
+    themePrompt ? `Low-priority style hint: ${themePrompt}` : "",
+    "Make the action continuous and physically plausible. Do not replace the source subject with a generic subject or unrelated scene.",
+    "Return a clean video only: no captions, no watermark, no UI, no split screen, no collage."
+  ].filter(Boolean).join("\n\n").slice(0, 1200);
+}
+
 function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
   const fields = recordValue(payload.params.fields);
   const videoParams = videoProviderParams(payload);
@@ -885,7 +940,22 @@ async function isProviderFrameUrlReadable(url: string, timeoutMs: number) {
   }
 }
 
-async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
+async function readVideoFrameAssetBytes(asset: ImageInputAsset, timeoutMs: number) {
+  const storageKey = textValue(asset.storageKey);
+  if (storageKey) {
+    try {
+      const filePath = customerAssetFilePath(storageKey);
+      const bytes = Buffer.from(await readFile(filePath));
+      if (bytes.length) {
+        return {
+          bytes,
+          mimeType: textValue(asset.mimeType) || contentTypeForCustomerAssetPath(filePath)
+        };
+      }
+    } catch {
+      // Fall back to the signed download URL when the local shared file is not present.
+    }
+  }
   const response = await fetchWithTimeout(
     asset.signedUrl,
     { cache: "no-store" },
@@ -895,26 +965,32 @@ async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
   if (!response.ok) throw new Error(`ai_provider_video_frame_data_uri_source_failed_${asset.assetId}_${response.status}`);
   const bytes = Buffer.from(await response.arrayBuffer());
   if (!bytes.length) throw new Error(`ai_provider_video_frame_data_uri_empty_${asset.assetId}`);
+  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || textValue(asset.mimeType) || "image/png";
+  return { bytes, mimeType };
+}
+
+async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
+  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs);
   const maxBytes = videoFrameDataUriMaxBytes();
-  if (bytes.length > maxBytes) throw new Error(`ai_provider_video_frame_data_uri_too_large_${asset.assetId}_${bytes.length}_${maxBytes}`);
-  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
-  return `data:${mimeType};base64,${bytes.toString("base64")}`;
+  let prepared = originalVideoReferenceImage(bytes, imageMimeTypeFromBytes(bytes, mimeType));
+  let preparedBytes = Buffer.from(prepared.bytes);
+  if (preparedBytes.length > maxBytes) {
+    prepared = await prepareVideoReferenceImage(bytes, mimeType, undefined, { forceCompression: true, fallbackToOriginal: false });
+    preparedBytes = Buffer.from(prepared.bytes);
+  }
+  if (preparedBytes.length > maxBytes) throw new Error(`ai_provider_video_frame_data_uri_too_large_${asset.assetId}_${preparedBytes.length}_${maxBytes}`);
+  return `data:${prepared.mimeType};base64,${preparedBytes.toString("base64")}`;
 }
 
 async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: number, targetSize: string) {
-  const response = await fetchWithTimeout(
-    asset.signedUrl,
-    { cache: "no-store" },
-    Math.min(timeoutMs, 30_000),
-    `ai_provider_video_frame_data_uri_timeout_${asset.assetId}`
-  );
-  if (!response.ok) throw new Error(`ai_provider_video_frame_data_uri_source_failed_${asset.assetId}_${response.status}`);
-  const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  if (!bytes.length) throw new Error(`ai_provider_video_frame_data_uri_empty_${asset.assetId}`);
-  const prepared = await prepareVideoReferenceImage(bytes, mimeType, targetSize);
-  const preparedBytes = Buffer.from(prepared.bytes);
+  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs);
   const maxBytes = videoFrameDataUriMaxBytes();
+  let prepared = await prepareVideoReferenceImage(bytes, mimeType, targetSize);
+  let preparedBytes = Buffer.from(prepared.bytes);
+  if (preparedBytes.length > maxBytes && !shouldCompressVideoReferenceImages()) {
+    prepared = await prepareVideoReferenceImage(bytes, mimeType, targetSize, { forceCompression: true, fallbackToOriginal: false });
+    preparedBytes = Buffer.from(prepared.bytes);
+  }
   if (preparedBytes.length > maxBytes) throw new Error(`ai_provider_video_frame_data_uri_too_large_${asset.assetId}_${preparedBytes.length}_${maxBytes}`);
   return `data:${prepared.mimeType};base64,${preparedBytes.toString("base64")}`;
 }
@@ -958,6 +1034,7 @@ function shouldRetryVideoTaskWithDataUriFrames(params: {
   imageUrls: string[];
   protocol: VideoProviderProtocol;
 }) {
+  if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return false;
   if (params.protocol === "openai-videos") return false;
   if (!params.imageUrls.length || params.imageUrls.every(isDataUri)) return false;
   if (process.env.AI_WORKER_VIDEO_FRAME_DATA_URLS?.trim() === "0") return false;
@@ -1112,8 +1189,7 @@ async function prepareProviderImage(bytes: Uint8Array, mimeType: string) {
 
 function shouldCompressVideoReferenceImages() {
   const explicit = process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_COMPRESSION?.trim();
-  if (explicit === "0") return false;
-  return shouldUseSharpForWorkerImages();
+  return explicit === "1";
 }
 
 function shouldAllowUnresizedVideoReferenceFallback() {
@@ -1131,10 +1207,17 @@ function originalVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
   };
 }
 
-async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, targetSize?: string) {
+async function prepareVideoReferenceImage(
+  bytes: Uint8Array,
+  mimeType: string,
+  targetSize?: string,
+  options: { forceCompression?: boolean; fallbackToOriginal?: boolean } = {}
+) {
   const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
   const target = targetSize ? parseVideoPixelSize(targetSize) : undefined;
-  if (!target || !shouldCompressVideoReferenceImages() || sourceMimeType.includes("gif")) {
+  const shouldPrepare = !sourceMimeType.includes("gif") &&
+    (options.forceCompression === true || (Boolean(target) && shouldCompressVideoReferenceImages()));
+  if (!shouldPrepare) {
     return originalVideoReferenceImage(bytes, sourceMimeType);
   }
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION ?? "1280") || 1280);
@@ -1152,7 +1235,7 @@ async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, t
     if (!resized.length) throw new Error("empty_video_reference_image");
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
   } catch (error) {
-    if (target) {
+    if (target && options.fallbackToOriginal !== false) {
       if (shouldFallbackUnresizedVideoReferenceImage(error)) {
         console.warn("video_reference_resize_fallback", {
           targetSize: `${target.width}x${target.height}`,
@@ -1161,6 +1244,9 @@ async function prepareVideoReferenceImage(bytes: Uint8Array, mimeType: string, t
         return originalVideoReferenceImage(bytes, sourceMimeType);
       }
       throw error instanceof Error ? new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}_${error.message}`) : new Error(`ai_provider_video_reference_resize_failed_${target.width}x${target.height}`);
+    }
+    if (options.fallbackToOriginal === false) {
+      throw error instanceof Error ? new Error(`ai_provider_video_reference_compression_failed_${error.message}`) : new Error("ai_provider_video_reference_compression_failed");
     }
     return originalVideoReferenceImage(bytes, sourceMimeType);
   }
@@ -1261,8 +1347,14 @@ async function isConfiguredLoopbackProxyReachable(proxyUrl: string) {
   return reachable;
 }
 
-function shouldRetryProviderFetchWithoutProxy(error: unknown, proxyUrl: string) {
+function isCreateLikeFetch(init: RequestInit) {
+  const method = (init.method ?? "GET").trim().toUpperCase();
+  return method !== "GET" && method !== "HEAD" && method !== "OPTIONS";
+}
+
+function shouldRetryProviderFetchWithoutProxy(error: unknown, proxyUrl: string, init: RequestInit) {
   if (process.env.AI_WORKER_DISABLE_PROXY_FALLBACK === "1" || !isLoopbackProxyUrl(proxyUrl)) return false;
+  if (isCreateLikeFetch(init) && process.env.AI_WORKER_ALLOW_PAID_CREATE_PROXY_FALLBACK !== "1") return false;
   let proxy: URL;
   try {
     proxy = new URL(proxyUrl);
@@ -1318,7 +1410,7 @@ async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: 
       if (error instanceof Error && error.name === "AbortError") {
         throw new Error(timeoutError);
       }
-      if (dispatcher && shouldRetryProviderFetchWithoutProxy(error, proxyUrl)) {
+      if (dispatcher && shouldRetryProviderFetchWithoutProxy(error, proxyUrl, init)) {
         return await runFetch();
       }
       throw error;
@@ -1393,6 +1485,25 @@ function originFromUrl(value: string | undefined): string {
 
 function workerCallbackOrigin(payload: WorkerPayload): string {
   return originFromUrl(payload.callbackUrl) || originFromUrl(payload.statusCallbackUrl);
+}
+
+function isLoopbackCallbackUrl(value: string | undefined): boolean {
+  if (!value) return false;
+  try {
+    const hostname = new URL(value).hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1" || hostname === "[::1]";
+  } catch {
+    return false;
+  }
+}
+
+function shouldUseDirectWorkerCallbacks(payload: WorkerPayload): boolean {
+  const configured = process.env.LOCAL_AI_WORKER_DIRECT_DB_CALLBACKS?.trim();
+  if (configured === "1") return true;
+  if (configured === "0") return false;
+  return process.env.NODE_ENV !== "production" &&
+    isLoopbackCallbackUrl(payload.callbackUrl) &&
+    isLoopbackCallbackUrl(payload.statusCallbackUrl);
 }
 
 function workerPublicOrigin(payload: WorkerPayload, sourceAssets: ImageInputAsset[]): string {
@@ -1615,6 +1726,10 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
     status,
     stage
   };
+  if (shouldUseDirectWorkerCallbacks(payload)) {
+    await updateGenerationJobStatusRelational(body).catch(() => null);
+    return;
+  }
   await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -1632,6 +1747,10 @@ async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | 
     stage,
     outputSlots: [slot]
   };
+  if (shouldUseDirectWorkerCallbacks(payload)) {
+    await updateGenerationJobStatusRelational(body).catch(() => null);
+    return;
+  }
   await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -1698,6 +1817,10 @@ async function postWorkerResult(
     requestId: payload.requestId,
     ...body
   };
+  if (shouldUseDirectWorkerCallbacks(payload)) {
+    await settleGenerationJobRelational(resultBody);
+    return;
+  }
   const signedBody = JSON.stringify({ ...resultBody, signature: signWorkerCallback(resultBody) });
   let lastStatus = 0;
   let lastError = "";
@@ -1726,8 +1849,47 @@ async function postWorkerResult(
 }
 
 function videoTaskId(body: VideoGenerateResponse) {
-  const taskId = body.request_id ?? body.data?.task_id ?? body.task_id ?? body.id;
+  const data = recordValue(body.data);
+  const task = recordValue(data?.task);
+  const taskId = body.request_id ??
+    data?.request_id ??
+    data?.task_id ??
+    data?.taskId ??
+    data?.id ??
+    task?.id ??
+    body.task_id ??
+    body.taskId ??
+    body.id;
   return typeof taskId === "number" || typeof taskId === "string" ? String(taskId) : "";
+}
+
+function normalizeVideoStatusResponse(body: VideoStatusResponse): VideoStatusResponse {
+  const data = recordValue(body.data);
+  if (!data) return body;
+  return {
+    ...body,
+    ...data,
+    error: body.error ?? data.error,
+    message: body.message ?? (typeof data.message === "string" ? data.message : undefined)
+  } as VideoStatusResponse;
+}
+
+function videoStatusResultUrl(status: VideoStatusResponse) {
+  const video = recordValue(status.video);
+  const result = recordValue(status.result);
+  const output = Array.isArray(status.output)
+    ? recordValue(status.output[0])
+    : recordValue(status.output);
+  return textValue(status.result_url) ||
+    textValue(status.video_url) ||
+    textValue(status.url) ||
+    textValue(video?.url) ||
+    textValue(result?.url) ||
+    textValue(result?.result_url) ||
+    textValue(result?.video_url) ||
+    textValue(output?.url) ||
+    textValue(output?.result_url) ||
+    textValue(output?.video_url);
 }
 
 function normalizedVideoMimeType(value: string) {
@@ -1737,7 +1899,7 @@ function normalizedVideoMimeType(value: string) {
 }
 
 function shouldOptimizeGeneratedVideoOutputs() {
-  return process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() !== "0";
+  return process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() === "1";
 }
 
 function generatedVideoOptimizeMinBytes() {
@@ -1834,7 +1996,7 @@ async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeTyp
 function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
-    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
     return "lk888-media";
@@ -1876,7 +2038,7 @@ function shouldBlockSmartPickLidReferenceVideo(params: {
   protocol: VideoProviderProtocol;
   referenceAssetCount: number;
 }) {
-  if (process.env.AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO?.trim() === "1") return false;
+  if ((envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true) === true) return false;
   return params.referenceAssetCount > 0 &&
     params.protocol === "openai-videos" &&
     isSmartPickLidBaseUrl(params.baseUrl);
@@ -2052,7 +2214,7 @@ async function pollVideoTask(params: {
         headers: { Authorization: `Bearer ${params.apiKey}` },
         cache: "no-store"
       }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
-      body = (await response.json().catch(() => ({}))) as VideoStatusResponse;
+      body = normalizeVideoStatusResponse((await response.json().catch(() => ({}))) as VideoStatusResponse);
       if (response.ok || params.protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
     }
     if (!response) throw new Error("ai_provider_video_status_empty_response");
@@ -2075,7 +2237,7 @@ async function pollVideoTask(params: {
       continue;
     }
     if (body.is_final === true) {
-      if (body.state === "success" && textValue(body.result_url)) return body;
+      if (body.state === "success" && videoStatusResultUrl(body)) return body;
       throw new Error(`ai_provider_video_failed_${body.state || "unknown"}_${textValue(body.error) || textValue(body.status) || "no_result"}`);
     }
   }
@@ -2112,7 +2274,8 @@ async function generateVideoWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
 }) {
-  const provider = await getPlatformAiProviderRelational(params.providerId);
+  const provider = getCachedWorkerProviderSecret(params.payload.requestId, params.providerId) ??
+    await getPlatformAiProviderRelational(params.providerId);
   if (provider?.enabled === false) {
     throw new Error("ai_provider_disabled");
   }
@@ -2166,6 +2329,8 @@ async function generateVideoWithProvider(params: {
   const videoParams = videoProviderParams(params.payload);
   const videoPromptForReferenceAssets = (assets: ImageInputAsset[]) => !assets.length
       ? buildTextToVideoPrompt(params.payload)
+      : protocol === "lk888-media"
+      ? buildLk888MediaVideoPrompt(params.payload, assets)
       : preferJsonVideoRequest
       ? buildDirectJsonVideoPrompt(params.payload, assets)
       : buildVideoPrompt(params.payload, assets);
@@ -2221,6 +2386,7 @@ async function generateVideoWithProvider(params: {
       index: 1,
       status: "running",
       stage: "video_task_created",
+      providerTaskId: taskId,
       error: "",
       updatedAt: new Date().toISOString()
     });
@@ -2259,8 +2425,7 @@ async function generateVideoWithProvider(params: {
     usedReferenceFrameCount = result.referenceFrameCount;
   }
   if (!status) throw new Error("ai_provider_video_empty_status");
-  const statusVideo = recordValue(status.video) ?? {};
-  const resultUrl = textValue(status.result_url) || textValue(status.video_url) || textValue(statusVideo?.url);
+  const resultUrl = videoStatusResultUrl(status);
   if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const downloadedVideo = await downloadVideoResult({
     resultUrl,
@@ -2478,6 +2643,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
         error: lastError.slice(0, 240),
         updatedAt: new Date().toISOString()
       });
+      if (!shouldAllowPaidVideoProviderFallback()) break;
     }
   }
 
@@ -2598,6 +2764,12 @@ export async function POST(request: Request) {
 
   void runLocalWorker(payload).catch((error) => {
     console.error("local_ai_worker_dispatch_failed", error);
+    void postWorkerResult(payload, {
+      status: "failed",
+      error: errorMessage(error).slice(0, 500)
+    }).catch((callbackError) => {
+      console.error("local_ai_worker_dispatch_failure_settlement_failed", callbackError);
+    });
   });
   return NextResponse.json({ ok: true, status: "accepted", jobId: payload.jobId }, { status: 202 });
 }

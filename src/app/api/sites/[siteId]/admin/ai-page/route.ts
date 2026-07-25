@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
@@ -28,6 +29,18 @@ const adminAiAppListTake = envInt("SITE_ADMIN_AI_APP_LIST_TAKE", 100);
 const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
 
 type JobCountRow = { status: string; _count?: true | { _all?: number } };
+type AdminJobSummaryRow = {
+  id: string;
+  siteId: string;
+  customerId: string;
+  aiAppId: string;
+  status: string;
+  creditsReserved: number;
+  requestJson: unknown;
+  resultJson: unknown;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+};
 
 function boundedTake(value: string | null, fallback: number, max: number): number {
   const parsed = Number(value);
@@ -81,6 +94,56 @@ function countGroupedJobs(row: JobCountRow): number {
   return typeof row._count === "object" ? row._count._all ?? 0 : 0;
 }
 
+async function readAdminJobSummaries(siteId: string, take: number, cursor?: string): Promise<AdminJobSummaryRow[]> {
+  const cursorRow = cursor
+    ? await prisma.generationJob.findFirst({
+        where: { id: cursor, siteId },
+        select: { id: true, updatedAt: true }
+      })
+    : undefined;
+  const cursorFilter = cursorRow
+    ? Prisma.sql`AND ("updatedAt" < ${cursorRow.updatedAt} OR ("updatedAt" = ${cursorRow.updatedAt} AND id > ${cursorRow.id}))`
+    : Prisma.empty;
+  return prisma.$queryRaw<AdminJobSummaryRow[]>`
+    SELECT
+      id,
+      "siteId",
+      "customerId",
+      "aiAppId",
+      status,
+      "creditsReserved",
+      "createdAt",
+      "updatedAt",
+      jsonb_strip_nulls(jsonb_build_object(
+        'mode', "requestJson"->'mode',
+        'outputType', "requestJson"->'outputType',
+        'fields', jsonb_build_object(
+          'mode', "requestJson"->'fields'->'mode',
+          'outputType', "requestJson"->'fields'->'outputType',
+          'creativePackName', "requestJson"->'fields'->'creativePackName'
+        ),
+        'flow', jsonb_build_object(
+          'aiAppSlug', "requestJson"->'flow'->'aiAppSlug',
+          'flowName', "requestJson"->'flow'->'flowName'
+        ),
+        'creativePack', jsonb_build_object('name', "requestJson"->'creativePack'->'name'),
+        'videoTheme', jsonb_build_object(
+          'id', "requestJson"->'videoTheme'->'id',
+          'name', "requestJson"->'videoTheme'->'name'
+        )
+      )) AS "requestJson",
+      CASE
+        WHEN "resultJson" IS NULL THEN NULL
+        ELSE jsonb_strip_nulls(jsonb_build_object('outputSlots', "resultJson"->'outputSlots'))
+      END AS "resultJson"
+    FROM "GenerationJob"
+    WHERE "siteId" = ${siteId}
+    ${cursorFilter}
+    ORDER BY "updatedAt" DESC, id ASC
+    LIMIT ${take + 1}
+  `;
+}
+
 function publicAiProvider(provider: PlatformAiProvider) {
   const status = aiProviderStatus(provider);
   return {
@@ -88,6 +151,7 @@ function publicAiProvider(provider: PlatformAiProvider) {
     label: provider.label,
     aiUrl: provider.aiUrl,
     modelType: provider.modelType,
+    providerType: provider.providerType,
     priority: provider.priority,
     preferred: provider.preferred,
     enabled: provider.enabled,
@@ -216,7 +280,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           },
           orderBy: [{ status: "asc" }, { name: "asc" }]
         }),
-        () => prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
+        () => prisma.platformAiProvider.findMany({ orderBy: [{ providerType: "asc" }, { enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
       ], siteAdminReadConcurrency));
 
       const failedJobs = jobCounts
@@ -244,6 +308,48 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         failedJobs,
         openJobs,
         completedJobs
+      };
+    }
+
+    if (detail === "jobs") {
+      const jobs = await perf.measure("db-jobs", () => readAdminJobSummaries(siteId, jobTake, jobCursor));
+      const visibleJobs = jobs.slice(0, jobTake);
+      const mappedJobs = visibleJobs.map(mapJobListItemForAdmin);
+      const customerIds = Array.from(new Set(mappedJobs.map((job) => job.customerId).filter(Boolean)));
+      const aiAppIds = Array.from(new Set(mappedJobs.map((job) => job.aiAppId).filter(Boolean)));
+      const [customers, platformAiApps] = await perf.measure("db-job-lookups", () => runDbTasks([
+        customerIds.length
+          ? () => prisma.customer.findMany({
+              where: { siteId, id: { in: customerIds } },
+              select: { id: true, email: true, name: true, status: true },
+              orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+              take: adminListTake
+            })
+          : () => Promise.resolve([]),
+        aiAppIds.length
+          ? () => prisma.aiApp.findMany({
+              where: { id: { in: aiAppIds } },
+              orderBy: [{ appType: "asc" }, { name: "asc" }],
+              take: adminAiAppListTake
+            })
+          : () => Promise.resolve([])
+      ], siteAdminReadConcurrency));
+      return {
+        ok: true,
+        apps: [],
+        toolCategories: [],
+        toolMenuItems: [],
+        jobs: mappedJobs,
+        customers,
+        platformAiApps: platformAiApps.map(mapAiApp),
+        platformAiProviders: [],
+        gateway: undefined,
+        pageInfo: {
+          nextJobCursor: jobs.length > jobTake ? jobs[jobTake]?.id ?? null : null
+        },
+        failedJobs: 0,
+        openJobs: 0,
+        completedJobs: 0
       };
     }
 
@@ -292,24 +398,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         orderBy: [{ status: "asc" }, { name: "asc" }]
       }),
       detail === "jobs"
-        ? () => prisma.generationJob.findMany({
-            where: { siteId },
-            select: {
-              id: true,
-              siteId: true,
-              customerId: true,
-              aiAppId: true,
-              status: true,
-              creditsReserved: true,
-              requestJson: true,
-              resultJson: true,
-              createdAt: true,
-              updatedAt: true
-            },
-            orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
-            take: jobTake + 1,
-            ...(jobCursor ? { cursor: { id: jobCursor }, skip: 1 } : {})
-          })
+        ? () => readAdminJobSummaries(siteId, jobTake, jobCursor)
         : () => Promise.resolve([]),
       detail === "jobs"
         ? () => prisma.customer.findMany({
@@ -322,7 +411,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       detail === "jobs"
         ? () => prisma.aiApp.findMany({ orderBy: [{ appType: "asc" }, { name: "asc" }], take: adminAiAppListTake })
         : () => Promise.resolve([]),
-      () => prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
+      () => prisma.platformAiProvider.findMany({ orderBy: [{ providerType: "asc" }, { enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
     ], siteAdminReadConcurrency));
 
     let toolCategories = initialToolCategories;

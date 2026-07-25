@@ -11,6 +11,8 @@ const files = {
   worker: fs.readFileSync(path.join(root, "src/lib/worker.ts"), "utf8"),
   storage: fs.readFileSync(path.join(root, "src/lib/customer-asset-storage.ts"), "utf8"),
   providers: fs.readFileSync(path.join(root, "src/app/api/platform/ai-providers/route.ts"), "utf8"),
+  providerConfig: fs.readFileSync(path.join(root, "src/lib/ai-provider-config.ts"), "utf8"),
+  providerAvailability: fs.readFileSync(path.join(root, "src/lib/video-provider-availability.ts"), "utf8"),
   providerPanel: fs.readFileSync(path.join(root, "src/components/platform/platform-ai-provider-panel.tsx"), "utf8"),
   multiframeScript: fs.readFileSync(path.join(root, "scripts/enable-video-provider-multiframe.mjs"), "utf8")
 };
@@ -18,6 +20,7 @@ const files = {
 const directJsonPromptFunction = files.dispatch.match(/function buildDirectJsonVideoPrompt[\s\S]*?\n}\n\nfunction buildVideoSceneImagePrompt/)?.[0] ?? "";
 const orderedVideoProvidersFunction = files.dispatch.match(/function orderedVideoProviders[\s\S]*?\n}\n\nfunction orderedVideoSceneImageProviders/)?.[0] ?? "";
 const videoProviderModelCandidatesFunction = files.dispatch.match(/function videoProviderModelCandidates[\s\S]*?\n}\n\nfunction isVideoModelUnavailableError/)?.[0] ?? "";
+const shouldTryNextVideoModelFunction = files.dispatch.match(/function shouldTryNextVideoModel[\s\S]*?\n}\n\nfunction isImageGenerationModel/)?.[0] ?? "";
 const createVideoTaskFunction = files.dispatch.match(/async function createVideoTask[\s\S]*?\n}\n\nasync function pollVideoTask/)?.[0] ?? "";
 
 const checks = [
@@ -32,7 +35,7 @@ const checks = [
       files.dispatch.includes("await runLocalVideoWorker(payload)")
   },
   {
-    label: "video provider supports the LK888 media generate and status endpoints",
+    label: "video provider supports LK888 media generate and status endpoints",
     pass: files.dispatch.includes("/v1/media/generate") &&
       files.dispatch.includes("/v1/skills/task-status") &&
       files.dispatch.includes("/v1/media/status") &&
@@ -41,6 +44,16 @@ const checks = [
       files.dispatch.includes("resolution: lk888MediaVideoResolution(videoParams.resolution)") &&
       files.dispatch.includes("is_final === true") &&
       files.dispatch.includes('body.state === "success"')
+  },
+  {
+    label: "2Ken video provider uses OpenAI-compatible videos protocol and models connectivity checks",
+    pass: files.dispatch.includes('hostname === "apis.2ken.com") return "openai-videos"') &&
+      files.dispatch.includes("function is2KenBaseUrl(") &&
+      files.dispatch.includes("is2KenBaseUrl(baseUrl)") &&
+      files.providerConfig.includes('hostname === "apis.2ken.com") return "openai-videos"') &&
+      files.providerConfig.includes("function openAiModelsUrl(") &&
+      files.providerAvailability.includes('hostname === "apis.2ken.com") return "openai-videos"') &&
+      files.dispatch.includes("/v1/videos/generations")
   },
   {
     label: "video provider supports SmartPickLid OpenAI-compatible video endpoints",
@@ -52,20 +65,26 @@ const checks = [
       files.dispatch.includes("/content")
   },
   {
-    label: "Grok proxy video channels are guarded until content relevance is verified",
+    label: "Grok proxy video channel guards preserve SmartPickLid default access and Magic666 opt-in access",
     pass: files.dispatch.includes("function shouldAllowMagic666VideoProvider()") &&
       files.dispatch.includes("function shouldAllowSmartPickLidVideoProvider()") &&
+      files.dispatch.includes("function envFlag(") &&
       files.dispatch.includes("AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO") &&
       files.dispatch.includes("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") &&
+      files.dispatch.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") ?? true') &&
+      files.dispatch.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true') &&
+      files.providerAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") ?? true') &&
+      files.providerAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true') &&
+      files.providerAvailability.includes('envFlag("AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO") === true') &&
       files.dispatch.includes("ai_provider_video_content_unverified_magic666") &&
       files.dispatch.includes("ai_provider_video_content_unverified_smartpicklid")
   },
   {
-    label: "preferred video providers keep fallback providers available for transient outages",
+    label: "preferred video providers respect explicit fallback settings",
     pass: orderedVideoProvidersFunction.includes('selection?.mode === "fixed_provider"') &&
       orderedVideoProvidersFunction.includes("selectedProvider") &&
       orderedVideoProvidersFunction.includes("fallbackProviders") &&
-      !orderedVideoProvidersFunction.includes('selection?.mode === "preferred_provider" && selection.fallbackEnabled === false')
+      orderedVideoProvidersFunction.includes('selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && selectedProvider')
   },
   {
     label: "video worker sends SmartPickLid Grok Imagine multi-frame uploads directly without scene composition fallback",
@@ -119,10 +138,11 @@ const checks = [
       files.dispatch.includes("if (!shouldTryNextSceneImageProvider(lastError)) break")
   },
   {
-    label: "video provider compresses references and does not drop direct JSON multi-reference requests to the first frame",
+    label: "video provider preserves references and does not drop direct JSON multi-reference requests to the first frame",
     pass: files.dispatch.includes("shouldCompressVideoReferenceImages") &&
-      files.dispatch.includes("return shouldUseSharpForWorkerImages();") &&
-      files.dispatch.includes("if (!target || !shouldCompressVideoReferenceImages() || sourceMimeType.includes(\"gif\"))") &&
+      files.dispatch.includes('return explicit === "1";') &&
+      files.dispatch.includes("forceCompression") &&
+      files.dispatch.includes("video_frame_data_uri_too_large") &&
       files.dispatch.includes("LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION") &&
       !files.dispatch.includes("shouldRetryOpenAiVideoTaskWithFirstFrame") &&
       !files.dispatch.includes("directJsonReferences?: boolean") &&
@@ -195,6 +215,21 @@ const checks = [
       files.dispatch.includes("if (!shouldTryNextVideoModel(error)) break")
   },
   {
+    label: "paid video task creation does not retry ambiguous network failures by default",
+    pass: files.dispatch.includes('LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES') &&
+      files.dispatch.includes('process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1"') &&
+      files.dispatch.includes('LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_PROVIDER_FALLBACK') &&
+      files.dispatch.includes('AI_WORKER_ALLOW_PAID_CREATE_PROXY_FALLBACK') &&
+      files.dispatch.includes('if (!shouldAllowPaidVideoProviderFallback()) break;') &&
+      files.dispatch.includes("return 1;") &&
+      files.dispatch.includes('if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return false;') &&
+      shouldTryNextVideoModelFunction.includes('message.includes("ai_provider_video_create_failed_502_")') &&
+      !shouldTryNextVideoModelFunction.includes('message.includes("fetch failed")') &&
+      !shouldTryNextVideoModelFunction.includes('message.includes("econnreset")') &&
+      !shouldTryNextVideoModelFunction.includes('message.includes("socket")') &&
+      !shouldTryNextVideoModelFunction.includes('message.includes("terminated")')
+  },
+  {
     label: "OpenAI-compatible reference video uses provider-compatible image-to-video candidates",
     pass: videoProviderModelCandidatesFunction.includes("function videoProviderModelCandidates(") &&
       files.dispatch.includes("function isImageToVideoModel(") &&
@@ -214,6 +249,7 @@ const checks = [
     pass: files.dispatch.includes("ffmpeg-static") &&
       files.dispatch.includes("function optimizeGeneratedVideoForPlayback(") &&
       files.dispatch.includes("AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS") &&
+      files.dispatch.includes('return process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() === "1";') &&
       files.dispatch.includes("AI_WORKER_VIDEO_OPTIMIZE_CRF") &&
       files.dispatch.includes('"-movflags"') &&
       files.dispatch.includes('"+faststart"') &&
@@ -306,7 +342,7 @@ const checks = [
   {
     label: "platform provider UI exposes the inferred provider protocol",
     pass: files.providerPanel.includes("providerProtocolText") &&
-      files.providerPanel.includes("LK888 media") &&
+      files.providerPanel.includes("Media task API") &&
       files.providerPanel.includes("接口协议")
   },
   {
@@ -315,9 +351,9 @@ const checks = [
       files.providerPanel.includes("单次参考图")
   },
   {
-    label: "video provider data script preserves the one-image upstream contract",
+    label: "video provider data script defaults video reference capability to the global cap",
     pass: files.multiframeScript.includes("VIDEO_PROVIDER_MAX_IMAGES_PER_REQUEST") &&
-      files.multiframeScript.includes('?? "1"') &&
+      files.multiframeScript.includes("DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT = 7") &&
       files.multiframeScript.includes("maxImagesPerRequest: targetLimit") &&
       files.multiframeScript.includes("modelType.trim().toLowerCase().includes(\"video\")")
   },
@@ -341,6 +377,17 @@ const checks = [
       files.dispatch.includes("worker_result_callback_retry") &&
       files.dispatch.includes("await new Promise((resolve) => setTimeout(resolve, workerCallbackRetryDelayMs(attempt)))") &&
       files.dispatch.includes("worker_result_callback_failed_${lastStatus || \"network\"}")
+  },
+  {
+    label: "local loopback worker callbacks persist directly and failures settle the job",
+    pass: files.dispatch.includes("settleGenerationJobRelational") &&
+      files.dispatch.includes("updateGenerationJobStatusRelational") &&
+      files.dispatch.includes("function shouldUseDirectWorkerCallbacks(") &&
+      files.dispatch.includes('process.env.LOCAL_AI_WORKER_DIRECT_DB_CALLBACKS?.trim()') &&
+      files.dispatch.includes("isLoopbackCallbackUrl(payload.callbackUrl)") &&
+      files.dispatch.includes("await updateGenerationJobStatusRelational(body).catch(() => null)") &&
+      files.dispatch.includes("await settleGenerationJobRelational(resultBody)") &&
+      files.dispatch.includes("local_ai_worker_dispatch_failure_settlement_failed")
   }
 ];
 

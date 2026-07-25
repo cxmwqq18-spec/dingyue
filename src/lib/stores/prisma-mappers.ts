@@ -27,6 +27,7 @@ import type {
   VideoThemeCategory
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
+import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizeVideoFrameLimit } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
@@ -1147,6 +1148,7 @@ export function toPlatformAiProvider(record: {
   aiUrl: string;
   apiKey?: string | null;
   modelType: string;
+  providerType?: string | null;
   priority: number;
   preferred: boolean;
   enabled?: boolean | null;
@@ -1164,6 +1166,7 @@ export function toPlatformAiProvider(record: {
     aiUrl: record.aiUrl,
     apiKey: record.apiKey ?? undefined,
     modelType: record.modelType,
+    providerType: normalizePlatformAiProviderType(record.providerType, inferPlatformAiProviderType(record)),
     priority: record.priority,
     preferred: record.preferred,
     enabled: record.enabled ?? true,

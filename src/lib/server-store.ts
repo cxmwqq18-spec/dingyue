@@ -83,6 +83,7 @@ import type {
   ThemeSettings,
   ThemeSettingValue
 } from "./types";
+import { inferPlatformAiProviderType, normalizePlatformAiProviderType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
@@ -835,11 +836,22 @@ function normalizeState(state: PlatformState): PlatformState {
     delete next.currentCloudflareAccountId;
   }
   next.platformAiProviders ??= [];
-  next.platformAiProviders = next.platformAiProviders.map((provider) => ({ ...provider, enabled: provider.enabled ?? true }));
+  next.platformAiProviders = next.platformAiProviders.map((provider) => ({
+    ...provider,
+    providerType: normalizePlatformAiProviderType(provider.providerType, inferPlatformAiProviderType(provider)),
+    enabled: provider.enabled ?? true
+  }));
+  for (const providerType of ["image", "video"] as const) {
+    const typedProviders = next.platformAiProviders
+      .filter((provider) => provider.providerType === providerType)
+      .sort((left, right) => Number(right.enabled) - Number(left.enabled) || Number(right.preferred) - Number(left.preferred) || left.priority - right.priority);
+    const preferred = typedProviders.find((provider) => provider.enabled && provider.preferred) ?? typedProviders.find((provider) => provider.enabled);
+    for (const provider of typedProviders) provider.preferred = provider.enabled && provider.id === preferred?.id;
+  }
   if (next.currentAiProviderId && !next.platformAiProviders.some((provider) => provider.id === next.currentAiProviderId && provider.enabled)) {
     delete next.currentAiProviderId;
   }
-  next.currentAiProviderId ??= next.platformAiProviders.find((provider) => provider.enabled && provider.preferred)?.id ?? next.platformAiProviders.find((provider) => provider.enabled)?.id ?? next.platformAiProviders[0]?.id;
+  next.currentAiProviderId ??= next.platformAiProviders.find((provider) => provider.providerType === "image" && provider.enabled && provider.preferred)?.id ?? next.platformAiProviders.find((provider) => provider.providerType === "image" && provider.enabled)?.id ?? next.platformAiProviders.find((provider) => provider.enabled)?.id ?? next.platformAiProviders[0]?.id;
   next.siteDomains ??= next.sites.map((site) => ({
     id: `dom_${site.id}_primary`,
     siteId: site.id,
@@ -4395,18 +4407,19 @@ export function recordStripeWebhook(payload: {
   return result;
 }
 
-export function getPlatformAiProviderFallbackQueue(): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">> {
+export function getPlatformAiProviderFallbackQueue(providerType?: PlatformAiProviderType): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">> {
   const state = readPlatformState();
   const providers = state.platformAiProviders ?? [];
   return providers
-    .filter((provider) => provider.enabled)
+    .filter((provider) => provider.enabled && (!providerType || provider.providerType === providerType))
     .slice()
-    .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)
-    .map(({ id, label, aiUrl, modelType, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+    .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority || left.label.localeCompare(right.label))
+    .map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
       id,
       label,
       aiUrl,
       modelType,
+      providerType: type,
       priority,
       preferred,
       enabled,
@@ -4618,6 +4631,7 @@ export function upsertPlatformAiProvider(params: {
   aiUrl: string;
   apiKey?: string;
   modelType: string;
+  providerType?: PlatformAiProviderType;
   makeCurrent?: boolean;
   enabled?: boolean;
   supportsGenerationN?: boolean;
@@ -4631,13 +4645,19 @@ export function upsertPlatformAiProvider(params: {
     state.platformAiProviders = providers;
     const now = new Date().toISOString();
     const existing = params.id ? providers.find((provider) => provider.id === params.id) : undefined;
-    const shouldPrefer = Boolean(params.makeCurrent || !state.currentAiProviderId);
+    const providerType = normalizePlatformAiProviderType(params.providerType, existing?.providerType ?? inferPlatformAiProviderType(params));
+    const existingProviderType = existing?.providerType;
+    const typedProviders = providers.filter((provider) => provider.providerType === providerType);
+    const hasPreferredForType = typedProviders.some((provider) => provider.enabled && provider.preferred);
+    const shouldPrefer = Boolean(params.makeCurrent || (existing?.providerType === providerType && existing.preferred && existing.enabled !== false) || !hasPreferredForType);
     const enabled = shouldPrefer ? true : params.enabled;
     if (existing) {
       existing.label = params.label.trim();
       existing.aiUrl = params.aiUrl.trim();
       existing.apiKey = params.apiKey?.trim() || existing.apiKey;
       existing.modelType = params.modelType.trim();
+      existing.providerType = providerType;
+      if (existingProviderType !== providerType) existing.priority = typedProviders.length + 1;
       existing.enabled = enabled ?? existing.enabled ?? true;
       existing.supportsGenerationN = Boolean(params.supportsGenerationN);
       existing.supportsEditN = Boolean(params.supportsEditN);
@@ -4652,8 +4672,9 @@ export function upsertPlatformAiProvider(params: {
         aiUrl: params.aiUrl.trim(),
         apiKey: params.apiKey?.trim() || undefined,
         modelType: params.modelType.trim(),
-        priority: providers.length + 1,
-        preferred: providers.length === 0,
+        providerType,
+        priority: typedProviders.length + 1,
+        preferred: false,
         enabled: enabled ?? true,
         supportsGenerationN: Boolean(params.supportsGenerationN),
         supportsEditN: Boolean(params.supportsEditN),
@@ -4665,8 +4686,25 @@ export function upsertPlatformAiProvider(params: {
       providers.push(result);
     }
     if (shouldPrefer) {
-      state.currentAiProviderId = result.id;
-      for (const provider of providers) provider.preferred = provider.id === result.id;
+      if (providerType === "image") state.currentAiProviderId = result.id;
+      for (const provider of providers) {
+        if (provider.providerType === providerType) provider.preferred = provider.id === result.id && provider.enabled !== false;
+      }
+    } else {
+      const fallback = providers
+        .filter((provider) => provider.providerType === providerType && provider.enabled)
+        .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)[0];
+      for (const provider of providers) {
+        if (provider.providerType === providerType) provider.preferred = provider.id === fallback?.id;
+      }
+    }
+    if (existingProviderType && existingProviderType !== providerType) {
+      const fallback = providers
+        .filter((provider) => provider.providerType === existingProviderType && provider.enabled)
+        .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)[0];
+      for (const provider of providers) {
+        if (provider.providerType === existingProviderType) provider.preferred = provider.id === fallback?.id;
+      }
     }
   });
   if (!result) throw new StoreError("ai_provider_save_failed", 500);
@@ -4680,8 +4718,11 @@ export function setCurrentPlatformAiProvider(params: { providerId: string; actor
     state.platformAiProviders = providers;
     const provider = providers.find((item) => item.id === params.providerId);
     if (!provider) throw new StoreError("ai_provider_not_found", 404);
-    state.currentAiProviderId = provider.id;
-    for (const item of providers) item.preferred = item.id === provider.id;
+    const providerType = normalizePlatformAiProviderType(provider.providerType);
+    if (providerType === "image") state.currentAiProviderId = provider.id;
+    for (const item of providers) {
+      if (item.providerType === providerType) item.preferred = item.id === provider.id;
+    }
     provider.enabled = true;
     provider.updatedAt = new Date().toISOString();
     provider.updatedBy = params.actor;

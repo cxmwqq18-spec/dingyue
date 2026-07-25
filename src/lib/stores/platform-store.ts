@@ -13,6 +13,7 @@ import {
   readPlatformState
 } from "@/lib/server-store";
 import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
+import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 
@@ -535,9 +536,9 @@ async function loadPlatformOverviewRelational(): Promise<{
     listSiteEmailConfigAssignmentsRelational(),
     prisma.platformCloudflareAccount.findMany({ orderBy: { updatedAt: "desc" } }),
     prisma.platformSetting.findUnique({ where: { key: cloudflareCurrentAccountSettingKey } }),
-    prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
+    prisma.platformAiProvider.findMany({ orderBy: [{ providerType: "asc" }, { enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] })
   ]);
-  const preferredProvider = aiProviders.find((provider) => provider.enabled && provider.preferred) ?? aiProviders.find((provider) => provider.enabled);
+  const preferredProvider = aiProviders.find((provider) => provider.providerType === "image" && provider.enabled && provider.preferred) ?? aiProviders.find((provider) => provider.providerType === "image" && provider.enabled) ?? aiProviders.find((provider) => provider.enabled);
   const currentCloudflareAccountId = cloudflareCurrentAccountIdFromSetting(currentCloudflareSetting?.value);
   const validCurrentCloudflareAccountId = cloudflareAccounts.some((account) => account.id === currentCloudflareAccountId)
     ? currentCloudflareAccountId
@@ -942,15 +943,53 @@ export const getPlatformActivityRelational = cache((limit = 40) =>
   platformReadCache.get(`activity:${limit}`, () => loadPlatformActivityRelational(limit), 15_000)
 );
 
-function buildPlatformAiProviderStatus(aiProviders: PlatformAiProvider[]) {
+function sortPlatformAiProviders(aiProviders: PlatformAiProvider[]): PlatformAiProvider[] {
+  return [...aiProviders].sort((left, right) =>
+    left.providerType.localeCompare(right.providerType) ||
+    Number(right.enabled) - Number(left.enabled) ||
+    Number(right.preferred) - Number(left.preferred) ||
+    left.priority - right.priority ||
+    left.label.localeCompare(right.label)
+  );
+}
+
+function currentPlatformAiProviderForType(aiProviders: PlatformAiProvider[], providerType: PlatformAiProviderType) {
+  const enabled = aiProviders.filter((provider) => provider.providerType === providerType && provider.enabled);
+  return enabled.find((provider) => provider.preferred) ?? enabled[0];
+}
+
+function platformAiProviderSummaryForType(aiProviders: PlatformAiProvider[], providerType: PlatformAiProviderType) {
+  const providers = aiProviders.filter((provider) => provider.providerType === providerType);
+  const enabledProviders = providers.filter((provider) => provider.enabled);
+  const current = currentPlatformAiProviderForType(aiProviders, providerType);
+  return {
+    totalProviders: providers.length,
+    enabledProviders: enabledProviders.length,
+    configuredProviders: providers.filter((provider) => aiProviderStatus(provider).configured).length,
+    runnableProviders: providers.filter((provider) => aiProviderStatus(provider).runnable).length,
+    currentProviderId: current?.id ?? "",
+    currentConfigured: aiProviderStatus(current).runnable
+  };
+}
+
+function buildPlatformAiProviderStatus(inputProviders: PlatformAiProvider[], options: { ok?: boolean; source?: "relational" | "json-fallback"; message?: string } = {}) {
+  const aiProviders = sortPlatformAiProviders(inputProviders);
   const enabledAiProviders = aiProviders.filter((provider) => provider.enabled);
-  const currentAiProviderId = enabledAiProviders.find((provider) => provider.preferred)?.id;
-  const currentAiProvider = enabledAiProviders.find((provider) => provider.id === currentAiProviderId) ?? enabledAiProviders.find((provider) => provider.preferred) ?? enabledAiProviders[0];
+  const currentProviderIds = Object.fromEntries(
+    platformAiProviderTypes.map((providerType) => [providerType, currentPlatformAiProviderForType(aiProviders, providerType)?.id ?? ""])
+  ) as Record<PlatformAiProviderType, string>;
+  const currentAiProvider = currentPlatformAiProviderForType(aiProviders, "image") ?? enabledAiProviders[0];
+  const summaryByType = Object.fromEntries(
+    platformAiProviderTypes.map((providerType) => [providerType, platformAiProviderSummaryForType(aiProviders, providerType)])
+  ) as Record<PlatformAiProviderType, ReturnType<typeof platformAiProviderSummaryForType>>;
   return {
     aiProviders,
     platformAiProviderStatus: {
-      ok: true,
+      ok: options.ok ?? true,
+      source: options.source ?? "relational",
+      message: options.message,
       currentProviderId: currentAiProvider?.id ?? "",
+      currentProviderIds,
       modelTypes: Array.from(new Set([
         "gpt-image-2",
         "gpt-5.5",
@@ -967,6 +1006,7 @@ function buildPlatformAiProviderStatus(aiProviders: PlatformAiProvider[]) {
         aiUrl: provider.aiUrl,
         modelType: provider.modelType,
         priority: provider.priority,
+        providerType: provider.providerType,
         preferred: provider.preferred,
         enabled: provider.enabled,
         supportsGenerationN: provider.supportsGenerationN,
@@ -975,7 +1015,7 @@ function buildPlatformAiProviderStatus(aiProviders: PlatformAiProvider[]) {
         createdAt: provider.createdAt,
         updatedAt: provider.updatedAt,
         updatedBy: provider.updatedBy,
-        isCurrent: provider.id === currentAiProvider?.id,
+        isCurrent: provider.id === currentProviderIds[provider.providerType],
         status: {
           ...aiProviderStatus(provider),
           label: provider.label,
@@ -988,7 +1028,8 @@ function buildPlatformAiProviderStatus(aiProviders: PlatformAiProvider[]) {
         enabledProviders: enabledAiProviders.length,
         configuredProviders: aiProviders.filter((provider) => aiProviderStatus(provider).configured).length,
         runnableProviders: aiProviders.filter((provider) => aiProviderStatus(provider).runnable).length,
-        currentConfigured: aiProviderStatus(currentAiProvider).runnable
+        currentConfigured: aiProviderStatus(currentAiProvider).runnable,
+        byType: summaryByType
       }
     }
   };
@@ -996,23 +1037,22 @@ function buildPlatformAiProviderStatus(aiProviders: PlatformAiProvider[]) {
 
 async function loadPlatformAiProviderStatusRelational() {
   try {
-    const aiProviderRecords = await prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
+    const aiProviderRecords = await prisma.platformAiProvider.findMany({ orderBy: [{ providerType: "asc" }, { enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
     return buildPlatformAiProviderStatus(aiProviderRecords.map(toPlatformAiProvider));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     warnRelationalFallback("platform ai provider status", error);
-    const aiProviders = [...(readPlatformState().platformAiProviders ?? [])].sort((left, right) =>
-      Number(right.enabled) - Number(left.enabled) ||
-      Number(right.preferred) - Number(left.preferred) ||
-      left.priority - right.priority
-    );
-    return buildPlatformAiProviderStatus(aiProviders);
+    const aiProviders = sortPlatformAiProviders(readPlatformState().platformAiProviders ?? []);
+    return buildPlatformAiProviderStatus(aiProviders, {
+      ok: false,
+      source: "json-fallback",
+      message: "数据库暂不可用，当前显示本地降级状态；请恢复数据库连接后刷新。"
+    });
   }
 }
 
-export const getPlatformAiProviderStatusRelational = cache(() =>
-  platformReadCache.get("ai-provider-status", loadPlatformAiProviderStatusRelational)
-);
+// AI provider config drives paid generation routes, so do not cache fallback reads as normal state.
+export const getPlatformAiProviderStatusRelational = cache(loadPlatformAiProviderStatusRelational);
 
 function loadPlatformSitesJsonFallback(): PlatformSiteList {
   const state = readPlatformState();
@@ -1552,15 +1592,62 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
 
 function normalizeProviderMaxImagesPerRequest(value: unknown) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.max(1, Math.min(Math.trunc(numeric), 20)) : 1;
 }
 
-export async function listPlatformAiProvidersRelational(): Promise<PlatformAiProvider[]> {
-  const records = await prisma.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
+const platformAiProviderOrderBy: Prisma.PlatformAiProviderOrderByWithRelationInput[] = [
+  { providerType: "asc" },
+  { enabled: "desc" },
+  { preferred: "desc" },
+  { priority: "asc" },
+  { label: "asc" }
+];
+
+function platformAiProviderTypeWhere(providerType?: PlatformAiProviderType) {
+  return providerType ? { providerType } : {};
+}
+
+async function setPreferredPlatformAiProviderForType(
+  tx: Prisma.TransactionClient,
+  params: { providerId: string; providerType: PlatformAiProviderType; actor?: string }
+) {
+  await tx.platformAiProvider.updateMany({
+    where: { providerType: params.providerType, id: { not: params.providerId } },
+    data: { preferred: false }
+  });
+  return tx.platformAiProvider.update({
+    where: { id: params.providerId },
+    data: { preferred: true, enabled: true, updatedBy: params.actor }
+  });
+}
+
+async function repairPreferredPlatformAiProviderForType(
+  tx: Prisma.TransactionClient,
+  providerType: PlatformAiProviderType,
+  actor?: string
+) {
+  const preferred = await tx.platformAiProvider.findFirst({
+    where: { providerType, enabled: true, preferred: true },
+    select: { id: true }
+  });
+  if (preferred) return;
+  const fallback = await tx.platformAiProvider.findFirst({
+    where: { providerType, enabled: true },
+    orderBy: [{ priority: "asc" }, { createdAt: "asc" }]
+  });
+  if (!fallback) return;
+  await setPreferredPlatformAiProviderForType(tx, { providerId: fallback.id, providerType, actor });
+}
+
+export async function listPlatformAiProvidersRelational(params: { providerType?: PlatformAiProviderType } = {}): Promise<PlatformAiProvider[]> {
+  const records = await prisma.platformAiProvider.findMany({
+    where: platformAiProviderTypeWhere(params.providerType),
+    orderBy: platformAiProviderOrderBy
+  });
   return records.map(toPlatformAiProvider);
 }
 
@@ -1570,13 +1657,14 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
   return record ? toPlatformAiProvider(record) : undefined;
 }
 
-export async function getPlatformAiProviderFallbackQueueRelational(): Promise<PlatformAiProviderFallbackQueue> {
-  const providers = await listPlatformAiProvidersRelational();
-  return providers.filter((provider) => provider.enabled).map(({ id, label, aiUrl, modelType, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+export async function getPlatformAiProviderFallbackQueueRelational(providerType?: PlatformAiProviderType): Promise<PlatformAiProviderFallbackQueue> {
+  const providers = await listPlatformAiProvidersRelational({ providerType });
+  return providers.filter((provider) => provider.enabled).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
     id,
     label,
     aiUrl,
     modelType,
+    providerType: type,
     priority,
     preferred,
     enabled,
@@ -1592,6 +1680,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   aiUrl: string;
   apiKey?: string;
   modelType: string;
+  providerType?: PlatformAiProviderType;
   makeCurrent?: boolean;
   enabled?: boolean;
   supportsGenerationN?: boolean;
@@ -1600,44 +1689,62 @@ export async function upsertPlatformAiProviderRelational(params: {
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
-  const providerCount = await prisma.platformAiProvider.count();
-  const shouldPrefer = Boolean(params.makeCurrent || providerCount === 0);
-  const enabled = shouldPrefer ? true : params.enabled;
   const aiUrl = params.aiUrl.trim() || existing?.aiUrl || "";
+  const modelType = params.modelType.trim();
+  const providerType = normalizePlatformAiProviderType(params.providerType, existing?.providerType ? normalizePlatformAiProviderType(existing.providerType) : inferPlatformAiProviderType({ label: params.label, aiUrl, modelType }));
   const providerRecord = await prisma.$transaction(async (tx) => {
-    if (shouldPrefer) await tx.platformAiProvider.updateMany({ data: { preferred: false } });
-    return existing
-      ? tx.platformAiProvider.update({
+    const existingProviderType = existing ? normalizePlatformAiProviderType(existing.providerType) : providerType;
+    const providerCount = await tx.platformAiProvider.count({ where: { providerType } });
+    const currentForType = await tx.platformAiProvider.findFirst({
+      where: { providerType, enabled: true, preferred: true, ...(existing ? { id: { not: existing.id } } : {}) },
+      select: { id: true }
+    });
+    const nextEnabled = params.makeCurrent ? true : params.enabled;
+    const shouldPrefer = Boolean(params.makeCurrent || (!existing && providerCount === 0) || (!currentForType && (nextEnabled ?? existing?.enabled ?? true)));
+    const updated = existing
+      ? await tx.platformAiProvider.update({
           where: { id: existing.id },
           data: {
             label: params.label.trim(),
             aiUrl,
             apiKey: params.apiKey?.trim() || existing.apiKey,
-            modelType: params.modelType.trim(),
-            preferred: shouldPrefer || existing.preferred,
-            enabled: enabled ?? existing.enabled,
+            modelType,
+            providerType,
+            priority: existingProviderType !== providerType ? providerCount + 1 : existing.priority,
+            preferred: false,
+            enabled: nextEnabled ?? existing.enabled,
             supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
             supportsEditN: params.supportsEditN ?? existing.supportsEditN,
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest ?? existing.maxImagesPerRequest),
             updatedBy: params.actor
           }
         })
-      : tx.platformAiProvider.create({
+      : await tx.platformAiProvider.create({
           data: {
             id: uid("aiprov"),
             label: params.label.trim(),
             aiUrl,
             apiKey: params.apiKey?.trim() || undefined,
-            modelType: params.modelType.trim(),
+            modelType,
+            providerType,
             priority: providerCount + 1,
-            preferred: shouldPrefer,
-            enabled: enabled ?? true,
+            preferred: false,
+            enabled: nextEnabled ?? true,
             supportsGenerationN: Boolean(params.supportsGenerationN),
             supportsEditN: Boolean(params.supportsEditN),
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest),
             updatedBy: params.actor
           }
         });
+    if (shouldPrefer && updated.enabled) {
+      await setPreferredPlatformAiProviderForType(tx, { providerId: updated.id, providerType, actor: params.actor });
+      return tx.platformAiProvider.findUniqueOrThrow({ where: { id: updated.id } });
+    }
+    await repairPreferredPlatformAiProviderForType(tx, providerType, params.actor);
+    if (existing && existingProviderType !== providerType) {
+      await repairPreferredPlatformAiProviderForType(tx, existingProviderType, params.actor);
+    }
+    return tx.platformAiProvider.findUniqueOrThrow({ where: { id: updated.id } });
   });
   const provider = toPlatformAiProvider(providerRecord);
   if (!provider.label || !provider.modelType || (!existing && !provider.aiUrl)) throw new RelationalStoreError("invalid_ai_provider", 400);
@@ -1652,10 +1759,10 @@ export async function setCurrentPlatformAiProviderRelational(params: {
   const provider = await prisma.$transaction(async (tx) => {
     const existing = await tx.platformAiProvider.findUnique({ where: { id: params.providerId } });
     if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
-    await tx.platformAiProvider.updateMany({ data: { preferred: false } });
-    return tx.platformAiProvider.update({
-      where: { id: params.providerId },
-      data: { preferred: true, enabled: true, updatedBy: params.actor }
+    return setPreferredPlatformAiProviderForType(tx, {
+      providerId: params.providerId,
+      providerType: normalizePlatformAiProviderType(existing.providerType),
+      actor: params.actor
     });
   });
   clearPlatformReadCache();
@@ -1670,35 +1777,27 @@ export async function setPlatformAiProviderEnabledRelational(params: {
   const provider = await prisma.$transaction(async (tx) => {
     const existing = await tx.platformAiProvider.findUnique({ where: { id: params.providerId } });
     if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
+    const providerType = normalizePlatformAiProviderType(existing.providerType);
+
+    if (params.enabled && existing.preferred) {
+      await tx.platformAiProvider.updateMany({
+        where: { providerType, id: { not: existing.id } },
+        data: { preferred: false }
+      });
+    }
 
     const updated = await tx.platformAiProvider.update({
       where: { id: existing.id },
-      data: { enabled: params.enabled, updatedBy: params.actor }
+      data: { enabled: params.enabled, preferred: params.enabled ? existing.preferred : false, updatedBy: params.actor }
     });
 
     if (params.enabled) {
-      const preferred = await tx.platformAiProvider.findFirst({ where: { enabled: true, preferred: true }, select: { id: true } });
-      if (!preferred) {
-        await tx.platformAiProvider.update({
-          where: { id: existing.id },
-          data: { preferred: true, updatedBy: params.actor }
-        });
-      }
+      await repairPreferredPlatformAiProviderForType(tx, providerType, params.actor);
       return updated;
     }
 
     if (existing.preferred) {
-      await tx.platformAiProvider.updateMany({ data: { preferred: false } });
-      const fallback = await tx.platformAiProvider.findFirst({
-        where: { enabled: true, id: { not: existing.id } },
-        orderBy: [{ priority: "asc" }]
-      });
-      if (fallback) {
-        await tx.platformAiProvider.update({
-          where: { id: fallback.id },
-          data: { preferred: true, updatedBy: params.actor }
-        });
-      }
+      await repairPreferredPlatformAiProviderForType(tx, providerType, params.actor);
     }
 
     return updated;
@@ -1713,7 +1812,8 @@ export async function setPlatformAiProviderEnabledRelational(params: {
     metadata: {
       label: provider.label,
       aiUrl: provider.aiUrl,
-      modelType: provider.modelType
+      modelType: provider.modelType,
+      providerType: provider.providerType
     }
   });
   clearPlatformReadCache();
@@ -1725,7 +1825,7 @@ export async function deletePlatformAiProviderRelational(params: {
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const deleted = await prisma.$transaction(async (tx) => {
-    const providers = await tx.platformAiProvider.findMany({ orderBy: [{ enabled: "desc" }, { preferred: "desc" }, { priority: "asc" }] });
+    const providers = await tx.platformAiProvider.findMany({ orderBy: platformAiProviderOrderBy });
     const existing = providers.find((provider) => provider.id === params.providerId);
     if (!existing) throw new RelationalStoreError("ai_provider_not_found", 404);
     if (providers.length <= 1) throw new RelationalStoreError("ai_provider_delete_last", 400);
@@ -1742,13 +1842,8 @@ export async function deletePlatformAiProviderRelational(params: {
     ));
 
     const record = await tx.platformAiProvider.delete({ where: { id: existing.id } });
-    const remaining = providers.filter((provider) => provider.id !== existing.id);
-    if (existing.preferred && remaining[0]) {
-      await tx.platformAiProvider.updateMany({ data: { preferred: false } });
-      await tx.platformAiProvider.update({
-        where: { id: remaining[0].id },
-        data: { preferred: true, updatedBy: params.actor }
-      });
+    if (existing.preferred) {
+      await repairPreferredPlatformAiProviderForType(tx, normalizePlatformAiProviderType(existing.providerType), params.actor);
     }
     return record;
   });
@@ -1762,7 +1857,8 @@ export async function deletePlatformAiProviderRelational(params: {
     metadata: {
       label: deleted.label,
       aiUrl: deleted.aiUrl,
-      modelType: deleted.modelType
+      modelType: deleted.modelType,
+      providerType: deleted.providerType
     }
   });
   const removed = toPlatformAiProvider(deleted);

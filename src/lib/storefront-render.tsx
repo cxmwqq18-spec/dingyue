@@ -33,6 +33,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
+import { readWorkspaceJobSummariesRelational } from "@/lib/workspace-runtime-jobs";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -866,6 +867,34 @@ function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): T
   };
 }
 
+function workspaceRuntimePreloadTimeoutMs(): number {
+  const configured = Number.parseInt(process.env.STOREFRONT_WORKSPACE_INITIAL_RUNTIME_TIMEOUT_MS ?? "", 10);
+  return Number.isFinite(configured) && configured >= 500 ? configured : 2_500;
+}
+
+function withWorkspaceRuntimePreloadTimeout<T>({
+  label,
+  promise,
+  timeoutMs
+}: {
+  label: string;
+  promise: Promise<T | undefined>;
+  timeoutMs: number;
+}): Promise<T | undefined> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return Promise.race([
+    promise,
+    new Promise<undefined>((resolve) => {
+      timer = setTimeout(() => {
+        console.warn(`[customer-workspace-ssr] ${label} timed out after ${timeoutMs}ms; deferring to client runtime refresh.`);
+        resolve(undefined);
+      }, timeoutMs);
+    })
+  ]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 function isoFromRelationalValue(value: unknown): string {
   if (value instanceof Date) return value.toISOString();
   if (typeof value === "string") {
@@ -883,25 +912,6 @@ function numberFromRelationalValue(value: unknown): number {
     return Number.isFinite(parsed) ? parsed : 0;
   }
   return 0;
-}
-
-function recordFromRelationalJson(value: unknown): Record<string, unknown> | undefined {
-  return value && typeof value === "object" && !Array.isArray(value)
-    ? value as Record<string, unknown>
-    : undefined;
-}
-
-function workspaceJobFromRelationalRow(job: Record<string, unknown>): ThemeRuntimeData["jobs"][number] {
-  return {
-    id: String(job.id),
-    aiAppId: String(job.aiAppId),
-    status: String(job.status) as ThemeRuntimeData["jobs"][number]["status"],
-    creditsReserved: numberFromRelationalValue(job.creditsReserved),
-    createdAt: isoFromRelationalValue(job.createdAt),
-    updatedAt: isoFromRelationalValue(job.updatedAt),
-    requestJson: recordFromRelationalJson(job.requestJson),
-    resultJson: recordFromRelationalJson(job.resultJson)
-  };
 }
 
 function workspaceSubscriptionFromRelationalRow(subscription: Record<string, unknown>): NonNullable<ThemeRuntimeData["subscriptions"]>[number] {
@@ -923,12 +933,8 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
   customer: PublicCustomer;
   siteId: string;
 }): Promise<ThemeRuntimeData> {
-  const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all([
-    prisma.generationJob.findMany({
-      where: { siteId, customerId: customer.id },
-      orderBy: { updatedAt: "desc" },
-      take: 8
-    }),
+  const recentJobs = await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 });
+  const [recentAssets, subscriptions, customerModels] = await Promise.all([
     prisma.assetUpload.findMany({
       where: {
         siteId,
@@ -937,7 +943,7 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
         role: { in: ["input", "training_input", "output"] }
       },
       orderBy: { createdAt: "desc" },
-      take: 96
+      take: 48
     }),
     prisma.subscription.findMany({
       where: { siteId, customerId: customer.id },
@@ -957,14 +963,10 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
       .filter((jobId): jobId is string => typeof jobId === "string" && !recentJobIds.has(jobId))
   ));
   const relatedJobs = relatedJobIds.length
-    ? await prisma.generationJob.findMany({
-        where: { siteId, customerId: customer.id, id: { in: relatedJobIds } },
-        orderBy: { updatedAt: "desc" }
-      })
+    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, ids: relatedJobIds })
     : [];
   const jobs = [...recentJobs, ...relatedJobs]
-    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime())
-    .map((job) => workspaceJobFromRelationalRow(job as unknown as Record<string, unknown>));
+    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
   const assets = recentAssets.map((asset) => {
     const mapped = toAssetUploadRelational(asset as unknown as Record<string, unknown>);
     return toThemeRuntimeAssetRelational(mapped);
@@ -2803,16 +2805,29 @@ export async function renderCustomerWorkspacePageBySlug({
       getCustomerWorkspaceBootstrapRelational(canonicalSlug)
     ]);
     if (!current || !bootstrap) redirect(loginPathWithNext);
-    const initialWorkspaceRuntime = await Promise.all([
-      getCustomerAdminAccessForSite({ siteId, customer: current.customer }),
-      readLightWorkspaceRuntimeForCustomerRelational({ siteId, customer: current.customer })
-        .then((runtime) => trimCustomerRuntimeForWorkspace(runtime, "/app"))
-        .catch(() => runtimeWithEmptyCollections({ customer: current.customer }))
-    ]).then(([adminAccess, workspaceRuntime]) => ({
-      ...workspaceRuntime,
-      customer: current.customer,
-      adminAccess
-    }));
+    const preloadTimeoutMs = workspaceRuntimePreloadTimeoutMs();
+    const [adminAccess, workspaceRuntime] = await Promise.all([
+      withWorkspaceRuntimePreloadTimeout({
+        label: "admin access preload",
+        timeoutMs: preloadTimeoutMs,
+        promise: getCustomerAdminAccessForSite({ siteId, customer: current.customer })
+          .catch(() => ({ canBypassBilling: false }))
+      }).then((access) => access ?? { canBypassBilling: false }),
+      withWorkspaceRuntimePreloadTimeout({
+        label: "workspace runtime preload",
+        timeoutMs: preloadTimeoutMs,
+        promise: readLightWorkspaceRuntimeForCustomerRelational({ siteId, customer: current.customer })
+          .then((runtime) => trimCustomerRuntimeForWorkspace(runtime, "/app"))
+          .catch(() => undefined)
+      })
+    ]);
+    const initialWorkspaceRuntime = workspaceRuntime
+      ? {
+        ...workspaceRuntime,
+        customer: current.customer,
+        adminAccess
+      }
+      : undefined;
     return (
       <CustomerWorkspaceClientPage
         initialBootstrap={{

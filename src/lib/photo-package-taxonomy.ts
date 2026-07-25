@@ -40,6 +40,12 @@ export function photoPackageLabel(value: string | undefined): string {
   return normalized.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function photoPackageMenuLabel(value: string | undefined): string {
+  const normalized = (value ?? "").replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+  if (!normalized) return photoPackageLabel(value);
+  return normalized.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
 const aidreamcapesCollectionHrefSlugAliases: Record<string, string> = {
   "cafe-street-stories": "cafe-corner-stories",
   "professional-headshots": "headshots",
@@ -180,7 +186,7 @@ export function getPhotoPackageMegaGroups(
         const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
         const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder));
         const itemSlug = category.slug || photoPackageSlug(category.label);
-        addGroupItem(group, { label: category.label, slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
+        addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
       });
     return sortedMegaGroups(groups);
   }
@@ -190,7 +196,7 @@ export function getPhotoPackageMegaGroups(
     const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
     const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder ?? category.sortOrder));
     const itemSlug = category.slug || photoPackageSlug(category.label);
-    addGroupItem(group, { label: category.label, slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
+    addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
   });
   creativePacks
     .filter((pack) => pack.status === "active")
@@ -199,7 +205,7 @@ export function getPhotoPackageMegaGroups(
       const groupLabel = parent?.label || pack.categoryRecord?.label || pack.name || photoPackageLabel(pack.categoryRecord?.slug || pack.category);
       const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
       const group = ensureGroup(groupSlug, groupLabel, parent?.description ?? undefined, parent?.icon ?? parent?.iconName, sortValue(parent?.sortOrder));
-      const itemLabel = pack.categoryRecord?.label || pack.name;
+      const itemLabel = photoPackageMenuLabel(pack.categoryRecord?.label || pack.name);
       const itemSlug = pack.categoryRecord?.slug || photoPackageSlug(pack.name);
       addGroupItem(group, {
         label: itemLabel,

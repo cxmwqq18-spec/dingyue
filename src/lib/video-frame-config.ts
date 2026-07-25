@@ -1,6 +1,7 @@
 export const DEFAULT_VIDEO_FRAME_LIMIT = 30;
 export const MAX_VIDEO_FRAME_LIMIT = 30;
 export const MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT = 7;
+export const CUSTOMER_VIDEO_FRAME_LIMIT = MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT;
 export const MAX_VIDEO_DURATION_SECONDS = 10;
 export const VIDEO_DURATION_OPTIONS = [
   { seconds: 6, creditMultiplier: 1 },

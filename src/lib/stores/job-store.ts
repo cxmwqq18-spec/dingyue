@@ -2,6 +2,7 @@ import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { normalizePlatformAiProviderType, platformProviderTypeForAppType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationEntryPoint, GenerationJob, SiteAiApp } from "@/lib/types";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
@@ -17,7 +18,7 @@ type JobSubscriptionBypass = {
   reason: "site_admin";
   siteAdminId?: string;
 };
-const jobStoreTimeoutMs = Math.max(5000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "20000") || 20000);
+const jobStoreTimeoutMs = Math.max(5000, Number(process.env.AI_JOB_STORE_TIMEOUT_MS ?? "60000") || 60000);
 const jobStoreTransactionOptions = { timeout: jobStoreTimeoutMs, maxWait: Math.min(5000, jobStoreTimeoutMs) };
 const DEFAULT_MAX_SOURCE_ASSETS = 15;
 const LEGACY_WORKFLOW_MAX_SOURCE_ASSETS = 4;
@@ -363,6 +364,7 @@ function isRenderablePromptField(key: string) {
     "trainingMode",
     "userDirection",
     "videoThemeId",
+    "videoThemeSlug",
     "videoThemeName",
     "videoThemePrompt",
     "frameAssetIds"
@@ -471,6 +473,55 @@ function resolveGenerationRequest(params: {
       videoReferenceContract
     }
   };
+}
+
+function platformFallbackProviderConfig(provider: AiProviderConfig): AiProviderConfig {
+  return {
+    mode: "platform_fallback",
+    fallbackEnabled: true,
+    ...(provider.modelType ? { modelType: provider.modelType } : {})
+  };
+}
+
+function providerRecordIsRunnable(provider: {
+  enabled?: boolean | null;
+  aiUrl?: string | null;
+  apiKey?: string | null;
+  modelType?: string | null;
+}) {
+  return provider.enabled !== false &&
+    Boolean(provider.aiUrl?.trim()) &&
+    Boolean(provider.apiKey?.trim()) &&
+    Boolean(provider.modelType?.trim());
+}
+
+async function normalizeProviderSelectionForAvailability(
+  tx: Tx,
+  params: { provider: AiProviderConfig; providerType: PlatformAiProviderType }
+) {
+  if (params.provider.mode === "platform_fallback" || !params.provider.providerId) return params.provider;
+  const provider = await tx.platformAiProvider.findUnique({
+    where: { id: params.provider.providerId },
+    select: {
+      providerType: true,
+      enabled: true,
+      aiUrl: true,
+      apiKey: true,
+      modelType: true
+    }
+  });
+  if (!provider) {
+    if (params.provider.mode === "preferred_provider") return platformFallbackProviderConfig(params.provider);
+    throw new StoreError("ai_provider_not_found", 404);
+  }
+  if (normalizePlatformAiProviderType(provider.providerType) !== params.providerType) {
+    throw new StoreError("ai_provider_type_mismatch", 400);
+  }
+  if (!providerRecordIsRunnable(provider)) {
+    if (params.provider.mode === "preferred_provider") return platformFallbackProviderConfig(params.provider);
+    throw new StoreError(provider.enabled === false ? "ai_provider_disabled" : "ai_provider_not_configured", 503);
+  }
+  return params.provider;
 }
 
 async function readCustomerForUpdate(tx: Tx, siteId: string, customerId: string) {
@@ -650,13 +701,25 @@ async function createGenerationJobInTx(tx: Tx, params: {
     : typeof fields.videoThemeId === "string"
       ? fields.videoThemeId
       : undefined;
+  const rawVideoThemeSlug = typeof params.requestJson?.videoThemeSlug === "string"
+    ? params.requestJson.videoThemeSlug
+    : typeof fields.videoThemeSlug === "string"
+      ? fields.videoThemeSlug
+      : undefined;
   const videoMode = isVideoModeRequest(params.requestJson) || params.aiAppSlug === "video_generator";
   const requestedAssetIds = requestedAssetIdsForRequest(params.requestJson, videoMode);
   if (videoMode && params.aiAppSlug !== "video_generator") throw new StoreError("video_theme_tool_mismatch", 400);
-  if (videoMode && !rawVideoThemeId) throw new StoreError("video_theme_required", 400);
-  const videoTheme = rawVideoThemeId
+  if (videoMode && !rawVideoThemeId && !rawVideoThemeSlug) throw new StoreError("video_theme_required", 400);
+  const videoTheme = rawVideoThemeId || rawVideoThemeSlug
     ? await tx.videoTheme.findFirst({
-        where: { id: rawVideoThemeId, siteId: params.siteId, status: "active" },
+        where: {
+          siteId: params.siteId,
+          status: "active",
+          OR: [
+            ...(rawVideoThemeId ? [{ id: rawVideoThemeId }] : []),
+            ...(rawVideoThemeSlug ? [{ slug: rawVideoThemeSlug }] : [])
+          ]
+        },
         select: {
           id: true,
           categoryId: true,
@@ -678,7 +741,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   let effectiveVideoMaxFrames: number | undefined;
   if (videoTheme) {
     const videoProviders = await tx.platformAiProvider.findMany({
-      where: { enabled: true },
+      where: { enabled: true, providerType: "video" },
       select: { id: true, label: true, aiUrl: true, apiKey: true, modelType: true, enabled: true, maxImagesPerRequest: true },
       orderBy: [{ preferred: "desc" }, { priority: "asc" }]
     });
@@ -739,6 +802,10 @@ async function createGenerationJobInTx(tx: Tx, params: {
   if ((customer.balance?.balance ?? 0) < creditsReserved) throw new StoreError("insufficient_credits", 402);
 
   const resolvedRequest = resolveGenerationRequest({ requestJson: params.requestJson, siteAiApp, requestedAssetIds, creativePack, videoTheme });
+  const resolvedProviderSelection = await normalizeProviderSelectionForAvailability(tx, {
+    provider: resolvedRequest.provider,
+    providerType: platformProviderTypeForAppType(siteAiApp.aiApp.appType)
+  });
   if (requestedAssetIds.length) {
     const validAssets = await tx.assetUpload.findMany({
       where: { id: { in: requestedAssetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null },
@@ -758,6 +825,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
         mode: "video",
         outputType: "video",
         videoThemeId: videoTheme.id,
+        videoThemeSlug: videoTheme.slug,
         videoThemeName: videoTheme.name,
         videoThemePrompt: videoTheme.prompt,
         frameAssetIds: requestedAssetIds,
@@ -792,6 +860,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
               mode: "video",
               outputType: "video",
               videoThemeId: videoTheme.id,
+              videoThemeSlug: videoTheme.slug,
               duration: String(requestedVideoDurationSeconds),
               videoDuration: String(requestedVideoDurationSeconds),
               durationSeconds: requestedVideoDurationSeconds,
@@ -858,7 +927,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
             }
           : undefined,
         prompt: resolvedRequest.prompt,
-        providerSelection: resolvedRequest.provider
+        providerSelection: resolvedProviderSelection
       })
     }
   });

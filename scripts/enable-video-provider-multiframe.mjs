@@ -2,8 +2,9 @@ import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const requestedLimit = Number(process.env.VIDEO_PROVIDER_MAX_IMAGES_PER_REQUEST ?? "1");
-const targetLimit = Math.max(1, Math.min(Math.trunc(Number.isFinite(requestedLimit) ? requestedLimit : 1), 30));
+const DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT = 7;
+const requestedLimit = Number(process.env.VIDEO_PROVIDER_MAX_IMAGES_PER_REQUEST ?? String(DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT));
+const targetLimit = Math.max(1, Math.min(Math.trunc(Number.isFinite(requestedLimit) ? requestedLimit : DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT), 30));
 
 function isVideoModel(modelType) {
   return typeof modelType === "string" && modelType.trim().toLowerCase().includes("video");
@@ -11,6 +12,7 @@ function isVideoModel(modelType) {
 
 async function main() {
   const providers = await prisma.platformAiProvider.findMany({
+    where: { providerType: "video" },
     select: {
       id: true,
       label: true,

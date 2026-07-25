@@ -350,9 +350,14 @@ for (const [phrase, records] of phraseGroups) {
 }
 
 const pairGroups = new Map();
+const allowedNormalizedTitleDescriptionPairs = new Set([
+  "{brand} com :: {brand} company name",
+  "support {brand} com :: contact us email for {brand}"
+]);
 for (const site of sites) {
   for (const pair of pairsBySite[site.id] ?? []) {
     const normalized = `${normalizeForCompare(pair.title)} :: ${normalizeForCompare(pair.description)}`;
+    if (allowedNormalizedTitleDescriptionPairs.has(normalized)) continue;
     const tokenCount = normalized.split(/\s+/).filter(Boolean).length;
     if (tokenCount < 6 || normalized.length < 35) continue;
     const group = pairGroups.get(normalized) ?? [];

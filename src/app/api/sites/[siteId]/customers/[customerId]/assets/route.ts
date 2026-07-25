@@ -66,8 +66,11 @@ function normalizedImageFileName(fileName: string, mimeType: string): string {
   return fileName;
 }
 
-async function prepareUploadedImage(file: File): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
+async function prepareUploadedImage(file: File, options: { preserveOriginal?: boolean } = {}): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
   const bytes = Buffer.from(await file.arrayBuffer());
+  if (options.preserveOriginal) {
+    return { bytes, mimeType: file.type || "application/octet-stream", fileName: file.name };
+  }
   if (file.type.includes("gif")) return { bytes, mimeType: file.type || "image/gif", fileName: file.name };
   const maxDimension = Math.max(512, Number(process.env.CUSTOMER_UPLOAD_IMAGE_MAX_DIMENSION ?? "2000") || 2000);
   const quality = Math.max(60, Math.min(Number(process.env.CUSTOMER_UPLOAD_IMAGE_QUALITY ?? "84") || 84, 95));
@@ -166,16 +169,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       };
     }
 
-    const preparedFile = body.file ? await prepareUploadedImage(body.file) : undefined;
+    const preserveOriginal = body.subjectRole === "video_frame";
+    const preparedFile = body.file ? await prepareUploadedImage(body.file, { preserveOriginal }) : undefined;
     if (preparedFile) body.mimeType = preparedFile.mimeType;
-    const compressedFile = preparedFile
+    const compressedFile = preparedFile && !preserveOriginal
       ? prepareCompressedCustomerImage({
         bytes: preparedFile.bytes,
         mimeType: preparedFile.mimeType,
         fileName: preparedFile.fileName,
         purpose: "input"
       })
-      : undefined;
+      : preparedFile;
     if (compressedFile) body.mimeType = compressedFile.mimeType;
     const storageKey = body.file && compressedFile
       ? customerAssetStorageKey({

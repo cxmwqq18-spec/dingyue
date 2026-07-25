@@ -59,7 +59,7 @@ export function isMagic666BaseUrl(baseUrl: string) {
 export function videoProviderProtocolForBaseUrl(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
-    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
     return "lk888-media";
@@ -71,16 +71,24 @@ export function isGrokImagineVideoModel(model: string) {
   return model.trim().toLowerCase().includes("grok-imagine-video");
 }
 
+function envFlag(name: string): boolean | undefined {
+  const value = process.env[name]?.trim().toLowerCase();
+  if (!value) return undefined;
+  if (value === "1" || value === "true" || value === "yes" || value === "on") return true;
+  if (value === "0" || value === "false" || value === "no" || value === "off") return false;
+  return undefined;
+}
+
 export function shouldAllowMagic666VideoProvider() {
-  return process.env.AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO?.trim() === "1";
+  return envFlag("AI_WORKER_ALLOW_MAGIC666_UNVERIFIED_VIDEO") === true;
 }
 
 export function shouldAllowSmartPickLidVideoProvider() {
-  return process.env.AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO?.trim() === "1";
+  return envFlag("AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO") ?? true;
 }
 
 export function shouldAllowSmartPickLidReferenceVideo() {
-  return process.env.AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO?.trim() === "1";
+  return envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true;
 }
 
 export function videoProviderAvailabilityReason(

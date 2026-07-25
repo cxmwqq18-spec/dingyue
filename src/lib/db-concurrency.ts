@@ -3,6 +3,8 @@ import "server-only";
 import { createAdminPerfTracker, isAdminPerfEnabled } from "@/lib/admin-perf";
 
 const defaultDbConcurrency = Number(process.env.ADMIN_DB_QUERY_CONCURRENCY ?? 2);
+const transientRetryCount = Math.max(0, Math.floor(Number(process.env.ADMIN_DB_TRANSIENT_RETRIES ?? 1)));
+const transientRetryDelayMs = Math.max(0, Math.floor(Number(process.env.ADMIN_DB_TRANSIENT_RETRY_DELAY_MS ?? 300)));
 
 const globalForDbConcurrency = globalThis as unknown as {
   adminDbTaskQueue?: {
@@ -14,6 +16,25 @@ const globalForDbConcurrency = globalThis as unknown as {
 const globalQueue = globalForDbConcurrency.adminDbTaskQueue ?? { active: 0, queue: [] };
 globalForDbConcurrency.adminDbTaskQueue = globalQueue;
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isTransientDbError(error: unknown): boolean {
+  const code = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
+  if (code === "P1001" || code === "P1017" || code === "P2024") return true;
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.includes("Server has closed the connection") ||
+    message.includes("Engine is not yet connected") ||
+    message.includes("Response from the Engine was empty") ||
+    message.includes("bytes remaining on stream") ||
+    message.includes("Can't reach database server") ||
+    message.includes("connection pool") ||
+    message.includes("Timed out fetching a new connection")
+  );
+}
+
 async function withGlobalDbSlot<T>(task: () => Promise<T>, concurrency: number): Promise<T> {
   const limit = Math.max(1, Math.floor(concurrency));
   while (globalQueue.active >= limit) {
@@ -21,6 +42,14 @@ async function withGlobalDbSlot<T>(task: () => Promise<T>, concurrency: number):
   }
   globalQueue.active += 1;
   try {
+    for (let attempt = 0; attempt <= transientRetryCount; attempt += 1) {
+      try {
+        return await task();
+      } catch (error) {
+        if (attempt >= transientRetryCount || !isTransientDbError(error)) throw error;
+        if (transientRetryDelayMs > 0) await sleep(transientRetryDelayMs * (attempt + 1));
+      }
+    }
     return await task();
   } finally {
     globalQueue.active = Math.max(0, globalQueue.active - 1);

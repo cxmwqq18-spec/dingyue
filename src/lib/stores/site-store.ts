@@ -12,6 +12,7 @@ import { prisma } from "@/lib/prisma";
 import { readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
+import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
@@ -959,7 +960,7 @@ function fallbackPublicVideoThemesForSite(siteId: string, take = 32): VideoTheme
   const providerMaxFrames = undefined;
   return themes.map((theme) => ({
     ...theme,
-    effectiveMaxFrames: normalizeVideoFrameLimit(theme.maxFrames),
+    effectiveMaxFrames: effectiveVideoFrameLimit([], theme.maxFrames),
     providerMaxFrames
   }));
 }
@@ -1047,7 +1048,7 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
             take
           });
         }
-        const providers = await getPlatformAiProviderFallbackQueueRelational();
+        const providers = await getPlatformAiProviderFallbackQueueRelational("video");
         const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
         return rows.map((row) => {
           const theme = toVideoTheme(row);
@@ -4404,9 +4405,9 @@ export async function updateSiteAiAppRelational(params: {
   const routeKey = params.routeKey.trim();
   if (!routeKey) throw new RelationalStoreError("invalid_route_key", 400);
   const workflowConfig = validateAiWorkflowConfig(params.workflowConfig);
-  const providerConfig = validateAiProviderConfig(params.providerConfig);
-  const existing = await prisma.siteAiApp.findFirst({ where: { id: params.siteAiAppId, siteId: params.siteId } });
+  const existing = await prisma.siteAiApp.findFirst({ where: { id: params.siteAiAppId, siteId: params.siteId }, include: { aiApp: true } });
   if (!existing) throw new RelationalStoreError("site_ai_app_not_found", 404);
+  const providerConfig = await validateAiProviderConfig(params.providerConfig, existing.aiApp.appType);
   const siteAiApp = await prisma.siteAiApp.update({
     where: { id: params.siteAiAppId },
     data: {
@@ -4451,13 +4452,24 @@ function validateAiWorkflowConfig(value: AiWorkflowConfig | undefined): AiWorkfl
   };
 }
 
-function validateAiProviderConfig(value: AiProviderConfig | undefined): AiProviderConfig | undefined {
+async function validateAiProviderConfig(value: AiProviderConfig | undefined, appType: string): Promise<AiProviderConfig | undefined> {
   if (value === undefined) return undefined;
   if (!value || typeof value !== "object") throw new RelationalStoreError("invalid_provider_config", 400);
   const mode = value.mode === "fixed_provider" || value.mode === "preferred_provider" ? value.mode : "platform_fallback";
+  const providerId = value.providerId ? String(value.providerId).trim().slice(0, 80) : undefined;
+  if (mode !== "platform_fallback" && providerId) {
+    const provider = await prisma.platformAiProvider.findUnique({
+      where: { id: providerId },
+      select: { providerType: true }
+    });
+    if (!provider) throw new RelationalStoreError("ai_provider_not_found", 404);
+    if (normalizePlatformAiProviderType(provider.providerType) !== platformProviderTypeForAppType(appType)) {
+      throw new RelationalStoreError("ai_provider_type_mismatch", 400);
+    }
+  }
   return {
     mode,
-    providerId: value.providerId ? String(value.providerId).trim().slice(0, 80) : undefined,
+    providerId,
     modelType: value.modelType ? String(value.modelType).trim().slice(0, 120) : undefined,
     fallbackEnabled: value.fallbackEnabled !== false
   };

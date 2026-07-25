@@ -57,8 +57,10 @@ const login = await request("/api/platform/auth/login", {
 const cookie = cookiesFrom(login.response, ["platform_session", "platform_csrf"]);
 const csrfToken = cookieValue(cookie, "platform_csrf");
 const before = await request("/api/platform/ai-providers", { cookie });
-const previousCurrentProviderId = before.json.currentProviderId || before.json.providers?.[0]?.id || "";
+const previousCurrentProviderId = before.json.currentProviderIds?.image || before.json.currentProviderId || before.json.providers?.[0]?.id || "";
+const previousVideoCurrentProviderId = before.json.currentProviderIds?.video || "";
 let providerId = "";
+let videoProviderId = "";
 
 const page = await request("/platform?module=gateway", { cookie });
 const html = await page.text();
@@ -69,7 +71,7 @@ for (const marker of ["AI 配置面板", "供应商列表", "测试连通性", "
 const missingCsrf = await request("/api/platform/ai-providers", {
   method: "PUT",
   cookie,
-  body: { label: "Smoke AI", aiUrl: "https://example.com/v1/models", apiKey: "sk_smoke_secret", modelType: "gpt-image-2" },
+  body: { label: "Smoke AI", aiUrl: "https://example.com/v1/models", apiKey: "sk_smoke_secret", modelType: "gpt-image-2", providerType: "image" },
   allowFailure: true
 });
 if (missingCsrf.response.status !== 403 || missingCsrf.json.error !== "csrf_token_required") {
@@ -85,14 +87,35 @@ const saved = await request("/api/platform/ai-providers", {
     aiUrl: "https://example.com/v1/models",
     apiKey: "sk_smoke_secret",
     modelType: "gpt-image-2",
+    providerType: "image",
     makeCurrent: true,
     maxImagesPerRequest: 7
   }
 });
-const provider = saved.json.providers.find((item) => item.id === saved.json.currentProviderId);
+const provider = saved.json.providers.find((item) => item.id === saved.json.currentProviderIds?.image);
 providerId = provider?.id ?? "";
-if (!provider?.isCurrent || provider.maxImagesPerRequest !== 7 || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
+if (!provider?.isCurrent || provider.providerType !== "image" || provider.maxImagesPerRequest !== 7 || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
   throw new Error(`ai provider save/mask failed: ${JSON.stringify(saved.json)}`);
+}
+
+const savedVideo = await request("/api/platform/ai-providers", {
+  method: "PUT",
+  cookie,
+  headers: { "x-csrf-token": csrfToken },
+  body: {
+    label: `Smoke Video ${Date.now()}`,
+    aiUrl: "https://example.com/v1/videos",
+    apiKey: "sk_smoke_video_secret",
+    modelType: "grok-imagine-video",
+    providerType: "video",
+    makeCurrent: true,
+    maxImagesPerRequest: 3
+  }
+});
+const videoProvider = savedVideo.json.providers.find((item) => item.id === savedVideo.json.currentProviderIds?.video);
+videoProviderId = videoProvider?.id ?? "";
+if (!videoProvider?.isCurrent || videoProvider.providerType !== "video" || savedVideo.json.currentProviderIds?.image !== provider.id) {
+  throw new Error(`video provider current state is not independent: ${JSON.stringify(savedVideo.json.currentProviderIds)}`);
 }
 
 const tested = await request("/api/platform/ai-providers", {
@@ -114,6 +137,9 @@ const fetchedProvider = fetched.json.providers.find((item) => item.id === provid
 if (!fetchedProvider?.status.apiKeyConfigured || fetchedProvider.maxImagesPerRequest !== 7 || JSON.stringify(fetched.json).includes("sk_smoke_secret")) {
   throw new Error(`ai provider GET did not preserve masked key state: ${JSON.stringify(fetched.json)}`);
 }
+if (JSON.stringify(fetched.json).includes("sk_smoke_video_secret")) {
+  throw new Error("ai provider GET leaked video provider API key");
+}
 
 const fallback = fetched.json.providers
   .filter((item) => item.status.configured)
@@ -133,6 +159,26 @@ if (previousCurrentProviderId && previousCurrentProviderId !== providerId) {
     body: { action: "current", providerId: previousCurrentProviderId }
   });
 }
+if (previousVideoCurrentProviderId && previousVideoCurrentProviderId !== videoProviderId) {
+  await request("/api/platform/ai-providers", {
+    method: "POST",
+    cookie,
+    headers: { "x-csrf-token": csrfToken },
+    body: { action: "current", providerId: previousVideoCurrentProviderId }
+  });
+}
+if (videoProviderId) {
+  const deletedVideo = await request("/api/platform/ai-providers", {
+    method: "DELETE",
+    cookie,
+    headers: { "x-csrf-token": csrfToken },
+    body: { providerId: videoProviderId },
+    allowFailure: true
+  });
+  if (!deletedVideo.response.ok && deletedVideo.json.error !== "ai_provider_delete_last") {
+    throw new Error(`video provider cleanup failed: ${deletedVideo.response.status} ${JSON.stringify(deletedVideo.json)}`);
+  }
+}
 const deleted = await request("/api/platform/ai-providers", {
   method: "DELETE",
   cookie,
@@ -147,6 +193,7 @@ if (!deleted.response.ok && deleted.json.error !== "ai_provider_delete_last") {
 console.log(JSON.stringify({
   ok: true,
   providerId: provider.id,
+  videoProviderId,
   restoredProviderId: previousCurrentProviderId || deleted.json.currentProviderId || "",
   preview: provider.status.apiKeyPreview,
   modelType: provider.modelType,

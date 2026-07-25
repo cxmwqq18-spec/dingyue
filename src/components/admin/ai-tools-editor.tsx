@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
 import type { PlatformAiProviderOption } from "@/components/admin/ai-tools-page-client";
+import { platformAiProviderTypeLabel, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import type {
   AiProviderConfig,
   AiWorkflowConfig,
@@ -127,6 +128,7 @@ function assetStep(config: AiWorkflowConfig): AiWorkflowStep {
 function configuredProviderLabel(provider?: PlatformAiProviderOption) {
   if (!provider) return "未选择链路";
   const tags = [
+    platformAiProviderTypeLabel(provider.providerType),
     provider.modelType,
     provider.enabled ? "已启用" : "已禁用",
     provider.preferred ? "平台优先" : `优先级 ${provider.priority}`,
@@ -140,6 +142,11 @@ function selectedProvider(
   providerId?: string,
 ) {
   return providers.find((provider) => provider.id === providerId);
+}
+
+function providersForApp(providers: PlatformAiProviderOption[], app: SiteAiApp) {
+  const providerType = platformProviderTypeForAppType(app.aiApp.appType);
+  return providers.filter((provider) => provider.providerType === providerType);
 }
 
 function preferredProvider(providers: PlatformAiProviderOption[]) {
@@ -213,14 +220,16 @@ export function AiToolsEditor({
   }
 
   function updateProviderMode(id: string, mode: AiProviderConfig["mode"]) {
-    const enabledProvider = preferredProvider(platformAiProviders);
+    const app = items.find((item) => item.id === id);
+    const typedProviders = app ? providersForApp(platformAiProviders, app) : platformAiProviders;
+    const enabledProvider = preferredProvider(typedProviders);
     updateProvider(id, (config) => ({
       ...config,
       mode,
       providerId:
         mode === "platform_fallback"
           ? undefined
-          : config.providerId && platformAiProviders.some((provider) => provider.id === config.providerId && provider.enabled)
+          : config.providerId && typedProviders.some((provider) => provider.id === config.providerId && provider.enabled)
             ? config.providerId
             : enabledProvider?.id,
       fallbackEnabled: mode !== "fixed_provider",
@@ -228,6 +237,12 @@ export function AiToolsEditor({
   }
 
   async function save(app: SiteAiApp) {
+    const provider = providerFor(app);
+    const typedProviders = providersForApp(platformAiProviders, app);
+    if ((provider.mode === "preferred_provider" || provider.mode === "fixed_provider") && provider.providerId && !typedProviders.some((item) => item.id === provider.providerId)) {
+      setMessage(`${app.aiApp.name} 当前选择的链路类型不匹配，请选择${platformAiProviderTypeLabel(platformProviderTypeForAppType(app.aiApp.appType))}供应商后再保存。`);
+      return;
+    }
     const response = await fetch(`/api/sites/${siteId}/ai/apps/${app.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -399,11 +414,14 @@ export function AiToolsEditor({
         {items.map((app) => {
           const workflow = workflowFor(app);
           const provider = providerFor(app);
+          const appProviderType = platformProviderTypeForAppType(app.aiApp.appType);
+          const typedProviders = providersForApp(platformAiProviders, app);
+          const enabledTypedProviders = typedProviders.filter((item) => item.enabled);
           const currentProvider = selectedProvider(
-            platformAiProviders,
+            typedProviders,
             provider.providerId,
           );
-          const defaultProvider = preferredProvider(platformAiProviders);
+          const defaultProvider = preferredProvider(typedProviders);
           const needsProvider =
             provider.mode === "preferred_provider" ||
             provider.mode === "fixed_provider";
@@ -539,10 +557,9 @@ export function AiToolsEditor({
                       去平台 AI 网关
                     </Link>
                   </div>
-                  {!platformAiProviders.some((provider) => provider.enabled) ? (
+                  {!enabledTypedProviders.length ? (
                     <div className="rounded-[8px] border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] leading-5 text-amber-800">
-                      平台还没有已启用的 AI 中转链路。请先到平台后台 AI
-                      网关启用供应商，再回到这里选择。
+                      平台还没有已启用的{platformAiProviderTypeLabel(appProviderType)}中转链路。请先到平台后台 AI 网关启用对应类型供应商，再回到这里选择。
                     </div>
                   ) : null}
                   <div className="grid items-start gap-3 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
@@ -570,17 +587,17 @@ export function AiToolsEditor({
                         平台 AI 中转链路
                         <select
                           className="selectmini"
-                          disabled={!platformAiProviders.some((item) => item.enabled)}
+                          disabled={!enabledTypedProviders.length}
                           onChange={(event) =>
                             updateProvider(app.id, (config) => ({
                               ...config,
                               providerId: event.target.value || undefined,
                             }))
                           }
-                          value={provider.providerId ?? ""}
+                          value={currentProvider?.id ?? ""}
                         >
                           <option value="">请选择平台 AI URL</option>
-                          {platformAiProviders.filter((item) => item.enabled).map((item) => (
+                          {enabledTypedProviders.map((item) => (
                             <option key={item.id} value={item.id}>
                               {item.label} · {item.modelType}
                               {item.preferred ? " · 平台优先" : ""}

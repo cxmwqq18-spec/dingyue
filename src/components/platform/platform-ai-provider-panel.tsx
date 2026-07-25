@@ -23,6 +23,7 @@ import {
   ErpToolbarField
 } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
+import { platformAiProviderTypeLabel, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { platformJsonHeaders } from "@/lib/client-csrf";
 
 type AiProviderRow = {
@@ -30,6 +31,8 @@ type AiProviderRow = {
   label: string;
   aiUrl: string;
   modelType: string;
+  providerType: PlatformAiProviderType;
+  priority: number;
   createdAt: string;
   updatedAt: string;
   updatedBy?: string;
@@ -55,9 +58,12 @@ type AiProviderRow = {
 
 type AiProviderPayload = {
   ok: boolean;
+  source?: "relational" | "json-fallback";
+  message?: string;
   accepted?: boolean;
   jobId?: string;
   currentProviderId: string;
+  currentProviderIds?: Record<PlatformAiProviderType, string>;
   modelTypes: string[];
   providers: AiProviderRow[];
   summary: {
@@ -66,6 +72,14 @@ type AiProviderPayload = {
     configuredProviders: number;
     runnableProviders: number;
     currentConfigured: boolean;
+    byType?: Record<PlatformAiProviderType, {
+      totalProviders: number;
+      enabledProviders: number;
+      configuredProviders: number;
+      runnableProviders: number;
+      currentProviderId: string;
+      currentConfigured: boolean;
+    }>;
   };
   test?: {
     ok: boolean;
@@ -81,6 +95,7 @@ type ProviderFormState = {
   aiUrl: string;
   apiKey: string;
   modelType: string;
+  providerType: PlatformAiProviderType;
   makeCurrent: boolean;
   enabled: boolean;
   supportsGenerationN: boolean;
@@ -94,6 +109,7 @@ const defaultProviderForm: ProviderFormState = {
   aiUrl: "",
   apiKey: "",
   modelType: "gpt-image-2",
+  providerType: "image",
   makeCurrent: true,
   enabled: true,
   supportsGenerationN: false,
@@ -128,10 +144,14 @@ function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGeneratio
 
 function providerProtocolText(provider: Pick<AiProviderRow, "status">) {
   return {
-    "lk888-media": "LK888 media",
+    "lk888-media": "Media task API",
     "openai-videos": "OpenAI videos",
     "openai-compatible": "OpenAI compatible"
   }[provider.status.protocol] ?? provider.status.protocol ?? "unknown";
+}
+
+function providerTypeTone(providerType: PlatformAiProviderType): "good" | "neutral" {
+  return providerType === "video" ? "neutral" : "good";
 }
 
 function providerRunnable(provider?: AiProviderRow) {
@@ -139,13 +159,36 @@ function providerRunnable(provider?: AiProviderRow) {
 }
 
 function providerSummary(providers: AiProviderRow[], currentProvider?: AiProviderRow): AiProviderPayload["summary"] {
+  const byType = Object.fromEntries((["image", "video"] as const).map((providerType) => {
+    const typed = providers.filter((provider) => provider.providerType === providerType);
+    const enabled = typed.filter((provider) => provider.enabled);
+    const current = enabled.find((provider) => provider.isCurrent) ?? enabled.find((provider) => provider.preferred);
+    return [providerType, {
+      totalProviders: typed.length,
+      enabledProviders: enabled.length,
+      configuredProviders: typed.filter((provider) => provider.status.configured).length,
+      runnableProviders: typed.filter(providerRunnable).length,
+      currentProviderId: current?.id ?? "",
+      currentConfigured: providerRunnable(current)
+    }];
+  })) as AiProviderPayload["summary"]["byType"];
   return {
     totalProviders: providers.length,
     enabledProviders: providers.filter((provider) => provider.enabled).length,
     configuredProviders: providers.filter((provider) => provider.status.configured).length,
     runnableProviders: providers.filter(providerRunnable).length,
-    currentConfigured: providerRunnable(currentProvider)
+    currentConfigured: providerRunnable(currentProvider),
+    byType
   };
+}
+
+function currentProviderIdsFromProviders(providers: AiProviderRow[]): Record<PlatformAiProviderType, string> {
+  return Object.fromEntries((["image", "video"] as const).map((providerType) => {
+    const current = providers.find((provider) => provider.providerType === providerType && provider.enabled && provider.isCurrent) ??
+      providers.find((provider) => provider.providerType === providerType && provider.enabled && provider.preferred) ??
+      providers.find((provider) => provider.providerType === providerType && provider.enabled);
+    return [providerType, current?.id ?? ""];
+  })) as Record<PlatformAiProviderType, string>;
 }
 
 export function PlatformAiProviderPanel({
@@ -177,7 +220,7 @@ export function PlatformAiProviderPanel({
     const normalized = query.trim().toLowerCase();
     return status.providers.filter((provider) => {
       if (!normalized) return true;
-      return [provider.label, provider.aiUrl, provider.modelType, provider.status.apiKeyPreview].join(" ").toLowerCase().includes(normalized);
+      return [provider.label, provider.aiUrl, provider.modelType, provider.providerType, platformAiProviderTypeLabel(provider.providerType), provider.status.apiKeyPreview].join(" ").toLowerCase().includes(normalized);
     });
   }, [query, status.providers]);
 
@@ -188,6 +231,7 @@ export function PlatformAiProviderPanel({
       aiUrl: provider.aiUrl,
       apiKey: "",
       modelType: provider.modelType,
+      providerType: provider.providerType,
       makeCurrent: provider.isCurrent,
       enabled: provider.enabled,
       supportsGenerationN: provider.supportsGenerationN,
@@ -243,6 +287,7 @@ export function PlatformAiProviderPanel({
         body: JSON.stringify({
           ...nextForm,
           modelType,
+          providerType: nextForm.providerType,
           apiKey: nextForm.apiKey.trim() || undefined
         })
       });
@@ -289,7 +334,8 @@ export function PlatformAiProviderPanel({
           id: nextForm.id,
           aiUrl: nextForm.aiUrl,
           apiKey: nextForm.apiKey.trim() || undefined,
-          modelType
+          modelType,
+          providerType: nextForm.providerType
         })
       });
       if (result.providers?.length) setStatus(result);
@@ -313,31 +359,35 @@ export function PlatformAiProviderPanel({
 
   async function makeCurrent(providerId: string) {
     const previousStatus = status;
+    const targetProvider = status.providers.find((provider) => provider.id === providerId);
+    if (!targetProvider) return;
     setCurrentActionId(providerId);
     setStatus((currentStatus) => {
       const providers = currentStatus.providers.map((provider) => ({
         ...provider,
-        isCurrent: provider.id === providerId,
-        preferred: provider.id === providerId,
+        isCurrent: provider.providerType === targetProvider.providerType ? provider.id === providerId : provider.isCurrent,
+        preferred: provider.providerType === targetProvider.providerType ? provider.id === providerId : provider.preferred,
         enabled: provider.id === providerId ? true : provider.enabled,
         status: provider.id === providerId ? { ...provider.status, enabled: true, runnable: provider.status.configured } : provider.status
       }));
       const currentProvider = providers.find((provider) => provider.id === providerId);
+      const currentProviderIds = currentProviderIdsFromProviders(providers);
       return {
         ...currentStatus,
-        currentProviderId: providerId,
+        currentProviderId: currentProviderIds.image || currentStatus.currentProviderId,
+        currentProviderIds,
         providers,
         summary: providerSummary(providers, currentProvider)
       };
     });
-    setMessage("正在切换优先 AI 供应商...");
+    setMessage(`正在切换${platformAiProviderTypeLabel(targetProvider.providerType)}优先供应商...`);
     try {
       const result = await request("/api/platform/ai-providers", {
         method: "POST",
         body: JSON.stringify({ providerId })
       });
       setStatus(result);
-      setMessage("优先 AI 供应商已切换。");
+      setMessage(`${platformAiProviderTypeLabel(targetProvider.providerType)}优先供应商已切换。`);
     } catch (error) {
       setStatus(previousStatus);
       setMessage(`切换失败：${error instanceof Error ? error.message : "unknown error"}`);
@@ -358,17 +408,20 @@ export function PlatformAiProviderPanel({
           status: { ...item.status, enabled, runnable: enabled && item.status.configured }
         };
       });
-      const enabledCurrent = updatedProviders.find((item) => item.enabled && item.preferred) ?? updatedProviders.find((item) => item.enabled);
+      const typedFallback = updatedProviders.find((item) => item.providerType === provider.providerType && item.enabled && item.preferred) ??
+        updatedProviders.find((item) => item.providerType === provider.providerType && item.enabled);
       const nextProviders = updatedProviders.map((item) => ({
         ...item,
-        isCurrent: item.id === enabledCurrent?.id,
-        preferred: item.enabled && item.id === enabledCurrent?.id
+        isCurrent: item.providerType === provider.providerType ? item.id === typedFallback?.id : item.isCurrent,
+        preferred: item.providerType === provider.providerType ? item.enabled && item.id === typedFallback?.id : item.preferred
       }));
+      const currentProviderIds = currentProviderIdsFromProviders(nextProviders);
       return {
         ...currentStatus,
-        currentProviderId: enabledCurrent?.id ?? "",
+        currentProviderId: currentProviderIds.image || currentStatus.currentProviderId,
+        currentProviderIds,
         providers: nextProviders,
-        summary: providerSummary(nextProviders, enabledCurrent)
+        summary: providerSummary(nextProviders, typedFallback)
       };
     });
     setMessage(`正在${enabled ? "启用" : "禁用"} AI 通道...`);
@@ -401,17 +454,21 @@ export function PlatformAiProviderPanel({
     setDeletingId(provider.id);
     setStatus((currentStatus) => {
       const providers = currentStatus.providers.filter((item) => item.id !== provider.id);
-      const currentProvider = providers.find((item) => item.enabled && item.isCurrent) ?? providers.find((item) => item.enabled) ?? providers[0];
+      const typedFallback = providers.find((item) => item.providerType === provider.providerType && item.enabled && item.isCurrent) ??
+        providers.find((item) => item.providerType === provider.providerType && item.enabled) ??
+        providers.find((item) => item.providerType === provider.providerType);
       const nextProviders = providers.map((item) => ({
         ...item,
-        isCurrent: item.id === currentProvider?.id,
-        preferred: item.id === currentProvider?.id
+        isCurrent: item.providerType === provider.providerType ? item.id === typedFallback?.id : item.isCurrent,
+        preferred: item.providerType === provider.providerType ? item.id === typedFallback?.id : item.preferred
       }));
+      const currentProviderIds = currentProviderIdsFromProviders(nextProviders);
       return {
         ...currentStatus,
-        currentProviderId: currentProvider?.id ?? "",
+        currentProviderId: currentProviderIds.image || currentStatus.currentProviderId,
+        currentProviderIds,
         providers: nextProviders,
-        summary: providerSummary(nextProviders, currentProvider)
+        summary: providerSummary(nextProviders, typedFallback)
       };
     });
     setMessage("正在删除 AI 供应商...");
@@ -431,25 +488,33 @@ export function PlatformAiProviderPanel({
     }
   }
 
-  const current = status.providers.find((provider) => provider.id === status.currentProviderId);
+  const currentProviderIds = status.currentProviderIds ?? currentProviderIdsFromProviders(status.providers);
+  const currentImageProvider = status.providers.find((provider) => provider.id === currentProviderIds.image);
+  const currentVideoProvider = status.providers.find((provider) => provider.id === currentProviderIds.video);
 
   return (
     <div className="grid gap-4">
       <ErpToolbar>
         <div className="flex flex-wrap gap-2">
           <ErpToolbarField label="Providers" value={`${status.summary.enabledProviders}/${status.summary.totalProviders}`} />
-          <ErpToolbarField label="Current" value={current?.label ?? "missing"} />
-          <ErpToolbarField label="Model" value={current?.modelType ?? "missing"} />
-          <ErpToolbarField label="API Key" value={current?.status.apiKeyConfigured ? current.status.apiKeyPreview : "missing"} />
+          <ErpToolbarField label="Image current" value={currentImageProvider?.label ?? "missing"} />
+          <ErpToolbarField label="Video current" value={currentVideoProvider?.label ?? "missing"} />
+          <ErpToolbarField label="Image key" value={currentImageProvider?.status.apiKeyConfigured ? currentImageProvider.status.apiKeyPreview : "missing"} />
         </div>
       </ErpToolbar>
+
+      {!status.ok ? (
+        <div className="rounded-[8px] border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] font-medium leading-5 text-amber-800">
+          {status.message ?? "AI 供应商配置暂时无法从数据库读取，请检查数据库连接后刷新。"}
+        </div>
+      ) : null}
 
       <ErpStatGrid
         columns={3}
         items={[
-          { label: "供应商数量", value: String(status.summary.totalProviders), detail: "平台级 AI provider", icon: Bot, tone: status.summary.totalProviders ? "good" : "warn" },
+          { label: "供应商数量", value: String(status.summary.totalProviders), detail: `生图 ${status.summary.byType?.image?.totalProviders ?? 0} / 视频 ${status.summary.byType?.video?.totalProviders ?? 0}`, icon: Bot, tone: status.summary.totalProviders ? "good" : "warn" },
           { label: "已启用", value: String(status.summary.enabledProviders), detail: `${status.summary.runnableProviders} 个可运行通道`, icon: ShieldCheck, tone: status.summary.runnableProviders ? "good" : "warn" },
-          { label: "优先供应商", value: status.summary.currentConfigured ? "ready" : "missing", detail: current?.enabled ? current.aiUrl : "未选择已启用供应商", icon: PlugZap, tone: status.summary.currentConfigured ? "good" : "warn" }
+          { label: "优先供应商", value: `${status.summary.byType?.image?.currentConfigured ? "图 ready" : "图 missing"} / ${status.summary.byType?.video?.currentConfigured ? "视频 ready" : "视频 missing"}`, detail: currentImageProvider?.enabled ? currentImageProvider.aiUrl : "未选择已启用生图供应商", icon: PlugZap, tone: status.summary.currentConfigured ? "good" : "warn" }
         ]}
       />
 
@@ -458,17 +523,25 @@ export function PlatformAiProviderPanel({
           <div className="grid gap-4">
             <ErpInfoList
               items={[
-                { label: "优先供应商", value: current?.label ?? "missing", tone: current ? "good" : "warn" },
-                { label: "模型类型", value: current?.modelType ?? "missing", tone: current?.modelType ? "good" : "warn" },
-                { label: "启用状态", value: current?.enabled ? "启用" : "未启用", tone: current?.enabled ? "good" : "warn" },
-                { label: "AI URL", value: current?.aiUrl ?? "missing", tone: current?.aiUrl ? "good" : "warn" },
-                { label: "接口协议", value: current ? providerProtocolText(current) : "missing", tone: current?.status.protocol ? "good" : "warn" },
-                { label: "API Key", value: current?.status.apiKeyConfigured ? current.status.apiKeyPreview : "missing", tone: current?.status.apiKeyConfigured ? "good" : "warn" }
+                { label: "生图优先", value: currentImageProvider?.label ?? "missing", tone: currentImageProvider ? "good" : "warn" },
+                { label: "生图模型", value: currentImageProvider?.modelType ?? "missing", tone: currentImageProvider?.modelType ? "good" : "warn" },
+                { label: "生图接口协议", value: currentImageProvider ? providerProtocolText(currentImageProvider) : "missing", tone: currentImageProvider?.status.protocol ? "good" : "warn" },
+                { label: "生图 API Key", value: currentImageProvider?.status.apiKeyConfigured ? currentImageProvider.status.apiKeyPreview : "missing", tone: currentImageProvider?.status.apiKeyConfigured ? "good" : "warn" },
+                { label: "视频优先", value: currentVideoProvider?.label ?? "missing", tone: currentVideoProvider ? "good" : "warn" },
+                { label: "视频模型", value: currentVideoProvider?.modelType ?? "missing", tone: currentVideoProvider?.modelType ? "good" : "warn" },
+                { label: "视频接口协议", value: currentVideoProvider ? providerProtocolText(currentVideoProvider) : "missing", tone: currentVideoProvider?.status.protocol ? "good" : "warn" },
+                { label: "视频 API Key", value: currentVideoProvider?.status.apiKeyConfigured ? currentVideoProvider.status.apiKeyPreview : "missing", tone: currentVideoProvider?.status.apiKeyConfigured ? "good" : "warn" }
               ]}
             />
             <ErpFormGrid>
               <ErpField label="供应商名称">
                 <ErpInput onChange={(event) => setForm((draft) => ({ ...draft, label: event.target.value }))} placeholder="OpenAI Primary" value={form.label} />
+              </ErpField>
+              <ErpField label="供应商类型">
+                <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, providerType: event.target.value as PlatformAiProviderType }))} value={form.providerType}>
+                  <option value="image">AI 生图</option>
+                  <option value="video">AI 生成视频</option>
+                </ErpSelect>
               </ErpField>
               <ErpField label="模型类型">
                 <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, modelType: event.target.value }))} value={form.modelType}>
@@ -484,7 +557,7 @@ export function PlatformAiProviderPanel({
               <ErpField label="扩展模型">
                 <ErpInput className="font-mono" onChange={(event) => setCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={customModelType} />
               </ErpField>
-              <ErpField label="单次最多参考图">
+              <ErpField label="单次最多参考图" hint={form.providerType === "video" ? "视频客户入口统一按全局 7 张限制；这里仅记录供应商能力，用于派发诊断。" : undefined}>
                 <ErpInput
                   min={1}
                   max={20}
@@ -505,7 +578,7 @@ export function PlatformAiProviderPanel({
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled }))} type="checkbox" />
-                保存后设为优先供应商
+                保存后设为该类型优先供应商
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.enabled} onChange={(event) => setForm((draft) => ({ ...draft, enabled: event.target.checked, makeCurrent: event.target.checked ? draft.makeCurrent : false }))} type="checkbox" />
@@ -534,13 +607,17 @@ export function PlatformAiProviderPanel({
             actions={<WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />}
           />
           <WorkbenchTableShell>
-            <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,0.75fr)_minmax(320px,1.25fr)_minmax(180px,0.5fr)_minmax(330px,0.95fr)]" columns={["供应商", "AI URL", "状态", "操作"]} />
+            <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,0.7fr)_minmax(110px,0.35fr)_minmax(280px,1.15fr)_minmax(180px,0.5fr)_minmax(360px,1fr)]" columns={["供应商", "类型", "AI URL", "状态", "操作"]} />
             {filtered.length ? filtered.map((provider) => (
-              <WorkbenchTableRow className="md:grid-cols-[minmax(180px,0.75fr)_minmax(320px,1.25fr)_minmax(180px,0.5fr)_minmax(330px,0.95fr)]" key={provider.id}>
+              <WorkbenchTableRow className="md:grid-cols-[minmax(180px,0.7fr)_minmax(110px,0.35fr)_minmax(280px,1.15fr)_minmax(180px,0.5fr)_minmax(360px,1fr)]" key={provider.id}>
                 <div className="min-w-0">
                   <div className="truncate text-[14px] font-semibold text-[#18212f]">{provider.label}</div>
                   <div className="mt-1 truncate font-mono text-[11px] text-[#98a2b3]">{provider.modelType} / {provider.status.apiKeyPreview || "missing key"}</div>
                   <div className="mt-1 truncate text-[11px] text-[#667085]">{providerProtocolText(provider)} / {providerCapabilityText(provider)}</div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <StatusPill label={platformAiProviderTypeLabel(provider.providerType)} tone={providerTypeTone(provider.providerType)} />
+                  <span className="font-mono text-[11px] text-[#98a2b3]">P{provider.priority}</span>
                 </div>
                 <div className="truncate font-mono text-[12px] text-[#667085]">{provider.aiUrl}</div>
                 <div className="flex flex-wrap gap-2">
@@ -551,7 +628,7 @@ export function PlatformAiProviderPanel({
                 <div className="flex flex-wrap gap-2">
                   <button className="admin_btn inline-flex h-[32px] items-center justify-center whitespace-nowrap px-3 text-[12px]" onClick={() => edit(provider)} type="button">编辑</button>
                   <button className="admin_btn inline-flex h-[32px] items-center justify-center whitespace-nowrap px-3 text-[12px]" disabled={provider.isCurrent || currentActionId === provider.id} onClick={() => makeCurrent(provider.id)} type="button">
-                    {currentActionId === provider.id ? "切换中" : "设为优先"}
+                    {currentActionId === provider.id ? "切换中" : "设为该类型优先"}
                   </button>
                   <button
                     className="admin_btn inline-flex h-[32px] items-center justify-center gap-1 whitespace-nowrap px-3 text-[12px] disabled:opacity-55"
@@ -608,6 +685,12 @@ export function PlatformAiProviderPanel({
                 <ErpField label="供应商名称">
                   <ErpInput onChange={(event) => setEditForm((draft) => draft ? { ...draft, label: event.target.value } : draft)} placeholder="OpenAI Primary" value={editForm.label} />
                 </ErpField>
+                <ErpField label="供应商类型">
+                  <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, providerType: event.target.value as PlatformAiProviderType } : draft)} value={editForm.providerType}>
+                    <option value="image">AI 生图</option>
+                    <option value="video">AI 生成视频</option>
+                  </ErpSelect>
+                </ErpField>
                 <ErpField label="模型类型">
                   <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, modelType: event.target.value } : draft)} value={editForm.modelType}>
                     {modelTypes.map((modelType) => <option key={modelType} value={modelType}>{modelType}</option>)}
@@ -622,7 +705,7 @@ export function PlatformAiProviderPanel({
                 <ErpField label="扩展模型">
                   <ErpInput className="font-mono" onChange={(event) => setEditCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={editCustomModelType} />
                 </ErpField>
-                <ErpField label="单次最多参考图">
+                <ErpField label="单次最多参考图" hint={editForm.providerType === "video" ? "视频客户入口统一按全局 7 张限制；这里仅记录供应商能力，用于派发诊断。" : undefined}>
                   <ErpInput
                     min={1}
                     max={20}
@@ -643,7 +726,7 @@ export function PlatformAiProviderPanel({
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled } : draft)} type="checkbox" />
-                  保存后设为优先供应商
+                  保存后设为该类型优先供应商
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.enabled} onChange={(event) => setEditForm((draft) => draft ? { ...draft, enabled: event.target.checked, makeCurrent: event.target.checked ? draft.makeCurrent : false } : draft)} type="checkbox" />

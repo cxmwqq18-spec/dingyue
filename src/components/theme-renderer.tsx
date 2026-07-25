@@ -813,7 +813,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const aidreamcapesToolBlocks = isAidreamcapes
     ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar", "image-to-video"].includes(toolBlockSlug(tool)))
     : configuredToolBlocks;
-  const rawToolMegaBlocks = dynamicToolBlocks.length || isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const rawToolMegaBlocks = isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
   const fullToolMegaBlocks = spanishXby ? spanishToolBlocks(rawToolMegaBlocks, isAidreamcapes) : rawToolMegaBlocks;
   const toolMegaBlocks = fullToolMegaBlocks;
   const showDreamShootToolsMega = !lightweight && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
@@ -3055,12 +3055,28 @@ function toolBlockSlug(block: SectionBlockInstance): string {
 function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[]): SectionBlockInstance[] {
   const merged = new Map<string, SectionBlockInstance>();
   for (const block of dreamshootDefaultToolBlocks()) {
-    merged.set(toolBlockSlug(block), block);
+    merged.set(toolBlockSlug(block), normalizeToolMenuBlockTitle(block));
   }
   for (const block of blocks) {
-    merged.set(toolBlockSlug(block), block);
+    merged.set(toolBlockSlug(block), normalizeToolMenuBlockTitle(block));
   }
   return Array.from(merged.values());
+}
+
+function toolMenuDisplayLabel(value: string): string {
+  return value.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
+function normalizeToolMenuBlockTitle(block: SectionBlockInstance): SectionBlockInstance {
+  const title = blockValue(block, "title", "");
+  if (!title) return block;
+  return {
+    ...block,
+    settings: {
+      ...block.settings,
+      title: toolMenuDisplayLabel(title)
+    }
+  };
 }
 
 function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
@@ -4015,7 +4031,7 @@ function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockInstance
         id: `tool_menu_${item.id}`,
         type: "tool_card",
         settings: {
-          title: item.title,
+          title: toolMenuDisplayLabel(item.title),
           description: item.description ?? "",
           category,
           categoryTitle: category,

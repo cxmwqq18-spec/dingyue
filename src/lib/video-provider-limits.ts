@@ -1,8 +1,7 @@
 import {
-  DEFAULT_VIDEO_FRAME_LIMIT,
+  CUSTOMER_VIDEO_FRAME_LIMIT,
   MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT,
-  MAX_VIDEO_FRAME_LIMIT,
-  normalizeVideoFrameLimit
+  MAX_VIDEO_FRAME_LIMIT
 } from "@/lib/video-frame-config";
 
 export type VideoProviderFrameLimitSource = {
@@ -32,7 +31,7 @@ export function configuredVideoProviderFrameLimit(providers: VideoProviderFrameL
 }
 
 export function effectiveVideoFrameLimit(providers: VideoProviderFrameLimitSource[], themeMaxFrames: unknown): number {
-  const themeLimit = normalizeVideoFrameLimit(themeMaxFrames);
-  const providerLimit = configuredVideoProviderFrameLimit(providers) ?? DEFAULT_VIDEO_FRAME_LIMIT;
-  return Math.min(themeLimit, providerLimit);
+  void providers;
+  void themeMaxFrames;
+  return CUSTOMER_VIDEO_FRAME_LIMIT;
 }

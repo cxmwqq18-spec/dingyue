@@ -181,7 +181,8 @@ function shouldRetryProviderFetchWithoutProxy(error, proxyUrl) {
 function videoProviderProtocol(baseUrl) {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
-    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
+    if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
   } catch {
     return "lk888-media";
   }
@@ -579,9 +580,10 @@ async function refreshPosterFromShowcaseImage(task, posterFile) {
 async function readVideoProviders(prisma) {
   const providers = await prisma.platformAiProvider.findMany({
     where: providerId
-      ? { id: providerId, enabled: true }
+      ? { id: providerId, enabled: true, providerType: "video" }
       : {
           enabled: true,
+          providerType: "video",
           OR: [
             { modelType: { contains: "video" } },
             { modelType: { contains: "i2v" } },

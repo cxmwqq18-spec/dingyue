@@ -442,7 +442,7 @@ async function PlatformModuleContent({
   if (activeModule === "gateway") {
     return (
       <div className="grid gap-4">
-        <ErpSection description="平台级 AI 供应商配置，供所有子站生图任务统一选择已启用的优先 provider，并在失败时按启用列表 fallback。" eyebrow="ai provider" title="AI 配置面板">
+        <ErpSection description="平台级 AI 供应商配置，按 AI 生图和 AI 生成视频两类独立维护优先 provider 和 fallback 队列。" eyebrow="ai provider" title="AI 配置面板">
           <PlatformAiProviderPanel initialStatus={platformAiProviderStatus} />
         </ErpSection>
 

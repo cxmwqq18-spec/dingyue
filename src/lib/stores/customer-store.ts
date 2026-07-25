@@ -1,6 +1,6 @@
 import "server-only";
 import { Prisma, type PrismaClient } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, runPrismaReadWithReconnect, runPrismaWriteWithReconnect } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import type { Customer, PublicCustomer } from "@/lib/types";
@@ -38,6 +38,16 @@ export async function listSiteCustomersRelational(
 export async function createCustomerSessionRelational(
   params: { siteId: string; email: string; password: string; name?: string },
   client: DbClient = prisma
+) {
+  const createSession = async () => createCustomerSessionRelationalOnce(params, client);
+  return client === prisma
+    ? runPrismaWriteWithReconnect(createSession, { label: "customer login session create" })
+    : createSession();
+}
+
+async function createCustomerSessionRelationalOnce(
+  params: { siteId: string; email: string; password: string; name?: string },
+  client: DbClient
 ) {
   const email = params.email.trim().toLowerCase();
   if (!email.includes("@")) throw new StoreError("invalid_email", 400);
@@ -131,6 +141,16 @@ export async function createExistingCustomerSessionRelational(
   params: { siteId: string; email: string; password: string },
   client: DbClient = prisma
 ) {
+  const createSession = async () => createExistingCustomerSessionRelationalOnce(params, client);
+  return client === prisma
+    ? runPrismaWriteWithReconnect(createSession, { label: "existing customer login session create" })
+    : createSession();
+}
+
+async function createExistingCustomerSessionRelationalOnce(
+  params: { siteId: string; email: string; password: string },
+  client: DbClient
+) {
   const email = params.email.trim().toLowerCase();
   if (!email.includes("@")) throw new StoreError("invalid_email", 400);
   if (params.password.trim().length < 6) throw new StoreError("password_min_6_chars", 400);
@@ -176,19 +196,24 @@ export async function getCustomerBySessionRelational(
   if (!params.sessionId) return undefined;
   let session;
   try {
-    await requireDelegate(client, "customerSession");
-    session = await (client as unknown as {
-      customerSession: { findFirst(args: unknown): Promise<(Record<string, unknown> & { customer?: Record<string, unknown> }) | null> };
-    }).customerSession.findFirst({
-      where: {
-        id: params.sessionId,
-        siteId: params.siteId,
-        expiresAt: { gt: new Date() }
-      },
-      include: {
-        customer: { include: { balance: true } }
-      }
-    });
+    const readSession = async () => {
+      await requireDelegate(client, "customerSession");
+      return (client as unknown as {
+        customerSession: { findFirst(args: unknown): Promise<(Record<string, unknown> & { customer?: Record<string, unknown> }) | null> };
+      }).customerSession.findFirst({
+        where: {
+          id: params.sessionId,
+          siteId: params.siteId,
+          expiresAt: { gt: new Date() }
+        },
+        include: {
+          customer: { include: { balance: true } }
+        }
+      });
+    };
+    session = client === prisma
+      ? await runPrismaReadWithReconnect(readSession, { label: "customer session lookup" })
+      : await readSession();
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     warnRelationalFallback("customer session lookup", error);

@@ -61,6 +61,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const body = (await request.json().catch(() => ({}))) as {
     customerId?: string;
     aiAppSlug?: string;
+    idempotencyKey?: string;
     params?: Record<string, unknown> & { assetIds?: unknown };
   };
   if (!body.customerId || !body.aiAppSlug) {
@@ -73,6 +74,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (shouldRequireProviderReachableVideoFrames() && isVideoJobRequest(body) && assetIds.length > 0 && isLoopbackBaseUrl(workerBaseUrls.publicBaseUrl)) {
     return NextResponse.json({ error: "video_public_asset_url_required" }, { status: 400 });
   }
+  const skipWorkerDispatch = process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1";
+  const idempotencyKey = request.headers.get("idempotency-key")?.trim() || body.idempotencyKey?.trim() || undefined;
   try {
     const adminAccess = await getCustomerAdminAccessForSite({ siteId, customer: guard.current.customer });
     const result = await submitGenerationJob({
@@ -81,6 +84,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       aiAppSlug: body.aiAppSlug,
       entryPoint: adminAccess.canBypassBilling ? "site_admin" : "customer_workspace",
       authContext: { kind: "customer", actorId: guard.current.customer.id },
+      idempotencyKey,
       baseUrls: workerBaseUrls,
       subscriptionBypass: adminAccess.canBypassBilling
         ? { enabled: true, reason: "site_admin", siteAdminId: adminAccess.siteAdminId }
@@ -91,7 +95,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         creativePackId: typeof body.params?.creativePackId === "string" ? body.params.creativePackId : undefined,
         customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
       },
-      skipWorkerDispatch: process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1",
+      skipWorkerDispatch,
       includeWorkerPayload: true
     });
     if (!result.ok) {

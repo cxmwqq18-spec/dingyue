@@ -21,17 +21,32 @@ function hasAnyCustomerSessionCookie(request: NextRequest): boolean {
   return request.cookies.getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
 }
 
-function emptyRuntime(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
-  return {
-    jobs: [],
-    assets: [],
-    albums: [],
-    ledger: [],
-    subscriptions: [],
-    orders: [],
-    customerModels: [],
-    ...runtime
-  };
+function workspaceRuntimePreloadTimeoutMs(): number {
+  const configured = Number.parseInt(process.env.STOREFRONT_WORKSPACE_INITIAL_RUNTIME_TIMEOUT_MS ?? "", 10);
+  return Number.isFinite(configured) && configured >= 500 ? configured : 2_500;
+}
+
+function withWorkspaceRuntimePreloadTimeout<T>({
+  label,
+  promise,
+  timeoutMs
+}: {
+  label: string;
+  promise: Promise<T | undefined>;
+  timeoutMs: number;
+}): Promise<T | undefined> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return Promise.race([
+    promise,
+    new Promise<undefined>((resolve) => {
+      timer = setTimeout(() => {
+        console.warn(`[customer-bootstrap] ${label} timed out after ${timeoutMs}ms; deferring to client runtime refresh.`);
+        resolve(undefined);
+      }, timeoutMs);
+    })
+  ]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
 }
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
@@ -143,21 +158,31 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     ), request, siteId, current);
   }
 
+  const preloadTimeoutMs = workspaceRuntimePreloadTimeoutMs();
   const [bootstrap, workspaceState, adminAccess] = await Promise.all([
     getCustomerWorkspaceBootstrapRelational(siteSlug),
-    readStorefrontCustomerRuntimeStateForSiteFromDatabase({
-      siteId,
-      sessionId: current.sessionId,
-      profile: "workspace"
-    }).catch(() => undefined),
-    getCustomerAdminAccessForSite({ siteId, customer: current.customer })
+    withWorkspaceRuntimePreloadTimeout({
+      label: "workspace runtime preload",
+      timeoutMs: preloadTimeoutMs,
+      promise: readStorefrontCustomerRuntimeStateForSiteFromDatabase({
+        siteId,
+        sessionId: current.sessionId,
+        profile: "workspace"
+      }).catch(() => undefined)
+    }),
+    withWorkspaceRuntimePreloadTimeout({
+      label: "admin access preload",
+      timeoutMs: preloadTimeoutMs,
+      promise: getCustomerAdminAccessForSite({ siteId, customer: current.customer })
+        .catch(() => ({ canBypassBilling: false }))
+    }).then((access) => access ?? { canBypassBilling: false })
   ]);
   if (!bootstrap) {
     return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
   }
   const workspaceRuntime = workspaceState
     ? getThemeRuntimeForCustomer(workspaceState, siteId, current.customer.id)
-    : emptyRuntime({ customer: current.customer });
+    : undefined;
 
   return ensureCustomerCsrfCookie(NextResponse.json(
     {
@@ -169,11 +194,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       creativePacks: bootstrap.creativePacks,
       toolMenuItems: bootstrap.toolMenuItems,
       videoThemes: bootstrap.videoThemes,
-      workspaceRuntime: {
+      ...(workspaceRuntime ? { workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,
         adminAccess
-      }
+      } } : {})
     },
     { headers: { "Cache-Control": "private, max-age=8" } }
   ), request, siteId, current);

@@ -27,6 +27,7 @@ import { OpsCard, StatusPill } from "@/components/ui";
 import type {
   AiApp,
   GenerationJob,
+  PlatformAiProviderType,
   PublicCustomer,
   SiteAiApp,
 } from "@/lib/types";
@@ -47,6 +48,7 @@ export type PlatformAiProviderOption = {
   label: string;
   aiUrl: string;
   modelType: string;
+  providerType: PlatformAiProviderType;
   priority: number;
   preferred: boolean;
   enabled: boolean;
@@ -261,9 +263,13 @@ export function AiToolsPageClient({
         current
           ? {
               ...current,
-              ...result,
-              apps: current.apps,
-              gateway: current.gateway ?? result.gateway,
+              jobs: result.jobs,
+              customers: mergeById(current.customers, result.customers),
+              platformAiApps: mergeById(
+                current.platformAiApps,
+                result.platformAiApps,
+              ),
+              pageInfo: result.pageInfo ?? current.pageInfo,
             }
           : result,
       );

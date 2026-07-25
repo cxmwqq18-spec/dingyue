@@ -50,12 +50,19 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const bytes = Buffer.from(await fileValue.arrayBuffer());
     const label = String(formData.get("label") ?? "").trim() || fileValue.name.replace(/\.[^.]+$/, "") || "upload";
     const subjectRole = String(formData.get("subjectRole") ?? "").trim() || undefined;
-    const compressed = prepareCompressedCustomerImage({
-      bytes,
-      mimeType: fileValue.type || "image/jpeg",
-      fileName: fileValue.name || "upload",
-      purpose: "input"
-    });
+    const compressed = subjectRole === "video_frame"
+      ? {
+        bytes,
+        mimeType: fileValue.type || "image/jpeg",
+        fileName: fileValue.name || "upload",
+        compressed: false
+      }
+      : prepareCompressedCustomerImage({
+        bytes,
+        mimeType: fileValue.type || "image/jpeg",
+        fileName: fileValue.name || "upload",
+        purpose: "input"
+      });
     const storageKey = customerAssetStorageKey({
       siteId,
       customerId,

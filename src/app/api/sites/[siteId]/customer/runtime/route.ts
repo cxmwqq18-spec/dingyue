@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { ensureCustomerCsrfCookie } from "@/lib/customer-csrf";
-import { prisma } from "@/lib/prisma";
+import { isTransientPrismaConnectionError, prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
@@ -10,8 +10,9 @@ import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/sto
 import { releaseStaleActiveGenerationJobsRelational } from "@/lib/stores/job-store";
 import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { readWorkspaceJobSummariesRelational } from "@/lib/workspace-runtime-jobs";
 import { cookies } from "next/headers";
-import type { CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
+import type { CustomerAdminAccess, CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ const customerRuntimeCache = createServerTtlCache(
   "customer-runtime-api",
   Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_API_TTL_MS ?? 30_000)
 );
+const workspaceDirectSqlEnabled = process.env.CUSTOMER_WORKSPACE_RUNTIME_DIRECT_SQL === "1";
 
 function emptyRuntime(): ThemeRuntimeData {
   return {
@@ -93,8 +95,26 @@ function isoFromRaw(value: unknown): string {
   return new Date(0).toISOString();
 }
 
+function timeFromRaw(value: unknown): number {
+  return new Date(isoFromRaw(value)).getTime();
+}
+
 function jsonRecord(value: unknown): Record<string, unknown> | undefined {
   return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
+function stringArrayFromRaw(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+}
+
+function runtimeJobFrameAssetIds(job: Pick<RuntimeJob, "requestJson">): string[] {
+  const request = jsonRecord(job.requestJson) ?? {};
+  const fields = jsonRecord(request.fields) ?? {};
+  return Array.from(new Set([
+    ...stringArrayFromRaw(fields.frameAssetIds),
+    ...stringArrayFromRaw(request.assetIds)
+  ]));
 }
 
 function publicCustomerFromWorkspaceRow(row: Record<string, unknown>): PublicCustomer {
@@ -157,7 +177,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
         AND b."customerId" = c.id
       WHERE s.id = ${sessionId}
         AND s."siteId" = ${siteId}
-        AND s."expiresAt" > NOW()
+        AND s."expiresAt" > (NOW() AT TIME ZONE 'UTC')
       LIMIT 1
     ),
     "recentJobs" AS (
@@ -292,6 +312,142 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
       })
     }
   };
+}
+
+async function readWorkspaceRuntimeSegmented(siteId: string, sessionId: string): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
+  const session = await prisma.customerSession.findFirst({
+    where: {
+      id: sessionId,
+      siteId,
+      expiresAt: { gt: new Date() }
+    },
+    include: {
+      customer: { include: { balance: true } }
+    }
+  });
+  if (!session?.customer) return undefined;
+
+  const customer = toPublicCustomerRelational(session.customer as Record<string, unknown>);
+  const recentJobs = await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 });
+  const recentAssets = await prisma.assetUpload.findMany({
+    where: {
+      siteId,
+      customerId: customer.id,
+      deletedAt: null,
+      role: { in: ["input", "training_input", "output"] }
+    },
+    orderBy: { createdAt: "desc" },
+    take: 48
+  });
+  const subscriptions = await prisma.subscription.findMany({
+    where: { siteId, customerId: customer.id },
+    orderBy: { createdAt: "desc" },
+    take: 4
+  });
+  const customerModels = await prisma.customerModel.findMany({
+    where: { siteId, customerId: customer.id },
+    orderBy: { updatedAt: "desc" },
+    take: 4
+  });
+
+  const recentJobIds = new Set(recentJobs.map((job) => job.id));
+  const relatedJobIds = Array.from(new Set(
+    recentAssets
+      .map((asset) => asset.jobId)
+      .filter((jobId): jobId is string => typeof jobId === "string" && !recentJobIds.has(jobId))
+  ));
+  const relatedJobs = relatedJobIds.length
+    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, ids: relatedJobIds })
+    : [];
+  const jobs = [...recentJobs, ...relatedJobs]
+    .sort((left, right) => timeFromRaw(right.updatedAt) - timeFromRaw(left.updatedAt));
+  const recentAssetIds = new Set(recentAssets.map((asset) => asset.id));
+  const referencedFrameAssetIds = Array.from(new Set(jobs.flatMap(runtimeJobFrameAssetIds)))
+    .filter((assetId) => !recentAssetIds.has(assetId));
+  const referencedFrameAssets = referencedFrameAssetIds.length
+    ? await prisma.assetUpload.findMany({
+        where: {
+          siteId,
+          customerId: customer.id,
+          id: { in: referencedFrameAssetIds },
+          deletedAt: null
+        },
+        orderBy: { createdAt: "desc" }
+      })
+    : [];
+  const assets = [...recentAssets, ...referencedFrameAssets]
+    .map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>))
+    .map((asset) => toThemeRuntimeAssetRelational(asset));
+
+  return {
+    customer,
+    runtime: {
+      ...emptyRuntime(),
+      customer,
+      jobs,
+      assets,
+      subscriptions: subscriptions.map((subscription) => runtimeSubscriptionFromWorkspaceRow(subscription as unknown as Record<string, unknown>)),
+      customerModels: customerModels.map((model) => {
+        const mapped = toCustomerModelRelational(model as unknown as Record<string, unknown>);
+        return {
+          id: mapped.id,
+          label: mapped.label,
+          modelType: mapped.modelType,
+          status: mapped.status,
+          inputAssetCount: mapped.inputAssetCount,
+          minInputAssets: mapped.minInputAssets,
+          createdAt: mapped.createdAt,
+          updatedAt: mapped.updatedAt
+        };
+      })
+    }
+  };
+}
+
+async function readWorkspaceRuntime(siteId: string, sessionId: string): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
+  if (!workspaceDirectSqlEnabled) {
+    return runPrismaReadWithReconnect(
+      () => readWorkspaceRuntimeSegmented(siteId, sessionId),
+      { label: "customer workspace runtime segmented", retries: 2, timeoutMs: 20_000 }
+    );
+  }
+  try {
+    return await runPrismaReadWithReconnect(
+      () => readWorkspaceRuntimeDirect(siteId, sessionId),
+      { label: "customer workspace runtime direct", retries: 1, timeoutMs: 30_000 }
+    );
+  } catch (error) {
+    if (!isTransientPrismaConnectionError(error)) throw error;
+    console.warn("[customer-runtime] workspace direct read unavailable; retrying with segmented relational read.");
+    return runPrismaReadWithReconnect(
+      () => readWorkspaceRuntimeSegmented(siteId, sessionId),
+      { label: "customer workspace runtime segmented", retries: 1, timeoutMs: 20_000 }
+    );
+  }
+}
+
+function shortRuntimeError(error: unknown): string {
+  return error instanceof Error ? error.message.split("\n")[0] : String(error);
+}
+
+async function getCurrentCustomerForRuntimeRefresh(siteId: string): Promise<NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>> | undefined> {
+  try {
+    return await getCurrentCustomerForSite(siteId);
+  } catch (error) {
+    if (!isTransientPrismaConnectionError(error)) throw error;
+    console.warn("[customer-runtime] current customer refresh lookup skipped after transient DB error:", shortRuntimeError(error));
+    return undefined;
+  }
+}
+
+async function getSafeCustomerAdminAccess(params: { siteId: string; customer: PublicCustomer }): Promise<CustomerAdminAccess> {
+  try {
+    return await getCustomerAdminAccessForSite(params);
+  } catch (error) {
+    if (!isTransientPrismaConnectionError(error)) throw error;
+    console.warn("[customer-runtime] admin access lookup skipped after transient DB error:", shortRuntimeError(error));
+    return { canBypassBilling: false };
+  }
 }
 
 function normalizeSection(value: string | null): CustomerRuntimeSection {
@@ -708,7 +864,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const refreshToken = searchParams.get("refresh") ?? "";
   const normalizedProfile = profile === "workspace" ? "workspace" : profile === "account" ? "account" : "full";
   const currentForRefresh = normalizedProfile === "workspace" || refreshToken
-    ? await getCurrentCustomerForSite(siteId)
+    ? await getCurrentCustomerForRuntimeRefresh(siteId)
     : undefined;
   if (currentForRefresh) {
     await releaseStaleActiveGenerationJobsRelational({
@@ -718,42 +874,52 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       console.error("customer_runtime_stale_job_release_failed", error);
     });
   }
-  const result = await customerRuntimeCache.get(
-    `${siteId}:${sessionId}:${normalizedProfile}:${section}:${refreshToken}`,
-    async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
-      if (normalizedProfile === "account") {
-        const accountRuntime = await readAccountSectionRuntimeForSession({ section, sessionId, siteId });
-        if (!accountRuntime) return undefined;
+  let result: { customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined;
+  try {
+    result = await customerRuntimeCache.get(
+      `${siteId}:${sessionId}:${normalizedProfile}:${section}:${refreshToken}`,
+      async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
+        if (normalizedProfile === "account") {
+          const accountRuntime = await readAccountSectionRuntimeForSession({ section, sessionId, siteId });
+          if (!accountRuntime) return undefined;
+          return {
+            customer: accountRuntime.current.customer,
+            runtime: accountRuntime.runtime
+          };
+        }
+        if (normalizedProfile === "workspace") {
+          return readWorkspaceRuntime(siteId, sessionId);
+        }
+        const current = await getCurrentCustomerForSite(siteId);
+        if (!current) return undefined;
+        const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({
+          siteId,
+          sessionId: current.sessionId,
+          profile: normalizedProfile
+        });
+        if (!state) return undefined;
         return {
-          customer: accountRuntime.current.customer,
-          runtime: accountRuntime.runtime
+          customer: current.customer,
+          runtime: trimRuntime(getThemeRuntimeForCustomer(state, siteId, current.customer.id), normalizedProfile, section)
         };
-      }
-      if (normalizedProfile === "workspace") {
-        return readWorkspaceRuntimeDirect(siteId, sessionId);
-      }
-      const current = await getCurrentCustomerForSite(siteId);
-      if (!current) return undefined;
-      const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({
-        siteId,
-        sessionId: current.sessionId,
-        profile: normalizedProfile
-      });
-      if (!state) return undefined;
-      return {
-        customer: current.customer,
-        runtime: trimRuntime(getThemeRuntimeForCustomer(state, siteId, current.customer.id), normalizedProfile, section)
-      };
-    },
-    normalizedProfile === "workspace" ? 8_000 : normalizedProfile === "account" ? 30_000 : 12_000
-  );
+      },
+      normalizedProfile === "workspace" ? 8_000 : normalizedProfile === "account" ? 30_000 : 12_000
+    );
+  } catch (error) {
+    const transient = isTransientPrismaConnectionError(error);
+    console.error("customer_runtime_load_failed", error);
+    return NextResponse.json(
+      { ok: false, error: transient ? "customer_runtime_db_unavailable" : "customer_runtime_unavailable", runtime: emptyRuntime() },
+      { status: transient ? 503 : 500 }
+    );
+  }
   if (!result) {
     return NextResponse.json({ ok: false, error: "customer_runtime_unavailable", runtime: emptyRuntime() }, { status: 404 });
   }
 
   const [adminAccess, current] = await Promise.all([
-    getCustomerAdminAccessForSite({ siteId, customer: result.customer }),
-    currentForRefresh ? Promise.resolve(currentForRefresh) : getCurrentCustomerForSite(siteId)
+    getSafeCustomerAdminAccess({ siteId, customer: result.customer }),
+    currentForRefresh ? Promise.resolve(currentForRefresh) : getCurrentCustomerForRuntimeRefresh(siteId)
   ]);
   const response = NextResponse.json({
     ok: true,

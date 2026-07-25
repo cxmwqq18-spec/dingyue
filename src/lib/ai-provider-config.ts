@@ -13,7 +13,7 @@ export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" |
   const aiUrl = provider?.aiUrl?.trim() ?? "";
   try {
     const hostname = new URL(aiUrl).hostname.toLowerCase();
-    if (hostname.includes("smartpicklid") || hostname.includes("magic666")) return "openai-videos";
+    if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
   } catch {
     // Keep unknown or in-progress URLs generic in the admin UI.
@@ -62,6 +62,15 @@ function lk888SkillsUrl(aiUrl: string) {
   return parsed.toString();
 }
 
+function openAiModelsUrl(aiUrl: string) {
+  const parsed = new URL(aiUrl);
+  const path = parsed.pathname.replace(/\/+$/, "");
+  parsed.pathname = path.endsWith("/models") ? path : `${path || "/v1"}/models`;
+  parsed.search = "";
+  parsed.hash = "";
+  return parsed.toString();
+}
+
 export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey">): Promise<{
   ok: boolean;
   status?: number;
@@ -80,6 +89,11 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   if (protocol === "lk888-media") {
     const skills = await fetchWithTimeout(lk888SkillsUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
     return { ok: skills.ok, status: skills.status, method: "GET", message: skills.ok ? "provider reachable" : `provider returned ${skills.status}` };
+  }
+
+  if (protocol === "openai-videos") {
+    const models = await fetchWithTimeout(openAiModelsUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
+    return { ok: models.ok, status: models.status, method: "GET", message: models.ok ? "provider reachable" : `provider returned ${models.status}` };
   }
 
   const head = await fetchWithTimeout(aiUrl, { method: "HEAD", headers, cache: "no-store", timeoutMs: aiProviderHeadTimeoutMs }).catch((error) => error as Error);

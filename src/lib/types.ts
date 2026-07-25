@@ -3,6 +3,7 @@ export type ConnectStatus = "not_started" | "pending" | "enabled" | "restricted"
 export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "refunded";
 export type LedgerType = "grant" | "reserve" | "consume" | "release" | "adjustment";
 export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platform_admin" | "external_api" | "rerun";
+export type PlatformAiProviderType = "image" | "video";
 
 export type SectionType =
   | "hero"
@@ -584,6 +585,7 @@ export interface PlatformAiProvider {
   aiUrl: string;
   apiKey?: string;
   modelType: "gpt-image-2" | "gpt-5.5" | string;
+  providerType: PlatformAiProviderType;
   priority: number;
   preferred: boolean;
   enabled: boolean;

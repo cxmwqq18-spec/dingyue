@@ -12,6 +12,7 @@ import {
   upsertPlatformAiProviderRelational
 } from "@/lib/stores/platform-store";
 import type { PlatformAiProvider } from "@/lib/types";
+import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 
 const defaultModelTypes = [
   "gpt-image-2",
@@ -33,16 +34,36 @@ async function requirePlatformRead() {
 async function payload(extra: Record<string, unknown> = {}) {
   const providers = await listPlatformAiProvidersRelational();
   const enabledProviders = providers.filter((provider) => provider.enabled);
-  const current = enabledProviders.find((provider) => provider.preferred) ?? enabledProviders[0];
+  const currentProviderIds = Object.fromEntries(platformAiProviderTypes.map((providerType) => {
+    const typed = enabledProviders.filter((provider) => provider.providerType === providerType);
+    const current = typed.find((provider) => provider.preferred) ?? typed[0];
+    return [providerType, current?.id ?? ""];
+  })) as Record<PlatformAiProviderType, string>;
+  const current = enabledProviders.find((provider) => provider.id === currentProviderIds.image) ?? enabledProviders[0];
+  const summaryForType = (providerType: PlatformAiProviderType) => {
+    const typed = providers.filter((provider) => provider.providerType === providerType);
+    const enabledTyped = typed.filter((provider) => provider.enabled);
+    const currentTyped = enabledTyped.find((provider) => provider.id === currentProviderIds[providerType]);
+    return {
+      totalProviders: typed.length,
+      enabledProviders: enabledTyped.length,
+      configuredProviders: typed.filter((provider) => aiProviderStatus(provider).configured).length,
+      runnableProviders: typed.filter((provider) => aiProviderStatus(provider).runnable).length,
+      currentProviderId: currentTyped?.id ?? "",
+      currentConfigured: aiProviderStatus(currentTyped).runnable
+    };
+  };
   return {
     ok: true,
     currentProviderId: current?.id ?? "",
+    currentProviderIds,
     modelTypes: Array.from(new Set([...defaultModelTypes, ...providers.map((provider) => provider.modelType).filter(Boolean)])),
     providers: providers.map((provider) => ({
       id: provider.id,
       label: provider.label,
       aiUrl: provider.aiUrl,
       modelType: provider.modelType,
+      providerType: provider.providerType,
       priority: provider.priority,
       preferred: provider.preferred,
       enabled: provider.enabled,
@@ -52,7 +73,7 @@ async function payload(extra: Record<string, unknown> = {}) {
       createdAt: provider.createdAt,
       updatedAt: provider.updatedAt,
       updatedBy: provider.updatedBy,
-      isCurrent: provider.id === current?.id,
+      isCurrent: provider.id === currentProviderIds[provider.providerType],
       status: aiProviderStatus(provider)
     })),
     summary: {
@@ -60,7 +81,8 @@ async function payload(extra: Record<string, unknown> = {}) {
       enabledProviders: enabledProviders.length,
       configuredProviders: providers.filter((provider) => aiProviderStatus(provider).configured).length,
       runnableProviders: providers.filter((provider) => aiProviderStatus(provider).runnable).length,
-      currentConfigured: aiProviderStatus(current).runnable
+      currentConfigured: aiProviderStatus(current).runnable,
+      byType: Object.fromEntries(platformAiProviderTypes.map((providerType) => [providerType, summaryForType(providerType)]))
     },
     ...extra
   };
@@ -91,6 +113,7 @@ export async function PUT(request: NextRequest) {
     aiUrl?: string;
     apiKey?: string;
     modelType?: string;
+    providerType?: string;
     makeCurrent?: boolean;
     enabled?: boolean;
     supportsGenerationN?: boolean;
@@ -114,6 +137,7 @@ export async function PUT(request: NextRequest) {
     aiUrl: body.aiUrl ?? "",
     apiKey: body.apiKey,
     modelType: body.modelType,
+    providerType: normalizePlatformAiProviderType(body.providerType, inferPlatformAiProviderType({ label: body.label, aiUrl: body.aiUrl, modelType: body.modelType })),
     makeCurrent: body.makeCurrent,
     enabled: typeof body.enabled === "boolean" ? body.enabled : undefined,
     supportsGenerationN: Boolean(body.supportsGenerationN),

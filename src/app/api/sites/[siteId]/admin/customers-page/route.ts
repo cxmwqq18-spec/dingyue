@@ -59,6 +59,15 @@ type AdminCustomerAssetJob = {
   createdAt: string;
   updatedAt: string;
 };
+type AdminCustomerAssetJobSummaryRow = {
+  id: string;
+  customerId: string;
+  status: string;
+  requestJson: unknown;
+  resultJson: unknown;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+};
 
 function adminCustomerAssetUrl(asset: Pick<AssetUpload, "storageKey">): string {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "").replace(/^\/+/, "");
@@ -96,6 +105,29 @@ function errorFromResultJson(value: unknown): string | undefined {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
   const error = (value as { error?: unknown }).error;
   return typeof error === "string" && error.trim().length > 0 ? error : undefined;
+}
+
+async function readCustomerAssetJobSummaries(siteId: string, take: number): Promise<AdminCustomerAssetJobSummaryRow[]> {
+  return prisma.$queryRaw<AdminCustomerAssetJobSummaryRow[]>`
+    SELECT
+      id,
+      "customerId",
+      status,
+      jsonb_strip_nulls(jsonb_build_object('assetIds', "requestJson"->'assetIds')) AS "requestJson",
+      CASE
+        WHEN "resultJson" IS NULL THEN NULL
+        ELSE jsonb_strip_nulls(jsonb_build_object(
+          'outputs', "resultJson"->'outputs',
+          'error', "resultJson"->'error'
+        ))
+      END AS "resultJson",
+      "createdAt",
+      "updatedAt"
+    FROM "GenerationJob"
+    WHERE "siteId" = ${siteId}
+    ORDER BY "createdAt" DESC, id ASC
+    LIMIT ${take}
+  `;
 }
 
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
@@ -210,7 +242,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         : () => Promise.resolve([]),
       includeDetail(detail, "delivery") || includeDetail(detail, "assets")
         ? () => prisma.assetUpload.findMany({
-        where: { siteId, deletedAt: null },
+        where: {
+          siteId,
+          deletedAt: null,
+          ...(detail === "delivery" ? { role: "output" } : {})
+        },
         select: {
           id: true,
           siteId: true,
@@ -233,13 +269,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         take: adminCustomerAssetTake
       })
         : () => Promise.resolve([]),
-      includeDetail(detail, "delivery") || includeDetail(detail, "assets")
-        ? () => prisma.generationJob.findMany({
-        where: { siteId },
-        select: { id: true, customerId: true, status: true, requestJson: true, resultJson: true, createdAt: true, updatedAt: true },
-        orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-        take: adminCustomerAssetTake
-      })
+      includeDetail(detail, "assets")
+        ? () => readCustomerAssetJobSummaries(siteId, adminCustomerAssetTake)
         : () => Promise.resolve([]),
       includeDetail(detail, "customers")
         ? () => prisma.siteAdmin.findMany({

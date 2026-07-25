@@ -485,6 +485,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
       return NextResponse.json({ error: asset.error }, { status: asset.status, headers });
     }
     if (wantsVideoPoster(_request)) {
+      if (asset.placeholder) {
+        return new Response(await readAssetBytes(asset), {
+          headers: assetHeaders(asset, asset.size)
+        });
+      }
       const poster = await resolveVideoPoster(asset);
       const accelResponse = xAccelPosterResponse(poster);
       if (accelResponse) return accelResponse;
@@ -542,6 +547,11 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
       return new Response(null, { status: asset.status, headers });
     }
     if (wantsVideoPoster(_request)) {
+      if (asset.placeholder) {
+        return new Response(null, {
+          headers: assetHeaders(asset, asset.size)
+        });
+      }
       const poster = await resolveVideoPoster(asset);
       const accelResponse = xAccelPosterResponse(poster);
       if (accelResponse) return accelResponse;

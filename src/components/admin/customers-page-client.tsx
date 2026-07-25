@@ -11,7 +11,7 @@ import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import type { Album, AssetUpload, CreativePack, CustomerModel, PublicCustomer, SiteAdmin } from "@/lib/types";
 import type { JobStatus } from "@/lib/types";
 
-const customersPageRequestTimeoutMs = 8_000;
+const customersPageRequestTimeoutMs = 12_000;
 
 type CustomerAssetJob = {
   id: string;
@@ -89,7 +89,7 @@ function LoadingSection({ title }: { title: string }) {
 
 function mergePayload(current: CustomersPagePayload | null, next: CustomersPagePayload): CustomersPagePayload {
   return {
-    signupCreditGrant: next.signupCreditGrant ?? current?.signupCreditGrant ?? 0,
+    signupCreditGrant: current?.signupCreditGrant ?? next.signupCreditGrant ?? 0,
     customers: next.customers ?? current?.customers,
     customerModels: next.customerModels ?? current?.customerModels,
     albums: next.albums ?? current?.albums,
@@ -128,7 +128,7 @@ export function CustomersPageClient({
       controllers.add(controller);
       return controller;
     }
-    async function loadDetail(detail: "customers" | "models" | "delivery") {
+    async function loadDetail(detail: "customers" | "models" | "delivery" | "assets") {
       const controller = nextController();
       try {
         const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, {
@@ -149,7 +149,11 @@ export function CustomersPageClient({
         await loadDetail("customers");
         window.setTimeout(() => {
           if (!active) return;
-          void Promise.all([loadDetail("models"), loadDetail("delivery")]).catch((error) => {
+          void (async () => {
+            await loadDetail("models");
+            await loadDetail("delivery");
+            await loadDetail("assets");
+          })().catch((error) => {
             if (!active || isAbortError(error)) return;
             setError(error instanceof Error ? error.message : "顾客明细加载失败。");
           });
@@ -239,7 +243,7 @@ export function CustomersPageClient({
         eyebrow="客户素材"
         title="客户素材表格"
       >
-        {payload.customerAssets && payload.customerModels ? (
+        {payload.customerAssets && payload.customerModels && payload.customerAssetJobs ? (
           <CustomerAssetReviewPanel
             assets={payload.customerAssets}
             assetJobs={payload.customerAssetJobs ?? []}

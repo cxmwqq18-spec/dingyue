@@ -126,7 +126,9 @@ async function localVideoThemePayload(params: {
     .filter((theme) => localThemeMatchesQuery(theme, theme.categoryId ? categoriesById.get(theme.categoryId) : undefined, params.query))
     .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt))
     .slice(0, params.pageSize);
-  const providers = state.platformAiProviders ?? [];
+  const providers = (state.platformAiProviders ?? []).filter((provider) =>
+    provider.providerType === "video" || /video|grok-imagine-video/i.test(provider.modelType)
+  );
   const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
   const categories = params.includeCategories
     ? Array.from(categoriesById.values())
@@ -174,7 +176,7 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
 }
 
 async function videoThemeProviderFrameLimits() {
-  const providers = await getPlatformAiProviderFallbackQueueRelational();
+  const providers = await getPlatformAiProviderFallbackQueueRelational("video");
   return {
     effectiveMaxFrames: (theme: Pick<VideoTheme, "maxFrames">) => effectiveVideoFrameLimit(providers, theme.maxFrames),
     providerMaxFrames: configuredVideoProviderFrameLimit(providers)

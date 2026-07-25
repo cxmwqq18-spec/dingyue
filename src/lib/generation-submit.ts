@@ -85,7 +85,8 @@ export async function submitGenerationJob(input: GenerationSubmitInput): Promise
     subscriptionBypass: input.subscriptionBypass,
     entryPoint: input.entryPoint,
     idempotencyKey,
-    requestHash
+    requestHash,
+    skipProviderAvailabilityCheck: input.skipWorkerDispatch === true
   });
 
   if (created.reused) {

@@ -16,7 +16,7 @@ import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
-import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
+import { CUSTOMER_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
 
 type CustomerWorkspaceSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerWorkspacePanel = "overview" | "create" | "upload" | "video";
@@ -48,7 +48,7 @@ type OutputCopyJob = {
   requestJson?: Record<string, unknown>;
 };
 const myDreamShootsDisplayName = "myᕲreamshoots";
-const VIDEO_FRAME_UPLOAD_LIMIT = MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT;
+const VIDEO_FRAME_UPLOAD_LIMIT = CUSTOMER_VIDEO_FRAME_LIMIT;
 const LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS = 120_000;
 const VIDEO_PREVIEW_INTERSECTION_MARGIN = "160px";
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
@@ -227,6 +227,9 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
     if (error.includes("generation_job_expired")) return isVideoRequest
       ? t(spanish, "The video generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador de video se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.")
       : t(spanish, "The generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
+    if (isVideoRequest && (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured"))) {
+      return t(spanish, "Video generation is temporarily unavailable while provider access is being updated. Credits were returned automatically, and you can retry once video access is restored.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. Los creditos se devolvieron automaticamente y podras reintentar cuando se restaure el acceso de video.");
+    }
     if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
     if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "The video provider timed out while creating the video task. The starter image was created correctly, credits were returned automatically, and you can retry after the provider recovers.", "El proveedor de video agoto el tiempo al crear la tarea. La imagen inicial se creo correctamente, los creditos se devolvieron automaticamente y puedes reintentar cuando el proveedor se recupere.");
     if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) return t(spanish, "The video provider connection was interrupted before it returned a video. Credits were returned automatically, and you can retry after a short wait.", "La conexion con el proveedor de video se interrumpio antes de devolver el video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
@@ -272,6 +275,7 @@ function workspaceJobOutputSlots(job: RuntimeJob, outputAssets: ThemeRuntimeAsse
       status,
       stage: typeof record.stage === "string" ? record.stage : undefined,
       storageKey: typeof record.storageKey === "string" ? record.storageKey : undefined,
+      previewUrl: typeof record.previewUrl === "string" ? record.previewUrl : undefined,
       mimeType: typeof record.mimeType === "string" ? record.mimeType : undefined,
       error: typeof record.error === "string" ? record.error : undefined,
       referenceFrameCount: Number.isFinite(Number(record.referenceFrameCount)) ? Math.max(0, Math.trunc(Number(record.referenceFrameCount))) : undefined,
@@ -488,7 +492,7 @@ function workspaceVideoPosterUrl(src: string): string {
 }
 
 function workspaceVideoPlaybackUrl(src: string): string {
-  return `${src}${src.includes("?") ? "&" : "?"}preview=1`;
+  return src;
 }
 
 function WorkspaceVideoPreviewButton({
@@ -548,7 +552,23 @@ function WorkspaceVideoPreviewButton({
     return () => observer.disconnect();
   }, [loadPreview, shouldLoad]);
 
-  const showFallbackPoster = shouldLoad && Boolean(fallbackPosterSrc) && !fallbackPosterFailed && !posterLoaded;
+  useEffect(() => {
+    if (!shouldLoad || !fallbackPosterSrc || posterFailed) return;
+    const controller = new AbortController();
+    fetch(posterSrc, {
+      cache: "no-store",
+      credentials: "same-origin",
+      method: "HEAD",
+      signal: controller.signal
+    })
+      .then((response) => {
+        if (response.headers.get("x-asset-placeholder") === "loading") setPosterFailed(true);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, [fallbackPosterSrc, posterFailed, posterSrc, shouldLoad]);
+
+  const showFallbackPoster = shouldLoad && Boolean(fallbackPosterSrc) && !fallbackPosterFailed && (!posterLoaded || posterFailed);
   const showPosterImage = shouldLoad && !posterFailed;
 
   return (
@@ -651,6 +671,9 @@ function workspaceGenerationErrorText(error: string, spanish = false): string {
   if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) {
     return t(spanish, "Frame images need a public URL before the video provider can read them.", "Los fotogramas necesitan una URL publica antes de que el proveedor de video pueda leerlos.");
   }
+  if (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured")) {
+    return t(spanish, "Video generation is temporarily unavailable while provider access is being updated.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor.");
+  }
   if (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504")) {
     return t(spanish, "The video provider timed out while creating the video task.", "El proveedor de video agoto el tiempo al crear la tarea.");
   }
@@ -702,6 +725,17 @@ function useWorkspaceRuntime(siteId: string, refreshKey = 0, enabled = true): Wo
   }, [enabled, siteId, refreshKey]);
 
   return state;
+}
+
+function workspaceRuntimeNeedsInitialRefresh(runtime?: ThemeRuntimeData): boolean {
+  if (!runtime) return true;
+  return !runtime.jobs.length &&
+    !runtime.assets.length &&
+    !runtime.albums.length &&
+    !runtime.ledger.length &&
+    !(runtime.subscriptions?.length) &&
+    !(runtime.orders?.length) &&
+    !(runtime.customerModels?.length);
 }
 
 function WorkspaceInlineLoading({ label }: { label: string }) {
@@ -777,10 +811,13 @@ export function CustomerWorkspaceShell({
 }) {
   const searchParams = useSearchParams();
   const spanishXby = isSpanishXbyWorkspaceSite(site);
+  const initialRuntimeNeedsRefresh = workspaceRuntimeNeedsInitialRefresh(initialRuntime);
   const [runtimeRefreshKey, setRuntimeRefreshKey] = useState(0);
-  const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(() => !initialRuntime);
+  const [runtimeFetchEnabled, setRuntimeFetchEnabled] = useState(() => initialRuntimeNeedsRefresh);
   const runtimeState = useWorkspaceRuntime(site.id, runtimeRefreshKey, runtimeFetchEnabled);
-  const runtime = runtimeState.runtime ?? initialRuntime;
+  const hideEmptyInitialRuntime = initialRuntimeNeedsRefresh && !runtimeState.runtime &&
+    (runtimeState.status === "idle" || runtimeState.status === "loading" || runtimeState.status === "error");
+  const runtime = runtimeState.runtime ?? (hideEmptyInitialRuntime ? undefined : initialRuntime);
   const [currentCustomerBalance, setCurrentCustomerBalance] = useState<PublicCustomer["balance"]>(() => customer.balance);
   const workspaceCustomer = useMemo(() => ({ ...customer, balance: currentCustomerBalance }), [currentCustomerBalance, customer]);
   const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(() => initialRuntime?.assets ?? assets);
@@ -891,7 +928,8 @@ export function CustomerWorkspaceShell({
   const failedVideoJobs = videoJobStatuses.filter((status) => status === "failed" || status === "partial").length;
   const runtimeIsLoading = runtimeState.status === "loading";
   const waitingForCreatedVideoJob = Boolean(pendingCreatedVideoJobId && !pendingCreatedVideoJob && runtimeState.status !== "error");
-  const runtimeIsInitializing = !workspaceNotice && !focusedJobId && !runtime && (runtimeState.status === "idle" || (runtimeState.status === "loading" && runtimeState.refreshKey === 0));
+  const runtimeInitialLoadFailed = initialRuntimeNeedsRefresh && runtimeState.status === "error" && !runtimeState.runtime;
+  const runtimeIsInitializing = !workspaceNotice && !focusedJobId && !runtime && (runtimeState.status === "idle" || (runtimeState.status === "loading" && runtimeState.refreshKey === 0) || runtimeInitialLoadFailed);
   const completedRuntimeRefreshKey = runtimeState.status === "ready" || runtimeState.status === "error" ? runtimeState.refreshKey : null;
   const resourceTitleByTab: Record<WorkspaceResourceTab, string> = {
     all: t(spanishXby, "All assets", "Todos los recursos"),
@@ -910,7 +948,12 @@ export function CustomerWorkspaceShell({
   };
 
   useEffect(() => {
-    if (runtimeFetchEnabled || initialRuntime) return;
+    if (runtimeFetchEnabled || activePanel !== "video" || videoFrameAssets.length) return;
+    setRuntimeFetchEnabled(true);
+  }, [activePanel, runtimeFetchEnabled, videoFrameAssets.length]);
+
+  useEffect(() => {
+    if (runtimeFetchEnabled || !initialRuntimeNeedsRefresh) return;
     const startRuntimeFetch = () => setRuntimeFetchEnabled(true);
     let idleId: number | undefined;
     const timeoutId = window.setTimeout(() => {
@@ -924,7 +967,7 @@ export function CustomerWorkspaceShell({
       window.clearTimeout(timeoutId);
       if (idleId !== undefined && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
     };
-  }, [initialRuntime, runtimeFetchEnabled]);
+  }, [initialRuntimeNeedsRefresh, runtimeFetchEnabled]);
 
   useEffect(() => {
     runtimeLoadingRef.current = runtimeState.status === "loading";
@@ -1075,7 +1118,9 @@ export function CustomerWorkspaceShell({
     });
   }, [maxVideoFrameCount, readyVideoFrameAssets]);
   const videoResourceAssets = galleryAssets.filter(isVideoAsset);
-  const videoWorkspaceSummary = waitingForCreatedVideoJob
+  const videoWorkspaceSummary = runtimeIsInitializing
+    ? t(spanishXby, "Loading video workspace", "Cargando espacio de video")
+    : waitingForCreatedVideoJob
     ? t(spanishXby, "New video request created · refreshing status", "Nueva solicitud de video creada · actualizando estado")
     : spanishXby
       ? `${activeVideoJobs} trabajos activos · ${failedVideoJobs} requieren atencion · ${videoResourceAssets.length} videos generados`
@@ -1241,14 +1286,15 @@ export function CustomerWorkspaceShell({
   }
   function slotPreviewAssetFor(job: RuntimeJob, slot: RuntimeOutputSlot, outputAssets: ThemeRuntimeAsset[], fallbackLabel?: string): ThemeRuntimeAsset | undefined {
     const slotStorageKey = slot.storageKey;
-    if (!slotStorageKey || !slot.mimeType?.startsWith("video/")) return undefined;
-    const existingAsset = outputAssetForSlot(slotStorageKey, outputAssets);
+    if ((!slotStorageKey && !slot.previewUrl) || !slot.mimeType?.startsWith("video/")) return undefined;
+    const existingAsset = slotStorageKey ? outputAssetForSlot(slotStorageKey, outputAssets) : undefined;
     if (existingAsset) return existingAsset;
     const label = fallbackLabel ?? `${workspaceJobTitle(job, false)} video ${slot.index}`;
+    const normalizedSlotKey = slotStorageKey ? normalizedWorkspaceStorageKey(slotStorageKey) : `preview-url-${job.id}-${slot.index}`;
     return {
-      id: `slot:${normalizedWorkspaceStorageKey(slotStorageKey)}`,
+      id: `slot:${normalizedSlotKey}`,
       jobId: job.id,
-      previewUrl: workspaceSlotPreviewUrl(slotStorageKey),
+      previewUrl: slotStorageKey ? workspaceSlotPreviewUrl(slotStorageKey) : slot.previewUrl!,
       storageKey: slotStorageKey,
       mimeType: slot.mimeType ?? "video/mp4",
       role: "output",
@@ -1581,7 +1627,7 @@ export function CustomerWorkspaceShell({
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of uploadFiles.entries()) {
       const optimisticAsset = optimisticAssets[index];
-      const preparedUpload = await prepareCustomerImageUploadFile(file);
+      const preparedUpload = await prepareCustomerImageUploadFile(file, { preserveOriginal: true });
       const formData = new FormData();
       formData.append("file", preparedUpload.file);
       formData.append("label", uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")));
@@ -2724,6 +2770,11 @@ export function CustomerWorkspaceShell({
                   {runtimeIsInitializing && !videoResourceAssets.length ? (
                     <div className="py-5"><WorkspaceInlineLoading label={t(spanishXby, "Loading video workspace.", "Cargando espacio de video.")} /></div>
                   ) : null}
+                  {runtimeInitialLoadFailed && !videoResourceAssets.length ? (
+                    <div className="rounded-[12px] border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-50/82" role="status">
+                      {t(spanishXby, "Workspace activity could not load from the database. Use Refresh status after the local database tunnel reconnects.", "No se pudo cargar la actividad del espacio desde la base de datos. Usa Actualizar estado despues de reconectar el tunel local.")}
+                    </div>
+                  ) : null}
 
                   {waitingForCreatedVideoJob || visibleVideoStatusJobs.length ? (
                     <div className="grid gap-3 border-b border-white/8 py-4">
@@ -2828,12 +2879,12 @@ export function CustomerWorkspaceShell({
                                       }`}
                                       key={`${job.id}_${slot.index}`}
                                     >
-                                      {slot.storageKey ? (
+                                      {slot.storageKey || slot.previewUrl ? (
                                         slotVideo ? (
                                           renderVideoPreviewButton({
-                                            mediaKey: `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}`,
+                                            mediaKey: slot.storageKey ? `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}` : `slot-preview:${job.id}:${slot.index}`,
                                             label: slotMediaLabel,
-                                            src: workspaceSlotPreviewUrl(slot.storageKey),
+                                            src: slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!,
                                             fallbackPosterSrc: fallbackVideoPosterForJob(job.id),
                                             compact: true,
                                             disabled: !slotPreviewAsset,
@@ -2845,7 +2896,7 @@ export function CustomerWorkspaceShell({
                                           <img
                                             alt={slotMediaLabel}
                                             className="aspect-[4/3] w-full object-cover"
-                                            src={workspaceSlotPreviewUrl(slot.storageKey)}
+                                            src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
                                           />
                                         )
                                       ) : (
@@ -2909,7 +2960,7 @@ export function CustomerWorkspaceShell({
                     </div>
                   ) : null}
 
-                  {!videoResourceAssets.length && !runtimeIsInitializing ? (
+                  {!videoResourceAssets.length && !runtimeIsInitializing && runtimeState.status !== "error" ? (
                     <div className="grid min-h-[360px] place-items-center rounded-[12px] border border-white/8 bg-black/18">
                       <div className="max-w-md text-center">
                         <p className="text-base font-semibold text-white/84">{t(spanishXby, "No generated videos yet", "Aun no hay videos generados")}</p>
@@ -3081,12 +3132,13 @@ export function CustomerWorkspaceShell({
                                     }`}
                                     key={`${job.id}_${slot.index}`}
                                   >
-                                    {slot.storageKey ? (
+                                    {slot.storageKey || slot.previewUrl ? (
                                       slotVideo ? (
                                         renderVideoPreviewButton({
-                                          mediaKey: `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}`,
+                                          mediaKey: slot.storageKey ? `slot:${normalizedWorkspaceStorageKey(slot.storageKey)}` : `slot-preview:${job.id}:${slot.index}`,
                                           label: slotMediaLabel,
-                                          src: workspaceSlotPreviewUrl(slot.storageKey),
+                                          src: slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!,
+                                          fallbackPosterSrc: fallbackVideoPosterForJob(job.id),
                                           compact: true,
                                           disabled: !slotPreviewAsset,
                                           onOpen: () => {
@@ -3097,7 +3149,7 @@ export function CustomerWorkspaceShell({
                                         <img
                                           alt={slotMediaLabel}
                                           className="aspect-[4/3] w-full object-cover"
-                                          src={workspaceSlotPreviewUrl(slot.storageKey)}
+                                          src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
                                         />
                                       )
                                     ) : (

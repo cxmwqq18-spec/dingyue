@@ -6,9 +6,8 @@ import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme } from "@/lib/types";
 import {
   DEFAULT_VIDEO_DURATION_SECONDS,
-  MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT,
+  CUSTOMER_VIDEO_FRAME_LIMIT,
   normalizeVideoDurationSecondsForFrameCount,
-  normalizeVideoFrameLimit,
   trimVideoFrameSelection,
   videoDurationCreditCost,
   videoDurationOptionsForFrameCount,
@@ -70,12 +69,18 @@ function errorText(error: string | undefined, status: number, spanish: boolean) 
   if (error === "too_many_video_frames_for_provider") return vt(spanish, "This video preset allows fewer frame images. Remove extra frames and try again.", "Este ajuste de video permite menos fotogramas. Quita fotogramas extra e intentalo de nuevo.");
   if (error === "video_frame_asset_required") return vt(spanish, "Use images uploaded in the video frame area before generating.", "Usa imagenes subidas en el area de fotogramas antes de generar.");
   if (error === "video_public_asset_url_required") return vt(spanish, "Video generation needs a public asset URL so the provider can read the selected frame images.", "La generacion de video necesita una URL publica de recursos para que el proveedor lea los fotogramas seleccionados.");
+  if (error === "video_provider_temporarily_unavailable" || error === "no_video_ai_provider_configured") return vt(spanish, "Video generation is temporarily unavailable while provider access is being updated. No credits were reserved.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. No se reservaron creditos.");
   if (status === 409) return vt(spanish, "Another request is already running. Check the All tab before starting a new one.", "Ya hay otra solicitud en ejecucion. Revisa la pestana Todo antes de iniciar otra.");
   return vt(spanish, "Video generation could not start. Please check the frame images and try again.", "No se pudo iniciar el video. Revisa las imagenes e intentalo de nuevo.");
 }
 
 function isCsrfError(error: string | undefined, status: number) {
   return status === 403 && (error === "csrf_token_required" || error === "csrf_token_mismatch" || Boolean(error?.includes("csrf")));
+}
+
+function newVideoSubmitIdempotencyKey() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `video_${crypto.randomUUID()}`;
+  return `video_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 }
 
 function isVideoAspectRatio(value: string | undefined): value is VideoAspectRatio {
@@ -127,6 +132,7 @@ export function CustomerVideoWorkspace({
   const [pending, setPending] = useState(false);
   const appliedRetryDraftKeyRef = useRef<string | null>(null);
   const retryDurationThemeIdRef = useRef<string | null>(null);
+  const submitAttemptRef = useRef<{ fingerprint: string; idempotencyKey: string } | null>(null);
 
   useEffect(() => {
     if (!initialThemes.length) return;
@@ -149,7 +155,10 @@ export function CustomerVideoWorkspace({
         const nextThemes = payload.themes ?? [];
         if (nextThemes.length) {
           setThemes(nextThemes);
-          setSelectedThemeId((current) => current || defaultVideoTheme(nextThemes)?.id || "");
+          setSelectedThemeId((current) => {
+            if (!current || !nextThemes.some((theme) => theme.id === current)) return defaultVideoTheme(nextThemes)?.id || current || "";
+            return current;
+          });
         }
         if (!nextThemes.length) {
           setMessage((current) => initialThemes.length ? current : vt(spanish, "No active video presets are available yet.", "Aun no hay ajustes de video activos."));
@@ -165,7 +174,7 @@ export function CustomerVideoWorkspace({
   }, [initialThemes.length, siteId, spanish, themeReloadKey]);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
-  const maxFrames = normalizeVideoFrameLimit(selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT);
+  const maxFrames = CUSTOMER_VIDEO_FRAME_LIMIT;
   const availableDurationOptions = videoDurationOptionsForFrameCount(selectedFrameIds.length);
   const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(selectedDurationSeconds, selectedFrameIds.length);
   const providerFrameLimitMessage = maxFrames > 1
@@ -197,7 +206,7 @@ export function CustomerVideoWorkspace({
       ? themes.find((theme) => theme.id === retryDraft.videoThemeId)
       : undefined;
     const restoredThemeId = restoredTheme?.id ?? retryDraft.videoThemeId;
-    const restoredMaxFrames = normalizeVideoFrameLimit(restoredTheme?.effectiveMaxFrames ?? restoredTheme?.maxFrames);
+    const restoredMaxFrames = CUSTOMER_VIDEO_FRAME_LIMIT;
     const restoredFrameIds = trimVideoFrameSelection(retryDraft.frameAssetIds, restoredMaxFrames);
     setSelectedFrameIds(restoredFrameIds);
     if (restoredThemeId) setSelectedThemeId(restoredThemeId);
@@ -288,6 +297,7 @@ export function CustomerVideoWorkspace({
         mode: "video",
         outputType: "video",
         videoThemeId: selectedTheme.id,
+        videoThemeSlug: selectedTheme.slug,
         duration: String(effectiveDurationSeconds),
         videoDuration: String(effectiveDurationSeconds),
         durationSeconds: effectiveDurationSeconds,
@@ -302,6 +312,7 @@ export function CustomerVideoWorkspace({
           outputType: "video",
           videoInputMode: hasReadyFrameInput ? "image_to_video" : "text_to_video",
           videoThemeId: selectedTheme.id,
+          videoThemeSlug: selectedTheme.slug,
           videoThemeName: selectedTheme.name,
           videoThemePrompt: selectedTheme.prompt,
           frameAssetIds: generationFrameIds,
@@ -317,23 +328,45 @@ export function CustomerVideoWorkspace({
         }
       }
     };
+    const requestFingerprint = JSON.stringify(requestBody);
+    const previousAttempt = submitAttemptRef.current;
+    const idempotencyKey = previousAttempt?.fingerprint === requestFingerprint
+      ? previousAttempt.idempotencyKey
+      : newVideoSubmitIdempotencyKey();
+    submitAttemptRef.current = { fingerprint: requestFingerprint, idempotencyKey };
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 30_000);
     const submitRequest = () => fetch(`/api/sites/${siteId}/ai/jobs`, {
       method: "POST",
-      headers: customerJsonHeaders(siteId),
-      body: JSON.stringify(requestBody)
+      headers: customerJsonHeaders(siteId, { "Idempotency-Key": idempotencyKey }),
+      signal: controller.signal,
+      body: JSON.stringify({ ...requestBody, idempotencyKey })
     });
-    let response = await submitRequest();
-    let result = (await response.json().catch(() => ({}))) as { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
-    if (isCsrfError(result.error, response.status)) {
-      await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=csrf-${Date.now()}`, { cache: "no-store" }).catch(() => null);
+    let response: Response;
+    let result: { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
+    try {
       response = await submitRequest();
-      result = (await response.json().catch(() => ({}))) as { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
+      result = (await response.json().catch(() => ({}))) as typeof result;
+      if (isCsrfError(result.error, response.status)) {
+        await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=csrf-${Date.now()}`, { cache: "no-store" }).catch(() => null);
+        response = await submitRequest();
+        result = (await response.json().catch(() => ({}))) as typeof result;
+      }
+    } catch (error) {
+      window.clearTimeout(timeout);
+      setPending(false);
+      setMessage(error instanceof DOMException && error.name === "AbortError"
+        ? vt(spanish, "Video request creation is taking longer than expected. Refresh the workspace before retrying so an already-started request can appear first.", "La creacion del video esta tardando mas de lo esperado. Actualiza el espacio de trabajo antes de reintentar para que aparezca primero una solicitud ya iniciada.")
+        : vt(spanish, "The network failed while starting this video. Please check the connection and try again.", "La red fallo al iniciar este video. Revisa la conexion e intentalo de nuevo."));
+      return;
     }
+    window.clearTimeout(timeout);
     setPending(false);
     if (!response.ok || !result.job) {
       setMessage(errorText(result.error, response.status, spanish));
       return;
     }
+    submitAttemptRef.current = null;
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
     onJobCreated(result.job.id, { customerBalance: result.customerBalance });
   }

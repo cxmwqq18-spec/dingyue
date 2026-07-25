@@ -70,10 +70,10 @@ async function compressToJpeg(file: File, maxDimension: number, quality: number)
 
 export async function prepareCustomerImageUploadFile(
   file: File,
-  options: { targetBytes?: number } = {}
+  options: { targetBytes?: number; preserveOriginal?: boolean } = {}
 ): Promise<PreparedCustomerImageUpload> {
   const targetBytes = options.targetBytes ?? defaultTargetBytes;
-  if (!canCompressImage(file) || file.size <= targetBytes) {
+  if (options.preserveOriginal || !canCompressImage(file) || file.size <= targetBytes) {
     return { file, compressed: false, originalSize: file.size, uploadSize: file.size };
   }
 

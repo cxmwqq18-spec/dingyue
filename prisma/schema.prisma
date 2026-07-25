@@ -105,6 +105,7 @@ model PlatformAiProvider {
   aiUrl               String
   apiKey              String?
   modelType           String
+  providerType        String   @default("image")
   priority            Int      @default(0)
   preferred           Boolean  @default(false)
   enabled             Boolean  @default(true)
@@ -117,6 +118,8 @@ model PlatformAiProvider {
 
   @@index([preferred, priority])
   @@index([enabled, preferred, priority])
+  @@index([providerType, preferred, priority])
+  @@index([providerType, enabled, preferred, priority])
 }
 
 model PlatformAsyncJob {

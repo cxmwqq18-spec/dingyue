@@ -1,5 +1,7 @@
 import crypto from "crypto";
-import { getPlatformAiProviderFallbackQueueRelational, type PlatformAiProviderFallbackQueue } from "@/lib/stores/platform-store";
+import { platformProviderTypeForAppType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { fetchWithTimeout } from "@/lib/fetch-timeout";
+import { getPlatformAiProviderFallbackQueueRelational, getPlatformAiProviderRelational, type PlatformAiProviderFallbackQueue } from "@/lib/stores/platform-store";
 import { getCustomerAssetRelational } from "@/lib/stores/asset-store";
 import type { GenerationJob, SiteAiApp } from "./types";
 
@@ -11,11 +13,12 @@ export interface WorkerPayload {
   routeKey: string;
   workflow?: unknown;
   prompt?: unknown;
-  inputAssets: Array<{ assetId: string; signedUrl: string; publicUrl?: string }>;
+  inputAssets: Array<{ assetId: string; signedUrl: string; publicUrl?: string; storageKey?: string; mimeType?: string }>;
   params: Record<string, unknown>;
   providerSelection?: unknown;
   aiProviderFallback: {
     strategy: "preferred_then_priority";
+    providerType: PlatformAiProviderType;
     providers: PlatformAiProviderFallbackQueue;
   };
   callbackUrl: string;
@@ -48,6 +51,32 @@ export interface WorkerResultPayload {
   error?: string;
 }
 
+type WorkerProviderSecret = PlatformAiProviderFallbackQueue[number] & { apiKey?: string };
+const workerProviderSecretCache = new Map<string, { expiresAt: number; providers: Map<string, WorkerProviderSecret> }>();
+
+function pruneWorkerProviderSecretCache(now = Date.now()) {
+  for (const [requestId, entry] of workerProviderSecretCache) {
+    if (entry.expiresAt <= now) workerProviderSecretCache.delete(requestId);
+  }
+}
+
+export function getCachedWorkerProviderSecret(requestId: string, providerId: string): WorkerProviderSecret | undefined {
+  pruneWorkerProviderSecretCache();
+  return workerProviderSecretCache.get(requestId)?.providers.get(providerId);
+}
+
+async function cacheWorkerProviderSecrets(requestId: string, providerQueue: PlatformAiProviderFallbackQueue) {
+  const providers = await Promise.all(providerQueue.map(async (provider) => {
+    const full = await getPlatformAiProviderRelational(provider.id);
+    return full ? { ...provider, apiKey: full.apiKey } : provider;
+  }));
+  workerProviderSecretCache.set(requestId, {
+    expiresAt: Date.now() + 1000 * 60 * 60,
+    providers: new Map(providers.map((provider) => [provider.id, provider]))
+  });
+  pruneWorkerProviderSecretCache();
+}
+
 export type WorkerOutputSlotStatus = "queued" | "running" | "succeeded" | "failed";
 
 export interface WorkerOutputSlot {
@@ -57,6 +86,7 @@ export interface WorkerOutputSlot {
   storageKey?: string;
   mimeType?: string;
   error?: string;
+  providerTaskId?: string;
   referenceFrameCount?: number;
   requestedReferenceFrameCount?: number;
   providerReferenceLimit?: number;
@@ -247,7 +277,7 @@ async function buildInputAssets(params: {
   job: GenerationJob;
   assetBaseUrl: string;
   publicAssetBaseUrl?: string;
-}): Promise<Array<{ assetId: string; signedUrl: string; publicUrl?: string }>> {
+}): Promise<Array<{ assetId: string; signedUrl: string; publicUrl?: string; storageKey?: string; mimeType?: string }>> {
   const assetBaseUrl = params.assetBaseUrl.replace(/\/$/, "");
   const publicAssetBaseUrl = params.publicAssetBaseUrl?.replace(/\/$/, "") || assetBaseUrl;
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60).toISOString();
@@ -268,7 +298,9 @@ async function buildInputAssets(params: {
       return {
         assetId: result.asset.id,
         signedUrl: `${assetBaseUrl}${path}`,
-        publicUrl: `${publicAssetBaseUrl}${path}`
+        publicUrl: `${publicAssetBaseUrl}${path}`,
+        storageKey: result.asset.storageKey,
+        mimeType: result.asset.mimeType
       };
     })
   );
@@ -298,6 +330,11 @@ export async function buildWorkerPayload(params: {
     assetBaseUrl: callbackBaseUrl,
     publicAssetBaseUrl: publicBaseUrl
   });
+  const providerType = isVideoWorkerJob(params.job)
+    ? "video"
+    : platformProviderTypeForAppType(params.siteAiApp.aiApp.appType);
+  const providerQueue = await getPlatformAiProviderFallbackQueueRelational(providerType);
+  await cacheWorkerProviderSecrets(requestId, providerQueue);
   const unsigned: Omit<WorkerPayload, "signature"> = {
     jobId: params.job.id,
     siteId: params.job.siteId,
@@ -311,7 +348,8 @@ export async function buildWorkerPayload(params: {
     providerSelection: params.job.requestJson.providerSelection,
     aiProviderFallback: {
       strategy: "preferred_then_priority",
-      providers: await getPlatformAiProviderFallbackQueueRelational()
+      providerType,
+      providers: providerQueue
     },
     callbackUrl: `${callbackBaseUrl}/api/internal/ai-worker/jobs/${params.job.id}/result`,
     statusCallbackUrl: `${callbackBaseUrl}/api/internal/ai-worker/jobs/${params.job.id}/status`,
@@ -327,7 +365,7 @@ export async function dispatchWorkerPayload(payload: WorkerPayload): Promise<Wor
   const endpoint = resolveWorkerDispatchEndpoint(payload);
   if (!endpoint) return { status: "skipped", error: "worker_dispatch_not_configured" };
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetchWithTimeout(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -335,7 +373,8 @@ export async function dispatchWorkerPayload(payload: WorkerPayload): Promise<Wor
         "X-AI-Worker-Request-Id": payload.requestId
       },
       body: JSON.stringify(payload),
-      cache: "no-store"
+      cache: "no-store",
+      timeoutMs: Number(process.env.AI_WORKER_DISPATCH_TIMEOUT_MS ?? 10_000)
     });
     return {
       status: response.ok ? "sent" : "failed",
