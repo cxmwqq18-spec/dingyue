@@ -66,6 +66,15 @@ type SharpFactory = (input: Buffer) => SharpInstance;
 
 const execFileAsync = promisify(execFile);
 
+function ffmpegExecutablePath() {
+  const explicit = process.env.FFMPEG_PATH?.trim() || process.env.FFMPEG_BINARY?.trim() || process.env.FFMPEG_BIN?.trim();
+  if (explicit) return explicit;
+  const bundledPath = typeof ffmpegPath === "string" ? ffmpegPath : "";
+  const bundledInsideNextBuild = bundledPath.includes(`${path.sep}.next${path.sep}`) || bundledPath.includes(`${path.sep}.next-build${path.sep}`);
+  if (bundledPath && !bundledInsideNextBuild) return bundledPath;
+  return path.join(process.cwd(), "node_modules", "ffmpeg-static", process.platform === "win32" ? "ffmpeg.exe" : "ffmpeg");
+}
+
 async function loadSharp(): Promise<SharpFactory | undefined> {
   try {
     const moduleName = "sharp";
@@ -1284,7 +1293,7 @@ async function resizeVideoReferenceToTargetCanvasWithFfmpeg(
   target: { width: number; height: number },
   quality: number
 ) {
-  const ffmpegExecutable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
+  const ffmpegExecutable = ffmpegExecutablePath();
   if (!ffmpegExecutable) throw new Error("ffmpeg_unavailable");
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), "mydreamshoots-video-reference-"));
   try {
@@ -2207,7 +2216,7 @@ async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeTyp
   if (!shouldOptimizeGeneratedVideoOutputs(mode)) return video;
   if (!video.mimeType.startsWith("video/")) return video;
   if (video.bytes.length < generatedVideoOptimizeMinBytes()) return video;
-  const ffmpegExecutable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
+  const ffmpegExecutable = ffmpegExecutablePath();
   if (!ffmpegExecutable) return video;
 
   const tmpDir = await mkdtemp(path.join(os.tmpdir(), "mydreamshoots-video-"));

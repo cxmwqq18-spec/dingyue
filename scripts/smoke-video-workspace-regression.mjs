@@ -713,6 +713,8 @@ assert(dispatchRoute.includes("prepareVideoReferenceImage(bytes, mimeType, param
 assert(dispatchRoute.includes("options.forceCompression === true || Boolean(target) || shouldCompressVideoReferenceImages()"), "video reference preparation should resize whenever a target size is supplied");
 assert(dispatchRoute.includes("resizeVideoReferenceToTargetCanvas"), "target-sized video reference preparation should preserve the full frame on a provider-sized canvas");
 assert(dispatchRoute.includes("resizeVideoReferenceToTargetCanvasWithFfmpeg"), "target-sized video references should fall back to ffmpeg-static when sharp cannot load on the production host");
+assert(dispatchRoute.includes("function ffmpegExecutablePath()"), "video worker should resolve ffmpeg-static from the release root instead of trusting Next's bundled route path");
+assert(dispatchRoute.includes('path.join(process.cwd(), "node_modules", "ffmpeg-static"'), "ffmpeg-static fallback should survive Next production route bundling");
 assert(dispatchRoute.includes("video_reference_resize_ffmpeg_fallback_failed"), "ffmpeg reference resize fallback failures should be logged before the worker fails the job");
 assert(dispatchRoute.includes('fit: "inside"') && dispatchRoute.includes("composite([{ input: foreground, gravity: \"center\" }]"), "target-sized video references should keep the whole source image centered instead of hard-cropping it");
 assert(!dispatchRoute.includes('? { width: target.width, height: target.height, fit: "cover", position: "attention" }'), "target-sized video references should not directly cover-crop mismatched source ratios");
