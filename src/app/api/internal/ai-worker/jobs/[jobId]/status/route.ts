@@ -33,6 +33,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       ? Math.max(0, Math.min(100, Number(body.progress)))
       : body.outputSlots?.find((slot) => Number.isFinite(Number(slot.progress)))?.progress;
     const outputSlots = Array.isArray(body.outputSlots) ? body.outputSlots : undefined;
+    const timing = recordTiming(body.timing);
     const result = await updateGenerationJobStatusRelational({
       jobId,
       siteId: body.siteId,
@@ -41,8 +42,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       stage: body.stage,
       progress,
       outputSlots,
-      timing: recordTiming(body.timing)
+      timing
     });
+    const resultTiming = recordTiming(result.job.resultJson?.timing) ?? timing;
     publishCustomerJobEventForJob("status", result.job, {
       alreadyFinal: result.alreadyFinal,
       stage: body.stage,
@@ -50,6 +52,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
         (Number.isFinite(Number(result.job.resultJson?.lastWorkerProgress)) ? Number(result.job.resultJson?.lastWorkerProgress) : undefined),
       outputSlots,
       error: body.error,
+      timing: resultTiming,
       eventKind: body.status === "failed" || result.alreadyFinal ? "final" : "progress"
     });
     return NextResponse.json({

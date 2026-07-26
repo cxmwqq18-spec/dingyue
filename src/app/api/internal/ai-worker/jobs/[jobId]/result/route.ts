@@ -7,6 +7,15 @@ import { verifyWorkerCallbackSignature, type WorkerResultPayload } from "@/lib/w
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function recordTiming(value: unknown): Record<string, string> | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const timing: Record<string, string> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (typeof entry === "string" && entry) timing[key] = entry;
+  }
+  return Object.keys(timing).length ? timing : undefined;
+}
+
 export async function POST(request: Request, { params }: { params: Promise<{ jobId: string }> }) {
   const { jobId } = await params;
   const body = (await request.json().catch(() => ({}))) as WorkerResultPayload;
@@ -35,7 +44,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
     publishCustomerJobEventForJob("result", result.job, {
       alreadyProcessed: result.alreadyProcessed,
       eventKind: "final",
-      error: body.error
+      error: body.error,
+      timing: recordTiming(result.job.resultJson?.timing) ?? body.timing
     });
     return NextResponse.json({
       accepted: true,

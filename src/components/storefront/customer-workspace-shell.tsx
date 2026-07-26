@@ -78,12 +78,27 @@ type RuntimeOutputSlot = {
   updatedAt?: string;
 };
 
+type VideoTimingBreakdownRow = {
+  key: string;
+  label: string;
+  seconds: number;
+  active?: boolean;
+};
+
+type VideoTimingBreakdown = {
+  hasDetailedTiming: boolean;
+  rows: VideoTimingBreakdownRow[];
+  totalSeconds?: number;
+  fallbackNotice?: string;
+};
+
 type LiveJobPatch = {
   status?: RuntimeJob["status"];
   stage?: string;
   progress?: number;
   outputSlots?: RuntimeOutputSlot[];
   error?: string;
+  timing?: Record<string, string>;
   updatedAt?: string;
 };
 
@@ -95,6 +110,7 @@ type CustomerJobEventPayload = {
   progress?: unknown;
   outputSlots?: unknown;
   error?: unknown;
+  timing?: unknown;
   eventKind?: unknown;
   updatedAt?: unknown;
 };
@@ -147,6 +163,15 @@ function runtimeOutputSlotStatusFromEvent(value: unknown): RuntimeOutputSlot["st
 function normalizedProgressValue(value: unknown): number | undefined {
   const progress = Number(value);
   return Number.isFinite(progress) ? Math.max(0, Math.min(100, progress)) : undefined;
+}
+
+function runtimeTimingFromEvent(value: unknown): Record<string, string> | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const timing: Record<string, string> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (typeof entry === "string" && entry) timing[key] = entry;
+  }
+  return Object.keys(timing).length ? timing : undefined;
 }
 
 function monotonicRuntimeProgress(previous: number | undefined, next: number | undefined, status?: RuntimeJob["status"] | RuntimeOutputSlot["status"]): number | undefined {
@@ -207,6 +232,9 @@ function mergeRuntimeOutputSlots(previous: unknown, patch: RuntimeOutputSlot[]):
 function applyLiveJobPatch(job: RuntimeJob, patch: LiveJobPatch): RuntimeJob {
   const previousResult = recordValue(job.resultJson);
   const outputSlots = patch.outputSlots ? mergeRuntimeOutputSlots(previousResult.outputSlots, patch.outputSlots) : undefined;
+  const timing = patch.timing
+    ? { ...(runtimeTimingFromEvent(previousResult.timing) ?? {}), ...patch.timing }
+    : undefined;
   const previousProgress = normalizedProgressValue(previousResult.lastWorkerProgress);
   const progress = monotonicRuntimeProgress(previousProgress, patch.progress, patch.status);
   return {
@@ -219,7 +247,8 @@ function applyLiveJobPatch(job: RuntimeJob, patch: LiveJobPatch): RuntimeJob {
       ...(patch.stage ? { lastWorkerStage: patch.stage } : {}),
       ...(progress !== undefined ? { lastWorkerProgress: progress } : {}),
       ...(outputSlots ? { outputSlots } : {}),
-      ...(patch.error ? { error: patch.error } : {})
+      ...(patch.error ? { error: patch.error } : {}),
+      ...(timing ? { timing } : {})
     }
   };
 }
@@ -310,6 +339,117 @@ function videoPromptRequiresFrameImages(prompt: string): boolean {
 
 function videoJobMissingRequiredFrames(job: RuntimeJob): boolean {
   return isVideoRuntimeJob(job) && !videoJobFrameIds(job).length && videoPromptRequiresFrameImages(videoJobPromptText(job));
+}
+
+function dateMs(value: unknown): number | undefined {
+  if (!(typeof value === "string" || value instanceof Date)) return undefined;
+  const ms = new Date(value).getTime();
+  return Number.isFinite(ms) ? ms : undefined;
+}
+
+function elapsedSeconds(startMs: number | undefined, endMs: number | undefined): number | undefined {
+  if (startMs === undefined || endMs === undefined || endMs < startMs) return undefined;
+  return (endMs - startMs) / 1000;
+}
+
+function formatWorkspaceDuration(seconds: number | undefined): string {
+  if (seconds === undefined) return "";
+  const rounded = Math.max(0, Math.round(seconds));
+  if (rounded < 1) return "<1s";
+  if (rounded < 60) return `${rounded}s`;
+  const minutes = Math.floor(rounded / 60);
+  const remainder = rounded % 60;
+  if (minutes < 60) return remainder ? `${minutes}m ${remainder}s` : `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const minuteRemainder = minutes % 60;
+  return minuteRemainder ? `${hours}h ${minuteRemainder}m` : `${hours}h`;
+}
+
+function workspaceVideoTimingBreakdown(job: RuntimeJob, spanish = false, nowMs = Date.now()): VideoTimingBreakdown {
+  const result = jobResult(job);
+  const timing = recordValue(result.timing);
+  const hasDetailedTiming = Object.keys(timing).length > 0;
+  const createdMs = dateMs(job.createdAt);
+  const updatedMs = dateMs(job.updatedAt);
+  const workerAcceptedMs = dateMs(timing.workerAcceptedAt);
+  const referencePreparedMs = dateMs(timing.referencePreparedAt);
+  const providerTaskCreatedMs = dateMs(timing.providerTaskCreatedAt);
+  const providerCompletedMs = dateMs(timing.providerCompletedAt);
+  const downloadedMs = dateMs(timing.downloadedAt);
+  const storedMs = dateMs(timing.storedAt);
+  const settledMs = dateMs(timing.settledAt);
+  const optimizedStoredMs = dateMs(timing.optimizedStoredAt);
+  const active = job.status === "queued" || job.status === "running";
+  const terminalMs = settledMs ?? storedMs ?? downloadedMs ?? providerCompletedMs ?? (active ? nowMs : updatedMs);
+  const incompleteStageEndMs = active ? nowMs : terminalMs;
+  const totalSeconds = elapsedSeconds(createdMs, terminalMs);
+
+  if (!hasDetailedTiming) {
+    return {
+      hasDetailedTiming,
+      rows: [],
+      totalSeconds,
+      fallbackNotice: t(spanish, "Timing details are available for newer video requests.", "Los detalles de tiempo estan disponibles para solicitudes de video mas recientes.")
+    };
+  }
+
+  const rows: VideoTimingBreakdownRow[] = [];
+  const addRow = (key: string, label: string, startMs: number | undefined, endMs: number | undefined, rowActive = false) => {
+    const seconds = elapsedSeconds(startMs, endMs);
+    if (seconds === undefined) return;
+    rows.push({ key, label, seconds, ...(rowActive ? { active: true } : {}) });
+  };
+
+  addRow(
+    "submit_to_worker",
+    t(spanish, "Submit to worker", "Enviar al worker"),
+    createdMs,
+    workerAcceptedMs ?? (!workerAcceptedMs ? incompleteStageEndMs : undefined),
+    active && !workerAcceptedMs
+  );
+  addRow(
+    "prepare_references",
+    t(spanish, "Prepare references", "Preparar referencias"),
+    workerAcceptedMs,
+    referencePreparedMs ?? (workerAcceptedMs && !referencePreparedMs ? incompleteStageEndMs : undefined),
+    active && Boolean(workerAcceptedMs) && !referencePreparedMs
+  );
+  addRow(
+    "create_provider_task",
+    t(spanish, "Create provider task", "Crear tarea del proveedor"),
+    referencePreparedMs,
+    providerTaskCreatedMs ?? (referencePreparedMs && !providerTaskCreatedMs ? incompleteStageEndMs : undefined),
+    active && Boolean(referencePreparedMs) && !providerTaskCreatedMs
+  );
+  addRow(
+    "provider_generation",
+    t(spanish, "Provider generation", "Generacion del proveedor"),
+    providerTaskCreatedMs,
+    providerCompletedMs ?? (providerTaskCreatedMs ? incompleteStageEndMs : undefined),
+    active && Boolean(providerTaskCreatedMs) && !providerCompletedMs
+  );
+  addRow(
+    "download_result",
+    t(spanish, "Download result", "Descargar resultado"),
+    providerCompletedMs,
+    downloadedMs ?? (providerCompletedMs && !downloadedMs ? incompleteStageEndMs : undefined),
+    active && Boolean(providerCompletedMs) && !downloadedMs
+  );
+  addRow(
+    "save_and_settle",
+    t(spanish, "Save and settle", "Guardar y cerrar"),
+    downloadedMs,
+    settledMs ?? storedMs ?? (downloadedMs ? incompleteStageEndMs : undefined),
+    active && Boolean(downloadedMs) && !storedMs && !settledMs
+  );
+  addRow(
+    "background_optimization",
+    t(spanish, "Background optimization", "Optimizacion en segundo plano"),
+    settledMs ?? storedMs,
+    optimizedStoredMs
+  );
+
+  return { hasDetailedTiming, rows, totalSeconds };
 }
 
 function stringRequestValue(...values: unknown[]): string | undefined {
@@ -1190,6 +1330,9 @@ export function CustomerWorkspaceShell({
       [eventJobId]: (() => {
         const previousPatch = current[eventJobId];
         const progress = monotonicRuntimeProgress(previousPatch?.progress, patch.progress, patch.status);
+        const timing = patch.timing
+          ? { ...(previousPatch?.timing ?? {}), ...patch.timing }
+          : undefined;
         return {
           ...previousPatch,
           ...(patch.status ? { status: patch.status } : {}),
@@ -1197,6 +1340,7 @@ export function CustomerWorkspaceShell({
           ...(progress !== undefined ? { progress } : {}),
           ...(patch.outputSlots ? { outputSlots: mergeRuntimeOutputSlots(previousPatch?.outputSlots, patch.outputSlots) } : {}),
           ...(patch.error ? { error: patch.error } : {}),
+          ...(timing ? { timing } : {}),
           ...(patch.updatedAt ? { updatedAt: patch.updatedAt } : {})
         };
       })()
@@ -1347,6 +1491,7 @@ export function CustomerWorkspaceShell({
       const outputSlots = runtimeOutputSlotsFromEvent(payload.outputSlots);
       const stage = typeof payload.stage === "string" ? payload.stage : undefined;
       const error = typeof payload.error === "string" ? payload.error : undefined;
+      const timing = runtimeTimingFromEvent(payload.timing);
       const updatedAt = typeof payload.updatedAt === "string" ? payload.updatedAt : new Date().toISOString();
       const finalEvent = payload.eventKind === "final" || payload.type === "result" || status === "succeeded" || status === "failed";
       setFocusedJobId((current) => current ?? eventJobId);
@@ -1356,6 +1501,7 @@ export function CustomerWorkspaceShell({
         ...(progress !== undefined ? { progress } : {}),
         ...(outputSlots ? { outputSlots } : {}),
         ...(error ? { error } : {}),
+        ...(timing ? { timing } : {}),
         updatedAt
       });
       if (!finalEvent) {
@@ -1367,6 +1513,7 @@ export function CustomerWorkspaceShell({
         return;
       }
       clearQueuedEventRefresh();
+      queueWorkspaceRuntimeRefresh("event");
       setRuntimeRefreshMessage(spanishXby ? `Generador finalizado ${workspaceJobTime(updatedAt)}` : `Generator finished ${workspaceJobTime(updatedAt)}`);
     };
     events.addEventListener("job", refreshFromJobEvent);
@@ -3207,6 +3354,7 @@ export function CustomerWorkspaceShell({
                           const slots = workspaceJobOutputSlots(job, outputAssets);
                           const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
                           const retryDraft = failed ? videoRetryDraftFromJob(job) : undefined;
+                          const timingBreakdown = workspaceVideoTimingBreakdown(job, spanishXby);
                           return (
                             <div
                               className={`rounded-[14px] border p-4 ${
@@ -3225,6 +3373,28 @@ export function CustomerWorkspaceShell({
                                 </span>
                               </div>
                               <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                              <div className="mt-3 border-t border-white/8 pt-3">
+                                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-semibold text-white/58">
+                                  <span>{t(spanishXby, "Time breakdown", "Desglose de tiempo")}</span>
+                                  {timingBreakdown.totalSeconds !== undefined ? (
+                                    <span>{t(spanishXby, "Total", "Total")} {formatWorkspaceDuration(timingBreakdown.totalSeconds)}</span>
+                                  ) : null}
+                                </div>
+                                {timingBreakdown.hasDetailedTiming && timingBreakdown.rows.length ? (
+                                  <div className="mt-2 grid gap-1.5 text-[10px] text-white/42 sm:grid-cols-2">
+                                    {timingBreakdown.rows.map((row) => (
+                                      <div className="flex min-w-0 items-center justify-between gap-2" key={row.key}>
+                                        <span className="truncate">{row.label}</span>
+                                        <span className={`shrink-0 font-semibold ${row.active ? "text-amber-100" : "text-white/56"}`}>
+                                          {formatWorkspaceDuration(row.seconds)}{row.active ? ` ${t(spanishXby, "so far", "hasta ahora")}` : ""}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p className="mt-2 text-[10px] leading-4 text-white/38">{timingBreakdown.fallbackNotice}</p>
+                                )}
+                              </div>
                               {failed ? (
                                 <div className="mt-3 flex flex-wrap items-center gap-2">
                                   <button

@@ -1923,8 +1923,24 @@ function publishLocalWorkerStatusEvent(
     ...(Number.isFinite(Number(options.progress)) ? { progress: normalizedWorkerProgress(options.progress) } : {}),
     ...(options.outputSlots ? { outputSlots: options.outputSlots } : {}),
     ...(options.error ? { error: options.error } : {}),
+    ...(options.timing ? { timing: options.timing } : {}),
     eventKind: options.eventKind ?? (status === "failed" || status === "succeeded" ? "final" : "progress")
   });
+}
+
+function timingFromResultJson(value: unknown, fallback?: Record<string, string>): Record<string, string> | undefined {
+  const result = value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+  const previousTiming = result.timing && typeof result.timing === "object" && !Array.isArray(result.timing)
+    ? result.timing as Record<string, unknown>
+    : {};
+  const timing: Record<string, string> = {};
+  for (const [key, entry] of Object.entries(previousTiming)) {
+    if (typeof entry === "string" && entry) timing[key] = entry;
+  }
+  for (const [key, entry] of Object.entries(fallback ?? {})) {
+    if (typeof entry === "string" && entry) timing[key] = entry;
+  }
+  return Object.keys(timing).length ? timing : undefined;
 }
 
 async function postWorkerStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, options: WorkerStatusPostOptions = {}) {
@@ -1943,7 +1959,12 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
       return;
     }
     const result = await updateGenerationJobStatusRelational(body).catch(() => null);
-    if (result) publishCustomerJobEventForJob("status", result.job, { stage, eventKind: options.eventKind ?? (status === "failed" ? "final" : "progress"), error: options.error });
+    if (result) publishCustomerJobEventForJob("status", result.job, {
+      stage,
+      eventKind: options.eventKind ?? (status === "failed" ? "final" : "progress"),
+      error: options.error,
+      timing: timingFromResultJson(result.job.resultJson, options.timing)
+    });
     return;
   }
   const request = fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
@@ -1996,6 +2017,7 @@ async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | 
         progress,
         outputSlots: [slot],
         error: slot.error || undefined,
+        timing: timingFromResultJson(result.job.resultJson, options.timing),
         eventKind: eventOptions.eventKind
       });
     }
@@ -2082,7 +2104,8 @@ async function postWorkerResult(
     publishCustomerJobEventForJob("result", result.job, {
       alreadyProcessed: result.alreadyProcessed,
       eventKind: "final",
-      error: body.error
+      error: body.error,
+      timing: timingFromResultJson(result.job.resultJson, body.timing)
     });
     return;
   }
@@ -2494,10 +2517,25 @@ async function pollVideoTask(params: {
   taskId: string;
   protocol: VideoProviderProtocol;
   timeoutMs: number;
+  timing?: Record<string, string>;
 }) {
   const startedAt = Date.now();
   let lastStatus = "";
   let firstPoll = true;
+  let providerFirstProgressAt = params.timing?.providerFirstProgressAt;
+  const providerProgressTiming = (progress: unknown): Record<string, string> | undefined => {
+    if (!Number.isFinite(Number(progress))) return undefined;
+    const providerLastProgressAt = new Date().toISOString();
+    if (!providerFirstProgressAt) providerFirstProgressAt = providerLastProgressAt;
+    if (params.timing) {
+      params.timing.providerFirstProgressAt = providerFirstProgressAt;
+      params.timing.providerLastProgressAt = providerLastProgressAt;
+    }
+    return {
+      providerFirstProgressAt,
+      providerLastProgressAt
+    };
+  };
   while (Date.now() - startedAt < params.timeoutMs) {
     const elapsedMs = Date.now() - startedAt;
     if (!firstPoll) {
@@ -2522,6 +2560,7 @@ async function pollVideoTask(params: {
           creditCost: task.creditCost
         };
         lastStatus = [body.status, body.progress].filter(Boolean).join("_");
+        const progressTiming = providerProgressTiming(body.progress);
         await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
           index: 1,
           status: "running",
@@ -2531,7 +2570,7 @@ async function pollVideoTask(params: {
             : undefined,
           error: "",
           updatedAt: new Date().toISOString()
-        }, { nonBlocking: true, progressWrite: true });
+        }, { nonBlocking: true, progressWrite: true, ...(progressTiming ? { timing: progressTiming } : {}) });
         if (body.status === "success" && body.videoUrl) return body;
         if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
           const rawFailure = textValue(body.error) || textValue(body.message) || "no_result";
@@ -2565,6 +2604,7 @@ async function pollVideoTask(params: {
         throw new Error(`ai_provider_video_status_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
       }
       lastStatus = [body.state, body.progress, body.status].filter(Boolean).join("_");
+      const progressTiming = providerProgressTiming(body.progress);
       await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
         index: 1,
         status: "running",
@@ -2574,7 +2614,7 @@ async function pollVideoTask(params: {
           : undefined,
         error: "",
         updatedAt: new Date().toISOString()
-      }, { nonBlocking: true, progressWrite: true });
+      }, { nonBlocking: true, progressWrite: true, ...(progressTiming ? { timing: progressTiming } : {}) });
       if (params.protocol === "openai-videos") {
         if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
         if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
@@ -2690,8 +2730,9 @@ async function downloadVideoResult(params: {
 async function generateVideoWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
+  timing?: Record<string, string>;
 }) {
-  const timing: Record<string, string> = {};
+  const timing = params.timing ?? {};
   const markTiming = (key: string) => {
     const value = new Date().toISOString();
     timing[key] = value;
@@ -2825,6 +2866,7 @@ async function generateVideoWithProvider(params: {
       apiKey: providerApiKey,
       taskId,
       protocol,
+      timing,
       timeoutMs
     });
     const providerCompletedAt = markTiming("providerCompletedAt");
@@ -2932,7 +2974,7 @@ async function generateVideoWithProvider(params: {
       timing: { optimizedStoredAt }
     });
     if (result.updated && result.job) {
-      publishCustomerJobEventForJob("result", result.job, { eventKind: "final" });
+      publishCustomerJobEventForJob("result", result.job, { eventKind: "final", timing: timingFromResultJson(result.job.resultJson, { optimizedStoredAt }) });
     }
   } : undefined;
   return {
@@ -3099,6 +3141,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
   const providerErrors: Array<{ provider: string; error: string }> = [];
   let lastError = "";
   let lastProviderFailure: VideoProviderFailure | undefined;
+  let lastProviderTiming: Record<string, string> | undefined;
 
   for (const provider of providers) {
     const trace = { provider: provider.label || provider.id, attempts: 0 };
@@ -3108,8 +3151,10 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     try {
       for (const attempt of Array.from({ length: maxAttempts }, (_, attemptIndex) => attemptIndex + 1)) {
         trace.attempts += 1;
+        const attemptTiming: Record<string, string> = {};
         try {
-          const output = await generateVideoWithProvider({ payload, providerId: provider.id });
+          const output = await generateVideoWithProvider({ payload, providerId: provider.id, timing: attemptTiming });
+          lastProviderTiming = { ...attemptTiming, ...output.timing };
           await postWorkerResult(payload, {
             status: "succeeded",
             outputs: [{ storageKey: output.storageKey, mimeType: output.mimeType }],
@@ -3134,6 +3179,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
           }
           return;
         } catch (error) {
+          if (Object.keys(attemptTiming).length) lastProviderTiming = { ...attemptTiming };
           lastError = errorMessage(error);
           lastProviderFailure = videoProviderFailureFromError(error, failureContext);
           if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
@@ -3152,7 +3198,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
         error: lastError.slice(0, 240),
         ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}),
         updatedAt: new Date().toISOString()
-      });
+      }, lastProviderTiming ? { timing: lastProviderTiming } : {});
       if (!shouldAllowPaidVideoProviderFallback()) break;
     }
   }
@@ -3167,7 +3213,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     error: finalError || "local_video_worker_generation_failed",
     ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}),
     costTrace: { providerErrors, ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}) },
-    timing: workerTiming
+    timing: { ...workerTiming, ...(lastProviderTiming ?? {}) }
   });
 }
 

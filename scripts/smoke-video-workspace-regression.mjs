@@ -15,6 +15,7 @@ const packageJson = read("package.json");
 const fixedPortDevScript = read("scripts/dev-fixed-port.mjs");
 const dbTunnelScript = read("scripts/start-remote-db-tunnel.mjs");
 const dbTunnelWatchScript = read("scripts/watch-remote-db-tunnel.mjs");
+const videoLatencyReport = read("scripts/report-video-generation-latency.mjs");
 assert(packageJson.includes('"dev:3002": "node scripts/dev-fixed-port.mjs"'), "dev:3002 should use the fixed-port launcher");
 assert(fixedPortDevScript.includes('port = String(Number(process.env.DEV_PORT || "3002") || 3002)'), "fixed-port launcher should default the storefront dev server to port 3002");
 assert(fixedPortDevScript.includes("Refusing to switch ports"), "fixed-port launcher should fail loudly instead of moving to another port");
@@ -22,6 +23,10 @@ assert(dbTunnelScript.includes('localPort = Number(process.env.REMOTE_DB_LOCAL_P
 assert(dbTunnelScript.includes("REMOTE_DB_TUNNEL_FORCE_RESTART"), "remote DB tunnel should not rebuild an existing listener unless forced");
 assert(dbTunnelWatchScript.includes("restartAfterFailures"), "remote DB tunnel watcher should require repeated failures before rebuilding the tunnel");
 assert(packageJson.includes('"sharp":'), "video worker should depend on sharp directly for production reference-image resizing");
+assert(videoLatencyReport.includes("Safety: read-only database query") && videoLatencyReport.includes("prisma.generationJob.findMany"), "video latency report should be an explicit read-only database diagnostic");
+assert(videoLatencyReport.includes("providerGeneration") && videoLatencyReport.includes("providerProgressWindow"), "video latency report should break down provider generation and progress timing");
+assert(videoLatencyReport.includes("scannedJobCount") && videoLatencyReport.includes("scanned up to"), "video latency report should scan recent jobs before selecting the requested number of video jobs");
+assert(videoLatencyReport.includes("progressWindow="), "video latency text output should expose provider progress window timing");
 
 const config = read("src/lib/video-frame-config.ts");
 assert(config.includes("DEFAULT_VIDEO_FRAME_LIMIT = 30"), "video frame default limit should be 30");
@@ -360,7 +365,7 @@ assert(workspaceShell.includes("pendingEventRefreshRef"), "workspace non-final a
 assert(workspaceShell.includes("queueWorkspaceRuntimeRefresh"), "workspace refreshes should share one event-driven refresh scheduler");
 assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("create")'), "video creation should trigger an immediate workspace refresh");
 assert((workspaceShell.match(/queueWorkspaceRuntimeRefresh\("create"\)/g) ?? []).length === 1, "video creation should refresh after acceptance without an extra pre-create runtime request");
-assert(!workspaceShell.includes('queueWorkspaceRuntimeRefresh("event")'), "final provider events should not trigger a workspace runtime refresh");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("event")'), "final provider events should schedule one runtime refresh after applying the live patch");
 assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("resume")'), "workspace should refresh active work when the page returns to the foreground");
 assert(workspaceShell.includes("document.addEventListener(\"visibilitychange\""), "workspace should listen for visible-page returns");
 assert(workspaceShell.includes("window.addEventListener(\"focus\""), "workspace should listen for browser focus returns");
@@ -379,6 +384,13 @@ assert(workspaceShell.includes("progressFromSlotStage"), "workspace should parse
 assert(workspaceShell.includes("slot.progress"), "workspace should prefer persisted provider progress");
 assert(workspaceShell.includes("lastWorkerProgress"), "workspace should use persisted top-level provider progress when a slot omits it");
 assert(workspaceShell.includes("slotProgress === undefined"), "workspace should show an indeterminate bar when the provider has not reported a percentage");
+assert(workspaceShell.includes("workspaceVideoTimingBreakdown"), "video status cards should derive a compact timing breakdown from resultJson timing");
+assert(workspaceShell.includes("Time breakdown"), "video status cards should expose timing details to customers");
+assert(workspaceShell.includes("Provider generation"), "video status cards should show the provider generation segment");
+assert(workspaceShell.includes("Background optimization"), "video status cards should show async optimization timing when available");
+assert(workspaceShell.includes("Timing details are available for newer video requests"), "old video jobs without timing should keep a compatibility note");
+assert(workspaceShell.includes("runtimeTimingFromEvent") && workspaceShell.includes("...(timing ? { timing } : {})"), "workspace SSE patches should merge worker timing into resultJson timing");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("event");') && workspaceShell.includes("clearQueuedEventRefresh();"), "workspace final SSE should refresh once after applying the final live patch");
 assert(workspaceRuntimeJobs.includes("requestJson: true") && workspaceRuntimeJobs.includes("resultJson: true"), "segmented workspace runtime reads should preserve job request and result details");
 assert(workspaceRuntimeJobs.includes("const persistedRequestJson = jsonRecord(job.requestJson)") && workspaceRuntimeJobs.includes("const persistedResultJson = jsonRecord(job.resultJson)"), "workspace job summaries should expose persisted provider progress and stages");
 assert(workspaceShell.includes("sample-selection:v2"), "workspace sample selection storage should invalidate older overlapping primary/partner selections");
@@ -686,6 +698,10 @@ assert(dispatchRoute.includes("workerProgressWriteState"), "video worker should 
 assert(dispatchRoute.includes("Math.abs(progress - previous.lastProgress) >= 10"), "video worker should write progress when it changes by at least 10 points");
 assert(dispatchRoute.includes("now - previous.lastWrittenAt >= 15_000"), "video worker should throttle small progress DB writes to at most every 15 seconds");
 assert(dispatchRoute.includes("{ nonBlocking: true, progressWrite: true }"), "video worker progress polling should publish locally without blocking on every DB write");
+assert(dispatchRoute.includes("providerFirstProgressAt") && dispatchRoute.includes("providerLastProgressAt"), "video worker should persist first and latest provider progress timing checkpoints");
+assert(dispatchRoute.includes("providerProgressTiming(body.progress)"), "video worker should attach progress timing to provider poll status updates");
+assert(dispatchRoute.includes("attemptTiming") && dispatchRoute.includes("lastProviderTiming"), "failed video workers should carry provider timing into terminal settlement");
+assert(dispatchRoute.includes("timingFromResultJson"), "worker customer events should include merged timing for live breakdown display");
 assert(dispatchRoute.includes('"video_task_created"') && dispatchRoute.includes("providerTaskCreatedAt"), "video worker should record and await the provider task creation checkpoint");
 assert(dispatchRoute.includes('"video_result_received"') && dispatchRoute.includes("storedAt"), "video worker should record and await the raw provider result storage checkpoint");
 assert(dispatchRoute.includes("workerAcceptedAt") && dispatchRoute.includes("referencePreparedAt") && dispatchRoute.includes("providerCompletedAt") && dispatchRoute.includes("downloadedAt") && jobStore.includes("settledAt"), "video worker should persist end-to-end video timing checkpoints");

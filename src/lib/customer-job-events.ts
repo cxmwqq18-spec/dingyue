@@ -14,6 +14,7 @@ export type CustomerJobEvent = {
   progress?: number;
   outputSlots?: WorkerOutputSlot[];
   error?: string;
+  timing?: Record<string, string>;
   eventKind?: "progress" | "final";
   updatedAt: string;
   emittedAt: string;
@@ -39,7 +40,7 @@ export function publishCustomerJobEvent(event: Omit<CustomerJobEvent, "emittedAt
 export function publishCustomerJobEventForJob(
   type: CustomerJobEventType,
   job: Pick<GenerationJob, "id" | "siteId" | "customerId" | "status" | "updatedAt">,
-  details: Partial<Pick<CustomerJobEvent, "stage" | "progress" | "outputSlots" | "error" | "eventKind" | "alreadyFinal" | "alreadyProcessed">> = {}
+  details: Partial<Pick<CustomerJobEvent, "stage" | "progress" | "outputSlots" | "error" | "timing" | "eventKind" | "alreadyFinal" | "alreadyProcessed">> = {}
 ): void {
   publishCustomerJobEvent({
     type,
