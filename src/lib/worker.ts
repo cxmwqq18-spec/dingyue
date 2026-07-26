@@ -3,6 +3,7 @@ import { platformProviderTypeForAppType, type PlatformAiProviderType } from "@/l
 import { fetchWithTimeout } from "@/lib/fetch-timeout";
 import { getPlatformAiProviderFallbackQueueRelational, getPlatformAiProviderRelational, type PlatformAiProviderFallbackQueue } from "@/lib/stores/platform-store";
 import { getCustomerAssetRelational } from "@/lib/stores/asset-store";
+import type { VideoProviderFailure } from "@/lib/video-provider-policy";
 import type { GenerationJob, SiteAiApp } from "./types";
 
 export interface WorkerPayload {
@@ -47,8 +48,10 @@ export interface WorkerResultPayload {
   status: "succeeded" | "failed";
   outputs?: Array<{ storageKey: string; mimeType?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
-  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }>; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+  costTrace?: { estimatedCostUsd?: number; providerCreditCost?: number; providerCurrency?: string; providerErrors?: Array<{ provider: string; error: string }>; providerFailure?: VideoProviderFailure; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+  providerFailure?: VideoProviderFailure;
   error?: string;
+  timing?: Record<string, string>;
 }
 
 type WorkerProviderSecret = PlatformAiProviderFallbackQueue[number] & { apiKey?: string };
@@ -83,6 +86,7 @@ export interface WorkerOutputSlot {
   index: number;
   status: WorkerOutputSlotStatus;
   stage?: string;
+  progress?: number;
   storageKey?: string;
   mimeType?: string;
   error?: string;
@@ -91,6 +95,7 @@ export interface WorkerOutputSlot {
   requestedReferenceFrameCount?: number;
   providerReferenceLimit?: number;
   providerReferenceSize?: string;
+  providerFailure?: VideoProviderFailure;
   updatedAt?: string;
 }
 

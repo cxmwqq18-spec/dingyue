@@ -1,15 +1,17 @@
 import "server-only";
 import crypto from "crypto";
 import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, runPrismaWriteWithReconnect } from "@/lib/prisma";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerEntry, Customer, GenerationEntryPoint, GenerationJob, SiteAiApp } from "@/lib/types";
-import { generatedOutputCopy } from "@/lib/generation-output-labels";
+import { generatedOutputCopy, generationThemeLabel } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
-import { normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, videoDurationCreditCost } from "@/lib/video-frame-config";
+import { normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, normalizeVideoModelFamily, normalizeVideoResolution, videoDurationCreditCost, type VideoModelFamily } from "@/lib/video-frame-config";
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
+import { videoProviderMatchesModelFamily } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
+import { isGeminiVideoFrameMimeType, type VideoProviderFailure } from "@/lib/video-provider-policy";
 import type { WorkerOutputSlot } from "@/lib/worker";
 
 type Tx = Prisma.TransactionClient;
@@ -45,6 +47,40 @@ async function withJobStoreTimeout<T>(operation: Promise<T>, message: string): P
 
 function toPrismaJson(value: Record<string, unknown>): Prisma.InputJsonValue {
   return JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
+}
+
+function mergeResultTiming(previousResult: Record<string, unknown>, timing?: Record<string, string>): Record<string, string> | undefined {
+  const previousTiming = previousResult.timing && typeof previousResult.timing === "object" && !Array.isArray(previousResult.timing)
+    ? previousResult.timing as Record<string, unknown>
+    : {};
+  const merged: Record<string, string> = {};
+  for (const [key, value] of Object.entries(previousTiming)) {
+    if (typeof value === "string" && value) merged[key] = value;
+  }
+  for (const [key, value] of Object.entries(timing ?? {})) {
+    if (typeof value === "string" && value) merged[key] = value;
+  }
+  return Object.keys(merged).length ? merged : undefined;
+}
+
+function replaceStorageKeyInResultRecords(value: unknown, params: { originalStorageKey: string; storageKey: string; mimeType: string; updatedAt: string }): { value: unknown; changed: boolean } {
+  if (!Array.isArray(value)) return { value, changed: false };
+  let changed = false;
+  const next = value.map((entry) => {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) return entry;
+    const record = entry as Record<string, unknown>;
+    if (record.storageKey !== params.originalStorageKey) return entry;
+    changed = true;
+    return {
+      ...record,
+      storageKey: params.storageKey,
+      mimeType: params.mimeType,
+      originalStorageKey: params.originalStorageKey,
+      optimizedAt: params.updatedAt,
+      updatedAt: typeof record.updatedAt === "string" ? record.updatedAt : params.updatedAt
+    };
+  });
+  return { value: next, changed };
 }
 
 function stableJson(value: unknown): string {
@@ -253,7 +289,7 @@ function subjectCompositionInstruction(requestJson: Record<string, unknown> | un
 }
 
 type GenerationCreativePack = Pick<Prisma.CreativePackGetPayload<object>, "id" | "name" | "headline" | "category" | "aiAppSlug" | "prompt" | "creditCost" | "outputCount">;
-type GenerationVideoTheme = Pick<Prisma.VideoThemeGetPayload<object>, "id" | "categoryId" | "slug" | "name" | "headline" | "description" | "prompt" | "creditCost" | "durationSeconds" | "maxFrames" | "imageUrl"> & {
+type GenerationVideoTheme = Pick<Prisma.VideoThemeGetPayload<object>, "id" | "categoryId" | "slug" | "name" | "headline" | "description" | "prompt" | "creditCost" | "modelPricing" | "durationSeconds" | "maxFrames" | "imageUrl"> & {
   category?: { slug: string; label: string } | null;
 };
 
@@ -337,6 +373,16 @@ function videoPromptText(requestJson: Record<string, unknown> | undefined): stri
   return "";
 }
 
+function requestedVideoModelFamily(requestJson: Record<string, unknown> | undefined): VideoModelFamily {
+  const fields = fieldRecord(requestJson);
+  return normalizeVideoModelFamily(
+    fields.videoModelFamily ??
+    fields.modelFamily ??
+    requestJson?.videoModelFamily ??
+    requestJson?.modelFamily
+  );
+}
+
 function videoPromptRequiresFrameImages(prompt: string): boolean {
   const text = prompt.trim().toLowerCase();
   if (!text) return false;
@@ -367,6 +413,9 @@ function isRenderablePromptField(key: string) {
     "videoThemeSlug",
     "videoThemeName",
     "videoThemePrompt",
+    "videoModelFamily",
+    "modelFamily",
+    "modelOverride",
     "frameAssetIds"
   ].includes(key);
 }
@@ -708,6 +757,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
       : undefined;
   const videoMode = isVideoModeRequest(params.requestJson) || params.aiAppSlug === "video_generator";
   const requestedAssetIds = requestedAssetIdsForRequest(params.requestJson, videoMode);
+  const requestedModelFamily = videoMode ? requestedVideoModelFamily(params.requestJson) : undefined;
   if (videoMode && params.aiAppSlug !== "video_generator") throw new StoreError("video_theme_tool_mismatch", 400);
   if (videoMode && !rawVideoThemeId && !rawVideoThemeSlug) throw new StoreError("video_theme_required", 400);
   const videoTheme = rawVideoThemeId || rawVideoThemeSlug
@@ -729,6 +779,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
           description: true,
           prompt: true,
           creditCost: true,
+          modelPricing: true,
           durationSeconds: true,
           maxFrames: true,
           imageUrl: true,
@@ -745,15 +796,17 @@ async function createGenerationJobInTx(tx: Tx, params: {
       select: { id: true, label: true, aiUrl: true, apiKey: true, modelType: true, enabled: true, maxImagesPerRequest: true },
       orderBy: [{ preferred: "desc" }, { priority: "asc" }]
     });
-    videoProviderMaxFrames = configuredVideoProviderFrameLimit(videoProviders);
-    effectiveVideoMaxFrames = effectiveVideoFrameLimit(videoProviders, videoTheme.maxFrames);
+    const modelFamilyVideoProviders = videoProviders.filter((provider) => videoProviderMatchesModelFamily(provider, requestedModelFamily));
+    videoProviderMaxFrames = configuredVideoProviderFrameLimit(modelFamilyVideoProviders);
+    effectiveVideoMaxFrames = effectiveVideoFrameLimit(modelFamilyVideoProviders, videoTheme.maxFrames);
     const maxFrames = effectiveVideoMaxFrames;
+    if (requestedModelFamily === "gemini" && requestedAssetIds.length < 1) throw new StoreError("video_frame_selection_required", 400);
     if (requestedAssetIds.length < 1 && !videoPromptText(params.requestJson)) throw new StoreError("video_prompt_required", 400);
     if (requestedAssetIds.length < 1 && videoPromptRequiresFrameImages(videoPromptText(params.requestJson))) {
       throw new StoreError("video_frame_selection_required", 400);
     }
     if (!params.skipProviderAvailabilityCheck) {
-      const availability = videoProviderAvailability(videoProviders, { referenceAssetCount: requestedAssetIds.length });
+      const availability = videoProviderAvailability(modelFamilyVideoProviders, { referenceAssetCount: requestedAssetIds.length });
       if (!availability.ok) throw new StoreError(availability.error, 503);
     }
     if (requestedAssetIds.length > maxFrames) throw new StoreError("too_many_video_frames_for_provider", 400);
@@ -788,11 +841,15 @@ async function createGenerationJobInTx(tx: Tx, params: {
         params.requestJson?.duration ??
         params.requestJson?.videoDuration,
         requestedAssetIds.length,
-        videoTheme.durationSeconds
+        videoTheme.durationSeconds,
+        requestedModelFamily
       )
     : undefined;
+  const requestedVideoResolution = videoTheme
+    ? normalizeVideoResolution(fields.resolution ?? params.requestJson?.resolution)
+    : undefined;
   const unitCreditCost = videoTheme
-    ? videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds)
+    ? videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds, requestedModelFamily, videoTheme.modelPricing)
     : creativePack?.creditCost ?? siteAiApp.creditCost;
   const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
   const billableCredits = unitCreditCost * outputCount;
@@ -806,6 +863,12 @@ async function createGenerationJobInTx(tx: Tx, params: {
     provider: resolvedRequest.provider,
     providerType: platformProviderTypeForAppType(siteAiApp.aiApp.appType)
   });
+  const videoProviderSelection = videoTheme
+    ? {
+        ...resolvedProviderSelection,
+        videoModelFamily: requestedModelFamily
+      }
+    : resolvedProviderSelection;
   if (requestedAssetIds.length) {
     const validAssets = await tx.assetUpload.findMany({
       where: { id: { in: requestedAssetIds }, siteId: params.siteId, customerId: params.customerId, deletedAt: null },
@@ -817,6 +880,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
     if (videoTheme) {
       const invalidVideoFrameAsset = validAssets.find((asset) => asset.role !== "input" || !asset.mimeType.startsWith("image/"));
       if (invalidVideoFrameAsset) throw new StoreError("video_frame_asset_required", 400);
+      if (requestedModelFamily === "gemini" && validAssets.some((asset) => !isGeminiVideoFrameMimeType(asset.mimeType))) {
+        throw new StoreError("unsupported_video_frame_type", 400);
+      }
     }
   }
   const resolvedFields = videoTheme
@@ -828,12 +894,16 @@ async function createGenerationJobInTx(tx: Tx, params: {
         videoThemeSlug: videoTheme.slug,
         videoThemeName: videoTheme.name,
         videoThemePrompt: videoTheme.prompt,
+        videoModelFamily: requestedModelFamily,
+        modelFamily: requestedModelFamily,
         frameAssetIds: requestedAssetIds,
         duration: String(requestedVideoDurationSeconds),
         videoDuration: String(requestedVideoDurationSeconds),
         durationSeconds: requestedVideoDurationSeconds,
         videoDurationSeconds: requestedVideoDurationSeconds,
+        resolution: requestedVideoResolution,
         baseCreditCost: videoTheme.creditCost,
+        modelPricing: videoTheme.modelPricing,
         selectedCreditCost: unitCreditCost,
         themeMaxFrames: normalizeVideoFrameLimit(videoTheme.maxFrames),
         providerMaxFrames: videoProviderMaxFrames,
@@ -861,10 +931,13 @@ async function createGenerationJobInTx(tx: Tx, params: {
               outputType: "video",
               videoThemeId: videoTheme.id,
               videoThemeSlug: videoTheme.slug,
+              videoModelFamily: requestedModelFamily,
+              modelFamily: requestedModelFamily,
               duration: String(requestedVideoDurationSeconds),
               videoDuration: String(requestedVideoDurationSeconds),
               durationSeconds: requestedVideoDurationSeconds,
               videoDurationSeconds: requestedVideoDurationSeconds,
+              resolution: requestedVideoResolution,
               assetIds: requestedAssetIds
             }
           : {}),
@@ -916,7 +989,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
               categoryLabel: videoTheme.category?.label ?? "",
               prompt: videoTheme.prompt,
               creditCost: videoTheme.creditCost,
+              modelPricing: videoTheme.modelPricing,
               selectedCreditCost: unitCreditCost,
+              selectedModelFamily: requestedModelFamily,
               durationSeconds: videoTheme.durationSeconds,
               selectedDurationSeconds: requestedVideoDurationSeconds,
               themeMaxFrames: normalizeVideoFrameLimit(videoTheme.maxFrames),
@@ -927,7 +1002,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
             }
           : undefined,
         prompt: resolvedRequest.prompt,
-        providerSelection: resolvedProviderSelection
+        providerSelection: videoProviderSelection
       })
     }
   });
@@ -1028,9 +1103,11 @@ export async function updateGenerationJobStatusRelational(params: {
   requestId: string;
   status: string;
   stage?: string;
+  progress?: number;
   outputSlots?: WorkerOutputSlot[];
+  timing?: Record<string, string>;
 }): Promise<{ job: GenerationJob; alreadyFinal: boolean }> {
-  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
+  return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const alreadyFinal = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
@@ -1052,11 +1129,16 @@ export async function updateGenerationJobStatusRelational(params: {
         updatedAt: slot.updatedAt ?? now
       });
     }
+    const timing = mergeResultTiming(previousResult, params.timing);
     const resultJson = {
       ...previousResult,
       lastWorkerStatus: params.status,
       lastWorkerStage: params.stage ?? "worker_update",
+      ...(Number.isFinite(Number(params.progress))
+        ? { lastWorkerProgress: Math.max(0, Math.min(100, Number(params.progress))) }
+        : {}),
       requestId: params.requestId,
+      ...(timing ? { timing } : {}),
       outputSlots: Array.from(slotsByIndex.values()).sort((left, right) => left.index - right.index)
     };
     const updatedJob = await tx.generationJob.update({
@@ -1067,7 +1149,9 @@ export async function updateGenerationJobStatusRelational(params: {
       }
     });
     return { job: mapGenerationJob(updatedJob), alreadyFinal };
-  }, jobStoreTransactionOptions), "job_status_update_timeout");
+  }, jobStoreTransactionOptions), "job_status_update_timeout"), {
+    label: "generation job status update"
+  });
 }
 
 export async function settleGenerationJobRelational(params: {
@@ -1077,15 +1161,19 @@ export async function settleGenerationJobRelational(params: {
   status: "succeeded" | "failed";
   outputs?: Array<{ storageKey: string; mimeType?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
-  costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }>; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+  costTrace?: { estimatedCostUsd?: number; providerCreditCost?: number; providerCurrency?: string; providerErrors?: Array<{ provider: string; error: string }>; providerFailure?: VideoProviderFailure; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+  providerFailure?: VideoProviderFailure;
   error?: string;
+  timing?: Record<string, string>;
 }): Promise<{ job: GenerationJob; ledger?: CreditLedgerEntry; alreadyProcessed: boolean; customer: Customer }> {
-  return withJobStoreTimeout(prisma.$transaction(async (tx) => {
+  return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
     const outputs = params.outputs ?? [];
+    const settledAt = new Date().toISOString();
+    const timing = mergeResultTiming(previousResult, { ...params.timing, settledAt });
     const alreadyProcessed = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
     const canRecoverExpiredSuccess = alreadyProcessed &&
       job.status === "failed" &&
@@ -1182,8 +1270,10 @@ export async function settleGenerationJobRelational(params: {
           },
           providerTrace: params.providerTrace ?? [],
           costTrace: params.costTrace ?? {},
+          providerFailure: params.providerFailure ?? params.costTrace?.providerFailure ?? null,
           error: params.error ?? null,
-          settledAt: new Date().toISOString()
+          ...(timing ? { timing } : {}),
+          settledAt
         })
       }
     });
@@ -1192,7 +1282,74 @@ export async function settleGenerationJobRelational(params: {
     }
     const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: job.customerId, siteId: job.siteId }, include: { balance: true } });
     return { job: mapGenerationJob(updatedJob), ledger: ledger ? mapCreditLedger(ledger) : undefined, alreadyProcessed: false, customer: mapCustomer(updatedCustomer) };
-  }, jobStoreTransactionOptions), "job_result_update_timeout");
+  }, jobStoreTransactionOptions), "job_result_update_timeout"), {
+    label: "generation job result update"
+  });
+}
+
+export async function replaceSettledGenerationOutputStorageKeyRelational(params: {
+  jobId: string;
+  siteId: string;
+  customerId: string;
+  originalStorageKey: string;
+  storageKey: string;
+  mimeType: string;
+  timing?: Record<string, string>;
+}): Promise<{ job?: GenerationJob; updated: boolean }> {
+  return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
+    const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId, customerId: params.customerId } });
+    if (!job) throw new StoreError("job_not_found", 404);
+    if (job.status !== "succeeded") return { job: mapGenerationJob(job), updated: false };
+    const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
+    const updatedAt = new Date().toISOString();
+    const outputs = replaceStorageKeyInResultRecords(previousResult.outputs, {
+      originalStorageKey: params.originalStorageKey,
+      storageKey: params.storageKey,
+      mimeType: params.mimeType,
+      updatedAt
+    });
+    const outputSlots = replaceStorageKeyInResultRecords(previousResult.outputSlots, {
+      originalStorageKey: params.originalStorageKey,
+      storageKey: params.storageKey,
+      mimeType: params.mimeType,
+      updatedAt
+    });
+    const assetResult = await tx.assetUpload.updateMany({
+      where: {
+        siteId: params.siteId,
+        customerId: params.customerId,
+        jobId: params.jobId,
+        storageKey: params.originalStorageKey
+      },
+      data: {
+        storageKey: params.storageKey,
+        mimeType: params.mimeType
+      }
+    });
+    const changed = outputs.changed || outputSlots.changed || assetResult.count > 0;
+    if (!changed) return { job: mapGenerationJob(job), updated: false };
+    const timing = mergeResultTiming(previousResult, params.timing);
+    const updatedJob = await tx.generationJob.update({
+      where: { id: job.id },
+      data: {
+        resultJson: toPrismaJson({
+          ...previousResult,
+          ...(outputs.changed ? { outputs: outputs.value } : {}),
+          ...(outputSlots.changed ? { outputSlots: outputSlots.value } : {}),
+          ...(timing ? { timing } : {}),
+          videoOptimization: {
+            originalStorageKey: params.originalStorageKey,
+            storageKey: params.storageKey,
+            mimeType: params.mimeType,
+            updatedAt
+          }
+        })
+      }
+    });
+    return { job: mapGenerationJob(updatedJob), updated: true };
+  }, jobStoreTransactionOptions), "job_video_output_replace_timeout"), {
+    label: "generation job video output replacement"
+  });
 }
 
 async function upsertAlbumForSettledJob(
@@ -1202,11 +1359,7 @@ async function upsertAlbumForSettledJob(
 ) {
   const assetIds: string[] = [];
   const mappedJob = mapGenerationJob(job);
-  const customerJobs = await tx.generationJob.findMany({
-    where: { siteId: job.siteId, customerId: job.customerId },
-    orderBy: { createdAt: "asc" }
-  });
-  const mappedCustomerJobs = customerJobs.map(mapGenerationJob);
+  const runNumber = await generationOutputRunNumberForSettledJob(tx, job, mappedJob);
   for (const [index, output] of outputs.entries()) {
     const existing = await tx.assetUpload.findFirst({
       where: { siteId: job.siteId, customerId: job.customerId, jobId: job.id, storageKey: output.storageKey }
@@ -1215,7 +1368,7 @@ async function upsertAlbumForSettledJob(
       assetIds.push(existing.id);
       continue;
     }
-    const outputCopy = generatedOutputCopy({ imageIndex: index + 1, job: mappedJob, jobs: mappedCustomerJobs });
+    const outputCopy = generatedOutputCopy({ imageIndex: index + 1, job: mappedJob, runNumber });
     const mediaKind = output.mimeType?.startsWith("video/") ? "AI-generated video" : "AI-generated image";
     const altText = [mediaKind, outputCopy.title, outputCopy.description].filter(Boolean).join(": ");
     const asset = await tx.assetUpload.create({
@@ -1265,6 +1418,45 @@ async function upsertAlbumForSettledJob(
       status: "ready",
       outputCount: outputs.length,
       coverAssetId: assetIds[0]
+    }
+  });
+}
+
+function textRequestValue(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function outputRunNumberFilters(job: GenerationJob): Prisma.GenerationJobWhereInput[] {
+  const mode = textRequestValue(job.requestJson.mode);
+  const themeLabel = generationThemeLabel(job);
+  const filters: Prisma.GenerationJobWhereInput[] = [];
+  if (mode) filters.push({ requestJson: { path: ["mode"], equals: mode } });
+  if (themeLabel) {
+    filters.push(
+      { requestJson: { path: ["fields", "videoThemeName"], equals: themeLabel } },
+      { requestJson: { path: ["videoTheme", "name"], equals: themeLabel } },
+      { requestJson: { path: ["fields", "creativePackName"], equals: themeLabel } },
+      { requestJson: { path: ["creativePack", "name"], equals: themeLabel } },
+      { requestJson: { path: ["prompt", "themeName"], equals: themeLabel } },
+      { requestJson: { path: ["fields", "packageName"], equals: themeLabel } },
+      { requestJson: { path: ["fields", "toolPresetTitle"], equals: themeLabel } }
+    );
+  }
+  return filters;
+}
+
+async function generationOutputRunNumberForSettledJob(
+  tx: Tx,
+  job: Prisma.GenerationJobGetPayload<object>,
+  mappedJob: GenerationJob
+): Promise<number> {
+  const filters = outputRunNumberFilters(mappedJob);
+  return tx.generationJob.count({
+    where: {
+      siteId: job.siteId,
+      customerId: job.customerId,
+      createdAt: { lte: job.createdAt },
+      ...(filters.length ? { OR: filters } : {})
     }
   });
 }

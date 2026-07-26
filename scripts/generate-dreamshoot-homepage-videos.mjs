@@ -284,8 +284,8 @@ function openAiPayloadVariants(model, prompt, dataUri, durationSeconds) {
       prompt,
       seconds,
       aspect_ratio: "1:1",
-      resolution: "720P",
-      image: dataUri
+      resolution: "720p",
+      images: [dataUri]
     },
     {
       model,

@@ -750,6 +750,7 @@ model VideoTheme {
   prompt          String
   status          String              @default("draft")
   creditCost      Int
+  modelPricing    Json?
   durationSeconds Int                 @default(6)
   maxFrames       Int                 @default(30)
   generationCount Int                 @default(0)

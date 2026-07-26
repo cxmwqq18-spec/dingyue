@@ -6,6 +6,7 @@ import {
   upsertVideoThemeRelational
 } from "@/lib/stores/site-store";
 import type { VideoTheme } from "@/lib/types";
+import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
 
 function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
   return {
@@ -17,6 +18,7 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
     prompt: typeof body.prompt === "string" ? body.prompt : "",
     status: body.status === "active" || body.status === "paused" || body.status === "draft" ? body.status : "draft",
     creditCost: Number(body.creditCost),
+    modelPricing: normalizeVideoModelPricing(body.modelPricing, Number(body.creditCost)),
     durationSeconds: Number(body.durationSeconds),
     maxFrames: Number(body.maxFrames),
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl : undefined,
@@ -44,6 +46,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       prompt: body.prompt ?? "",
       status: body.status,
       creditCost: Number(body.creditCost),
+      modelPricing: body.modelPricing,
       durationSeconds: Number(body.durationSeconds),
       maxFrames: Number(body.maxFrames),
       imageUrl: body.imageUrl,

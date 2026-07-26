@@ -70,6 +70,36 @@ export async function POST(request: Request) {
   }
 
   try {
+    const contentType = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase() || "";
+    if (contentType === "application/octet-stream") {
+      const url = new URL(request.url);
+      const storageKey = customerScopedStorageKey(
+        request.headers.get("x-customer-asset-storage-key") ?? url.searchParams.get("storageKey")
+      );
+      const mimeType = safeMimeType(
+        request.headers.get("x-customer-asset-mime-type") ?? url.searchParams.get("mimeType")
+      );
+      const bytes = Buffer.from(await request.arrayBuffer());
+      if (!bytes.length) {
+        return NextResponse.json({ ok: false, error: "asset_data_required" }, { status: 400 });
+      }
+      const maxTransferBytes = maxTransferBytesFor({ mimeType, storageKey });
+      if (bytes.length > maxTransferBytes) {
+        return NextResponse.json(
+          { ok: false, error: "asset_data_too_large", size: bytes.length, maxBytes: maxTransferBytes },
+          { status: 413 }
+        );
+      }
+      writeCustomerAssetFile({ storageKey, bytes });
+      return NextResponse.json({
+        ok: true,
+        storageKey,
+        mimeType,
+        size: bytes.length,
+        url: customerAssetUrl(storageKey)
+      });
+    }
+
     const body = (await request.json().catch(() => ({}))) as {
       storageKey?: unknown;
       mimeType?: unknown;

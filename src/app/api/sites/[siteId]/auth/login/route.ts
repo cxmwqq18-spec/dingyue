@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { primeCustomerSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
@@ -17,6 +18,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const result = await createExistingCustomerSessionRelational({ siteId, email: body.email, password: body.password });
+    primeCustomerSessionAuthCache({ customer: result.customer, session: result.session, sessionId: result.session.id });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,

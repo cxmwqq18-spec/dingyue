@@ -3,6 +3,8 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import type { ThemeRuntimeData } from "@/lib/types";
 
+export const WORKSPACE_RELATED_JOB_SUMMARY_LIMIT = 8;
+
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
 type WorkspaceJobSummaryRow = {
   id: string;
@@ -11,6 +13,8 @@ type WorkspaceJobSummaryRow = {
   creditsReserved: number;
   createdAt: Date;
   updatedAt: Date;
+  requestJson?: unknown;
+  resultJson?: unknown;
 };
 
 function numberFromRaw(value: unknown): number {
@@ -32,6 +36,12 @@ function isoFromRaw(value: unknown): string {
   return new Date(0).toISOString();
 }
 
+function jsonRecord(value: unknown): Record<string, unknown> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : undefined;
+}
+
 function runtimeJobFromWorkspaceSummaryRow(job: WorkspaceJobSummaryRow): RuntimeJob {
   const isVideo = job.aiAppId.toLowerCase().includes("video");
   const outputType = isVideo ? "video" : "image";
@@ -39,6 +49,32 @@ function runtimeJobFromWorkspaceSummaryRow(job: WorkspaceJobSummaryRow): Runtime
   const slotStatus = job.status === "succeeded" || job.status === "failed" || job.status === "running" || job.status === "queued"
     ? job.status
     : "queued";
+  const fallbackRequestJson = {
+    mode: outputType,
+    outputType,
+    fields: {
+      mode: outputType,
+      outputType,
+      videoThemeName: title,
+      outputCount: 1
+    },
+    billing: {
+      outputCount: 1
+    }
+  };
+  const persistedRequestJson = jsonRecord(job.requestJson);
+  const fallbackResultJson = {
+    ...(job.status === "failed" ? { error: isVideo ? "ai_provider_video_failed" : "generation_failed" } : {}),
+    outputSlots: [
+      {
+        index: 1,
+        status: slotStatus,
+        stage: job.status === "succeeded" ? "provider_response_received" : undefined,
+        updatedAt: isoFromRaw(job.updatedAt)
+      }
+    ]
+  };
+  const persistedResultJson = jsonRecord(job.resultJson);
   return {
     id: String(job.id),
     aiAppId: String(job.aiAppId),
@@ -47,39 +83,36 @@ function runtimeJobFromWorkspaceSummaryRow(job: WorkspaceJobSummaryRow): Runtime
     createdAt: isoFromRaw(job.createdAt),
     updatedAt: isoFromRaw(job.updatedAt),
     requestJson: {
-      mode: outputType,
-      outputType,
+      ...fallbackRequestJson,
+      ...persistedRequestJson,
       fields: {
-        mode: outputType,
-        outputType,
-        videoThemeName: title,
-        outputCount: 1
+        ...fallbackRequestJson.fields,
+        ...jsonRecord(persistedRequestJson?.fields)
       },
       billing: {
-        outputCount: 1
+        ...fallbackRequestJson.billing,
+        ...jsonRecord(persistedRequestJson?.billing)
       }
     },
     resultJson: {
-      ...(job.status === "failed" ? { error: isVideo ? "ai_provider_video_failed" : "generation_failed" } : {}),
-      outputSlots: [
-        {
-          index: 1,
-          status: slotStatus,
-          stage: job.status === "succeeded" ? "provider_response_received" : undefined,
-          updatedAt: isoFromRaw(job.updatedAt)
-        }
-      ]
+      ...fallbackResultJson,
+      ...persistedResultJson,
+      outputSlots: Array.isArray(persistedResultJson?.outputSlots)
+        ? persistedResultJson.outputSlots
+        : fallbackResultJson.outputSlots
     }
   };
 }
 
 export async function readWorkspaceJobSummariesRelational({
   customerId,
+  includeJson = true,
   ids,
   siteId,
   take
 }: {
   customerId: string;
+  includeJson?: boolean;
   ids?: string[];
   siteId: string;
   take?: number;
@@ -98,8 +131,9 @@ export async function readWorkspaceJobSummariesRelational({
       status: true,
       creditsReserved: true,
       createdAt: true,
-      updatedAt: true
+      updatedAt: true,
+      ...(includeJson ? { requestJson: true, resultJson: true } : {})
     }
   });
-  return rows.map(runtimeJobFromWorkspaceSummaryRow);
+  return (rows as WorkspaceJobSummaryRow[]).map(runtimeJobFromWorkspaceSummaryRow);
 }

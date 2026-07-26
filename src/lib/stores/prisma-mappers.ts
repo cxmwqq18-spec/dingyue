@@ -28,7 +28,7 @@ import type {
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
-import { normalizeVideoFrameLimit } from "@/lib/video-frame-config";
+import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
 type CustomerWithBalance = Prisma.CustomerGetPayload<{ include: { balance: true } }>;
@@ -775,6 +775,7 @@ export function toVideoTheme(record: {
   prompt: string;
   status: string;
   creditCost: number;
+  modelPricing?: unknown;
   durationSeconds: number;
   maxFrames: number;
   generationCount: number;
@@ -794,6 +795,7 @@ export function toVideoTheme(record: {
     prompt: record.prompt,
     status: record.status as VideoTheme["status"],
     creditCost: record.creditCost,
+    modelPricing: normalizeVideoModelPricing(record.modelPricing, record.creditCost),
     durationSeconds: record.durationSeconds,
     maxFrames: normalizeVideoFrameLimit(record.maxFrames),
     generationCount: record.generationCount,

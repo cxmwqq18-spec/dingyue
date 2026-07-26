@@ -1,9 +1,14 @@
 import "server-only";
 import { getCurrentPlatformAdmin, getCurrentSiteAdmin } from "@/lib/api-auth";
 import { isTransientPrismaConnectionError, prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
+import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import type { CustomerAdminAccess, PublicCustomer } from "@/lib/types";
 
 type SiteAdminRole = NonNullable<CustomerAdminAccess["role"]>;
+const customerAdminEmailAccessCache = createServerTtlCache(
+  "customer-admin-email-access",
+  Number(process.env.CUSTOMER_ADMIN_EMAIL_ACCESS_CACHE_TTL_MS ?? 30_000)
+);
 
 function normalizeEmail(email: string | undefined): string | undefined {
   const normalized = email?.trim().toLowerCase();
@@ -46,19 +51,22 @@ async function getCustomerAdminAccessForSiteUnsafe({
 
   if (!customerEmail) return { canBypassBilling: false };
 
-  const siteAdmin = await runPrismaReadWithReconnect(
-    () => prisma.siteAdmin.findFirst({
-      where: {
-        siteId,
-        email: { equals: customerEmail, mode: "insensitive" }
-      },
-      select: {
-        id: true,
-        displayName: true,
-        role: true
-      }
-    }),
-    { label: "customer admin access site admin", retries: 2, timeoutMs: 10_000 }
+  const siteAdmin = await customerAdminEmailAccessCache.get(
+    `${siteId}:${customerEmail}`,
+    () => runPrismaReadWithReconnect(
+      () => prisma.siteAdmin.findFirst({
+        where: {
+          siteId,
+          email: { equals: customerEmail, mode: "insensitive" }
+        },
+        select: {
+          id: true,
+          displayName: true,
+          role: true
+        }
+      }),
+      { label: "customer admin access site admin", retries: 2, timeoutMs: 10_000 }
+    )
   );
   if (!siteAdmin) return { canBypassBilling: false };
 

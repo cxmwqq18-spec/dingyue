@@ -10,7 +10,7 @@ import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/sto
 import { releaseStaleActiveGenerationJobsRelational } from "@/lib/stores/job-store";
 import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
-import { readWorkspaceJobSummariesRelational } from "@/lib/workspace-runtime-jobs";
+import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { cookies } from "next/headers";
 import type { CustomerAdminAccess, CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
@@ -21,7 +21,12 @@ const customerRuntimeCache = createServerTtlCache(
   "customer-runtime-api",
   Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_API_TTL_MS ?? 30_000)
 );
+const staleActiveJobReleaseCache = createServerTtlCache(
+  "customer-runtime-stale-active-release",
+  Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_STALE_RELEASE_TTL_MS ?? 30_000)
+);
 const workspaceDirectSqlEnabled = process.env.CUSTOMER_WORKSPACE_RUNTIME_DIRECT_SQL === "1";
+const staleActiveJobReleaseWaitMs = Math.max(0, Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_STALE_RELEASE_WAIT_MS ?? 150));
 
 function emptyRuntime(): ThemeRuntimeData {
   return {
@@ -231,6 +236,8 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
         WHERE "jobId" IS NOT NULL
       )
         AND j.id NOT IN (SELECT id FROM "recentJobs")
+      ORDER BY j."updatedAt" DESC
+      LIMIT ${WORKSPACE_RELATED_JOB_SUMMARY_LIMIT}
     ),
     "workspaceJobs" AS (
       SELECT * FROM "recentJobs"
@@ -314,50 +321,61 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
   };
 }
 
-async function readWorkspaceRuntimeSegmented(siteId: string, sessionId: string): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
-  const session = await prisma.customerSession.findFirst({
-    where: {
-      id: sessionId,
-      siteId,
-      expiresAt: { gt: new Date() }
-    },
-    include: {
-      customer: { include: { balance: true } }
-    }
-  });
-  if (!session?.customer) return undefined;
+async function readWorkspaceRuntimeSegmented(
+  siteId: string,
+  sessionId: string,
+  current?: AccountCurrentCustomer
+): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
+  const customer = current?.sessionId === sessionId && current.customer.siteId === siteId
+    ? current.customer
+    : undefined;
+  const resolvedCustomer = customer ?? await (async () => {
+    const session = await prisma.customerSession.findFirst({
+      where: {
+        id: sessionId,
+        siteId,
+        expiresAt: { gt: new Date() }
+      },
+      include: {
+        customer: { include: { balance: true } }
+      }
+    });
+    return session?.customer ? toPublicCustomerRelational(session.customer as Record<string, unknown>) : undefined;
+  })();
+  if (!resolvedCustomer) return undefined;
 
-  const customer = toPublicCustomerRelational(session.customer as Record<string, unknown>);
-  const recentJobs = await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 });
-  const recentAssets = await prisma.assetUpload.findMany({
-    where: {
-      siteId,
-      customerId: customer.id,
-      deletedAt: null,
-      role: { in: ["input", "training_input", "output"] }
-    },
-    orderBy: { createdAt: "desc" },
-    take: 48
-  });
-  const subscriptions = await prisma.subscription.findMany({
-    where: { siteId, customerId: customer.id },
-    orderBy: { createdAt: "desc" },
-    take: 4
-  });
-  const customerModels = await prisma.customerModel.findMany({
-    where: { siteId, customerId: customer.id },
-    orderBy: { updatedAt: "desc" },
-    take: 4
-  });
+  const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all([
+    readWorkspaceJobSummariesRelational({ siteId, customerId: resolvedCustomer.id, take: 8 }),
+    prisma.assetUpload.findMany({
+      where: {
+        siteId,
+        customerId: resolvedCustomer.id,
+        deletedAt: null,
+        role: { in: ["input", "training_input", "output"] }
+      },
+      orderBy: { createdAt: "desc" },
+      take: 48
+    }),
+    prisma.subscription.findMany({
+      where: { siteId, customerId: resolvedCustomer.id },
+      orderBy: { createdAt: "desc" },
+      take: 4
+    }),
+    prisma.customerModel.findMany({
+      where: { siteId, customerId: resolvedCustomer.id },
+      orderBy: { updatedAt: "desc" },
+      take: 4
+    })
+  ]);
 
   const recentJobIds = new Set(recentJobs.map((job) => job.id));
   const relatedJobIds = Array.from(new Set(
     recentAssets
       .map((asset) => asset.jobId)
       .filter((jobId): jobId is string => typeof jobId === "string" && !recentJobIds.has(jobId))
-  ));
+  )).slice(0, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT);
   const relatedJobs = relatedJobIds.length
-    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, ids: relatedJobIds })
+    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: resolvedCustomer.id, ids: relatedJobIds, includeJson: false })
     : [];
   const jobs = [...recentJobs, ...relatedJobs]
     .sort((left, right) => timeFromRaw(right.updatedAt) - timeFromRaw(left.updatedAt));
@@ -368,7 +386,7 @@ async function readWorkspaceRuntimeSegmented(siteId: string, sessionId: string):
     ? await prisma.assetUpload.findMany({
         where: {
           siteId,
-          customerId: customer.id,
+          customerId: resolvedCustomer.id,
           id: { in: referencedFrameAssetIds },
           deletedAt: null
         },
@@ -380,10 +398,10 @@ async function readWorkspaceRuntimeSegmented(siteId: string, sessionId: string):
     .map((asset) => toThemeRuntimeAssetRelational(asset));
 
   return {
-    customer,
+    customer: resolvedCustomer,
     runtime: {
       ...emptyRuntime(),
-      customer,
+      customer: resolvedCustomer,
       jobs,
       assets,
       subscriptions: subscriptions.map((subscription) => runtimeSubscriptionFromWorkspaceRow(subscription as unknown as Record<string, unknown>)),
@@ -404,10 +422,14 @@ async function readWorkspaceRuntimeSegmented(siteId: string, sessionId: string):
   };
 }
 
-async function readWorkspaceRuntime(siteId: string, sessionId: string): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
+async function readWorkspaceRuntime(
+  siteId: string,
+  sessionId: string,
+  current?: AccountCurrentCustomer
+): Promise<{ customer: PublicCustomer; runtime: ThemeRuntimeData } | undefined> {
   if (!workspaceDirectSqlEnabled) {
     return runPrismaReadWithReconnect(
-      () => readWorkspaceRuntimeSegmented(siteId, sessionId),
+      () => readWorkspaceRuntimeSegmented(siteId, sessionId, current),
       { label: "customer workspace runtime segmented", retries: 2, timeoutMs: 20_000 }
     );
   }
@@ -420,7 +442,7 @@ async function readWorkspaceRuntime(siteId: string, sessionId: string): Promise<
     if (!isTransientPrismaConnectionError(error)) throw error;
     console.warn("[customer-runtime] workspace direct read unavailable; retrying with segmented relational read.");
     return runPrismaReadWithReconnect(
-      () => readWorkspaceRuntimeSegmented(siteId, sessionId),
+      () => readWorkspaceRuntimeSegmented(siteId, sessionId, current),
       { label: "customer workspace runtime segmented", retries: 1, timeoutMs: 20_000 }
     );
   }
@@ -428,6 +450,27 @@ async function readWorkspaceRuntime(siteId: string, sessionId: string): Promise<
 
 function shortRuntimeError(error: unknown): string {
   return error instanceof Error ? error.message.split("\n")[0] : String(error);
+}
+
+async function releaseStaleActiveJobsForRuntimeRefresh(params: { siteId: string; customerId: string }): Promise<void> {
+  const release = staleActiveJobReleaseCache
+    .get(`${params.siteId}:${params.customerId}`, () => releaseStaleActiveGenerationJobsRelational(params))
+    .catch((error) => {
+      console.error("customer_runtime_stale_job_release_failed", error);
+    });
+  if (staleActiveJobReleaseWaitMs <= 0) {
+    void release;
+    return;
+  }
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  await Promise.race([
+    release,
+    new Promise<void>((resolve) => {
+      timer = setTimeout(resolve, staleActiveJobReleaseWaitMs);
+    })
+  ]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
 }
 
 async function getCurrentCustomerForRuntimeRefresh(siteId: string): Promise<NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>> | undefined> {
@@ -867,11 +910,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     ? await getCurrentCustomerForRuntimeRefresh(siteId)
     : undefined;
   if (currentForRefresh) {
-    await releaseStaleActiveGenerationJobsRelational({
+    await releaseStaleActiveJobsForRuntimeRefresh({
       siteId,
       customerId: currentForRefresh.customer.id
-    }).catch((error) => {
-      console.error("customer_runtime_stale_job_release_failed", error);
     });
   }
   let result: { customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined;
@@ -888,7 +929,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           };
         }
         if (normalizedProfile === "workspace") {
-          return readWorkspaceRuntime(siteId, sessionId);
+          return readWorkspaceRuntime(siteId, sessionId, currentForRefresh);
         }
         const current = await getCurrentCustomerForSite(siteId);
         if (!current) return undefined;

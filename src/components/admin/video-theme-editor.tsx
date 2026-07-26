@@ -15,7 +15,15 @@ import {
 } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
 import type { VideoTheme, VideoThemeCategory } from "@/lib/types";
-import { DEFAULT_VIDEO_FRAME_LIMIT, MAX_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
+import {
+  DEFAULT_VIDEO_FRAME_LIMIT,
+  MAX_VIDEO_FRAME_LIMIT,
+  defaultVideoModelPricing,
+  normalizeVideoFrameLimit,
+  normalizeVideoModelPricing,
+  type VideoDurationSeconds,
+  type VideoModelFamily
+} from "@/lib/video-frame-config";
 
 type Status = VideoTheme["status"];
 
@@ -54,6 +62,13 @@ const statusLabels: Record<Status, string> = {
   paused: "已暂停"
 };
 
+const videoModelPricingInputs: Array<{ family: VideoModelFamily; seconds: VideoDurationSeconds; label: string }> = [
+  { family: "grok", seconds: 6, label: "Grok 6s" },
+  { family: "grok", seconds: 10, label: "Grok 10s" },
+  { family: "gemini", seconds: 10, label: "Gemini 10s" },
+  { family: "gemini", seconds: 15, label: "Gemini 15s" }
+];
+
 function statusTone(status: Status): "good" | "warn" | "neutral" {
   if (status === "active") return "good";
   if (status === "paused") return "warn";
@@ -78,6 +93,7 @@ function newThemeDraft(categoryId?: string): Omit<VideoTheme, "id" | "siteId" | 
     prompt: "Create a polished short video from the provided frame images with natural camera movement, consistent subjects, realistic motion, and cinematic pacing.",
     status: "draft",
     creditCost: 24,
+    modelPricing: defaultVideoModelPricing(24),
     durationSeconds: 6,
     maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
     imageUrl: "",
@@ -214,6 +230,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       prompt: theme.prompt,
       status: theme.status ?? "draft",
       creditCost: Math.max(1, Math.trunc(Number(theme.creditCost) || 1)),
+      modelPricing: normalizeVideoModelPricing(theme.modelPricing, theme.creditCost),
       durationSeconds: Math.min(15, Math.max(1, Math.trunc(Number(theme.durationSeconds) || 6))),
       maxFrames: normalizeVideoFrameLimit(theme.maxFrames),
       imageUrl: theme.imageUrl || "",
@@ -510,6 +527,20 @@ function ThemeForm<T extends Partial<VideoTheme>>({
   onChange: <K extends keyof T>(key: K, value: T[K]) => void;
   onGalleryChange: (value: string) => void;
 }) {
+  const modelPricing = normalizeVideoModelPricing(theme.modelPricing, theme.creditCost);
+
+  function updateModelPrice(family: VideoModelFamily, seconds: VideoDurationSeconds, value: number) {
+    const current = normalizeVideoModelPricing(theme.modelPricing, theme.creditCost);
+    const next = {
+      ...current,
+      [family]: {
+        ...(current[family] ?? {}),
+        [seconds]: Math.max(0, Math.trunc(Number(value) || 0))
+      }
+    };
+    onChange("modelPricing" as keyof T, next as T[keyof T]);
+  }
+
   return (
     <div className="mt-4 grid gap-4">
       <ErpFormGrid columns={2}>
@@ -541,6 +572,21 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         </ErpField>
         <ErpField label="视频时长（秒）">
           <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 6} />
+        </ErpField>
+        <ErpField hint="前台按所选模型和时长扣费；旧积分消耗仅作为未配置时的兜底基准。" label="分模型用户扣费" span="full">
+          <div className="grid gap-2 rounded-[10px] border border-slate-200 bg-slate-50 p-3 sm:grid-cols-4">
+            {videoModelPricingInputs.map((item) => (
+              <label className="grid gap-1 text-xs font-semibold text-slate-500" key={`${item.family}-${item.seconds}`}>
+                <span>{item.label}</span>
+                <ErpInput
+                  min={0}
+                  onChange={(event) => updateModelPrice(item.family, item.seconds, Number(event.target.value))}
+                  type="number"
+                  value={modelPricing[item.family]?.[item.seconds] ?? 0}
+                />
+              </label>
+            ))}
+          </div>
         </ErpField>
         <ErpField hint={`最多可传 ${MAX_VIDEO_FRAME_LIMIT} 张，前台和后端会按此上限统一校验。`} label="最大帧图数">
           <ErpInput max={MAX_VIDEO_FRAME_LIMIT} min={1} onChange={(event) => onChange("maxFrames" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.maxFrames ?? DEFAULT_VIDEO_FRAME_LIMIT} />

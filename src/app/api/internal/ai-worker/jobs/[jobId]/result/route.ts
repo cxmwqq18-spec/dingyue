@@ -28,10 +28,14 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       outputs: body.outputs,
       providerTrace: body.providerTrace,
       costTrace: body.costTrace,
-      error: body.error
+      providerFailure: body.providerFailure,
+      error: body.error,
+      timing: body.timing
     });
     publishCustomerJobEventForJob("result", result.job, {
-      alreadyProcessed: result.alreadyProcessed
+      alreadyProcessed: result.alreadyProcessed,
+      eventKind: "final",
+      error: body.error
     });
     return NextResponse.json({
       accepted: true,

@@ -183,8 +183,8 @@ const checks = [
       files.dispatch.includes("aspect_ratio: params.videoParams.aspect_ratio") &&
       files.dispatch.includes("resolution: smartPickLidJsonVideoResolution(params.videoParams.resolution)") &&
       files.dispatch.includes("openAiJsonVideoReferencePayload") &&
-      files.dispatch.includes("? { images: urls }") &&
-      files.dispatch.includes("return options?.smartPickLid ? { image: imageUrl } : { image: { url: imageUrl } };") &&
+      files.dispatch.includes("return imageUrls.length ? { images: imageUrls } : {};") &&
+      files.dispatch.includes("return { image: { url: imageUrl } };") &&
       files.dispatch.includes("reference_images: urls.map((url) => ({ url }))") &&
       files.dispatch.includes("form.append(\"input_reference\"") &&
       files.dispatch.includes("form.append(\"aspect_ratio\", params.videoParams.aspect_ratio)") &&
@@ -249,12 +249,16 @@ const checks = [
     pass: files.dispatch.includes("ffmpeg-static") &&
       files.dispatch.includes("function optimizeGeneratedVideoForPlayback(") &&
       files.dispatch.includes("AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS") &&
-      files.dispatch.includes('return process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() === "1";') &&
+      files.dispatch.includes("type GeneratedVideoOptimizeMode") &&
+      files.dispatch.includes('return "async";') &&
       files.dispatch.includes("AI_WORKER_VIDEO_OPTIMIZE_CRF") &&
       files.dispatch.includes('"-movflags"') &&
       files.dispatch.includes('"+faststart"') &&
       files.dispatch.includes("const downloadedVideo = await downloadVideoResult") &&
-      files.dispatch.includes("const video = await optimizeGeneratedVideoForPlayback(downloadedVideo)") &&
+      files.dispatch.includes("const optimizeMode = generatedVideoOptimizeMode()") &&
+      files.dispatch.includes('optimizeMode === "sync"') &&
+      files.dispatch.includes('const asyncVideoOptimization = optimizeMode === "async" ? async () =>') &&
+      files.dispatch.includes("replaceSettledGenerationOutputStorageKeyRelational") &&
       files.dispatch.includes("writeCustomerAssetFileShared")
   },
   {

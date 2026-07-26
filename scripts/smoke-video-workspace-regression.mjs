@@ -21,6 +21,7 @@ assert(fixedPortDevScript.includes("Refusing to switch ports"), "fixed-port laun
 assert(dbTunnelScript.includes('localPort = Number(process.env.REMOTE_DB_LOCAL_PORT || "15432")'), "remote DB tunnel should default to fixed local port 15432");
 assert(dbTunnelScript.includes("REMOTE_DB_TUNNEL_FORCE_RESTART"), "remote DB tunnel should not rebuild an existing listener unless forced");
 assert(dbTunnelWatchScript.includes("restartAfterFailures"), "remote DB tunnel watcher should require repeated failures before rebuilding the tunnel");
+assert(packageJson.includes('"sharp":'), "video worker should depend on sharp directly for production reference-image resizing");
 
 const config = read("src/lib/video-frame-config.ts");
 assert(config.includes("DEFAULT_VIDEO_FRAME_LIMIT = 30"), "video frame default limit should be 30");
@@ -28,16 +29,34 @@ assert(config.includes("MAX_VIDEO_FRAME_LIMIT = 30"), "video frame max limit sho
 assert(config.includes("return Math.max(1, Math.min(MAX_VIDEO_FRAME_LIMIT, count));"), "explicit lower theme frame limits should be preserved inside the shared cap");
 assert(!config.includes("return Math.max(minimum"), "video frame normalization should not force every theme up to the default limit");
 assert(config.includes("VIDEO_DURATION_OPTIONS"), "video duration options should be shared between UI and backend");
-assert(config.includes("MAX_VIDEO_DURATION_SECONDS = 10"), "video duration should be capped to the product-supported duration");
+assert(config.includes("MAX_VIDEO_DURATION_SECONDS = 15"), "video duration should be capped to the 15 second product-supported duration");
+assert(config.includes("{ seconds: 6, creditMultiplier: 1"), "video duration options should include the 6 second base price");
+assert(config.includes("{ seconds: 10, creditMultiplier: 10 / 6"), "10 second video pricing should be derived from the 6 second base price");
+assert(config.includes("{ seconds: 15, creditMultiplier: 15 / 6"), "15 second video pricing should be derived from the 6 second base price");
+assert(config.includes("const VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = VIDEO_MODEL_FAMILIES"), "video durations should share all supported model families");
+assert((config.match(/modelFamilies: VIDEO_DURATION_MODEL_FAMILIES/g) ?? []).length === 3, "6/10/15 second video options should be available to every video model family");
+assert(!config.includes("GROK_VIDEO_DURATION_MODEL_FAMILIES") && !config.includes("GEMINI_VIDEO_DURATION_MODEL_FAMILIES"), "video durations should not be split by model family");
+assert(config.includes('DEFAULT_VIDEO_RESOLUTION = "720p"'), "video resolution should default to 720p");
+assert(config.includes("normalizeVideoResolution"), "video resolution normalization should be shared between backend and worker");
 assert(config.includes("MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS"), "multi-reference video duration should share the product duration cap");
 assert(config.includes("MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT = 7"), "multi-reference video frame count should be capped to the upstream-supported count");
 assert(config.includes("CUSTOMER_VIDEO_FRAME_LIMIT = MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT"), "customer video frame count should use the global multi-reference cap");
 assert(config.includes("videoDurationOptionsForFrameCount"), "video duration options should stay behind a frame-count-aware helper");
 assert(config.includes("normalizeVideoDurationSecondsForFrameCount"), "video duration normalization should account for multi-reference limits");
-assert(config.includes("if (seconds > MAX_VIDEO_DURATION_SECONDS) return MAX_VIDEO_DURATION_SECONDS"), "legacy 15 second requests should be clamped to 10 seconds");
+assert(config.includes("if (seconds > maxSeconds) return maxSeconds"), "duration normalization should allow 15s and only clamp above the active option max");
 assert(config.includes("videoDurationCreditCost"), "video duration pricing should use a shared helper");
 assert(config.includes("trimVideoFrameSelection"), "video frame selection trimming should be shared between UI components");
 assert(config.includes("frameIds.slice(-limit)"), "provider-aware frame trimming should keep the latest clicked frame when over limit");
+
+const videoProviderPolicy = read("src/lib/video-provider-policy.ts");
+assert(videoProviderPolicy.includes("GEMINI_VIDEO_FRAME_ALLOWED_MIME_TYPES"), "Gemini/Huitu video frame MIME policy should be centralized");
+assert(videoProviderPolicy.includes('"image/jpeg"') && videoProviderPolicy.includes('"image/png"'), "Gemini/Huitu video frames should be limited to JPG/PNG");
+assert(videoProviderPolicy.includes("geminiVideoFramePolicyWarningMessage"), "Gemini video upload warnings should come from shared policy copy");
+assert(videoProviderPolicy.includes("grokVideoFrameGuidanceMessage"), "Grok video guidance should come from shared policy copy");
+assert(videoProviderPolicy.includes("Grok supports text-to-video or image-to-video"), "Grok guidance should explain text-to-video and image-to-video modes");
+assert(videoProviderPolicy.includes("Avoid unsafe or rights-sensitive prompts and uploads"), "Grok guidance should include prompt and upload safety guidance");
+assert(videoProviderPolicy.includes("real_person_reference_unsupported"), "provider failure normalization should classify real-person reference rejections");
+assert(videoProviderPolicy.includes("videoProviderFailureCustomerMessage"), "provider failure reasons should have customer-safe display copy");
 
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
 assert(videoWorkspace.includes("status === 403 || error?.includes(\"csrf\")"), "video workspace should identify CSRF failures instead of blaming frame images");
@@ -51,12 +70,17 @@ assert(videoWorkspace.includes("trimVideoFrameSelection(current, maxFrames)"), "
 assert(videoWorkspace.includes("Selected frames are treated as ordered reference images"), "video workspace should explain that selected frames drive image-to-video references");
 assert(videoWorkspace.includes("customerBalance?: PublicCustomer[\"balance\"]"), "video workspace should accept updated customer balance from job creation");
 assert(videoWorkspace.includes("onJobCreated(result.job.id, { customerBalance: result.customerBalance })"), "video job creation should return updated balance to the workspace shell");
+assert(videoWorkspace.includes("onGenerationStarted?.();"), "video workspace should notify the shell before the create request waits on the network");
+assert(videoWorkspace.includes("onGenerationFailed?.(nextMessage)"), "video workspace should notify the shell when early navigation reaches a create failure");
+assert(videoWorkspace.includes("const isSubmitting = pending || submissionPending"), "video workspace should keep the create action locked across the early navigation boundary");
 assert(videoWorkspace.includes('PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion"'), "video workspace should prefer the neutral prompt-directed video preset");
 assert(videoWorkspace.includes("function defaultVideoTheme"), "video workspace should resolve a neutral default video preset explicitly");
 assert(videoWorkspace.includes("defaultVideoTheme(nextThemes)?.id"), "video workspace should not default to the first active video theme");
 assert(!videoWorkspace.includes("nextThemes[0]?.id"), "video workspace should not silently select the first active video theme");
 assert(!videoWorkspace.includes("themes.find((theme) => theme.id === selectedThemeId) ?? themes[0]"), "video workspace should not fall back to the first active video theme inline");
 assert(videoWorkspace.includes("availableDurationOptions.map"), "video workspace should render selectable duration options based on frame count");
+assert(videoWorkspace.includes("DEFAULT_VIDEO_RESOLUTION"), "video workspace should use the shared 720p default resolution");
+assert(!videoWorkspace.includes('"480p"') && !videoWorkspace.includes('"480P"'), "video workspace should not expose 480p as a customer-selectable resolution");
 assert(videoWorkspace.includes("normalizeVideoDurationSecondsForFrameCount"), "video workspace should clamp restored and selected duration for multi-frame requests");
 assert(videoWorkspace.includes("selectedDurationSeconds"), "video workspace should track the selected duration");
 assert(videoWorkspace.includes("videoDurationCreditCost(selectedTheme.creditCost, effectiveDurationSeconds"), "video workspace should price the effective duration dynamically");
@@ -77,7 +101,7 @@ assert(videoWorkspace.includes("const isTextToVideo = selectedFrameIds.length ==
 assert(videoWorkspace.includes("videoInputMode: hasReadyFrameInput ? \"image_to_video\" : \"text_to_video\""), "video workspace should submit an explicit text-to-video or image-to-video mode");
 assert(videoWorkspace.includes("videoThemeSlug: selectedTheme.slug"), "video workspace should submit the selected video theme slug so stale cached ids can be reconciled");
 assert(videoWorkspace.includes("Describe the video you want, or select frame images"), "video workspace should allow text prompts instead of forcing frame selection");
-assert(videoWorkspace.includes("isTextToVideo ? vt(spanish, \"Text to video\""), "video workspace should show text-to-video mode in the composer");
+assert(videoWorkspace.includes("isTextToVideo && !selectedModelNeedsFrames ? vt(spanish, \"Text to video\""), "video workspace should show text-to-video mode in the composer");
 assert(!videoWorkspace.includes("!selectedFrameIds.length || hasPendingFrameUploads"), "video generation button should not require selected frames when a prompt is present");
 assert(videoWorkspace.includes("textToVideoConfirmArmed"), "text-to-video requests without selected frames should require an explicit confirmation click");
 assert(videoWorkspace.includes("textToVideoConfirmOpen"), "no-frame text-to-video confirmation should open a visible dialog");
@@ -89,6 +113,13 @@ assert(videoWorkspace.includes("Continue text-to-video"), "the no-frame dialog s
 assert(videoWorkspace.includes("role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"text-to-video-confirm-title\""), "the no-frame warning should render as an accessible modal dialog");
 assert(videoWorkspace.includes("onOpenFrameManager()"), "the no-frame dialog should be able to send customers back to the frame picker");
 assert(videoWorkspace.includes("video_frame_selection_required"), "video workspace should explain backend image-reference prompt guard failures");
+assert(videoWorkspace.includes("geminiVideoFrameRequirementMessage(spanish)"), "video workspace should show a Gemini-specific frame requirement");
+assert(videoWorkspace.includes("geminiVideoFramePolicyWarningMessage(spanish)"), "video workspace should warn that Gemini cannot use real-person references");
+assert(videoWorkspace.includes('selectedVideoModelFamily === "gemini"'), "video workspace should show Gemini policy only when Gemini is selected");
+assert(videoWorkspace.includes('selectedVideoModelFamily === "grok"'), "video workspace should show Grok guidance only when Grok is selected");
+assert(videoWorkspace.includes("grokVideoFrameGuidanceMessage(spanish)"), "video workspace should show Grok text-to-video and image-to-video guidance");
+assert(videoWorkspace.includes("grokVideoFrameGuidanceDetailMessage(spanish)"), "video workspace should show Grok prompt and upload safety guidance");
+assert(videoWorkspace.includes("unsupported_video_frame_type"), "video workspace should explain unsupported Gemini frame image types");
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
 assert(videoWorkspace.includes("retryDraft?: VideoRetryDraft | null"), "video workspace should accept a retry draft from the results panel");
@@ -115,12 +146,16 @@ assert(customerAdminAccess.includes('source: "platform_admin_session"'), "platfo
 const jobStore = read("src/lib/stores/job-store.ts");
 assert(jobStore.includes("lock_customer_generation"), "generation submit advisory lock should keep the lock statement out of the result set");
 assert(!jobStore.includes("await tx.$queryRaw`SELECT pg_advisory_xact_lock"), "generation submit advisory lock should not query a void-returning Postgres function directly");
+assert(jobStore.includes("generationOutputRunNumberForSettledJob"), "settled output labels should compute generation numbers without loading every customer job");
+assert(jobStore.includes("tx.generationJob.count({"), "settled output run numbers should use a compact count query");
+assert(!jobStore.includes("const customerJobs = await tx.generationJob.findMany"), "settled album creation should not fetch full customer job history inside the result transaction");
 assert(jobStore.includes("normalizeVideoDurationSecondsForFrameCount"), "job store should normalize requested video durations within provider limits");
+assert(jobStore.includes("normalizeVideoResolution"), "job store should normalize stale or legacy video resolutions before snapshotting the job");
 assert(jobStore.includes("videoDurationCreditCost(videoTheme.creditCost"), "job store should bill video duration choices dynamically");
 assert(jobStore.includes("rawVideoThemeSlug") && jobStore.includes("{ slug: rawVideoThemeSlug }"), "job store should resolve video themes by slug when a cached frontend id is stale");
 assert(jobStore.includes("selectedDurationSeconds"), "job store should snapshot the selected video duration");
 assert(jobStore.includes("requestedAssetIdsForRequest(params.requestJson, videoMode)"), "job store should accept video frame ids from either assetIds or fields.frameAssetIds");
-assert(jobStore.includes("effectiveVideoFrameLimit(videoProviders, videoTheme.maxFrames)"), "job store should validate video frames against the preset frame limit");
+assert(jobStore.includes("modelFamilyVideoProviders") && jobStore.includes("effectiveVideoFrameLimit(modelFamilyVideoProviders, videoTheme.maxFrames)"), "job store should validate video frames against the model-family preset frame limit");
 assert(jobStore.includes("function videoPromptText"), "job store should read the written prompt for text-to-video requests");
 assert(jobStore.includes("function videoPromptRequiresFrameImages"), "job store should detect prompts that require selected frame images");
 assert(jobStore.includes('StoreError("video_frame_selection_required"'), "job store should reject image-reference prompts when no video frames are selected");
@@ -137,7 +172,9 @@ assert(!jobStore.includes("Source images win over preset, theme, style, and user
 assert(jobStore.includes("videoReferenceContract"), "video job prompt metadata should snapshot the reference contract");
 assert(jobStore.includes("const hasPaidCreditRequest = creditsReserved > 0"), "job store should recognize paid credit-backed generation requests");
 assert(jobStore.includes("!activeSubscription && !hasPaidCreditRequest"), "job store should only require a subscription when no paid credits are being reserved");
-assert(jobStore.includes("videoProviderAvailability(videoProviders"), "job store should preflight video provider availability before reserving credits");
+assert(jobStore.includes("videoProviderAvailability(modelFamilyVideoProviders"), "job store should preflight model-family video provider availability before reserving credits");
+assert(jobStore.includes('requestedModelFamily === "gemini" && requestedAssetIds.length < 1'), "Gemini/Huitu video jobs should require at least one frame image before dispatch");
+assert(jobStore.includes("videoProviderMatchesModelFamily(provider, requestedModelFamily)"), "job store should lock video providers to the requested model family");
 assert(jobStore.includes('StoreError(availability.error, 503)'), "video provider preflight should return a service-unavailable error without creating a job");
 assert(jobStore.includes("skipProviderAvailabilityCheck"), "smoke skip-dispatch probes should be able to exercise job creation without live provider availability");
 assert(jobStore.includes("normalizeProviderSelectionForAvailability"), "job store should normalize stale preferred provider selections before creating jobs");
@@ -159,12 +196,32 @@ assert(generationSubmit.includes("skipProviderAvailabilityCheck: input.skipWorke
 
 const jobsRoute = read("src/app/api/sites/[siteId]/ai/jobs/route.ts");
 assert(jobsRoute.includes("...(isVideoJobRequest(body) ? stringArray(fields.frameAssetIds) : [])"), "job API should preserve video frame ids submitted inside fields.frameAssetIds");
+assert(jobsRoute.includes('requestedVideoModelFamily(body) === "gemini" && assetIds.length < 1'), "job API should reject Gemini video requests before dispatch when no frame image is selected");
 assert(jobsRoute.includes('request.headers.get("idempotency-key")'), "customer job API should accept idempotency keys from browser submits");
 assert(jobsRoute.includes("idempotencyKey,"), "customer job API should pass idempotency keys into generation submit");
+
+const customerAssetsRouteForVideoPolicy = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/route.ts");
+assert(customerAssetsRouteForVideoPolicy.includes("unsupported_video_frame_type"), "video frame uploads should reject unsupported image types at the API boundary");
+assert(customerAssetsRouteForVideoPolicy.includes("geminiVideoFrameMimeTypeForUpload"), "video frame upload MIME validation should use shared Gemini policy");
+
+const customerWorkspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
+assert(customerWorkspaceShell.includes("GEMINI_VIDEO_FRAME_ACCEPT"), "video frame upload input should advertise JPG/PNG only");
+assert(customerWorkspaceShell.includes("isGeminiVideoFrameUploadFile"), "video frame picker should filter unsupported files before upload");
+assert(!customerWorkspaceShell.includes("geminiVideoFramePolicyWarningMessage(spanishXby)"), "video frame manager should not duplicate Gemini policy warnings from the right composer");
+assert(!customerWorkspaceShell.includes("geminiVideoFrameUploadTypeMessage"), "video frame manager should use generic upload type copy instead of Gemini-specific left-side copy");
+assert(!customerWorkspaceShell.includes("Gemini video uses JPG or PNG frames only"), "video frame manager should not show Gemini upload requirements on the left");
+assert(customerWorkspaceShell.includes("parseVideoProviderFailure(record.providerFailure)"), "workspace output slots should parse structured provider failure details");
+assert(customerWorkspaceShell.includes("workspaceJobProviderFailureBody"), "failed video job cards should show provider-specific failure reasons");
 
 const workerDispatch = read("src/lib/worker.ts");
 assert(workerDispatch.includes("fetchWithTimeout(endpoint"), "worker dispatch should not wait forever for the worker accept endpoint");
 assert(workerDispatch.includes("AI_WORKER_DISPATCH_TIMEOUT_MS"), "worker dispatch timeout should be configurable");
+assert(workerDispatch.includes("providerFailure?: VideoProviderFailure"), "worker callback payloads should carry structured provider failure details");
+
+const localWorkerDispatch = read("src/app/api/internal/ai-worker/dispatch/route.ts");
+assert(localWorkerDispatch.includes("videoProviderFailureFromError"), "local video worker should normalize provider errors");
+assert(localWorkerDispatch.includes("providerFailure: lastProviderFailure"), "local video worker should return provider failure details to the job result");
+assert(localWorkerDispatch.includes("LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES"), "paid video provider retries should stay opt-in");
 
 const remoteDbTunnelScript = read("scripts/start-remote-db-tunnel.mjs");
 assert(remoteDbTunnelScript.includes("isPostgresResponsive"), "remote DB tunnel startup should validate PostgreSQL responsiveness, not only an open port");
@@ -192,18 +249,27 @@ assert(customerRuntimeRoute.includes('CUSTOMER_WORKSPACE_RUNTIME_DIRECT_SQL === 
 assert(customerRuntimeRoute.includes('{ label: "customer workspace runtime segmented", retries: 2, timeoutMs: 20_000 }'), "workspace runtime segmented reads should retry through short DB tunnel rebuilds with a workspace-specific timeout");
 assert(customerRuntimeRoute.includes("getCurrentCustomerForRuntimeRefresh"), "workspace runtime should not let auxiliary current-customer refresh lookups block real runtime data");
 assert(customerRuntimeRoute.includes("admin access lookup skipped after transient DB error"), "workspace runtime should not fail when admin bypass lookup hits a transient DB tunnel error");
-assert(customerRuntimeRoute.includes("readWorkspaceJobSummariesRelational"), "workspace runtime should read summarized job JSON instead of full generation job JSON");
+assert(customerRuntimeRoute.includes("readWorkspaceJobSummariesRelational"), "workspace runtime should read job projections through a shared helper");
+assert(customerRuntimeRoute.includes("WORKSPACE_RELATED_JOB_SUMMARY_LIMIT"), "workspace runtime should cap related job summaries so old asset-linked jobs cannot time out refreshes");
+assert(customerRuntimeRoute.includes("const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all"), "workspace runtime should read independent customer data in parallel after session lookup");
+assert(customerRuntimeRoute.includes(").slice(0, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT)"), "workspace runtime should keep all assets while limiting old related job detail reads");
+assert(customerRuntimeRoute.includes('LIMIT ${WORKSPACE_RELATED_JOB_SUMMARY_LIMIT}'), "direct SQL workspace runtime should apply the same related job cap");
+assert(customerRuntimeRoute.includes("current?: AccountCurrentCustomer"), "workspace runtime segmented reads should reuse the already-verified customer when available");
+assert(customerRuntimeRoute.includes("readWorkspaceRuntime(siteId, sessionId, currentForRefresh)"), "workspace runtime refresh should avoid a duplicate session lookup after current customer refresh");
+assert(customerRuntimeRoute.includes("includeJson: false"), "workspace runtime should not load full JSON for older related jobs used only to label existing assets");
 
 const workspaceRuntimeJobs = read("src/lib/workspace-runtime-jobs.ts");
+assert(workspaceRuntimeJobs.includes("WORKSPACE_RELATED_JOB_SUMMARY_LIMIT = 8"), "workspace related job summaries should use the shared 8-job cap");
 assert(workspaceRuntimeJobs.includes("readWorkspaceJobSummariesRelational"), "workspace job summaries should live in a shared helper");
 assert(!workspaceRuntimeJobs.includes("$queryRaw"), "workspace job summaries should avoid raw SQL over the SSH DB tunnel");
-assert(workspaceRuntimeJobs.includes("aiAppId: true"), "workspace job summaries should select scalar job fields only");
-assert(!workspaceRuntimeJobs.includes("requestJson: true"), "workspace job summaries should not batch-read full request JSON");
+assert(workspaceRuntimeJobs.includes("aiAppId: true"), "workspace job summaries should select the job identity fields");
+assert(workspaceRuntimeJobs.includes("includeJson = true"), "workspace job summaries should default to full JSON for recent live progress jobs");
+assert(workspaceRuntimeJobs.includes("requestJson: true") && workspaceRuntimeJobs.includes("resultJson: true"), "workspace job summaries should preserve request and result details for live progress");
 assert(workspaceRuntimeJobs.includes("outputType"), "workspace job summaries should synthesize a compact output type for the UI");
 assert(workspaceRuntimeJobs.includes("outputSlots"), "workspace job summaries should synthesize output slot progress");
 
 const storefrontRender = read("src/lib/storefront-render.tsx");
-assert(storefrontRender.includes("readWorkspaceJobSummariesRelational"), "workspace SSR should use summarized job JSON");
+assert(storefrontRender.includes("readWorkspaceJobSummariesRelational"), "workspace SSR should use the shared job projection");
 assert(!storefrontRender.includes("prisma.generationJob.findMany({\n      where: { siteId, customerId: customer.id },\n      orderBy: { updatedAt: \"desc\" },\n      take: 8"), "workspace SSR should not batch-read full generation job JSON");
 
 assert(customerAdminAccess.includes("transient DB lookup failed; continuing without admin bypass"), "customer admin bypass lookup should not fail the customer workspace during DB tunnel blips");
@@ -225,6 +291,10 @@ assert(!/source:\s*"\/api\/local-assets\/:path\*"[\s\S]{0,240}Cache-Control/.tes
 
 assert(storefrontRender.includes("readLightWorkspaceRuntimeForCustomerRelational"), "workspace SSR should use a light runtime query instead of full customer state hydration");
 assert(storefrontRender.includes("readLightWorkspaceRuntimeForCustomerRelational({ siteId, customer: current.customer })"), "workspace SSR should hydrate the initial panel from the light runtime query");
+assert(storefrontRender.includes("WORKSPACE_RELATED_JOB_SUMMARY_LIMIT"), "workspace SSR should share the same related job summary cap as the runtime API");
+assert(storefrontRender.includes("const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all"), "workspace SSR should read independent customer data in parallel");
+assert(storefrontRender.includes(").slice(0, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT)"), "workspace SSR should keep all assets while limiting old related job detail reads");
+assert(storefrontRender.includes("includeJson: false"), "workspace SSR should not preload full JSON for older related jobs");
 assert(storefrontRender.includes("workspaceRuntimePreloadTimeoutMs"), "workspace SSR should cap initial runtime preload latency");
 assert(storefrontRender.includes("deferring to client runtime refresh"), "workspace SSR should defer slow DB tunnel reads to the client runtime refresh");
 assert(storefrontRender.includes("...(initialWorkspaceRuntime ? { workspaceRuntime: initialWorkspaceRuntime } : {})"), "workspace SSR should omit timed-out runtime instead of freezing an empty workspace");
@@ -258,8 +328,11 @@ assert(videoProviderAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID
 assert(videoProviderAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true'), "SmartPickLid reference video preflight should default to the enabled platform provider unless explicitly disabled");
 assert(videoProviderAvailability.includes("video_provider_temporarily_unavailable"), "video provider availability should expose a customer-safe unavailable error");
 assert(videoProviderAvailability.includes("ai_provider_video_first_frame_required_lk888_media"), "LK888 Grok video preflight should require a reference frame");
+assert(videoProviderAvailability.includes('"huitu-openapi"'), "Huitu video providers should be recognized as a dedicated protocol");
+assert(videoProviderAvailability.includes("ai_provider_video_reference_required_huitu"), "Huitu video preflight should require a reference frame");
 
 const workspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
+const videoRefreshEventDrivenSmoke = read("scripts/smoke-video-refresh-event-driven.mjs");
 const localAssetsRoute = read("src/app/api/local-assets/[...path]/route.ts");
 const workspaceVideoPreviewButton = workspaceShell.match(/function WorkspaceVideoPreviewButton[\s\S]*?\n}\n\nfunction mediaLabel/)?.[0] ?? "";
 assert(workspaceShell.includes("workspaceRuntimeNeedsInitialRefresh"), "workspace shell should detect empty preloaded runtime and refresh it");
@@ -272,7 +345,31 @@ assert(workspaceShell.includes("...(current.runtime ? { runtime: current.runtime
 assert(workspaceShell.includes('runtimeState.status === "loading" && runtimeState.refreshKey === 0'), "workspace loading panels should be limited to the initial runtime load");
 assert(workspaceShell.includes("!workspaceNotice && !focusedJobId && !runtime"), "workspace loading panels should not cover a just-created job notice while runtime refreshes");
 assert(workspaceShell.includes("Workspace activity could not load from the database"), "video results tab should explain database runtime load failures instead of showing zero data");
-assert(workspaceShell.includes("pendingEventRefreshRef"), "workspace job event refreshes should be coalesced while a runtime refresh is already loading");
+assert(workspaceShell.includes("pendingEventRefreshRef"), "workspace non-final automatic refreshes should be coalesced while a runtime refresh is already loading");
+assert(workspaceShell.includes("queueWorkspaceRuntimeRefresh"), "workspace refreshes should share one event-driven refresh scheduler");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("create")'), "video creation should trigger an immediate workspace refresh");
+assert((workspaceShell.match(/queueWorkspaceRuntimeRefresh\("create"\)/g) ?? []).length === 1, "video creation should refresh after acceptance without an extra pre-create runtime request");
+assert(!workspaceShell.includes('queueWorkspaceRuntimeRefresh("event")'), "final provider events should not trigger a workspace runtime refresh");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("resume")'), "workspace should refresh active work when the page returns to the foreground");
+assert(workspaceShell.includes("document.addEventListener(\"visibilitychange\""), "workspace should listen for visible-page returns");
+assert(workspaceShell.includes("window.addEventListener(\"focus\""), "workspace should listen for browser focus returns");
+assert(workspaceShell.includes("runtimeAutoRefreshAllowedRef"), "foreground refreshes should be gated to active or just-created jobs");
+assert(workspaceShell.includes("const [liveJobUpdates, setLiveJobUpdates]"), "workspace progress SSE events should update jobs locally");
+assert(workspaceShell.includes("applyLiveJobPatch"), "workspace progress SSE events should patch persisted job display fields locally");
+assert(workspaceShell.includes("const finalEvent = payload.eventKind === \"final\" || payload.type === \"result\""), "workspace SSE should distinguish progress from final events");
+assert(workspaceShell.includes("applyLiveJobEventPatch(eventJobId") && workspaceShell.includes("clearQueuedEventRefresh()"), "workspace final SSE should update local state and clear queued automatic refreshes");
+assert(workspaceShell.includes("Generator progress received (${Math.round(progress)}%)."), "workspace progress SSE copy should not say it is refreshing");
+assert(!workspaceShell.includes("Generator progress received (${Math.round(Number(payload.progress))}%). Refreshing workspace."), "workspace progress SSE should not trigger refresh-oriented progress copy");
+assert(workspaceShell.includes("Generator finished ${workspaceJobTime(updatedAt)}"), "final event copy should not say the workspace is refreshing");
+assert(workspaceShell.includes("monotonicRuntimeProgress"), "workspace progress should not move backward when provider events arrive out of order");
+assert(!workspaceShell.includes("CUSTOMER_WORKSPACE_ACTIVE_REFRESH_INTERVAL_MS"), "workspace should not poll the runtime continuously while a job is active");
+assert(workspaceShell.includes("events.addEventListener(\"error\""), "workspace should surface SSE reconnect state while event-driven updates recover");
+assert(workspaceShell.includes("progressFromSlotStage"), "workspace should parse progress from legacy provider stage strings");
+assert(workspaceShell.includes("slot.progress"), "workspace should prefer persisted provider progress");
+assert(workspaceShell.includes("lastWorkerProgress"), "workspace should use persisted top-level provider progress when a slot omits it");
+assert(workspaceShell.includes("slotProgress === undefined"), "workspace should show an indeterminate bar when the provider has not reported a percentage");
+assert(workspaceRuntimeJobs.includes("requestJson: true") && workspaceRuntimeJobs.includes("resultJson: true"), "segmented workspace runtime reads should preserve job request and result details");
+assert(workspaceRuntimeJobs.includes("const persistedRequestJson = jsonRecord(job.requestJson)") && workspaceRuntimeJobs.includes("const persistedResultJson = jsonRecord(job.resultJson)"), "workspace job summaries should expose persisted provider progress and stages");
 assert(workspaceShell.includes("sample-selection:v2"), "workspace sample selection storage should invalidate older overlapping primary/partner selections");
 assert(workspaceShell.includes('if (!asset.subjectRole && !asset.localTarget) return target === "primary";'), "unassigned legacy samples should not appear in both couple sample pickers");
 assert(workspaceShell.includes("partnerSampleIds.filter((id) => !savedPrimarySet.has(id))"), "saved primary and partner sample selections should stay mutually exclusive");
@@ -296,7 +393,7 @@ assert(workspaceShell.includes("...current.filter((asset) => asset.id !== localI
 assert(workspaceShell.includes("invalidateCustomerAssets(site.id, customer.id)"), "video frame upload and delete flows should invalidate the customer asset cache before broadcasting updates");
 assert(workspaceShell.includes("VIDEO_FRAME_UPLOAD_LIMIT = CUSTOMER_VIDEO_FRAME_LIMIT"), "workspace frame manager should use the global customer video frame limit");
 assert(workspaceShell.includes("const maxVideoFrameCount = VIDEO_FRAME_UPLOAD_LIMIT"), "workspace frame manager should not use the legacy 30-frame limit");
-assert(workspaceShell.includes("Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} frame images"), "workspace frame manager copy should use the 7-frame upload limit");
+assert(workspaceShell.includes("Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} JPG or PNG frame images"), "workspace frame manager copy should use the 7-frame upload limit and provider-safe image types");
 assert(workspaceShell.includes("imageFiles.slice(0, maxVideoFrameCount)"), "workspace frame uploads should cap each upload batch to the provider limit");
 assert(workspaceShell.includes("readyVideoFrameAssets.slice(0, maxVideoFrameCount)"), "uploaded frame list should render at most the provider-supported frame count");
 assert(!workspaceShell.includes("Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame images"), "workspace frame manager should not show the default 30-frame copy");
@@ -322,16 +419,26 @@ assert(!workspaceShell.includes("col-span-2 grid h-7"), "selected frame row acti
 assert(workspaceShell.includes("const videoRuntimeJobs = recentJobs.filter(isVideoRuntimeJob);"), "video jobs should be scoped to the video workspace");
 assert(workspaceShell.includes('id="video-workspace-videos"'), "video workspace should render its own video results panel");
 assert(workspaceShell.includes("onJobCreated={showVideoJobStatus}"), "video generation should route to the video workspace Videos tab");
+assert(workspaceShell.includes("onGenerationStarted={showVideoJobSubmitting}"), "video generation should switch to the Videos tab as soon as request creation starts");
+assert(workspaceShell.includes("onGenerationFailed={showVideoJobCreationFailed}"), "video generation failures should be surfaced after the early tab switch");
+assert(workspaceShell.includes("submissionPending={videoSubmissionPending}"), "video input should stay locked while an early-switched request is still being created");
+assert(workspaceShell.includes("video-submission:"), "video workspace should track the pre-job submission state before a real job id exists");
 assert(workspaceShell.includes("pendingCreatedVideoJobId"), "video workspace should track a just-created video job until runtime includes it");
 assert(workspaceShell.includes("setPendingCreatedVideoJobId(jobId)"), "video generation should mark the newly created job as pending before refreshing runtime");
 assert(workspaceShell.includes("pendingCreatedVideoJobId === focusedJobId"), "video status cards should not fall back to stale failed jobs while a new focused video job is still loading");
 assert(workspaceShell.includes("New video request created · refreshing status"), "video workspace summary should hide stale counts while loading the newly created request");
 assert(workspaceShell.includes("Previous failed requests are hidden until the latest status arrives"), "video workspace should render a neutral pending card instead of the previous failed request");
+assert(workspaceShell.includes('0 of 1 delivered · 1 pending'), "video workspace pending card should keep the same compact slot summary before the runtime job arrives");
+assert(workspaceShell.includes('Waiting for status'), "video workspace pending card should show a stable status footer while the runtime job is loading");
+assert(workspaceShell.includes("w-1/3 animate-[admin-progress_1.05s_ease-in-out_infinite] rounded-full bg-[#31d4ff]"), "video workspace pending card should use an indeterminate progress animation instead of a fake percentage");
+assert(!workspaceShell.includes('w-[35%] rounded-full bg-[#31d4ff]'), "video workspace should not show a hardcoded pending percentage");
 assert(workspaceShell.includes("Video generation is temporarily unavailable while provider access is being updated. Credits were returned automatically"), "video result cards should explain provider availability failures instead of a generic no-progress failure");
 assert(workspaceShell.includes("text-xs font-semibold leading-5 text-red-400"), "video frame sidebar operation messages should render in red for visibility");
 assert(workspaceShell.includes("group/video relative block w-full bg-black text-left"), "video resource cards should use the app preview entry instead of native thumbnail controls");
 assert(workspaceShell.indexOf("{selectedPreviewAsset ? (") > workspaceShell.indexOf("</main>"), "generated asset preview dialog should render outside panel-specific branches");
 assert(workspaceShell.includes('className="relative aspect-video w-full overflow-hidden'), "video result cards should keep a stable aspect-ratio preview frame");
+assert(workspaceVideoPreviewButton.includes("object-contain"), "video result cards should show portrait posters without cropping them into landscape previews");
+assert(!workspaceVideoPreviewButton.includes('title={label}'), "video preview buttons should not show native title tooltips over the video poster");
 assert(workspaceShell.includes('src={posterSrc}') && workspaceShell.includes('loading="lazy"'), "video result cards should render lazy poster images");
 assert(!workspaceShell.includes("autoPlay"), "video result cards should not autoplay in the results grid");
 assert(!workspaceShell.includes("loop"), "video result cards should not loop in the results grid");
@@ -347,6 +454,8 @@ assert(!workspaceVideoPreviewButton.includes('preload="metadata"'), "video thumb
 assert(workspaceShell.includes("key={selectedPreviewAsset.id}"), "video preview dialog should remount the video element when switching assets");
 assert(workspaceShell.includes("poster={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}"), "video preview dialog should show the cached server poster while the MP4 loads");
 assert(workspaceShell.includes('preload="metadata"'), "video preview dialog should avoid preloading the entire MP4 before playback");
+assert(!workspaceShell.includes("title={selectedPreviewLabel}"), "video preview dialog should not let native title tooltips obscure portrait video content");
+assert(workspaceShell.includes('className="max-h-[82vh] max-w-full object-contain"'), "video preview dialog should keep the real video aspect ratio instead of stretching to the full modal width");
 assert(workspaceShell.includes("function workspaceVideoPlaybackUrl"), "video preview dialog should have a dedicated playback URL helper");
 assert(workspaceShell.includes("function workspaceVideoPlaybackUrl(src: string): string {\n  return src;\n}"), "video preview dialog should play the original generated video instead of a low-resolution transcode");
 assert(!workspaceShell.includes('return `${src}${src.includes("?") ? "&" : "?"}preview=1`;'), "video preview dialog must not force the low-resolution preview MP4");
@@ -384,6 +493,8 @@ assert(workspaceShell.includes("function videoRetryDraftFromJob"), "workspace sh
 assert(workspaceShell.includes("setRetryVideoDraft({ ...draft, key:"), "retrying a failed video should pass a one-time draft into the video composer");
 assert(workspaceShell.includes("Retry video"), "failed video cards should expose a retry button");
 assert(workspaceShell.includes("onRetryDraftApplied={() => setRetryVideoDraft(null)}"), "video retry drafts should be cleared after the composer applies them");
+assert(videoRefreshEventDrivenSmoke.includes("progress_event_triggered_runtime_refresh"), "event-driven smoke should assert progress events do not refresh runtime");
+assert(videoRefreshEventDrivenSmoke.includes("final_events_triggered_runtime_refresh"), "event-driven smoke should assert final events do not refresh runtime");
 
 const worker = read("src/lib/worker.ts");
 assert(worker.includes("configuredWorkerPublicBaseUrl"), "worker should support a configured public base URL");
@@ -434,6 +545,13 @@ assert(workerDispatchRoute.includes("workerCallbackTimeoutMs"), "local worker ca
 assert(workerDispatchRoute.includes("fetchWorkerCallbackWithTimeout"), "local worker status/result callbacks should not hang forever");
 assert(workerDispatchRoute.includes("LOCAL_AI_WORKER_CALLBACK_TIMEOUT_MS"), "local worker callback timeout should be configurable");
 
+const workerStatusCallbackRoute = read("src/app/api/internal/ai-worker/jobs/[jobId]/status/route.ts");
+const workerResultCallbackRoute = read("src/app/api/internal/ai-worker/jobs/[jobId]/result/route.ts");
+assert(workerStatusCallbackRoute.includes("recordTiming(body.timing)"), "worker status callbacks should persist timing updates");
+assert(workerStatusCallbackRoute.includes("outputSlots,") && workerStatusCallbackRoute.includes("eventKind: body.status === \"failed\" || result.alreadyFinal ? \"final\" : \"progress\""), "worker status callbacks should publish progress event details");
+assert(workerResultCallbackRoute.includes("timing: body.timing"), "worker result callbacks should pass timing through to settlement");
+assert(workerResultCallbackRoute.includes('eventKind: "final"'), "worker result callbacks should publish final customer job events");
+
 const assetStore = read("src/lib/stores/asset-store.ts");
 assert(assetStore.includes("previewUrl: customerAssetPreviewUrl(storageKey)"), "relational customer assets should keep their own preview URL");
 assert(assetStore.includes('previewStatus: hasReadablePreview ? "ready" : "loading"'), "relational customer assets should expose loading preview status");
@@ -445,14 +563,26 @@ assert(clientImageUpload.includes("canvas.toBlob"), "large customer image upload
 assert(clientImageUpload.includes("preserveOriginal"), "customer image uploads should support bypassing client-side compression for video frames");
 assert(clientImageUpload.includes("customerImageUploadErrorMessage"), "customer image uploads should map server errors to customer-facing messages");
 
-const customerAssetsRoute = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/route.ts");
-assert(customerAssetsRoute.includes("CUSTOMER_UPLOAD_MAX_BYTES"), "customer asset upload size should be configurable for production");
-assert(customerAssetsRoute.includes("defaultMaxUploadBytes = 32 * 1024 * 1024"), "customer asset upload route should accept modern phone photos before compression");
-assert(customerAssetsRoute.includes('body.subjectRole === "video_frame"'), "customer asset upload route should detect video frame uploads");
-assert(customerAssetsRoute.includes("preserveOriginal"), "customer asset upload route should preserve original video frame bytes");
-assert(customerAssetsRoute.includes("writeCustomerAssetFile({"), "customer asset uploads should write directly to shared local storage");
-assert(!customerAssetsRoute.includes("writeCustomerAssetFileShared"), "customer asset uploads should not route same-server uploads through base64 HTTP transfer");
-assert(!customerAssetsRoute.includes("body.file.size > 10 * 1024 * 1024"), "customer asset upload route should not keep the old hard-coded 10MB rejection");
+const customerAssetsUploadRoute = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/route.ts");
+assert(customerAssetsUploadRoute.includes("CUSTOMER_UPLOAD_MAX_BYTES"), "customer asset upload size should be configurable for production");
+assert(customerAssetsUploadRoute.includes("defaultMaxUploadBytes = 32 * 1024 * 1024"), "customer asset upload route should accept modern phone photos before compression");
+assert(customerAssetsUploadRoute.includes('body.subjectRole === "video_frame"'), "customer asset upload route should detect video frame uploads");
+assert(customerAssetsUploadRoute.includes("preserveOriginal"), "customer asset upload route should preserve original video frame bytes");
+assert(customerAssetsUploadRoute.includes("writeCustomerAssetFile({"), "customer asset uploads should write directly to shared local storage");
+assert(!customerAssetsUploadRoute.includes("writeCustomerAssetFileShared"), "customer asset uploads should not route same-server uploads through base64 HTTP transfer");
+assert(!customerAssetsUploadRoute.includes("body.file.size > 10 * 1024 * 1024"), "customer asset upload route should not keep the old hard-coded 10MB rejection");
+
+const customerAssetStorage = read("src/lib/customer-asset-storage.ts");
+const internalCustomerAssetsRoute = read("src/app/api/internal/customer-assets/route.ts");
+assert(customerAssetStorage.includes('params.purpose === "output"') && customerAssetStorage.includes('params.mimeType.toLowerCase().startsWith("video/")'), "remote worker video output uploads should prefer binary transfer");
+assert(customerAssetStorage.includes('"Content-Type": "application/octet-stream"'), "remote worker video output uploads should use octet-stream bodies");
+assert(customerAssetStorage.includes("X-Customer-Asset-Storage-Key") && customerAssetStorage.includes("X-Customer-Asset-Mime-Type"), "binary customer asset uploads should carry storage metadata in headers");
+assert(customerAssetStorage.includes("CUSTOMER_ASSET_REMOTE_VIDEO_UPLOAD_MODE") && customerAssetStorage.includes('!== "json"'), "binary video upload should keep an explicit JSON fallback knob");
+assert(customerAssetStorage.includes("dataBase64: params.bytes.toString(\"base64\")"), "remote customer asset writes should keep the legacy JSON/base64 path");
+assert(internalCustomerAssetsRoute.includes('contentType === "application/octet-stream"'), "internal customer asset route should accept binary uploads");
+assert(internalCustomerAssetsRoute.includes('request.headers.get("x-customer-asset-storage-key")') && internalCustomerAssetsRoute.includes('url.searchParams.get("storageKey")'), "binary customer asset uploads should accept storage keys from headers or query");
+assert(internalCustomerAssetsRoute.includes("Buffer.from(await request.arrayBuffer())"), "binary customer asset uploads should read raw request bytes");
+assert(internalCustomerAssetsRoute.includes("dataBase64"), "internal customer asset route should keep the JSON/base64 compatibility branch");
 
 const serverStore = read("src/lib/server-store.ts");
 assert(serverStore.includes("const isCustomerAsset = isCustomerAssetStorageKey(storageKey)"), "JSON runtime customer assets should detect customer-owned storage keys");
@@ -460,13 +590,15 @@ assert(serverStore.includes('previewStatus: hasReadablePreview ? "ready" : "load
 
 const dispatchRoute = read("src/app/api/internal/ai-worker/dispatch/route.ts");
 const directJsonPromptFunction = dispatchRoute.match(/function buildDirectJsonVideoPrompt[\s\S]*?\n}\n\nfunction buildVideoSceneImagePrompt/)?.[0] ?? "";
+const pollVideoTaskFunction = dispatchRoute.match(/async function pollVideoTask[\s\S]*?\n}\n\nfunction videoProviderReadRetryAttempts/)?.[0] ?? "";
+const videoProviderAttemptsFunction = dispatchRoute.match(/function videoProviderAttempts[\s\S]*?\n}\n\nfunction shouldAllowPaidVideoProviderFallback/)?.[0] ?? "";
 assert(dispatchRoute.includes("return inputAssets(payload).slice(0, maxFrames);"), "video worker should use the normalized frame limit");
 assert(!/function videoFrameAssets[\s\S]*?slice\(0,\s*4\)/.test(dispatchRoute), "video worker should not truncate frames to 4");
 assert(dispatchRoute.includes("shouldRejectLoopbackVideoFrameUrls"), "video worker should gate loopback rejection by environment");
 assert(dispatchRoute.includes("shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)"), "local development should not reject loopback frame URLs");
 assert(dispatchRoute.includes("shouldUseVideoFrameDataUriFallback"), "local video worker should support data URI fallback for provider frame URLs");
 assert(dispatchRoute.includes("ai_provider_video_frame_data_uri_source_failed"), "video data URI fallback should fetch the signed source frame before provider dispatch");
-assert(dispatchRoute.includes("videoProviderDataUriFrameUrls"), "video worker should be able to force frame data URI URLs");
+assert(dispatchRoute.includes("shouldForceVideoFrameDataUris()") && dispatchRoute.includes("videoFramePreparedDataUri(asset"), "video worker should be able to force resized frame data URI URLs");
 assert(dispatchRoute.includes("shouldRetryVideoTaskWithDataUriFrames"), "video worker should keep the data URI fallback branch explicit");
 assert(dispatchRoute.includes('if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return false;'), "paid video data URI retry should require explicit opt-in");
 assert(dispatchRoute.includes("shouldCompressVideoReferenceImages"), "video worker should keep video reference preprocessing configurable");
@@ -529,9 +661,30 @@ assert(dispatchRoute.includes("shouldTryNextVideoModel"), "video worker should t
 assert(dispatchRoute.includes('ai_provider_video_create_failed_502_'), "video worker should recognize provider create 502 responses as model fallback candidates");
 assert(dispatchRoute.includes('LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1"'), "paid video worker should avoid repeated provider task creation by default");
 assert(dispatchRoute.includes('LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "1"'), "paid video retries should require an explicit opt-in and default to one attempt");
+assert(videoProviderAttemptsFunction.includes('if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return 1;'), "paid video provider create attempts should default to exactly one");
 assert(dispatchRoute.includes('LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_PROVIDER_FALLBACK'), "paid video provider fallback should require explicit opt-in");
 assert(dispatchRoute.includes('if (!shouldAllowPaidVideoProviderFallback()) break;'), "paid video worker should not fall through to another paid provider by default");
 assert(dispatchRoute.includes('message.includes("failed_502")'), "video worker should treat transient 502 provider failures as retryable");
+assert(dispatchRoute.includes("video_provider_poll_retry"), "video worker should retry transient status reads against the existing provider task");
+assert(pollVideoTaskFunction.includes("let firstPoll = true") && pollVideoTaskFunction.includes("if (!firstPoll)") && pollVideoTaskFunction.includes("firstPoll = false;"), "video worker should read provider status immediately after task creation before sleeping");
+assert(!pollVideoTaskFunction.includes("createVideoTask("), "video provider status polling should never create another provider task");
+assert(pollVideoTaskFunction.includes("fetchHuituOpenApiVideoTask") && pollVideoTaskFunction.includes("lk888MediaStatusUrls") && pollVideoTaskFunction.includes("/v1/videos/${encodeURIComponent(params.taskId)}"), "video provider status polling should only use read-only status endpoints");
+assert(dispatchRoute.includes("withVideoProviderReadRetries"), "video worker should retry transient result downloads against the existing provider task");
+assert(dispatchRoute.includes("video_provider_download_retry"), "video worker should report transient result-download retries");
+assert(dispatchRoute.includes("workerProgressWriteState"), "video worker should track progress writes for throttling");
+assert(dispatchRoute.includes("Math.abs(progress - previous.lastProgress) >= 10"), "video worker should write progress when it changes by at least 10 points");
+assert(dispatchRoute.includes("now - previous.lastWrittenAt >= 15_000"), "video worker should throttle small progress DB writes to at most every 15 seconds");
+assert(dispatchRoute.includes("{ nonBlocking: true, progressWrite: true }"), "video worker progress polling should publish locally without blocking on every DB write");
+assert(dispatchRoute.includes('"video_task_created"') && dispatchRoute.includes("providerTaskCreatedAt"), "video worker should record and await the provider task creation checkpoint");
+assert(dispatchRoute.includes('"video_result_received"') && dispatchRoute.includes("storedAt"), "video worker should record and await the raw provider result storage checkpoint");
+assert(dispatchRoute.includes("workerAcceptedAt") && dispatchRoute.includes("referencePreparedAt") && dispatchRoute.includes("providerCompletedAt") && dispatchRoute.includes("downloadedAt") && jobStore.includes("settledAt"), "video worker should persist end-to-end video timing checkpoints");
+assert(dispatchRoute.includes("AI_WORKER_VIDEO_OPTIMIZE_MODE") && dispatchRoute.includes('return "async";'), "video output optimization should default to async mode");
+assert(dispatchRoute.includes('optimizeMode === "sync"') && dispatchRoute.includes("asyncVideoOptimization"), "video worker should support sync optimization only when explicitly selected and otherwise defer optimization");
+assert(dispatchRoute.includes("replaceSettledGenerationOutputStorageKeyRelational"), "async video optimization should replace the settled storage key after success");
+assert(dispatchRoute.includes('publishCustomerJobEventForJob("status"'), "direct worker status writes should publish customer events");
+assert(dispatchRoute.includes('publishCustomerJobEventForJob("result"'), "direct worker result writes should publish customer events");
+assert(dispatchRoute.includes("const progress = normalizedWorkerProgress(slot.progress)") && dispatchRoute.includes("publishCustomerJobEventForJob(\"status\", result.job, {\n        stage,\n        progress,"), "direct worker status events should include provider progress");
+assert(dispatchRoute.includes("progress: Number.isFinite(Number(body.progress))"), "video worker should persist normalized provider progress");
 assert(!dispatchRoute.includes("shouldGenerateSceneImageAfterEditError"), "video scene composition should not keep a no-input text-generation fallback helper");
 assert(!dispatchRoute.includes("ai_provider_video_scene_image_generation"), "video scene composition should fail edit errors instead of switching to text-only generation");
 assert(!dispatchRoute.includes("shouldUseLocalVideoFallback"), "video provider failures should not be hidden behind a local video fallback");
@@ -540,10 +693,29 @@ assert(!dispatchRoute.includes('message.includes("econnreset")') || !dispatchRou
 assert(!dispatchRoute.includes("generateLocalFallbackVideo"), "video generation should not produce local fallback videos when the external provider is unavailable");
 assert(!dispatchRoute.includes("local_video_fallback_started"), "video generation should not report local fallback progress");
 assert(!dispatchRoute.includes("Local video fallback"), "video generation should not record local fallback outputs");
-assert(dispatchRoute.includes("videoSizeForParams"), "video worker should map aspect ratio and resolution to provider size");
+assert(dispatchRoute.includes("videoSizeForParams"), "video worker should map aspect ratio to the 720p provider size");
+assert(dispatchRoute.includes("createHuituOpenApiVideoTask"), "video worker should create Huitu OpenAPI tasks through the dedicated adapter");
+assert(dispatchRoute.includes("fetchHuituOpenApiVideoTask"), "video worker should poll Huitu OpenAPI task status through the dedicated adapter");
+assert(dispatchRoute.includes("downloadHuituOpenApiVideoTaskFile"), "video worker should download Huitu OpenAPI videos through the dedicated adapter");
+assert(dispatchRoute.includes("videoProviderMatchesModelFamily"), "video worker should lock provider queues to the selected model family");
+assert(dispatchRoute.includes("const videoResolutions = new Set([DEFAULT_VIDEO_RESOLUTION])"), "video worker should normalize legacy or invalid resolutions to 720p");
+assert(dispatchRoute.includes("const longEdge = 1280") && dispatchRoute.includes("const shortEdge = 720"), "video worker should target 720p dimensions for reference images and provider size");
+assert(!dispatchRoute.includes("854") && !dispatchRoute.includes("480p"), "video worker should not send 480p dimensions or resolution upstream");
+assert(dispatchRoute.includes("function smartPickLidJsonVideoResolution(resolution: string) {\n  return normalizeVideoResolution(resolution);\n}"), "SmartPickLid JSON video requests should send lowercase 720p resolution");
+assert(dispatchRoute.includes("return imageUrls.length ? { images: imageUrls } : {};"), "SmartPickLid JSON video requests should send references through the upstream images array");
+assert(!dispatchRoute.includes("return options?.smartPickLid ? { image: imageUrl }"), "SmartPickLid JSON video requests should not send single references through a separate image field");
 assert(dispatchRoute.includes('new Set(["16:9", "4:3", "1:1", "3:4", "9:16", "3:2", "2:3"])'), "video worker should accept every aspect ratio offered by the composer");
 assert(dispatchRoute.includes('aspectRatio === "4:3"'), "video worker should map 4:3 output size");
 assert(dispatchRoute.includes('aspectRatio === "3:4"'), "video worker should map 3:4 output size");
+assert(dispatchRoute.includes("targetSize: videoParams.size"), "video data URI fallback should resize frame images to the target 720p size");
+assert(dispatchRoute.includes('const usePreparedProviderDataUris = protocol === "lk888-media"'), "LK888 video image payloads should use resized data URI references by default");
+assert(dispatchRoute.includes("prepareVideoReferenceImage(bytes, mimeType, params.videoParams.size)"), "multipart video references should be resized to the target 720p size before upload");
+assert(dispatchRoute.includes("options.forceCompression === true || Boolean(target) || shouldCompressVideoReferenceImages()"), "video reference preparation should resize whenever a target size is supplied");
+assert(dispatchRoute.includes("resizeVideoReferenceToTargetCanvas"), "target-sized video reference preparation should preserve the full frame on a provider-sized canvas");
+assert(dispatchRoute.includes('fit: "inside"') && dispatchRoute.includes("composite([{ input: foreground, gravity: \"center\" }]"), "target-sized video references should keep the whole source image centered instead of hard-cropping it");
+assert(!dispatchRoute.includes('? { width: target.width, height: target.height, fit: "cover", position: "attention" }'), "target-sized video references should not directly cover-crop mismatched source ratios");
+assert(dispatchRoute.includes("ai_provider_video_reference_resize_failed_"), "video reference resize failures should fail explicitly");
+assert(!dispatchRoute.includes("options.fallbackToOriginal !== false"), "video reference resize should not silently fall back to uploading the original image");
 assert(dispatchRoute.includes("size: providerRequestSize"), "multipart OpenAI-compatible video requests should send a provider-supported output size");
 assert(dispatchRoute.includes("function openAiVideoCreateEndpoint("), "OpenAI-compatible video create endpoint should be selected per provider");
 assert(dispatchRoute.includes('usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"'), "SmartPickLid and Magic666 proxy video creates should use the proxy-supported endpoint");

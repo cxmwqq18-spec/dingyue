@@ -27,6 +27,7 @@
     "smoke:customer-job-events": "node scripts/smoke-customer-job-events.mjs",
     "smoke:video-workspace": "node scripts/smoke-video-provider-availability-runtime.mjs && node scripts/smoke-video-workspace-regression.mjs",
     "smoke:video-provider-config": "node scripts/smoke-video-site-provider-config.mjs",
+    "smoke:huitu-video-openapi": "node --no-warnings --experimental-strip-types scripts/smoke-huitu-video-openapi.mjs",
     "repair:video-provider-config": "node scripts/repair-video-site-provider-config.mjs",
     "sync:dreamshoot-homepage-showcase": "node scripts/sync-dreamshoot-homepage-showcase.mjs",
     "generate:dreamshoot-homepage-images": "node scripts/generate-dreamshoot-homepage-images.mjs",
@@ -84,6 +85,7 @@
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.34.5",
     "undici": "^6.27.0"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import { EventEmitter } from "node:events";
 import type { GenerationJob, JobStatus } from "@/lib/types";
+import type { WorkerOutputSlot } from "@/lib/worker";
 
 export type CustomerJobEventType = "status" | "result";
 
@@ -10,6 +11,10 @@ export type CustomerJobEvent = {
   jobId: string;
   status: JobStatus;
   stage?: string;
+  progress?: number;
+  outputSlots?: WorkerOutputSlot[];
+  error?: string;
+  eventKind?: "progress" | "final";
   updatedAt: string;
   emittedAt: string;
   alreadyFinal?: boolean;
@@ -34,7 +39,7 @@ export function publishCustomerJobEvent(event: Omit<CustomerJobEvent, "emittedAt
 export function publishCustomerJobEventForJob(
   type: CustomerJobEventType,
   job: Pick<GenerationJob, "id" | "siteId" | "customerId" | "status" | "updatedAt">,
-  details: Partial<Pick<CustomerJobEvent, "stage" | "alreadyFinal" | "alreadyProcessed">> = {}
+  details: Partial<Pick<CustomerJobEvent, "stage" | "progress" | "outputSlots" | "error" | "eventKind" | "alreadyFinal" | "alreadyProcessed">> = {}
 ): void {
   publishCustomerJobEvent({
     type,

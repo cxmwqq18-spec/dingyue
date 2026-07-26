@@ -1,7 +1,8 @@
 import "server-only";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
+import { isHuituOpenApiBaseUrl } from "@/lib/video-provider-family";
 
-export type VideoProviderProtocol = "lk888-media" | "openai-videos";
+export type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi";
 export type VideoProviderAvailabilityReason =
   | "ai_provider_disabled"
   | "ai_provider_url_missing"
@@ -10,7 +11,8 @@ export type VideoProviderAvailabilityReason =
   | "ai_provider_video_content_unverified_smartpicklid"
   | "ai_provider_video_content_unverified_magic666"
   | "ai_provider_video_reference_channel_unreliable_smartpicklid"
-  | "ai_provider_video_first_frame_required_lk888_media";
+  | "ai_provider_video_first_frame_required_lk888_media"
+  | "ai_provider_video_reference_required_huitu";
 
 export type VideoProviderAvailabilityInput = {
   id?: string;
@@ -59,6 +61,7 @@ export function isMagic666BaseUrl(baseUrl: string) {
 export function videoProviderProtocolForBaseUrl(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
+    if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
@@ -119,6 +122,9 @@ export function videoProviderAvailabilityReason(
   }
   if (protocol === "lk888-media" && isGrokImagineVideoModel(model) && params.referenceAssetCount <= 0) {
     return "ai_provider_video_first_frame_required_lk888_media";
+  }
+  if (protocol === "huitu-openapi" && params.referenceAssetCount <= 0) {
+    return "ai_provider_video_reference_required_huitu";
   }
   return undefined;
 }

@@ -146,6 +146,7 @@ function providerProtocolText(provider: Pick<AiProviderRow, "status">) {
   return {
     "lk888-media": "Media task API",
     "openai-videos": "OpenAI videos",
+    "huitu-openapi": "Huitu OpenAPI",
     "openai-compatible": "OpenAI compatible"
   }[provider.status.protocol] ?? provider.status.protocol ?? "unknown";
 }

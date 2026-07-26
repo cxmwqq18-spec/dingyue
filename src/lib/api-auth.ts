@@ -89,6 +89,11 @@ export function clearCustomerSessionAuthCache(siteId?: string, customerId?: stri
   customerSessionInflight.clear();
 }
 
+export function primeCustomerSessionAuthCache(current: CurrentCustomer): void {
+  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, "current"), current, scopedSessionCacheTtlMs);
+  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, current.customer.id), current, scopedSessionCacheTtlMs);
+}
+
 function scopedSessionKey(siteId: string, sessionId: string, extra?: string): string {
   return extra ? `${siteId}:${sessionId}:${extra}` : `${siteId}:${sessionId}`;
 }

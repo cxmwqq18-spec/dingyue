@@ -2,7 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { latestActivity, siteDemoSnapshot } from "@/lib/ops";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
@@ -1644,16 +1644,22 @@ async function repairPreferredPlatformAiProviderForType(
 }
 
 export async function listPlatformAiProvidersRelational(params: { providerType?: PlatformAiProviderType } = {}): Promise<PlatformAiProvider[]> {
-  const records = await prisma.platformAiProvider.findMany({
-    where: platformAiProviderTypeWhere(params.providerType),
-    orderBy: platformAiProviderOrderBy
-  });
+  const records = await runPrismaReadWithReconnect(
+    () => prisma.platformAiProvider.findMany({
+      where: platformAiProviderTypeWhere(params.providerType),
+      orderBy: platformAiProviderOrderBy
+    }),
+    { label: "platform AI providers list" }
+  );
   return records.map(toPlatformAiProvider);
 }
 
 export async function getPlatformAiProviderRelational(providerId?: string): Promise<PlatformAiProvider | undefined> {
   if (!providerId) return undefined;
-  const record = await prisma.platformAiProvider.findUnique({ where: { id: providerId } });
+  const record = await runPrismaReadWithReconnect(
+    () => prisma.platformAiProvider.findUnique({ where: { id: providerId } }),
+    { label: "platform AI provider lookup" }
+  );
   return record ? toPlatformAiProvider(record) : undefined;
 }
 

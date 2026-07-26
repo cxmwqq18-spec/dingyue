@@ -5,6 +5,7 @@ import path from "path";
 import { promisify } from "util";
 import { NextResponse } from "next/server";
 import ffmpegPath from "ffmpeg-static";
+import { publishCustomerJobEvent, publishCustomerJobEventForJob } from "@/lib/customer-job-events";
 import {
   contentTypeForCustomerAssetPath,
   customerAssetStorageKey,
@@ -13,8 +14,14 @@ import {
   prepareCompressedCustomerImage,
   writeCustomerAssetFileShared
 } from "@/lib/customer-asset-storage";
-import { settleGenerationJobRelational, updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
+import { replaceSettledGenerationOutputStorageKeyRelational, settleGenerationJobRelational, updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
+import {
+  HUITU_OPENAPI_PROVIDER_CURRENCY,
+  createHuituOpenApiVideoTask,
+  downloadHuituOpenApiVideoTaskFile,
+  fetchHuituOpenApiVideoTask
+} from "@/lib/huitu-openapi-video";
 import {
   signWorkerLocalAssetDownload,
   signWorkerCallback,
@@ -23,7 +30,14 @@ import {
   type WorkerOutputSlot,
   type WorkerPayload
 } from "@/lib/worker";
-import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
+import { DEFAULT_VIDEO_RESOLUTION, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelFamily, normalizeVideoResolution, type VideoModelFamily } from "@/lib/video-frame-config";
+import { isHuituOpenApiBaseUrl, videoProviderMatchesModelFamily, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
+import {
+  attachVideoProviderFailure,
+  normalizeVideoProviderFailure,
+  videoProviderFailureFromError,
+  type VideoProviderFailure
+} from "@/lib/video-provider-policy";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,9 +49,16 @@ type SharpResizeOptions = {
   position?: "attention" | "centre" | "center";
   withoutEnlargement?: boolean;
 };
+type SharpCompositeOptions = {
+  input: Buffer;
+  gravity?: "center" | "centre";
+};
 type SharpInstance = {
   rotate: () => SharpInstance;
   resize: (options: SharpResizeOptions) => SharpInstance;
+  blur: (radius?: number) => SharpInstance;
+  modulate: (options: { brightness?: number; saturation?: number }) => SharpInstance;
+  composite: (overlays: SharpCompositeOptions[]) => SharpInstance;
   jpeg: (options: { quality: number; mozjpeg: boolean }) => SharpInstance;
   toBuffer: () => Promise<Buffer>;
 };
@@ -104,9 +125,10 @@ type VideoStatusResponse = {
   status?: string;
   status_group?: string;
   is_final?: boolean;
-  progress?: string;
+  progress?: string | number;
   result_url?: string;
   video_url?: string;
+  videoUrl?: string;
   url?: string;
   result_type?: string;
   video?: { url?: string; duration?: number };
@@ -115,9 +137,10 @@ type VideoStatusResponse = {
   error?: unknown;
   message?: string;
   cost?: number;
+  creditCost?: number;
 };
 
-type VideoProviderProtocol = "lk888-media" | "openai-videos";
+type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi";
 
 type WorkerImageProvider = WorkerPayload["aiProviderFallback"]["providers"][number];
 type GeneratedOutput = {
@@ -126,9 +149,13 @@ type GeneratedOutput = {
   providerLabel: string;
   index: number;
   estimatedCostUsd?: number;
+  providerCreditCost?: number;
+  providerCurrency?: string;
   referenceFrameCount?: number;
   requestedReferenceFrameCount?: number;
   providerReferenceLimit?: number;
+  timing?: Record<string, string>;
+  asyncVideoOptimization?: () => Promise<void>;
 };
 type VideoSceneReference = {
   storageKey: string;
@@ -269,6 +296,7 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
   const normalizedModel = normalizeVideoGenerationModel(model);
   const protocol = params?.protocol;
   const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
+  if (protocol === "huitu-openapi") return [normalizedModel];
   if (protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "")) {
     const normalizedFirstCandidates = referenceAssetCount > 0
       ? [
@@ -361,6 +389,18 @@ function requestedModelOverride(payload: WorkerPayload) {
   return textValue(payload.params.modelOverride) || textValue(fields?.modelOverride);
 }
 
+function requestedVideoModelFamily(payload: WorkerPayload): VideoModelFamily {
+  const fields = recordValue(payload.params.fields);
+  const selection = recordValue(payload.providerSelection);
+  return normalizeVideoModelFamily(
+    textValue(payload.params.videoModelFamily) ||
+    textValue(payload.params.modelFamily) ||
+    textValue(fields?.videoModelFamily) ||
+    textValue(fields?.modelFamily) ||
+    textValue(selection?.videoModelFamily)
+  );
+}
+
 function isVideoGenerationRequest(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
   const requestedModel = requestedModelOverride(payload);
@@ -403,7 +443,14 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const videoProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "image" && isVideoGenerationModel(provider.modelType));
+  const selectedModelFamily = requestedVideoModelFamily(payload);
+  const videoProviders = payload.aiProviderFallback.providers.filter((provider) =>
+    provider.id &&
+    provider.enabled !== false &&
+    provider.providerType !== "image" &&
+    isVideoGenerationModel(provider.modelType) &&
+    videoProviderMatchesModelFamily(provider, selectedModelFamily)
+  );
   const selection = recordValue(payload.providerSelection);
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
@@ -468,8 +515,10 @@ function videoProviderCreateTimeoutMs(timeoutMs: number) {
   return Math.max(60_000, Math.min(configured, timeoutMs));
 }
 
-function videoProviderPollIntervalMs() {
-  return Math.max(1_000, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_POLL_INTERVAL_MS ?? "5000") || 5_000, 15_000));
+function videoProviderPollIntervalMs(elapsedMs = 0) {
+  const configured = process.env.LOCAL_AI_WORKER_VIDEO_POLL_INTERVAL_MS?.trim();
+  const fallback = elapsedMs < 90_000 ? 2_000 : 5_000;
+  return Math.max(1_000, Math.min(Number(configured || fallback) || fallback, 15_000));
 }
 
 function providerAttempts() {
@@ -494,7 +543,7 @@ function errorMessage(error: unknown): string {
 function isRetryableProviderError(error: unknown): boolean {
   const message = errorMessage(error).toLowerCase();
   if (isVideoModelUnavailableError(error) || message.includes("invalid request")) return false;
-  if (message.includes("failed_429") || message.includes("failed_502") || message.includes("failed_503") || message.includes("failed_504") || message.includes("failed_524")) return true;
+  if (message.includes("failed_429") || message.includes("failed_500") || message.includes("failed_502") || message.includes("failed_503") || message.includes("failed_504") || message.includes("failed_524")) return true;
   return message.includes("fetch failed") || message.includes("timeout") || message.includes("socket") || message.includes("econnreset") || message.includes("terminated");
 }
 
@@ -998,23 +1047,21 @@ async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: numb
 async function videoProviderFrameUrls(params: {
   referenceAssets: ImageInputAsset[];
   timeoutMs: number;
+  targetSize?: string;
 }) {
   const urls = params.referenceAssets.map(providerReachableAssetUrl).filter(Boolean);
   if (urls.length !== params.referenceAssets.length) return urls;
   if (!shouldUseVideoFrameDataUriFallback()) return urls;
   if (shouldForceVideoFrameDataUris()) {
-    return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+    return Promise.all(params.referenceAssets.map((asset) => params.targetSize
+      ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)
+      : videoFrameDataUri(asset, params.timeoutMs)));
   }
   const readableChecks = await Promise.all(urls.map((url) => isProviderFrameUrlReadable(url, params.timeoutMs)));
   if (readableChecks.every(Boolean)) return urls;
-  return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
-}
-
-function videoProviderDataUriFrameUrls(params: {
-  referenceAssets: ImageInputAsset[];
-  timeoutMs: number;
-}) {
-  return Promise.all(params.referenceAssets.map((asset) => videoFrameDataUri(asset, params.timeoutMs)));
+  return Promise.all(params.referenceAssets.map((asset) => params.targetSize
+    ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)
+    : videoFrameDataUri(asset, params.timeoutMs)));
 }
 
 function videoProviderPreparedDataUriFrameUrls(params: {
@@ -1065,12 +1112,11 @@ function shouldRejectLoopbackVideoFrameUrls() {
 }
 
 const videoAspectRatios = new Set(["16:9", "4:3", "1:1", "3:4", "9:16", "3:2", "2:3"]);
-const videoResolutions = new Set(["720p", "480p"]);
-const videoDurations = new Set(Array.from({ length: 15 }, (_, index) => String(index + 1)));
+const videoResolutions = new Set([DEFAULT_VIDEO_RESOLUTION]);
 
-function videoSizeForParams(aspectRatio: string, resolution: string) {
-  const longEdge = resolution === "480p" ? 854 : 1280;
-  const shortEdge = resolution === "480p" ? 480 : 720;
+function videoSizeForParams(aspectRatio: string) {
+  const longEdge = 1280;
+  const shortEdge = 720;
   if (aspectRatio === "4:3") return `${Math.round(shortEdge * 4 / 3)}x${shortEdge}`;
   if (aspectRatio === "3:4") return `${shortEdge}x${Math.round(shortEdge * 4 / 3)}`;
   if (aspectRatio === "9:16" || aspectRatio === "2:3") return `${shortEdge}x${longEdge}`;
@@ -1085,12 +1131,11 @@ function openAiVideoProviderSize(params: { aspect_ratio: string; resolution: str
 }
 
 function smartPickLidJsonVideoResolution(resolution: string) {
-  return resolution.trim().toUpperCase();
+  return normalizeVideoResolution(resolution);
 }
 
 function lk888MediaVideoResolution(resolution: string) {
-  const normalized = resolution.trim().toLowerCase();
-  return normalized === "480p" ? "480p" : "720p";
+  return normalizeVideoResolution(resolution);
 }
 
 function lk888MediaVideoAspectRatio(aspectRatio: string) {
@@ -1133,13 +1178,14 @@ function parseVideoPixelSize(value: string) {
 
 function videoProviderParams(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
+  const modelFamily = requestedVideoModelFamily(payload);
   const rawAspectRatio = textValue(payload.params.aspect_ratio) || textValue(payload.params.aspectRatio) || textValue(fields?.aspect_ratio) || textValue(fields?.aspectRatio);
   const rawResolution = textValue(payload.params.resolution) || textValue(fields?.resolution);
   const rawDuration = textValue(payload.params.durationSeconds) || textValue(payload.params.videoDurationSeconds) || textValue(payload.params.duration) || textValue(payload.params.videoDuration) || textValue(fields?.durationSeconds) || textValue(fields?.videoDurationSeconds) || textValue(fields?.duration) || textValue(fields?.videoDuration);
   const aspect_ratio = videoAspectRatios.has(rawAspectRatio) ? rawAspectRatio : "16:9";
-  const resolution = videoResolutions.has(rawResolution) ? rawResolution : "720p";
-  const duration = videoDurations.has(rawDuration) ? String(normalizeVideoDurationSeconds(rawDuration)) : String(normalizeVideoDurationSeconds(undefined));
-  return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio, resolution) };
+  const resolution = videoResolutions.has(rawResolution) ? rawResolution : normalizeVideoResolution(rawResolution);
+  const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelFamily));
+  return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio) };
 }
 
 function extensionForMime(mimeType: string) {
@@ -1207,6 +1253,31 @@ function originalVideoReferenceImage(bytes: Uint8Array, mimeType: string) {
   };
 }
 
+async function resizeVideoReferenceToTargetCanvas(
+  sharp: SharpFactory,
+  bytes: Buffer,
+  target: { width: number; height: number },
+  quality: number
+) {
+  const jpegOptions = { quality, mozjpeg: true };
+  const background = await sharp(bytes)
+    .rotate()
+    .resize({ width: target.width, height: target.height, fit: "cover", position: "attention" })
+    .blur(24)
+    .modulate({ brightness: 0.72, saturation: 0.82 })
+    .jpeg(jpegOptions)
+    .toBuffer();
+  const foreground = await sharp(bytes)
+    .rotate()
+    .resize({ width: target.width, height: target.height, fit: "inside" })
+    .jpeg(jpegOptions)
+    .toBuffer();
+  return sharp(background)
+    .composite([{ input: foreground, gravity: "center" }])
+    .jpeg(jpegOptions)
+    .toBuffer();
+}
+
 async function prepareVideoReferenceImage(
   bytes: Uint8Array,
   mimeType: string,
@@ -1215,8 +1286,7 @@ async function prepareVideoReferenceImage(
 ) {
   const sourceMimeType = imageMimeTypeFromBytes(bytes, mimeType);
   const target = targetSize ? parseVideoPixelSize(targetSize) : undefined;
-  const shouldPrepare = !sourceMimeType.includes("gif") &&
-    (options.forceCompression === true || (Boolean(target) && shouldCompressVideoReferenceImages()));
+  const shouldPrepare = options.forceCompression === true || Boolean(target) || shouldCompressVideoReferenceImages();
   if (!shouldPrepare) {
     return originalVideoReferenceImage(bytes, sourceMimeType);
   }
@@ -1225,18 +1295,19 @@ async function prepareVideoReferenceImage(
   try {
     const sharp = await loadSharp();
     if (!sharp) throw new Error("sharp_unavailable");
-    const resized = await sharp(Buffer.from(bytes))
-      .rotate()
-      .resize(target
-        ? { width: target.width, height: target.height, fit: "cover", position: "attention" }
-        : { width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
-      .jpeg({ quality, mozjpeg: true })
-      .toBuffer();
+    const sourceBytes = Buffer.from(bytes);
+    const resized = target
+      ? await resizeVideoReferenceToTargetCanvas(sharp, sourceBytes, target, quality)
+      : await sharp(sourceBytes)
+        .rotate()
+        .resize({ width: maxDimension, height: maxDimension, fit: "inside", withoutEnlargement: true })
+        .jpeg({ quality, mozjpeg: true })
+        .toBuffer();
     if (!resized.length) throw new Error("empty_video_reference_image");
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
   } catch (error) {
-    if (target && options.fallbackToOriginal !== false) {
-      if (shouldFallbackUnresizedVideoReferenceImage(error)) {
+    if (target) {
+      if (options.fallbackToOriginal === true && shouldFallbackUnresizedVideoReferenceImage(error)) {
         console.warn("video_reference_resize_fallback", {
           targetSize: `${target.width}x${target.height}`,
           error: errorMessage(error).slice(0, 160)
@@ -1718,45 +1789,171 @@ async function buildVideoReferenceForm(params: {
   return form;
 }
 
-async function postWorkerStatus(payload: WorkerPayload, status: "running" | "failed", stage: string) {
-  const body = {
-    jobId: payload.jobId,
-    siteId: payload.siteId,
-    requestId: payload.requestId,
-    status,
-    stage
-  };
-  if (shouldUseDirectWorkerCallbacks(payload)) {
-    await updateGenerationJobStatusRelational(body).catch(() => null);
-    return;
-  }
-  await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...body, signature: signWorkerCallback(body) }),
-    cache: "no-store"
-  }).catch(() => null);
+type WorkerStatusPostOptions = {
+  timing?: Record<string, string>;
+  eventKind?: "progress" | "final";
+  nonBlocking?: boolean;
+  forceWrite?: boolean;
+  progressWrite?: boolean;
+  error?: string;
+  outputSlots?: WorkerOutputSlot[];
+  progress?: number;
+  updatedAt?: string;
+  customerEvent?: boolean;
+};
+
+const workerProgressWriteState = new Map<string, { lastWrittenAt: number; lastProgress?: number }>();
+
+function normalizedWorkerProgress(value: unknown): number | undefined {
+  if (!Number.isFinite(Number(value))) return undefined;
+  return Math.max(0, Math.min(100, Number(value)));
 }
 
-async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, slot: WorkerOutputSlot) {
+function workerProgressWriteKey(payload: WorkerPayload, slotIndex: number) {
+  return `${payload.siteId}:${payload.customerId}:${payload.jobId}:${payload.requestId}:${slotIndex}`;
+}
+
+function markWorkerProgressWritten(payload: WorkerPayload, slot: WorkerOutputSlot, progress: number | undefined, now = Date.now()) {
+  workerProgressWriteState.set(workerProgressWriteKey(payload, slot.index), { lastWrittenAt: now, lastProgress: progress });
+}
+
+function shouldWriteProgressStatus(payload: WorkerPayload, slot: WorkerOutputSlot, options: WorkerStatusPostOptions = {}) {
+  if (options.forceWrite) return true;
+  if (!options.progressWrite) return true;
+  const now = Date.now();
+  const progress = normalizedWorkerProgress(slot.progress);
+  const previous = workerProgressWriteState.get(workerProgressWriteKey(payload, slot.index));
+  if (!previous) {
+    markWorkerProgressWritten(payload, slot, progress, now);
+    return true;
+  }
+  if (progress !== undefined && (previous.lastProgress === undefined || Math.abs(progress - previous.lastProgress) >= 10)) {
+    markWorkerProgressWritten(payload, slot, progress, now);
+    return true;
+  }
+  if (now - previous.lastWrittenAt >= 15_000) {
+    markWorkerProgressWritten(payload, slot, progress, now);
+    return true;
+  }
+  return false;
+}
+
+function clearWorkerProgressWrites(payload: WorkerPayload) {
+  const prefix = `${payload.siteId}:${payload.customerId}:${payload.jobId}:${payload.requestId}:`;
+  for (const key of workerProgressWriteState.keys()) {
+    if (key.startsWith(prefix)) workerProgressWriteState.delete(key);
+  }
+}
+
+function publishLocalWorkerStatusEvent(
+  payload: WorkerPayload,
+  status: "running" | "failed" | "succeeded",
+  stage: string | undefined,
+  options: WorkerStatusPostOptions = {}
+) {
+  if (options.customerEvent === false) return;
+  publishCustomerJobEvent({
+    type: status === "succeeded" ? "result" : "status",
+    siteId: payload.siteId,
+    customerId: payload.customerId,
+    jobId: payload.jobId,
+    status,
+    updatedAt: options.updatedAt ?? new Date().toISOString(),
+    ...(stage ? { stage } : {}),
+    ...(Number.isFinite(Number(options.progress)) ? { progress: normalizedWorkerProgress(options.progress) } : {}),
+    ...(options.outputSlots ? { outputSlots: options.outputSlots } : {}),
+    ...(options.error ? { error: options.error } : {}),
+    eventKind: options.eventKind ?? (status === "failed" || status === "succeeded" ? "final" : "progress")
+  });
+}
+
+async function postWorkerStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, options: WorkerStatusPostOptions = {}) {
   const body = {
     jobId: payload.jobId,
     siteId: payload.siteId,
     requestId: payload.requestId,
     status,
     stage,
-    outputSlots: [slot]
+    ...(options.timing ? { timing: options.timing } : {})
   };
   if (shouldUseDirectWorkerCallbacks(payload)) {
-    await updateGenerationJobStatusRelational(body).catch(() => null);
+    if (options.nonBlocking) {
+      publishLocalWorkerStatusEvent(payload, status, stage, options);
+      void updateGenerationJobStatusRelational(body).catch(() => null);
+      return;
+    }
+    const result = await updateGenerationJobStatusRelational(body).catch(() => null);
+    if (result) publishCustomerJobEventForJob("status", result.job, { stage, eventKind: options.eventKind ?? (status === "failed" ? "final" : "progress"), error: options.error });
     return;
   }
-  await fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
+  const request = fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ...body, signature: signWorkerCallback(body) }),
     cache: "no-store"
   }).catch(() => null);
+  if (options.nonBlocking) {
+    publishLocalWorkerStatusEvent(payload, status, stage, options);
+    void request;
+    return;
+  }
+  await request;
+}
+
+async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, slot: WorkerOutputSlot, options: WorkerStatusPostOptions = {}) {
+  const progress = normalizedWorkerProgress(slot.progress);
+  const body = {
+    jobId: payload.jobId,
+    siteId: payload.siteId,
+    requestId: payload.requestId,
+    status,
+    stage,
+    ...(progress !== undefined ? { progress } : {}),
+    outputSlots: [slot],
+    ...(options.timing ? { timing: options.timing } : {})
+  };
+  const eventOptions = {
+    ...options,
+    outputSlots: [slot],
+    progress,
+    error: slot.error || options.error,
+    eventKind: options.eventKind ?? (status === "failed" ? "final" : "progress"),
+    updatedAt: slot.updatedAt
+  } satisfies WorkerStatusPostOptions;
+  const shouldWrite = shouldWriteProgressStatus(payload, slot, options);
+  if (shouldUseDirectWorkerCallbacks(payload)) {
+    if (options.nonBlocking) publishLocalWorkerStatusEvent(payload, status, stage, eventOptions);
+    if (!shouldWrite) return;
+    const write = updateGenerationJobStatusRelational(body).catch(() => null);
+    if (options.nonBlocking) {
+      void write;
+      return;
+    }
+    const result = await write;
+    if (result) {
+      publishCustomerJobEventForJob("status", result.job, {
+        stage,
+        progress,
+        outputSlots: [slot],
+        error: slot.error || undefined,
+        eventKind: eventOptions.eventKind
+      });
+    }
+    return;
+  }
+  if (options.nonBlocking) publishLocalWorkerStatusEvent(payload, status, stage, eventOptions);
+  if (!shouldWrite) return;
+  const request = fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...body, signature: signWorkerCallback(body) }),
+    cache: "no-store"
+  }).catch(() => null);
+  if (options.nonBlocking) {
+    void request;
+    return;
+  }
+  await request;
 }
 
 function workerCallbackRetryAttempts() {
@@ -1807,8 +2004,10 @@ async function postWorkerResult(
     status: "succeeded" | "failed";
     outputs?: Array<{ storageKey: string; mimeType?: string }>;
     providerTrace?: Array<{ provider: string; attempts: number }>;
-    costTrace?: { estimatedCostUsd?: number; providerErrors?: Array<{ provider: string; error: string }>; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+    costTrace?: { estimatedCostUsd?: number; providerCreditCost?: number; providerCurrency?: string; providerErrors?: Array<{ provider: string; error: string }>; providerFailure?: VideoProviderFailure; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
+    providerFailure?: VideoProviderFailure;
     error?: string;
+    timing?: Record<string, string>;
   }
 ) {
   const resultBody = {
@@ -1818,7 +2017,13 @@ async function postWorkerResult(
     ...body
   };
   if (shouldUseDirectWorkerCallbacks(payload)) {
-    await settleGenerationJobRelational(resultBody);
+    const result = await settleGenerationJobRelational(resultBody);
+    clearWorkerProgressWrites(payload);
+    publishCustomerJobEventForJob("result", result.job, {
+      alreadyProcessed: result.alreadyProcessed,
+      eventKind: "final",
+      error: body.error
+    });
     return;
   }
   const signedBody = JSON.stringify({ ...resultBody, signature: signWorkerCallback(resultBody) });
@@ -1833,7 +2038,10 @@ async function postWorkerResult(
         body: signedBody,
         cache: "no-store"
       });
-      if (response.ok) return;
+      if (response.ok) {
+        clearWorkerProgressWrites(payload);
+        return;
+      }
       lastStatus = response.status;
       lastError = (await response.text().catch(() => "")).slice(0, 240);
       if (!shouldRetryWorkerCallbackStatus(response.status) || attempt >= attempts) break;
@@ -1882,6 +2090,7 @@ function videoStatusResultUrl(status: VideoStatusResponse) {
     : recordValue(status.output);
   return textValue(status.result_url) ||
     textValue(status.video_url) ||
+    textValue(status.videoUrl) ||
     textValue(status.url) ||
     textValue(video?.url) ||
     textValue(result?.url) ||
@@ -1898,8 +2107,17 @@ function normalizedVideoMimeType(value: string) {
   return "video/mp4";
 }
 
-function shouldOptimizeGeneratedVideoOutputs() {
-  return process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() === "1";
+type GeneratedVideoOptimizeMode = "async" | "sync" | "off";
+
+function generatedVideoOptimizeMode(): GeneratedVideoOptimizeMode {
+  const configured = process.env.AI_WORKER_VIDEO_OPTIMIZE_MODE?.trim().toLowerCase();
+  if (configured === "async" || configured === "sync" || configured === "off") return configured;
+  if (process.env.AI_WORKER_OPTIMIZE_VIDEO_OUTPUTS?.trim() === "0") return "off";
+  return "async";
+}
+
+function shouldOptimizeGeneratedVideoOutputs(mode = generatedVideoOptimizeMode()) {
+  return mode !== "off";
 }
 
 function generatedVideoOptimizeMinBytes() {
@@ -1934,8 +2152,8 @@ function generatedVideoOptimizeBufsize() {
   return process.env.AI_WORKER_VIDEO_OPTIMIZE_BUFSIZE?.trim() || "4400k";
 }
 
-async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeType: string }) {
-  if (!shouldOptimizeGeneratedVideoOutputs()) return video;
+async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeType: string }, mode = generatedVideoOptimizeMode()) {
+  if (!shouldOptimizeGeneratedVideoOutputs(mode)) return video;
   if (!video.mimeType.startsWith("video/")) return video;
   if (video.bytes.length < generatedVideoOptimizeMinBytes()) return video;
   const ffmpegExecutable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
@@ -1996,6 +2214,7 @@ async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeTyp
 function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
+    if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
@@ -2072,14 +2291,16 @@ function openAiJsonVideoReferenceLimit() {
 }
 
 function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string, options?: { smartPickLid?: boolean }) {
+  if (options?.smartPickLid) {
+    const imageUrls = urls.length ? urls : fallbackImageUrl ? [fallbackImageUrl] : [];
+    return imageUrls.length ? { images: imageUrls } : {};
+  }
   if (urls.length > 1) {
-    return options?.smartPickLid
-      ? { images: urls }
-      : { reference_images: urls.map((url) => ({ url })) };
+    return { reference_images: urls.map((url) => ({ url })) };
   }
   const imageUrl = urls[0] ?? fallbackImageUrl;
   if (!imageUrl) return {};
-  return options?.smartPickLid ? { image: imageUrl } : { image: { url: imageUrl } };
+  return { image: { url: imageUrl } };
 }
 
 async function createVideoTask(params: {
@@ -2091,9 +2312,25 @@ async function createVideoTask(params: {
   referenceAssets: ImageInputAsset[];
   videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
   protocol: VideoProviderProtocol;
+  clientRequestId: string;
   timeoutMs: number;
 }) {
   const firstImageUrl = params.imageUrls[0];
+  if (params.protocol === "huitu-openapi") {
+    const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
+    const task = await createHuituOpenApiVideoTask({
+      baseUrl: params.baseUrl,
+      apiKey: params.apiKey,
+      prompt: params.prompt,
+      imageUrls: params.imageUrls,
+      duration: params.videoParams.duration,
+      ratio: params.videoParams.aspect_ratio,
+      clientRequestId: params.clientRequestId,
+      fetchWithTimeout,
+      timeoutMs: createTimeoutMs
+    });
+    return task.id;
+  }
   const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
   const endpoint = params.protocol === "openai-videos"
     ? openAiVideoCreateEndpoint(params.baseUrl)
@@ -2180,9 +2417,9 @@ async function createVideoTask(params: {
       protocol: params.protocol,
       endpoint: endpoint.replace(params.baseUrl, ""),
       duration: params.videoParams.duration,
-      size: useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : `${lk888MediaVideoAspectRatio(params.videoParams.aspect_ratio)}/${lk888MediaVideoResolution(params.videoParams.resolution)}`,
+      size: useSmartPickLidJsonRequest || useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : `${lk888MediaVideoAspectRatio(params.videoParams.aspect_ratio)}/${lk888MediaVideoResolution(params.videoParams.resolution)}`,
       imageCount: referenceCount,
-      imageKind: useSmartPickLidJsonRequest ? (referenceCount > 1 ? "smartpicklid_json_data_uri_images" : "smartpicklid_json_data_uri_image") : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : referenceCount > 1 ? "lk888_media_images_array" : firstImageUrl?.startsWith("data:") ? "lk888_media_images_data_uri" : "lk888_media_images_url",
+      imageKind: useSmartPickLidJsonRequest ? "smartpicklid_json_data_uri_images" : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : referenceCount > 1 ? "lk888_media_images_array" : firstImageUrl?.startsWith("data:") ? "lk888_media_images_data_uri" : "lk888_media_images_url",
       promptLength: params.prompt.length
     };
     throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
@@ -2199,49 +2436,150 @@ async function pollVideoTask(params: {
   timeoutMs: number;
 }) {
   const startedAt = Date.now();
-  const pollIntervalMs = videoProviderPollIntervalMs();
   let lastStatus = "";
+  let firstPoll = true;
   while (Date.now() - startedAt < params.timeoutMs) {
-    await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
-    const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
-    const urls = params.protocol === "openai-videos"
-      ? [new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)]
-      : lk888MediaStatusUrls(mediaBaseUrl, params.taskId);
-    let response: Response | undefined;
-    let body: VideoStatusResponse = {};
-    for (const [index, url] of urls.entries()) {
-      response = await fetchWithTimeout(url.toString(), {
-        headers: { Authorization: `Bearer ${params.apiKey}` },
-        cache: "no-store"
-      }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
-      body = normalizeVideoStatusResponse((await response.json().catch(() => ({}))) as VideoStatusResponse);
-      if (response.ok || params.protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
+    const elapsedMs = Date.now() - startedAt;
+    if (!firstPoll) {
+      await new Promise((resolve) => setTimeout(resolve, videoProviderPollIntervalMs(elapsedMs)));
     }
-    if (!response) throw new Error("ai_provider_video_status_empty_response");
-    if (!response.ok) {
-      throw new Error(`ai_provider_video_status_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
-    }
-    lastStatus = [body.state, body.progress, body.status].filter(Boolean).join("_");
-    await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
-      index: 1,
-      status: "running",
-      stage: `video_provider_running${body.progress ? `_${body.progress}` : ""}`,
-      error: "",
-      updatedAt: new Date().toISOString()
-    });
-    if (params.protocol === "openai-videos") {
-      if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
-      if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
-        throw new Error(`ai_provider_video_failed_failed_${textValue(body.error) || textValue(body.message) || "no_result"}`);
+    firstPoll = false;
+    try {
+      if (params.protocol === "huitu-openapi") {
+        const task = await fetchHuituOpenApiVideoTask({
+          baseUrl: params.baseUrl,
+          apiKey: params.apiKey,
+          taskId: params.taskId,
+          fetchWithTimeout,
+          timeoutMs: Math.min(45_000, params.timeoutMs)
+        });
+        const body: VideoStatusResponse = {
+          id: task.id,
+          status: task.status,
+          progress: task.progress,
+          error: task.error,
+          videoUrl: task.videoUrl ?? undefined,
+          creditCost: task.creditCost
+        };
+        lastStatus = [body.status, body.progress].filter(Boolean).join("_");
+        await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
+          index: 1,
+          status: "running",
+          stage: `video_provider_running${body.progress ? `_${body.progress}` : ""}`,
+          progress: Number.isFinite(Number(body.progress))
+            ? Math.max(0, Math.min(100, Number(body.progress)))
+            : undefined,
+          error: "",
+          updatedAt: new Date().toISOString()
+        }, { nonBlocking: true, progressWrite: true });
+        if (body.status === "success" && body.videoUrl) return body;
+        if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
+          const rawFailure = textValue(body.error) || textValue(body.message) || "no_result";
+          throw attachVideoProviderFailure(
+            new Error(`ai_provider_video_failed_${body.status}_${rawFailure}`),
+            normalizeVideoProviderFailure({
+              error: rawFailure,
+              providerFamily: requestedVideoModelFamily(params.payload),
+              providerProtocol: params.protocol
+            })
+          );
+        }
+        continue;
       }
-      continue;
-    }
-    if (body.is_final === true) {
-      if (body.state === "success" && videoStatusResultUrl(body)) return body;
-      throw new Error(`ai_provider_video_failed_${body.state || "unknown"}_${textValue(body.error) || textValue(body.status) || "no_result"}`);
+      const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
+      const urls = params.protocol === "openai-videos"
+          ? [new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)]
+          : lk888MediaStatusUrls(mediaBaseUrl, params.taskId);
+      let response: Response | undefined;
+      let body: VideoStatusResponse = {};
+      for (const [index, url] of urls.entries()) {
+        response = await fetchWithTimeout(url.toString(), {
+          headers: { Authorization: `Bearer ${params.apiKey}` },
+          cache: "no-store"
+        }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
+        body = normalizeVideoStatusResponse((await response.json().catch(() => ({}))) as VideoStatusResponse);
+        if (response.ok || params.protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
+      }
+      if (!response) throw new Error("ai_provider_video_status_empty_response");
+      if (!response.ok) {
+        throw new Error(`ai_provider_video_status_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+      }
+      lastStatus = [body.state, body.progress, body.status].filter(Boolean).join("_");
+      await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
+        index: 1,
+        status: "running",
+        stage: `video_provider_running${body.progress ? `_${body.progress}` : ""}`,
+        progress: Number.isFinite(Number(body.progress))
+          ? Math.max(0, Math.min(100, Number(body.progress)))
+          : undefined,
+        error: "",
+        updatedAt: new Date().toISOString()
+      }, { nonBlocking: true, progressWrite: true });
+      if (params.protocol === "openai-videos") {
+        if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
+        if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
+          const rawFailure = textValue(body.error) || textValue(body.message) || "no_result";
+          throw attachVideoProviderFailure(
+            new Error(`ai_provider_video_failed_failed_${rawFailure}`),
+            normalizeVideoProviderFailure({
+              error: rawFailure,
+              providerFamily: requestedVideoModelFamily(params.payload),
+              providerProtocol: params.protocol
+            })
+          );
+        }
+        continue;
+      }
+      if (body.is_final === true) {
+        if (body.state === "success" && videoStatusResultUrl(body)) return body;
+        const rawFailure = textValue(body.error) || textValue(body.status) || "no_result";
+        throw attachVideoProviderFailure(
+          new Error(`ai_provider_video_failed_${body.state || "unknown"}_${rawFailure}`),
+          normalizeVideoProviderFailure({
+            error: rawFailure,
+            providerFamily: requestedVideoModelFamily(params.payload),
+            providerProtocol: params.protocol
+          })
+        );
+      }
+    } catch (error) {
+      if (!isRetryableProviderError(error)) throw error;
+      const retryError = errorMessage(error).slice(0, 240);
+      lastStatus = `poll_error_${retryError}`;
+      await postWorkerSlotStatus(params.payload, "running", "video_provider_poll_retry", {
+        index: 1,
+        status: "running",
+        stage: "video_provider_poll_retry",
+        error: retryError,
+        updatedAt: new Date().toISOString()
+      }, { nonBlocking: true, progressWrite: true }).catch(() => undefined);
     }
   }
   throw new Error(`ai_provider_video_timeout_${params.timeoutMs}_${lastStatus || "no_status"}`);
+}
+
+function videoProviderReadRetryAttempts() {
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_READ_RETRY_ATTEMPTS ?? "3") || 3, 5));
+}
+
+async function withVideoProviderReadRetries<T>(task: () => Promise<T>): Promise<T> {
+  const maxAttempts = videoProviderReadRetryAttempts();
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      return await task();
+    } catch (error) {
+      lastError = error;
+      if (!isRetryableProviderError(error) || attempt >= maxAttempts) throw error;
+      console.warn("video_provider_download_retry", {
+        attempt,
+        maxAttempts,
+        error: errorMessage(error).slice(0, 240)
+      });
+      await new Promise((resolve) => setTimeout(resolve, Math.min(5_000, 1_000 * attempt)));
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("ai_provider_video_download_failed");
 }
 
 async function downloadVideoResult(params: {
@@ -2252,6 +2590,23 @@ async function downloadVideoResult(params: {
   protocol: VideoProviderProtocol;
   timeoutMs: number;
 }) {
+  if (params.protocol === "huitu-openapi") {
+    return withVideoProviderReadRetries(async () => {
+      const response = await downloadHuituOpenApiVideoTaskFile({
+        baseUrl: params.baseUrl ?? "",
+        apiKey: params.apiKey ?? "",
+        taskId: params.taskId ?? "",
+        resultUrl: params.resultUrl,
+        fetchWithTimeout,
+        timeoutMs: Math.min(params.timeoutMs, 120_000)
+      });
+      if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
+      const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
+      const bytes = Buffer.from(await response.arrayBuffer());
+      if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
+      return { bytes, mimeType };
+    });
+  }
   const resultUrl = params.protocol === "openai-videos"
     ? params.resultUrl || `${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId ?? "")}/content`
     : params.resultUrl;
@@ -2259,21 +2614,29 @@ async function downloadVideoResult(params: {
   const headers = params.protocol === "openai-videos" && params.apiKey
     ? { Authorization: `Bearer ${params.apiKey}` }
     : undefined;
-  const response = await fetchWithTimeout(resultUrl, {
-    ...(headers ? { headers } : {}),
-    cache: "no-store"
-  }, Math.min(params.timeoutMs, 120_000), "ai_provider_video_download_timeout");
-  if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
-  const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
-  return { bytes, mimeType };
+  return withVideoProviderReadRetries(async () => {
+    const response = await fetchWithTimeout(resultUrl, {
+      ...(headers ? { headers } : {}),
+      cache: "no-store"
+    }, Math.min(params.timeoutMs, 120_000), "ai_provider_video_download_timeout");
+    if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
+    const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
+    return { bytes, mimeType };
+  });
 }
 
 async function generateVideoWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
 }) {
+  const timing: Record<string, string> = {};
+  const markTiming = (key: string) => {
+    const value = new Date().toISOString();
+    timing[key] = value;
+    return value;
+  };
   const provider = getCachedWorkerProviderSecret(params.payload.requestId, params.providerId) ??
     await getPlatformAiProviderRelational(params.providerId);
   if (provider?.enabled === false) {
@@ -2316,9 +2679,13 @@ async function generateVideoWithProvider(params: {
   const referenceAssets = requestedReferenceAssets.slice(0, providerReferenceLimit);
 
   const timeoutMs = videoProviderTimeoutMs();
+  const videoParams = videoProviderParams(params.payload);
   const useProviderFrameUrls = protocol !== "openai-videos" || !preferJsonVideoRequest;
+  const usePreparedProviderDataUris = protocol === "lk888-media";
   const imageUrls = useProviderFrameUrls
-    ? await videoProviderFrameUrls({ referenceAssets, timeoutMs })
+    ? usePreparedProviderDataUris
+      ? await videoProviderPreparedDataUriFrameUrls({ referenceAssets, timeoutMs, targetSize: videoParams.size })
+      : await videoProviderFrameUrls({ referenceAssets, timeoutMs, targetSize: videoParams.size })
     : [];
   if (protocol === "lk888-media" && isGrokImagineVideoModel(model) && !referenceAssets.length) {
     throw new Error("ai_provider_video_first_frame_required_lk888_media");
@@ -2326,7 +2693,6 @@ async function generateVideoWithProvider(params: {
   if (useProviderFrameUrls && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
     throw new Error("ai_provider_video_frame_public_urls_required");
   }
-  const videoParams = videoProviderParams(params.payload);
   const videoPromptForReferenceAssets = (assets: ImageInputAsset[]) => !assets.length
       ? buildTextToVideoPrompt(params.payload)
       : protocol === "lk888-media"
@@ -2335,6 +2701,7 @@ async function generateVideoWithProvider(params: {
       ? buildDirectJsonVideoPrompt(params.payload, assets)
       : buildVideoPrompt(params.payload, assets);
   const prompt = videoPromptForReferenceAssets(referenceAssets);
+  const referencePreparedAt = markTiming("referencePreparedAt");
   await postWorkerSlotStatus(params.payload, "running", "video_reference_format_ready", {
     index: 1,
     status: "running",
@@ -2345,9 +2712,9 @@ async function generateVideoWithProvider(params: {
     providerReferenceLimit,
     providerReferenceSize: videoParams.size,
     updatedAt: new Date().toISOString()
-  });
-  await postWorkerStatus(params.payload, "running", "source_images_ready");
-  await postWorkerStatus(params.payload, "running", "video_provider_request_started");
+  }, { forceWrite: true, timing: { referencePreparedAt } });
+  await postWorkerStatus(params.payload, "running", "source_images_ready", { timing: { referencePreparedAt } });
+  await postWorkerStatus(params.payload, "running", "video_provider_request_started", { timing: { referencePreparedAt } });
   await postWorkerSlotStatus(params.payload, "running", "video_provider_request_started", {
     index: 1,
     status: "running",
@@ -2357,7 +2724,7 @@ async function generateVideoWithProvider(params: {
     requestedReferenceFrameCount: requestedReferenceAssets.length,
     providerReferenceLimit,
     updatedAt: new Date().toISOString()
-  });
+  }, { forceWrite: true, timing: { referencePreparedAt } });
 
   const runVideoProviderTask = async (frameImageUrls: string[], taskReferenceAssets = referenceAssets, taskPrompt = prompt) => {
     let taskId = "";
@@ -2373,6 +2740,7 @@ async function generateVideoWithProvider(params: {
           referenceAssets: taskReferenceAssets,
           videoParams,
           protocol,
+          clientRequestId: `${params.payload.jobId}_${params.payload.requestId}`,
           timeoutMs
         });
         break;
@@ -2382,6 +2750,7 @@ async function generateVideoWithProvider(params: {
       }
     }
     if (!taskId) throw createError instanceof Error ? createError : new Error("ai_provider_video_create_failed");
+    const providerTaskCreatedAt = markTiming("providerTaskCreatedAt");
     await postWorkerSlotStatus(params.payload, "running", "video_task_created", {
       index: 1,
       status: "running",
@@ -2389,7 +2758,7 @@ async function generateVideoWithProvider(params: {
       providerTaskId: taskId,
       error: "",
       updatedAt: new Date().toISOString()
-    });
+    }, { forceWrite: true, timing: { providerTaskCreatedAt } });
     const status = await pollVideoTask({
       payload: params.payload,
       baseUrl,
@@ -2398,6 +2767,16 @@ async function generateVideoWithProvider(params: {
       protocol,
       timeoutMs
     });
+    const providerCompletedAt = markTiming("providerCompletedAt");
+    await postWorkerSlotStatus(params.payload, "running", "video_provider_completed", {
+      index: 1,
+      status: "running",
+      stage: "video_provider_completed",
+      providerTaskId: taskId,
+      progress: 100,
+      error: "",
+      updatedAt: providerCompletedAt
+    }, { forceWrite: true, timing: { providerCompletedAt } });
     return { status, taskId, referenceFrameCount: taskReferenceAssets.length };
   };
 
@@ -2418,7 +2797,11 @@ async function generateVideoWithProvider(params: {
       error: errorMessage(error).slice(0, 240),
       updatedAt: new Date().toISOString()
     });
-    const dataUriImageUrls = await videoProviderDataUriFrameUrls({ referenceAssets, timeoutMs });
+    const dataUriImageUrls = await videoProviderPreparedDataUriFrameUrls({
+      referenceAssets,
+      timeoutMs,
+      targetSize: videoParams.size
+    });
     const result = await runVideoProviderTask(dataUriImageUrls);
     status = result.status;
     taskId = result.taskId;
@@ -2435,7 +2818,11 @@ async function generateVideoWithProvider(params: {
     protocol,
     timeoutMs
   });
-  const video = await optimizeGeneratedVideoForPlayback(downloadedVideo);
+  const downloadedAt = markTiming("downloadedAt");
+  const optimizeMode = generatedVideoOptimizeMode();
+  const video = optimizeMode === "sync"
+    ? await optimizeGeneratedVideoForPlayback(downloadedVideo, optimizeMode)
+    : downloadedVideo;
   const storageKey = customerAssetStorageKey({
     siteId: params.payload.siteId,
     customerId: params.payload.customerId,
@@ -2447,6 +2834,7 @@ async function generateVideoWithProvider(params: {
     mimeType: video.mimeType,
     purpose: "output"
   });
+  const storedAt = markTiming("storedAt");
   await postWorkerSlotStatus(params.payload, "running", "video_result_received", {
     index: 1,
     status: "succeeded",
@@ -2458,16 +2846,48 @@ async function generateVideoWithProvider(params: {
     requestedReferenceFrameCount: requestedReferenceAssets.length,
     providerReferenceLimit,
     updatedAt: new Date().toISOString()
-  });
+  }, { forceWrite: true, timing: { downloadedAt, storedAt } });
+  const asyncVideoOptimization = optimizeMode === "async" ? async () => {
+    const optimized = await optimizeGeneratedVideoForPlayback(downloadedVideo, optimizeMode);
+    if (optimized.bytes === downloadedVideo.bytes && optimized.mimeType === downloadedVideo.mimeType) return;
+    const optimizedStorageKey = customerAssetStorageKey({
+      siteId: params.payload.siteId,
+      customerId: params.payload.customerId,
+      fileName: `${params.payload.jobId}-video-1-optimized.${extensionForCustomerAssetMime(optimized.mimeType)}`
+    });
+    await writeCustomerAssetFileShared({
+      storageKey: optimizedStorageKey,
+      bytes: optimized.bytes,
+      mimeType: optimized.mimeType,
+      purpose: "output"
+    });
+    const optimizedStoredAt = new Date().toISOString();
+    const result = await replaceSettledGenerationOutputStorageKeyRelational({
+      jobId: params.payload.jobId,
+      siteId: params.payload.siteId,
+      customerId: params.payload.customerId,
+      originalStorageKey: storageKey,
+      storageKey: optimizedStorageKey,
+      mimeType: optimized.mimeType,
+      timing: { optimizedStoredAt }
+    });
+    if (result.updated && result.job) {
+      publishCustomerJobEventForJob("result", result.job, { eventKind: "final" });
+    }
+  } : undefined;
   return {
     storageKey,
     mimeType: video.mimeType,
     providerLabel: provider.label,
     index: 1,
     estimatedCostUsd: typeof status.cost === "number" ? status.cost : undefined,
+    providerCreditCost: typeof status.creditCost === "number" ? status.creditCost : undefined,
+    providerCurrency: typeof status.creditCost === "number" ? HUITU_OPENAPI_PROVIDER_CURRENCY : undefined,
     referenceFrameCount: usedReferenceFrameCount,
     requestedReferenceFrameCount: requestedReferenceAssets.length,
-    providerReferenceLimit
+    providerReferenceLimit,
+    timing,
+    asyncVideoOptimization
   };
 }
 
@@ -2598,21 +3018,32 @@ async function generateWithProvider(params: {
   return { outputs, error: firstError };
 }
 
+function videoProviderFailureContext(provider: WorkerImageProvider): { providerFamily: VideoModelFamily; providerProtocol: VideoProviderProtocol } {
+  return {
+    providerFamily: videoProviderModelFamilyForProvider(provider),
+    providerProtocol: videoProviderProtocol(normalizeBaseUrl(provider.aiUrl ?? ""))
+  };
+}
+
 async function runLocalVideoWorker(payload: WorkerPayload) {
+  const workerAcceptedAt = new Date().toISOString();
+  const workerTiming = { workerAcceptedAt };
   const providers = orderedVideoProviders(payload);
   if (!providers.length) {
-    await postWorkerResult(payload, { status: "failed", error: "no_video_ai_provider_configured" });
+    await postWorkerResult(payload, { status: "failed", error: "no_video_ai_provider_configured", timing: workerTiming });
     return;
   }
 
-  await postWorkerStatus(payload, "running", "local_video_worker_started");
+  await postWorkerStatus(payload, "running", "local_video_worker_started", { timing: workerTiming });
   const providerTrace: Array<{ provider: string; attempts: number }> = [];
   const providerErrors: Array<{ provider: string; error: string }> = [];
   let lastError = "";
+  let lastProviderFailure: VideoProviderFailure | undefined;
 
   for (const provider of providers) {
     const trace = { provider: provider.label || provider.id, attempts: 0 };
     providerTrace.push(trace);
+    const failureContext = videoProviderFailureContext(provider);
     const maxAttempts = videoProviderAttempts();
     try {
       for (const attempt of Array.from({ length: maxAttempts }, (_, attemptIndex) => attemptIndex + 1)) {
@@ -2623,11 +3054,28 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
             status: "succeeded",
             outputs: [{ storageKey: output.storageKey, mimeType: output.mimeType }],
             providerTrace,
-            costTrace: { estimatedCostUsd: output.estimatedCostUsd ?? 0, referenceFrameCount: output.referenceFrameCount, requestedReferenceFrameCount: output.requestedReferenceFrameCount, providerReferenceLimit: output.providerReferenceLimit }
+            costTrace: {
+              estimatedCostUsd: output.estimatedCostUsd ?? 0,
+              providerCreditCost: output.providerCreditCost,
+              providerCurrency: output.providerCurrency,
+              referenceFrameCount: output.referenceFrameCount,
+              requestedReferenceFrameCount: output.requestedReferenceFrameCount,
+              providerReferenceLimit: output.providerReferenceLimit
+            },
+            timing: { ...workerTiming, ...output.timing }
           });
+          if (output.asyncVideoOptimization) {
+            void output.asyncVideoOptimization().catch((error) => {
+              console.warn("worker_async_video_optimization_failed", {
+                jobId: payload.jobId,
+                error: errorMessage(error).slice(0, 240)
+              });
+            });
+          }
           return;
         } catch (error) {
           lastError = errorMessage(error);
+          lastProviderFailure = videoProviderFailureFromError(error, failureContext);
           if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
           await new Promise((resolve) => setTimeout(resolve, 10_000 * attempt));
         }
@@ -2635,12 +3083,14 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
       throw new Error(lastError || "local_video_worker_generation_failed");
     } catch (error) {
       lastError = errorMessage(error);
+      lastProviderFailure = videoProviderFailureFromError(error, failureContext);
       providerErrors.push({ provider: provider.label || provider.id, error: lastError });
       await postWorkerSlotStatus(payload, "running", "video_provider_failed", {
         index: 1,
         status: "failed",
         stage: "video_provider_failed",
         error: lastError.slice(0, 240),
+        ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}),
         updatedAt: new Date().toISOString()
       });
       if (!shouldAllowPaidVideoProviderFallback()) break;
@@ -2655,7 +3105,9 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     status: "failed",
     providerTrace,
     error: finalError || "local_video_worker_generation_failed",
-    costTrace: { providerErrors }
+    ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}),
+    costTrace: { providerErrors, ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}) },
+    timing: workerTiming
   });
 }
 

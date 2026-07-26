@@ -1,8 +1,11 @@
+import type { VideoModelPricing } from "@/lib/video-frame-config";
+
 export type SiteStatus = "active" | "draft" | "suspended";
 export type ConnectStatus = "not_started" | "pending" | "enabled" | "restricted";
 export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "refunded";
 export type LedgerType = "grant" | "reserve" | "consume" | "release" | "adjustment";
 export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platform_admin" | "external_api" | "rerun";
+
 export type PlatformAiProviderType = "image" | "video";
 
 export type SectionType =
@@ -690,6 +693,7 @@ export interface VideoTheme {
   prompt: string;
   status: "active" | "draft" | "paused";
   creditCost: number;
+  modelPricing?: VideoModelPricing;
   durationSeconds: number;
   maxFrames: number;
   effectiveMaxFrames?: number;

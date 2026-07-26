@@ -186,20 +186,42 @@ export async function writeCustomerAssetFileRemote(params: {
     throw new CustomerAssetStorageError("customer_asset_transfer_secret_required", 500);
   }
   const storageKey = normalizeCustomerAssetStorageKey(params.storageKey);
-  const response = await fetch(`${baseUrl}/api/internal/customer-assets`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Customer-Asset-Transfer-Secret": secret
-    },
-    body: JSON.stringify({
-      storageKey,
-      mimeType: params.mimeType,
-      purpose: params.purpose,
-      dataBase64: params.bytes.toString("base64")
-    }),
-    cache: "no-store"
-  });
+  const preferBinaryUpload = params.purpose === "output" &&
+    params.mimeType.toLowerCase().startsWith("video/") &&
+    process.env.CUSTOMER_ASSET_REMOTE_VIDEO_UPLOAD_MODE?.trim().toLowerCase() !== "json";
+  const url = new URL("/api/internal/customer-assets", baseUrl);
+  if (preferBinaryUpload) {
+    url.searchParams.set("storageKey", storageKey);
+    url.searchParams.set("mimeType", params.mimeType);
+    if (params.purpose) url.searchParams.set("purpose", params.purpose);
+  }
+  const response = await fetch(url.toString(), preferBinaryUpload
+    ? {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "X-Customer-Asset-Transfer-Secret": secret,
+          "X-Customer-Asset-Storage-Key": storageKey,
+          "X-Customer-Asset-Mime-Type": params.mimeType,
+          ...(params.purpose ? { "X-Customer-Asset-Purpose": params.purpose } : {})
+        },
+        body: new Blob([new Uint8Array(params.bytes)], { type: params.mimeType }),
+        cache: "no-store"
+      }
+    : {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Customer-Asset-Transfer-Secret": secret
+        },
+        body: JSON.stringify({
+          storageKey,
+          mimeType: params.mimeType,
+          purpose: params.purpose,
+          dataBase64: params.bytes.toString("base64")
+        }),
+        cache: "no-store"
+      });
   const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; url?: string; size?: number; maxBytes?: number };
   if (!response.ok || result.ok === false) {
     const sizeHint = result.error === "asset_data_too_large" && typeof result.size === "number" && typeof result.maxBytes === "number"

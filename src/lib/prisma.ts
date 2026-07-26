@@ -7,6 +7,7 @@ const defaultReadRetryDelayMs = Math.max(0, Math.floor(Number(process.env.PRISMA
 const defaultReadTimeoutMs = Math.max(0, Math.floor(Number(process.env.PRISMA_READ_TIMEOUT_MS ?? 8_000)));
 const defaultWriteRetryCount = Math.max(0, Math.floor(Number(process.env.PRISMA_WRITE_TRANSIENT_RETRIES ?? 1)));
 const defaultWriteRetryDelayMs = Math.max(0, Math.floor(Number(process.env.PRISMA_WRITE_TRANSIENT_RETRY_DELAY_MS ?? 300)));
+const disconnectSharedClientOnTransient = process.env.PRISMA_DISCONNECT_ON_TRANSIENT === "1";
 
 export const prisma =
   globalForPrisma.prisma ??
@@ -75,7 +76,7 @@ async function runReadWithTimeout<T>(task: () => Promise<T>, label: string, time
   try {
     return await Promise.race([operation, timeout]);
   } catch (error) {
-    if (timedOut) await prisma.$disconnect().catch(() => undefined);
+    if (timedOut && disconnectSharedClientOnTransient) await prisma.$disconnect().catch(() => undefined);
     throw error;
   } finally {
     if (timeoutId) clearTimeout(timeoutId);
@@ -96,8 +97,8 @@ export async function runPrismaReadWithReconnect<T>(
       return await runReadWithTimeout(task, label, timeoutMs);
     } catch (error) {
       if (attempt >= retries || !isTransientPrismaConnectionError(error)) throw error;
-      console.warn(`[prisma-read] ${label} failed on attempt ${attempt + 1}; reconnecting before retry.`);
-      await prisma.$disconnect().catch(() => undefined);
+      console.warn(`[prisma-read] ${label} failed on attempt ${attempt + 1}; retrying after transient connection error.`);
+      if (disconnectSharedClientOnTransient) await prisma.$disconnect().catch(() => undefined);
       if (retryDelayMs > 0) await sleep(retryDelayMs * (attempt + 1));
     }
   }
@@ -118,8 +119,8 @@ export async function runPrismaWriteWithReconnect<T>(
       return await task();
     } catch (error) {
       if (attempt >= retries || !isTransientPrismaConnectionError(error)) throw error;
-      console.warn(`[prisma-write] ${label} failed on attempt ${attempt + 1}; reconnecting before retry.`);
-      await prisma.$disconnect().catch(() => undefined);
+      console.warn(`[prisma-write] ${label} failed on attempt ${attempt + 1}; retrying after transient connection error.`);
+      if (disconnectSharedClientOnTransient) await prisma.$disconnect().catch(() => undefined);
       if (retryDelayMs > 0) await sleep(retryDelayMs * (attempt + 1));
     }
   }

@@ -15,7 +15,7 @@ import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platf
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
-import { DEFAULT_VIDEO_FRAME_LIMIT, normalizeVideoFrameLimit } from "@/lib/video-frame-config";
+import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -4032,6 +4032,7 @@ async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): 
       prompt: theme.prompt,
       status: "active",
       creditCost: theme.creditCost,
+      modelPricing: defaultVideoModelPricing(theme.creditCost) as Prisma.InputJsonValue,
       durationSeconds: theme.durationSeconds,
       maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
       imageUrl: theme.imageUrl,
@@ -4045,6 +4046,7 @@ async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): 
       prompt: theme.prompt,
       status: "active",
       creditCost: theme.creditCost,
+      modelPricing: defaultVideoModelPricing(theme.creditCost) as Prisma.InputJsonValue,
       durationSeconds: theme.durationSeconds,
       maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
       imageUrl: existingTheme?.imageUrl || theme.imageUrl,
@@ -4115,6 +4117,7 @@ async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<
         prompt: theme.prompt,
         status: "active",
         creditCost: theme.creditCost,
+        modelPricing: defaultVideoModelPricing(theme.creditCost) as Prisma.InputJsonValue,
         durationSeconds: theme.durationSeconds,
         maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
         imageUrl: theme.imageUrl,
@@ -4184,6 +4187,7 @@ export async function upsertVideoThemeRelational(params: {
   prompt: string;
   status?: VideoTheme["status"];
   creditCost: number;
+  modelPricing?: VideoModelPricing;
   durationSeconds: number;
   maxFrames: number;
   imageUrl?: string;
@@ -4200,6 +4204,7 @@ export async function upsertVideoThemeRelational(params: {
   if (prompt.length < 12) throw new RelationalStoreError("video_theme_prompt_required", 400);
   if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
   const creditCost = clampInteger(Number(params.creditCost), 24, 0, 10000);
+  const modelPricing = normalizeVideoModelPricing(params.modelPricing, creditCost);
   const durationSeconds = clampInteger(Number(params.durationSeconds), 6, 1, 15);
   const maxFrames = normalizeVideoFrameLimit(params.maxFrames, DEFAULT_VIDEO_FRAME_LIMIT);
   const galleryImages = Array.isArray(params.galleryImages) ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 12) : [];
@@ -4219,6 +4224,7 @@ export async function upsertVideoThemeRelational(params: {
     prompt,
     status: videoThemeStatus(params.status),
     creditCost,
+    modelPricing: modelPricing as Prisma.InputJsonValue,
     durationSeconds,
     maxFrames,
     categoryId: category?.id ?? null,

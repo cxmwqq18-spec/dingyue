@@ -33,7 +33,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
-import { readWorkspaceJobSummariesRelational } from "@/lib/workspace-runtime-jobs";
+import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -425,6 +425,7 @@ function lightweightVideoTheme(theme: VideoTheme): VideoTheme {
     prompt: "",
     status: theme.status,
     creditCost: theme.creditCost,
+    modelPricing: theme.modelPricing,
     durationSeconds: theme.durationSeconds,
     maxFrames: theme.maxFrames,
     effectiveMaxFrames: theme.effectiveMaxFrames,
@@ -933,8 +934,8 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
   customer: PublicCustomer;
   siteId: string;
 }): Promise<ThemeRuntimeData> {
-  const recentJobs = await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 });
-  const [recentAssets, subscriptions, customerModels] = await Promise.all([
+  const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all([
+    readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 }),
     prisma.assetUpload.findMany({
       where: {
         siteId,
@@ -961,9 +962,9 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
     recentAssets
       .map((asset) => asset.jobId)
       .filter((jobId): jobId is string => typeof jobId === "string" && !recentJobIds.has(jobId))
-  ));
+  )).slice(0, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT);
   const relatedJobs = relatedJobIds.length
-    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, ids: relatedJobIds })
+    ? await readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, ids: relatedJobIds, includeJson: false })
     : [];
   const jobs = [...recentJobs, ...relatedJobs]
     .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());

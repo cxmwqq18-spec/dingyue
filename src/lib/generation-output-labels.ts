@@ -157,8 +157,11 @@ export function generatedOutputCopy(params: {
   imageIndex: number;
   job?: OutputLabelJob;
   jobs?: OutputLabelJob[];
+  runNumber?: number;
 }) {
-  const runNumber = generationRunNumber(params.job, params.jobs);
+  const runNumber = Number.isFinite(params.runNumber) && Number(params.runNumber) > 0
+    ? Math.trunc(Number(params.runNumber))
+    : generationRunNumber(params.job, params.jobs);
   const optionSummary = generationOptionSummary(params.job);
   const optionTitle = optionSummary === "Default options" ? undefined : optionSummary;
   const outputNoun = isVideoJob(params.job) ? "Video" : "Image";

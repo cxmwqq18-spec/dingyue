@@ -22,23 +22,35 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     },
     start(controller) {
       let closed = false;
+      let cleanedUp = false;
+      const subscription: {
+        heartbeat?: ReturnType<typeof setInterval>;
+        unsubscribe?: () => void;
+      } = {};
+      const cleanupStream = () => {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        closed = true;
+        subscription.unsubscribe?.();
+        if (subscription.heartbeat) clearInterval(subscription.heartbeat);
+      };
       const send = (event: string, data: unknown) => {
         if (closed) return;
         try {
           controller.enqueue(encodeEvent(event, data));
         } catch {
-          closed = true;
+          cleanupStream();
         }
       };
-      send("ready", { ok: true, siteId, customerId: current.customer.id, connectedAt: new Date().toISOString() });
-      const unsubscribe = subscribeCustomerJobEvents(
+      subscription.unsubscribe = subscribeCustomerJobEvents(
         { siteId, customerId: current.customer.id },
         (event: CustomerJobEvent) => send("job", event)
       );
-      cleanup = () => {
-        closed = true;
-        unsubscribe?.();
-      };
+      subscription.heartbeat = setInterval(() => {
+        send("heartbeat", { at: new Date().toISOString() });
+      }, 15_000);
+      cleanup = cleanupStream;
+      send("ready", { ok: true, siteId, customerId: current.customer.id, connectedAt: new Date().toISOString() });
     }
   });
 

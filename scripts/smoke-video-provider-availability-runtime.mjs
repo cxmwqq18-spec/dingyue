@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const require = createRequire(import.meta.url);
 const jiti = require("jiti")(path.join(root, "scripts", "smoke-video-provider-availability-runtime.mjs"), {
+  alias: { "@": path.join(root, "src") },
   interopDefault: true
 });
 

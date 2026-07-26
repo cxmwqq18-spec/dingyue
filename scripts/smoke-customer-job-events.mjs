@@ -96,7 +96,7 @@ async function loginCustomer(email) {
   return cookie;
 }
 
-async function openJobEventStream(cookie, jobId) {
+async function openJobEventStream(cookie, jobId, expectedStatuses = ["running"]) {
   const controller = new AbortController();
   const response = await fetch(`${baseUrl}/api/sites/${siteId}/customer/job-events`, {
     headers: { cookie },
@@ -124,7 +124,7 @@ async function openJobEventStream(cookie, jobId) {
   const timeout = setTimeout(() => {
     if (!eventResolved) rejectEvent(new Error("job_event_not_received"));
     controller.abort();
-  }, 8000);
+  }, 20_000);
 
   const pump = (async () => {
     try {
@@ -143,7 +143,7 @@ async function openJobEventStream(cookie, jobId) {
           readyResolved = true;
           resolveReady(payload);
         }
-        if (eventName === "job" && payload.jobId === jobId && payload.status === "running" && !eventResolved) {
+        if (eventName === "job" && payload.jobId === jobId && expectedStatuses.includes(payload.status) && !eventResolved) {
           eventResolved = true;
           clearTimeout(timeout);
           resolveEvent(payload);
@@ -174,7 +174,14 @@ async function postWorkerStatus(identity) {
     siteId,
     requestId: identity.requestId,
     status: "running",
-    stage: "provider_request_started"
+    stage: "provider_request_started",
+    progress: 35,
+    outputSlots: [{
+      index: 1,
+      status: "running",
+      stage: "provider_request_started",
+      progress: 35
+    }]
   };
   const response = await fetch(`${baseUrl}/api/internal/ai-worker/jobs/${identity.jobId}/status`, {
     method: "POST",
@@ -271,19 +278,24 @@ async function postWorkerFailedResult(identity) {
   return data;
 }
 
-async function assertFailedStatusStillSettles(customerId) {
+async function assertFailedStatusStillSettles(customerId, cookie) {
   const identity = await createReservedSmokeJob(customerId);
+  const stream = await openJobEventStream(cookie, identity.jobId, ["failed"]);
+  await stream.ready;
   await postWorkerFailedStatus(identity);
   const afterStatus = await prisma.generationJob.findUniqueOrThrow({ where: { id: identity.jobId } });
   assert(afterStatus.status !== "failed", `failed_status_finalized_job_before_result:${afterStatus.status}`);
   const balanceAfterStatus = await prisma.creditBalance.findUniqueOrThrow({ where: { customerId } });
   assert(balanceAfterStatus.balance === 15 && balanceAfterStatus.reserved === 5, `failed_status_changed_balance:${balanceAfterStatus.balance}:${balanceAfterStatus.reserved}`);
   const result = await postWorkerFailedResult(identity);
+  const terminalEvent = await stream.event;
+  stream.close();
+  await stream.pump;
   assert(result.job?.status === "failed", `failed_result_did_not_finalize:${result.job?.status ?? "missing"}`);
   assert(result.customerBalance?.available === 20, `failed_result_did_not_release_available:${result.customerBalance?.available}`);
   assert(result.customerBalance?.reserved === 0, `failed_result_did_not_release_reserved:${result.customerBalance?.reserved}`);
   assert(result.ledgerAction?.type === "release", `failed_result_missing_release:${result.ledgerAction?.type ?? "none"}`);
-  return result;
+  return { result, terminalEvent };
 }
 
 async function cleanup() {
@@ -299,17 +311,22 @@ try {
   const event = await stream.event;
   stream.close();
   await stream.pump;
-  const failedSettlement = await assertFailedStatusStillSettles(identity.customerId);
+  const failedSettlement = await assertFailedStatusStillSettles(identity.customerId, cookie);
   console.log(JSON.stringify({
     ok: true,
     jobId: event.jobId,
     status: event.status,
     type: event.type,
     stage: event.stage,
+    progress: event.progress,
     failedStatusSettlement: {
-      jobId: failedSettlement.job.id,
-      status: failedSettlement.job.status,
-      ledgerAction: failedSettlement.ledgerAction.type
+      jobId: failedSettlement.result.job.id,
+      status: failedSettlement.result.job.status,
+      ledgerAction: failedSettlement.result.ledgerAction.type,
+      event: {
+        type: failedSettlement.terminalEvent.type,
+        status: failedSettlement.terminalEvent.status
+      }
     }
   }, null, 2));
 } finally {

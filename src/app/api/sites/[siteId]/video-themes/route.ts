@@ -12,6 +12,7 @@ import {
   upsertVideoThemeRelational
 } from "@/lib/stores/site-store";
 import type { PlatformState, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 
 const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
@@ -166,6 +167,7 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
     prompt: typeof body.prompt === "string" ? body.prompt : "",
     status: body.status === "active" || body.status === "paused" || body.status === "draft" ? body.status : "draft",
     creditCost: Number(body.creditCost),
+    modelPricing: normalizeVideoModelPricing(body.modelPricing, Number(body.creditCost)),
     durationSeconds: Number(body.durationSeconds),
     maxFrames: Number(body.maxFrames),
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl : undefined,
@@ -340,6 +342,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       prompt: body.prompt ?? "",
       status: body.status,
       creditCost: Number(body.creditCost),
+      modelPricing: body.modelPricing,
       durationSeconds: Number(body.durationSeconds),
       maxFrames: Number(body.maxFrames),
       imageUrl: body.imageUrl,

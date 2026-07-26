@@ -19,6 +19,7 @@ import {
   pruneCustomerInputAssetsRelational,
   toThemeRuntimeAssetRelational
 } from "@/lib/stores/asset-store";
+import { geminiVideoFrameMimeTypeForUpload, isGeminiVideoFrameMimeType } from "@/lib/video-provider-policy";
 import type { NextRequest } from "next/server";
 
 type SharpFactory = (input: Buffer) => {
@@ -66,10 +67,10 @@ function normalizedImageFileName(fileName: string, mimeType: string): string {
   return fileName;
 }
 
-async function prepareUploadedImage(file: File, options: { preserveOriginal?: boolean } = {}): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
+async function prepareUploadedImage(file: File, options: { preserveOriginal?: boolean; mimeTypeOverride?: string } = {}): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
   const bytes = Buffer.from(await file.arrayBuffer());
   if (options.preserveOriginal) {
-    return { bytes, mimeType: file.type || "application/octet-stream", fileName: file.name };
+    return { bytes, mimeType: options.mimeTypeOverride || file.type || "application/octet-stream", fileName: file.name };
   }
   if (file.type.includes("gif")) return { bytes, mimeType: file.type || "image/gif", fileName: file.name };
   const maxDimension = Math.max(512, Number(process.env.CUSTOMER_UPLOAD_IMAGE_MAX_DIMENSION ?? "2000") || 2000);
@@ -167,10 +168,19 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         jobId?: string;
         subjectRole?: string;
       };
+      if (body.subjectRole === "video_frame" && body.mimeType && !isGeminiVideoFrameMimeType(body.mimeType)) {
+        return NextResponse.json({ ok: false, error: "unsupported_video_frame_type" }, { status: 400 });
+      }
     }
 
+    const videoFrameMimeType = body.subjectRole === "video_frame" && body.file
+      ? geminiVideoFrameMimeTypeForUpload(body.file)
+      : undefined;
+    if (body.subjectRole === "video_frame" && body.file && !videoFrameMimeType) {
+      return NextResponse.json({ ok: false, error: "unsupported_video_frame_type" }, { status: 400 });
+    }
     const preserveOriginal = body.subjectRole === "video_frame";
-    const preparedFile = body.file ? await prepareUploadedImage(body.file, { preserveOriginal }) : undefined;
+    const preparedFile = body.file ? await prepareUploadedImage(body.file, { preserveOriginal, mimeTypeOverride: videoFrameMimeType }) : undefined;
     if (preparedFile) body.mimeType = preparedFile.mimeType;
     const compressedFile = preparedFile && !preserveOriginal
       ? prepareCompressedCustomerImage({

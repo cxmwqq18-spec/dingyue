@@ -1,0 +1,1 @@
+ALTER TABLE "VideoTheme" ADD COLUMN IF NOT EXISTS "modelPricing" JSONB;

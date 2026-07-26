@@ -107,6 +107,11 @@ export function customerImageUploadErrorMessage(fileName: string, error: string 
       ? `${fileName} no parece ser una imagen compatible. Elige un archivo JPG, PNG o WebP.`
       : `${fileName} does not look like a supported image. Choose a JPG, PNG, or WebP file.`;
   }
+  if (error === "unsupported_video_frame_type") {
+    return spanish
+      ? `${fileName} no es compatible para video Gemini. Usa un archivo JPG o PNG.`
+      : `${fileName} is not supported for Gemini video. Use a JPG or PNG file.`;
+  }
   if (error === "rate_limited") {
     return spanish
       ? "Se iniciaron demasiadas subidas a la vez. Espera un minuto e intentalo de nuevo."
