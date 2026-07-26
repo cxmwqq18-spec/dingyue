@@ -42,14 +42,11 @@ export async function GET(
     Date.parse(expiresAt) > Date.now() &&
     signature === signWorkerAssetDownload({ siteId, customerId, assetId, expiresAt })
   );
-  if (!workerSignatureValid && !(await hasCustomerSession(siteId, customerId))) {
+  const customerSessionValid = workerSignatureValid || (await hasCustomerSession(siteId, customerId));
+  if (!customerSessionValid) {
     return NextResponse.json({ error: "customer_login_required" }, { status: 401 });
   }
-  const token = url.searchParams.get("token");
   try {
-    if (!token && !workerSignatureValid && !isInlinePreview) {
-      return NextResponse.json({ error: "missing_download_token" }, { status: 400 });
-    }
     const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
     const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
     const mimeType = result.mimeType || result.asset.mimeType;

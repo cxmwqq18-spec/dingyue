@@ -23,7 +23,8 @@ import {
   geminiVideoFramePolicyWarningMessage,
   geminiVideoFrameRequirementMessage,
   grokVideoFrameGuidanceDetailMessage,
-  grokVideoFrameGuidanceMessage
+  grokVideoFrameGuidanceMessage,
+  isGeminiVideoFrameMimeType
 } from "@/lib/video-provider-policy";
 
 type SubscriptionStatus = "loading" | "active" | "required" | "admin";
@@ -41,6 +42,11 @@ export type VideoRetryDraft = {
   videoModelFamily?: string;
   aspectRatio?: string;
   resolution?: string;
+};
+type SelectedVideoFrameInfo = {
+  id: string;
+  label?: string;
+  mimeType?: string;
 };
 
 const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
@@ -120,6 +126,7 @@ export function CustomerVideoWorkspace({
   onRetryDraftApplied,
   readyFrameIds,
   retryDraft,
+  selectedFrames = [],
   selectedFrameIds,
   setSelectedFrameIds,
   siteId,
@@ -142,6 +149,7 @@ export function CustomerVideoWorkspace({
   onOpenFrameManager: () => void;
   onRetryDraftApplied?: () => void;
   retryDraft?: VideoRetryDraft | null;
+  selectedFrames?: SelectedVideoFrameInfo[];
 }) {
   const [themes, setThemes] = useState<VideoTheme[]>(() => initialThemes);
   const [selectedThemeId, setSelectedThemeId] = useState(() => defaultVideoTheme(initialThemes)?.id || "");
@@ -214,6 +222,22 @@ export function CustomerVideoWorkspace({
   const trimmedPromptNote = promptNote.trim();
   const hasReadyFrameInput = generationFrameIds.length > 0;
   const isTextToVideo = selectedFrameIds.length === 0;
+  const selectedFrameInfoById = new Map(selectedFrames.map((frame) => [frame.id, frame]));
+  const unsupportedGeminiFrames = selectedVideoModelFamily === "gemini"
+    ? generationFrameIds
+      .map((assetId) => selectedFrameInfoById.get(assetId))
+      .filter((frame): frame is SelectedVideoFrameInfo => {
+        if (!frame) return false;
+        return !isGeminiVideoFrameMimeType(frame.mimeType);
+      })
+    : [];
+  const unsupportedGeminiFrameMessage = unsupportedGeminiFrames.length
+    ? vt(
+        spanish,
+        `Gemini video needs JPG or PNG frame images. Re-upload ${unsupportedGeminiFrames.length === 1 ? "this frame" : "these frames"} as JPG or PNG, or switch to Grok for WebP/reference frames.`,
+        `El video Gemini necesita fotogramas JPG o PNG. Vuelve a subir ${unsupportedGeminiFrames.length === 1 ? "este fotograma" : "estos fotogramas"} como JPG o PNG, o cambia a Grok para WebP/referencias.`
+      )
+    : "";
   const needsTextToVideoConfirmation = !selectedModelNeedsFrames && isTextToVideo && trimmedPromptNote.length > 0;
   const textToVideoConfirmationMessage = vt(
     spanish,
@@ -305,6 +329,10 @@ export function CustomerVideoWorkspace({
     }
     if (selectedModelNeedsFrames && !selectedFrameIds.length) {
       setMessage(geminiVideoFrameRequirementMessage(spanish));
+      return;
+    }
+    if (selectedModelNeedsFrames && unsupportedGeminiFrameMessage) {
+      setMessage(unsupportedGeminiFrameMessage);
       return;
     }
     if (selectedFrameIds.length && (hasPendingFrameUploads || !generationFrameIds.length)) {
@@ -631,6 +659,7 @@ export function CustomerVideoWorkspace({
                         : vt(spanish, "No frames selected. This request will run as text-to-video and follow only your written prompt.", "No hay fotogramas seleccionados. Esta solicitud se ejecutara como texto a video y seguira solo tu prompt escrito.")}
                 </p>
                 {providerFrameLimitMessage && selectedFrameIds.length ? <p className="mt-2 text-xs leading-5 text-[#31d4ff]">{providerFrameLimitMessage}</p> : null}
+                {unsupportedGeminiFrameMessage ? <p className="mt-2 text-xs font-semibold leading-5 text-amber-200">{unsupportedGeminiFrameMessage}</p> : null}
               </div>
             </div>
 

@@ -120,6 +120,8 @@ assert(videoWorkspace.includes('selectedVideoModelFamily === "grok"'), "video wo
 assert(videoWorkspace.includes("grokVideoFrameGuidanceMessage(spanish)"), "video workspace should show Grok text-to-video and image-to-video guidance");
 assert(videoWorkspace.includes("grokVideoFrameGuidanceDetailMessage(spanish)"), "video workspace should show Grok prompt and upload safety guidance");
 assert(videoWorkspace.includes("unsupported_video_frame_type"), "video workspace should explain unsupported Gemini frame image types");
+assert(videoWorkspace.includes("unsupportedGeminiFrameMessage"), "video workspace should preflight unsupported selected Gemini frame types before submit");
+assert(videoWorkspace.includes("isGeminiVideoFrameMimeType(frame.mimeType)"), "video workspace should use shared Gemini MIME validation for selected frame metadata");
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
 assert(videoWorkspace.includes("retryDraft?: VideoRetryDraft | null"), "video workspace should accept a retry draft from the results panel");
@@ -207,11 +209,20 @@ assert(customerAssetsRouteForVideoPolicy.includes("geminiVideoFrameMimeTypeForUp
 const customerWorkspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
 assert(customerWorkspaceShell.includes("GEMINI_VIDEO_FRAME_ACCEPT"), "video frame upload input should advertise JPG/PNG only");
 assert(customerWorkspaceShell.includes("isGeminiVideoFrameUploadFile"), "video frame picker should filter unsupported files before upload");
+assert(customerWorkspaceShell.includes("selectedFrames={selectedVideoFrames.map"), "video composer should receive selected frame MIME metadata for Gemini preflight");
 assert(!customerWorkspaceShell.includes("geminiVideoFramePolicyWarningMessage(spanishXby)"), "video frame manager should not duplicate Gemini policy warnings from the right composer");
 assert(!customerWorkspaceShell.includes("geminiVideoFrameUploadTypeMessage"), "video frame manager should use generic upload type copy instead of Gemini-specific left-side copy");
 assert(!customerWorkspaceShell.includes("Gemini video uses JPG or PNG frames only"), "video frame manager should not show Gemini upload requirements on the left");
 assert(customerWorkspaceShell.includes("parseVideoProviderFailure(record.providerFailure)"), "workspace output slots should parse structured provider failure details");
 assert(customerWorkspaceShell.includes("workspaceJobProviderFailureBody"), "failed video job cards should show provider-specific failure reasons");
+
+const assetDownloadButton = read("src/components/storefront/customer-asset-download-button.tsx");
+const assetDownloadRoute = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/[assetId]/download/route.ts");
+assert(assetDownloadButton.includes("<a"), "customer asset downloads should use a native same-tab anchor instead of async popup navigation");
+assert(assetDownloadButton.includes("downloadHref"), "customer asset download button should expose a direct GET download href");
+assert(!assetDownloadButton.includes("window.open(result.downloadUrl"), "customer asset downloads should not depend on window.open after an async fetch");
+assert(assetDownloadRoute.includes("customerSessionValid"), "customer asset GET downloads should reuse the existing customer session check");
+assert(!assetDownloadRoute.includes("!token && !workerSignatureValid && !isInlinePreview"), "logged-in customer asset GET downloads should not require a POST-created token");
 
 const workerDispatch = read("src/lib/worker.ts");
 assert(workerDispatch.includes("fetchWithTimeout(endpoint"), "worker dispatch should not wait forever for the worker accept endpoint");
