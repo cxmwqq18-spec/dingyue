@@ -712,6 +712,8 @@ assert(dispatchRoute.includes('const usePreparedProviderDataUris = protocol === 
 assert(dispatchRoute.includes("prepareVideoReferenceImage(bytes, mimeType, params.videoParams.size)"), "multipart video references should be resized to the target 720p size before upload");
 assert(dispatchRoute.includes("options.forceCompression === true || Boolean(target) || shouldCompressVideoReferenceImages()"), "video reference preparation should resize whenever a target size is supplied");
 assert(dispatchRoute.includes("resizeVideoReferenceToTargetCanvas"), "target-sized video reference preparation should preserve the full frame on a provider-sized canvas");
+assert(dispatchRoute.includes("resizeVideoReferenceToTargetCanvasWithFfmpeg"), "target-sized video references should fall back to ffmpeg-static when sharp cannot load on the production host");
+assert(dispatchRoute.includes("video_reference_resize_ffmpeg_fallback_failed"), "ffmpeg reference resize fallback failures should be logged before the worker fails the job");
 assert(dispatchRoute.includes('fit: "inside"') && dispatchRoute.includes("composite([{ input: foreground, gravity: \"center\" }]"), "target-sized video references should keep the whole source image centered instead of hard-cropping it");
 assert(!dispatchRoute.includes('? { width: target.width, height: target.height, fit: "cover", position: "attention" }'), "target-sized video references should not directly cover-crop mismatched source ratios");
 assert(dispatchRoute.includes("ai_provider_video_reference_resize_failed_"), "video reference resize failures should fail explicitly");

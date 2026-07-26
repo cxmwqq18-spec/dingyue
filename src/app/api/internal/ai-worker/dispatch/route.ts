@@ -1278,6 +1278,46 @@ async function resizeVideoReferenceToTargetCanvas(
     .toBuffer();
 }
 
+async function resizeVideoReferenceToTargetCanvasWithFfmpeg(
+  bytes: Buffer,
+  mimeType: string,
+  target: { width: number; height: number },
+  quality: number
+) {
+  const ffmpegExecutable = typeof ffmpegPath === "string" && ffmpegPath ? ffmpegPath : "";
+  if (!ffmpegExecutable) throw new Error("ffmpeg_unavailable");
+  const tmpDir = await mkdtemp(path.join(os.tmpdir(), "mydreamshoots-video-reference-"));
+  try {
+    const inputPath = path.join(tmpDir, `input.${extensionForMime(mimeType)}`);
+    const outputPath = path.join(tmpDir, "output.jpg");
+    const qscale = String(Math.max(2, Math.min(8, Math.round((100 - quality) / 5))));
+    const filter = `[0:v]scale=${target.width}:${target.height}:force_original_aspect_ratio=increase,crop=${target.width}:${target.height},boxblur=24:1,eq=brightness=-0.08:saturation=0.82[bg];[0:v]scale=${target.width}:${target.height}:force_original_aspect_ratio=decrease[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,format=yuvj420p`;
+    await writeFile(inputPath, bytes);
+    await execFileAsync(
+      ffmpegExecutable,
+      [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-i",
+        inputPath,
+        "-filter_complex",
+        filter,
+        "-frames:v",
+        "1",
+        "-q:v",
+        qscale,
+        outputPath
+      ],
+      { timeout: Math.max(5_000, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_FFMPEG_TIMEOUT_MS ?? "15000") || 15_000) }
+    );
+    return await readFile(outputPath);
+  } finally {
+    await rm(tmpDir, { recursive: true, force: true });
+  }
+}
+
 async function prepareVideoReferenceImage(
   bytes: Uint8Array,
   mimeType: string,
@@ -1307,6 +1347,17 @@ async function prepareVideoReferenceImage(
     return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
   } catch (error) {
     if (target) {
+      try {
+        const resized = await resizeVideoReferenceToTargetCanvasWithFfmpeg(Buffer.from(bytes), sourceMimeType, target, quality);
+        if (!resized.length) throw new Error("empty_video_reference_image");
+        return { bytes: blobPartFromBytes(resized), mimeType: "image/jpeg" };
+      } catch (fallbackError) {
+        console.warn("video_reference_resize_ffmpeg_fallback_failed", {
+          targetSize: `${target.width}x${target.height}`,
+          sharpError: errorMessage(error).slice(0, 160),
+          error: errorMessage(fallbackError).slice(0, 160)
+        });
+      }
       if (options.fallbackToOriginal === true && shouldFallbackUnresizedVideoReferenceImage(error)) {
         console.warn("video_reference_resize_fallback", {
           targetSize: `${target.width}x${target.height}`,
