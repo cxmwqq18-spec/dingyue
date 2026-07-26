@@ -4,6 +4,9 @@ export type PreparedCustomerImageUpload = {
   originalSize: number;
   uploadSize: number;
 };
+export type PreparedCustomerVideoFrameUpload = PreparedCustomerImageUpload & {
+  converted: boolean;
+};
 
 const defaultTargetBytes = 8 * 1024 * 1024;
 const compressionPlans = [
@@ -16,6 +19,33 @@ function canCompressImage(file: File): boolean {
   const type = file.type.toLowerCase();
   if (!type.startsWith("image/")) return false;
   return type !== "image/gif" && type !== "image/svg+xml";
+}
+
+export function canPrepareCustomerVideoFrameUploadFile(file: File): boolean {
+  const type = file.type.toLowerCase().split(";")[0];
+  if (type === "image/gif" || type === "image/svg+xml") return false;
+  return type.startsWith("image/") || /\.(jpe?g|png|webp|heic|heif|bmp|tiff?)$/i.test(file.name);
+}
+
+function isGeminiReadyImage(file: File): boolean {
+  const type = file.type.toLowerCase().split(";")[0];
+  if (type === "image/jpeg" || type === "image/png") return true;
+  if (type && type !== "application/octet-stream") return false;
+  return /\.(jpe?g|png)$/i.test(file.name);
+}
+
+function geminiReadyImageMimeType(file: File): "image/jpeg" | "image/png" | undefined {
+  const type = file.type.toLowerCase().split(";")[0];
+  if (type === "image/jpeg" || type === "image/png") return type;
+  if (type && type !== "application/octet-stream") return undefined;
+  if (/\.(jpe?g)$/i.test(file.name)) return "image/jpeg";
+  if (/\.png$/i.test(file.name)) return "image/png";
+  return undefined;
+}
+
+function fileWithMimeType(file: File, mimeType: "image/jpeg" | "image/png"): File {
+  if (file.type.toLowerCase().split(";")[0] === mimeType) return file;
+  return new File([file], file.name, { type: mimeType, lastModified: file.lastModified });
 }
 
 function jpegName(fileName: string): string {
@@ -94,6 +124,27 @@ export async function prepareCustomerImageUploadFile(
     return { file: best, compressed: true, originalSize: file.size, uploadSize: best.size };
   }
   return { file, compressed: false, originalSize: file.size, uploadSize: file.size };
+}
+
+export async function prepareCustomerVideoFrameUploadFile(
+  file: File,
+  options: { targetBytes?: number } = {}
+): Promise<PreparedCustomerVideoFrameUpload> {
+  if (!canPrepareCustomerVideoFrameUploadFile(file)) throw new Error("unsupported_video_frame_type");
+  if (isGeminiReadyImage(file)) {
+    const normalizedFile = fileWithMimeType(file, geminiReadyImageMimeType(file) ?? "image/jpeg");
+    const prepared = await prepareCustomerImageUploadFile(normalizedFile, { targetBytes: options.targetBytes });
+    return {
+      ...prepared,
+      originalSize: file.size,
+      converted: prepared.file.name !== file.name || prepared.file.size !== file.size || prepared.file.type.toLowerCase().split(";")[0] !== file.type.toLowerCase().split(";")[0]
+    };
+  }
+  const convertedFile = await compressToJpeg(file, compressionPlans[0].maxDimension, compressionPlans[0].quality);
+  const prepared = convertedFile.size > (options.targetBytes ?? defaultTargetBytes)
+    ? await prepareCustomerImageUploadFile(convertedFile, { targetBytes: options.targetBytes })
+    : { file: convertedFile, compressed: true, originalSize: file.size, uploadSize: convertedFile.size };
+  return { ...prepared, originalSize: file.size, converted: true };
 }
 
 export function customerImageUploadErrorMessage(fileName: string, error: string | undefined, spanish = false): string {

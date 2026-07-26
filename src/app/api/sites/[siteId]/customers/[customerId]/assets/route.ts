@@ -33,6 +33,8 @@ type SharpFactory = (input: Buffer) => {
 };
 
 const defaultMaxUploadBytes = 32 * 1024 * 1024;
+const convertibleVideoFrameExtensionPattern = /\.(jpe?g|png|webp|heic|heif|bmp|tiff?)$/i;
+const excludedVideoFrameMimeTypes = new Set(["image/gif", "image/svg+xml"]);
 
 function maxCustomerUploadBytes(): number {
   const configured = Number(process.env.CUSTOMER_UPLOAD_MAX_BYTES ?? "");
@@ -67,6 +69,21 @@ function normalizedImageFileName(fileName: string, mimeType: string): string {
   return fileName;
 }
 
+function normalizedFileMimeType(file: File): string {
+  return (file.type || "").split(";")[0]?.trim().toLowerCase() || "";
+}
+
+function looksLikeSupportedImageUpload(file: File): boolean {
+  const mimeType = normalizedFileMimeType(file);
+  return mimeType.startsWith("image/") || convertibleVideoFrameExtensionPattern.test(file.name);
+}
+
+function canTryConvertingVideoFrame(file: File): boolean {
+  const mimeType = normalizedFileMimeType(file);
+  if (excludedVideoFrameMimeTypes.has(mimeType)) return false;
+  return looksLikeSupportedImageUpload(file);
+}
+
 async function prepareUploadedImage(file: File, options: { preserveOriginal?: boolean; mimeTypeOverride?: string } = {}): Promise<{ bytes: Buffer; mimeType: string; fileName: string }> {
   const bytes = Buffer.from(await file.arrayBuffer());
   if (options.preserveOriginal) {
@@ -87,6 +104,20 @@ async function prepareUploadedImage(file: File, options: { preserveOriginal?: bo
   } catch {
     return { bytes, mimeType: file.type || "application/octet-stream", fileName: file.name };
   }
+}
+
+async function prepareVideoFrameImage(file: File): Promise<{ bytes: Buffer; mimeType: "image/jpeg" | "image/png"; fileName: string } | undefined> {
+  const readyMimeType = geminiVideoFrameMimeTypeForUpload(file);
+  if (readyMimeType) {
+    const prepared = await prepareUploadedImage(file, { preserveOriginal: true, mimeTypeOverride: readyMimeType });
+    return { bytes: prepared.bytes, mimeType: readyMimeType, fileName: normalizedImageFileName(prepared.fileName, readyMimeType) };
+  }
+  if (!canTryConvertingVideoFrame(file)) return undefined;
+  const prepared = await prepareUploadedImage(file);
+  if (prepared.mimeType === "image/jpeg") {
+    return { bytes: prepared.bytes, mimeType: "image/jpeg", fileName: normalizedImageFileName(prepared.fileName, "image/jpeg") };
+  }
+  return undefined;
 }
 
 function removeWrittenAssetFile(storageKey: string | undefined) {
@@ -152,7 +183,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       if (!body.file) {
         return NextResponse.json({ ok: false, error: "asset_file_required" }, { status: 400 });
       }
-      if (!body.file.type.startsWith("image/")) {
+      if (!looksLikeSupportedImageUpload(body.file)) {
         return NextResponse.json({ ok: false, error: "asset_file_must_be_image" }, { status: 400 });
       }
       const maxUploadBytes = maxCustomerUploadBytes();
@@ -173,14 +204,15 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       }
     }
 
-    const videoFrameMimeType = body.subjectRole === "video_frame" && body.file
-      ? geminiVideoFrameMimeTypeForUpload(body.file)
+    const preserveOriginal = body.subjectRole === "video_frame";
+    const preparedFile = body.file
+      ? preserveOriginal
+        ? await prepareVideoFrameImage(body.file)
+        : await prepareUploadedImage(body.file)
       : undefined;
-    if (body.subjectRole === "video_frame" && body.file && !videoFrameMimeType) {
+    if (body.subjectRole === "video_frame" && body.file && !preparedFile) {
       return NextResponse.json({ ok: false, error: "unsupported_video_frame_type" }, { status: 400 });
     }
-    const preserveOriginal = body.subjectRole === "video_frame";
-    const preparedFile = body.file ? await prepareUploadedImage(body.file, { preserveOriginal, mimeTypeOverride: videoFrameMimeType }) : undefined;
     if (preparedFile) body.mimeType = preparedFile.mimeType;
     const compressedFile = preparedFile && !preserveOriginal
       ? prepareCompressedCustomerImage({

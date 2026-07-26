@@ -2,6 +2,7 @@ import "server-only";
 
 import { prisma } from "@/lib/prisma";
 import type { ThemeRuntimeData } from "@/lib/types";
+import { DEFAULT_VIDEO_MODEL_FAMILY } from "@/lib/video-frame-config";
 
 export const WORKSPACE_RELATED_JOB_SUMMARY_LIMIT = 8;
 
@@ -56,6 +57,12 @@ function runtimeJobFromWorkspaceSummaryRow(job: WorkspaceJobSummaryRow): Runtime
       mode: outputType,
       outputType,
       videoThemeName: title,
+      ...(isVideo ? {
+        videoModelFamily: DEFAULT_VIDEO_MODEL_FAMILY,
+        modelFamily: DEFAULT_VIDEO_MODEL_FAMILY,
+        videoThemeCategoryLabel: title,
+        videoThemeCategorySlug: "prompt-directed-motion"
+      } : {}),
       outputCount: 1
     },
     billing: {

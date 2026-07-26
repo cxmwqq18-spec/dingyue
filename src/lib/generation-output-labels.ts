@@ -30,6 +30,14 @@ function humanizePrompt(value: unknown): string {
   return text.replace(/\s+/g, " ").slice(0, 70);
 }
 
+function videoModelLabelFromValue(value: unknown): string {
+  const normalized = textValue(value).toLowerCase();
+  if (!normalized) return "";
+  if (normalized.includes("gemini") || normalized.includes("huitu") || normalized.includes("veo")) return "Gemini";
+  if (normalized.includes("grok") || normalized.includes("xai")) return "Grok";
+  return titleCase(normalized);
+}
+
 function cleanStoredOutputLabel(value: string | undefined): string {
   if (!value) return "";
   const internalLabelPattern = /^(Training\s*Mode|TrainingMode|Package\s*Audience|PackageAudience|Customer\s*Model\s*Label|CustomerModelLabel|Primary\s*Asset\s*Ids|PrimaryAssetIds|Partner\s*Asset\s*Ids|PartnerAssetIds)\s*:/i;
@@ -87,8 +95,33 @@ export function generationCategoryLabel(job: OutputLabelJob | undefined): string
   const fields = fieldsFromJob(job);
   const creativePack = recordValue(request.creativePack);
   const videoTheme = recordValue(request.videoTheme);
-  const category = textValue(videoTheme?.categoryLabel) || textValue(videoTheme?.categorySlug) || textValue(fields.creativePackCategory) || textValue(creativePack?.category);
+  const category = textValue(videoTheme?.categoryLabel) ||
+    textValue(fields.videoThemeCategoryLabel) ||
+    textValue(videoTheme?.categorySlug) ||
+    textValue(fields.videoThemeCategorySlug) ||
+    textValue(request.videoThemeCategoryLabel) ||
+    textValue(request.videoThemeCategorySlug) ||
+    textValue(fields.creativePackCategory) ||
+    textValue(creativePack?.category);
   return titleCase(category || generationThemeLabel(job));
+}
+
+export function generationVideoModelLabel(job: OutputLabelJob | undefined): string {
+  if (!isVideoJob(job)) return "";
+  const request = job?.requestJson ?? {};
+  const fields = fieldsFromJob(job);
+  const providerSelection = recordValue(request.providerSelection);
+  const modelLabel = videoModelLabelFromValue(fields.videoModelFamily) ||
+    videoModelLabelFromValue(fields.modelFamily) ||
+    videoModelLabelFromValue(request.videoModelFamily) ||
+    videoModelLabelFromValue(request.modelFamily) ||
+    videoModelLabelFromValue(providerSelection?.videoModelFamily) ||
+    videoModelLabelFromValue(providerSelection?.modelFamily) ||
+    videoModelLabelFromValue(fields.videoProviderFamily) ||
+    videoModelLabelFromValue(request.videoProviderFamily) ||
+    videoModelLabelFromValue(fields.modelType) ||
+    videoModelLabelFromValue(request.modelType);
+  return modelLabel || "Grok";
 }
 
 export function generationOptionSummary(job: OutputLabelJob | undefined): string {
@@ -123,6 +156,12 @@ export function generationOptionSummary(job: OutputLabelJob | undefined): string
     "videoThemeId",
     "videoThemeName",
     "videoThemePrompt",
+    "videoThemeSlug",
+    "videoThemeCategoryLabel",
+    "videoThemeCategorySlug",
+    "videoInputMode",
+    "videoModelFamily",
+    "modelFamily",
     "videoDuration",
     "videoDurationSeconds"
   ]);
@@ -164,7 +203,10 @@ export function generatedOutputCopy(params: {
     : generationRunNumber(params.job, params.jobs);
   const optionSummary = generationOptionSummary(params.job);
   const optionTitle = optionSummary === "Default options" ? undefined : optionSummary;
-  const outputNoun = isVideoJob(params.job) ? "Video" : "Image";
+  const videoJob = isVideoJob(params.job);
+  const outputNoun = videoJob ? "Video" : "Image";
+  const categoryLabel = params.job ? generationCategoryLabel(params.job) : "";
+  const videoModelLabel = videoJob ? generationVideoModelLabel(params.job) : "";
   const title = compactParts([
     generationThemeLabel(params.job),
     generationTimeLabel(params.job),
@@ -177,11 +219,16 @@ export function generatedOutputCopy(params: {
     title: shouldUseStoredLabel ? storedLabel : title,
     description: compactParts([
       params.job ? `Package: ${generationThemeLabel(params.job)}` : undefined,
-      params.job ? `Category: ${generationCategoryLabel(params.job)}` : undefined,
+      videoModelLabel ? `Video model: ${videoModelLabel}` : undefined,
+      params.job && categoryLabel ? `Category: ${categoryLabel}` : undefined,
       optionTitle,
       `Created ${generationTimeLabel(params.job)}`,
       `Generation ${runNumber}`,
       `${outputNoun} ${params.imageIndex}`
-    ])
+    ]),
+    tags: [
+      videoModelLabel ? `Model: ${videoModelLabel}` : undefined,
+      params.job && categoryLabel ? `Category: ${categoryLabel}` : undefined
+    ].filter((tag): tag is string => Boolean(tag))
   };
 }

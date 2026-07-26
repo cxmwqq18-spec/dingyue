@@ -35,12 +35,14 @@ assert(config.includes("return Math.max(1, Math.min(MAX_VIDEO_FRAME_LIMIT, count
 assert(!config.includes("return Math.max(minimum"), "video frame normalization should not force every theme up to the default limit");
 assert(config.includes("VIDEO_DURATION_OPTIONS"), "video duration options should be shared between UI and backend");
 assert(config.includes("MAX_VIDEO_DURATION_SECONDS = 15"), "video duration should be capped to the 15 second product-supported duration");
+assert(config.includes("MAX_GROK_VIDEO_DURATION_SECONDS = 10"), "Grok video duration should be capped to the currently verified upstream-supported duration");
 assert(config.includes("{ seconds: 6, creditMultiplier: 1"), "video duration options should include the 6 second base price");
 assert(config.includes("{ seconds: 10, creditMultiplier: 10 / 6"), "10 second video pricing should be derived from the 6 second base price");
 assert(config.includes("{ seconds: 15, creditMultiplier: 15 / 6"), "15 second video pricing should be derived from the 6 second base price");
-assert(config.includes("const VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = VIDEO_MODEL_FAMILIES"), "video durations should share all supported model families");
-assert((config.match(/modelFamilies: VIDEO_DURATION_MODEL_FAMILIES/g) ?? []).length === 3, "6/10/15 second video options should be available to every video model family");
-assert(!config.includes("GROK_VIDEO_DURATION_MODEL_FAMILIES") && !config.includes("GEMINI_VIDEO_DURATION_MODEL_FAMILIES"), "video durations should not be split by model family");
+assert(config.includes("STANDARD_VIDEO_DURATION_MODEL_FAMILIES"), "standard 6/10 second video durations should be shared by every model family");
+assert(config.includes('LONG_VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = ["gemini"]'), "15 second video duration should stay limited to verified long-video model families");
+assert((config.match(/modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES/g) ?? []).length === 2, "6/10 second video options should be available to every video model family");
+assert((config.match(/modelFamilies: LONG_VIDEO_DURATION_MODEL_FAMILIES/g) ?? []).length === 1, "15 second video should not be exposed to Grok until the upstream supports it reliably");
 assert(config.includes('DEFAULT_VIDEO_RESOLUTION = "720p"'), "video resolution should default to 720p");
 assert(config.includes("normalizeVideoResolution"), "video resolution normalization should be shared between backend and worker");
 assert(config.includes("MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS"), "multi-reference video duration should share the product duration cap");
@@ -62,6 +64,7 @@ assert(videoProviderPolicy.includes("Grok supports text-to-video or image-to-vid
 assert(videoProviderPolicy.includes("Avoid unsafe or rights-sensitive prompts and uploads"), "Grok guidance should include prompt and upload safety guidance");
 assert(videoProviderPolicy.includes("real_person_reference_unsupported"), "provider failure normalization should classify real-person reference rejections");
 assert(videoProviderPolicy.includes("videoProviderFailureCustomerMessage"), "provider failure reasons should have customer-safe display copy");
+assert(videoProviderPolicy.includes("isVideoProviderUpstreamUnavailableError"), "upstream video provider outages should not be normalized as reference-image policy rejections");
 
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
 assert(videoWorkspace.includes("status === 403 || error?.includes(\"csrf\")"), "video workspace should identify CSRF failures instead of blaming frame images");
@@ -127,6 +130,9 @@ assert(videoWorkspace.includes("grokVideoFrameGuidanceDetailMessage(spanish)"), 
 assert(videoWorkspace.includes("unsupported_video_frame_type"), "video workspace should explain unsupported Gemini frame image types");
 assert(videoWorkspace.includes("unsupportedGeminiFrameMessage"), "video workspace should preflight unsupported selected Gemini frame types before submit");
 assert(videoWorkspace.includes("isGeminiVideoFrameMimeType(frame.mimeType)"), "video workspace should use shared Gemini MIME validation for selected frame metadata");
+assert(videoWorkspace.includes("promptSuggestsPeopleReference"), "video workspace should detect people-reference prompts that should use Grok instead of Gemini");
+assert(videoWorkspace.includes('vt(spanish, "Use Grok"'), "video workspace should turn blocked Gemini reference submits into an explicit Grok switch action");
+assert(videoWorkspace.includes('setSelectedVideoModelFamily("grok")'), "blocked Gemini reference submits should switch to Grok before any paid create request");
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
 assert(videoWorkspace.includes("retryDraft?: VideoRetryDraft | null"), "video workspace should accept a retry draft from the results panel");
@@ -212,14 +218,20 @@ assert(customerAssetsRouteForVideoPolicy.includes("unsupported_video_frame_type"
 assert(customerAssetsRouteForVideoPolicy.includes("geminiVideoFrameMimeTypeForUpload"), "video frame upload MIME validation should use shared Gemini policy");
 
 const customerWorkspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
-assert(customerWorkspaceShell.includes("GEMINI_VIDEO_FRAME_ACCEPT"), "video frame upload input should advertise JPG/PNG only");
-assert(customerWorkspaceShell.includes("isGeminiVideoFrameUploadFile"), "video frame picker should filter unsupported files before upload");
+assert(customerWorkspaceShell.includes("canPrepareCustomerVideoFrameUploadFile"), "video frame picker should accept browser-readable images before Gemini conversion");
+assert(customerWorkspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should convert unsupported Gemini image formats before upload");
+assert(customerWorkspaceShell.includes('accept="image/*,.jpg,.jpeg,.png,.webp,.heic,.heif,.bmp,.tif,.tiff"'), "video frame upload input should accept common image files that can be converted before upload");
 assert(customerWorkspaceShell.includes("selectedFrames={selectedVideoFrames.map"), "video composer should receive selected frame MIME metadata for Gemini preflight");
 assert(!customerWorkspaceShell.includes("geminiVideoFramePolicyWarningMessage(spanishXby)"), "video frame manager should not duplicate Gemini policy warnings from the right composer");
 assert(!customerWorkspaceShell.includes("geminiVideoFrameUploadTypeMessage"), "video frame manager should use generic upload type copy instead of Gemini-specific left-side copy");
 assert(!customerWorkspaceShell.includes("Gemini video uses JPG or PNG frames only"), "video frame manager should not show Gemini upload requirements on the left");
 assert(customerWorkspaceShell.includes("parseVideoProviderFailure(record.providerFailure)"), "workspace output slots should parse structured provider failure details");
 assert(customerWorkspaceShell.includes("workspaceJobProviderFailureBody"), "failed video job cards should show provider-specific failure reasons");
+assert(
+  customerWorkspaceShell.indexOf("isVideoProviderUpstreamUnavailableError(error)") >= 0 &&
+  customerWorkspaceShell.indexOf("isVideoProviderUpstreamUnavailableError(error)") < customerWorkspaceShell.indexOf("const normalizedFailure = providerFailure ?? normalizeVideoProviderFailure({ error })"),
+  "slot-level upstream video provider outages should be shown before providerFailure reference-rejection copy"
+);
 
 const assetDownloadButton = read("src/components/storefront/customer-asset-download-button.tsx");
 const assetDownloadRoute = read("src/app/api/sites/[siteId]/customers/[customerId]/assets/[assetId]/download/route.ts");
@@ -405,7 +417,7 @@ assert(!workspaceShell.includes("isVideoRuntimeJob(job) && !videoJobFrameIds(job
 assert(workspaceShell.includes("This video request did not include selected frame images"), "workspace shell should warn when an image-reference video prompt has no frame references");
 assert(workspaceShell.includes("URL.createObjectURL(file)"), "video frame uploads should use optimistic local previews");
 assert(workspaceShell.includes('params.asset.localStatus === "uploading" && params.asset.previewUrl'), "video frame uploads should render the local image preview while the file is still uploading");
-assert(workspaceShell.includes("prepareCustomerImageUploadFile(file, { preserveOriginal: true })"), "video frame uploads should preserve the original image before sending it to the server");
+assert(workspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should prepare a Gemini-ready image before sending it to the server");
 assert(workspaceShell.includes("customerImageUploadErrorMessage(file.name, result.error, spanishXby)"), "video frame upload failures should surface server error details");
 assert(workspaceShell.includes("local:video:"), "video frame uploads should create local optimistic asset ids");
 assert(workspaceShell.includes("uploaded and selected"), "video frame uploads should auto-select successful uploads");
@@ -416,7 +428,7 @@ assert(workspaceShell.includes("...current.filter((asset) => asset.id !== localI
 assert(workspaceShell.includes("invalidateCustomerAssets(site.id, customer.id)"), "video frame upload and delete flows should invalidate the customer asset cache before broadcasting updates");
 assert(workspaceShell.includes("VIDEO_FRAME_UPLOAD_LIMIT = CUSTOMER_VIDEO_FRAME_LIMIT"), "workspace frame manager should use the global customer video frame limit");
 assert(workspaceShell.includes("const maxVideoFrameCount = VIDEO_FRAME_UPLOAD_LIMIT"), "workspace frame manager should not use the legacy 30-frame limit");
-assert(workspaceShell.includes("Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} JPG or PNG frame images"), "workspace frame manager copy should use the 7-frame upload limit and provider-safe image types");
+assert(workspaceShell.includes("Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files"), "workspace frame manager copy should use the 7-frame upload limit and explain upload conversion");
 assert(workspaceShell.includes("imageFiles.slice(0, maxVideoFrameCount)"), "workspace frame uploads should cap each upload batch to the provider limit");
 assert(workspaceShell.includes("readyVideoFrameAssets.slice(0, maxVideoFrameCount)"), "uploaded frame list should render at most the provider-supported frame count");
 assert(!workspaceShell.includes("Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame images"), "workspace frame manager should not show the default 30-frame copy");
@@ -431,6 +443,8 @@ assert(workspaceShell.includes('type WorkspaceResourceTab = "all" | "recent" | "
 assert(workspaceShell.includes('type VideoWorkspaceTab = "generate" | "videos";'), "the video workspace should expose only input and result tabs");
 assert(workspaceShell.includes('{ id: "generate", label: t(spanishXby, "Input", "Entrada") }'), "the video workspace should label the input module tab");
 assert(workspaceShell.includes('{ id: "videos", label: t(spanishXby, "Video results", "Resultados") }'), "the video workspace should label the results module tab");
+assert(workspaceShell.includes('hidden={videoWorkspaceTab === "videos"}'), "video input composer should stay mounted when switching to results so draft inputs are preserved");
+assert(!workspaceShell.includes('showVideoStep && videoWorkspaceTab !== "videos" ?'), "video input composer should not unmount when switching to results");
 assert(!workspaceShell.includes('{ id: "themes"'), "the video workspace should not expose a theme tab");
 assert(!workspaceShell.includes('{ id: "frames"'), "the video workspace should not expose a frame tab in the top tab bar");
 assert(!workspaceShell.includes('chooseVideoWorkspaceTab("frames")'), "frame management should not be a top-level workspace tab");

@@ -62,9 +62,15 @@ function stringFromUnknown(value: unknown, depth = 0): string {
   ].map((item) => stringFromUnknown(item, depth + 1)).filter(Boolean).join(" ");
 }
 
+export function isVideoProviderUpstreamUnavailableError(value: unknown): boolean {
+  const lower = stringFromUnknown(value).toLowerCase();
+  return Boolean(lower) && /upstream_error|服务暂时不可用|稍后重试|temporarily unavailable|try again later|service unavailable/.test(lower);
+}
+
 function providerFailureCodeFromMessage(message: string): VideoProviderFailureCode | undefined {
   const lower = message.toLowerCase();
   if (!message) return undefined;
+  if (isVideoProviderUpstreamUnavailableError(message)) return undefined;
   if (/未成年|儿童|小孩|婴儿|幼儿|minor|underage|child|children|baby|infant/.test(lower)) return "minor_reference_unsupported";
   if (/色情|裸露|裸体|sexual|nudity|nude|nsfw|porn/.test(lower)) return "sexual_content_unsupported";
   if (/暴力|血腥|violence|violent|gore|bloody|weapon|self[-\s]?harm|suicide/.test(lower)) return "violent_content_unsupported";
@@ -125,8 +131,8 @@ export function geminiVideoFramePolicyWarningMessage(spanish = false): string {
 
 export function geminiVideoFramePolicyDetailMessage(spanish = false): string {
   return spanish
-    ? "Usa JPG o PNG. Evita menores, desnudez, celebridades o figuras publicas, personajes con copyright, violencia, odio, actividad ilegal, armas, autolesion, documentos sensibles, marcas de agua, mucho texto e imagenes borrosas o privadas."
-    : "Use JPG or PNG. Avoid minors, nudity, celebrity or public figures, copyrighted characters, violence, hate, illegal activity, weapons, self-harm, sensitive documents, watermarks, large text, blurry images, or private images.";
+    ? "Usa JPG o PNG. Evita menores, desnudez, celebridades o figuras publicas, personajes de anime/juegos/comics que puedan tener copyright, violencia, odio, actividad ilegal, armas, autolesion, documentos sensibles, marcas de agua, mucho texto e imagenes borrosas o privadas."
+    : "Use JPG or PNG. Avoid minors, nudity, celebrity or public figures, anime/game/comic characters that may be copyrighted, violence, hate, illegal activity, weapons, self-harm, sensitive documents, watermarks, large text, blurry images, or private images.";
 }
 
 export function grokVideoFrameGuidanceMessage(spanish = false): string {
@@ -143,6 +149,7 @@ export function grokVideoFrameGuidanceDetailMessage(spanish = false): string {
 
 export function videoProviderFailureCustomerMessage(failure: VideoProviderFailure | VideoProviderFailureCode, spanish = false): string {
   const code = typeof failure === "string" ? failure : failure.code;
+  const providerFamily = typeof failure === "string" ? undefined : failure.providerFamily;
   if (code === "real_person_reference_unsupported") {
     return spanish
       ? "Gemini no puede usar imagenes de referencia que contengan personas reales o reconocibles. Elige una referencia sin personas reales e intentalo de nuevo."
@@ -182,6 +189,11 @@ export function videoProviderFailureCustomerMessage(failure: VideoProviderFailur
     return spanish
       ? "El proveedor de video no pudo procesar el formato de la imagen. Usa JPG o PNG e intentalo de nuevo."
       : "The video provider could not process that image format. Use JPG or PNG and try again.";
+  }
+  if (providerFamily === "gemini") {
+    return spanish
+      ? "Gemini rechazo la referencia durante la revision de seguridad. Usa una imagen JPG/PNG simple de un producto, objeto, paisaje, mascota o referencia original no sensible; evita personas reales, menores, desnudez, violencia y personajes de anime/juegos/comics que puedan tener copyright."
+      : "Gemini rejected the reference during safety review. Use a simple JPG/PNG product, object, landscape, pet, or original non-sensitive reference; avoid real people, minors, nudity, violence, and anime/game/comic characters that may be copyrighted.";
   }
   return spanish
     ? "El proveedor de video rechazo la referencia. Revisa la imagen, elige otra referencia segura e intentalo de nuevo."
