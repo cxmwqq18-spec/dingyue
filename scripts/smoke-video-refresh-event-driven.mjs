@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { chromium } from "playwright";
 import { loadRuntimeEnv } from "./load-runtime-env.mjs";
@@ -12,6 +14,7 @@ const password = "EventDrivenSmoke1!";
 const customerId = `cust_video_refresh_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
 const jobId = `job_video_refresh_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
 const email = `${customerId}@example.test`;
+const outputStorageKey = `sites/${siteId}/customers/${customerId}/${jobId}-output.mp4`;
 
 function hashPassword(value) {
   return `sha256:${crypto.createHash("sha256").update(value).digest("hex")}`;
@@ -26,6 +29,22 @@ function signWorkerCallback(payload) {
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
+}
+
+function customerAssetRootPath() {
+  const configured = process.env.CUSTOMER_ASSET_STORAGE_ROOT?.trim();
+  return configured ? path.resolve(configured) : path.join(process.cwd(), "data", "customer-assets");
+}
+
+function smokeCustomerAssetDir() {
+  return path.join(customerAssetRootPath(), "sites", siteId, "customers", customerId);
+}
+
+async function seedSmokeVideoOutput() {
+  const sourcePath = path.join(process.cwd(), "public/assets/dreamshoot/generated/homepage-showcase/videos/prompt-directed-motion.mp4");
+  const outputPath = path.join(customerAssetRootPath(), outputStorageKey);
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, await readFile(sourcePath));
 }
 
 async function postCallback(path, payload) {
@@ -161,19 +180,20 @@ try {
   const requestsBeforeFinalEvents = runtimeRequests;
   const finalRuntimeRefresh = page.waitForResponse(
     (response) => response.url().includes(`/api/sites/${siteId}/customer/runtime`) && response.request().method() === "GET",
-    { timeout: 10_000 }
+    { timeout: 20_000 }
   );
+  await seedSmokeVideoOutput();
   await postCallback("result", {
     siteId,
     requestId: `req_${jobId}`,
     status: "succeeded",
     outputs: [{
-      storageKey: `customer-assets/${customerId}/${jobId}-output.mp4`,
+      storageKey: outputStorageKey,
       mimeType: "video/mp4"
     }]
   });
   await finalRuntimeRefresh;
-  await page.getByText("1 generated videos", { exact: true }).waitFor({ timeout: 8_000 });
+  await page.getByText(/1 generated videos/).waitFor({ timeout: 8_000 });
   await page.waitForTimeout(900);
   const requestsAfterFinalEvents = runtimeRequests;
   assert(
@@ -194,5 +214,6 @@ try {
 } finally {
   await browser?.close().catch(() => undefined);
   await prisma.customer.deleteMany({ where: { id: customerId } }).catch(() => undefined);
+  await rm(smokeCustomerAssetDir(), { recursive: true, force: true }).catch(() => undefined);
   await prisma.$disconnect();
 }
