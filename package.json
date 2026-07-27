@@ -13,6 +13,7 @@
     "audit:ai-wedding-journey": "node scripts/audit-ai-wedding-customer-journey.mjs",
     "audit:ai-wedding-visual": "node scripts/audit-ai-wedding-visual.mjs",
     "audit:dreamshoot": "node scripts/audit-dreamshoot-parity.mjs",
+    "audit:aidreamcapes-sync": "node scripts/audit-aidreamcapes-sync.mjs",
     "audit:domains": "node scripts/audit-domain-routing.mjs",
     "audit:creative-pack-covers": "node scripts/audit-creative-pack-covers.mjs",
     "smoke:designer-ui": "node scripts/smoke-designer-ui.mjs",

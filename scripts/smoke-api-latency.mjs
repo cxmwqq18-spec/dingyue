@@ -15,9 +15,14 @@ const defaultEndpoints = [
   ["GET", "/api/platform/email"],
   ["GET", "/api/sites/site_dreamshoot/email"],
   ["GET", "/api/sites/site_dreamshoot/customers/export"],
+  ["GET", "/api/sites/site_aidreamcapes/email"],
+  ["GET", "/api/sites/site_aidreamcapes/customers/export"],
   ["GET", "/site/dreamshoot"],
   ["GET", "/site/dreamshoot/admin/login"],
-  ["GET", "/site/dreamshoot/pricing"]
+  ["GET", "/site/dreamshoot/pricing"],
+  ["GET", "/site/aidreamcapes"],
+  ["GET", "/site/aidreamcapes/admin/login"],
+  ["GET", "/site/aidreamcapes/pricing"]
 ];
 
 function parseEndpoint(value) {
