@@ -1,5 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { loadRuntimeEnv } from "./load-runtime-env.mjs";
+
+loadRuntimeEnv();
 
 const dataDir = path.join(process.cwd(), "data");
 const statePath = path.join(dataDir, "platform-state.json");
