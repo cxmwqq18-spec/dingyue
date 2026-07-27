@@ -1,8 +1,8 @@
 import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
+import { customersPageCache } from "@/lib/admin-customers-page-cache";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
-import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import {
   getSiteAlbumsFromState,
   getSiteCreativePacksFromState,
@@ -14,8 +14,6 @@ import {
 import { toAlbumRelational, toAssetUploadRelational, toCreativePack, toCustomerModelRelational, toPublicCustomerRelational, toSiteAdmin } from "@/lib/stores/prisma-mappers";
 import type { AssetUpload } from "@/lib/types";
 import type { JobStatus } from "@/lib/types";
-
-const customersPageCache = createServerTtlCache("site-admin-customers-page", Number(process.env.SITE_ADMIN_CUSTOMERS_PAGE_CACHE_TTL_MS ?? 15_000));
 
 function envInt(name: string, fallback: number): number {
   const parsed = Number(process.env[name]);

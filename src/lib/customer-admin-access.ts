@@ -15,6 +15,15 @@ function normalizeEmail(email: string | undefined): string | undefined {
   return normalized || undefined;
 }
 
+export function clearCustomerAdminAccessCache(siteId?: string, email?: string): void {
+  const customerEmail = normalizeEmail(email);
+  if (siteId && customerEmail) {
+    customerAdminEmailAccessCache.clear(`${siteId}:${customerEmail}`);
+    return;
+  }
+  customerAdminEmailAccessCache.clear();
+}
+
 function siteAdminRole(value: string): SiteAdminRole {
   return value === "owner" || value === "support" ? value : "admin";
 }

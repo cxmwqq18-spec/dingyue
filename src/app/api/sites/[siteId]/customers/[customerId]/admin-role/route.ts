@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
 import { requireSiteMutation } from "@/lib/api-auth";
+import { clearCustomerAdminAccessCache } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
 import { prisma } from "@/lib/prisma";
 import { createSiteAdminRelational, updateSiteAdminRelational } from "@/lib/stores/site-store";
@@ -11,7 +13,7 @@ export async function PATCH(
   { params }: { params: Promise<{ siteId: string; customerId: string }> }
 ) {
   const { siteId, customerId } = await params;
-  const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:customer-admin-role` });
+  const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:customer-admin-role:${customerId}` });
   if (!guard.ok) return guard.response;
 
   const body = (await request.json().catch(() => ({}))) as { role?: SiteAdmin["role"]; temporaryPassword?: string };
@@ -40,6 +42,8 @@ export async function PATCH(
         role,
         actor: guard.current.siteAdmin.id
       });
+      clearCustomerAdminAccessCache(siteId, customer.email);
+      invalidateAdminCustomersPageCache(siteId);
       return NextResponse.json({ ok: true, admin: result.admin, created: false });
     }
 
@@ -52,6 +56,8 @@ export async function PATCH(
       role,
       actor: guard.current.siteAdmin.id
     });
+    clearCustomerAdminAccessCache(siteId, customer.email);
+    invalidateAdminCustomersPageCache(siteId);
     return NextResponse.json({ ok: true, admin: result.admin, created: true, temporaryPassword });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { Coins, Loader2, ShieldCheck } from "lucide-react";
+import { Coins, KeyRound, Loader2, ShieldCheck } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { AdminPagination, clampPage, pageItems, adminPageSizeOptions } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
@@ -26,7 +26,36 @@ type BusyAction = {
   label: string;
 };
 
+type MessageTone = "info" | "success" | "error";
+
 const mutationTimeoutMs = 8_000;
+
+function customerActionErrorMessage(code?: string) {
+  return {
+    csrf_token_required: "后台登录校验缺失，请刷新页面后重试。",
+    csrf_token_mismatch: "后台登录校验已过期，请刷新页面后重试。",
+    adjustment_reason_required: "额度调整原因缺失，请稍后重试。",
+    adjustment_would_make_negative_balance: "调整后余额不能小于 0。",
+    customer_not_found_for_site: "当前站点没有找到该顾客。",
+    invalid_adjustment_amount: "额度调整必须是非 0 整数。",
+    invalid_customer_status: "顾客状态无效。",
+    missing_customer_status: "请选择顾客状态。",
+    owner_role_requires_owner_actor: "只有站点所有者可以设置 owner 权限。",
+    password_min_6_chars: "密码至少需要 6 位。",
+    password_required: "请输入新密码。",
+    rate_limited: "操作过于频繁，请稍后再试。",
+    site_admin_forbidden: "当前后台账号没有执行该操作的权限。",
+    site_admin_login_required: "后台登录已失效，请重新登录。"
+  }[code ?? ""] ?? code ?? "操作失败。";
+}
+
+function messageToneClass(tone: MessageTone) {
+  return {
+    info: "border-[#dbe7f5] bg-[#f8fbff] text-[#667085]",
+    success: "border-emerald-200 bg-emerald-50 text-emerald-700",
+    error: "border-red-200 bg-red-50 text-red-700"
+  }[tone];
+}
 
 function ActionOverlay({ label }: { label: string }) {
   return (
@@ -59,6 +88,7 @@ export function CustomerAdminPanel({
   const [items, setItems] = useState(customers);
   const [adminItems, setAdminItems] = useState(siteAdmins);
   const [adjustments, setAdjustments] = useState<Record<string, string>>({});
+  const [passwordDrafts, setPasswordDrafts] = useState<Record<string, string>>({});
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<Customer["status"] | "">("");
   const [page, setPage] = useState(1);
@@ -66,6 +96,7 @@ export function CustomerAdminPanel({
   const [signupGrant, setSignupGrant] = useState(String(signupCreditGrant));
   const [busyAction, setBusyAction] = useState<BusyAction | null>(null);
   const [message, setMessage] = useState("客户变更仅作用于当前站点，并会立即保存。");
+  const [messageTone, setMessageTone] = useState<MessageTone>("info");
   const isBusy = Boolean(busyAction);
 
   useEffect(() => {
@@ -105,6 +136,11 @@ export function CustomerAdminPanel({
     });
   }
 
+  function showMessage(nextMessage: string, tone: MessageTone = "info") {
+    setMessage(nextMessage);
+    setMessageTone(tone);
+  }
+
   async function updateStatus(customerId: string, status: Customer["status"]) {
     if (isBusy) return;
     setBusyAction({ key: `status:${customerId}`, label: "正在更新顾客状态..." });
@@ -120,13 +156,13 @@ export function CustomerAdminPanel({
       const result = response.data;
       if (response.ok && result.customer) {
         setItems((current) => current.map((item) => (item.id === customerId ? result.customer ?? item : item)));
-        setMessage(`${result.customer.email} 已更新为${customerStatusLabels[result.customer.status]}。`);
+        showMessage(`${result.customer.email} 已更新为${customerStatusLabels[result.customer.status]}。`, "success");
         refreshInBackground();
       } else {
-        setMessage(result.error ?? "状态更新失败。");
+        showMessage(`状态更新失败：${customerActionErrorMessage(result.error)}`, "error");
       }
     } catch (error) {
-      setMessage(error instanceof Error && error.name === "AbortError" ? "状态更新超时，请稍后重试。" : "状态更新失败。");
+      showMessage(error instanceof Error && error.name === "AbortError" ? "状态更新超时，请稍后重试。" : "状态更新失败。", "error");
     } finally {
       setBusyAction(null);
     }
@@ -136,7 +172,7 @@ export function CustomerAdminPanel({
     if (isBusy) return;
     const amount = Number(adjustments[customerId] ?? 0);
     if (!Number.isFinite(amount) || amount === 0) {
-      setMessage("请输入非 0 的调整额度。");
+      showMessage("请输入非 0 的调整额度。", "error");
       return;
     }
     setBusyAction({ key: `credits:${customerId}`, label: "正在调整顾客额度..." });
@@ -153,13 +189,13 @@ export function CustomerAdminPanel({
       if (response.ok && result.customer) {
         setItems((current) => current.map((item) => (item.id === customerId ? result.customer ?? item : item)));
         setAdjustments((current) => ({ ...current, [customerId]: "" }));
-        setMessage(`${result.customer.email} 已调整 ${amount} 点额度。`);
+        showMessage(`${result.customer.email} 已调整 ${amount} 点额度。`, "success");
         refreshInBackground();
       } else {
-        setMessage(result.error ?? "额度调整失败。");
+        showMessage(`额度调整失败：${customerActionErrorMessage(result.error)}`, "error");
       }
     } catch (error) {
-      setMessage(error instanceof Error && error.name === "AbortError" ? "额度调整超时，请稍后重试。" : "额度调整失败。");
+      showMessage(error instanceof Error && error.name === "AbortError" ? "额度调整超时，请稍后重试。" : "额度调整失败。", "error");
     } finally {
       setBusyAction(null);
     }
@@ -184,7 +220,7 @@ export function CustomerAdminPanel({
       })),
       ["customerId", "name", "email", "status", "availableCredits", "reservedCredits"]
     );
-    setMessage(`已导出 ${filteredItems.length} 条顾客记录。`);
+    showMessage(`已导出 ${filteredItems.length} 条顾客记录。`, "success");
   }
 
   async function saveSignupCreditGrant() {
@@ -204,13 +240,13 @@ export function CustomerAdminPanel({
       if (response.ok) {
         const savedGrant = result.site?.signupCreditGrant ?? nextGrant;
         setSignupGrant(String(savedGrant));
-        setMessage(`新用户注册赠送额度已设置为 ${savedGrant} 点。该配置只影响后续新注册客户。`);
+        showMessage(`新用户注册赠送额度已设置为 ${savedGrant} 点。该配置只影响后续新注册客户。`, "success");
         refreshInBackground();
       } else {
-        setMessage(result.error ?? "注册赠送额度保存失败。");
+        showMessage(`注册赠送额度保存失败：${customerActionErrorMessage(result.error)}`, "error");
       }
     } catch (error) {
-      setMessage(error instanceof Error && error.name === "AbortError" ? "注册赠送额度保存超时，请稍后重试。" : "注册赠送额度保存失败。");
+      showMessage(error instanceof Error && error.name === "AbortError" ? "注册赠送额度保存超时，请稍后重试。" : "注册赠送额度保存失败。", "error");
     } finally {
       setBusyAction(null);
     }
@@ -258,17 +294,51 @@ export function CustomerAdminPanel({
             }
           ];
         });
-        setMessage(
+        showMessage(
           result.created
             ? `${result.admin.email} 已设为站点管理员。临时密码：${result.temporaryPassword}`
-            : `${result.admin.email} 已更新为站点管理员。`
+            : `${result.admin.email} 已更新为站点管理员。`,
+          "success"
         );
         refreshInBackground();
       } else {
-        setMessage(result.error ?? "管理员类型设置失败。");
+        showMessage(`管理员类型设置失败：${customerActionErrorMessage(result.error)}`, "error");
       }
     } catch (error) {
-      setMessage(error instanceof Error && error.name === "AbortError" ? "管理员类型设置超时，请稍后重试。" : "管理员类型设置失败。");
+      showMessage(error instanceof Error && error.name === "AbortError" ? "管理员类型设置超时，请稍后重试。" : "管理员类型设置失败。", "error");
+    } finally {
+      setBusyAction(null);
+    }
+  }
+
+  async function resetCustomerPassword(customer: PublicCustomer) {
+    if (isBusy) return;
+    const password = passwordDrafts[customer.id]?.trim() ?? "";
+    if (password.length < 6) {
+      showMessage("密码至少需要 6 位。", "error");
+      return;
+    }
+    setBusyAction({ key: `password:${customer.id}`, label: "正在修改顾客密码..." });
+    try {
+      const response = await fetchAdminJson<{ customer?: PublicCustomer; error?: string }>(`/api/sites/${siteId}/customers/${customer.id}/password`, {
+        timeoutMs: mutationTimeoutMs,
+        init: {
+          method: "PATCH",
+          headers: siteAdminJsonHeaders(siteId),
+          body: JSON.stringify({ password })
+        }
+      });
+      const result = response.data;
+      if (response.ok && result.customer) {
+        setItems((current) => current.map((item) => (item.id === customer.id ? result.customer ?? item : item)));
+        setPasswordDrafts((current) => ({ ...current, [customer.id]: "" }));
+        showMessage(`${result.customer.email} 的登录密码已更新，旧登录会话已失效。`, "success");
+        refreshInBackground();
+      } else {
+        showMessage(`密码修改失败：${customerActionErrorMessage(result.error)}`, "error");
+      }
+    } catch (error) {
+      showMessage(error instanceof Error && error.name === "AbortError" ? "密码修改超时，请稍后重试。" : "密码修改失败。", "error");
     } finally {
       setBusyAction(null);
     }
@@ -280,7 +350,7 @@ export function CustomerAdminPanel({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-[16px] font-semibold text-[#333]">会员与顾客列表</h2>
-          <p className="mt-1 text-[12px] text-[#666]">{message}</p>
+          <p className={`mt-2 inline-flex min-h-[28px] items-center rounded-[8px] border px-3 text-[12px] font-medium ${messageToneClass(messageTone)}`}>{message}</p>
         </div>
       </div>
       <div className="mt-4 rounded-[12px] border border-[#e4edf8] bg-[#f8fbff] px-4 py-4">
@@ -353,13 +423,14 @@ export function CustomerAdminPanel({
         </div>
       </div>
       <div className="mt-4 overflow-x-auto">
-        <table className="list min-w-[1080px]">
+        <table className="list min-w-[1240px]">
           <thead>
             <tr>
               <th className="bgtt aleft">客户</th>
               <th className="bgtt aleft">邮箱</th>
               <th className="bgtt">状态</th>
               <th className="bgtt">后台类型</th>
+              <th className="bgtt">登录密码</th>
               <th className="bgtt">余额</th>
               <th className="bgtt">调整额度</th>
             </tr>
@@ -400,6 +471,27 @@ export function CustomerAdminPanel({
                   )}
                 </td>
                 <td>
+                  <span className="inline-flex items-center justify-center gap-1">
+                    <input
+                      autoComplete="new-password"
+                      className="inputtext h-[30px] w-[120px] text-center"
+                      disabled={isBusy}
+                      onChange={(event) => setPasswordDrafts((current) => ({ ...current, [customer.id]: event.target.value }))}
+                      placeholder="新密码"
+                      type="password"
+                      value={passwordDrafts[customer.id] ?? ""}
+                    />
+                    <button className="admin_btn inline-flex h-[30px] shrink-0 items-center gap-1 whitespace-nowrap" disabled={isBusy} onClick={() => resetCustomerPassword(customer)} type="button">
+                      {busyAction?.key === `password:${customer.id}` ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={1.8} />
+                      ) : (
+                        <KeyRound className="h-3.5 w-3.5" strokeWidth={1.8} />
+                      )}
+                      {busyAction?.key === `password:${customer.id}` ? "修改中" : "修改"}
+                    </button>
+                  </span>
+                </td>
+                <td>
                   <span className="block font-mono text-[#333]">{customer.balance.available} 点</span>
                   <span className="font-mono text-[11px] text-[#999]">预扣 {customer.balance.reserved} 点</span>
                 </td>
@@ -428,7 +520,7 @@ export function CustomerAdminPanel({
             })}
             {!filteredItems.length ? (
               <tr>
-                <td className="text-center text-[#999]" colSpan={6}>当前筛选下没有顾客记录。</td>
+                <td className="text-center text-[#999]" colSpan={7}>当前筛选下没有顾客记录。</td>
               </tr>
             ) : null}
           </tbody>

@@ -245,3 +245,43 @@ export async function updateCustomerStatusRelational(
   });
   return { customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>) };
 }
+
+export async function updateCustomerPasswordRelational(
+  params: { siteId: string; customerId: string; password: string },
+  client: DbClient = prisma
+): Promise<{ customer: PublicCustomer }> {
+  const updatePassword = async () => updateCustomerPasswordRelationalOnce(params, client);
+  return client === prisma
+    ? runPrismaWriteWithReconnect(updatePassword, { label: "customer password update" })
+    : updatePassword();
+}
+
+async function updateCustomerPasswordRelationalOnce(
+  params: { siteId: string; customerId: string; password: string },
+  client: DbClient
+): Promise<{ customer: PublicCustomer }> {
+  const password = params.password.trim();
+  if (password.length < 6) throw new StoreError("password_min_6_chars", 400);
+  await requireDelegate(client, "customerSession");
+  await requireModelFields(client, "Customer", ["id", "siteId", "passwordHash"]);
+
+  const existing = await client.customer.findFirst({
+    where: { id: params.customerId, siteId: params.siteId },
+    select: { id: true }
+  });
+  if (!existing) throw new StoreError("customer_not_found_for_site", 404);
+
+  const customer = await client.$transaction(async (tx) => {
+    const updated = await tx.customer.update({
+      where: { id: existing.id },
+      data: { passwordHash: hashRelationalPassword(password) },
+      include: { balance: true }
+    });
+    await tx.customerSession.deleteMany({
+      where: { siteId: params.siteId, customerId: existing.id }
+    });
+    return updated;
+  });
+
+  return { customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>) };
+}

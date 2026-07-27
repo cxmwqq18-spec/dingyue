@@ -68,6 +68,31 @@ export function clearCustomerSessionAuthCache(siteId?: string, customerId?: stri
     customerSessionInflight.delete(cacheKey);
     return;
   }
+  if (siteId && customerId) {
+    const prefix = `${siteId}:`;
+    const affectedSessionIds = new Set<string>();
+    for (const [key, entry] of customerSessionCache.entries()) {
+      if (key.startsWith(prefix) && entry.current.customer.id === customerId) {
+        affectedSessionIds.add(entry.current.sessionId);
+        bumpSessionVersion(customerSessionVersions, key);
+        customerSessionCache.delete(key);
+      }
+    }
+    for (const sessionId of affectedSessionIds) {
+      for (const key of [scopedSessionKey(siteId, sessionId, "current"), scopedSessionKey(siteId, sessionId, customerId)]) {
+        bumpSessionVersion(customerSessionVersions, key);
+        customerSessionCache.delete(key);
+        customerSessionInflight.delete(key);
+      }
+    }
+    for (const key of customerSessionInflight.keys()) {
+      if (key.startsWith(prefix) && key.endsWith(`:${customerId}`)) {
+        bumpSessionVersion(customerSessionVersions, key);
+        customerSessionInflight.delete(key);
+      }
+    }
+    return;
+  }
   if (siteId && sessionId) {
     const prefix = `${siteId}:${sessionId}:`;
     for (const key of customerSessionCache.keys()) {

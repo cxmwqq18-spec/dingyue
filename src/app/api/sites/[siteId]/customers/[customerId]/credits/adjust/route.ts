@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { adjustCustomerCreditsRelational } from "@/lib/stores/billing-store";
@@ -33,6 +34,7 @@ export async function POST(
       reason,
       actor: body.actor
     });
+    invalidateAdminCustomersPageCache(siteId);
     return NextResponse.json({ ok: true, customer: result.customer, ledgerAction: result.ledger });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
