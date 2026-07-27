@@ -323,7 +323,7 @@ export async function readCustomerAssetFileByStorageKey(params: {
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
   const altText = typeof asset.validationReport?.altText === "string" ? asset.validationReport.altText : undefined;
-  const hasReadablePreview = customerAssetFileExists(storageKey) || hasRemoteCustomerAssetReadSource();
+  const hasReadablePreview = customerAssetFileExists(storageKey) || shouldAssumeRemoteCustomerAssetsReadable();
   return {
     id: asset.id,
     jobId: asset.jobId,
