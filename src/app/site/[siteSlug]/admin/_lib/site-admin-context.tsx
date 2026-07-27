@@ -45,6 +45,7 @@ import {
   getSiteThemePublicationsFromState,
   getSiteCustomersFromState,
   toPublicCustomer,
+  readLocalPlatformStateFallback,
   readPlatformState
 } from "@/lib/server-store";
 import { getCurrentSiteAdmin } from "@/lib/api-auth";
@@ -72,7 +73,7 @@ import {
   mapPaymentEvent,
   toCreativePack,
 } from "@/lib/stores/prisma-mappers";
-import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
+import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import type {
   Album,
   AssetUpload,
@@ -192,6 +193,14 @@ function emptyPlatformState(overrides: Partial<PlatformState> = {}): PlatformSta
     ledger: [],
     ...overrides
   };
+}
+
+function findSiteInStateBySlug(state: PlatformState, siteSlug: string): Site | undefined {
+  const normalizedSlug = siteSlug.trim().toLowerCase();
+  return state.sites.find((site) =>
+    site.slug.toLowerCase() === normalizedSlug ||
+    site.primaryDomain.toLowerCase() === normalizedSlug
+  );
 }
 
 function mapAiAppForAdmin(row: {
@@ -775,27 +784,51 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataP
   ]);
   const wants = (...keys: SiteAdminDataInclude[]) => keys.some((key) => include.has(key));
   const usePostgres = process.env.PERSISTENCE_BACKEND === "postgres";
-  const useLiveAdminReads = process.env.SITE_ADMIN_LIVE_READS === "1" || usePostgres;
+  const configuredLiveAdminReads = process.env.SITE_ADMIN_LIVE_READS === "1" || usePostgres;
   const shouldLoadSummary = options.summary ?? true;
   const summaryMode = shouldLoadSummary === true ? (include.has("overview") ? "full" : "light") : shouldLoadSummary;
   const overviewRequest = include.has("overview") || (include.size === 2 && include.has("orders") && include.has("ai"));
   const overviewOnly = overviewRequest;
   const listTake = options.take ?? adminListTake;
-  const legacyState = usePostgres ? undefined : measureSync("context", () => readPlatformState(), { source: "state" });
+  let legacyState = usePostgres ? undefined : measureSync("context", () => readPlatformState(), { source: "state" });
+  let usingLocalRelationalFallback = false;
   const needsFullSitePages = wants("themes", "themePages");
   const needsContentSitePages = !needsFullSitePages && wants("content");
-  const sitePromise = usePostgres
-    ? needsFullSitePages
-      ? getSiteBySlugForAdmin(siteSlug)
-      : needsContentSitePages
-      ? getSiteContentBySlugForAdmin(siteSlug)
-      : getSiteShellBySlugForAdmin(siteSlug)
-    : Promise.resolve(legacyState?.sites.find((item) => item.slug === siteSlug));
-  const site = await measure("context", () => sitePromise, { source: usePostgres ? "postgres" : "state" });
+
+  function loadLocalRelationalFallback(scope: string, error: unknown): PlatformState {
+    if (!shouldFallbackRelationalRead(error)) throw error;
+    const fallback = readLocalPlatformStateFallback();
+    if (!fallback) throw error;
+    warnRelationalFallback(scope, error);
+    legacyState = fallback;
+    usingLocalRelationalFallback = true;
+    return fallback;
+  }
+
+  const site = await measure("context", async () => {
+    if (!usePostgres) return legacyState ? findSiteInStateBySlug(legacyState, siteSlug) : undefined;
+    if (shouldUseRelationalReadFallbackCircuit()) {
+      const fallback = readLocalPlatformStateFallback();
+      if (fallback) {
+        legacyState = fallback;
+        usingLocalRelationalFallback = true;
+        return findSiteInStateBySlug(fallback, siteSlug);
+      }
+    }
+    try {
+      if (needsFullSitePages) return await getSiteBySlugForAdmin(siteSlug);
+      if (needsContentSitePages) return await getSiteContentBySlugForAdmin(siteSlug);
+      return await getSiteShellBySlugForAdmin(siteSlug);
+    } catch (error) {
+      const fallback = loadLocalRelationalFallback("site admin shell", error);
+      return findSiteInStateBySlug(fallback, siteSlug);
+    }
+  }, { source: usePostgres ? "postgres" : "state" });
   if (!site) notFound();
 
   const current = await measure("auth", () => getCurrentSiteAdmin(site.id));
   if (!current) redirect(`/site/${site.slug}/admin/login`);
+  const useLiveAdminReads = configuredLiveAdminReads && !usingLocalRelationalFallback;
 
   const needsFullCustomerCollections = wants("customers");
   const needsCustomerAssets = include.has("state") || needsFullCustomerCollections;

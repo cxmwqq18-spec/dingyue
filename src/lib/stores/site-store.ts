@@ -9,11 +9,11 @@ import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agen
 import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
-import { readPlatformState } from "@/lib/server-store";
+import { readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
-import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
+import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import type {
@@ -1897,9 +1897,17 @@ async function loadStorefrontAccessSummaryRelational(): Promise<StorefrontAccess
 
 export async function createSiteAdminSessionRelational(params: { siteId: string; email: string; password: string }) {
   const email = params.email.trim().toLowerCase();
-  const admin = await runSiteAdminRead(`site admin login:${params.siteId}`, () =>
-    prisma.siteAdmin.findUnique({ where: { siteId_email: { siteId: params.siteId, email } } })
-  );
+  let admin;
+  if (shouldUseRelationalReadFallbackCircuit()) {
+    return createLocalSiteAdminSessionFallback(params, new RelationalStoreError("relational_site_admin_login_unavailable", 503));
+  }
+  try {
+    admin = await runSiteAdminRead(`site admin login:${params.siteId}`, () =>
+      prisma.siteAdmin.findUnique({ where: { siteId_email: { siteId: params.siteId, email } } })
+    );
+  } catch (error) {
+    return createLocalSiteAdminSessionFallback(params, error);
+  }
   if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
     throw new RelationalStoreError("invalid_site_admin_credentials", 401);
   }
@@ -1913,6 +1921,33 @@ export async function createSiteAdminSessionRelational(params: { siteId: string;
   });
   return {
     siteAdmin: toPublicSiteAdminRelational(admin),
+    session: toSiteAdminSessionRelational(session)
+  };
+}
+
+function createLocalSiteAdminSessionFallback(
+  params: { siteId: string; email: string; password: string },
+  error: unknown
+) {
+  if (!shouldFallbackRelationalRead(error)) throw error;
+  const state = readLocalPlatformStateFallback();
+  if (!state) throw error;
+  const email = params.email.trim().toLowerCase();
+  const admin = state.siteAdmins.find((item) => item.siteId === params.siteId && item.email.trim().toLowerCase() === email);
+  if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
+    throw new RelationalStoreError("invalid_site_admin_credentials", 401);
+  }
+  warnRelationalFallback("site admin login", error);
+  const now = new Date();
+  const session = {
+    id: relationalUid("sasess"),
+    siteId: params.siteId,
+    siteAdminId: admin.id,
+    createdAt: now.toISOString(),
+    expiresAt: new Date(now.getTime() + relationalSessionTtlMs).toISOString()
+  };
+  return {
+    siteAdmin: toPublicSiteAdminRelational({ ...admin }),
     session: toSiteAdminSessionRelational(session)
   };
 }

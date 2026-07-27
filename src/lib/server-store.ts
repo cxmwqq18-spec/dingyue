@@ -173,6 +173,11 @@ function readJsonPlatformStateFallback(): PlatformState {
   return normalized;
 }
 
+export function readLocalPlatformStateFallback(): PlatformState | undefined {
+  if (process.env.NODE_ENV === "production" || process.env.PLATFORM_STATE_POSTGRES_STRICT === "1") return undefined;
+  return readJsonPlatformStateFallback();
+}
+
 function writeJsonPlatformStateFallback(nextState: PlatformState): PlatformState {
   fs.mkdirSync(dataDir, { recursive: true });
   fs.writeFileSync(dataFile, `${JSON.stringify(nextState, null, 2)}\n`);
