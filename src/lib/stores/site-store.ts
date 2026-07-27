@@ -8,7 +8,7 @@ import { suggestedCreativePackPrompt } from "@/lib/creative-pack-suggestions";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { prisma } from "@/lib/prisma";
+import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
@@ -86,6 +86,27 @@ const siteRuntimeInclude = {
   settings: true,
   connect: true
 } satisfies Prisma.SiteInclude;
+
+function envPositiveInt(name: string, fallback: number): number {
+  const parsed = Number(process.env[name]);
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
+}
+
+const siteAdminPrismaReadTimeoutMs = envPositiveInt("SITE_ADMIN_PRISMA_READ_TIMEOUT_MS", 3_000);
+const siteAdminSummaryReadTimeoutMs = envPositiveInt("SITE_ADMIN_SUMMARY_READ_TIMEOUT_MS", 8_000);
+const siteAdminPrismaReadRetries = envPositiveInt("SITE_ADMIN_PRISMA_READ_RETRIES", 0);
+
+function runSiteAdminRead<T>(
+  label: string,
+  task: () => Promise<T>,
+  options: { timeoutMs?: number } = {}
+): Promise<T> {
+  return runPrismaReadWithReconnect(task, {
+    label,
+    retries: siteAdminPrismaReadRetries,
+    timeoutMs: options.timeoutMs ?? siteAdminPrismaReadTimeoutMs
+  });
+}
 
 function isMissingToolMenuTableError(error: unknown): boolean {
   const code = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
@@ -1876,7 +1897,9 @@ async function loadStorefrontAccessSummaryRelational(): Promise<StorefrontAccess
 
 export async function createSiteAdminSessionRelational(params: { siteId: string; email: string; password: string }) {
   const email = params.email.trim().toLowerCase();
-  const admin = await prisma.siteAdmin.findUnique({ where: { siteId_email: { siteId: params.siteId, email } } });
+  const admin = await runSiteAdminRead(`site admin login:${params.siteId}`, () =>
+    prisma.siteAdmin.findUnique({ where: { siteId_email: { siteId: params.siteId, email } } })
+  );
   if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
     throw new RelationalStoreError("invalid_site_admin_credentials", 401);
   }
@@ -1919,10 +1942,12 @@ export async function getSiteAdminBySessionRelational(params: { siteId: string; 
   if (!params.sessionId) return undefined;
   let session;
   try {
-    session = await prisma.siteAdminSession.findUnique({
-      where: { id: params.sessionId },
-      include: { siteAdmin: true }
-    });
+    session = await runSiteAdminRead(`site admin session:${params.siteId}`, () =>
+      prisma.siteAdminSession.findUnique({
+        where: { id: params.sessionId },
+        include: { siteAdmin: true }
+      })
+    );
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     warnRelationalFallback("site admin session lookup", error);
@@ -1939,13 +1964,15 @@ export async function getSiteAdminBridgeSessionRelational(params: { siteId: stri
   if (!params.sessionId) return undefined;
   let session;
   try {
-    session = await prisma.siteAdminSession.findFirst({
-      where: { id: params.sessionId, siteId: params.siteId, expiresAt: { gt: new Date() } },
-      include: {
-        siteAdmin: true,
-        site: { select: { id: true, slug: true } }
-      }
-    });
+    session = await runSiteAdminRead(`site admin bridge session:${params.siteId}`, () =>
+      prisma.siteAdminSession.findFirst({
+        where: { id: params.sessionId, siteId: params.siteId, expiresAt: { gt: new Date() } },
+        include: {
+          siteAdmin: true,
+          site: { select: { id: true, slug: true } }
+        }
+      })
+    );
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     warnRelationalFallback("site admin bridge session lookup", error);
@@ -2128,14 +2155,14 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
 export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefined> {
   try {
     const canonicalSlug = canonicalSiteSlug(slug);
-    return await siteReadCache.get(`admin-login-site:${canonicalSlug}`, async () => {
+    return await siteReadCache.get(`admin-login-site:${canonicalSlug}`, () => runSiteAdminRead(`admin login site:${canonicalSlug}`, async () => {
       const site = await prisma.site.findFirst({
         where: { slug: { in: legacySiteSlugCandidates(slug) } },
         orderBy: { updatedAt: "desc" },
         select: adminLoginSiteSelect
       });
       return site ? toAdminLoginSiteShell(site) : undefined;
-    });
+    }));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
@@ -2144,13 +2171,13 @@ export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefi
 
 export async function getSiteByIdForAdmin(siteId: string): Promise<Site | undefined> {
   try {
-    return await siteReadCache.get(`admin-site-id:${siteId}`, async () => {
+    return await siteReadCache.get(`admin-site-id:${siteId}`, () => runSiteAdminRead(`admin site id:${siteId}`, async () => {
       const site = await prisma.site.findUnique({
         where: { id: siteId },
         include: siteRuntimeInclude
       });
       return site ? toSite(site) : undefined;
-    });
+    }));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
@@ -2186,7 +2213,7 @@ function normalizePreflightThemeSettings(value: unknown): Site["themeSettings"][
 
 export async function getThemePublishPreflightSiteRelational(siteId: string): Promise<{ site?: Site; dirtyPageIds: string[] }> {
   try {
-    return await siteReadCache.get(`theme-preflight-site:${siteId}`, async () => {
+    return await siteReadCache.get(`theme-preflight-site:${siteId}`, () => runSiteAdminRead(`theme preflight site:${siteId}`, async () => {
       type PreflightSiteRow = {
         id: string;
         name: string;
@@ -2303,7 +2330,7 @@ export async function getThemePublishPreflightSiteRelational(siteId: string): Pr
           }))
         }
       };
-    }, Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
+    }, { timeoutMs: siteAdminSummaryReadTimeoutMs }), Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_theme_preflight_site_unavailable", 503);
@@ -2318,7 +2345,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
   mediaAssets: PublishPreflightMediaAsset[];
 }> {
   try {
-    return await siteReadCache.get(`theme-preflight-bundle:${siteId}`, async () => {
+    return await siteReadCache.get(`theme-preflight-bundle:${siteId}`, () => runSiteAdminRead(`theme preflight bundle:${siteId}`, async () => {
       type PreflightBundleRow = {
         id: string;
         name: string;
@@ -2478,7 +2505,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
           }))
         }
       };
-    }, Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
+    }, { timeoutMs: siteAdminSummaryReadTimeoutMs }), Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_theme_preflight_bundle_unavailable", 503);
@@ -2488,7 +2515,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
 export async function getSiteShellBySlugForAdmin(slug: string): Promise<Site | undefined> {
   try {
     const canonicalSlug = canonicalSiteSlug(slug);
-    return await siteReadCache.get(`admin-shell-v2:${canonicalSlug}`, async () => {
+    return await siteReadCache.get(`admin-shell-v2:${canonicalSlug}`, () => runSiteAdminRead(`admin shell:${canonicalSlug}`, async () => {
       const slugCandidates = legacySiteSlugCandidates(slug);
       type AdminShellSiteRow = {
         id: string;
@@ -2586,7 +2613,7 @@ export async function getSiteShellBySlugForAdmin(slug: string): Promise<Site | u
           publishedJson: { ...emptyThemePageJson, pageType: page.pageType }
         }))
       };
-    });
+    }));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_site_shell_lookup_unavailable", 503);
@@ -2965,7 +2992,11 @@ export async function getSiteMediaSummaryRelational(siteId: string): Promise<Sit
 async function getSiteAdminContextRelationalSummary(siteId: string, mode: "light" | "full" = "full"): Promise<SiteAdminContextRelationalSummary> {
   return siteReadCache.get(
     `admin-summary:${mode}:${siteId}`,
-    () => mode === "light" ? loadLightSiteAdminContextRelationalSummary(siteId) : loadSiteAdminContextRelationalSummary(siteId),
+    () => runSiteAdminRead(
+      `admin summary:${mode}:${siteId}`,
+      () => mode === "light" ? loadLightSiteAdminContextRelationalSummary(siteId) : loadSiteAdminContextRelationalSummary(siteId),
+      { timeoutMs: siteAdminSummaryReadTimeoutMs }
+    ),
     Number(process.env.SITE_ADMIN_SUMMARY_CACHE_TTL_MS ?? 15_000)
   );
 }
@@ -3272,14 +3303,14 @@ async function loadSiteAdminContextRelationalSummary(siteId: string): Promise<Si
 }
 
 export async function getFirstSiteAdminEmailRelational(siteId: string): Promise<string | undefined> {
-  return siteReadCache.get(`first-admin:${siteId}`, async () => {
+  return siteReadCache.get(`first-admin:${siteId}`, () => runSiteAdminRead(`first site admin:${siteId}`, async () => {
     const admin = await prisma.siteAdmin.findFirst({
       where: { siteId },
       orderBy: { createdAt: "asc" },
       select: { email: true }
     });
     return admin?.email;
-  });
+  }));
 }
 
 export async function getFirstSiteAdminEmail(siteId: string): Promise<string | undefined> {

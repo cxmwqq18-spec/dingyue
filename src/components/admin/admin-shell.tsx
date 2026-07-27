@@ -31,6 +31,16 @@ function fallbackBreadcrumbs({
   ];
 }
 
+const lightweightAdminPrefetchAllow = [
+  "/admin/ai-tools",
+  "/admin/content",
+  "/admin/customers",
+  "/admin/orders",
+  "/admin/partners",
+  "/admin/products",
+  "/admin/settings"
+];
+
 export function AdminShell({
   brand,
   eyebrow,
@@ -90,7 +100,7 @@ export function AdminShell({
   return (
     <Shell tone="admin">
       <AdminNavigationFeedback />
-      <AdminRoutePrefetcher hrefs={modulePrefetchHrefs} />
+      <AdminRoutePrefetcher allow={lightweightAdminPrefetchAllow} hrefs={modulePrefetchHrefs} />
       <div
         className="min-h-[100dvh] bg-[var(--admin-bg)] text-[var(--admin-muted)]"
         data-admin-layout="saas-clean-admin-shell"

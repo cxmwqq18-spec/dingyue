@@ -150,9 +150,13 @@ export function CustomersPageClient({
         window.setTimeout(() => {
           if (!active) return;
           void (async () => {
-            await loadDetail("models");
-            await loadDetail("delivery");
-            await loadDetail("assets");
+            const results = await Promise.allSettled([
+              loadDetail("models"),
+              loadDetail("delivery"),
+              loadDetail("assets")
+            ]);
+            const failed = results.find((result): result is PromiseRejectedResult => result.status === "rejected");
+            if (failed) throw failed.reason;
           })().catch((error) => {
             if (!active || isAbortError(error)) return;
             setError(error instanceof Error ? error.message : "顾客明细加载失败。");

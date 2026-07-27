@@ -3,6 +3,7 @@ const siteId = process.env.SITE_ADMIN_SITE_ID ?? "site_dreamshoot";
 const username = process.env.SITE_ADMIN_USER ?? "owner@mydreamshoots.localhost";
 const password = process.env.SITE_ADMIN_PASSWORD ?? "mydreamshoots123";
 const timeoutMs = Number(process.env.SITE_ADMIN_API_TIMEOUT_MS ?? 12_000);
+const loginTimeoutMs = Number(process.env.SITE_ADMIN_LOGIN_TIMEOUT_MS ?? timeoutMs);
 const slowMs = Number(process.env.SITE_ADMIN_API_SLOW_MS ?? 1_500);
 const repeat = Math.max(1, Math.floor(Number(process.env.SITE_ADMIN_API_REPEAT ?? 2)));
 
@@ -12,7 +13,8 @@ const targets = [
   { name: "products", path: `/api/sites/${siteId}/admin/products-page` },
   { name: "ai summary", path: `/api/sites/${siteId}/admin/ai-page?detail=summary` },
   { name: "content summary", path: `/api/sites/${siteId}/admin/content-page` },
-  { name: "settings", path: `/api/sites/${siteId}/admin/settings-page` }
+  { name: "settings", path: `/api/sites/${siteId}/admin/settings-page` },
+  { name: "publish preflight", path: `/api/sites/${siteId}/admin/publish-preflight` }
 ];
 
 const sectionGroups = [
@@ -63,16 +65,62 @@ function cookieFrom(response, name) {
 }
 
 async function loginSiteAdmin() {
-  const response = await fetch(`${base}/api/sites/${siteId}/admin/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: username, password }),
-    redirect: "manual",
-    cache: "no-store"
-  });
-  if (!response.ok) throw new Error(`site_admin_login_failed:${siteId}:${response.status}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), loginTimeoutMs);
+  const started = performance.now();
+  let response;
+  try {
+    response = await fetch(`${base}/api/sites/${siteId}/admin/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: username, password }),
+      redirect: "manual",
+      cache: "no-store",
+      signal: controller.signal
+    });
+  } catch (error) {
+    return {
+      ok: false,
+      status: 0,
+      ms: Math.round(performance.now() - started),
+      error: error?.name || "fetch_failed",
+      sample: String(error?.message ?? error).slice(0, 300)
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+  const ms = Math.round(performance.now() - started);
+  const serverTiming = response.headers.get("server-timing") || undefined;
+  if (!response.ok) {
+    const sample = await response.text().catch(() => "");
+    return {
+      ok: false,
+      status: response.status,
+      ms,
+      serverTiming,
+      sample: sample.slice(0, 300)
+    };
+  }
   const csrfName = `site_admin_csrf_${siteId}`;
-  return [cookieFrom(response, `site_admin_session_${siteId}`), cookieFrom(response, csrfName)].join("; ");
+  let cookie;
+  try {
+    cookie = [cookieFrom(response, `site_admin_session_${siteId}`), cookieFrom(response, csrfName)].join("; ");
+  } catch (error) {
+    return {
+      ok: false,
+      status: response.status,
+      ms,
+      serverTiming,
+      error: error instanceof Error ? error.message : "missing_login_cookie"
+    };
+  }
+  return {
+    ok: true,
+    status: response.status,
+    ms,
+    serverTiming,
+    cookie
+  };
 }
 
 async function timedGet(target, cookie, round, extraHeaders = {}) {
@@ -91,6 +139,7 @@ async function timedGet(target, cookie, round, extraHeaders = {}) {
       signal: controller.signal
     });
     const text = await response.text().catch(() => "");
+    const serverTiming = response.headers.get("server-timing") || undefined;
     return {
       ok: response.ok,
       round,
@@ -98,6 +147,7 @@ async function timedGet(target, cookie, round, extraHeaders = {}) {
       path: target.path,
       status: response.status,
       ms: Math.round(performance.now() - started),
+      serverTiming,
       bytes: text.length,
       sample: response.ok ? undefined : text.slice(0, 160)
     };
@@ -152,6 +202,7 @@ async function timedSectionGroup(group, cookie, round) {
       ok: sample.ok,
       status: sample.status,
       ms: sample.ms,
+      serverTiming: sample.serverTiming,
       bytes: sample.bytes,
       error: sample.error,
       sample: sample.sample
@@ -166,7 +217,22 @@ function percentile(values, p) {
   return sorted[Math.max(0, Math.min(sorted.length - 1, index))];
 }
 
-const cookie = await loginSiteAdmin();
+const login = await loginSiteAdmin();
+if (!login.ok) {
+  console.log(JSON.stringify({
+    ok: false,
+    generatedAt: new Date().toISOString(),
+    base,
+    siteId,
+    repeat,
+    timeoutMs,
+    loginTimeoutMs,
+    slowMs,
+    login
+  }, null, 2));
+  process.exit(1);
+}
+const cookie = login.cookie;
 const samples = [];
 const sectionSamples = [];
 for (let round = 1; round <= repeat; round += 1) {
@@ -192,6 +258,7 @@ const summary = targets.map((target) => {
     p95Ms: percentile(times, 95),
     maxMs: Math.max(...times),
     bytes: Math.max(...items.map((item) => item.bytes)),
+    serverTiming: items.map((item) => item.serverTiming).filter(Boolean),
     slow: Math.max(...times) >= slowMs,
     failures: failures.map((item) => ({ status: item.status, error: item.error, sample: item.sample }))
   };
@@ -227,7 +294,9 @@ const report = {
   siteId,
   repeat,
   timeoutMs,
+  loginTimeoutMs,
   slowMs,
+  login: { status: login.status, ms: login.ms, serverTiming: login.serverTiming },
   slowTargets: summary.filter((item) => item.slow),
   slowSectionGroups: sectionSummary.filter((item) => item.slow),
   summary,

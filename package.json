@@ -36,6 +36,7 @@
     "smoke:worker-provider-fallback": "node scripts/smoke-worker-provider-fallback.mjs",
     "smoke:dreamshoot-public-seo-templates": "node scripts/smoke-dreamshoot-public-seo-templates.mjs",
     "smoke:aidreamcapes-backend": "node scripts/smoke-aidreamcapes-backend-isolation.mjs",
+    "smoke:site-admin-db-health": "node scripts/smoke-site-admin-db-health.mjs",
     "smoke:site-admin-nav-instant": "node scripts/smoke-site-admin-nav-instant.mjs",
     "smoke:site-admin-module-latency": "node scripts/smoke-site-admin-module-latency.mjs",
     "smoke:site-admin-api-timing": "node scripts/smoke-site-admin-api-timing.mjs",
