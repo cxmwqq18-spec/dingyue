@@ -586,6 +586,38 @@ const workspaceCustomerRuntimeLimits = {
   customerModels: 4,
   albums: 8
 } as const;
+
+function localSiteBySlugForAdmin(slug: string): Site | undefined {
+  const state = readLocalPlatformStateFallback();
+  if (!state) return undefined;
+  const candidates = new Set(
+    legacySiteSlugCandidates(slug)
+      .map((candidate) => candidate.trim().toLowerCase())
+      .filter(Boolean)
+  );
+  candidates.add(canonicalSiteSlug(slug));
+  const cleanedHost = cleanHost(slug);
+  if (cleanedHost) candidates.add(cleanedHost);
+  const site = state.sites.find((item) =>
+    candidates.has(item.slug.trim().toLowerCase()) ||
+    candidates.has(item.primaryDomain.trim().toLowerCase())
+  );
+  return site ? cloneJson(site) : undefined;
+}
+
+function localSiteByIdForAdmin(siteId: string): Site | undefined {
+  const state = readLocalPlatformStateFallback();
+  const site = state?.sites.find((item) => item.id === siteId);
+  return site ? cloneJson(site) : undefined;
+}
+
+function localFirstSiteAdminEmail(siteId: string): string | undefined {
+  const state = readLocalPlatformStateFallback();
+  return state?.siteAdmins
+    .filter((admin) => admin.siteId === siteId)
+    .sort((left, right) => String(left.createdAt ?? "").localeCompare(String(right.createdAt ?? "")))
+    .at(0)?.email;
+}
 const accountCustomerRuntimeLimits = {
   products: 0,
   siteAiApps: 0,
@@ -2188,6 +2220,10 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
 }
 
 export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefined> {
+  if (shouldUseRelationalReadFallbackCircuit()) {
+    const fallback = localSiteBySlugForAdmin(slug);
+    if (fallback) return fallback;
+  }
   try {
     const canonicalSlug = canonicalSiteSlug(slug);
     return await siteReadCache.get(`admin-login-site:${canonicalSlug}`, () => runSiteAdminRead(`admin login site:${canonicalSlug}`, async () => {
@@ -2200,11 +2236,20 @@ export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefi
     }));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
+    const fallback = localSiteBySlugForAdmin(slug);
+    if (fallback) {
+      warnRelationalFallback("admin login site lookup", error);
+      return fallback;
+    }
     throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
   }
 }
 
 export async function getSiteByIdForAdmin(siteId: string): Promise<Site | undefined> {
+  if (shouldUseRelationalReadFallbackCircuit()) {
+    const fallback = localSiteByIdForAdmin(siteId);
+    if (fallback) return fallback;
+  }
   try {
     return await siteReadCache.get(`admin-site-id:${siteId}`, () => runSiteAdminRead(`admin site id:${siteId}`, async () => {
       const site = await prisma.site.findUnique({
@@ -2215,6 +2260,11 @@ export async function getSiteByIdForAdmin(siteId: string): Promise<Site | undefi
     }));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
+    const fallback = localSiteByIdForAdmin(siteId);
+    if (fallback) {
+      warnRelationalFallback("admin site id lookup", error);
+      return fallback;
+    }
     throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
   }
 }
@@ -3349,10 +3399,19 @@ export async function getFirstSiteAdminEmailRelational(siteId: string): Promise<
 }
 
 export async function getFirstSiteAdminEmail(siteId: string): Promise<string | undefined> {
+  if (shouldUseRelationalReadFallbackCircuit()) {
+    const fallback = localFirstSiteAdminEmail(siteId);
+    if (fallback) return fallback;
+  }
   try {
     return await getFirstSiteAdminEmailRelational(siteId);
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
+    const fallback = localFirstSiteAdminEmail(siteId);
+    if (fallback) {
+      warnRelationalFallback("first site admin email lookup", error);
+      return fallback;
+    }
     throw new RelationalStoreError("relational_site_admin_email_lookup_unavailable", 503);
   }
 }
