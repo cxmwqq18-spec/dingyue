@@ -22,6 +22,13 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function numberFromDb(value) {
+  if (typeof value === "bigint") return Number(value);
+  if (typeof value === "number") return value;
+  if (typeof value === "string") return Number(value) || 0;
+  return 0;
+}
+
 function ledgerCreditState(ledger) {
   return ledger.reduce(
     (state, entry) => {
@@ -64,18 +71,90 @@ try {
     where: { id: testCustomerId, siteId },
     include: { balance: true }
   })));
-  samples.push(await timed("counts", async () => ({
-    customers: await prisma.customer.count({ where: { siteId } }),
-    activeCustomers: await prisma.customer.count({ where: { siteId, status: "active" } }),
-    subscriptions: await prisma.subscription.count({ where: { siteId } }),
-    orders: await prisma.order.count({ where: { siteId } }),
-    jobs: await prisma.generationJob.count({ where: { siteId } }),
-    albums: await prisma.album.count({ where: { siteId } }),
-    assets: await prisma.assetUpload.count({ where: { siteId, deletedAt: null } }),
-    products: await prisma.product.count({ where: { siteId } }),
-    packs: await prisma.creativePack.count({ where: { siteId } }),
-    ledger: await prisma.creditLedger.count({ where: { siteId } })
-  })));
+  samples.push(await timed("counts", async () => {
+    const [row] = await prisma.$queryRaw`
+      WITH
+        customer_summary AS (
+          SELECT
+            COUNT(*) AS customers,
+            COUNT(*) FILTER (WHERE "status" = 'active') AS "activeCustomers"
+          FROM "Customer"
+          WHERE "siteId" = ${siteId}
+        ),
+        subscription_summary AS (
+          SELECT COUNT(*) AS subscriptions
+          FROM "Subscription"
+          WHERE "siteId" = ${siteId}
+        ),
+        order_summary AS (
+          SELECT COUNT(*) AS orders
+          FROM "Order"
+          WHERE "siteId" = ${siteId}
+        ),
+        job_summary AS (
+          SELECT COUNT(*) AS jobs
+          FROM "GenerationJob"
+          WHERE "siteId" = ${siteId}
+        ),
+        album_summary AS (
+          SELECT COUNT(*) AS albums
+          FROM "Album"
+          WHERE "siteId" = ${siteId}
+        ),
+        asset_summary AS (
+          SELECT COUNT(*) AS assets
+          FROM "AssetUpload"
+          WHERE "siteId" = ${siteId} AND "deletedAt" IS NULL
+        ),
+        product_summary AS (
+          SELECT COUNT(*) AS products
+          FROM "Product"
+          WHERE "siteId" = ${siteId}
+        ),
+        pack_summary AS (
+          SELECT COUNT(*) AS packs
+          FROM "CreativePack"
+          WHERE "siteId" = ${siteId}
+        ),
+        ledger_summary AS (
+          SELECT COUNT(*) AS ledger
+          FROM "CreditLedger"
+          WHERE "siteId" = ${siteId}
+        )
+      SELECT
+        customer_summary.customers,
+        customer_summary."activeCustomers",
+        subscription_summary.subscriptions,
+        order_summary.orders,
+        job_summary.jobs,
+        album_summary.albums,
+        asset_summary.assets,
+        product_summary.products,
+        pack_summary.packs,
+        ledger_summary.ledger
+      FROM customer_summary
+      CROSS JOIN subscription_summary
+      CROSS JOIN order_summary
+      CROSS JOIN job_summary
+      CROSS JOIN album_summary
+      CROSS JOIN asset_summary
+      CROSS JOIN product_summary
+      CROSS JOIN pack_summary
+      CROSS JOIN ledger_summary
+    `;
+    return {
+      customers: numberFromDb(row?.customers),
+      activeCustomers: numberFromDb(row?.activeCustomers),
+      subscriptions: numberFromDb(row?.subscriptions),
+      orders: numberFromDb(row?.orders),
+      jobs: numberFromDb(row?.jobs),
+      albums: numberFromDb(row?.albums),
+      assets: numberFromDb(row?.assets),
+      products: numberFromDb(row?.products),
+      packs: numberFromDb(row?.packs),
+      ledger: numberFromDb(row?.ledger)
+    };
+  }));
   samples.push(await timed("delivery", () => prisma.album.findFirst({
     where: { id: albumId, siteId, customerId },
     include: { coverAsset: true }
@@ -93,12 +172,20 @@ try {
     select: { id: true, amount: true, type: true, sourceId: true },
     orderBy: { createdAt: "asc" }
   })));
-  samples.push(await timed("crossSiteLeaks", async () => ({
-    dreamshootCustomer: await prisma.customer.findFirst({ where: { id: customerId, siteId: "site_dreamshoot" }, select: { id: true } }),
-    dreamshootAsset: await prisma.assetUpload.findFirst({ where: { id: assetId, siteId: "site_dreamshoot" }, select: { id: true } }),
-    dreamshootAlbum: await prisma.album.findFirst({ where: { id: albumId, siteId: "site_dreamshoot" }, select: { id: true } }),
-    aidreamcapesDreamshootCustomer: await prisma.customer.findFirst({ where: { siteId, id: "cust_dreamshoot_nora" }, select: { id: true } })
-  })));
+  samples.push(await timed("crossSiteLeaks", async () => {
+    const [
+      dreamshootCustomer,
+      dreamshootAsset,
+      dreamshootAlbum,
+      aidreamcapesDreamshootCustomer
+    ] = await Promise.all([
+      prisma.customer.findFirst({ where: { id: customerId, siteId: "site_dreamshoot" }, select: { id: true } }),
+      prisma.assetUpload.findFirst({ where: { id: assetId, siteId: "site_dreamshoot" }, select: { id: true } }),
+      prisma.album.findFirst({ where: { id: albumId, siteId: "site_dreamshoot" }, select: { id: true } }),
+      prisma.customer.findFirst({ where: { siteId, id: "cust_dreamshoot_nora" }, select: { id: true } })
+    ]);
+    return { dreamshootCustomer, dreamshootAsset, dreamshootAlbum, aidreamcapesDreamshootCustomer };
+  }));
 
   const byName = Object.fromEntries(samples.map((sample) => [sample.name, sample.value]));
   assert(byName.site?.slug === "aidreamcapes", "missing_aidreamcapes_site");

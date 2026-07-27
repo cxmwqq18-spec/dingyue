@@ -3134,26 +3134,102 @@ async function loadLightSiteAdminContextRelationalSummary(siteId: string): Promi
   >;
   const [summaryRows, gateway] = await Promise.all([
     prisma.$queryRaw<LightSummaryRow[]>`
+      WITH
+        product_summary AS (
+          SELECT
+            COUNT(*) AS "productCount",
+            COUNT(*) FILTER (WHERE "status" = 'active') AS "activeProductCount"
+          FROM "Product"
+          WHERE "siteId" = ${siteId}
+        ),
+        price_summary AS (
+          SELECT COUNT(*) AS "totalPriceCount"
+          FROM "Price"
+          WHERE "siteId" = ${siteId}
+        ),
+        job_summary AS (
+          SELECT
+            COUNT(*) AS "jobCount",
+            COUNT(*) FILTER (WHERE "status" IN ('failed', 'refunded')) AS "failedJobCount",
+            COUNT(*) FILTER (WHERE "status" IN ('running', 'queued')) AS "openJobCount",
+            COUNT(*) FILTER (WHERE "status" = 'succeeded') AS "completedJobCount"
+          FROM "GenerationJob"
+          WHERE "siteId" = ${siteId}
+        ),
+        app_summary AS (
+          SELECT
+            COUNT(*) AS "appCount",
+            COUNT(*) FILTER (WHERE "enabled" = true) AS "activeAppCount"
+          FROM "SiteAiApp"
+          WHERE "siteId" = ${siteId}
+        ),
+        media_summary AS (
+          SELECT COUNT(*) AS "mediaCount"
+          FROM "MediaAsset"
+          WHERE "siteId" = ${siteId}
+        ),
+        publication_summary AS (
+          SELECT COUNT(*) AS "publicationCount"
+          FROM "ThemePublication"
+          WHERE "siteId" = ${siteId}
+        ),
+        customer_summary AS (
+          SELECT COUNT(*) AS "customerCount"
+          FROM "Customer"
+          WHERE "siteId" = ${siteId}
+        ),
+        balance_summary AS (
+          SELECT
+            COALESCE(SUM("balance"), 0) AS "availableCredits",
+            COALESCE(SUM("reserved"), 0) AS "reservedCredits"
+          FROM "CreditBalance"
+          WHERE "siteId" = ${siteId}
+        ),
+        order_summary AS (
+          SELECT
+            COUNT(*) AS "orderCount",
+            COUNT(*) FILTER (WHERE "status" IN ('paid', 'fulfilled')) AS "paidOrderCount",
+            COALESCE(SUM("amountCents") FILTER (WHERE "status" IN ('paid', 'fulfilled')), 0) AS "revenueCents"
+          FROM "Order"
+          WHERE "siteId" = ${siteId}
+        ),
+        subscription_summary AS (
+          SELECT
+            COUNT(*) AS "subscriptionCount",
+            COUNT(*) FILTER (WHERE "status" IN ('active', 'trialing')) AS "activeSubscriptionCount"
+          FROM "Subscription"
+          WHERE "siteId" = ${siteId}
+        )
       SELECT
-        (SELECT COUNT(*) FROM "Product" WHERE "siteId" = ${siteId}) AS "productCount",
-        (SELECT COUNT(*) FROM "Product" WHERE "siteId" = ${siteId} AND "status" = 'active') AS "activeProductCount",
-        (SELECT COUNT(*) FROM "Price" WHERE "siteId" = ${siteId}) AS "totalPriceCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId}) AS "jobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" IN ('failed', 'refunded')) AS "failedJobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" IN ('running', 'queued')) AS "openJobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" = 'succeeded') AS "completedJobCount",
-        (SELECT COUNT(*) FROM "SiteAiApp" WHERE "siteId" = ${siteId}) AS "appCount",
-        (SELECT COUNT(*) FROM "SiteAiApp" WHERE "siteId" = ${siteId} AND "enabled" = true) AS "activeAppCount",
-        (SELECT COUNT(*) FROM "MediaAsset" WHERE "siteId" = ${siteId}) AS "mediaCount",
-        (SELECT COUNT(*) FROM "ThemePublication" WHERE "siteId" = ${siteId}) AS "publicationCount",
-        (SELECT COUNT(*) FROM "Customer" WHERE "siteId" = ${siteId}) AS "customerCount",
-        (SELECT COALESCE(SUM("balance"), 0) FROM "CreditBalance" WHERE "siteId" = ${siteId}) AS "availableCredits",
-        (SELECT COALESCE(SUM("reserved"), 0) FROM "CreditBalance" WHERE "siteId" = ${siteId}) AS "reservedCredits",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId}) AS "orderCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled')) AS "paidOrderCount",
-        (SELECT COUNT(*) FROM "Subscription" WHERE "siteId" = ${siteId}) AS "subscriptionCount",
-        (SELECT COUNT(*) FROM "Subscription" WHERE "siteId" = ${siteId} AND "status" IN ('active', 'trialing')) AS "activeSubscriptionCount",
-        (SELECT COALESCE(SUM("amountCents"), 0) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled')) AS "revenueCents"
+        product_summary."productCount",
+        product_summary."activeProductCount",
+        price_summary."totalPriceCount",
+        job_summary."jobCount",
+        job_summary."failedJobCount",
+        job_summary."openJobCount",
+        job_summary."completedJobCount",
+        app_summary."appCount",
+        app_summary."activeAppCount",
+        media_summary."mediaCount",
+        publication_summary."publicationCount",
+        customer_summary."customerCount",
+        balance_summary."availableCredits",
+        balance_summary."reservedCredits",
+        order_summary."orderCount",
+        order_summary."paidOrderCount",
+        subscription_summary."subscriptionCount",
+        subscription_summary."activeSubscriptionCount",
+        order_summary."revenueCents"
+      FROM product_summary
+      CROSS JOIN price_summary
+      CROSS JOIN job_summary
+      CROSS JOIN app_summary
+      CROSS JOIN media_summary
+      CROSS JOIN publication_summary
+      CROSS JOIN customer_summary
+      CROSS JOIN balance_summary
+      CROSS JOIN order_summary
+      CROSS JOIN subscription_summary
     `,
     prisma.aiGatewayGroup
       .findFirst({ where: { siteId }, orderBy: [{ status: "asc" }, { name: "asc" }] })
@@ -3254,44 +3330,177 @@ async function loadSiteAdminContextRelationalSummary(siteId: string): Promise<Si
   };
   const [summaryRows, dailyOpsRows, gateway] = await Promise.all([
     prisma.$queryRaw<SummaryRow[]>`
+      WITH
+        product_summary AS (
+          SELECT
+            COUNT(*) AS "productCount",
+            COUNT(*) FILTER (WHERE "status" = 'active') AS "activeProductCount"
+          FROM "Product"
+          WHERE "siteId" = ${siteId}
+        ),
+        price_summary AS (
+          SELECT COUNT(*) AS "totalPriceCount"
+          FROM "Price"
+          WHERE "siteId" = ${siteId}
+        ),
+        job_summary AS (
+          SELECT
+            COUNT(*) AS "jobCount",
+            COUNT(*) FILTER (WHERE "status" IN ('failed', 'refunded')) AS "failedJobCount",
+            COUNT(*) FILTER (WHERE "status" IN ('running', 'queued')) AS "openJobCount",
+            COUNT(*) FILTER (WHERE "status" = 'succeeded') AS "completedJobCount",
+            COUNT(*) FILTER (WHERE "createdAt" >= NOW() - INTERVAL '1 day') AS "todayJobCount",
+            COUNT(*) FILTER (WHERE "createdAt" >= NOW() - INTERVAL '30 days') AS "monthJobCount"
+          FROM "GenerationJob"
+          WHERE "siteId" = ${siteId}
+        ),
+        app_summary AS (
+          SELECT
+            COUNT(*) AS "appCount",
+            COUNT(*) FILTER (WHERE "enabled" = true) AS "activeAppCount"
+          FROM "SiteAiApp"
+          WHERE "siteId" = ${siteId}
+        ),
+        media_summary AS (
+          SELECT COUNT(*) AS "mediaCount"
+          FROM "MediaAsset"
+          WHERE "siteId" = ${siteId}
+        ),
+        publication_summary AS (
+          SELECT COUNT(*) AS "publicationCount"
+          FROM "ThemePublication"
+          WHERE "siteId" = ${siteId}
+        ),
+        customer_summary AS (
+          SELECT COUNT(*) AS "customerCount"
+          FROM "Customer"
+          WHERE "siteId" = ${siteId}
+        ),
+        balance_summary AS (
+          SELECT
+            COALESCE(SUM("balance"), 0) AS "availableCredits",
+            COALESCE(SUM("reserved"), 0) AS "reservedCredits"
+          FROM "CreditBalance"
+          WHERE "siteId" = ${siteId}
+        ),
+        order_summary AS (
+          SELECT
+            COUNT(*) AS "orderCount",
+            COUNT(*) FILTER (WHERE "status" IN ('paid', 'fulfilled')) AS "paidOrderCount",
+            COUNT(*) FILTER (WHERE "status" IN ('created', 'checkout_started')) AS "pendingOrderCount",
+            COUNT(*) FILTER (WHERE "createdAt" >= NOW() - INTERVAL '30 days') AS "monthOrderCount",
+            COUNT(*) FILTER (WHERE "status" IN ('paid', 'fulfilled') AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthPaidOrderCount",
+            COUNT(*) FILTER (WHERE "status" IN ('created', 'checkout_started') AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthPendingOrderCount",
+            COALESCE(SUM("amountCents") FILTER (WHERE "status" IN ('paid', 'fulfilled')), 0) AS "revenueCents",
+            COALESCE(SUM("amountCents") FILTER (WHERE "status" IN ('paid', 'fulfilled') AND "createdAt" >= NOW() - INTERVAL '30 days'), 0) AS "monthRevenueCents"
+          FROM "Order"
+          WHERE "siteId" = ${siteId}
+        ),
+        subscription_summary AS (
+          SELECT
+            COUNT(*) AS "subscriptionCount",
+            COUNT(*) FILTER (WHERE "status" IN ('active', 'trialing')) AS "activeSubscriptionCount"
+          FROM "Subscription"
+          WHERE "siteId" = ${siteId}
+        ),
+        ledger_summary AS (
+          SELECT COUNT(*) AS "ledgerCount"
+          FROM "CreditLedger"
+          WHERE "siteId" = ${siteId}
+        ),
+        payment_event_summary AS (
+          SELECT COUNT(*) AS "paymentEventCount"
+          FROM "PaymentEvent"
+          WHERE "siteId" = ${siteId}
+        ),
+        pack_summary AS (
+          SELECT
+            COUNT(*) FILTER (WHERE "status" = 'active') AS "activePackCount",
+            COUNT(*) FILTER (WHERE "status" = 'draft') AS "draftPackCount"
+          FROM "CreativePack"
+          WHERE "siteId" = ${siteId}
+        ),
+        album_summary AS (
+          SELECT
+            COUNT(*) AS "albumCount",
+            COUNT(*) FILTER (WHERE "status" = 'ready') AS "readyAlbumCount"
+          FROM "Album"
+          WHERE "siteId" = ${siteId}
+        ),
+        model_summary AS (
+          SELECT
+            COUNT(*) AS "modelCount",
+            COUNT(*) FILTER (WHERE "status" = 'ready') AS "readyModelCount"
+          FROM "CustomerModel"
+          WHERE "siteId" = ${siteId}
+        ),
+        asset_summary AS (
+          SELECT
+            COUNT(*) FILTER (WHERE "role" = 'input' AND "deletedAt" IS NULL) AS "inputAssetCount",
+            COUNT(*) FILTER (WHERE "role" = 'output' AND "deletedAt" IS NULL) AS "generatedAssetCount"
+          FROM "AssetUpload"
+          WHERE "siteId" = ${siteId}
+        ),
+        page_summary AS (
+          SELECT COUNT(*) FILTER (WHERE "draftJson"::jsonb IS DISTINCT FROM "publishedJson"::jsonb) AS "dirtyPageCount"
+          FROM "ThemePage"
+          WHERE "siteId" = ${siteId}
+        )
       SELECT
-        (SELECT COUNT(*) FROM "Product" WHERE "siteId" = ${siteId}) AS "productCount",
-        (SELECT COUNT(*) FROM "Product" WHERE "siteId" = ${siteId} AND "status" = 'active') AS "activeProductCount",
-        (SELECT COUNT(*) FROM "Price" WHERE "siteId" = ${siteId}) AS "totalPriceCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId}) AS "jobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" IN ('failed', 'refunded')) AS "failedJobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" IN ('running', 'queued')) AS "openJobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "status" = 'succeeded') AS "completedJobCount",
-        (SELECT COUNT(*) FROM "SiteAiApp" WHERE "siteId" = ${siteId}) AS "appCount",
-        (SELECT COUNT(*) FROM "SiteAiApp" WHERE "siteId" = ${siteId} AND "enabled" = true) AS "activeAppCount",
-        (SELECT COUNT(*) FROM "MediaAsset" WHERE "siteId" = ${siteId}) AS "mediaCount",
-        (SELECT COUNT(*) FROM "ThemePublication" WHERE "siteId" = ${siteId}) AS "publicationCount",
-        (SELECT COUNT(*) FROM "Customer" WHERE "siteId" = ${siteId}) AS "customerCount",
-        (SELECT COALESCE(SUM("balance"), 0) FROM "CreditBalance" WHERE "siteId" = ${siteId}) AS "availableCredits",
-        (SELECT COALESCE(SUM("reserved"), 0) FROM "CreditBalance" WHERE "siteId" = ${siteId}) AS "reservedCredits",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId}) AS "orderCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled')) AS "paidOrderCount",
-        (SELECT COUNT(*) FROM "Subscription" WHERE "siteId" = ${siteId}) AS "subscriptionCount",
-        (SELECT COUNT(*) FROM "CreditLedger" WHERE "siteId" = ${siteId}) AS "ledgerCount",
-        (SELECT COUNT(*) FROM "PaymentEvent" WHERE "siteId" = ${siteId}) AS "paymentEventCount",
-        (SELECT COALESCE(SUM("amountCents"), 0) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled')) AS "revenueCents",
-        (SELECT COUNT(*) FROM "Subscription" WHERE "siteId" = ${siteId} AND "status" IN ('active', 'trialing')) AS "activeSubscriptionCount",
-        (SELECT COUNT(*) FROM "CreativePack" WHERE "siteId" = ${siteId} AND "status" = 'active') AS "activePackCount",
-        (SELECT COUNT(*) FROM "CreativePack" WHERE "siteId" = ${siteId} AND "status" = 'draft') AS "draftPackCount",
-        (SELECT COUNT(*) FROM "Album" WHERE "siteId" = ${siteId}) AS "albumCount",
-        (SELECT COUNT(*) FROM "Album" WHERE "siteId" = ${siteId} AND "status" = 'ready') AS "readyAlbumCount",
-        (SELECT COUNT(*) FROM "CustomerModel" WHERE "siteId" = ${siteId}) AS "modelCount",
-        (SELECT COUNT(*) FROM "CustomerModel" WHERE "siteId" = ${siteId} AND "status" = 'ready') AS "readyModelCount",
-        (SELECT COUNT(*) FROM "AssetUpload" WHERE "siteId" = ${siteId} AND "role" = 'input' AND "deletedAt" IS NULL) AS "inputAssetCount",
-        (SELECT COUNT(*) FROM "AssetUpload" WHERE "siteId" = ${siteId} AND "role" = 'output' AND "deletedAt" IS NULL) AS "generatedAssetCount",
-        (SELECT COUNT(*) FROM "ThemePage" WHERE "siteId" = ${siteId} AND "draftJson"::jsonb IS DISTINCT FROM "publishedJson"::jsonb) AS "dirtyPageCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('created', 'checkout_started')) AS "pendingOrderCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthOrderCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled') AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthPaidOrderCount",
-        (SELECT COUNT(*) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('created', 'checkout_started') AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthPendingOrderCount",
-        (SELECT COALESCE(SUM("amountCents"), 0) FROM "Order" WHERE "siteId" = ${siteId} AND "status" IN ('paid', 'fulfilled') AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthRevenueCents",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "createdAt" >= NOW() - INTERVAL '1 day') AS "todayJobCount",
-        (SELECT COUNT(*) FROM "GenerationJob" WHERE "siteId" = ${siteId} AND "createdAt" >= NOW() - INTERVAL '30 days') AS "monthJobCount"
+        product_summary."productCount",
+        product_summary."activeProductCount",
+        price_summary."totalPriceCount",
+        job_summary."jobCount",
+        job_summary."failedJobCount",
+        job_summary."openJobCount",
+        job_summary."completedJobCount",
+        app_summary."appCount",
+        app_summary."activeAppCount",
+        media_summary."mediaCount",
+        publication_summary."publicationCount",
+        customer_summary."customerCount",
+        balance_summary."availableCredits",
+        balance_summary."reservedCredits",
+        order_summary."orderCount",
+        order_summary."paidOrderCount",
+        subscription_summary."subscriptionCount",
+        ledger_summary."ledgerCount",
+        payment_event_summary."paymentEventCount",
+        order_summary."revenueCents",
+        subscription_summary."activeSubscriptionCount",
+        pack_summary."activePackCount",
+        pack_summary."draftPackCount",
+        album_summary."albumCount",
+        album_summary."readyAlbumCount",
+        model_summary."modelCount",
+        model_summary."readyModelCount",
+        asset_summary."inputAssetCount",
+        asset_summary."generatedAssetCount",
+        page_summary."dirtyPageCount",
+        order_summary."pendingOrderCount",
+        order_summary."monthOrderCount",
+        order_summary."monthPaidOrderCount",
+        order_summary."monthPendingOrderCount",
+        order_summary."monthRevenueCents",
+        job_summary."todayJobCount",
+        job_summary."monthJobCount"
+      FROM product_summary
+      CROSS JOIN price_summary
+      CROSS JOIN job_summary
+      CROSS JOIN app_summary
+      CROSS JOIN media_summary
+      CROSS JOIN publication_summary
+      CROSS JOIN customer_summary
+      CROSS JOIN balance_summary
+      CROSS JOIN order_summary
+      CROSS JOIN subscription_summary
+      CROSS JOIN ledger_summary
+      CROSS JOIN payment_event_summary
+      CROSS JOIN pack_summary
+      CROSS JOIN album_summary
+      CROSS JOIN model_summary
+      CROSS JOIN asset_summary
+      CROSS JOIN page_summary
     `,
     prisma.$queryRaw<DailyOpsRow[]>`
       WITH days AS (

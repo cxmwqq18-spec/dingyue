@@ -353,6 +353,7 @@ model Price {
   @@unique([siteId, stripePriceId])
   @@index([siteId, productId])
   @@index([siteId, interval])
+  @@index([productId, createdAt])
 }
 
 model Subscription {
@@ -376,6 +377,7 @@ model Subscription {
   @@index([siteId, customerId, status])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, productId])
+  @@index([siteId, createdAt])
   @@index([siteId, status, createdAt])
   @@index([siteId, status, currentPeriodEnd])
 }
@@ -396,6 +398,7 @@ model Order {
 
   @@unique([siteId, customerId, sourceId])
   @@index([siteId, customerId, createdAt])
+  @@index([siteId, createdAt])
   @@index([siteId, status])
   @@index([siteId, status, createdAt])
 }
@@ -432,6 +435,7 @@ model CreditLedger {
   @@unique([siteId, customerId, type, sourceId])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, sourceType, sourceId])
+  @@index([siteId, createdAt])
   @@index([siteId, type, createdAt])
 }
 
@@ -632,6 +636,7 @@ model SiteTheme {
 
   @@unique([siteId, themeId])
   @@index([siteId, status])
+  @@index([siteId, status, updatedAt])
   @@index([siteId, themeKey])
 }
 
@@ -650,6 +655,7 @@ model ThemeCopy {
 
   @@index([siteId, themeKey])
   @@index([siteId, createdAt])
+  @@index([siteId, updatedAt])
 }
 
 model SectionDefinition {
@@ -806,6 +812,7 @@ model CustomerModel {
 
   @@index([siteId, customerId, status])
   @@index([siteId, providerModelId])
+  @@index([siteId, createdAt])
   @@index([siteId, status, updatedAt])
   @@index([siteId, updatedAt])
 }
@@ -832,6 +839,7 @@ model Album {
   @@index([siteId, customerId, updatedAt])
   @@index([siteId, sourceJobId])
   @@index([siteId, creativePackId])
+  @@index([siteId, createdAt])
   @@index([siteId, status, updatedAt])
   @@index([siteId, updatedAt])
 }
@@ -866,6 +874,7 @@ model AssetUpload {
   @@index([siteId, jobId])
   @@index([siteId, reviewStatus])
   @@index([siteId, reviewStatus, createdAt])
+  @@index([siteId, role, deletedAt, createdAt])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, createdAt])
 }
@@ -924,6 +933,7 @@ model GenerationJob {
   @@index([siteId, aiAppId])
   @@index([siteId, entryPoint, createdAt])
   @@index([siteId, idempotencyKey])
+  @@index([siteId, createdAt])
   @@index([siteId, status, updatedAt])
   @@index([siteId, updatedAt])
   @@index([status, updatedAt])

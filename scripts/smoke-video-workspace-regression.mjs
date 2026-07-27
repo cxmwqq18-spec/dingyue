@@ -377,11 +377,13 @@ assert(workspaceShell.includes("pendingEventRefreshRef"), "workspace non-final a
 assert(workspaceShell.includes("queueWorkspaceRuntimeRefresh"), "workspace refreshes should share one event-driven refresh scheduler");
 assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("create")'), "video creation should trigger an immediate workspace refresh");
 assert((workspaceShell.match(/queueWorkspaceRuntimeRefresh\("create"\)/g) ?? []).length === 1, "video creation should refresh after acceptance without an extra pre-create runtime request");
-assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("event")'), "final provider events should schedule one runtime refresh after applying the live patch");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("final-event")'), "final provider events should schedule one runtime refresh after applying the live patch");
 assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("resume")'), "workspace should refresh active work when the page returns to the foreground");
 assert(workspaceShell.includes("document.addEventListener(\"visibilitychange\""), "workspace should listen for visible-page returns");
 assert(workspaceShell.includes("window.addEventListener(\"focus\""), "workspace should listen for browser focus returns");
 assert(workspaceShell.includes("runtimeAutoRefreshAllowedRef"), "foreground refreshes should be gated to active or just-created jobs");
+assert(workspaceShell.includes('if (reason === "resume" && !runtimeAutoRefreshAllowedRef.current) return;'), "foreground resume refreshes should remain gated without blocking final output refreshes");
+assert(!workspaceShell.includes('(reason === "event" || reason === "resume")'), "final output refreshes should not be blocked by the active-job gate");
 assert(workspaceShell.includes("const [liveJobUpdates, setLiveJobUpdates]"), "workspace progress SSE events should update jobs locally");
 assert(workspaceShell.includes("applyLiveJobPatch"), "workspace progress SSE events should patch persisted job display fields locally");
 assert(workspaceShell.includes("const finalEvent = payload.eventKind === \"final\" || payload.type === \"result\""), "workspace SSE should distinguish progress from final events");
@@ -402,7 +404,7 @@ assert(workspaceShell.includes("Provider generation"), "video status cards shoul
 assert(workspaceShell.includes("Background optimization"), "video status cards should show async optimization timing when available");
 assert(workspaceShell.includes("Timing details are available for newer video requests"), "old video jobs without timing should keep a compatibility note");
 assert(workspaceShell.includes("runtimeTimingFromEvent") && workspaceShell.includes("...(timing ? { timing } : {})"), "workspace SSE patches should merge worker timing into resultJson timing");
-assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("event");') && workspaceShell.includes("clearQueuedEventRefresh();"), "workspace final SSE should refresh once after applying the final live patch");
+assert(workspaceShell.includes('queueWorkspaceRuntimeRefresh("final-event");') && workspaceShell.includes("clearQueuedEventRefresh();"), "workspace final SSE should refresh once after applying the final live patch");
 assert(workspaceRuntimeJobs.includes("requestJson: true") && workspaceRuntimeJobs.includes("resultJson: true"), "segmented workspace runtime reads should preserve job request and result details");
 assert(workspaceRuntimeJobs.includes("const persistedRequestJson = jsonRecord(job.requestJson)") && workspaceRuntimeJobs.includes("const persistedResultJson = jsonRecord(job.resultJson)"), "workspace job summaries should expose persisted provider progress and stages");
 assert(workspaceShell.includes("sample-selection:v2"), "workspace sample selection storage should invalidate older overlapping primary/partner selections");
@@ -531,7 +533,8 @@ assert(workspaceShell.includes("setRetryVideoDraft({ ...draft, key:"), "retrying
 assert(workspaceShell.includes("Retry video"), "failed video cards should expose a retry button");
 assert(workspaceShell.includes("onRetryDraftApplied={() => setRetryVideoDraft(null)}"), "video retry drafts should be cleared after the composer applies them");
 assert(videoRefreshEventDrivenSmoke.includes("progress_event_triggered_runtime_refresh"), "event-driven smoke should assert progress events do not refresh runtime");
-assert(videoRefreshEventDrivenSmoke.includes("final_events_triggered_runtime_refresh"), "event-driven smoke should assert final events do not refresh runtime");
+assert(videoRefreshEventDrivenSmoke.includes("final_event_runtime_refresh_count"), "event-driven smoke should assert final events refresh runtime once");
+assert(videoRefreshEventDrivenSmoke.includes("1 generated videos"), "event-driven smoke should assert the refreshed runtime surfaces the completed video asset");
 
 const worker = read("src/lib/worker.ts");
 assert(worker.includes("configuredWorkerPublicBaseUrl"), "worker should support a configured public base URL");

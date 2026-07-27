@@ -821,6 +821,12 @@ function assetPreviewIsLoading(asset: Pick<ThemeRuntimeAsset, "previewStatus"> &
   return asset.localStatus === "uploading" || asset.previewStatus === "loading";
 }
 
+function shouldRenderSourceSample(asset: Pick<ThemeRuntimeAsset, "id" | "previewStatus"> & { localStatus?: LocalUploadStatus }): boolean {
+  if (asset.localStatus === "failed") return true;
+  if (asset.id.startsWith("local:") || asset.localStatus === "uploading") return true;
+  return !assetPreviewIsLoading(asset);
+}
+
 function isVideoFrameCandidateAsset(asset: Pick<ThemeRuntimeAsset, "mimeType" | "role" | "subjectRole">): boolean {
   return asset.mimeType.startsWith("image/") && asset.role === "input" && asset.subjectRole === "video_frame";
 }
@@ -1280,7 +1286,7 @@ export function CustomerWorkspaceShell({
     [spanishXby]
   );
   const galleryAssets = hydratedAssets.filter((asset) => shouldShowAssetOnSurface(asset, "workspace-gallery"));
-  const sourceAssets = sampleAssets;
+  const sourceAssets = sampleAssets.filter(shouldRenderSourceSample);
   const readySourceAssets = sourceAssets.filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset) && asset.localStatus !== "failed");
   const readyPrimarySampleIds = primarySampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
   const readyPartnerSampleIds = partnerSampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
@@ -1366,14 +1372,14 @@ export function CustomerWorkspaceShell({
     }));
   }
 
-  function queueWorkspaceRuntimeRefresh(reason: "manual" | "event" | "create" | "resume") {
-    if ((reason === "event" || reason === "resume") && !runtimeAutoRefreshAllowedRef.current) return;
+  function queueWorkspaceRuntimeRefresh(reason: "manual" | "final-event" | "create" | "resume") {
+    if (reason === "resume" && !runtimeAutoRefreshAllowedRef.current) return;
     setRuntimeFetchEnabled(true);
     if (reason === "manual") {
       setManualRefreshPending(true);
       setRuntimeRefreshMessage("");
     }
-    if (reason === "event") {
+    if (reason === "final-event") {
       if (eventRefreshTimerRef.current !== undefined) return;
       eventRefreshTimerRef.current = window.setTimeout(() => {
         eventRefreshTimerRef.current = undefined;
@@ -1532,7 +1538,7 @@ export function CustomerWorkspaceShell({
         return;
       }
       clearQueuedEventRefresh();
-      queueWorkspaceRuntimeRefresh("event");
+      queueWorkspaceRuntimeRefresh("final-event");
       setRuntimeRefreshMessage(spanishXby ? `Generador finalizado ${workspaceJobTime(updatedAt)}` : `Generator finished ${workspaceJobTime(updatedAt)}`);
     };
     events.addEventListener("job", refreshFromJobEvent);
@@ -1571,7 +1577,6 @@ export function CustomerWorkspaceShell({
     }
     if ((runtimeState.status === "ready" || runtimeState.status === "error") && pendingEventRefreshRef.current) {
       pendingEventRefreshRef.current = false;
-      if (!runtimeAutoRefreshAllowedRef.current) return;
       setRuntimeFetchEnabled(true);
       setRuntimeRefreshKey((current) => {
         const next = current + 1;
@@ -1674,10 +1679,12 @@ export function CustomerWorkspaceShell({
   }, [galleryAssets]);
   const workspaceSlotPreviewUrl = (storageKey: string) =>
     outputPreviewUrlByStorageKey.get(normalizedWorkspaceStorageKey(storageKey)) ?? workspaceStoragePreviewUrl(storageKey);
-  const sourceSamplePreviewUrl = (asset: Pick<ThemeRuntimeAsset, "id" | "previewUrl"> & { localStatus?: LocalUploadStatus }) =>
+  const sourceSamplePreviewUrl = (asset: Pick<ThemeRuntimeAsset, "id" | "previewUrl" | "storageKey"> & { localStatus?: LocalUploadStatus }) =>
     asset.id.startsWith("local:") || asset.localStatus === "uploading"
       ? asset.previewUrl
-      : `/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}/download?preview=1`;
+      : asset.storageKey
+        ? workspaceStoragePreviewUrl(asset.storageKey)
+        : asset.previewUrl;
   function renderVideoPreviewLoading(compact = false) {
     return (
       <div className="absolute inset-0 grid place-items-center bg-[#080c12]">
@@ -3060,7 +3067,8 @@ export function CustomerWorkspaceShell({
                                 <div className="mt-3 grid grid-cols-3 gap-2" role="list" aria-label={`${group.title} samples`}>
                                   {groupAssets.slice(0, 15).map((asset) => {
                                     const selected = selectedIds.includes(asset.id);
-                                    const selectable = asset.localStatus !== "uploading" && asset.localStatus !== "failed";
+                                    const previewUnavailable = assetPreviewIsLoading(asset) && asset.localStatus !== "uploading";
+                                    const selectable = !assetPreviewIsLoading(asset) && asset.localStatus !== "failed";
                                     return (
                                       <div
                                         className={`group/sample relative overflow-hidden rounded-[10px] border bg-black/30 transition ${
@@ -3102,6 +3110,9 @@ export function CustomerWorkspaceShell({
                                       ) : null}
                                       {asset.localStatus === "failed" ? (
                                         <span className="absolute inset-0 grid place-items-center bg-rose-950/70 px-2 text-center text-[11px] font-semibold text-white">{t(spanishXby, "Failed", "Fallida")}</span>
+                                      ) : null}
+                                      {previewUnavailable ? (
+                                        <span className="absolute inset-0 grid place-items-center bg-black/68 px-2 text-center text-[11px] font-semibold text-white">{t(spanishXby, "Preview unavailable", "Vista previa no disponible")}</span>
                                       ) : null}
                                       </div>
                                     );

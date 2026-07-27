@@ -159,31 +159,26 @@ try {
   );
 
   const requestsBeforeFinalEvents = runtimeRequests;
-  await postCallback("status", {
-    siteId,
-    requestId: `req_${jobId}`,
-    status: "failed",
-    stage: "video_provider_failed",
-    outputSlots: [{
-      index: 1,
-      status: "failed",
-      stage: "video_provider_failed",
-      error: "event_driven_smoke_failed"
-    }]
-  });
+  const finalRuntimeRefresh = page.waitForResponse(
+    (response) => response.url().includes(`/api/sites/${siteId}/customer/runtime`) && response.request().method() === "GET",
+    { timeout: 10_000 }
+  );
   await postCallback("result", {
     siteId,
     requestId: `req_${jobId}`,
-    status: "failed",
-    outputs: [],
-    error: "event_driven_smoke_failed"
+    status: "succeeded",
+    outputs: [{
+      storageKey: `customer-assets/${customerId}/${jobId}-output.mp4`,
+      mimeType: "video/mp4"
+    }]
   });
-  await page.getByText("Generation failed", { exact: true }).waitFor({ timeout: 8_000 });
+  await finalRuntimeRefresh;
+  await page.getByText("1 generated videos", { exact: true }).waitFor({ timeout: 8_000 });
   await page.waitForTimeout(900);
   const requestsAfterFinalEvents = runtimeRequests;
   assert(
-    requestsAfterFinalEvents === requestsBeforeFinalEvents,
-    `final_events_triggered_runtime_refresh:${requestsAfterFinalEvents - requestsBeforeFinalEvents}`
+    requestsAfterFinalEvents - requestsBeforeFinalEvents === 1,
+    `final_event_runtime_refresh_count:${requestsAfterFinalEvents - requestsBeforeFinalEvents}`
   );
   await page.screenshot({ path: "/tmp/video-refresh-event-driven.png", fullPage: true });
   assert(consoleErrors.length === 0, `browser_console_errors:${consoleErrors.join(" | ")}`);
