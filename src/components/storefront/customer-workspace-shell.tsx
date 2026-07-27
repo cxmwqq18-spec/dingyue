@@ -1121,10 +1121,7 @@ function WorkspaceInlineLoading({ label }: { label: string }) {
 type StudioConsoleSectionId = "generate" | "try-on" | "video" | "background" | "model";
 
 const studioConsoleSections: Array<{ id: StudioConsoleSectionId; label: string; panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor }> = [
-  { id: "generate", label: "Generate Image", panel: "create", anchor: "step-create" },
-  { id: "try-on", label: "Try-On", panel: "create", anchor: "step-create" },
   { id: "video", label: "Image to Video", panel: "video", anchor: "step-video" },
-  { id: "background", label: "Change Background", panel: "create", anchor: "step-create" },
   { id: "model", label: "Create New AI Model", panel: "create", anchor: "source-photos" }
 ];
 
@@ -1271,7 +1268,6 @@ export function CustomerWorkspaceShell({
       { id: "all", label: t(spanishXby, "All", "Todo") },
       { id: "recent", label: t(spanishXby, "Recent", "Reciente") },
       { id: "favorites", label: t(spanishXby, "Favorites", "Favoritos") },
-      { id: "try-on", label: t(spanishXby, "Try-on", "Probador") },
       { id: "packages", label: t(spanishXby, "Pick Package", "Elegir paquete") }
     ],
     [spanishXby]
