@@ -4,10 +4,10 @@ import { hasCustomerSession, requireCustomerMutation } from "@/lib/api-auth";
 import {
   cleanCustomerAssetFileName,
   customerAssetStorageKey,
-  deleteCustomerAssetFile,
+  deleteCustomerAssetFileShared,
   extensionForCustomerAssetMime,
   prepareCompressedCustomerImage,
-  writeCustomerAssetFile
+  writeCustomerAssetFileShared
 } from "@/lib/customer-asset-storage";
 import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agent";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
@@ -123,7 +123,7 @@ async function prepareVideoFrameImage(file: File): Promise<{ bytes: Buffer; mime
 function removeWrittenAssetFile(storageKey: string | undefined) {
   if (!storageKey) return;
   try {
-    deleteCustomerAssetFile(storageKey);
+    void deleteCustomerAssetFileShared(storageKey).catch(() => undefined);
   } catch {
     // Keep the upload response focused on the metadata failure.
   }
@@ -232,9 +232,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       : undefined;
     let writtenStorageKey: string | undefined;
     if (compressedFile && storageKey) {
-      writeCustomerAssetFile({
+      await writeCustomerAssetFileShared({
         storageKey,
-        bytes: compressedFile.bytes
+        bytes: compressedFile.bytes,
+        mimeType: compressedFile.mimeType,
+        purpose: "input"
       });
       writtenStorageKey = storageKey;
     }

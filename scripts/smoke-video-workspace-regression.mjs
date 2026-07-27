@@ -605,8 +605,8 @@ assert(customerAssetsUploadRoute.includes("CUSTOMER_UPLOAD_MAX_BYTES"), "custome
 assert(customerAssetsUploadRoute.includes("defaultMaxUploadBytes = 32 * 1024 * 1024"), "customer asset upload route should accept modern phone photos before compression");
 assert(customerAssetsUploadRoute.includes('body.subjectRole === "video_frame"'), "customer asset upload route should detect video frame uploads");
 assert(customerAssetsUploadRoute.includes("preserveOriginal"), "customer asset upload route should preserve original video frame bytes");
-assert(customerAssetsUploadRoute.includes("writeCustomerAssetFile({"), "customer asset uploads should write directly to shared local storage");
-assert(!customerAssetsUploadRoute.includes("writeCustomerAssetFileShared"), "customer asset uploads should not route same-server uploads through base64 HTTP transfer");
+assert(customerAssetsUploadRoute.includes("writeCustomerAssetFileShared({"), "customer asset uploads should use shared storage so production thumbnails survive deploys and multi-instance reads");
+assert(customerAssetsUploadRoute.includes("deleteCustomerAssetFileShared"), "customer asset uploads should clean up metadata failures from the same shared storage target");
 assert(!customerAssetsUploadRoute.includes("body.file.size > 10 * 1024 * 1024"), "customer asset upload route should not keep the old hard-coded 10MB rejection");
 
 const customerAssetStorage = read("src/lib/customer-asset-storage.ts");
