@@ -858,6 +858,14 @@ function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   return Array.from(new Set([normalized, "/404"]));
 }
 
+function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.ThemePageWhereInput | undefined {
+  if (!pageSlugs) return undefined;
+  const includeBlogPages = pageSlugs.some((slug) => slug === "/blog" || slug.startsWith("/blog/"));
+  return includeBlogPages
+    ? { OR: [{ slug: { in: pageSlugs } }, { slug: { startsWith: "/blog/" } }] }
+    : { slug: { in: pageSlugs } };
+}
+
 function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const slugs = pageSlugs ?? [];
   const primary = slugs.find((slug) => slug !== "/404") ?? "/";
@@ -1313,10 +1321,11 @@ async function getPublicRuntimeSiteLookupByHost(host: string | null | undefined)
 async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup, pageSlugs?: string[], contextSlug?: string): Promise<PlatformState | undefined> {
   const startedAt = Date.now();
   const needs = publicRuntimeNeeds(pageSlugs, contextSlug);
+  const pageWhere = publicRuntimePageWhere(pageSlugs);
   const select = {
       ...publicRuntimeSiteSelect,
-      pages: pageSlugs
-        ? { ...publicRuntimeSiteSelect.pages, where: { slug: { in: pageSlugs } } }
+      pages: pageWhere
+        ? { ...publicRuntimeSiteSelect.pages, where: pageWhere }
         : publicRuntimeSiteSelect.pages
     } satisfies Prisma.SiteSelect;
   const site = "id" in lookup

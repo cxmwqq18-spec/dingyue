@@ -6,6 +6,7 @@ const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 const seoIndexing = fs.readFileSync(path.join(process.cwd(), "src/lib/seo-indexing.ts"), "utf8");
 const storefrontRender = fs.readFileSync(path.join(process.cwd(), "src/lib/storefront-render.tsx"), "utf8");
 const themeRenderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
+const siteStore = fs.readFileSync(path.join(process.cwd(), "src/lib/stores/site-store.ts"), "utf8");
 
 const checks = [];
 
@@ -203,6 +204,10 @@ assert(
   storefrontRender.includes("function pageNeedsBlogEntries") &&
     (storefrontRender.match(/includeBlogEntries && page\.slug\.startsWith\("\/blog\/"\)/g) ?? []).length >= 2,
   "storefront render payload keeps blog article pages available to blog list sections"
+);
+assert(
+  siteStore.includes("function publicRuntimePageWhere") && siteStore.includes('startsWith: "/blog/"'),
+  "public storefront runtime loads blog article pages for blog list routes"
 );
 
 for (const expected of expectedSites) {
