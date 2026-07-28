@@ -582,6 +582,14 @@ function pageNeedsSearchEntries(pageJson: ThemePageJson): boolean {
   });
 }
 
+function pageNeedsBlogEntries(pageJson: ThemePageJson, pagePath: string): boolean {
+  if (pagePath === "/blog" || pagePath.startsWith("/blog/")) return true;
+  return pageJson.sectionsOrder.some((sectionId) => {
+    const type = pageJson.sections[sectionId]?.type;
+    return type === "blog_list" || type === "blog_article";
+  });
+}
+
 const emptyClientPageJson: ThemePageJson = {
   pageType: "content",
   version: 1,
@@ -648,14 +656,17 @@ function lightweightSiteForClient(site: Site, pages: ThemePage[]): Site {
 function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePath: string): Site {
   const pageMap = new Map<string, ThemePage>();
   const includeSearchEntries = pageNeedsSearchEntries(activePage);
+  const includeBlogEntries = pageNeedsBlogEntries(activePage, pagePath);
   for (const page of site.pages) {
+    const includeFullContent = includeSearchEntries || (includeBlogEntries && (page.slug === pagePath || page.slug.startsWith("/blog/")));
     if (
       page.slug === pagePath ||
       page.slug === "/" ||
       page.slug === "/404" ||
+      (includeBlogEntries && page.slug.startsWith("/blog/")) ||
       (includeSearchEntries && (["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/")))
     ) {
-      pageMap.set(page.id, lightweightPageForClient(page, includeSearchEntries));
+      pageMap.set(page.id, lightweightPageForClient(page, includeFullContent));
     }
   }
   return lightweightSiteForClient(site, Array.from(pageMap.values()));
@@ -663,6 +674,7 @@ function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePat
 
 function clientSiteForSectionRender(site: Site, activePage: ThemePageJson, pagePath: string): Site {
   const pageMap = new Map<string, ThemePage>();
+  const includeBlogEntries = pageNeedsBlogEntries(activePage, pagePath);
   for (const page of site.pages) {
     if (page.slug === pagePath) {
       pageMap.set(page.id, {
@@ -670,6 +682,8 @@ function clientSiteForSectionRender(site: Site, activePage: ThemePageJson, pageP
         draftJson: activePage,
         publishedJson: activePage
       });
+    } else if (includeBlogEntries && page.slug.startsWith("/blog/")) {
+      pageMap.set(page.id, lightweightPageForClient(page, true));
     } else if (page.slug === "/" || page.slug === "/404") {
       pageMap.set(page.id, lightweightPageForClient(page, false));
     }

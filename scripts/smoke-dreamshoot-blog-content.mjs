@@ -4,6 +4,8 @@ import path from "path";
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 const seoIndexing = fs.readFileSync(path.join(process.cwd(), "src/lib/seo-indexing.ts"), "utf8");
+const storefrontRender = fs.readFileSync(path.join(process.cwd(), "src/lib/storefront-render.tsx"), "utf8");
+const themeRenderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
 
 const checks = [];
 
@@ -192,6 +194,15 @@ assert(
   seoIndexing.includes("if (isLocalHostRequest) return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));") &&
     !seoIndexing.includes("if (isLocalHostRequest) return publicFallbackSitemapUrlsForHost(normalizedHosts);"),
   "local sitemap reads real indexable site pages before falling back"
+);
+assert(
+  themeRenderer.includes('sectionType !== "blog_article"') && themeRenderer.includes('sectionType !== "blog_list"'),
+  "published blog list and article sections server-render instead of lazy-loading empty shells"
+);
+assert(
+  storefrontRender.includes("function pageNeedsBlogEntries") &&
+    (storefrontRender.match(/includeBlogEntries && page\.slug\.startsWith\("\/blog\/"\)/g) ?? []).length >= 2,
+  "storefront render payload keeps blog article pages available to blog list sections"
 );
 
 for (const expected of expectedSites) {

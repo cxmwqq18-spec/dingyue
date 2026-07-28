@@ -133,6 +133,22 @@ type SearchPageEntry = Pick<ThemePageJson, "pageType"> & {
   description: string;
   imageUrl: string;
 };
+type BlogArticleCard = {
+  id: string;
+  slug: string;
+  href: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  imageAlt: string;
+  author: string;
+  publishedAt: string;
+  updatedAt: string;
+  readMinutes: string;
+  tags: string[];
+  guideType: string;
+  sortTime: number;
+};
 
 export function ThemeRenderer({
   site,
@@ -239,6 +255,8 @@ export function ThemeRenderer({
           const shouldLazyRender = mode === "published" &&
             index > 0 &&
             sectionType !== "policy_content" &&
+            sectionType !== "blog_article" &&
+            sectionType !== "blog_list" &&
             !shouldServerRenderPublicSeo &&
             (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
           return shouldLazyRender ? (
@@ -410,6 +428,9 @@ function sectionRendersMainHeading(sectionId: string, section: SectionInstance, 
   }
   if (sectionType === "blog_list") {
     return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.page.pageType === "article" ? "h2" : "h1") === "h1";
+  }
+  if (sectionType === "blog_article") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), "h1") === "h1";
   }
   if (sectionType === "search_results") {
     return normalizedHeadingLevel(setting(section, "headingLevel"), "h2") === "h1";
@@ -1452,7 +1473,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
             ["FAQ", "/faq", "company"],
-            ["Field Notes", "/blog", "company"],
+            ["Blog", "/blog", "company"],
             ["About the Studio", "/about-us", "company"],
             ["Contact the Studio", "/contact-us", "company"],
             ["Creators Circle", "/creators-circle", "company"],
@@ -1467,7 +1488,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
             ["FAQ", "/faq", "company"],
-            ["Guides", "/blog", "company"],
+            ["Blog", "/blog", "company"],
             ["About us", "/about-us", "company"],
             ["Contact us", "/contact-us", "company"],
             ["Creators Circle", "/creators-circle", "company"],
@@ -3260,6 +3281,91 @@ function pageHeroImage(site: Site, page: Site["pages"][number], fallback: string
       .flatMap((section) => [setting(section, "imageUrl"), setting(section, "mediaAssetId"), setting(section, "src"), firstImage(section)])
       .find(Boolean) || fallback;
   return mediaAssetUrl(site, image);
+}
+
+function blogArticleSection(page: Site["pages"][number]): SectionInstance | undefined {
+  const orderedSections = page.publishedJson.sectionsOrder
+    .map((sectionId) => page.publishedJson.sections[sectionId])
+    .filter((section): section is SectionInstance => Boolean(section));
+  return orderedSections.find((section) => section.type === "blog_article") ??
+    (/^\/blog\//.test(page.slug) || page.pageType === "article" ? orderedSections.find((section) => section.type === "rich_text") : undefined);
+}
+
+function articleDateLabel(value: string): string {
+  const text = stripHtml(value);
+  if (!text) return "";
+  const parsed = new Date(text);
+  if (Number.isNaN(parsed.getTime())) return text;
+  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(parsed);
+}
+
+function articleReadTimeLabel(value: string, fallback = "6"): string {
+  const text = stripHtml(value || fallback);
+  if (!text) return "";
+  if (/read/i.test(text)) return text;
+  const minutes = Number.parseInt(text, 10);
+  if (!Number.isFinite(minutes) || minutes <= 0) return text;
+  return `${minutes} min read`;
+}
+
+function articleTags(value: string): string[] {
+  return value
+    .split(/[|,]/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .slice(0, 6);
+}
+
+function articleHeadingsFromHtml(html: string): Array<{ id?: string; label: string; level: number }> {
+  const headings: Array<{ id?: string; label: string; level: number }> = [];
+  const matcher = /<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = matcher.exec(html))) {
+    const level = Number.parseInt(match[1] ?? "2", 10);
+    const attrs = match[2] ?? "";
+    const label = stripHtml(match[3] ?? "");
+    if (!label) continue;
+    const id = attrs.match(/\sid=["']([^"']+)["']/i)?.[1] ?? slugify(label);
+    headings.push({ id, label, level });
+  }
+  return headings.slice(0, 8);
+}
+
+function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[] {
+  return site.pages
+    .filter((page) => page.slug.startsWith("/blog/") && page.slug !== currentPath)
+    .map((page, index): BlogArticleCard | undefined => {
+      const article = blogArticleSection(page);
+      if (!article) return undefined;
+      const title = setting(article, "title", page.title);
+      const body = setting(article, "body", "");
+      const description = setting(article, "summary", page.publishedJson.seo?.description ?? truncateText(body, 160));
+      const imageSetting = setting(article, "imageUrl", "");
+      const imageUrl = imageSetting
+        ? mediaAssetUrl(site, imageSetting)
+        : pageHeroImage(site, page, fallbackImageForSeed(`${site.slug}-${slugify(page.slug)}-${index}`));
+      const publishedAt = setting(article, "publishedAt", "");
+      const updatedAt = setting(article, "updatedAt", "");
+      const sortDate = new Date(updatedAt || publishedAt).getTime();
+      return {
+        id: page.id,
+        slug: page.slug,
+        href: page.slug,
+        title,
+        description,
+        imageUrl,
+        imageAlt: setting(article, "imageAlt", title),
+        author: setting(article, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "MyDreamShoots editorial team"),
+        publishedAt: articleDateLabel(publishedAt),
+        updatedAt: articleDateLabel(updatedAt),
+        readMinutes: articleReadTimeLabel(setting(article, "readMinutes", "6")),
+        tags: articleTags(setting(article, "tags", setting(article, "guideType", ""))),
+        guideType: setting(article, "guideType", isAidreamcapesSite(site) ? "Travel guide" : "AI photo guide"),
+        sortTime: Number.isFinite(sortDate) ? sortDate : 0
+      };
+    })
+    .filter((item): item is BlogArticleCard => Boolean(item))
+    .sort((left, right) => right.sortTime - left.sortTime || left.title.localeCompare(right.title));
 }
 
 export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
@@ -5393,6 +5499,110 @@ function renderLegacySaasSection({
             </div>
           </div>
         </div>
+      </section>
+    );
+  }
+
+  if (type === "blog_article") {
+    const title = setting(section, "title", "Photo guide");
+    const summary = setting(section, "summary", truncateText(setting(section, "body", ""), 180));
+    const author = setting(section, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "MyDreamShoots editorial team");
+    const publishedAt = articleDateLabel(setting(section, "publishedAt", ""));
+    const updatedAt = articleDateLabel(setting(section, "updatedAt", ""));
+    const readMinutes = articleReadTimeLabel(setting(section, "readMinutes", "6"));
+    const body = setting(section, "body", "<p>Photo planning guidance appears here.</p>");
+    const tags = articleTags(setting(section, "tags", setting(section, "guideType", "")));
+    const headings = articleHeadingsFromHtml(body);
+    const coverImage = mediaAssetUrl(site, setting(section, "imageUrl", fallbackImageForSeed(`${site.slug}-${slugify(renderContext.pagePath)}-article`)));
+    const relatedArticles = blogArticleCardsForSite(site, renderContext.pagePath).slice(0, 3);
+    const HeadingTag = setting(section, "headingLevel", "h1") === "h2" ? "h2" : "h1";
+    const primaryCta = setting(section, "primaryCta", isAidreamcapesSite(site) ? "Start a travel set" : "Create my first photo set");
+    const primaryHref = setting(section, "primaryHref", "/login");
+    const secondaryCta = setting(section, "secondaryCta", isAidreamcapesSite(site) ? "Travel Packages" : "Explore packages");
+    const secondaryHref = setting(section, "secondaryHref", "/collections");
+
+    return (
+      <section className="bg-[#F5F8FB] px-5 py-14 text-slate-900 md:py-18" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
+        <article className="mx-auto max-w-4xl">
+          <header className="mx-auto max-w-3xl">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-semibold text-slate-500">
+              {publishedAt ? <span>{publishedAt}</span> : null}
+              <span>{author}</span>
+              <span className="uppercase tracking-[0.12em]">{setting(section, "eyebrow", "Guide")}</span>
+              {readMinutes ? (
+                <span className="inline-flex items-center gap-1">
+                  <Clock3 className="h-4 w-4" strokeWidth={1.8} />
+                  {readMinutes}
+                </span>
+              ) : null}
+            </div>
+            <HeadingTag className="mt-5 text-4xl font-bold text-[var(--site-accent)] md:text-6xl">{title}</HeadingTag>
+            {summary ? <p className="mt-5 text-lg font-medium leading-8 text-slate-700 md:text-xl md:leading-9">{summary}</p> : null}
+            {updatedAt && updatedAt !== publishedAt ? <p className="mt-3 text-sm text-slate-500">Updated {updatedAt}</p> : null}
+          </header>
+
+          <div className="mt-9 aspect-[16/9] overflow-hidden rounded-lg bg-slate-200 shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]">
+            <img className="h-full w-full object-cover" src={coverImage} alt={setting(section, "imageAlt", title)} />
+          </div>
+
+          {headings.length ? (
+            <nav className="mx-auto mt-8 max-w-3xl border-y border-slate-200 py-5" aria-label="Article contents">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">On this page</p>
+              <div className="mt-4 grid gap-2 text-sm font-medium text-slate-700 sm:grid-cols-2">
+                {headings.map((heading) => (
+                  <a className={heading.level === 3 ? "pl-3 transition hover:text-[var(--site-accent)]" : "transition hover:text-[var(--site-accent)]"} href={`#${heading.id}`} key={`${heading.id}-${heading.label}`}>
+                    {heading.label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+          ) : null}
+
+          {tags.length ? (
+            <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center gap-2 text-sm text-slate-600">
+              <Tags className="h-4 w-4 text-[var(--site-accent)]" strokeWidth={1.8} />
+              {tags.map((tag) => (
+                <span className="rounded-full border border-slate-200 bg-white px-3 py-1" key={tag}>{tag}</span>
+              ))}
+            </div>
+          ) : null}
+
+          <div
+            className="mx-auto mt-8 max-w-3xl text-lg leading-9 text-slate-700 [&_a]:font-semibold [&_a]:text-[var(--site-accent)] [&_a]:underline [&_blockquote]:my-7 [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--site-accent)] [&_blockquote]:bg-white [&_blockquote]:px-5 [&_blockquote]:py-4 [&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-[var(--site-accent)] [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[var(--site-accent)] [&_li]:mb-2 [&_ol]:my-5 [&_ol]:pl-6 [&_p]:mb-6 [&_strong]:font-bold [&_strong]:text-slate-900 [&_table]:my-8 [&_table]:w-full [&_table]:overflow-hidden [&_table]:rounded-lg [&_table]:border [&_table]:border-slate-200 [&_td]:border-t [&_td]:border-slate-200 [&_td]:bg-white [&_td]:p-3 [&_th]:bg-white [&_th]:p-3 [&_th]:text-left [&_th]:font-bold [&_th]:text-slate-900 [&_ul]:my-5 [&_ul]:pl-6"
+            dangerouslySetInnerHTML={{ __html: body }}
+          />
+
+          <div className="mx-auto mt-10 max-w-3xl rounded-lg bg-slate-950 p-6 text-white">
+            <p className="text-xl font-bold">{isAidreamcapesSite(site) ? "Plan the next route album" : "Try the workflow yourself"}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-300">{isAidreamcapesSite(site) ? "Choose a destination brief, review credits, and keep delivery inside your private gallery." : "Choose a photo package, review the credit cost, and keep finished images inside your private gallery."}</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950" href={hrefFor(site, primaryHref)}>
+                {primaryCta}
+                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+              </Link>
+              {secondaryCta ? (
+                <Link className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white" href={hrefFor(site, secondaryHref)}>
+                  {secondaryCta}
+                </Link>
+              ) : null}
+            </div>
+          </div>
+
+          {relatedArticles.length ? (
+            <section className="mx-auto mt-12 max-w-3xl border-t border-slate-200 pt-8" aria-labelledby={`${sectionAnchor(section, id)}-related`}>
+              <h2 className="text-2xl font-bold text-slate-950" id={`${sectionAnchor(section, id)}-related`}>Related guides</h2>
+              <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedArticles.map((article) => (
+                  <Link className="group block" href={hrefFor(site, article.href)} key={article.id}>
+                    <img className="aspect-[4/3] w-full rounded-lg object-cover" src={article.imageUrl} alt={article.imageAlt} />
+                    <span className="mt-3 block text-base font-bold leading-6 text-slate-950 group-hover:text-[var(--site-accent)]">{article.title}</span>
+                    <span className="mt-1 block text-sm text-slate-500">{article.readMinutes}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
+        </article>
       </section>
     );
   }
@@ -12207,23 +12417,66 @@ function SectionView({
     const spanishBlog = isSpanishXbySite(site);
     const aidreamcapesBlog = isAidreamcapesSite(site);
     const guideType = setting(section, "guideType", spanishBlog ? aidreamcapesBlog ? "Nota de viaje IA" : "Guia de fotos IA" : "AI photo guide");
-    const fallbackArticles = spanishBlog
+    const fallbackArticles: BlogArticleCard[] = (spanishBlog
       ? aidreamcapesBlog
         ? ["Como preparar fotos fuente", "Creditos y entrega de ruta", "Planificar un destino visual"]
         : ["Como elegir selfies fuente", "Creditos y entrega del album", "Planificar un set tematico IA"]
-      : ["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"];
+      : ["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"]).map((title, index) => ({
+        id: `fallback_blog_${index}`,
+        slug: "/blog",
+        href: "/blog",
+        title,
+        description: setting(section, "body", spanishBlog ? "Guia editorial para preparar mejores resultados de fotos con IA." : "Editorial guidance for planning better AI photo results."),
+        imageUrl: mediaAssetUrl(site, fallbackImageForSeed(`${site.slug}-blog-${index}`)),
+        imageAlt: title,
+        author: aidreamcapesBlog ? "Aidreamcapes editorial team" : "MyDreamShoots editorial team",
+        publishedAt: "",
+        updatedAt: "",
+        readMinutes: articleReadTimeLabel("6"),
+        tags: [guideType],
+        guideType,
+        sortTime: 0
+      }));
+    const articles = blogArticleCardsForSite(site, renderContext.pagePath);
+    const visibleArticles = articles.length ? articles : fallbackArticles;
     const defaultHeadingLevel = renderContext.page.pageType === "article" ? "h2" : "h1";
     const HeadingTag = setting(section, "headingLevel", defaultHeadingLevel) === "h2" ? "h2" : "h1";
     return (
-      <section className="px-5 py-10">
-        <div className="mx-auto max-w-[var(--site-content-width)] rounded-[1.4rem] border border-black/10 bg-white p-6">
-          <HeadingTag className="text-2xl font-semibold">{setting(section, "title", spanishBlog ? aidreamcapesBlog ? "Notas de campo" : "Guias" : "Guides")}</HeadingTag>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {fallbackArticles.map((title) => (
-              <article className="rounded-xl border border-black/10 p-4" key={title}>
-                <p className="font-medium">{title}</p>
-                <p className="mt-2 text-xs leading-5 text-zinc-500">{guideType}</p>
-              </article>
+      <section className="px-5 py-12" data-saas-section-renderer="blog_list" id={sectionAnchor(section, id)}>
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-3xl">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{guideType}</p>
+              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
+                {setting(section, "title", spanishBlog ? aidreamcapesBlog ? "Notas de campo" : "Guias" : "Guides")}
+              </HeadingTag>
+              {setting(section, "body") ? <p className="mt-4 text-sm leading-7 text-zinc-600">{setting(section, "body")}</p> : null}
+            </div>
+            <span className="inline-flex w-fit rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs text-zinc-500">
+              {visibleArticles.length} {visibleArticles.length === 1 ? "article" : "articles"}
+            </span>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {visibleArticles.map((article) => (
+              <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-white shadow-[0_24px_70px_-62px_rgba(24,24,27,0.35)] transition hover:-translate-y-1" href={hrefFor(site, article.href)} key={article.id}>
+                <div className="aspect-[16/9] overflow-hidden bg-zinc-100">
+                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={article.imageUrl} alt={article.imageAlt} />
+                </div>
+                <article className="p-5">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-zinc-500">
+                    <span>{article.author}</span>
+                    {article.publishedAt ? <span>/ {article.publishedAt}</span> : null}
+                    {article.readMinutes ? <span>/ {article.readMinutes}</span> : null}
+                  </div>
+                  <h3 className="mt-3 text-lg font-semibold leading-tight text-zinc-950 transition group-hover:text-[var(--site-accent)]">{article.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-zinc-600">{article.description}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {(article.tags.length ? article.tags : [article.guideType]).slice(0, 3).map((tag) => (
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] text-zinc-500" key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
