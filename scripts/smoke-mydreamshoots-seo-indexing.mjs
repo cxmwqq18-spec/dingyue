@@ -50,6 +50,7 @@ const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
 const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
 const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
+const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
@@ -163,6 +164,29 @@ assert(
     seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", normalized)') &&
     seoIndexing.includes('`/tools/${slug}`'),
   "sitemap URL expansion must include explicit SEO directory pages using canonical collection paths"
+);
+assert(
+  seoIndexing.includes("DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS") &&
+    seoIndexing.includes('"/tools/creator-portrait"') &&
+    seoIndexing.includes('"/tools/background-remover"') &&
+    seoIndexing.includes('"/tools/fashion-reel"') &&
+    seoIndexing.includes("state.toolMenuItems ?? []") &&
+    seoIndexing.includes("state.creativePackCategories ?? []") &&
+    seoIndexing.includes("collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson)") &&
+    seoIndexing.includes('"/about-us"') &&
+    seoIndexing.includes('"/contact-us"') &&
+    seoIndexing.includes('"/children-privacy"') &&
+    seoIndexing.includes('"/state-privacy"'),
+  "sitemap URL expansion must cover storefront menu tools, package categories, theme hrefs, and canonical public support pages"
+);
+assert(
+  storefrontStateRelational.includes("creativePackCategories.map(toCreativePackCategory)") &&
+    storefrontStateRelational.includes("toolCategories.map(toToolCategory)") &&
+    storefrontStateRelational.includes("toolMenuItems.map(toToolMenuItem)") &&
+    storefrontStateRelational.includes("prisma.creativePackCategory.findMany") &&
+    storefrontStateRelational.includes("prisma.toolMenuItem.findMany") &&
+    storefrontStateRelational.includes("categoryRecord: { include: { parent: true } }"),
+  "relational platform state used by sitemap must include storefront navigation categories and tool menu items"
 );
 assert(
   sitemapRoute.includes('export const dynamic = "force-dynamic"') &&
