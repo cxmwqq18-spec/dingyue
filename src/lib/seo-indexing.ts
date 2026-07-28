@@ -32,7 +32,83 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/shipping",
   "/faq",
   "/blog",
-  "/blog/preparing-source-photos"
+  "/blog/preparing-source-photos",
+  "/blog/choosing-ai-photo-packages",
+  "/blog/private-gallery-and-credits-guide",
+  "/blog/creator-photo-package-guide",
+  "/blog/avatar-photo-package-guide",
+  "/blog/wedding-photo-package-guide",
+  "/blog/cultural-wedding-photo-guide",
+  "/blog/couple-photo-package-guide",
+  "/blog/creative-photo-package-guide",
+  "/blog/beauty-style-photo-guide",
+  "/blog/sports-fan-photo-guide",
+  "/blog/video-photo-package-guide",
+  "/blog/utility-image-prep-guide",
+  "/blog/headshot-photo-package-guide",
+  "/blog/seasonal-photo-package-guide",
+  "/blog/photo-ai-tool-guide",
+  "/blog/ai-photo-edit-tool-guide",
+  "/blog/video-ai-tool-guide",
+  "/blog/ai-video-add-ons-photo-package-guide",
+  "/blog/anime-avatar-photo-package-guide",
+  "/blog/christmas-couple-photo-package-guide",
+  "/blog/christmas-photos-photo-package-guide",
+  "/blog/creator-portraits-photo-package-guide",
+  "/blog/cyberpunk-photo-package-guide",
+  "/blog/desi-wedding-photo-package-guide",
+  "/blog/engagement-photo-package-guide",
+  "/blog/fashion-editorial-photo-package-guide",
+  "/blog/gala-photos-photo-package-guide",
+  "/blog/hairstyle-photo-package-guide",
+  "/blog/holiday-photo-package-guide",
+  "/blog/indian-wedding-photo-package-guide",
+  "/blog/mafia-photo-package-guide",
+  "/blog/magic-upscaler-photo-package-guide",
+  "/blog/nature-photo-package-guide",
+  "/blog/product-style-photo-package-guide",
+  "/blog/professional-headshots-photo-package-guide",
+  "/blog/profile-cards-photo-package-guide",
+  "/blog/social-cards-photo-package-guide",
+  "/blog/travel-scene-pack-photo-package-guide",
+  "/blog/valentine-photos-photo-package-guide",
+  "/blog/virtual-try-on-photo-package-guide",
+  "/blog/wedding-portraits-photo-package-guide",
+  "/blog/world-cup-fan-photos-photo-package-guide",
+  "/blog/boudoir-photo-package-guide",
+  "/blog/headshot-tool-guide",
+  "/blog/creator-portrait-tool-guide",
+  "/blog/world-cup-fan-photos-tool-guide",
+  "/blog/cyberpunk-portrait-tool-guide",
+  "/blog/gala-photo-tool-guide",
+  "/blog/noir-portrait-tool-guide",
+  "/blog/anime-avatar-tool-guide",
+  "/blog/nature-adventure-tool-guide",
+  "/blog/fashion-editorial-tool-guide",
+  "/blog/product-lifestyle-tool-guide",
+  "/blog/background-changer-tool-guide",
+  "/blog/background-remover-tool-guide",
+  "/blog/magic-eraser-tool-guide",
+  "/blog/photo-enhancer-tool-guide",
+  "/blog/portrait-retouch-tool-guide",
+  "/blog/unblur-image-tool-guide",
+  "/blog/color-correction-tool-guide",
+  "/blog/old-photo-restoration-tool-guide",
+  "/blog/edit-by-prompt-tool-guide",
+  "/blog/magic-upscaler-tool-guide",
+  "/blog/image-to-video-tool-guide",
+  "/blog/profile-clip-tool-guide",
+  "/blog/fan-poster-motion-tool-guide",
+  "/blog/creator-intro-video-tool-guide",
+  "/blog/product-teaser-clip-tool-guide",
+  "/blog/animated-avatar-tool-guide",
+  "/blog/fashion-reel-tool-guide",
+  "/blog/album-story-video-tool-guide",
+  "/blog/portrait-motion-video-theme-guide",
+  "/blog/travel-story-video-theme-guide",
+  "/blog/social-cards-video-theme-guide",
+  "/blog/wedding-memory-video-theme-guide",
+  "/blog/product-teaser-video-theme-guide"
 ];
 const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/",
@@ -46,7 +122,86 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/refunds",
   "/content",
   "/shipping",
-  "/faq"
+  "/faq",
+  "/blog",
+  "/blog/planning-dreamscape-source-photos",
+  "/blog/destination-mood-references",
+  "/blog/route-album-credit-planning",
+  "/blog/route-portraits-category-guide",
+  "/blog/local-moments-category-guide",
+  "/blog/open-air-routes-category-guide",
+  "/blog/travel-story-kits-category-guide",
+  "/blog/lifestyle-routes-category-guide",
+  "/blog/professional-celebrations-category-guide",
+  "/blog/destination-tools-guide",
+  "/blog/travel-moment-tools-guide",
+  "/blog/adventure-tools-guide",
+  "/blog/creator-travel-tools-guide",
+  "/blog/route-portrait-albums-photo-package-guide",
+  "/blog/coastal-light-sets-photo-package-guide",
+  "/blog/old-quarter-walks-photo-package-guide",
+  "/blog/desert-road-stories-photo-package-guide",
+  "/blog/golden-hour-route-stories-photo-package-guide",
+  "/blog/island-resort-scenes-photo-package-guide",
+  "/blog/market-morning-walks-photo-package-guide",
+  "/blog/nature-portrait-studio-photo-package-guide",
+  "/blog/postcard-story-sets-photo-package-guide",
+  "/blog/private-villa-stays-photo-package-guide",
+  "/blog/road-trip-frames-photo-package-guide",
+  "/blog/scenic-overlooks-photo-package-guide",
+  "/blog/shared-route-albums-photo-package-guide",
+  "/blog/snow-lodge-escapes-photo-package-guide",
+  "/blog/travel-journal-covers-photo-package-guide",
+  "/blog/alpine-trail-frames-photo-package-guide",
+  "/blog/cafe-street-stories-photo-package-guide",
+  "/blog/city-light-night-walks-photo-package-guide",
+  "/blog/family-travel-keepsakes-photo-package-guide",
+  "/blog/lagoon-route-studies-photo-package-guide",
+  "/blog/lake-house-weekends-photo-package-guide",
+  "/blog/rail-journey-portraits-photo-package-guide",
+  "/blog/rainy-city-breaks-photo-package-guide",
+  "/blog/rooftop-city-nights-photo-package-guide",
+  "/blog/route-moodboards-photo-package-guide",
+  "/blog/solo-traveler-profiles-photo-package-guide",
+  "/blog/wellness-retreat-scenes-photo-package-guide",
+  "/blog/evening-route-portraits-photo-package-guide",
+  "/blog/boudoir-editorial-portraits-photo-package-guide",
+  "/blog/hairstyle-try-on-stories-photo-package-guide",
+  "/blog/professional-headshot-studio-photo-package-guide",
+  "/blog/milestone-postcard-sets-photo-package-guide",
+  "/blog/holiday-couple-cards-photo-package-guide",
+  "/blog/gala-night-portraits-photo-package-guide",
+  "/blog/heritage-celebration-portraits-photo-package-guide",
+  "/blog/route-portrait-engine-tool-guide",
+  "/blog/coastal-portrait-tool-guide",
+  "/blog/island-resort-scenes-tool-guide",
+  "/blog/scenic-overlook-story-tool-guide",
+  "/blog/travel-profile-story-tool-guide",
+  "/blog/editorial-getaway-tool-guide",
+  "/blog/cafe-street-story-tool-guide",
+  "/blog/cinematic-travel-tool-guide",
+  "/blog/route-moodboard-tool-guide",
+  "/blog/social-keepsake-tool-guide",
+  "/blog/lagoon-portrait-mixer-tool-guide",
+  "/blog/desert-road-portraits-tool-guide",
+  "/blog/rail-journey-frames-tool-guide",
+  "/blog/market-morning-portraits-tool-guide",
+  "/blog/rooftop-skyline-set-tool-guide",
+  "/blog/rainy-city-album-tool-guide",
+  "/blog/private-villa-portraits-tool-guide",
+  "/blog/wellness-retreat-scenes-tool-guide",
+  "/blog/snow-lodge-portraits-tool-guide",
+  "/blog/lake-house-weekend-tool-guide",
+  "/blog/shared-route-album-tool-guide",
+  "/blog/family-travel-keepsakes-tool-guide",
+  "/blog/golden-hour-route-story-tool-guide",
+  "/blog/solo-traveler-profile-set-tool-guide",
+  "/blog/travel-journal-cover-maker-tool-guide",
+  "/blog/private-album-curator-tool-guide",
+  "/blog/route-motion-video-theme-guide",
+  "/blog/coastal-motion-video-theme-guide",
+  "/blog/memory-film-video-theme-guide",
+  "/blog/profile-travel-video-theme-guide"
 ];
 
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
@@ -87,7 +242,6 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
 ];
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
-const PUBLIC_HOST_FALLBACK_PATHS = Array.from(new Set([...FALLBACK_INDEXABLE_PATHS, ...AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS]));
 const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;
 const AIDREAMCAPES_FALLBACK_SITE = { id: AIDREAMCAPES_SITE_ID, slug: "aidreamcapes", name: "Aidreamcapes", primaryDomain: "www.aidreamcapes.com" } as Site;
 const CANONICAL_PUBLIC_PATHS = new Map([
@@ -557,19 +711,18 @@ function publicFallbackSitemapUrlsForHost(hosts: string[]): string[] {
   if (hosts.some(isMydreamshootsHost)) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
   if (hosts.some(isLocalDevelopmentHost)) {
     return [
-      ...fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, PUBLIC_HOST_FALLBACK_PATHS),
-      ...fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, PUBLIC_HOST_FALLBACK_PATHS)
+      ...fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS),
+      ...fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS)
     ];
   }
-  return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, PUBLIC_HOST_FALLBACK_PATHS);
+  return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
 }
 
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
-  if (!normalizedHost) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, PUBLIC_HOST_FALLBACK_PATHS);
+  if (!normalizedHost) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
   const isLocalHostRequest = normalizedHosts.some(isLocalDevelopmentHost);
-  if (isLocalHostRequest) return publicFallbackSitemapUrlsForHost(normalizedHosts);
   const shouldUseLegacyStateFirst = isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
