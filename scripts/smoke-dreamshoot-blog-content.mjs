@@ -201,6 +201,10 @@ assert(
   "published blog list and article sections server-render instead of lazy-loading empty shells"
 );
 assert(
+  themeRenderer.includes('pagePath === "/blog"') && themeRenderer.includes("keptIntro") && themeRenderer.includes("simpleBlogTitle"),
+  "theme renderer keeps the blog homepage to a simple intro and article list"
+);
+assert(
   storefrontRender.includes("function pageNeedsBlogEntries") &&
     (storefrontRender.match(/includeBlogEntries && page\.slug\.startsWith\("\/blog\/"\)/g) ?? []).length >= 2,
   "storefront render payload keeps blog article pages available to blog list sections"

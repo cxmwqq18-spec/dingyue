@@ -404,7 +404,19 @@ type PhotoPackageMegaGroup = {
   }>;
 };
 
-function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, _pagePath: string, _site: Site): Array<[string, SectionInstance]> {
+function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, _site: Site): Array<[string, SectionInstance]> {
+  if (pagePath === "/blog") {
+    let keptIntro = false;
+    return entries.filter(([, section]) => {
+      const sectionType = canonicalSectionType(section.type);
+      if (sectionType === "blog_list") return true;
+      if (sectionType === "rich_text" && !keptIntro) {
+        keptIntro = true;
+        return true;
+      }
+      return false;
+    });
+  }
   return entries;
 }
 
@@ -413,7 +425,7 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
 }
 
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
-  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/faq", "/help", "/search", "/cart"]);
+  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
   const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
   return (semanticH1Paths.has(pagePath) || page.pageType === "article") && firstRichTextId === sectionId ? "h1" : "h2";
 }
@@ -12093,6 +12105,7 @@ function SectionView({
 
   if (section.type === "rich_text") {
     const spanishXbyRichText = isSpanishXbySite(site);
+    const aidreamcapesRichText = isAidreamcapesSite(site);
     const rawEyebrow = setting(section, "eyebrow", "");
     const eyebrow = spanishXbyRichText
       ? rawEyebrow
@@ -12120,6 +12133,23 @@ function SectionView({
     const localizedHeading = spanishXbyRichText
       ? rawHeading.replace(/^About\b/i, "Sobre").replace(/^Contact\b/i, "Contacto")
       : rawHeading;
+    if (renderContext.pagePath === "/blog" && renderContext.page.pageType === "blog") {
+      const simpleBlogTitle = spanishXbyRichText
+        ? aidreamcapesRichText ? "Notas" : "Blog"
+        : aidreamcapesRichText ? "Field Notes" : "Blog";
+      return (
+        <section className="bg-[#101114] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, id)}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="mx-auto max-w-4xl text-center">
+              <HeadingTag className="text-4xl font-semibold leading-none tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">
+                {simpleBlogTitle}
+              </HeadingTag>
+              <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/62 md:text-lg">{body}</p>
+            </div>
+          </div>
+        </section>
+      );
+    }
     return (
       <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -12441,6 +12471,34 @@ function SectionView({
     const visibleArticles = articles.length ? articles : fallbackArticles;
     const defaultHeadingLevel = renderContext.page.pageType === "article" ? "h2" : "h1";
     const HeadingTag = setting(section, "headingLevel", defaultHeadingLevel) === "h2" ? "h2" : "h1";
+    const blogHomeList = renderContext.pagePath === "/blog" && renderContext.page.pageType === "blog";
+    if (blogHomeList) {
+      return (
+        <section className="bg-[#101114] px-5 pb-16 text-white md:pb-24" data-saas-section-renderer="blog_list" id={sectionAnchor(section, id)}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <h2 className="sr-only">{setting(section, "title", spanishBlog ? aidreamcapesBlog ? "Notas" : "Blog" : "Blog articles")}</h2>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {visibleArticles.map((article) => (
+                <Link className="group overflow-hidden rounded-lg border border-white/10 bg-[#1b2635] text-white shadow-[0_24px_80px_-64px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24" href={hrefFor(site, article.href)} key={article.id}>
+                  <div className="aspect-[16/9] overflow-hidden bg-white/[0.06]">
+                    <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={article.imageUrl} alt={article.imageAlt} />
+                  </div>
+                  <article className="p-5 md:p-6">
+                    <h3 className="text-xl font-semibold leading-tight tracking-tight text-white">{article.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-white/58">{article.description}</p>
+                    <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-white/48">
+                      <span>{article.author}</span>
+                      {article.publishedAt ? <span>/ {article.publishedAt}</span> : null}
+                      {article.readMinutes ? <span>/ {article.readMinutes}</span> : null}
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
     return (
       <section className="px-5 py-12" data-saas-section-renderer="blog_list" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
