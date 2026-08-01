@@ -14,7 +14,7 @@ import {
   prepareCompressedCustomerImage,
   writeCustomerAssetFileShared
 } from "@/lib/customer-asset-storage";
-import { replaceSettledGenerationOutputStorageKeyRelational, settleGenerationJobRelational, updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
+import { releaseStaleActiveGenerationJobRelational, replaceSettledGenerationOutputStorageKeyRelational, settleGenerationJobRelational, updateGenerationJobStatusRelational } from "@/lib/stores/job-store";
 import { getPlatformAiProviderRelational } from "@/lib/stores/platform-store";
 import {
   HUITU_OPENAPI_PROVIDER_CURRENCY,
@@ -23,6 +23,12 @@ import {
   fetchHuituOpenApiVideoTask
 } from "@/lib/huitu-openapi-video";
 import {
+  createTokengoMediaVideoTask,
+  fetchTokengoMediaVideoTask,
+  normalizeTokengoMediaBaseUrl,
+  resolveTokengoMediaResultUrl
+} from "@/lib/tokengo-media-video";
+import {
   signWorkerLocalAssetDownload,
   signWorkerCallback,
   getCachedWorkerProviderSecret,
@@ -30,14 +36,31 @@ import {
   type WorkerOutputSlot,
   type WorkerPayload
 } from "@/lib/worker";
+import {
+  abortLocalWorkerProcesses,
+  isLocalWorkerAbortError,
+  registerLocalWorkerProcess,
+  sleepWithLocalWorkerAbort,
+  throwIfLocalWorkerAborted
+} from "@/lib/local-worker-abort-registry";
 import { DEFAULT_VIDEO_RESOLUTION, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelFamily, normalizeVideoResolution, type VideoModelFamily } from "@/lib/video-frame-config";
-import { isHuituOpenApiBaseUrl, videoProviderMatchesModelFamily, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
+import { orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderMatchesModelFamily, videoProviderModelFamilyForProvider, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { isVideoProviderModel } from "@/lib/video-provider-limits";
 import {
   attachVideoProviderFailure,
   normalizeVideoProviderFailure,
   videoProviderFailureFromError,
   type VideoProviderFailure
 } from "@/lib/video-provider-policy";
+import {
+  buildMinimalVideoProviderPromptText,
+  videoProviderUserPrompt
+} from "@/lib/video-provider-prompt";
+import {
+  videoProviderCreateTimeoutMs as configuredVideoProviderCreateTimeoutMs,
+  videoProviderWorkerTimeoutMs
+} from "@/lib/video-provider-timeouts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -92,6 +115,13 @@ function shouldUseSharpForWorkerImages() {
   return process.env.NODE_ENV !== "production";
 }
 
+function shouldUseSharpForVideoReferenceImages() {
+  const explicit = process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_USE_SHARP?.trim();
+  if (explicit === "1") return true;
+  if (explicit === "0" || process.env.LOCAL_AI_WORKER_DISABLE_SHARP === "1") return false;
+  return process.env.NODE_ENV !== "production";
+}
+
 type ImageGenerationResponse = {
   data?: Array<{ b64_json?: string; image_base64?: string }>;
   output?: Array<{ b64_json?: string; image_base64?: string }>;
@@ -141,15 +171,13 @@ type VideoStatusResponse = {
   url?: string;
   result_type?: string;
   video?: { url?: string; duration?: number };
-  result?: { url?: string; result_url?: string; video_url?: string };
+  result?: { url?: string; result_url?: string; video_url?: string; videos?: Array<{ url?: string; result_url?: string; video_url?: string }>; images?: Array<{ url?: string; result_url?: string }> };
   output?: { url?: string; result_url?: string; video_url?: string } | Array<{ url?: string; result_url?: string; video_url?: string }>;
   error?: unknown;
   message?: string;
   cost?: number;
   creditCost?: number;
 };
-
-type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi";
 
 type WorkerImageProvider = WorkerPayload["aiProviderFallback"]["providers"][number];
 type GeneratedOutput = {
@@ -237,7 +265,7 @@ function safeImagePrompt(value: string) {
 
 function isVideoGenerationModel(model: string) {
   const normalized = model.trim().toLowerCase();
-  return normalized.includes("video") || normalized.includes("grok-imagine-video");
+  return isVideoProviderModel(normalized);
 }
 
 function normalizeVideoGenerationModel(model: string) {
@@ -246,7 +274,7 @@ function normalizeVideoGenerationModel(model: string) {
 
 function isImageToVideoModel(model: string) {
   const normalized = model.trim().toLowerCase();
-  return normalized.includes("grok-imagine-video") || normalized.includes("grok-video-") || normalized.includes("image-to-video") || normalized.includes("i2v");
+  return normalized.includes("grok-imagine") || normalized.includes("grok-video-") || normalized.includes("image-to-video") || normalized.includes("i2v") || normalized.startsWith("veo-");
 }
 
 function isSmartPickLidBaseUrl(baseUrl: string) {
@@ -293,32 +321,60 @@ function usesProxyOpenAiVideoEndpoint(baseUrl: string) {
   return isSmartPickLidBaseUrl(baseUrl) || isMagic666BaseUrl(baseUrl) || is2KenBaseUrl(baseUrl);
 }
 
+function proxyOpenAiVideoBaseUrl(baseUrl: string) {
+  const trimmed = baseUrl.trim().replace(/\/+$/, "");
+  return usesProxyOpenAiVideoEndpoint(trimmed) ? trimmed.replace(/\/v1$/, "") : trimmed;
+}
+
 function openAiVideoCreateEndpoint(baseUrl: string) {
-  return `${baseUrl}${usesProxyOpenAiVideoEndpoint(baseUrl) ? "/v1/videos" : "/v1/videos/generations"}`;
+  const endpointBaseUrl = proxyOpenAiVideoBaseUrl(baseUrl);
+  return `${endpointBaseUrl}${usesProxyOpenAiVideoEndpoint(endpointBaseUrl) ? "/v1/videos" : "/v1/videos/generations"}`;
+}
+
+function openAiVideoStatusEndpoint(baseUrl: string, taskId: string) {
+  return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/videos/${encodeURIComponent(taskId)}`;
+}
+
+function openAiVideoContentEndpoint(baseUrl: string, taskId: string) {
+  return `${openAiVideoStatusEndpoint(baseUrl, taskId)}/content`;
 }
 
 function isGrokImagineVideoModel(model: string) {
   return model.trim().toLowerCase().includes("grok-imagine-video");
 }
 
+function isSmartPickLidJsonVideoModel(model: string) {
+  const normalized = model.trim().toLowerCase();
+  return isGrokImagineVideoModel(normalized) || normalized.includes("grok-imagine-1.5") || normalized.startsWith("veo-");
+}
+
 function videoProviderModelCandidates(model: string, params?: { protocol?: VideoProviderProtocol; referenceAssetCount?: number; baseUrl?: string }) {
   const normalizedModel = normalizeVideoGenerationModel(model);
   const protocol = params?.protocol;
   const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
+  if (protocol === "tokengo-media") return [normalizedModel];
   if (protocol === "huitu-openapi") return [normalizedModel];
   if (protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "")) {
-    const normalizedFirstCandidates = referenceAssetCount > 0
-      ? [
-          normalizedModel === "grok-imagine-video" || normalizedModel.startsWith("grok-video-3-")
-            ? normalizedModel
-            : ""
-        ]
-      : [normalizedModel];
+    const smartPickLidReferenceCandidates = [
+      "grok-imagine-video",
+      normalizedModel,
+      "grok-imagine-video-special",
+      "grok-imagine-1.5-special",
+      "grok-imagine-1.5",
+      "grok-video-3-pro",
+      "grok-video-3-max"
+    ];
+    const smartPickLidTextCandidates = [
+      "grok-imagine-video",
+      normalizedModel,
+      "grok-imagine-video-special",
+      "grok-imagine-1.5-special",
+      "grok-imagine-1.5"
+    ];
     const referenceCandidates = referenceAssetCount > 0
-      ? ["grok-imagine-video", "grok-video-3-pro", "grok-video-3-max"]
-      : ["grok-imagine-video"];
+      ? smartPickLidReferenceCandidates
+      : smartPickLidTextCandidates;
     return Array.from(new Set([
-      ...normalizedFirstCandidates,
       ...referenceCandidates
     ].filter(Boolean)));
   }
@@ -400,7 +456,7 @@ function requestedModelOverride(payload: WorkerPayload) {
 
 function requestedVideoModelFamily(payload: WorkerPayload): VideoModelFamily {
   const fields = recordValue(payload.params.fields);
-  const selection = recordValue(payload.providerSelection);
+  const selection = recordValue(payload.providerSelection) ?? {};
   return normalizeVideoModelFamily(
     textValue(payload.params.videoModelFamily) ||
     textValue(payload.params.modelFamily) ||
@@ -433,7 +489,7 @@ function isVideoGenerationRequest(payload: WorkerPayload) {
 
 function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
   const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
-  const selection = recordValue(payload.providerSelection);
+  const selection = recordValue(payload.providerSelection) ?? {};
   const selectedProviderId = textValue(selection?.providerId);
   const selectedProvider = selectedProviderId
     ? imageProviders.find((provider) => provider.id === selectedProviderId)
@@ -451,31 +507,29 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
   return [...preferredProviders, ...fallbackProviders];
 }
 
+function isTokengoGrokImagine15VideoProvider(provider: WorkerImageProvider) {
+  return isTokengoMediaBaseUrl(normalizeBaseUrl(provider.aiUrl ?? "")) &&
+    provider.modelType?.trim().toLowerCase() === "grok-imagine-1.5";
+}
+
 function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
   const selectedModelFamily = requestedVideoModelFamily(payload);
   const videoProviders = payload.aiProviderFallback.providers.filter((provider) =>
     provider.id &&
     provider.enabled !== false &&
     provider.providerType !== "image" &&
-    isVideoGenerationModel(provider.modelType) &&
+    (provider.providerType === "video" || isVideoGenerationModel(provider.modelType)) &&
     videoProviderMatchesModelFamily(provider, selectedModelFamily)
   );
-  const selection = recordValue(payload.providerSelection);
-  const selectedProviderId = textValue(selection?.providerId);
-  const selectedProvider = selectedProviderId
-    ? videoProviders.find((provider) => provider.id === selectedProviderId)
-    : undefined;
-
-  if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
-  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && selectedProvider) return [selectedProvider];
-
-  const preferredProviders = Array.from(new Map([
-    ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
-    ...videoProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
-  ]).values());
-  const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
-  const fallbackProviders = videoProviders.filter((provider) => !preferredIds.has(provider.id));
-  return [...preferredProviders, ...fallbackProviders];
+  const ordered = orderSelectableAiProviderFallbackCandidates(videoProviders, payload.providerSelection);
+  const selection = recordValue(payload.providerSelection) ?? {};
+  if (selection.mode === "fixed_provider" || selection.mode === "preferred_provider") return ordered;
+  const hasAtMostOneReference = videoFrameAssets(payload).length <= 1;
+  const tokengoSingleReferenceProviders = ordered.filter(isTokengoGrokImagine15VideoProvider);
+  const otherVideoProviders = ordered.filter((provider) => !isTokengoGrokImagine15VideoProvider(provider));
+  return hasAtMostOneReference
+    ? [...tokengoSingleReferenceProviders, ...otherVideoProviders]
+    : [...otherVideoProviders, ...tokengoSingleReferenceProviders];
 }
 
 function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
@@ -516,12 +570,15 @@ function videoSceneImageProviderAttempts() {
 }
 
 function videoProviderTimeoutMs() {
-  return Math.max(60_000, Number(process.env.LOCAL_AI_WORKER_VIDEO_TIMEOUT_MS ?? "900000") || 900_000);
+  return videoProviderWorkerTimeoutMs();
 }
 
 function videoProviderCreateTimeoutMs(timeoutMs: number) {
-  const configured = Number(process.env.LOCAL_AI_WORKER_VIDEO_CREATE_TIMEOUT_MS ?? "180000") || 180_000;
-  return Math.max(60_000, Math.min(configured, timeoutMs));
+  return Math.min(configuredVideoProviderCreateTimeoutMs(), timeoutMs);
+}
+
+function videoCreateOrphanWatchdogMs() {
+  return videoProviderCreateTimeoutMs(videoProviderTimeoutMs()) + 2 * 60_000 + 10_000;
 }
 
 function videoProviderPollIntervalMs(elapsedMs = 0) {
@@ -537,10 +594,6 @@ function providerAttempts() {
 function videoProviderAttempts() {
   if (process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_RETRIES !== "1") return 1;
   return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_PROVIDER_ATTEMPTS ?? "1") || 1, 2));
-}
-
-function shouldAllowPaidVideoProviderFallback() {
-  return process.env.LOCAL_AI_WORKER_ALLOW_PAID_VIDEO_PROVIDER_FALLBACK === "1";
 }
 
 function errorMessage(error: unknown): string {
@@ -730,20 +783,46 @@ function promptForOutputSlot(prompt: string, slotIndex: number, totalCount: numb
   ].join("\n\n");
 }
 
+function buildVideoSkillPackQualityPrompt(params: {
+  aspectRatio: string;
+  duration: string;
+  frameCount: number;
+  modelFamily: VideoModelFamily;
+  resolution: string;
+}) {
+  return [
+    "Latest installed AI video skill-pack quality layer: treat short customer notes as drafts and upgrade them into production-ready video direction while preserving the user's intent.",
+    "Hook and beat logic: the first 0-3 seconds must have a clear hook or story function. Every visible beat must advance action, prove a selling point, change emotion, or increase pressure.",
+    "Renderable detail rule: each beat needs one environmental pressure, one physical micro-action, and one sound or visual motif. Replace vague style words with concrete visible facts.",
+    "Camera and final image: use one motivated primary camera move, smooth acceleration and deceleration, readable scene geometry, and a clear final frame.",
+    params.frameCount > 0
+      ? `Reference continuity: use all ${params.frameCount} ordered reference frame${params.frameCount === 1 ? "" : "s"} as binding visual evidence.`
+      : `Text-to-video continuity: create one ${params.duration}-second ${params.aspectRatio} ${params.resolution.toUpperCase()} clip from the written direction without inventing unrelated preset scenes.`,
+    params.modelFamily === "grok"
+      ? "Grok adapter: write the supplier prompt in plain natural English, keep duration/aspect/resolution as request settings, describe reference images by role, and do not use Seedance @Image/@Video syntax."
+      : "Gemini adapter: keep frame references explicit, concise, and policy-safe. Use concrete visual actions and avoid unsupported real-person reference wording when the selected provider cannot use it."
+  ].join("\n");
+}
+
 function buildVideoQualitySystemPrompt(params: {
   aspectRatio: string;
   duration: string;
   frameCount: number;
+  modelFamily: VideoModelFamily;
   resolution: string;
 }) {
+  const providerContract = params.frameCount > 0
+    ? `Provider contract: create exactly one ${params.duration}-second image-to-video MP4 at ${params.aspectRatio} ${params.resolution.toUpperCase()} from the ordered input reference image${params.frameCount === 1 ? "" : "s"}.`
+    : `Provider contract: create exactly one ${params.duration}-second text-to-video MP4 at ${params.aspectRatio} ${params.resolution.toUpperCase()} from the written customer direction.`;
   return [
     "Internal video quality system: these rules are mandatory and have higher priority than the user direction when quality, identity, anatomy, continuity, or output cleanliness would otherwise degrade.",
-    `Provider contract: create exactly one ${params.duration}-second image-to-video MP4 at ${params.aspectRatio} ${params.resolution.toUpperCase()} from the ordered input reference image${params.frameCount === 1 ? "" : "s"}.`,
+    buildVideoSkillPackQualityPrompt(params),
+    providerContract,
     "Prompt hierarchy: ordered frame images and subject identity first; then continuity, anatomy, motion, and camera rules; then user direction; then theme style. If a user direction conflicts with identity preservation, natural anatomy, or clean output, keep the closest realistic interpretation instead.",
     params.frameCount > 0
       ? "Reference lock: uploaded frame images are binding visual evidence. The video must visibly derive from those images; if motion is difficult, simplify the action instead of replacing the subjects, setting, or requested interaction."
       : "Text-to-video mode: no frame image was uploaded. Follow the written customer direction as the source of truth and do not borrow unrelated preset scenes.",
-    "Shot plan: generate one coherent continuous scene with a clear beginning, middle, and end beat. Use a single believable camera plan, natural acceleration and deceleration, and visible subject or environmental movement. Do not output a slideshow, static pan, or frozen still.",
+    "Shot plan: generate one coherent continuous scene with a clear beginning, middle, and end beat. Use visible subject or environmental movement. Do not output a slideshow, static pan, or frozen still.",
     "Reference discipline: preserve the people, faces, body proportions, hair, wardrobe, products, props, scene geometry, and lighting cues from the reference frames. Do not swap identities, change facial structure, invent extra people, duplicate subjects, or alter important product shapes.",
     "Anatomy and motion guardrails: keep hands, eyes, limbs, shoulders, necks, and posture believable. Avoid melted faces, extra fingers, warped eyes, rubber limbs, jitter, floating objects, sudden teleporting, over-fast zooms, or physically impossible bends.",
     params.frameCount > 1
@@ -815,112 +894,42 @@ function buildOpeningPortraitVideoPrompt(userNote: string) {
   ].join("\n");
 }
 
-function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
-  const fields = recordValue(payload.params.fields);
-  const frameAssets = referenceAssets;
-  const videoParams = videoProviderParams(payload);
-  const themeName = textValue(fields?.videoThemeName) || textValue(fields?.toolPresetTitle);
-  const themePrompt = textValue(fields?.videoThemePrompt);
-  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt);
-  const frameManifest = frameAssets.length
-    ? [
-        `Use ${frameAssets.length} ordered frame image${frameAssets.length === 1 ? "" : "s"} as visual anchors:`,
-        ...frameAssets.map((asset, index) => `Frame ${index + 1}: assetId=${asset.assetId}. ${index === 0 ? "Use as the opening frame anchor." : "Use as a later reference beat and preserve important people, product, wardrobe, prop, and scene cues."}`)
-      ].join("\n")
-    : "";
-  const promptParts = [
-    buildVideoQualitySystemPrompt({
-      aspectRatio: videoParams.aspect_ratio,
-      duration: videoParams.duration,
-      frameCount: frameAssets.length,
-      resolution: videoParams.resolution
-    }),
-    buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
-    buildOpeningPortraitVideoPrompt(userNote),
-    buildVideoReferenceContractPrompt({ frameAssets, userNote }),
-    "Create one polished realistic image-to-video MP4 from the supplied frame image.",
-    userNote ? `User direction: ${userNote}` : "",
-    themeName ? `Internal fallback video preset: ${themeName}` : "",
-    themePrompt ? `Optional preset style, ignore if it conflicts with the user direction or selected frames: ${themePrompt}` : "",
-    textValue(payload.params.style) ? `Style: ${textValue(payload.params.style)}` : "",
-    frameManifest,
-    frameAssets.length > 1 ? "Direct reference rule: use the supplied original frame images as the identity and cast source. The video may change pose, angle, and motion, but the people must remain recognizably the uploaded subjects from their respective frames." : "",
-    "Use the uploaded first frame as a visual anchor, not as a frozen still or slideshow source.",
-    "Match the output orientation to the selected video aspect ratio and source frame. Keep a horizontal landscape frame for landscape source images.",
-    "Preserve natural human body proportions, believable face and limb geometry, and sharp subject details. Do not stretch, squash, blur, or reshape the athlete.",
-    "Infer plausible preceding and following action beats from the user note, video theme prompt, body pose, object trajectory, scene geometry, wardrobe, lighting, and camera context.",
-    "Animate a complete continuous motion sequence with visible subject movement, object movement, acceleration, deceleration, and cinematic camera movement while preserving subject continuity, clothing cues, and scene direction.",
-    "If more than one ordered frame is supplied, use every frame as an intentional visual reference. Do not silently ignore later frames or generate a clip that only reflects Frame 1.",
-    "Avoid freeze frames, repeated still loops, contact sheets, storyboard panels, split screens, abrupt morphing, or static pan-only output.",
-    "Return one polished video clip with no text overlay, no watermark, and no UI."
-  ].filter(Boolean);
-  return promptParts.join("\n\n").slice(0, 3600);
+function buildMinimalVideoProviderPrompt(
+  payload: WorkerPayload,
+  referenceAssets = videoFrameAssets(payload),
+  videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }
+) {
+  return buildMinimalVideoProviderPromptText({
+    aspectRatio: videoParams?.aspect_ratio,
+    duration: videoParams?.duration,
+    resolution: videoParams?.resolution,
+    userPrompt: videoProviderUserPrompt(payload),
+    referenceCount: referenceAssets.length
+  });
 }
 
-function buildLk888MediaVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
-  const fields = recordValue(payload.params.fields);
-  const videoParams = videoProviderParams(payload);
-  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt) || promptText(payload.prompt);
-  const themeName = textValue(fields?.videoThemeName) || textValue(fields?.toolPresetTitle);
-  const themePrompt = textValue(fields?.videoThemePrompt);
-  const frameSummary = referenceAssets.length
-    ? `Use ${referenceAssets.length} uploaded first-frame reference image${referenceAssets.length === 1 ? "" : "s"} as the visual source.`
-    : "";
-  return [
-    `Create one ${videoParams.duration}-second image-to-video MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
-    frameSummary,
-    "Keep the uploaded subject, pet, object, scene, lighting, and camera angle recognizable from the reference image.",
-    userNote ? `Customer direction: ${userNote}` : "",
-    themeName ? `Preset: ${themeName}` : "",
-    themePrompt ? `Low-priority style hint: ${themePrompt}` : "",
-    "Make the action continuous and physically plausible. Do not replace the source subject with a generic subject or unrelated scene.",
-    "Return a clean video only: no captions, no watermark, no UI, no split screen, no collage."
-  ].filter(Boolean).join("\n\n").slice(0, 1200);
+function buildVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload)) {
-  const fields = recordValue(payload.params.fields);
-  const videoParams = videoProviderParams(payload);
-  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt);
-  const frameManifest = referenceAssets.length
-    ? [
-        `Reference image count: ${referenceAssets.length}. Use every uploaded reference image as a mandatory visual source.`,
-        ...referenceAssets.map((asset, index) => {
-          const characterLabel = index === 0 ? "Character A" : index === 1 ? "Character B" : `Character ${index + 1}`;
-          return `Reference image ${index + 1}: assetId=${asset.assetId}; ${characterLabel}. Preserve this uploaded subject's face shape, hair, skin tone, apparent age range, wardrobe cues, and visual identity.`;
-        })
-      ].join("\n")
-    : "";
-  const openingBeat = userRequestsOpeningPortraitSequence(userNote)
-    ? "Opening beat: begin with the uploaded people portrait-readable and front-facing enough to identify them. Then animate the later requested motion naturally, such as turning toward each other, kissing, and looking at each other if requested."
-    : "";
-  return [
-    `Image-to-video task: create exactly one ${videoParams.duration}-second realistic MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
-    "The uploaded images are the source of truth. The video must feature the same uploaded subject, pet, person, product, prop, and scene facts, not a newly cast subject and not an unrelated location or crowd scene.",
-    referenceAssets.length > 1
-      ? "Cast requirement: combine the uploaded people from the ordered reference images into one coherent scene. Keep exactly those selected people as the main visible subjects."
-      : "Reference requirement: keep the uploaded subject, pet, person, product, or prop as the main visible subject.",
-    frameManifest,
-    userNote ? `Customer direction, highest priority: ${userNote}` : "",
-    openingBeat,
-    "Use the uploaded image as the opening visual anchor. Keep the camera focused on that uploaded subject and the requested action.",
-    "Make the action continuous and natural. Preserve recognizable fur, face, body shape, wardrobe or object cues, props, background cues, and lighting continuity throughout.",
-    "Return only one clean video clip: no captions, no UI, no watermark, no split screen, no collage, no storyboard panels."
-  ].filter(Boolean).join("\n\n").slice(0, 2200);
+function buildLk888MediaVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function buildTextToVideoPrompt(payload: WorkerPayload) {
-  const fields = recordValue(payload.params.fields);
-  const videoParams = videoProviderParams(payload);
-  const userNote = textValue(fields?.promptNote) || textValue(fields?.prompt) || promptText(payload.prompt);
-  return [
-    `Text-to-video task: create exactly one ${videoParams.duration}-second realistic MP4 at ${videoParams.aspect_ratio} ${videoParams.resolution.toUpperCase()}.`,
-    "No reference images were uploaded. Use the customer's written direction as the source of truth for subject, setting, style, action, camera motion, and story beat.",
-    userNote ? `Customer direction, highest priority: ${userNote}` : "",
-    "Create a coherent single scene with a clear beginning, middle, and end. Keep motion natural, physically plausible, and visually stable.",
-    "Do not introduce unrelated preset scenes, random crowds, stock travel footage, captions, UI, watermarks, split screens, collages, or storyboard panels.",
-    "Return one polished clean video clip."
-  ].filter(Boolean).join("\n\n").slice(0, 1800);
+function buildSingleReferenceDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
+}
+
+function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
+}
+
+function buildOpenAiJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
+}
+
+function buildTextToVideoPrompt(payload: WorkerPayload, videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+  return buildMinimalVideoProviderPrompt(payload, [], videoParams);
 }
 
 function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageInputAsset[]) {
@@ -937,6 +946,7 @@ function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageIn
     : "";
   return [
     "Internal video scene compositor: create exactly one new photorealistic starter scene image that will be used as the only upstream image-to-video reference.",
+    "Skill-pack starter quality: compose a first-frame hook with environmental pressure, physical micro-action cues, a sound or visual motif, and a clear final frame the video can animate toward.",
     buildOpeningPortraitStarterScenePrompt(userNote, frameAssets.length),
     buildExplicitUserDirectionPrompt(userNote, frameAssets.length),
     "Identity preservation is the highest requirement for this starter image. Use the uploaded frame images as binding character references, not as loose mood references.",
@@ -956,7 +966,7 @@ function buildVideoSceneImagePrompt(payload: WorkerPayload, frameAssets: ImageIn
     "If some frames represent later visual beats, blend those cues into the scene as environmental, pose, wardrobe, prop, or motion-ready details without creating multiple panels.",
     "Do not replace the requested action with walking, generic portrait posing, holiday posing, or unrelated lifestyle action unless the user asked for it.",
     "Create a clean starter frame with stable anatomy, natural hands, realistic face structure, sharp focal subject, coherent depth, and safe margins for the selected aspect ratio."
-  ].filter(Boolean).join("\n\n").slice(0, 3600);
+  ].filter(Boolean).join("\n\n").slice(0, 4300);
 }
 
 function inputAssets(payload: WorkerPayload): ImageInputAsset[] {
@@ -989,16 +999,17 @@ function videoFrameDataUriMaxBytes() {
   return Number.isFinite(configured) && configured > 0 ? configured : 8 * 1024 * 1024;
 }
 
-async function isProviderFrameUrlReadable(url: string, timeoutMs: number) {
+async function isProviderFrameUrlReadable(url: string, timeoutMs: number, signal?: AbortSignal) {
   try {
-    const response = await fetchWithTimeout(url, { method: "HEAD", cache: "no-store" }, Math.min(timeoutMs, 10_000), "ai_provider_video_frame_probe_timeout");
+    const response = await fetchWithTimeout(url, { method: "HEAD", cache: "no-store", signal }, Math.min(timeoutMs, 10_000), "ai_provider_video_frame_probe_timeout");
     return response.ok;
   } catch {
     return false;
   }
 }
 
-async function readVideoFrameAssetBytes(asset: ImageInputAsset, timeoutMs: number) {
+async function readVideoFrameAssetBytes(asset: ImageInputAsset, timeoutMs: number, signal?: AbortSignal) {
+  throwIfLocalWorkerAborted(signal);
   const storageKey = textValue(asset.storageKey);
   if (storageKey) {
     try {
@@ -1016,7 +1027,7 @@ async function readVideoFrameAssetBytes(asset: ImageInputAsset, timeoutMs: numbe
   }
   const response = await fetchWithTimeout(
     asset.signedUrl,
-    { cache: "no-store" },
+    { cache: "no-store", signal },
     Math.min(timeoutMs, 30_000),
     `ai_provider_video_frame_data_uri_timeout_${asset.assetId}`
   );
@@ -1027,8 +1038,8 @@ async function readVideoFrameAssetBytes(asset: ImageInputAsset, timeoutMs: numbe
   return { bytes, mimeType };
 }
 
-async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
-  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs);
+async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number, signal?: AbortSignal) {
+  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs, signal);
   const maxBytes = videoFrameDataUriMaxBytes();
   let prepared = originalVideoReferenceImage(bytes, imageMimeTypeFromBytes(bytes, mimeType));
   let preparedBytes = Buffer.from(prepared.bytes);
@@ -1040,8 +1051,8 @@ async function videoFrameDataUri(asset: ImageInputAsset, timeoutMs: number) {
   return `data:${prepared.mimeType};base64,${preparedBytes.toString("base64")}`;
 }
 
-async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: number, targetSize: string) {
-  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs);
+async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: number, targetSize: string, signal?: AbortSignal) {
+  const { bytes, mimeType } = await readVideoFrameAssetBytes(asset, timeoutMs, signal);
   const maxBytes = videoFrameDataUriMaxBytes();
   let prepared = await prepareVideoReferenceImage(bytes, mimeType, targetSize);
   let preparedBytes = Buffer.from(prepared.bytes);
@@ -1055,30 +1066,35 @@ async function videoFramePreparedDataUri(asset: ImageInputAsset, timeoutMs: numb
 
 async function videoProviderFrameUrls(params: {
   referenceAssets: ImageInputAsset[];
+  allowDataUriFallback?: boolean;
+  signal?: AbortSignal;
   timeoutMs: number;
   targetSize?: string;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const urls = params.referenceAssets.map(providerReachableAssetUrl).filter(Boolean);
   if (urls.length !== params.referenceAssets.length) return urls;
-  if (!shouldUseVideoFrameDataUriFallback()) return urls;
+  if (params.allowDataUriFallback === false || !shouldUseVideoFrameDataUriFallback()) return urls;
   if (shouldForceVideoFrameDataUris()) {
     return Promise.all(params.referenceAssets.map((asset) => params.targetSize
-      ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)
-      : videoFrameDataUri(asset, params.timeoutMs)));
+      ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize, params.signal)
+      : videoFrameDataUri(asset, params.timeoutMs, params.signal)));
   }
-  const readableChecks = await Promise.all(urls.map((url) => isProviderFrameUrlReadable(url, params.timeoutMs)));
+  const readableChecks = await Promise.all(urls.map((url) => isProviderFrameUrlReadable(url, params.timeoutMs, params.signal)));
   if (readableChecks.every(Boolean)) return urls;
   return Promise.all(params.referenceAssets.map((asset) => params.targetSize
-    ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)
-    : videoFrameDataUri(asset, params.timeoutMs)));
+    ? videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize, params.signal)
+    : videoFrameDataUri(asset, params.timeoutMs, params.signal)));
 }
 
 function videoProviderPreparedDataUriFrameUrls(params: {
   referenceAssets: ImageInputAsset[];
+  signal?: AbortSignal;
   timeoutMs: number;
   targetSize: string;
 }) {
-  return Promise.all(params.referenceAssets.map((asset) => videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize)));
+  throwIfLocalWorkerAborted(params.signal);
+  return Promise.all(params.referenceAssets.map((asset) => videoFramePreparedDataUri(asset, params.timeoutMs, params.targetSize, params.signal)));
 }
 
 function isDataUri(value: string) {
@@ -1118,6 +1134,13 @@ function shouldRejectLoopbackVideoFrameUrls() {
   if (process.env.ALLOW_LOOPBACK_VIDEO_FRAME_URLS === "1") return false;
   if (process.env.REQUIRE_PUBLIC_VIDEO_FRAME_URLS === "1") return true;
   return process.env.NODE_ENV === "production";
+}
+
+function assertTokengoMediaPublicFrameUrls(protocol: VideoProviderProtocol, imageUrls: string[]) {
+  if (protocol !== "tokengo-media" || !imageUrls.length) return;
+  if (imageUrls.some((url) => isDataUri(url) || isLoopbackUrl(url))) {
+    throw new Error("video_public_asset_url_required_tokengo_media");
+  }
 }
 
 const videoAspectRatios = new Set(["16:9", "4:3", "1:1", "3:4", "9:16", "3:2", "2:3"]);
@@ -1195,6 +1218,14 @@ function videoProviderParams(payload: WorkerPayload) {
   const resolution = videoResolutions.has(rawResolution) ? rawResolution : normalizeVideoResolution(rawResolution);
   const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelFamily));
   return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio) };
+}
+
+function explicitVideoEndImageUrl(payload: WorkerPayload) {
+  const fields = recordValue(payload.params.fields);
+  return textValue(payload.params.end_image_url) ||
+    textValue(payload.params.endImageUrl) ||
+    textValue(fields?.end_image_url) ||
+    textValue(fields?.endImageUrl);
 }
 
 function extensionForMime(mimeType: string) {
@@ -1342,7 +1373,7 @@ async function prepareVideoReferenceImage(
   const maxDimension = Math.max(512, Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_MAX_DIMENSION ?? "1280") || 1280);
   const quality = Math.max(60, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_REFERENCE_QUALITY ?? "80") || 80, 95));
   try {
-    const sharp = await loadSharp();
+    const sharp = shouldUseSharpForVideoReferenceImages() ? await loadSharp() : undefined;
     if (!sharp) throw new Error("sharp_unavailable");
     const sourceBytes = Buffer.from(bytes);
     const resized = target
@@ -1508,7 +1539,11 @@ function shouldRetryProviderFetchWithoutProxy(error: unknown, proxyUrl: string, 
 }
 
 async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: number, timeoutError: string) {
+  throwIfLocalWorkerAborted(init.signal ?? undefined);
   const controller = new AbortController();
+  const externalSignal = init.signal ?? undefined;
+  const abortFromExternalSignal = () => controller.abort(externalSignal?.reason);
+  externalSignal?.addEventListener("abort", abortFromExternalSignal, { once: true });
   const proxyUrl = providerProxyUrl();
   const runFetch = async (dispatcher?: unknown) => {
     const fetchInit: FetchInitWithDispatcher = {
@@ -1538,19 +1573,24 @@ async function fetchWithTimeout(resource: string, init: RequestInit, timeoutMs: 
     try {
       return await runFetch(dispatcher);
     } catch (error) {
+      throwIfLocalWorkerAborted(externalSignal);
       if (error instanceof Error && error.name === "AbortError") {
         throw new Error(timeoutError);
       }
       if (dispatcher && shouldRetryProviderFetchWithoutProxy(error, proxyUrl, init)) {
+        throwIfLocalWorkerAborted(externalSignal);
         return await runFetch();
       }
       throw error;
     }
   } catch (error) {
+    throwIfLocalWorkerAborted(externalSignal);
     if (error instanceof Error && error.name === "AbortError") {
       throw new Error(timeoutError);
     }
     throw error;
+  } finally {
+    externalSignal?.removeEventListener("abort", abortFromExternalSignal);
   }
 }
 
@@ -1565,10 +1605,12 @@ async function buildImageEditForm(params: {
   payload: WorkerPayload;
   model: string;
   prompt: string;
+  signal?: AbortSignal;
   timeoutMs: number;
   outputCount?: number;
   assets?: ImageInputAsset[];
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const form = new FormData();
   form.append("model", params.model);
   form.append("prompt", params.prompt);
@@ -1588,7 +1630,7 @@ async function buildImageEditForm(params: {
     const role = roles.roleFor(asset.assetId);
     const response = await fetchWithTimeout(
       asset.signedUrl,
-      { cache: "no-store" },
+      { cache: "no-store", signal: params.signal },
       Math.min(params.timeoutMs, 30_000),
       `ai_provider_source_image_timeout_${asset.assetId}`
     );
@@ -1703,6 +1745,7 @@ async function generateVideoSceneImageWithEdit(params: {
   payload: WorkerPayload;
   model: string;
   prompt: string;
+  signal?: AbortSignal;
   timeoutMs: number;
   sceneInputAssets: ImageInputAsset[];
   baseUrl: string;
@@ -1712,6 +1755,7 @@ async function generateVideoSceneImageWithEdit(params: {
     payload: params.payload,
     model: params.model,
     prompt: params.prompt,
+    signal: params.signal,
     timeoutMs: params.timeoutMs,
     assets: params.sceneInputAssets
   });
@@ -1724,7 +1768,8 @@ async function generateVideoSceneImageWithEdit(params: {
         Authorization: `Bearer ${params.apiKey}`
       },
       body: form,
-      cache: "no-store"
+      cache: "no-store",
+      signal: params.signal
     },
     params.timeoutMs,
     `ai_provider_video_scene_image_edit_timeout_${params.timeoutMs}`
@@ -1741,7 +1786,9 @@ async function generateVideoSceneImageWithEdit(params: {
 async function composeVideoSceneReference(params: {
   payload: WorkerPayload;
   requestedReferenceAssets: ImageInputAsset[];
+  signal?: AbortSignal;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const sceneProviders = orderedVideoSceneImageProviders(params.payload);
   if (!sceneProviders.length) throw new Error("ai_provider_video_scene_image_provider_missing");
   const timeoutMs = providerTimeoutMs();
@@ -1783,6 +1830,7 @@ async function composeVideoSceneReference(params: {
           payload: params.payload,
           model,
           prompt,
+          signal: params.signal,
           timeoutMs,
           sceneInputAssets,
           baseUrl,
@@ -1797,7 +1845,7 @@ async function composeVideoSceneReference(params: {
       } catch (error) {
         lastError = error;
         if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
-        await new Promise((resolve) => setTimeout(resolve, 2_500 * attempt));
+        await sleepWithLocalWorkerAbort(2_500 * attempt, params.signal);
       }
     }
     if (!shouldTryNextSceneImageProvider(lastError)) break;
@@ -1818,9 +1866,11 @@ async function buildVideoReferenceForm(params: {
   model: string;
   prompt: string;
   videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
+  signal?: AbortSignal;
   timeoutMs: number;
   smartPickLid?: boolean;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const form = new FormData();
   form.append("model", params.model);
   form.append("prompt", params.prompt);
@@ -1836,7 +1886,7 @@ async function buildVideoReferenceForm(params: {
   for (const [index, asset] of referenceAssets.entries()) {
     const response = await fetchWithTimeout(
       asset.signedUrl,
-      { cache: "no-store" },
+      { cache: "no-store", signal: params.signal },
       Math.min(params.timeoutMs, 30_000),
       `ai_provider_video_reference_image_timeout_${asset.assetId}`
     );
@@ -1943,7 +1993,7 @@ function timingFromResultJson(value: unknown, fallback?: Record<string, string>)
   return Object.keys(timing).length ? timing : undefined;
 }
 
-async function postWorkerStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, options: WorkerStatusPostOptions = {}) {
+async function postWorkerStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, options: WorkerStatusPostOptions = {}): Promise<{ alreadyFinal?: boolean }> {
   const body = {
     jobId: payload.jobId,
     siteId: payload.siteId,
@@ -1956,7 +2006,7 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
     if (options.nonBlocking) {
       publishLocalWorkerStatusEvent(payload, status, stage, options);
       void updateGenerationJobStatusRelational(body).catch(() => null);
-      return;
+      return {};
     }
     const result = await updateGenerationJobStatusRelational(body).catch(() => null);
     if (result) publishCustomerJobEventForJob("status", result.job, {
@@ -1965,7 +2015,7 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
       error: options.error,
       timing: timingFromResultJson(result.job.resultJson, options.timing)
     });
-    return;
+    return { alreadyFinal: result?.alreadyFinal };
   }
   const request = fetchWorkerCallbackWithTimeout(payload.statusCallbackUrl, {
     method: "POST",
@@ -1976,9 +2026,11 @@ async function postWorkerStatus(payload: WorkerPayload, status: "running" | "fai
   if (options.nonBlocking) {
     publishLocalWorkerStatusEvent(payload, status, stage, options);
     void request;
-    return;
+    return {};
   }
-  await request;
+  const response = await request;
+  const result = (await response?.json().catch(() => ({}))) as { alreadyFinal?: boolean };
+  return { alreadyFinal: result.alreadyFinal === true };
 }
 
 async function postWorkerSlotStatus(payload: WorkerPayload, status: "running" | "failed", stage: string, slot: WorkerOutputSlot, options: WorkerStatusPostOptions = {}) {
@@ -2171,6 +2223,10 @@ function videoStatusResultUrl(status: VideoStatusResponse) {
   const output = Array.isArray(status.output)
     ? recordValue(status.output[0])
     : recordValue(status.output);
+  const resultVideos = Array.isArray(result?.videos) ? result?.videos : undefined;
+  const resultImages = Array.isArray(result?.images) ? result?.images : undefined;
+  const firstResultVideo = resultVideos ? recordValue(resultVideos[0]) : undefined;
+  const firstResultImage = resultImages ? recordValue(resultImages[0]) : undefined;
   return textValue(status.result_url) ||
     textValue(status.video_url) ||
     textValue(status.videoUrl) ||
@@ -2179,6 +2235,11 @@ function videoStatusResultUrl(status: VideoStatusResponse) {
     textValue(result?.url) ||
     textValue(result?.result_url) ||
     textValue(result?.video_url) ||
+    textValue(firstResultVideo?.url) ||
+    textValue(firstResultVideo?.result_url) ||
+    textValue(firstResultVideo?.video_url) ||
+    textValue(firstResultImage?.url) ||
+    textValue(firstResultImage?.result_url) ||
     textValue(output?.url) ||
     textValue(output?.result_url) ||
     textValue(output?.video_url);
@@ -2298,6 +2359,7 @@ function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
     if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
+    if (isTokengoMediaBaseUrl(baseUrl)) return "tokengo-media";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
@@ -2330,9 +2392,11 @@ function shouldUseSmartPickLidJsonVideoRequest(params: {
   model: string;
   protocol: VideoProviderProtocol;
 }) {
+  const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
+  if (explicitMode === "multipart" || explicitMode === "form") return false;
   return params.protocol === "openai-videos" &&
-    (isSmartPickLidBaseUrl(params.baseUrl) || isMagic666BaseUrl(params.baseUrl)) &&
-    isGrokImagineVideoModel(params.model);
+    usesProxyOpenAiVideoEndpoint(params.baseUrl) &&
+    isSmartPickLidJsonVideoModel(params.model);
 }
 
 function shouldBlockSmartPickLidReferenceVideo(params: {
@@ -2373,10 +2437,11 @@ function openAiJsonVideoReferenceLimit() {
   return Math.max(1, Math.min(Math.trunc(configured), MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT));
 }
 
-function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string, options?: { smartPickLid?: boolean }) {
-  if (options?.smartPickLid) {
+function openAiJsonVideoReferencePayload(urls: string[], fallbackImageUrl?: string, options?: { proxyStringReferences?: boolean }) {
+  if (options?.proxyStringReferences) {
     const imageUrls = urls.length ? urls : fallbackImageUrl ? [fallbackImageUrl] : [];
-    return imageUrls.length ? { images: imageUrls } : {};
+    if (imageUrls.length > 1) return { images: imageUrls };
+    return imageUrls.length ? { image: imageUrls[0] } : {};
   }
   if (urls.length > 1) {
     return { reference_images: urls.map((url) => ({ url })) };
@@ -2396,11 +2461,16 @@ async function createVideoTask(params: {
   videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
   protocol: VideoProviderProtocol;
   clientRequestId: string;
+  endImageUrl?: string;
+  signal?: AbortSignal;
   timeoutMs: number;
+  onProviderCreateStarted?: () => Promise<void>;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const firstImageUrl = params.imageUrls[0];
   if (params.protocol === "huitu-openapi") {
     const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
+    await params.onProviderCreateStarted?.();
     const task = await createHuituOpenApiVideoTask({
       baseUrl: params.baseUrl,
       apiKey: params.apiKey,
@@ -2409,7 +2479,25 @@ async function createVideoTask(params: {
       duration: params.videoParams.duration,
       ratio: params.videoParams.aspect_ratio,
       clientRequestId: params.clientRequestId,
-      fetchWithTimeout,
+      fetchWithTimeout: (resource, init, timeout, timeoutError) =>
+        fetchWithTimeout(resource, { ...init, signal: params.signal }, timeout, timeoutError),
+      timeoutMs: createTimeoutMs
+    });
+    return task.id;
+  }
+  if (params.protocol === "tokengo-media") {
+    const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
+    await params.onProviderCreateStarted?.();
+    const task = await createTokengoMediaVideoTask({
+      baseUrl: normalizeTokengoMediaBaseUrl(params.baseUrl),
+      apiKey: params.apiKey,
+      model: params.model,
+      prompt: params.prompt,
+      imageUrls: params.imageUrls,
+      endImageUrl: params.endImageUrl,
+      videoParams: params.videoParams,
+      fetchWithTimeout: (resource, init, timeout, timeoutError) =>
+        fetchWithTimeout(resource, { ...init, signal: params.signal }, timeout, timeoutError),
       timeoutMs: createTimeoutMs
     });
     return task.id;
@@ -2425,17 +2513,19 @@ async function createVideoTask(params: {
   });
   const useOpenAiJsonReference = shouldUseOpenAiVideoJsonReference(params) && !useSmartPickLidJsonRequest;
   const useJsonReference = useSmartPickLidJsonRequest || useOpenAiJsonReference;
+  const useProxyStringReferences = usesProxyOpenAiVideoEndpoint(params.baseUrl);
   const providerRequestSize = openAiVideoRequestSize(params.videoParams, { smartPickLidJson: useSmartPickLidJsonRequest });
   const providerReferenceTargetSize = openAiVideoReferenceTargetSize(params.videoParams, { smartPickLidJson: useSmartPickLidJsonRequest });
   const openAiJsonImageUrls = useJsonReference
     ? await videoProviderPreparedDataUriFrameUrls({
         referenceAssets: params.referenceAssets,
+        signal: params.signal,
         timeoutMs: params.timeoutMs,
         targetSize: providerReferenceTargetSize
       })
     : [];
   const openAiJsonReferencePayload = useJsonReference
-    ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl, { smartPickLid: useSmartPickLidJsonRequest })
+    ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl, { proxyStringReferences: useProxyStringReferences })
     : {};
   const openAiVideosForm = params.protocol === "openai-videos" && !useJsonReference && params.referenceAssets.length
     ? await buildVideoReferenceForm({
@@ -2443,6 +2533,7 @@ async function createVideoTask(params: {
         model: params.model,
         prompt: params.prompt,
         videoParams: params.videoParams,
+        signal: params.signal,
         timeoutMs: params.timeoutMs,
         smartPickLid: isSmartPickLidBaseUrl(params.baseUrl)
       })
@@ -2477,8 +2568,9 @@ async function createVideoTask(params: {
         model: params.model,
         params: lk888MediaVideoParams(params.videoParams, params.imageUrls),
         prompt: params.prompt
-      };
+  };
   const createTimeoutMs = videoProviderCreateTimeoutMs(params.timeoutMs);
+  await params.onProviderCreateStarted?.();
   const response = await fetchWithTimeout(endpoint, {
     method: "POST",
     headers: openAiVideosForm
@@ -2488,7 +2580,8 @@ async function createVideoTask(params: {
           Authorization: `Bearer ${params.apiKey}`
     },
     body: openAiVideosForm ?? JSON.stringify(payload),
-    cache: "no-store"
+    cache: "no-store",
+    signal: params.signal
   }, createTimeoutMs, `ai_provider_video_create_timeout_${createTimeoutMs}`);
   const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
   const taskId = videoTaskId(body);
@@ -2498,11 +2591,11 @@ async function createVideoTask(params: {
     const requestSummary = {
       model: params.model,
       protocol: params.protocol,
-      endpoint: endpoint.replace(params.baseUrl, ""),
+      endpoint: new URL(endpoint).pathname,
       duration: params.videoParams.duration,
       size: useSmartPickLidJsonRequest || useOpenAiJsonReference ? `${params.videoParams.aspect_ratio}/${smartPickLidJsonVideoResolution(params.videoParams.resolution)}` : params.protocol === "openai-videos" ? providerRequestSize : `${lk888MediaVideoAspectRatio(params.videoParams.aspect_ratio)}/${lk888MediaVideoResolution(params.videoParams.resolution)}`,
       imageCount: referenceCount,
-      imageKind: useSmartPickLidJsonRequest ? "smartpicklid_json_data_uri_images" : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : referenceCount > 1 ? "lk888_media_images_array" : firstImageUrl?.startsWith("data:") ? "lk888_media_images_data_uri" : "lk888_media_images_url",
+      imageKind: useSmartPickLidJsonRequest ? (referenceCount > 1 ? "smartpicklid_json_data_uri_images" : "smartpicklid_json_data_uri_image") : useOpenAiJsonReference ? (referenceCount > 1 ? "json_reference_images" : "json_image") : params.protocol === "openai-videos" ? "multipart_input_reference" : referenceCount > 1 ? "lk888_media_images_array" : firstImageUrl?.startsWith("data:") ? "lk888_media_images_data_uri" : "lk888_media_images_url",
       promptLength: params.prompt.length
     };
     throw new Error(`ai_provider_video_create_failed_${multiFrameHint}${response.status}_${JSON.stringify(body).slice(0, 240)}_request_${JSON.stringify(requestSummary)}`);
@@ -2516,9 +2609,11 @@ async function pollVideoTask(params: {
   apiKey: string;
   taskId: string;
   protocol: VideoProviderProtocol;
+  signal?: AbortSignal;
   timeoutMs: number;
   timing?: Record<string, string>;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const startedAt = Date.now();
   let lastStatus = "";
   let firstPoll = true;
@@ -2537,9 +2632,10 @@ async function pollVideoTask(params: {
     };
   };
   while (Date.now() - startedAt < params.timeoutMs) {
+    throwIfLocalWorkerAborted(params.signal);
     const elapsedMs = Date.now() - startedAt;
     if (!firstPoll) {
-      await new Promise((resolve) => setTimeout(resolve, videoProviderPollIntervalMs(elapsedMs)));
+      await sleepWithLocalWorkerAbort(videoProviderPollIntervalMs(elapsedMs), params.signal);
     }
     firstPoll = false;
     try {
@@ -2548,7 +2644,8 @@ async function pollVideoTask(params: {
           baseUrl: params.baseUrl,
           apiKey: params.apiKey,
           taskId: params.taskId,
-          fetchWithTimeout,
+          fetchWithTimeout: (resource, init, timeout, timeoutError) =>
+            fetchWithTimeout(resource, { ...init, signal: params.signal }, timeout, timeoutError),
           timeoutMs: Math.min(45_000, params.timeoutMs)
         });
         const body: VideoStatusResponse = {
@@ -2585,16 +2682,64 @@ async function pollVideoTask(params: {
         }
         continue;
       }
+      if (params.protocol === "tokengo-media") {
+        const task = await fetchTokengoMediaVideoTask({
+          baseUrl: params.baseUrl,
+          apiKey: params.apiKey,
+          taskId: params.taskId,
+          fetchWithTimeout: (resource, init, timeout, timeoutError) =>
+            fetchWithTimeout(resource, { ...init, signal: params.signal }, timeout, timeoutError),
+          timeoutMs: Math.min(45_000, params.timeoutMs)
+        });
+        const body: VideoStatusResponse = {
+          id: task.id,
+          state: task.state,
+          status: task.status,
+          is_final: task.isFinal,
+          progress: task.progress,
+          error: task.error,
+          message: task.message,
+          result_url: task.resultUrl,
+          cost: task.cost,
+          creditCost: task.creditCost
+        };
+        lastStatus = [body.state, body.progress, body.status].filter(Boolean).join("_");
+        const progressTiming = providerProgressTiming(body.progress);
+        await postWorkerSlotStatus(params.payload, "running", "video_provider_running", {
+          index: 1,
+          status: "running",
+          stage: `video_provider_running${body.progress ? `_${body.progress}` : ""}`,
+          progress: Number.isFinite(Number(body.progress))
+            ? Math.max(0, Math.min(100, Number(body.progress)))
+            : undefined,
+          error: "",
+          updatedAt: new Date().toISOString()
+        }, { nonBlocking: true, progressWrite: true, ...(progressTiming ? { timing: progressTiming } : {}) });
+        if (body.is_final === true) {
+          if (body.state === "success" && videoStatusResultUrl(body)) return body;
+          const rawFailure = textValue(body.error) || textValue(body.message) || textValue(body.status) || "no_result";
+          throw attachVideoProviderFailure(
+            new Error(`ai_provider_video_failed_${body.state || "unknown"}_${rawFailure}`),
+            normalizeVideoProviderFailure({
+              error: rawFailure,
+              providerFamily: requestedVideoModelFamily(params.payload),
+              providerProtocol: params.protocol
+            })
+          );
+        }
+        continue;
+      }
       const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
       const urls = params.protocol === "openai-videos"
-          ? [new URL(`${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId)}`)]
+          ? [new URL(openAiVideoStatusEndpoint(params.baseUrl, params.taskId))]
           : lk888MediaStatusUrls(mediaBaseUrl, params.taskId);
       let response: Response | undefined;
       let body: VideoStatusResponse = {};
       for (const [index, url] of urls.entries()) {
         response = await fetchWithTimeout(url.toString(), {
           headers: { Authorization: `Bearer ${params.apiKey}` },
-          cache: "no-store"
+          cache: "no-store",
+          signal: params.signal
         }, Math.min(45_000, params.timeoutMs), "ai_provider_video_status_timeout");
         body = normalizeVideoStatusResponse((await response.json().catch(() => ({}))) as VideoStatusResponse);
         if (response.ok || params.protocol === "openai-videos" || index === urls.length - 1 || (response.status !== 404 && response.status !== 405)) break;
@@ -2662,10 +2807,11 @@ function videoProviderReadRetryAttempts() {
   return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_VIDEO_READ_RETRY_ATTEMPTS ?? "3") || 3, 5));
 }
 
-async function withVideoProviderReadRetries<T>(task: () => Promise<T>): Promise<T> {
+async function withVideoProviderReadRetries<T>(task: () => Promise<T>, signal?: AbortSignal): Promise<T> {
   const maxAttempts = videoProviderReadRetryAttempts();
   let lastError: unknown;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    throwIfLocalWorkerAborted(signal);
     try {
       return await task();
     } catch (error) {
@@ -2676,7 +2822,7 @@ async function withVideoProviderReadRetries<T>(task: () => Promise<T>): Promise<
         maxAttempts,
         error: errorMessage(error).slice(0, 240)
       });
-      await new Promise((resolve) => setTimeout(resolve, Math.min(5_000, 1_000 * attempt)));
+      await sleepWithLocalWorkerAbort(Math.min(5_000, 1_000 * attempt), signal);
     }
   }
   throw lastError instanceof Error ? lastError : new Error("ai_provider_video_download_failed");
@@ -2688,16 +2834,20 @@ async function downloadVideoResult(params: {
   apiKey?: string;
   taskId?: string;
   protocol: VideoProviderProtocol;
+  signal?: AbortSignal;
   timeoutMs: number;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   if (params.protocol === "huitu-openapi") {
     return withVideoProviderReadRetries(async () => {
+      throwIfLocalWorkerAborted(params.signal);
       const response = await downloadHuituOpenApiVideoTaskFile({
         baseUrl: params.baseUrl ?? "",
         apiKey: params.apiKey ?? "",
         taskId: params.taskId ?? "",
         resultUrl: params.resultUrl,
-        fetchWithTimeout,
+        fetchWithTimeout: (resource, init, timeout, timeoutError) =>
+          fetchWithTimeout(resource, { ...init, signal: params.signal }, timeout, timeoutError),
         timeoutMs: Math.min(params.timeoutMs, 120_000)
       });
       if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
@@ -2705,33 +2855,52 @@ async function downloadVideoResult(params: {
       const bytes = Buffer.from(await response.arrayBuffer());
       if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
       return { bytes, mimeType };
-    });
+    }, params.signal);
   }
-  const resultUrl = params.protocol === "openai-videos"
-    ? params.resultUrl || `${params.baseUrl}/v1/videos/${encodeURIComponent(params.taskId ?? "")}/content`
+  const rawResultUrl = params.protocol === "openai-videos"
+    ? params.resultUrl || openAiVideoContentEndpoint(params.baseUrl ?? "", params.taskId ?? "")
     : params.resultUrl;
+  const resultUrl = params.protocol === "tokengo-media"
+    ? resolveTokengoMediaResultUrl(params.baseUrl ?? "", rawResultUrl)
+    : rawResultUrl;
   if (!resultUrl) throw new Error("ai_provider_video_empty_result_url");
-  const headers = params.protocol === "openai-videos" && params.apiKey
+  const sameProviderOrigin = params.baseUrl
+    ? (() => {
+        try {
+          return new URL(resultUrl).origin === new URL(params.baseUrl).origin;
+        } catch {
+          return false;
+        }
+      })()
+    : false;
+  const headers = params.apiKey && (
+    params.protocol === "openai-videos" ||
+    (params.protocol === "tokengo-media" && sameProviderOrigin)
+  )
     ? { Authorization: `Bearer ${params.apiKey}` }
     : undefined;
   return withVideoProviderReadRetries(async () => {
+    throwIfLocalWorkerAborted(params.signal);
     const response = await fetchWithTimeout(resultUrl, {
       ...(headers ? { headers } : {}),
-      cache: "no-store"
+      cache: "no-store",
+      signal: params.signal
     }, Math.min(params.timeoutMs, 120_000), "ai_provider_video_download_timeout");
     if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
     const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
     const bytes = Buffer.from(await response.arrayBuffer());
     if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
     return { bytes, mimeType };
-  });
+  }, params.signal);
 }
 
 async function generateVideoWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
+  signal?: AbortSignal;
   timing?: Record<string, string>;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const timing = params.timing ?? {};
   const markTiming = (key: string) => {
     const value = new Date().toISOString();
@@ -2749,7 +2918,7 @@ async function generateVideoWithProvider(params: {
   const providerApiKey = provider.apiKey;
   const requestedModel = requestedModelOverride(params.payload);
   const model = normalizeVideoGenerationModel(requestedModel && isVideoGenerationModel(requestedModel) ? requestedModel : provider.modelType);
-  if (!isVideoGenerationModel(model)) {
+  if (provider.providerType !== "video" && !isVideoGenerationModel(model)) {
     throw new Error(`ai_provider_not_video_model_${provider.label || provider.id}_${model}`);
   }
   const requestedReferenceAssets = videoFrameAssets(params.payload);
@@ -2783,10 +2952,11 @@ async function generateVideoWithProvider(params: {
   const videoParams = videoProviderParams(params.payload);
   const useProviderFrameUrls = protocol !== "openai-videos" || !preferJsonVideoRequest;
   const usePreparedProviderDataUris = protocol === "lk888-media";
+  const endImageUrl = explicitVideoEndImageUrl(params.payload);
   const imageUrls = useProviderFrameUrls
     ? usePreparedProviderDataUris
-      ? await videoProviderPreparedDataUriFrameUrls({ referenceAssets, timeoutMs, targetSize: videoParams.size })
-      : await videoProviderFrameUrls({ referenceAssets, timeoutMs, targetSize: videoParams.size })
+      ? await videoProviderPreparedDataUriFrameUrls({ referenceAssets, signal: params.signal, timeoutMs, targetSize: videoParams.size })
+      : await videoProviderFrameUrls({ referenceAssets, allowDataUriFallback: protocol !== "tokengo-media", signal: params.signal, timeoutMs, targetSize: videoParams.size })
     : [];
   if (protocol === "lk888-media" && isGrokImagineVideoModel(model) && !referenceAssets.length) {
     throw new Error("ai_provider_video_first_frame_required_lk888_media");
@@ -2794,14 +2964,20 @@ async function generateVideoWithProvider(params: {
   if (useProviderFrameUrls && (imageUrls.length !== referenceAssets.length || (shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)))) {
     throw new Error("ai_provider_video_frame_public_urls_required");
   }
+  assertTokengoMediaPublicFrameUrls(protocol, imageUrls);
   const videoPromptForReferenceAssets = (assets: ImageInputAsset[]) => !assets.length
-      ? buildTextToVideoPrompt(params.payload)
+      ? buildTextToVideoPrompt(params.payload, videoParams)
       : protocol === "lk888-media"
-      ? buildLk888MediaVideoPrompt(params.payload, assets)
+      ? buildLk888MediaVideoPrompt(params.payload, assets, videoParams)
       : preferJsonVideoRequest
-      ? buildDirectJsonVideoPrompt(params.payload, assets)
-      : buildVideoPrompt(params.payload, assets);
+      ? buildOpenAiJsonVideoPrompt(params.payload, assets, videoParams)
+      : buildVideoPrompt(params.payload, assets, videoParams);
   const prompt = videoPromptForReferenceAssets(referenceAssets);
+  const providerPromptAuditTiming = {
+    providerUserPromptLength: String(videoProviderUserPrompt(params.payload).length),
+    providerPromptLength: String(prompt.length),
+    providerPromptSource: "user_prompt_plus_reference_fidelity_format_and_output_constraint"
+  };
   const referencePreparedAt = markTiming("referencePreparedAt");
   await postWorkerSlotStatus(params.payload, "running", "video_reference_format_ready", {
     index: 1,
@@ -2815,7 +2991,9 @@ async function generateVideoWithProvider(params: {
     updatedAt: new Date().toISOString()
   }, { forceWrite: true, timing: { referencePreparedAt } });
   await postWorkerStatus(params.payload, "running", "source_images_ready", { timing: { referencePreparedAt } });
-  await postWorkerStatus(params.payload, "running", "video_provider_request_started", { timing: { referencePreparedAt } });
+  await postWorkerStatus(params.payload, "running", "video_provider_request_started", {
+    timing: { referencePreparedAt, ...providerPromptAuditTiming }
+  });
   await postWorkerSlotStatus(params.payload, "running", "video_provider_request_started", {
     index: 1,
     status: "running",
@@ -2831,6 +3009,7 @@ async function generateVideoWithProvider(params: {
     let taskId = "";
     let createError: unknown;
     for (const modelCandidate of videoProviderModelCandidates(model, { protocol, referenceAssetCount: taskReferenceAssets.length, baseUrl })) {
+      throwIfLocalWorkerAborted(params.signal);
       try {
         taskId = await createVideoTask({
           baseUrl,
@@ -2842,7 +3021,22 @@ async function generateVideoWithProvider(params: {
           videoParams,
           protocol,
           clientRequestId: `${params.payload.jobId}_${params.payload.requestId}`,
-          timeoutMs
+          endImageUrl,
+          signal: params.signal,
+          timeoutMs,
+          onProviderCreateStarted: async () => {
+            const providerCreateStartedAt = markTiming("providerCreateStartedAt");
+            await postWorkerSlotStatus(params.payload, "running", "video_provider_create_started", {
+              index: 1,
+              status: "running",
+              stage: "video_provider_create_started",
+              error: "",
+              referenceFrameCount: taskReferenceAssets.length,
+              requestedReferenceFrameCount: requestedReferenceAssets.length,
+              providerReferenceLimit,
+              updatedAt: providerCreateStartedAt
+            }, { forceWrite: true, timing: { providerCreateStartedAt } });
+          }
         });
         break;
       } catch (error) {
@@ -2867,6 +3061,7 @@ async function generateVideoWithProvider(params: {
       taskId,
       protocol,
       timing,
+      signal: params.signal,
       timeoutMs
     });
     const providerCompletedAt = markTiming("providerCompletedAt");
@@ -2901,6 +3096,7 @@ async function generateVideoWithProvider(params: {
     });
     const dataUriImageUrls = await videoProviderPreparedDataUriFrameUrls({
       referenceAssets,
+      signal: params.signal,
       timeoutMs,
       targetSize: videoParams.size
     });
@@ -2911,20 +3107,23 @@ async function generateVideoWithProvider(params: {
   }
   if (!status) throw new Error("ai_provider_video_empty_status");
   const resultUrl = videoStatusResultUrl(status);
-  if (protocol === "lk888-media" && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
+  if ((protocol === "lk888-media" || protocol === "tokengo-media") && !resultUrl) throw new Error("ai_provider_video_empty_result_url");
   const downloadedVideo = await downloadVideoResult({
     resultUrl,
     baseUrl,
     apiKey: providerApiKey,
     taskId,
     protocol,
+    signal: params.signal,
     timeoutMs
   });
   const downloadedAt = markTiming("downloadedAt");
+  throwIfLocalWorkerAborted(params.signal);
   const optimizeMode = generatedVideoOptimizeMode();
   const video = optimizeMode === "sync"
     ? await optimizeGeneratedVideoForPlayback(downloadedVideo, optimizeMode)
     : downloadedVideo;
+  throwIfLocalWorkerAborted(params.signal);
   const storageKey = customerAssetStorageKey({
     siteId: params.payload.siteId,
     customerId: params.payload.customerId,
@@ -2984,7 +3183,7 @@ async function generateVideoWithProvider(params: {
     index: 1,
     estimatedCostUsd: typeof status.cost === "number" ? status.cost : undefined,
     providerCreditCost: typeof status.creditCost === "number" ? status.creditCost : undefined,
-    providerCurrency: typeof status.creditCost === "number" ? HUITU_OPENAPI_PROVIDER_CURRENCY : undefined,
+    providerCurrency: protocol === "huitu-openapi" && typeof status.creditCost === "number" ? HUITU_OPENAPI_PROVIDER_CURRENCY : undefined,
     referenceFrameCount: usedReferenceFrameCount,
     requestedReferenceFrameCount: requestedReferenceAssets.length,
     providerReferenceLimit,
@@ -2996,9 +3195,11 @@ async function generateVideoWithProvider(params: {
 async function generateWithProvider(params: {
   payload: WorkerPayload;
   providerId: string;
+  signal?: AbortSignal;
   slotIndexes: number[];
   totalCount: number;
 }) {
+  throwIfLocalWorkerAborted(params.signal);
   const provider = await getPlatformAiProviderRelational(params.providerId);
   if (provider?.enabled === false) {
     throw new Error("ai_provider_disabled");
@@ -3021,6 +3222,7 @@ async function generateWithProvider(params: {
   await postWorkerStatus(params.payload, "running", "provider_request_started");
 
   async function generateSlot(slotIndex: number) {
+    throwIfLocalWorkerAborted(params.signal);
     const promptForSlot = promptForOutputSlot(prompt, slotIndex, params.totalCount);
     await postWorkerSlotStatus(params.payload, "running", "provider_request_started", {
       index: slotIndex,
@@ -3032,7 +3234,7 @@ async function generateWithProvider(params: {
     try {
       const response = hasInputImages
         ? await (async () => {
-          const form = await buildImageEditForm({ payload: params.payload, model, prompt: promptForSlot, timeoutMs });
+          const form = await buildImageEditForm({ payload: params.payload, model, prompt: promptForSlot, signal: params.signal, timeoutMs });
           if (!form) throw new Error("ai_provider_image_edit_missing_input");
           return fetchWithTimeout(
             `${baseUrl}/v1/images/edits`,
@@ -3042,7 +3244,8 @@ async function generateWithProvider(params: {
                 Authorization: `Bearer ${providerApiKey}`
               },
               body: form,
-              cache: "no-store"
+              cache: "no-store",
+              signal: params.signal
             },
             timeoutMs,
             `ai_provider_image_edit_timeout_${timeoutMs}`
@@ -3061,7 +3264,8 @@ async function generateWithProvider(params: {
             quality: process.env.LOCAL_AI_WORKER_IMAGE_QUALITY ?? "low",
             response_format: "b64_json"
           }),
-          cache: "no-store"
+          cache: "no-store",
+          signal: params.signal
         }, timeoutMs, `ai_provider_generation_timeout_${timeoutMs}`);
       const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
       if (!response.ok) {
@@ -3070,6 +3274,7 @@ async function generateWithProvider(params: {
       }
       const [b64] = imageBase64List(body);
       if (!b64) throw new Error("ai_provider_empty_image_payload");
+      throwIfLocalWorkerAborted(params.signal);
       const preparedOutput = prepareCompressedCustomerImage({
         bytes: Buffer.from(b64, "base64"),
         mimeType: "image/png",
@@ -3087,6 +3292,7 @@ async function generateWithProvider(params: {
         mimeType: preparedOutput.mimeType,
         purpose: "output"
       });
+      throwIfLocalWorkerAborted(params.signal);
       await postWorkerSlotStatus(params.payload, "running", "provider_response_received", {
         index: slotIndex,
         status: "succeeded",
@@ -3127,7 +3333,8 @@ function videoProviderFailureContext(provider: WorkerImageProvider): { providerF
   };
 }
 
-async function runLocalVideoWorker(payload: WorkerPayload) {
+async function runLocalVideoWorker(payload: WorkerPayload, signal?: AbortSignal) {
+  throwIfLocalWorkerAborted(signal);
   const workerAcceptedAt = new Date().toISOString();
   const workerTiming = { workerAcceptedAt };
   const providers = orderedVideoProviders(payload);
@@ -3136,7 +3343,8 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
     return;
   }
 
-  await postWorkerStatus(payload, "running", "local_video_worker_started", { timing: workerTiming });
+  const started = await postWorkerStatus(payload, "running", "local_video_worker_started", { timing: workerTiming });
+  if (started.alreadyFinal) return;
   const providerTrace: Array<{ provider: string; attempts: number }> = [];
   const providerErrors: Array<{ provider: string; error: string }> = [];
   let lastError = "";
@@ -3144,16 +3352,18 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
   let lastProviderTiming: Record<string, string> | undefined;
 
   for (const provider of providers) {
+    throwIfLocalWorkerAborted(signal);
     const trace = { provider: provider.label || provider.id, attempts: 0 };
     providerTrace.push(trace);
     const failureContext = videoProviderFailureContext(provider);
     const maxAttempts = videoProviderAttempts();
     try {
       for (const attempt of Array.from({ length: maxAttempts }, (_, attemptIndex) => attemptIndex + 1)) {
+        throwIfLocalWorkerAborted(signal);
         trace.attempts += 1;
         const attemptTiming: Record<string, string> = {};
         try {
-          const output = await generateVideoWithProvider({ payload, providerId: provider.id, timing: attemptTiming });
+          const output = await generateVideoWithProvider({ payload, providerId: provider.id, signal, timing: attemptTiming });
           lastProviderTiming = { ...attemptTiming, ...output.timing };
           await postWorkerResult(payload, {
             status: "succeeded",
@@ -3183,7 +3393,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
           lastError = errorMessage(error);
           lastProviderFailure = videoProviderFailureFromError(error, failureContext);
           if (!isRetryableProviderError(error) || attempt >= maxAttempts) break;
-          await new Promise((resolve) => setTimeout(resolve, 10_000 * attempt));
+          await sleepWithLocalWorkerAbort(10_000 * attempt, signal);
         }
       }
       throw new Error(lastError || "local_video_worker_generation_failed");
@@ -3199,7 +3409,7 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
         ...(lastProviderFailure ? { providerFailure: lastProviderFailure } : {}),
         updatedAt: new Date().toISOString()
       }, lastProviderTiming ? { timing: lastProviderTiming } : {});
-      if (!shouldAllowPaidVideoProviderFallback()) break;
+      if (!shouldTryNextPaidVideoProvider(error, lastProviderTiming)) break;
     }
   }
 
@@ -3217,14 +3427,16 @@ async function runLocalVideoWorker(payload: WorkerPayload) {
   });
 }
 
-async function runLocalImageWorker(payload: WorkerPayload) {
+async function runLocalImageWorker(payload: WorkerPayload, signal?: AbortSignal) {
+  throwIfLocalWorkerAborted(signal);
   const providers = orderedImageProviders(payload);
   if (!providers.length) {
     await postWorkerResult(payload, { status: "failed", error: "no_image_ai_provider_configured" });
     return;
   }
 
-  await postWorkerStatus(payload, "running", "local_worker_started");
+  const started = await postWorkerStatus(payload, "running", "local_worker_started");
+  if (started.alreadyFinal) return;
   const providerTrace: Array<{ provider: string; attempts: number }> = [];
   const totalCount = outputCount(payload);
   const successfulOutputsByIndex = new Map<number, GeneratedOutput>();
@@ -3232,11 +3444,13 @@ async function runLocalImageWorker(payload: WorkerPayload) {
   const providerErrors: Array<{ provider: string; error: string }> = [];
 
   for (const provider of providers) {
+    throwIfLocalWorkerAborted(signal);
     const trace = { provider: provider.label || provider.id, attempts: 0 };
     providerTrace.push(trace);
     try {
       let outputError: unknown;
       for (const attempt of Array.from({ length: providerAttempts() }, (_, attemptIndex) => attemptIndex + 1)) {
+        throwIfLocalWorkerAborted(signal);
         const missingSlotIndexes = Array.from({ length: totalCount }, (_, index) => index + 1)
           .filter((slotIndex) => !successfulOutputsByIndex.has(slotIndex));
         if (!missingSlotIndexes.length) break;
@@ -3245,6 +3459,7 @@ async function runLocalImageWorker(payload: WorkerPayload) {
           const result = await generateWithProvider({
             payload,
             providerId: provider.id,
+            signal,
             slotIndexes: missingSlotIndexes,
             totalCount
           });
@@ -3254,11 +3469,11 @@ async function runLocalImageWorker(payload: WorkerPayload) {
           outputError = result.error;
           if (!result.error || successfulOutputsByIndex.size >= totalCount) break;
           if (!isRetryableProviderError(result.error) || attempt >= providerAttempts()) break;
-          await new Promise((resolve) => setTimeout(resolve, 900 * attempt));
+          await sleepWithLocalWorkerAbort(900 * attempt, signal);
         } catch (error) {
           outputError = error;
           if (!isRetryableProviderError(error) || attempt >= providerAttempts()) break;
-          await new Promise((resolve) => setTimeout(resolve, 900 * attempt));
+          await sleepWithLocalWorkerAbort(900 * attempt, signal);
         }
       }
       if (successfulOutputsByIndex.size < totalCount) {
@@ -3303,12 +3518,13 @@ async function runLocalImageWorker(payload: WorkerPayload) {
   });
 }
 
-async function runLocalWorker(payload: WorkerPayload) {
+async function runLocalWorker(payload: WorkerPayload, signal?: AbortSignal) {
+  throwIfLocalWorkerAborted(signal);
   if (isVideoGenerationRequest(payload)) {
-    await runLocalVideoWorker(payload);
+    await runLocalVideoWorker(payload, signal);
     return;
   }
-  await runLocalImageWorker(payload);
+  await runLocalImageWorker(payload, signal);
 }
 
 export async function POST(request: Request) {
@@ -3320,7 +3536,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_worker_payload_signature" }, { status: 401 });
   }
 
-  void runLocalWorker(payload).catch((error) => {
+  const workerRegistration = registerLocalWorkerProcess({
+    siteId: payload.siteId,
+    jobId: payload.jobId,
+    requestId: payload.requestId
+  });
+  const createOrphanWatchdogMs = isVideoGenerationRequest(payload) ? videoCreateOrphanWatchdogMs() : 0;
+  const createOrphanWatchdog = createOrphanWatchdogMs > 0
+    ? setTimeout(() => {
+        void releaseStaleActiveGenerationJobRelational({
+          siteId: payload.siteId,
+          customerId: payload.customerId,
+          jobId: payload.jobId,
+          forceVideoCreateTimeout: true
+        }).then((released) => {
+          if (!released) return;
+          const abortResult = abortLocalWorkerProcesses({
+            siteId: payload.siteId,
+            jobId: payload.jobId,
+            requestId: payload.requestId,
+            reason: "local_worker_aborted"
+          });
+          console.warn("local_ai_worker_watchdog_released_stale_video_job", {
+            jobId: payload.jobId,
+            requestId: payload.requestId,
+            aborted: abortResult.aborted,
+            abortCount: abortResult.count
+          });
+        }).catch((error) => {
+          console.error("local_ai_worker_watchdog_release_failed", error);
+        });
+      }, createOrphanWatchdogMs)
+    : undefined;
+  createOrphanWatchdog?.unref?.();
+  void runLocalWorker(payload, workerRegistration.signal).catch((error) => {
+    if (workerRegistration.signal.aborted || isLocalWorkerAbortError(error)) return;
     console.error("local_ai_worker_dispatch_failed", error);
     void postWorkerResult(payload, {
       status: "failed",
@@ -3328,6 +3578,9 @@ export async function POST(request: Request) {
     }).catch((callbackError) => {
       console.error("local_ai_worker_dispatch_failure_settlement_failed", callbackError);
     });
+  }).finally(() => {
+    if (createOrphanWatchdog) clearTimeout(createOrphanWatchdog);
+    workerRegistration.unregister();
   });
   return NextResponse.json({ ok: true, status: "accepted", jobId: payload.jobId }, { status: 202 });
 }

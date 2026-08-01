@@ -41,11 +41,12 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
   deportes: "world-cup-fan-photos",
-  lifestyle: "travel-scene-pack",
+  lifestyle: "outdoor-creator-scenes",
   "professional-headshots": "headshots",
   sports: "world-cup-fan-photos",
-  travel: "travel-scene-pack",
-  viaje: "travel-scene-pack",
+  travel: "outdoor-creator-scenes",
+  viaje: "outdoor-creator-scenes",
+  "travel-scene-pack": "outdoor-creator-scenes",
   video: "ai-video-add-ons"
 };
 const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
@@ -98,7 +99,9 @@ const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/l
 const SEO_HEAD_TAG_RE =
   /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
 const LEADING_SEO_HEAD_TAG_RE =
-  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
+  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|keywords|robots|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
+const ESSENTIAL_HEAD_TAG_RE =
+  /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
 const AIDREAMCAPES_LOGO_IMG_RE =
   /<img\b(?=[^>]*src=["']\/assets\/sites\/site_aidreamcapes\/brand\/aidreamcapesai-logo-refined\.svg[^"']*["'])(?=[^>]*alt=["'][^"']*Aidreamcapes[^"']*["'])([^>]*)\/?>/gi;
@@ -114,7 +117,7 @@ const AIDREAMSHOOTS_APPLE_ICON = "/assets/sites/site_aidreamshoots/brand/aidream
 const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702";
 const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702";
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
-const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for AI travel portraits and private destination galleries"><defs><linearGradient id="aidreamcapes-header-logo" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff0b8"/><stop offset="0.38" stop-color="#ff75b7"/><stop offset="1" stop-color="#8a7cff"/></linearGradient><radialGradient id="aidreamcapes-header-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="0.55" stop-color="#b8f7ff" stop-opacity="0.25"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient></defs><rect width="512" height="512" rx="118" fill="#080a12"/><circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="30"/><circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" stroke-width="23" opacity="0.95"/><circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-header-aura)"/><path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="13" stroke-linecap="round"/><path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" stroke-width="17" stroke-linecap="round" opacity="0.76"/></svg>`;
+const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for private fan-scene and holiday photo albums"><defs><linearGradient id="aidreamcapes-header-logo" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff0b8"/><stop offset="0.38" stop-color="#ff75b7"/><stop offset="1" stop-color="#8a7cff"/></linearGradient><radialGradient id="aidreamcapes-header-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="0.55" stop-color="#b8f7ff" stop-opacity="0.25"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient></defs><rect width="512" height="512" rx="118" fill="#080a12"/><circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="30"/><circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" stroke-width="23" opacity="0.95"/><circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-header-aura)"/><path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="13" stroke-linecap="round"/><path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" stroke-width="17" stroke-linecap="round" opacity="0.76"/></svg>`;
 
 function envSwitch(value: string | undefined): boolean | undefined {
   const normalized = String(value ?? "").trim().toLowerCase();
@@ -140,6 +143,23 @@ function storefrontEdgeHtmlRewriteEnabled(request: NextRequest): boolean {
   if (isEnglishPublicStorefrontHtmlRequest(request)) return false;
 
   return true;
+}
+
+function storefrontHeadSeoReorderEnabled(request: NextRequest): boolean {
+  // Launch SEO rule: public storefront source must keep <title> first in <head>.
+  // This cannot be disabled by the heavier HTML rewrite performance switches.
+  if (storefrontHeadOrderRequired(request)) return true;
+
+  const headRewrite = envSwitch(process.env.STOREFRONT_HEAD_SEO_REORDER);
+  if (headRewrite !== undefined) return headRewrite;
+  return storefrontEdgeHtmlRewriteEnabled(request);
+}
+
+function storefrontHeadOrderRequired(request: NextRequest): boolean {
+  const pathname = request.nextUrl.pathname;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (INTERNAL_PATH_RE.test(pathname) || isPrivateStorefrontHtmlRequest(request)) return false;
+  return TARGET_SITE_PATH_RE.test(pathname) || TARGET_HOST_RE.test(host);
 }
 
 function normalizePathSlug(value: string): string {
@@ -268,7 +288,7 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
 }
 
 function shouldReorderStorefrontHead(request: NextRequest): boolean {
-  if (!storefrontEdgeHtmlRewriteEnabled(request)) return false;
+  if (!storefrontHeadSeoReorderEnabled(request)) return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
@@ -287,7 +307,8 @@ function isSpanishXbyRequest(request: NextRequest): boolean {
 }
 
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
-  if (!storefrontEdgeHtmlRewriteEnabled(request)) return false;
+  const shouldReorder = shouldReorderStorefrontHead(request);
+  if (!shouldReorder && !storefrontEdgeHtmlRewriteEnabled(request)) return false;
   if (request.method !== "GET") return false;
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   if (INTERNAL_PATH_RE.test(request.nextUrl.pathname)) return false;
@@ -295,7 +316,7 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
   const accept = request.headers.get("accept") ?? "";
   if (accept && !accept.includes("text/html") && !accept.includes("*/*")) return false;
 
-  return shouldReorderStorefrontHead(request) || isSpanishXbyRequest(request);
+  return shouldReorder || isSpanishXbyRequest(request);
 }
 
 function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
@@ -326,11 +347,13 @@ function withStorefrontLocale(html: string, request: NextRequest): string {
   return withSpanishLang.replace(/<head\b[^>]*>/i, (tag) => `${tag}<meta http-equiv="Content-Language" content="es">`);
 }
 
-function titleFirstSeoTags(tags: string[]): string[] {
+function splitTitleAndSeoTags(tags: string[]): { titleTag: string; seoTags: string[] } {
   const titleIndex = tags.findIndex((tag) => /^<title\b/i.test(tag));
-  if (titleIndex < 0) return tags;
-  const titleTag = tags[titleIndex];
-  return [titleTag, ...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)];
+  if (titleIndex < 0) return { titleTag: "", seoTags: tags };
+  return {
+    titleTag: tags[titleIndex],
+    seoTags: [...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)]
+  };
 }
 
 function leadingSeoHeadLength(headContent: string): number {
@@ -360,7 +383,13 @@ function moveSeoTagsBeforeResources(html: string): string {
   });
   if (!seoTags.length) return html;
 
-  const reorderedHead = `${titleFirstSeoTags(seoTags).join("")}${strippedHead}`;
+  const essentialTags: string[] = [];
+  const remainingHead = strippedHead.replace(ESSENTIAL_HEAD_TAG_RE, (tag) => {
+    essentialTags.push(tag);
+    return "";
+  });
+  const { titleTag, seoTags: nonTitleSeoTags } = splitTitleAndSeoTags(seoTags);
+  const reorderedHead = `${titleTag}${essentialTags.join("")}${nonTitleSeoTags.join("")}${remainingHead}`;
   return `${beforeHeadContent}${reorderedHead}${strippedAfterHead}`;
 }
 
@@ -416,8 +445,22 @@ function sameServerUrl(request: NextRequest): URL {
   const upstreamUrl = request.nextUrl.clone();
   upstreamUrl.protocol = "http:";
   upstreamUrl.hostname = "127.0.0.1";
-  upstreamUrl.port = process.env.PORT || "3000";
+  upstreamUrl.port = sameServerPort(request);
   return upstreamUrl;
+}
+
+function sameServerPort(request: NextRequest): string {
+  const configuredPort = process.env.STOREFRONT_INTERNAL_PORT || process.env.PORT;
+  if (configuredPort) return configuredPort;
+
+  const forwardedPort = request.headers.get("x-forwarded-port");
+  if (forwardedPort && !["80", "443"].includes(forwardedPort)) return forwardedPort;
+
+  const host = request.headers.get("host") ?? "";
+  const localHostPort = host.match(/^(?:localhost|127\.0\.0\.1|\[::1\]):(\d+)$/i)?.[1];
+  if (localHostPort) return localHostPort;
+
+  return "3010";
 }
 
 function storefrontSlugForHost(host: string | null | undefined): string | undefined {
@@ -483,7 +526,7 @@ export async function middleware(request: NextRequest) {
   if (usesInternalSitePath) {
     const publicHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
     if (TARGET_HOST_RE.test(publicHost)) upstreamHeaders.set(STOREFRONT_PUBLIC_HOST_HEADER, publicHost);
-    upstreamHeaders.set("x-forwarded-host", `127.0.0.1:${process.env.PORT || "3000"}`);
+    upstreamHeaders.set("x-forwarded-host", `127.0.0.1:${sameServerPort(request)}`);
   } else {
     const requestHost = request.headers.get("host") ?? "";
     const forwardedHost = upstreamHeaders.get("x-forwarded-host") ?? "";

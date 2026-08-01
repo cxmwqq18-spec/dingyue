@@ -9,7 +9,7 @@ import { customerAssetRolesForSurface } from "@/lib/customer-asset-resource-agen
 import { runDbTasks } from "@/lib/db-concurrency";
 import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
-import { readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
+import { mutateLocalPlatformStateFallback, readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
@@ -20,6 +20,7 @@ import type {
   AiGatewayGroup,
   AiProviderConfig,
   AiWorkflowConfig,
+  AiWorkflowStep,
   AuditLogEntry,
   CreativePack,
   CreativePackCategory,
@@ -27,9 +28,11 @@ import type {
   MediaAsset,
   PlatformState,
   Product,
+  PublicSiteAdmin,
   PublicPlatformAdmin,
   Site,
   SiteAdmin,
+  SiteAdminSession,
   SiteAiApp,
   SiteDomain,
   ThemePageJson,
@@ -95,6 +98,91 @@ function envPositiveInt(name: string, fallback: number): number {
 const siteAdminPrismaReadTimeoutMs = envPositiveInt("SITE_ADMIN_PRISMA_READ_TIMEOUT_MS", 3_000);
 const siteAdminSummaryReadTimeoutMs = envPositiveInt("SITE_ADMIN_SUMMARY_READ_TIMEOUT_MS", 8_000);
 const siteAdminPrismaReadRetries = envPositiveInt("SITE_ADMIN_PRISMA_READ_RETRIES", 0);
+
+type LocalSiteAdminSessionFallbackEntry = {
+  site?: { id: string; slug: string };
+  siteAdmin: PublicSiteAdmin;
+  session: SiteAdminSession;
+};
+
+const localSiteAdminSessionFallbacks = new Map<string, LocalSiteAdminSessionFallbackEntry>();
+
+function localSiteAdminSessionFallbackKey(siteId: string, sessionId: string): string {
+  return `${siteId}:${sessionId}`;
+}
+
+function canUseLocalSiteAdminSessionFallback(): boolean {
+  return process.env.NODE_ENV !== "production" && process.env.PLATFORM_STATE_POSTGRES_STRICT !== "1";
+}
+
+function pruneLocalSiteAdminSessionFallbacks(now = Date.now()): void {
+  for (const [key, entry] of localSiteAdminSessionFallbacks) {
+    if (new Date(entry.session.expiresAt).getTime() <= now) {
+      localSiteAdminSessionFallbacks.delete(key);
+    }
+  }
+}
+
+function rememberLocalSiteAdminSessionFallback(entry: LocalSiteAdminSessionFallbackEntry): void {
+  if (!canUseLocalSiteAdminSessionFallback()) return;
+  const expiresAt = new Date(entry.session.expiresAt).getTime();
+  if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return;
+  pruneLocalSiteAdminSessionFallbacks();
+  localSiteAdminSessionFallbacks.set(localSiteAdminSessionFallbackKey(entry.session.siteId, entry.session.id), entry);
+  try {
+    mutateLocalPlatformStateFallback((state) => {
+      const siteAdmin = state.siteAdmins.find((item) => item.siteId === entry.session.siteId && item.id === entry.session.siteAdminId);
+      if (!siteAdmin) return;
+      state.siteAdminSessions = state.siteAdminSessions.filter((session) => session.id !== entry.session.id);
+      state.siteAdminSessions.push(entry.session);
+    });
+  } catch {
+    // JSON fallback mirroring is best-effort; the in-memory cache still covers the current dev server.
+  }
+}
+
+function getLocalSiteAdminSessionFallback(siteId: string, sessionId?: string): LocalSiteAdminSessionFallbackEntry | undefined {
+  if (!sessionId || !canUseLocalSiteAdminSessionFallback()) return undefined;
+  pruneLocalSiteAdminSessionFallbacks();
+  const entry = localSiteAdminSessionFallbacks.get(localSiteAdminSessionFallbackKey(siteId, sessionId));
+  if (entry?.session.siteId === siteId) {
+    const expiresAt = new Date(entry.session.expiresAt).getTime();
+    if (Number.isFinite(expiresAt) && expiresAt > Date.now()) return entry;
+    localSiteAdminSessionFallbacks.delete(localSiteAdminSessionFallbackKey(siteId, sessionId));
+  }
+
+  const state = readLocalPlatformStateFallback();
+  const session = state?.siteAdminSessions.find((item) => item.siteId === siteId && item.id === sessionId && new Date(item.expiresAt).getTime() > Date.now());
+  const siteAdmin = session ? state?.siteAdmins.find((item) => item.siteId === siteId && item.id === session.siteAdminId) : undefined;
+  if (!state || !session || !siteAdmin) return undefined;
+  const fallbackEntry: LocalSiteAdminSessionFallbackEntry = {
+    site: state.sites.find((site) => site.id === siteId),
+    siteAdmin: toPublicSiteAdminRelational({ ...siteAdmin }),
+    session
+  };
+  localSiteAdminSessionFallbacks.set(localSiteAdminSessionFallbackKey(siteId, sessionId), fallbackEntry);
+  return fallbackEntry;
+}
+
+function forgetLocalSiteAdminSessionFallback(siteId: string | undefined, sessionId: string): void {
+  if (!canUseLocalSiteAdminSessionFallback()) return;
+  if (siteId) {
+    localSiteAdminSessionFallbacks.delete(localSiteAdminSessionFallbackKey(siteId, sessionId));
+  } else {
+    for (const [key, entry] of localSiteAdminSessionFallbacks) {
+      if (entry.session.id === sessionId) localSiteAdminSessionFallbacks.delete(key);
+    }
+  }
+  try {
+    mutateLocalPlatformStateFallback((state) => {
+      state.siteAdminSessions = state.siteAdminSessions.filter((session) =>
+        siteId ? session.siteId !== siteId || session.id !== sessionId : session.id !== sessionId
+      );
+    });
+  } catch {
+    // Local fallback cleanup is best-effort.
+  }
+}
 
 function runSiteAdminRead<T>(
   label: string,
@@ -1642,7 +1730,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
       ? () => prisma.customerModel.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.customerModels })
       : () => Promise.resolve([]),
     wantsAlbums && limits.albums
-      ? () => prisma.album.findMany({ where: { siteId, customerId }, orderBy: { updatedAt: "desc" }, take: limits.albums })
+      ? () => prisma.album.findMany({ where: { siteId, customerId, status: "ready" }, orderBy: { updatedAt: "desc" }, take: limits.albums })
       : () => Promise.resolve([])
   ]);
 
@@ -1701,7 +1789,7 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
   if (missingAlbumCoverAssetIds.length) relatedAlbumOr.push({ coverAssetId: { in: missingAlbumCoverAssetIds } });
   if (wantsAlbums && relatedAlbumOr.length) {
     const relatedAlbums = await prisma.album.findMany({
-      where: { siteId, customerId, OR: relatedAlbumOr },
+      where: { siteId, customerId, status: "ready", OR: relatedAlbumOr },
       orderBy: { updatedAt: "desc" },
       take: Math.max(limits.albums || 12, relatedAlbumOr.length * 6)
     });
@@ -1777,7 +1865,7 @@ async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<Platfo
     prisma.assetUpload.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.assetUploads }),
     prisma.creditLedger.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.ledger }),
     prisma.customerModel.findMany({ where: { siteId }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.customerModels }),
-    prisma.album.findMany({ where: { siteId }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.albums })
+    prisma.album.findMany({ where: { siteId, status: "ready" }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.albums })
   ]);
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
@@ -1960,9 +2048,12 @@ export async function createSiteAdminSessionRelational(params: { siteId: string;
       expiresAt: new Date(Date.now() + relationalSessionTtlMs)
     }
   });
+  const siteAdmin = toPublicSiteAdminRelational(admin);
+  const siteAdminSession = toSiteAdminSessionRelational(session);
+  rememberLocalSiteAdminSessionFallback({ siteAdmin, session: siteAdminSession });
   return {
-    siteAdmin: toPublicSiteAdminRelational(admin),
-    session: toSiteAdminSessionRelational(session)
+    siteAdmin,
+    session: siteAdminSession
   };
 }
 
@@ -1987,9 +2078,16 @@ function createLocalSiteAdminSessionFallback(
     createdAt: now.toISOString(),
     expiresAt: new Date(now.getTime() + relationalSessionTtlMs).toISOString()
   };
+  const siteAdmin = toPublicSiteAdminRelational({ ...admin });
+  const siteAdminSession = toSiteAdminSessionRelational(session);
+  rememberLocalSiteAdminSessionFallback({
+    site: state.sites.find((item) => item.id === params.siteId),
+    siteAdmin,
+    session: siteAdminSession
+  });
   return {
-    siteAdmin: toPublicSiteAdminRelational({ ...admin }),
-    session: toSiteAdminSessionRelational(session)
+    siteAdmin,
+    session: siteAdminSession
   };
 }
 
@@ -2004,18 +2102,32 @@ export async function createSiteAdminSessionByAdminIdRelational(params: { siteId
       expiresAt: new Date(Date.now() + relationalSessionTtlMs)
     }
   });
+  const siteAdmin = toPublicSiteAdminRelational(admin);
+  const siteAdminSession = toSiteAdminSessionRelational(session);
+  rememberLocalSiteAdminSessionFallback({ siteAdmin, session: siteAdminSession });
   return {
-    siteAdmin: toPublicSiteAdminRelational(admin),
-    session: toSiteAdminSessionRelational(session)
+    siteAdmin,
+    session: siteAdminSession
   };
 }
 
 export async function deleteSiteAdminSessionRelational(sessionId: string, client: PrismaLike = prisma): Promise<void> {
-  await client.siteAdminSession.deleteMany({ where: { id: sessionId } });
+  try {
+    await client.siteAdminSession.deleteMany({ where: { id: sessionId } });
+  } finally {
+    forgetLocalSiteAdminSessionFallback(undefined, sessionId);
+  }
 }
 
 export async function getSiteAdminBySessionRelational(params: { siteId: string; sessionId?: string }) {
   if (!params.sessionId) return undefined;
+  const localFallback = getLocalSiteAdminSessionFallback(params.siteId, params.sessionId);
+  if (localFallback) {
+    return {
+      siteAdmin: localFallback.siteAdmin,
+      session: localFallback.session
+    };
+  }
   let session;
   try {
     session = await runSiteAdminRead(`site admin session:${params.siteId}`, () =>
@@ -2038,6 +2150,19 @@ export async function getSiteAdminBySessionRelational(params: { siteId: string; 
 
 export async function getSiteAdminBridgeSessionRelational(params: { siteId: string; sessionId?: string }) {
   if (!params.sessionId) return undefined;
+  const localFallback = getLocalSiteAdminSessionFallback(params.siteId, params.sessionId);
+  if (localFallback) {
+    const site = localFallback.site ?? readLocalPlatformStateFallback()?.sites.find((item) => item.id === params.siteId);
+    if (site) {
+      return {
+        site: { id: site.id, slug: site.slug },
+        result: {
+          siteAdmin: localFallback.siteAdmin,
+          session: localFallback.session
+        }
+      };
+    }
+  }
   let session;
   try {
     session = await runSiteAdminRead(`site admin bridge session:${params.siteId}`, () =>
@@ -2074,11 +2199,17 @@ export async function createSiteAdminBridgeSessionRelational(siteId: string) {
       expiresAt: new Date(Date.now() + relationalSessionTtlMs)
     }
   });
+  const siteAdminSession = toSiteAdminSessionRelational(session);
+  rememberLocalSiteAdminSessionFallback({
+    site,
+    siteAdmin: admin,
+    session: siteAdminSession
+  });
   return {
     site,
     result: {
       siteAdmin: admin,
-      session: toSiteAdminSessionRelational(session)
+      session: siteAdminSession
     }
   };
 }
@@ -4252,6 +4383,37 @@ function defaultVideoWorkflowConfig(): AiWorkflowConfig {
   };
 }
 
+function videoWorkflowConfigWithCurrentFrameLimit(value: unknown): AiWorkflowConfig {
+  const fallback = defaultVideoWorkflowConfig();
+  const source = value && typeof value === "object" && !Array.isArray(value)
+    ? cloneJson(value as Partial<AiWorkflowConfig>)
+    : fallback;
+  const sourceSteps = Array.isArray(source.steps) && source.steps.length
+    ? source.steps
+    : fallback.steps;
+  let hasAssetSelectStep = false;
+  const steps = sourceSteps.map((step): AiWorkflowStep => {
+    if (step.kind !== "asset_select") return step;
+    hasAssetSelectStep = true;
+    return {
+      ...step,
+      assetRules: {
+        ...(step.assetRules ?? {}),
+        min: 0,
+        max: DEFAULT_VIDEO_FRAME_LIMIT,
+        roles: step.assetRules?.roles?.length ? step.assetRules.roles : ["input", "training_input"],
+        accept: step.assetRules?.accept?.length ? step.assetRules.accept : ["image/*"],
+        required: false
+      }
+    };
+  });
+  return {
+    ...fallback,
+    ...(source as Partial<AiWorkflowConfig>),
+    steps: hasAssetSelectStep ? steps : [fallback.steps[0], ...steps]
+  };
+}
+
 const ensureDefaultVideoThemesInFlight = new Map<string, Promise<void>>();
 
 export async function ensureVideoGeneratorAppForSiteRelational(siteId: string): Promise<{ siteAiApp: SiteAiApp }> {
@@ -4403,13 +4565,20 @@ async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<
   if (existingTheme) {
     const existingApp = await prisma.siteAiApp.findFirst({
       where: { siteId, aiApp: { slug: "video_generator" } },
-      select: { id: true }
+      select: { id: true, workflowConfig: true }
     });
     if (existingApp) {
       await prisma.videoTheme.updateMany({
         where: { siteId, maxFrames: { lt: DEFAULT_VIDEO_FRAME_LIMIT } },
         data: { maxFrames: DEFAULT_VIDEO_FRAME_LIMIT }
       });
+      const workflowConfig = videoWorkflowConfigWithCurrentFrameLimit(existingApp.workflowConfig);
+      if (JSON.stringify(workflowConfig) !== JSON.stringify(existingApp.workflowConfig)) {
+        await prisma.siteAiApp.update({
+          where: { id: existingApp.id },
+          data: { workflowConfig: workflowConfig as unknown as Prisma.InputJsonValue }
+        });
+      }
       await ensurePromptDirectedDefaultVideoThemeRelational(siteId);
       clearSiteReadCache();
       return;

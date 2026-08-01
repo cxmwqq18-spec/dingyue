@@ -59,6 +59,12 @@ const routeMeta: Record<SiteAdminModuleCode, PendingRouteMeta> = {
     title: "AI 工具",
     subtitle: "正在进入工具启用、扣费规则、worker 路由和任务队列。"
   },
+  processes: {
+    code: "processes",
+    eyebrow: "AI 进程控制",
+    title: "进程管理",
+    subtitle: "正在加载排队和运行中的生成任务、预扣积分和终止操作。"
+  },
   email: {
     code: "email",
     eyebrow: "site email",
@@ -82,6 +88,7 @@ function siteAdminCodeFromHref(href?: string): SiteAdminModuleCode | undefined {
   if (matchesAdminPath("/admin/orders")) return "orders";
   if (matchesAdminPath("/admin/customers")) return "customers";
   if (matchesAdminPath("/admin/partners")) return "partners";
+  if (matchesAdminPath("/admin/processes")) return "processes";
   if (matchesAdminPath("/admin/ai-tools")) return "ai";
   if (matchesAdminPath("/admin/content")) return "content";
   if (matchesAdminPath("/admin/email")) return "email";

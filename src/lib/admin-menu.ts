@@ -2,6 +2,7 @@ import {
   Bot,
   Building2,
   Cloud,
+  CircleStop,
   CreditCard,
   FileText,
   Gauge,
@@ -27,6 +28,7 @@ export type SiteAdminModuleCode =
   | "customers"
   | "partners"
   | "ai"
+  | "processes"
   | "content"
   | "email"
   | "settings";
@@ -156,6 +158,18 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     aiExtension: "N8N 只作为 worker，不接支付、不决定额度、不写账本。",
     keywords: ["ai", "worker", "model", "album", "AI", "工厂", "相册"],
     items: ["AI 工具", "扣费规则", "任务队列", "失败重跑"]
+  },
+  {
+    label: "进程管理",
+    code: "processes",
+    icon: CircleStop,
+    href: "/admin/processes",
+    metric: "进程",
+    tone: "warn",
+    description: "查看正在排队或运行的 AI 生成进程，必要时人工终止并释放预扣积分。",
+    aiExtension: "终止动作只做本站业务结算，不跨站、不直接操作供应商余额。",
+    keywords: ["processes", "process", "jobs", "queue", "worker", "terminate", "进程", "终止", "队列"],
+    items: ["进程列表", "运行状态", "人工终止", "释放预扣"]
   },
   {
     label: "邮件管理",

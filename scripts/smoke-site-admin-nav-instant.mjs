@@ -12,6 +12,7 @@ const startUrl = `${baseUrl}/site/${siteSlug}/admin/orders`;
 const targets = [
   { label: "顾客资产", title: "顾客管理", code: "customers", url: `/site/${siteSlug}/admin/customers` },
   { label: "AI 工厂", title: "AI 工具", code: "ai", url: `/site/${siteSlug}/admin/ai-tools` },
+  { label: "进程管理", title: "进程管理", code: "processes", url: `/site/${siteSlug}/admin/processes` },
   { label: "邮件管理", title: "邮件管理", code: "email", url: `/site/${siteSlug}/admin/email` },
   { label: "设置收款", title: "设置收款", code: "settings", url: `/site/${siteSlug}/admin/settings` },
   { label: "内容运营", title: "内容运营", code: "content", url: `/site/${siteSlug}/admin/content` },

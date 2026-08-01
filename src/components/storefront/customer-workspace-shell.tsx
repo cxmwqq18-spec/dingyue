@@ -2,7 +2,7 @@
 
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, Pencil, Play, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { invalidateCustomerAssets } from "@/components/app/customer-assets-client-cache";
 import { JobCreateForm } from "@/components/app/job-create-form";
@@ -10,7 +10,8 @@ import { CustomerShellHeader } from "@/components/storefront/customer-shell-head
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
 import { CustomerVideoWorkspace, type VideoRetryDraft } from "@/components/storefront/customer-video-workspace";
-import { csrfHeader } from "@/lib/client-csrf";
+import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { sampleUploadFeedbackCount } from "@/lib/customer-workspace-sample-selection";
 import {
   canPrepareCustomerVideoFrameUploadFile,
   customerImageUploadErrorMessage,
@@ -38,6 +39,11 @@ type CreatedWorkspaceJobFeedback = {
   customerBalance?: PublicCustomer["balance"];
 };
 type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-photos" | "review-request" | "video-workspace-videos" | "resources-videos" | `resources-${WorkspaceResourceTab}`;
+
+function newVideoRetryIdempotencyKey(sourceJobId: string) {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `video_retry_${sourceJobId}_${crypto.randomUUID()}`;
+  return `video_retry_${sourceJobId}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
 type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
 type SampleTarget = "primary" | "partner";
@@ -337,7 +343,7 @@ function videoJobPromptText(job: Pick<RuntimeJob, "requestJson"> | OutputCopyJob
 function videoPromptRequiresFrameImages(prompt: string): boolean {
   const text = prompt.trim().toLowerCase();
   if (!text) return false;
-  return /上传.{0,12}(图片|照片|图像|素材|参考图)|根据.{0,12}(图片|照片|图像|素材|参考图)|这(张|个|些).{0,8}(图片|照片|图像|素材|参考图)|图中|照片中|uploaded.{0,24}(image|photo|frame|picture)|selected.{0,24}(image|photo|frame|picture)|reference.{0,24}(image|photo|frame|picture)|source.{0,24}(image|photo|frame|picture)/i.test(text);
+  return /\u4e0a\u4f20.{0,12}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u6839\u636e.{0,12}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u8fd9(\u5f20|\u4e2a|\u4e9b).{0,8}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u56fe\u4e2d|\u7167\u7247\u4e2d|uploaded.{0,24}(image|photo|frame|picture)|selected.{0,24}(image|photo|frame|picture)|reference.{0,24}(image|photo|frame|picture)|source.{0,24}(image|photo|frame|picture)/i.test(text);
 }
 
 function videoJobMissingRequiredFrames(job: RuntimeJob): boolean {
@@ -476,6 +482,12 @@ function shouldRestoreGeminiRetryAsGrok(failure?: VideoProviderFailure): boolean
   return failure?.providerFamily === "gemini" && failure.code === "real_person_reference_unsupported";
 }
 
+function canDirectRetryVideoJob(job: RuntimeJob, failure?: VideoProviderFailure): boolean {
+  if (!isVideoRuntimeJob(job)) return false;
+  if (!failure) return true;
+  return failure.code === "frame_url_unreadable";
+}
+
 function videoRetryDraftFromJob(job: RuntimeJob, providerFailure?: VideoProviderFailure, spanish = false): Omit<VideoRetryDraft, "key"> | undefined {
   if (!isVideoRuntimeJob(job)) return undefined;
   const request = recordValue(job.requestJson);
@@ -567,6 +579,8 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
     const error = typeof result.error === "string" && result.error ? result.error : slotError ?? "";
     const lowerError = error.toLowerCase();
     const isVideoRequest = isVideoRuntimeJob(job);
+    if (isVideoRequest && (error.includes("ai_provider_video_request_timeout") || error.includes("video_provider_request_timeout"))) return t(spanish, "The video request stalled before the provider returned a task id. Credits were returned automatically; refresh the workspace, then retry after a short wait.", "La solicitud de video se quedo detenida antes de que el proveedor devolviera un id de tarea. Los creditos se devolvieron automaticamente; actualiza el espacio y reintenta despues de una breve espera.");
+    if (isVideoRequest && (error.includes("ai_provider_video_create_timeout") || error.includes("video_provider_create_timeout"))) return t(spanish, "The video provider did not return a task after the create request timed out. Credits were returned automatically; retry after a short wait or use another healthy video provider.", "El proveedor de video no devolvio una tarea antes de agotar el tiempo de creacion. Los creditos se devolvieron automaticamente; reintenta despues de una breve espera o usa otro proveedor disponible.");
     if (error.includes("generation_job_expired")) return isVideoRequest
       ? t(spanish, "The video generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador de video se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.")
       : t(spanish, "The generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
@@ -758,6 +772,7 @@ function workspaceSlotProgressText(slot: RuntimeOutputSlot, spanish = false): st
   if (slot.stage === "video_result_received") return t(spanish, "Saving video", "Guardando video");
   if (slot.stage === "provider_response_received") return t(spanish, "Saving output", "Guardando resultado");
   if (slot.stage === "video_task_created") return t(spanish, "Video task created", "Tarea de video creada");
+  if (slot.stage === "video_provider_create_started") return t(spanish, "Submitting video task", "Enviando tarea de video");
   if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
   if (slot.stage === "video_scene_image_generation_started") return t(spanish, "Preparing starter image", "Preparando imagen inicial");
   if (slot.stage === "video_provider_request_started") return t(spanish, "Generating video", "Generando video");
@@ -813,12 +828,19 @@ function workspaceStoragePreviewUrl(storageKey: string): string {
 }
 
 function workspaceAssetPreviewUrl(asset: Pick<ThemeRuntimeAsset, "previewUrl" | "storageKey" | "role">): string {
-  if (asset.role === "output" && asset.storageKey) return workspaceStoragePreviewUrl(asset.storageKey);
   return asset.previewUrl;
 }
 
 function assetPreviewIsLoading(asset: Pick<ThemeRuntimeAsset, "previewStatus"> & { localStatus?: LocalUploadStatus }): boolean {
   return asset.localStatus === "uploading" || asset.previewStatus === "loading";
+}
+
+function videoFrameAssetReadyForGeneration(asset: Pick<ThemeRuntimeAsset, "id"> & { localStatus?: LocalUploadStatus }): boolean {
+  return !asset.id.startsWith("local:") && asset.localStatus !== "uploading" && asset.localStatus !== "failed";
+}
+
+function videoFrameAssetSelectable(asset: Pick<ThemeRuntimeAsset, "id"> & { localStatus?: LocalUploadStatus }): boolean {
+  return videoFrameAssetReadyForGeneration(asset);
 }
 
 function shouldRenderSourceSample(asset: Pick<ThemeRuntimeAsset, "id" | "previewStatus"> & { localStatus?: LocalUploadStatus }): boolean {
@@ -983,6 +1005,61 @@ function WorkspaceVideoPreviewButton({
         </span>
       ) : null}
     </button>
+  );
+}
+
+function WorkspaceVideoPreviewPlayer({
+  label,
+  posterSrc,
+  src,
+  spanish
+}: {
+  label: string;
+  posterSrc: string;
+  src: string;
+  spanish: boolean;
+}) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    setIsPlaying(false);
+  }, [src]);
+
+  return (
+    <div className="relative inline-block max-w-full">
+      <video
+        aria-label={label}
+        className="max-h-[82vh] max-w-full object-contain"
+        controls
+        playsInline
+        poster={posterSrc}
+        preload="metadata"
+        ref={videoRef}
+        src={src}
+        onEnded={() => setIsPlaying(false)}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+      />
+      {!isPlaying ? (
+        <button
+          aria-label={t(spanish, "Play video preview", "Reproducir vista previa de video")}
+          className="absolute inset-x-0 top-0 bottom-14 grid cursor-pointer place-items-center bg-transparent text-white transition hover:bg-white/[0.04]"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const video = videoRef.current;
+            if (!video) return;
+            void video.play().catch(() => {});
+          }}
+          type="button"
+        >
+          <span className="grid h-16 w-16 place-items-center rounded-full border border-white/16 bg-black/50 text-white backdrop-blur transition hover:bg-black/65">
+            <Play className="ml-1 h-7 w-7" strokeWidth={1.8} />
+          </span>
+        </button>
+      ) : null}
+    </div>
   );
 }
 
@@ -1256,6 +1333,9 @@ export function CustomerWorkspaceShell({
   const [focusedJobId, setFocusedJobId] = useState<string | null>(null);
   const [pendingCreatedVideoJobId, setPendingCreatedVideoJobId] = useState<string | null>(null);
   const [videoSubmissionPending, setVideoSubmissionPending] = useState(false);
+  const [videoCreationFailureMessage, setVideoCreationFailureMessage] = useState("");
+  const [videoCreationFailureAtMs, setVideoCreationFailureAtMs] = useState<number | null>(null);
+  const [retryingVideoJobId, setRetryingVideoJobId] = useState<string | null>(null);
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
   const [sampleDeleteConfirm, setSampleDeleteConfirm] = useState<{ assets: SampleAsset[]; label: string } | null>(null);
@@ -1303,22 +1383,35 @@ export function CustomerWorkspaceShell({
   );
   const readySelectedVideoFrameIds = useMemo(
     () => selectedVideoFrames
-      .filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset))
+      .filter(videoFrameAssetReadyForGeneration)
       .map((asset) => asset.id),
     [selectedVideoFrames]
   );
   const maxVideoFrameCount = VIDEO_FRAME_UPLOAD_LIMIT;
   const resourceStatusJobs = recentJobs.filter((job) => !isVideoRuntimeJob(job));
   const videoRuntimeJobs = recentJobs.filter(isVideoRuntimeJob);
+  const latestSucceededVideoJob = videoRuntimeJobs.find((job) => workspaceJobEffectiveStatus(job) === "succeeded");
+  const latestSucceededVideoJobUpdatedMs = latestSucceededVideoJob
+    ? dateMs(latestSucceededVideoJob.updatedAt) ?? dateMs(latestSucceededVideoJob.createdAt) ?? 0
+    : 0;
+  const currentVideoRuntimeJobs = latestSucceededVideoJob
+    ? videoRuntimeJobs.filter((job) => {
+        const status = workspaceJobEffectiveStatus(job);
+        if (status !== "failed" && status !== "partial") return true;
+        const jobUpdatedMs = dateMs(job.updatedAt) ?? dateMs(job.createdAt) ?? 0;
+        return jobUpdatedMs > latestSucceededVideoJobUpdatedMs;
+      })
+    : videoRuntimeJobs;
   const pendingCreatedVideoJob = pendingCreatedVideoJobId ? videoRuntimeJobs.find((job) => job.id === pendingCreatedVideoJobId) : undefined;
   const resourceJobStatuses = resourceStatusJobs.map((job) => workspaceJobEffectiveStatus(job));
-  const videoJobStatuses = videoRuntimeJobs.map((job) => workspaceJobEffectiveStatus(job));
+  const videoJobStatuses = currentVideoRuntimeJobs.map((job) => workspaceJobEffectiveStatus(job));
   const activeJobs = resourceJobStatuses.filter((status) => status === "queued" || status === "running").length;
   const failedJobs = resourceJobStatuses.filter((status) => status === "failed" || status === "partial").length;
   const activeVideoJobs = videoJobStatuses.filter((status) => status === "queued" || status === "running").length;
   const failedVideoJobs = videoJobStatuses.filter((status) => status === "failed" || status === "partial").length;
   const runtimeIsLoading = runtimeState.status === "loading";
   const waitingForCreatedVideoJob = Boolean(pendingCreatedVideoJobId && !pendingCreatedVideoJob && runtimeState.status !== "error");
+  const showVideoCreationFailure = Boolean(videoCreationFailureMessage);
   const runtimeInitialLoadFailed = initialRuntimeNeedsRefresh && runtimeState.status === "error" && !runtimeState.runtime;
   const runtimeIsInitializing = !workspaceNotice && !focusedJobId && !runtime && (runtimeState.status === "idle" || (runtimeState.status === "loading" && runtimeState.refreshKey === 0) || runtimeInitialLoadFailed);
   const completedRuntimeRefreshKey = runtimeState.status === "ready" || runtimeState.status === "error" ? runtimeState.refreshKey : null;
@@ -1774,15 +1867,43 @@ export function CustomerWorkspaceShell({
   const visibleVideoStatusJobs = useMemo(() => {
     if (focusedJobId) {
       const focusedJob = videoRuntimeJobs.find((job) => job.id === focusedJobId);
-      if (focusedJob) return [focusedJob];
+      if (focusedJob) {
+        const status = workspaceJobEffectiveStatus(focusedJob);
+        if (status === "queued" || status === "running" || status === "succeeded" || status === "failed" || status === "partial") return [focusedJob];
+      }
       if (pendingCreatedVideoJobId === focusedJobId) return [];
     }
-    const activeJob = videoRuntimeJobs.find((job) => {
+    const activeJob = currentVideoRuntimeJobs.find((job) => {
       const status = workspaceJobEffectiveStatus(job);
       return status === "queued" || status === "running";
     });
-    return [activeJob ?? videoRuntimeJobs[0]].filter((job): job is RuntimeJob => Boolean(job));
-  }, [focusedJobId, pendingCreatedVideoJobId, videoRuntimeJobs]);
+    if (activeJob) return [activeJob];
+    const attentionJob = currentVideoRuntimeJobs.find((job) => {
+      const status = workspaceJobEffectiveStatus(job);
+      return status === "failed" || status === "partial";
+    });
+    if (attentionJob) return [attentionJob];
+    const latestSucceededJob = videoRuntimeJobs.find((job) => workspaceJobEffectiveStatus(job) === "succeeded");
+    return latestSucceededJob ? [latestSucceededJob] : [];
+  }, [currentVideoRuntimeJobs, focusedJobId, pendingCreatedVideoJobId, videoRuntimeJobs]);
+  const hasVideoJobAfterCreationFailure = Boolean(videoCreationFailureAtMs && videoRuntimeJobs.some((job) => {
+    const jobCreatedMs = dateMs(job.createdAt) ?? dateMs(job.updatedAt) ?? 0;
+    return jobCreatedMs >= videoCreationFailureAtMs - 90_000;
+  }));
+  const showVideoCreationFailureCard = showVideoCreationFailure && !hasVideoJobAfterCreationFailure;
+  const visibleVideoProgressJobs = showVideoCreationFailureCard ? [] : visibleVideoStatusJobs;
+  useEffect(() => {
+    if (!videoCreationFailureMessage || !hasVideoJobAfterCreationFailure) return;
+    setVideoCreationFailureMessage("");
+    setVideoCreationFailureAtMs(null);
+    setWorkspaceNotice((current) => {
+      if (
+        current?.startsWith("The video request could not be created.") ||
+        current?.startsWith("No se pudo crear la solicitud de video.")
+      ) return "";
+      return current;
+    });
+  }, [hasVideoJobAfterCreationFailure, videoCreationFailureMessage]);
   const outputIndexByAssetId = useMemo(() => {
     const counts = new Map<string, number>();
     return new Map(galleryAssets.map((asset) => {
@@ -1941,7 +2062,64 @@ export function CustomerWorkspaceShell({
     }, 0);
   }
 
-  function retryVideoJob(job: RuntimeJob) {
+  function videoRetryRequestErrorMessage(error: string | undefined, status: number) {
+    if (status === 401 || error === "customer_login_required") return t(spanishXby, "Please sign in again before retrying this video.", "Vuelve a iniciar sesion antes de reintentar este video.");
+    if (status === 403 || error?.includes("csrf")) return t(spanishXby, "Your secure session expired. Refresh the page, then retry this video.", "Tu sesion segura expiro. Actualiza la pagina y reintenta este video.");
+    if (error === "insufficient_credits") return t(spanishXby, "Not enough credits to retry this video.", "No hay creditos suficientes para reintentar este video.");
+    if (error === "generation_job_already_running") return t(spanishXby, "Another request is already running. Wait for it to finish before retrying.", "Ya hay otra solicitud en ejecucion. Espera a que termine antes de reintentar.");
+    if (error === "only_failed_or_refunded_jobs_can_be_rerun") return t(spanishXby, "Only failed video requests can be retried.", "Solo se pueden reintentar solicitudes de video fallidas.");
+    if (error === "only_video_jobs_can_be_retried") return t(spanishXby, "Only video requests can be retried here.", "Solo se pueden reintentar solicitudes de video aqui.");
+    if (status === 409) return t(spanishXby, "This video cannot be retried right now. Refresh the workspace and check its latest status.", "Este video no se puede reintentar ahora. Actualiza el espacio y revisa su estado mas reciente.");
+    return t(spanishXby, "We could not start a retry for this video. Refresh the workspace and try again.", "No pudimos iniciar el reintento de este video. Actualiza el espacio e intentalo de nuevo.");
+  }
+
+  async function retryVideoJob(job: RuntimeJob) {
+    if (retryingVideoJobId) return;
+    const slots = workspaceJobOutputSlots(job, outputAssetsByJobId.get(job.id) ?? []);
+    const providerFailure = workspaceJobProviderFailure(job, slots);
+    if (!canDirectRetryVideoJob(job, providerFailure)) {
+      setRuntimeRefreshMessage(t(spanishXby, "This video needs adjusted inputs before retrying. Use Edit and retry to review the setup first.", "Este video necesita ajustar entradas antes de reintentar. Usa Editar y reintentar para revisar la configuracion primero."));
+      return;
+    }
+    const idempotencyKey = newVideoRetryIdempotencyKey(job.id);
+    setRetryingVideoJobId(job.id);
+    setVideoSubmissionPending(true);
+    setRetryVideoDraft(null);
+    setFocusedJobId(job.id);
+    setPendingCreatedVideoJobId(`video-retry:${job.id}:${Date.now()}`);
+    setRuntimeRefreshMessage("");
+    setWorkspaceNotice(t(spanishXby, "Retrying this failed video request. A new request will appear here as soon as it is accepted.", "Reintentando esta solicitud de video fallida. Una nueva solicitud aparecera aqui en cuanto se acepte."));
+    chooseVideoWorkspaceTab("videos");
+    try {
+      const response = await fetch(`/api/sites/${site.id}/ai/jobs/${job.id}/retry`, {
+        method: "POST",
+        headers: customerJsonHeaders(site.id, { "Idempotency-Key": idempotencyKey }),
+        body: JSON.stringify({ customerId: customer.id, idempotencyKey })
+      });
+      const result = (await response.json().catch(() => ({}))) as {
+        job?: { id: string };
+        customerBalance?: PublicCustomer["balance"];
+        error?: string;
+        reused?: boolean;
+      };
+      if (!response.ok || !result.job) {
+        const message = videoRetryRequestErrorMessage(result.error, response.status);
+        setVideoSubmissionPending(false);
+        setPendingCreatedVideoJobId(null);
+        setWorkspaceNotice(t(spanishXby, `The video retry could not be created. ${message}`, `No se pudo crear el reintento de video. ${message}`));
+        return;
+      }
+      showVideoJobStatus(result.job.id, { customerBalance: result.customerBalance });
+    } catch {
+      setVideoSubmissionPending(false);
+      setPendingCreatedVideoJobId(null);
+      setWorkspaceNotice(t(spanishXby, "The network failed while starting this retry. Check the connection and try again.", "La red fallo al iniciar este reintento. Revisa la conexion e intentalo de nuevo."));
+    } finally {
+      setRetryingVideoJobId(null);
+    }
+  }
+
+  function editAndRetryVideoJob(job: RuntimeJob) {
     const slots = workspaceJobOutputSlots(job, outputAssetsByJobId.get(job.id) ?? []);
     const providerFailure = workspaceJobProviderFailure(job, slots);
     const restoreAsGrok = shouldRestoreGeminiRetryAsGrok(providerFailure);
@@ -1953,7 +2131,7 @@ export function CustomerWorkspaceShell({
     }
     const availableFrameIds = new Set(
       readyVideoFrameAssets
-        .filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset))
+        .filter(videoFrameAssetReadyForGeneration)
         .map((asset) => asset.id)
     );
     const restoredFrameCount = draft.frameAssetIds.filter((assetId) => availableFrameIds.has(assetId)).length;
@@ -2057,7 +2235,7 @@ export function CustomerWorkspaceShell({
   }
 
   function toggleVideoFrame(asset: VideoFrameAsset) {
-    if (assetPreviewIsLoading(asset) || asset.localStatus === "failed") return;
+    if (!videoFrameAssetSelectable(asset)) return;
     setSelectedVideoFrameIds((current) => {
       if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
       if (current.length >= maxVideoFrameCount) {
@@ -2292,6 +2470,8 @@ export function CustomerWorkspaceShell({
 
   function showVideoJobSubmitting() {
     setVideoSubmissionPending(true);
+    setVideoCreationFailureMessage("");
+    setVideoCreationFailureAtMs(null);
     setRetryVideoDraft(null);
     setFocusedJobId(null);
     setPendingCreatedVideoJobId(`video-submission:${Date.now()}`);
@@ -2306,6 +2486,8 @@ export function CustomerWorkspaceShell({
 
   function showVideoJobCreationFailed(message: string) {
     setVideoSubmissionPending(false);
+    setVideoCreationFailureMessage(message);
+    setVideoCreationFailureAtMs(Date.now());
     setPendingCreatedVideoJobId(null);
     setFocusedJobId(null);
     setWorkspaceNotice(t(
@@ -2317,6 +2499,8 @@ export function CustomerWorkspaceShell({
 
   function showVideoJobStatus(jobId: string, feedback?: CreatedWorkspaceJobFeedback) {
     applyCreatedJobFeedback(feedback);
+    setVideoCreationFailureMessage("");
+    setVideoCreationFailureAtMs(null);
     setRetryVideoDraft(null);
     setFocusedJobId(jobId);
     setPendingCreatedVideoJobId(jobId);
@@ -2533,7 +2717,12 @@ export function CustomerWorkspaceShell({
     }
     const keepIds = Array.from(new Set([...nextPrimaryIds, ...nextPartnerIds])).slice(0, 30);
     void syncCurrentSamples(keepIds);
-    setSampleUploadMessage(spanishXby ? `${createdAssets.length} muestra${createdAssets.length === 1 ? "" : "s"} subida${createdAssets.length === 1 ? "" : "s"} y seleccionada${createdAssets.length === 1 ? "" : "s"}.` : `${createdAssets.length} sample${createdAssets.length === 1 ? "" : "s"} uploaded and selected.`);
+    const selectedSampleCount = sampleUploadFeedbackCount({
+      createdAssetCount: createdAssets.length,
+      primarySampleIds: nextPrimaryIds,
+      partnerSampleIds: nextPartnerIds
+    });
+    setSampleUploadMessage(spanishXby ? `${selectedSampleCount} muestra${selectedSampleCount === 1 ? "" : "s"} subida${selectedSampleCount === 1 ? "" : "s"} y seleccionada${selectedSampleCount === 1 ? "" : "s"}.` : `${selectedSampleCount} sample${selectedSampleCount === 1 ? "" : "s"} uploaded and selected.`);
     setUploadingSampleTarget(null);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
@@ -2679,9 +2868,9 @@ export function CustomerWorkspaceShell({
               </div>
             </div>
             <div className="grid max-h-[520px] grid-cols-2 gap-2 overflow-y-auto pr-1">
-              {readyVideoFrameAssets.slice(0, maxVideoFrameCount).map((asset) => {
+              {readyVideoFrameAssets.map((asset) => {
                 const selected = selectedVideoFrameIds.includes(asset.id);
-                const selectable = !assetPreviewIsLoading(asset) && asset.localStatus !== "failed";
+                const selectable = videoFrameAssetSelectable(asset);
                 return (
                   <div className={`group/frame relative overflow-hidden rounded-[12px] border bg-black/30 transition ${selected ? "border-[#31d4ff] ring-2 ring-[#31d4ff]/30" : "border-white/10 hover:border-white/28"}`} key={asset.id}>
                     <button
@@ -3040,7 +3229,7 @@ export function CustomerWorkspaceShell({
                                   <div>
                                     <p className="text-sm font-semibold">{group.title}</p>
                                     <p className="mt-1 text-xs leading-5 text-white/52">
-                                      {group.body} {spanishXby ? `${selectedGroupAssets.length} seleccionadas. Toca una foto para elegir muestras y elimina las seleccionadas si hace falta.` : `${selectedGroupAssets.length} selected. Tap a photo to choose samples, then delete selected if needed.`}
+                                      {group.body} {spanishXby ? `${selectedIds.length} seleccionadas. Toca una foto para elegir muestras y elimina las seleccionadas si hace falta.` : `${selectedIds.length} selected. Tap a photo to choose samples, then delete selected if needed.`}
                                     </p>
                                   </div>
                                   <div className="flex shrink-0 gap-2">
@@ -3357,7 +3546,7 @@ export function CustomerWorkspaceShell({
                     </div>
                   ) : null}
 
-                  {waitingForCreatedVideoJob || visibleVideoStatusJobs.length ? (
+                  {waitingForCreatedVideoJob || showVideoCreationFailureCard || visibleVideoProgressJobs.length ? (
                     <div className="grid gap-3 border-b border-white/8 py-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Video request progress", "Progreso de video")}</p>
@@ -3371,6 +3560,37 @@ export function CustomerWorkspaceShell({
                         </button>
                       </div>
                       <div className="grid gap-3 lg:grid-cols-2">
+                        {showVideoCreationFailureCard ? (
+                          <div className="rounded-[14px] border border-rose-400/22 bg-rose-500/10 p-4" role="alert">
+                            <div className="flex flex-wrap items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <p className="truncate text-sm font-semibold text-white">{t(spanishXby, "Video request was not created", "No se creo la solicitud de video")}</p>
+                                <p className="mt-1 text-xs font-semibold text-rose-200">{t(spanishXby, "Start request failed", "No se pudo iniciar")}</p>
+                              </div>
+                              <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
+                                {t(spanishXby, "NOT STARTED", "NO INICIADO")}
+                              </span>
+                            </div>
+                            <p className="mt-3 text-xs leading-5 text-white/62">{videoCreationFailureMessage}</p>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              <button
+                                className="rounded-full border border-white/16 px-3 py-1.5 text-xs font-semibold text-white/74 transition hover:bg-white/[0.08] hover:text-white"
+                                onClick={() => chooseVideoWorkspaceTab("generate")}
+                                type="button"
+                              >
+                                {t(spanishXby, "Back to setup", "Volver a configurar")}
+                              </button>
+                              <button
+                                className="rounded-full border border-white/16 px-3 py-1.5 text-xs font-semibold text-white/74 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+                                disabled={runtimeRefreshUiPending}
+                                onClick={requestWorkspaceRefresh}
+                                type="button"
+                              >
+                                {runtimeRefreshUiPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
                         {waitingForCreatedVideoJob ? (
                           <div className="rounded-[14px] border border-amber-300/18 bg-amber-300/8 p-4" role="status">
                             <div className="flex flex-wrap items-start justify-between gap-3">
@@ -3412,11 +3632,14 @@ export function CustomerWorkspaceShell({
                               <span>{t(spanishXby, "Waiting for status", "Esperando estado")}</span>
                             </div>
                           </div>
-                        ) : visibleVideoStatusJobs.map((job) => {
+                        ) : visibleVideoProgressJobs.map((job) => {
                           const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
                           const slots = workspaceJobOutputSlots(job, outputAssets);
                           const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
-                          const retryDraft = failed ? videoRetryDraftFromJob(job) : undefined;
+                          const providerFailure = failed ? workspaceJobProviderFailure(job, slots) : undefined;
+                          const retryDraft = failed ? videoRetryDraftFromJob(job, providerFailure, spanishXby) : undefined;
+                          const directRetry = failed && canDirectRetryVideoJob(job, providerFailure);
+                          const retryingThisJob = retryingVideoJobId === job.id;
                           const timingBreakdown = workspaceVideoTimingBreakdown(job, spanishXby);
                           return (
                             <div
@@ -3462,15 +3685,27 @@ export function CustomerWorkspaceShell({
                                 <div className="mt-3 flex flex-wrap items-center gap-2">
                                   <button
                                     className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-rose-200/24 bg-rose-100/10 px-3 text-xs font-semibold text-rose-50 transition hover:bg-rose-100/16 disabled:cursor-not-allowed disabled:opacity-45"
-                                    disabled={!retryDraft}
+                                    disabled={!directRetry || Boolean(retryingVideoJobId)}
                                     onClick={() => retryVideoJob(job)}
-                                    title={retryDraft
-                                      ? t(spanishXby, "Restore the previous inputs and generate again", "Restaurar entradas anteriores y volver a generar")
-                                      : t(spanishXby, "This request no longer has saved frame inputs", "Esta solicitud ya no tiene fotogramas guardados")}
+                                    title={directRetry
+                                      ? t(spanishXby, "Create a new video request with the same saved inputs", "Crear una nueva solicitud de video con las mismas entradas guardadas")
+                                      : t(spanishXby, "Review and adjust the inputs before retrying this failure", "Revisa y ajusta las entradas antes de reintentar este fallo")}
                                     type="button"
                                   >
                                     <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
-                                    {t(spanishXby, "Retry video", "Reintentar video")}
+                                    {retryingThisJob ? t(spanishXby, "Retrying...", "Reintentando...") : t(spanishXby, "Retry video", "Reintentar video")}
+                                  </button>
+                                  <button
+                                    className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 text-xs font-semibold text-white/72 transition hover:bg-white/[0.1] disabled:cursor-not-allowed disabled:opacity-45"
+                                    disabled={!retryDraft || Boolean(retryingVideoJobId)}
+                                    onClick={() => editAndRetryVideoJob(job)}
+                                    title={retryDraft
+                                      ? t(spanishXby, "Restore the previous inputs so you can edit them and generate again", "Restaurar entradas anteriores para editarlas y volver a generar")
+                                      : t(spanishXby, "This request no longer has saved frame inputs", "Esta solicitud ya no tiene fotogramas guardados")}
+                                    type="button"
+                                  >
+                                    <Pencil className="h-3.5 w-3.5" strokeWidth={1.8} />
+                                    {t(spanishXby, "Edit and retry", "Editar y reintentar")}
                                   </button>
                                 </div>
                               ) : null}
@@ -3624,6 +3859,7 @@ export function CustomerWorkspaceShell({
                 <div className="p-4 md:p-5">
                   <JobCreateForm
                     assets={hydratedAssets}
+                    creativePackCategories={creativePackCategories}
                     creativePacks={creativePacks}
                     customer={workspaceCustomer}
                     customerModels={customerModels}
@@ -3636,6 +3872,7 @@ export function CustomerWorkspaceShell({
                     preferredMode={preferredCreateMode}
                     preferredModeRequest={preferredCreateModeRequest}
                     preferredToolId={preferredToolId}
+                    site={site}
                     siteAiApps={siteAiApps}
                     siteId={site.id}
                     siteSlug={site.slug}
@@ -3646,8 +3883,14 @@ export function CustomerWorkspaceShell({
                     onContinueToSources={() => choosePanel("create", "source-photos")}
                     onOpenUploadManager={() => choosePanel("upload", "step-upload")}
                     onReviewCurrentRequest={showCurrentRequestReview}
+                    onVideoToolSelected={(tool) => {
+                      setAppliedOperationContext({ action: tool.title, source: t(spanishXby, "Tools", "Herramientas") });
+                      setWorkspaceNotice(t(spanishXby, `${tool.title} opens in the Image to Video workspace.`, `${tool.title} se abre en el espacio Image to Video.`));
+                      chooseVideoWorkspaceTab("generate");
+                    }}
                     preferProvidedAssets
                     tone="dark"
+                    toolMenuItems={toolMenuItems}
                   />
                 </div>
               </section>
@@ -3904,15 +4147,12 @@ export function CustomerWorkspaceShell({
             </button>
             <div className="grid min-h-[52vh] place-items-center overflow-hidden rounded-[10px] bg-black">
               {isVideoAsset(selectedPreviewAsset) ? (
-                <video
-                  aria-label={selectedPreviewLabel}
-                  className="max-h-[82vh] max-w-full object-contain"
-                  controls
+                <WorkspaceVideoPreviewPlayer
                   key={selectedPreviewAsset.id}
-                  playsInline
-                  poster={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
-                  preload="metadata"
+                  label={selectedPreviewLabel}
+                  posterSrc={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
                   src={workspaceVideoPlaybackUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
+                  spanish={spanishXby}
                 />
               ) : (
                 <img alt={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" src={workspaceAssetPreviewUrl(selectedPreviewAsset)} />

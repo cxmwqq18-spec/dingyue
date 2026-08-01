@@ -23,6 +23,12 @@ const statePath = path.join(repoRoot, "data", "platform-state.json");
 const showcaseSectionId = "generation_showcase_1";
 const workflowSectionId = "flow_bridge_1";
 const CUSTOMER_VIDEO_FRAME_LIMIT = 7;
+const obsoleteShowcaseRows = {
+  site_dreamshoot: {
+    categorySlugs: ["travel-story"],
+    themeSlugs: ["travel-route-story"]
+  }
+};
 
 const rawArgs = process.argv.slice(2);
 const args = new Map();
@@ -290,6 +296,23 @@ function upsertRows(rows, incomingRows, keyForRow) {
   return Array.from(nextByKey.values());
 }
 
+function deactivateObsoleteShowcaseRows(state, store) {
+  const obsolete = obsoleteShowcaseRows[store.siteId];
+  if (!obsolete) return;
+  const categorySlugs = new Set(obsolete.categorySlugs);
+  const themeSlugs = new Set(obsolete.themeSlugs);
+  state.videoThemeCategories = (state.videoThemeCategories ?? []).map((category) =>
+    category.siteId === store.siteId && categorySlugs.has(category.slug)
+      ? { ...category, status: "inactive" }
+      : category
+  );
+  state.videoThemes = (state.videoThemes ?? []).map((theme) =>
+    theme.siteId === store.siteId && themeSlugs.has(theme.slug)
+      ? { ...theme, status: "inactive" }
+      : theme
+  );
+}
+
 function applyHomeShowcase(pageJson, store) {
   if (!pageJson?.sections || !Array.isArray(pageJson.sectionsOrder)) return false;
   const section = homepageShowcaseSection(store, 8, 8);
@@ -414,6 +437,18 @@ async function updateDatabase(state, stores) {
         report.themes += 1;
       }
 
+      const obsolete = obsoleteShowcaseRows[store.siteId];
+      if (obsolete) {
+        await prisma.videoThemeCategory.updateMany({
+          where: { siteId: store.siteId, slug: { in: obsolete.categorySlugs } },
+          data: { status: "inactive" }
+        });
+        await prisma.videoTheme.updateMany({
+          where: { siteId: store.siteId, slug: { in: obsolete.themeSlugs } },
+          data: { status: "inactive" }
+        });
+      }
+
       const homePage = (state.sites ?? [])
         .find((site) => site.id === store.siteId)
         ?.pages?.find((page) => page.slug === "/");
@@ -472,6 +507,7 @@ async function main() {
     const themes = videoThemeRowsForStore(store, categories, state, now);
     state.videoThemeCategories = upsertRows(state.videoThemeCategories ?? [], categories, (row) => `${row.siteId}:${row.slug}`);
     state.videoThemes = upsertRows(state.videoThemes ?? [], themes, (row) => `${row.siteId}:${row.slug}`);
+    deactivateObsoleteShowcaseRows(state, store);
   }
 
   const sectionReport = applyShowcaseToState(state, stores);

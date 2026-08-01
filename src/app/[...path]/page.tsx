@@ -22,8 +22,10 @@ import {
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
+import { customerSessionCookie } from "@/lib/session";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -36,26 +38,54 @@ const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
-  "background-changer": "/tools/route-portrait-engine",
-  "background-remover": "/tools/route-portrait-engine",
-  "dreamscape-generator": "/tools/route-portrait-engine",
-  "image-generator": "/tools/route-portrait-engine",
-  "image-to-video": "/tools/route-portrait-engine",
+  "background-changer": "/tools/fan-scene-album-builder",
+  "background-remover": "/tools/fan-scene-album-builder",
+  "dreamscape-generator": "/tools/fan-scene-album-builder",
+  "image-generator": "/tools/fan-scene-album-builder",
+  "image-to-video": "/tools/seasonal-celebration-album-maker",
   "image-studio": "/tools",
-  "portrait-generator": "/tools/route-portrait-engine",
-  "portrait-maker": "/tools/route-portrait-engine",
-  "product-reverie": "/tools/route-moodboard",
-  "soft-glam": "/tools/cafe-street-story",
-  "couple-escape-album": "/tools/shared-route-album",
-  "wedding-portraits": "/tools",
-  "world-cup-fan-photos": "/tools",
-  headshot: "/tools/route-portrait-engine"
+  "portrait-generator": "/tools/fan-scene-album-builder",
+  "portrait-maker": "/tools/fan-scene-album-builder",
+  "product-reverie": "/tools/permission-safe-photo-planner",
+  "soft-glam": "/tools/premiere-portrait-set-builder",
+  "couple-escape-album": "/tools/seasonal-celebration-album-maker",
+  "wedding-portraits": "/tools/seasonal-celebration-album-maker",
+  "world-cup-fan-photos": "/tools/game-day-group-portrait-maker",
+  headshot: "/tools/premiere-portrait-set-builder",
+  "route-portrait-engine": "/tools/fan-scene-album-builder",
+  "coastal-portrait": "/tools/christmas-group-album-studio",
+  "island-resort-scenes": "/tools/seasonal-celebration-album-maker",
+  "scenic-overlook-story": "/tools/game-day-group-portrait-maker",
+  "travel-profile-story": "/tools/fan-scene-album-builder",
+  "editorial-getaway": "/tools/premiere-portrait-set-builder",
+  "cafe-street-story": "/tools/premiere-portrait-set-builder",
+  "cinematic-travel": "/tools/game-day-group-portrait-maker",
+  "route-moodboard": "/tools/permission-safe-photo-planner",
+  "social-keepsake": "/tools/seasonal-celebration-album-maker",
+  "family-travel-keepsakes": "/tools/thanksgiving-keepsake-set-maker",
+  "travel-journal-cover-maker": "/tools/seasonal-celebration-album-maker"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
+
+async function hasValidCustomerSessionForSite(site: { id: string }): Promise<boolean> {
+  const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
+  if (!sessionId) return false;
+  const relationalCustomer = await getCustomerBySessionRelational({ siteId: site.id, sessionId });
+  return Boolean(relationalCustomer);
+}
+
+function safeHostCustomerNextPath(value: string | string[] | undefined, fallback = "/app/create"): string {
+  const rawValue = Array.isArray(value) ? value[0] : value;
+  if (typeof rawValue !== "string") return fallback;
+  const path = rawValue.trim();
+  if (!path || !path.startsWith("/") || path.startsWith("//")) return fallback;
+  if (/^\/(?:login|logout)(?:[/?#]|$)/i.test(path)) return fallback;
+  return path;
 }
 
 function searchParamsSuffix(query: Record<string, string | string[] | undefined>): string {
@@ -284,6 +314,10 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  if (slug === "/login" && (await hasValidCustomerSessionForSite(site))) {
+    const query = searchParams ? await searchParams : {};
+    redirect(safeHostCustomerNextPath(query.next));
+  }
   if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
   if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
   const resolvedToolPage = firstSegment === "tools" && path[1]

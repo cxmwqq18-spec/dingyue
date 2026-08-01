@@ -64,8 +64,8 @@ function makeCategoryArticle(input) {
   const directoryHref = isTool || isVideoTheme ? "/tools" : "/collections";
   const directoryLabel = isTool || isVideoTheme ? "Tools" : "Photo Packages";
   const sourceTerm = input.sourceTerm ?? (isVideoTheme ? "source frames" : isAidreamcapes ? "source portraits" : "source photos");
-  const setTerm = isVideoTheme ? "video clip" : isAidreamcapes ? "route album" : "photo set";
-  const brandNiche = isAidreamcapes ? "travel portrait" : "AI photo";
+  const setTerm = isVideoTheme ? "video clip" : isAidreamcapes ? "album" : "photo set";
+  const brandNiche = isAidreamcapes ? "fan and holiday" : "AI photo";
   const examples = input.examples.length ? input.examples : [label];
   const examplesText = readableList(examples);
   const anchorPrefix = input.blogSlug.replace(/^\/blog\//, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -74,6 +74,55 @@ function makeCategoryArticle(input) {
   const seoTitle = input.seoTitle ?? searchFriendlySeoTitle(label, brand, isVideoTheme ? "video themes" : "private galleries");
   const seoDescription = input.seoDescription ?? `Plan ${label} in ${brand}: choose ${sourceTerm}, compare fit, review credit cost, and check the private gallery before downloads.`;
   const faqIntro = input.faqIntro ?? `${label} questions usually come down to source quality, scope, credit planning, and whether the finished images match the intended use.`;
+  const targetHref = input.targetHref ?? directoryHref;
+  const targetLabel = input.targetLabel ?? (isTool ? `Open ${label} tool` : isVideoTheme ? `Open ${label} video themes` : `Open ${label} package`);
+  const openingLead = isAidreamcapes
+    ? `The ${label} ${articleKind} gives ${brand} customers one clear private album direction to compare before credits are spent.`
+    : `The ${label} ${articleKind} helps ${brand} customers choose a clear package direction before they spend credits.`;
+  const fitLead = isAidreamcapes
+    ? `Use ${label} when ${examplesText} are the clearest match for the next ${setTerm}.`
+    : `Use ${label} when ${examplesText} are the nearest match for the next ${setTerm}.`;
+  const secondLead = isAidreamcapes
+    ? `The strongest ${lowerLabel} requests keep one occasion, one scene, and one review goal in the same lane. A customer who wants a private fan or holiday album should not judge the set by the standards of a work profile or a broader editorial brief.`
+    : `The strongest ${lowerLabel} requests keep the brief and the result aligned. A customer who needs a calm work portrait should not judge the same set by the standards of a dramatic scene package.`;
+  const sourceLead = isAidreamcapes
+    ? `${input.sourceFocus} Start with approved source portraits and one album cue that matters most to the gallery. Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, fan details, holiday cues, or movement ideas should support the request after the person is already clear.`
+    : `${input.sourceFocus} Start with sharp source photos and one style cue that matters most to the package. Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, fan details, holiday cues, or movement ideas should support the request after the person is already clear.`;
+  const compareLead = isAidreamcapes
+    ? `Compare ${lowerLabel} against neighboring ${pluralKind} by the private outcome it supports, not by the strongest cover image. The table below turns the category into a practical choice before credit cost is confirmed.`
+    : `Compare ${lowerLabel} against neighboring ${pluralKind} by the job it solves, not by which cover image looks strongest. The table below turns the category into a practical choice before credit cost is confirmed.`;
+  const creditsLead = isAidreamcapes
+    ? `Before the job starts, review the visible credit cost and the permission boundary. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader album may be easier to judge because it gives more crops and expressions to compare.`
+    : `Before the job starts, review the visible credit cost and ask whether the category is carrying the right amount of work. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader gallery may be easier to judge because it gives more crops and expressions to compare.`;
+  const reviewLead = isAidreamcapes
+    ? `${input.reviewFocus} Also check whether the gallery still feels original, private, and easy to explain to someone who was not part of the request.`
+    : `${input.reviewFocus} Also check small visual details that often decide whether a result is ready for a profile, card, post, or archive: face consistency, hand and hair edges, clothing lines, background distractions, and whether the image still reads well at the crop size where you will use it.`;
+  const moodLead = `${input.elementStory} This is where ${label} becomes more than a menu label. The visible mood should explain why the category was chosen, while the private gallery keeps the customer in control of what stays personal and what becomes a downloaded favorite.`;
+  const avoidLead = isAidreamcapes
+    ? `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Keep one occasion, one mood, and one review standard at a time, then run a second request when the next direction is different enough to need its own review.`
+    : `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Do not ask one job to be a professional portrait, a themed album, a restoration pass, and a motion concept at the same time. Keep the category honest, then run a second request when the next direction is different enough to need its own review.`;
+  const planningHeading = isAidreamcapes ? "A planning pass before credits" : "A planning pass before you spend credits";
+  const planningIntro = isAidreamcapes
+    ? `For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.`
+    : `For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.`;
+  const planningBullets = isAidreamcapes
+    ? [
+      "Name the exact private album use for the finished images.",
+      `Choose the clearest ${sourceTerm} before adding style references.`,
+      `Match the request to ${examplesText}, not every nearby category.`,
+      "Review credit cost and permission boundaries before generation starts.",
+      "Use the private gallery to compare results before downloading favorites."
+    ]
+    : [
+      "Name the exact use for the finished images.",
+      `Choose the clearest ${sourceTerm} before adding style references.`,
+      `Match the request to ${examplesText}, not every nearby category.`,
+      "Review credit cost before generation starts.",
+      "Use the private gallery to compare results before downloading favorites."
+    ];
+  const closingLead = isAidreamcapes
+    ? `${label} works best when it is treated as a focused private album choice. Prepare the right inputs, review the cost, and let the private gallery show what should happen next.`
+    : `${label} works best when it is treated as a focused planning choice. Prepare the right inputs, review the cost, and let the private gallery show what should happen next.`;
 
   return {
     id: `${input.sitePrefix}_blog_${kind}_${anchorPrefix.replace(/-/g, "_")}`,
@@ -92,31 +141,33 @@ function makeCategoryArticle(input) {
     primaryHref: directoryHref,
     secondaryCta: input.secondaryCta ?? "View pricing",
     secondaryHref: "/pricing",
+    targetLabel,
+    targetHref,
     seoTitle,
     seoDescription,
     seoKeywords: input.seoKeywords ?? `${label} guide, ${brand} ${pluralKind}, ${brandNiche} planning, ${sourceTerm}, private gallery credits`,
     body: html`
-      <p>The ${label} ${articleKind} has a specific job inside ${brand}: ${description}. It works best when the request has one clear use, a small set of dependable ${sourceTerm}, and a private review plan before anything is downloaded or shared.</p>
-      <h2 id="${anchorPrefix}-fit">When ${label} is the right fit</h2>
-      <p>${input.bestFor} This is the category to choose when ${examplesText} match the result you want from the next ${setTerm}. If the goal is still vague, start by naming the final use: profile update, creator album, keepsake, announcement, social draft, or a short motion test.</p>
-      <p>The strongest ${lowerLabel} requests keep style and purpose in the same lane. A customer who needs a calm work portrait should not judge the same set by the standards of a dramatic scene package. A customer who wants a themed private album should allow more mood, but still check whether the person remains recognizable.</p>
-      <h2 id="${anchorPrefix}-source">What to prepare before choosing it</h2>
-      <p>${input.sourceFocus} Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, destination cues, fan details, or movement ideas should support the request after the person is already clear.</p>
+      <p>${openingLead}</p>
+      <h2 id="${anchorPrefix}-fit">${isAidreamcapes ? `Where ${label} fits` : `When ${label} is the right fit`}</h2>
+      <p>${fitLead} If the goal is still vague, start by naming the final use: profile update, creator album, keepsake, announcement, social draft, or a short motion test.</p>
+      <p>${secondLead}</p>
+      <h2 id="${anchorPrefix}-source">${isAidreamcapes ? "What to upload first" : "What to prepare before choosing it"}</h2>
+      <p>${sourceLead}</p>
       <p>For a first pass, keep the input set smaller and cleaner than a social camera roll. Use current images, avoid heavy filters, and separate unrelated goals into different private jobs. ${brand} can follow a focused brief more reliably than a folder that asks for several looks at once.</p>
-      <h2 id="${anchorPrefix}-compare">How to compare ${label} with nearby choices</h2>
-      <p>Compare ${lowerLabel} against neighboring ${pluralKind} by the decision it helps you make, not only by which cover image looks strongest. The table below turns the category into a practical choice before credit cost is confirmed.</p>
+      <h2 id="${anchorPrefix}-compare">${isAidreamcapes ? `How ${label} compares` : `How to compare ${label} with nearby choices`}</h2>
+      <p>${compareLead}</p>
       <table><thead><tr><th>Decision point</th><th>Use ${label} when</th><th>Review after generation</th></tr></thead><tbody><tr><td>Final use</td><td>${input.bestFor}</td><td>${input.reviewFocus}</td></tr><tr><td>${sourceTerm}</td><td>${input.sourceFocus}</td><td>Check whether the clearest input details carried through the best images.</td></tr><tr><td>Category examples</td><td>${examplesText}</td><td>Keep the outputs that match the chosen example instead of mixing several directions.</td></tr><tr><td>Credit plan</td><td>Use a focused first pass when the style is new.</td><td>Decide whether the next request should repeat, expand, or change direction.</td></tr></tbody></table>
-      <h2 id="${anchorPrefix}-credits">Credit and private gallery planning</h2>
-      <p>Before the job starts, review the visible credit cost and ask whether the category is carrying the right amount of work. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader gallery may be easier to judge because it gives more crops and expressions to compare.</p>
+      <h2 id="${anchorPrefix}-credits">${isAidreamcapes ? "Credit and permission planning" : "Credit and private gallery planning"}</h2>
+      <p>${creditsLead}</p>
       <p>Finished outputs belong in the signed-in private gallery first. Use that space to compare identity, crop, expression, background detail, and whether the ${articleKind} actually delivered the mood you selected. Download favorites only after separating public-use images from experiments.</p>
-      <h2 id="${anchorPrefix}-review">Details to review before download</h2>
-      <p>${input.reviewFocus} Also check small visual details that often decide whether a result is ready for a profile, card, post, or archive: face consistency, hand and hair edges, clothing lines, background distractions, and whether the image still reads well at the crop size where you will use it.</p>
-      <p>${input.elementStory} This is where ${label} becomes more than a menu label. The visible mood should explain why the category was chosen, while the private gallery keeps the customer in control of what stays personal and what becomes a downloaded favorite.</p>
-      <h2 id="${anchorPrefix}-avoid">Mistakes to avoid</h2>
-      <p>${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Do not ask one job to be a professional portrait, a themed album, a restoration pass, and a motion concept at the same time. Keep the category honest, then run a second request when the next direction is different enough to need its own review.</p>
-      <h2 id="${anchorPrefix}-planning-pass">A planning pass before you spend credits</h2>
-      <ul><li>Name the exact use for the finished images.</li><li>Choose the clearest ${sourceTerm} before adding style references.</li><li>Match the request to ${examplesText}, not every nearby category.</li><li>Review credit cost before generation starts.</li><li>Use the private gallery to compare results before downloading favorites.</li></ul>
-      <p>For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.</p>
+      <h2 id="${anchorPrefix}-review">${isAidreamcapes ? "What to review privately" : "Details to review before download"}</h2>
+      <p>${reviewLead}</p>
+      <p>${moodLead}</p>
+      <h2 id="${anchorPrefix}-avoid">${isAidreamcapes ? "What to avoid" : "Mistakes to avoid"}</h2>
+      <p>${avoidLead}</p>
+      <h2 id="${anchorPrefix}-planning-pass">${planningHeading}</h2>
+      <ul>${planningBullets.map((item) => `<li>${item}</li>`).join("")}</ul>
+      <p>${planningIntro}</p>
       <h2 id="${anchorPrefix}-faq">${label} FAQ</h2>
       <p>${faqIntro}</p>
       <h3 id="${anchorPrefix}-first-request">Is ${label} good for a first request?</h3>
@@ -125,7 +176,7 @@ function makeCategoryArticle(input) {
       <p>Use enough images to show identity, angle, and expression without adding confusion. A small set of clear portraits usually beats a large group of old, filtered, or mixed-purpose images.</p>
       <h3 id="${anchorPrefix}-next-category">When should I choose another category instead?</h3>
       <p>Choose another category when the review criteria change. If ${label} is being judged by a different use case, style world, or motion need, split the work into a separate private job so credits support a clearer outcome.</p>
-      <p>${label} works best when it is treated as a focused planning choice. Prepare the right inputs, review the cost, and let the private gallery show what should happen next.</p>
+      <p>${closingLead}</p>
     `
   };
 }
@@ -135,7 +186,8 @@ const mydreamshootsThemeArticles = [
     label: "Creator",
     blogSlug: "/blog/creator-photo-package-guide",
     description: "Creator portraits, profile cards, product-style scenes, social cards, and private personal-brand albums.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/creator-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp?v=20260715b",
+    targetHref: "/collections/creator",
     examples: ["creator portraits", "profile cards", "product-style scenes", "social cards"],
     bestFor: "Use Creator when the finished images need to support a personal brand, creator profile, campaign draft, or social-facing album.",
     sourceFocus: "Prepare clear face photos plus one or two frames that show posture, shoulders, and the kind of outfit tone you want the creator set to follow.",
@@ -147,7 +199,8 @@ const mydreamshootsThemeArticles = [
     label: "Avatar",
     blogSlug: "/blog/avatar-photo-package-guide",
     description: "Stylized avatar, anime-inspired profile, and character-concept packages for playful private galleries.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/avatar-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-01.webp?v=20260715b",
+    targetHref: "/collections/avatar",
     examples: ["anime avatars", "stylized profile icons", "character concepts", "playful social crops"],
     bestFor: "Use Avatar when the image can be more stylized than a normal portrait while still staying recognizable as the person.",
     sourceFocus: "Use sharp, recent portraits without heavy filters so the stylized result has a stable identity base before character details are added.",
@@ -159,7 +212,8 @@ const mydreamshootsThemeArticles = [
     label: "Wedding",
     blogSlug: "/blog/wedding-photo-package-guide",
     description: "Wedding portraits, couple albums, save-the-date concepts, and announcement-ready visuals.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/wedding-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp?v=20260715b",
+    targetHref: "/collections/wedding",
     examples: ["wedding portraits", "save-the-date concepts", "couple albums", "announcement visuals"],
     bestFor: "Use Wedding when the finished images need a romantic, announcement-ready, or keepsake mood for a couple or ceremony-inspired album.",
     sourceFocus: "Prepare clear portraits for each person and include simple notes about formal tone, outfit direction, and whether the set should feel quiet or celebratory.",
@@ -171,7 +225,8 @@ const mydreamshootsThemeArticles = [
     label: "Cultural",
     blogSlug: "/blog/cultural-wedding-photo-guide",
     description: "Indian and Desi Wedding-inspired portraits with respectful styling and private gallery delivery.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/cultural-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-01.webp?v=20260715b",
+    targetHref: "/collections/cultural",
     examples: ["Indian wedding looks", "Desi wedding portraits", "formal celebration images", "private cultural keepsakes"],
     bestFor: "Use Cultural when the customer wants a celebration-inspired portrait direction with clear styling notes and careful private review.",
     sourceFocus: "Prepare current portraits and write respectful styling notes around outfit tone, color, formality, and album use without inventing personal traditions.",
@@ -183,7 +238,8 @@ const mydreamshootsThemeArticles = [
     label: "Couple",
     blogSlug: "/blog/couple-photo-package-guide",
     description: "Keepsake couple portraits, engagement concepts, Valentine visuals, and festive relationship keepsakes.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/couple-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-01.webp?v=20260715b",
+    targetHref: "/collections/couple",
     examples: ["couple portraits", "engagement concepts", "Valentine visuals", "relationship keepsakes"],
     bestFor: "Use Couple when the finished set should read as a shared portrait, private keepsake, or relationship announcement.",
     sourceFocus: "Use permission-safe photos for both people, ideally with clear faces and at least one frame that shows how they look together.",
@@ -195,7 +251,8 @@ const mydreamshootsThemeArticles = [
     label: "Creative",
     blogSlug: "/blog/creative-photo-package-guide",
     description: "Cinematic worlds, noir portraits, cyberpunk scenes, gala looks, nature images, and editorial private albums.",
-    imageUrl: "/assets/dreamshoot/generated/category-covers/mydreamshoots/creative-cover.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-01.webp?v=20260715b",
+    targetHref: "/collections/creative",
     examples: ["cyberpunk scenes", "noir portraits", "gala looks", "nature images"],
     bestFor: "Use Creative when the gallery can carry stronger mood, scene design, and dramatic styling than a work profile or simple social crop.",
     sourceFocus: "Start with stable identity photos, then add one clear story world such as neon city, formal night, outdoor portrait, or noir character mood.",
@@ -207,7 +264,8 @@ const mydreamshootsThemeArticles = [
     label: "Beauty",
     blogSlug: "/blog/beauty-style-photo-guide",
     description: "Hairstyle previews, try-on directions, soft glam portraits, and private style-planning galleries.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/hairstyle/hairstyle-01.webp?v=20260715b",
+    targetHref: "/collections/beauty",
     examples: ["hairstyle previews", "virtual try-on looks", "soft glam portraits", "style-planning galleries"],
     bestFor: "Use Beauty when the customer wants to compare style direction, hair mood, makeup tone, or outfit framing in a private gallery.",
     sourceFocus: "Use current portraits with visible hairline, face shape, and natural lighting so style changes have a clear person to follow.",
@@ -219,7 +277,8 @@ const mydreamshootsThemeArticles = [
     label: "Sports",
     blogSlug: "/blog/sports-fan-photo-guide",
     description: "Personal fan portraits, match-day posters, profile avatars, and stadium-inspired images.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp?v=20260715b",
+    targetHref: "/collections/sports",
     examples: ["fan portraits", "match-day posters", "profile avatars", "stadium-inspired images"],
     bestFor: "Use Sports when the finished images should feel like personal fan content, match-day profile material, or a private themed keepsake.",
     sourceFocus: "Use a clear portrait and describe fan mood, colors, crop need, and personal use without relying on official logos or player likenesses.",
@@ -231,7 +290,8 @@ const mydreamshootsThemeArticles = [
     label: "Video",
     blogSlug: "/blog/video-photo-package-guide",
     description: "Motion-ready image frames and short-video add-on directions for private albums.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
+    targetHref: "/collections/video",
     examples: ["motion-ready frames", "image-to-video concepts", "profile clips", "album story videos"],
     bestFor: "Use Video when a finished image should become a short motion concept, profile clip, fan poster motion, or private album add-on.",
     sourceFocus: "Choose the clearest finished image or frame sequence, then define one movement idea such as slow camera drift, soft reveal, or profile clip pacing.",
@@ -243,7 +303,8 @@ const mydreamshootsThemeArticles = [
     label: "Utility",
     blogSlug: "/blog/utility-image-prep-guide",
     description: "Upscaling and image-prep packages for cleaner private gallery downloads.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-01.webp?v=20260715b",
+    targetHref: "/collections/utility",
     examples: ["magic upscaling", "image prep", "cleaner downloads", "gallery finishing"],
     bestFor: "Use Utility when the main job is preparing, enlarging, or cleaning an image rather than changing the whole portrait style.",
     sourceFocus: "Start with the best available image and decide whether the goal is clarity, crop readiness, or download quality before spending credits.",
@@ -255,7 +316,8 @@ const mydreamshootsThemeArticles = [
     label: "Headshots",
     blogSlug: "/blog/headshot-photo-package-guide",
     description: "Professional headshots for LinkedIn, resumes, teams, founders, and polished work profiles.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-01.webp?v=20260715b",
+    targetHref: "/collections/headshots",
     examples: ["LinkedIn portraits", "resume photos", "founder profiles", "team-ready headshots"],
     bestFor: "Use Headshots when the finished images need to feel clear, restrained, current, and appropriate for work-facing profiles.",
     sourceFocus: "Use recent face-forward portraits with neutral lighting, readable hair and shoulders, and clothing that does not distract from the person.",
@@ -267,7 +329,8 @@ const mydreamshootsThemeArticles = [
     label: "Seasonal",
     blogSlug: "/blog/seasonal-photo-package-guide",
     description: "Holiday portraits, Christmas cards, festive social visuals, and private seasonal albums.",
-    imageUrl: "/assets/dreamshoot/holiday-card-gpt2.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp?v=20260715b",
+    targetHref: "/collections/seasonal",
     examples: ["holiday portraits", "Christmas cards", "festive social visuals", "seasonal private albums"],
     bestFor: "Use Seasonal when the finished set should carry a holiday, greeting-card, or festive keepsake mood.",
     sourceFocus: "Use clear portraits and name the season, card crop, warmth level, and whether the result is for one person, a couple, or a small group.",
@@ -311,7 +374,7 @@ const mydreamshootsToolArticles = [
     label: "Video AI",
     blogSlug: "/blog/video-ai-tool-guide",
     description: "Motion tools for image-to-video concepts, profile clips, fan poster motion, creator intros, product teasers, avatar previews, and album stories.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
     examples: ["image-to-video concepts", "profile clips", "fan poster motion", "creator intro videos"],
     bestFor: "Use Video AI when a finished image or frame sequence should become a short private motion test for social, profile, or album review.",
     sourceFocus: "Choose one strong image, define the movement, and keep the clip purpose clear before spending credits on motion.",
@@ -328,76 +391,95 @@ const mydreamshootsToolArticles = [
 
 const aidreamcapesThemeArticles = [
   {
-    label: "Route Portraits",
-    blogSlug: "/blog/route-portraits-category-guide",
-    description: "Location-led AI portrait packages for coasts, resorts, old cities, and scenic overlooks.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-destination.webp?v=20260630cat",
-    examples: ["coastal light sets", "old city walks", "resort balcony scenes", "scenic outlooks"],
-    bestFor: "Use Route Portraits when the destination itself should guide the album through coast, city, resort, or lookout scenes.",
-    sourceFocus: "Prepare clear portraits plus one route mood, one lighting direction, and simple outfit notes that fit the destination.",
-    reviewFocus: "Review whether the person stays recognizable while the place texture, light, and route continuity feel believable.",
-    elementStory: "Route portraits use place texture, horizon lines, street scale, balcony light, and travel posture to tell the album story.",
-    avoid: "Avoid asking one route request to cover several destinations that do not share light, wardrobe, or season."
+    label: "Fan-Scene Albums",
+    blogSlug: "/blog/fan-scene-photo-albums-guide",
+    description: "Private fan-scene album categories for original supporter moments, meetup-style portraits, photo walls, and keepsake cards.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=20260731assetfix1",
+    targetHref: "/collections/fan-scene-albums",
+    examples: ["private fan-scene albums", "backstage meetup portraits", "supporter photo walls", "fan keepsake card sets"],
+    bestFor: "Use Fan-Scene Albums when the finished gallery should feel like an original supporter moment without copying real celebrities or official marks.",
+    sourceFocus: "Prepare approved portraits, name the fan-scene mood, and note any people, logos, teams, events, or protected materials that must stay out.",
+    reviewFocus: "Review identity, scene originality, permission boundaries, expression, and whether the private album feels celebratory without implying affiliation.",
+    elementStory: "Fan-scene albums rely on spotlight mood, supporter color, private-event atmosphere, and careful boundaries around recognizable public material.",
+    avoid: "Avoid asking for real celebrity recreation, official team branding, protected event marks, or photos you do not have permission to use."
   },
   {
-    label: "Local Moments",
-    blogSlug: "/blog/local-moments-category-guide",
-    description: "Cafe, street, balcony, sunset, and shared-trip portrait directions.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-moments.webp?v=20260630cat",
-    examples: ["cafe stories", "market walks", "golden hour routes", "shared albums"],
-    bestFor: "Use Local Moments when the album should feel like a lived-in travel scene rather than a broad destination postcard.",
-    sourceFocus: "Use portraits with natural expression and add references for street texture, cafe light, balcony framing, or shared-trip warmth.",
-    reviewFocus: "Review expression, small environmental details, route continuity, and whether the gallery feels personal enough for a private keepsake.",
-    elementStory: "Local moments are carried by everyday details: table light, street color, sunset edges, market rhythm, and how people share the frame.",
-    avoid: "Avoid overloading a local scene with landmark, resort, and adventure cues that belong in separate route albums."
+    label: "Game-Day Group Portraits",
+    blogSlug: "/blog/game-day-group-portraits-guide",
+    description: "Game-day group photo categories for arena-inspired portraits, stadium night sets, and watch party albums.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=20260731assetfix1",
+    targetHref: "/collections/game-day-group-photos",
+    examples: ["game-day group portraits", "stadium night fan sets", "watch party albums"],
+    bestFor: "Use Game-Day Group Portraits when the gallery needs supporter energy, group composition, and arena-like atmosphere without official branding.",
+    sourceFocus: "Use clear approved portraits for each person and describe colors, celebration level, crop needs, and any team or event marks to avoid.",
+    reviewFocus: "Review each face, group spacing, hand detail, background energy, and whether the result stays identity-safe and brand-safe.",
+    elementStory: "Game-day portraits work through crowd energy, light flare, poster crop, group gesture, and color hints that do not depend on logos.",
+    avoid: "Avoid official logos, real athlete likenesses, protected event names, or a crowded prompt that makes group identity hard to review."
   },
   {
-    label: "Open-Air Routes",
-    blogSlug: "/blog/open-air-routes-category-guide",
-    description: "Mountain, lake, road-trip, forest cabin, and outdoor travel portrait themes.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-adventure.webp?v=20260630cat",
-    examples: ["alpine trail frames", "desert road stories", "lake house weekends", "snow lodge escapes"],
-    bestFor: "Use Open-Air Routes when the album needs outdoor scale, weather mood, road movement, or natural setting around the portrait.",
-    sourceFocus: "Prepare clear portraits and outfit notes that can handle outdoor layers, walking posture, brighter light, or colder scenes.",
-    reviewFocus: "Review body posture, outdoor clothing fit, terrain believability, face detail, and whether the scene supports rather than hides the person.",
-    elementStory: "Open-air images use distance, weather, trail lines, lake light, road texture, and layered clothing to create travel atmosphere.",
-    avoid: "Avoid combining snow lodge, desert road, and lake weekend moods in one request unless the first pass is deliberately exploratory."
+    label: "Premiere-Inspired Portrait Sets",
+    blogSlug: "/blog/premiere-style-photo-sets-guide",
+    description: "Premiere-inspired categories for flash portraits, VIP arrivals, and award-night private albums.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/premiere-style-portraits.webp?v=20260731assetfix1",
+    targetHref: "/collections/premiere-style-portraits",
+    examples: ["premiere flash portraits", "VIP arrival photo sets", "award night keepsake albums"],
+    bestFor: "Use Premiere-Inspired Portrait Sets when the private gallery should feel polished, formal, and event-ready without copying public figures.",
+    sourceFocus: "Prepare clear portraits plus outfit and formality notes, then keep the brief focused on original arrival energy and camera-flash mood.",
+    reviewFocus: "Review face consistency, formal styling, flash balance, background restraint, and whether the gallery avoids celebrity or brand confusion.",
+    elementStory: "Premiere-style images use flash, dark venue contrast, formal posture, and arrival framing to create a private VIP mood.",
+    avoid: "Avoid requesting a real public figure, protected red-carpet branding, official event marks, or a look that implies endorsement."
   },
   {
-    label: "Travel Story Kits",
-    blogSlug: "/blog/travel-story-kits-category-guide",
-    description: "Postcard, itinerary, editorial, and social-ready travel visuals for creators.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-creator.webp?v=20260630cat",
-    examples: ["postcard story sets", "route moodboards", "rail journey portraits", "travel journal covers"],
-    bestFor: "Use Travel Story Kits when the output needs to behave like a planned travel narrative, creator set, journal cover, or social-ready album.",
-    sourceFocus: "Use portraits plus a small reference board where each reference has a job: light, place texture, wardrobe tone, or album format.",
-    reviewFocus: "Review whether the story pieces feel connected, whether crops support social or journal use, and whether the route mood stays readable.",
-    elementStory: "Story kits turn visible route details into structure: cover image, postcard crop, rail sequence, or moodboard direction.",
-    avoid: "Avoid adding too many references that repeat the same job or pull the album into a different season or city."
+    label: "Christmas Holiday Albums",
+    blogSlug: "/blog/holiday-memory-albums-guide",
+    description: "Christmas holiday album categories for group cards, cozy portraits, and winter fan greeting albums.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=20260731assetfix1",
+    targetHref: "/collections/christmas-holiday-albums",
+    examples: ["Christmas group albums", "cozy card portrait sets", "winter fan greeting albums"],
+    bestFor: "Use Christmas Holiday Albums when the finished gallery should feel warm, greeting-card ready, and private enough for family or fan keepsakes.",
+    sourceFocus: "Use approved portraits and note card crop, warmth level, group size, winter details, and any protected decorations or characters to avoid.",
+    reviewFocus: "Review each face, card framing, seasonal props, hand detail, and whether the image feels personal rather than generic holiday decor.",
+    elementStory: "Christmas holiday albums depend on warm light, card composition, winter texture, small gestures, and safe seasonal styling.",
+    avoid: "Avoid protected characters, branded decorations, unapproved group photos, or mixing too many holiday scenes into one request."
   },
   {
-    label: "Lifestyle Routes",
-    blogSlug: "/blog/lifestyle-routes-category-guide",
-    description: "Botanical paths, city light walks, evening routes, beauty studies, and polished room portraits for private image planning.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-lifestyle.webp?v=20260715life",
-    examples: ["nature portrait studio", "city light night walks", "evening route portraits", "soft editorial room portraits"],
-    bestFor: "Use Lifestyle Routes when the album should feel polished, personal, and atmosphere-led without becoming a full destination itinerary.",
-    sourceFocus: "Prepare portraits with clear face and hair detail, then add light, room, evening, city, or botanical cues that define the lifestyle mood.",
-    reviewFocus: "Review color tone, face consistency, hair edges, room or city texture, and whether the lifestyle mood stays believable.",
-    elementStory: "Lifestyle routes are built from soft cues: plant texture, window light, evening color, room shape, and polished posture.",
-    avoid: "Avoid treating lifestyle categories as beauty, travel, and professional goals at once; pick the strongest visual job first."
+    label: "Thanksgiving Keepsake Sets",
+    blogSlug: "/blog/thanksgiving-keepsake-sets-category-guide",
+    description: "Thanksgiving keepsake categories for table scenes, gratitude portraits, and Friendsgiving memory sets.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/thanksgiving-memory-sets.webp?v=20260731assetfix1",
+    targetHref: "/collections/thanksgiving-memory-sets",
+    examples: ["Thanksgiving table keepsakes", "gratitude group portraits", "Friendsgiving memory sets"],
+    bestFor: "Use Thanksgiving Keepsake Sets when the private album should feel warm, grateful, group-friendly, and suitable for seasonal sharing.",
+    sourceFocus: "Prepare approved portraits and describe table light, group size, card use, outfit tone, and any family details that should stay private.",
+    reviewFocus: "Review group identity, expression, table or room details, crop warmth, and whether the gallery respects private context.",
+    elementStory: "Thanksgiving sets are carried by table light, shared posture, warm color, subtle seasonal detail, and private-album restraint.",
+    avoid: "Avoid inventing family relationships, using unapproved group photos, or overloading the request with several holidays at once."
   },
   {
-    label: "Professional & Celebrations",
-    blogSlug: "/blog/professional-celebrations-category-guide",
-    description: "Work portraits and ceremonial scene atlases for announcements, seasonal cards, formal evenings, and cultural celebrations.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-occasions.webp?v=20260715life",
-    examples: ["professional headshots", "milestone postcards", "holiday couple cards", "heritage celebration portraits"],
-    bestFor: "Use Professional & Celebrations when the finished image needs a clear occasion, work-facing polish, or ceremonial private-gallery review.",
-    sourceFocus: "Prepare current portraits, event tone, outfit formality, and card or profile use without inventing ceremony details that were not supplied.",
-    reviewFocus: "Review expression, formality, clothing detail, card crop, cultural respect, and whether the image is appropriate for the intended audience.",
-    elementStory: "Occasion images rely on visible signals: formal clothing, warm light, paired posture, card framing, or work-ready restraint.",
-    avoid: "Avoid claiming personal heritage, ceremony meaning, or event facts that are not part of the customer's request."
+    label: "Halloween Party Portraits",
+    blogSlug: "/blog/halloween-party-portraits-category-guide",
+    description: "Halloween party portrait categories for costume-friendly albums, party scenes, and cast-style private galleries.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/halloween-party-portraits.webp?v=20260731assetfix1",
+    targetHref: "/collections/halloween-party-portraits",
+    examples: ["Halloween party portrait sets", "costume cast photo albums", "spooky fan card portraits"],
+    bestFor: "Use Halloween Party Portraits when the gallery can be playful, moody, and costume-friendly while staying original and permission-safe.",
+    sourceFocus: "Use clear approved portraits, name the costume mood in general terms, and avoid protected characters, masks, or branded costume details.",
+    reviewFocus: "Review face visibility, costume originality, party lighting, hand detail, and whether the mood stays fun without becoming a trademark copy.",
+    elementStory: "Halloween portraits use color, shadow, costume shape, group energy, and original party atmosphere to carry the theme.",
+    avoid: "Avoid protected characters, branded costumes, gore-heavy prompts, or anything that hides identity so much the private gallery is hard to review."
+  },
+  {
+    label: "Seasonal Celebration Photos",
+    blogSlug: "/blog/seasonal-celebration-photos-category-guide",
+    description: "Seasonal celebration categories for birthdays, New Year countdowns, family occasions, and rotating private albums.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/seasonal-celebration-photos.webp?v=20260731assetfix1",
+    targetHref: "/collections/seasonal-celebration-photos",
+    examples: ["birthday fan moment sets", "New Year countdown albums", "family occasion portraits"],
+    bestFor: "Use Seasonal Celebration Photos when the event is specific but does not fit only Christmas, Thanksgiving, Halloween, or game-day categories.",
+    sourceFocus: "Prepare approved portraits, name the occasion, choose the card or album use, and keep fan or family references permission-safe.",
+    reviewFocus: "Review event clarity, expression, crop, source-photo identity, and whether the finished images match the intended private use.",
+    elementStory: "Seasonal celebration images work through occasion cues: countdown light, birthday warmth, family-card framing, and private keepsake polish.",
+    avoid: "Avoid vague celebration prompts, protected brand references, or mixing unrelated occasions that need separate review criteria."
   }
 ].map((item) => makeCategoryArticle({
   sitePrefix: "site_aidreamcapes",
@@ -408,52 +490,76 @@ const aidreamcapesThemeArticles = [
 
 const aidreamcapesToolArticles = [
   {
-    label: "Destination Tools",
-    blogSlug: "/blog/destination-tools-guide",
-    description: "Travel portrait planners for cities, coasts, resorts, and scenic overlooks.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-destination.webp?v=20260630cat",
-    examples: ["route portrait engine", "coastal light composer", "island balcony studio", "lagoon portrait mixer"],
-    bestFor: "Use Destination Tools when the tool should help choose a place-led album before a private route set is generated.",
-    sourceFocus: "Prepare source portraits, choose one destination family, and add light or outfit notes that fit that place.",
-    reviewFocus: "Review route believability, face consistency, background detail, and whether the selected tool narrowed the destination clearly.",
-    elementStory: "Destination tools translate place cues into practical decisions: coast, balcony, lagoon, city, or overlook.",
-    avoid: "Avoid choosing several destination tools for one job when the routes need different seasons, wardrobes, or lighting."
+    label: "Fan-Scene Builders",
+    blogSlug: "/blog/fan-scene-builders-guide",
+    description: "Builders for private fan-scene albums, meetup portraits, supporter walls, and keepsake card workflows.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp?v=20260731assetfix1",
+    examples: ["fan-scene album builder", "backstage meetup scene builder", "supporter photo wall maker", "fan keepsake card maker"],
+    bestFor: "Use Fan-Scene Builders when the workflow needs an original supporter scene with clear permission boundaries before generation starts.",
+    sourceFocus: "Prepare approved portraits, choose one fan-scene builder, and write what public figures, marks, or copyrighted details must stay out.",
+    reviewFocus: "Review identity, fan-scene originality, private album fit, and whether the selected builder keeps the request safe.",
+    elementStory: "Fan-scene builder tools turn the same safety rules into different formats: albums, walls, meetup portraits, and cards.",
+    avoid: "Avoid selecting several fan-scene builders for one job when each one needs different review criteria."
   },
   {
-    label: "Travel Moment Tools",
-    blogSlug: "/blog/travel-moment-tools-guide",
-    description: "Street, cafe, balcony, sunset, and shared-trip portrait tools.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-moments.webp?v=20260630cat",
-    examples: ["cafe corner story tool", "market morning portraits", "shared route album", "golden hour route stories"],
-    bestFor: "Use Travel Moment Tools when the customer needs a smaller scene, shared frame, local walk, or time-of-day mood.",
-    sourceFocus: "Use portraits with natural expression and add a reference for the local detail that matters most: cafe, market, skyline, or sunset.",
-    reviewFocus: "Review warmth, expression, shared spacing, street detail, and whether the final image feels like a real moment instead of a generic route.",
-    elementStory: "Moment tools depend on small sensory cues: late light, table edges, street color, shared posture, and a believable crop.",
-    avoid: "Avoid forcing a small moment tool to carry a full itinerary, outdoor adventure, and postcard cover in one request."
+    label: "Game-Day Builders",
+    blogSlug: "/blog/game-day-builders-guide",
+    description: "Builders for game-day group portraits, stadium night sets, and watch party album workflows.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/game-day-group-portraits.webp?v=20260731assetfix1",
+    examples: ["game-day group portrait maker", "stadium night fan set maker", "watch party album builder"],
+    bestFor: "Use Game-Day Builders when the private job needs supporter energy, group balance, and a sports-inspired mood without official marks.",
+    sourceFocus: "Use approved group portraits or individual portraits, then define colors, energy, crop, and the marks or teams to avoid.",
+    reviewFocus: "Review every face, group spacing, celebratory mood, and whether the result avoids affiliation or endorsement signals.",
+    elementStory: "Game-day builder tools use arena-like light, poster framing, and group gesture while staying independent from official branding.",
+    avoid: "Avoid real athlete likenesses, protected team names, official logos, or group photos without permission."
   },
   {
-    label: "Adventure Tools",
-    blogSlug: "/blog/adventure-tools-guide",
-    description: "Mountain trail, road trip, cabin, lake, and outdoor escape tools.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-adventure.webp?v=20260630cat",
-    examples: ["alpine trail scene tool", "desert road portraits", "snow lodge portraits", "lake house weekend tool"],
-    bestFor: "Use Adventure Tools when the private album should feel outdoors, spacious, and route-driven without hiding the person in the scenery.",
-    sourceFocus: "Prepare portraits with enough body or shoulder detail for outdoor posture, and include notes about layers, season, or road mood.",
-    reviewFocus: "Review terrain, clothing, weather fit, face detail, and whether the scene keeps the subject readable at social or keepsake crop size.",
-    elementStory: "Adventure tools use scale, road lines, trail texture, water light, and seasonal clothing to make the route feel specific.",
-    avoid: "Avoid mixing every outdoor mood into one request; a lake weekend and a desert road usually deserve separate private galleries."
+    label: "Premiere Creator Tools",
+    blogSlug: "/blog/premiere-creator-tools-guide",
+    description: "Tools for premiere-style portraits, VIP arrival photos, and award-night private albums.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/premiere-flash-portraits.webp?v=20260731assetfix1",
+    examples: ["premiere portrait set builder", "VIP arrival photo maker", "award night album studio"],
+    bestFor: "Use Premiere Creator Tools when the customer wants polished event styling, flash mood, or formal creator portraits without public-figure copying.",
+    sourceFocus: "Prepare clear portraits with outfit notes and choose one formal event direction before adding flash or venue cues.",
+    reviewFocus: "Review formal styling, face consistency, background restraint, and whether the result avoids brand or celebrity confusion.",
+    elementStory: "Premiere creator tools use flash, dark venue polish, formal posture, and private arrival energy as the main visual signals.",
+    avoid: "Avoid public-figure prompts, real event branding, protected logo walls, or implied endorsements."
   },
   {
-    label: "Creator Travel Tools",
-    blogSlug: "/blog/creator-travel-tools-guide",
-    description: "Postcard sets, itinerary moodboards, and editorial travel story tools.",
-    imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/parent-creator.webp?v=20260630cat",
-    examples: ["route moodboard tool", "postcard story set maker", "rail journey frames", "travel journal cover maker"],
-    bestFor: "Use Creator Travel Tools when the output needs social structure, a journal cover, a route board, or a personal travel profile direction.",
-    sourceFocus: "Use clear portraits plus a compact moodboard where each reference supports format, light, place texture, or wardrobe tone.",
-    reviewFocus: "Review story continuity, crop purpose, title or cover fit, and whether the result can work as a personal travel set.",
-    elementStory: "Creator tools organize travel mood into formats: postcard, journal cover, rail sequence, profile clip, or route board.",
-    avoid: "Avoid using creator tools as a catch-all for unrelated travel ideas; the finished gallery should still have one format and one audience."
+    label: "Holiday Album Tools",
+    blogSlug: "/blog/holiday-album-tools-guide",
+    description: "Tools for Christmas group albums, Thanksgiving keepsakes, Halloween portraits, and winter greetings.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp?v=20260731assetfix1",
+    examples: ["Christmas group album studio", "Thanksgiving keepsake set maker", "Halloween party portrait maker", "winter fan greeting maker"],
+    bestFor: "Use Holiday Album Tools when the job needs one specific seasonal album workflow with clear card, group, or keepsake goals.",
+    sourceFocus: "Prepare approved portraits, name the holiday, choose the album use, and keep protected decorations or characters out of the brief.",
+    reviewFocus: "Review identity, holiday clarity, crop, private-gallery usefulness, and whether the chosen tool fits the exact occasion.",
+    elementStory: "Holiday album tools translate seasonal details into practical albums: Christmas cards, gratitude sets, Halloween portraits, and winter greetings.",
+    avoid: "Avoid combining several holidays in one prompt or relying on protected characters and branded decorations."
+  },
+  {
+    label: "Occasion Card Tools",
+    blogSlug: "/blog/occasion-card-tools-guide",
+    description: "Tools for birthday fan moments, New Year countdown albums, cozy cards, and Friendsgiving private images.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/birthday-fan-moment-set.webp?v=20260731assetfix1",
+    examples: ["birthday fan moment maker", "New Year countdown album maker", "cozy card portrait maker", "Friendsgiving memory maker"],
+    bestFor: "Use Occasion Card Tools when the image should work as a private greeting, celebration card, or small event album.",
+    sourceFocus: "Use approved portraits, define the occasion, decide whether the result is a card or album, and note any personal details to keep private.",
+    reviewFocus: "Review card readability, facial consistency, occasion cues, and whether the finished image is ready for private sharing.",
+    elementStory: "Occasion card tools rely on concise event signals: date mood, greeting-card crop, expression, color, and personal warmth.",
+    avoid: "Avoid vague party prompts, unapproved group images, or mixing birthdays, New Year, and other occasions in one request."
+  },
+  {
+    label: "Safety Prep Tools",
+    blogSlug: "/blog/safety-prep-tools-guide",
+    description: "Tools for permission-safe photo planning, source checks, and safer fan or holiday album briefs.",
+    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/fan-letter-moment-set.webp?v=20260731assetfix1",
+    examples: ["permission-safe photo planner", "source-photo review", "brand-safe brief planning", "private album checklist"],
+    bestFor: "Use Safety Prep Tools before generation when the request involves fan scenes, group photos, public references, or seasonal materials.",
+    sourceFocus: "Check that photos are approved, remove protected marks, write what should not appear, and keep the prompt focused on original scenes.",
+    reviewFocus: "Review permission status, identity clarity, brand safety, and whether the selected creative direction can be generated responsibly.",
+    elementStory: "Safety prep tools turn boundaries into usable creative constraints before credits are spent.",
+    avoid: "Avoid using safety prep as a substitute for rights, consent, or permission when the input material is not yours to use."
   }
 ].map((item) => makeCategoryArticle({
   sitePrefix: "site_aidreamcapes",
@@ -476,6 +582,21 @@ function slugifySegment(value) {
 
 function activeItems(state, key, siteId) {
   return (state[key] ?? []).filter((item) => item.siteId === siteId && item.status === "active");
+}
+
+const blogCoverageExclusions = {
+  site_dreamshoot: {
+    creativeCategorySlugs: new Set(["travel-scene-pack"]),
+    videoCategorySlugs: new Set(["travel-story"])
+  }
+};
+
+function isExcludedBlogCoverage(siteId, kind, slug) {
+  const exclusions = blogCoverageExclusions[siteId];
+  if (!exclusions) return false;
+  if (kind === "creative-category") return exclusions.creativeCategorySlugs.has(slug);
+  if (kind === "video-category") return exclusions.videoCategorySlugs.has(slug);
+  return false;
 }
 
 function siteById(state, siteId) {
@@ -527,10 +648,44 @@ function compactList(items, fallback) {
   return values.length ? values.slice(0, 4) : [fallback];
 }
 
+function sanitizeBlogCoverageText(siteId, value) {
+  if (siteId !== "site_dreamshoot") return value;
+  return String(value ?? "")
+    .replace(/travel-inspired profiles/gi, "outdoor creator profiles")
+    .replace(/travel-inspired/gi, "outdoor creator")
+    .replace(/travel profile/gi, "creator profile")
+    .replace(/travel mood/gi, "creator mood")
+    .replace(/travel moodboards/gi, "creator moodboards")
+    .replace(/destination moods/gi, "outdoor moods")
+    .replace(/destination crops/gi, "outdoor crops");
+}
+
 function defaultSiteImage(brand) {
   return brand === "Aidreamcapes"
-    ? "/assets/sites/site_aidreamcapes/creative-packs/route-portrait-albums-cover.webp"
+    ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/fan-scene-albums.webp"
     : "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.webp";
+}
+
+function safeToolCoverImage(tool, brand) {
+  const sourceImage = String(tool.imageUrl ?? "").trim();
+  if (brand !== "MyDreamShoots" || !/(category-covers|hero-grid)/i.test(sourceImage)) {
+    return sourceImage || defaultSiteImage(brand);
+  }
+  const slug = slugifySegment(tool.slug || tool.title);
+  const galleryBySlug = {
+    "creator-portrait": "creator-portraits",
+    "cyberpunk-portrait": "cyberpunk",
+    "gala-photo": "gala-photos",
+    "noir-portrait": "mafia",
+    "anime-avatar": "anime-avatar",
+    "product-lifestyle": "product-style",
+    "unblur-image": "magic-upscaler",
+    "image-to-video": "ai-video-add-ons"
+  };
+  const gallery = galleryBySlug[slug];
+  return gallery
+    ? `/assets/dreamshoot/generated/pack-galleries/${gallery}/${gallery}-01.webp`
+    : defaultSiteImage(brand);
 }
 
 function makeCreativeCategoryArticle(state, siteId, brand, category, parent, packs) {
@@ -541,7 +696,7 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
     label,
     parentLabel
   ], label);
-  const routeNoun = brand === "Aidreamcapes" ? "route album" : "private gallery";
+  const routeNoun = brand === "Aidreamcapes" ? "private album" : "private gallery";
   return makeCategoryArticle({
     sitePrefix: siteId,
     brand,
@@ -551,10 +706,12 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
     description: category.description || `${label} sits under ${parentLabel} and gives shoppers a narrower ${routeNoun} direction to compare before spending credits.`,
     imageUrl: category.imageUrl || packs.find((pack) => pack.imageUrl)?.imageUrl || parent?.imageUrl || defaultSiteImage(brand),
     imageAlt: `${brand} ${label} package category cover`,
+    targetLabel: `Open ${label} package`,
+    targetHref: `/collections/${slugifySegment(category.slug || label)}`,
     examples,
     bestFor: `Use ${label} when ${parentLabel} is the right broad direction but the next ${routeNoun} needs a more specific mood, format, or use case.`,
     sourceFocus: brand === "Aidreamcapes"
-      ? `Prepare clear source portraits, then add one route cue that matches ${label}: light, place texture, season, outfit tone, or album format.`
+      ? `Prepare clear source portraits, then add one album cue that matches ${label}: light, scene texture, season, outfit tone, or album format.`
       : `Prepare clear source photos, then add one style cue that matches ${label}: expression, outfit tone, background mood, crop need, or final use.`,
     reviewFocus: `Review whether the finished images match ${label} instead of drifting back into a generic ${parentLabel} result.`,
     elementStory: `${label} should have visible cues that explain the category choice: color, posture, crop, scene texture, styling, or movement readiness.`,
@@ -568,22 +725,28 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
 function makeToolItemArticle(siteId, brand, tool, categoryLabel) {
   const label = tool.title || tool.slug;
   const examples = compactList([tool.badge, categoryLabel, label, tool.href], label);
+  const description = sanitizeBlogCoverageText(
+    siteId,
+    tool.description || `${label} is a ${categoryLabel} tool for focused private image planning and gallery review.`
+  );
   return makeCategoryArticle({
     sitePrefix: siteId,
     brand,
     kind: "tool",
     label,
     blogSlug: `/blog/${slugifySegment(tool.slug || label)}-tool-guide`,
-    description: tool.description || `${label} is a ${categoryLabel} tool for focused private image planning and gallery review.`,
-    imageUrl: tool.imageUrl || defaultSiteImage(brand),
+    description,
+    imageUrl: safeToolCoverImage(tool, brand),
     imageAlt: `${brand} ${label} tool cover`,
+    targetLabel: `Open ${label} tool`,
+    targetHref: tool.href?.startsWith("/tools/") ? tool.href : `/tools/${slugifySegment(tool.slug || label)}`,
     examples,
     bestFor: `Use ${label} when the customer needs the ${categoryLabel} workflow to solve one visible job before generation or download.`,
     sourceFocus: brand === "Aidreamcapes"
-      ? `Prepare source portraits and route notes that match ${label}, then keep the tool brief focused on one place, format, or motion need.`
+      ? `Prepare source portraits and reference notes that match ${label}, then keep the tool brief focused on one scene, format, or motion need.`
       : `Prepare source photos or finished gallery images that match ${label}, then keep the tool brief focused on one edit, portrait, or motion need.`,
     reviewFocus: `Review whether ${label} improved the intended output without introducing identity drift, edge artifacts, crop problems, or confusing style changes.`,
-    elementStory: `${label} should leave a visible reason for using the tool: cleaner detail, stronger crop, clearer route mood, stronger profile fit, or better motion readiness.`,
+    elementStory: `${label} should leave a visible reason for using the tool: cleaner detail, stronger crop, clearer theme fit, stronger profile fit, or better motion readiness.`,
     avoid: `Avoid using ${label} as a catch-all for unrelated edits, new portraits, and motion requests in the same credit spend.`,
     seoTitle: searchFriendlySeoTitle(label, brand),
     seoDescription: `Use ${label} in ${brand}: prepare inputs, compare tool fit, review credit cost, and check private gallery results before downloads.`,
@@ -602,6 +765,8 @@ function makeVideoThemeCategoryArticle(siteId, brand, category) {
     description: category.description || `${label} groups video themes for short private clips made from selected image frames.`,
     imageUrl: category.imageUrl || defaultSiteImage(brand),
     imageAlt: `${brand} ${label} video theme category cover`,
+    targetLabel: `Open ${label} video themes`,
+    targetHref: "/tools",
     examples: compactList([label, category.slug, "private video clips", "source frames"], label),
     bestFor: `Use ${label} when a still image or ordered frame set needs a short motion direction instead of another still-image gallery.`,
     sourceFocus: `Choose clean source frames, define one motion idea, and make sure the image is already worth animating before spending credits.`,
@@ -621,6 +786,7 @@ function buildCreativeCategoryCoverageArticles(state, siteId, brand, existingArt
   const byId = new Map(categories.map((category) => [category.id, category]));
   const packs = activeItems(state, "creativePacks", siteId);
   return categories
+    .filter((category) => !isExcludedBlogCoverage(siteId, "creative-category", category.slug))
     .filter((category) => category.parentId)
     .map((category) => {
       const parent = category.parentId ? byId.get(category.parentId) : undefined;
@@ -655,6 +821,7 @@ function buildToolItemCoverageArticles(state, siteId, brand, existingArticles) {
 function buildVideoThemeCategoryCoverageArticles(state, siteId, brand, existingArticles) {
   const existing = articleSlugs(existingArticles);
   return activeItems(state, "videoThemeCategories", siteId)
+    .filter((category) => !isExcludedBlogCoverage(siteId, "video-category", category.slug))
     .map((category) => makeVideoThemeCategoryArticle(siteId, brand, category))
     .filter((article) => !existing.has(article.slug));
 }
@@ -737,7 +904,7 @@ const siteConfigs = [
           <table><thead><tr><th>Check</th><th>Why it matters</th></tr></thead><tbody><tr><td>Recent, sharp portraits</td><td>Helps the result preserve identity and current details.</td></tr><tr><td>Natural expressions</td><td>Gives packages more usable options for professional, social, or cinematic scenes.</td></tr><tr><td>Simple lighting</td><td>Reduces shadows and color shifts before generation begins.</td></tr><tr><td>Permission-safe uploads</td><td>Keeps private albums and account records easier to manage.</td></tr></tbody></table>
           <h2 id="mistakes-that-lower-result-quality">Mistakes that lower result quality</h2>
           <p>The weakest source sets usually have the same pattern: one very polished selfie, one filtered social post, and several photos where the face is small or turned away. That combination asks the system to guess too much. It may still produce attractive images, but the person can drift between outputs because the identity evidence is uneven.</p>
-          <p>Another common issue is mixing different life stages in one upload. A current photo, an old vacation photo, and a heavily edited formal image can all be meaningful to the customer, but they are not equally useful for generation. If your goal is a photo package that looks like you now, make the current images the base set.</p>
+          <p>Another common issue is mixing different life stages in one upload. A current photo, an older casual photo, and a heavily edited formal image can all be meaningful to the customer, but they are not equally useful for generation. If your goal is a photo package that looks like you now, make the current images the base set.</p>
           <h2 id="how-many-photos-to-upload">How many photos should you upload?</h2>
           <p>More photos are not automatically better. A smaller group of clear, consistent portraits usually beats a large folder of mixed screenshots. For a first MyDreamShoots set, think in terms of coverage: front-facing, slight side angle, different expression, and one frame that shows hair and shoulders clearly. If a photo repeats the same angle and lighting as another, keep the sharper one.</p>
           <h2 id="source-photo-faq">Source photo FAQ</h2>
@@ -768,6 +935,8 @@ const siteConfigs = [
         primaryHref: "/collections",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing",
+        targetLabel: "Browse photo packages",
+        targetHref: "/collections",
         seoTitle: "How to choose AI photo packages before spending credits",
         seoDescription:
           "Compare MyDreamShoots AI photo packages by final use, source-photo fit, style risk, output needs, private delivery, and visible credit cost.",
@@ -784,7 +953,7 @@ const siteConfigs = [
           <h2 id="decide-how-much-style-risk">Decide how much style risk you want</h2>
           <p>Cleaner professional packages usually carry less visual risk because the scene is restrained. Fantasy, sports, event, and cinematic packages can be more dramatic, which also means you should review outputs carefully before using them publicly. Choose the package that matches your comfort with transformation.</p>
           <h2 id="decide-where-the-photos-will-be-used">Decide where the photos will be used</h2>
-          <p>A package feels easier to judge when you name the destination for the finished images. A resume portrait needs a calmer crop and a face-forward expression. A creator profile can accept more gesture, color, and crop variety. A fan poster or holiday scene can be judged by mood, but it still needs enough identity consistency that friends recognize the person without reading the caption.</p>
+          <p>A package feels easier to judge when you name the final use for the finished images. A resume portrait needs a calmer crop and a face-forward expression. A creator profile can accept more gesture, color, and crop variety. A fan poster or holiday scene can be judged by mood, but it still needs enough identity consistency that friends recognize the person without reading the caption.</p>
           <p>Write the intended use in plain language before choosing the package. "Three profile options for LinkedIn" leads to a different choice than "a private album of cinematic portraits for a birthday surprise." That short sentence helps you avoid buying a style because it looks exciting while missing the use case that actually matters.</p>
           <h2 id="quick-comparison">Quick comparison</h2>
           <table><thead><tr><th>Package goal</th><th>Best source-photo match</th><th>Review focus</th></tr></thead><tbody><tr><td>Professional headshots</td><td>Clear face detail, neutral clothing, low visual clutter.</td><td>Identity, crop, expression, and background restraint.</td></tr><tr><td>Creator portraits</td><td>Several expressions, some outfit variety, natural body posture.</td><td>Personality, usable crops, and social profile fit.</td></tr><tr><td>Themed albums</td><td>Stable identity photos plus one clear mood direction.</td><td>Scene consistency, costume fit, and artifact checks.</td></tr><tr><td>Small test set</td><td>Your sharpest two or three current portraits.</td><td>Whether the direction is worth a larger credit spend.</td></tr></tbody></table>
@@ -820,6 +989,8 @@ const siteConfigs = [
         primaryHref: "/login",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing",
+        targetLabel: "View pricing",
+        targetHref: "/pricing",
         seoTitle: "MyDreamShoots private gallery, credits, and download guide",
         seoDescription:
           "Learn how MyDreamShoots private galleries, credit history, generation review, downloads, and account-scoped albums work after AI photo delivery.",
@@ -866,185 +1037,188 @@ const siteConfigs = [
     brand: "Aidreamcapes",
     blogTitle: "Field Notes",
     footerLabel: "Blog",
-    guideType: "Travel guide",
-    homeIntroTitle: "Travel portrait field notes for better destination scenes.",
+    guideType: "Fan and holiday guide",
+    homeIntroTitle: "Fan and holiday field notes for better private albums.",
     homeIntroBody:
-      "Use Aidreamcapes Field Notes to plan source portraits, destination mood references, route albums, visible credits, and private gallery review.",
-    homeListTitle: "Aidreamcapes travel portrait guides",
+      "Use Aidreamcapes Field Notes to plan source portraits, fan-scene references, holiday album briefs, visible credits, and private gallery review.",
+    homeListTitle: "Aidreamcapes fan and holiday guides",
     homeListBody:
-      "Field Notes for source portraits, route moods, coastal or city references, credit planning, private delivery, and more intentional AI travel albums.",
+      "Field Notes for source portraits, fan-scene moods, holiday references, credit planning, private delivery, and more intentional AI private albums.",
     relatedTitle: "More field notes",
     relatedBody:
-      "Continue with guides on source portraits, destination references, route mood, credit planning, and private album review.",
+      "Continue with guides on source portraits, fan-scene references, holiday planning, credit planning, and private album review.",
     homeSeo: {
-      title: "Aidreamcapes Field Notes for AI travel portrait planning",
+      title: "Aidreamcapes Field Notes for private fan and holiday albums",
       description:
-        "Read Aidreamcapes Field Notes for source portraits, destination mood references, route albums, visible credits, and private gallery delivery.",
+        "Read Aidreamcapes Field Notes for source portraits, fan-scene references, holiday album briefs, visible credits, and private gallery delivery.",
       keywords:
-        "AI travel portrait guides, destination mood references, route album planning, Aidreamcapes credits"
+        "fan-scene references, holiday album planning, private gallery credits, Aidreamcapes",
+      ogImage: "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/fan-scene-albums.webp"
     },
     articles: [
       {
         id: "site_aidreamcapes_blog_detail",
-        slug: "/blog/planning-dreamscape-source-photos",
-        pageTitle: "Planning travel portrait source photos",
-        title: "How to plan source photos for cinematic AI travel portraits",
+        slug: "/blog/approved-source-photo-planning",
+        pageTitle: "Approved source photo planning",
+        title: "How to plan approved source photos for private fan and holiday albums",
         summary:
-          "Choose clear portraits, route-aware outfit notes, and focused references so Aidreamcapes can build cleaner private destination albums.",
+          "Choose clear portraits, note permission boundaries, and keep fan-scene or holiday references focused so Aidreamcapes can build cleaner private albums.",
         author: "Aidreamcapes editorial team",
         publishedAt: "2026-07-28",
         updatedAt: "2026-07-28",
         readMinutes: "7",
-        imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/route-portrait-albums-cover.webp",
-        imageAlt: "Aidreamcapes route portrait album cover",
-        tags: "Source portraits|Travel portraits|Destination planning|Private albums",
-        primaryCta: "Start a travel set",
+        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/fan-scene-albums.webp",
+        imageAlt: "Aidreamcapes fan-scene album cover",
+        tags: "Source portraits|Fan scenes|Holiday planning|Private albums",
+        primaryCta: "Start a fan set",
         primaryHref: "/login",
-        secondaryCta: "Travel Packages",
+        secondaryCta: "Browse albums",
         secondaryHref: "/collections",
-        seoTitle: "How to plan source photos for AI travel portraits",
+        seoTitle: "How to plan approved source photos for Aidreamcapes private albums",
         seoDescription:
-          "Learn how to choose source photos, outfit notes, and destination mood references for Aidreamcapes AI travel portraits and private albums.",
+          "Learn how to choose source photos, note permission boundaries, and keep fan-scene or holiday references focused for Aidreamcapes private albums.",
         seoKeywords:
-          "AI travel portrait source photos, destination portrait planning, route album source photos",
+          "approved source photos, fan-scene album planning, private holiday albums, Aidreamcapes",
         body: html`
-          <p>Strong Aidreamcapes results begin before a destination scene is generated. The private workflow needs clear portraits first, then route mood, outfit notes, and atmosphere references that support the album direction without overloading it.</p>
+          <p>Strong Aidreamcapes results begin before the album is generated. The private workflow needs clear portraits first, then fan-scene or holiday cues that support the gallery direction without overwhelming it.</p>
           <h2 id="start-with-identity-clarity">Start with identity clarity</h2>
-          <p>Choose recent portraits where the face is sharp, naturally lit, and easy to recognize. Avoid heavy filters, sunglasses, harsh shadows, and group photos when the request needs consistent solo travel portraits.</p>
-          <p>For paired or family-style route albums, keep the same rule for every person in the set. One clear portrait for each subject is better than a folder where one person appears in crisp light and another is only visible in distant vacation photos.</p>
-          <h2 id="add-destination-context">Add destination context intentionally</h2>
-          <p>A coastal set may need warm light, linen textures, and relaxed posture notes. An old quarter walk can use cafe, plaza, stone street, and boutique hotel references. A trail album benefits from outdoor layers, weather notes, and preferred season.</p>
-          <p>Helpful context can also include what should stay out of the scene. If the album should feel like a quiet hotel morning, say that instead of leaving room for nightlife, crowded streets, or heavy fashion styling. Boundaries keep the route believable and make the finished gallery easier to review.</p>
-          <h2 id="match-wardrobe-to-route">Match wardrobe notes to the route</h2>
-          <p>Wardrobe does not need to be complicated. Light neutrals can work for beach and resort scenes. Structured jackets can fit city routes. Outdoor layers support alpine or road-trip moods. Use wardrobe notes to make the destination believable, not to rewrite every detail of the person.</p>
+          <p>Choose recent portraits where the face is sharp, naturally lit, and easy to recognize. Avoid heavy filters, sunglasses, harsh shadows, and group photos when the request needs consistent solo albums.</p>
+          <p>For paired or family-style albums, keep the same rule for every person in the set. One clear portrait for each subject is better than a folder where one person appears in crisp light and another is only visible in distant group shots.</p>
+          <h2 id="add-context-intentionally">Add context intentionally</h2>
+          <p>A cozy table set may need warm light, linen textures, and relaxed posture notes. A fan-scene album can use poster color, supporter energy, backstage cues, or watch-party references. A holiday set benefits from season, gesture, and card-ready framing.</p>
+          <p>Helpful context can also include what should stay out of the scene. If the album should feel like a quiet private keepsake, say that instead of leaving room for crowded backgrounds or overdone styling. Boundaries keep the result believable and make the finished gallery easier to review.</p>
+          <h2 id="match-wardrobe-to-the-theme">Match wardrobe notes to the theme</h2>
+          <p>Wardrobe does not need to be complicated. Light neutrals can work for holiday cards. Structured jackets can fit fan-scene portraits. Soft layers support family keepsakes or event albums. Use wardrobe notes to make the gallery believable, not to rewrite every detail of the person.</p>
           <h2 id="keep-the-request-focused">Keep the request focused</h2>
-          <p>One clear route direction usually works better than five mixed destinations in the same job. If you want both a coastal album and a city album, run them as separate package choices so each private gallery has a coherent mood.</p>
-          <h2 id="choose-photos-for-the-route">Choose photos for the route, not just the face</h2>
-          <p>A travel portrait needs identity, but it also needs enough body and wardrobe context to feel believable in a destination scene. A close crop can help with face detail, while a half-body source image helps the request understand posture, shoulders, and how clothing should sit in a route album.</p>
-          <p>If the destination mood involves movement, such as a market walk or trail overlook, include one relaxed standing frame. If the route is more polished, such as a resort balcony or city cafe, a calmer portrait with clean lighting may be enough.</p>
-          <h2 id="balance-real-person-and-place-mood">Balance the real person and the place mood</h2>
-          <p>The best Aidreamcapes requests do not let the destination swallow the person. A dramatic coast, old city lane, or alpine overlook should support the portrait rather than turn the subject into a background detail. When choosing source photos, keep one image where the face is unmistakable and one image that shows posture or wardrobe. When writing route notes, describe the place in visible terms instead of asking for a vague travel fantasy.</p>
-          <p>This balance is especially useful for shared albums or profile refreshes. The image should feel like a believable travel portrait of the person, not an anonymous postcard with a face added later.</p>
+          <p>One clear theme usually works better than five mixed ideas in the same job. If you want both a fan-scene album and a holiday album, run them as separate package choices so each private gallery has a coherent mood.</p>
+          <h2 id="choose-photos-for-the-theme">Choose photos for the theme, not just the face</h2>
+          <p>An album needs identity, but it also needs enough body and wardrobe context to feel believable in a themed scene. A close crop can help with face detail, while a half-body source image helps the request understand posture, shoulders, and how clothing should sit in the album.</p>
+          <p>If the theme involves movement, such as a watch-party frame or a card-ready pose, include one relaxed standing shot. If the theme is more polished, such as a table keepsake or a quiet studio-style set, a calmer portrait with clean lighting may be enough.</p>
+          <h2 id="balance-real-person-and-theme">Balance the real person and the theme</h2>
+          <p>The best Aidreamcapes requests do not let the theme swallow the person. A dramatic backdrop, party corner, or holiday prop should support the portrait rather than turn the subject into a background detail. When choosing source photos, keep one image where the face is unmistakable and one image that shows posture or wardrobe. When writing notes, describe the visible scene instead of asking for a vague fantasy.</p>
+          <p>This balance is especially useful for shared albums or profile refreshes. The image should feel like a believable themed portrait of the person, not an anonymous stock scene with a face added later.</p>
           <h2 id="review-outputs-privately">Review outputs privately before sharing</h2>
-          <p>Finished travel portraits return to the Aidreamcapes account gallery. Compare identity, lighting, crop, and route consistency before downloading favorites for profiles, postcards, social posts, or personal keepsakes.</p>
+          <p>Finished albums return to the Aidreamcapes account gallery. Compare identity, lighting, crop, and theme consistency before downloading favorites for profiles, cards, social posts, or personal keepsakes.</p>
           <h2 id="source-planning-checklist">Source planning checklist</h2>
-          <ul><li>Use clear recent portraits before expressive references.</li><li>Pick one route mood for the first request.</li><li>Add outfit notes that support the destination.</li><li>Check the visible credit cost before generation.</li><li>Review the private gallery before sharing images elsewhere.</li></ul>
-          <h2 id="travel-source-photo-faq">Travel source photo FAQ</h2>
-          <h3 id="do-i-need-real-travel-photos">Do I need real travel photos?</h3>
-          <p>No. The source photos should mainly identify the person. Destination references and package choice can describe the route mood. Real travel photos can help as references only when you own them and they support the scene clearly.</p>
+          <ul><li>Use clear recent portraits before expressive references.</li><li>Pick one theme for the first request.</li><li>Add outfit notes that support the album.</li><li>Check the visible credit cost before generation.</li><li>Review the private gallery before sharing images elsewhere.</li></ul>
+          <h2 id="source-photo-faq">Source photo FAQ</h2>
+          <h3 id="do-i-need-real-reference-photos">Do I need real reference photos?</h3>
+          <p>No. The source photos should mainly identify the person. Fan-scene references and album choice can describe the mood. Real reference photos can help as references only when you own them and they support the scene clearly.</p>
           <h3 id="should-i-include-full-body-photos">Should I include full-body photos?</h3>
-          <p>A full-body photo is useful for route albums with walking, overlook, or resort scenes, but it should still be clear and current. If the face becomes too small, pair it with a sharper portrait.</p>
+          <p>A full-body photo is useful for albums with walking, greeting, or group scenes, but it should still be clear and current. If the face becomes too small, pair it with a sharper portrait.</p>
           <h3 id="what-if-my-photos-have-different-outfits">What if my photos have different outfits?</h3>
-          <p>Some variety is fine, but avoid making wardrobe the main signal. Use outfit notes to guide the destination look, then let the clearest current portraits carry identity.</p>
-          <p>Source planning does not need a professional travel shoot. It needs clear portraits and a route brief that knows what kind of album you want.</p>
+          <p>Some variety is fine, but avoid making wardrobe the main signal. Use outfit notes to guide the album look, then let the clearest current portraits carry identity.</p>
+          <p>Source planning does not need a professional shoot. It needs clear portraits and an album brief that knows what kind of private gallery you want.</p>
         `
       },
       {
-        id: "site_aidreamcapes_blog_destination_mood",
-        slug: "/blog/destination-mood-references",
-        pageTitle: "Destination mood references",
-        title: "How to choose destination mood references for AI travel portraits",
+        id: "site_aidreamcapes_blog_fan_scene_references",
+        slug: "/blog/permission-safe-fan-scene-references",
+        pageTitle: "Permission-safe fan-scene references",
+        title: "How to choose permission-safe fan-scene references for private albums",
         summary:
-          "A guide to choosing coastal, city, resort, trail, and postcard references that give Aidreamcapes a focused route mood without making the request noisy.",
+          "A guide to choosing original mood references, holiday cues, and safe boundaries that keep Aidreamcapes requests focused and private.",
         author: "Aidreamcapes editorial team",
         publishedAt: "2026-07-28",
         updatedAt: "2026-07-28",
         readMinutes: "6",
-        imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/route-moodboards-cover.webp",
-        imageAlt: "Aidreamcapes route moodboard cover",
-        tags: "Destination mood|Mood references|Travel portraits|Route planning",
-        primaryCta: "Plan a route album",
+        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/seasonal-celebration-photos.webp",
+        imageAlt: "Aidreamcapes fan-scene reference cover",
+        tags: "Fan-scene references|Holiday cues|Private albums|Permission-safe planning",
+        primaryCta: "Plan a fan scene",
         primaryHref: "/collections",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing",
-        seoTitle: "How to choose destination mood references for AI travel portraits",
+        targetLabel: "Fan and holiday albums",
+        targetHref: "/collections",
+        seoTitle: "How to choose permission-safe fan-scene references for Aidreamcapes",
         seoDescription:
-          "Choose better coastal, city, resort, trail, and postcard references for Aidreamcapes AI travel portraits and private route albums.",
+          "Choose better fan-scene references, holiday cues, and private album notes so Aidreamcapes can keep each request focused, original, and private.",
         seoKeywords:
-          "destination mood references, AI travel portraits, route moodboard, travel portrait brief",
+          "permission-safe references, fan-scene mood boards, holiday cues, Aidreamcapes",
         body: html`
-          <p>Destination references work best when they behave like a compass. They should point Aidreamcapes toward light, texture, season, and route mood without asking one private job to become every trip at once.</p>
-          <h2 id="choose-one-primary-mood">Choose one primary mood</h2>
-          <p>Start by naming the main feeling of the album: coastal calm, old city walk, island resort, mountain trail, rainy city break, market morning, or postcard journey. A precise mood helps every generated image feel like part of the same route.</p>
-          <p>The primary mood should be specific enough that you could reject a wrong image quickly. If the brief says "quiet harbor morning," a neon nightlife frame is clearly off-route. If the brief only says "travel vibe," almost anything can pass, which makes the final gallery harder to judge.</p>
+          <p>Fan-scene references work best when they behave like a compass. They should point Aidreamcapes toward light, texture, season, and album mood without asking one private job to become every idea at once.</p>
+          <h2 id="choose-one-primary-scene">Choose one primary scene</h2>
+          <p>Start by naming the main feeling of the album: supporter energy, holiday warmth, quiet card set, table keepsake, backstage moment, or a small celebration. A precise mood helps every generated image feel like part of the same gallery.</p>
+          <p>The primary mood should be specific enough that you could reject a wrong image quickly. If the brief says "quiet table morning," a loud party frame is clearly off-scene. If the brief only says "fan vibe," almost anything can pass, which makes the final gallery harder to judge.</p>
           <h2 id="use-observable-reference-details">Use observable reference details</h2>
-          <p>Useful references describe what the viewer can see: warm sea light, stone streets, shaded cafes, rooftop skyline, pine trail, linen outfit, soft rain, or golden hour. Avoid vague instructions that sound good but do not tell the scene what to show.</p>
-          <p>Good reference notes often combine one place texture, one light direction, and one wardrobe signal. For example, a shaded cafe lane, late-afternoon side light, and relaxed neutral layers give the album a practical direction without forcing every frame to copy the same background.</p>
+          <p>Useful references describe what the viewer can see: warm lamp light, table settings, backstage color, cardigan layers, card-friendly spacing, soft party glow, or golden-hour warmth. Avoid vague instructions that sound good but do not tell the scene what to show.</p>
+          <p>Good reference notes often combine one texture, one light direction, and one wardrobe signal. For example, a warm table surface, late-afternoon side light, and relaxed neutral layers give the album a practical direction without forcing every frame to copy the same background.</p>
           <h2 id="limit-the-number-of-references">Limit the number of references</h2>
-          <p>Two or three focused references are usually easier to follow than a large mixed board. If one reference is for lighting, one for route texture, and one for wardrobe tone, the package has a cleaner brief.</p>
-          <h2 id="separate-conflicting-routes">Separate conflicting routes</h2>
-          <p>A desert road set and a rain-soaked city album can both be beautiful, but they should not fight inside the same generation request. Split them into separate private albums so credits support a clear outcome.</p>
+          <p>Two or three focused references are usually easier to follow than a large mixed board. If one reference is for lighting, one for scene texture, and one for wardrobe tone, the package has a cleaner brief.</p>
+          <h2 id="separate-conflicting-scenes">Separate conflicting scenes</h2>
+          <p>A watch-party set and a formal holiday album can both be beautiful, but they should not fight inside the same generation request. Split them into separate private albums so credits support a clear outcome.</p>
           <h2 id="turn-references-into-a-short-brief">Turn references into a short brief</h2>
-          <p>A strong brief can be one sentence: "Warm coastal portraits with relaxed linen styling, soft sunset light, and a private resort balcony mood." That gives the workflow a destination, visual texture, and wardrobe direction.</p>
+          <p>A strong brief can be one sentence: "Warm fan-scene portraits with relaxed styling, soft evening light, and a private keepsake mood." That gives the workflow a scene, visual texture, and wardrobe direction.</p>
           <h2 id="reference-quality-check">Reference quality check</h2>
-          <table><thead><tr><th>Reference type</th><th>Useful detail</th></tr></thead><tbody><tr><td>Light</td><td>Golden hour, soft overcast, shaded cafe, bright coast.</td></tr><tr><td>Place texture</td><td>Stone streets, balcony, boardwalk, trail overlook, market lane.</td></tr><tr><td>Wardrobe tone</td><td>Neutral layers, resort linen, structured city jacket, outdoor shell.</td></tr><tr><td>Album use</td><td>Profile, keepsake, postcard crop, family route, creator story.</td></tr></tbody></table>
+          <table><thead><tr><th>Reference type</th><th>Useful detail</th></tr></thead><tbody><tr><td>Light</td><td>Golden hour, soft overcast, warm table light, bright celebration glow.</td></tr><tr><td>Scene texture</td><td>Card stock, backdrop rail, table setting, market color, party space.</td></tr><tr><td>Wardrobe tone</td><td>Neutral layers, card-friendly linen, structured jacket, soft party shell.</td></tr><tr><td>Album use</td><td>Profile, keepsake, card crop, family set, creator story.</td></tr></tbody></table>
           <h2 id="bad-references-to-leave-out">Bad references to leave out</h2>
-          <p>Leave out references that conflict with the route. A snowy street, tropical beach, desert road, and luxury hotel lobby can all be attractive, but together they create a confused request. Also avoid references where the subject is hidden, the lighting is too stylized to read, or the main value is a celebrity pose rather than observable place details.</p>
-          <p>When a reference is mostly about mood, translate it into visible words. Instead of "make it cinematic," name the thing that creates the mood: dusk light, wet pavement, quiet balcony, market color, soft hotel window light, or a clean horizon.</p>
+          <p>Leave out references that conflict with the scene. A holiday card, fan-scene wall, party backdrop, and family table can all be attractive, but together they create a confused request. Also avoid references where the subject is hidden, the lighting is too stylized to read, or the main value is a celebrity pose rather than observable scene details.</p>
+          <p>When a reference is mostly about mood, translate it into visible words. Instead of "make it cinematic," name the thing that creates the mood: warm light, soft shadow, quiet backdrop, table color, glow from a window, or a clean frame edge.</p>
           <h2 id="make-references-work-together">Make references work together</h2>
-          <p>Think of each reference as having a job. One image can define light, another can define place texture, and a third can suggest wardrobe tone. If two references are doing the same job, keep the clearer one. If a reference introduces a new season, city, color palette, or camera mood, ask whether it helps the route or simply adds noise.</p>
-          <p>A focused route board often feels quieter than a social media moodboard. That is a strength. Aidreamcapes can follow a small set of visible cues more easily than a collage of beautiful but conflicting travel ideas.</p>
-          <h2 id="destination-reference-faq">Destination reference FAQ</h2>
+          <p>Think of each reference as having a job. One image can define light, another can define scene texture, and a third can suggest wardrobe tone. If two references are doing the same job, keep the clearer one. If a reference introduces a new season, color palette, or camera mood, ask whether it helps the album or simply adds noise.</p>
+          <p>A focused reference board often feels quieter than a social media moodboard. That is a strength. Aidreamcapes can follow a small set of visible cues more easily than a collage of beautiful but conflicting ideas.</p>
+          <h2 id="reference-faq">Reference FAQ</h2>
           <h3 id="can-i-use-a-moodboard">Can I use a moodboard?</h3>
           <p>Yes, but keep it small. Two or three references with different jobs are stronger than a large board where every image competes for attention.</p>
           <h3 id="should-references-show-people">Should references show people?</h3>
-          <p>They can, but they do not have to. A place, color palette, lighting condition, or route texture can be more useful than another person's pose, especially when your own source portraits already carry identity.</p>
-          <h3 id="how-specific-should-the-brief-be">How specific should the route brief be?</h3>
-          <p>Specific enough to guide the album, but short enough to stay readable. One route, one lighting direction, one wardrobe tone, and one intended use are usually enough for a first request.</p>
-          <p>Good mood references make the final gallery feel planned. They give the route a visual language before the first image is generated.</p>
+          <p>They can, but they do not have to. A scene, color palette, lighting condition, or table texture can be more useful than another person's pose, especially when your own source portraits already carry identity.</p>
+          <h3 id="how-specific-should-the-brief-be">How specific should the brief be?</h3>
+          <p>Specific enough to guide the album, but short enough to stay readable. One scene, one lighting direction, one wardrobe tone, and one intended use are usually enough for a first request.</p>
+          <p>Good references make the final gallery feel planned. They give the album a visual language before the first image is generated.</p>
         `
       },
       {
-        id: "site_aidreamcapes_blog_route_credit",
-        slug: "/blog/route-album-credit-planning",
-        pageTitle: "Route album credit planning",
-        title: "Route albums and credits: planning a private Aidreamcapes set",
+        id: "site_aidreamcapes_blog_private_album_credit",
+        slug: "/blog/private-album-credit-planning",
+        pageTitle: "Private album credit planning",
+        title: "How to plan private album credits for Aidreamcapes",
         summary:
-          "Plan a private Aidreamcapes route album by matching destination scope, output needs, review time, and visible credit cost before generation starts.",
+          "Plan output count, review time, visible credit cost, and how much iteration you want before starting a fan or holiday album.",
         author: "Aidreamcapes editorial team",
         publishedAt: "2026-07-28",
         updatedAt: "2026-07-28",
         readMinutes: "6",
-        imageUrl: "/assets/sites/site_aidreamcapes/creative-packs/shared-route-albums-cover.webp",
-        imageAlt: "Aidreamcapes shared route album cover",
-        tags: "Route albums|Credits|Private gallery|Travel workflow",
-        primaryCta: "Start a travel set",
+        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/thanksgiving-memory-sets.webp",
+        imageAlt: "Aidreamcapes private album credit cover",
+        tags: "Private albums|Credits|Fan scenes|Holiday planning",
+        primaryCta: "Plan credits",
         primaryHref: "/login",
-        secondaryCta: "Travel Packages",
+        secondaryCta: "Browse albums",
         secondaryHref: "/collections",
-        seoTitle: "Aidreamcapes route albums and credit planning guide",
+        seoTitle: "Aidreamcapes private album credits and planning guide",
         seoDescription:
-          "Plan Aidreamcapes route albums by destination scope, output count, visible credits, private gallery review, and download needs.",
+          "Plan Aidreamcapes album credits by output count, visible cost, private gallery review, and whether the next request is a fan scene or holiday set.",
         seoKeywords:
-          "route album credits, AI travel portrait pricing, Aidreamcapes private gallery, destination album planning",
+          "private album credits, fan-scene planning, holiday album pricing, Aidreamcapes",
         body: html`
-          <p>A route album is more than a single travel portrait. It is a small visual story, so the best credit plan starts with scope: how many scenes you need, how experimental the destination mood is, and how much review you want before sharing favorites.</p>
+          <p>A private album is more than a single portrait. It is a small visual story, so the best credit plan starts with scope: how many scenes you need, how experimental the theme is, and how much review you want before sharing favorites.</p>
           <h2 id="define-the-album-scope">Define the album scope</h2>
-          <p>Decide whether you need one polished profile set, a wider route story, or a keepsake album with multiple crops. A focused city profile may need fewer outputs than a route album that covers arrival, walk, overlook, cafe, and postcard frames.</p>
-          <p>Scope also affects how you review the results. A profile refresh can be judged by one or two strong hero images. A route album needs continuity: similar light, believable wardrobe, and enough variety that the gallery feels like a short trip rather than repeated versions of the same frame.</p>
+          <p>Decide whether you need one polished profile set, a wider fan-scene story, or a keepsake album with multiple crops. A focused profile refresh may need fewer outputs than a theme album that covers arrival, greeting, pose, close-up, and card-ready frames.</p>
+          <p>Scope also affects how you review the results. A profile refresh can be judged by one or two strong hero images. A theme album needs continuity: similar light, believable wardrobe, and enough variety that the gallery feels like a short story rather than repeated versions of the same frame.</p>
           <h2 id="review-credit-cost-before-starting">Review credit cost before starting</h2>
-          <p>Aidreamcapes shows credit cost before a private generation request begins. Use that step to decide whether the album should be a first test, a full route set, or a follow-up after improving source portraits and references.</p>
+          <p>Aidreamcapes shows credit cost before a private generation request begins. Use that step to decide whether the album should be a first test, a full theme set, or a follow-up after improving source portraits and references.</p>
           <h2 id="budget-for-iteration">Budget for iteration</h2>
-          <p>Travel mood can be sensitive to lighting, wardrobe, and route details. If you are testing a new destination style, leave room for a second pass. The first gallery can teach you which source photos, outfit notes, or reference details to refine.</p>
+          <p>Theme mood can be sensitive to lighting, wardrobe, and scene details. If you are testing a new look, leave room for a second pass. The first gallery can teach you which source photos, outfit notes, or reference details to refine.</p>
           <h2 id="keep-private-review-in-the-plan">Keep private review in the plan</h2>
           <p>Finished images return to the account gallery, where you can compare consistency before downloading. Review time matters because some frames may become profile images, while others belong in a private keepsake album.</p>
-          <h2 id="avoid-spending-credits-on-mixed-routes">Avoid spending credits on mixed routes</h2>
-          <p>The easiest way to waste a route album is to ask for several trips at once. A cafe morning, mountain overlook, marina walk, and rainy city night can all belong in the larger travel imagination, but they compete when one request needs a coherent gallery. Pick the route that best fits the source photos and save the other ideas for later.</p>
-          <p>This does not make the album less creative. It makes the review clearer. When the route is focused, you can judge whether identity, lighting, clothing, and scene texture improved together instead of trying to untangle too many changes at once.</p>
+          <h2 id="avoid-spending-credits-on-mixed-albums">Avoid spending credits on mixed albums</h2>
+          <p>The easiest way to waste a private album is to ask for several moods at once. A fan-scene morning, holiday table, spotlight portrait, and party night can all belong in the larger imagination, but they compete when one request needs a coherent gallery. Pick the theme that best fits the source photos and save the other ideas for later.</p>
+          <p>This does not make the album less creative. It makes the review clearer. When the theme is focused, you can judge whether identity, lighting, clothing, and scene texture improved together instead of trying to untangle too many changes at once.</p>
           <h2 id="match-album-size-to-use">Match album size to the use</h2>
-          <table><thead><tr><th>Album use</th><th>Credit planning approach</th><th>Private review focus</th></tr></thead><tbody><tr><td>Profile refresh</td><td>Choose a tighter set with one route mood.</td><td>Face consistency, crop, and clean background detail.</td></tr><tr><td>Route story</td><td>Plan for several scenes in the same destination language.</td><td>Whether the album feels connected from image to image.</td></tr><tr><td>Gift or keepsake</td><td>Leave room for a second pass if the mood is personal.</td><td>Expression, warmth, and whether the image feels believable.</td></tr><tr><td>Creator content</td><td>Budget for crop variety and a few stronger scene options.</td><td>Which images can work as headers, posts, or thumbnails.</td></tr></tbody></table>
-          <h2 id="choose-the-next-route">Choose the next route from what worked</h2>
-          <p>If coastal light fits the subject well, build a second album around resort, island, or harbor scenes. If city texture works better, try old quarter, market morning, rooftop, or rainy street sets. Let the first private gallery guide the next credit spend.</p>
+          <table><thead><tr><th>Album use</th><th>Credit planning approach</th><th>Private review focus</th></tr></thead><tbody><tr><td>Profile refresh</td><td>Choose a tighter set with one theme.</td><td>Face consistency, crop, and clean background detail.</td></tr><tr><td>Theme story</td><td>Plan for several scenes in the same visual language.</td><td>Whether the album feels connected from image to image.</td></tr><tr><td>Gift or keepsake</td><td>Leave room for a second pass if the mood is personal.</td><td>Expression, warmth, and whether the image feels believable.</td></tr><tr><td>Creator content</td><td>Budget for crop variety and a few stronger scene options.</td><td>Which images can work as headers, posts, or thumbnails.</td></tr></tbody></table>
+          <h2 id="choose-the-next-album">Choose the next album from what worked</h2>
+          <p>If holiday light fits the subject well, build a second album around warm cards, table scenes, or winter keepsakes. If fan-scene texture works better, try supporter walls, backstage moments, or watch-party sets. Let the first private gallery guide the next credit spend.</p>
           <h2 id="credit-planning-checklist">Credit planning checklist</h2>
-          <ul><li>Name the route mood before choosing the package.</li><li>Match source-photo quality to the ambition of the album.</li><li>Check credit cost before generation starts.</li><li>Save room for a second pass when testing a new destination style.</li><li>Use the private gallery to decide what to download and what to improve.</li></ul>
-          <h2 id="route-credit-faq">Route credit FAQ</h2>
+          <ul><li>Name the album mood before choosing the package.</li><li>Match source-photo quality to the ambition of the album.</li><li>Check credit cost before generation starts.</li><li>Save room for a second pass when testing a new look.</li><li>Use the private gallery to decide what to download and what to improve.</li></ul>
+          <h2 id="album-credit-faq">Album credit FAQ</h2>
           <h3 id="should-i-run-one-large-album-first">Should I run one large album first?</h3>
-          <p>Run a larger album when the route direction is already clear. If you are testing a new destination mood, a focused first pass can show whether the source photos and references are working before you spend more credits.</p>
+          <p>Run a larger album when the direction is already clear. If you are testing a new look, a focused first pass can show whether the source photos and references are working before you spend more credits.</p>
           <h3 id="what-counts-as-a-good-first-pass">What counts as a good first pass?</h3>
-          <p>A good first pass does not need every image to be final. It should show stable identity, a believable route mood, and enough usable frames to decide whether the next request should expand, repeat, or change direction.</p>
-          <h3 id="how-should-i-compare-two-route-ideas">How should I compare two route ideas?</h3>
-          <p>Compare one variable at a time. If both source photos and route mood change between requests, it becomes harder to know what improved the gallery.</p>
-          <p>Credits are easiest to manage when each request has a clear purpose. Plan the route, review the cost, then let the private gallery show you what the next album should become.</p>
+          <p>A good first pass does not need every image to be final. It should show stable identity, a believable mood, and enough usable frames to decide whether the next request should expand, repeat, or change direction.</p>
+          <h3 id="how-should-i-compare-two-ideas">How should I compare two ideas?</h3>
+          <p>Compare one variable at a time. If both source photos and album mood change between requests, it becomes harder to know what improved the gallery.</p>
+          <p>Credits are easiest to manage when each request has a clear purpose. Plan the album, review the cost, then let the private gallery show you what the next set should become.</p>
         `
       },
       ...aidreamcapesThemeArticles,
@@ -1152,10 +1326,14 @@ function ensureSeoPages(settings, site) {
     robots: { index: true, follow: true },
     pages: {}
   };
-  settings.seo.pages ??= {};
+  const previousPages = settings.seo.pages ?? {};
+  const nextPages = {};
+  for (const page of site.pages.filter((item) => item.slug !== "/blog" && !item.slug.startsWith("/blog/"))) {
+    if (previousPages[page.id]) nextPages[page.id] = previousPages[page.id];
+  }
   for (const page of site.pages.filter((item) => item.slug === "/blog" || item.slug.startsWith("/blog/"))) {
     const pageSeo = page.publishedJson.seo ?? {};
-    settings.seo.pages[page.id] = {
+    nextPages[page.id] = {
       title: pageSeo.title ?? page.title,
       description: pageSeo.description ?? "",
       keywords: pageSeo.keywords ?? "",
@@ -1165,6 +1343,7 @@ function ensureSeoPages(settings, site) {
       follow: pageSeo.robots?.follow ?? true
     };
   }
+  settings.seo.pages = nextPages;
 }
 
 function makeBlogHomeJson(config, existingPage) {
@@ -1192,6 +1371,7 @@ function makeBlogHomeJson(config, existingPage) {
       title: config.homeSeo.title,
       description: config.homeSeo.description,
       keywords: config.homeSeo.keywords,
+      ogImage: config.homeSeo.ogImage ?? config.articles[0]?.imageUrl ?? "",
       canonicalPath: "/blog",
       robots: { index: true, follow: true }
     }
@@ -1201,6 +1381,8 @@ function makeBlogHomeJson(config, existingPage) {
 function makeArticleJson(config, article, existingPage, sourceArticlePage) {
   const sourceJson = existingPage?.publishedJson ?? sourceArticlePage?.publishedJson ?? {};
   const sections = clone(sourceJson.sections ?? {});
+  const targetHref = article.targetHref ?? article.secondaryHref ?? article.primaryHref ?? "/collections";
+  const targetLabel = article.targetLabel ?? article.secondaryCta ?? article.primaryCta ?? "Open related page";
   sections.blog_detail_1 = section("blog_article", {
     eyebrow: article.slug === config.articles[0].slug ? config.guideType : "Guide",
     title: article.title,
@@ -1217,15 +1399,14 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     primaryHref: article.primaryHref,
     secondaryCta: article.secondaryCta,
     secondaryHref: article.secondaryHref,
+    targetLabel,
+    targetHref,
     body: article.body
   });
-  sections.blog_list_1 = section("blog_list", {
-    title: config.relatedTitle,
-    headingLevel: "h2",
-    body: config.relatedBody,
-    guideType: config.guideType
-  });
-  const sectionsOrder = ["blog_detail_1", "packages_1", "packages_strip_1", "blog_list_1", "conversion_1"].filter((id) => sections[id]);
+  for (const sectionId of ["packages_1", "packages_strip_1", "blog_list_1", "conversion_1"]) {
+    delete sections[sectionId];
+  }
+  const sectionsOrder = ["blog_detail_1"];
   return {
     pageType: "article",
     version: sourceJson.version ?? 1,
@@ -1282,6 +1463,69 @@ function syncSiteThemes(state, site) {
   }
 }
 
+function removeStaleBlogArticles(site, expectedArticleSlugs) {
+  site.pages = site.pages.filter((page) => {
+    if (!page.slug.startsWith("/blog/")) return true;
+    return expectedArticleSlugs.has(page.slug);
+  });
+}
+
+function readConstStringArray(source, constName) {
+  const match = source.match(new RegExp(`const ${constName} = \\[([\\s\\S]*?)\\];`));
+  if (!match) throw new Error(`missing_${constName}`);
+  return Array.from(match[1].matchAll(/"([^"]+)"/g), (item) => item[1]);
+}
+
+function formatConstStringArray(constName, values) {
+  return `const ${constName} = [\n${values.map((value) => `  ${JSON.stringify(value)}`).join(",\n")}\n];`;
+}
+
+function replaceConstStringArray(source, constName, values) {
+  return source.replace(
+    new RegExp(`const ${constName} = \\[[\\s\\S]*?\\];`),
+    formatConstStringArray(constName, values)
+  );
+}
+
+function fallbackPathsForSite(site, existingPaths) {
+  const blogPaths = site.pages
+    .filter((page) => page.slug === "/blog" || page.slug.startsWith("/blog/"))
+    .map((page) => page.slug);
+  const next = [
+    ...existingPaths.filter((item) => !item.startsWith("/blog")),
+    ...blogPaths
+  ];
+  return Array.from(new Set(next));
+}
+
+function syncSeoFallbacks(state) {
+  const seoIndexingPath = path.join(process.cwd(), "src/lib/seo-indexing.ts");
+  const source = fs.readFileSync(seoIndexingPath, "utf8");
+  const dreamshootSite = state.sites.find((site) => site.id === "site_dreamshoot" || site.slug === "mydreamshoots");
+  const aidreamcapesSite = state.sites.find((site) => site.id === "site_aidreamcapes" || site.slug === "aidreamcapes");
+  if (!dreamshootSite || !aidreamcapesSite) return { updated: false };
+
+  const dreamshootFallback = fallbackPathsForSite(
+    dreamshootSite,
+    readConstStringArray(source, "FALLBACK_INDEXABLE_PATHS")
+  );
+  const aidreamcapesFallback = fallbackPathsForSite(
+    aidreamcapesSite,
+    readConstStringArray(source, "AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS")
+  );
+  const next = replaceConstStringArray(
+    replaceConstStringArray(source, "FALLBACK_INDEXABLE_PATHS", dreamshootFallback),
+    "AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS",
+    aidreamcapesFallback
+  );
+  if (next !== source) fs.writeFileSync(seoIndexingPath, next);
+  return {
+    updated: next !== source,
+    mydreamshoots: dreamshootFallback.length,
+    aidreamcapes: aidreamcapesFallback.length
+  };
+}
+
 function syncSite(state, config) {
   const site = state.sites.find((item) => item.id === config.siteId || item.slug === config.slug);
   if (!site) throw new Error(`Missing site ${config.slug}`);
@@ -1324,6 +1568,7 @@ function syncSite(state, config) {
     });
   }
 
+  removeStaleBlogArticles(site, new Set(config.articles.map((article) => article.slug)));
   ensureSeoPages(site.themeSettings.draftJson, site);
   ensureSeoPages(site.themeSettings.publishedJson, site);
   syncSiteThemes(state, site);
@@ -1333,9 +1578,11 @@ function syncSite(state, config) {
 const state = sourceState;
 for (const config of siteConfigs) syncSite(state, config);
 fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+const seoFallbacks = syncSeoFallbacks(state);
 
 console.log(JSON.stringify({
   ok: true,
   updatedSites: siteConfigs.map((config) => config.slug),
-  articlesPerSite: Object.fromEntries(siteConfigs.map((config) => [config.slug, config.articles.length]))
+  articlesPerSite: Object.fromEntries(siteConfigs.map((config) => [config.slug, config.articles.length])),
+  seoFallbacks
 }, null, 2));

@@ -2,8 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Download, ExternalLink, ImageIcon, PencilLine, Plus, Save, Search, Trash2, UploadCloud } from "lucide-react";
+import { Download, ExternalLink, ImageIcon, PencilLine, Plus, RefreshCcw, Save, Search, ShieldCheck, Trash2, UploadCloud } from "lucide-react";
 import { downloadCsv } from "@/components/admin/export-utils";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import type { MediaAsset, Site } from "@/lib/types";
 
@@ -76,6 +77,7 @@ export function ThemeMediaPanel({
   const [message, setMessage] = useState("Theme media is separated from customer private uploads and feeds the designer resource selector.");
   const [submitting, setSubmitting] = useState(false);
   const [loadingPage, setLoadingPage] = useState(false);
+  const [watermarking, setWatermarking] = useState(false);
   const didMountFilters = useRef(false);
   const editing = Boolean(editingId);
 
@@ -231,6 +233,38 @@ export function ThemeMediaPanel({
     setMessage(`已导出 ${filtered.length} 条站点素材记录。`);
   }
 
+  async function refreshPublicWatermarks() {
+    setWatermarking(true);
+    setMessage("正在刷新当前站点公共展示素材水印，客户上传和用户生成结果不会被处理。");
+    try {
+      const response = await fetch(`/api/sites/${site.id}/admin/media-watermark`, {
+        method: "POST",
+        headers: siteAdminJsonHeaders(site.id),
+        body: JSON.stringify({ dryRun: false })
+      });
+      const result = (await response.json().catch(() => ({}))) as {
+        error?: string;
+        discovered?: number;
+        processed?: number;
+        changed?: number;
+        skipped?: number;
+        failures?: Array<{ filePath: string; error: string }>;
+        text?: string;
+      };
+      if (!response.ok && !result.processed) {
+        setMessage(`展示水印刷新失败：${result.error ?? "unknown error"}`);
+        return;
+      }
+      const failures = result.failures?.length ?? 0;
+      setMessage(
+        `展示水印刷新完成：${result.text ?? "site domain"}，发现 ${result.discovered ?? 0} 个，处理 ${result.processed ?? 0} 个，更新 ${result.changed ?? 0} 个，跳过 ${result.skipped ?? 0} 个，失败 ${failures} 个。`
+      );
+      router.refresh();
+    } finally {
+      setWatermarking(false);
+    }
+  }
+
   const activeAsset = editingId ? editingDraft ?? draft : draft;
   const activePreviewUrl = previewFor(site, activeAsset);
 
@@ -291,6 +325,15 @@ export function ThemeMediaPanel({
                 <Download className="h-3.5 w-3.5" strokeWidth={1.8} />
                 导出素材
               </button>
+              <button
+                className="input_btn inline-flex h-[30px] items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={watermarking || submitting}
+                onClick={refreshPublicWatermarks}
+                type="button"
+              >
+                <RefreshCcw className={`h-3.5 w-3.5 ${watermarking ? "animate-spin" : ""}`} strokeWidth={1.8} />
+                {watermarking ? "刷新中" : "刷新展示水印"}
+              </button>
             </div>
           </div>
           <div className="mt-2 flex flex-wrap gap-2 text-[12px] text-[#666]">
@@ -298,6 +341,10 @@ export function ThemeMediaPanel({
             <span className="tag_gray">装修素材 {usageCounts?.theme ?? items.filter((asset) => asset.usage === "theme").length}</span>
             <span className="tag_gray">封面 {usageCounts?.pack_cover ?? items.filter((asset) => asset.usage === "pack_cover").length}</span>
             <span className="tag_gray">外链 {sourceCounts?.external_url ?? items.filter((asset) => asset.sourceType === "external_url").length}</span>
+            <span className="tag_gray inline-flex items-center gap-1">
+              <ShieldCheck className="h-3 w-3" strokeWidth={1.8} />
+              展示资源水印
+            </span>
           </div>
         </div>
       </div>

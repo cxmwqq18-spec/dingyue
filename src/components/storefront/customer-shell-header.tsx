@@ -173,16 +173,17 @@ export function CustomerShellHeader({
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
   const logoAlt = isSpanishXby
     ? isAidreamcapes
-      ? `${readableLogoText} logo para retratos de viaje con IA y galerias privadas`
+      ? `${readableLogoText} logo para albumes privados de fans y recuerdos festivos`
       : `${readableLogoText} logo para paquetes de fotos con IA y galerias privadas`
     : isAidreamcapes
-      ? "Aidreamcapes logo for AI travel portraits and private destination galleries"
+      ? "Aidreamcapes logo for private fan-scene and holiday photo albums"
       : isMyDreamShoots
         ? "MyDreamShoots heart camera logo for AI photo packages and private galleries"
         : `${readableLogoText} logo`;
   const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks, creativePackCategories);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
-  const activePackageGroups = dynamicPackageGroups.length ? dynamicPackageGroups : fallbackPackageGroups;
+  const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
+  const activePackageGroups = hasCatalogData ? dynamicPackageGroups : fallbackPackageGroups;
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const activeToolBlocks = getToolBlocksForMenu(menuSite, toolMenuItems);
   const packagePrefetchPaths = Array.from(new Set([
@@ -204,9 +205,9 @@ export function CustomerShellHeader({
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
           {isSpanishXby
             ? isAidreamcapes
-              ? "Crea retratos de viaje con IA desde tus fotos cotidianas."
+              ? "Crea albumes privados de fans y recuerdos festivos desde fotos aprobadas."
               : "Crea sets privados de fotos con IA desde selfies cotidianos."
-            : isAidreamcapes ? "Create AI travel portraits from everyday uploads." : "Create private AI photo sets from everyday selfies."}
+            : isAidreamcapes ? "Create private fan-scene and holiday albums from approved photos." : "Create private AI photo sets from everyday selfies."}
         </p>
         <div className="flex min-h-[72px] items-center justify-between gap-5">
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
@@ -224,14 +225,14 @@ export function CustomerShellHeader({
           <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Paquetes de viaje" : "Ver paquetes" : isAidreamcapes ? "Travel Packages" : "Browse packages"}
+              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
               <PackageMegaPanel
                 basePath={basePath}
                 groups={activePackageGroups}
-                title={isSpanishXby ? isAidreamcapes ? "Estudios de rutas de viaje" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Travel route studios" : "AI photo package studios"}
+                title={isSpanishXby ? isAidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Occasion album studios" : "AI photo package studios"}
               />
             </ClickMegaMenu>
             <ClickMegaMenu
@@ -252,7 +253,7 @@ export function CustomerShellHeader({
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`}>
+            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`} prefetch>
               {isSpanishXby ? "Espacio privado" : "Workspace"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>
@@ -264,7 +265,7 @@ export function CustomerShellHeader({
           </nav>
 
           <div className="flex min-w-0 items-center gap-2">
-            <StorefrontInstantLink className={`hidden min-w-0 items-center gap-3 rounded-full border px-4 py-2 text-sm leading-tight md:inline-flex ${dark ? "border-white/55 bg-transparent text-white" : "border-[#dfd3c4] bg-white text-[#171514]"}`} href={`${basePath}/app/create`}>
+            <StorefrontInstantLink className={`hidden min-w-0 items-center gap-3 rounded-full border px-4 py-2 text-sm leading-tight md:inline-flex ${dark ? "border-white/55 bg-transparent text-white" : "border-[#dfd3c4] bg-white text-[#171514]"}`} href={`${basePath}/app/create`} prefetch>
               <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${dark ? "bg-white text-[#171514]" : "bg-[#171514] text-white"}`}>
                 <UserCircle className="h-5 w-5" strokeWidth={1.8} />
               </span>

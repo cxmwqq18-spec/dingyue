@@ -269,8 +269,8 @@ function storefrontLaunchChecklistSeo(
   return {
     title: "Professional AI Photo Generator Online - MyDreamShoots",
     description:
-      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
-    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
+      "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.",
+    keywords: "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator"
   };
 }
 
@@ -284,12 +284,12 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
         description: "Learn how Aidreamcapes turns private uploads into cinematic portraits, visible credit workflows, and customer-only galleries."
       },
       "/tools": {
-        title: "Aidreamcapes AI Tools - route portraits and scenic travel builders",
-        description: "Explore Aidreamcapes tools for route portraits, coastal light scenes, alpine trail frames, old quarter walks, route moodboards, and private travel gallery delivery."
+        title: "Aidreamcapes AI Tools - fan-scene and holiday album builders",
+        description: "Explore Aidreamcapes tools for fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas group albums, Thanksgiving keepsakes, Halloween party portraits, and private gallery delivery."
       },
       "/help": {
         title: "Aidreamcapes FAQ",
-        description: "Find answers about source photos, route portrait packages, credits, private galleries, delivery, privacy, and support.",
+        description: "Find answers about source photos, fan-scene albums, holiday memory sets, credits, private galleries, delivery, privacy, and support.",
         canonicalPath: "/faq"
       },
       "/terms": {

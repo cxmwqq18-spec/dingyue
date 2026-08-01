@@ -10,6 +10,7 @@ export const auditToneOptions: Array<{ value: "" | AuditTone; label: string }> =
 
 const auditEventLabels: Record<string, string> = {
   credits_adjusted: "客户积分已调整",
+  generation_job_terminated: "生成任务已终止",
   internal_theme_package_installed: "内置装修包已安装",
   order_failed: "订单支付失败",
   order_fulfilled: "订单已履约",
@@ -52,6 +53,7 @@ const auditEventLabels: Record<string, string> = {
 
 const auditObjectLabels: Record<string, string> = {
   customer: "客户",
+  generation_job: "生成任务",
   platform_ai_provider: "平台 AI 供应商",
   platform_cloudflare_account: "平台 Cloudflare 账号",
   platform_email_settings: "平台邮件配置",

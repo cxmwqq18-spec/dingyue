@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { publicSiteUrlFromParts } from "@/lib/domain-routing";
+import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
+import {
+  aidreamcapesCategoryUseCaseProfileForSlug,
+  mydreamshootsCategoryUseCaseProfileForSlug,
+  type PhotoPackageUseCaseProfile
+} from "@/lib/photo-package-use-case-profiles";
 import { isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type SeoDirectoryKind = "collection" | "tool";
@@ -189,19 +195,19 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
 
 export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/workflow": {
-    title: "How Aidreamcapes works - private AI travel portrait workflow",
+    title: "How Aidreamcapes works - private fan-scene and holiday albums",
     description:
-      "Learn how Aidreamcapes customers upload source photos, choose travel portrait routes, review visible credits, generate private results, and download finished galleries.",
-    keywords: "Aidreamcapes workflow, AI travel portrait workflow, private destination portraits, AI travel gallery credits",
+      "Learn how Aidreamcapes customers upload approved source photos, choose fan-scene or holiday album directions, review visible credits, generate private results, and download finished galleries.",
+    keywords: "Aidreamcapes workflow, fan-scene photo albums, game-day group portraits, holiday memory albums, private AI photo credits",
     canonicalPath: "/workflow",
     index: true,
     follow: true
   },
   "/about-us": {
-    title: "About Aidreamcapes",
+    title: "About Aidreamcapes private fan-scene and holiday albums",
     description:
-      "Learn about Aidreamcapes, a private AI travel portrait workspace for source photo planning, visible credits, destination scenes, and customer-only gallery delivery.",
-    keywords: "About Aidreamcapes, AI travel portraits, private AI destination gallery, cinematic travel photos, portrait workspace",
+      "Learn about Aidreamcapes, a private AI photo album workspace for fan-scene albums, game-day group portraits, premiere-inspired sets, holiday memories, visible credits, and account-only delivery.",
+    keywords: "About Aidreamcapes, fan-scene photo albums, game-day group portraits, holiday memory albums, private AI photo workspace",
     canonicalPath: "/about-us",
     index: true,
     follow: true
@@ -209,35 +215,35 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
   "/contact-us": {
     title: "Contact Aidreamcapes",
     description:
-      "Contact Aidreamcapes for travel portrait support, source photo guidance, sales questions, billing review, privacy requests, or company address information.",
-    keywords: "Contact Aidreamcapes, Aidreamcapes support, AI travel portrait support, Aidreamcapes sales, private gallery help",
+      "Contact Aidreamcapes for fan-scene album support, holiday memory album guidance, source photo permission questions, billing review, privacy requests, or private gallery help.",
+    keywords: "Contact Aidreamcapes, Aidreamcapes support, fan-scene album support, holiday photo album support, private gallery help",
     canonicalPath: "/contact-us",
     index: true,
     follow: true
   },
   "/faq": {
-    title: "Aidreamcapes FAQ",
+    title: "Aidreamcapes FAQ for fan-scene and holiday photo albums",
     description:
-      "Find practical Aidreamcapes FAQ answers about source photo quality, travel package choice, destination references, credit usage, checkout, refunds, privacy, cookies, and private gallery delivery.",
-    keywords: "Aidreamcapes FAQ, AI travel photo upload questions, destination package FAQ, private travel gallery support",
+      "Find practical Aidreamcapes FAQ answers about approved source photos, fan-scene styling, game-day boundaries, holiday albums, credit usage, checkout, refunds, privacy, and private gallery delivery.",
+    keywords: "Aidreamcapes FAQ, fan-scene photo albums FAQ, holiday memory album help, game-day group portraits, private AI gallery support",
     canonicalPath: "/faq",
     index: true,
     follow: true
   },
   "/creators-circle": {
-    title: "Aidreamcapes Creators Circle - creator travel portrait program",
+    title: "Aidreamcapes Creators Circle - private fan-scene album program",
     description:
-      "Join the Aidreamcapes Creators Circle for AI travel portrait campaigns, private galleries, visible credits, and creator collaboration opportunities.",
-    keywords: "Aidreamcapes creators circle, AI travel creator program, creator portrait campaign, AI portrait affiliate program",
+      "Join the Aidreamcapes Creators Circle for fan-scene photo album campaigns, game-day group portrait ideas, holiday memory sets, private galleries, visible credits, and creator collaboration opportunities.",
+    keywords: "Aidreamcapes creators circle, fan-scene album creator program, holiday memory album campaign, AI portrait affiliate program",
     canonicalPath: "/creators-circle",
     index: true,
     follow: true
   },
   "/partner-registration": {
-    title: "Aidreamcapes Partner Registration - apply for creator collaborations",
+    title: "Aidreamcapes Partner Registration - fan and holiday album collaborations",
     description:
-      "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, and travel portrait collaboration goals.",
-    keywords: "Aidreamcapes partner registration, AI travel portrait partner application, creator collaboration application, AI portrait campaign partner",
+      "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, fan-scene album ideas, and holiday memory album collaboration goals.",
+    keywords: "Aidreamcapes partner registration, fan-scene photo album partner, holiday memory album collaboration, AI portrait campaign partner",
     canonicalPath: "/partner-registration",
     index: true,
     follow: true
@@ -363,10 +369,10 @@ export function getDreamshootPublicSeoPageMetadataForSite(
 
 const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
   "/tools": {
-    title: "Aidreamcapes Studio Tools",
+    title: "Aidreamcapes fan-scene and holiday photo tools",
     description:
-      "Explore Aidreamcapes tools for destination portraits, coastal getaways, island resort scenes, old city walks, mountain trails, and private gallery delivery.",
-    keywords: "Aidreamcapes tools, AI travel portrait tools, destination portrait tool, cinematic travel portrait generator",
+      "Explore Aidreamcapes tools for fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, and private gallery delivery.",
+    keywords: "Aidreamcapes tools, fan-scene album builder, game-day group portrait maker, Christmas group album studio, Halloween party portrait maker",
     canonicalPath: "/tools",
     index: true,
     follow: true
@@ -828,7 +834,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   }
 };
 
-const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
+const aidreamcapesLegacyCollectionDirectory: SeoDirectoryMap = {
   "route-portrait-albums": {
     label: "Route Portrait Albums",
     title: "AI Route Portrait Albums - cinematic travel photos with Aidreamcapes",
@@ -928,11 +934,11 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     h3: ["Magazine-style travel portraits", "Fashion and location direction", "Private editorial gallery workflow"],
     intro: "Editorial Getaways blend fashion-page composition with imagined travel locations, giving customers a polished visual story from simple source photos.",
     details: [
-      "Use this collection for outfit-forward portraits, launch visuals, travel-inspired campaigns, and elevated social images.",
+      "Use this collection for outfit-forward portraits, launch visuals, scenic campaigns, and elevated social images.",
       "Customers can request soft luxury, art-hotel, garden, city, or coastal editorial mood.",
       "Final galleries are private and credit-tracked so each generation fits the site's paid workflow."
     ],
-    useCases: ["Fashion creator visuals", "Editorial profile campaigns", "Travel-inspired launches", "Magazine-style personal albums"],
+    useCases: ["Fashion creator visuals", "Editorial profile campaigns", "Scenic creator launches", "Magazine-style personal albums"],
     workflow: ["Upload clear portraits and outfit references.", "Pick an editorial getaway mood.", "Generate a styled private album.", "Download campaign-ready images."],
     ctaLabel: "Create Editorial Photos",
     ctaHref: "/tools/editorial-getaway"
@@ -965,7 +971,7 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
     intro: "Cinematic Travel turns ordinary uploads into destination-led portraits with a sense of movement, story, and place.",
     details: [
       "Customers can explore old-city streets, desert roads, mountain overlooks, rainy cafes, and coastlines without booking a trip.",
-      "The page explains how source photos, credits, and private delivery work for travel-inspired outputs.",
+      "The page explains how source photos, credits, and private delivery work for scenic outputs.",
       "This category is useful for social profiles, dating apps, creator campaigns, and personal albums."
     ],
     useCases: ["Destination profile images", "Travel creator concepts", "Dream-trip visual stories", "Private scenic portrait albums"],
@@ -1191,36 +1197,246 @@ const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
   }
 };
 
+const aidreamcapesGeneratedCollectionDefs = [
+  ["private-fan-scene-albums", "Private Fan-Scene Albums", "polished private fan-scene albums with meetup mood, supporter-wall styling, and original star-adjacent atmosphere", "fan-scene-album-builder", "Fan-scene albums"],
+  ["backstage-meetup-portraits", "Backstage Meetup Portraits", "backstage-style meetup portraits with soft flash, velvet-rope energy, and private keepsake crops", "backstage-meetup-scene-builder", "Fan-scene portraits"],
+  ["supporter-photo-walls", "Supporter Photo Walls", "creator supporter photo walls, community album frames, and profile-ready fan-scene layouts", "supporter-photo-wall-maker", "Supporter albums"],
+  ["fan-keepsake-card-sets", "Fan Keepsake Card Sets", "giftable fan keepsake cards, warm note scenes, and supporter album crops", "fan-keepsake-card-maker", "Keepsake cards"],
+  ["game-day-group-portraits", "Game-Day Group Portraits", "sports-energy group portraits, watch-party album frames, and supporter scenes without official marks", "game-day-group-portrait-maker", "Game-day portraits"],
+  ["stadium-night-fan-sets", "Stadium Night Fan Sets", "floodlight fan portraits, dramatic supporter scenes, and private game-night album crops", "stadium-night-fan-set-maker", "Stadium fan sets"],
+  ["watch-party-albums", "Watch Party Albums", "lively watch-party portraits, celebration group photos, and private supporter albums", "watch-party-album-builder", "Watch-party albums"],
+  ["premiere-flash-portraits", "Premiere Flash Portraits", "flash-lit formal portraits, polished arrival crops, and private creator-ready images", "premiere-portrait-set-builder", "Premiere portraits"],
+  ["vip-arrival-photo-sets", "VIP Arrival Photo Sets", "original VIP-inspired arrival portraits, refined profile crops, and private evening album images", "vip-arrival-photo-maker", "VIP photo sets"],
+  ["award-night-keepsake-albums", "Award Night Keepsake Albums", "elegant award-night inspired keepsakes, spotlight group images, and formal private album frames", "award-night-album-studio", "Award-night albums"],
+  ["christmas-holiday-albums", "Christmas Holiday Albums", "Christmas album directions for festive group portraits, cozy cards, winter greetings, and private holiday downloads", "christmas-group-album-studio", "Christmas albums"],
+  ["christmas-group-albums", "Christmas Group Albums", "festive group portraits, cozy gathering photos, card covers, and private Christmas album downloads", "christmas-group-album-studio", "Christmas group albums"],
+  ["cozy-card-portrait-sets", "Cozy Card Portrait Sets", "warm card-ready portraits with winter light, simple decor, and album-friendly seasonal crops", "cozy-card-portrait-maker", "Cozy card portraits"],
+  ["winter-fan-greeting-albums", "Winter Fan Greeting Albums", "seasonal supporter greetings, group-card scenes, and private winter fan album images", "winter-fan-greeting-maker", "Winter fan greetings"],
+  ["thanksgiving-table-keepsakes", "Thanksgiving Table Keepsakes", "warm table portraits, gratitude-note scenes, and family-style private keepsake albums", "thanksgiving-keepsake-set-maker", "Thanksgiving keepsakes"],
+  ["gratitude-group-portraits", "Gratitude Group Portraits", "autumn group portraits, gratitude album covers, and private celebration frames", "thanksgiving-keepsake-set-maker", "Gratitude portraits"],
+  ["friendsgiving-memory-sets", "Friendsgiving Memory Sets", "friend-group portraits, host moments, and share-ready private seasonal album images", "friendsgiving-memory-maker", "Friendsgiving sets"],
+  ["halloween-party-portrait-sets", "Halloween Party Portrait Sets", "dramatic party portraits, moody lighting, and original costume-friendly seasonal scenes", "halloween-party-portrait-maker", "Halloween party portraits"],
+  ["costume-cast-photo-albums", "Costume Cast Photo Albums", "original costume-group portraits, cast-wall layouts, and private Halloween album downloads", "costume-cast-album-builder", "Costume cast albums"],
+  ["birthday-fan-moment-sets", "Birthday Fan Moment Sets", "birthday spotlight photos, fan-style greetings, family occasion portraits, and giftable private keepsakes", "birthday-fan-moment-maker", "Birthday fan moments"],
+  ["new-year-countdown-albums", "New Year Countdown Albums", "countdown group portraits, festive party album covers, and polished New Year celebration frames", "new-year-countdown-album-maker", "New Year albums"]
+] as const;
+
+const aidreamcapesGeneratedCollectionDirectory = Object.fromEntries(
+  aidreamcapesGeneratedCollectionDefs.map(([slug, label, description, toolSlug, meta]) => [
+    slug,
+    {
+      label,
+      title: `${label} for private Aidreamcapes galleries`,
+      description: `Create Aidreamcapes ${description} from approved source photos with visible credits, source-photo permission guidance, and account-only gallery delivery.`,
+      keywords: `Aidreamcapes ${label}, ${meta}, private fan-scene albums, holiday memory albums, permission-safe AI photos`,
+      h2: label.toLowerCase(),
+      h3: ["Approved source photos", "Private gallery delivery", "Original occasion styling"],
+      intro: `${label} help customers turn approved source photos into polished private album images while keeping the request original and clear of unlicensed celebrity likenesses, athlete likenesses, official marks, brand logos, trademarks, and protected material.`,
+      details: [
+        `Use this theme for ${description} while keeping source-photo permission and credit cost visible before generation.`,
+        "The page supports cover previews, gallery examples, private downloads, and a focused Aidreamcapes builder for the matching occasion.",
+        "Prompts should describe mood, setting, color, and album intent instead of requesting protected people, official logos, trademarks, or copyrighted characters."
+      ],
+      useCases: [meta, "Private album planning", "Occasion keepsakes", "Download-ready gallery images"],
+      workflow: ["Upload photos you own or have permission to use.", `Choose the ${label} direction.`, "Review credits and protected-material boundaries.", "Download finished images from the private Aidreamcapes gallery."],
+      ctaLabel: `Open ${label}`,
+      ctaHref: `/tools/${toolSlug}`
+    }
+  ])
+) as SeoDirectoryMap;
+
+const aidreamcapesCollectionDirectory: SeoDirectoryMap = {
+  "fan-scene-albums": {
+    label: "Fan-Scene Albums",
+    title: "Fan-scene photo albums for private Aidreamcapes galleries",
+    description: "Create Aidreamcapes fan-scene photo albums with meetup mood, supporter wall styling, private gallery delivery, visible credits, and source-photo permission guidance.",
+    keywords: "Aidreamcapes fan-scene photo albums, private fan-scene album, fan meetup photo album, permission-safe AI photos",
+    h2: "fan-scene photo albums",
+    h3: ["Private supporter scenes", "Approved source-photo workflow", "Original star-adjacent atmosphere"],
+    intro: "Fan-Scene Albums help customers turn approved source portraits into a private album that feels polished, celebratory, and fan-friendly without copying a real celebrity, athlete, public figure, official mark, brand logo, trademark, or protected material.",
+    details: [
+      "Use this category when the goal is a private fan moment: meetup energy, poster-wall styling, creator supporter scenes, and album-ready crops.",
+      "The page keeps the source-photo permission boundary, credit cost, and private delivery flow visible before customers start generation.",
+      "Finished images are intended for personal galleries, private sharing, creator community moments, and giftable keepsakes."
+    ],
+    useCases: ["Private fan-scene albums", "Creator supporter photo walls", "Meetup-style keepsakes", "Spotlight profile crops"],
+    workflow: ["Upload photos you own or have permission to use.", "Choose a fan-scene direction.", "Review the visible credit cost.", "Download results from the private Aidreamcapes gallery."],
+    ctaLabel: "Build a fan-scene album",
+    ctaHref: "/tools/fan-scene-album-builder"
+  },
+  "game-day-group-photos": {
+    label: "Game-Day Group Portraits",
+    title: "Game-day group portraits with private Aidreamcapes album delivery",
+    description: "Create game-day group portraits, supporter scenes, watch-party albums, and arena-inspired photo sets without official team logos, event marks, or real athlete recreation.",
+    keywords: "Aidreamcapes game-day group portraits, sports fan group photos, supporter photo album, arena-inspired AI portraits",
+    h2: "game-day group portraits",
+    h3: ["Supporter group energy", "No official marks", "Private album downloads"],
+    intro: "Game-Day Group Portraits bring sports energy into private group photos while keeping the output original and clear of official team logos, event marks, protected uniforms, and real athlete likeness promises.",
+    details: [
+      "Use group source photos, watch-party references, or color notes to shape a lively supporter set.",
+      "Aidreamcapes shows the credit cost before generation and keeps results attached to the signed-in account.",
+      "The category works for fan groups, fantasy league parties, birthday viewing nights, and private seasonal sports albums."
+    ],
+    useCases: ["Watch-party albums", "Sports fan group photos", "Supporter profile images", "Private celebration galleries"],
+    workflow: ["Upload approved individual or group photos.", "Select a game-day portrait direction.", "Confirm credits and safety boundaries.", "Review and download the private group set."],
+    ctaLabel: "Make game-day portraits",
+    ctaHref: "/tools/game-day-group-portrait-maker"
+  },
+  "premiere-style-portraits": {
+    label: "Premiere-Inspired Portrait Sets",
+    title: "Premiere-inspired photo sets for polished Aidreamcapes portraits",
+    description: "Build premiere-inspired photo sets, flash-lit VIP portrait albums, formal arrival images, and private creator-ready portraits with original styling.",
+    keywords: "Aidreamcapes premiere-inspired photo sets, VIP style portraits, red carpet inspired photos, private creator portrait albums",
+    h2: "premiere-inspired photo sets",
+    h3: ["Flash-lit portrait mood", "Original VIP atmosphere", "Creator-ready private albums"],
+    intro: "Premiere-Inspired Portrait Sets use camera-flash mood, formal styling, and polished arrival energy to create original private portraits rather than imitating real public figures or protected event branding.",
+    details: [
+      "This category fits customers who want a sharper evening look for profile refreshes, invitations, creator announcements, or special events.",
+      "Clear face references and simple wardrobe notes help the set stay cohesive across cover images, profile crops, and gallery frames.",
+      "The finished album is delivered privately with source-photo permission and protected-mark boundaries surfaced in the workflow."
+    ],
+    useCases: ["VIP-style portraits", "Formal event keepsakes", "Creator announcement images", "Premiere-inspired album covers"],
+    workflow: ["Upload approved portraits.", "Pick the premiere-inspired mood.", "Review credit cost and protected-mark guidance.", "Download finished private portraits."],
+    ctaLabel: "Design premiere portraits",
+    ctaHref: "/tools/premiere-portrait-set-builder"
+  },
+  "christmas-group-albums": {
+    label: "Christmas Group Albums",
+    title: "Christmas group albums and festive private photo sets",
+    description: "Create Aidreamcapes Christmas group albums, cozy card portraits, festive party photo walls, and private holiday memory albums from approved source images.",
+    keywords: "Aidreamcapes Christmas group albums, Christmas group photos, holiday memory albums, festive AI photo sets",
+    h2: "Christmas group albums",
+    h3: ["Festive group portraits", "Card-ready album crops", "Private holiday gallery"],
+    intro: "Christmas Group Albums help families, friend groups, teams, and creator communities build warm seasonal portraits from photos they own or have permission to use.",
+    details: [
+      "Use this category for cozy card covers, holiday party walls, winter fan greetings, and group-friendly private albums.",
+      "The workflow avoids official brand logos, trademarks, protected characters, and copied public-figure likenesses.",
+      "Customers can review credit cost before generation and download finished images from their account gallery."
+    ],
+    useCases: ["Christmas group albums", "Holiday card portraits", "Party photo walls", "Winter fan greetings"],
+    workflow: ["Upload approved group photos.", "Choose a Christmas album direction.", "Confirm credits before generation.", "Download festive images privately."],
+    ctaLabel: "Create a Christmas album",
+    ctaHref: "/tools/christmas-group-album-studio"
+  },
+  "thanksgiving-memory-sets": {
+    label: "Thanksgiving Keepsake Sets",
+    title: "Thanksgiving keepsake sets for private Aidreamcapes albums",
+    description: "Create Thanksgiving keepsake sets, Friendsgiving group portraits, gratitude table albums, and warm autumn photo memories with private gallery delivery.",
+    keywords: "Aidreamcapes Thanksgiving keepsake sets, Thanksgiving group portraits, Friendsgiving photo album, holiday memory albums",
+    h2: "Thanksgiving keepsake sets",
+    h3: ["Gratitude table portraits", "Friendsgiving album moments", "Warm private delivery"],
+    intro: "Thanksgiving Keepsake Sets focus on warmth, gathering, and gratitude, turning approved source photos into private album images that feel personal and shareable.",
+    details: [
+      "The category fits family gatherings, Friendsgiving parties, host portraits, and autumn announcement images.",
+      "Aidreamcapes keeps visible credit costs, upload rights, and account-only delivery connected in one flow.",
+      "Requests should stay original and avoid protected logos, official marks, copied public-figure likenesses, and unlicensed material."
+    ],
+    useCases: ["Thanksgiving keepsake albums", "Friendsgiving group portraits", "Autumn host photos", "Family occasion galleries"],
+    workflow: ["Upload photos with permission.", "Choose a Thanksgiving keepsake style.", "Review credit cost.", "Save finished results from the private gallery."],
+    ctaLabel: "Make Thanksgiving keepsakes",
+    ctaHref: "/tools/thanksgiving-keepsake-set-maker"
+  },
+  "halloween-party-portraits": {
+    label: "Halloween Party Portraits",
+    title: "Halloween party portraits and original seasonal photo albums",
+    description: "Create Aidreamcapes Halloween party portraits, dramatic group images, costume-friendly album sets, and private seasonal photos without protected character copying.",
+    keywords: "Aidreamcapes Halloween party portraits, Halloween group photos, costume party AI portraits, seasonal celebration photo albums",
+    h2: "Halloween party portraits",
+    h3: ["Original costume-friendly scenes", "Dramatic party lighting", "Private seasonal galleries"],
+    intro: "Halloween Party Portraits bring moody color and playful seasonal atmosphere to approved photos while avoiding protected characters, branded costumes, logos, and copied public-figure likenesses.",
+    details: [
+      "Use this category for group party images, cast-style portraits, spooky fan-card looks, and seasonal album covers.",
+      "The safest prompts describe mood, colors, lighting, and original costume ideas instead of requesting protected characters or branded props.",
+      "Finished images stay in the customer account for private review and download."
+    ],
+    useCases: ["Halloween party portraits", "Original costume albums", "Spooky fan-card photos", "Seasonal group images"],
+    workflow: ["Upload approved party photos.", "Pick an original Halloween direction.", "Confirm credits and safety notes.", "Download the private portrait set."],
+    ctaLabel: "Shape Halloween portraits",
+    ctaHref: "/tools/halloween-party-portrait-maker"
+  },
+  "seasonal-celebration-photos": {
+    label: "Seasonal Celebration Photos",
+    title: "Seasonal celebration photos for rotating Aidreamcapes occasions",
+    description: "Create seasonal celebration photos for birthdays, New Year groups, family occasions, fan greetings, and holiday memory albums in one private workflow.",
+    keywords: "Aidreamcapes seasonal celebration photos, holiday memory albums, birthday fan moment set, New Year group portraits",
+    h2: "seasonal celebration photos",
+    h3: ["Rotating occasion albums", "Birthday and New Year sets", "Private album continuity"],
+    intro: "Seasonal Celebration Photos give customers one flexible Aidreamcapes category for birthdays, New Year countdowns, family updates, fan greetings, and rotating holiday albums.",
+    details: [
+      "Choose this category when the occasion is personal, time-sensitive, or broader than a single named holiday.",
+      "Source-photo permission, visible credits, protected-mark boundaries, and private account delivery stay part of the same workflow.",
+      "Finished sets can include cover images, group portraits, profile crops, and gallery-ready keepsakes."
+    ],
+    useCases: ["Birthday fan moments", "New Year group albums", "Family occasion portraits", "Seasonal holiday memories"],
+    workflow: ["Upload approved source photos.", "Choose the seasonal occasion.", "Review credits before generation.", "Download finished private images."],
+    ctaLabel: "Start a seasonal album",
+    ctaHref: "/tools/birthday-fan-moment-maker"
+  },
+  ...aidreamcapesGeneratedCollectionDirectory
+};
+
 const aidreamcapesCollectionAliases: Record<string, string> = {
-  adventure: "road-trip-frames",
-  city: "old-quarter-walks",
-  coastal: "coastal-light-sets",
-  costero: "coastal-light-sets",
-  destination: "route-portrait-albums",
-  destino: "route-portrait-albums",
-  postcard: "postcard-story-sets",
-  postal: "postcard-story-sets",
-  "cafe-street-journals": "cafe-street-stories",
-  "destination-portrait-albums": "route-portrait-albums",
-  "coastal-getaways": "coastal-light-sets",
-  "old-city-walks": "old-quarter-walks",
-  "mountain-trails": "alpine-trail-frames",
-  "itinerary-moodboards": "route-moodboards",
-  "postcard-social-sets": "postcard-story-sets",
-  "travel-profile-stories": "solo-traveler-profiles",
-  "lagoon-route-studys": "lagoon-route-studies",
-  nature: "nature-portrait-studio",
-  "city-light": "city-light-night-walks",
-  night: "city-light-night-walks",
-  evening: "evening-route-portraits",
-  boudoir: "boudoir-editorial-portraits",
-  hairstyle: "hairstyle-try-on-stories",
-  headshot: "professional-headshot-studio",
-  headshots: "professional-headshot-studio",
-  milestone: "milestone-postcard-sets",
-  holiday: "holiday-couple-cards",
-  gala: "gala-night-portraits",
-  heritage: "heritage-celebration-portraits"
+  adventure: "game-day-group-photos",
+  "anime-avatar": "halloween-party-portraits",
+  city: "premiere-style-portraits",
+  "christmas": "christmas-group-albums",
+  "christmas-couple": "christmas-group-albums",
+  coastal: "christmas-group-albums",
+  costero: "christmas-group-albums",
+  "creator-portraits": "premiere-style-portraits",
+  cyberpunk: "halloween-party-portraits",
+  destination: "fan-scene-albums",
+  destino: "fan-scene-albums",
+  engagement: "seasonal-celebration-photos",
+  "fan-scenes": "fan-scene-albums",
+  "fashion-editorial": "premiere-style-portraits",
+  "game-day": "game-day-group-photos",
+  "gala-photos": "premiere-style-portraits",
+  halloween: "halloween-party-portraits",
+  mafia: "halloween-party-portraits",
+  "premiere": "premiere-style-portraits",
+  "product-style": "seasonal-celebration-photos",
+  postcard: "seasonal-celebration-photos",
+  postal: "seasonal-celebration-photos",
+  seasonal: "seasonal-celebration-photos",
+  thanksgiving: "thanksgiving-memory-sets",
+  "virtual-try-on": "premiere-style-portraits",
+  "wedding-portraits": "seasonal-celebration-photos",
+  "world-cup-fan-photos": "game-day-group-photos",
+  "cafe-street-journals": "premiere-style-portraits",
+  "cafe-street-stories": "premiere-style-portraits",
+  "destination-portrait-albums": "fan-scene-albums",
+  "route-portrait-albums": "fan-scene-albums",
+  "coastal-getaways": "christmas-group-albums",
+  "coastal-light-sets": "christmas-group-albums",
+  "old-city-walks": "premiere-style-portraits",
+  "old-quarter-walks": "premiere-style-portraits",
+  "mountain-trails": "game-day-group-photos",
+  "road-trip-frames": "game-day-group-photos",
+  "itinerary-moodboards": "seasonal-celebration-photos",
+  "route-moodboards": "seasonal-celebration-photos",
+  "postcard-social-sets": "seasonal-celebration-photos",
+  "postcard-story-sets": "seasonal-celebration-photos",
+  "travel-profile-stories": "fan-scene-albums",
+  "solo-traveler-profiles": "fan-scene-albums",
+  "island-resort-scenes": "seasonal-celebration-photos",
+  "scenic-overlooks": "game-day-group-photos",
+  "alpine-trail-frames": "seasonal-celebration-photos",
+  "cinematic-travel": "game-day-group-photos",
+  "family-travel-keepsakes": "thanksgiving-memory-sets",
+  "travel-journal-covers": "seasonal-celebration-photos",
+  nature: "seasonal-celebration-photos",
+  "city-light": "premiere-style-portraits",
+  night: "premiere-style-portraits",
+  evening: "premiere-style-portraits",
+  boudoir: "premiere-style-portraits",
+  hairstyle: "seasonal-celebration-photos",
+  headshot: "premiere-style-portraits",
+  headshots: "premiere-style-portraits",
+  milestone: "seasonal-celebration-photos",
+  holiday: "seasonal-celebration-photos",
+  gala: "premiere-style-portraits",
+  heritage: "thanksgiving-memory-sets"
 };
 
 export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug: string): string {
@@ -1229,12 +1445,20 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
 }
 
 const dreamshootCollectionAliases: Record<string, string> = {
+  christmas: "christmas-photos",
   deportes: "world-cup-fan-photos",
+  "fan-photos": "world-cup-fan-photos",
+  halloween: "halloween-party-photos",
+  "premiere-style-portraits": "gala-photos",
+  "sports-stars": "world-cup-fan-photos",
   sports: "world-cup-fan-photos",
-  travel: "travel-scene-pack",
-  viaje: "travel-scene-pack",
+  thanksgiving: "thanksgiving-group-photos",
+  travel: "outdoor-creator-scenes",
+  viaje: "outdoor-creator-scenes",
+  "travel-scene-pack": "outdoor-creator-scenes",
+  "vip-looks": "gala-photos",
   video: "ai-video-add-ons",
-  lifestyle: "travel-scene-pack",
+  lifestyle: "outdoor-creator-scenes",
   "professional-headshots": "headshots"
 };
 
@@ -1262,7 +1486,7 @@ export function canonicalAidreamcapesCollectionPath(rawSlug: string): string {
   return `/collections/${canonicalSlug}`;
 }
 
-const aidreamcapesToolDirectory: SeoDirectoryMap = {
+const aidreamcapesLegacyToolDirectory: SeoDirectoryMap = {
   "route-portrait-engine": {
     label: "Route Portrait Engine",
     title: "AI Route Portrait Engine - create cinematic travel portraits",
@@ -1320,7 +1544,7 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
   "golden-hour-route-story": {
     label: "Golden Hour Route Story",
     title: "AI Golden Hour Route Story Tool - warm sunset travel portraits",
-    description: "Create warm AI route portraits with Aidreamcapes using private uploads, golden-hour lighting, travel-inspired scenes, and private gallery delivery.",
+    description: "Create warm AI route portraits with Aidreamcapes using private uploads, golden-hour lighting, scenic scenes, and private gallery delivery.",
     keywords: "AI golden hour route story, shared route portrait AI, Aidreamcapes route story tool, sunset travel portrait generator",
     h2: "golden hour route story tool",
     h3: ["Shared route source-photo tips", "Romantic scene directions", "Private album delivery"],
@@ -1360,13 +1584,13 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     keywords: "AI editorial getaway, travel portrait tool, Aidreamcapes editorial generator, magazine style AI portrait",
     h2: "editorial getaway tool",
     h3: ["Editorial input planning", "Travel-fashion outputs", "Private campaign gallery"],
-    intro: "Editorial Getaway turns source portraits and outfit references into polished travel-inspired campaign images.",
+    intro: "Editorial Getaway turns source portraits and outfit references into polished campaign images.",
     details: [
       "Upload clear subject photos plus outfit or mood references when possible.",
       "Choose a location style such as art hotel, old city, garden terrace, coast, or cinematic road.",
       "Use results for profile refreshes, social campaigns, or visual planning."
     ],
-    useCases: ["Editorial profile sets", "Creator launches", "Travel-inspired campaigns", "Fashion moodboards"],
+    useCases: ["Editorial profile sets", "Creator launches", "Scenic creator campaigns", "Fashion moodboards"],
     workflow: ["Upload portraits and references.", "Choose a getaway mood.", "Generate private editorial images.", "Download campaign-ready favorites."],
     ctaLabel: "Create Editorial Getaways",
     ctaHref: "/app/create?tool_id=editorial-getaway"
@@ -1443,6 +1667,201 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Create Social Keepsakes",
     ctaHref: "/app/create?tool_id=social-keepsake"
   }
+};
+
+const aidreamcapesGeneratedToolDefs = [
+  ["fan-scene-album-builder", "Fan-Scene Album Builder", "private fan-scene albums with meetup energy, spotlight mood, and original identity-safe styling"],
+  ["backstage-meetup-scene-builder", "Backstage Meetup Scene Builder", "backstage-style meetup portraits with velvet-rope mood and soft flash"],
+  ["supporter-photo-wall-maker", "Supporter Photo Wall Maker", "supporter wall layouts, creator community portraits, and fan album frames"],
+  ["fan-keepsake-card-maker", "Fan Keepsake Card Maker", "giftable supporter cards, warm note moments, and private fan keepsake crops"],
+  ["game-day-group-portrait-maker", "Game-Day Group Portrait Maker", "supporter group portraits, watch-party albums, and arena-style fan photos"],
+  ["stadium-night-fan-set-maker", "Stadium Night Fan Set Maker", "floodlight fan portraits and dramatic supporter scenes"],
+  ["watch-party-album-builder", "Watch Party Album Builder", "watch-party portraits, celebration group photos, and private supporter albums"],
+  ["premiere-portrait-set-builder", "Premiere Portrait Set Builder", "premiere-inspired portraits, VIP arrival crops, and polished creator albums"],
+  ["vip-arrival-photo-maker", "VIP Arrival Photo Maker", "polished arrival portraits with original evening atmosphere"],
+  ["award-night-album-studio", "Award Night Album Studio", "award-night keepsakes, spotlight portraits, and formal group images"],
+  ["new-year-countdown-album-maker", "New Year Countdown Album Maker", "countdown portraits, party group images, and New Year private album covers"],
+  ["christmas-group-album-studio", "Christmas Group Album Studio", "festive group portraits, cozy cards, and private Christmas album images"],
+  ["cozy-card-portrait-maker", "Cozy Card Portrait Maker", "warm card-ready portraits with winter light and seasonal crops"],
+  ["winter-fan-greeting-maker", "Winter Fan Greeting Maker", "seasonal fan greetings, group-card scenes, and winter album images"],
+  ["thanksgiving-keepsake-set-maker", "Thanksgiving Keepsake Set Maker", "gratitude portraits, Friendsgiving scenes, and family-style album crops"],
+  ["friendsgiving-memory-maker", "Friendsgiving Memory Maker", "friend-group portraits, host moments, and share-ready seasonal album images"],
+  ["halloween-party-portrait-maker", "Halloween Party Portrait Maker", "dramatic party portraits and original costume-friendly Halloween images"],
+  ["costume-cast-album-builder", "Costume Cast Album Builder", "original costume-group portraits, cast-wall layouts, and private seasonal downloads"],
+  ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "birthday spotlight photos, fan-style greetings, and giftable private keepsakes"],
+  ["permission-safe-photo-planner", "Permission-Safe Photo Planner", "source-photo permission checks, protected-mark boundaries, and credit-aware album planning"]
+] as const;
+
+const aidreamcapesGeneratedToolDirectory = Object.fromEntries(
+  aidreamcapesGeneratedToolDefs.map(([slug, label, description]) => [
+    slug,
+    {
+      label,
+      title: `${label} for Aidreamcapes private albums`,
+      description: `Use Aidreamcapes ${label} to create ${description} from approved source photos with visible credits, source-photo guidance, and private gallery delivery.`,
+      keywords: `Aidreamcapes ${label}, private fan-scene album tool, holiday memory album tool, permission-safe AI photo builder`,
+      h2: label.toLowerCase(),
+      h3: ["Approved uploads", "Visible credits", "Private gallery workflow"],
+      intro: `${label} helps customers prepare a focused fan-scene, game-day, premiere, holiday, or occasion album without copying real celebrities, real athletes, public figures, official marks, brand logos, trademarks, or protected materials.`,
+      details: [
+        `Use this tool for ${description} while keeping upload rights and credit cost visible before generation.`,
+        "The builder works best with clear portraits, a focused album direction, and notes about anything that should not appear.",
+        "Finished results return to the signed-in Aidreamcapes gallery for private review and download."
+      ],
+      useCases: ["Private fan-scene albums", "Game-day group portraits", "Holiday memory sets", "Permission-safe creator moments"],
+      workflow: ["Upload approved source photos.", "Choose the matching album direction.", "Review credits and safety boundaries.", "Download finished results from the private gallery."],
+      ctaLabel: `Start ${label}`,
+      ctaHref: `/app/create?tool_id=${slug}`
+    }
+  ])
+) as SeoDirectoryMap;
+
+const aidreamcapesToolDirectory: SeoDirectoryMap = {
+  "fan-scene-album-builder": {
+    label: "Fan-Scene Album Builder",
+    title: "Fan-Scene Album Builder - private Aidreamcapes photo albums",
+    description: "Use Aidreamcapes Fan-Scene Album Builder to create private fan-scene photo albums from approved source photos with visible credits, original styling, and private gallery delivery.",
+    keywords: "Aidreamcapes Fan-Scene Album Builder, fan-scene photo albums, private fan album maker, permission-safe AI photo tool",
+    h2: "fan-scene album builder",
+    h3: ["Approved source photos", "Original supporter atmosphere", "Private album delivery"],
+    intro: "Fan-Scene Album Builder helps customers create a polished supporter moment from photos they own or have permission to use, without promising to recreate real celebrities, athletes, public figures, official marks, logos, trademarks, or protected material.",
+    details: [
+      "Choose meetup mood, supporter wall styling, spotlight portrait energy, or creator community framing.",
+      "The tool shows the credit cost before generation and keeps jobs tied to the signed-in Aidreamcapes account.",
+      "Use clear source images and describe the atmosphere rather than requesting protected people or branded assets."
+    ],
+    useCases: ["Private fan-scene albums", "Supporter wall portraits", "Creator community images", "Giftable fan moments"],
+    workflow: ["Upload approved photos.", "Pick the fan-scene direction.", "Review credits and safety notes.", "Download finished album images."],
+    ctaLabel: "Start Fan-Scene Album Builder",
+    ctaHref: "/app/create?tool_id=fan-scene-album-builder"
+  },
+  "game-day-group-portrait-maker": {
+    label: "Game-Day Group Portrait Maker",
+    title: "Game-Day Group Portrait Maker - sports fan group photos",
+    description: "Create Aidreamcapes game-day group portraits, watch-party images, and arena-inspired supporter albums while avoiding official logos, event marks, and real athlete likenesses.",
+    keywords: "Aidreamcapes Game-Day Group Portrait Maker, game-day group portraits, sports fan group photos, supporter album tool",
+    h2: "game-day group portrait maker",
+    h3: ["Sports-energy portraits", "No official team marks", "Private supporter albums"],
+    intro: "Game-Day Group Portrait Maker turns approved group or individual photos into sports-energy portraits for private albums, with clear boundaries around public figures, athlete likenesses, official team logos, event marks, and trademarks.",
+    details: [
+      "Use it for watch parties, supporter groups, fantasy league celebrations, and energetic seasonal sports photos.",
+      "Color and mood notes work best when they stay generic and permission-safe.",
+      "Finished group images return to a private Aidreamcapes gallery for review and download."
+    ],
+    useCases: ["Watch-party portraits", "Sports fan photos", "Group celebration albums", "Supporter profile crops"],
+    workflow: ["Upload approved group photos.", "Choose the game-day mood.", "Confirm credit cost.", "Review finished portraits privately."],
+    ctaLabel: "Create Game-Day Portraits",
+    ctaHref: "/app/create?tool_id=game-day-group-portrait-maker"
+  },
+  "premiere-portrait-set-builder": {
+    label: "Premiere Portrait Set Builder",
+    title: "Premiere Portrait Set Builder - Aidreamcapes VIP-style photos",
+    description: "Build premiere-inspired photo sets, flash-lit arrival portraits, VIP-style crops, and polished private albums with original Aidreamcapes styling.",
+    keywords: "Aidreamcapes Premiere Portrait Set Builder, premiere-inspired photo sets, VIP style portraits, private creator albums",
+    h2: "premiere portrait set builder",
+    h3: ["Flash-lit portrait mood", "Original VIP styling", "Creator-ready downloads"],
+    intro: "Premiere Portrait Set Builder creates formal, camera-flash atmosphere for private portrait sets without copying real public figures, protected event branding, step-and-repeat logos, or trademarks.",
+    details: [
+      "Use this tool for creator announcements, party portraits, formal couple photos, and polished album covers.",
+      "Wardrobe and lighting notes help the generated set feel cohesive without requiring protected references.",
+      "Credit cost, private gallery delivery, and upload permissions remain visible in the flow."
+    ],
+    useCases: ["VIP-style portraits", "Premiere-inspired album covers", "Creator media images", "Formal occasion portraits"],
+    workflow: ["Upload approved portraits.", "Select a premiere-inspired mood.", "Review credits and boundaries.", "Download finished private images."],
+    ctaLabel: "Build Premiere Portraits",
+    ctaHref: "/app/create?tool_id=premiere-portrait-set-builder"
+  },
+  "christmas-group-album-studio": {
+    label: "Christmas Group Album Studio",
+    title: "Christmas Group Album Studio - festive Aidreamcapes albums",
+    description: "Create Christmas group albums, festive private photo sets, cozy card portraits, and holiday party photo walls with Aidreamcapes.",
+    keywords: "Aidreamcapes Christmas Group Album Studio, Christmas group albums, holiday memory albums, festive AI portraits",
+    h2: "Christmas group album studio",
+    h3: ["Festive group photos", "Card-ready private albums", "Holiday gallery delivery"],
+    intro: "Christmas Group Album Studio turns approved family, friend, team, or creator community photos into warm festive album images while avoiding protected logos, trademarks, and unlicensed character references.",
+    details: [
+      "Choose cozy interiors, winter greetings, polished party walls, or group-card directions.",
+      "The tool shows credit use before generation and returns finished results to the private Aidreamcapes account.",
+      "For best results, upload clear group photos and describe mood, colors, and formality."
+    ],
+    useCases: ["Christmas group photos", "Holiday card portraits", "Party photo walls", "Winter fan greetings"],
+    workflow: ["Upload approved group photos.", "Choose a festive album style.", "Confirm credits.", "Download the private Christmas set."],
+    ctaLabel: "Open Christmas Album Studio",
+    ctaHref: "/app/create?tool_id=christmas-group-album-studio"
+  },
+  "thanksgiving-keepsake-set-maker": {
+    label: "Thanksgiving Keepsake Set Maker",
+    title: "Thanksgiving Keepsake Set Maker - Aidreamcapes holiday memories",
+    description: "Create Thanksgiving keepsake sets, gratitude table portraits, Friendsgiving photo albums, and warm autumn private galleries from approved source photos.",
+    keywords: "Aidreamcapes Thanksgiving Keepsake Set Maker, Thanksgiving keepsake sets, Friendsgiving photo album, holiday memory albums",
+    h2: "Thanksgiving keepsake set maker",
+    h3: ["Gratitude portraits", "Friendsgiving group albums", "Warm private gallery"],
+    intro: "Thanksgiving Keepsake Set Maker creates warm gathering portraits and gratitude-centered photo albums from images customers own or have permission to use.",
+    details: [
+      "The tool supports table scenes, host portraits, friend-group albums, and autumn family keepsakes.",
+      "Requests should avoid unlicensed marks, copied public figures, protected materials, and brand logos.",
+      "Finished images stay inside the customer's Aidreamcapes account."
+    ],
+    useCases: ["Thanksgiving keepsakes", "Friendsgiving portraits", "Family group albums", "Autumn host images"],
+    workflow: ["Upload approved photos.", "Pick a Thanksgiving memory direction.", "Review credits.", "Save finished results privately."],
+    ctaLabel: "Make Thanksgiving Keepsakes",
+    ctaHref: "/app/create?tool_id=thanksgiving-keepsake-set-maker"
+  },
+  "halloween-party-portrait-maker": {
+    label: "Halloween Party Portrait Maker",
+    title: "Halloween Party Portrait Maker - original seasonal Aidreamcapes photos",
+    description: "Create Halloween party portraits, original costume-friendly group images, spooky fan-card photos, and private seasonal albums with Aidreamcapes.",
+    keywords: "Aidreamcapes Halloween Party Portrait Maker, Halloween party portraits, costume party AI portraits, seasonal celebration photos",
+    h2: "Halloween party portrait maker",
+    h3: ["Original party styling", "Costume-friendly portraits", "Private seasonal album"],
+    intro: "Halloween Party Portrait Maker adds dramatic color and playful seasonal atmosphere to approved photos while avoiding protected characters, branded costumes, official marks, copied public figures, and trademarks.",
+    details: [
+      "Use mood, lighting, color, and original costume notes to steer the set safely.",
+      "The tool is useful for group party images, spooky profile crops, private albums, and seasonal social posts.",
+      "Aidreamcapes keeps credit spend and finished downloads inside the account workflow."
+    ],
+    useCases: ["Halloween group portraits", "Original costume albums", "Spooky fan-card images", "Party profile photos"],
+    workflow: ["Upload approved party photos.", "Choose an original Halloween look.", "Review credit cost and safety boundaries.", "Download the private set."],
+    ctaLabel: "Create Halloween Portraits",
+    ctaHref: "/app/create?tool_id=halloween-party-portrait-maker"
+  },
+  "seasonal-celebration-album-maker": {
+    label: "Seasonal Celebration Album Maker",
+    title: "Seasonal Celebration Album Maker - Aidreamcapes occasion photos",
+    description: "Plan seasonal celebration photos for birthdays, New Year groups, family occasions, fan greetings, and rotating holiday memory albums in Aidreamcapes.",
+    keywords: "Aidreamcapes Seasonal Celebration Album Maker, seasonal celebration photos, holiday memory albums, birthday fan moment set",
+    h2: "seasonal celebration album maker",
+    h3: ["Rotating occasion sets", "Birthday and New Year portraits", "Private album continuity"],
+    intro: "Seasonal Celebration Album Maker is the flexible Aidreamcapes tool for birthdays, New Year moments, family updates, fan greetings, and holiday album ideas that do not fit one single occasion.",
+    details: [
+      "Customers can choose a personal celebration direction, review credits, and keep output in a private account gallery.",
+      "Source images must be owned by the customer or used with permission.",
+      "Requests should remain original and avoid protected logos, official marks, real public-figure copying, and trademarks."
+    ],
+    useCases: ["Birthday fan moments", "New Year group albums", "Family occasion portraits", "Seasonal holiday images"],
+    workflow: ["Upload approved source photos.", "Choose the seasonal occasion.", "Confirm credit cost.", "Download finished private images."],
+    ctaLabel: "Start Seasonal Album Maker",
+    ctaHref: "/app/create?tool_id=seasonal-celebration-album-maker"
+  },
+  "permission-safe-photo-planner": {
+    label: "Permission-Safe Photo Planner",
+    title: "Permission-Safe Photo Planner for Aidreamcapes fan and holiday albums",
+    description: "Use Aidreamcapes Permission-Safe Photo Planner to check source-photo permissions, protected mark boundaries, credit cost, and album intent before generation.",
+    keywords: "Aidreamcapes Permission-Safe Photo Planner, source photo permission, AI photo safety planner, private fan-scene albums",
+    h2: "permission-safe photo planner",
+    h3: ["Source-photo checks", "Protected mark boundaries", "Credit-aware album planning"],
+    intro: "Permission-Safe Photo Planner gives customers a clear preparation step before creating fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal Aidreamcapes albums.",
+    details: [
+      "The planner reminds customers to use only photos they own or have permission to use.",
+      "It also keeps real celebrity, real athlete, public figure, official team logo, event mark, brand logo, trademark, and protected-material boundaries visible.",
+      "Use it before opening a specific album builder when a request includes unclear references."
+    ],
+    useCases: ["Upload permission checks", "Fan-scene planning", "Holiday album preparation", "Credit cost review"],
+    workflow: ["Review the source photos.", "Clarify the occasion and audience.", "Remove unlicensed marks or protected references.", "Open the matching Aidreamcapes builder."],
+    ctaLabel: "Open Safety Planner",
+    ctaHref: "/app/create?tool_id=permission-safe-photo-planner"
+  },
+  ...aidreamcapesGeneratedToolDirectory
 };
 
 function normalizeDirectorySlug(value: string): string {
@@ -1698,23 +2117,22 @@ function fallbackCollection(slug: string, brandName = "MyDreamShoots"): SeoDirec
   const lower = lowerTopic(subject);
   const pluralLabel = pluralTopicLabel(label);
   if (isAidreamcapesBrand(brandName)) {
-    const packageTopic = collectionTitleTopic(label);
     return {
       label,
-      title: `AI ${subject} Travel Gallery | ${brandName}`,
-      description: `Explore ${brandName} ${lower} galleries for private source-photo planning, coastal and city scene directions, soft editorial crops, visible credits, and customer-only downloads.`,
-      keywords: `AI ${subject} travel gallery, ${lower} portrait gallery, ${brandName} ${lower}, private editorial AI gallery`,
-      h2: `${lower} travel gallery`,
-      h3: [`${subject} scene direction`, `Source-photo planning`, `Private gallery delivery`],
-      intro: `This ${subject} gallery frames the style, mood, and source-photo guidance customers need before choosing an Aidreamcapes scene.`,
+      title: `AI ${subject} Private Album | ${brandName}`,
+      description: `Explore ${brandName} ${lower} albums for private source-photo planning, fan-scene and holiday directions, soft editorial crops, visible credits, and customer-only downloads.`,
+      keywords: `AI ${subject} private album, ${lower} album, ${brandName} ${lower}, private editorial AI album`,
+      h2: `${lower} private album`,
+      h3: [`${subject} album direction`, `Source-photo planning`, `Private gallery delivery`],
+      intro: `This ${subject} album frames the style, mood, and source-photo guidance customers need before choosing an Aidreamcapes direction.`,
       details: [
-        `Customers can compare ${lower} scene ideas, crop choices, and atmosphere before starting a private generation.`,
-        "Coastal, city, resort, trail, and editorial directions stay focused so customers can choose the right private gallery style.",
-        "Finished images stay in a private gallery so customers can review, download, and choose what to share."
+        `Customers can compare ${lower} album ideas, crop choices, and atmosphere before starting a private generation.`,
+        "Fan-scene, holiday, creator, and editorial directions stay focused so customers can choose the right private album style.",
+        "Finished images stay in a private album so customers can review, download, and choose what to share."
       ],
-      useCases: [`${subject} travel portraits`, `${subject} soft-gallery images`, `${subject} editorial scenes`, `${subject} postcard keepsakes`],
-      workflow: ["Choose a scene direction.", "Upload clear source photos.", "Review private gallery options.", "Download the final images you want to keep."],
-      ctaLabel: `Open ${subject} Gallery`,
+      useCases: [`${subject} private portraits`, `${subject} album images`, `${subject} editorial scenes`, `${subject} keepsakes`],
+      workflow: ["Choose an album direction.", "Upload clear source portraits.", "Review private album options.", "Download the final images you want to keep."],
+      ctaLabel: `Open ${subject} Album`,
       ctaHref: "/tools/image-studio"
     };
   }
@@ -1786,12 +2204,12 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
   const subject = stripTrailingMediaNoun(seed.label);
   const lower = lowerTopic(subject);
   const guideHeadings = aidreamcapes
-    ? ["Source-photo checklist", "Destination and mood planning", "Private gallery review"]
+    ? ["Source-photo checklist", "Occasion and mood planning", "Private gallery review"]
     : ["Source-photo checklist", "Credit and delivery review", "Private gallery review"];
   const guideDetails = aidreamcapes
     ? [
-        `For stronger ${lower} results, use clear portraits that show the subject naturally and add route, outfit, light, or atmosphere references when the destination scene needs a specific story.`,
-        `Before starting, compare the scene examples, destination mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`
+        `For stronger ${lower} results, use clear portraits that show the subject naturally and add outfit, light, color, group, or occasion references when the album scene needs a specific story.`,
+        `Before starting, compare the scene examples, occasion mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`
       ]
     : [
         `For stronger ${lower} results, upload several clear photos you own or have permission to use, with natural lighting, visible subject detail, and enough angle variety for a consistent private gallery.`,
@@ -1803,6 +2221,54 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
     ...seed,
     h3,
     details
+  };
+}
+
+type SeoUseCaseProfile = DreamshootPackProfile | PhotoPackageUseCaseProfile;
+
+function truncateSeoDescription(value: string, maxLength = 220): string {
+  if (value.length <= maxLength) return value;
+  const trimmed = value.slice(0, maxLength - 1).replace(/\s+\S*$/, "").replace(/[,.]$/, "");
+  return `${trimmed}.`;
+}
+
+function collectionSeedWithUseCaseProfile(
+  seed: SeoDirectorySeed,
+  profile: SeoUseCaseProfile,
+  brandName: string
+): SeoDirectorySeed {
+  const titleScenario = profile.tags.slice(0, 2).join(" and ");
+  const title = titleScenario
+    ? `${profile.metaLabel} for ${titleScenario} | ${brandName}`
+    : `${profile.metaLabel} | ${brandName}`;
+  const description = truncateSeoDescription(`${profile.cardDescription} ${profile.whatCreates}`);
+  const keywordParts = [
+    ...seed.keywords.split(",").map((keyword) => keyword.trim()),
+    profile.metaLabel,
+    ...profile.tags,
+    ...profile.detailTags.slice(0, 6)
+  ];
+  const details = [
+    profile.detailIntro,
+    profile.whatCreates,
+    profile.coverNote,
+    profile.safetyNote ?? "",
+    ...seed.details
+  ].filter(Boolean);
+
+  return {
+    ...seed,
+    title,
+    description,
+    keywords: Array.from(new Set(keywordParts.filter(Boolean))).join(", "),
+    h2: profile.headline,
+    h3: ["What this creates", "Best use cases", "Workflow and review"],
+    intro: profile.detailIntro,
+    details: Array.from(new Set(details)).slice(0, 5),
+    useCases: profile.bestFor,
+    workflow: profile.workflow,
+    ctaLabel: `Create ${profile.metaLabel}`,
+    ctaHref: seed.ctaHref
   };
 }
 
@@ -1923,7 +2389,7 @@ export function metadataForDreamshootFallbackRoute(
         description: aidreamcapes
           ? `${spanishBrand} es una tienda privada para retratos de viaje con IA, creditos, subidas privadas y galerias de cliente.`
           : `${spanishBrand} es una tienda privada para fotos con IA, creditos, paquetes creativos y galerias de cliente.`,
-        keywords: aidreamcapes ? `${spanishBrand}, retratos de viaje IA, galeria privada` : `${spanishBrand}, fotos IA, galeria privada`,
+        keywords: aidreamcapes ? `${spanishBrand}, albumes de fans, recuerdos festivos, galeria privada` : `${spanishBrand}, fotos IA, galeria privada`,
         canonicalPath: normalizedPath,
         index: false,
         follow: true
@@ -1931,9 +2397,9 @@ export function metadataForDreamshootFallbackRoute(
     : {
         title: aidreamcapes ? "Aidreamcapes" : "MyDreamShoots",
         description: aidreamcapes
-          ? "Aidreamcapes is a private AI travel portrait workspace for route scenes, destination-style albums, visible credits, and customer-only galleries."
+          ? "Aidreamcapes is a private AI photo workspace for fan-scene albums, game-day group portraits, holiday memory albums, visible credits, and customer-only galleries."
           : "MyDreamShoots is a private AI photo workspace for uploads, credits, creator photo packages, AI tools, and customer-only galleries.",
-        keywords: aidreamcapes ? "Aidreamcapes, AI travel portraits, private destination gallery" : "MyDreamShoots, AI photo workspace, AI creator photo packages, private photo gallery",
+        keywords: aidreamcapes ? "Aidreamcapes, fan-scene photo albums, holiday memory albums, private occasion gallery" : "MyDreamShoots, AI photo workspace, AI creator photo packages, private photo gallery",
         canonicalPath: normalizedPath,
         index: false,
         follow: true
@@ -1991,9 +2457,17 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
     : kind === "collection"
       ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName)
       : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
-  const enrichedSource = kind === "collection" && !spanishXby
-    ? enrichCollectionGuide(source, brandName)
+  const collectionProfile = kind === "collection" && !spanishXby
+    ? aidreamcapes
+      ? aidreamcapesCategoryUseCaseProfileForSlug(canonicalSlug)
+      : mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
+    : undefined;
+  const sourceWithProfile = collectionProfile
+    ? collectionSeedWithUseCaseProfile(source, collectionProfile, brandName)
     : source;
+  const enrichedSource = kind === "collection" && !spanishXby
+    ? enrichCollectionGuide(sourceWithProfile, brandName)
+    : sourceWithProfile;
   const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
   return {
     ...enrichedSource,

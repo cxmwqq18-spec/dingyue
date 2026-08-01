@@ -30,7 +30,7 @@ export async function getCustomerAccountSummaryRuntimeRelational({
       take: 12
     }),
     prisma.album.findMany({
-      where: { siteId, customerId: customer.id },
+      where: { siteId, customerId: customer.id, status: "ready" },
       orderBy: { updatedAt: "desc" },
       take: 12
     }),

@@ -2,16 +2,35 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { BookOpenCheck, FileText, HelpCircle, Megaphone, Palette, Send } from "lucide-react";
+import { BookOpenCheck, FileText, HelpCircle, Megaphone, Newspaper, Palette, Send } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { ContentDraftEditorLazy } from "@/components/admin/content-draft-editor-lazy";
 import { ErpInfoList, ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
 import type { CreativePack, MediaAsset, Product, Site, SiteAiApp, ThemePage, ThemePublication } from "@/lib/types";
 
+type BlogSummaryArticle = {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  publishedAt: string;
+  readMinutes: string;
+  draftStatus: "dirty" | "live";
+  seoStatus: "ready" | "needs_review";
+};
+
+type BlogSummary = {
+  homeSlug: string;
+  articleCount: number;
+  footerLinkPresent: boolean;
+  articles: BlogSummaryArticle[];
+};
+
 type ContentPagePayload = {
   ok?: boolean;
   site: Site;
+  blogSummary?: BlogSummary;
   publicationCount?: number;
   publications: ThemePublication[];
   packs?: CreativePack[];
@@ -67,6 +86,7 @@ const contentModules = [
   { key: "pricing_table", label: "价格表" },
   { key: "faq_accordion", label: "FAQ 折叠面板" },
   { key: "blog_list", label: "博客列表" },
+  { key: "blog_article", label: "博客文章" },
   { key: "policy_content", label: "政策正文" }
 ];
 
@@ -281,6 +301,9 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
   }
   const publicationCount = publicationSection.data?.publicationCount ?? payload.publicationCount ?? payload.publications.length;
   const publicationCountValue = publicationSection.loading && !publicationSection.data ? "加载中" : String(publicationCount);
+  const blogSummary: BlogSummary = payload.blogSummary ?? { homeSlug: "", articleCount: 0, footerLinkPresent: false, articles: [] };
+  const blogSeoReadyCount = blogSummary.articles.filter((article) => article.seoStatus === "ready").length;
+  const blogDirtyCount = blogSummary.articles.filter((article) => article.draftStatus === "dirty").length;
 
   return (
     <div className="grid gap-5">
@@ -290,6 +313,7 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
           { label: "内容页", value: String(derived.contentEditablePages.length), detail: "当前工作台管理的内容页", icon: FileText, tone: derived.contentEditablePages.length ? "good" : "warn" },
           { label: "政策页", value: String(derived.policyPages.length), detail: "隐私、退款和内容政策页", icon: HelpCircle, tone: derived.policyPages.length ? "good" : "warn" },
           { label: "帮助页", value: String(derived.helpPages.length), detail: "FAQ 与帮助中心模板", icon: Megaphone, tone: derived.helpPages.length ? "good" : "warn" },
+          { label: "博客文章", value: String(blogSummary.articleCount), detail: blogSummary.footerLinkPresent ? "底部入口已连接" : "底部入口待检查", icon: Newspaper, tone: blogSummary.articleCount >= 3 && blogSummary.footerLinkPresent ? "good" : "warn" },
           { label: "待发布草稿", value: String(derived.dirtyContentPages.length), detail: "尚未发布上线的内容草稿", icon: Palette, tone: derived.dirtyContentPages.length ? "warn" : "good" },
           { label: "发布快照", value: publicationCountValue, detail: publicationSection.error ? "发布摘要加载失败" : "可用于回滚的已发布版本", icon: Send, tone: publicationCount ? "good" : publicationSection.error ? "warn" : "neutral" },
           { label: "内容模块", value: String(contentModules.length), detail: "编辑器中可用的内容区块", icon: BookOpenCheck, tone: "good" }
@@ -337,6 +361,55 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
               </div>
             </div>
           </div>
+        </div>
+      </ErpSection>
+
+      <ErpSection
+        action={<ErpToolbarAction href={modulePath(siteSlug, "/admin/content?editor=1#content-editor")} label="打开博客编辑" primary />}
+        description="博客内容仍然复用主题页面草稿和发布体系。这里集中查看博客首页、文章元信息、SEO 状态、底部导航入口和发布差异。"
+        eyebrow="博客专区"
+        title="博客内容状态"
+      >
+        <ErpToolbar>
+          <div className="flex flex-wrap gap-3">
+            <ErpToolbarField label="博客首页" value={blogSummary.homeSlug || "缺失"} />
+            <ErpToolbarField label="文章数量" value={String(blogSummary.articleCount)} />
+            <ErpToolbarField label="底部入口" value={blogSummary.footerLinkPresent ? "已连接" : "待补齐"} />
+            <ErpToolbarField label="SEO 就绪" value={`${blogSeoReadyCount}/${blogSummary.articleCount}`} />
+            <ErpToolbarField label="草稿待发" value={String(blogDirtyCount)} />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <ErpToolbarAction href={modulePath(siteSlug, blogSummary.homeSlug || "/blog")} label="查看博客首页" />
+            <ErpToolbarAction href={modulePath(siteSlug, "/admin/design/pages")} label="页面树" />
+          </div>
+        </ErpToolbar>
+        <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="grid gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 md:grid-cols-[minmax(0,1fr)_0.45fr_0.34fr_0.34fr_0.42fr]">
+            <span>文章</span>
+            <span>元信息</span>
+            <span>发布</span>
+            <span>SEO</span>
+            <span>操作</span>
+          </div>
+          {blogSummary.articles.map((article) => (
+            <div className="grid gap-3 border-b border-slate-100 px-4 py-4 text-sm last:border-b-0 md:grid-cols-[minmax(0,1fr)_0.45fr_0.34fr_0.34fr_0.42fr]" key={article.id}>
+              <span className="min-w-0">
+                <span className="block break-words font-medium text-slate-900">{article.title}</span>
+                <span className="font-mono text-xs text-slate-500">{article.slug}</span>
+              </span>
+              <span className="text-xs leading-5 text-slate-600">
+                <span className="block">{article.author || "未填写作者"}</span>
+                <span className="block font-mono">{article.publishedAt || "未填写日期"} · {article.readMinutes || "未填写阅读时长"}</span>
+              </span>
+              <StatusPill label={article.draftStatus === "dirty" ? "草稿待发布" : "已发布"} tone={article.draftStatus === "dirty" ? "warn" : "good"} />
+              <StatusPill label={article.seoStatus === "ready" ? "SEO 就绪" : "待补 SEO"} tone={article.seoStatus === "ready" ? "good" : "warn"} />
+              <span className="flex flex-wrap gap-2">
+                <ErpToolbarAction href={modulePath(siteSlug, article.slug)} label="前台" />
+                <ErpToolbarAction href={modulePath(siteSlug, "/admin/content?editor=1#content-editor")} label="编辑" />
+              </span>
+            </div>
+          ))}
+          {!blogSummary.articles.length ? <div className="px-4 py-6 text-sm text-slate-500">当前站点还没有博客文章页，请先在页面树中添加 /blog/* 内容页。</div> : null}
         </div>
       </ErpSection>
 

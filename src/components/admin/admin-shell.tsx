@@ -37,6 +37,7 @@ const lightweightAdminPrefetchAllow = [
   "/admin/customers",
   "/admin/orders",
   "/admin/partners",
+  "/admin/processes",
   "/admin/products",
   "/admin/settings"
 ];

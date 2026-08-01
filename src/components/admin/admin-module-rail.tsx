@@ -27,6 +27,7 @@ export function navBelongsToModule(item: AdminNavItem, module: AdminModuleDefini
   if (module.code === "products") return href.includes("/admin/products") || text.includes("商品") || text.includes("套餐");
   if (module.code === "orders") return href.includes("/admin/orders") || text.includes("订单") || text.includes("订阅");
   if (module.code === "customers") return href.includes("/admin/customers") || text.includes("顾客") || text.includes("客户");
+  if (module.code === "processes") return href.includes("/admin/processes") || text.includes("进程") || text.includes("终止");
   if (module.code === "ai") return href.includes("/admin/ai-tools") || text.includes("ai");
   if (module.code === "content") return href.includes("/admin/content") || text.includes("内容") || text.includes("运营");
   if (module.code === "settings") return href.includes("/admin/settings") || text.includes("设置");

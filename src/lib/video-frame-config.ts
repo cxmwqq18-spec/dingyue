@@ -3,18 +3,17 @@ export const MAX_VIDEO_FRAME_LIMIT = 30;
 export const MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT = 7;
 export const CUSTOMER_VIDEO_FRAME_LIMIT = MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT;
 export const MAX_VIDEO_DURATION_SECONDS = 15;
-export const MAX_GROK_VIDEO_DURATION_SECONDS = 10;
+export const MAX_GROK_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
 export const VIDEO_MODEL_FAMILIES = ["grok", "gemini"] as const;
 export type VideoModelFamily = typeof VIDEO_MODEL_FAMILIES[number];
 export const DEFAULT_VIDEO_MODEL_FAMILY: VideoModelFamily = "grok";
 export const DEFAULT_VIDEO_RESOLUTION = "720p";
 export type VideoResolution = typeof DEFAULT_VIDEO_RESOLUTION;
 const STANDARD_VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = VIDEO_MODEL_FAMILIES;
-const LONG_VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = ["gemini"];
 export const VIDEO_DURATION_OPTIONS = [
   { seconds: 6, creditMultiplier: 1, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES },
   { seconds: 10, creditMultiplier: 10 / 6, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES },
-  { seconds: 15, creditMultiplier: 15 / 6, modelFamilies: LONG_VIDEO_DURATION_MODEL_FAMILIES }
+  { seconds: 15, creditMultiplier: 15 / 6, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES }
 ] as const;
 export const DEFAULT_VIDEO_DURATION_SECONDS = VIDEO_DURATION_OPTIONS[0].seconds;
 export const MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
@@ -70,7 +69,10 @@ export function normalizeVideoDurationSeconds(
   return options.find((option) => option.seconds === seconds)?.seconds ?? fallbackOption.seconds;
 }
 
-export function videoDurationOptionsForFrameCount(frameCount: unknown, modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY): VideoDurationOption[] {
+export function videoDurationOptionsForFrameCount(
+  frameCount: unknown,
+  modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY
+): VideoDurationOption[] {
   void frameCount;
   return videoDurationOptionsForModelFamily(normalizeVideoModelFamily(modelFamily));
 }

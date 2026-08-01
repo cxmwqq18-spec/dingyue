@@ -29,6 +29,8 @@ const imageSize = args.get("size") ?? process.env.THEME_GALLERY_SIZE ?? "1024x10
 const imageQuality = args.get("quality") ?? process.env.THEME_GALLERY_QUALITY ?? "low";
 const outRoot = path.resolve(process.cwd(), args.get("out") ?? "public/assets/dreamshoot/generated/pack-galleries");
 const publicPrefix = args.get("public-prefix") ?? "/assets/dreamshoot/generated/pack-galleries";
+const coverRoot = path.resolve(process.cwd(), args.get("cover-out") ?? "public/assets/dreamshoot/generated/pack-covers");
+const coverPublicPrefix = args.get("cover-public-prefix") ?? "/assets/dreamshoot/generated/pack-covers";
 const publicVersion = args.get("version") ?? process.env.THEME_GALLERY_VERSION ?? "20260715b";
 const force = flags.has("force") || process.env.THEME_GALLERY_FORCE === "1";
 const saveSheets = flags.has("save-sheets") || process.env.THEME_GALLERY_SAVE_SHEETS === "1";
@@ -63,7 +65,9 @@ const themeDirections = {
   "valentine-photos": "romantic Valentine portraits and couple card scenes with warm light, date-night mood, tasteful hearts, flowers, and gift-ready images",
   engagement: "engagement-style portraits with proposal scenes, ring detail moments, couple announcements, romantic outdoor light, and polished keepsake mood",
   boudoir: "tasteful fully clothed confidence portraits for adults in elegant studio lighting; satin robe-inspired outerwear, slip-dress-inspired fashion, soft bedroom-studio decor, refined beauty styling, no nudity, no lingerie focus, no sexual pose",
-  holiday: "holiday travel and seasonal portraits with warm vacation scenes, winter cards, festive but tasteful styling, and private album mood",
+  holiday: "seasonal holiday portraits for Christmas, Thanksgiving, Halloween, winter cards, family-style celebration albums, greeting-card compositions, warm home interiors, festive lights, gifts, harvest tables, tasteful costume-party details, and private album mood; no beach, tropical resort, summer vacation, or generic travel imagery",
+  "thanksgiving-group-photos": "Thanksgiving group portraits with warm dinner-table atmosphere, harvest colors, cozy home interiors, gratitude cards, family and friend gathering energy, card-ready compositions, and private seasonal album mood",
+  "halloween-party-photos": "Halloween party portraits with costume-party energy, dramatic colored lighting, playful spooky decor, group-friendly card framing, cinematic VIP party mood, and seasonal private album images",
   "christmas-couple": "Christmas couple portraits with cozy sweaters, warm lights, tree decor, snow-window mood, greeting-card compositions, and romantic holiday energy",
   "christmas-photos": "solo Christmas portraits with festive lights, tree decor, snow mood, warm sweaters, holiday cards, and seasonal profile images",
   "ai-video-add-ons": "motion-ready AI video starter frames, cinematic storyboard stills, dynamic poses, timeline-like visual rhythm, and short clip preview energy",
@@ -103,6 +107,13 @@ function galleryPaths(slug) {
   });
 }
 
+function coverPath(slug) {
+  return {
+    publicPath: `${coverPublicPrefix}/${slug}/${slug}-cover.webp?v=${publicVersion}`,
+    filePath: path.join(coverRoot, slug, `${slug}-cover.webp`)
+  };
+}
+
 async function fileExists(filePath) {
   try {
     const stat = await fs.stat(filePath);
@@ -127,7 +138,7 @@ function buildPrompt(pack, slug, sheetIndex) {
     `Batch: ${sheetIndex + 1} of 3. ${variationFocus}`,
     "Layout: exactly four distinct image examples arranged as a clean 2 column by 2 row grid inside one square image.",
     "Each grid tile must be a separate finished gallery example for this same package theme, with different poses, crops, lighting, wardrobe, settings, or compositions.",
-    "All four tiles must stay on the requested theme. Do not include unrelated themes, generic stock headshots, football players outside the fan-photo theme, wedding scenes outside wedding/couple themes, or travel/nature scenes outside travel/nature/holiday themes.",
+    "All four tiles must stay on the requested theme. Do not include unrelated themes, generic stock headshots, football players outside the fan-photo theme, wedding scenes outside wedding/couple themes, travel/nature scenes outside travel/nature/travel packages, or beach/tropical resort scenes inside seasonal holiday packages.",
     "Style: premium realistic editorial photography or polished original avatar art when the theme is anime avatar; high-quality AI photo subscription aesthetic.",
     "Constraints: no text, no captions, no logos, no watermarks, no UI, no celebrity likeness, no copyrighted characters, no brand marks, no distorted faces, no duplicated tiles."
   ].join("\n");
@@ -224,12 +235,31 @@ async function cropContactSheet(buffer, slug, sheetIndex) {
   }
 }
 
+async function createCoverFromGallery(slug, sourceFilePath) {
+  const sharp = (await import("sharp")).default;
+  const cover = coverPath(slug);
+  await fs.mkdir(path.dirname(cover.filePath), { recursive: true });
+  const overlay = Buffer.from(
+    `<svg width="1280" height="960" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#05070E" stop-opacity="0.18" offset="0"/><stop stop-color="#16dcf0" stop-opacity="0.12" offset="0.45"/><stop stop-color="#ff9f43" stop-opacity="0.16" offset="1"/></linearGradient></defs><rect width="1280" height="960" fill="url(#g)"/></svg>`
+  );
+  await sharp(sourceFilePath)
+    .resize(1280, 960, { fit: "cover", position: "entropy" })
+    .modulate({ brightness: 0.94, saturation: 1.08, hue: 4 })
+    .composite([{ input: overlay, blend: "overlay" }])
+    .sharpen({ sigma: 0.42 })
+    .webp({ quality: 90 })
+    .toFile(cover.filePath);
+  return cover.publicPath;
+}
+
 async function generatePack(pack, provider) {
   const slug = pack.categoryRecord?.slug ?? slugify(pack.category || pack.name);
   const outputs = galleryPaths(slug);
   const complete = await Promise.all(outputs.map((output) => fileExists(output.filePath)));
+  const cover = coverPath(slug);
   if (!force && complete.every(Boolean)) {
-    return { slug, name: pack.name, skipped: true, imageUrl: outputs[0].publicPath };
+    if (!(await fileExists(cover.filePath))) await createCoverFromGallery(slug, outputs[0].filePath);
+    return { slug, name: pack.name, skipped: true, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath) };
   }
   for (let sheetIndex = 0; sheetIndex < 3; sheetIndex += 1) {
     console.log(`generating ${slug}: ${pack.name} sheet ${sheetIndex + 1}/3`);
@@ -241,7 +271,8 @@ async function generatePack(pack, provider) {
     }
     await cropContactSheet(buffer, slug, sheetIndex);
   }
-  return { slug, name: pack.name, skipped: false, imageUrl: outputs[0].publicPath };
+  await createCoverFromGallery(slug, outputs[0].filePath);
+  return { slug, name: pack.name, skipped: false, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath) };
 }
 
 async function mapLimit(items, workerCount, mapper) {

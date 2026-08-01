@@ -1,3 +1,5 @@
+import { isVideoProviderModel } from "@/lib/video-provider-limits";
+
 export const platformAiProviderTypes = ["image", "video"] as const;
 
 export type PlatformAiProviderType = typeof platformAiProviderTypes[number];
@@ -12,7 +14,12 @@ export function inferPlatformAiProviderType(provider: {
   modelType?: string | null;
 }): PlatformAiProviderType {
   const text = [provider.modelType, provider.label, provider.aiUrl].filter(Boolean).join(" ").toLowerCase();
-  return text.includes("video") || text.includes("grok-imagine-video") || text.includes("smartpicklid") || text.includes("magic666")
+  return isVideoProviderModel(provider.modelType) ||
+    text.includes("smartpicklid") ||
+    text.includes("magic666") ||
+    text.includes("tokengo") ||
+    text.includes("token6688") ||
+    text.includes("buming")
     ? "video"
     : "image";
 }

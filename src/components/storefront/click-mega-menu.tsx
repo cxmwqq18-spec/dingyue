@@ -171,18 +171,25 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   return (
     <div
       className="relative"
-      onClickCapture={(event) => {
+      onClick={(event) => {
         const target = event.target instanceof Element ? event.target : null;
         const anchor = target?.closest<HTMLAnchorElement>("a[href]");
         if (!anchor) return;
         const href = anchor.getAttribute("href");
-        if (href && !href.startsWith("#") && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) {
-          window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
+        if (!href || href.startsWith("#") || anchor.hasAttribute("download") || (anchor.target && anchor.target !== "_self")) return;
+        let navigationHref = "";
+        try {
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+          navigationHref = `${url.pathname}${url.search}${url.hash}`;
+        } catch {
+          return;
         }
-        window.setTimeout(() => {
+        window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href: navigationHref } }));
+        window.requestAnimationFrame(() => {
           setOpen(false);
           cancelWarmFetches();
-        }, 0);
+        });
       }}
       onPointerOverCapture={(event) => {
         if (event.pointerType !== "touch") prefetchHoveredAnchor(event.target);

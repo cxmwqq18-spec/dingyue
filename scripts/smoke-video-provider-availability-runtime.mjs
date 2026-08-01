@@ -71,6 +71,16 @@ const magic666Provider = {
   enabled: true
 };
 
+const tokengoProvider = {
+  id: "provider_tokengo",
+  label: "Buming Veo",
+  aiUrl: "https://buming.token6688.com",
+  apiKey: "redacted-test-key",
+  modelType: "veo3.1",
+  providerType: "video",
+  enabled: true
+};
+
 withEnv({
   AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO: undefined,
   AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO: undefined,
@@ -91,6 +101,14 @@ withEnv({
     magicAvailability.ok === false &&
     magicAvailability.blockedProviders[0]?.reason === "ai_provider_video_content_unverified_magic666",
     "Magic666 remains guarded unless explicitly allowed"
+  );
+
+  const tokengoAvailability = availabilityModule.videoProviderAvailability([tokengoProvider], {
+    referenceAssetCount: 0
+  });
+  assert(
+    tokengoAvailability.ok === true,
+    "Buming/TokenGo video provider is runnable without a reference frame"
   );
 });
 

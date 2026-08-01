@@ -34,10 +34,16 @@ export function publicUrlForRequest(request: Request, path: string): URL {
   const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
   const forwardedPort = request.headers.get("x-forwarded-port")?.split(",")[0]?.trim();
   const fallback = new URL(request.url);
-  const protocol = forwardedProto || fallback.protocol.replace(":", "") || "http";
-  const externalHost = host || fallback.host;
+  const fallbackHostname = fallback.hostname.toLowerCase();
+  const preferLocalRequestOrigin = process.env.NODE_ENV !== "production" && (
+    fallbackHostname === "localhost" ||
+    fallbackHostname === "127.0.0.1" ||
+    /^\d{1,3}(?:\.\d{1,3}){3}$/.test(fallbackHostname)
+  );
+  const protocol = preferLocalRequestOrigin ? fallback.protocol.replace(":", "") || "http" : forwardedProto || fallback.protocol.replace(":", "") || "http";
+  const externalHost = preferLocalRequestOrigin ? fallback.host : host || fallback.host;
   const hostWithPort =
-    forwardedPort && externalHost && !externalHost.includes(":") && !["80", "443"].includes(forwardedPort)
+    !preferLocalRequestOrigin && forwardedPort && externalHost && !externalHost.includes(":") && !["80", "443"].includes(forwardedPort)
       ? `${externalHost}:${forwardedPort}`
       : externalHost;
   return new URL(path, `${protocol}://${hostWithPort || fallback.host}`);

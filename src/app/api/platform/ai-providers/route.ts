@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { aiProviderStatus, assertValidAiProviderUrl, testAiProviderConnection } from "@/lib/ai-provider-config";
 import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { createAsyncJob, toAsyncJobAcceptedPayload } from "@/lib/async-jobs";
+import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { StoreError } from "@/lib/server-store";
 import {
   deletePlatformAiProviderRelational,
@@ -19,9 +20,17 @@ const defaultModelTypes = [
   "gpt-5.5",
   "grok-video-3-pro",
   "grok-video-3-max",
+  "grok-imagine-video-special",
+  "grok-imagine-1.5-special",
   "grok-imagine-video",
+  "grok-imagine-1.5",
   "grok-imagine-video-1.5-preview",
   "grok-imagine-video-1.5",
+  "veo-3-1-manju-special",
+  "veo-4-omni-manju-special",
+  "veo-4-omni",
+  "veo-3.1",
+  "veo-4-omni-v2v",
   "grok-video-3.5-1015"
 ];
 
@@ -36,7 +45,7 @@ async function payload(extra: Record<string, unknown> = {}) {
   const enabledProviders = providers.filter((provider) => provider.enabled);
   const currentProviderIds = Object.fromEntries(platformAiProviderTypes.map((providerType) => {
     const typed = enabledProviders.filter((provider) => provider.providerType === providerType);
-    const current = typed.find((provider) => provider.preferred) ?? typed[0];
+    const current = typed[0];
     return [providerType, current?.id ?? ""];
   })) as Record<PlatformAiProviderType, string>;
   const current = enabledProviders.find((provider) => provider.id === currentProviderIds.image) ?? enabledProviders[0];
@@ -104,7 +113,7 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:ai-provider" });
+  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], rateLimit: RATE_LIMITS.adminProviderConfig });
   if (!permission.ok) return permission.response;
 
   const body = (await request.json().catch(() => ({}))) as {
@@ -119,10 +128,17 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN?: boolean;
     supportsEditN?: boolean;
     maxImagesPerRequest?: number;
+    priority?: unknown;
   };
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_ai_provider_label" }, { status: 400 });
   if (!body.id && !body.aiUrl?.trim()) return NextResponse.json({ error: "missing_ai_provider_url" }, { status: 400 });
   if (!body.modelType?.trim()) return NextResponse.json({ error: "missing_ai_provider_model_type" }, { status: 400 });
+  if (body.priority !== undefined) {
+    const priority = Number(body.priority);
+    if (!Number.isFinite(priority) || !Number.isInteger(priority) || priority < 0) {
+      return NextResponse.json({ error: "invalid_ai_provider_priority" }, { status: 400 });
+    }
+  }
   if (body.aiUrl?.trim()) {
     try {
       assertValidAiProviderUrl(body.aiUrl);
@@ -143,17 +159,18 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN: Boolean(body.supportsGenerationN),
     supportsEditN: Boolean(body.supportsEditN),
     maxImagesPerRequest: body.maxImagesPerRequest,
+    priority: body.priority,
     actor: permission.current.platformAdmin.id
   });
   return NextResponse.json(await payload());
 }
 
 export async function POST(request: NextRequest) {
-  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:ai-provider" });
+  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], rateLimit: RATE_LIMITS.adminProviderConfig });
   if (!permission.ok) return permission.response;
 
   const body = (await request.json().catch(() => ({}))) as {
-    action?: "current" | "test" | "enabled";
+    action?: "current" | "test" | "enabled" | "reveal";
     providerId?: string;
     enabled?: boolean;
     id?: string;
@@ -161,6 +178,19 @@ export async function POST(request: NextRequest) {
     apiKey?: string;
   };
   try {
+    if (body.action === "reveal") {
+      const providerId = body.providerId?.trim() || body.id?.trim();
+      if (!providerId) return NextResponse.json({ error: "missing_ai_provider" }, { status: 400 });
+      const provider = await getPlatformAiProviderRelational(providerId);
+      if (!provider) return NextResponse.json({ error: "ai_provider_not_found" }, { status: 404 });
+      const status = aiProviderStatus(provider);
+      return NextResponse.json({
+        ok: true,
+        providerId: provider.id,
+        apiKey: provider.apiKey ?? "",
+        apiKeyPreview: status.apiKeyPreview
+      });
+    }
     if (body.action === "test") {
       const provider = await providerFromBody(body);
       const job = await createAsyncJob({
@@ -194,7 +224,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], key: "platform:ai-provider" });
+  const permission = await requirePlatformMutation(request, { roles: ["super_admin", "ops"], rateLimit: RATE_LIMITS.adminProviderConfig });
   if (!permission.ok) return permission.response;
 
   const body = (await request.json().catch(() => ({}))) as { providerId?: string };

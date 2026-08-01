@@ -1,4 +1,5 @@
-export type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi";
+import type { VideoProviderProtocol } from "@/lib/video-provider-family";
+
 export type VideoModelFamily = "grok" | "gemini";
 
 export type VideoProviderFailureCode =
@@ -85,7 +86,7 @@ function providerFailureCodeFromMessage(message: string): VideoProviderFailureCo
 }
 
 function normalizedProviderProtocol(value: unknown): VideoProviderProtocol | undefined {
-  return value === "lk888-media" || value === "openai-videos" || value === "huitu-openapi" ? value : undefined;
+  return value === "lk888-media" || value === "openai-videos" || value === "huitu-openapi" || value === "tokengo-media" ? value : undefined;
 }
 
 function normalizedProviderFamily(value: unknown): VideoModelFamily | undefined {
@@ -125,8 +126,8 @@ export function geminiVideoFrameUploadTypeMessage(spanish = false): string {
 
 export function geminiVideoFramePolicyWarningMessage(spanish = false): string {
   return spanish
-    ? "Gemini no puede usar imagenes de referencia que contengan personas reales o reconocibles. Elige productos, objetos, paisajes, mascotas, ilustraciones o referencias ficticias/estilizadas."
-    : "Gemini cannot use reference images that contain real or recognizable people. Choose products, objects, landscapes, pets, illustrations, or fully fictional/stylized references.";
+    ? "Gemini puede rechazar imagenes de referencia con personas reales o reconocibles. Las referencias ficticias/estilizadas pueden enviarse, pero pueden fallar en la revision del proveedor."
+    : "Gemini may reject reference images with real or recognizable people. Fictional or stylized references can be submitted, but may still fail provider review.";
 }
 
 export function geminiVideoFramePolicyDetailMessage(spanish = false): string {

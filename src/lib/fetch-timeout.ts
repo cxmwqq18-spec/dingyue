@@ -42,27 +42,55 @@ function proxyAgentForUrl(proxyUrl: string) {
   return cachedProxyAgent.agent;
 }
 
-function withProxyDispatcher(input: string | URL, init: RequestInit): RequestInit {
+function proxyUrlForInput(input: string | URL): string {
   const proxyUrl = configuredProxyUrl();
-  if (!proxyUrl) return init;
+  if (!proxyUrl) return "";
   try {
     const target = new URL(String(input));
-    if (!["http:", "https:"].includes(target.protocol) || isLoopbackHost(target.hostname)) return init;
-    return { ...init, dispatcher: proxyAgentForUrl(proxyUrl) } as RequestInit;
+    if (!["http:", "https:"].includes(target.protocol) || isLoopbackHost(target.hostname)) return "";
+    return proxyUrl;
   } catch {
-    return init;
+    return "";
   }
+}
+
+function proxyLooksLocal(proxyUrl: string): boolean {
+  try {
+    return isLoopbackHost(new URL(proxyUrl).hostname);
+  } catch {
+    return false;
+  }
+}
+
+function shouldRetryWithoutLocalProxy(error: unknown, proxyUrl: string): boolean {
+  if (!proxyLooksLocal(proxyUrl) || process.env.AI_WORKER_PROXY_DIRECT_FALLBACK === "0") return false;
+  const cause = error instanceof Error && "cause" in error ? (error as Error & { cause?: unknown }).cause : undefined;
+  const code = typeof cause === "object" && cause && "code" in cause ? String((cause as { code?: unknown }).code ?? "") : "";
+  const message = [
+    error instanceof Error ? error.message : "",
+    cause instanceof Error ? cause.message : ""
+  ].join(" ");
+  return code === "ECONNREFUSED" ||
+    code === "ECONNRESET" ||
+    code === "EHOSTUNREACH" ||
+    code === "ENETUNREACH" ||
+    /ECONNREFUSED|ECONNRESET|EHOSTUNREACH|ENETUNREACH/.test(message);
 }
 
 export async function fetchWithTimeout(input: string | URL, init: RequestInit & { timeoutMs?: number } = {}): Promise<Response> {
   const url = String(input);
   const timeoutMs = Math.max(250, init.timeoutMs ?? 5000);
   const signal = init.signal ?? timeoutSignal(url, timeoutMs);
+  const proxyUrl = proxyUrlForInput(input);
+  const requestInit = { ...init, signal };
   try {
-    return await fetch(input, withProxyDispatcher(input, { ...init, signal }));
+    return await fetch(input, proxyUrl ? { ...requestInit, dispatcher: proxyAgentForUrl(proxyUrl) } as RequestInit : requestInit);
   } catch (error) {
     if (error instanceof Error && (error.name === "TimeoutError" || error.name === "AbortError")) {
       throw new FetchTimeoutError(url, timeoutMs);
+    }
+    if (proxyUrl && shouldRetryWithoutLocalProxy(error, proxyUrl)) {
+      return fetch(input, requestInit);
     }
     throw error;
   }

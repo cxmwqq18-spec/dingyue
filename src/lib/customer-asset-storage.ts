@@ -14,6 +14,11 @@ export class CustomerAssetStorageError extends Error {
   }
 }
 
+export type CustomerAssetWatermarkMarker = {
+  version: string;
+  text: string;
+};
+
 const assetMimeByExtension: Record<string, string> = {
   ".gif": "image/gif",
   ".jpg": "image/jpeg",
@@ -127,11 +132,36 @@ export function writeCustomerAssetFile(params: { storageKey: string; bytes: Buff
   return { path: filePath, size: params.bytes.length };
 }
 
+function customerAssetWatermarkMarkerPath(storageKey: string): string {
+  return `${customerAssetFilePath(storageKey)}.watermark.json`;
+}
+
+export function readCustomerAssetWatermarkMarker(storageKey: string): CustomerAssetWatermarkMarker | undefined {
+  try {
+    const value = JSON.parse(fs.readFileSync(customerAssetWatermarkMarkerPath(storageKey), "utf8")) as Partial<CustomerAssetWatermarkMarker>;
+    if (typeof value.version === "string" && typeof value.text === "string") {
+      return { version: value.version, text: value.text };
+    }
+  } catch {
+    return undefined;
+  }
+  return undefined;
+}
+
+export function writeCustomerAssetWatermarkMarker(storageKey: string, marker: CustomerAssetWatermarkMarker): void {
+  const markerPath = customerAssetWatermarkMarkerPath(storageKey);
+  fs.mkdirSync(path.dirname(markerPath), { recursive: true });
+  fs.writeFileSync(markerPath, `${JSON.stringify({
+    ...marker,
+    writtenAt: new Date().toISOString()
+  }, null, 2)}\n`);
+}
+
 export async function readCustomerAssetFileRemote(params: {
   storageKey: string;
   baseUrl?: string;
   secret?: string;
-}): Promise<{ storageKey: string; bytes: Buffer; mimeType: string }> {
+}): Promise<{ storageKey: string; bytes: Buffer; mimeType: string; watermark?: CustomerAssetWatermarkMarker }> {
   const baseUrls = Array.from(new Set([
     normalizeBaseUrl(params.baseUrl || customerAssetReadBaseUrl()),
     normalizeBaseUrl(customerAssetWriteBaseUrl())
@@ -161,7 +191,8 @@ export async function readCustomerAssetFileRemote(params: {
       return {
         storageKey,
         bytes: Buffer.from(await response.arrayBuffer()),
-        mimeType: response.headers.get("content-type")?.split(";")[0]?.trim() || "application/octet-stream"
+        mimeType: response.headers.get("content-type")?.split(";")[0]?.trim() || "application/octet-stream",
+        watermark: watermarkMarkerFromHeaders(response.headers)
       };
     } catch (error) {
       lastError = error;
@@ -171,6 +202,12 @@ export async function readCustomerAssetFileRemote(params: {
   throw new CustomerAssetStorageError("customer_asset_remote_read_failed", 500);
 }
 
+function watermarkMarkerFromHeaders(headers: Headers): CustomerAssetWatermarkMarker | undefined {
+  const version = headers.get("x-customer-asset-watermark-version")?.trim();
+  const text = headers.get("x-customer-asset-watermark-text")?.trim();
+  return version && text ? { version, text } : undefined;
+}
+
 export async function writeCustomerAssetFileRemote(params: {
   storageKey: string;
   bytes: Buffer;
@@ -178,6 +215,7 @@ export async function writeCustomerAssetFileRemote(params: {
   baseUrl?: string;
   secret?: string;
   purpose?: "input" | "output";
+  watermark?: CustomerAssetWatermarkMarker;
 }): Promise<{ storageKey: string; size: number; url?: string }> {
   const baseUrl = normalizeBaseUrl(params.baseUrl || customerAssetWriteBaseUrl());
   if (!baseUrl) throw new CustomerAssetStorageError("customer_asset_write_base_url_required", 500);
@@ -203,7 +241,11 @@ export async function writeCustomerAssetFileRemote(params: {
           "X-Customer-Asset-Transfer-Secret": secret,
           "X-Customer-Asset-Storage-Key": storageKey,
           "X-Customer-Asset-Mime-Type": params.mimeType,
-          ...(params.purpose ? { "X-Customer-Asset-Purpose": params.purpose } : {})
+          ...(params.purpose ? { "X-Customer-Asset-Purpose": params.purpose } : {}),
+          ...(params.watermark ? {
+            "X-Customer-Asset-Watermark-Version": params.watermark.version,
+            "X-Customer-Asset-Watermark-Text": params.watermark.text
+          } : {})
         },
         body: new Blob([new Uint8Array(params.bytes)], { type: params.mimeType }),
         cache: "no-store"
@@ -218,6 +260,8 @@ export async function writeCustomerAssetFileRemote(params: {
           storageKey,
           mimeType: params.mimeType,
           purpose: params.purpose,
+          watermarkVersion: params.watermark?.version,
+          watermarkText: params.watermark?.text,
           dataBase64: params.bytes.toString("base64")
         }),
         cache: "no-store"
@@ -237,6 +281,7 @@ export async function writeCustomerAssetFileShared(params: {
   bytes: Buffer;
   mimeType: string;
   purpose?: "input" | "output";
+  watermark?: CustomerAssetWatermarkMarker;
 }): Promise<{ storageKey: string; size: number; path?: string; url?: string; remote: boolean }> {
   const storageKey = normalizeCustomerAssetStorageKey(params.storageKey);
   const remoteBaseUrl = customerAssetWriteBaseUrl();
@@ -246,11 +291,13 @@ export async function writeCustomerAssetFileShared(params: {
       bytes: params.bytes,
       mimeType: params.mimeType,
       purpose: params.purpose,
+      watermark: params.watermark,
       baseUrl: remoteBaseUrl
     });
     return { ...written, remote: true };
   }
   const written = writeCustomerAssetFile({ storageKey, bytes: params.bytes });
+  if (params.watermark) writeCustomerAssetWatermarkMarker(storageKey, params.watermark);
   return { storageKey, size: written.size, path: written.path, remote: false };
 }
 
@@ -286,6 +333,7 @@ export function deleteCustomerAssetFile(storageKey: string): { deleted: boolean;
   const filePath = customerAssetFilePath(storageKey);
   const existed = fs.existsSync(filePath);
   fs.rmSync(filePath, { force: true });
+  fs.rmSync(customerAssetWatermarkMarkerPath(storageKey), { force: true });
   pruneEmptyAssetDirectories(path.dirname(filePath));
   return { deleted: existed, path: filePath };
 }

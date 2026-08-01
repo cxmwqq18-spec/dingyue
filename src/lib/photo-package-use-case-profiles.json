@@ -1,0 +1,567 @@
+{
+  "mydreamshootsCategories": {
+    "creator": {
+      "headline": "Creator Photos for Launches, Media Kits, and Social Campaigns",
+      "cardDescription": "Create polished creator portraits for media kits, profile banners, course launches, podcast covers, and sponsor decks.",
+      "metaLabel": "Creator portraits",
+      "tags": ["Media kit", "Launch", "Sponsor deck", "Profile banner"],
+      "detailTags": ["Personal brand", "Podcast cover", "Course launch", "Social campaign", "Founder creator"],
+      "detailIntro": "Use this collection when you need creator-ready images that feel intentional across profile pages, launch posts, media kits, newsletter headers, and sponsor presentations.",
+      "whatCreates": "A set of AI creator portraits, editorial profile images, social banners, and campaign-ready shots from your uploaded photos.",
+      "bestFor": [
+        "YouTube, TikTok, newsletter, and podcast profile refreshes",
+        "Creator media kits and sponsor pitch decks",
+        "Course launches, coaching pages, and personal brand sites",
+        "Announcement posts, banner images, and campaign thumbnails"
+      ],
+      "workflow": [
+        "Upload clear selfies or portrait photos with different expressions.",
+        "Choose a creator style pack that matches your channel or launch mood.",
+        "Generate several angles so you have options for profile, banner, and thumbnail crops.",
+        "Download the strongest images and use them across your creator pages and campaign assets."
+      ],
+      "styleNotes": [
+        "Check that the face, hairline, and hands still look natural.",
+        "Pick images with enough negative space for text overlays or sponsor logos.",
+        "Use the same outfit direction across a launch so the campaign feels consistent."
+      ],
+      "coverNote": "Creator images work best when your source photos show your face clearly and include both close-up and half-body references."
+    },
+    "avatar": {
+      "headline": "AI Avatars for Profiles, Gaming Handles, and Community Identity",
+      "cardDescription": "Turn selfies into avatars for gaming profiles, Discord servers, creator handles, fan communities, and social profile refreshes.",
+      "metaLabel": "AI avatars",
+      "tags": ["Gaming", "Discord", "Social profile", "Community"],
+      "detailTags": ["Profile avatar", "Gaming handle", "Server identity", "Streamer profile", "Fan account"],
+      "detailIntro": "Use this collection when you want a recognizable avatar that still feels like you, whether it is for a gaming handle, community profile, social account, or creative identity.",
+      "whatCreates": "Stylized AI avatars, profile icons, character-like portraits, and identity images suitable for square crops and account pages.",
+      "bestFor": [
+        "Gaming profiles, Discord servers, and community member cards",
+        "Streamer avatars, fan accounts, and creator profile icons",
+        "Social media refreshes where a real selfie feels too plain",
+        "Character-inspired profile images for private use and personal branding"
+      ],
+      "workflow": [
+        "Upload sharp front-facing photos with consistent lighting.",
+        "Select an avatar style that fits your platform or community tone.",
+        "Generate multiple expressions and framing options for square avatars.",
+        "Download versions for profile icons, channel art, and community posts."
+      ],
+      "styleNotes": [
+        "Confirm the avatar is recognizable at small sizes.",
+        "Avoid using official character marks or protected team logos unless you own the rights.",
+        "Choose a version that matches the tone of the platform where it will appear."
+      ],
+      "coverNote": "Avatar packs perform best with clean face references and simple backgrounds.",
+      "safetyNote": "Use original styles for avatars and avoid copying protected characters, official logos, or another person's likeness without permission."
+    },
+    "wedding": {
+      "headline": "Wedding Photos for Save-the-Dates, Couple Albums, and Keepsakes",
+      "cardDescription": "Create romantic wedding visuals for save-the-date concepts, wedding websites, couple albums, invitations, and private keepsakes.",
+      "metaLabel": "Wedding photos",
+      "tags": ["Save the date", "Couple album", "Wedding site", "Keepsake"],
+      "detailTags": ["Engagement", "Invitation", "Private album", "Wedding website", "Couple story"],
+      "detailIntro": "Use this collection to design wedding-inspired images before or after the big day, from save-the-date concepts and wedding website visuals to private couple keepsakes.",
+      "whatCreates": "AI wedding portraits, engagement-style scenes, romantic couple albums, invitation-ready images, and keepsake visuals.",
+      "bestFor": [
+        "Wedding websites, save-the-date concepts, and announcement posts",
+        "Engagement portraits, couple albums, and anniversary keepsakes",
+        "Invitation mockups, guest book visuals, and private photo gifts",
+        "Couples who want dreamy scenes without booking a full styled shoot"
+      ],
+      "workflow": [
+        "Upload clear solo or couple photos with natural expressions.",
+        "Choose a wedding, engagement, or cultural style that matches the story.",
+        "Generate several scene options for cards, websites, and albums.",
+        "Download images for private keepsakes, drafts, or polished announcement assets."
+      ],
+      "styleNotes": [
+        "Review rings, veils, hands, and face details closely before using an image in print.",
+        "Use final wedding dates, names, and venue details only in a separate design tool after generation.",
+        "Pick images with soft backgrounds when you need space for invitation text."
+      ],
+      "coverNote": "Wedding packs are strongest when both partners have clear, well-lit source photos from similar angles.",
+      "safetyNote": "For cultural wedding styles, use references respectfully and avoid presenting generated details as real ceremony documentation."
+    },
+    "cultural": {
+      "headline": "Cultural Portraits for Heritage Albums, Celebrations, and Family Stories",
+      "cardDescription": "Create heritage-inspired portraits for cultural celebrations, family albums, festival greetings, milestone posts, and private keepsakes.",
+      "metaLabel": "Cultural portraits",
+      "tags": ["Heritage", "Festival", "Family story", "Keepsake"],
+      "detailTags": ["Celebration", "Family album", "Festival greeting", "Milestone", "Traditional style"],
+      "detailIntro": "Use this collection when you want portraits that honor cultural styling for personal albums, festival greetings, family occasion posts, and private keepsake sets.",
+      "whatCreates": "AI cultural portraits, celebration-ready images, festival greeting visuals, and family-style keepsake scenes.",
+      "bestFor": [
+        "Festival greetings, family albums, and cultural milestone posts",
+        "Private keepsakes for weddings, engagements, and heritage celebrations",
+        "Profile images with traditional outfits or celebration styling",
+        "Families who want coordinated images without arranging a studio session"
+      ],
+      "workflow": [
+        "Upload clear portraits and include outfit references when available.",
+        "Select the cultural or celebration pack that matches the intended occasion.",
+        "Generate options with different framing for cards, albums, and social posts.",
+        "Download the images and review details before sharing with family or community groups."
+      ],
+      "styleNotes": [
+        "Check jewelry, fabric details, hands, and facial resemblance carefully.",
+        "Use respectful wording when describing cultural or religious contexts.",
+        "Avoid using generated images as proof of real attendance at an event."
+      ],
+      "coverNote": "Cultural styles work best when the uploaded photos have clear faces and the intended outfit direction is easy to understand.",
+      "safetyNote": "Use cultural and religious themes respectfully, especially for ceremonies, sacred dress, or community-specific symbols."
+    },
+    "couple": {
+      "headline": "Couple Photos for Date Nights, Anniversaries, and Romantic Albums",
+      "cardDescription": "Create couple portraits for anniversary posts, date-night albums, engagement concepts, holiday cards, and private romantic keepsakes.",
+      "metaLabel": "Couple photos",
+      "tags": ["Anniversary", "Date night", "Engagement", "Keepsake"],
+      "detailTags": ["Romantic album", "Holiday card", "Couple story", "Private gift", "Date-night mood"],
+      "detailIntro": "Use this collection to turn everyday couple photos into polished scenes for anniversaries, holiday cards, date-night memories, engagement concepts, and private gifts.",
+      "whatCreates": "AI couple portraits, romantic scene sets, anniversary-ready images, holiday card visuals, and private keepsake albums.",
+      "bestFor": [
+        "Anniversary posts, date-night albums, and private romantic gifts",
+        "Engagement concepts, couple profile images, and wedding website drafts",
+        "Holiday cards, date-night moodboards, and long-distance relationship keepsakes",
+        "Couples who want coordinated images without planning a photo shoot"
+      ],
+      "workflow": [
+        "Upload clear photos of both people, ideally with similar lighting and recent face references.",
+        "Choose a couple style pack that matches the mood or occasion.",
+        "Generate multiple images for square posts, portrait cards, and album covers.",
+        "Download the best options and use them for cards, posts, or private albums."
+      ],
+      "styleNotes": [
+        "Review both faces separately so one person is not improved at the other's expense.",
+        "Check hands, arms, jewelry, and eye direction in close couple poses.",
+        "Use images privately when the other person has not approved public sharing."
+      ],
+      "coverNote": "Couple packs are most reliable when both people are visible, well-lit, and represented in several uploaded photos.",
+      "safetyNote": "Only upload and share another person's photos when you have their permission."
+    },
+    "creative": {
+      "headline": "Creative Portraits for Editorial Looks, Character Concepts, and Bold Profiles",
+      "cardDescription": "Create expressive images for editorial profiles, character concepts, album-cover moods, party posters, and standout social refreshes.",
+      "metaLabel": "Creative portraits",
+      "tags": ["Editorial", "Character", "Poster", "Social refresh"],
+      "detailTags": ["Album mood", "Concept art", "Party invite", "Bold profile", "Fashion story"],
+      "detailIntro": "Use this collection when your profile needs more drama than a standard headshot, from editorial portraits and character concepts to poster-style images and bold social refreshes.",
+      "whatCreates": "AI creative portraits, cinematic character scenes, fashion-editorial images, poster-ready crops, and expressive profile visuals.",
+      "bestFor": [
+        "Editorial profile refreshes, creative portfolios, and artist pages",
+        "Character concepts, party posters, and album-cover style moods",
+        "Fashion stories, nightlife looks, and bold social media campaigns",
+        "Users who want images with a stronger visual point of view"
+      ],
+      "workflow": [
+        "Upload portraits with clear facial detail and a few varied expressions.",
+        "Select a creative pack with the mood, era, or scene direction you want.",
+        "Generate a range of images so you can choose between subtle and dramatic versions.",
+        "Download the strongest crops for profiles, posters, covers, or concept boards."
+      ],
+      "styleNotes": [
+        "Check that stylization does not overpower facial resemblance.",
+        "Use simple crops for profile images and more complex frames for posters.",
+        "Avoid suggesting a real affiliation, film role, or brand endorsement unless it is true."
+      ],
+      "coverNote": "Creative packs benefit from expressive photos and clean face references that leave room for dramatic styling."
+    },
+    "beauty": {
+      "headline": "Beauty Photos for Glow-Ups, Makeup Looks, and Profile Refreshes",
+      "cardDescription": "Create beauty portraits for makeup ideas, hairstyle previews, dating profiles, salon moodboards, and polished social updates.",
+      "metaLabel": "Beauty portraits",
+      "tags": ["Makeup", "Hair", "Dating profile", "Glow-up"],
+      "detailTags": ["Salon moodboard", "Beauty profile", "Style preview", "Social refresh", "Self-care"],
+      "detailIntro": "Use this collection for polished beauty images that help preview a look, refresh a profile, plan a salon direction, or create a confident set of social portraits.",
+      "whatCreates": "AI beauty portraits, hairstyle previews, makeup-inspired images, profile-ready shots, and self-care themed albums.",
+      "bestFor": [
+        "Makeup concepts, hairstyle previews, and salon consultation moodboards",
+        "Dating profile refreshes, social portraits, and personal glow-up albums",
+        "Beauty creator content, skincare page visuals, and style comparison sets",
+        "Users who want refined portraits without booking a beauty shoot"
+      ],
+      "workflow": [
+        "Upload clear face photos with natural lighting and minimal filters.",
+        "Choose a beauty or hairstyle pack that matches the intended look.",
+        "Generate options with different hair, makeup, and portrait framing.",
+        "Download favorites and compare them before using as profile or style references."
+      ],
+      "styleNotes": [
+        "Check eyes, skin texture, teeth, hairline, and earrings for realism.",
+        "Treat hairstyle outputs as inspiration, not a guaranteed salon result.",
+        "Use softer edits for professional profiles and bolder edits for beauty content."
+      ],
+      "coverNote": "Beauty packs work best with close, well-lit photos where the face is unobstructed."
+    },
+    "sports": {
+      "headline": "Sports Fan Photos for Match-Day Posts, Stadium Portraits, and Watch Parties",
+      "cardDescription": "Create sports-themed images for match-day posts, fan avatars, stadium portraits, championship posters, and watch-party graphics.",
+      "metaLabel": "Sports fan photos",
+      "tags": ["Match day", "Stadium", "Fan avatar", "Poster"],
+      "detailTags": ["Watch party", "Championship", "Supporter card", "Team spirit", "Game night"],
+      "detailIntro": "Use this collection to create energetic fan images for match days, watch parties, supporter avatars, stadium-style portraits, and private championship keepsakes.",
+      "whatCreates": "AI sports fan portraits, stadium scenes, supporter avatars, match-day graphics, and poster-style images.",
+      "bestFor": [
+        "Match-day social posts, supporter avatars, and watch-party invites",
+        "Stadium-style portraits, championship posters, and fantasy fan cards",
+        "Private group albums for friends, teams, and supporter communities",
+        "Users who want sports energy without arranging a themed shoot"
+      ],
+      "workflow": [
+        "Upload clear solo or group photos with visible faces.",
+        "Pick a sports style pack and choose the energy level that fits the event.",
+        "Generate several portrait and poster crops for different platforms.",
+        "Download the best images for private albums, posts, avatars, or watch-party graphics."
+      ],
+      "styleNotes": [
+        "Check jersey text, numbers, fingers, and crowd details before posting.",
+        "Use original colors or generic supporter styling when official marks are not allowed.",
+        "Avoid implying professional athlete status or official team endorsement."
+      ],
+      "coverNote": "Sports scenes work best with energetic expressions and clean face references.",
+      "safetyNote": "Do not use protected team logos, league marks, player likenesses, or official branding unless you have rights to use them."
+    },
+    "video": {
+      "headline": "AI Video Add-Ons for Motion Clips, Reels, and Cinematic Moments",
+      "cardDescription": "Turn portraits into short AI clips for reels, profile reveals, romantic moments, launch teasers, and cinematic social posts.",
+      "metaLabel": "AI video add-ons",
+      "tags": ["Reels", "Motion clip", "Launch teaser", "Profile reveal"],
+      "detailTags": ["Cinematic moment", "Social video", "Couple clip", "Creator teaser", "Album motion"],
+      "detailIntro": "Use this collection when a still image is not enough and you want a short motion moment for reels, profile reveals, launch teasers, couple clips, or cinematic social posts.",
+      "whatCreates": "Short AI video clips, motion portraits, cinematic reveal moments, and social-ready animated scenes derived from your selected images.",
+      "bestFor": [
+        "Instagram reels, TikTok posts, profile reveals, and launch teasers",
+        "Couple moments, wedding album motion, and holiday greetings",
+        "Creator announcements, product-style reveals, and cinematic social posts",
+        "Users who want lightweight motion without planning a video shoot"
+      ],
+      "workflow": [
+        "Start with a strong generated image or upload a clear portrait.",
+        "Choose the motion style and keep the prompt focused on one simple action.",
+        "Generate a short clip and review face consistency frame by frame.",
+        "Download the video for reels, stories, launch teasers, or private albums."
+      ],
+      "styleNotes": [
+        "Check face stability, hand movement, and background flicker before sharing.",
+        "Short, simple motion usually looks more natural than complex action.",
+        "Avoid using video outputs to suggest real footage of an event that did not happen."
+      ],
+      "coverNote": "Video add-ons work best when the starting image has a clear subject and a simple scene.",
+      "safetyNote": "Only animate people whose photos you have permission to use, and avoid misleading viewers about whether the clip is real footage."
+    },
+    "utility": {
+      "headline": "Utility Photo Tools for Upscaling, Try-Ons, and Practical Image Prep",
+      "cardDescription": "Use practical AI tools for image upscaling, outfit previews, product-style shots, profile cleanup, and ready-to-share photo prep.",
+      "metaLabel": "Photo utilities",
+      "tags": ["Upscale", "Try-on", "Cleanup", "Product style"],
+      "detailTags": ["Image prep", "Outfit preview", "Profile cleanup", "Listing visual", "Before and after"],
+      "detailIntro": "Use this collection for practical image work such as upscaling older portraits, previewing outfits, cleaning up profile images, or creating simple product-style visuals.",
+      "whatCreates": "Improved image versions, AI upscales, outfit preview visuals, product-style portraits, and cleaner photos for sharing or publishing.",
+      "bestFor": [
+        "Upscaling small or older portraits for profile and album use",
+        "Virtual try-on previews before buying or planning an outfit",
+        "Product-style and listing-adjacent visuals for personal projects",
+        "Cleaning up photos before using them in packs, posts, or profile pages"
+      ],
+      "workflow": [
+        "Upload the image you want to improve or preview.",
+        "Choose the utility pack that matches the task, such as upscale or try-on.",
+        "Generate a few versions and compare detail, fit, and realism.",
+        "Download the cleanest result for profiles, albums, previews, or creative projects."
+      ],
+      "styleNotes": [
+        "Review fabric edges, hands, logos, and product details closely.",
+        "Do not treat try-on results as exact fit or color guarantees.",
+        "Keep original files when you need a comparison before using the updated image."
+      ],
+      "coverNote": "Utility tools are most reliable with sharp source images and clear lighting."
+    },
+    "headshots": {
+      "headline": "Professional Headshots for LinkedIn, Resumes, and Team Pages",
+      "cardDescription": "Create polished headshots for LinkedIn, resumes and CVs, founder bios, team pages, speaker profiles, and job applications.",
+      "metaLabel": "Professional headshots",
+      "tags": ["LinkedIn", "Resume", "Founder bio", "Team page"],
+      "detailTags": ["CV", "Speaker profile", "Job application", "Company bio", "Portfolio"],
+      "detailIntro": "Use this collection when you need a credible professional portrait for LinkedIn, a resume or CV, founder bios, team pages, speaker profiles, press kits, and job applications.",
+      "whatCreates": "AI professional headshots, business portraits, team-page images, resume-ready photos, and speaker profile visuals.",
+      "bestFor": [
+        "LinkedIn profile refreshes, resumes, CVs, and job applications",
+        "Founder bios, company team pages, and investor decks",
+        "Conference speaker profiles, press kits, and portfolio pages",
+        "Remote teams that need consistent professional photos without a studio day"
+      ],
+      "workflow": [
+        "Upload several clear selfies with neutral expressions and good lighting.",
+        "Choose a headshot pack that fits your industry, role, and presentation style.",
+        "Generate multiple backgrounds, outfits, and crops for different professional uses.",
+        "Download the best images and use the tight crop for LinkedIn and wider crops for bios."
+      ],
+      "styleNotes": [
+        "Check eyes, teeth, skin texture, hairline, and collar details before uploading to a professional profile.",
+        "Choose conservative backgrounds for resumes and more expressive backgrounds for founder or speaker pages.",
+        "Avoid uniforms, badges, or company marks you are not authorized to use."
+      ],
+      "coverNote": "Headshots work best with recent source photos where your face is centered, sharp, and not heavily filtered."
+    },
+    "seasonal": {
+      "headline": "Seasonal Photos for Holiday Cards, Party Albums, and Occasion Posts",
+      "cardDescription": "Create seasonal images for Christmas cards, Thanksgiving albums, Halloween party portraits, birthday posts, and New Year greetings.",
+      "metaLabel": "Seasonal photos",
+      "tags": ["Holiday card", "Party album", "Family greeting", "Occasion post"],
+      "detailTags": ["Christmas", "Thanksgiving", "Halloween", "Birthday", "New Year"],
+      "detailIntro": "Use this collection for timely photos around holidays and milestones, including Christmas cards, Thanksgiving albums, Halloween party portraits, birthday posts, and New Year greetings.",
+      "whatCreates": "AI seasonal portraits, holiday card images, party album scenes, family greeting visuals, and celebration-ready social posts.",
+      "bestFor": [
+        "Christmas cards, winter greetings, and holiday party photo walls",
+        "Thanksgiving albums, Friendsgiving posts, and gratitude table portraits",
+        "Halloween costume portraits, birthday posts, and New Year countdown images",
+        "Families, couples, and friend groups who want themed photos without a seasonal shoot"
+      ],
+      "workflow": [
+        "Upload clear solo, couple, family, or group photos.",
+        "Choose the holiday or occasion pack that matches the date and tone.",
+        "Generate images in card-friendly, profile-friendly, and album-friendly crops.",
+        "Download favorites and add names, dates, or greetings in your design tool if needed."
+      ],
+      "styleNotes": [
+        "Check faces, fingers, props, food, costumes, and text-like details before printing.",
+        "Use specific holiday outputs only for the occasion they represent.",
+        "Keep family and group images private unless everyone is comfortable with sharing."
+      ],
+      "coverNote": "Seasonal packs are strongest when uploaded photos include every person clearly and the desired holiday mood is simple to read.",
+      "safetyNote": "Use cultural, religious, costume, and family scenes respectfully, especially when sharing group photos publicly."
+    }
+  },
+  "aidreamcapesCategories": {
+    "fan-scene-albums": {
+      "headline": "Fan-Scene Albums for Meetups, Supporter Walls, and Private Keepsakes",
+      "cardDescription": "Create permission-safe fan-scene albums for fan meetup moments, creator supporter walls, fan-letter keepsakes, and private star-adjacent scenes.",
+      "metaLabel": "Fan-scene albums",
+      "tags": ["Fan meetup", "Supporter wall", "Keepsake", "Private album"],
+      "detailTags": ["Creator supporter", "Fan letter", "Star-adjacent", "Meetup memory", "Private gallery"],
+      "detailIntro": "Use this collection to design fan-inspired scenes that celebrate a creator, performer, or fictional event without copying a celebrity likeness or pretending the moment really happened.",
+      "whatCreates": "Private fan-scene albums, supporter wall portraits, fan-letter keepsake images, and star-adjacent gallery moments with original styling.",
+      "bestFor": [
+        "Fan meetup moments and private supporter album pages",
+        "Creator supporter walls, thank-you galleries, and fan-letter visuals",
+        "Star-adjacent scenes that feel exciting without copying a real celebrity",
+        "Private keepsakes for fandom groups, birthday gifts, and community memories"
+      ],
+      "workflow": [
+        "Upload photos you own and have permission to use.",
+        "Choose a fan-scene pack with a general venue, mood, or album direction.",
+        "Generate original scenes without celebrity face copying or official branding.",
+        "Download the images for private albums, fan letters, supporter walls, or keepsake pages."
+      ],
+      "styleNotes": [
+        "Review faces, hands, crowd details, and any text-like background marks.",
+        "Keep the scene clearly original and avoid implying a real meeting, endorsement, or official access.",
+        "Use private sharing when the image includes friends, supporters, or community members."
+      ],
+      "reviewPoints": [
+        "No copied celebrity likeness or official artist branding",
+        "No misleading claim that the scene documents a real event",
+        "All uploaded people have permission to appear"
+      ],
+      "coverNote": "Fan-scene albums work best with clear portraits and prompts that describe the mood rather than a real celebrity identity.",
+      "safetyNote": "Do not copy celebrity likenesses, official fan club marks, tour branding, or copyrighted characters. Keep fan scenes private and clearly fictional when needed."
+    },
+    "game-day-group-photos": {
+      "headline": "Game-Day Group Portraits for Watch Parties, Arena Scenes, and Supporter Posters",
+      "cardDescription": "Create game-day group photos for watch parties, arena-style portraits, championship posters, supporter avatars, and private team-spirit albums.",
+      "metaLabel": "Game-day group photos",
+      "tags": ["Watch party", "Arena portrait", "Championship", "Supporter avatar"],
+      "detailTags": ["Game night", "Group poster", "Private team spirit", "Stadium style", "Fan card"],
+      "detailIntro": "Use this collection to turn group photos into energetic game-day visuals for watch parties, arena-style portraits, championship posters, supporter avatars, and private fan albums.",
+      "whatCreates": "AI game-day group portraits, stadium-style images, supporter posters, watch-party graphics, and team-spirit albums without official marks.",
+      "bestFor": [
+        "Watch-party invites, game-night posts, and group chat celebration images",
+        "Arena-style group portraits, championship posters, and supporter avatars",
+        "Private fantasy fan cards for friends, families, or local clubs",
+        "Sports-themed birthday, tailgate, or viewing-party keepsakes"
+      ],
+      "workflow": [
+        "Upload clear group or solo photos where each face is visible.",
+        "Choose a game-day pack and keep team references generic or personally owned.",
+        "Generate portrait, poster, and avatar-friendly options.",
+        "Download the strongest images for watch-party graphics, supporter albums, or private posts."
+      ],
+      "styleNotes": [
+        "Check jerseys, hands, faces, crowd signage, and trophy details before sharing.",
+        "Use generic colors or original supporter styling when official marks are not licensed.",
+        "Avoid implying professional athlete status, league affiliation, or official team endorsement."
+      ],
+      "reviewPoints": [
+        "No official league, club, or team logo unless you own the rights",
+        "No real player likeness copied into the scene",
+        "Group members are recognizable and approved for sharing"
+      ],
+      "coverNote": "Game-day group photos are strongest when faces are clear and the source photo shows the group arrangement you want to preserve.",
+      "safetyNote": "Avoid protected team logos, league marks, official uniforms, player likenesses, and sponsorship claims unless you have rights to use them."
+    },
+    "premiere-style-portraits": {
+      "headline": "Premiere-Inspired Portrait Sets for Red Carpets, VIP Arrivals, and Award Nights",
+      "cardDescription": "Create premiere-inspired portraits for red-carpet looks, VIP arrival scenes, award-night keepsakes, spotlight couple photos, and friend group galleries.",
+      "metaLabel": "Premiere-inspired portraits",
+      "tags": ["Red carpet", "VIP arrival", "Award night", "Spotlight"],
+      "detailTags": ["Couple spotlight", "Friend gallery", "Private premiere", "Gala look", "Arrival portrait"],
+      "detailIntro": "Use this collection when you want a glamorous event feel for portraits, couple images, friend group galleries, award-night keepsakes, or private celebration albums.",
+      "whatCreates": "AI red-carpet portraits, VIP arrival scenes, spotlight couple photos, award-night images, and premiere-style friend galleries.",
+      "bestFor": [
+        "Red-carpet portraits, VIP arrival looks, and private premiere albums",
+        "Award-night keepsakes, gala-style profile images, and spotlight couple photos",
+        "Friend group galleries for birthdays, screenings, launches, or formal events",
+        "Social posts that need a polished event mood without a real venue shoot"
+      ],
+      "workflow": [
+        "Upload clear solo, couple, or group photos with visible faces.",
+        "Choose a premiere-inspired pack with the level of glamour you want.",
+        "Generate multiple crops for profiles, albums, and event-style posts.",
+        "Download the best images and review background text, flashes, and outfit details."
+      ],
+      "styleNotes": [
+        "Check faces, hands, jewelry, seams, and any red-carpet signage.",
+        "Avoid using real festival, studio, or award-show logos unless you have rights.",
+        "Keep the image positioned as inspired or fictional if no real event took place."
+      ],
+      "reviewPoints": [
+        "No real award show or studio branding unless licensed",
+        "No misleading claim that the portrait is from an actual red-carpet event",
+        "Outfits, faces, and background text look natural"
+      ],
+      "coverNote": "Premiere portraits work best with confident expressions and a few source photos that show the outfit or preferred styling.",
+      "safetyNote": "Do not imply official event attendance, press accreditation, celebrity association, or brand endorsement unless it is true."
+    },
+    "christmas-group-albums": {
+      "headline": "Christmas Group Albums for Holiday Cards, Cozy Portraits, and Winter Greetings",
+      "cardDescription": "Create Christmas group albums for holiday cards, cozy family portraits, winter greetings, office party photo walls, and private festive keepsakes.",
+      "metaLabel": "Christmas group albums",
+      "tags": ["Holiday card", "Winter greeting", "Cozy portrait", "Party wall"],
+      "detailTags": ["Family album", "Office party", "Festive keepsake", "Friends photo", "Card cover"],
+      "detailIntro": "Use this collection to create warm Christmas visuals for holiday cards, cozy group portraits, winter greetings, office party photo walls, and private festive albums.",
+      "whatCreates": "AI Christmas group portraits, holiday card images, cozy winter scenes, party photo wall visuals, and festive keepsake albums.",
+      "bestFor": [
+        "Family holiday cards, winter greetings, and private Christmas albums",
+        "Office party photo walls, friend group portraits, and festive social posts",
+        "Card cover images, newsletter greetings, and cozy couple or group keepsakes",
+        "Families or teams who want holiday images without arranging a seasonal shoot"
+      ],
+      "workflow": [
+        "Upload clear photos of every person who should appear.",
+        "Choose a Christmas album pack with the tone, setting, or group size you want.",
+        "Generate card-friendly and album-friendly crops.",
+        "Download the best images and add names, dates, or greeting text in a design tool."
+      ],
+      "styleNotes": [
+        "Review faces, hands, ornaments, background text, and gift details before printing.",
+        "Use your own wording for greetings after generation so text is accurate.",
+        "Keep group photos private unless everyone is comfortable with public sharing."
+      ],
+      "reviewPoints": [
+        "Every group member is represented naturally",
+        "Holiday props and hands look believable",
+        "Any added greeting text is reviewed outside the generator"
+      ],
+      "coverNote": "Christmas group albums work best when uploaded photos show each person clearly and from a similar angle."
+    },
+    "thanksgiving-memory-sets": {
+      "headline": "Thanksgiving Keepsake Sets for Gratitude Tables, Friendsgiving Albums, and Family Stories",
+      "cardDescription": "Create Thanksgiving keepsakes for gratitude table portraits, Friendsgiving albums, autumn host stories, family-style cards, and private memory sets.",
+      "metaLabel": "Thanksgiving keepsake sets",
+      "tags": ["Gratitude table", "Friendsgiving", "Autumn host", "Family story"],
+      "detailTags": ["Dinner portrait", "Memory set", "Private album", "Seasonal card", "Host story"],
+      "detailIntro": "Use this collection to build warm autumn albums around gratitude tables, Friendsgiving dinners, host stories, family-style cards, and private Thanksgiving keepsakes.",
+      "whatCreates": "AI Thanksgiving portraits, gratitude table scenes, Friendsgiving albums, autumn host story images, and family-style keepsake sets.",
+      "bestFor": [
+        "Gratitude table portraits, family-style cards, and private dinner albums",
+        "Friendsgiving galleries, host story posts, and autumn celebration keepsakes",
+        "Seasonal postcards, memory books, and warm group portraits",
+        "Families and friend groups who want a coordinated album without a formal shoot"
+      ],
+      "workflow": [
+        "Upload clear solo, family, or friend group photos.",
+        "Choose a Thanksgiving pack that matches the table, home, or autumn mood.",
+        "Generate several warm portrait and album crops.",
+        "Download the best images and add real names, dates, or notes in your own layout."
+      ],
+      "styleNotes": [
+        "Review faces, fingers, food, tableware, and background details before sharing.",
+        "Avoid using generated images as proof of real attendance at a gathering.",
+        "Keep family and friend images private if the group has not approved public posting."
+      ],
+      "reviewPoints": [
+        "Food and table details look natural",
+        "The scene does not misrepresent who attended a real event",
+        "All people shown are approved for the album"
+      ],
+      "coverNote": "Thanksgiving sets work best with warm, clear photos and a simple group arrangement.",
+      "safetyNote": "Use family and cultural gathering scenes respectfully, especially when images include children, elders, or private home settings."
+    },
+    "halloween-party-portraits": {
+      "headline": "Halloween Party Portraits for Costume Groups, Spooky Cards, and Original Seasonal Albums",
+      "cardDescription": "Create Halloween party portraits for costume group photos, spooky party cards, haunted premiere looks, friend albums, and original seasonal posts.",
+      "metaLabel": "Halloween party portraits",
+      "tags": ["Costume group", "Spooky card", "Party album", "Haunted look"],
+      "detailTags": ["Friend portrait", "Seasonal post", "Original costume", "Party invite", "Night portrait"],
+      "detailIntro": "Use this collection for costume group portraits, spooky party cards, haunted premiere looks, friend albums, and original Halloween scenes that do not rely on protected characters.",
+      "whatCreates": "AI Halloween portraits, costume group images, spooky party card visuals, haunted event looks, and original seasonal albums.",
+      "bestFor": [
+        "Costume group portraits, friend albums, and spooky social posts",
+        "Halloween party cards, haunted premiere looks, and event invitations",
+        "Original seasonal albums for families, creators, or private groups",
+        "Profile refreshes that need a dramatic October mood"
+      ],
+      "workflow": [
+        "Upload clear solo or group photos with visible faces.",
+        "Choose a Halloween pack with an original costume or spooky mood.",
+        "Generate portrait, card, and album crops.",
+        "Download favorites and inspect faces, hands, props, and background symbols."
+      ],
+      "styleNotes": [
+        "Check masks, hands, teeth, props, and costume edges before sharing.",
+        "Use original costume concepts instead of copying protected movie characters.",
+        "Keep scarier versions appropriate for the audience and platform."
+      ],
+      "reviewPoints": [
+        "Costumes are original or licensed",
+        "No protected horror character is copied directly",
+        "The output is appropriate for the intended audience"
+      ],
+      "coverNote": "Halloween portraits work best with expressive faces and simple costume direction.",
+      "safetyNote": "Avoid copying protected characters, movie monsters, official costume designs, or sensitive cultural dress as a joke or disguise."
+    },
+    "seasonal-celebration-photos": {
+      "headline": "Seasonal Celebration Photos for Birthdays, New Year Albums, and Milestone Cards",
+      "cardDescription": "Create celebration photos for birthday moments, New Year countdown albums, milestone postcards, family occasion portraits, and private event keepsakes.",
+      "metaLabel": "Seasonal celebration photos",
+      "tags": ["Birthday", "New Year", "Milestone", "Family occasion"],
+      "detailTags": ["Countdown album", "Postcard", "Private event", "Celebration wall", "Occasion portrait"],
+      "detailIntro": "Use this collection when the occasion is personal rather than tied to one holiday, from birthdays and New Year countdowns to milestone postcards, family portraits, and private event keepsakes.",
+      "whatCreates": "AI celebration portraits, birthday images, New Year countdown albums, milestone postcards, family occasion photos, and private event keepsake sets.",
+      "bestFor": [
+        "Birthday portraits, party albums, and private celebration walls",
+        "New Year countdown albums, milestone postcards, and family occasion portraits",
+        "Graduation-style moments, reunion keepsakes, and friend group albums",
+        "Creators, families, and groups who need occasion visuals quickly"
+      ],
+      "workflow": [
+        "Upload clear photos of the people you want included.",
+        "Choose a seasonal celebration pack and describe the occasion simply.",
+        "Generate options for cards, posts, albums, and event walls.",
+        "Download the images and add exact dates, names, or captions in your own design tool."
+      ],
+      "styleNotes": [
+        "Review faces, hands, candles, confetti, signs, and any text-like details.",
+        "Keep generated images separate from real event documentation when accuracy matters.",
+        "Use private sharing for family, children, or guest group images."
+      ],
+      "reviewPoints": [
+        "The occasion is represented clearly without false event claims",
+        "Group members are approved for sharing",
+        "Any date or name text is added and checked outside the generator"
+      ],
+      "coverNote": "Seasonal celebration packs work best with clear group photos and a simple occasion prompt.",
+      "safetyNote": "Only upload and share photos of other people when you have permission, especially for children, family events, and private parties."
+    }
+  }
+}

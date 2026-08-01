@@ -18,7 +18,7 @@ export interface WorkerPayload {
   params: Record<string, unknown>;
   providerSelection?: unknown;
   aiProviderFallback: {
-    strategy: "preferred_then_priority";
+    strategy: "priority_then_preferred";
     providerType: PlatformAiProviderType;
     providers: PlatformAiProviderFallbackQueue;
   };
@@ -352,7 +352,7 @@ export async function buildWorkerPayload(params: {
     params: params.job.requestJson,
     providerSelection: params.job.requestJson.providerSelection,
     aiProviderFallback: {
-      strategy: "preferred_then_priority",
+      strategy: "priority_then_preferred",
       providerType,
       providers: providerQueue
     },

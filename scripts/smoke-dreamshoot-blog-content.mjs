@@ -72,6 +72,26 @@ function activeItems(key, siteId) {
   return (state[key] ?? []).filter((item) => item.siteId === siteId && item.status === "active");
 }
 
+const blogCoverageExclusions = {
+  site_dreamshoot: {
+    creativeCategorySlugs: new Set(["travel-scene-pack"]),
+    videoCategorySlugs: new Set(["travel-story"])
+  }
+};
+
+const oldThemeArticlePatterns = {
+  site_dreamshoot: /\b(travel|route|destination|coastal|getaway|itinerary|postcard|traveler|journey|trip|vacation)\b/i,
+  site_aidreamcapes: /\b(travel|route|destination|coastal|getaway|itinerary|postcard|traveler|journey|trip|vacation)\b/i
+};
+
+function isExcludedBlogCoverage(siteId, kind, slug) {
+  const exclusions = blogCoverageExclusions[siteId];
+  if (!exclusions) return false;
+  if (kind === "creative-category") return exclusions.creativeCategorySlugs.has(slug);
+  if (kind === "video-category") return exclusions.videoCategorySlugs.has(slug);
+  return false;
+}
+
 function blockString(block, key, fallback = "") {
   const value = block?.settings?.[key];
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
@@ -110,7 +130,8 @@ function uniqueValues(values) {
 }
 
 function expectedCoverageForSite(site, expected) {
-  const creativeCategories = activeItems("creativePackCategories", expected.siteId);
+  const creativeCategories = activeItems("creativePackCategories", expected.siteId)
+    .filter((category) => !isExcludedBlogCoverage(expected.siteId, "creative-category", category.slug));
   const toolCategories = activeItems("toolCategories", expected.siteId);
   const toolMenuItems = activeItems("toolMenuItems", expected.siteId);
   const fallbackToolCards = toolMenuItems.length ? [] : toolCardsFromSite(site);
@@ -120,7 +141,8 @@ function expectedCoverageForSite(site, expected) {
   const toolItemLabels = toolMenuItems.length
     ? toolMenuItems.map((tool) => tool.title)
     : fallbackToolCards.map((tool) => tool.title);
-  const videoThemeCategories = activeItems("videoThemeCategories", expected.siteId);
+  const videoThemeCategories = activeItems("videoThemeCategories", expected.siteId)
+    .filter((category) => !isExcludedBlogCoverage(expected.siteId, "video-category", category.slug));
   return {
     total:
       expected.baseArticleSlugs.length +
@@ -177,9 +199,9 @@ const expectedSites = [
     label: "Blog",
     foreignBrandPatterns: [/MyDreamShoots/i, /mydreamshoots/i, /DreamShootAI/i],
     baseArticleSlugs: [
-      "/blog/planning-dreamscape-source-photos",
-      "/blog/destination-mood-references",
-      "/blog/route-album-credit-planning"
+      "/blog/approved-source-photo-planning",
+      "/blog/permission-safe-fan-scene-references",
+      "/blog/private-album-credit-planning"
     ]
   }
 ];
@@ -210,6 +232,28 @@ assert(
   "storefront render payload keeps blog article pages available to blog list sections"
 );
 assert(
+  storefrontRender.includes("const blogArticleMetadataSettings") &&
+    storefrontRender.includes("function lightweightBlogArticlePageForClient") &&
+    storefrontRender.includes("Object.entries(sourceSection.settings).filter"),
+  "non-current blog articles use metadata-only client payloads"
+);
+assert(
+  themeRenderer.includes('aria-label="More guides"') &&
+    themeRenderer.includes('className="h-full w-full object-contain"') &&
+    !themeRenderer.includes("Try the workflow yourself"),
+  "blog details use a light internal-link footer without the old dark CTA block"
+);
+assert(
+  themeRenderer.includes("aspect-[4/3] overflow-hidden bg-white/[0.08]") &&
+    themeRenderer.includes("aspect-[4/3] overflow-hidden bg-zinc-100"),
+  "blog cards use safe, complete-image cover frames"
+);
+assert(
+  storefrontRender.includes("lightweightBlogArticlePageForClient(page)") &&
+    !storefrontRender.includes("includeBlogEntries && page.slug.startsWith(\"/blog/\") {\n      pageMap.set(page.id, lightweightPageForClient(page, true));"),
+  "section renders do not hydrate every related blog body"
+);
+assert(
   siteStore.includes("function publicRuntimePageWhere") && siteStore.includes('startsWith: "/blog/"'),
   "public storefront runtime loads blog article pages for blog list routes"
 );
@@ -227,8 +271,17 @@ for (const expected of expectedSites) {
 
   const articlePages = site.pages.filter((page) => page.slug.startsWith("/blog/"));
   const coverage = expectedCoverageForSite(site, expected);
-  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover all category and tool surfaces`, `expected ${coverage.total}, found ${articlePages.length}`);
+  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover current category and tool surfaces`, `expected ${coverage.total}, found ${articlePages.length}`);
   const articleSlugs = articlePages.map((page) => page.slug).sort();
+  const excludedSlugs = blogCoverageExclusions[expected.siteId];
+  if (excludedSlugs) {
+    for (const slug of excludedSlugs.creativeCategorySlugs) {
+      assert(!articleSlugs.includes(`/blog/${slugifySegment(slug)}-photo-package-guide`), `${expected.slug}: excluded old package category has no blog article`, slug);
+    }
+    for (const slug of excludedSlugs.videoCategorySlugs) {
+      assert(!articleSlugs.includes(`/blog/${slugifySegment(slug)}-video-theme-guide`), `${expected.slug}: excluded old video category has no blog article`, slug);
+    }
+  }
   for (const slug of expected.baseArticleSlugs) {
     assert(articleSlugs.includes(slug), `${expected.slug}: base article slug present ${slug}`);
   }
@@ -277,6 +330,36 @@ for (const expected of expectedSites) {
     assert(/^\d{4}-\d{2}-\d{2}$/.test(sectionSetting(articleSection, "publishedAt")), `${expected.slug}${article.slug}: published date is ISO date`);
     assert(/^\d+$/.test(sectionSetting(articleSection, "readMinutes")), `${expected.slug}${article.slug}: read minutes present`);
     assert(sectionSetting(articleSection, "imageUrl").startsWith("/assets/"), `${expected.slug}${article.slug}: cover image is local asset`);
+    assert(sectionSetting(articleSection, "targetHref").length > 1, `${expected.slug}${article.slug}: targetHref is present`);
+    assert(sectionSetting(articleSection, "targetLabel").length > 3, `${expected.slug}${article.slug}: targetLabel is present`);
+    assert(
+      article.publishedJson.sectionsOrder.length === 1 &&
+        article.publishedJson.sectionsOrder[0] === "blog_detail_1" &&
+        Object.keys(article.publishedJson.sections).every((sectionId) => sectionId === "blog_detail_1"),
+      `${expected.slug}${article.slug}: detail page contains only blog_detail_1`
+    );
+    const targetHref = sectionSetting(articleSection, "targetHref");
+    const toolGroupSlugs = new Set([
+      "/blog/photo-ai-tool-guide",
+      "/blog/ai-photo-edit-tool-guide",
+      "/blog/video-ai-tool-guide",
+      "/blog/destination-tools-guide",
+      "/blog/travel-moment-tools-guide",
+      "/blog/adventure-tools-guide",
+      "/blog/creator-travel-tools-guide"
+    ]);
+    if (/-tool-guide$/i.test(article.slug) && !toolGroupSlugs.has(article.slug)) {
+      assert(targetHref.startsWith("/tools/"), `${expected.slug}${article.slug}: tool article links to a specific tool`, targetHref);
+    } else if (/-video-theme-guide$/i.test(article.slug)) {
+      assert(targetHref === "/tools" || targetHref.startsWith("/tools/"), `${expected.slug}${article.slug}: video theme article links to tools`, targetHref);
+    } else if (/-photo-package-guide$/i.test(article.slug) && !expected.baseArticleSlugs.includes(article.slug)) {
+      assert(targetHref.startsWith("/collections/"), `${expected.slug}${article.slug}: package article links to a specific collection`, targetHref);
+    } else {
+      assert(/^(\/collections(?:\/[^/]+)?|\/tools(?:\/[^/]+)?|\/pricing|\/login)$/.test(targetHref), `${expected.slug}${article.slug}: base article has a store entry link`, targetHref);
+    }
+    if (expected.siteId === "site_dreamshoot") {
+      assert(!/\/(category-covers|hero-grid)-/i.test(sectionSetting(articleSection, "imageUrl")), `${expected.slug}${article.slug}: cover avoids collage-style assets`, sectionSetting(articleSection, "imageUrl"));
+    }
     assert((pageSeo.title ?? "").length >= 45 && (pageSeo.title ?? "").length <= 70, `${expected.slug}${article.slug}: SEO title is search-result friendly`, pageSeo.title ?? "");
     assert((pageSeo.description ?? "").length >= 120 && (pageSeo.description ?? "").length <= 160, `${expected.slug}${article.slug}: SEO description is search-result friendly`, pageSeo.description ?? "");
     assert(pageSeo.canonicalPath === article.slug, `${expected.slug}${article.slug}: canonical path matches slug`, pageSeo.canonicalPath ?? "");
@@ -292,7 +375,10 @@ for (const expected of expectedSites) {
     assert(!badPhrase, `${expected.slug}${article.slug}: body avoids prompt-like filler`, badPhrase ?? "");
   }
 
-  const combinedBlogText = articlePages.map(pageText).join("\n");
+  const copyCheckedArticles = articlePages.filter((page) => !/-video-theme-guide$/i.test(page.slug));
+  const combinedBlogText = copyCheckedArticles.map(pageText).join("\n");
+  const oldThemePattern = oldThemeArticlePatterns[expected.siteId];
+  assert(!oldThemePattern?.test(combinedBlogText), `${expected.slug}: article copy avoids old travel/route theme terms`);
   for (const pattern of expected.foreignBrandPatterns) {
     assert(!pattern.test(combinedBlogText), `${expected.slug}: article copy does not mention sibling brand`, String(pattern));
   }

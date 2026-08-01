@@ -1,8 +1,7 @@
 import "server-only";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
-import { isHuituOpenApiBaseUrl } from "@/lib/video-provider-family";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 
-export type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi";
 export type VideoProviderAvailabilityReason =
   | "ai_provider_disabled"
   | "ai_provider_url_missing"
@@ -20,6 +19,7 @@ export type VideoProviderAvailabilityInput = {
   aiUrl?: string | null;
   apiKey?: string | null;
   modelType?: string | null;
+  providerType?: string | null;
   enabled?: boolean;
 };
 
@@ -62,6 +62,7 @@ export function videoProviderProtocolForBaseUrl(baseUrl: string): VideoProviderP
   try {
     const hostname = new URL(baseUrl).hostname.toLowerCase();
     if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
+    if (isTokengoMediaBaseUrl(baseUrl)) return "tokengo-media";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
   } catch {
@@ -99,7 +100,7 @@ export function videoProviderAvailabilityReason(
   params: { referenceAssetCount: number }
 ): VideoProviderAvailabilityReason | undefined {
   const model = provider.modelType?.trim() ?? "";
-  if (!isVideoProviderModel(model)) return "ai_provider_not_video_model";
+  if (provider.providerType !== "video" && !isVideoProviderModel(model)) return "ai_provider_not_video_model";
   if (provider.enabled === false) return "ai_provider_disabled";
   if (!provider.aiUrl?.trim()) return "ai_provider_url_missing";
   if (!provider.apiKey?.trim()) return "ai_provider_api_key_missing";

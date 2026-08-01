@@ -1,7 +1,7 @@
 import "server-only";
 import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformAiProvider } from "@/lib/types";
-import { isHuituOpenApiBaseUrl } from "@/lib/video-provider-family";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 
 export function maskAiProviderKey(apiKey?: string): string {
   const value = apiKey?.trim() ?? "";
@@ -10,11 +10,12 @@ export function maskAiProviderKey(apiKey?: string): string {
   return `${value.slice(0, 6)}...${value.slice(-4)}`;
 }
 
-export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType">): "lk888-media" | "openai-videos" | "huitu-openapi" | "openai-compatible" {
+export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType">): VideoProviderProtocol | "openai-compatible" {
   const aiUrl = provider?.aiUrl?.trim() ?? "";
   try {
     const hostname = new URL(aiUrl).hostname.toLowerCase();
     if (isHuituOpenApiBaseUrl(aiUrl)) return "huitu-openapi";
+    if (isTokengoMediaBaseUrl(aiUrl)) return "tokengo-media";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
   } catch {
@@ -82,6 +83,14 @@ function huituHealthUrl(aiUrl: string) {
   return parsed.toString();
 }
 
+function tokengoModelsCatalogUrl(aiUrl: string) {
+  const parsed = new URL(aiUrl);
+  parsed.pathname = "/v1/skills/models";
+  parsed.search = "";
+  parsed.hash = "";
+  return parsed.toString();
+}
+
 export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey">): Promise<{
   ok: boolean;
   status?: number;
@@ -110,6 +119,11 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   if (protocol === "huitu-openapi") {
     const health = await fetchWithTimeout(huituHealthUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
     return { ok: health.ok, status: health.status, method: "GET", message: health.ok ? "provider reachable" : `provider returned ${health.status}` };
+  }
+
+  if (protocol === "tokengo-media") {
+    const models = await fetchWithTimeout(tokengoModelsCatalogUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
+    return { ok: models.ok, status: models.status, method: "GET", message: models.ok ? "provider reachable" : `provider returned ${models.status}` };
   }
 
   const head = await fetchWithTimeout(aiUrl, { method: "HEAD", headers, cache: "no-store", timeoutMs: aiProviderHeadTimeoutMs }).catch((error) => error as Error);

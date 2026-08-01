@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const providerId = process.env.TWOKEN_VIDEO_PROVIDER_ID?.trim() || "aiprov_2ken_grok_imagine_video";
-const label = process.env.TWOKEN_VIDEO_PROVIDER_LABEL?.trim() || "2Ken Grok Imagine Video";
-const aiUrl = (process.env.TWOKEN_VIDEO_BASE_URL?.trim() || "https://apis.2ken.com/v1").replace(/\/+$/, "");
+const providerId = process.env.TWOKEN_VIDEO_PROVIDER_ID?.trim() || "aiprov_smartpicklid_2ken_grok_video";
+const label = process.env.TWOKEN_VIDEO_PROVIDER_LABEL?.trim() || "SmartPickLid 2KEN Grok Video";
+const aiUrl = (process.env.TWOKEN_VIDEO_BASE_URL?.trim() || "https://api.smartpicklid.com").replace(/\/+$/, "");
 const modelType = process.env.TWOKEN_VIDEO_MODEL?.trim() || "grok-imagine-video";
 const apiKey = process.env.TWOKEN_VIDEO_API_KEY?.trim() || process.env.TWO_KEN_VIDEO_API_KEY?.trim() || "";
 const DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT = 7;

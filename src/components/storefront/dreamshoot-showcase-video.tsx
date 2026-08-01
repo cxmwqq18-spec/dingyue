@@ -7,19 +7,21 @@ type DreamshootShowcaseVideoProps = {
   poster: string;
   label: string;
   className?: string;
+  priority?: boolean;
 };
 
 const SHOWCASE_VIDEO_LOAD_DELAY_MS = 900;
 
-export function DreamshootShowcaseVideo({ src, poster, label, className }: DreamshootShowcaseVideoProps) {
+export function DreamshootShowcaseVideo({ src, poster, label, className, priority = false }: DreamshootShowcaseVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const shouldLoadRef = useRef(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const initialShouldLoad = priority;
+  const shouldLoadRef = useRef(initialShouldLoad);
+  const [shouldLoad, setShouldLoad] = useState(initialShouldLoad);
 
   useEffect(() => {
-    shouldLoadRef.current = false;
-    setShouldLoad(false);
-  }, [src]);
+    shouldLoadRef.current = priority;
+    setShouldLoad(priority);
+  }, [priority, src]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -76,6 +78,7 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
           { rootMargin: "360px 0px" }
         );
     observer?.observe(observeTarget);
+    if (priority) window.requestAnimationFrame(playWhenAllowed);
     if (!observer) revealAndPlay();
 
     return () => {
@@ -86,7 +89,7 @@ export function DreamshootShowcaseVideo({ src, poster, label, className }: Dream
       video.removeEventListener("loadeddata", handleCanPlay);
       video.removeEventListener("canplay", handleCanPlay);
     };
-  }, [src]);
+  }, [priority, src]);
 
   useEffect(() => {
     if (!shouldLoad) return;

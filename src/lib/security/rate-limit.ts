@@ -125,6 +125,9 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   // 后台高风险变更 - 每15分钟8次
   adminMutation: { windowMs: 900000, maxRequests: 8, keyPrefix: "admin_mutation" },
 
+  // 平台 AI 供应商配置 - 人工启停/排序需要连续操作，但仍保留后台写入限流
+  adminProviderConfig: { windowMs: 60000, maxRequests: 30, keyPrefix: "admin_provider_config" },
+
   // 后台客户素材清理 - 支持人工连续删除和小批量清理
   adminCustomerAssetDelete: { windowMs: 60000, maxRequests: 60, keyPrefix: "admin_customer_asset_delete" },
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 
 export type PackageTaxonomyCard = {
   id: string;
@@ -10,9 +10,19 @@ export type PackageTaxonomyCard = {
   meta: string;
   keywords: string[];
   imageUrl: string;
+  imageUrls?: string[];
   href: string;
   appHref: string;
   chips: string[];
+  detailBestFor?: string[];
+  detailCreates?: string;
+  detailReviewPoints?: string[];
+  detailStats?: string[];
+  detailWorkflow?: string[];
+  layout?: "split" | "mosaic";
+  photoCountLabel?: string;
+  tags?: string[];
+  usesLabel?: string;
 };
 
 function cardLinkLabel(action: string, title: string) {
@@ -27,6 +37,122 @@ function isSpanishCard(card: PackageTaxonomyCard | null | undefined): boolean {
 function slugFromHref(href: string) {
   const clean = href.split("?")[0]?.split("#")[0] ?? "";
   return clean.split("/").filter(Boolean).pop() ?? "";
+}
+
+function comparableImageUrl(value: string): string {
+  return value.trim().split("?")[0] ?? value.trim();
+}
+
+function cardImageUrls(card: PackageTaxonomyCard): string[] {
+  const seen = new Set<string>();
+  return [...(card.imageUrls ?? []), card.imageUrl]
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .filter((value) => {
+      const key = comparableImageUrl(value);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function detailPreviewImages(card: PackageTaxonomyCard): string[] {
+  return cardImageUrls(card).slice(0, 1);
+}
+
+function SafeTaxonomyImage({
+  alt,
+  className = "",
+  decoding = "async",
+  fetchPriority,
+  loading,
+  src
+}: {
+  alt: string;
+  className?: string;
+  decoding?: "async" | "auto" | "sync";
+  fetchPriority?: "high" | "low" | "auto";
+  loading?: "eager" | "lazy";
+  src: string;
+}) {
+  const safeAlt = alt.trim() || "Private photo package preview";
+  return (
+    <img
+      alt={safeAlt}
+      className={`block h-auto w-full object-center ${className}`}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
+      loading={loading}
+      src={src}
+    />
+  );
+}
+
+const splitCardClass =
+  "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
+const splitImageShellClass = "bg-[#0B1020]/[0.70]";
+const splitImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
+const splitSingleImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
+const splitContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
+const splitTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
+const splitDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
+const splitArrowClass = "mt-1 h-5 w-5 shrink-0 text-slate-300/70 transition group-hover:translate-x-1 group-hover:text-cyan-100";
+const splitTagClass =
+  "rounded-[8px] border border-white/[0.13] bg-[#101827]/[0.76] px-2.5 py-1 text-[11px] font-semibold leading-5 text-white/[0.78] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
+const splitFooterClass = "mt-auto flex items-center justify-between gap-3 border-t border-white/[0.08] pt-3";
+const splitPhotoCountClass =
+  "rounded-[8px] border border-cyan-200/18 bg-[#0D2B2C]/70 px-2.5 py-1 text-xs font-semibold leading-5 text-[#58E6D9] shadow-[inset_0_1px_0_rgba(255,255,255,0.10)]";
+const splitUsesClass = "truncate text-xs leading-5 text-slate-500";
+
+function SplitPackageTaxonomyCard({ card, index }: { card: PackageTaxonomyCard; index: number }) {
+  const images = cardImageUrls(card);
+  const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3);
+  return (
+    <a
+      aria-label={cardLinkLabel("View collection", card.title)}
+      className={splitCardClass}
+      href={card.href}
+    >
+      <div className={splitImageShellClass}>
+        <div className={images.length > 1 ? "grid grid-cols-2 items-start gap-0.5 p-3" : "grid items-start p-3"}>
+          {images.slice(0, 2).map((image, imageIndex) => (
+            <div className={images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
+              <SafeTaxonomyImage
+                alt={imageIndex === 0 ? `${card.title} preview` : `${card.title} gallery preview`}
+                className="transition duration-500"
+                decoding="async"
+                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
+                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                src={image}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className={splitContentClass}>
+        <div className="flex items-start gap-3">
+          <div className="min-w-0 flex-1">
+            <h2 className={splitTitleClass}>{card.title}</h2>
+            <p className={splitDescriptionClass} title={card.description}>{card.description}</p>
+          </div>
+          <ArrowRight className={splitArrowClass} strokeWidth={1.8} />
+        </div>
+        {tags.length ? (
+          <div className="mt-4 flex min-h-[4.1rem] flex-wrap content-start items-start gap-2">
+            {tags.map((tag) => (
+              <span className={splitTagClass} key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        <div className={splitFooterClass}>
+          <span className={splitPhotoCountClass}>{card.photoCountLabel || card.chips[0] || "20 Photos"}</span>
+          <span className={splitUsesClass}>{card.usesLabel || card.meta}</span>
+        </div>
+      </div>
+    </a>
+  );
 }
 
 export function PackageTaxonomyClient({
@@ -47,60 +173,154 @@ export function PackageTaxonomyClient({
 
   if (selected) {
     const spanish = isSpanishCard(selected);
+    const detailBestFor = selected.detailBestFor ?? [];
+    const detailReviewPoints = selected.detailReviewPoints ?? [];
+    const detailStats = selected.detailStats ?? [];
+    const detailWorkflow = selected.detailWorkflow ?? [];
+    const hasDetailBlocks = Boolean(selected.detailCreates || detailBestFor.length || detailWorkflow.length || detailReviewPoints.length);
+    const hasLeftDetailBlocks = Boolean(selected.detailCreates || detailReviewPoints.length);
+    const hasRightDetailBlocks = Boolean(detailBestFor.length || detailWorkflow.length);
+    const selectedImages = detailPreviewImages(selected);
     const selectedPanelClass = variant === "cream"
-      ? "rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] sm:p-7"
-      : "rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-7";
+      ? "flex flex-col rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] sm:p-6 lg:p-7"
+      : "flex flex-col rounded-[24px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] sm:p-6 lg:p-7";
     const selectedImageFrameClass = variant === "cream"
-      ? "min-h-[360px] overflow-hidden rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-3"
-      : "min-h-[360px] overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3";
+      ? "w-full overflow-hidden rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-3 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] lg:max-w-[540px] lg:justify-self-end"
+      : "w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end";
     const selectedImageBgClass = variant === "cream" ? "bg-[#EADFCF]" : "bg-zinc-900";
     return (
-      <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" data-package-taxonomy-client="ready">
-        <div className={selectedPanelClass}>
-          <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/44"}>{spanish ? "Paquete seleccionado" : "Selected package"}</p>
-          <h2 className={variant === "cream" ? "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.8rem,3vw,3.2rem)] font-semibold leading-none tracking-tight text-white [font-family:var(--site-title-font)]"}>
-            {selected.title}
-          </h2>
-          <p className={variant === "cream" ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/66"}>
-            {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
-          </p>
-          {selected.chips.length ? (
-            <div className="mt-6 flex flex-wrap gap-2">
-              {selected.chips.map((chip) => (
-                <span className={variant === "cream" ? "rounded-full border border-[#E3D3BE] bg-white/70 px-3 py-1.5 text-xs font-semibold text-[#7B5C40]" : "rounded-full border border-white/12 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold text-white/68"} key={chip}>
-                  {chip}
-                </span>
+      <div data-package-taxonomy-client="ready">
+        <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-start">
+          <div className={selectedPanelClass}>
+            <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.44]"}>{spanish ? "Paquete seleccionado" : "Selected package"}</p>
+            <h2 className={variant === "cream" ? "mt-4 text-[clamp(1.7rem,2.7vw,2.85rem)] font-semibold leading-[1.02] tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.7rem,2.7vw,2.85rem)] font-semibold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]"}>
+              {selected.title}
+            </h2>
+            <p className={variant === "cream" ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/[0.66]"}>
+              {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
+            </p>
+            {detailStats.length ? (
+              <div className="mt-6 grid gap-2 sm:grid-cols-2">
+                {detailStats.map((stat) => (
+                  <span className={variant === "cream" ? "rounded-[14px] border border-[#E3D3BE] bg-white/70 px-3 py-2 text-center text-xs font-semibold text-[#7B5C40]" : "rounded-[14px] border border-white/12 bg-white/[0.06] px-3 py-2 text-center text-xs font-semibold text-white/[0.74]"} key={stat}>
+                    {stat}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {selected.chips.length ? (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {selected.chips.map((chip) => (
+                  <span className={variant === "cream" ? "rounded-[8px] border border-[#E3D3BE] bg-white/70 px-2.5 py-1 text-[11px] font-semibold leading-5 text-[#7B5C40]" : splitTagClass} key={chip}>
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            <a className={variant === "cream" ? "mt-7 inline-flex items-center gap-2 self-start rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={selected.appHref}>
+              {spanish ? "Empezar este paquete" : "Start this package"}
+              <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+            </a>
+          </div>
+          <div className={selectedImageFrameClass}>
+            <div className={selectedImages.length > 1 ? "grid grid-cols-2 items-start gap-3" : "grid items-start"}>
+              {selectedImages.map((image, index) => (
+                <div className={`overflow-hidden rounded-[18px] ${selectedImageBgClass}`} key={`${selected.id}_detail_${image}_${index}`}>
+                  <SafeTaxonomyImage
+                    alt={spanish ? `${selected.title} vista previa privada ${index + 1}` : `${selected.title} preview ${index + 1}`}
+                    className="transition duration-500"
+                    decoding="async"
+                    fetchPriority={index === 0 ? "low" : "auto"}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    src={image}
+                  />
+                </div>
               ))}
             </div>
-          ) : null}
-          <a className={variant === "cream" ? "mt-7 inline-flex items-center gap-2 rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={selected.appHref}>
-            {spanish ? "Empezar este paquete" : "Start this package"}
-            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-          </a>
-        </div>
-        <div className={selectedImageFrameClass}>
-          <div className={`relative h-full min-h-[336px] overflow-hidden rounded-[18px] ${selectedImageBgClass}`}>
-            <img
-              alt={spanish ? `${selected.title} vista previa privada` : `${selected.title} preview`}
-              className="h-full min-h-[336px] w-full object-cover"
-              decoding="async"
-              fetchPriority="low"
-              loading="lazy"
-              src={selected.imageUrl}
-            />
           </div>
         </div>
+        {hasDetailBlocks ? (
+          <div className={variant === "cream" ? "mt-6 rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-5 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.24)] sm:p-6 lg:p-7" : "mt-6 rounded-[24px] border border-white/10 bg-white/[0.045] p-5 shadow-[0_28px_90px_-68px_rgba(0,0,0,0.85)] sm:p-6 lg:p-7"}>
+            <div className={`grid gap-6 ${hasLeftDetailBlocks && hasRightDetailBlocks ? "lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" : ""}`}>
+              {hasLeftDetailBlocks ? (
+                <div className="grid content-start gap-6">
+                  {selected.detailCreates ? (
+                    <div>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Que crea" : "What this creates"}</h2>
+                      <p className={variant === "cream" ? "mt-2 text-sm leading-7 text-[#6F6257]" : "mt-2 text-sm leading-7 text-white/[0.58]"}>
+                        {selected.detailCreates}
+                      </p>
+                    </div>
+                  ) : null}
+                  {detailReviewPoints.length ? (
+                    <div>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Puntos de revision" : "Review points"}</h2>
+                      <ul className="mt-3 grid gap-2">
+                        {detailReviewPoints.map((item) => (
+                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                            <Sparkles className={variant === "cream" ? "mt-0.5 h-4 w-4 shrink-0 text-[#B86E36]" : "mt-0.5 h-4 w-4 shrink-0 text-blue-300"} strokeWidth={2} />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+              {hasRightDetailBlocks ? (
+                <div className="grid content-start gap-6 xl:grid-cols-2">
+                  {detailBestFor.length ? (
+                    <div>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Mejor para" : "Best for"}</h2>
+                      <ul className="mt-3 grid gap-2">
+                        {detailBestFor.map((item) => (
+                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                            <CheckCircle2 className={variant === "cream" ? "mt-0.5 h-4 w-4 shrink-0 text-[#B86E36]" : "mt-0.5 h-4 w-4 shrink-0 text-[#16dcf0]"} strokeWidth={2} />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {detailWorkflow.length ? (
+                    <div>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Como funciona" : "How it works"}</h2>
+                      <ol className="mt-3 grid gap-2">
+                        {detailWorkflow.map((item, index) => (
+                          <li className={variant === "cream" ? "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-[#6F6257]" : "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                            <span className={variant === "cream" ? "grid h-6 w-6 place-items-center rounded-full bg-[#1E1712]/10 text-[11px] font-bold text-[#1E1712]/[0.78]" : "grid h-6 w-6 place-items-center rounded-full bg-white/10 text-[11px] font-bold text-white/[0.78]"}>{index + 1}</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (cards.some((card) => card.layout === "split")) {
+    return (
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-package-taxonomy-client="ready">
+        {cards.map((card, index) => (
+          <SplitPackageTaxonomyCard card={card} index={index} key={card.id} />
+        ))}
       </div>
     );
   }
 
   return (
-    <div className="mt-10 grid auto-rows-[minmax(230px,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
+    <div className="mt-10 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
       {cards.map((card, index) => {
         const spanish = isSpanishCard(card);
         const mosaicVariant = index % 10;
         const cardSpanClass = mosaicVariant === 0
-          ? "lg:col-span-7 lg:row-span-2"
+          ? "lg:col-span-7"
           : mosaicVariant === 1
           ? "lg:col-span-5"
           : mosaicVariant === 2
@@ -118,14 +338,9 @@ export function PackageTaxonomyClient({
           : mosaicVariant === 8
           ? "lg:col-span-5"
           : "lg:col-span-7";
-        const cardHeightClass = mosaicVariant === 0
-          ? "min-h-[560px] lg:min-h-[600px]"
-          : mosaicVariant === 1 || mosaicVariant === 2 || mosaicVariant === 9
-          ? "min-h-[300px] lg:min-h-[320px]"
-          : "min-h-[330px]";
         const cardClass = variant === "cream"
-          ? `group relative flex overflow-hidden rounded-[18px] border border-[#E3D3BE] bg-[#FFF8ED] text-[#1E1712] shadow-[0_22px_48px_-42px_rgba(70,46,24,0.42)] transition hover:-translate-y-1 hover:border-[#B86E36]/45 sm:col-span-1 ${cardSpanClass} ${cardHeightClass}`
-          : `group relative flex overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.07] text-white shadow-[0_22px_46px_-38px_rgba(0,0,0,0.82)] transition hover:-translate-y-1 hover:border-white/24 sm:col-span-1 ${cardSpanClass} ${cardHeightClass}`;
+          ? `group relative block overflow-hidden rounded-[18px] border border-[#E3D3BE] bg-[#FFF8ED] text-[#1E1712] shadow-[0_22px_48px_-42px_rgba(70,46,24,0.42)] transition hover:-translate-y-1 hover:border-[#B86E36]/45 sm:col-span-1 ${cardSpanClass}`
+          : `group relative block overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.07] text-white shadow-[0_22px_46px_-38px_rgba(0,0,0,0.82)] transition hover:-translate-y-1 hover:border-white/24 sm:col-span-1 ${cardSpanClass}`;
         return (
           <a
             aria-label={cardLinkLabel(spanish ? "Ver coleccion" : "View collection", card.title)}
@@ -133,28 +348,29 @@ export function PackageTaxonomyClient({
             href={card.href}
             key={card.id}
           >
-            <img
-              alt={card.title}
-              className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
-              decoding="async"
-              fetchPriority="low"
-              loading="lazy"
-              src={card.imageUrl}
-            />
-            <div className={variant === "cream" ? "absolute inset-0 bg-[linear-gradient(180deg,rgba(30,23,18,0.02)_0%,rgba(30,23,18,0.36)_48%,rgba(30,23,18,0.84)_100%)]" : "absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,10,0.08)_0%,rgba(8,8,10,0.45)_42%,rgba(8,8,10,0.92)_100%)]"} />
-            <div className={variant === "cream" ? "absolute inset-0 bg-[linear-gradient(130deg,rgba(216,138,75,0.24),rgba(255,248,237,0)_52%)] opacity-0 transition group-hover:opacity-100" : "absolute inset-0 bg-[linear-gradient(130deg,rgba(201,88,242,0.2),rgba(22,220,240,0)_48%)] opacity-0 transition group-hover:opacity-100"} />
-            <div className={`relative flex w-full flex-col p-5 sm:p-6 ${cardHeightClass}`}>
+            <div className="relative overflow-hidden bg-white/[0.035]">
+              <SafeTaxonomyImage
+                alt={card.title}
+                className="transition duration-700"
+                decoding="async"
+                fetchPriority="low"
+                loading="lazy"
+                src={card.imageUrl}
+              />
+              {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: "linear-gradient(90deg,#ffa644,#ec4bdd,#16dcf0)" }} /> : null}
+            </div>
+            <div className="flex min-h-[220px] w-full flex-col p-5 sm:p-6">
               <div className="flex items-start justify-between gap-3">
-                <span className={variant === "cream" ? "max-w-[78%] rounded-full border border-white/38 bg-[#1E1712]/44 px-3 py-1 text-xs font-semibold text-[#FFF8ED] backdrop-blur" : "max-w-[78%] rounded-full border border-white/18 bg-black/34 px-3 py-1 text-xs font-semibold text-white/86 backdrop-blur"}>{card.meta}</span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-white/78 transition group-hover:translate-x-1 group-hover:text-white" strokeWidth={1.8} />
+                <span className={variant === "cream" ? "max-w-[78%] rounded-[8px] border border-[#E3D3BE] bg-white/70 px-2.5 py-1 text-[11px] font-semibold text-[#7B5C40]" : "max-w-[78%] rounded-[8px] border border-white/[0.13] bg-[#101827]/[0.76] px-2.5 py-1 text-[11px] font-semibold text-white/[0.78] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"}>{card.meta}</span>
+                <ArrowRight className={variant === "cream" ? "h-4 w-4 shrink-0 text-[#7B5C40]/72 transition group-hover:translate-x-1 group-hover:text-[#1E1712]" : "h-4 w-4 shrink-0 text-white/78 transition group-hover:translate-x-1 group-hover:text-white"} strokeWidth={1.8} />
               </div>
               <div className="mt-auto">
-                <h2 className="text-[clamp(1.35rem,2.1vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-balance">{card.title}</h2>
-                <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-white/78">{card.description}</p>
+                <h2 className="text-[clamp(1.25rem,1.8vw,1.72rem)] font-semibold leading-tight tracking-[-0.03em] text-balance">{card.title}</h2>
+                <p className={variant === "cream" ? "mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-[#6F6257]" : "mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-white/68"}>{card.description}</p>
                 {card.keywords.length ? (
                   <div className="mt-5 flex flex-wrap gap-2">
                     {card.keywords.slice(0, 4).map((keyword) => (
-                      <span className={variant === "cream" ? "rounded-full bg-[#FFF8ED]/20 px-2.5 py-1 text-[11px] font-medium text-white/82 backdrop-blur" : "rounded-full bg-white/[0.12] px-2.5 py-1 text-[11px] font-medium text-white/72 backdrop-blur"} key={keyword}>
+                      <span className={variant === "cream" ? "rounded-[8px] border border-white/20 bg-[#1E1712]/[0.38] px-2.5 py-1 text-[11px] font-semibold text-white/[0.82] backdrop-blur" : "rounded-[8px] border border-white/[0.13] bg-[#101827]/[0.76] px-2.5 py-1 text-[11px] font-semibold text-white/[0.78] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur"} key={keyword}>
                         {keyword}
                       </span>
                     ))}

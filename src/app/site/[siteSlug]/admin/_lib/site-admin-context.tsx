@@ -6,6 +6,7 @@ import {
   BarChart3,
   Bot,
   Boxes,
+  CircleStop,
   CreditCard,
   Database,
   FileClock,
@@ -267,6 +268,7 @@ export function siteAdminNav(site: Site, data: SiteAdminData) {
     { label: "顾客管理", href: modulePath(site, "/admin/customers"), icon: Users, group: "交易与客户", badge: String(data.customerCount) },
     { label: "推广合作者", href: modulePath(site, "/admin/partners"), icon: Handshake, group: "交易与客户", badge: "申请" },
     { label: "AI 工具", href: modulePath(site, "/admin/ai-tools"), icon: Bot, group: "AI 订阅", badge: `${data.activeAiApps}/${data.appCount}` },
+    { label: "进程管理", href: modulePath(site, "/admin/processes"), icon: CircleStop, group: "AI 订阅", badge: String(data.openJobs) },
     { label: "内容运营", href: modulePath(site, "/admin/content"), icon: FileText, group: "运营内容", badge: String(data.contentPageCount) },
     { label: "邮件管理", href: modulePath(site, "/admin/email"), icon: MailCheck, group: "设置与安全", badge: data.emailReady ? "ready" : "setup" },
     { label: "站点设置", href: modulePath(site, "/admin/settings"), icon: Settings2, group: "设置与安全", badge: data.site.connect.chargesEnabled ? "ready" : "setup" }
@@ -279,7 +281,8 @@ export function siteAdminCommandActions(site: Site, data: SiteAdminData) {
     { label: "装修", href: modulePath(site, "/admin/design"), icon: Palette, badge: String(site.pages.length), tone: data.publicationCount ? "good" as const : "warn" as const },
     { label: "商品", href: modulePath(site, "/admin/products"), icon: ShoppingBag, badge: String(data.productCount), tone: data.activeProducts ? "good" as const : "warn" as const },
     { label: "订单", href: modulePath(site, "/admin/orders"), icon: ReceiptText, badge: String(data.orderCount), tone: data.orderCount ? "good" as const : "neutral" as const },
-    { label: "AI", href: modulePath(site, "/admin/ai-tools"), icon: Bot, badge: String(data.openJobs), tone: data.failedJobs ? "bad" as const : data.openJobs ? "warn" as const : "good" as const }
+    { label: "AI", href: modulePath(site, "/admin/ai-tools"), icon: Bot, badge: `${data.activeAiApps}/${data.appCount}`, tone: data.activeAiApps ? "good" as const : "warn" as const },
+    { label: "进程", href: modulePath(site, "/admin/processes"), icon: CircleStop, badge: String(data.openJobs), tone: data.failedJobs ? "bad" as const : data.openJobs ? "warn" as const : "good" as const }
   ];
 }
 
@@ -288,7 +291,8 @@ export function siteAdminQuickActions(site: Site, data: SiteAdminData) {
     { label: "打开装修器", href: modulePath(site, "/admin/design/workbench"), icon: Palette, detail: "页面树、区块树、全局页眉页脚、预览、保存和发布。", tone: data.publicationCount ? "good" as const : "warn" as const },
     { label: "商品套餐", href: modulePath(site, "/admin/products"), icon: ShoppingBag, detail: "订阅套餐、credit pack 和 DreamShoot 风格拍摄包。", tone: data.activeProducts ? "good" as const : "warn" as const },
     { label: "顾客会员", href: modulePath(site, "/admin/customers"), icon: Users, detail: "客户状态、余额、模型、私有相册和素材边界。", tone: data.customerCount ? "good" as const : "neutral" as const },
-    { label: "AI 工具", href: modulePath(site, "/admin/ai-tools"), icon: Bot, detail: "工具启用、扣费、worker 路由、任务队列和重跑。", tone: data.activeAiApps ? "good" as const : "warn" as const }
+    { label: "AI 工具", href: modulePath(site, "/admin/ai-tools"), icon: Bot, detail: "工具启用、扣费、worker 路由、任务队列和重跑。", tone: data.activeAiApps ? "good" as const : "warn" as const },
+    { label: "进程管理", href: modulePath(site, "/admin/processes"), icon: CircleStop, detail: "查看排队和运行中的生成任务，必要时人工终止并释放预扣积分。", tone: data.openJobs ? "warn" as const : "good" as const }
   ];
 }
 
@@ -298,7 +302,8 @@ export function siteAdminStats(data: SiteAdminData) {
     { label: "顾客", value: String(data.customerCount), tone: data.customerCount ? "good" as const : "neutral" as const, href: modulePath(data.site, "/admin/customers") },
     { label: "商品", value: `${data.activeProducts}/${data.productCount}`, tone: data.activeProducts ? "good" as const : "warn" as const, href: modulePath(data.site, "/admin/products") },
     { label: "订单", value: String(data.orderCount), tone: data.orderCount ? "good" as const : "neutral" as const, href: modulePath(data.site, "/admin/orders") },
-    { label: "AI", value: `${data.activeAiApps}/${data.appCount}`, tone: data.activeAiApps ? "good" as const : "warn" as const, href: modulePath(data.site, "/admin/ai-tools") }
+    { label: "AI", value: `${data.activeAiApps}/${data.appCount}`, tone: data.activeAiApps ? "good" as const : "warn" as const, href: modulePath(data.site, "/admin/ai-tools") },
+    { label: "进程", value: String(data.openJobs), tone: data.openJobs ? "warn" as const : "good" as const, href: modulePath(data.site, "/admin/processes") }
   ];
 }
 
@@ -1175,6 +1180,7 @@ export const moduleIcons = {
   customers: Users,
   partners: Handshake,
   ai: Bot,
+  processes: CircleStop,
   content: FileText,
   settings: Settings2,
   credits: Database,

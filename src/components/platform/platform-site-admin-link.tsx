@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState, type MouseEvent } from "react";
 import { platformJsonHeaders } from "@/lib/client-csrf";
 
-const adminBridgeTimeoutMs = 8000;
+const adminBridgeTimeoutMs = 15000;
 
 function adminBridgeErrorLabel(error?: string): string {
   return {
@@ -89,6 +89,85 @@ function writeAdminBridgeLoadingPage(adminWindow: Window) {
   }
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function writeAdminBridgeErrorPage(adminWindow: Window, message: string) {
+  try {
+    const safeMessage = escapeHtml(message);
+    adminWindow.document.open();
+    adminWindow.document.write(`<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>进入后台失败</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        background: #fff7ed;
+        color: #172033;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      main {
+        width: min(460px, calc(100vw - 48px));
+        border: 1px solid #fed7aa;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 20px 55px rgba(154, 52, 18, 0.14);
+        padding: 32px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+      p {
+        margin: 0;
+        color: #9a3412;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      button {
+        margin-top: 20px;
+        border: 1px solid #fed7aa;
+        border-radius: 10px;
+        background: #fff7ed;
+        color: #9a3412;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        padding: 10px 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>进入后台失败</h1>
+      <p>${safeMessage}</p>
+      <button onclick="window.close()" type="button">关闭窗口</button>
+    </main>
+  </body>
+</html>`);
+    adminWindow.document.close();
+    adminWindow.focus();
+  } catch {
+    // Some browser policies can block writing to the popup; the inline message remains visible.
+  }
+}
+
 export function PlatformSiteAdminLink({
   siteId,
   path = "/admin",
@@ -101,15 +180,32 @@ export function PlatformSiteAdminLink({
   className?: string;
 }) {
   const [pending, setPending] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const feedbackId = useId();
   const pendingRef = useRef(false);
+  const bridgeHref = `/api/platform/sites/${encodeURIComponent(siteId)}/admin-bridge?path=${encodeURIComponent(path)}`;
 
-  async function openAdmin() {
-    if (pendingRef.current) return;
-    const adminWindow = window.open("about:blank", "_blank");
-    if (!adminWindow) {
-      window.alert("浏览器拦截了新窗口，请允许弹出窗口后再进入后台。");
+  function reportFailure(adminWindow: Window | null, message: string) {
+    setFeedback(message);
+    if (adminWindow && !adminWindow.closed) {
+      writeAdminBridgeErrorPage(adminWindow, message);
+    }
+  }
+
+  async function openAdmin(event: MouseEvent<HTMLAnchorElement>) {
+    if (pendingRef.current) {
+      event.preventDefault();
       return;
     }
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    setFeedback(null);
+    const adminWindow = window.open("about:blank", "_blank");
+    if (!adminWindow) {
+      const message = "浏览器拦截了新窗口，请允许弹出窗口后再进入后台。";
+      setFeedback(message);
+      return;
+    }
+    event.preventDefault();
     writeAdminBridgeLoadingPage(adminWindow);
     pendingRef.current = true;
     setPending(true);
@@ -120,7 +216,7 @@ export function PlatformSiteAdminLink({
       controller.abort();
     }, adminBridgeTimeoutMs);
     try {
-      const response = await fetch(`/api/platform/sites/${siteId}/admin-bridge`, {
+      const response = await fetch(`/api/platform/sites/${encodeURIComponent(siteId)}/admin-bridge`, {
         method: "POST",
         headers: platformJsonHeaders(),
         body: JSON.stringify({ path }),
@@ -129,22 +225,20 @@ export function PlatformSiteAdminLink({
       const result = (await response.json().catch(() => ({}))) as { redirectTo?: string; error?: string };
       if (!response.ok || !result.redirectTo) {
         const message = response.status === 429 ? "操作太频繁，请稍后再试。" : adminBridgeErrorLabel(result.error);
-        window.alert(message);
-        adminWindow.close();
+        reportFailure(adminWindow, message);
         return;
       }
+      setFeedback(null);
       adminWindow.location.replace(result.redirectTo);
     } catch (error) {
-      adminWindow.close();
-      if (!timedOut && error instanceof TypeError && error.message.toLowerCase().includes("failed to fetch")) {
-        return;
-      }
       const message = error instanceof DOMException && error.name === "AbortError"
-        ? "进入后台超时，已恢复当前页面操作，请稍后重试。"
-        : error instanceof Error
+        ? "进入后台等待时间过长，本地服务可能仍在冷启动，请稍后重试。"
+        : !timedOut && error instanceof TypeError && error.message.toLowerCase().includes("failed to fetch")
+          ? "后台桥接请求未完成，请确认本地服务仍在运行后重试。"
+          : error instanceof Error
           ? `进入后台失败：${error.message}`
           : "进入后台失败，请稍后重试。";
-      window.alert(message);
+      reportFailure(adminWindow, message);
     } finally {
       window.clearTimeout(timeout);
       pendingRef.current = false;
@@ -153,8 +247,28 @@ export function PlatformSiteAdminLink({
   }
 
   return (
-    <button className={className} disabled={pending} onClick={openAdmin} type="button">
-      {pending ? "进入中" : label}
-    </button>
+    <span className="relative inline-flex">
+      <a
+        aria-busy={pending}
+        aria-describedby={feedback ? feedbackId : undefined}
+        aria-disabled={pending}
+        className={className}
+        href={bridgeHref}
+        onClick={openAdmin}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {pending ? "进入中" : label}
+      </a>
+      {feedback ? (
+        <span
+          className="absolute left-1/2 top-[calc(100%+6px)] z-30 w-64 -translate-x-1/2 rounded-[8px] border border-[#fed7aa] bg-[#fff7ed] px-3 py-2 text-left text-[12px] leading-5 text-[#9a3412] shadow-[0_14px_30px_-18px_rgba(154,52,18,0.45)]"
+          id={feedbackId}
+          role="alert"
+        >
+          {feedback}
+        </span>
+      ) : null}
+    </span>
   );
 }

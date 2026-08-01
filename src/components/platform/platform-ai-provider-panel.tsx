@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Bot, PlugZap, Power, PowerOff, Save, ShieldCheck, Trash2, X } from "lucide-react";
+import { Bot, Eye, EyeOff, PlugZap, Power, PowerOff, Save, ShieldCheck, Trash2, X } from "lucide-react";
 import {
   WorkbenchActionButton,
   WorkbenchSearchInput,
@@ -87,6 +87,8 @@ type AiProviderPayload = {
     method?: "HEAD" | "GET";
     message: string;
   };
+  apiKey?: string;
+  apiKeyPreview?: string;
 };
 
 type ProviderFormState = {
@@ -96,6 +98,7 @@ type ProviderFormState = {
   apiKey: string;
   modelType: string;
   providerType: PlatformAiProviderType;
+  priority: number;
   makeCurrent: boolean;
   enabled: boolean;
   supportsGenerationN: boolean;
@@ -110,6 +113,7 @@ const defaultProviderForm: ProviderFormState = {
   apiKey: "",
   modelType: "gpt-image-2",
   providerType: "image",
+  priority: 0,
   makeCurrent: true,
   enabled: true,
   supportsGenerationN: false,
@@ -123,11 +127,13 @@ function errorLabel(code?: string): string {
     platform_forbidden: "当前平台账号没有权限修改 AI 供应商配置。",
     csrf_token_required: "安全令牌缺失，请刷新页面后重试。",
     csrf_token_mismatch: "安全令牌不匹配，请刷新页面后重试。",
+    rate_limited: "操作太频繁，请稍等后重试。",
     missing_ai_provider_label: "请输入供应商名称。",
     missing_ai_provider_url: "请输入 AI URL。",
     invalid_ai_provider_url: "请输入有效的 http/https AI URL。",
     missing_ai_provider_api_key: "请输入 API Key，或编辑已有供应商时保留原密钥。",
     missing_ai_provider_model_type: "请选择或输入模型类型。",
+    invalid_ai_provider_priority: "调用优先级必须是 0 或更大的整数。",
     missing_ai_provider: "请选择 AI 供应商。",
     ai_provider_not_found: "AI 供应商不存在。",
     ai_provider_delete_last: "至少需要保留一个 AI 供应商。",
@@ -147,6 +153,7 @@ function providerProtocolText(provider: Pick<AiProviderRow, "status">) {
     "lk888-media": "Media task API",
     "openai-videos": "OpenAI videos",
     "huitu-openapi": "Huitu OpenAPI",
+    "tokengo-media": "Buming / TokenGo media",
     "openai-compatible": "OpenAI compatible"
   }[provider.status.protocol] ?? provider.status.protocol ?? "unknown";
 }
@@ -155,15 +162,43 @@ function providerTypeTone(providerType: PlatformAiProviderType): "good" | "neutr
   return providerType === "video" ? "neutral" : "good";
 }
 
+function normalizeProviderPriority(value: unknown, fallback = 0) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? Math.max(0, Math.trunc(numeric)) : Math.max(0, Math.trunc(fallback));
+}
+
+function nextProviderPriorityForType(providers: AiProviderRow[], providerType: PlatformAiProviderType) {
+  const typed = providers.filter((provider) => provider.providerType === providerType);
+  if (!typed.length) return 0;
+  return Math.max(...typed.map((provider) => normalizeProviderPriority(provider.priority))) + 1;
+}
+
+function nextProviderForm(providers: AiProviderRow[], providerType: PlatformAiProviderType = "image"): ProviderFormState {
+  return {
+    ...defaultProviderForm,
+    providerType,
+    priority: nextProviderPriorityForType(providers, providerType)
+  };
+}
+
 function providerRunnable(provider?: AiProviderRow) {
   return Boolean(provider?.enabled && provider.status.configured);
+}
+
+function compareProviderRows(left: AiProviderRow, right: AiProviderRow) {
+  return left.providerType.localeCompare(right.providerType) ||
+    Number(right.enabled) - Number(left.enabled) ||
+    Number(right.status.configured) - Number(left.status.configured) ||
+    normalizeProviderPriority(left.priority, Number.MAX_SAFE_INTEGER) - normalizeProviderPriority(right.priority, Number.MAX_SAFE_INTEGER) ||
+    Number(right.preferred) - Number(left.preferred) ||
+    left.label.localeCompare(right.label);
 }
 
 function providerSummary(providers: AiProviderRow[], currentProvider?: AiProviderRow): AiProviderPayload["summary"] {
   const byType = Object.fromEntries((["image", "video"] as const).map((providerType) => {
     const typed = providers.filter((provider) => provider.providerType === providerType);
     const enabled = typed.filter((provider) => provider.enabled);
-    const current = enabled.find((provider) => provider.isCurrent) ?? enabled.find((provider) => provider.preferred);
+    const current = [...enabled].sort(compareProviderRows)[0];
     return [providerType, {
       totalProviders: typed.length,
       enabledProviders: enabled.length,
@@ -184,10 +219,9 @@ function providerSummary(providers: AiProviderRow[], currentProvider?: AiProvide
 }
 
 function currentProviderIdsFromProviders(providers: AiProviderRow[]): Record<PlatformAiProviderType, string> {
+  const ordered = [...providers].sort(compareProviderRows);
   return Object.fromEntries((["image", "video"] as const).map((providerType) => {
-    const current = providers.find((provider) => provider.providerType === providerType && provider.enabled && provider.isCurrent) ??
-      providers.find((provider) => provider.providerType === providerType && provider.enabled && provider.preferred) ??
-      providers.find((provider) => provider.providerType === providerType && provider.enabled);
+    const current = ordered.find((provider) => provider.providerType === providerType && provider.enabled);
     return [providerType, current?.id ?? ""];
   })) as Record<PlatformAiProviderType, string>;
 }
@@ -200,7 +234,7 @@ export function PlatformAiProviderPanel({
   const router = useRouter();
   const [status, setStatus] = useState(initialStatus);
   const [query, setQuery] = useState("");
-  const [form, setForm] = useState<ProviderFormState>(defaultProviderForm);
+  const [form, setForm] = useState<ProviderFormState>(() => nextProviderForm(initialStatus.providers));
   const [customModelType, setCustomModelType] = useState("");
   const [editForm, setEditForm] = useState<ProviderFormState | null>(null);
   const [editCustomModelType, setEditCustomModelType] = useState("");
@@ -208,6 +242,8 @@ export function PlatformAiProviderPanel({
   const [savingEdit, setSavingEdit] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testingEdit, setTestingEdit] = useState(false);
+  const [editKeyVisible, setEditKeyVisible] = useState(false);
+  const [revealingEditKey, setRevealingEditKey] = useState(false);
   const [currentActionId, setCurrentActionId] = useState<string | null>(null);
   const [enableActionId, setEnableActionId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -222,10 +258,12 @@ export function PlatformAiProviderPanel({
     return status.providers.filter((provider) => {
       if (!normalized) return true;
       return [provider.label, provider.aiUrl, provider.modelType, provider.providerType, platformAiProviderTypeLabel(provider.providerType), provider.status.apiKeyPreview].join(" ").toLowerCase().includes(normalized);
-    });
+    }).sort(compareProviderRows);
   }, [query, status.providers]);
 
   function edit(provider: AiProviderRow) {
+    setEditKeyVisible(false);
+    setRevealingEditKey(false);
     setEditForm({
       id: provider.id,
       label: provider.label,
@@ -233,6 +271,7 @@ export function PlatformAiProviderPanel({
       apiKey: "",
       modelType: provider.modelType,
       providerType: provider.providerType,
+      priority: normalizeProviderPriority(provider.priority),
       makeCurrent: provider.isCurrent,
       enabled: provider.enabled,
       supportsGenerationN: provider.supportsGenerationN,
@@ -240,12 +279,13 @@ export function PlatformAiProviderPanel({
       maxImagesPerRequest: provider.maxImagesPerRequest || 1
     });
     setEditCustomModelType(modelTypes.includes(provider.modelType) ? "" : provider.modelType);
-    setEditMessage("API Key 留空会保留原密钥；AI URL 可以清空保存。");
+    setEditMessage("API Key 默认隐藏；点击“显示”可查看当前保存的密钥。AI URL 可以清空保存。");
   }
 
   function validateProviderForm(nextForm: ProviderFormState, modelType: string, mode: "create" | "edit", action: "save" | "test") {
     if (!nextForm.label.trim()) return "请输入供应商名称。";
     if (!modelType.trim()) return "请选择或输入模型类型。";
+    if (!Number.isFinite(Number(nextForm.priority)) || Number(nextForm.priority) < 0) return "调用优先级必须是 0 或更大的整数。";
     if (!nextForm.aiUrl.trim()) {
       if (mode === "edit" && action === "save") return "";
       return mode === "create" ? "请先填写 AI URL，或点击列表里的“编辑”修改已有供应商。" : "AI URL 为空，无法测试连通性。";
@@ -296,10 +336,12 @@ export function PlatformAiProviderPanel({
       if (mode === "edit") {
         setEditForm(null);
         setEditCustomModelType("");
+        setEditKeyVisible(false);
+        setRevealingEditKey(false);
         setEditMessage("");
         setMessage(`${nextForm.label.trim() || "AI 供应商"} 已保存，列表已更新。`);
       } else {
-        setForm(defaultProviderForm);
+        setForm(nextProviderForm(result.providers, nextForm.providerType));
         setCustomModelType("");
         setMessage("AI 供应商配置已保存。");
       }
@@ -358,6 +400,43 @@ export function PlatformAiProviderPanel({
     }
   }
 
+  async function revealEditApiKey() {
+    if (!editForm) return;
+    if (editKeyVisible) {
+      setEditKeyVisible(false);
+      setEditMessage("API Key 已隐藏；留空保存仍会保留原密钥。");
+      return;
+    }
+    if (editForm.apiKey.trim()) {
+      setEditKeyVisible(true);
+      setEditMessage("正在显示当前输入的 API Key；保存时可直接保留或替换。");
+      return;
+    }
+    setRevealingEditKey(true);
+    setEditMessage("正在读取当前保存的 API Key...");
+    try {
+      const result = await request("/api/platform/ai-providers", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "reveal",
+          providerId: editForm.id
+        })
+      });
+      const apiKey = typeof result.apiKey === "string" ? result.apiKey : "";
+      if (!apiKey) {
+        setEditMessage("当前供应商还没有保存 API Key。");
+        return;
+      }
+      setEditForm((draft) => draft ? { ...draft, apiKey } : draft);
+      setEditKeyVisible(true);
+      setEditMessage("已显示当前 API Key；保存时可直接保留或替换。");
+    } catch (error) {
+      setEditMessage(`读取失败：${error instanceof Error ? error.message : "unknown error"}`);
+    } finally {
+      setRevealingEditKey(false);
+    }
+  }
+
   async function makeCurrent(providerId: string) {
     const previousStatus = status;
     const targetProvider = status.providers.find((provider) => provider.id === providerId);
@@ -368,6 +447,7 @@ export function PlatformAiProviderPanel({
         ...provider,
         isCurrent: provider.providerType === targetProvider.providerType ? provider.id === providerId : provider.isCurrent,
         preferred: provider.providerType === targetProvider.providerType ? provider.id === providerId : provider.preferred,
+        priority: provider.id === providerId ? 0 : provider.priority,
         enabled: provider.id === providerId ? true : provider.enabled,
         status: provider.id === providerId ? { ...provider.status, enabled: true, runnable: provider.status.configured } : provider.status
       }));
@@ -409,8 +489,7 @@ export function PlatformAiProviderPanel({
           status: { ...item.status, enabled, runnable: enabled && item.status.configured }
         };
       });
-      const typedFallback = updatedProviders.find((item) => item.providerType === provider.providerType && item.enabled && item.preferred) ??
-        updatedProviders.find((item) => item.providerType === provider.providerType && item.enabled);
+      const typedFallback = [...updatedProviders].sort(compareProviderRows).find((item) => item.providerType === provider.providerType && item.enabled);
       const nextProviders = updatedProviders.map((item) => ({
         ...item,
         isCurrent: item.providerType === provider.providerType ? item.id === typedFallback?.id : item.isCurrent,
@@ -455,8 +534,7 @@ export function PlatformAiProviderPanel({
     setDeletingId(provider.id);
     setStatus((currentStatus) => {
       const providers = currentStatus.providers.filter((item) => item.id !== provider.id);
-      const typedFallback = providers.find((item) => item.providerType === provider.providerType && item.enabled && item.isCurrent) ??
-        providers.find((item) => item.providerType === provider.providerType && item.enabled) ??
+      const typedFallback = [...providers].sort(compareProviderRows).find((item) => item.providerType === provider.providerType && item.enabled) ??
         providers.find((item) => item.providerType === provider.providerType);
       const nextProviders = providers.map((item) => ({
         ...item,
@@ -539,7 +617,17 @@ export function PlatformAiProviderPanel({
                 <ErpInput onChange={(event) => setForm((draft) => ({ ...draft, label: event.target.value }))} placeholder="OpenAI Primary" value={form.label} />
               </ErpField>
               <ErpField label="供应商类型">
-                <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, providerType: event.target.value as PlatformAiProviderType }))} value={form.providerType}>
+                <ErpSelect
+                  onChange={(event) => {
+                    const providerType = event.target.value as PlatformAiProviderType;
+                    setForm((draft) => ({
+                      ...draft,
+                      providerType,
+                      priority: nextProviderPriorityForType(status.providers, providerType)
+                    }));
+                  }}
+                  value={form.providerType}
+                >
                   <option value="image">AI 生图</option>
                   <option value="video">AI 生成视频</option>
                 </ErpSelect>
@@ -554,6 +642,14 @@ export function PlatformAiProviderPanel({
               </ErpField>
               <ErpField label="API Key">
                 <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setForm((draft) => ({ ...draft, apiKey: event.target.value }))} placeholder={form.id ? "留空则保留当前 key" : "AI provider API key"} type="password" value={form.apiKey} />
+              </ErpField>
+              <ErpField label="调用优先级 P" hint="数字越小越先调用；例如 P0 会先于 P9。">
+                <ErpInput
+                  min={0}
+                  onChange={(event) => setForm((draft) => ({ ...draft, priority: normalizeProviderPriority(event.target.value) }))}
+                  type="number"
+                  value={form.priority}
+                />
               </ErpField>
               <ErpField label="扩展模型">
                 <ErpInput className="font-mono" onChange={(event) => setCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={customModelType} />
@@ -674,6 +770,8 @@ export function PlatformAiProviderPanel({
                 onClick={() => {
                   setEditForm(null);
                   setEditCustomModelType("");
+                  setEditKeyVisible(false);
+                  setRevealingEditKey(false);
                   setEditMessage("");
                 }}
                 type="button"
@@ -701,7 +799,27 @@ export function PlatformAiProviderPanel({
                   <ErpInput className="font-mono" onChange={(event) => setEditForm((draft) => draft ? { ...draft, aiUrl: event.target.value } : draft)} placeholder="可清空，清空后该供应商会显示为缺失" value={editForm.aiUrl} />
                 </ErpField>
                 <ErpField label="API Key">
-                  <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setEditForm((draft) => draft ? { ...draft, apiKey: event.target.value } : draft)} placeholder="留空则保留当前 key" type="password" value={editForm.apiKey} />
+                  <div className="flex gap-2">
+                    <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setEditForm((draft) => draft ? { ...draft, apiKey: event.target.value } : draft)} placeholder="留空则保留当前 key" type={editKeyVisible ? "text" : "password"} value={editForm.apiKey} />
+                    <button
+                      aria-label={editKeyVisible ? "隐藏当前 API Key" : "显示当前 API Key"}
+                      className="admin_btn inline-flex h-[38px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55"
+                      disabled={revealingEditKey || savingEdit}
+                      onClick={revealEditApiKey}
+                      type="button"
+                    >
+                      {editKeyVisible ? <EyeOff className="h-3.5 w-3.5" strokeWidth={1.8} /> : <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />}
+                      {revealingEditKey ? "读取中" : editKeyVisible ? "隐藏" : "显示"}
+                    </button>
+                  </div>
+                </ErpField>
+                <ErpField label="调用优先级 P" hint="数字越小越先调用；保存后立即影响 fallback 队列。">
+                  <ErpInput
+                    min={0}
+                    onChange={(event) => setEditForm((draft) => draft ? { ...draft, priority: normalizeProviderPriority(event.target.value) } : draft)}
+                    type="number"
+                    value={editForm.priority}
+                  />
                 </ErpField>
                 <ErpField label="扩展模型">
                   <ErpInput className="font-mono" onChange={(event) => setEditCustomModelType(event.target.value)} placeholder="自定义 modelType，可留空" value={editCustomModelType} />

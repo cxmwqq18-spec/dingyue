@@ -62,6 +62,14 @@ function bridgeErrorResponse(code: string, status: number, detail?: string) {
   );
 }
 
+function isTrustedAdminBridgeNavigation(request: NextRequest): boolean {
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) return false;
+  const fetchMode = request.headers.get("sec-fetch-mode");
+  if (fetchMode && fetchMode !== "navigate") return false;
+  return true;
+}
+
 async function createAdminBridgeSession(siteId: string) {
   return createSiteAdminBridgeSessionRelational(siteId);
 }
@@ -138,14 +146,18 @@ async function buildBridgeResponse(request: NextRequest, siteId: string, request
   }
 }
 
-async function requireAdminBridge(request: NextRequest, siteId: string) {
+async function requireAdminBridge(request: NextRequest, siteId: string, options: { requireCsrf?: boolean } = {}) {
   const current = await getCurrentPlatformAdmin();
   if (!current) return { ok: false as const, response: NextResponse.json({ error: "platform_login_required" }, { status: 401 }) };
   if (!["super_admin", "ops"].includes(current.platformAdmin.role)) {
     return { ok: false as const, response: NextResponse.json({ error: "platform_forbidden" }, { status: 403 }) };
   }
-  const csrf = requireCsrfToken(request, "platform", current.sessionId);
-  if (csrf) return { ok: false as const, response: csrf };
+  if (options.requireCsrf ?? true) {
+    const csrf = requireCsrfToken(request, "platform", current.sessionId);
+    if (csrf) return { ok: false as const, response: csrf };
+  } else if (!isTrustedAdminBridgeNavigation(request)) {
+    return { ok: false as const, response: NextResponse.json({ error: "platform_forbidden" }, { status: 403 }) };
+  }
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.adminBridge, `platform:${current.platformAdmin.id}:admin-bridge:${siteId}`);
   if (!limited.allowed) return { ok: false as const, response: limited.response };
   return { ok: true as const, current };
@@ -156,7 +168,7 @@ export async function GET(
   { params }: { params: Promise<{ siteId: string }> }
 ) {
   const { siteId } = await params;
-  const guard = await requireAdminBridge(request, siteId);
+  const guard = await requireAdminBridge(request, siteId, { requireCsrf: false });
   if (!guard.ok) return guard.response;
 
   const path = new URL(request.url).searchParams.get("path");

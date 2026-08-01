@@ -947,15 +947,15 @@ function sortPlatformAiProviders(aiProviders: PlatformAiProvider[]): PlatformAiP
   return [...aiProviders].sort((left, right) =>
     left.providerType.localeCompare(right.providerType) ||
     Number(right.enabled) - Number(left.enabled) ||
-    Number(right.preferred) - Number(left.preferred) ||
     left.priority - right.priority ||
+    Number(right.preferred) - Number(left.preferred) ||
     left.label.localeCompare(right.label)
   );
 }
 
 function currentPlatformAiProviderForType(aiProviders: PlatformAiProvider[], providerType: PlatformAiProviderType) {
   const enabled = aiProviders.filter((provider) => provider.providerType === providerType && provider.enabled);
-  return enabled.find((provider) => provider.preferred) ?? enabled[0];
+  return enabled[0];
 }
 
 function platformAiProviderSummaryForType(aiProviders: PlatformAiProvider[], providerType: PlatformAiProviderType) {
@@ -995,6 +995,8 @@ function buildPlatformAiProviderStatus(inputProviders: PlatformAiProvider[], opt
         "gpt-5.5",
         "grok-video-3-pro",
         "grok-video-3-max",
+        "grok-imagine-1.5",
+        "grok-imagine-1.5-special",
         "grok-imagine-video",
         "grok-imagine-video-1.5-preview",
         "grok-imagine-video-1.5",
@@ -1602,10 +1604,14 @@ function normalizeProviderMaxImagesPerRequest(value: unknown) {
 const platformAiProviderOrderBy: Prisma.PlatformAiProviderOrderByWithRelationInput[] = [
   { providerType: "asc" },
   { enabled: "desc" },
-  { preferred: "desc" },
   { priority: "asc" },
+  { preferred: "desc" },
   { label: "asc" }
 ];
+const platformAiProviderTransactionOptions = {
+  maxWait: Number(process.env.PLATFORM_AI_PROVIDER_TX_MAX_WAIT_MS ?? 10_000),
+  timeout: Number(process.env.PLATFORM_AI_PROVIDER_TX_TIMEOUT_MS ?? 30_000)
+} as const;
 
 function platformAiProviderTypeWhere(providerType?: PlatformAiProviderType) {
   return providerType ? { providerType } : {};
@@ -1613,7 +1619,7 @@ function platformAiProviderTypeWhere(providerType?: PlatformAiProviderType) {
 
 async function setPreferredPlatformAiProviderForType(
   tx: Prisma.TransactionClient,
-  params: { providerId: string; providerType: PlatformAiProviderType; actor?: string }
+  params: { providerId: string; providerType: PlatformAiProviderType; actor?: string; makeTopPriority?: boolean }
 ) {
   await tx.platformAiProvider.updateMany({
     where: { providerType: params.providerType, id: { not: params.providerId } },
@@ -1621,7 +1627,12 @@ async function setPreferredPlatformAiProviderForType(
   });
   return tx.platformAiProvider.update({
     where: { id: params.providerId },
-    data: { preferred: true, enabled: true, updatedBy: params.actor }
+    data: {
+      preferred: true,
+      enabled: true,
+      ...(params.makeTopPriority ? { priority: 0 } : {}),
+      updatedBy: params.actor
+    }
   });
 }
 
@@ -1665,7 +1676,7 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(providerType?: PlatformAiProviderType): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational({ providerType });
-  return providers.filter((provider) => provider.enabled).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
     id,
     label,
     aiUrl,
@@ -1680,6 +1691,20 @@ export async function getPlatformAiProviderFallbackQueueRelational(providerType?
   }));
 }
 
+function normalizeProviderPriority(value: unknown, fallback: number): number {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? Math.max(0, Math.trunc(numeric)) : Math.max(0, Math.trunc(fallback));
+}
+
+async function nextPlatformAiProviderPriorityForType(tx: Prisma.TransactionClient, providerType: PlatformAiProviderType): Promise<number> {
+  const provider = await tx.platformAiProvider.findFirst({
+    where: { providerType },
+    select: { priority: true },
+    orderBy: [{ priority: "desc" }, { createdAt: "desc" }]
+  });
+  return provider ? provider.priority + 1 : 0;
+}
+
 export async function upsertPlatformAiProviderRelational(params: {
   id?: string;
   label: string;
@@ -1687,6 +1712,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   apiKey?: string;
   modelType: string;
   providerType?: PlatformAiProviderType;
+  priority?: unknown;
   makeCurrent?: boolean;
   enabled?: boolean;
   supportsGenerationN?: boolean;
@@ -1701,12 +1727,18 @@ export async function upsertPlatformAiProviderRelational(params: {
   const providerRecord = await prisma.$transaction(async (tx) => {
     const existingProviderType = existing ? normalizePlatformAiProviderType(existing.providerType) : providerType;
     const providerCount = await tx.platformAiProvider.count({ where: { providerType } });
+    const defaultPriority = await nextPlatformAiProviderPriorityForType(tx, providerType);
     const currentForType = await tx.platformAiProvider.findFirst({
       where: { providerType, enabled: true, preferred: true, ...(existing ? { id: { not: existing.id } } : {}) },
       select: { id: true }
     });
     const nextEnabled = params.makeCurrent ? true : params.enabled;
     const shouldPrefer = Boolean(params.makeCurrent || (!existing && providerCount === 0) || (!currentForType && (nextEnabled ?? existing?.enabled ?? true)));
+    const nextPriority = params.priority === undefined
+      ? existing
+        ? existingProviderType !== providerType ? defaultPriority : existing.priority
+        : defaultPriority
+      : normalizeProviderPriority(params.priority, existing?.priority ?? defaultPriority);
     const updated = existing
       ? await tx.platformAiProvider.update({
           where: { id: existing.id },
@@ -1716,7 +1748,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             apiKey: params.apiKey?.trim() || existing.apiKey,
             modelType,
             providerType,
-            priority: existingProviderType !== providerType ? providerCount + 1 : existing.priority,
+            priority: nextPriority,
             preferred: false,
             enabled: nextEnabled ?? existing.enabled,
             supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
@@ -1733,7 +1765,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             apiKey: params.apiKey?.trim() || undefined,
             modelType,
             providerType,
-            priority: providerCount + 1,
+            priority: nextPriority,
             preferred: false,
             enabled: nextEnabled ?? true,
             supportsGenerationN: Boolean(params.supportsGenerationN),
@@ -1743,7 +1775,7 @@ export async function upsertPlatformAiProviderRelational(params: {
           }
         });
     if (shouldPrefer && updated.enabled) {
-      await setPreferredPlatformAiProviderForType(tx, { providerId: updated.id, providerType, actor: params.actor });
+      await setPreferredPlatformAiProviderForType(tx, { providerId: updated.id, providerType, actor: params.actor, makeTopPriority: Boolean(params.makeCurrent && params.priority === undefined) });
       return tx.platformAiProvider.findUniqueOrThrow({ where: { id: updated.id } });
     }
     await repairPreferredPlatformAiProviderForType(tx, providerType, params.actor);
@@ -1751,7 +1783,7 @@ export async function upsertPlatformAiProviderRelational(params: {
       await repairPreferredPlatformAiProviderForType(tx, existingProviderType, params.actor);
     }
     return tx.platformAiProvider.findUniqueOrThrow({ where: { id: updated.id } });
-  });
+  }, platformAiProviderTransactionOptions);
   const provider = toPlatformAiProvider(providerRecord);
   if (!provider.label || !provider.modelType || (!existing && !provider.aiUrl)) throw new RelationalStoreError("invalid_ai_provider", 400);
   clearPlatformReadCache();
@@ -1768,9 +1800,10 @@ export async function setCurrentPlatformAiProviderRelational(params: {
     return setPreferredPlatformAiProviderForType(tx, {
       providerId: params.providerId,
       providerType: normalizePlatformAiProviderType(existing.providerType),
-      actor: params.actor
+      actor: params.actor,
+      makeTopPriority: true
     });
-  });
+  }, platformAiProviderTransactionOptions);
   clearPlatformReadCache();
   return toPlatformAiProvider(provider);
 }
@@ -1807,7 +1840,7 @@ export async function setPlatformAiProviderEnabledRelational(params: {
     }
 
     return updated;
-  });
+  }, platformAiProviderTransactionOptions);
 
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
@@ -1852,7 +1885,7 @@ export async function deletePlatformAiProviderRelational(params: {
       await repairPreferredPlatformAiProviderForType(tx, normalizePlatformAiProviderType(existing.providerType), params.actor);
     }
     return record;
-  });
+  }, platformAiProviderTransactionOptions);
 
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",

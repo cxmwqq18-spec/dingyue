@@ -9,6 +9,9 @@ const args = new Set(process.argv.slice(2));
 const uniqueGalleryRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-galleries");
 const uniqueGalleryPublicPrefix = "/assets/dreamshoot/generated/pack-galleries";
 const uniqueGalleryVersion = process.env.THEME_GALLERY_VERSION ?? "20260715b";
+const uniqueCoverRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-covers");
+const uniqueCoverPublicPrefix = "/assets/dreamshoot/generated/pack-covers";
+const uniqueCoverVersion = process.env.THEME_COVER_VERSION ?? "20260731themeuniqueness1";
 let sharpLoader;
 const perceptualHashCache = new Map();
 
@@ -50,16 +53,16 @@ const profileBySlug = {
     pools: ["noir", "creative", "gala"]
   },
   nature: {
-    headline: "Outdoor adventure portraits with scenic backdrops, natural light, travel mood, and lifestyle crops.",
+    headline: "Outdoor adventure portraits with scenic backdrops, natural light, creator mood, and lifestyle crops.",
     detail: "Place portraits into grounded nature scenes for profile refreshes, creator content, and private travel-inspired albums.",
-    bestFor: "outdoor profile photos, adventure portraits, travel moodboards, and lifestyle galleries",
+    bestFor: "outdoor profile photos, adventure portraits, creator moodboards, and lifestyle galleries",
     pools: ["travel", "nature", "creator"]
   },
-  "travel-scene-pack": {
-    headline: "Travel-scene portraits for beaches, cities, cliffs, dates, and vacation-inspired creator albums.",
-    detail: "Compare travel looks before spending credits, from golden-hour scenes to city walks and scenic destination portraits.",
-    bestFor: "dating profiles, personal-brand updates, holiday albums, and dream-trip social visuals",
-    pools: ["travel", "couple", "creator"]
+  "outdoor-creator-scenes": {
+    headline: "Outdoor creator-scene portraits for beaches, cities, cliffs, dates, and golden-hour albums.",
+    detail: "Compare outdoor creator looks before spending credits, from golden-hour scenes to city walks and scenic personal-brand portraits.",
+    bestFor: "dating profiles, personal-brand updates, holiday albums, and golden-hour social visuals",
+    pools: ["nature", "couple", "creator"]
   },
   "virtual-try-on": {
     headline: "Private outfit and styling previews for creator looks, fashion tests, and personal photo planning.",
@@ -140,10 +143,10 @@ const profileBySlug = {
     pools: ["boudoir", "beauty", "fashion"]
   },
   holiday: {
-    headline: "Holiday travel portraits, seasonal profile images, scenic cards, and private festive albums.",
-    detail: "Create seasonal visuals with warm travel mood, greeting-card crops, and private gallery review before downloading.",
-    bestFor: "holiday cards, travel-inspired portraits, seasonal social posts, and private album keepsakes",
-    pools: ["seasonal", "travel", "christmas"]
+    headline: "Holiday portraits, seasonal profile images, scenic cards, and private festive albums.",
+    detail: "Create seasonal visuals with warm holiday mood, greeting-card crops, and private gallery review before downloading.",
+    bestFor: "holiday cards, festive portraits, seasonal social posts, and private album keepsakes",
+    pools: ["seasonal", "christmas", "couple"]
   },
   "christmas-couple": {
     headline: "Christmas couple portraits, cozy holiday scenes, greeting-card ideas, and romantic festive albums.",
@@ -192,6 +195,30 @@ function slugify(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function normalizeSharedProfile(slug, profile) {
+  const bestForItems = Array.isArray(profile.bestFor) ? profile.bestFor.filter(Boolean) : [];
+  const poolTokens = [
+    slug,
+    profile.metaLabel,
+    ...(profile.tags ?? []),
+    ...(profile.detailTags ?? [])
+  ].map(slugify).filter(Boolean);
+  return {
+    ...profile,
+    headline: profile.headline,
+    detail: profile.detailIntro || profile.cardDescription,
+    bestFor: bestForItems.join(", "),
+    bestForItems,
+    pools: Array.from(new Set(poolTokens))
+  };
+}
+
+const sharedProfilesPath = path.resolve(process.cwd(), "src/lib/dreamshoot-pack-profiles.json");
+const sharedProfileBySlug = JSON.parse(fs.readFileSync(sharedProfilesPath, "utf8"));
+for (const [slug, profile] of Object.entries(sharedProfileBySlug)) {
+  profileBySlug[slug] = normalizeSharedProfile(slug, profile);
 }
 
 function listAssets() {
@@ -268,7 +295,7 @@ const forbiddenSourcePatternsBySlug = {
   "gala-photos": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /nature/i, /travel/i, /christmas/i],
   mafia: [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /nature/i, /travel/i, /christmas/i],
   nature: [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /wedding/i, /couple/i, /engagement/i, /gala/i, /noir/i, /mafia/i],
-  "travel-scene-pack": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /noir/i, /mafia/i],
+  "outdoor-creator-scenes": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /noir/i, /mafia/i],
   "virtual-try-on": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /nature/i, /travel/i, /christmas/i],
   "creator-portraits": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /wedding/i, /couple/i, /engagement/i, /nature/i, /travel/i, /christmas/i],
   "fashion-editorial": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /nature/i, /travel/i, /christmas/i],
@@ -354,9 +381,6 @@ async function writeUniqueGalleryImage(sourcePublicPath, outputFile, slug, slot)
   const image = await sharp();
   const seed = hashText(`${slug}:${slot}:${sourcePublicPath}`);
   const slotNumber = Number(slot) || 1;
-  const cropSize = 1120 + (seed % 300);
-  const cropLeft = seed % Math.max(1, cropSize - 1023);
-  const cropTop = (seed >>> 4) % Math.max(1, cropSize - 1023);
   const cropPositions = ["centre", "north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest", "entropy"];
   const cropPosition = cropPositions[slotNumber % cropPositions.length];
   const hue = (seed % 48) - 24;
@@ -372,12 +396,8 @@ async function writeUniqueGalleryImage(sourcePublicPath, outputFile, slug, slot)
   const overlay = Buffer.from(
     `<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent[0]}" stop-opacity="${overlayOpacity}" offset="0"/><stop stop-color="${accent[1]}" stop-opacity="${overlayOpacity / 1.4}" offset="1"/></linearGradient><radialGradient id="r" cx="${20 + (seed % 60)}%" cy="${18 + ((seed >>> 5) % 58)}%" r="65%"><stop stop-color="#ffffff" stop-opacity="${overlayOpacity / 1.6}" offset="0"/><stop stop-color="#000000" stop-opacity="0" offset="1"/></radialGradient></defs><rect width="1024" height="1024" fill="url(#g)"/><rect width="1024" height="1024" fill="url(#r)"/><path d="M${(seed % 260) - 80} 1024 L1024 ${(seed >>> 3) % 260}" stroke="#ffffff" stroke-opacity="${overlayOpacity / 1.2}" stroke-width="${18 + (seed % 24)}"/></svg>`
   );
-  let pipeline = image(assetFilePath(sourcePublicPath))
-    .resize(cropSize, cropSize, { fit: "cover", position: cropPosition })
-    .extract({ left: cropLeft, top: cropTop, width: 1024, height: 1024 });
-  if (slotNumber % 4 === 0) pipeline = pipeline.flop();
-  if (slotNumber % 5 === 0) pipeline = pipeline.flip();
-  await pipeline
+  await image(assetFilePath(sourcePublicPath))
+    .resize(1024, 1024, { fit: "cover", position: cropPosition })
     .modulate({ brightness, saturation, hue })
     .composite([{ input: overlay, blend: "overlay" }])
     .sharpen({ sigma: 0.32 + ((seed >>> 8) % 6) / 20 })
@@ -385,13 +405,50 @@ async function writeUniqueGalleryImage(sourcePublicPath, outputFile, slug, slot)
     .toFile(outputFile);
 }
 
+function themeSourceAssets(slug, allAssets) {
+  const localGallery = (prefix, count = 12) => Array.from({ length: count }, (_, index) => {
+    const slot = String(index + 1).padStart(2, "0");
+    return `/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/${prefix}-${slot}.webp`;
+  }).filter((asset) => fs.existsSync(assetFilePath(asset)));
+  if (slug === "thanksgiving-group-photos") {
+    return localGallery("thanksgiving-keepsake-table-set");
+  }
+  if (slug === "halloween-party-photos") {
+    return [
+      ...localGallery("halloween-party-portrait-set"),
+      ...localGallery("spooky-fan-card-portraits"),
+      ...localGallery("haunted-premiere-portrait-set")
+    ];
+  }
+  if (slug === "holiday") {
+    return allAssets.filter((asset) => /holiday|christmas|seasonal/i.test(asset));
+  }
+  return [];
+}
+
 async function galleryForProfile(profile, pack, pools, allAssets, slug) {
   const gallery = providerGalleryPaths(slug);
   const missing = gallery.filter((publicPath) => !fs.existsSync(assetFilePath(publicPath)));
   if (missing.length) {
-    throw new Error(
-      `Missing provider-generated gallery images for ${pack.name}. Run: node scripts/generate-mydreamshoots-theme-galleries.mjs --slugs ${slug} --force`
-    );
+    const profilePools = Array.isArray(profile.pools) ? profile.pools : [];
+    const pooledAssets = profilePools.flatMap((pool) => pools[pool] ?? []);
+    const candidates = unique([
+      ...themeSourceAssets(slug, allAssets),
+      ...pooledAssets
+    ]).filter((asset) => fs.existsSync(assetFilePath(asset)));
+    if (!candidates.length) {
+      throw new Error(
+        `Missing gallery images for ${pack.name}. Run: node scripts/generate-mydreamshoots-theme-galleries.mjs --slugs ${slug} --force`
+      );
+    }
+    const sources = await distinctGallerySources(candidates, slug, 12);
+    for (let index = 0; index < gallery.length; index += 1) {
+      const publicPath = gallery[index];
+      const outputFile = assetFilePath(publicPath);
+      const source = sources[index % sources.length];
+      const slot = String(index + 1).padStart(2, "0");
+      await writeUniqueGalleryImage(source, outputFile, slug, slot);
+    }
   }
   return gallery;
 }
@@ -403,13 +460,53 @@ function providerGalleryPaths(slug) {
   });
 }
 
+function providerCoverPath(slug) {
+  return `${uniqueCoverPublicPrefix}/${slug}/${slug}-cover.webp?v=${uniqueCoverVersion}`;
+}
+
+async function ensureProviderCover(slug, sourcePublicPath) {
+  const coverPublicPath = providerCoverPath(slug);
+  const coverFilePath = assetFilePath(coverPublicPath);
+  if (fs.existsSync(coverFilePath)) return coverPublicPath;
+  fs.mkdirSync(path.dirname(coverFilePath), { recursive: true });
+  const image = await sharp();
+  const seed = hashText(`cover:${slug}:${sourcePublicPath}`);
+  const accent = slug.includes("thanksgiving")
+    ? ["#f7b733", "#8b4513"]
+    : slug.includes("halloween")
+      ? ["#ff7a18", "#7c3aed"]
+      : ["#16dcf0", "#ff9f43"];
+  const overlay = Buffer.from(
+    `<svg width="1280" height="960" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent[0]}" stop-opacity="0.16" offset="0"/><stop stop-color="${accent[1]}" stop-opacity="0.18" offset="1"/></linearGradient><radialGradient id="r" cx="${24 + (seed % 48)}%" cy="${18 + ((seed >>> 5) % 52)}%" r="72%"><stop stop-color="#ffffff" stop-opacity="0.11" offset="0"/><stop stop-color="#000000" stop-opacity="0" offset="1"/></radialGradient></defs><rect width="1280" height="960" fill="url(#g)"/><rect width="1280" height="960" fill="url(#r)"/></svg>`
+  );
+  await image(assetFilePath(sourcePublicPath))
+    .resize(1280, 960, { fit: "cover", position: "entropy" })
+    .modulate({ brightness: 0.92, saturation: 1.12, hue: (seed % 28) - 14 })
+    .composite([{ input: overlay, blend: "overlay" }])
+    .sharpen({ sigma: 0.46 })
+    .webp({ quality: 90 })
+    .toFile(coverFilePath);
+  return coverPublicPath;
+}
+
+function coverSourceForSlug(slug, galleryImages) {
+  if (slug === "thanksgiving-group-photos") return galleryImages[1] ?? galleryImages[0];
+  if (slug === "halloween-party-photos") return galleryImages[5] ?? galleryImages[0];
+  return galleryImages[0];
+}
+
 function descriptionFor(pack, profile) {
+  const bestFor = profile.bestForItems?.length
+    ? `Best for ${profile.bestForItems.join(", ")}.`
+    : profile.bestFor
+    ? `Best for ${profile.bestFor}.`
+    : "";
   return [
-    `Create ${pack.name} images with MyDreamShoots from source photos you own or have permission to use.`,
-    profile.detail,
-    `This package is best for ${profile.bestFor}.`,
-    `Review the ${pack.creditCost || 20}-credit cost before generation, keep results in a private gallery, and download the finished images that fit your profile, post, album, or website.`
-  ].join(" ");
+    profile.detailIntro || profile.detail || profile.cardDescription || profile.headline,
+    profile.whatCreates,
+    bestFor,
+    profile.safetyNote
+  ].filter(Boolean).join(" ");
 }
 
 function updateCollectionsPage(pageJson) {
@@ -451,7 +548,7 @@ function updateCollectionsPage(pageJson) {
         id: "pkg_path_upload",
         meta: "Step 01",
         title: "Source-photo checklist",
-        text: "Upload clear portraits, selfies, product references, or couple photos that you own or have permission to use. Good lighting, visible faces, and a few angle options help the selected package produce a more consistent private gallery."
+        text: "Upload clear portraits, selfies, product references, or group photos that you own or have permission to use. Good lighting, visible faces, and a few angle options help the selected package produce a more consistent private gallery."
       },
       {
         id: "pkg_path_preview",
@@ -540,7 +637,7 @@ async function applyLocalState() {
       category.description = profile.headline;
       category.heroTitle = category.label;
       category.heroSubtitle = profile.detail;
-      category.imageUrl = providerGalleryPaths(category.slug)[0];
+      category.imageUrl = providerCoverPath(category.slug);
       categoryCount += 1;
     } else if (parentProfile) {
       category.heroTitle = parentProfile[0];
@@ -559,7 +656,7 @@ async function applyLocalState() {
     pack.headline = profile.headline;
     pack.description = descriptionFor(pack, profile);
     pack.galleryImages = await galleryForProfile(profile, pack, pools, allAssets, slug);
-    pack.imageUrl = pack.galleryImages[0];
+    pack.imageUrl = await ensureProviderCover(slug, coverSourceForSlug(slug, pack.galleryImages));
     pack.category = slug;
     packs += 1;
   }

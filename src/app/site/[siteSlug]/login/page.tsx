@@ -54,7 +54,7 @@ export default async function SiteLoginPage({
   );
   const nextPath = isSafeNextPath ? query?.next ?? "" : "";
   if (relationalCustomer) {
-    redirect(nextPath || storefrontPathForRouteMode(publicSiteSlug(site.slug), "/app", routeMode));
+    redirect(nextPath || storefrontPathForRouteMode(publicSiteSlug(site.slug), "/app/create", routeMode));
   }
   return renderStorefrontLoginPage({ site, query, routeMode, state });
 }

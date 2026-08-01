@@ -121,6 +121,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         customer: result.customer,
         customerBalance: result.customerBalance,
         workerDispatch: result.workerDispatch,
+        reused: result.reused === true,
         note: result.note
       }, { status: result.workerDispatch.status === "skipped" ? 503 : 502 });
     }
@@ -133,6 +134,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       ledgerAction: result.ledgerAction ?? null,
       workerPayload: result.workerPayload,
       workerDispatch: result.workerDispatch,
+      reused: result.reused === true,
       note: result.note
     });
   } catch (error) {

@@ -146,18 +146,41 @@ export async function submitGenerationJob(input: GenerationSubmitInput): Promise
 export async function submitRerunGenerationJob(input: {
   siteId: string;
   jobId: string;
+  customerId?: string;
   actor?: string;
+  idempotencyKey?: string;
+  requireVideo?: boolean;
   baseUrls: WorkerBaseUrls;
+  skipWorkerDispatch?: boolean;
   includeWorkerPayload?: boolean;
 }) {
   const rerun = await rerunGenerationJobRelational({
     siteId: input.siteId,
     jobId: input.jobId,
-    actor: input.actor
+    customerId: input.customerId,
+    actor: input.actor,
+    idempotencyKey: input.idempotencyKey,
+    requireVideo: input.requireVideo,
+    skipProviderAvailabilityCheck: input.skipWorkerDispatch === true
   });
+  if (rerun.reused) {
+    return {
+      ok: true,
+      sourceJob: rerun.sourceJob,
+      job: rerun.job,
+      customer: rerun.customer,
+      customerBalance: rerun.customer.balance,
+      ledgerAction: null,
+      workerDispatch: { status: "skipped" as const, error: "idempotent_replay" },
+      reused: true,
+      note: "Idempotent replay returned the existing rerun job."
+    };
+  }
   const workerPayload = await buildWorkerPayload({ job: rerun.job, siteAiApp: rerun.siteAiApp, baseUrls: input.baseUrls });
-  const workerDispatch = await dispatchWorkerPayload(workerPayload);
-  if (workerDispatch.status !== "sent") {
+  const workerDispatch = input.skipWorkerDispatch
+    ? { status: "skipped" as const }
+    : await dispatchWorkerPayload(workerPayload);
+  if (!input.skipWorkerDispatch && workerDispatch.status !== "sent") {
     const settled = await settleFailedDispatch({
       siteId: input.siteId,
       job: rerun.job,
@@ -172,6 +195,7 @@ export async function submitRerunGenerationJob(input: {
       customerBalance: settled.customer.balance,
       ledgerAction: settled.ledger ?? null,
       workerDispatch,
+      reused: false,
       ...(input.includeWorkerPayload ? { workerPayload } : {}),
       note: "Worker dispatch was not accepted. The rerun job was failed and reserved credits were released."
     };
@@ -182,9 +206,12 @@ export async function submitRerunGenerationJob(input: {
     job: rerun.job,
     customer: rerun.customer,
     customerBalance: rerun.customer.balance,
-    ledgerAction: rerun.ledger,
+    ledgerAction: rerun.ledger ?? null,
     workerDispatch,
+    reused: false,
     ...(input.includeWorkerPayload ? { workerPayload } : {}),
-    note: "Persisted rerun job, reserved credits, and attempted worker dispatch."
+    note: input.skipWorkerDispatch
+      ? "Persisted rerun job and reserved credits. Worker dispatch is not configured."
+      : "Persisted rerun job, reserved credits, and attempted worker dispatch."
   };
 }

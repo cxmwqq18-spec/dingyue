@@ -8,6 +8,7 @@ const brandProfiles = [
   {
     matcher: /mydreamshoots|dreamshoot/i,
     brand: "MyDreamShoots",
+    footerCopyright: "© 2026 myDreamshoots.com. All rights reserved.",
     footerTitle: "MyDreamShoots",
     companyName: "myDreamshoots.com",
     companyAddress: defaultCompanyAddress,
@@ -54,7 +55,7 @@ const brandProfiles = [
       ["How it works", "/workflow", "product"],
       ["Pricing", "/pricing", "product"],
       ["FAQ", "/faq", "company"],
-      ["Guides", "/blog", "company"],
+      ["Blog", "/blog", "company"],
       ["About us", "/about-us", "company"],
       ["Contact us", "/contact-us", "company"],
       ["Creators Circle", "/creators-circle", "company"],
@@ -69,6 +70,7 @@ const brandProfiles = [
   {
     matcher: /aidreamcapes/i,
     brand: "Aidreamcapes",
+    footerCopyright: "© 2026 Aidreamcapes.com. All rights reserved.",
     footerTitle: "ልiጋreamርapes",
     companyName: "Aidreamcapes.com",
     companyAddress: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
@@ -115,7 +117,7 @@ const brandProfiles = [
       ["How it works", "/workflow", "product"],
       ["Pricing", "/pricing", "product"],
       ["FAQ", "/faq", "company"],
-      ["Field Notes", "/blog", "company"],
+      ["Blog", "/blog", "company"],
       ["About the Studio", "/about-us", "company"],
       ["Contact the Studio", "/contact-us", "company"],
       ["Creators Circle", "/creators-circle", "company"],
@@ -465,7 +467,7 @@ function upsertFooterLinks(settings, profile) {
     youtubeUrl: profile.youtubeUrl,
     twitterUrl: profile.twitterUrl,
     showPaymentIcons: true,
-    copyright: `© 2026 ${profile.brand}. All rights reserved.`
+    copyright: profile.footerCopyright ?? `© 2026 ${profile.brand}. All rights reserved.`
   };
   const blocks = Array.isArray(next.globalSections.footer.blocks) ? next.globalSections.footer.blocks : [];
   const preservedExternalBlocks = blocks.map((item) => ({

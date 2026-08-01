@@ -13,7 +13,7 @@ import {
 } from "@/lib/stores/site-store";
 import type { PlatformState, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
-import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
+import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 
 const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
 const publicVideoThemeDefaultsEnsured = new Set<string>();
@@ -128,7 +128,7 @@ async function localVideoThemePayload(params: {
     .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt))
     .slice(0, params.pageSize);
   const providers = (state.platformAiProviders ?? []).filter((provider) =>
-    provider.providerType === "video" || /video|grok-imagine-video/i.test(provider.modelType)
+    provider.providerType === "video" || isVideoProviderModel(provider.modelType)
   );
   const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
   const categories = params.includeCategories

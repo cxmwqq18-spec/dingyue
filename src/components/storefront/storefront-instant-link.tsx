@@ -48,6 +48,7 @@ const hoverPrefetchPathPrefixes = [
   "/pricing",
   "/tools"
 ];
+const privateRuntimePathPrefixes = ["/account", "/album", "/app"];
 
 function internalStorefrontHref(href: LinkProps["href"], target?: string) {
   if (typeof href !== "string" || href.startsWith("#") || (target && target !== "_self")) return null;
@@ -111,6 +112,7 @@ function scrollToHashTarget(targetUrl: URL) {
 function shouldUseDocumentNavigation(targetUrl: URL, force = false) {
   if (force) return true;
   const publicPathname = storefrontPublicPathname(targetUrl);
+  if (privateRuntimePathPrefixes.some((prefix) => publicPathname === prefix || publicPathname.startsWith(`${prefix}/`))) return true;
   if (process.env.NEXT_PUBLIC_STOREFRONT_DOCUMENT_NAVIGATION === "1") return true;
   if (process.env.NEXT_PUBLIC_STOREFRONT_COLLECTION_DOCUMENT_NAVIGATION === "1" && (publicPathname === "/collections" || publicPathname.startsWith("/collections/"))) return true;
   if (process.env.NEXT_PUBLIC_STOREFRONT_TOOL_DOCUMENT_NAVIGATION === "1" && (publicPathname === "/tools" || publicPathname.startsWith("/tools/"))) return true;
@@ -122,6 +124,10 @@ function isSamePageHashHref(href: LinkProps["href"], target?: string) {
   const targetUrl = internalStorefrontHref(href, target);
   if (!targetUrl || !targetUrl.hash) return false;
   return targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search;
+}
+
+function isCurrentPlainHref(targetUrl: URL) {
+  return !targetUrl.hash && !window.location.hash && targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search;
 }
 
 export function StorefrontInstantLink({
@@ -169,6 +175,7 @@ export function StorefrontInstantLink({
     const targetUrl = internalStorefrontHref(href, target);
     if (!targetUrl) return;
     event.preventDefault();
+    if (isCurrentPlainHref(targetUrl)) return;
     if (scrollToHashTarget(targetUrl)) return;
     const nextHref = hrefFromUrl(targetUrl);
     window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href: nextHref } }));

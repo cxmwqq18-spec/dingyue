@@ -1202,7 +1202,8 @@ export async function updatePlatformDocumentState<T>(
 
 export async function addAuditLogRelational(
   db: PrismaLike,
-  entry: Omit<import("@/lib/types").AuditLogEntry, "id" | "createdAt"> & { id?: string; createdAt?: string }
+  entry: Omit<import("@/lib/types").AuditLogEntry, "id" | "createdAt"> & { id?: string; createdAt?: string },
+  options: { syncPlatformState?: boolean } = {}
 ) {
   const createdAt = entry.createdAt ? new Date(entry.createdAt) : new Date();
   const id = entry.id ?? relationalUid("audit");
@@ -1220,6 +1221,7 @@ export async function addAuditLogRelational(
       createdAt
     }
   });
+  if (options.syncPlatformState === false) return;
   await updatePlatformDocumentState(db, (state) => {
     state.auditLogs ??= [];
     state.auditLogs.unshift({

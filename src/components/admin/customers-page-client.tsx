@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { GalleryVerticalEnd, Sparkles, UploadCloud, Users } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import { AlbumDeliveryPanel } from "@/components/admin/album-delivery-panel";
+import type { AlbumDeliveryPagination } from "@/components/admin/album-delivery-panel";
 import { CustomerAdminPanel } from "@/components/admin/customer-admin-panel";
 import { CustomerAssetReviewPanel } from "@/components/admin/customer-asset-review-panel";
 import { ErpSection, ErpStatGrid } from "@/components/admin/erp-primitives";
@@ -28,6 +29,8 @@ type CustomersPagePayload = {
   customers?: PublicCustomer[];
   customerModels?: CustomerModel[];
   albums?: Album[];
+  albumCustomers?: PublicCustomer[];
+  albumPagination?: AlbumDeliveryPagination;
   packs?: CreativePack[];
   customerAssets?: AssetUpload[];
   customerAssetJobs?: CustomerAssetJob[];
@@ -87,14 +90,25 @@ function LoadingSection({ title }: { title: string }) {
   );
 }
 
+function mergeById<T extends { id: string }>(current: T[] | undefined, next: T[] | undefined): T[] | undefined {
+  if (!next) return current;
+  if (!current) return next;
+  const byId = new Map<string, T>();
+  for (const item of current) byId.set(item.id, item);
+  for (const item of next) byId.set(item.id, item);
+  return [...byId.values()];
+}
+
 function mergePayload(current: CustomersPagePayload | null, next: CustomersPagePayload): CustomersPagePayload {
   return {
     signupCreditGrant: current?.signupCreditGrant ?? next.signupCreditGrant ?? 0,
     customers: next.customers ?? current?.customers,
     customerModels: next.customerModels ?? current?.customerModels,
     albums: next.albums ?? current?.albums,
+    albumCustomers: next.albumCustomers ?? current?.albumCustomers,
+    albumPagination: next.albumPagination ?? current?.albumPagination,
     packs: next.packs ?? current?.packs,
-    customerAssets: next.customerAssets ?? current?.customerAssets,
+    customerAssets: mergeById(current?.customerAssets, next.customerAssets),
     customerAssetJobs: next.customerAssetJobs ?? current?.customerAssetJobs,
     siteAdmins: next.siteAdmins ?? current?.siteAdmins
   };
@@ -178,18 +192,20 @@ export function CustomersPageClient({
   const derived = useMemo(() => {
     const customers = payload?.customers ?? [];
     const customerModels = payload?.customerModels ?? [];
-    const albums = payload?.albums ?? [];
     const customerAssets = payload?.customerAssets ?? [];
+    const albumTotal = payload?.albumPagination?.totalCount ?? initialAlbumCount;
+    const readyAlbums = payload?.albumPagination?.readyCount ?? (payload?.albums ? payload.albums.filter((album) => album.status === "ready").length : initialReadyAlbums);
     return {
       blockedCustomers: customers.filter((customer) => customer.status === "blocked").length,
       customerCount: payload ? customers.length : initialCustomerCount,
       generatedAssets: customerAssets.filter((asset) => asset.role === "output"),
       inputAssets: customerAssets.filter((asset) => asset.role === "input"),
-      readyAlbums: payload ? albums.filter((album) => album.status === "ready").length : initialReadyAlbums,
+      albumTotal,
+      readyAlbums,
       readyModels: payload ? customerModels.filter((model) => model.status === "ready").length : initialReadyModels,
       pastDueCustomers: customers.filter((customer) => customer.status === "past_due").length
     };
-  }, [initialCustomerCount, initialReadyAlbums, initialReadyModels, payload]);
+  }, [initialAlbumCount, initialCustomerCount, initialReadyAlbums, initialReadyModels, payload]);
 
   return (
     <div className="grid gap-5">
@@ -198,7 +214,7 @@ export function CustomersPageClient({
           { label: "顾客", value: String(derived.customerCount), detail: `${derived.pastDueCustomers} 个逾期 / ${derived.blockedCustomers} 个封禁`, icon: Users, tone: derived.blockedCustomers ? "bad" : derived.pastDueCustomers ? "warn" : "good" },
           { label: "额度", value: String(initialAvailableCredits), detail: `${initialAvailableCredits} 可用 / ${initialReservedCredits} 预扣`, icon: UploadCloud, tone: initialReservedCredits ? "warn" : "good" },
           { label: "模型", value: `${derived.readyModels}/${payload?.customerModels?.length || initialModelCount}`, detail: "已就绪客户模型", icon: Sparkles, tone: derived.readyModels ? "good" : "warn" },
-          { label: "相册", value: `${derived.readyAlbums}/${payload?.albums?.length || initialAlbumCount}`, detail: `${derived.generatedAssets.length || initialGeneratedAssetCount} 个生成输出`, icon: GalleryVerticalEnd, tone: derived.readyAlbums ? "good" : "warn" }
+          { label: "相册", value: `${derived.readyAlbums}/${derived.albumTotal}`, detail: `${derived.generatedAssets.length || initialGeneratedAssetCount} 个生成输出`, icon: GalleryVerticalEnd, tone: derived.readyAlbums ? "good" : "warn" }
         ]}
       />
 
@@ -235,7 +251,15 @@ export function CustomersPageClient({
         </ErpSection>
         <ErpSection description="相册和输出素材只属于当前站点和当前顾客，不允许跨站读取。" eyebrow="相册交付" title="相册交付">
           {payload.albums && payload.packs && payload.customerAssets ? (
-            <AlbumDeliveryPanel albums={payload.albums} assets={derived.generatedAssets} customers={payload.customers ?? []} packs={payload.packs} siteId={siteId} />
+            <AlbumDeliveryPanel
+              albumCustomers={payload.albumCustomers ?? []}
+              albums={payload.albums}
+              assets={derived.generatedAssets}
+              customers={payload.customers ?? []}
+              packs={payload.packs}
+              pagination={payload.albumPagination}
+              siteId={siteId}
+            />
           ) : (
             <LoadingSection title="相册交付" />
           )}

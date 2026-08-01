@@ -100,16 +100,22 @@ function pathModeReadPreference(): string {
   return (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase();
 }
 
+function prefersLocalPersistenceBackend(): boolean {
+  const backend = (process.env.PERSISTENCE_BACKEND ?? "").trim().toLowerCase();
+  return Boolean(backend && backend !== "postgres");
+}
+
 function isSynchronizedDreamshootSite(siteSlug?: string): boolean {
   if (!siteSlug) return false;
   return /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSiteSlug(siteSlug));
 }
 
 export function preferLocalPathModeState(siteSlug?: string): boolean {
-  if (process.env.NODE_ENV === "production") return false;
   const preference = pathModeReadPreference();
   if (["database", "db", "relational"].includes(preference)) return false;
   if (["local", "json", "legacy", "file"].includes(preference)) return true;
+  if (prefersLocalPersistenceBackend()) return true;
+  if (process.env.NODE_ENV === "production") return false;
   return !isSynchronizedDreamshootSite(siteSlug);
 }
 

@@ -33,7 +33,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
-import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT } from "@/lib/workspace-runtime-jobs";
+import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -340,6 +340,7 @@ function lightweightCreativePack(pack: CreativePack): CreativePack {
     createdAt: "",
     imageUrl: pack.imageUrl,
     galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12),
+    galleryImageAlts: (pack.galleryImageAlts ?? []).filter(Boolean).slice(0, 12),
     categoryRecord: lightweightCategoryRecord(pack.categoryRecord)
   };
 }
@@ -606,6 +607,51 @@ function lightweightPageForClient(page: ThemePage, includeContent = false): Them
   };
 }
 
+const blogArticleMetadataSettings = new Set([
+  "eyebrow",
+  "headingLevel",
+  "title",
+  "summary",
+  "author",
+  "publishedAt",
+  "updatedAt",
+  "readMinutes",
+  "imageUrl",
+  "imageAlt",
+  "tags",
+  "guideType",
+  "targetHref",
+  "targetLabel"
+]);
+
+function lightweightBlogArticlePageForClient(page: ThemePage): ThemePage {
+  const sourceJson = page.publishedJson;
+  const sectionId = sourceJson.sectionsOrder.find((id) => sourceJson.sections[id]?.type === "blog_article");
+  const sourceSection = sectionId ? sourceJson.sections[sectionId] : undefined;
+  if (!sectionId || !sourceSection) return lightweightPageForClient(page, false);
+  const settings = Object.fromEntries(
+    Object.entries(sourceSection.settings).filter(([key]) => blogArticleMetadataSettings.has(key))
+  ) as SectionInstance["settings"];
+  const pageJson: ThemePageJson = {
+    pageType: sourceJson.pageType,
+    version: sourceJson.version,
+    sectionsOrder: [sectionId],
+    sections: {
+      [sectionId]: {
+        type: "blog_article",
+        settings,
+        blocks: []
+      }
+    },
+    seo: sourceJson.seo
+  };
+  return {
+    ...page,
+    draftJson: pageJson,
+    publishedJson: pageJson
+  };
+}
+
 function lightweightSiteForClient(site: Site, pages: ThemePage[]): Site {
   const { colors, radii, typography } = site.themeSettings.publishedJson;
   const settings: Site["themeSettings"]["publishedJson"] = {
@@ -658,7 +704,7 @@ function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePat
   const includeSearchEntries = pageNeedsSearchEntries(activePage);
   const includeBlogEntries = pageNeedsBlogEntries(activePage, pagePath);
   for (const page of site.pages) {
-    const includeFullContent = includeSearchEntries || (includeBlogEntries && (page.slug === pagePath || page.slug.startsWith("/blog/")));
+    const includeFullContent = includeSearchEntries || (includeBlogEntries && page.slug === pagePath);
     if (
       page.slug === pagePath ||
       page.slug === "/" ||
@@ -666,7 +712,14 @@ function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePat
       (includeBlogEntries && page.slug.startsWith("/blog/")) ||
       (includeSearchEntries && (["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/")))
     ) {
-      pageMap.set(page.id, lightweightPageForClient(page, includeFullContent));
+      pageMap.set(
+        page.id,
+        includeFullContent
+          ? lightweightPageForClient(page, true)
+          : includeBlogEntries && page.slug.startsWith("/blog/")
+            ? lightweightBlogArticlePageForClient(page)
+            : lightweightPageForClient(page, false)
+      );
     }
   }
   return lightweightSiteForClient(site, Array.from(pageMap.values()));
@@ -683,7 +736,7 @@ function clientSiteForSectionRender(site: Site, activePage: ThemePageJson, pageP
         publishedJson: activePage
       });
     } else if (includeBlogEntries && page.slug.startsWith("/blog/")) {
-      pageMap.set(page.id, lightweightPageForClient(page, true));
+      pageMap.set(page.id, lightweightBlogArticlePageForClient(page));
     } else if (page.slug === "/" || page.slug === "/404") {
       pageMap.set(page.id, lightweightPageForClient(page, false));
     }
@@ -727,7 +780,7 @@ function mydreamshootsPolicyBody(path: string): string {
 function aidreamcapesPolicyBody(path: string): string {
   const normalized = normalizePublicSlug(path).replace(/-/g, " ");
   if (normalized.includes("children")) {
-    return "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI travel portrait workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>";
+    return "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo album workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>";
   }
   if (normalized.includes("state privacy") || normalized.includes("california") || normalized.includes("ccpa")) {
     return "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("Aidreamcapes");
@@ -929,6 +982,24 @@ function numberFromRelationalValue(value: unknown): number {
   return 0;
 }
 
+function relationalJsonRecord(value: unknown): Record<string, unknown> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
+function relationalStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+}
+
+function runtimeJobFrameAssetIdsFromRelational(job: Pick<ThemeRuntimeData["jobs"][number], "requestJson">): string[] {
+  const request = relationalJsonRecord(job.requestJson) ?? {};
+  const fields = relationalJsonRecord(request.fields) ?? {};
+  return Array.from(new Set([
+    ...relationalStringArray(fields.frameAssetIds),
+    ...relationalStringArray(request.assetIds)
+  ]));
+}
+
 function workspaceSubscriptionFromRelationalRow(subscription: Record<string, unknown>): NonNullable<ThemeRuntimeData["subscriptions"]>[number] {
   return {
     id: String(subscription.id),
@@ -948,7 +1019,7 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
   customer: PublicCustomer;
   siteId: string;
 }): Promise<ThemeRuntimeData> {
-  const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all([
+  const [recentJobs, recentAssets, videoFrameAssets, subscriptions, customerModels] = await Promise.all([
     readWorkspaceJobSummariesRelational({ siteId, customerId: customer.id, take: 8 }),
     prisma.assetUpload.findMany({
       where: {
@@ -959,6 +1030,17 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
       },
       orderBy: { createdAt: "desc" },
       take: 48
+    }),
+    prisma.assetUpload.findMany({
+      where: {
+        siteId,
+        customerId: customer.id,
+        deletedAt: null,
+        role: "input",
+        subjectRole: "video_frame"
+      },
+      orderBy: { createdAt: "desc" },
+      take: WORKSPACE_VIDEO_FRAME_ASSET_LIMIT
     }),
     prisma.subscription.findMany({
       where: { siteId, customerId: customer.id },
@@ -982,10 +1064,29 @@ async function readLightWorkspaceRuntimeForCustomerRelational({
     : [];
   const jobs = [...recentJobs, ...relatedJobs]
     .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
-  const assets = recentAssets.map((asset) => {
-    const mapped = toAssetUploadRelational(asset as unknown as Record<string, unknown>);
-    return toThemeRuntimeAssetRelational(mapped);
-  });
+  const recentAssetIds = new Set([...recentAssets, ...videoFrameAssets].map((asset) => asset.id));
+  const referencedFrameAssetIds = Array.from(new Set(jobs.flatMap(runtimeJobFrameAssetIdsFromRelational)))
+    .filter((assetId) => !recentAssetIds.has(assetId));
+  const referencedFrameAssets = referencedFrameAssetIds.length
+    ? await prisma.assetUpload.findMany({
+        where: {
+          siteId,
+          customerId: customer.id,
+          id: { in: referencedFrameAssetIds },
+          deletedAt: null
+        },
+        orderBy: { createdAt: "desc" }
+      })
+    : [];
+  const assets = Array.from(new Map(
+    [...recentAssets, ...videoFrameAssets, ...referencedFrameAssets]
+      .map((asset) => [asset.id, asset])
+  ).values())
+    .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime())
+    .map((asset) => {
+      const mapped = toAssetUploadRelational(asset as unknown as Record<string, unknown>);
+      return toThemeRuntimeAssetRelational(mapped);
+    });
   return runtimeWithEmptyCollections({
     customer,
     jobs,
@@ -1194,20 +1295,20 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
         type: "rich_text",
         settings: {
           anchor: "packages",
-          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de paquetes de viaje" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Travel package library" : "Photo package library",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : "Photo package library",
           title: isSpanishXby
             ? isAidreamcapes
-              ? "Paquetes de retratos de viaje por ruta, escena y recuerdo."
+              ? "Albumes privados de fans y recuerdos festivos por ocasion."
               : "Paquetes de fotos con IA por estilo, uso y entrega."
-            : firstSection?.settings?.title || (isAidreamcapes ? "AI travel portrait packages by route, scene, and keepsake goal." : "AI photo packages by style, use case, and delivery goal."),
+            : firstSection?.settings?.title || (isAidreamcapes ? "Private fan-scene and holiday albums by occasion." : "AI photo packages by style, use case, and delivery goal."),
           body: isSpanishXby
             ? isAidreamcapes
-              ? "Explora retratos de ruta, sets de luz costera, paseos urbanos, escenas al aire libre y recuerdos privados antes de gastar creditos."
+              ? "Explora albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias y Halloween antes de gastar creditos."
               : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
             : firstSection?.settings?.subtitle || (isAidreamcapes
-              ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
+              ? "Browse fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, and seasonal memories before you spend credits."
               : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits."),
-          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver paquetes de viaje" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse travel packages" : "Browse photo packages",
+          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver albumes de ocasion" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse occasion albums" : "Browse photo packages",
           primaryHref: "#package-taxonomy",
           secondaryCta: isSpanishXby ? "Ver precios" : "View pricing",
           secondaryHref: "/pricing",
@@ -1244,20 +1345,20 @@ function withDreamShootCollectionsDirectoryPage(pageJson: ThemePageJson, site: S
         type: "dreamshoot_package_taxonomy",
         settings: {
           anchor: "package-taxonomy",
-          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de paquetes de viaje" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Travel package library" : "Photo package library",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : "Photo package library",
           title: isSpanishXby
             ? isAidreamcapes
-              ? "Paquetes de retratos de viaje por ruta, escena y recuerdo."
+              ? "Albumes privados de fans y recuerdos festivos por ocasion."
               : "Paquetes de fotos con IA por estilo, uso y entrega."
             : isAidreamcapes
-              ? "AI travel portrait packages by route, scene, and keepsake goal."
+              ? "Private fan-scene and holiday albums by occasion."
               : "AI photo packages by style, use case, and delivery goal.",
           subtitle: isSpanishXby
             ? isAidreamcapes
-              ? "Explora rutas, luz costera, paseos urbanos, escenas al aire libre y recuerdos privados antes de gastar creditos."
+              ? "Explora albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias y Halloween antes de gastar creditos."
               : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
             : isAidreamcapes
-              ? "Browse route portraits, coastal light sets, city walks, outdoor frames, and private travel keepsakes before you spend credits."
+              ? "Browse fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, and seasonal memories before you spend credits."
               : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits.",
           layout: "editorial",
           headingLevel: "h2"
@@ -1725,23 +1826,23 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
           anchor: "tools",
           title: isSpanishXby
             ? isAidreamcapes
-              ? "Herramientas de retratos de viaje con IA"
+              ? "Herramientas de albumes privados de ocasion"
               : "Herramientas de fotos con IA"
             : isAidreamcapes
               ? "Aidreamcapes studio tools"
               : "AI Tools Collection",
           subtitle: isSpanishXby
             ? isAidreamcapes
-              ? "Elige herramientas para retratos de destino, escapadas urbanas, luz costera, rutas, albumes privados y postales."
+              ? "Elige herramientas para albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias, Halloween y recuerdos privados."
               : "Elige herramientas para generar fotos, cambiar fondos, preparar videos, retocar imagenes y entregar albumes privados."
             : isAidreamcapes
-              ? "Choose a focused Aidreamcapes tool for destination portraits, city breaks, coastal light, adventure routes, private travel albums, and postcard-ready story sets."
+              ? "Choose a focused Aidreamcapes tool for fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas groups, Thanksgiving keepsakes, Halloween portraits, and seasonal memories."
               : "Discover paid AI tools for photo generation, background editing, video concepts, and private album workflows. Every tool has its own page and opens the editor with the correct preset.",
           categories: isSpanishXby
             ? isAidreamcapes
-              ? "Herramientas de destino|Momentos de viaje|Aventura|Creadores"
+              ? "Fans|Dia de partido|Festivos|Seguridad"
               : "Foto IA|Edicion IA|Video IA"
-            : isAidreamcapes ? "Destination Tools|Travel Moment Tools|Adventure Tools|Creator Travel Tools" : "Photo AI|AI Photo Edit|Video AI",
+            : isAidreamcapes ? "Fan-Scene Tools|Game-Day Tools|Holiday Memory Tools|Safety Planning Tools" : "Photo AI|AI Photo Edit|Video AI",
           layout: "directory"
         },
         blocks: tools
@@ -2032,13 +2133,33 @@ const dreamshootImageStudioToolAliases = new Set([
 ]);
 
 const aidreamcapesToolAliases = new Map<string, string>([
-  ["portrait-generator", "route-portrait-engine"],
-  ["portrait-maker", "route-portrait-engine"],
-  ["dreamscape-generator", "route-portrait-engine"],
-  ["image-studio", "route-portrait-engine"],
-  ["image-generator", "route-portrait-engine"],
-  ["headshot", "route-portrait-engine"],
-  ["couple-escape-album", "shared-route-album"]
+  ["portrait-generator", "fan-scene-album-builder"],
+  ["portrait-maker", "fan-scene-album-builder"],
+  ["dreamscape-generator", "fan-scene-album-builder"],
+  ["image-studio", "fan-scene-album-builder"],
+  ["image-generator", "fan-scene-album-builder"],
+  ["headshot", "premiere-portrait-set-builder"],
+  ["background-changer", "fan-scene-album-builder"],
+  ["background-remover", "fan-scene-album-builder"],
+  ["image-to-video", "new-year-countdown-album-maker"],
+  ["product-reverie", "permission-safe-photo-planner"],
+  ["soft-glam", "premiere-portrait-set-builder"],
+  ["couple-escape-album", "birthday-fan-moment-maker"],
+  ["wedding-portraits", "birthday-fan-moment-maker"],
+  ["world-cup-fan-photos", "game-day-group-portrait-maker"],
+  ["route-portrait-engine", "fan-scene-album-builder"],
+  ["coastal-portrait", "christmas-group-album-studio"],
+  ["island-resort-scenes", "new-year-countdown-album-maker"],
+  ["scenic-overlook-story", "game-day-group-portrait-maker"],
+  ["travel-profile-story", "fan-scene-album-builder"],
+  ["editorial-getaway", "premiere-portrait-set-builder"],
+  ["cafe-street-story", "premiere-portrait-set-builder"],
+  ["cinematic-travel", "game-day-group-portrait-maker"],
+  ["route-moodboard", "permission-safe-photo-planner"],
+  ["social-keepsake", "birthday-fan-moment-maker"],
+  ["family-travel-keepsakes", "thanksgiving-keepsake-set-maker"],
+  ["seasonal-celebration-album-maker", "new-year-countdown-album-maker"],
+  ["travel-journal-cover-maker", "new-year-countdown-album-maker"]
 ]);
 
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
@@ -2255,6 +2376,15 @@ export async function renderStorefrontPage({
         prompt: undefined,
         galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12)
       }))
+    };
+  }
+  if (pageSectionTypes(pageJson).has("dreamshoot_generation_showcase") && !pageRenderData.videoThemes.length) {
+    pageRenderData = {
+      ...pageRenderData,
+      videoThemes: trimVideoThemesForStorefront(
+        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
+        32
+      )
     };
   }
   pageRenderData = withPageMediaAssets(currentSite, pageJson, settings, pageRenderData);
@@ -2685,6 +2815,8 @@ export async function renderStorefrontLoginPage({
   if (!currentSite) notFound();
   const page = getPage(currentSite, "/login");
   const renderData = getSiteRenderData(state, currentSite.id);
+  const sessionId = await readCustomerSessionId(currentSite.id);
+  const current = sessionId ? await getCustomerBySessionRelational({ siteId: currentSite.id, sessionId }) : undefined;
   currentSite.mediaAssets = [];
 
   return renderThemePage({
@@ -2700,6 +2832,7 @@ export async function renderStorefrontLoginPage({
     },
     routeMode,
     runtime: runtimeWithEmptyCollections({
+      ...(current ? { customer: current.customer } : {}),
       auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined)
     }),
     settings: currentSite.themeSettings.publishedJson,
@@ -2815,11 +2948,10 @@ export async function renderCustomerWorkspacePageBySlug({
     if (!siteId) notFound();
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
-    const [current, bootstrap] = await Promise.all([
-      getCustomerBySessionRelational({ siteId, sessionId }),
-      getCustomerWorkspaceBootstrapRelational(canonicalSlug)
-    ]);
-    if (!current || !bootstrap) redirect(loginPathWithNext);
+    const current = await getCustomerBySessionRelational({ siteId, sessionId });
+    if (!current) redirect(loginPathWithNext);
+    const bootstrap = await getCustomerWorkspaceBootstrapRelational(canonicalSlug);
+    if (!bootstrap) redirect(loginPathWithNext);
     const preloadTimeoutMs = workspaceRuntimePreloadTimeoutMs();
     const [adminAccess, workspaceRuntime] = await Promise.all([
       withWorkspaceRuntimePreloadTimeout({

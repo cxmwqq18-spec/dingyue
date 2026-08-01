@@ -51,11 +51,42 @@ function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean
   return /aidreamcapes/i.test(`${site?.slug ?? ""} ${site?.name ?? ""} ${site?.primaryDomain ?? ""} ${site?.branding?.logoText ?? ""}`);
 }
 
+const storefrontAssetVersion = "20260801visualfix1";
+
+function versionedAsset(pathname: string) {
+  return `${pathname}?v=${storefrontAssetVersion}`;
+}
+
 const assets = {
   desiWeddingPack: "/assets/dreamshoot/generated/20260622-pack-fill/desi-wedding-pack.png",
   holidayTravelPack: "/assets/dreamshoot/generated/20260622-pack-fill/holiday-travel-pack.png",
   aiVideoAddonsPack: "/assets/dreamshoot/generated/20260622-pack-fill/ai-video-addons-pack.png",
   magicUpscalerPack: "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.png",
+  galleryWorldCupFanOne: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp",
+  galleryWorldCupFanTwo: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp",
+  galleryWorldCupFanThree: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp",
+  galleryWorldCupFanFour: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp",
+  galleryGalaOne: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp",
+  galleryGalaTwo: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp",
+  galleryChristmasPhotosOne: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp",
+  galleryChristmasPhotosTwo: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-02.webp",
+  galleryChristmasPhotosThree: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-03.webp",
+  galleryChristmasPhotosFour: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp",
+  galleryChristmasPhotosFive: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-05.webp",
+  galleryChristmasCoupleOne: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp",
+  galleryChristmasCoupleTwo: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
+  galleryChristmasCoupleThree: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
+  galleryChristmasCover: versionedAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"),
+  gallerySeasonalFallback: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1",
+  galleryHolidayFallback: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp",
+  galleryThanksgivingOne: "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-01.webp",
+  galleryThanksgivingTwo: "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-02.webp",
+  galleryThanksgivingThree: "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-03.webp",
+  galleryThanksgivingFour: "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-04.webp",
+  galleryThanksgivingFallback: versionedAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"),
+  galleryHalloweenFallback: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260731themeuniqueness1",
+  galleryCreatorOne: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
+  galleryCreatorTwo: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp",
   proofWorldcupGallery: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-worldcup-gallery.png",
   catalogWorldcupCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-worldcup-card.png",
   catalogHeadshotCard: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
@@ -141,7 +172,7 @@ const dreamshootMegaTools = [
   block("mega_tool_gala", "tool_card", { title: "Gala photo maker", description: "Input: clear portraits and style direction you own or can use. Output: private formal evening portrait options. Best for: event-inspired profile images and polished album looks. Cost: credits are shown before generation.", category: "Photo AI", badge: "Style", imageUrl: assets.heroGridGala, href: toolHref("gala-photo") }),
   block("mega_tool_noir", "tool_card", { title: "Noir character portraits", description: "Input: your own portrait with character direction. Output: private noir-style character portraits. Best for: dramatic profile concepts and creative scenes. Cost: credits are shown before generation.", category: "Photo AI", badge: "Noir", imageUrl: assets.heroGridNoir, href: toolHref("noir-portrait") }),
   block("mega_tool_anime", "tool_card", { title: "Anime avatar builder", description: "Input: your own portrait or avatar reference. Output: private stylized avatar concepts. Best for: profile updates, fan communities, and playful identity ideas. Cost: credits are shown before generation.", category: "Photo AI", badge: "Avatar", imageUrl: assets.heroGridAvatar, href: toolHref("anime-avatar") }),
-  block("mega_tool_nature", "tool_card", { title: "Nature adventure photos", description: "Input: your own portrait and outdoor mood direction. Output: private nature and adventure portrait scenes. Best for: travel-inspired profiles and lifestyle albums. Cost: credits are shown before generation.", category: "Photo AI", badge: "Outdoor", imageUrl: assets.natureSolo, href: toolHref("nature-adventure") }),
+  block("mega_tool_nature", "tool_card", { title: "Nature adventure photos", description: "Input: your own portrait and outdoor mood direction. Output: private nature and adventure portrait scenes. Best for: outdoor creator profiles and lifestyle albums. Cost: credits are shown before generation.", category: "Photo AI", badge: "Outdoor", imageUrl: assets.natureSolo, href: toolHref("nature-adventure") }),
   block("mega_tool_fashion", "tool_card", { title: "Fashion editorial set", description: "Input: your own photo and style references. Output: private fashion editorial and visual try-on previews. Best for: outfit direction, creator looks, and adult consensual non-explicit styling. Cost: credits are shown before generation.", category: "Photo AI", badge: "Editorial", imageUrl: assets.manPortrait, href: toolHref("fashion-editorial") }),
   block("mega_tool_product", "tool_card", { title: "Product lifestyle photos", description: "Input: product or creator reference images you own or can use. Output: private product-style lifestyle image concepts. Best for: campaign drafts, social commerce visuals, and creator product scenes. Cost: credits are shown before generation.", category: "Photo AI", badge: "Commerce", imageUrl: assets.heroGridProduct, href: toolHref("product-lifestyle") }),
   block("mega_edit_background", "tool_card", { title: "Background changer", description: "Input: one portrait or product photo you own or can edit. Output: a private image with a cleaner replacement background. Best for: preparing source photos before a full package. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Studio", imageUrl: assets.sampleCyberpunk, href: toolHref("background-changer") }),
@@ -170,15 +201,15 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "Create studio-style headshots and themed portraits from your selfies.",
-      subheadline: "Upload clear photos once, then create private headshots, creator portraits, fan posters, beauty previews, and themed albums. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account.",
+      headline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+      subheadline: "Upload clear photos once, then create private sports fan photos, sports-idol style meetups, red-carpet fan moments, Christmas group portraits, Thanksgiving albums, Halloween party photos, and seasonal cards. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
       heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
-        "Upload clear photos you own or have permission to use.|Choose headshots, fan posters, creator portraits, beauty previews, and themed albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-      highlightWord: "real",
+        "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
+      highlightWord: "fan",
       heroBadge: "AI photo package studio",
       authRibbon: "Plans start at $24.50/month",
       authPrimaryLabel: "Continue with email",
@@ -201,13 +232,13 @@ const homeSections: ThemePageJson["sections"] = {
   ),
   brand_strip_1: section(
     "brand_logo_strip",
-    { anchor: "trusted", title: "Private photo sets for work profiles, fan posts, creator pages, and personal albums.", style: "dark" },
+    { anchor: "trusted", title: "Private photo sets for fan meetups, sports-idol style moments, VIP looks, Christmas cards, Thanksgiving portraits, and Halloween albums.", style: "dark" },
     [
-      block("logo_reviews", "logo", { name: "Use cases", imageUrl: "", badge: "Private" }),
-      block("logo_packages", "logo", { name: "Photo Packages", imageUrl: "", badge: "Catalog" }),
-      block("logo_model", "logo", { name: "Personal AI Model", imageUrl: "", badge: "Private" }),
-      block("logo_video", "logo", { name: "AI Video", imageUrl: "", badge: "Motion" }),
-      block("logo_tryon", "logo", { name: "Virtual Try-On", imageUrl: "", badge: "Style" })
+      block("logo_reviews", "logo", { name: "Fan meetups", imageUrl: "", badge: "Private" }),
+      block("logo_packages", "logo", { name: "Sports fan packs", imageUrl: "", badge: "Catalog" }),
+      block("logo_model", "logo", { name: "VIP-style looks", imageUrl: "", badge: "Permission-safe" }),
+      block("logo_video", "logo", { name: "Christmas albums", imageUrl: "", badge: "Seasonal" }),
+      block("logo_tryon", "logo", { name: "Halloween & Thanksgiving", imageUrl: "", badge: "Holiday" })
     ]
   ),
   visual_proof_1: section(
@@ -216,18 +247,18 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "proof-gallery",
       label: "Visual proof gallery",
       title: "See what your selfies can become.",
-      subtitle: "See examples of what your selfies can become: headshots, fan posters, creator portraits, style previews, and seasonal albums.",
-      tabs: "All|Sports|Headshots|Beauty|Creative|Lifestyle|Seasonal|Video",
-      badges: "Private model|Album-ready|Full package catalog",
+      subtitle: "See examples of fan meetups, sports-idol style photos, VIP looks, Christmas group portraits, Thanksgiving albums, Halloween party shots, and seasonal cards.",
+      tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal",
+      badges: "Private model|Fan-safe styling|Holiday albums",
       primaryCta: "Start this pack",
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium posters, match-day portraits, and fan profile scenes.", category: "Sports", badge: "Featured", imageUrl: assets.proofWorldcupGallery, href: "/collections/sports" }),
-      block("proof_headshots", "proof_card", { title: "Professional headshots", description: "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Credit cost is shown before generation.", category: "Headshots", badge: "Business", imageUrl: assets.proofBusinessFounder, href: "/collections/headshots" }),
-      block("proof_hairstyle", "proof_card", { title: "Hairstyle previews", description: "Preview hair direction, beauty styling, and polished profile looks.", category: "Beauty", badge: "Beauty", imageUrl: assets.proofBeautyHair, href: "/collections/beauty" }),
-      block("proof_cyberpunk", "proof_card", { title: "Cinematic worlds", description: "Cyberpunk, noir, gala, and editorial scene concepts.", category: "Creative", badge: "Creative", imageUrl: assets.proofCinematicWorlds, href: "/collections/creative" }),
-      block("proof_travel", "proof_card", { title: "Lifestyle portraits", description: "Outdoor profile photos, creator scenes, and cinematic personal-brand looks.", category: "Lifestyle", badge: "Lifestyle", imageUrl: assets.proofCoupleEngagement, href: "/collections/travel" })
+      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Fan Photos", badge: "Featured", imageUrl: assets.galleryWorldCupFanOne, href: "/collections/world-cup-fan-photos" }),
+      block("proof_sports_meetup", "proof_card", { title: "Sports idol-style meetups", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Sports Stars", badge: "Sports Stars", imageUrl: assets.galleryWorldCupFanTwo, href: "/collections/world-cup-fan-photos" }),
+      block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: assets.galleryGalaOne, href: "/collections/gala-photos" }),
+      block("proof_christmas", "proof_card", { title: "Christmas group photos", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Christmas", badge: "Christmas", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photos" }),
+      block("proof_seasonal", "proof_card", { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: assets.gallerySeasonalFallback, href: "/collections/holiday" })
     ]
   ),
   featured_pack_1: section(
@@ -236,8 +267,8 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "featured-pack",
       label: "Featured seasonal pack",
       badge: "Match-day pack",
-      title: "World Cup fan photos for match-day moments.",
-      subtitle: "Create personal fan portraits, match-day posters, and profile avatars from your own selfies.",
+      title: "World Cup fan photos for sports-idol style moments.",
+      subtitle: "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
       primaryCta: "Create Fan Photos",
       primaryHref: "/login",
       secondaryCta: "View Sports Packs",
@@ -246,22 +277,90 @@ const homeSections: ThemePageJson["sections"] = {
       credits: "26 credits",
       privacy: "Private album",
       includedTitle: "Included outputs",
-      includedOutputs: "Fan posters|Large portrait graphics for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
-      safetyCopy: "For personal fan use only. Do not use official marks, event logos, player likenesses, or brand assets without permission.",
+      includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+      safetyCopy: "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
       overlayTitle: "World Cup Pack",
-      overlaySubtitle: "Match-day looks without a studio.",
-      overlayChips: "fan poster|avatar|stadium|social-ready",
-      bottomNote: "Seasonal packs rotate around tournaments, holidays, and personal fan-photo moments.",
+      overlaySubtitle: "Sports-idol style fan photos without a studio.",
+      overlayChips: "fan meetup|group shot|stadium|social-ready",
+      bottomNote: "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
       campaignLabel: "Current campaign: World Cup Fan Photos",
-      nextCampaignLabel: "Next: Valentine / Graduation Season"
+      nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     },
     [
       block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: assets.worldCupStadiumPortrait, shape: "tall" }),
-      block("seasonal_worldcup_2", "seasonal_image", { label: "Friend Fan Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, shape: "wide" }),
+      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, shape: "wide" }),
       block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, shape: "square" }),
       block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: assets.worldCupFanPoster, shape: "tall" }),
       block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, shape: "tall" }),
       block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: assets.worldCupBanner, shape: "wide" })
+    ]
+  ),
+  featured_christmas_1: section(
+    "dreamshoot_featured_pack",
+    {
+      anchor: "christmas-holiday-pack",
+      label: "Featured holiday pack",
+      badge: "Christmas pack",
+      title: "Christmas group photos for cards, posts, and private albums.",
+      subtitle: "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
+      primaryCta: "Create Christmas Photos",
+      primaryHref: "/login",
+      secondaryCta: "View Christmas Photos",
+      secondaryHref: "/collections/christmas-photos",
+      photos: "Holiday cards",
+      credits: "20 credits",
+      privacy: "Private album",
+      includedTitle: "Included outputs",
+      includedOutputs: "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
+      safetyCopy: "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+      overlayTitle: "Christmas Photos",
+      overlaySubtitle: "Festive holiday portraits without a studio.",
+      overlayChips: "Christmas cards|group portraits|cozy scenes|private",
+      bottomNote: "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
+      campaignLabel: "Current campaign: Christmas Photos",
+      nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
+    },
+    [
+      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp", shape: "square" }),
+      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp", shape: "square" }),
+      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp", shape: "square" }),
+      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: assets.galleryChristmasCover, shape: "square" }),
+      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp", shape: "square" }),
+      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp", shape: "square" })
+    ]
+  ),
+  featured_thanksgiving_1: section(
+    "dreamshoot_featured_pack",
+    {
+      anchor: "thanksgiving-pack",
+      label: "Featured seasonal pack",
+      badge: "Thanksgiving pack",
+      title: "Thanksgiving group photos for warm private albums.",
+      subtitle: "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
+      primaryCta: "Create Thanksgiving Photos",
+      primaryHref: "/login",
+      secondaryCta: "View Thanksgiving Photos",
+      secondaryHref: "/collections/thanksgiving-group-photos",
+      photos: "Group portraits",
+      credits: "20 credits",
+      privacy: "Private gallery",
+      includedTitle: "Included outputs",
+      includedOutputs: "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
+      safetyCopy: "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+      overlayTitle: "Thanksgiving Photos",
+      overlaySubtitle: "Warm gratitude scenes from approved photos.",
+      overlayChips: "group portraits|gratitude cards|Friendsgiving|private",
+      bottomNote: "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
+      campaignLabel: "Current campaign: Thanksgiving Group Photos",
+      nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
+    },
+    [
+      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), shape: "square" }),
+      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), shape: "square" }),
+      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), shape: "square" }),
+      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: assets.galleryThanksgivingFallback, shape: "square" }),
+      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), shape: "square" }),
+      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), shape: "square" })
     ]
   ),
   package_catalog_1: section(
@@ -270,21 +369,20 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "packages",
       label: "Photo package catalog",
       title: "Choose a photo package first.",
-      subtitle: "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Only upload photos you own or have permission to use.",
-      tabs: "All|Headshots|Beauty|Creative|Sports|Creator|Avatar|Lifestyle|Cultural|Seasonal|Video|Utility",
+      subtitle: "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Choose fan photos, VIP-style looks, Christmas cards, Thanksgiving portraits, Halloween party albums, or seasonal group photos from images you own or have permission to use.",
+      tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
       steps: "Pick pack|See credit cost|Generate album",
       source: "creative_packs",
       featuredCount: 5
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only; do not use official marks, logos, or player likenesses without permission.", category: "Sports", meta: "Private gallery", credits: "26 credits", imageUrl: assets.catalogWorldcupCard, href: "/collections/world-cup-fan-photos" }),
-      block("catalog_headshot", "catalog_pack", { title: "Professional Headshots", description: "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", category: "Headshots", meta: "Work profiles", credits: "20 credits", imageUrl: assets.catalogHeadshotCard, href: "/collections/headshots" }),
-      block("catalog_cyberpunk", "catalog_pack", { title: "Cyberpunk", description: "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", category: "Creative", meta: "Poster crops", credits: "26 credits", imageUrl: assets.cyberpunk, href: "/collections/cyberpunk" }),
-      block("catalog_hairstyle", "catalog_pack", { title: "Hairstyle", description: "Preview haircut, color, and styling ideas before you commit to a salon change or full image package.", category: "Beauty", meta: "Style preview", credits: "18 credits", imageUrl: assets.catalogHairstyleCard, href: "/collections/hairstyle" }),
-      block("catalog_gala", "catalog_pack", { title: "Gala Photos", description: "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", category: "Creative", meta: "Evening portraits", credits: "24 credits", imageUrl: assets.catalogGalaCard, href: "/collections/gala-photos" }),
-      block("catalog_travel", "catalog_pack", { title: "Lifestyle portrait pack", description: "Outdoor profile photos, creator scenes, and personal-brand album images.", category: "Lifestyle", meta: "Lifestyle scenes", credits: "24 credits", imageUrl: assets.holidayTravelPack, href: "/collections/travel" }),
-      block("catalog_fashion", "catalog_pack", { title: "Fashion Editorial", description: "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", category: "Beauty", meta: "Style preview", credits: "24 credits", imageUrl: assets.virtualLooks, href: "/collections/fashion-editorial" }),
-      block("catalog_boudoir", "catalog_pack", { title: "Boudoir", description: "Create a private boudoir-inspired portrait set from photos you own or have permission to use. Adult, consensual, non-explicit use only; no minors, non-consenting people, stolen images, or unauthorized portraits.", category: "Boudoir", meta: "Adult consent", credits: "24 credits", imageUrl: assets.womanPortrait, href: "/collections/boudoir" })
+      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/collections/world-cup-fan-photos" }),
+      block("catalog_christmas", "catalog_pack", { title: "Christmas Photos", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Christmas", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photos" }),
+      block("catalog_christmas_couple", "catalog_pack", { title: "Christmas Couple", description: "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.", category: "Christmas", meta: "Couple cards", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/collections/christmas-couple" }),
+      block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: assets.galleryHolidayFallback, href: "/collections/holiday" }),
+      block("catalog_creator_vip", "catalog_pack", { title: "Creator red-carpet style", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "VIP Looks", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/collections/creator-portraits" }),
+      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Group Photos", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Thanksgiving", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/collections/thanksgiving-group-photos" }),
+      block("catalog_halloween", "catalog_pack", { title: "Halloween Party Photos", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Halloween", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/collections/halloween-party-photos" })
     ]
   ),
   generation_showcase_1: section(
@@ -296,7 +394,7 @@ const homeSections: ThemePageJson["sections"] = {
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
       imageTitle: "Customer image themes",
       videoTitle: "Customer video themes",
-      imageSlugs: "professional-headshots|world-cup-fan-photos|hairstyle|cyberpunk|gala-photos|nature|creator-portraits|wedding-portraits",
+      imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
       videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       itemLimit: 8,
       primaryCta: "Start with your photos",
@@ -525,66 +623,66 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "reviews",
       title: "Ways people use MyDreamShoots.",
-      subtitle: "Real stories for social content, wedding pages, family keepsakes, and short AI videos.",
+      subtitle: "Theme examples for fan meetup albums, VIP-style looks, Christmas cards, holiday groups, and short private clips.",
       summaryTitle: "Ways people use MyDreamShoots",
-      summaryBody: "Turn everyday selfies and family photos into private albums, gallery-ready images, and 6-10 second video moments.",
+      summaryBody: "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits.",
       summaryRating: "",
       summaryMeta: "Narrative examples"
     },
     [
-      block("review_ava", "testimonial", {
-        quote: "Create daily content without spending hours on outfit changes, makeup, hairstyling, or studio setup.",
-        name: "Daily creator content",
-        role: "Creator workflow",
-        location: "Photos and short videos",
+      block("review_fan_meetup", "testimonial", {
+        quote: "Turn match-day selfies into sports fan photos, supporter portraits, and group-friendly fan meetup images without using official logos or real player likenesses.",
+        name: "Fan meetup album",
+        role: "Sports fan photos",
+        location: "Fan Photos",
         rating: "",
         avatarUrl: assets.reviewAvaAvatar,
-        resultImageUrl: assets.reviewAvaResultGala
+        resultImageUrl: assets.galleryWorldCupFanThree
       }),
-      block("review_lucas", "testimonial", {
-        quote: "Build wedding-style albums and realistic short videos that can support a couple's wedding website or announcement page.",
-        name: "Wedding website visuals",
-        role: "Wedding stories",
-        location: "Albums and video clips",
+      block("review_vip", "testimonial", {
+        quote: "Plan VIP-style portraits and red-carpet fan moments from approved source photos before spending credits on a full private gallery.",
+        name: "VIP-style portrait set",
+        role: "Red-carpet style",
+        location: "VIP Looks",
         rating: "",
         avatarUrl: assets.reviewLucasAvatar,
-        resultImageUrl: assets.reviewLucasResultHeadshot
+        resultImageUrl: assets.galleryGalaTwo
       }),
-      block("review_mia", "testimonial", {
-        quote: "Recreate meaningful family scenes from approved photos, including memorial albums and gentle hug videos for loved ones.",
-        name: "Family memory album",
-        role: "Keepsake scenes",
-        location: "Private family gallery",
+      block("review_christmas", "testimonial", {
+        quote: "Compare Christmas couple, friend-card, and group portrait directions before creating card-ready favorites for a private album.",
+        name: "Christmas card set",
+        role: "Holiday cards",
+        location: "Christmas photos",
         rating: "",
         avatarUrl: assets.reviewMiaAvatar,
-        resultImageUrl: assets.reviewMiaResultBeautySports
+        resultImageUrl: assets.galleryChristmasCoupleTwo
       }),
-      block("review_noah", "testimonial", {
-        quote: "Use up to 7 selected frame images, choose 6 or 10 seconds, review credits first, then save the result in your private gallery.",
-        name: "Prompt-led video scene",
-        role: "Video previews",
-        location: "6-10 second clips",
+      block("review_holiday", "testimonial", {
+        quote: "Build seasonal holiday albums around Christmas cards, Thanksgiving warmth, Halloween mood, and private family-style keepsakes.",
+        name: "Holiday group album",
+        role: "Seasonal albums",
+        location: "Private gallery",
         rating: "",
         avatarUrl: assets.reviewNoahAvatar,
-        resultImageUrl: assets.reviewNoahResultSocialCard
+        resultImageUrl: assets.galleryChristmasPhotosTwo
       }),
-      block("review_elena", "testimonial", {
-        quote: "Preview hairstyles, outfits, and themed portrait directions before committing credits to a full package.",
-        name: "Private style preview",
-        role: "Style planning",
-        location: "Beauty and try-on",
+      block("review_credit", "testimonial", {
+        quote: "Pick a theme, check the credit cost, and keep every fan-photo or holiday result inside a private MyDreamShoots gallery.",
+        name: "Credit planning",
+        role: "Private workflow",
+        location: "Clear credits",
         rating: "",
         avatarUrl: assets.womanPortrait,
-        resultImageUrl: assets.cyberpunk
+        resultImageUrl: assets.galleryCreatorOne
       }),
-      block("review_ryan", "testimonial", {
-        quote: "Compare finished examples, confirm the credit cost before generation, and download only the private results you want to keep.",
-        name: "Gallery delivery",
-        role: "Credit planning",
-        location: "Private workflow",
+      block("review_clip", "testimonial", {
+        quote: "Turn finished fan portraits or VIP-style images into short private clips after reviewing the credit cost and source-frame guidance.",
+        name: "Short motion preview",
+        role: "Image-to-video ideas",
+        location: "Private clips",
         rating: "",
         avatarUrl: assets.selfie,
-        resultImageUrl: assets.travelScene
+        resultImageUrl: assets.galleryCreatorTwo
       })
     ]
   ),
@@ -815,22 +913,26 @@ const templateSections = {
 };
 
 const aidreamcapesPublicAssets = {
-  hero: "/assets/sites/site_aidreamcapes/creative-packs/route-portrait-albums-cover.webp?v=20260630webp",
-  route: "/assets/sites/site_aidreamcapes/creative-packs/scenic-overlooks-v2.webp?v=20260630webp",
-  city: "/assets/sites/site_aidreamcapes/creative-packs/cafe-street-story-studio.webp?v=20260630webp",
-  gallery: "/assets/sites/site_aidreamcapes/creative-packs/postcard-social-sets-v2.webp?v=20260630webp",
-  profile: "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260630webp"
+  hero: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp"),
+  fan: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp"),
+  gameDay: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/game-day-group-portraits.webp"),
+  premiere: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/premiere-flash-portraits.webp"),
+  christmas: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp"),
+  thanksgiving: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/thanksgiving-keepsake-table-set.webp"),
+  halloween: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/halloween-party-portrait-set.webp"),
+  seasonal: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/seasonal-celebration-photo-set.webp"),
+  gallery: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp")
 } as const;
 
 function aidreamcapesTrustSection(): SectionInstance {
   return section(
     "trust_signal_bar",
-    { anchor: "trust", title: "Private travel portraits, visible credits, and account-only delivery." },
+    { anchor: "trust", title: "Approved photos, visible credits, and no protected likeness or marks." },
     [
       block("aidream_trust_private", "stat", { value: "Private", label: "source photos and galleries stay in the signed-in customer account" }),
-      block("aidream_trust_credits", "stat", { value: "Credits", label: "route costs are shown before each request reserves credits" }),
-      block("aidream_trust_routes", "stat", { value: "Routes", label: "coast, city, resort, trail, and postcard directions are clearly scoped" }),
-      block("aidream_trust_delivery", "stat", { value: "Gallery", label: "finished portraits return to a private review and download space" })
+      block("aidream_trust_credits", "stat", { value: "Credits", label: "album costs are shown before each request reserves credits" }),
+      block("aidream_trust_original", "stat", { value: "Original", label: "no real celebrity, athlete, public figure, logo, official mark, or trademark recreation" }),
+      block("aidream_trust_delivery", "stat", { value: "Gallery", label: "finished fan and holiday photos return to a private review space" })
     ]
   );
 }
@@ -842,27 +944,27 @@ function aidreamcapesFaqSection(): SectionInstance {
       anchor: "faq",
       eyebrow: "Questions before upload",
       title: "FAQ",
-      subtitle: "Answers to source photos, travel portrait requests, credits, privacy, refunds, and gallery delivery.",
-      journeyTitle: "Your travel portrait flow",
-      journeyTitles: "Upload|Choose Route|Generate|Download",
-      journeyDescriptions: "Add clear source photos.|Pick a destination mood.|AI builds the private set.|Download from your gallery."
+      subtitle: "Answers to approved source photos, fan-scene albums, game-day group portraits, holiday albums, credits, privacy, refunds, and gallery delivery.",
+      journeyTitle: "Your private album flow",
+      journeyTitles: "Upload|Choose Album|Review Credits|Download",
+      journeyDescriptions: "Add approved source photos.|Pick a fan or holiday direction.|Confirm the credit cost.|Download from your gallery."
     },
     [
-      block("aidream_faq_trial", "faq_item", {
-        question: "Can I preview Aidreamcapes before buying?",
-        answer: "Some lightweight guidance can be explored before a full request. Premium route portrait albums require credits because they use dedicated generation capacity."
+      block("aidream_faq_sources", "faq_item", {
+        question: "What photos can I upload?",
+        answer: "Upload only photos you own or have permission to use. Clear portraits and group photos work best for Aidreamcapes fan-scene and holiday albums."
+      }),
+      block("aidream_faq_likeness", "faq_item", {
+        question: "Can Aidreamcapes recreate a real celebrity or athlete?",
+        answer: "No. Aidreamcapes can create original fan-scene, game-day, premiere, and holiday atmosphere, but it does not promise or support copying real celebrities, real athletes, public figures, official marks, brand logos, trademarks, or protected materials."
       }),
       block("aidream_faq_credits", "faq_item", {
         question: "When are credits used?",
-        answer: "The route cost is shown before generation. Credits are reserved when a private request starts, used after successful delivery, or released when a failed request returns the reservation."
+        answer: "The album cost is shown before generation. Credits are reserved when a private request starts, used after successful delivery, or released when a failed request returns the reservation."
       }),
       block("aidream_faq_private", "faq_item", {
         question: "Are my uploaded photos private?",
-        answer: "Yes. Source photos, route briefs, generation jobs, albums, orders, and credits stay connected to your signed-in Aidreamcapes account and are not public by default."
-      }),
-      block("aidream_faq_uploads", "faq_item", {
-        question: "What photos should I upload?",
-        answer: "Recent, clear portraits work best. Use varied angles, expressions, lighting, and wardrobe notes so the private workflow has enough range for travel scenes."
+        answer: "Yes. Source photos, album briefs, generation jobs, finished images, orders, and credits stay connected to your signed-in Aidreamcapes account and are not public by default."
       }),
       block("aidream_faq_delete", "faq_item", {
         question: "Can I delete my photos?",
@@ -883,20 +985,20 @@ function aidreamcapesPlanRulesSection(): SectionInstance {
       anchor: "plan-rules",
       eyebrow: "Plans and credits",
       title: "How Aidreamcapes credits work",
-      body: "Credits are shown before a route portrait request starts, reserved while generation runs, used after successful delivery, and returned when a failed request releases the reservation. Your source photos, route briefs, albums, downloads, and credit history stay inside your signed-in Aidreamcapes account.",
-      imageUrl: aidreamcapesPublicAssets.route,
+      body: "Credits are shown before a fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal album request starts. Credits are reserved while generation runs, used after successful delivery, and returned when a failed request releases the reservation. Your source photos, album briefs, downloads, and credit history stay inside your signed-in Aidreamcapes account.",
+      imageUrl: aidreamcapesPublicAssets.gameDay,
       primaryCta: "Choose a plan",
       primaryHref: "/pricing",
-      secondaryCta: "Explore travel tools",
+      secondaryCta: "Explore album tools",
       secondaryHref: "/tools",
       tone: "dark",
       layout: "commerce_intro"
     },
     [
-      block("aidream_plan_source", "card", { meta: "source prep", title: "Prepare better source photos", description: "Upload clear portraits and optional destination notes before starting a full travel album." }),
-      block("aidream_plan_routes", "card", { meta: "route direction", title: "Pick a travel mood", description: "Choose coastal light, old quarter walks, alpine trails, resort stays, or postcard-style keepsakes before spending credits." }),
+      block("aidream_plan_source", "card", { meta: "source prep", title: "Prepare better source photos", description: "Upload clear photos you own or have permission to use before starting a full album." }),
+      block("aidream_plan_album", "card", { meta: "album direction", title: "Pick a fan or holiday album", description: "Choose fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal styling before spending credits." }),
       block("aidream_plan_credits", "card", { meta: "credit ledger", title: "Review credits first", description: "Reservations, successful generations, releases, and top-ups remain visible in the customer account." }),
-      block("aidream_plan_gallery", "card", { meta: "private delivery", title: "Download from your gallery", description: "Finished travel portraits return to an account-only gallery for review and download." })
+      block("aidream_plan_gallery", "card", { meta: "private delivery", title: "Download from your gallery", description: "Finished fan and holiday images return to an account-only gallery for review and download." })
     ]
   );
 }
@@ -907,16 +1009,16 @@ function aidreamcapesConversionSection(): SectionInstance {
     {
       anchor: "start",
       eyebrow: "Start creating",
-      title: "Open your private Aidreamcapes travel studio.",
-      subtitle: "Choose a route portrait package, upload clear source photos, review credits, and keep finished destination images in one private workspace.",
-      primaryCta: "Create travel portraits",
+      title: "Open your private Aidreamcapes fan and holiday album studio.",
+      subtitle: "Choose a fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal album, upload approved source photos, review credits, and keep finished images in one private workspace.",
+      primaryCta: "Create an occasion album",
       primaryHref: "/login",
       secondaryCta: "Choose a plan",
       secondaryHref: "/pricing"
     },
     [
       block("aidream_cta_metric_credits", "stat", { value: "Credits", label: "shown before generation" }),
-      block("aidream_cta_metric_routes", "stat", { value: "20+", label: "travel portrait paths" }),
+      block("aidream_cta_metric_themes", "stat", { value: "7", label: "fan and holiday album categories" }),
       block("aidream_cta_metric_private", "stat", { value: "Private", label: "uploads and galleries" })
     ]
   );
@@ -928,14 +1030,14 @@ function aidreamcapesWorkflowStepsSection(): SectionInstance {
     {
       anchor: "workflow",
       eyebrow: "How it works",
-      title: "Upload, choose a route, review credits, generate.",
-      subtitle: "Use photos you own or have permission to use. Choose a destination direction, review the credit cost, generate private results, and download favorites.",
-      imageUrl: aidreamcapesPublicAssets.profile
+      title: "Upload, choose an album direction, review credits, generate.",
+      subtitle: "Use photos you own or have permission to use. Choose a fan or holiday direction, review the credit cost, generate private results, and download favorites.",
+      imageUrl: aidreamcapesPublicAssets.premiere
     },
     [
       block("aidream_step_upload", "card", { title: "Upload clear photos", text: "Use recent portraits where the face or subject is visible. Only upload photos you own or have permission to use.", meta: "01" }),
-      block("aidream_step_route", "card", { title: "Choose a travel route", text: "Pick the outcome you want, such as coastal light, city walks, alpine trails, resort scenes, or postcard keepsakes.", meta: "02" }),
-      block("aidream_step_credits", "card", { title: "Review the credit cost", text: "The request shows the credit cost before generation starts so you know what the route will reserve.", meta: "03" }),
+      block("aidream_step_theme", "card", { title: "Choose a fan or holiday direction", text: "Pick fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, or seasonal celebration photos.", meta: "02" }),
+      block("aidream_step_credits", "card", { title: "Review the credit cost", text: "The request shows the credit cost before generation starts so you know what the album will reserve.", meta: "03" }),
       block("aidream_step_gallery", "card", { title: "Download from your gallery", text: "Finished sets land in your private gallery where you can review, approve, and download results.", meta: "04" })
     ]
   );
@@ -944,15 +1046,15 @@ function aidreamcapesWorkflowStepsSection(): SectionInstance {
 function aidreamcapesGenerationShowcaseSection(): SectionInstance {
   return section("dreamshoot_generation_showcase", {
     anchor: "generated-showcase",
-    eyebrow: "Customer travel examples",
-    title: "Browse destination image and video themes customers have created.",
-    subtitle: "These examples use private customer-created travel materials. Scan the labels for route, coastal, profile, and keepsake directions.",
-    imageTitle: "Customer destination themes",
+    eyebrow: "Customer occasion examples",
+    title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
+    subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
+    imageTitle: "Fan and holiday image themes",
     videoTitle: "Customer travel video themes",
-    imageSlugs: "route-portrait-albums|coastal-light-sets|old-quarter-walks|island-resort-scenes|scenic-overlooks|alpine-trail-frames|solo-traveler-profiles|heritage-celebration-portraits",
+    imageSlugs: "fan-scene-albums|game-day-group-photos|stadium-night-fan-sets|premiere-style-portraits|christmas-holiday-albums|thanksgiving-memory-sets|halloween-party-portraits|seasonal-celebration-photos",
     videoSlugs: "route-atlas-motion|coastal-memory-clip|old-quarter-walkthrough|resort-balcony-motion|scenic-overlook-pan|alpine-trail-motion|solo-traveler-profile-clip|heritage-celebration-film",
     itemLimit: 8,
-    primaryCta: "Start a route gallery",
+    primaryCta: "Start with approved photos",
     primaryHref: "/login"
   });
 }
@@ -964,19 +1066,19 @@ function aidreamcapesWorkflowPage(): ThemePageJson {
     {
       workflow_intro_1: section("rich_text", {
         eyebrow: "How it works",
-        title: "How Aidreamcapes turns source photos into private travel portraits.",
-        body: "Upload photos you own, choose the destination mood you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.",
+        title: "How Aidreamcapes turns approved photos into private fan and holiday albums.",
+        body: "Upload photos you own or have permission to use, choose the fan or holiday album direction you want, review the visible credit cost, generate the private request, and download finished images from your account gallery. Aidreamcapes does not recreate real celebrities, real athletes, public figures, official marks, brand logos, trademarks, or protected materials without permission.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: aidreamcapesPublicAssets.hero,
-        primaryCta: "Browse travel packages",
+        primaryCta: "Browse occasion albums",
         primaryHref: "/collections",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing"
       }, [
-        block("aidream_workflow_private", "rich_text_card", { meta: "Private", title: "Account-scoped uploads", description: "Source photos, route briefs, jobs, credits, and albums stay attached to the signed-in customer account." }),
-        block("aidream_workflow_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the route cost before a private request reserves credits." }),
-        block("aidream_workflow_gallery", "rich_text_card", { meta: "Gallery", title: "Finished albums", description: "Generated travel portraits return to a private gallery for review and download." })
+        block("aidream_workflow_private", "rich_text_card", { meta: "Private", title: "Account-scoped uploads", description: "Source photos, album briefs, jobs, credits, and albums stay attached to the signed-in customer account." }),
+        block("aidream_workflow_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the album cost before a private request reserves credits." }),
+        block("aidream_workflow_gallery", "rich_text_card", { meta: "Gallery", title: "Finished albums", description: "Generated fan and holiday photos return to a private gallery for review and download." })
       ]),
       workflow_1: aidreamcapesWorkflowStepsSection(),
       plan_rules_1: aidreamcapesPlanRulesSection(),
@@ -985,9 +1087,9 @@ function aidreamcapesWorkflowPage(): ThemePageJson {
     },
     1,
     {
-      title: "How Aidreamcapes works - private AI travel portrait workflow",
-      description: "Learn how Aidreamcapes customers upload source photos, choose travel portrait routes, review credits, generate private results, and download finished galleries.",
-      keywords: "Aidreamcapes workflow, AI travel portrait workflow, private destination portraits, AI travel gallery credits",
+      title: "How Aidreamcapes works - private fan-scene and holiday albums",
+      description: "Learn how Aidreamcapes customers upload approved source photos, choose fan-scene or holiday album directions, review credits, generate private results, and download finished galleries.",
+      keywords: "Aidreamcapes workflow, fan-scene photo albums, game-day group portraits, holiday memory albums, private AI photo credits",
       canonicalPath: "/workflow",
       robots: { index: true, follow: true }
     }
@@ -1001,46 +1103,46 @@ function aidreamcapesCreatorsCirclePage(site?: DreamshootPublicSeoSiteSeed): The
     {
       creators_intro_1: section("rich_text", {
         eyebrow: "Creator channel",
-        title: "Share AI travel portrait stories your audience can actually try.",
-        body: "Aidreamcapes partners with travel creators, itinerary writers, photographers, lifestyle editors, and community builders who can introduce private AI travel portrait packages in a useful, trustworthy way. Share route moods, source-photo tips, before-and-after stories, and seasonal destination ideas while your audience keeps uploads, credits, and galleries inside their own account.",
+        title: "Share private fan-scene and holiday album ideas your audience can actually try.",
+        body: "Aidreamcapes partners with creators, photographers, lifestyle editors, fan communities, and holiday planners who can introduce private fan-scene photo albums, game-day group portraits, premiere-inspired sets, and seasonal memory albums in a useful, trustworthy way. Share source-photo tips, before-and-after stories, and permission-safe occasion ideas while your audience keeps uploads, credits, and galleries inside their own account.",
         headingLevel: "h1",
         tone: "dark",
-        imageUrl: aidreamcapesPublicAssets.city,
+        imageUrl: aidreamcapesPublicAssets.premiere,
         primaryCta: "Apply as a partner",
         primaryHref: "/partner-registration",
-        secondaryCta: "Explore travel packages",
+        secondaryCta: "Explore occasion albums",
         secondaryHref: "/collections"
       }, [
-        block("aidream_creator_campaigns", "rich_text_card", { meta: "Channel", title: "Route-ready campaigns", description: "Launch content around coastal light, city walks, resort stays, profile stories, and seasonal travel portrait paths." }),
+        block("aidream_creator_campaigns", "rich_text_card", { meta: "Channel", title: "Occasion-ready campaigns", description: "Launch content around fan-scene albums, game-day group portraits, premiere-inspired sets, and holiday memory albums." }),
         block("aidream_creator_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside Aidreamcapes, so you promote the experience without handling personal photos." }),
-        block("aidream_creator_assets", "rich_text_card", { meta: "Assets", title: "Story angles included", description: "Use page links, route themes, upload tips, and destination talking points that match the Aidreamcapes catalog." }),
-        block("aidream_creator_growth", "rich_text_card", { meta: "Growth", title: "Room for paid channels", description: "We can reserve partner routes for creators, newsletters, paid media tests, travel communities, and niche collaborations." })
+        block("aidream_creator_assets", "rich_text_card", { meta: "Assets", title: "Story angles included", description: "Use page links, album themes, upload tips, and safety talking points that match the Aidreamcapes catalog." }),
+        block("aidream_creator_growth", "rich_text_card", { meta: "Growth", title: "Room for paid channels", description: "We can reserve partner campaigns for creators, newsletters, paid media tests, fan communities, and seasonal collaborations." })
       ]),
       creators_fit_1: section("rich_text", {
         eyebrow: "Who fits",
-        title: "Built for creators who explain travel mood, identity, and visual storytelling.",
-        body: "The strongest partners show real use cases: a solo traveler refreshing profile images, a planner testing destination moods, a creator building route content, or a small team preparing campaign visuals. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
-        imageUrl: aidreamcapesPublicAssets.route,
+        title: "Built for creators who explain fan moments, holidays, and permission-safe visual storytelling.",
+        body: "The strongest partners show real use cases: a fan community creating private album images, a group preparing game-day portraits, a creator testing premiere-inspired visuals, or a family planning seasonal keepsakes. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
+        imageUrl: aidreamcapesPublicAssets.gameDay,
         primaryCta: "Start the application",
         primaryHref: "/partner-registration",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing"
       }, [
-        block("aidream_fit_social", "rich_text_card", { meta: "Social", title: "Short-form creators", description: "Reels, TikTok, Shorts, and carousel creators who can demonstrate route portrait ideas clearly." }),
-        block("aidream_fit_newsletter", "rich_text_card", { meta: "Community", title: "Newsletter and group owners", description: "Operators with engaged audiences around travel planning, lifestyle storytelling, creator tools, or personal branding." }),
-        block("aidream_fit_photo", "rich_text_card", { meta: "Studio", title: "Photographers and consultants", description: "Professionals who want an AI add-on for route mood boards, destination portraits, and campaign concepts." }),
-        block("aidream_fit_paid", "rich_text_card", { meta: "Media", title: "Performance partners", description: "Paid media, SEO, and affiliate teams that can test a dedicated travel portrait channel with clean attribution." })
+        block("aidream_fit_social", "rich_text_card", { meta: "Social", title: "Short-form creators", description: "Reels, TikTok, Shorts, and carousel creators who can demonstrate fan-scene or holiday album ideas clearly." }),
+        block("aidream_fit_newsletter", "rich_text_card", { meta: "Community", title: "Newsletter and group owners", description: "Operators with engaged audiences around fandom, sports moments, holiday planning, creator tools, or personal branding." }),
+        block("aidream_fit_photo", "rich_text_card", { meta: "Studio", title: "Photographers and consultants", description: "Professionals who want an AI add-on for permission-safe occasion portraits and campaign concepts." }),
+        block("aidream_fit_paid", "rich_text_card", { meta: "Media", title: "Performance partners", description: "Paid media, SEO, and affiliate teams that can test a dedicated fan and holiday album channel with clean attribution." })
       ]),
       creators_steps_1: section("rich_text", {
         eyebrow: "How it works",
         title: "A simple path from application to live campaign.",
-        body: "Tell us about your audience, preferred channels, publishing cadence, and the travel portrait angles you want to test. Approved partners receive a dedicated Aidreamcapes route, campaign notes, and a way to coordinate launch timing with the Aidreamcapes team.",
+        body: "Tell us about your audience, preferred channels, publishing cadence, and the fan or holiday album angles you want to test. Approved partners receive campaign notes and a way to coordinate launch timing with the Aidreamcapes team.",
         tone: "warm"
       }, [
-        block("aidream_step_apply", "rich_text_card", { meta: "01", title: "Apply", description: "Submit your creator profile, social links, audience notes, and the kind of travel portrait campaign you want to run." }),
-        block("aidream_step_match", "rich_text_card", { meta: "02", title: "Match", description: "We review fit, confirm the channel, and suggest route portrait packages that make sense for your audience." }),
-        block("aidream_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner route that sends customers to Aidreamcapes packages, pricing, or a specific offer." }),
-        block("aidream_step_learn", "rich_text_card", { meta: "04", title: "Learn", description: "Track what resonates, refine the story, and plan follow-up drops around seasonal destinations or niche travel moods." })
+        block("aidream_step_apply", "rich_text_card", { meta: "01", title: "Apply", description: "Submit your creator profile, social links, audience notes, and the kind of fan or holiday album campaign you want to run." }),
+        block("aidream_step_match", "rich_text_card", { meta: "02", title: "Match", description: "We review fit, confirm the channel, and suggest album categories that make sense for your audience." }),
+        block("aidream_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner offer that sends customers to Aidreamcapes albums, pricing, or a specific private-gallery flow." }),
+        block("aidream_step_learn", "rich_text_card", { meta: "04", title: "Learn", description: "Track what resonates, refine the story, and plan follow-up drops around seasonal events or niche fan moments." })
       ]),
       pricing_1: homeSections.pricing_1,
       conversion_1: aidreamcapesConversionSection()
@@ -1058,11 +1160,11 @@ function aidreamcapesPartnerRegistrationPage(site?: DreamshootPublicSeoSiteSeed)
       partner_form_1: section("rich_text", {
         eyebrow: "Partner application",
         title: "Apply for a reserved Aidreamcapes creator channel.",
-        body: "Tell us who you reach, how you publish, and which Aidreamcapes travel portrait experiences would fit your audience. Approved partners can send customers to route portrait packages, pricing, or a specific private gallery offer.",
+        body: "Tell us who you reach, how you publish, and which Aidreamcapes fan-scene or holiday album experiences would fit your audience. Approved partners can send customers to album categories, pricing, or a specific private gallery offer.",
         headingLevel: "h1",
         layout: "application_form",
         tone: "dark",
-        imageUrl: aidreamcapesPublicAssets.profile,
+        imageUrl: aidreamcapesPublicAssets.seasonal,
         primaryCta: "Email partnership details",
         primaryHref: "mailto:support@aidreamcapes.com?subject=Aidreamcapes%20partner%20application",
         secondaryCta: "Back to Creators Circle",
@@ -1072,21 +1174,21 @@ function aidreamcapesPartnerRegistrationPage(site?: DreamshootPublicSeoSiteSeed)
         block("aidream_partner_field_email", "form_field", { label: "Email address", placeholder: "you@example.com", fieldType: "email", required: true }),
         block("aidream_partner_field_website", "form_field", { label: "Website", placeholder: "https://your-site.com", fieldType: "text", required: false }),
         block("aidream_partner_field_channels", "form_field", { label: "Primary channel links", placeholder: "Instagram, TikTok, YouTube, newsletter, website, or community links", fieldType: "textarea", required: true }),
-        block("aidream_partner_field_audience", "form_field", { label: "Audience and niche", placeholder: "Tell us who follows you and why AI travel portraits fit them.", fieldType: "textarea", required: true }),
+        block("aidream_partner_field_audience", "form_field", { label: "Audience and niche", placeholder: "Tell us who follows you and why private fan or holiday albums fit them.", fieldType: "textarea", required: true }),
         block("aidream_partner_field_cadence", "form_field", { label: "Publishing cadence", placeholder: "Weekly videos, newsletter drops, paid campaigns, community posts...", fieldType: "text", required: false }),
-        block("aidream_partner_field_ideas", "form_field", { label: "Campaign ideas", placeholder: "Which route portraits, stories, or seasonal destination angles would you promote first?", fieldType: "textarea", required: false }),
+        block("aidream_partner_field_ideas", "form_field", { label: "Campaign ideas", placeholder: "Which fan-scene albums, game-day portraits, or holiday memory angles would you promote first?", fieldType: "textarea", required: false }),
         block("aidream_partner_field_terms", "form_field", { label: "I confirm that my promotions will respect privacy, platform rules, and truthful AI disclosure.", fieldType: "checkbox", required: true })
       ]),
       partner_expectations_1: section("rich_text", {
         eyebrow: "Before you submit",
         title: "What we look for in partner channels.",
-        body: "Great applications are specific. Include real channel links, the audience problem you solve, the content format you prefer, and how you would explain private AI travel portraits without overstating results.",
+        body: "Great applications are specific. Include real channel links, the audience problem you solve, the content format you prefer, and how you would explain private AI fan and holiday albums without overstating results.",
         imageUrl: aidreamcapesPublicAssets.gallery
       }, [
-        block("aidream_partner_fit", "rich_text_card", { meta: "Audience", title: "Clear audience fit", description: "Travel, lifestyle, creator, photography, itinerary, wellness, and personal-brand communities usually map well to the Aidreamcapes catalog." }),
-        block("aidream_partner_quality", "rich_text_card", { meta: "Quality", title: "Helpful creative framing", description: "We prefer educational demos, honest results, and practical route examples over hype-only promotions." }),
+        block("aidream_partner_fit", "rich_text_card", { meta: "Audience", title: "Clear audience fit", description: "Fan, sports, lifestyle, creator, photography, holiday planning, and personal-brand communities usually map well to the Aidreamcapes catalog." }),
+        block("aidream_partner_quality", "rich_text_card", { meta: "Quality", title: "Helpful creative framing", description: "We prefer educational demos, honest results, and practical album examples over hype-only promotions." }),
         block("aidream_partner_compliance", "rich_text_card", { meta: "Rules", title: "Privacy and disclosure", description: "Partners should disclose AI use where appropriate and avoid collecting customer uploads outside Aidreamcapes." }),
-        block("aidream_partner_launch", "rich_text_card", { meta: "Launch", title: "A testable plan", description: "Share when you can publish, what format you will use, and which route or offer would make the campaign easy to measure." })
+        block("aidream_partner_launch", "rich_text_card", { meta: "Launch", title: "A testable plan", description: "Share when you can publish, what format you will use, and which album offer would make the campaign easy to measure." })
       ]),
       trust_1: aidreamcapesTrustSection(),
       conversion_1: aidreamcapesConversionSection()
@@ -1103,33 +1205,33 @@ function aidreamcapesAboutPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJso
     {
       about_intro_1: section("rich_text", {
         eyebrow: "About Aidreamcapes",
-        title: "Private AI travel portraits with route planning and account-only delivery.",
-        body: "Aidreamcapes helps customers turn everyday source photos into cinematic route portraits, coastal light sets, city walks, resort scenes, and private galleries without planning a real destination shoot.",
+        title: "Private fan-scene and holiday photo albums with clear boundaries.",
+        body: "Aidreamcapes helps customers turn approved source photos into fan-scene albums, game-day group portraits, premiere-inspired photo sets, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, and seasonal celebration photos with visible credits and account-only delivery.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: aidreamcapesPublicAssets.hero,
-        primaryCta: "Explore travel packages",
+        primaryCta: "Explore occasion albums",
         primaryHref: "/collections",
         secondaryCta: "Contact us",
         secondaryHref: "/contact-us"
       }, [
-        block("aidream_about_route", "rich_text_card", { meta: "Route context", title: "Destination briefs first", description: "Customers choose a coast, city, trail, resort, or postcard direction before the album request begins." }),
-        block("aidream_about_ledger", "rich_text_card", { meta: "Credit ledger", title: "Travel credit holds", description: "Each package shows its credit cost, reservation state, and delivery outcome inside the account history." }),
-        block("aidream_about_album", "rich_text_card", { meta: "Album delivery", title: "Trip-ready selections", description: "Delivered portraits can be compared, downloaded, and kept as a private destination album." })
+        block("aidream_about_permission", "rich_text_card", { meta: "Permission", title: "Approved photos first", description: "Customers should upload only photos they own or have permission to use before the album request begins." }),
+        block("aidream_about_ledger", "rich_text_card", { meta: "Credit ledger", title: "Visible credit holds", description: "Each package shows its credit cost, reservation state, and delivery outcome inside the account history." }),
+        block("aidream_about_album", "rich_text_card", { meta: "Album delivery", title: "Occasion-ready selections", description: "Delivered portraits can be compared, downloaded, and kept as a private fan or holiday album." })
       ]),
       about_values_1: section("rich_text", {
         eyebrow: "What we focus on",
-        title: "Source photos, destination planning, visible credits, and private albums.",
-        body: "Each Aidreamcapes page is designed around a clear travel portrait outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.",
-        imageUrl: aidreamcapesPublicAssets.route,
+        title: "Source photos, album planning, visible credits, and private delivery.",
+        body: "Each Aidreamcapes page is designed around a clear fan or holiday album outcome so customers know what to upload, what credits are reserved, and where finished images will arrive.",
+        imageUrl: aidreamcapesPublicAssets.christmas,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
         secondaryCta: "FAQ",
         secondaryHref: "/faq"
       }, [
-        block("aidream_value_workspace", "rich_text_card", { meta: "Scoped workspace", title: "Account-bound albums", description: "Source photos, route briefs, generated portraits, and downloads remain tied to the signed-in Aidreamcapes account." }),
-        block("aidream_value_credits", "rich_text_card", { meta: "Ledger clarity", title: "Route credit visibility", description: "Plan costs, reservations, releases, top-ups, and delivery states are visible before and after each destination request." }),
-        block("aidream_value_scenes", "rich_text_card", { meta: "Travel direction", title: "Destination-led guidance", description: "Coastal light, old quarter, alpine trail, villa, cafe, and postcard packages each carry their own upload notes." })
+        block("aidream_value_workspace", "rich_text_card", { meta: "Scoped workspace", title: "Account-bound albums", description: "Source photos, album briefs, generated portraits, and downloads remain tied to the signed-in Aidreamcapes account." }),
+        block("aidream_value_credits", "rich_text_card", { meta: "Ledger clarity", title: "Album credit visibility", description: "Plan costs, reservations, releases, top-ups, and delivery states are visible before and after each album request." }),
+        block("aidream_value_scenes", "rich_text_card", { meta: "Safety", title: "Original style guidance", description: "Fan-scene, game-day, premiere, and holiday packages keep public-figure likeness and protected-mark boundaries visible." })
       ]),
       trust_1: aidreamcapesTrustSection(),
       conversion_1: aidreamcapesConversionSection()
@@ -1149,17 +1251,17 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
         title: "Contact Aidreamcapes support.",
-        body: "Reach Aidreamcapes support for source photo guidance, travel request status, account access, billing review, privacy questions, plan fit, or creator and business use cases.",
+        body: "Reach Aidreamcapes support for source photo guidance, fan or holiday album request status, account access, billing review, privacy questions, plan fit, or creator and business use cases.",
         headingLevel: "h1",
         tone: "dark",
-        imageUrl: aidreamcapesPublicAssets.city,
+        imageUrl: aidreamcapesPublicAssets.thanksgiving,
         primaryCta: "Email support",
         primaryHref: `mailto:${supportEmail}`,
         secondaryCta: "View FAQ",
         secondaryHref: "/faq"
       }, [
-        block("aidream_contact_support", "rich_text_card", { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and private travel gallery delivery support." }),
-        block("aidream_contact_account", "rich_text_card", { meta: "Account help", title: supportEmail, description: "For plan questions, creator use cases, billing review, credits, and route portrait delivery help." }),
+        block("aidream_contact_support", "rich_text_card", { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and private album delivery support." }),
+        block("aidream_contact_account", "rich_text_card", { meta: "Account help", title: supportEmail, description: "For plan questions, creator use cases, billing review, credits, and fan or holiday album delivery help." }),
         block("aidream_contact_address", "rich_text_card", { meta: "Address", title: companyAddress, description: "Address for Aidreamcapes.com business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
@@ -1182,9 +1284,9 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "generation_showcase_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
+    ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "package_catalog_1", "generation_showcase_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"],
     {
-      ...pickSections(homeSections, ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
+      ...pickSections(homeSections, ["hero_1", "brand_strip_1", "visual_proof_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "package_catalog_1", "flow_bridge_1", "pricing_1", "proof_1", "faq_1", "trust_1", "conversion_1"]),
       generation_showcase_1: generationShowcaseSection
     },
     1
@@ -1436,13 +1538,9 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "blog-detail": page(
     "article",
-    ["blog_detail_1", "packages_1", "packages_strip_1", "blog_list_1", "conversion_1"],
+    ["blog_detail_1"],
     {
-      blog_detail_1: templateSections.blog_detail_1,
-      packages_1: homeSections.packages_1,
-      packages_strip_1: homeSections.packages_strip_1,
-      blog_list_1: section("blog_list", { title: "Related guides", body: "Read more about source photos, private models, credit usage, photo package planning, and album delivery.", guideType: "AI photo guide", headingLevel: "h2" }),
-      conversion_1: homeSections.conversion_1
+      blog_detail_1: templateSections.blog_detail_1
     },
     1
   ),
@@ -1678,6 +1776,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Browse packages", href: "/collections" },
         { label: "Tools", href: "/tools" },
         { label: "How it works", href: "/workflow" },
+        { label: "Blog", href: "/blog" },
         { label: "Pricing", href: "/pricing" },
         { label: "FAQ", href: "/faq" }
       ],
@@ -1692,7 +1791,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "About us", href: "/about-us", group: "company" },
         { label: "Contact us", href: "/contact-us", group: "company" },
         { label: "Creators Circle", href: "/creators-circle", group: "company" },
-        { label: "Guides", href: "/blog", group: "company" }
+        { label: "Blog", href: "/blog", group: "company" }
       ]
     },
     globalSections: {
@@ -1711,6 +1810,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Browse packages", href: "/collections" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
+          { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
           { id: "dreamshoot_header_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq" } },
           ...dreamshootMegaTools
@@ -1742,7 +1842,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           taxId: "",
           salesEmail: "",
           bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
-          copyright: "© 2026 MyDreamShoots. All rights reserved."
+          copyright: "© 2026 myDreamshoots.com. All rights reserved."
         },
         blocks: [
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
@@ -1759,7 +1859,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },
           { id: "dreamshoot_footer_contact", type: "menu_link", settings: { label: "Contact us", href: "/contact-us", group: "company" } },
           { id: "dreamshoot_footer_creators", type: "menu_link", settings: { label: "Creators Circle", href: "/creators-circle", group: "company" } },
-          { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Guides", href: "/blog", group: "company" } }
+          { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Blog", href: "/blog", group: "company" } }
         ]
       }
     },

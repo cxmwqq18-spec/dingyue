@@ -10,6 +10,32 @@ function isCustomerFacingPath(pathname: string): boolean {
   return true;
 }
 
+function installBrowserTranslationDomGuard() {
+  if (typeof Node === "undefined") return;
+  const nodeConstructor = Node as typeof Node & { __dreamshootBrowserTranslationDomGuard?: boolean };
+  if (nodeConstructor.__dreamshootBrowserTranslationDomGuard) return;
+
+  const nativeRemoveChild = Node.prototype.removeChild;
+  const nativeInsertBefore = Node.prototype.insertBefore;
+
+  Object.defineProperty(nodeConstructor, "__dreamshootBrowserTranslationDomGuard", {
+    value: true,
+    configurable: false
+  });
+
+  // Browser translators can replace React-owned text nodes with their own wrappers.
+  // When React later removes or inserts around the stale text node, avoid a full-page NotFoundError.
+  Node.prototype.removeChild = function removeChild<T extends Node>(this: Node, child: T): T {
+    if (child.parentNode !== this) return child;
+    return nativeRemoveChild.call(this, child) as T;
+  };
+
+  Node.prototype.insertBefore = function insertBefore<T extends Node>(this: Node, node: T, child: Node | null): T {
+    if (child && child.parentNode !== this) return nativeInsertBefore.call(this, node, null) as T;
+    return nativeInsertBefore.call(this, node, child) as T;
+  };
+}
+
 function removeGoogleNoTranslateMeta() {
   document.querySelectorAll<HTMLMetaElement>('meta[name="google"]').forEach((meta) => {
     if (/notranslate/i.test(meta.content)) meta.remove();
@@ -43,6 +69,7 @@ export function HtmlLangSync() {
       document.body?.setAttribute("translate", "yes");
 
       if (isCustomerFacingPath(window.location.pathname)) {
+        installBrowserTranslationDomGuard();
         document.documentElement.classList.remove("notranslate");
         document.body?.classList.remove("notranslate");
         removeGoogleNoTranslateMeta();

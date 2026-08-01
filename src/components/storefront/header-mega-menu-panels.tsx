@@ -40,8 +40,8 @@ function themeCountLabel(count: number, spanish: boolean): string {
 }
 
 function packagePanelTitle(aidreamcapes: boolean, spanish: boolean): string {
-  if (spanish) return aidreamcapes ? "Estudios de rutas de viaje" : "Estudios de paquetes de fotos";
-  return aidreamcapes ? "Travel route studios" : "AI photo package studios";
+  if (spanish) return aidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos";
+  return aidreamcapes ? "Occasion album studios" : "AI photo package studios";
 }
 
 export function HeaderPhotoPackageMegaPanel({
@@ -188,7 +188,7 @@ export function HeaderMobilePhotoPackagesMenu({
   spanish?: boolean;
 }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
-  const menuLabel = spanish ? aidreamcapes ? "Paquetes de viaje" : "Ver paquetes" : aidreamcapes ? "Travel Packages" : "Browse packages";
+  const menuLabel = spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileSummaryClass(dark)}>

@@ -83,6 +83,7 @@ import type {
   ThemeSettings,
   ThemeSettingValue
 } from "./types";
+import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
@@ -127,6 +128,17 @@ function cloneState(state: PlatformState): PlatformState {
 
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function normalizePlatformAiProviderPriority(value: unknown, fallback = 0) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? Math.max(0, Math.trunc(numeric)) : Math.max(0, Math.trunc(fallback));
+}
+
+function comparePlatformAiProviderPriority(left: Pick<PlatformAiProvider, "priority" | "preferred" | "label">, right: Pick<PlatformAiProvider, "priority" | "preferred" | "label">) {
+  return normalizePlatformAiProviderPriority(left.priority, Number.MAX_SAFE_INTEGER) - normalizePlatformAiProviderPriority(right.priority, Number.MAX_SAFE_INTEGER) ||
+    Number(right.preferred) - Number(left.preferred) ||
+    left.label.localeCompare(right.label);
 }
 
 function readPostgresStateCache(): PlatformState | null {
@@ -176,6 +188,13 @@ function readJsonPlatformStateFallback(): PlatformState {
 export function readLocalPlatformStateFallback(): PlatformState | undefined {
   if (process.env.NODE_ENV === "production" || process.env.PLATFORM_STATE_POSTGRES_STRICT === "1") return undefined;
   return readJsonPlatformStateFallback();
+}
+
+export function mutateLocalPlatformStateFallback(mutator: (state: PlatformState) => void): PlatformState | undefined {
+  if (process.env.NODE_ENV === "production" || process.env.PLATFORM_STATE_POSTGRES_STRICT === "1") return undefined;
+  const state = readJsonPlatformStateFallback();
+  mutator(state);
+  return writeJsonPlatformStateFallback(state);
 }
 
 function writeJsonPlatformStateFallback(nextState: PlatformState): PlatformState {
@@ -849,8 +868,8 @@ function normalizeState(state: PlatformState): PlatformState {
   for (const providerType of ["image", "video"] as const) {
     const typedProviders = next.platformAiProviders
       .filter((provider) => provider.providerType === providerType)
-      .sort((left, right) => Number(right.enabled) - Number(left.enabled) || Number(right.preferred) - Number(left.preferred) || left.priority - right.priority);
-    const preferred = typedProviders.find((provider) => provider.enabled && provider.preferred) ?? typedProviders.find((provider) => provider.enabled);
+      .sort((left, right) => Number(right.enabled) - Number(left.enabled) || comparePlatformAiProviderPriority(left, right));
+    const preferred = typedProviders.find((provider) => provider.enabled);
     for (const provider of typedProviders) provider.preferred = provider.enabled && provider.id === preferred?.id;
   }
   if (next.currentAiProviderId && !next.platformAiProviders.some((provider) => provider.id === next.currentAiProviderId && provider.enabled)) {
@@ -1611,7 +1630,7 @@ export function getThemeRuntimeForCustomer(state: PlatformState, siteId: string,
   const customer = state.customers.find((item) => item.siteId === siteId && item.id === customerId);
   const jobs = getCustomerJobsFromState(state, siteId, customerId);
   const assets = getCustomerAssetsFromState(state, siteId, customerId);
-  const albums = getSiteAlbumsFromState(state, siteId).filter((album) => album.customerId === customerId);
+  const albums = getSiteAlbumsFromState(state, siteId).filter((album) => album.customerId === customerId && album.status === "ready");
   const ledger = getCustomerLedgerFromState(state, siteId, customerId);
   const customerModels = getSiteCustomerModelsFromState(state, siteId).filter((model) => model.customerId === customerId);
   const subscriptions = state.subscriptions.filter((subscription) => subscription.siteId === siteId && subscription.customerId === customerId);
@@ -4416,9 +4435,9 @@ export function getPlatformAiProviderFallbackQueue(providerType?: PlatformAiProv
   const state = readPlatformState();
   const providers = state.platformAiProviders ?? [];
   return providers
-    .filter((provider) => provider.enabled && (!providerType || provider.providerType === providerType))
+    .filter((provider) => aiProviderStatus(provider).runnable && (!providerType || provider.providerType === providerType))
     .slice()
-    .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority || left.label.localeCompare(right.label))
+    .sort(comparePlatformAiProviderPriority)
     .map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
       id,
       label,
@@ -4637,6 +4656,7 @@ export function upsertPlatformAiProvider(params: {
   apiKey?: string;
   modelType: string;
   providerType?: PlatformAiProviderType;
+  priority?: unknown;
   makeCurrent?: boolean;
   enabled?: boolean;
   supportsGenerationN?: boolean;
@@ -4653,16 +4673,24 @@ export function upsertPlatformAiProvider(params: {
     const providerType = normalizePlatformAiProviderType(params.providerType, existing?.providerType ?? inferPlatformAiProviderType(params));
     const existingProviderType = existing?.providerType;
     const typedProviders = providers.filter((provider) => provider.providerType === providerType);
+    const defaultPriority = typedProviders.length ? Math.max(...typedProviders.map((provider) => normalizePlatformAiProviderPriority(provider.priority))) + 1 : 0;
     const hasPreferredForType = typedProviders.some((provider) => provider.enabled && provider.preferred);
     const shouldPrefer = Boolean(params.makeCurrent || (existing?.providerType === providerType && existing.preferred && existing.enabled !== false) || !hasPreferredForType);
     const enabled = shouldPrefer ? true : params.enabled;
+    const priority = params.makeCurrent && params.priority === undefined
+      ? 0
+      : params.priority === undefined
+        ? existing
+          ? existingProviderType !== providerType ? defaultPriority : normalizePlatformAiProviderPriority(existing.priority)
+          : defaultPriority
+        : normalizePlatformAiProviderPriority(params.priority, existing?.priority ?? defaultPriority);
     if (existing) {
       existing.label = params.label.trim();
       existing.aiUrl = params.aiUrl.trim();
       existing.apiKey = params.apiKey?.trim() || existing.apiKey;
       existing.modelType = params.modelType.trim();
       existing.providerType = providerType;
-      if (existingProviderType !== providerType) existing.priority = typedProviders.length + 1;
+      existing.priority = priority;
       existing.enabled = enabled ?? existing.enabled ?? true;
       existing.supportsGenerationN = Boolean(params.supportsGenerationN);
       existing.supportsEditN = Boolean(params.supportsEditN);
@@ -4678,7 +4706,7 @@ export function upsertPlatformAiProvider(params: {
         apiKey: params.apiKey?.trim() || undefined,
         modelType: params.modelType.trim(),
         providerType,
-        priority: typedProviders.length + 1,
+        priority,
         preferred: false,
         enabled: enabled ?? true,
         supportsGenerationN: Boolean(params.supportsGenerationN),
@@ -4698,7 +4726,7 @@ export function upsertPlatformAiProvider(params: {
     } else {
       const fallback = providers
         .filter((provider) => provider.providerType === providerType && provider.enabled)
-        .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)[0];
+        .sort(comparePlatformAiProviderPriority)[0];
       for (const provider of providers) {
         if (provider.providerType === providerType) provider.preferred = provider.id === fallback?.id;
       }
@@ -4706,7 +4734,7 @@ export function upsertPlatformAiProvider(params: {
     if (existingProviderType && existingProviderType !== providerType) {
       const fallback = providers
         .filter((provider) => provider.providerType === existingProviderType && provider.enabled)
-        .sort((left, right) => Number(right.preferred) - Number(left.preferred) || left.priority - right.priority)[0];
+        .sort(comparePlatformAiProviderPriority)[0];
       for (const provider of providers) {
         if (provider.providerType === existingProviderType) provider.preferred = provider.id === fallback?.id;
       }
@@ -4729,6 +4757,7 @@ export function setCurrentPlatformAiProvider(params: { providerId: string; actor
       if (item.providerType === providerType) item.preferred = item.id === provider.id;
     }
     provider.enabled = true;
+    provider.priority = 0;
     provider.updatedAt = new Date().toISOString();
     provider.updatedBy = params.actor;
     result = provider;

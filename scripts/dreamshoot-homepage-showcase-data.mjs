@@ -1,4 +1,4 @@
-export const SHOWCASE_VERSION = "20260717motionDiversity";
+export const SHOWCASE_VERSION = "20260801visualfix1";
 
 function showcaseSlug(value) {
   return String(value || "")
@@ -22,22 +22,16 @@ export const showcaseStores = [
     siteId: "site_dreamshoot",
     siteSlug: "mydreamshoots",
     imageSlugs: [
-      "professional-headshots",
       "world-cup-fan-photos",
-      "hairstyle",
-      "cyberpunk",
-      "gala-photos",
-      "nature",
+      "christmas-couple",
+      "christmas-photos",
       "creator-portraits",
-      "wedding-portraits"
+      "gala-photos",
+      "holiday",
+      "professional-headshots",
+      "cyberpunk"
     ],
     imageThemes: [
-      {
-        slug: "professional-headshots",
-        name: "Professional Headshots",
-        meta: "Headshots",
-        prompt: "a credible business portrait result for LinkedIn, resumes, founders, and team pages, with polished office or studio light, realistic skin texture, confident adult subject, and clean professional wardrobe"
-      },
       {
         slug: "world-cup-fan-photos",
         name: "World Cup Fan Photos",
@@ -45,40 +39,46 @@ export const showcaseStores = [
         prompt: "a generic football fan portrait result in stadium light with scarf or jersey-inspired wardrobe, celebration energy, cinematic crowd depth, no real team marks, no real players, and no event logos"
       },
       {
-        slug: "hairstyle",
-        name: "Hairstyle",
-        meta: "Beauty",
-        prompt: "a beauty portrait result focused on hairstyle preview quality, realistic hair texture, salon-inspired light, flattering face framing, and a clear polished crop for private planning"
+        slug: "christmas-couple",
+        name: "Christmas Couple",
+        meta: "Christmas",
+        prompt: "a cozy Christmas couple portrait result with warm lights, festive interior detail, greeting-card composition, natural expressions, and private keepsake polish"
+      },
+      {
+        slug: "christmas-photos",
+        name: "Christmas Photos",
+        meta: "Christmas",
+        prompt: "a festive Christmas group photo or card-ready portrait result with decorated interior, winter glow, cheerful seasonal styling, clear faces, and private album polish"
+      },
+      {
+        slug: "creator-portraits",
+        name: "Creator Portraits",
+        meta: "VIP Looks",
+        prompt: "a VIP-style creator portrait result for red-carpet style fan moments, media kits, thumbnails, and social profiles, with polished event light and personal-brand framing"
+      },
+      {
+        slug: "gala-photos",
+        name: "Gala Photos",
+        meta: "Red Carpet",
+        prompt: "a formal gala portrait result with black-tie styling, evening gown or tailored suit cues, warm event lighting, polished luxury venue atmosphere, and red-carpet editorial framing"
+      },
+      {
+        slug: "holiday",
+        name: "Holiday",
+        meta: "Seasonal",
+        prompt: "a polished seasonal holiday album image with warm greeting-card composition, winter or celebration atmosphere, clear portrait focus, and private family-style keepsake mood"
+      },
+      {
+        slug: "professional-headshots",
+        name: "Professional Headshots",
+        meta: "Headshots",
+        prompt: "a credible business portrait result for LinkedIn, resumes, founders, and team pages, with polished office or studio light, realistic skin texture, confident adult subject, and clean professional wardrobe"
       },
       {
         slug: "cyberpunk",
         name: "Cyberpunk",
         meta: "Creative",
         prompt: "a cinematic cyberpunk portrait result in a neon night city with rain reflections, colored rim light, futuristic wardrobe cues, and a dramatic but realistic editorial finish"
-      },
-      {
-        slug: "gala-photos",
-        name: "Gala Photos",
-        meta: "Creative",
-        prompt: "a formal gala portrait result with black-tie styling, evening gown or tailored suit cues, warm event lighting, polished luxury venue atmosphere, and red-carpet editorial framing"
-      },
-      {
-        slug: "nature",
-        name: "Nature",
-        meta: "Adventure",
-        prompt: "an outdoor adventure portrait result in mountains, forests, trails, lakes, or golden-hour natural scenery with believable wind, outdoor layers, and crisp scenic depth"
-      },
-      {
-        slug: "creator-portraits",
-        name: "Creator Portraits",
-        meta: "Creator",
-        prompt: "a creator portrait result for newsletters, thumbnails, media kits, and social profiles, with camera or microphone-adjacent studio cues, warm desk light, and confident personal-brand framing"
-      },
-      {
-        slug: "wedding-portraits",
-        name: "Wedding Portraits",
-        meta: "Wedding",
-        prompt: "a tasteful wedding-inspired portrait result with romantic ceremony light, veil or suit cues, flowers, warm venue atmosphere, and elegant save-the-date polish"
       }
     ],
     section: {
@@ -95,7 +95,7 @@ export const showcaseStores = [
     publicRoot: "/assets/dreamshoot/generated/homepage-showcase",
     videoCategories: [
       { slug: "portrait-motion", label: "Portrait Motion", description: "Short moving portraits for headshots, creators, and personal profile scenes." },
-      { slug: "travel-story", label: "Lifestyle Motion", description: "Cinematic motion for outdoor, creator, and everyday album moments." },
+      { slug: "creator-motion", label: "Creator Motion", description: "Cinematic motion for creator portraits, profile updates, and everyday album moments." },
       { slug: "social-cards", label: "Social Clips", description: "Compact profile, announcement, and story-ready short clips." },
       { slug: "wedding-memory", label: "Keepsake Film", description: "Romantic, seasonal, and celebration clips from finished image frames." },
       { slug: "product-teaser", label: "Product Motion", description: "Product and creator-commerce clips with clean studio movement." }
@@ -124,13 +124,13 @@ export const showcaseStores = [
         durationSeconds: 5
       },
       {
-        slug: "travel-route-story",
-        posterSlug: "nature",
-        categorySlug: "travel-story",
-        name: "Lifestyle Route Story",
-        headline: "A short outdoor or travel-inspired motion scene.",
-        description: "Uses a finished lifestyle frame as the opening beat for a natural moving scene.",
-        prompt: "Create one realistic outdoor lifestyle portrait motion clip from the supplied image frame. Preserve the main visible person, wardrobe, outdoor scene facts, lighting direction, and camera angle while adding natural wind, subtle environmental movement, and a smooth lifestyle camera drift. The subject must remain visible and recognizable as the source portrait; do not output an empty lake, market, pet room, studio headshot, or unrelated travel postcard. Keep it continuous and realistic without text, logos, UI, or slideshow behavior.",
+        slug: "creator-scene-motion",
+        posterSlug: "creator-portraits",
+        categorySlug: "creator-motion",
+        name: "Creator Scene Motion",
+        headline: "A short creator portrait motion scene.",
+        description: "Uses a finished creator frame as the opening beat for a natural moving scene.",
+        prompt: "Create one realistic creator portrait motion clip from the supplied image frame. Preserve the main visible person, wardrobe, scene facts, lighting direction, and camera angle while adding subtle environmental movement and a smooth creator-profile camera drift. The subject must remain visible and recognizable as the source portrait; do not output an empty landscape, market, pet room, studio headshot, or unrelated postcard scene. Keep it continuous and realistic without text, logos, UI, or slideshow behavior.",
         creditCost: 28,
         durationSeconds: 6
       },
@@ -196,77 +196,80 @@ export const showcaseStores = [
     siteId: "site_aidreamcapes",
     siteSlug: "aidreamcapes",
     imageSlugs: [
-      "route-portrait-albums",
-      "coastal-light-sets",
-      "old-quarter-walks",
-      "island-resort-scenes",
-      "scenic-overlooks",
-      "alpine-trail-frames",
-      "solo-traveler-profiles",
-      "heritage-celebration-portraits"
+      "fan-scene-albums",
+      "game-day-group-photos",
+      "stadium-night-fan-sets",
+      "premiere-style-portraits",
+      "christmas-holiday-albums",
+      "thanksgiving-memory-sets",
+      "halloween-party-portraits",
+      "seasonal-celebration-photos"
     ],
     imageThemes: [
       {
-        slug: "route-portrait-albums",
-        name: "Route Portrait Albums",
-        meta: "Route Portraits",
-        prompt: "a cinematic route portrait result with a traveler, destination-route cues, luggage or notebook detail, soft scenic depth, and private travel album polish"
+        slug: "fan-scene-albums",
+        name: "Fan-Scene Albums",
+        meta: "Private Fan Scenes",
+        prompt: "a private fan-scene album example with meetup atmosphere, supporter photo wall styling, spotlight portrait energy, original scene design, no real celebrity copy, and no protected logos"
       },
       {
-        slug: "coastal-light-sets",
-        name: "Coastal Light Sets",
-        meta: "Coastal",
-        prompt: "a warm seaside portrait result with beach walk, cliffside path, white island town, sailboat dock, linen styling, and soft coastal light"
+        slug: "game-day-group-photos",
+        name: "Game-Day Group Portraits",
+        meta: "Sports Energy",
+        prompt: "a game-day group portrait example with arena-inspired light, supporter celebration mood, private group album polish, no official team marks, no event logos, and no real athlete recreation"
       },
       {
-        slug: "old-quarter-walks",
-        name: "Old Quarter Walks",
-        meta: "City Routes",
-        prompt: "an old city travel portrait result in stone lanes, cafe corners, plazas, museum steps, or boutique hotel entrances with warm street texture"
+        slug: "stadium-night-fan-sets",
+        name: "Stadium Night Fan Sets",
+        meta: "Stadium Energy",
+        prompt: "a stadium-night fan set example with floodlight drama, original supporter styling, private group album polish, no official team marks, and no real athlete recreation"
       },
       {
-        slug: "island-resort-scenes",
-        name: "Island Resort Scenes",
-        meta: "Resort",
-        prompt: "a relaxed island resort portrait result with white terraces, poolside light, balcony or breakfast-table cues, palms, linen textures, and vacation warmth"
+        slug: "premiere-style-portraits",
+        name: "Premiere-Inspired Portrait Sets",
+        meta: "VIP Mood",
+        prompt: "a premiere-inspired portrait example with camera flash, polished arrival styling, formal evening atmosphere, original step-and-repeat feel, no public figure copying, and no brand logos"
       },
       {
-        slug: "scenic-overlooks",
-        name: "Scenic Overlooks",
-        meta: "Scenic Routes",
-        prompt: "a scenic overlook portrait result with sea cliffs, terrace railings, ridge paths, panoramic horizon, wide sky, and open destination atmosphere"
+        slug: "christmas-holiday-albums",
+        name: "Christmas Holiday Albums",
+        meta: "Christmas",
+        prompt: "a Christmas holiday album example with cozy lights, fan-safe group styling, greeting-card warmth, private seasonal gallery polish, no protected characters, and no branded decorations"
       },
       {
-        slug: "alpine-trail-frames",
-        name: "Alpine Trail Frames",
-        meta: "Alpine",
-        prompt: "an alpine trail portrait result with lake, cabin, mountain path, hiking layers, pine road, crisp daylight, and quiet adventure mood"
+        slug: "thanksgiving-memory-sets",
+        name: "Thanksgiving Keepsake Sets",
+        meta: "Gratitude",
+        prompt: "a Thanksgiving keepsake set example with warm table light, gratitude gathering mood, family-style private album crops, approved source-photo feel, and no protected marks"
       },
       {
-        slug: "solo-traveler-profiles",
-        name: "Solo Traveler Profiles",
-        meta: "Profile Travel",
-        prompt: "a confident solo traveler profile result for creators or founders, with scenic backdrop, travel journal or camera cue, natural expression, and public-bio polish"
+        slug: "halloween-party-portraits",
+        name: "Halloween Party Portraits",
+        meta: "Halloween",
+        prompt: "a Halloween party portrait example with moody color, original costume-friendly styling, playful group energy, private seasonal album polish, no protected characters, and no branded costumes"
       },
       {
-        slug: "heritage-celebration-portraits",
-        name: "Heritage Celebration Portraits",
-        meta: "Heritage",
-        prompt: "a respectful heritage celebration portrait result with rich textiles, traditional attire cues, warm gathering atmosphere, vibrant color, and elegant keepsake composition"
+        slug: "seasonal-celebration-photos",
+        name: "Seasonal Celebration Photos",
+        meta: "Rotating Occasions",
+        prompt: "a seasonal celebration photo example with birthday or New Year group energy, private occasion album continuity, polished cover crop, approved source-photo mood, and no protected branding"
       }
     ],
     section: {
       anchor: "generated-showcase",
-      eyebrow: "Customer travel examples",
-      title: "Browse destination image and video themes customers have created.",
-      subtitle: "These examples use private customer-created travel materials. Scan the labels for route, coastal, profile, and keepsake directions.",
-      imageTitle: "Customer destination themes",
+      eyebrow: "Customer occasion examples",
+      title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
+      subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
+      imageTitle: "Fan and holiday image themes",
       videoTitle: "Customer travel video themes",
-      primaryCta: "Start a route gallery",
+      primaryCta: "Start with approved photos",
       primaryHref: "/login"
     },
-    assetRoot: "public/assets/sites/site_aidreamcapes/homepage-showcase",
-    publicRoot: "/assets/sites/site_aidreamcapes/homepage-showcase",
+    assetRoot: "public/assets/sites/site_aidreamcapes/fan-holiday-theme",
+    publicRoot: "/assets/sites/site_aidreamcapes/fan-holiday-theme",
+    videoAssetRoot: "public/assets/sites/site_aidreamcapes/homepage-showcase",
+    videoPublicRoot: "/assets/sites/site_aidreamcapes/homepage-showcase",
+    videoVersion: "20260717motionDiversity",
     videoCategories: [
       { slug: "route-motion", label: "Route Motion", description: "Scenic travel clips for route portraits, lookouts, and city walks." },
       { slug: "coastal-motion", label: "Coastal Motion", description: "Sea light, resort, and breezy private-gallery travel clips." },
@@ -372,11 +375,15 @@ export function showcaseStoreBySlug(slug) {
 }
 
 export function publicShowcasePosterPath(store, videoSlug) {
-  return `${store.publicRoot}/posters/${videoSlug}.webp?v=${SHOWCASE_VERSION}`;
+  const root = store.videoPublicRoot ?? store.publicRoot;
+  const version = store.videoVersion ?? SHOWCASE_VERSION;
+  return `${root}/posters/${videoSlug}.webp?v=${version}`;
 }
 
 export function publicShowcaseVideoPath(store, videoSlug) {
-  return `${store.publicRoot}/videos/${videoSlug}.mp4?v=${SHOWCASE_VERSION}`;
+  const root = store.videoPublicRoot ?? store.publicRoot;
+  const version = store.videoVersion ?? SHOWCASE_VERSION;
+  return `${root}/videos/${videoSlug}.mp4?v=${version}`;
 }
 
 export function publicShowcaseImagePath(store, imageSlug) {
@@ -384,11 +391,11 @@ export function publicShowcaseImagePath(store, imageSlug) {
 }
 
 export function localShowcasePosterPath(store, videoSlug) {
-  return `${store.assetRoot}/posters/${videoSlug}.webp`;
+  return `${store.videoAssetRoot ?? store.assetRoot}/posters/${videoSlug}.webp`;
 }
 
 export function localShowcaseVideoPath(store, videoSlug) {
-  return `${store.assetRoot}/videos/${videoSlug}.mp4`;
+  return `${store.videoAssetRoot ?? store.assetRoot}/videos/${videoSlug}.mp4`;
 }
 
 export function localShowcaseImagePath(store, imageSlug) {

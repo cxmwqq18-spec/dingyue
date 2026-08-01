@@ -145,13 +145,13 @@ async function main() {
       if (!seo) continue;
       seo.siteTitle = "MyDreamShoots";
       seo.titleTemplate = "%s | MyDreamShoots";
-      seo.siteDescription = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
-      seo.siteKeywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+      seo.siteDescription = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
+      seo.siteKeywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
       for (const pageSeo of Object.values(seo.pages ?? {})) delete pageSeo.keywords;
       if (seo.pages?.site_dreamshoot_home) {
         seo.pages.site_dreamshoot_home.title = "Professional AI Photo Generator Online - MyDreamShoots";
-        seo.pages.site_dreamshoot_home.description = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
-        seo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+        seo.pages.site_dreamshoot_home.description = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
+        seo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
       }
     }
     if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
@@ -164,8 +164,8 @@ async function main() {
     let draftJson = rewriteJson(structuredClone(page.draftJson));
     let publishedJson = rewriteJson(structuredClone(page.publishedJson));
     if (page.slug === "/") {
-      draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
-      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
+      draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
+      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
     }
     if (page.slug === "/pricing") {
       draftJson = setPageSeo(draftJson, "MyDreamShoots Pricing | Credits for Private AI Photo Packages", "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.");

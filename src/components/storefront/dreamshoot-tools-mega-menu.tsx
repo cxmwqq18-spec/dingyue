@@ -204,6 +204,10 @@ function dreamshootToolLookupKey(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
+function toolMenuDisplayLabel(value: string): string {
+  return value.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
 function dreamshootStaticToolPath(fallbackToolId = "", fallbackToolTitle = ""): string {
   const slug = dreamshootStaticToolSlugByKey[fallbackToolId] ?? dreamshootStaticToolSlugByKey[dreamshootToolLookupKey(fallbackToolId)] ?? dreamshootStaticToolSlugByKey[dreamshootToolLookupKey(fallbackToolTitle)];
   return slug ? `/tools/${slug}` : "/tools";
@@ -235,34 +239,34 @@ function toolActionHref(site: DreamShootToolsMenuSite, href: string, fallbackToo
 
 function dreamshootDefaultToolTitle(slug: string): string {
   const explicit: Record<string, string> = {
-    "headshot": "Professional headshot maker",
-    "creator-portrait": "Creator portrait studio",
-    "world-cup-fan-photos": "World Cup fan photos",
-    "cyberpunk-portrait": "Cyberpunk portrait maker",
-    "gala-photo": "Gala photo maker",
-    "noir-portrait": "Noir character portraits",
-    "anime-avatar": "Anime avatar builder",
-    "nature-adventure": "Nature adventure photos",
-    "fashion-editorial": "Fashion editorial set",
-    "product-lifestyle": "Product lifestyle photos",
-    "background-changer": "Background changer",
-    "background-remover": "Background remover",
-    "magic-eraser": "Magic eraser",
-    "photo-enhancer": "Photo enhancer",
-    "portrait-retouch": "Portrait retouch",
-    "unblur-image": "Unblur image",
-    "color-correction": "Color correction",
-    "old-photo-restoration": "Old photo restoration",
-    "edit-by-prompt": "Edit by prompt",
-    "magic-upscaler": "Magic upscaler",
-    "image-to-video": "Image to video concept",
-    "profile-clip": "Profile clip maker",
-    "fan-poster-motion": "Fan poster motion",
-    "creator-intro-video": "Creator intro video",
-    "product-teaser-clip": "Product teaser clip",
-    "animated-avatar": "Animated avatar preview",
-    "fashion-reel": "Fashion reel starter",
-    "album-story-video": "Album story video"
+    "headshot": "Professional Headshot Maker",
+    "creator-portrait": "Creator Portrait Studio",
+    "world-cup-fan-photos": "World Cup Fan Photos",
+    "cyberpunk-portrait": "Cyberpunk Portrait Maker",
+    "gala-photo": "Gala Photo Maker",
+    "noir-portrait": "Noir Character Portraits",
+    "anime-avatar": "Anime Avatar Builder",
+    "nature-adventure": "Nature Adventure Photos",
+    "fashion-editorial": "Fashion Editorial Set",
+    "product-lifestyle": "Product Lifestyle Photos",
+    "background-changer": "Background Changer",
+    "background-remover": "Background Remover",
+    "magic-eraser": "Magic Eraser",
+    "photo-enhancer": "Photo Enhancer",
+    "portrait-retouch": "Portrait Retouch",
+    "unblur-image": "Unblur Image",
+    "color-correction": "Color Correction",
+    "old-photo-restoration": "Old Photo Restoration",
+    "edit-by-prompt": "Edit by Prompt",
+    "magic-upscaler": "Magic Upscaler",
+    "image-to-video": "Image to Video Concept",
+    "profile-clip": "Profile Clip Maker",
+    "fan-poster-motion": "Fan Poster Motion",
+    "creator-intro-video": "Creator Intro Video",
+    "product-teaser-clip": "Product Teaser Clip",
+    "animated-avatar": "Animated Avatar Preview",
+    "fashion-reel": "Fashion Reel Starter",
+    "album-story-video": "Album Story Video"
   };
   return explicit[slug] ?? slug.split(/[-_]+/g).map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
 }
@@ -317,14 +321,26 @@ function dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
 
 function aidreamcapesDefaultToolBlocks(): SectionBlockInstance[] {
   return [
-    ["route-portrait-engine", "Route Portrait Engine", "Destination Tools"],
-    ["coastal-portrait", "Coastal Light Composer", "Destination Tools"],
-    ["island-resort-scenes", "Island Resort Scene Studio", "Destination Tools"],
-    ["golden-hour-route-story", "Scenic Overlook Story Maker", "Travel Moment Tools"],
-    ["cinematic-travel", "Alpine Trail Frame Scene Tool", "Adventure Tools"],
-    ["cafe-street-story", "Old Quarter Walk Portrait Tool", "Travel Moment Tools"],
-    ["route-moodboard", "Route Moodboard Tool", "Creator Travel Tools"],
-    ["social-keepsake", "Postcard Story Set Maker", "Creator Travel Tools"]
+    ["fan-scene-album-builder", "Fan-Scene Album Builder", "Fan-Scene Builders"],
+    ["backstage-meetup-scene-builder", "Backstage Meetup Scene Builder", "Fan-Scene Builders"],
+    ["supporter-photo-wall-maker", "Supporter Photo Wall Maker", "Fan-Scene Builders"],
+    ["fan-keepsake-card-maker", "Fan Keepsake Card Maker", "Fan-Scene Builders"],
+    ["game-day-group-portrait-maker", "Game-Day Group Portrait Maker", "Game-Day Builders"],
+    ["stadium-night-fan-set-maker", "Stadium Night Fan Set Maker", "Game-Day Builders"],
+    ["watch-party-album-builder", "Watch Party Album Builder", "Game-Day Builders"],
+    ["premiere-portrait-set-builder", "Premiere Portrait Set Builder", "Premiere Creator Tools"],
+    ["vip-arrival-photo-maker", "VIP Arrival Photo Maker", "Premiere Creator Tools"],
+    ["award-night-album-studio", "Award Night Album Studio", "Premiere Creator Tools"],
+    ["new-year-countdown-album-maker", "New Year Countdown Album Maker", "Occasion Card Tools"],
+    ["christmas-group-album-studio", "Christmas Group Album Studio", "Holiday Album Tools"],
+    ["cozy-card-portrait-maker", "Cozy Card Portrait Maker", "Occasion Card Tools"],
+    ["winter-fan-greeting-maker", "Winter Fan Greeting Maker", "Holiday Album Tools"],
+    ["thanksgiving-keepsake-set-maker", "Thanksgiving Keepsake Set Maker", "Holiday Album Tools"],
+    ["friendsgiving-memory-maker", "Friendsgiving Memory Maker", "Occasion Card Tools"],
+    ["halloween-party-portrait-maker", "Halloween Party Portrait Maker", "Holiday Album Tools"],
+    ["costume-cast-album-builder", "Costume Cast Album Builder", "Holiday Album Tools"],
+    ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "Occasion Card Tools"],
+    ["permission-safe-photo-planner", "Permission-Safe Photo Planner", "Safety Prep Tools"]
   ].map(([slug, title, category]) => ({
     id: `default_tool_${slug}`,
     type: "tool_card",
@@ -381,7 +397,7 @@ export function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockI
         id: `tool_menu_${item.id}`,
         type: "tool_card",
         settings: {
-          title: item.title,
+          title: toolMenuDisplayLabel(item.title),
           description: item.description ?? "",
           category,
           categoryTitle: category,
@@ -423,10 +439,10 @@ function dreamshootMegaCategoryMeta(category: string) {
       title: "Retouch Lab"
     };
   }
-  if (normalized.includes("destination") || normalized.includes("travel") || normalized.includes("adventure") || normalized.includes("route")) {
+  if (normalized.includes("fan") || normalized.includes("game") || normalized.includes("holiday") || normalized.includes("safety")) {
     return {
       accent: "#38bdf8",
-      description: "Plan destination portraits, route scenes, and private travel galleries.",
+      description: "Plan fan-scene albums, game-day group portraits, holiday memories, and private occasion galleries.",
       icon: Globe2,
       panelTitle: category,
       title: category

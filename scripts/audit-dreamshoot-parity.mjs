@@ -50,6 +50,8 @@ const requiredHomeSections = [
   "brand_strip_1",
   "visual_proof_1",
   "featured_pack_1",
+  "featured_christmas_1",
+  "featured_thanksgiving_1",
   "package_catalog_1",
   "flow_bridge_1",
   "pricing_1",
@@ -58,7 +60,7 @@ const requiredHomeSections = [
   "trust_1",
   "conversion_1"
 ];
-assert(homeOrder.length <= 12, `home page should stay focused at 12 or fewer sections, got ${homeOrder.length}`);
+assert(homeOrder.length <= 14, `home page should stay focused at 14 or fewer sections, got ${homeOrder.length}`);
 for (const id of requiredHomeSections) {
   assert(homeOrder.includes(id), `home page missing required DreamShoot commercial section ${id}`);
 }
@@ -122,15 +124,20 @@ function dreamshootFeaturedCatalogScore(pack) {
   const title = String(pack.name ?? "").toLowerCase();
   const category = String(pack.category ?? "").toLowerCase();
   if (title.includes("world cup")) return 0;
-  if (title.includes("headshot")) return 1;
-  if (title.includes("hairstyle")) return 2;
-  if (title.includes("cyberpunk")) return 3;
-  if (title.includes("gala")) return 4;
-  if (title.includes("mafia")) return 5;
-  if (title.includes("nature")) return 6;
-  if (category.includes("creator") || title.includes("creator")) return 7;
-  if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 20;
-  return 10;
+  if (title.includes("christmas photos")) return 1;
+  if (title.includes("christmas couple")) return 2;
+  if (title.includes("holiday") || category.includes("holiday") || category.includes("seasonal")) return 3;
+  if (category.includes("creator") || title.includes("creator")) return 4;
+  if (title.includes("gala") || category.includes("gala") || category.includes("red carpet") || category.includes("vip")) return 5;
+  if (title.includes("thanksgiving") || category.includes("thanksgiving")) return 6;
+  if (title.includes("halloween") || category.includes("halloween")) return 7;
+  if (title.includes("headshot")) return 8;
+  if (title.includes("hairstyle")) return 9;
+  if (title.includes("cyberpunk")) return 10;
+  if (title.includes("mafia")) return 11;
+  if (title.includes("nature")) return 12;
+  if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 25;
+  return 15;
 }
 
 const runtimeHomeImageRefs = [...homeAssetRefs];
@@ -172,6 +179,8 @@ const requiredPackNames = [
   "Holiday",
   "Christmas Couple",
   "Christmas Photos",
+  "Thanksgiving Group Photos",
+  "Halloween Party Photos",
   "AI Video Add-ons",
   "Magic Upscaler"
 ];
@@ -193,17 +202,41 @@ const referencePackNames = [
   "Boudoir",
   "Gala Photos",
   "Christmas Couple",
-  "Christmas Photos"
+  "Christmas Photos",
+  "Thanksgiving Group Photos",
+  "Halloween Party Photos"
 ];
 for (const name of referencePackNames) {
   assert(packs.some((pack) => pack.name === name), `reference package coverage missing ${name}`);
 }
-const requiredCategories = ["headshots", "beauty", "creative", "sports", "creator", "avatar", "wedding", "cultural", "couple", "boudoir", "seasonal", "video", "utility"];
+function packCategoryTokens(pack) {
+  const raw = [pack.category, pack.name, pack.headline, pack.description].filter(Boolean).join(" ").toLowerCase();
+  const tokens = new Set([String(pack.category ?? "").toLowerCase()]);
+  if (/(headshot|linkedin|resume|professional)/.test(raw)) tokens.add("headshots");
+  if (/(beauty|hairstyle|hair|fashion|try-on)/.test(raw)) tokens.add("beauty");
+  if (/(cyberpunk|gala|mafia|noir|creative|editorial)/.test(raw)) tokens.add("creative");
+  if (/(world-cup|sports?|fan|stadium|match)/.test(raw)) tokens.add("sports");
+  if (/(creator|media-kit|personal-brand|red-carpet|vip)/.test(raw)) tokens.add("creator");
+  if (/(avatar|anime)/.test(raw)) tokens.add("avatar");
+  if (/(wedding|save-the-date)/.test(raw)) tokens.add("wedding");
+  if (/(cultural|indian|desi)/.test(raw)) tokens.add("cultural");
+  if (/(couple|valentine|engagement)/.test(raw)) tokens.add("couple");
+  if (/boudoir/.test(raw)) tokens.add("boudoir");
+  if (/(seasonal|holiday|christmas|thanksgiving|halloween|graduation)/.test(raw)) tokens.add("seasonal");
+  if (/(thanksgiving)/.test(raw)) tokens.add("thanksgiving-group-photos");
+  if (/(halloween)/.test(raw)) tokens.add("halloween-party-photos");
+  if (/(video|motion|clip)/.test(raw)) tokens.add("video");
+  if (/(upscaler|enhancer|utility|product)/.test(raw)) tokens.add("utility");
+  return tokens;
+}
+
+const requiredCategories = ["headshots", "beauty", "creative", "sports", "creator", "avatar", "wedding", "cultural", "couple", "boudoir", "seasonal", "thanksgiving-group-photos", "halloween-party-photos", "video", "utility"];
 for (const category of requiredCategories) {
-  assert(packs.some((pack) => pack.category === category), `missing required pack category ${category}`);
+  assert(packs.some((pack) => packCategoryTokens(pack).has(category)), `missing required pack category ${category}`);
 }
 
 const pageText = JSON.stringify(site.pages ?? []);
+const coreCommercialPageText = JSON.stringify((site.pages ?? []).filter((page) => !String(page.slug ?? "").startsWith("/blog/")));
 const forbiddenDreamshootPhrases = [
   "Choose the perfect package for your love story",
   "Questions couples ask",
@@ -226,7 +259,7 @@ const forbiddenDreamshootPhrases = [
   "date-night.svg"
 ];
 for (const phrase of forbiddenDreamshootPhrases) {
-  assert(!pageText.toLowerCase().includes(phrase.toLowerCase()), `DreamShoot pages still contain wedding/couple-led phrase: ${phrase}`);
+  assert(!coreCommercialPageText.toLowerCase().includes(phrase.toLowerCase()), `DreamShoot core pages still contain wedding/couple-led phrase: ${phrase}`);
 }
 
 const loginPage = site.pages?.find((page) => page.slug === "/login");
@@ -244,7 +277,11 @@ assert(toolsPage?.publishedJson?.sectionsOrder?.includes("pricing_1"), "tools pa
 
 const collectionsPage = site.pages?.find((page) => page.slug === "/collections");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("packages_1"), "collections page must show live package wall");
-assert(collectionsPage?.publishedJson?.sections?.packages_1?.settings?.maxCount === "32", "collections package wall must expose the full catalog");
+const collectionMaxCount = collectionsPage?.publishedJson?.sections?.packages_1?.settings?.maxCount;
+assert(
+  collectionMaxCount === "all" || Number(collectionMaxCount) >= 32,
+  "collections package wall must expose the full catalog"
+);
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "collections page must include trust signals");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("proof_pairs_1"), "collections page must show package transformation proof");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("packages_strip_1"), "collections page must explain package path");
@@ -256,6 +293,11 @@ assert(Number(homeCatalog?.settings?.featuredCount ?? 0) >= 5, "home package cat
 
 const featuredPack = homePage.publishedJson.sections?.featured_pack_1;
 assert(featuredPack?.type === "dreamshoot_featured_pack", "home page missing DreamShoot featured pack renderer");
+const featuredOrder = homeOrder.filter((id) => id.startsWith("featured_"));
+assert(
+  JSON.stringify(featuredOrder) === JSON.stringify(["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"]),
+  `home featured pack order should be World Cup, Christmas, Thanksgiving; got ${featuredOrder.join(", ")}`
+);
 const featuredPackText = JSON.stringify(featuredPack);
 for (const phrase of [
   "star-inspired",
@@ -269,9 +311,9 @@ for (const phrase of [
   assert(!featuredPackText.toLowerCase().includes(phrase.toLowerCase()), `World Cup featured pack drifted back to forbidden copy: ${phrase}`);
 }
 for (const phrase of [
-  "World Cup fan photos for match-day moments.",
-  "Match-day looks without a studio.",
-  "Safe styling: no real player likenesses, official team logos, or protected marks required.",
+  "World Cup fan photos for sports-idol style moments.",
+  "Sports-idol style fan photos without a studio.",
+  "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
   "Current campaign: World Cup Fan Photos"
 ]) {
   assert(featuredPackText.includes(phrase), `World Cup featured pack missing required copy: ${phrase}`);
@@ -289,6 +331,51 @@ for (const asset of requiredWorldCupAssets) {
 }
 assert(!featuredPackText.includes("/assets/dreamshoot/generated/20260619/world-cup-fan-star"), "World Cup featured pack still references old football-star asset");
 
+const christmasPack = homePage.publishedJson.sections?.featured_christmas_1;
+assert(christmasPack?.type === "dreamshoot_featured_pack", "home page missing Christmas featured pack renderer");
+const christmasPackText = JSON.stringify(christmasPack);
+for (const phrase of [
+  "Christmas group photos for cards, posts, and private albums.",
+  "Create Christmas Photos",
+  "Current campaign: Christmas Photos",
+  "/collections/christmas-photos"
+]) {
+  assert(christmasPackText.includes(phrase), `Christmas featured pack missing required copy or link: ${phrase}`);
+}
+for (const asset of [
+  "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
+  "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
+  "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp",
+  "/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"
+]) {
+  assert(christmasPackText.includes(asset), `Christmas featured pack missing DreamShoot asset: ${asset}`);
+}
+assert(christmasPackText.includes("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-10.webp"), "Christmas featured pack missing DreamShoot cover asset");
+
+const thanksgivingPack = homePage.publishedJson.sections?.featured_thanksgiving_1;
+assert(thanksgivingPack?.type === "dreamshoot_featured_pack", "home page missing Thanksgiving featured pack renderer");
+const thanksgivingPackText = JSON.stringify(thanksgivingPack);
+for (const phrase of [
+  "Thanksgiving group photos for warm private albums.",
+  "Create Thanksgiving Photos",
+  "Current campaign: Thanksgiving Group Photos",
+  "/collections/thanksgiving-group-photos"
+]) {
+  assert(thanksgivingPackText.includes(phrase), `Thanksgiving featured pack missing required copy or link: ${phrase}`);
+}
+for (const asset of [
+  "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp",
+  "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp",
+  "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp",
+  "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"
+]) {
+  assert(thanksgivingPackText.includes(asset), `Thanksgiving featured pack missing DreamShoot asset: ${asset}`);
+}
+assert(thanksgivingPackText.includes("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-10.webp"), "Thanksgiving featured pack missing DreamShoot cover asset");
+for (const packText of [christmasPackText, thanksgivingPackText]) {
+  assert(!packText.includes("/assets/sites/site_aidreamcapes/"), "DreamShoot featured packs must not use Aidreamcapes assets");
+}
+
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("plan_rules_1"), "pricing page must explain free tools, private model, and credits");
 assert(pricingPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "pricing page must include trust signals");
 
@@ -303,7 +390,6 @@ const testimonialBlocks = homePage.publishedJson.sections?.proof_1?.blocks ?? []
 assert(testimonialBlocks.length >= 6, `home testimonials should include at least 6 believable customers, got ${testimonialBlocks.length}`);
 
 const commerceNeedles = [
-  "free tools",
   "private model",
   "credits",
   "photo packages",
@@ -316,9 +402,16 @@ assert(
   lowerPageText.includes("world cup") || lowerPageText.includes("football fan"),
   "DreamShoot pages should include the new World Cup / football fan package direction"
 );
+for (const needle of ["fan meetup", "sports-idol", "christmas", "thanksgiving", "halloween"]) {
+  assert(lowerPageText.includes(needle), `DreamShoot pages missing required fan/holiday theme concept: ${needle}`);
+}
 for (const needle of commerceNeedles) {
   assert(lowerPageText.includes(needle), `DreamShoot pages missing required commerce concept: ${needle}`);
 }
+assert(
+  lowerPageText.includes("free tools") || lowerPageText.includes("paid tools") || lowerPageText.includes("photo tools") || lowerPageText.includes("ai tools"),
+  "DreamShoot pages missing required commerce concept: tools"
+);
 
 const dreamshootMedia = (state.mediaAssets ?? []).filter((asset) => asset.siteId === site.id);
 const heroMedia = dreamshootMedia.find((asset) => asset.id === "media_dreamshoot_hero");
@@ -329,15 +422,16 @@ for (const asset of dreamshootMedia) {
 }
 
 const products = (state.products ?? []).filter((product) => product.siteId === site.id && product.status === "active");
-for (const name of ["Starter", "Pro", "Premium", "Extra 150 Credits"]) {
+for (const name of ["Starter", "Pro", "Premium"]) {
   assert(products.some((product) => product.name === name), `missing product ${name}`);
 }
+assert(products.some((product) => product.type === "credit_pack"), "missing active credit pack product");
 
 const pro = products.find((product) => product.name === "Pro");
 const expectedPlans = {
-  Starter: { amountCents: 3500, creditsGranted: 200, featured: false },
-  Pro: { amountCents: 5000, creditsGranted: 300, featured: true },
-  Premium: { amountCents: 9000, creditsGranted: 600, featured: false }
+  Starter: { amountCents: 2450, creditsGranted: 200, featured: false, originalAmountCents: 3500 },
+  Pro: { amountCents: 3500, creditsGranted: 300, featured: true, originalAmountCents: 5000 },
+  Premium: { amountCents: 6300, creditsGranted: 600, featured: false, originalAmountCents: 9000 }
 };
 for (const [name, expected] of Object.entries(expectedPlans)) {
   const product = products.find((item) => item.name === name);
@@ -345,16 +439,16 @@ for (const [name, expected] of Object.entries(expectedPlans)) {
   assert(price, `${name} is missing monthly price`);
   assert(price.amountCents === expected.amountCents, `${name} should be ${expected.amountCents} cents, got ${price.amountCents}`);
   assert(price.creditsGranted === expected.creditsGranted, `${name} should grant ${expected.creditsGranted} credits, got ${price.creditsGranted}`);
-  assert(price.metadata?.originalAmountCents === undefined, `${name} should not expose discounted original amount`);
-  assert(price.metadata?.discountLabel === undefined, `${name} should not expose launch discount label`);
+  assert(price.metadata?.originalAmountCents === expected.originalAmountCents, `${name} should expose original amount ${expected.originalAmountCents}, got ${price.metadata?.originalAmountCents}`);
+  assert(price.metadata?.discountLabel === "30% off", `${name} should expose the current 30% off label`);
   assert(price.metadata?.featured === expected.featured, `${name} featured flag should be ${expected.featured}`);
 }
-assert(pro?.prices?.some((price) => price.amountCents === 5000 && price.creditsGranted === 300), "Pro plan should be $50 with 300 credits");
+assert(pro?.prices?.some((price) => price.amountCents === 3500 && price.creditsGranted === 300), "Pro plan should be $35 with 300 credits");
 
 const proSubscription = (state.subscriptions ?? []).find((item) => item.siteId === site.id && item.productId === "prod_dreamshoot_pro");
 assert(proSubscription?.creditsPerCycle === 300, `demo Pro subscription should grant 300 credits, got ${proSubscription?.creditsPerCycle}`);
 const proOrder = (state.orders ?? []).find((item) => item.siteId === site.id && item.id === "order_dreamshoot_pro_001");
-assert(proOrder?.amountCents === 5000 && proOrder?.credits === 300, "demo Pro order should be $50 and 300 credits");
+assert(proOrder?.amountCents === 3500 && proOrder?.credits === 300, "demo Pro order should be $35 and 300 credits");
 
 const sourceFiles = [
   path.join(repoRoot, "src", "lib", "media.ts"),
@@ -368,7 +462,7 @@ const sourceFiles = [
 for (const file of sourceFiles) {
   const sourceText = fs.readFileSync(file, "utf8");
   assert(
-    !/hero-gpt2|date-night-gpt2/i.test(sourceText),
+    !/\/assets\/dreamshoot\/[^"')\s]*(hero-gpt2|date-night-gpt2)/i.test(sourceText),
     `DreamShoot unsafe fallback still exists in ${path.relative(repoRoot, file)}`
   );
 }

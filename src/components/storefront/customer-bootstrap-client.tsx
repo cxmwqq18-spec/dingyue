@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CustomerAccountShell } from "@/components/storefront/customer-account-shell";
+import { CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, type CustomerBootstrapInvalidationDetail } from "@/components/storefront/customer-bootstrap-events";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
@@ -40,6 +41,7 @@ const workspaceRuntimeWarmRequests = new Map<string, Promise<void>>();
 
 const bootstrapCache = new Map<string, CustomerBootstrap>();
 const bootstrapRequests = new Map<string, Promise<CustomerBootstrap>>();
+let bootstrapCacheEpoch = 0;
 
 function bootstrapCacheKey(siteSlug: string, mode: BootstrapMode): string {
   return mode === "workspace" ? siteSlug : `${siteSlug}:${mode}`;
@@ -53,7 +55,47 @@ function isLoginRequiredBootstrapError(response: Response, data: BootstrapErrorP
   return response.status === 401 || data.error === "auth_required" || data.error === "customer_login_required" || Boolean(data.loginPath);
 }
 
+function bootstrapArray<T>(value: T[] | undefined): T[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function customerBootstrapAbortError() {
+  return Object.assign(new Error("customer_bootstrap_aborted"), { name: "AbortError" });
+}
+
+function clearCustomerBootstrapCache(siteSlug?: string) {
+  bootstrapCacheEpoch += 1;
+  if (!siteSlug) {
+    bootstrapCache.clear();
+    bootstrapRequests.clear();
+    workspaceRuntimeWarmCache.clear();
+    workspaceRuntimeWarmRequests.clear();
+    return;
+  }
+  [siteSlug, bootstrapCacheKey(siteSlug, "shell"), bootstrapCacheKey(siteSlug, "account")].forEach((key) => {
+    bootstrapCache.delete(key);
+    bootstrapRequests.delete(key);
+  });
+  Array.from(workspaceRuntimeWarmCache).forEach((key) => {
+    if (key.endsWith(`:${siteSlug}`)) workspaceRuntimeWarmCache.delete(key);
+  });
+  Array.from(workspaceRuntimeWarmRequests.keys()).forEach((key) => {
+    if (key.endsWith(`:${siteSlug}`)) workspaceRuntimeWarmRequests.delete(key);
+  });
+}
+
+function invalidationSiteSlug(event: Event): string | undefined {
+  if (!(event instanceof CustomEvent)) return undefined;
+  const detail = event.detail as CustomerBootstrapInvalidationDetail | undefined;
+  return typeof detail?.siteSlug === "string" && detail.siteSlug ? detail.siteSlug : undefined;
+}
+
+function isAbortError(error: unknown): boolean {
+  return error instanceof Error && error.name === "AbortError";
+}
+
 async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mode: BootstrapMode = "workspace"): Promise<CustomerBootstrap> {
+  if (signal?.aborted) throw customerBootstrapAbortError();
   const cacheKey = bootstrapCacheKey(siteSlug, mode);
   const cached = bootstrapCache.get(cacheKey);
   if (cached) return cached;
@@ -64,25 +106,33 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
   if (inFlight) return inFlight;
 
   const query = mode === "workspace" ? "" : `?include=${mode}`;
+  const requestEpoch = bootstrapCacheEpoch;
   const request = fetch(`/api/site-slugs/${encodeURIComponent(siteSlug)}/customer/bootstrap${query}`, {
     credentials: "same-origin",
     signal
   })
     .then(async (response) => {
+      if (signal?.aborted || requestEpoch !== bootstrapCacheEpoch) throw customerBootstrapAbortError();
       const data = (await response.json().catch(() => ({}))) as BootstrapErrorPayload;
+      if (signal?.aborted || requestEpoch !== bootstrapCacheEpoch) throw customerBootstrapAbortError();
+      const siteAiApps = bootstrapArray(data.siteAiApps);
+      const creativePackCategories = bootstrapArray(data.creativePackCategories);
+      const creativePacks = bootstrapArray(data.creativePacks);
+      const toolMenuItems = bootstrapArray(data.toolMenuItems);
+      const videoThemes = bootstrapArray(data.videoThemes);
       if (mode === "shell" && isLoginRequiredBootstrapError(response, data)) {
         const bootstrap = {
           authenticated: false,
-          siteAiApps: data.siteAiApps ?? [],
-          creativePackCategories: data.creativePackCategories ?? [],
-          creativePacks: data.creativePacks ?? [],
-          toolMenuItems: data.toolMenuItems ?? [],
-          videoThemes: data.videoThemes ?? []
+          siteAiApps,
+          creativePackCategories,
+          creativePacks,
+          toolMenuItems,
+          videoThemes
         };
         bootstrapCache.set(cacheKey, bootstrap);
         return bootstrap;
       }
-      if (!response.ok || !data.ok || !data.siteAiApps || !data.creativePacks) {
+      if (!response.ok || !data.ok) {
         throw Object.assign(new Error(data.error || "customer_bootstrap_unavailable"), { loginPath: data.loginPath });
       }
       if (mode !== "shell" && (!data.site || !data.customer)) {
@@ -92,11 +142,11 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         authenticated: data.authenticated ?? Boolean(data.customer),
         site: data.site,
         customer: data.customer,
-        siteAiApps: data.siteAiApps,
-        creativePackCategories: data.creativePackCategories ?? [],
-        creativePacks: data.creativePacks,
-        toolMenuItems: data.toolMenuItems ?? [],
-        videoThemes: data.videoThemes ?? [],
+        siteAiApps,
+        creativePackCategories,
+        creativePacks,
+        toolMenuItems,
+        videoThemes,
         accountRuntime: data.accountRuntime,
         workspaceRuntime: data.workspaceRuntime
       };
@@ -173,21 +223,32 @@ function useCustomerBootstrap(siteSlug: string, mode: BootstrapMode = "workspace
       controller.abort();
       if (timer) window.clearTimeout(timer);
     };
+    const invalidateBootstrap = (event: Event) => {
+      const targetSiteSlug = invalidationSiteSlug(event);
+      if (targetSiteSlug && targetSiteSlug !== siteSlug) return;
+      clearCustomerBootstrapCache(siteSlug);
+      cancelBootstrap();
+    };
     const load = () => {
       setState({ status: "loading" });
       loadCustomerBootstrap(siteSlug, controller.signal, mode)
-        .then((bootstrap) => setState({ status: "ready", data: bootstrap }))
-        .catch((error) => {
+        .then((bootstrap) => {
           if (controller.signal.aborted) return;
+          setState({ status: "ready", data: bootstrap });
+        })
+        .catch((error) => {
+          if (controller.signal.aborted || isAbortError(error)) return;
           const loginPath = typeof error === "object" && error && "loginPath" in error && typeof error.loginPath === "string" ? error.loginPath : undefined;
           setState({ status: "error", error: error instanceof Error ? error.message : "customer_bootstrap_unavailable", loginPath });
         });
     };
     const timer = delayMs > 0 ? window.setTimeout(load, delayMs) : undefined;
     if (!timer) load();
-    window.addEventListener("storefront:navigation-start", cancelBootstrap);
+    window.addEventListener("storefront:navigation-start", invalidateBootstrap);
+    window.addEventListener(CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, invalidateBootstrap);
     return () => {
-      window.removeEventListener("storefront:navigation-start", cancelBootstrap);
+      window.removeEventListener("storefront:navigation-start", invalidateBootstrap);
+      window.removeEventListener(CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, invalidateBootstrap);
       cancelBootstrap();
     };
   }, [cacheKey, delayMs, enabled, mode, siteSlug]);
@@ -215,9 +276,17 @@ export function CustomerBootstrapPrefetch({ mode = "workspace", siteSlug }: { mo
       controller.abort();
       window.clearTimeout(idleId);
     };
-    window.addEventListener("storefront:navigation-start", cancelBootstrapPrefetch);
+    const invalidateBootstrapPrefetch = (event: Event) => {
+      const targetSiteSlug = invalidationSiteSlug(event);
+      if (targetSiteSlug && targetSiteSlug !== siteSlug) return;
+      clearCustomerBootstrapCache(siteSlug);
+      cancelBootstrapPrefetch();
+    };
+    window.addEventListener("storefront:navigation-start", invalidateBootstrapPrefetch);
+    window.addEventListener(CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, invalidateBootstrapPrefetch);
     return () => {
-      window.removeEventListener("storefront:navigation-start", cancelBootstrapPrefetch);
+      window.removeEventListener("storefront:navigation-start", invalidateBootstrapPrefetch);
+      window.removeEventListener(CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, invalidateBootstrapPrefetch);
       cancelBootstrapPrefetch();
     };
   }, [mode, siteSlug]);
@@ -320,7 +389,7 @@ export function CustomerHeaderBootstrapControls({
         <p className="truncate text-sm font-semibold">{customer.name}</p>
         <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
         <div className="mt-3 grid gap-2">
-          <StorefrontInstantLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref}>
+          <StorefrontInstantLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref} prefetch>
             {signOutLabel === "Sign out" ? "Account" : "Cuenta"}
           </StorefrontInstantLink>
         </div>
@@ -328,15 +397,16 @@ export function CustomerHeaderBootstrapControls({
       </div>
     );
   }
+  const workspaceLabel = signOutLabel === "Sign out" ? "Open workspace" : "Abrir espacio privado";
   return (
     <div className={signedInClassName}>
-      <StorefrontInstantLink className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref}>
+      <StorefrontInstantLink aria-label={workspaceLabel} className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref} prefetch>
         <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
           <UserRound className="h-4 w-4" strokeWidth={1.8} />
         </span>
-        <span className="min-w-0 text-left">
-          <span className="block max-w-[11rem] truncate text-sm font-semibold">{customer.name}</span>
-          <span className={dark ? "block max-w-[13rem] truncate text-xs text-white/62" : "block max-w-[13rem] truncate text-xs text-[#64605a]"}>
+        <span className="hidden min-w-0 text-left lg:block">
+          <span className="block max-w-[8.5rem] truncate text-sm font-semibold xl:max-w-[10rem]">{customer.name}</span>
+          <span className={dark ? "block max-w-[8.5rem] truncate text-xs text-white/62 xl:max-w-[11rem]" : "block max-w-[8.5rem] truncate text-xs text-[#64605a] xl:max-w-[11rem]"}>
             {customer.email}
           </span>
         </span>

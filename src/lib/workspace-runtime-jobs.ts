@@ -5,6 +5,7 @@ import type { ThemeRuntimeData } from "@/lib/types";
 import { DEFAULT_VIDEO_MODEL_FAMILY } from "@/lib/video-frame-config";
 
 export const WORKSPACE_RELATED_JOB_SUMMARY_LIMIT = 8;
+export const WORKSPACE_VIDEO_FRAME_ASSET_LIMIT = 200;
 
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
 type WorkspaceJobSummaryRow = {

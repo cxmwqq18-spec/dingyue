@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ShieldCheck } from "lucide-react";
+import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 import { authMessageForCode } from "@/lib/auth-messages";
 import { customerPasswordPolicyMessage, getCustomerPasswordPolicyError } from "@/lib/customer-password-policy";
 
@@ -232,7 +232,6 @@ export function LoginForm({
   locale?: LoginLocale;
   returnTo?: string;
 }) {
-  const router = useRouter();
   const modeCopy = modeCopyByLocale[locale];
   const copy = loginCopyByLocale[locale];
   const sitePath = (path = "/") => {
@@ -293,8 +292,9 @@ export function LoginForm({
   function openCustomerWorkspace() {
     const fallbackHref = sitePath("/app/create");
     const href = returnTo && returnTo.startsWith(sitePath("/")) ? returnTo : fallbackHref;
+    dispatchCustomerBootstrapInvalidation({ reason: "login", siteSlug });
     window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
-    router.replace(href);
+    window.location.assign(href);
   }
 
   function validateNewPassword() {

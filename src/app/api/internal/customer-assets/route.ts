@@ -6,7 +6,9 @@ import {
   customerAssetUrl,
   deleteCustomerAssetFile,
   normalizeCustomerAssetStorageKey,
-  writeCustomerAssetFile
+  readCustomerAssetWatermarkMarker,
+  writeCustomerAssetFile,
+  writeCustomerAssetWatermarkMarker
 } from "@/lib/customer-asset-storage";
 
 export const runtime = "nodejs";
@@ -42,6 +44,22 @@ function customerScopedStorageKey(value: unknown): string {
 function safeMimeType(value: unknown): string {
   if (typeof value !== "string" || !value.includes("/")) return "application/octet-stream";
   return value.trim().slice(0, 120);
+}
+
+function safeWatermarkMarker(params: { version?: unknown; text?: unknown }) {
+  const version = typeof params.version === "string" ? params.version.trim().slice(0, 120) : "";
+  const text = typeof params.text === "string" ? params.text.trim().slice(0, 120) : "";
+  return version && text ? { version, text } : undefined;
+}
+
+function watermarkHeaders(storageKey: string): Record<string, string> {
+  const marker = readCustomerAssetWatermarkMarker(storageKey);
+  return marker
+    ? {
+        "X-Customer-Asset-Watermark-Version": marker.version,
+        "X-Customer-Asset-Watermark-Text": marker.text
+      }
+    : {};
 }
 
 function configuredTransferLimit(envName: string, fallback: number): number {
@@ -91,6 +109,11 @@ export async function POST(request: Request) {
         );
       }
       writeCustomerAssetFile({ storageKey, bytes });
+      const watermark = safeWatermarkMarker({
+        version: request.headers.get("x-customer-asset-watermark-version"),
+        text: request.headers.get("x-customer-asset-watermark-text")
+      });
+      if (watermark) writeCustomerAssetWatermarkMarker(storageKey, watermark);
       return NextResponse.json({
         ok: true,
         storageKey,
@@ -104,6 +127,8 @@ export async function POST(request: Request) {
       storageKey?: unknown;
       mimeType?: unknown;
       dataBase64?: unknown;
+      watermarkText?: unknown;
+      watermarkVersion?: unknown;
     };
     const storageKey = customerScopedStorageKey(body.storageKey);
     if (typeof body.dataBase64 !== "string" || !body.dataBase64) {
@@ -121,6 +146,8 @@ export async function POST(request: Request) {
       );
     }
     writeCustomerAssetFile({ storageKey, bytes });
+    const watermark = safeWatermarkMarker({ version: body.watermarkVersion, text: body.watermarkText });
+    if (watermark) writeCustomerAssetWatermarkMarker(storageKey, watermark);
     return NextResponse.json({
       ok: true,
       storageKey,
@@ -153,7 +180,8 @@ export async function GET(request: Request) {
       headers: {
         "Content-Type": contentTypeForCustomerAssetPath(filePath),
         "Content-Length": String(bytes.length),
-        "Cache-Control": "private, max-age=30"
+        "Cache-Control": "private, max-age=30",
+        ...watermarkHeaders(storageKey)
       }
     });
   } catch (error) {
@@ -173,7 +201,8 @@ export async function HEAD(request: Request) {
     const filePath = customerAssetFilePath(storageKey);
     return new Response(null, {
       headers: {
-        "Content-Type": contentTypeForCustomerAssetPath(filePath)
+        "Content-Type": contentTypeForCustomerAssetPath(filePath),
+        ...watermarkHeaders(storageKey)
       }
     });
   } catch {

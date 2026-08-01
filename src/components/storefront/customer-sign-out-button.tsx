@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 
 export function CustomerSignOutButton({
   className,
@@ -22,6 +23,7 @@ export function CustomerSignOutButton({
   async function signOut() {
     if (pending) return;
     setPending(true);
+    dispatchCustomerBootstrapInvalidation({ reason: "logout" });
     const body = new FormData();
     body.set("siteId", siteId);
     await fetch(logoutHref, {

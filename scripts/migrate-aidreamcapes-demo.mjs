@@ -879,6 +879,16 @@ const aidreamcapesSampleBlocks = [
   settings: { label, imageUrl, meta }
 }));
 
+const aidreamcapesBeforeAfterBlocks = [
+  ["proof_pair_profile_story", "Phone source", "Profile story set", aidreamcapesPackCoverImages.oldCity, aidreamcapesPackImages.editorial],
+  ["proof_pair_cafe_street", "Everyday portrait", "Cafe street result", aidreamcapesPackCoverImages.cafe, aidreamcapesPackImages.glam],
+  ["proof_pair_postcard_story", "Route mood reference", "Postcard story set", aidreamcapesPackCoverImages.moodboard, aidreamcapesAsset("postcard-social-sets-v2")]
+].map(([id, beforeLabel, afterLabel, beforeImage, afterImage]) => ({
+  id,
+  type: "before_after",
+  settings: { beforeLabel, afterLabel, beforeImage, afterImage }
+}));
+
 const aidreamcapesFeaturedPackBlocks = aidreamcapesSampleBlocks.map((block, index) => ({
   id: block.id.replace("sample_", "featured_"),
   type: "seasonal_image",
@@ -1008,6 +1018,7 @@ function buildThemeSettings() {
     { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections" } },
     { id: "aidreamcapes_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
     { id: "aidreamcapes_header_how", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
+    { id: "aidreamcapes_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
     { id: "aidreamcapes_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
     { id: "aidreamcapes_header_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq" } },
     ...clone(aidreamcapesTools),
@@ -1038,7 +1049,7 @@ function buildThemeSettings() {
     { id: "aidreamcapes_footer_tools", type: "menu_link", settings: { label: "Route Portrait Engine", href: "/tools/route-portrait-engine", group: "product" } },
     { id: "aidreamcapes_footer_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow", group: "product" } },
     { id: "aidreamcapes_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
-    { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Field Notes", href: "/blog", group: "company" } },
+    { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Blog", href: "/blog", group: "company" } },
     { id: "aidreamcapes_footer_about", type: "menu_link", settings: { label: "About the Studio", href: "/about-us", group: "company" } },
     { id: "aidreamcapes_footer_contact", type: "menu_link", settings: { label: "Contact the Studio", href: "/contact-us", group: "company" } },
     { id: "aidreamcapes_footer_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "support" } },
@@ -1362,6 +1373,7 @@ function rewriteAidreamcapesSharedSections(pageJson, mapping) {
       title: "Preview the route mood before committing credits.",
       subtitle: "Compare source-photo intent, destination atmosphere, and expected album output before you open a private request."
     };
+    proofPairs.blocks = clone(aidreamcapesBeforeAfterBlocks);
   }
 
   const toolBanner = pageJson.sections.tool_banner_1;

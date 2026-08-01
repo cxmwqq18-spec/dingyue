@@ -232,9 +232,9 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
     {
       label: "运行中任务",
       value: String(data.openJobs),
-      href: modulePath(data.site, "/admin/ai-tools"),
+      href: modulePath(data.site, "/admin/processes"),
       detail: "这些任务仍占用预扣 credits。",
-      owner: "AI 工厂",
+      owner: "进程管理",
       tone: data.failedJobs ? "bad" : data.openJobs ? "warn" : "good"
     },
     {

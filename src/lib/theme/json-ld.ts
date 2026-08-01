@@ -163,6 +163,18 @@ function sectionValue(pageJson: ThemePageJson | undefined, key: string): string 
   return "";
 }
 
+function sectionOfType(pageJson: ThemePageJson | undefined, type: string) {
+  if (!hasPageSections(pageJson)) return undefined;
+  return pageJson.sectionsOrder
+    .map((sectionId) => pageJson.sections[sectionId])
+    .find((section) => section?.type === type);
+}
+
+function articleSectionValue(pageJson: ThemePageJson | undefined, key: string): string {
+  const article = sectionOfType(pageJson, "blog_article");
+  return cleanText(article?.settings?.[key]) || sectionValue(pageJson, key);
+}
+
 function blockValue(block: SectionBlockInstance, key: string, fallback = ""): string {
   return cleanText(block.settings[key], fallback);
 }
@@ -384,14 +396,25 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode 
 function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
   const isArticle = pagePath.startsWith("/blog/") || /^(article|post)$/i.test(pageJson?.pageType ?? "");
   if (!isArticle) return undefined;
-  const image = sectionValue(pageJson, "imageUrl") || sectionValue(pageJson, "backgroundImage");
+  const image = articleSectionValue(pageJson, "imageUrl") || sectionValue(pageJson, "backgroundImage");
+  const author = articleSectionValue(pageJson, "author") || siteBrandName(site);
+  const datePublished = articleSectionValue(pageJson, "publishedAt");
+  const dateModified = articleSectionValue(pageJson, "updatedAt") || datePublished;
+  const tags = listText(sectionOfType(pageJson, "blog_article")?.settings.tags);
   return {
-    "@type": "Article",
-    headline: title,
-    description,
-    author: { "@type": "Organization", name: siteBrandName(site) },
-    publisher: { "@type": "Organization", name: siteBrandName(site) },
+    "@type": "BlogPosting",
+    headline: articleSectionValue(pageJson, "title") || title,
+    description: articleSectionValue(pageJson, "summary") || description,
+    author: { "@type": "Person", name: cleanSchemaText(site, author) },
+    publisher: {
+      "@type": "Organization",
+      name: siteBrandName(site),
+      url: siteBaseUrl(site, routeMode)
+    },
     mainEntityOfPage: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath)),
+    ...(datePublished ? { datePublished } : {}),
+    ...(dateModified ? { dateModified } : {}),
+    ...(tags.length ? { keywords: tags.join(", ") } : {}),
     ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
   };
 }

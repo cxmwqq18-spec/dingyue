@@ -27,9 +27,9 @@
 - [ ] `title` 正确：
   `Professional AI Photo Generator Online - MyDreamShoots`
 - [ ] `description` 正确：
-  `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
+  `Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.`
 - [ ] `keywords` 正确：
-  `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot`
+  `Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator`
 
 检查方式：
 
@@ -40,18 +40,19 @@
 
 ## 2. Title 位置检查
 
-上线前需要确认 `<title>` 位于 `<head>` 内，并且位置靠前。
+上线前需要确认 `<title>` 位于 `<head>` 内，并且固定为 `<head>` 后第一个有效标签。这个位置是上线硬规则，不得因 Next.js 资源预加载、脚本注入、性能优化、middleware 开关或自定义 server 变更而后移。
 
 - [ ] 页面源代码中存在 `<head>`。
-- [ ] `<title>` 出现在 `<head>` 之后。
+- [ ] `<title>` 紧跟 `<head>` 之后，不能被 `preload`、`stylesheet`、`script` 或其他资源标签插到前面。
 - [ ] `<title>` 位于主要资源加载标签之前，例如大量 `preload`、`script`、`stylesheet` 之前。
 - [ ] `description`、`keywords`、canonical、OG/Twitter 等 SEO 标签也在 `<head>` 内。
+- [ ] 上线前执行 `npm run smoke:storefront-head-title-order`，确认 MyDreamShoots 与 AIdreamcapes 首页源码标题顺序通过。
 
 建议检查方式：
 
 1. 打开页面源代码。
 2. 从顶部开始查看 `<head>`。
-3. 确认 `<title>` 紧跟在基础 head 元素后方，不能被渲染到 `<body>` 中。
+3. 确认 `<title>` 紧跟 `<head>` 之后，是 `<head>` 内第一个有效标签，不能被渲染到 `<body>` 中。
 
 ## 3. H1 / H2 / H3 内容结构检查
 
@@ -159,6 +160,94 @@
 })
 ```
 
+## 8. Sitemap 与目录覆盖检查
+
+上线前必须确认每个对应网站的 `sitemap.xml` 按独立域名输出，并覆盖该网站全部可索引目录。检查不能只看 Header 菜单里当前露出的几个链接；必须覆盖公共基础页、policy 页、套餐目录、工具目录、博客目录和所有当前 active 的二级详情目录。
+
+覆盖范围：
+
+- [ ] 使用对应生产 Host 单独请求 sitemap：`www.mydreamshoots.com/sitemap.xml` 只包含 MyDreamShoots URL，`www.aidreamcapes.com/sitemap.xml` 只包含 AIdreamcapes URL；后续 `.eu` 店铺上线时也按各自域名单独检查。
+- [ ] 基础公共页进入 sitemap：`/`、`/workflow`、`/pricing`、`/faq`、`/about-us`、`/contact-us`。
+- [ ] Policy 页进入 sitemap：`/privacy`、`/terms`、`/cookies`、`/refunds`、`/content`、`/shipping`、`/children-privacy`、`/state-privacy`。
+- [ ] 套餐目录完整覆盖：`/collections`、全部 active `creativePackCategories`、全部 active `creativePacks` 对应的 canonical `/collections/*` 路径。
+- [ ] 工具目录完整覆盖：`/tools`、全部 active `toolMenuItems`、MyDreamShoots 默认公开工具、所有 canonical `/tools/*` 路径。
+- [ ] 博客目录完整覆盖：`/blog`、全部可索引 `article` 页面对应的 `/blog/*` 路径。
+- [ ] Header 桌面 / 移动端 `Browse packages` / `Occasion Albums` / `Tools` 内链全部可以跳转，最终 canonical URL 为 200，并且最终路径存在于对应网站 sitemap。
+- [ ] 旧路径、重定向路径、重复 policy 路径不得出现在 sitemap，例如旧工具、旧 travel blog、`/cookie-policy`、`/privacy-policy`、`/terms-of-service`。
+- [ ] 修改 `data/platform-state.json`、关系表、分类/工具菜单或 SEO 目录后，必须同步 platform-state 文档和关系表，再清理 `.next/cache/platform-state-postgres.json`。
+
+必跑命令：
+
+```bash
+npm run smoke:storefront-navigation-data
+npm run smoke:storefront-sitemap-directory-coverage
+```
+
+自动化脚本说明：
+
+- `smoke:storefront-navigation-data`：确认不同页面上的套餐/工具弹层数据一致，避免局部页面读到旧分类或旧工具。
+- `smoke:storefront-sitemap-directory-coverage`：从 `data/platform-state.json` 推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留。
+
+当前 `.com` 店铺目录口径：
+
+| 店铺 | 套餐目录 | 工具目录 | 博客 / 公共目录 |
+| --- | --- | --- | --- |
+| MyDreamShoots | `/collections`、40 个 active 分类、28 个 active pack 的 canonical collection 路径 | `/tools`、28 个 canonical 公开工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
+| AIdreamcapes | `/collections`、27 个 active 分类、28 个 active pack 的 canonical collection 路径 | `/tools`、20 个 active tool menu item 路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
+
+## 2026-08-01 Storefront 视觉、路由、Footer 修复记录
+
+本轮固定两站 `.com` footer 最底部版权文案，后续上线和同步脚本不得改回旧品牌格式：
+
+| 店铺 | Footer 底部版权文案 |
+| --- | --- |
+| MyDreamShoots | `© 2026 myDreamshoots.com. All rights reserved.` |
+| AIdreamcapes | `© 2026 Aidreamcapes.com. All rights reserved.` |
+
+同步要求：
+
+- 目标视觉资产缓存版本为 `20260801visualfix1`。
+- MyDreamShoots Thanksgiving `Keepsake Cover` 使用 `public/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp`。
+- AIdreamcapes Christmas `Holiday story` 使用 `public/assets/sites/site_aidreamcapes/fan-holiday-theme/posters/christmas-card-motion.webp`。
+- 首页套餐分类 pills、卡片、箭头和图片数量入口必须进入对应 `/collections/<slug>` 详情页；真正创建 CTA 仍可进入 `/login`、`/app/create` 或 `/tools/*`。
+- 首页 generated showcase 图片 rail 不得出现灰色空白块；featured pack 左侧文案卡不得被右侧图片墙强行撑高出大量空白。
+
+## 2026-07-31 Sitemap 与新分类 / 新工具内链记录
+
+本轮针对 MyDreamShoots 与 AIdreamcapes 的新主题分类、工具分类和 sitemap 做了本地及关系表复查，并把 sitemap 覆盖纳入上线固定检查项。
+
+| 检查项 | MyDreamShoots | AIdreamcapes | 结果 |
+| --- | --- | --- | --- |
+| Header 套餐 / 工具菜单内链 | 套餐 28 条、工具 28 条 | 套餐 20 条、工具 20 条 | 2026-07-31 线上新 release 复查通过，跨路由菜单数据一致。 |
+| 菜单最终路径进入 sitemap | [x] | [x] | 所有菜单链接最终 canonical 路径均存在于对应域名 sitemap。 |
+| 新主题 / 工具目录进入 sitemap | [x] `outdoor-creator-scenes`、`thanksgiving-group-photos`、`halloween-party-photos` 等已覆盖 | [x] fan-scene、game-day、premiere、Christmas、Thanksgiving、Halloween、seasonal 工具和分类已覆盖 | `smoke:storefront-sitemap-directory-coverage` 通过。 |
+| 旧路径从 sitemap 移除 | [x] 旧 `travel-scene-pack` / `travel-story` blog 未残留；旧集合路径 308 到 `outdoor-creator-scenes` | [x] 旧 travel tools / old travel blog / `route-portrait-engine` 未残留 | 旧路径残留为 0。 |
+| 关系表与 platform-state 文档 | 页面 106、active 分类 40、active pack 28、公开工具 28、博客 80 | 页面 98、active 分类 27、active pack 28、active 工具 20、博客 61 | 已同步线上 Postgres 关系表和 platform-state 文档；Postgres smoke 显示 6 sites、7 customers、41 jobs、98 assets、16 albums。 |
+| sitemap URL 数量 | 168 | 149 | 对应 Host 独立输出，无跨站域名；directory bucket 缺失为 0。 |
+| 博客主题严格扫描 | 80 个 blog URL，旧主题词命中 0 | 61 个 blog URL，旧主题词命中 0 | 逐篇检查 slug、title、H1、description、正文，未见旧 travel / route 主题残留。 |
+| 图片健康抽样 | 全 sitemap 去重 436 个图片引用全部 `200 image/*` | 全 sitemap 去重 406 个图片引用全部 `200 image/*` | 覆盖 sitemap 页面、首页、目录页、集合页、工具页、博客页；4 个首次抓取超时页面已单独复核，页面 200、图片 17/17 通过；当前资产版本为 `20260731assetfix1`。 |
+
+本轮执行命令：
+
+```bash
+npm run typecheck
+npm run smoke:storefront-public-routes
+npm run smoke:storefront-navigation-data
+npm run smoke:storefront-sitemap-directory-coverage
+npm run smoke:storefront-head-title-order
+npm run smoke:dreamshoot-blog-content
+npm run smoke:postgres-state
+```
+
+2026-07-31 线上发布记录：
+
+- Release：`/www/wwwroot/mydreamshoots.com/releases/copy-20260731235558`，`mydreamshoots.service` 与 `/www/wwwroot/mydreamshoots.com/app` 均已指向该 release，服务端口 `3010`。
+- 数据同步：`sync-fan-holiday-storefront-theme`、`sync-dreamshoot-blog-content.mjs`、`db:import-state` 已执行；因全量 relational import 被历史 `siteDomain.domain` 唯一约束阻断，本轮改用定向 relational upsert 更新两个 `.com` 站的 `themePage`、`themeSettings`、`siteTheme`，并更新 MyDreamShoots 的 `creativePackCategory` / `creativePack`。本次补丁额外精准更新线上 Postgres 的 MyDreamShoots `toolMenuItem`、`themePublication` 和 `platformStateDocument`，清理旧 `travel-inspired` 工具文案。
+- 内容修复：MyDreamShoots 旧 `Travel Scene Pack` 改为 `Outdoor Creator Scenes`，canonical 路径为 `/collections/outdoor-creator-scenes`；旧 `/collections/travel-scene-pack` 308 到新路径；旧 `/blog/travel-scene-pack-photo-package-guide` 与 `/blog/travel-story-video-theme-guide` 已从关系表和 sitemap 删除。AIdreamcapes fallback collection 文案从旧 `Travel Gallery` / postcard keepsake 口径改为 private fan-scene / holiday album 口径；两站博客生成模板已按品牌拆分语言结构。
+- 图片修复：AIdreamcapes `fan-holiday-theme` covers/gallery 与 MyDreamShoots Thanksgiving / Christmas / outdoor creator 图片均使用 `20260731assetfix1` 版本规避 Cloudflare 旧 404 缓存；最终全 sitemap 图片 probe 为 MyDreamShoots 436/436、AIdreamcapes 406/406 通过，首次超时页面单独复核图片 17/17 通过。
+- 最终验证：`typecheck`、`smoke:storefront-public-routes`、`smoke:storefront-navigation-data`、`smoke:storefront-sitemap-directory-coverage`、`smoke:storefront-head-title-order`、`smoke:dreamshoot-blog-content`、`smoke:fan-holiday-storefront-theme`、`smoke:postgres-state` 通过；Playwright smoke 使用本机浏览器经 SSH tunnel 指向线上 `127.0.0.1:3010` 执行。
+- 公网复查：`https://www.mydreamshoots.com/`、`https://www.aidreamcapes.com/`、两个 `.com` sitemap、`https://www.mydreamshoots.com/tools/nature-adventure`、`https://www.aidreamcapes.com/blog/fan-scene-photo-albums-guide` 均返回 200；全 sitemap 文案扫描两站旧主题命中 0、跨品牌命中 0；`.eu` 可达性抽查 `https://aidreamshoots.eu/`、`https://www.aidreamshoots.eu/`、`https://aidreamcapes.eu/`、`https://www.aidreamcapes.eu/` 均返回 200。
+
 ## 2026-07-16 西班牙店铺名称和域名规则记录
 
 本轮固定两个西班牙店铺的对外名称和域名，并写入后续工作规则。
@@ -210,6 +299,7 @@
 | Footer 页面链接带 nofollow | [x] | [x] | 2026-07-14 页面抽查通过；邮件链接不按页面导航 nofollow 处理。 |
 | 前台无其他语言混入 | [x] | [x] | 2026-07-14 主要页面可见文本中文字符数为 0。 |
 | Google Translate 兼容 | [x] | [x] | 2026-07-14 已加入 `html/body translate=yes` 与 `Content-Language` 守护；公共页与客户工作区 DOM 属性抽查通过。 |
+| Sitemap 全目录覆盖 | [x] | [x] | 2026-07-31 菜单内链最终路径均在对应 sitemap；目录覆盖脚本通过；旧路径残留为 0。 |
 | 主要页面已抽查 | [x] | [x] | 首页、Pricing、FAQ/Help、Workflow、Collections、Tools、Login、工具详情页已抽查。 |
 
 ## 2026-07-14 上线复查补充
@@ -293,3 +383,26 @@ SECURE Data Act / GUARD Financial Data Act 监测记录：
 - 数据残留扫描：两个目标站点主记录、主题记录、发布快照中不再包含旧地址 `8 THE GREEN STE B, DOVER, DE 19901` 或 `sales@aidreamcapes.com`。
 - 2026-07-14 补充验证：`npm run typecheck`、`data/platform-state.json` JSON 解析、`git diff --check`、旧 EIN/州缩写文案残留扫描、前台源码中文字符扫描均通过。
 - 2026-07-14 补充 Playwright 抽查 `http://127.0.0.1:3109/site/mydreamshoots/state-privacy`、`http://127.0.0.1:3109/site/aidreamcapes/state-privacy`、两站首页滚动页脚：州隐私正文、SECURE/GUARD 监测项、底部公司资料、Organization JSON-LD `PostalAddress` 与实体 `identifier` 均通过。
+
+## 2026-08-01 公开媒体批刷水印上线记录
+
+本轮把水印放到后台批处理层，而不是生成层。公开展示的图片 / 视频通过后台按钮或 CLI 统一刷新，前台展示版本带站点域名水印；客户上传原件、生成结果和工作区素材保持干净。
+
+检查要求：
+
+- `public/assets/...` 里被前台展示的图片 / 视频统一由 `batchWatermarkSitePublicMedia` 或 `npm run watermark:storefront-public-media` 处理，右下角使用站点域名水印。
+- MyDreamShoots 使用 `myDreamshoots.com`，AIdreamcapes 使用 `Aidreamcapes.com`。
+- `.com` 店铺的生成结果、用户上传、下载预览和工作区访问不再自动打水印。
+- 旧的公开素材可用后台按钮 `刷新展示水印` 或 `npm run watermark:storefront-public-media -- --force` 重刷，避免重复叠加。
+- `public/assets/dreamshoot` 非品牌公开素材、`public/assets/sites/site_aidreamcapes` 非品牌公开素材、以及对应 `.eu` 公开素材均使用 `20260801-storefront-watermark1` 标记；品牌 logo/icon 不进批处理。
+- 上线前执行 `npm run watermark:storefront-public-media -- --dry-run`，如果公开素材已刷新完成，应返回 `changed: 0` 且 `failures: []`。
+
+本轮验证：
+
+- `npm run typecheck`
+- `npm run smoke:storefront-watermarks`
+- `npm run smoke:dreamshoot-homepage-showcase`
+- `npm run smoke:fan-holiday-storefront-theme`
+- `npm run smoke:storefront-navigation-data`
+- `npm run smoke:storefront-sitemap-directory-coverage`
+- `npm run watermark:storefront-public-media -- --dry-run`

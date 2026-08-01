@@ -16,6 +16,7 @@ const modules = [
   { path: `/site/${siteSlug}/admin/orders`, h1: "订单与订阅" },
   { path: `/site/${siteSlug}/admin/customers`, h1: "顾客管理" },
   { path: `/site/${siteSlug}/admin/ai-tools`, h1: "AI 工具" },
+  { path: `/site/${siteSlug}/admin/processes`, h1: "进程管理" },
   { path: `/site/${siteSlug}/admin/email`, h1: "邮件管理" },
   { path: `/site/${siteSlug}/admin/settings`, h1: "设置收款" }
 ];

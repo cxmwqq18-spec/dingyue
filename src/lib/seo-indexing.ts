@@ -70,7 +70,6 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/blog/professional-headshots-photo-package-guide",
   "/blog/profile-cards-photo-package-guide",
   "/blog/social-cards-photo-package-guide",
-  "/blog/travel-scene-pack-photo-package-guide",
   "/blog/valentine-photos-photo-package-guide",
   "/blog/virtual-try-on-photo-package-guide",
   "/blog/wedding-portraits-photo-package-guide",
@@ -105,10 +104,13 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/blog/fashion-reel-tool-guide",
   "/blog/album-story-video-tool-guide",
   "/blog/portrait-motion-video-theme-guide",
-  "/blog/travel-story-video-theme-guide",
   "/blog/social-cards-video-theme-guide",
   "/blog/wedding-memory-video-theme-guide",
-  "/blog/product-teaser-video-theme-guide"
+  "/blog/product-teaser-video-theme-guide",
+  "/blog/thanksgiving-group-photos-photo-package-guide",
+  "/blog/halloween-party-photos-photo-package-guide",
+  "/blog/creator-motion-video-theme-guide",
+  "/blog/outdoor-creator-scenes-photo-package-guide"
 ];
 const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/",
@@ -123,81 +125,78 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/content",
   "/shipping",
   "/faq",
+  "/collections/fan-scene-albums",
+  "/collections/game-day-group-photos",
+  "/collections/premiere-style-portraits",
+  "/collections/christmas-group-albums",
+  "/collections/thanksgiving-memory-sets",
+  "/collections/halloween-party-portraits",
+  "/collections/seasonal-celebration-photos",
+  "/tools/fan-scene-album-builder",
+  "/tools/game-day-group-portrait-maker",
+  "/tools/premiere-portrait-set-builder",
+  "/tools/christmas-group-album-studio",
+  "/tools/thanksgiving-keepsake-set-maker",
+  "/tools/halloween-party-portrait-maker",
+  "/tools/new-year-countdown-album-maker",
+  "/tools/permission-safe-photo-planner",
   "/blog",
-  "/blog/planning-dreamscape-source-photos",
-  "/blog/destination-mood-references",
-  "/blog/route-album-credit-planning",
-  "/blog/route-portraits-category-guide",
-  "/blog/local-moments-category-guide",
-  "/blog/open-air-routes-category-guide",
-  "/blog/travel-story-kits-category-guide",
-  "/blog/lifestyle-routes-category-guide",
-  "/blog/professional-celebrations-category-guide",
-  "/blog/destination-tools-guide",
-  "/blog/travel-moment-tools-guide",
-  "/blog/adventure-tools-guide",
-  "/blog/creator-travel-tools-guide",
-  "/blog/route-portrait-albums-photo-package-guide",
-  "/blog/coastal-light-sets-photo-package-guide",
-  "/blog/old-quarter-walks-photo-package-guide",
-  "/blog/desert-road-stories-photo-package-guide",
-  "/blog/golden-hour-route-stories-photo-package-guide",
-  "/blog/island-resort-scenes-photo-package-guide",
-  "/blog/market-morning-walks-photo-package-guide",
-  "/blog/nature-portrait-studio-photo-package-guide",
-  "/blog/postcard-story-sets-photo-package-guide",
-  "/blog/private-villa-stays-photo-package-guide",
-  "/blog/road-trip-frames-photo-package-guide",
-  "/blog/scenic-overlooks-photo-package-guide",
-  "/blog/shared-route-albums-photo-package-guide",
-  "/blog/snow-lodge-escapes-photo-package-guide",
-  "/blog/travel-journal-covers-photo-package-guide",
-  "/blog/alpine-trail-frames-photo-package-guide",
-  "/blog/cafe-street-stories-photo-package-guide",
-  "/blog/city-light-night-walks-photo-package-guide",
-  "/blog/family-travel-keepsakes-photo-package-guide",
-  "/blog/lagoon-route-studies-photo-package-guide",
-  "/blog/lake-house-weekends-photo-package-guide",
-  "/blog/rail-journey-portraits-photo-package-guide",
-  "/blog/rainy-city-breaks-photo-package-guide",
-  "/blog/rooftop-city-nights-photo-package-guide",
-  "/blog/route-moodboards-photo-package-guide",
-  "/blog/solo-traveler-profiles-photo-package-guide",
-  "/blog/wellness-retreat-scenes-photo-package-guide",
-  "/blog/evening-route-portraits-photo-package-guide",
-  "/blog/boudoir-editorial-portraits-photo-package-guide",
-  "/blog/hairstyle-try-on-stories-photo-package-guide",
-  "/blog/professional-headshot-studio-photo-package-guide",
-  "/blog/milestone-postcard-sets-photo-package-guide",
-  "/blog/holiday-couple-cards-photo-package-guide",
-  "/blog/gala-night-portraits-photo-package-guide",
-  "/blog/heritage-celebration-portraits-photo-package-guide",
-  "/blog/route-portrait-engine-tool-guide",
-  "/blog/coastal-portrait-tool-guide",
-  "/blog/island-resort-scenes-tool-guide",
-  "/blog/scenic-overlook-story-tool-guide",
-  "/blog/travel-profile-story-tool-guide",
-  "/blog/editorial-getaway-tool-guide",
-  "/blog/cafe-street-story-tool-guide",
-  "/blog/cinematic-travel-tool-guide",
-  "/blog/route-moodboard-tool-guide",
-  "/blog/social-keepsake-tool-guide",
-  "/blog/lagoon-portrait-mixer-tool-guide",
-  "/blog/desert-road-portraits-tool-guide",
-  "/blog/rail-journey-frames-tool-guide",
-  "/blog/market-morning-portraits-tool-guide",
-  "/blog/rooftop-skyline-set-tool-guide",
-  "/blog/rainy-city-album-tool-guide",
-  "/blog/private-villa-portraits-tool-guide",
-  "/blog/wellness-retreat-scenes-tool-guide",
-  "/blog/snow-lodge-portraits-tool-guide",
-  "/blog/lake-house-weekend-tool-guide",
-  "/blog/shared-route-album-tool-guide",
-  "/blog/family-travel-keepsakes-tool-guide",
-  "/blog/golden-hour-route-story-tool-guide",
-  "/blog/solo-traveler-profile-set-tool-guide",
-  "/blog/travel-journal-cover-maker-tool-guide",
-  "/blog/private-album-curator-tool-guide",
+  "/blog/fan-scene-photo-albums-guide",
+  "/blog/game-day-group-portraits-guide",
+  "/blog/premiere-style-photo-sets-guide",
+  "/blog/holiday-memory-albums-guide",
+  "/blog/approved-source-photo-planning",
+  "/blog/permission-safe-fan-scene-references",
+  "/blog/private-album-credit-planning",
+  "/blog/thanksgiving-keepsake-sets-category-guide",
+  "/blog/halloween-party-portraits-category-guide",
+  "/blog/seasonal-celebration-photos-category-guide",
+  "/blog/fan-scene-builders-guide",
+  "/blog/game-day-builders-guide",
+  "/blog/premiere-creator-tools-guide",
+  "/blog/holiday-album-tools-guide",
+  "/blog/occasion-card-tools-guide",
+  "/blog/safety-prep-tools-guide",
+  "/blog/private-fan-scene-albums-photo-package-guide",
+  "/blog/backstage-meetup-portraits-photo-package-guide",
+  "/blog/supporter-photo-walls-photo-package-guide",
+  "/blog/fan-keepsake-card-sets-photo-package-guide",
+  "/blog/game-day-group-portraits-photo-package-guide",
+  "/blog/stadium-night-fan-sets-photo-package-guide",
+  "/blog/watch-party-albums-photo-package-guide",
+  "/blog/premiere-flash-portraits-photo-package-guide",
+  "/blog/vip-arrival-photo-sets-photo-package-guide",
+  "/blog/award-night-keepsake-albums-photo-package-guide",
+  "/blog/christmas-group-albums-photo-package-guide",
+  "/blog/cozy-card-portrait-sets-photo-package-guide",
+  "/blog/winter-fan-greeting-albums-photo-package-guide",
+  "/blog/thanksgiving-table-keepsakes-photo-package-guide",
+  "/blog/gratitude-group-portraits-photo-package-guide",
+  "/blog/friendsgiving-memory-sets-photo-package-guide",
+  "/blog/halloween-party-portrait-sets-photo-package-guide",
+  "/blog/costume-cast-photo-albums-photo-package-guide",
+  "/blog/birthday-fan-moment-sets-photo-package-guide",
+  "/blog/new-year-countdown-albums-photo-package-guide",
+  "/blog/fan-scene-album-builder-tool-guide",
+  "/blog/backstage-meetup-scene-builder-tool-guide",
+  "/blog/supporter-photo-wall-maker-tool-guide",
+  "/blog/fan-keepsake-card-maker-tool-guide",
+  "/blog/game-day-group-portrait-maker-tool-guide",
+  "/blog/stadium-night-fan-set-maker-tool-guide",
+  "/blog/watch-party-album-builder-tool-guide",
+  "/blog/premiere-portrait-set-builder-tool-guide",
+  "/blog/vip-arrival-photo-maker-tool-guide",
+  "/blog/award-night-album-studio-tool-guide",
+  "/blog/new-year-countdown-album-maker-tool-guide",
+  "/blog/christmas-group-album-studio-tool-guide",
+  "/blog/cozy-card-portrait-maker-tool-guide",
+  "/blog/winter-fan-greeting-maker-tool-guide",
+  "/blog/thanksgiving-keepsake-set-maker-tool-guide",
+  "/blog/friendsgiving-memory-maker-tool-guide",
+  "/blog/halloween-party-portrait-maker-tool-guide",
+  "/blog/costume-cast-album-builder-tool-guide",
+  "/blog/birthday-fan-moment-maker-tool-guide",
+  "/blog/permission-safe-photo-planner-tool-guide",
   "/blog/route-motion-video-theme-guide",
   "/blog/coastal-motion-video-theme-guide",
   "/blog/memory-film-video-theme-guide",
@@ -283,20 +282,33 @@ const DREAMSHOOT_LEGACY_TOOL_CANONICAL_PATHS = new Map([
 ]);
 const AIDREAMCAPES_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/ai-image-studio", "/tools"],
-  ["/tools/background-changer", "/tools/route-portrait-engine"],
-  ["/tools/background-remover", "/tools/route-portrait-engine"],
-  ["/tools/dreamscape-generator", "/tools/route-portrait-engine"],
-  ["/tools/image-generator", "/tools/route-portrait-engine"],
-  ["/tools/image-to-video", "/tools/route-portrait-engine"],
+  ["/tools/background-changer", "/tools/fan-scene-album-builder"],
+  ["/tools/background-remover", "/tools/fan-scene-album-builder"],
+  ["/tools/dreamscape-generator", "/tools/fan-scene-album-builder"],
+  ["/tools/image-generator", "/tools/fan-scene-album-builder"],
+  ["/tools/image-to-video", "/tools/new-year-countdown-album-maker"],
   ["/tools/image-studio", "/tools"],
-  ["/tools/portrait-generator", "/tools/route-portrait-engine"],
-  ["/tools/portrait-maker", "/tools/route-portrait-engine"],
-  ["/tools/product-reverie", "/tools/route-moodboard"],
-  ["/tools/soft-glam", "/tools/cafe-street-story"],
-  ["/tools/couple-escape-album", "/tools/shared-route-album"],
-  ["/tools/wedding-portraits", "/tools"],
-  ["/tools/world-cup-fan-photos", "/tools"],
-  ["/tools/headshot", "/tools/route-portrait-engine"]
+  ["/tools/portrait-generator", "/tools/fan-scene-album-builder"],
+  ["/tools/portrait-maker", "/tools/fan-scene-album-builder"],
+  ["/tools/product-reverie", "/tools/permission-safe-photo-planner"],
+  ["/tools/soft-glam", "/tools/premiere-portrait-set-builder"],
+  ["/tools/couple-escape-album", "/tools/birthday-fan-moment-maker"],
+  ["/tools/wedding-portraits", "/tools/birthday-fan-moment-maker"],
+  ["/tools/world-cup-fan-photos", "/tools/game-day-group-portrait-maker"],
+  ["/tools/headshot", "/tools/premiere-portrait-set-builder"],
+  ["/tools/route-portrait-engine", "/tools/fan-scene-album-builder"],
+  ["/tools/coastal-portrait", "/tools/christmas-group-album-studio"],
+  ["/tools/island-resort-scenes", "/tools/new-year-countdown-album-maker"],
+  ["/tools/scenic-overlook-story", "/tools/game-day-group-portrait-maker"],
+  ["/tools/travel-profile-story", "/tools/fan-scene-album-builder"],
+  ["/tools/editorial-getaway", "/tools/premiere-portrait-set-builder"],
+  ["/tools/cafe-street-story", "/tools/premiere-portrait-set-builder"],
+  ["/tools/cinematic-travel", "/tools/game-day-group-portrait-maker"],
+  ["/tools/route-moodboard", "/tools/permission-safe-photo-planner"],
+  ["/tools/social-keepsake", "/tools/birthday-fan-moment-maker"],
+  ["/tools/family-travel-keepsakes", "/tools/thanksgiving-keepsake-set-maker"],
+  ["/tools/seasonal-celebration-album-maker", "/tools/new-year-countdown-album-maker"],
+  ["/tools/travel-journal-cover-maker", "/tools/new-year-countdown-album-maker"]
 ]);
 
 function normalizePath(slug: string): string {
@@ -545,7 +557,7 @@ function collectInternalHrefPaths(state: PlatformState, site: Site, paths: Set<s
 
 function collectExplicitSeoDirectoryPaths(site: Site): string[] {
   const collections = getExplicitSeoDirectorySlugsForSite(site, "collection").map((slug) => canonicalSeoDirectoryPathForSite(site, "collection", slug));
-  const tools = getExplicitSeoDirectorySlugsForSite(site, "tool").map((slug) => `/tools/${slug}`);
+  const tools = getExplicitSeoDirectorySlugsForSite(site, "tool").map((slug) => canonicalToolPathForSite(site, `/tools/${slug}`));
   return Array.from(new Set([...collections, ...tools]));
 }
 
@@ -590,6 +602,8 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
 }
 
 async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
+  if (prefersLegacyStateForPersistenceBackend()) return readLegacyIndexableStateAndSites();
+
   try {
     const state = await readStorefrontPlatformStateFromDatabase();
     const sites = findIndexableSites(state);
@@ -690,6 +704,11 @@ function isLocalDevelopmentHost(host: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || host === "::1";
 }
 
+function prefersLegacyStateForPersistenceBackend(): boolean {
+  const backend = (process.env.PERSISTENCE_BACKEND ?? "").trim().toLowerCase();
+  return Boolean(backend && backend !== "postgres");
+}
+
 function fallbackUrlsForOrigin(origin: string, paths: string[]): string[] {
   return paths.map((path) => (path === "/" ? origin : `${origin}${path}`));
 }
@@ -723,7 +742,7 @@ export async function getStorefrontSitemapUrlsForHost(hosts: string | null | und
   const normalizedHost = normalizedHosts[0] ?? "";
   if (!normalizedHost) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
   const isLocalHostRequest = normalizedHosts.some(isLocalDevelopmentHost);
-  const shouldUseLegacyStateFirst = isLocalHostRequest || process.env.NODE_ENV !== "production";
+  const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
     return publicFallbackSitemapUrlsForHost(normalizedHosts);

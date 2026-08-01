@@ -10,6 +10,7 @@ export type PhotoPackageMegaGroup = {
     label: string;
     slug: string;
     href: string;
+    packId?: string;
     icon?: string;
     sortOrder?: number;
   }>;
@@ -47,19 +48,62 @@ function photoPackageMenuLabel(value: string | undefined): string {
 }
 
 const aidreamcapesCollectionHrefSlugAliases: Record<string, string> = {
-  "cafe-street-stories": "cafe-corner-stories",
-  "professional-headshots": "headshots",
-  "road-trip-frames": "cinematic-travel"
+  "adventure": "game-day-group-photos",
+  "city": "premiere-style-portraits",
+  "coastal": "christmas-group-albums",
+  "costero": "christmas-group-albums",
+  "destination": "fan-scene-albums",
+  "destino": "fan-scene-albums",
+  "postcard": "seasonal-celebration-photos",
+  "postal": "seasonal-celebration-photos",
+  "cafe-street-stories": "premiere-style-portraits",
+  "professional-headshots": "premiere-style-portraits",
+  "road-trip-frames": "game-day-group-photos",
+  "route-portrait-albums": "fan-scene-albums",
+  "destination-portrait-albums": "fan-scene-albums",
+  "coastal-light-sets": "christmas-group-albums",
+  "coastal-getaways": "christmas-group-albums",
+  "old-quarter-walks": "premiere-style-portraits",
+  "old-city-walks": "premiere-style-portraits",
+  "island-resort-scenes": "seasonal-celebration-photos",
+  "scenic-overlooks": "game-day-group-photos",
+  "alpine-trail-frames": "seasonal-celebration-photos",
+  "mountain-trails": "game-day-group-photos",
+  "cinematic-travel": "game-day-group-photos",
+  "itinerary-moodboards": "seasonal-celebration-photos",
+  "route-moodboards": "seasonal-celebration-photos",
+  "postcard-social-sets": "seasonal-celebration-photos",
+  "postcard-story-sets": "seasonal-celebration-photos",
+  "travel-profile-stories": "fan-scene-albums",
+  "solo-traveler-profiles": "fan-scene-albums",
+  "family-travel-keepsakes": "thanksgiving-memory-sets",
+  "travel-journal-covers": "seasonal-celebration-photos"
 };
 
-function photoPackageCollectionHrefForSlug(slug: string | undefined): string {
+const dreamshootCollectionHrefSlugAliases: Record<string, string> = {
+  "professional-headshots": "headshots",
+  "premiere-style-portraits": "gala-photos",
+  "thanksgiving": "thanksgiving-group-photos",
+  "halloween": "halloween-party-photos"
+};
+
+const dreamshootPackageGroupSlugOverrides: Record<string, string> = {
+  "christmas-couple": "seasonal"
+};
+
+function shouldUseAidreamcapesCollectionAliases(siteIds: Array<string | undefined>): boolean {
+  return siteIds.some((siteId) => (siteId ?? "").toLowerCase().includes("aidreamcapes"));
+}
+
+function photoPackageCollectionHrefForSlug(slug: string | undefined, aliases: Record<string, string> = dreamshootCollectionHrefSlugAliases): string {
   const normalizedSlug = photoPackageSlug(slug);
-  const hrefSlug = aidreamcapesCollectionHrefSlugAliases[normalizedSlug] ?? normalizedSlug;
+  const hrefSlug = aliases[normalizedSlug] ?? normalizedSlug;
   return hrefSlug ? `/collections/${hrefSlug}` : "/collections";
 }
 
-export function creativePackCollectionHref(pack: CreativePack): string {
-  return photoPackageCollectionHrefForSlug(pack.categoryRecord?.slug || pack.category || pack.name);
+export function creativePackCollectionHref(pack: CreativePack, aliases?: Record<string, string>): string {
+  const scopedAliases = aliases ?? (shouldUseAidreamcapesCollectionAliases([pack.siteId, pack.categoryRecord?.siteId]) ? aidreamcapesCollectionHrefSlugAliases : dreamshootCollectionHrefSlugAliases);
+  return photoPackageCollectionHrefForSlug(pack.categoryRecord?.slug || pack.category || pack.name, scopedAliases);
 }
 
 export function creativePackCategoryOption(pack: CreativePack): PhotoPackageCategoryOption {
@@ -145,6 +189,10 @@ export function getPhotoPackageMegaGroups(
   creativePackCategories: CreativePackCategory[] = []
 ): PhotoPackageMegaGroup[] {
   const groups = new Map<string, PhotoPackageMegaGroup>();
+  const collectionHrefAliases = shouldUseAidreamcapesCollectionAliases([
+    ...creativePacks.map((pack) => pack.siteId),
+    ...creativePackCategories.map((category) => category.siteId)
+  ]) ? aidreamcapesCollectionHrefSlugAliases : dreamshootCollectionHrefSlugAliases;
   const ensureGroup = (groupSlug: string, groupLabel: string, description?: string, icon?: string, sortOrder?: number) => {
     const existing = groups.get(groupSlug);
     if (existing) {
@@ -162,12 +210,43 @@ export function getPhotoPackageMegaGroups(
     return group;
   };
   const addGroupItem = (group: PhotoPackageMegaGroup, item: PhotoPackageMegaGroup["items"][number]) => {
-    if (!group.items.some((existing) => existing.slug === item.slug)) {
+    if (item.packId) {
+      if (!group.items.some((existing) => existing.packId === item.packId)) {
+        group.items.push(item);
+      }
+      return;
+    }
+    if (!group.items.some((existing) => !existing.packId && existing.slug === item.slug)) {
       group.items.push(item);
     }
   };
   const activeCategories = creativePackCategories.filter((category) => category.status === "active");
   const categoryById = new Map(activeCategories.map((category) => [category.id, category]));
+  const activePacks = creativePacks.filter((pack) => pack.status === "active");
+  const addActivePackItems = () => {
+    activePacks.forEach((pack) => {
+      const packSlug = photoPackageSlug(pack.categoryRecord?.slug || pack.category || pack.name);
+      const overrideGroupSlug = shouldUseAidreamcapesCollectionAliases([pack.siteId, pack.categoryRecord?.siteId])
+        ? undefined
+        : dreamshootPackageGroupSlugOverrides[packSlug];
+      const overrideParent = overrideGroupSlug
+        ? activeCategories.find((category) => !category.parentId && photoPackageSlug(category.slug || category.label) === overrideGroupSlug)
+        : undefined;
+      const canonicalCategory = pack.categoryRecord?.id ? categoryById.get(pack.categoryRecord.id) : undefined;
+      const parent = overrideParent ?? canonicalCategory?.parent ?? (canonicalCategory?.parentId ? categoryById.get(canonicalCategory.parentId) : undefined) ?? pack.categoryRecord?.parent;
+      const groupLabel = parent?.label || canonicalCategory?.label || pack.categoryRecord?.label || pack.name || photoPackageLabel(pack.categoryRecord?.slug || pack.category);
+      const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
+      const group = ensureGroup(groupSlug, groupLabel, parent?.description ?? canonicalCategory?.description ?? pack.categoryRecord?.description, parent?.icon ?? parent?.iconName ?? canonicalCategory?.icon ?? canonicalCategory?.iconName ?? pack.categoryRecord?.icon ?? pack.categoryRecord?.iconName, parent?.sortOrder ?? canonicalCategory?.sortOrder ?? pack.categoryRecord?.sortOrder);
+      addGroupItem(group, {
+        label: photoPackageMenuLabel(pack.name || pack.categoryRecord?.label),
+        slug: pack.id,
+        href: creativePackCollectionHref(pack, collectionHrefAliases),
+        packId: pack.id,
+        icon: canonicalCategory?.icon ?? canonicalCategory?.iconName ?? pack.categoryRecord?.icon ?? pack.categoryRecord?.iconName,
+        sortOrder: sortValue(canonicalCategory?.sortOrder ?? pack.categoryRecord?.sortOrder)
+      });
+    });
+  };
   const rootCategories = activeCategories
     .filter((category) => !category.parentId && !category.parent)
     .sort((a, b) => sortValue(a.sortOrder) - sortValue(b.sortOrder) || a.label.localeCompare(b.label));
@@ -177,6 +256,10 @@ export function getPhotoPackageMegaGroups(
       const groupSlug = category.slug || photoPackageSlug(category.label);
       ensureGroup(groupSlug, category.label, category.description, category.icon ?? category.iconName, sortValue(category.sortOrder));
     });
+    if (activePacks.length) {
+      addActivePackItems();
+      return sortedMegaGroups(groups);
+    }
     activeCategories
       .filter((category) => !rootIds.has(category.id))
       .sort((a, b) => sortValue(a.sortOrder) - sortValue(b.sortOrder) || a.label.localeCompare(b.label))
@@ -186,35 +269,23 @@ export function getPhotoPackageMegaGroups(
         const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
         const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder));
         const itemSlug = category.slug || photoPackageSlug(category.label);
-        addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
+        addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
       });
+    addActivePackItems();
     return sortedMegaGroups(groups);
   }
-  activeCategories.forEach((category) => {
-    const parent = category.parent;
-    const groupLabel = parent?.label || category.label;
-    const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
-    const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder ?? category.sortOrder));
-    const itemSlug = category.slug || photoPackageSlug(category.label);
-    addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
-  });
-  creativePacks
-    .filter((pack) => pack.status === "active")
-    .forEach((pack) => {
-      const parent = pack.categoryRecord?.parent;
-      const groupLabel = parent?.label || pack.categoryRecord?.label || pack.name || photoPackageLabel(pack.categoryRecord?.slug || pack.category);
+  if (activePacks.length) {
+    addActivePackItems();
+  } else {
+    activeCategories.forEach((category) => {
+      const parent = category.parent;
+      const groupLabel = parent?.label || category.label;
       const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
-      const group = ensureGroup(groupSlug, groupLabel, parent?.description ?? undefined, parent?.icon ?? parent?.iconName, sortValue(parent?.sortOrder));
-      const itemLabel = photoPackageMenuLabel(pack.categoryRecord?.label || pack.name);
-      const itemSlug = pack.categoryRecord?.slug || photoPackageSlug(pack.name);
-      addGroupItem(group, {
-        label: itemLabel,
-        slug: itemSlug,
-        href: creativePackCollectionHref(pack),
-        icon: pack.categoryRecord?.icon ?? pack.categoryRecord?.iconName,
-        sortOrder: sortValue(pack.categoryRecord?.sortOrder)
-      });
+      const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder ?? category.sortOrder));
+      const itemSlug = category.slug || photoPackageSlug(category.label);
+      addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
     });
+  }
   return sortedMegaGroups(groups);
 }
 

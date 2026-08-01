@@ -2,11 +2,13 @@
 
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Camera, CheckCircle2, Lightbulb, MapPin, Play, Sparkles, Trash2, UploadCloud, WandSparkles } from "lucide-react";
-import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, PublicCustomer, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel } from "@/lib/types";
+import { getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
+import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, CreativePackCategory, PublicCustomer, SectionBlockInstance, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel, ToolMenuItem } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
-import { creativePackCategoryOption, creativePackMatchesCategory, photoPackageCategoryOptions } from "@/lib/photo-package-taxonomy";
+import { creativePackCollectionHref, creativePackMatchesCategory, getPhotoPackageMegaGroups, photoPackageSlug, type PhotoPackageMegaGroup } from "@/lib/photo-package-taxonomy";
+import { themeValueToString } from "@/lib/theme-values";
 
 type CreateMode = "theme" | "tool";
 type PackageAudience = "self" | "partner" | "both";
@@ -34,6 +36,15 @@ type CreatedJobFeedback = {
   };
   customerBalance?: PublicCustomer["balance"];
   note?: string;
+};
+type JobCreateSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain"> & {
+  __storefrontBasePath?: string;
+};
+type ToolPresetKind = "photo" | "video";
+type VideoToolSelection = {
+  id: string;
+  title: string;
+  href?: string;
 };
 
 function jobT(spanish: boolean, english: string, spanishText: string): string {
@@ -81,194 +92,16 @@ type ToolPreset = {
   title: string;
   description: string;
   category: string;
+  kind?: ToolPresetKind;
+  href?: string;
   creditCost?: number;
   backendSlug?: string;
   prompt: string;
 };
 
-const TOOL_PRESET_LIBRARY: ToolPreset[] = [
-  {
-    id: "headshot-generator",
-    title: "Headshot Photo Generator",
-    description: "Create polished work profiles, team portraits, and founder photos from clear selfies.",
-    category: "Portrait makers",
-    prompt: "Create a polished professional headshot with natural lighting, clean background, and a confident expression."
-  },
-  {
-    id: "anime-avatar",
-    title: "Anime Avatar Builder",
-    description: "Convert a clear selfie into stylized avatar concepts for profiles, social handles, and campaigns.",
-    category: "Portrait makers",
-    prompt: "Create a stylized anime avatar inspired by the uploaded portrait while preserving recognizable facial features."
-  },
-  {
-    id: "wedding-portraits",
-    title: "Wedding Portraits",
-    description: "Create elegant couple, ceremony, and celebration portrait concepts before building a full album.",
-    category: "Portrait makers",
-    prompt: "Create refined wedding portrait concepts with romantic lighting, elegant styling, and album-ready composition."
-  },
-  {
-    id: "gala-photo",
-    title: "Gala Photo Maker",
-    description: "Preview formal night-out portraits with red-carpet lighting, polished outfits, and social-ready crops.",
-    category: "Portrait makers",
-    prompt: "Create a formal gala portrait with evening lighting, polished attire, and editorial composition."
-  },
-  {
-    id: "nature-adventure",
-    title: "Nature Adventure Photos",
-    description: "Place the customer in scenic outdoor, hiking, and travel-inspired portrait scenes.",
-    category: "Portrait makers",
-    prompt: "Create an outdoor adventure portrait in a scenic natural landscape with cinematic but realistic lighting."
-  },
-  {
-    id: "edit-by-prompt",
-    title: "Edit by Prompt",
-    description: "Describe a focused image edit and preview it before spending package credits.",
-    category: "Cleanup tools",
-    prompt: ""
-  },
-  {
-    id: "background-changer",
-    title: "Background Changer",
-    description: "Replace a plain selfie background before ordering a full photo package.",
-    category: "Cleanup tools",
-    prompt: "Replace the background with a clean studio setting while keeping the subject natural and realistic."
-  },
-  {
-    id: "background-remover",
-    title: "Background Remover",
-    description: "Cut out product or portrait backgrounds for cleaner private photos.",
-    category: "Cleanup tools",
-    prompt: "Remove the background cleanly and preserve the subject edges for a transparent or neutral-background result."
-  },
-  {
-    id: "magic-eraser",
-    title: "Magic Eraser",
-    description: "Remove small distractions from portraits, cards, and generated scenes.",
-    category: "Cleanup tools",
-    prompt: "Remove distracting objects while keeping the surrounding image realistic and seamless."
-  },
-  {
-    id: "photo-enhancer",
-    title: "Photo Enhancer",
-    description: "Improve low-light uploads before using them for private model training.",
-    category: "Cleanup tools",
-    prompt: "Enhance sharpness, exposure, and color balance while preserving a realistic photo look."
-  },
-  {
-    id: "portrait-retouch",
-    title: "Portrait Retouch",
-    description: "Clean skin, flyaways, and lighting without changing the customer's identity.",
-    category: "Cleanup tools",
-    prompt: "Retouch the portrait lightly with natural skin texture, balanced lighting, and no identity change."
-  },
-  {
-    id: "unblur-image",
-    title: "Unblur Image",
-    description: "Rescue soft phone shots before they enter a paid generation workflow.",
-    category: "Cleanup tools",
-    prompt: "Improve clarity and reduce blur while keeping the image realistic."
-  },
-  {
-    id: "color-correction",
-    title: "Color Correction",
-    description: "Balance tones for profile photos, posters, and package previews.",
-    category: "Cleanup tools",
-    prompt: "Correct the color balance, exposure, and contrast for a clean natural result."
-  },
-  {
-    id: "old-photo-restoration",
-    title: "Old Photo Restoration",
-    description: "Repair faded photos and prepare them for private album delivery.",
-    category: "Cleanup tools",
-    prompt: "Restore the old photo by reducing scratches, improving contrast, and preserving the original identity."
-  },
-  {
-    id: "image-to-video",
-    title: "Image to Video Concept",
-    description: "Turn a finished photo package image into a short motion concept.",
-    category: "Motion builders",
-    prompt: "Create a short motion concept from the uploaded image with subtle camera movement and natural animation."
-  },
-  {
-    id: "profile-clip",
-    title: "Profile Clip Maker",
-    description: "Create social profile motion from headshots or creator portraits.",
-    category: "Motion builders",
-    prompt: "Create a short social profile clip using the uploaded portrait with subtle motion and polished framing."
-  },
-  {
-    id: "creator-intro-video",
-    title: "Creator Intro Video",
-    description: "Turn creator portraits into short intro clips for profiles and reels.",
-    category: "Motion builders",
-    prompt: "Create a compact creator intro motion concept with polished pacing and profile-ready framing."
-  },
-  {
-    id: "fan-poster-motion",
-    title: "Fan Poster Motion",
-    description: "Animate fan posters and match-day profile scenes.",
-    category: "Motion builders",
-    prompt: "Create a short sports fan poster motion concept with energetic but realistic movement."
-  },
-  {
-    id: "product-teaser-clip",
-    title: "Product Teaser Clip",
-    description: "Create simple motion ideas for product-style package outputs.",
-    category: "Motion builders",
-    prompt: "Create a short product teaser motion concept with clean framing and subtle commercial-style movement."
-  }
-];
-
-const AIDREAMCAPES_TOOL_PRESET_LIBRARY: ToolPreset[] = [
-  {
-    id: "route-portrait-composer",
-    title: "Route Portrait Composer",
-    description: "Build scenic travel portraits from everyday travel reference photos and destination notes.",
-    category: "Travel portrait tools",
-    prompt: "Create a realistic travel portrait with route-ready styling, natural light, and destination atmosphere."
-  },
-  {
-    id: "city-walk-editor",
-    title: "City Walk Editor",
-    description: "Shape street, cafe, plaza, and old-city portrait scenes without planning a physical shoot.",
-    category: "Travel portrait tools",
-    prompt: "Create an old-city walking portrait with natural street light, believable wardrobe, and editorial travel framing."
-  },
-  {
-    id: "coastal-light-maker",
-    title: "Coastal Light Maker",
-    description: "Preview beach, cliffside, marina, and resort portrait lighting for private albums.",
-    category: "Destination tools",
-    prompt: "Create a coastal travel portrait with warm seaside light, realistic background depth, and relaxed vacation styling."
-  },
-  {
-    id: "scenic-overlook-story",
-    title: "Scenic Overlook Story",
-    description: "Turn private portraits into mountain, terrace, and overlook scenes with postcard-ready framing.",
-    category: "Destination tools",
-    prompt: "Create a scenic overlook portrait with panoramic landscape context, natural pose, and cinematic but realistic light."
-  },
-  {
-    id: "postcard-crop-set",
-    title: "Postcard Crop Set",
-    description: "Prepare profile, story, and memory-card crops from route portrait outputs.",
-    category: "Delivery tools",
-    prompt: "Create a travel postcard portrait crop set with consistent color, clean composition, and social-ready framing."
-  },
-  {
-    id: "travel-motion-concept",
-    title: "Travel Motion Concept",
-    description: "Create short route-story motion ideas from finished travel portraits.",
-    category: "Delivery tools",
-    prompt: "Create a short travel portrait motion concept with subtle camera movement and natural destination atmosphere."
-  }
-];
-
 const STANDALONE_VIDEO_TOOL_IDS = new Set([
   "album-story-video",
+  "animated-avatar",
   "creator-intro-video",
   "fan-poster-motion",
   "fashion-reel",
@@ -496,9 +329,9 @@ function promptBuilderGroupsForPack(pack?: CreativePack): PromptBuilderGroup[] {
   return category ? CATEGORY_PROMPT_BUILDER_GROUPS[category] : DEFAULT_PROMPT_BUILDER_GROUPS;
 }
 
-function isStandaloneVideoToolPreset(preset: Pick<ToolPreset, "id" | "title" | "category">) {
+function isVideoToolPreset(preset: Pick<ToolPreset, "id" | "title" | "category">) {
   const text = `${preset.id} ${preset.title} ${preset.category}`.toLowerCase();
-  return STANDALONE_VIDEO_TOOL_IDS.has(preset.id) || /\b(video|motion|clip|reel)\b/i.test(text);
+  return STANDALONE_VIDEO_TOOL_IDS.has(preset.id) || /\b(video|motion|clip|reel|animated)\b/i.test(text);
 }
 
 const SPANISH_TOOL_PRESET_COPY: Record<string, Partial<Pick<ToolPreset, "title" | "description" | "category" | "prompt">>> = {
@@ -654,7 +487,14 @@ const SPANISH_TOOL_PRESET_COPY: Record<string, Partial<Pick<ToolPreset, "title" 
 };
 
 function normalizeToolId(value: string | undefined): string {
-  return (value ?? "").trim().toLowerCase().replace(/_/g, "-");
+  return (value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/^\/tools\//, "")
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 function fieldValueDefault(field: AiWorkflowField): string | number | boolean {
@@ -776,6 +616,75 @@ function mergeAssetLists(primary: ThemeRuntimeAsset[], secondary: ThemeRuntimeAs
 
 function packsForApp(packs: CreativePack[], aiAppSlug: string): CreativePack[] {
   return packs.filter((pack) => pack.status === "active" && pack.aiAppSlug === aiAppSlug);
+}
+
+function collectionSlugFromHref(href: string | undefined): string {
+  const path = (href ?? "").split("?")[0]?.split("#")[0] ?? "";
+  const fromCollectionsPath = path.split("/collections/")[1] ?? "";
+  const pathParts = path.split("/").filter(Boolean);
+  const fallbackPathPart = pathParts[pathParts.length - 1] ?? "";
+  return photoPackageSlug(fromCollectionsPath || fallbackPathPart);
+}
+
+function megaGroupItemMatchesPack(item: PhotoPackageMegaGroup["items"][number], pack: CreativePack): boolean {
+  if (item.packId) return item.packId === pack.id;
+  const itemHrefSlug = collectionSlugFromHref(item.href);
+  const packHrefSlug = collectionSlugFromHref(creativePackCollectionHref(pack));
+  return creativePackMatchesCategory(pack, item.slug) ||
+    creativePackMatchesCategory(pack, item.label) ||
+    (itemHrefSlug !== "all" && creativePackMatchesCategory(pack, itemHrefSlug)) ||
+    (itemHrefSlug !== "all" && itemHrefSlug === packHrefSlug);
+}
+
+function megaGroupItemForPack(pack: CreativePack, groups: PhotoPackageMegaGroup[]): PhotoPackageMegaGroup["items"][number] | undefined {
+  for (const group of groups) {
+    const item = group.items.find((groupItem) => megaGroupItemMatchesPack(groupItem, pack));
+    if (item) return item;
+  }
+  return undefined;
+}
+
+function workspacePackageLabel(pack: CreativePack, groups: PhotoPackageMegaGroup[]): string {
+  return megaGroupItemForPack(pack, groups)?.label || pack.name;
+}
+
+function workspacePackageHref(pack: CreativePack, groups: PhotoPackageMegaGroup[]): string {
+  return megaGroupItemForPack(pack, groups)?.href || creativePackCollectionHref(pack);
+}
+
+function creativePackMatchesMegaGroup(pack: CreativePack, category: string, groups: PhotoPackageMegaGroup[]): boolean {
+  const selectedSlug = photoPackageSlug(category);
+  if (!selectedSlug || selectedSlug === "all") return true;
+  const selectedGroup = groups.find((group) => photoPackageSlug(group.slug) === selectedSlug);
+  if (selectedGroup) return selectedGroup.items.some((item) => megaGroupItemMatchesPack(item, pack));
+  return creativePackMatchesCategory(pack, selectedSlug);
+}
+
+function megaGroupsInPackagePanelOrder(groups: PhotoPackageMegaGroup[]): PhotoPackageMegaGroup[] {
+  const columns: PhotoPackageMegaGroup[][] = [[], [], []];
+  groups.forEach((group, index) => {
+    columns[index % columns.length]?.push(group);
+  });
+  return columns.flat();
+}
+
+function orderedCreativePacksFromMegaGroups(activePacks: CreativePack[], groups: PhotoPackageMegaGroup[]): CreativePack[] {
+  const ordered: CreativePack[] = [];
+  const seen = new Set<string>();
+  groups.forEach((group) => {
+    group.items.forEach((item) => {
+      const match = activePacks.find((pack) => !seen.has(pack.id) && megaGroupItemMatchesPack(item, pack));
+      if (!match) return;
+      ordered.push(match);
+      seen.add(match.id);
+    });
+  });
+  activePacks.forEach((pack) => {
+    if (seen.has(pack.id)) return;
+    ordered.push(pack);
+    seen.add(pack.id);
+  });
+  return ordered;
 }
 
 function modeForInitialState(initialCreativePackId: string | undefined, initialToolId: string | undefined, initialPack: CreativePack | undefined, creativePacks: CreativePack[]): CreateMode {
@@ -918,24 +827,86 @@ function displayMaterialRule(rule: string, spanish = false): string {
     .replace(/private photos/gi, "fotos privadas");
 }
 
-function buildToolPresets(siteAiApps: SiteAiApp[], siteSlug: string): ToolPreset[] {
-  const firstBackendSlug = siteAiApps[0]?.aiApp.slug;
-  const presetLibrary = /aidreamcapes/i.test(siteSlug) ? AIDREAMCAPES_TOOL_PRESET_LIBRARY : TOOL_PRESET_LIBRARY;
-  const realTools = siteAiApps.filter((app) => app.aiApp.appType !== "video" && normalizeToolId(app.aiApp.slug) !== "video-generator").map((app) => ({
-    id: normalizeToolId(app.aiApp.slug),
-    title: app.aiApp.name,
-    description: app.aiApp.description,
-    category: "Enabled tools",
-    creditCost: app.creditCost,
-    backendSlug: app.aiApp.slug,
-    prompt: ""
+function toolBlockText(block: SectionBlockInstance, key: string, fallback = ""): string {
+  const value = themeValueToString(block.settings[key], fallback).trim();
+  return value || fallback;
+}
+
+function toolSlugFromHref(href: string): string {
+  const path = href.split("?")[0]?.split("#")[0] ?? "";
+  const fromToolsPath = path.split("/tools/")[1] ?? "";
+  const pathParts = path.split("/").filter(Boolean);
+  const fallbackPathPart = pathParts[pathParts.length - 1] ?? "";
+  return normalizeToolId(fromToolsPath || fallbackPathPart);
+}
+
+function toolPresetIdForBlock(block: SectionBlockInstance): string {
+  const href = toolBlockText(block, "href", "");
+  const blockId = block.id.replace(/^default_tool_/, "").replace(/^tool_menu_/, "");
+  return toolSlugFromHref(href) || normalizeToolId(blockId) || normalizeToolId(toolBlockText(block, "title", ""));
+}
+
+function defaultToolDescription(title: string, category: string, kind: ToolPresetKind): string {
+  if (kind === "video") return `Open ${title} in the Image to Video workspace.`;
+  if (/edit|retouch|cleanup|restore|background|enhance|upscal/i.test(category)) {
+    return `Use ${title} with your private uploads before ordering a full photo package.`;
+  }
+  return `Use ${title} with your private selfies to prepare a focused photo result.`;
+}
+
+function photoBackendForTool(siteAiApps: SiteAiApp[], toolId: string): SiteAiApp | undefined {
+  const enabledPhotoApps = siteAiApps.filter((app) => app.enabled !== false && app.aiApp.appType !== "video" && normalizeToolId(app.aiApp.slug) !== "video-generator");
+  const exactBackend = enabledPhotoApps.find((app) => normalizeToolId(app.aiApp.slug) === toolId || normalizeToolId(app.routeKey) === toolId);
+  const imageBackend = enabledPhotoApps.find((app) => normalizeToolId(app.aiApp.slug) === "image-generator");
+  return exactBackend ?? imageBackend ?? enabledPhotoApps[0];
+}
+
+function videoBackendForTool(siteAiApps: SiteAiApp[]): SiteAiApp | undefined {
+  return siteAiApps.find((app) => app.enabled !== false && (app.aiApp.appType === "video" || normalizeToolId(app.aiApp.slug) === "video-generator"));
+}
+
+function buildToolPresets(site: JobCreateSite, siteAiApps: SiteAiApp[], toolMenuItems: ToolMenuItem[]): ToolPreset[] {
+  const videoBackend = videoBackendForTool(siteAiApps);
+  const presets = getToolBlocksForMenu(site, toolMenuItems).map((block) => {
+    const id = toolPresetIdForBlock(block);
+    const title = toolBlockText(block, "title", "AI photo tool");
+    const category = toolBlockText(block, "categoryTitle", toolBlockText(block, "category", "Photo AI"));
+    const kind: ToolPresetKind = isVideoToolPreset({ id, title, category }) ? "video" : "photo";
+    const backend = kind === "photo" ? photoBackendForTool(siteAiApps, id) : undefined;
+    const description = toolBlockText(block, "description", defaultToolDescription(title, category, kind));
+    return {
+      id,
+      title,
+      description,
+      category,
+      kind,
+      href: toolBlockText(block, "href", `/tools/${id}`),
+      creditCost: kind === "video" ? videoBackend?.creditCost : backend?.creditCost,
+      backendSlug: kind === "photo" ? backend?.aiApp.slug : undefined,
+      prompt: toolBlockText(block, "prompt", "")
+    } satisfies ToolPreset;
+  }).filter((preset) => preset.kind === "video" || Boolean(preset.backendSlug));
+  return orderToolPresetsForMegaPanel(Array.from(new Map(presets.map((preset) => [preset.id, preset])).values()));
+}
+
+function orderedToolCategories(categories: string[]): string[] {
+  const preferred = ["Photo AI", "AI Photo Edit", "Video AI"];
+  const ordered = preferred.filter((category) => categories.includes(category));
+  return [...ordered, ...categories.filter((category) => !ordered.includes(category))];
+}
+
+function orderToolPresetsForMegaPanel(presets: ToolPreset[]): ToolPreset[] {
+  const categories = Array.from(new Set(presets.map((preset) => preset.category)));
+  const detailGroups = orderedToolCategories(categories).map((category) => ({
+    category,
+    items: presets.filter((preset) => preset.category === category)
   }));
-  const library = presetLibrary.map((preset) => ({
-    ...preset,
-    backendSlug: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.aiApp.slug ?? firstBackendSlug,
-    creditCost: siteAiApps.find((app) => normalizeToolId(app.aiApp.slug) === preset.id)?.creditCost ?? siteAiApps[0]?.creditCost
-  })).filter((preset) => Boolean(preset.backendSlug) && !isStandaloneVideoToolPreset(preset));
-  return Array.from(new Map([...realTools, ...library].map((preset) => [preset.id, preset])).values());
+  const columnCount = Math.min(3, Math.max(1, detailGroups.length));
+  const columns = Array.from({ length: columnCount }, () => [] as typeof detailGroups);
+  detailGroups.forEach((group, index) => {
+    columns[index % columnCount]?.push(group);
+  });
+  return columns.flatMap((column) => column.flatMap((group) => group.items));
 }
 
 function packageAudienceOptionsForLocale(spanish: boolean): Array<{ id: PackageAudience; title: string; description: string; helper: string }> {
@@ -964,9 +935,12 @@ function packageAudienceOptionsForLocale(spanish: boolean): Array<{ id: PackageA
 export function JobCreateForm({
   siteId,
   siteSlug,
+  site,
   customer,
-  siteAiApps,
+  siteAiApps: rawSiteAiApps,
   creativePacks = [],
+  creativePackCategories = [],
+  toolMenuItems = [],
   initialCreativePackId,
   initialToolId,
   assets = [],
@@ -988,13 +962,17 @@ export function JobCreateForm({
   onJobCreated,
   onContinueToSources,
   onReviewCurrentRequest,
-  onOpenUploadManager
+  onOpenUploadManager,
+  onVideoToolSelected
 }: {
   siteId: string;
   siteSlug: string;
+  site?: JobCreateSite;
   customer: PublicCustomer;
   siteAiApps: SiteAiApp[];
   creativePacks?: CreativePack[];
+  creativePackCategories?: CreativePackCategory[];
+  toolMenuItems?: ToolMenuItem[];
   initialCreativePackId?: string;
   initialToolId?: string;
   assets?: ThemeRuntimeAsset[];
@@ -1017,10 +995,19 @@ export function JobCreateForm({
   onContinueToSources?: () => void;
   onReviewCurrentRequest?: () => void;
   onOpenUploadManager?: () => void;
+  onVideoToolSelected?: (tool: VideoToolSelection) => void;
 }) {
   const spanish = locale === "es";
+  const siteAiApps = Array.isArray(rawSiteAiApps) ? rawSiteAiApps : [];
   const normalizedInitialToolId = normalizeToolId(initialToolId);
-  const toolPresets = useMemo(() => buildToolPresets(siteAiApps, siteSlug).map((preset) => localizeToolPreset(preset, spanish)), [siteAiApps, siteSlug, spanish]);
+  const menuSite = useMemo<JobCreateSite>(() => site ?? {
+    id: siteId,
+    slug: siteSlug,
+    name: siteSlug,
+    primaryDomain: "",
+    branding: { logoText: siteSlug, market: "", description: "" }
+  }, [site, siteId, siteSlug]);
+  const toolPresets = useMemo(() => buildToolPresets(menuSite, siteAiApps, toolMenuItems).map((preset) => localizeToolPreset(preset, spanish)), [menuSite, siteAiApps, toolMenuItems, spanish]);
   const packageAudienceOptions = useMemo(() => packageAudienceOptionsForLocale(spanish), [spanish]);
   const initialPack =
     creativePacks.find((pack) => pack.status === "active" && pack.id === initialCreativePackId) ??
@@ -1060,13 +1047,24 @@ export function JobCreateForm({
   const localAssetMutationRef = useRef(0);
   const sourceUploadInputRef = useRef<HTMLInputElement | null>(null);
   const pendingUploadTargetRef = useRef<UploadTarget>("primary");
+  const routedVideoToolIdsRef = useRef<Set<string>>(new Set());
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
-  const activeCreativePacks = creativePacks.filter((pack) => pack.status === "active");
-  const themeCategories = photoPackageCategoryOptions(activeCreativePacks);
+  const activeCreativePacks = useMemo(() => creativePacks.filter((pack) => pack.status === "active"), [creativePacks]);
+  const packageMegaGroups = useMemo(() => getPhotoPackageMegaGroups(activeCreativePacks, creativePackCategories), [activeCreativePacks, creativePackCategories]);
+  const orderedPackageMegaGroups = useMemo(() => megaGroupsInPackagePanelOrder(packageMegaGroups), [packageMegaGroups]);
+  const orderedActiveCreativePacks = useMemo(() => orderedCreativePacksFromMegaGroups(activeCreativePacks, orderedPackageMegaGroups), [activeCreativePacks, orderedPackageMegaGroups]);
   const visibleCreativePacks = themeCategory === "all"
-    ? activeCreativePacks
-    : activeCreativePacks.filter((pack) => creativePackMatchesCategory(pack, themeCategory));
-  const categoryOptions = [{ slug: "all", label: jobT(spanish, "All packages", "Todos los paquetes") }, ...themeCategories];
+    ? orderedActiveCreativePacks
+    : orderedActiveCreativePacks.filter((pack) => creativePackMatchesMegaGroup(pack, themeCategory, packageMegaGroups));
+  const categoryOptions = [
+    { slug: "all", label: jobT(spanish, "All packages", "Todos los paquetes"), themeCount: orderedActiveCreativePacks.length },
+    ...orderedPackageMegaGroups.map((group) => ({
+      slug: photoPackageSlug(group.slug),
+      label: group.label,
+      sortOrder: group.sortOrder,
+      themeCount: group.items.length
+    }))
+  ];
   const displayedCategoryOptions = showAllCategories ? categoryOptions : categoryOptions.slice(0, COLLAPSED_CATEGORY_LIMIT);
   const hasMoreCategories = categoryOptions.length > COLLAPSED_CATEGORY_LIMIT;
   const displayedCreativePacks = showAllOptions ? visibleCreativePacks : visibleCreativePacks.slice(0, COLLAPSED_THEME_CARD_LIMIT);
@@ -1074,12 +1072,13 @@ export function JobCreateForm({
   const hiddenOptionCount = createMode === "theme"
     ? Math.max(visibleCreativePacks.length - displayedCreativePacks.length, 0)
     : Math.max(toolPresets.length - displayedToolPresets.length, 0);
-  const appPacks = packsForApp(creativePacks, selectedApp?.aiApp.slug ?? "");
-  const selectedPack = (createMode === "theme" ? activeCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? activeCreativePacks[0] : appPacks[0]);
+  const appPacks = packsForApp(orderedActiveCreativePacks, selectedApp?.aiApp.slug ?? "");
+  const selectedPack = (createMode === "theme" ? orderedActiveCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? orderedActiveCreativePacks[0] : appPacks[0]);
   const selectedWorkflow = workflowFor(selectedApp);
   const selectedToolPreset = toolPresets.find((preset) => preset.id === selectedToolId);
+  const selectedToolIsVideo = createMode === "tool" && selectedToolPreset?.kind === "video";
   const selectionPreviewImage = createMode === "theme" ? selectedPack?.imageUrl : undefined;
-  const selectionTitle = createMode === "theme" ? selectedPack?.name ?? jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
+  const selectionTitle = createMode === "theme" ? selectedPack ? workspacePackageLabel(selectedPack, packageMegaGroups) : jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
   const selectionDescription = createMode === "theme"
     ? selectedPack?.description || selectedPack?.headline || jobT(spanish, "Choose this package, attach selfies, then review credits before generation.", "Elige este paquete, adjunta selfies y revisa los creditos antes de generar.")
     : selectedToolPreset?.description ?? jobT(spanish, "Choose this focused tool, attach selfies, then review credits before generation.", "Elige esta herramienta, adjunta selfies y revisa los creditos antes de generar.");
@@ -1091,18 +1090,28 @@ export function JobCreateForm({
   const effectiveMaxAssets = maxAssetsForWorkflow(selectedWorkflow);
   const materialRules = selectedWorkflow?.materialRules?.length ? selectedWorkflow.materialRules : selectedApp ? defaultWorkflow(selectedApp).materialRules ?? [] : [];
   const modeFields = fieldsForMode(selectedFields, createMode);
-  const modeSubmitLabel = createMode === "theme" ? jobT(spanish, "Start photo package", "Iniciar paquete") : jobT(spanish, "Start tool", "Iniciar herramienta");
+  const modeSubmitLabel = createMode === "theme"
+    ? jobT(spanish, "Start photo package", "Iniciar paquete")
+    : selectedToolIsVideo
+      ? jobT(spanish, "Open video workspace", "Abrir espacio de video")
+      : jobT(spanish, "Start tool", "Iniciar herramienta");
   const requestOutputCount = createMode === "theme" ? themeOutputCount : selectedPack?.outputCount ?? 1;
-  const unitCreditCost = createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedToolPreset?.creditCost ?? selectedApp?.creditCost ?? 0;
+  const unitCreditCost = createMode === "theme" ? selectedPack?.creditCost ?? selectedApp?.creditCost ?? 0 : selectedToolIsVideo ? 0 : selectedToolPreset?.creditCost ?? selectedApp?.creditCost ?? 0;
   const billableOutputCount = createMode === "theme" ? Math.max(1, requestOutputCount) : 1;
   const selectionCreditCost = unitCreditCost * billableOutputCount;
-  const selectionUnitCostLabel = createMode === "theme" ? jobT(spanish, `${unitCreditCost} per image`, `${unitCreditCost} por imagen`) : jobT(spanish, `${unitCreditCost} per request`, `${unitCreditCost} por solicitud`);
-  const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : jobT(spanish, "Tool result", "Resultado de herramienta");
-  const configureSelectionLabel = createMode === "theme" ? jobT(spanish, "Configure package", "Configurar paquete") : jobT(spanish, "Configure tool", "Configurar herramienta");
+  const selectionUnitCostLabel = createMode === "theme"
+    ? jobT(spanish, `${unitCreditCost} per image`, `${unitCreditCost} por imagen`)
+    : selectedToolIsVideo
+      ? jobT(spanish, "Uses video workspace", "Usa el espacio de video")
+      : jobT(spanish, `${unitCreditCost} per request`, `${unitCreditCost} por solicitud`);
+  const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : selectedToolIsVideo ? jobT(spanish, "Video workspace", "Espacio de video") : jobT(spanish, "Tool result", "Resultado de herramienta");
+  const configureSelectionLabel = createMode === "theme" ? jobT(spanish, "Configure package", "Configurar paquete") : selectedToolIsVideo ? jobT(spanish, "Open video workspace", "Abrir espacio de video") : jobT(spanish, "Configure tool", "Configurar herramienta");
   const selectedRequestAssetIds = Array.from(new Set([...selectedAssetIds, ...partnerSelectedAssetIds])).slice(0, effectiveMaxAssets);
   const light = tone === "light";
   const pricingHref = `/site/${siteSlug}/pricing`;
-  const subscriptionGateMessage = subscriptionStatus === "loading"
+  const subscriptionGateMessage = selectedToolIsVideo
+    ? ""
+    : subscriptionStatus === "loading"
     ? jobT(spanish, "Checking your subscription before generation. You can keep preparing photos while this loads.", "Revisando tu suscripcion antes de generar. Puedes seguir preparando fotos mientras carga.")
     : subscriptionStatus === "required"
       ? selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available
@@ -1112,15 +1121,17 @@ export function JobCreateForm({
         ? jobT(spanish, "Site admin access is active. Subscription is not required, and credits will still be reserved for this request.", "El acceso de administrador esta activo. No se requiere suscripcion y los creditos se reservaran igualmente.")
       : "";
   const subscriptionBypassActive = subscriptionStatus === "admin";
-  const hasCreditsForRequest = selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available;
+  const hasCreditsForRequest = selectedToolIsVideo || (selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available);
   const subscriptionHardGate = subscriptionStatus === "required" && !hasCreditsForRequest;
   const creditsUsageNote = createMode === "theme"
     ? jobT(spanish, `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`, `Se gastan ${unitCreditCost} creditos por cada imagen generada. Esta solicitud gastara ${selectionCreditCost} creditos por ${requestOutputCount} imagen${requestOutputCount === 1 ? "" : "es"}.`)
-    : jobT(spanish, `${selectionCreditCost} credits are spent for this tool request.`, `Esta solicitud de herramienta gastara ${selectionCreditCost} creditos.`);
+    : selectedToolIsVideo
+      ? jobT(spanish, "This tool opens the Image to Video workspace. No photo request is submitted from this form.", "Esta herramienta abre el espacio Image to Video. No se envia una solicitud de fotos desde este formulario.")
+      : jobT(spanish, `${selectionCreditCost} credits are spent for this tool request.`, `Esta solicitud de herramienta gastara ${selectionCreditCost} creditos.`);
   const subscriptionGateClass = subscriptionHardGate
     ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
     : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/68");
-  const canStartRequest = Boolean(aiAppSlug && selectedRequestAssetIds.length >= minAssets && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive || hasCreditsForRequest));
+  const canStartRequest = selectedToolIsVideo || Boolean(aiAppSlug && selectedRequestAssetIds.length >= minAssets && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive || hasCreditsForRequest));
   const selectedSourceAssets = sourceAssets.filter((asset) => selectedRequestAssetIds.includes(asset.id));
   const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
   const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
@@ -1258,7 +1269,7 @@ export function JobCreateForm({
   function updateAiApp(nextSlug: string, nextMode: CreateMode = createMode) {
     setAiAppSlug(nextSlug);
     const nextApp = siteAiApps.find((app) => app.aiApp.slug === nextSlug);
-    setCreativePackId(packsForApp(creativePacks, nextSlug)[0]?.id ?? "");
+    setCreativePackId(packsForApp(orderedActiveCreativePacks, nextSlug)[0]?.id ?? "");
     setFormValues(valuesForMode(nextApp, nextMode));
     setSelectedAssetIds(initialSelectedAssets(availableAssets, workflowFor(nextApp)).slice(0, DEFAULT_MAX_SOURCE_ASSETS));
     setPartnerSelectedAssetIds([]);
@@ -1266,7 +1277,6 @@ export function JobCreateForm({
 
   function updateCreativePack(pack: CreativePack) {
     setCreateMode("theme");
-    setThemeCategory(creativePackCategoryOption(pack).slug || "all");
     setCreativePackId(pack.id);
     setPackagePromptDraft(pack.prompt?.trim() || pack.description || pack.headline || "");
     setPromptBuilderSelections({});
@@ -1332,11 +1342,26 @@ export function JobCreateForm({
       };
     });
     if (nextMode === "theme" && !creativePackId) {
-      setCreativePackId(appPacks[0]?.id ?? creativePacks.find((pack) => pack.status === "active")?.id ?? "");
+      setCreativePackId(appPacks[0]?.id ?? orderedActiveCreativePacks[0]?.id ?? "");
     }
   }
 
+  function handleVideoToolPreset(preset: ToolPreset) {
+    setCreateMode("tool");
+    setSelectedToolId(preset.id);
+    setPromptBuilderSelections({});
+    setPackageDialogOpen(false);
+    setDialogMessage("");
+    setDialogTone("info");
+    setMessage(jobT(spanish, `${preset.title} opens in the Image to Video workspace.`, `${preset.title} se abre en el espacio Image to Video.`));
+    onVideoToolSelected?.({ id: preset.id, title: preset.title, href: preset.href });
+  }
+
   function updateToolPreset(preset: ToolPreset) {
+    if (preset.kind === "video") {
+      handleVideoToolPreset(preset);
+      return;
+    }
     if (!preset.backendSlug) return;
     setCreateMode("tool");
     setSelectedToolId(preset.id);
@@ -1355,6 +1380,10 @@ export function JobCreateForm({
   }
 
   function openPackageDialog() {
+    if (createMode === "tool" && selectedToolPreset?.kind === "video") {
+      handleVideoToolPreset(selectedToolPreset);
+      return;
+    }
     setDialogMessage("");
     setDialogTone("info");
     if (createMode === "theme" && selectedPack) {
@@ -1375,6 +1404,10 @@ export function JobCreateForm({
   }
 
   function selectToolPresetAndOpen(preset: ToolPreset) {
+    if (preset.kind === "video") {
+      handleVideoToolPreset(preset);
+      return;
+    }
     updateToolPreset(preset);
     setDialogMessage("");
     setDialogTone("info");
@@ -1385,8 +1418,8 @@ export function JobCreateForm({
   function updateThemeCategory(nextCategory: string) {
     setThemeCategory(nextCategory);
     const nextPacks = nextCategory === "all"
-      ? activeCreativePacks
-      : activeCreativePacks.filter((pack) => creativePackMatchesCategory(pack, nextCategory));
+      ? orderedActiveCreativePacks
+      : orderedActiveCreativePacks.filter((pack) => creativePackMatchesMegaGroup(pack, nextCategory, packageMegaGroups));
     if (nextPacks.length && !nextPacks.some((pack) => pack.id === creativePackId)) {
       updateCreativePack(nextPacks[0]);
       setThemeCategory(nextCategory);
@@ -1424,6 +1457,15 @@ export function JobCreateForm({
   }, []);
 
   useEffect(() => {
+    const normalizedToolId = normalizeToolId(initialToolId);
+    if (!normalizedToolId) return;
+    const initialVideoPreset = toolPresets.find((preset) => preset.id === normalizedToolId && preset.kind === "video");
+    if (!initialVideoPreset || routedVideoToolIdsRef.current.has(initialVideoPreset.id)) return;
+    routedVideoToolIdsRef.current.add(initialVideoPreset.id);
+    handleVideoToolPreset(initialVideoPreset);
+  }, [initialToolId, toolPresets]);
+
+  useEffect(() => {
     if (!preferredMode && !preferredToolId) return;
     const normalizedPreferredToolId = preferredToolId ? normalizeToolId(preferredToolId) : "";
     if (preferredMode === "tool" || normalizedPreferredToolId) {
@@ -1436,7 +1478,7 @@ export function JobCreateForm({
       return;
     }
     if (preferredMode === createMode) return;
-    const nextPack = activeCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? activeCreativePacks[0];
+    const nextPack = orderedActiveCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? orderedActiveCreativePacks[0];
     updateCreateMode("theme");
     if (nextPack) updateCreativePack(nextPack);
   }, [preferredMode, preferredModeRequest, preferredToolId]);
@@ -1582,6 +1624,10 @@ export function JobCreateForm({
     };
     if (createMode === "theme" && !selectedPack) {
       showDialogError(jobT(spanish, "Choose a photo package before starting.", "Elige un paquete de fotos antes de empezar."));
+      return;
+    }
+    if (createMode === "tool" && selectedToolPreset?.kind === "video") {
+      handleVideoToolPreset(selectedToolPreset);
       return;
     }
     if (subscriptionStatus === "loading") {
@@ -1902,11 +1948,11 @@ export function JobCreateForm({
                 className={`rounded-full px-4 py-2 transition ${
                   active ? (light ? "bg-[linear-gradient(135deg,#ff8a5c_0%,#ec4bdd_55%,#16dcf0_100%)] text-white shadow-[0_10px_26px_-20px_rgba(236,75,221,0.75)]" : "bg-white text-[#14161a]") : (light ? "text-[#706961] hover:bg-white hover:text-[#171514] disabled:pointer-events-none disabled:opacity-40" : "text-white/64 hover:bg-white/[0.06] hover:text-white disabled:pointer-events-none disabled:opacity-40")
                 }`}
-                disabled={item.mode === "theme" ? !activeCreativePacks.length : !toolPresets.length}
+                disabled={item.mode === "theme" ? !orderedActiveCreativePacks.length : !toolPresets.length}
                 key={item.mode}
                 onClick={() => {
                   if (item.mode === "theme") {
-                    const nextPack = activeCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? activeCreativePacks[0];
+                    const nextPack = orderedActiveCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? orderedActiveCreativePacks[0];
                     updateCreateMode("theme");
                     if (nextPack) updateCreativePack(nextPack);
                     return;
@@ -1922,21 +1968,25 @@ export function JobCreateForm({
             );
           })}
         </div>
-        {createMode === "theme" && themeCategories.length > 1 ? (
+        {createMode === "theme" && packageMegaGroups.length > 1 ? (
           <div className={`rounded-[18px] border p-2 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/10"}`}>
             <div className="flex flex-wrap gap-2">
             {displayedCategoryOptions.map((category) => {
               const active = themeCategory === category.slug;
               return (
                 <button
-                  className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${
+                  aria-label={`${category.label}: ${category.themeCount} ${jobT(spanish, "themes", "temas")}`}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold transition ${
                     active ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#b9542d] shadow-[0_10px_28px_-22px_rgba(255,138,92,0.8)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#dfd3c4] bg-white text-[#706961] hover:border-[#bcae9f] hover:text-[#171514]" : "border-white/10 bg-white/[0.04] text-white/68 hover:text-white")
                   }`}
+                  data-workspace-package-category-count={category.themeCount}
+                  data-workspace-package-category-option={category.slug}
                   key={category.slug}
                   onClick={() => updateThemeCategory(category.slug)}
                   type="button"
                 >
-                  {category.label}
+                  <span>{category.label}</span>
+                  <span className="shrink-0 rounded-full bg-current/10 px-1.5 py-0.5 text-[10px] leading-none opacity-75">{category.themeCount}</span>
                 </button>
               );
             })}
@@ -1976,7 +2026,7 @@ export function JobCreateForm({
               {createMode === "tool" ? (
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolPreset?.category ?? jobT(spanish, "Tool", "Herramienta")}</span>
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA")}</span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolIsVideo ? jobT(spanish, "Image to Video workspace", "Espacio Image to Video") : selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA")}</span>
                 </div>
               ) : null}
             </div>
@@ -2030,20 +2080,25 @@ export function JobCreateForm({
         <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" : "grid gap-3 md:grid-cols-2 xl:grid-cols-3"}>
           {createMode === "theme" ? displayedCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
-            const packageCardCopy = pack.description.trim() || (pack.headline.trim() !== pack.name.trim() ? pack.headline.trim() : "");
+            const packageCardTitle = workspacePackageLabel(pack, packageMegaGroups);
+            const packageCardHref = workspacePackageHref(pack, packageMegaGroups);
+            const packageCardCopy = pack.description.trim() || (pack.headline.trim() !== packageCardTitle.trim() ? pack.headline.trim() : "");
             return (
               <button
-                aria-label={packageCardCopy ? `${pack.name}. ${packageCardCopy}` : pack.name}
+                aria-label={packageCardCopy ? `${packageCardTitle}. ${packageCardCopy}` : packageCardTitle}
                 className={`grid min-h-[268px] content-start gap-3 rounded-[16px] border p-3 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
+                data-workspace-package-href={packageCardHref}
+                data-workspace-package-option={pack.id}
+                data-workspace-package-title={packageCardTitle}
                 key={pack.id}
                 onClick={() => selectCreativePackAndOpen(pack)}
                 type="button"
               >
                 <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
                   {pack.imageUrl ? (
-                    <img className="aspect-[4/3] w-full object-cover" src={pack.imageUrl} alt={pack.name} />
+                    <img className="aspect-[4/3] w-full object-cover" src={pack.imageUrl} alt={packageCardTitle} />
                   ) : (
                     <span className="flex aspect-[4/3] items-center justify-center">
                       <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
@@ -2053,7 +2108,7 @@ export function JobCreateForm({
                 <span className="min-w-0">
                   <span className="flex items-start justify-between gap-2">
                     <span className="min-w-0">
-                      <span className="block text-base font-semibold leading-5">{pack.name}</span>
+                      <span className="block text-base font-semibold leading-5">{packageCardTitle}</span>
                       {packageCardCopy ? (
                         <span
                           aria-label={packageCardCopy}
@@ -2080,12 +2135,17 @@ export function JobCreateForm({
             );
           }) : displayedToolPresets.map((preset) => {
             const active = preset.id === selectedToolId;
+            const presetIsVideo = preset.kind === "video";
             const presetCreditCost = preset.creditCost ?? selectedApp?.creditCost ?? 0;
             return (
               <button
                 className={`grid min-h-[188px] content-start gap-3 rounded-[16px] border p-4 text-left transition hover:-translate-y-0.5 ${
                   active ? selectedCardClass : neutralCardClass
                 }`}
+                data-workspace-tool-href={preset.href ?? ""}
+                data-workspace-tool-kind={preset.kind ?? "photo"}
+                data-workspace-tool-option={preset.id}
+                data-workspace-tool-title={preset.title}
                 key={preset.id}
                 onClick={() => selectToolPresetAndOpen(preset)}
                 type="button"
@@ -2109,10 +2169,10 @@ export function JobCreateForm({
                     {preset.category}
                   </span>
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedPillClass : neutralPillClass}`}>
-                    {jobT(spanish, `${presetCreditCost} credits`, `${presetCreditCost} creditos`)}
+                    {presetIsVideo ? jobT(spanish, "Video workspace", "Espacio de video") : jobT(spanish, `${presetCreditCost} credits`, `${presetCreditCost} creditos`)}
                   </span>
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${active ? selectedSoftPillClass : neutralPillClass}`}>
-                    {jobT(spanish, "Tool result", "Resultado de herramienta")}
+                    {presetIsVideo ? jobT(spanish, "Image to Video", "Image to Video") : jobT(spanish, "Tool result", "Resultado de herramienta")}
                   </span>
                 </span>
               </button>
@@ -2395,14 +2455,14 @@ export function JobCreateForm({
                 <p className={`mt-2 text-lg font-semibold ${textClass}`}>{selectionTitle}</p>
                 <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{selectionDescription}</p>
               </div>
-              {[
-                { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
-                { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
-                { label: jobT(spanish, "Selfies", "Selfies"), value: jobT(spanish, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected`, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} seleccionadas`) },
-                { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
-                { label: jobT(spanish, "Price per image", "Precio por imagen"), value: `${unitCreditCost}` },
-                { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : jobT(spanish, "Tool result", "Resultado de herramienta") }
-              ].map((item) => (
+                {[
+                  { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
+                  { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
+                  { label: jobT(spanish, "Selfies", "Selfies"), value: jobT(spanish, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected`, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} seleccionadas`) },
+                  { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
+                  { label: createMode === "theme" ? jobT(spanish, "Price per image", "Precio por imagen") : selectedToolIsVideo ? jobT(spanish, "Workspace", "Espacio") : jobT(spanish, "Price per request", "Precio por solicitud"), value: selectedToolIsVideo ? jobT(spanish, "Image to Video", "Image to Video") : `${unitCreditCost}` },
+                  { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : selectionOutputLabel }
+                ].map((item) => (
                 <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
                   <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
                   <span className={`max-w-[58%] truncate text-right text-sm font-semibold ${textClass}`}>{item.value}</span>
@@ -2419,7 +2479,9 @@ export function JobCreateForm({
             </div>
             <div className="grid gap-3">
               <p className={`text-xs leading-5 ${mutedClass}`}>
-                {selectedRequestAssetIds.length > effectiveMaxAssets
+                {selectedToolIsVideo
+                  ? jobT(spanish, "Open the video workspace to upload frame images and write the motion prompt.", "Abre el espacio de video para subir fotogramas y escribir el prompt de movimiento.")
+                  : selectedRequestAssetIds.length > effectiveMaxAssets
                   ? jobT(spanish, `Use up to ${effectiveMaxAssets} private photos before starting.`, `Usa hasta ${effectiveMaxAssets} fotos privadas antes de empezar.`)
                   : jobT(spanish, `Select at least ${minAssets} private photo before starting. Add more angles for stronger results.`, `Selecciona al menos ${minAssets} foto privada antes de empezar. Anade mas angulos para mejores resultados.`)}
               </p>
@@ -2569,8 +2631,8 @@ export function JobCreateForm({
                     { label: jobT(spanish, "Primary", "Principal"), value: photoCountLabel(selectedAssetIds.length, spanish) },
                     { label: jobT(spanish, "Partner", "Pareja"), value: isCoupleFlow ? photoCountLabel(partnerSelectedAssetIds.length, spanish) : jobT(spanish, "Not used", "No usado") },
                     { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
-                    { label: jobT(spanish, "Price per image", "Precio por imagen"), value: `${unitCreditCost}` },
-                    { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : jobT(spanish, "Tool result", "Resultado de herramienta") }
+                    { label: createMode === "theme" ? jobT(spanish, "Price per image", "Precio por imagen") : selectedToolIsVideo ? jobT(spanish, "Workspace", "Espacio") : jobT(spanish, "Price per request", "Precio por solicitud"), value: selectedToolIsVideo ? jobT(spanish, "Image to Video", "Image to Video") : `${unitCreditCost}` },
+                    { label: jobT(spanish, "Output", "Resultado"), value: createMode === "theme" ? imageCountLabel(requestOutputCount, spanish) : selectionOutputLabel }
                   ].map((item) => (
                     <div className={`flex items-center justify-between gap-3 rounded-[12px] border px-3 py-2 ${subtlePanelClass}`} key={item.label}>
                       <span className={`text-xs font-semibold uppercase tracking-[0.12em] ${eyebrowClass}`}>{item.label}</span>
@@ -2625,7 +2687,7 @@ export function JobCreateForm({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
-            {jobT(spanish, `${selectionCreditCost} credits`, `${selectionCreditCost} creditos`)}
+            {selectedToolIsVideo ? jobT(spanish, "Video workspace", "Espacio de video") : jobT(spanish, `${selectionCreditCost} credits`, `${selectionCreditCost} creditos`)}
           </span>
           <span className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#fffaf3] text-[#625d56]" : "border-white/10 bg-white/[0.04] text-white/68"}`}>
             {jobT(spanish, `${customer.balance.available} available`, `${customer.balance.available} disponibles`)}

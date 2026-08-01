@@ -126,20 +126,20 @@ for (const site of state.sites ?? []) {
   if (themeSeo) {
     themeSeo.siteTitle = "MyDreamShoots";
     themeSeo.titleTemplate = "%s | MyDreamShoots";
-    themeSeo.siteDescription = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
-    themeSeo.siteKeywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+    themeSeo.siteDescription = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
+    themeSeo.siteKeywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
     for (const pageSeo of Object.values(themeSeo.pages ?? {})) delete pageSeo.keywords;
     if (themeSeo.pages?.site_dreamshoot_home) {
       themeSeo.pages.site_dreamshoot_home.title = "Professional AI Photo Generator Online - MyDreamShoots";
-      themeSeo.pages.site_dreamshoot_home.description = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.";
-      themeSeo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
+      themeSeo.pages.site_dreamshoot_home.description = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
+      themeSeo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
     }
   }
 
   for (const page of site.pages ?? []) {
     delete page.publishedJson?.seo?.keywords;
     if (page.slug === "/") {
-      setSeo(page, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator  maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
+      setSeo(page, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
       const hero = page.publishedJson?.sections?.hero_1;
       if (hero?.blocks) {
         const primary = hero.blocks.find((block) => block.id === "hero_cta_primary");

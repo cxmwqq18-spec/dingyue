@@ -12,7 +12,7 @@ const boundaryCopy = {
   headshot:
     "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for IDs, impersonation, or unauthorized people.",
   worldCup:
-    "Create personal fan portraits, match-day posters, and profile avatars from your own selfies. For personal fan use only; no official logos, player likenesses, or official marks without permission.",
+    "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.",
   tryOn:
     "Preview outfit, styling, and fashion directions as a visual preview before a full package. Not an exact fit guarantee.",
   fashion:
@@ -33,7 +33,7 @@ const trustCopy = {
 };
 
 const contentCopy = {
-  homeHeadline: "Create studio-style headshots and themed portraits from your selfies.",
+  homeHeadline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
   headshotToolEyebrow: "AI Headshot Generator",
   headshotToolTitle: "AI headshots for LinkedIn, resumes, and founder profiles.",
   headshotToolSubtitle:
@@ -42,9 +42,9 @@ const contentCopy = {
   headshotEntrySubtitle:
     "Upload clear portraits you own, confirm the credit cost, and receive private headshot options for LinkedIn, resumes, team pages, and founder bios.",
   footerBody:
-    "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
+    "MyDreamShoots helps you turn your own photos into private sports fan photos, VIP-style portraits, holiday group photos, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
   footerSocialBody:
-    "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums."
+    "MyDreamShoots helps you turn your own photos into private fan photos, VIP-style portraits, holiday group photos, and themed albums."
 };
 
 function toolDetails({ input, output, bestFor, cost }) {
@@ -66,8 +66,8 @@ const defaultToolDetailCopy = {
   }),
   "mega_tool_worldcup": toolDetails({
     input: "your own selfies for personal fan use.",
-    output: "private fan portraits, posters, and profile avatars.",
-    bestFor: "match-day social posts without official marks, logos, or player likenesses.",
+    output: "private fan meetup photos, posters, group shots, and profile avatars.",
+    bestFor: "match-day social posts without official marks, logos, player likenesses, or celebrity likenesses.",
     cost: "credits are shown before generation."
   }),
   "mega_tool_cyberpunk": toolDetails({
@@ -97,7 +97,7 @@ const defaultToolDetailCopy = {
   "mega_tool_nature": toolDetails({
     input: "your own portrait and outdoor mood direction.",
     output: "private nature and adventure portrait scenes.",
-    bestFor: "travel-inspired profiles and lifestyle albums.",
+    bestFor: "outdoor creator profiles and lifestyle albums.",
     cost: "credits are shown before generation."
   }),
   "mega_tool_fashion": toolDetails({
@@ -233,11 +233,11 @@ const textById = new Map([
   ["taxonomy_headshot", boundaryCopy.headshot],
   ["mega_tool_headshot", boundaryCopy.headshot],
   ["proof_pair_headshot", boundaryCopy.headshot],
-  ["proof_worldcup", boundaryCopy.worldCup],
+  ["proof_worldcup", "Stadium fan posters, match-day group shots, and social-ready supporter portraits."],
   ["catalog_worldcup", boundaryCopy.worldCup],
   ["taxonomy_worldcup", boundaryCopy.worldCup],
   ["mega_tool_worldcup", boundaryCopy.worldCup],
-  ["mega_video_fan", "Animate World Cup fan posters and match-day profile scenes for personal fan use only; no official logos, player likenesses, or official marks without permission."],
+  ["mega_video_fan", "Animate World Cup fan posters and match-day profile scenes for personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission."],
   ["tab_tryon", boundaryCopy.tryOn],
   ["mega_tool_virtual_tryon", boundaryCopy.tryOn],
   ["mega_tool_fashion", boundaryCopy.fashion],
@@ -266,7 +266,25 @@ const sectionSettingsById = new Map([
     {
       headline: contentCopy.homeHeadline,
       subheadline:
-        "Upload clear photos once, then create private headshots, creator portraits, fan posters, beauty previews, and themed albums. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account."
+        "Upload clear photos once, then create private sports fan photos, sports-idol style meetups, red-carpet fan moments, Christmas group portraits, Thanksgiving albums, Halloween party photos, and seasonal cards. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account.",
+      bulletList:
+        "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery."
+    }
+  ],
+  [
+    "brand_strip_1",
+    {
+      title:
+        "Private photo sets for fan meetups, sports-idol style moments, VIP looks, Christmas cards, Thanksgiving portraits, and Halloween albums."
+    }
+  ],
+  [
+    "visual_proof_1",
+    {
+      subtitle:
+        "See examples of fan meetups, sports-idol style photos, VIP looks, Christmas group portraits, Thanksgiving albums, Halloween party shots, and seasonal cards.",
+      tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal",
+      badges: "Private model|Fan-safe styling|Holiday albums"
     }
   ],
   [
@@ -288,15 +306,26 @@ const sectionSettingsById = new Map([
   [
     "featured_pack_1",
     {
+      title: "World Cup fan photos for sports-idol style moments.",
+      subtitle:
+        "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
+      includedOutputs:
+        "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
       safetyCopy:
-        "For personal fan use only: no official logos, player likenesses, or official marks without permission."
+        "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
+      overlaySubtitle: "Sports-idol style fan photos without a studio.",
+      overlayChips: "fan meetup|group shot|stadium|social-ready",
+      bottomNote:
+        "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
+      nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     }
   ],
   [
     "package_catalog_1",
     {
       subtitle:
-        "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Only upload photos you own or have permission to use."
+        "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Choose fan photos, VIP-style looks, Christmas cards, Thanksgiving portraits, Halloween party albums, or seasonal group photos from images you own or have permission to use.",
+      tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility"
     }
   ],
   [

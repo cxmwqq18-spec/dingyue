@@ -15,8 +15,11 @@ function isHtmlResponse(response) {
 
 function tagKey(tag) {
   if (/^<title\b/i.test(tag)) return "title";
+  if (/\bcharset=/i.test(tag)) return "meta:charset";
   const name = tag.match(/\bname=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
   if (name) return `meta:name:${name}`;
+  const httpEquiv = tag.match(/\bhttp-equiv=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
+  if (httpEquiv) return `meta:http-equiv:${httpEquiv}`;
   const property = tag.match(/\bproperty=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
   if (property) return `meta:property:${property}`;
   const rel = tag.match(/\brel=(["'])(.*?)\1/i)?.[2]?.toLowerCase();
@@ -52,11 +55,29 @@ function pullSeoTags(head) {
   return { remaining, tags };
 }
 
-function titleFirstSeoTags(tags) {
+function pullEssentialTags(head) {
+  const tags = [];
+  const seen = new Set();
+  const pattern = /<meta\s+(?=[^>]*(?:charset=|name=(["'])viewport\1|http-equiv=(["'])Content-Language\2))[^>]*>/gi;
+  const remaining = head.replace(pattern, (tag) => {
+    const key = tagKey(tag);
+    if (!seen.has(key)) {
+      seen.add(key);
+      tags.push(tag);
+    }
+    return "";
+  });
+
+  return { remaining, tags };
+}
+
+function splitTitleAndSeoTags(tags) {
   const titleIndex = tags.findIndex((tag) => /^<title\b/i.test(tag));
-  if (titleIndex < 0) return tags;
-  const titleTag = tags[titleIndex];
-  return [titleTag, ...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)];
+  if (titleIndex < 0) return { titleTag: "", seoTags: tags };
+  return {
+    titleTag: tags[titleIndex],
+    seoTags: [...tags.slice(0, titleIndex), ...tags.slice(titleIndex + 1)]
+  };
 }
 
 function reorderHtmlHead(html) {
@@ -69,7 +90,9 @@ function reorderHtmlHead(html) {
   const { remaining, tags } = pullSeoTags(head);
   if (!tags.length) return html;
 
-  const reorderedHead = `${titleFirstSeoTags(tags).join("")}${remaining}`;
+  const { remaining: headWithoutEssentials, tags: essentialTags } = pullEssentialTags(remaining);
+  const { titleTag, seoTags } = splitTitleAndSeoTags(tags);
+  const reorderedHead = `${titleTag}${essentialTags.join("")}${seoTags.join("")}${headWithoutEssentials}`;
   return `${html.slice(0, headStart)}${reorderedHead}${html.slice(headClose)}`;
 }
 

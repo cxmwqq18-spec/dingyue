@@ -7,6 +7,8 @@ const routePath = path.resolve(__dirname, "../src/app/api/internal/ai-worker/dis
 const source = fs.readFileSync(routePath, "utf8");
 const platformStorePath = path.resolve(__dirname, "../src/lib/stores/platform-store.ts");
 const platformStoreSource = fs.readFileSync(platformStorePath, "utf8");
+const videoFallbackPath = path.resolve(__dirname, "../src/lib/video-provider-fallback.ts");
+const videoFallbackSource = fs.readFileSync(videoFallbackPath, "utf8");
 
 const checks = [
   {
@@ -14,17 +16,19 @@ const checks = [
     pass: /function orderedImageProviders\(/.test(source)
   },
   {
-    label: "worker ignores disabled providers in fallback queues",
+    label: "worker ignores non-runnable providers in fallback queues",
     pass: /provider\.enabled !== false/.test(source) &&
-      /providers\.filter\(\(provider\) => provider\.enabled\)\.map/.test(platformStoreSource)
+      /providers\.filter\(\(provider\) => aiProviderStatus\(provider\)\.runnable\)\.map/.test(platformStoreSource)
   },
   {
     label: "preferred providers do not exclude non-preferred fallback providers",
     pass: !source.includes("const providers = preferredImageProviders.length ? preferredImageProviders : imageProviders")
   },
   {
-    label: "worker still prioritizes preferred providers before fallback providers",
-    pass: source.includes("preferredProviders") && source.includes("fallbackProviders")
+    label: "video worker prioritizes lower priority values before preferred badges",
+    pass: source.includes("orderSelectableAiProviderFallbackCandidates(videoProviders, payload.providerSelection)") &&
+      videoFallbackSource.includes("providerPriority(left.priority) - providerPriority(right.priority)") &&
+      videoFallbackSource.includes("Number(Boolean(right.preferred)) - Number(Boolean(left.preferred))")
   },
   {
     label: "fixed provider mode can still restrict generation to one configured provider",

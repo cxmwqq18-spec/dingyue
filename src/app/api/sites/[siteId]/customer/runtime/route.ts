@@ -10,7 +10,7 @@ import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/sto
 import { releaseStaleActiveGenerationJobsRelational } from "@/lib/stores/job-store";
 import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
-import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT } from "@/lib/workspace-runtime-jobs";
+import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { cookies } from "next/headers";
 import type { CustomerAdminAccess, CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
@@ -194,7 +194,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
       ORDER BY j."updatedAt" DESC
       LIMIT 8
     ),
-    "workspaceAssets" AS (
+    "recentWorkspaceAssets" AS (
       SELECT *
       FROM (
         (
@@ -222,6 +222,19 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
               OR NULLIF(a."validationReport"->>'favoriteAt', '') IS NOT NULL
             )
         )
+        UNION
+        (
+          SELECT a.*
+          FROM "AssetUpload" a
+          JOIN "currentCustomer" cc
+            ON cc.id = a."customerId"
+            AND cc."siteId" = a."siteId"
+          WHERE a."role" = 'input'
+            AND a."subjectRole" = 'video_frame'
+            AND a."deletedAt" IS NULL
+          ORDER BY a."createdAt" DESC
+          LIMIT ${WORKSPACE_VIDEO_FRAME_ASSET_LIMIT}
+        )
       ) AS assets
     ),
     "relatedJobs" AS (
@@ -232,7 +245,7 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
         AND cc."siteId" = j."siteId"
       WHERE j.id IN (
         SELECT DISTINCT "jobId"
-        FROM "workspaceAssets"
+        FROM "recentWorkspaceAssets"
         WHERE "jobId" IS NOT NULL
       )
         AND j.id NOT IN (SELECT id FROM "recentJobs")
@@ -243,6 +256,40 @@ async function readWorkspaceRuntimeDirect(siteId: string, sessionId: string): Pr
       SELECT * FROM "recentJobs"
       UNION
       SELECT * FROM "relatedJobs"
+    ),
+    "referencedFrameAssetIds" AS (
+      SELECT DISTINCT ids."assetId"
+      FROM "workspaceJobs" j
+      CROSS JOIN LATERAL (
+        SELECT jsonb_array_elements_text(
+          CASE
+            WHEN jsonb_typeof((j."requestJson"::jsonb)->'fields'->'frameAssetIds') = 'array'
+              THEN (j."requestJson"::jsonb)->'fields'->'frameAssetIds'
+            ELSE '[]'::jsonb
+          END
+        ) AS "assetId"
+        UNION
+        SELECT jsonb_array_elements_text(
+          CASE
+            WHEN jsonb_typeof((j."requestJson"::jsonb)->'assetIds') = 'array'
+              THEN (j."requestJson"::jsonb)->'assetIds'
+            ELSE '[]'::jsonb
+          END
+        ) AS "assetId"
+      ) ids
+      WHERE ids."assetId" <> ''
+    ),
+    "workspaceAssets" AS (
+      SELECT * FROM "recentWorkspaceAssets"
+      UNION
+      SELECT a.*
+      FROM "AssetUpload" a
+      JOIN "currentCustomer" cc
+        ON cc.id = a."customerId"
+        AND cc."siteId" = a."siteId"
+      JOIN "referencedFrameAssetIds" r
+        ON r."assetId" = a.id
+      WHERE a."deletedAt" IS NULL
     )
     SELECT
       json_build_object(
@@ -344,7 +391,7 @@ async function readWorkspaceRuntimeSegmented(
   })();
   if (!resolvedCustomer) return undefined;
 
-  const [recentJobs, recentAssets, subscriptions, customerModels] = await Promise.all([
+  const [recentJobs, recentAssets, videoFrameAssets, subscriptions, customerModels] = await Promise.all([
     readWorkspaceJobSummariesRelational({ siteId, customerId: resolvedCustomer.id, take: 8 }),
     prisma.assetUpload.findMany({
       where: {
@@ -355,6 +402,17 @@ async function readWorkspaceRuntimeSegmented(
       },
       orderBy: { createdAt: "desc" },
       take: 48
+    }),
+    prisma.assetUpload.findMany({
+      where: {
+        siteId,
+        customerId: resolvedCustomer.id,
+        deletedAt: null,
+        role: "input",
+        subjectRole: "video_frame"
+      },
+      orderBy: { createdAt: "desc" },
+      take: WORKSPACE_VIDEO_FRAME_ASSET_LIMIT
     }),
     prisma.subscription.findMany({
       where: { siteId, customerId: resolvedCustomer.id },
@@ -379,7 +437,7 @@ async function readWorkspaceRuntimeSegmented(
     : [];
   const jobs = [...recentJobs, ...relatedJobs]
     .sort((left, right) => timeFromRaw(right.updatedAt) - timeFromRaw(left.updatedAt));
-  const recentAssetIds = new Set(recentAssets.map((asset) => asset.id));
+  const recentAssetIds = new Set([...recentAssets, ...videoFrameAssets].map((asset) => asset.id));
   const referencedFrameAssetIds = Array.from(new Set(jobs.flatMap(runtimeJobFrameAssetIds)))
     .filter((assetId) => !recentAssetIds.has(assetId));
   const referencedFrameAssets = referencedFrameAssetIds.length
@@ -393,7 +451,11 @@ async function readWorkspaceRuntimeSegmented(
         orderBy: { createdAt: "desc" }
       })
     : [];
-  const assets = [...recentAssets, ...referencedFrameAssets]
+  const assets = Array.from(new Map(
+    [...recentAssets, ...videoFrameAssets, ...referencedFrameAssets]
+      .map((asset) => [asset.id, asset])
+  ).values())
+    .sort((left, right) => timeFromRaw(right.createdAt) - timeFromRaw(left.createdAt))
     .map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>))
     .map((asset) => toThemeRuntimeAssetRelational(asset));
 

@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Download, EyeOff, Save } from "lucide-react";
+import { Download, EyeOff, Save, Search } from "lucide-react";
+import { fetchAdminJson, type CachedJsonResponse } from "@/components/admin/admin-api-client";
+import { AdminPagination } from "@/components/admin/admin-pagination";
 import { downloadCsv } from "@/components/admin/export-utils";
 import type { Album, AssetUpload, CreativePack, PublicCustomer } from "@/lib/types";
 import { StatusPill } from "@/components/ui";
@@ -19,43 +21,150 @@ const albumStatusLabels: Record<Album["status"], string> = {
   hidden: "已隐藏"
 };
 
+function assetFileName(asset: Pick<AssetUpload, "storageKey" | "label">): string {
+  return asset.storageKey.split("/").filter(Boolean).pop() || asset.label;
+}
+
+export type AlbumDeliveryPagination = {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  query: string;
+  status: Album["status"] | "";
+  totalCount: number;
+  readyCount: number;
+  processingCount: number;
+  hiddenCount: number;
+};
+
+type AlbumDeliveryPayload = {
+  albums?: Album[];
+  albumCustomers?: PublicCustomer[];
+  albumPagination?: AlbumDeliveryPagination;
+  packs?: CreativePack[];
+  customerAssets?: AssetUpload[];
+  error?: string;
+};
+
+function fallbackPagination(albums: Album[]): AlbumDeliveryPagination {
+  return {
+    page: 1,
+    pageSize: 20,
+    total: albums.length,
+    totalPages: Math.max(1, Math.ceil(albums.length / 20)),
+    query: "",
+    status: "",
+    totalCount: albums.length,
+    readyCount: albums.filter((album) => album.status === "ready").length,
+    processingCount: albums.filter((album) => album.status === "processing").length,
+    hiddenCount: albums.filter((album) => album.status === "hidden").length
+  };
+}
+
+function mergeCustomers(...groups: PublicCustomer[][]): PublicCustomer[] {
+  const byId = new Map<string, PublicCustomer>();
+  for (const group of groups) {
+    for (const customer of group) byId.set(customer.id, customer);
+  }
+  return [...byId.values()];
+}
+
 export function AlbumDeliveryPanel({
   siteId,
   albums,
+  albumCustomers = [],
+  pagination,
   customers,
   packs,
   assets
 }: {
   siteId: string;
   albums: Album[];
+  albumCustomers?: PublicCustomer[];
+  pagination?: AlbumDeliveryPagination;
   customers: PublicCustomer[];
   packs: CreativePack[];
   assets: AssetUpload[];
 }) {
   const router = useRouter();
   const [items, setItems] = useState(albums);
-  const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<Album["status"] | "">("");
+  const [assetItems, setAssetItems] = useState(assets);
+  const [packItems, setPackItems] = useState(packs);
+  const [customerItems, setCustomerItems] = useState(() => mergeCustomers(customers, albumCustomers));
+  const [pageMeta, setPageMeta] = useState<AlbumDeliveryPagination>(() => pagination ?? fallbackPagination(albums));
+  const [query, setQuery] = useState(pagination?.query ?? "");
+  const [draftQuery, setDraftQuery] = useState(pagination?.query ?? "");
+  const [statusFilter, setStatusFilter] = useState<Album["status"] | "">(pagination?.status ?? "");
+  const [loadingPage, setLoadingPage] = useState(false);
   const [busyAlbumId, setBusyAlbumId] = useState<string | null>(null);
-  const [message, setMessage] = useState("用于管理客户专属相册交付。相册关联生成任务、输出素材和封面图，只有当前站点和对应顾客可以查看。");
+  const [message, setMessage] = useState("用于管理 Album 相册交付记录。相册关联生成任务、输出素材和封面图，封面候选只来自当前顾客的 AI 输出素材。");
 
   useEffect(() => {
     setItems(albums);
-  }, [albums]);
+    setPageMeta(pagination ?? fallbackPagination(albums));
+    setQuery(pagination?.query ?? "");
+    setDraftQuery(pagination?.query ?? "");
+    setStatusFilter(pagination?.status ?? "");
+  }, [albums, pagination]);
 
-  const filteredItems = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    return items.filter((album) => {
-      if (statusFilter && album.status !== statusFilter) return false;
-      if (!normalized) return true;
-      const customer = customers.find((item) => item.id === album.customerId);
-      const pack = packs.find((item) => item.id === album.creativePackId);
-      return [album.title, album.sourceJobId ?? "", customer?.email ?? "", pack?.name ?? ""]
-        .join(" ")
-        .toLowerCase()
-        .includes(normalized);
+  useEffect(() => {
+    setAssetItems(assets);
+  }, [assets]);
+
+  useEffect(() => {
+    setPackItems(packs);
+  }, [packs]);
+
+  useEffect(() => {
+    setCustomerItems(mergeCustomers(customers, albumCustomers));
+  }, [albumCustomers, customers]);
+
+  const customerById = useMemo(() => new Map(customerItems.map((customer) => [customer.id, customer])), [customerItems]);
+  const packById = useMemo(() => new Map(packItems.map((pack) => [pack.id, pack])), [packItems]);
+
+  async function loadAlbumPage(overrides: Partial<Pick<AlbumDeliveryPagination, "page" | "pageSize" | "query" | "status">> = {}) {
+    const nextPage = overrides.page ?? pageMeta.page;
+    const nextPageSize = overrides.pageSize ?? pageMeta.pageSize;
+    const nextQuery = overrides.query ?? query;
+    const nextStatus = overrides.status ?? statusFilter;
+    const params = new URLSearchParams({
+      detail: "delivery",
+      albumPage: String(nextPage),
+      albumPageSize: String(nextPageSize)
     });
-  }, [customers, items, packs, query, statusFilter]);
+    if (nextQuery.trim()) params.set("albumQuery", nextQuery.trim());
+    if (nextStatus) params.set("albumStatus", nextStatus);
+    setLoadingPage(true);
+    let response: CachedJsonResponse<AlbumDeliveryPayload>;
+    try {
+      response = await fetchAdminJson<AlbumDeliveryPayload>(`/api/sites/${siteId}/admin/customers-page?${params.toString()}`, {
+        ttlMs: 0,
+        timeoutMs: 12_000
+      });
+    } catch {
+      setLoadingPage(false);
+      setMessage("相册分页加载中断，请稍后重试。");
+      return;
+    }
+    setLoadingPage(false);
+    if (!response.ok) {
+      setMessage(response.data.error ?? "相册分页加载失败。");
+      return;
+    }
+    const result = response.data;
+    setItems(result.albums ?? []);
+    setAssetItems(result.customerAssets ?? []);
+    if (result.packs) setPackItems(result.packs);
+    setCustomerItems((current) => mergeCustomers(customers, current, result.albumCustomers ?? []));
+    if (result.albumPagination) {
+      setPageMeta(result.albumPagination);
+      setQuery(result.albumPagination.query);
+      setDraftQuery(result.albumPagination.query);
+      setStatusFilter(result.albumPagination.status);
+    }
+    setMessage(`已加载第 ${result.albumPagination?.page ?? nextPage} 页，共 ${result.albumPagination?.total ?? result.albums?.length ?? 0} 条匹配相册。`);
+  }
 
   function update<K extends keyof Album>(albumId: string, key: K, value: Album[K]) {
     setItems((current) => current.map((album) => (album.id === albumId ? { ...album, [key]: value } : album)));
@@ -78,6 +187,7 @@ export function AlbumDeliveryPanel({
     if (response.ok && result.album) {
       setItems((current) => current.map((item) => (item.id === result.album?.id ? result.album : item)));
       setMessage(actionLabel ? `${result.album.title} 已${actionLabel}。` : `${result.album.title} 已保存。`);
+      void loadAlbumPage({ page: pageMeta.page });
       router.refresh();
     } else {
       setMessage(result.error ?? "相册保存失败。");
@@ -93,16 +203,21 @@ export function AlbumDeliveryPanel({
   }
 
   function resetFilters() {
-    setQuery("");
-    setStatusFilter("");
+    setDraftQuery("");
+    void loadAlbumPage({ page: 1, query: "", status: "" });
+  }
+
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void loadAlbumPage({ page: 1, query: draftQuery.trim() });
   }
 
   function exportAlbums() {
     downloadCsv(
       `${siteId}-albums.csv`,
-      filteredItems.map((album) => {
-        const customer = customers.find((item) => item.id === album.customerId);
-        const pack = packs.find((item) => item.id === album.creativePackId);
+      items.map((album) => {
+        const customer = customerById.get(album.customerId);
+        const pack = album.creativePackId ? packById.get(album.creativePackId) : undefined;
         return {
           albumId: album.id,
           title: album.title,
@@ -117,7 +232,7 @@ export function AlbumDeliveryPanel({
       }),
       ["albumId", "title", "customerEmail", "creativePack", "status", "outputCount", "coverAssetId", "sourceJobId", "updatedAt"]
     );
-    setMessage(`已导出 ${filteredItems.length} 条相册记录。`);
+    setMessage(`已导出当前页 ${items.length} 条相册记录。`);
   }
 
   return (
@@ -135,34 +250,44 @@ export function AlbumDeliveryPanel({
       </div>
       <div className="mt-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
         <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
-          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">共 {items.length} 个相册</span>
-          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{items.filter((album) => album.status === "ready").length} 已就绪</span>
-          <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700">{items.filter((album) => album.status === "processing").length} 处理中</span>
-          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">{filteredItems.length} 当前显示</span>
+          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">共 {pageMeta.totalCount} 个相册</span>
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-700">{pageMeta.readyCount} 已就绪</span>
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-700">{pageMeta.processingCount} 处理中</span>
+          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">{pageMeta.hiddenCount} 已隐藏</span>
+          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">匹配 {pageMeta.total} 条</span>
+          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5">当前页 {items.length} 条</span>
         </div>
-        <div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px_auto]">
+        <form className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1fr)_220px_auto_auto]" onSubmit={submitSearch}>
           <input
             className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => setDraftQuery(event.target.value)}
             placeholder="搜索相册、顾客、套餐、任务"
-            value={query}
+            value={draftQuery}
           />
-          <select className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm" onChange={(event) => setStatusFilter(event.target.value as Album["status"] | "")} value={statusFilter}>
+          <select
+            className="rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
+            onChange={(event) => void loadAlbumPage({ page: 1, status: event.target.value as Album["status"] | "" })}
+            value={statusFilter}
+          >
             <option value="">全部状态</option>
             <option value="processing">处理中</option>
             <option value="ready">已就绪</option>
             <option value="hidden">已隐藏</option>
           </select>
+          <button className="rounded-xl border border-black/10 bg-white px-4 py-2 text-sm active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55" disabled={loadingPage} type="submit">
+            <Search className="mr-1.5 inline h-4 w-4" strokeWidth={1.8} />
+            搜索
+          </button>
           <button className="rounded-xl border border-black/10 bg-white px-4 py-2 text-sm active:scale-[0.98]" onClick={resetFilters} type="button">
             重置
           </button>
-        </div>
+        </form>
       </div>
       <div className="mt-5 divide-y divide-zinc-200 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
-        {filteredItems.map((album) => {
-          const customer = customers.find((item) => item.id === album.customerId);
-          const pack = packs.find((item) => item.id === album.creativePackId);
-          const coverCandidates = assets.filter((asset) => asset.customerId === album.customerId && asset.role === "output");
+        {items.map((album) => {
+          const customer = customerById.get(album.customerId);
+          const pack = album.creativePackId ? packById.get(album.creativePackId) : undefined;
+          const coverCandidates = assetItems.filter((asset) => asset.customerId === album.customerId && asset.role === "output");
           return (
             <div className="grid gap-4 p-4 text-sm" key={album.id}>
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -205,7 +330,7 @@ export function AlbumDeliveryPanel({
                     <option value="">未设置</option>
                     {coverCandidates.map((asset) => (
                       <option key={asset.id} value={asset.id}>
-                        {asset.label} / {asset.storageKey}
+                        {asset.label} / {assetFileName(asset)}
                       </option>
                     ))}
                   </select>
@@ -225,13 +350,20 @@ export function AlbumDeliveryPanel({
             </div>
           );
         })}
-        {!filteredItems.length ? (
+        {!items.length ? (
           <div className="p-6 text-sm text-zinc-600">
             <p className="font-semibold text-zinc-900">暂无匹配的相册。</p>
             <p className="mt-2 leading-6">操作手册：AI 任务成功后会生成输出素材和相册记录；运维需要确认标题、输出数量、封面素材和交付状态。客户可见的相册应标记为“已就绪”，问题相册可先“隐藏”，避免客户前台看到未验收内容。</p>
           </div>
         ) : null}
       </div>
+      <AdminPagination
+        onPageChange={(nextPage: number | ((page: number) => number)) => void loadAlbumPage({ page: typeof nextPage === "function" ? nextPage(pageMeta.page) : nextPage })}
+        onPageSizeChange={(nextPageSize) => void loadAlbumPage({ page: 1, pageSize: nextPageSize })}
+        page={pageMeta.page}
+        pageSize={pageMeta.pageSize}
+        total={pageMeta.total}
+      />
     </div>
   );
 }

@@ -570,7 +570,8 @@ async function refreshPosterFromShowcaseImage(task, posterFile) {
   const posterSlug = showcaseVideoPosterSlug(task.store, task.theme, task.index);
   const imageFile = path.resolve(repoRoot, localShowcaseImagePath(task.store, posterSlug));
   if (!(await fileExists(imageFile))) return { ok: false, posterSlug, imageFile };
-  if (force || !(await fileExists(posterFile))) {
+  const shouldCopyPoster = force || !(await fileExists(posterFile));
+  if (shouldCopyPoster) {
     await fs.mkdir(path.dirname(posterFile), { recursive: true });
     await fs.copyFile(imageFile, posterFile);
   }

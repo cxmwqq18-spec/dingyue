@@ -10,6 +10,7 @@ const files = {
   jobStore: read("src/lib/stores/job-store.ts"),
   siteApiKeys: read("src/lib/site-api-keys.ts"),
   customerJobs: read("src/app/api/sites/[siteId]/ai/jobs/route.ts"),
+  customerRetry: read("src/app/api/sites/[siteId]/ai/jobs/[jobId]/retry/route.ts"),
   rerun: read("src/app/api/sites/[siteId]/ai/jobs/[jobId]/rerun/route.ts"),
   externalJobs: read("src/app/api/v1/sites/[siteId]/ai/jobs/route.ts"),
   externalJobRead: read("src/app/api/v1/sites/[siteId]/ai/jobs/[jobId]/route.ts"),
@@ -28,7 +29,19 @@ assert(files.migration.includes('CREATE TABLE "SiteApiKey"'), "migration creates
 assert(files.submit.includes("export async function submitGenerationJob"), "generation submission is centralized");
 assert(files.submit.includes("idempotent_replay"), "submission skips dispatch on idempotent replay");
 assert(files.customerJobs.includes("submitGenerationJob({"), "customer workspace job route uses centralized submission");
+assert(files.customerJobs.includes("reused: result.reused === true"), "customer workspace job route reports idempotent replays");
+assert(files.customerRetry.includes("requireCustomerMutation"), "customer video retry route requires customer auth");
+assert(files.customerRetry.includes('request.headers.get("idempotency-key")'), "customer video retry route accepts idempotency keys from browser submits");
+assert(files.customerRetry.includes("submitRerunGenerationJob({"), "customer video retry route uses centralized rerun submission");
+assert(files.customerRetry.includes("customerId: body.customerId"), "customer video retry route scopes reruns to the current customer");
+assert(files.customerRetry.includes("requireVideo: true"), "customer video retry route only retries video jobs");
+assert(files.customerRetry.includes("reused: result.reused === true"), "customer video retry route reports idempotent rerun replays");
+assert(files.customerRetry.includes("x-smoke-skip-worker-dispatch"), "customer video retry route can be smoke-tested without dispatching a paid provider worker");
 assert(files.rerun.includes("submitRerunGenerationJob"), "rerun route uses centralized submission");
+assert(files.submit.includes("if (rerun.reused)") && files.submit.includes("Idempotent replay returned the existing rerun job."), "rerun submission skips dispatch on idempotent replay");
+assert(files.submit.includes("skipWorkerDispatch") && files.submit.includes("Persisted rerun job and reserved credits. Worker dispatch is not configured."), "rerun submission supports skip-worker smoke tests");
+assert(files.jobStore.includes("only_video_jobs_can_be_retried"), "job store rejects non-video customer retry attempts");
+assert(files.jobStore.includes("idempotencyKey: params.idempotencyKey"), "job store passes customer retry idempotency into rerun creation");
 assert(files.externalJobs.includes('request.headers.get("idempotency-key")'), "external job API requires idempotency key");
 assert(files.externalJobs.includes('entryPoint: "external_api"'), "external job API marks entry point");
 assert(files.externalJobs.includes("video_public_asset_url_required"), "external job API keeps video frame public URL protection");

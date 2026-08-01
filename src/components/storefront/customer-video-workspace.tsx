@@ -49,6 +49,11 @@ type SelectedVideoFrameInfo = {
   label?: string;
   mimeType?: string;
 };
+type VideoPromptRiskMessage = {
+  id: string;
+  severity: "block" | "warn";
+  message: string;
+};
 
 const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
   { id: "16:9", label: "16:9", shape: "aspect-[16/9] w-7" },
@@ -68,6 +73,16 @@ const VIDEO_MODEL_OPTIONS: Array<{ id: VideoModelFamily; label: string }> = [
 ];
 
 const PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion";
+const VIDEO_PROMPT_MAX_LENGTH = 5000;
+const VIDEO_PROMPT_TEMPLATE = [
+  "Step 1: Describe the main subject or product. Include what should stay consistent from uploaded frame images.",
+  "",
+  "Step 2: Set the scene and visual style. Mention location, lighting, mood, aspect ratio, and whether it should feel like UGC, cinematic, travel, or product video.",
+  "",
+  "Step 3: Define the motion. Explain the first 0-3 second hook, the main action, camera movement, and the final frame.",
+  "",
+  "Step 4: Add audio and safety constraints. Include dialogue, ambient sound, and what to avoid: extra people, warped hands, product drift, text, watermarks, or unsafe content."
+].join("\n");
 
 function vt(spanish: boolean, english: string, spanishText: string) {
   return spanish ? spanishText : english;
@@ -95,7 +110,10 @@ function errorText(error: string | undefined, status: number, spanish: boolean, 
   if (error === "video_frame_asset_required") return vt(spanish, "Use images uploaded in the video frame area before generating.", "Usa imagenes subidas en el area de fotogramas antes de generar.");
   if (error === "unsupported_video_frame_type") return vt(spanish, "Gemini video can only use JPG or PNG frame images.", "El video Gemini solo puede usar fotogramas JPG o PNG.");
   if (error === "video_public_asset_url_required") return vt(spanish, "Video generation needs a public asset URL so the provider can read the selected frame images.", "La generacion de video necesita una URL publica de recursos para que el proveedor lea los fotogramas seleccionados.");
-  if (error === "video_provider_temporarily_unavailable" || error === "no_video_ai_provider_configured") return vt(spanish, "Video generation is temporarily unavailable while provider access is being updated. No credits were reserved.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. No se reservaron creditos.");
+  if (error === "video_provider_temporarily_unavailable" || error === "no_video_ai_provider_configured") return modelFamily === "gemini"
+    ? vt(spanish, "Gemini video provider is not available right now. No video request was created and no credits were reserved.", "El proveedor de video Gemini no esta disponible ahora. No se creo ninguna solicitud de video y no se reservaron creditos.")
+    : vt(spanish, "Video generation is temporarily unavailable while provider access is being updated. No credits were reserved.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. No se reservaron creditos.");
+  if (error === "missing_required_prompt_input") return vt(spanish, "Complete the required prompt details before generating video.", "Completa los detalles requeridos del prompt antes de generar video.");
   if (status === 409) return vt(spanish, "Another request is already running. Check the All tab before starting a new one.", "Ya hay otra solicitud en ejecucion. Revisa la pestana Todo antes de iniciar otra.");
   return vt(spanish, "Video generation could not start. Please check the frame images and try again.", "No se pudo iniciar el video. Revisa las imagenes e intentalo de nuevo.");
 }
@@ -117,8 +135,173 @@ function isVideoResolution(value: string | undefined): value is VideoResolution 
   return VIDEO_RESOLUTION_OPTIONS.some((option) => option.id === value);
 }
 
+const NEGATED_PROMPT_CUE_PATTERN = /\b(avoid|without|no|not|never|exclude|remove|do not|don't|dont)\b|evita|sin|\u907f\u514d|\u4e0d\u8981|\u4e0d\u9700\u8981|\u4e0d\u51fa\u73b0|\u65e0|\u6ca1\u6709|\u6392\u9664/i;
+const PEOPLE_REFERENCE_PROMPT_PATTERN = /\b(baby|infant|toddler|child|children|kid|kids|minor|boy|girl|person|people|human|face|portrait|selfie|man|woman|family|couple)\b|bebe|nino|nina|persona|retrato|familia|pareja|\u5a74\u513f|\u5b9d\u5b9d|\u5c0f\u5b69|\u5b69\u5b50|\u513f\u7ae5|\u672a\u6210\u5e74|\u7537\u5b69|\u5973\u5b69|\u4eba\u50cf|\u771f\u4eba|\u8138|\u5bb6\u4eba|\u5bb6\u5ead|\u60c5\u4fa3/gi;
+const MINOR_PROMPT_PATTERN = /\b(baby|infant|toddler|child|children|kid|kids|minor|underage|boy|girl)\b|bebe|nino|nina|menor|\u5a74\u513f|\u5b9d\u5b9d|\u5c0f\u5b69|\u5b69\u5b50|\u513f\u7ae5|\u672a\u6210\u5e74|\u7537\u5b69|\u5973\u5b69|\u5e7c\u513f/gi;
+const UNSAFE_CONTENT_PROMPT_PATTERN = /\b(nude|nudity|nsfw|porn|sexual|erotic|lingerie|underwear|violence|violent|blood|bloody|gore|weapon|gun|knife|self-harm|suicide|hate|illegal)\b|\u88f8\u9732|\u88f8\u4f53|\u8272\u60c5|\u6027\u611f|\u66b4\u529b|\u8840\u8165|\u6b66\u5668|\u67aa|\u5200|\u81ea\u6b8b|\u81ea\u6740|\u4ec7\u6068|\u8fdd\u6cd5/gi;
+const RIGHTS_PROMPT_PATTERN = /\b(celebrity|public figure|famous actor|famous singer|copyright|trademark|branded character|anime character|game character|comic character|logo|watermark|large text|text-heavy|subtitle|caption)\b|\u540d\u4eba|\u516c\u4f17\u4eba\u7269|\u660e\u661f|\u7248\u6743|\u5546\u6807|\u52a8\u6f2b\u89d2\u8272|\u6e38\u620f\u89d2\u8272|\u6f2b\u753b\u89d2\u8272|\u6807\u5fd7|\u6c34\u5370|\u5927\u6bb5\u6587\u5b57|\u5b57\u5e55/gi;
+const POSITIVE_PROMPT_CUE_AFTER_NEGATION_PATTERN = /\b(add|include|show|display|with|featuring|using|create|make|generate|turn into|transform into)\b|agrega|incluye|muestra|con|\u6dfb\u52a0|\u5305\u542b|\u51fa\u73b0|\u663e\u793a|\u751f\u6210|\u4f7f\u7528/i;
+
+function promptClauseNegatesMatch(clauseBeforeMatch: string) {
+  const negationMatcher = new RegExp(NEGATED_PROMPT_CUE_PATTERN.source, "gi");
+  const matches = Array.from(clauseBeforeMatch.matchAll(negationMatcher));
+  const lastNegation = matches.at(-1);
+  if (!lastNegation) return false;
+  const afterNegation = clauseBeforeMatch.slice((lastNegation.index ?? 0) + lastNegation[0].length);
+  return !POSITIVE_PROMPT_CUE_AFTER_NEGATION_PATTERN.test(afterNegation);
+}
+
+function promptHasNonNegatedMatch(value: string, pattern: RegExp) {
+  const text = value.toLowerCase();
+  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
+  const matcher = new RegExp(pattern.source, flags);
+  for (const match of text.matchAll(matcher)) {
+    const start = match.index ?? 0;
+    const before = text.slice(Math.max(0, start - 96), start);
+    const clauseBeforeMatch = before.split(/[.!?\n;\u3002\uff01\uff1f\uff1b]/).pop() ?? before;
+    if (!promptClauseNegatesMatch(clauseBeforeMatch)) return true;
+  }
+  return false;
+}
+
 function promptSuggestsPeopleReference(value: string) {
-  return /\b(baby|infant|toddler|child|children|kid|kids|minor|boy|girl|person|people|human|face|portrait|selfie|man|woman|family|couple)\b|bebe|nino|nina|persona|retrato|familia|pareja|\u5a74\u513f|\u5b9d\u5b9d|\u5c0f\u5b69|\u5b69\u5b50|\u513f\u7ae5|\u672a\u6210\u5e74|\u7537\u5b69|\u5973\u5b69|\u4eba\u50cf|\u771f\u4eba|\u8138|\u5bb6\u4eba|\u5bb6\u5ead|\u60c5\u4fa3/i.test(value);
+  return promptHasNonNegatedMatch(value, PEOPLE_REFERENCE_PROMPT_PATTERN);
+}
+
+function videoAspectOrientation(aspectRatio: VideoAspectRatio): "landscape" | "portrait" | "square" {
+  const [width, height] = aspectRatio.split(":").map((part) => Number(part));
+  if (width > height) return "landscape";
+  if (height > width) return "portrait";
+  return "square";
+}
+
+function promptMentionedAspectRatios(value: string) {
+  const matches: string[] = [];
+  const matcher = /\b(\d{1,2}\s*:\s*\d{1,2})\b/g;
+  for (const match of value.matchAll(matcher)) {
+    const start = match.index ?? 0;
+    const before = value.slice(Math.max(0, start - 96), start);
+    const clauseBeforeMatch = before.split(/[.!?\n;\u3002\uff01\uff1f\uff1b]/).pop() ?? before;
+    if (promptClauseNegatesMatch(clauseBeforeMatch)) continue;
+    matches.push(match[1].replace(/\s+/g, ""));
+  }
+  return Array.from(new Set(matches));
+}
+
+function promptFormatConflictMessage(params: {
+  aspectRatio: VideoAspectRatio;
+  prompt: string;
+  spanish: boolean;
+}): string {
+  const selectedOrientation = videoAspectOrientation(params.aspectRatio);
+  const mentionsLandscape = promptHasNonNegatedMatch(params.prompt, /\b(horizontal|landscape|wide|widescreen)\b|\u6a2a\u5c4f|\u6a2a\u7248/gi);
+  const mentionsPortrait = promptHasNonNegatedMatch(params.prompt, /\b(vertical|portrait)\b|\u7ad6\u5c4f|\u7ad6\u7248/gi);
+  const mentionedRatios = promptMentionedAspectRatios(params.prompt).filter((ratio) => ratio !== params.aspectRatio);
+  const ratioConflict = mentionedRatios[0];
+  const orientationConflict =
+    (selectedOrientation === "portrait" && mentionsLandscape) ||
+    (selectedOrientation === "landscape" && mentionsPortrait);
+  if (!ratioConflict && !orientationConflict) return "";
+  const conflictLabel = ratioConflict
+    ? vt(params.spanish, ` ${ratioConflict}`, ` ${ratioConflict}`)
+    : mentionsLandscape
+      ? vt(params.spanish, " horizontal/landscape", " horizontal/paisaje")
+      : vt(params.spanish, " vertical/portrait", " vertical/retrato");
+  return vt(
+    params.spanish,
+    `Your prompt mentions${conflictLabel}, but the selected video format is ${params.aspectRatio}. The selected format will be sent to the provider; switch the aspect ratio or edit the prompt if needed.`,
+    `Tu prompt menciona${conflictLabel}, pero el formato seleccionado es ${params.aspectRatio}. El formato seleccionado se enviara al proveedor; cambia la relacion de aspecto o edita el prompt si hace falta.`
+  );
+}
+
+function videoPromptRequiresFrameImages(prompt: string): boolean {
+  const text = prompt.trim().toLowerCase();
+  if (!text) return false;
+  return /\u4e0a\u4f20.{0,12}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u6839\u636e.{0,12}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u8fd9(\u5f20|\u4e2a|\u4e9b).{0,8}(\u56fe\u7247|\u7167\u7247|\u56fe\u50cf|\u7d20\u6750|\u53c2\u8003\u56fe)|\u56fe\u4e2d|\u7167\u7247\u4e2d|uploaded.{0,24}(image|photo|frame|picture)|selected.{0,24}(image|photo|frame|picture)|reference.{0,24}(image|photo|frame|picture)|source.{0,24}(image|photo|frame|picture)/i.test(text);
+}
+
+function videoPromptRiskMessages(params: {
+  aspectRatio: VideoAspectRatio;
+  modelFamily: VideoModelFamily;
+  prompt: string;
+  selectedFrameCount: number;
+  spanish: boolean;
+}): VideoPromptRiskMessage[] {
+  const prompt = params.prompt.trim();
+  if (!prompt) return [];
+  const messages: VideoPromptRiskMessage[] = [];
+  if (videoPromptRequiresFrameImages(prompt) && params.selectedFrameCount < 1) {
+    messages.push({
+      id: "missing_prompt_referenced_frames",
+      severity: "block",
+      message: vt(
+        params.spanish,
+        "Your prompt says to use uploaded, selected, source, or reference images, but no frame image is selected. Select frame images on the left, or remove that image-reference wording.",
+        "Tu prompt menciona imagenes subidas, seleccionadas, de origen o de referencia, pero no hay fotogramas seleccionados. Selecciona fotogramas a la izquierda o elimina esa referencia del prompt."
+      )
+    });
+  }
+  const formatConflictMessage = promptFormatConflictMessage({
+    aspectRatio: params.aspectRatio,
+    prompt,
+    spanish: params.spanish
+  });
+  if (formatConflictMessage) {
+    messages.push({
+      id: "prompt_format_conflict",
+      severity: "warn",
+      message: formatConflictMessage
+    });
+  }
+  if (params.modelFamily === "gemini" && params.selectedFrameCount > 0 && promptSuggestsPeopleReference(prompt)) {
+    messages.push({
+      id: "gemini_people_reference",
+      severity: "warn",
+      message: vt(
+        params.spanish,
+        "Gemini may reject real or recognizable people in frame references. You can still submit this request; if the provider rejects it, switch to Grok or use product/object/landscape references.",
+        "Gemini puede rechazar personas reales o reconocibles en referencias. Puedes enviar esta solicitud; si el proveedor la rechaza, cambia a Grok o usa referencias de productos, objetos o paisajes."
+      )
+    });
+  }
+  if (promptHasNonNegatedMatch(prompt, MINOR_PROMPT_PATTERN)) {
+    messages.push({
+      id: "minor_policy_risk",
+      severity: "warn",
+      message: vt(
+        params.spanish,
+        "Risk: providers often reject prompts involving children, babies, or minors. Use adult-only, fictional/stylized, or non-person references where possible.",
+        "Riesgo: los proveedores suelen rechazar prompts con ninos, bebes o menores. Usa referencias solo de adultos, ficticias/estilizadas o sin personas cuando sea posible."
+      )
+    });
+  }
+  if (promptHasNonNegatedMatch(prompt, UNSAFE_CONTENT_PROMPT_PATTERN)) {
+    messages.push({
+      id: "unsafe_content_policy_risk",
+      severity: "warn",
+      message: vt(
+        params.spanish,
+        "Risk: sexual content, nudity, violence, weapons, gore, self-harm, hate, or illegal activity may be rejected. Remove those details before submitting.",
+        "Riesgo: contenido sexual, desnudez, violencia, armas, sangre, autolesion, odio o actividad ilegal puede rechazarse. Quita esos detalles antes de enviar."
+      )
+    });
+  }
+  if (promptHasNonNegatedMatch(prompt, RIGHTS_PROMPT_PATTERN)) {
+    messages.push({
+      id: "rights_policy_risk",
+      severity: "warn",
+      message: vt(
+        params.spanish,
+        "Risk: celebrities, public figures, copyrighted characters, logos, watermarks, subtitles, or heavy visible text may be rejected. Use original, rights-safe references.",
+        "Riesgo: celebridades, figuras publicas, personajes con copyright, logos, marcas de agua, subtitulos o mucho texto visible pueden rechazarse. Usa referencias originales y seguras por derechos."
+      )
+    });
+  }
+  return messages.slice(0, 4);
+}
+
+function isPromptFrameReferenceBlockingMessage(value: string) {
+  return value.startsWith("Your prompt says to use uploaded") || value.startsWith("Tu prompt menciona imagenes subidas");
 }
 
 export function CustomerVideoWorkspace({
@@ -215,17 +398,28 @@ export function CustomerVideoWorkspace({
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
   const maxFrames = CUSTOMER_VIDEO_FRAME_LIMIT;
   const selectedModelNeedsFrames = selectedVideoModelFamily === "gemini";
-  const availableDurationOptions = videoDurationOptionsForFrameCount(selectedFrameIds.length, selectedVideoModelFamily);
-  const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(selectedDurationSeconds, selectedFrameIds.length, selectedTheme?.durationSeconds, selectedVideoModelFamily);
+  const availableDurationOptions = videoDurationOptionsForFrameCount(
+    selectedFrameIds.length,
+    selectedVideoModelFamily
+  );
+  const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(
+    selectedDurationSeconds,
+    selectedFrameIds.length,
+    selectedTheme?.durationSeconds,
+    selectedVideoModelFamily
+  );
   const providerFrameLimitMessage = maxFrames > 1
     ? vt(spanish, `Selected frames are treated as ordered reference images for image-to-video.`, `Los fotogramas seleccionados se tratan como imagenes de referencia ordenadas para imagen a video.`)
     : "";
-  const selectedCreditCost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, effectiveDurationSeconds, selectedVideoModelFamily, selectedTheme.modelPricing) : 0;
+  const selectedCreditCost = selectedTheme
+    ? videoDurationCreditCost(selectedTheme.creditCost, effectiveDurationSeconds, selectedVideoModelFamily, selectedTheme.modelPricing)
+    : 0;
   const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
   const generationFrameIds = readyFrameIds ?? selectedFrameIds;
   const hasPendingFrameUploads = generationFrameIds.length !== selectedFrameIds.length;
   const trimmedPromptNote = promptNote.trim();
   const hasReadyFrameInput = generationFrameIds.length > 0;
+  const hasSelectedFrameInput = selectedFrameIds.length > 0;
   const isTextToVideo = selectedFrameIds.length === 0;
   const selectedFrameInfoById = new Map(selectedFrames.map((frame) => [frame.id, frame]));
   const unsupportedGeminiFrames = selectedVideoModelFamily === "gemini"
@@ -243,14 +437,7 @@ export function CustomerVideoWorkspace({
         `El video Gemini necesita fotogramas JPG o PNG. Vuelve a subir ${unsupportedGeminiFrames.length === 1 ? "este fotograma" : "estos fotogramas"} como JPG o PNG, o cambia a Grok para WebP/referencias.`
       )
     : "";
-  const unsupportedGeminiReferenceMessage = selectedModelNeedsFrames && hasReadyFrameInput && promptSuggestsPeopleReference(trimmedPromptNote)
-    ? vt(
-        spanish,
-        "For people, babies, children, portraits, selfies, or family photos, use Grok. Gemini frame references are limited to products, objects, landscapes, pets, illustrations, or fictional/stylized subjects.",
-        "Para personas, bebes, ninos, retratos, selfies o fotos familiares, usa Grok. Las referencias de Gemini se limitan a productos, objetos, paisajes, mascotas, ilustraciones o sujetos ficticios/estilizados."
-      )
-    : "";
-  const geminiSwitchMessages = [unsupportedGeminiReferenceMessage, unsupportedGeminiFrameMessage].filter(Boolean);
+  const geminiSwitchMessages = [unsupportedGeminiFrameMessage].filter(Boolean);
   const geminiSwitchMessage = geminiSwitchMessages[0] ?? "";
   const canSwitchGeminiToGrok = selectedVideoModelFamily === "gemini" && Boolean(geminiSwitchMessage);
   const needsTextToVideoConfirmation = !selectedModelNeedsFrames && isTextToVideo && trimmedPromptNote.length > 0;
@@ -259,6 +446,15 @@ export function CustomerVideoWorkspace({
     "No frame images are selected. This will run as text-to-video and follow only your written prompt. Select frame images on the left for image-to-video, or continue only if you want a prompt-only result.",
     "No hay fotogramas seleccionados. Esto se ejecutara como texto a video y seguira solo tu prompt escrito. Selecciona fotogramas a la izquierda para imagen a video, o continua solo si quieres un resultado solo con prompt."
   );
+  const promptRiskMessages = videoPromptRiskMessages({
+    aspectRatio: selectedAspectRatio,
+    modelFamily: selectedVideoModelFamily,
+    prompt: trimmedPromptNote,
+    selectedFrameCount: selectedFrameIds.length,
+    spanish
+  });
+  const blockingPromptRisk = promptRiskMessages.find((risk) => risk.severity === "block");
+  const blockingPromptRiskMessage = blockingPromptRisk?.message ?? "";
   const isSubmitting = pending || submissionPending;
   const generateButtonLabel = isSubmitting
     ? vt(spanish, "Starting", "Iniciando")
@@ -267,7 +463,7 @@ export function CustomerVideoWorkspace({
       : textToVideoConfirmArmed && needsTextToVideoConfirmation
       ? vt(spanish, "Generate text-to-video", "Generar texto a video")
       : vt(spanish, "Generate video", "Generar video");
-  const canGenerateCurrentVideo = !hasPendingFrameUploads && (hasReadyFrameInput || (!selectedModelNeedsFrames && trimmedPromptNote.length > 0));
+  const canGenerateCurrentVideo = hasSelectedFrameInput || hasReadyFrameInput || (!selectedModelNeedsFrames && trimmedPromptNote.length > 0);
 
   useEffect(() => {
     if (!retryDraft || appliedRetryDraftKeyRef.current === retryDraft.key) return;
@@ -281,7 +477,12 @@ export function CustomerVideoWorkspace({
     setSelectedFrameIds(restoredFrameIds);
     if (restoredThemeId) setSelectedThemeId(restoredThemeId);
     setSelectedVideoModelFamily(restoredModelFamily);
-    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(retryDraft.durationSeconds, restoredFrameIds.length, undefined, restoredModelFamily));
+    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(
+      retryDraft.durationSeconds,
+      restoredFrameIds.length,
+      undefined,
+      restoredModelFamily
+    ));
     if (retryDraft.durationSeconds !== undefined && restoredThemeId) retryDurationThemeIdRef.current = restoredThemeId;
     if (isVideoAspectRatio(retryDraft.aspectRatio)) setSelectedAspectRatio(retryDraft.aspectRatio);
     if (isVideoResolution(retryDraft.resolution)) setSelectedResolution(retryDraft.resolution);
@@ -298,7 +499,12 @@ export function CustomerVideoWorkspace({
       retryDurationThemeIdRef.current = null;
       return;
     }
-    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(selectedDurationSeconds, selectedFrameIds.length, selectedTheme.durationSeconds, selectedVideoModelFamily));
+    setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(
+      selectedDurationSeconds,
+      selectedFrameIds.length,
+      selectedTheme.durationSeconds,
+      selectedVideoModelFamily
+    ));
   }, [selectedDurationSeconds, selectedFrameIds.length, selectedTheme, selectedVideoModelFamily]);
 
   useEffect(() => {
@@ -313,6 +519,11 @@ export function CustomerVideoWorkspace({
   }, [needsTextToVideoConfirmation, textToVideoConfirmationMessage]);
 
   useEffect(() => {
+    if (blockingPromptRiskMessage) return;
+    setMessage((current) => isPromptFrameReferenceBlockingMessage(current) ? "" : current);
+  }, [blockingPromptRiskMessage]);
+
+  useEffect(() => {
     if (selectedDurationSeconds !== effectiveDurationSeconds) {
       setSelectedDurationSeconds(effectiveDurationSeconds);
     }
@@ -323,6 +534,13 @@ export function CustomerVideoWorkspace({
     setTextToVideoConfirmArmed(false);
     setMessage(vt(spanish, "Select frame images on the left, then generate image-to-video.", "Selecciona fotogramas a la izquierda y luego genera imagen a video."));
     onOpenFrameManager();
+  }
+
+  function applyVideoPromptTemplate() {
+    setPromptNote(VIDEO_PROMPT_TEMPLATE);
+    setTextToVideoConfirmArmed(false);
+    setTextToVideoConfirmOpen(false);
+    setMessage("Template added. Edit each step, then generate your video.");
   }
 
   async function generateVideo(options: { confirmedTextToVideo?: boolean } = {}) {
@@ -344,12 +562,18 @@ export function CustomerVideoWorkspace({
       setMessage(vt(spanish, "Describe the video you want, or select frame images on the left for image-to-video.", "Describe el video que quieres o selecciona fotogramas a la izquierda para imagen a video."));
       return;
     }
+    if (blockingPromptRisk) {
+      setTextToVideoConfirmArmed(false);
+      setTextToVideoConfirmOpen(false);
+      setMessage(blockingPromptRisk.message);
+      return;
+    }
     if (canSwitchGeminiToGrok) {
       setSelectedVideoModelFamily("grok");
       setMessage(vt(
         spanish,
-        "Switched to Grok for people or WebP/reference frames. Review the setup, then generate the video.",
-        "Se cambio a Grok para personas o fotogramas WebP/referencias. Revisa la configuracion y luego genera el video."
+        "Switched to Grok for frame formats that Gemini cannot use directly. Review the setup, then generate the video.",
+        "Se cambio a Grok para formatos de fotograma que Gemini no puede usar directamente. Revisa la configuracion y luego genera el video."
       ));
       return;
     }
@@ -447,7 +671,7 @@ export function CustomerVideoWorkspace({
       body: JSON.stringify({ ...requestBody, idempotencyKey })
     });
     let response: Response;
-    let result: { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string };
+    let result: { job?: { id: string }; customerBalance?: PublicCustomer["balance"]; error?: string; reused?: boolean };
     try {
       response = await submitRequest();
       result = (await response.json().catch(() => ({}))) as typeof result;
@@ -468,15 +692,20 @@ export function CustomerVideoWorkspace({
     }
     window.clearTimeout(timeout);
     setPending(false);
-    if (!response.ok || !result.job) {
+    if (result.job?.id) {
+      // Worker dispatch can fail after the job is created; show that job instead of a duplicate creation-failed card.
+      submitAttemptRef.current = null;
+      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+      onJobCreated(result.job.id, { customerBalance: result.customerBalance });
+      return;
+    }
+    if (!result.job?.id) {
+      submitAttemptRef.current = null;
       const nextMessage = errorText(result.error, response.status, spanish, selectedVideoModelFamily);
       setMessage(nextMessage);
       onGenerationFailed?.(nextMessage);
       return;
     }
-    submitAttemptRef.current = null;
-    window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-    onJobCreated(result.job.id, { customerBalance: result.customerBalance });
   }
 
   return (
@@ -512,8 +741,19 @@ export function CustomerVideoWorkspace({
                   : vt(spanish, "Use selected frames when you want image-to-video, or write a standalone prompt when you want text-to-video.", "Usa fotogramas seleccionados para imagen a video, o escribe un prompt independiente para texto a video.")}
               </p>
             </div>
-            <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/62">
-              {selectedFrameIds.length}/{maxFrames} {vt(spanish, "frames", "fotogramas")}
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <button
+                aria-label="Use video prompt template"
+                className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[#31d4ff]/30 bg-[#31d4ff]/10 px-3 text-xs font-semibold text-[#d8f7ff] transition hover:border-[#31d4ff]/55 hover:bg-[#31d4ff]/16 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#31d4ff]/45"
+                onClick={applyVideoPromptTemplate}
+                type="button"
+              >
+                <Sparkles className="h-3.5 w-3.5" strokeWidth={1.9} />
+                Use template
+              </button>
+              <div className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/62">
+                {selectedFrameIds.length}/{maxFrames} {vt(spanish, "frames", "fotogramas")}
+              </div>
             </div>
           </div>
 
@@ -539,13 +779,19 @@ export function CustomerVideoWorkspace({
             <label className="block">
               <span className="sr-only">{vt(spanish, "Video direction", "Direccion de video")}</span>
               <textarea
-                className="min-h-[156px] w-full resize-none rounded-[14px] border border-transparent bg-transparent px-2 py-2 text-base leading-7 text-white outline-none transition placeholder:text-white/28 focus:border-[#31d4ff]/55 focus:bg-black/14 sm:min-h-[172px]"
-                maxLength={600}
+                className="min-h-[156px] w-full resize-y rounded-[14px] border border-transparent bg-transparent px-2 py-2 text-base leading-7 text-white outline-none transition placeholder:text-white/28 focus:border-[#31d4ff]/55 focus:bg-black/14 sm:min-h-[172px]"
+                maxLength={VIDEO_PROMPT_MAX_LENGTH}
                 onChange={(event) => {
                   setPromptNote(event.target.value);
                   setTextToVideoConfirmArmed(false);
                   setTextToVideoConfirmOpen(false);
-                  setMessage((current) => current === textToVideoConfirmationMessage ? "" : current);
+                  setMessage((current) =>
+                    current === textToVideoConfirmationMessage ||
+                    isPromptFrameReferenceBlockingMessage(current) ||
+                    promptRiskMessages.some((risk) => risk.message === current)
+                      ? ""
+                      : current
+                  );
                 }}
                 placeholder={vt(
                   spanish,
@@ -559,6 +805,21 @@ export function CustomerVideoWorkspace({
                 value={promptNote}
               />
             </label>
+            {promptRiskMessages.length ? (
+              <div className="mt-3 flex items-start gap-2 rounded-[12px] border border-amber-300/18 bg-amber-300/[0.08] p-3 text-amber-50">
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-200" strokeWidth={1.9} />
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-200/82">{vt(spanish, "Prompt check", "Revision del prompt")}</p>
+                  <div className="mt-1 grid gap-1">
+                    {promptRiskMessages.map((risk) => (
+                      <p className={`text-xs leading-5 ${risk.severity === "block" ? "font-semibold text-red-200" : "text-amber-50/76"}`} key={risk.id}>
+                        {risk.message}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : null}
 
             <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap items-center gap-2">
@@ -649,7 +910,9 @@ export function CustomerVideoWorkspace({
                 <div className="inline-flex rounded-[10px] border border-white/10 bg-black/16 p-1">
                   {availableDurationOptions.map((option) => {
                     const selected = effectiveDurationSeconds === option.seconds;
-                    const cost = selectedTheme ? videoDurationCreditCost(selectedTheme.creditCost, option.seconds, selectedVideoModelFamily, selectedTheme.modelPricing) : 0;
+                    const cost = selectedTheme
+                      ? videoDurationCreditCost(selectedTheme.creditCost, option.seconds, selectedVideoModelFamily, selectedTheme.modelPricing)
+                      : 0;
                     return (
                       <button
                         className={`min-h-7 rounded-[8px] px-3 text-xs font-semibold transition ${selected ? "bg-white text-[#101114]" : "text-white/56 hover:bg-white/[0.08] hover:text-white"}`}

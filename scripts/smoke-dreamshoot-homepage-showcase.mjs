@@ -42,6 +42,57 @@ function assertPage(pageJson, label) {
   assert(settings.primaryHref === "/login", `${label}: primary CTA should stay customer-safe`);
 }
 
+function assetUrlsFromValue(value, urls = []) {
+  if (typeof value === "string") {
+    for (const part of value.split("|")) {
+      const url = part.trim();
+      if (url.startsWith("/assets/")) urls.push(url);
+    }
+    return urls;
+  }
+  if (!value || typeof value !== "object") return urls;
+  if (Array.isArray(value)) {
+    for (const item of value) assetUrlsFromValue(item, urls);
+    return urls;
+  }
+  for (const item of Object.values(value)) assetUrlsFromValue(item, urls);
+  return urls;
+}
+
+function assertMydreamshootsHomepageAssets(pageJson, label) {
+  const assetUrls = [...new Set(assetUrlsFromValue(pageJson))];
+  assert(assetUrls.length > 0, `${label}: expected homepage image assets`);
+  for (const url of assetUrls) {
+    const pathname = url.split("?")[0];
+    const assetFile = path.resolve(repoRoot, "public", `.${pathname}`);
+    assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing homepage image asset ${assetFile}`);
+  }
+}
+
+function imageSlugsForPage(pageJson) {
+  return String(pageJson?.sections?.generation_showcase_1?.settings?.imageSlugs ?? "")
+    .split("|")
+    .map((slug) => slug.trim())
+    .filter(Boolean);
+}
+
+function assertMydreamshootsImageSlugPriority(pageJson, label) {
+  const slugs = imageSlugsForPage(pageJson);
+  const expected = [
+    "world-cup-fan-photos",
+    "christmas-couple",
+    "christmas-photos",
+    "creator-portraits",
+    "gala-photos",
+    "holiday",
+    "professional-headshots",
+    "cyberpunk"
+  ];
+  assert(slugs.join("|") === expected.join("|"), `${label}: MyDreamShoots showcase image slugs drifted: ${slugs.join("|")}`);
+  assert(!slugs.includes("thanksgiving-group-photos"), `${label}: Thanksgiving should stay out of showcase image front row until a dedicated clear asset exists`);
+  assert(!slugs.includes("halloween-party-photos"), `${label}: Halloween should stay out of showcase image front row until a dedicated clear asset exists`);
+}
+
 for (const store of showcaseStores) {
   const site = siteForStore(store);
   assert(site, `${store.key}: site missing from platform state`);
@@ -49,16 +100,31 @@ for (const store of showcaseStores) {
   assert(home, `${store.key}: home page missing`);
   assertPage(home?.draftJson, `${store.key}: draft home`);
   assertPage(home?.publishedJson, `${store.key}: published home`);
+  if (store.key === "mydreamshoots") {
+    assertMydreamshootsImageSlugPriority(home?.draftJson, `${store.key}: draft home`);
+    assertMydreamshootsImageSlugPriority(home?.publishedJson, `${store.key}: published home`);
+    assertMydreamshootsHomepageAssets(home?.draftJson, `${store.key}: draft home`);
+    assertMydreamshootsHomepageAssets(home?.publishedJson, `${store.key}: published home`);
+    assert(store.imageSlugs.join("|") === imageSlugsForPage(home?.publishedJson).join("|"), `${store.key}: showcase seed and published page image slug order differ`);
+  }
 
   for (const theme of (state.siteThemes ?? []).filter((item) => item.siteId === store.siteId)) {
     const template = theme.templates?.index;
     assert(template?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${store.key}: site theme ${theme.id} missing showcase`);
     assertOrder(template?.content_for_page ?? [], `${store.key}: site theme ${theme.id}`);
+    if (store.key === "mydreamshoots") {
+      assertMydreamshootsImageSlugPriority({ sections: { generation_showcase_1: template?.sections?.generation_showcase_1 } }, `${store.key}: site theme ${theme.id}`);
+      assertMydreamshootsHomepageAssets(template, `${store.key}: site theme ${theme.id}`);
+    }
   }
 
   for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === store.siteId)) {
     const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/")?.publishedJson;
     assertPage(snapshotHome, `${store.key}: publication ${publication.version}`);
+    if (store.key === "mydreamshoots") {
+      assertMydreamshootsImageSlugPriority(snapshotHome, `${store.key}: publication ${publication.version}`);
+      assertMydreamshootsHomepageAssets(snapshotHome, `${store.key}: publication ${publication.version}`);
+    }
   }
 
   const categories = (state.videoThemeCategories ?? []).filter((category) => category.siteId === store.siteId);
@@ -100,6 +166,8 @@ for (const [hash, keys] of videoHashes.entries()) {
 const storefrontRender = fs.readFileSync(path.join(repoRoot, "src/lib/storefront-render.tsx"), "utf8");
 assert(storefrontRender.includes("prompt: \"\""), "storefront lazy payload should redact video theme prompts");
 assert(storefrontRender.includes("videoThemes: needsVideoThemes ? trimVideoThemesForStorefront"), "storefront lazy payload should request video themes only for showcase sections");
+assert(storefrontRender.includes("pageSectionTypes(pageJson).has(\"dreamshoot_generation_showcase\") && !pageRenderData.videoThemes.length"), "full storefront page render should recover public showcase video themes when the lean runtime state omits them");
+assert(storefrontRender.includes("loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32)"), "full storefront page render should use the cached public video theme reader for the homepage showcase fallback");
 
 const themeRenderer = fs.readFileSync(path.join(repoRoot, "src/components/theme-renderer.tsx"), "utf8");
 const showcaseRenderer = themeRenderer.match(/if \(section\.type === "dreamshoot_generation_showcase"\)[\s\S]*?if \(section\.type === "dreamshoot_featured_pack"\)/)?.[0] ?? "";
@@ -107,10 +175,13 @@ assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should 
 assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase rails should auto-scroll without duplicating card data");
 assert(showcaseRenderer.includes("<figure"), "showcase material cards should render as display-only figures");
 assert(showcaseRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should use dedicated AI-generated homepage image assets");
+assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
+assert(showcaseRenderer.includes("StorefrontNaturalImage"), "showcase image cards should render natural-height images instead of fixed square shells");
 assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image example"), "showcase images should have customer-created alt text");
 assert(showcaseRenderer.includes('fetchPriority={card.index < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image cards");
 assert(showcaseRenderer.includes('loading={card.index < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image cards");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
+assert(showcaseRenderer.includes("priority={card.index < 4}"), "showcase should eagerly prepare initially visible motion cards");
 assert(!showcaseRenderer.includes("autoLoad={railIndex"), "showcase videos must not leave most rail cards poster-only behind an index gate");
 assert(showcaseRenderer.includes("customer-created video example"), "showcase videos should have accessible labels");
 assert(!showcaseRenderer.includes("[...imageCards, ...imageCards]"), "showcase image rail must not duplicate the data array");
@@ -122,6 +193,7 @@ assert(!showcaseRenderer.includes("href={hrefFor(site, card.href)}"), "showcase 
 assert(!showcaseRenderer.includes("Make a clip"), "showcase material cards should not show workspace CTAs");
 
 const showcaseVideoComponent = fs.readFileSync(path.join(repoRoot, "src/components/storefront/dreamshoot-showcase-video.tsx"), "utf8");
+assert(showcaseVideoComponent.includes("priority?: boolean") && showcaseVideoComponent.includes("initialShouldLoad = priority"), "showcase video component should support priority eager loading for initially visible cards");
 assert(showcaseVideoComponent.includes("video.play()"), "showcase video component should actively start muted playback");
 assert(showcaseVideoComponent.includes("IntersectionObserver"), "showcase video component should play videos when the showcase rail is near the viewport");
 assert(showcaseVideoComponent.includes("autoPlay={shouldLoad}") && showcaseVideoComponent.includes("loop") && showcaseVideoComponent.includes("muted") && showcaseVideoComponent.includes("playsInline"), "showcase video component should keep gated autoplay attributes");

@@ -76,8 +76,12 @@ function sourceAssetIdsFromJobRequest(value: unknown): string[] {
     .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
-function customerAssetPreviewUrl(storageKey: string): string {
-  return `/api/local-assets/${normalizeCustomerAssetStorageKey(storageKey)}`;
+function customerAssetPreviewUrl(asset: Pick<AssetUpload, "id" | "siteId" | "customerId" | "role" | "storageKey">): string {
+  const storageKey = normalizeCustomerAssetStorageKey(asset.storageKey);
+  if (asset.role === "output") {
+    return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
+  }
+  return `/api/local-assets/${storageKey}`;
 }
 
 export async function createAssetUploadRelational(
@@ -307,12 +311,14 @@ export async function readCustomerAssetFileByStorageKey(params: {
   });
   const filePath = customerAssetFilePath(storageKey);
   if (fs.existsSync(filePath)) {
-    return { asset: params.asset, bytes: fs.readFileSync(filePath), mimeType: params.asset.mimeType };
+    const bytes = fs.readFileSync(filePath);
+    return { asset: params.asset, bytes, mimeType: params.asset.mimeType };
   }
   if (hasRemoteCustomerAssetReadSource()) {
     try {
       const remote = await readCustomerAssetFileRemote({ storageKey });
-      return { asset: params.asset, bytes: remote.bytes, mimeType: remote.mimeType || params.asset.mimeType };
+      const mimeType = remote.mimeType || params.asset.mimeType;
+      return { asset: params.asset, bytes: remote.bytes, mimeType };
     } catch {
       throw new StoreError("asset_file_missing", 404);
     }
@@ -331,7 +337,7 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     altText,
     label: asset.label,
     storageKey,
-    previewUrl: customerAssetPreviewUrl(storageKey),
+    previewUrl: customerAssetPreviewUrl(asset),
     previewStatus: hasReadablePreview ? "ready" : "loading",
     downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
     mimeType: asset.mimeType,

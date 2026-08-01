@@ -39,6 +39,7 @@ export type SectionType =
   | "faq"
   | "policy_content"
   | "blog_list"
+  | "blog_article"
   | "rich_text"
   | "media_banner"
   | "before_after_gallery"

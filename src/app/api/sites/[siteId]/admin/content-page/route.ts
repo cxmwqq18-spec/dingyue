@@ -12,7 +12,7 @@ import {
 } from "@/lib/server-store";
 import { prisma } from "@/lib/prisma";
 import { mapProduct, toCreativePack, toMediaAsset, toSite, toSiteAiApp } from "@/lib/stores/prisma-mappers";
-import type { Site, ThemePageJson } from "@/lib/types";
+import type { Site, ThemePage, ThemePageJson } from "@/lib/types";
 
 const contentPageCache = createServerTtlCache("admin-content-page", 15_000);
 
@@ -48,6 +48,78 @@ function pageSummaryJson(value: unknown): ThemePageJson {
   };
 }
 
+type BlogSummaryArticle = {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  publishedAt: string;
+  readMinutes: string;
+  draftStatus: "dirty" | "live";
+  seoStatus: "ready" | "needs_review";
+};
+
+type BlogSummary = {
+  homeSlug: string;
+  articleCount: number;
+  footerLinkPresent: boolean;
+  articles: BlogSummaryArticle[];
+};
+
+function sectionSetting(entry: { settings?: Record<string, unknown> } | undefined, key: string, fallback = ""): string {
+  const value = entry?.settings?.[key];
+  if (typeof value === "string") return value.trim() || fallback;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  return fallback;
+}
+
+function blogArticleSection(page: ThemePage) {
+  const orderedSections = page.publishedJson.sectionsOrder
+    .map((sectionId) => page.publishedJson.sections[sectionId])
+    .filter(Boolean);
+  return orderedSections.find((section) => section.type === "blog_article") ??
+    orderedSections.find((section) => section.type === "rich_text");
+}
+
+function pageSeoReady(page: ThemePage): boolean {
+  const seo = page.publishedJson.seo;
+  return Boolean(seo?.title?.trim() && seo.description?.trim() && seo.canonicalPath?.trim() && seo.robots?.index !== false);
+}
+
+function footerHasBlogLink(site: Site): boolean {
+  const footerBlocks = site.themeSettings.publishedJson.globalSections?.footer?.blocks ?? [];
+  const footerLinks = site.themeSettings.publishedJson.navigation?.footerLinks ?? [];
+  return [
+    ...footerLinks.map((link) => link.href),
+    ...footerBlocks.map((block) => sectionSetting(block, "href"))
+  ].some((href) => href === "/blog" || href.startsWith("/blog?") || href.startsWith("/blog#"));
+}
+
+function buildBlogSummary(site: Site): BlogSummary {
+  const articles = site.pages
+    .filter((page) => page.slug.startsWith("/blog/"))
+    .map((page): BlogSummaryArticle => {
+      const article = blogArticleSection(page);
+      return {
+        id: page.id,
+        slug: page.slug,
+        title: sectionSetting(article, "title", page.title),
+        author: sectionSetting(article, "author", site.name),
+        publishedAt: sectionSetting(article, "publishedAt"),
+        readMinutes: sectionSetting(article, "readMinutes"),
+        draftStatus: JSON.stringify(page.draftJson) === JSON.stringify(page.publishedJson) ? "live" : "dirty",
+        seoStatus: pageSeoReady(page) ? "ready" : "needs_review"
+      };
+    })
+    .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt) || left.title.localeCompare(right.title));
+  return {
+    homeSlug: site.pages.some((page) => page.slug === "/blog") ? "/blog" : "",
+    articleCount: articles.length,
+    footerLinkPresent: footerHasBlogLink(site),
+    articles
+  };
+}
+
 function lightSite(record: {
   id: string;
   name: string;
@@ -59,6 +131,7 @@ function lightSite(record: {
   branding: unknown;
   domains?: Array<{ domain: string; isPrimary: boolean }>;
   connect?: { stripeAccountId: string; onboardingStatus: string; chargesEnabled: boolean; payoutsEnabled: boolean } | null;
+  settings?: { draftJson: unknown; publishedJson: unknown } | null;
   pages?: Array<{
     id: string;
     siteId: string;
@@ -81,6 +154,7 @@ function lightSite(record: {
     branding: record.branding,
     domains: record.domains,
     connect: record.connect,
+    settings: record.settings,
     pages: []
   });
   site.pages = (record.pages ?? []).map((page) => ({
@@ -130,6 +204,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     }
     const corePayload = {
       ok: true,
+      blogSummary: buildBlogSummary(site),
       site: editor
         ? { ...site, pages: site.pages.slice(0, adminContentPageTake) }
         : {
@@ -159,6 +234,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           signupCreditGrant: true,
           branding: true,
           connect: true,
+          settings: { select: { draftJson: true, publishedJson: true } },
           domains: {
             orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
             take: adminDomainListTake,
@@ -174,19 +250,21 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               templateKey: true,
               slug: true,
               title: true,
-              ...(editor ? { draftJson: true, publishedJson: true } : {})
+              draftJson: true,
+              publishedJson: true
             }
           },
-          ...(editor ? { settings: { select: { draftJson: true, publishedJson: true } } } : {})
         }
       })
     );
 
     if (!siteRecord) return undefined;
+    const fullSite = toSite(siteRecord);
 
     return {
       ok: true,
-      site: editor ? toSite(siteRecord) : lightSite(siteRecord),
+      blogSummary: buildBlogSummary(fullSite),
+      site: editor ? fullSite : lightSite(siteRecord),
       publications: []
     };
   };
