@@ -604,15 +604,35 @@ async function submitJob(page) {
 }
 
 async function openResults(page) {
+  const resultsSection = page.locator("#video-workspace-videos").first();
   const tab = page.getByRole("button", { name: /Video results/i }).first();
-  if (await tab.isVisible().catch(() => false)) {
-    await clickWithPointer(page, tab, { force: true });
-  } else {
-    await page.goto(`${absoluteUrl("/app/create")}#video-workspace-videos`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    if (await resultsSection.isVisible({ timeout: 2_000 }).catch(() => false)) return;
+    if (await tab.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await clickWithPointer(page, tab, { force: true }).catch(() => undefined);
+    } else if (attempt === 1) {
+      await page.goto(`${absoluteUrl("/app/create")}#video-workspace-videos`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+    }
+    await page.evaluate(() => {
+      const buttons = [...document.querySelectorAll("button")];
+      const resultsButton = buttons.find((button) => /Video results/i.test(button.textContent || ""));
+      if (resultsButton) resultsButton.click();
+      window.history.replaceState(null, "", "#video-workspace-videos");
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+      document.getElementById("video-workspace-videos")?.scrollIntoView({ block: "start" });
+    }).catch(() => undefined);
+    await waitReady(page);
+    await installOverlay(page);
+    await page.waitForTimeout(1_000);
   }
-  await waitReady(page);
-  await installOverlay(page);
-  await page.locator("#video-workspace-videos").waitFor({ state: "visible", timeout: 60_000 });
+  const state = await page.evaluate(() => ({
+    hash: window.location.hash,
+    url: window.location.href,
+    hasResultsSection: Boolean(document.getElementById("video-workspace-videos")),
+    visibleText: document.body.innerText.slice(0, 1200)
+  })).catch(() => ({}));
+  log("video results tab did not become visible", state);
+  await resultsSection.waitFor({ state: "visible", timeout: 15_000 });
 }
 
 async function showGenerateClickOnly(page) {

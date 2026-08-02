@@ -2123,7 +2123,7 @@ function storefrontSectionLabel(type: string): string {
   return labels[type] ?? type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark1";
+const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark30";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
