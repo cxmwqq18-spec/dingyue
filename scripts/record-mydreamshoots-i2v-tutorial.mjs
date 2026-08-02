@@ -27,7 +27,7 @@ const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
 const viewport = { width: 1920, height: 1080 };
 const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 10);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
-const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 2));
+const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
@@ -342,18 +342,26 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
 
   let lastError = "login_failed";
-  for (const [index, candidate] of candidates.entries()) {
-    const response = await context.request.post(apiUrl(`/api/sites/${siteId}/auth/login`), {
-      data: { email: candidate.email, password: candidate.password },
-      failOnStatusCode: false
-    });
-    const data = await response.json().catch(() => ({}));
-    if (response.ok() && data.ok !== false) {
-      log("authenticated browser context", { candidate: index + 1, source: candidate.source });
-      return;
+  const authRounds = Math.max(1, Number(process.env.TUTORIAL_AUTH_RETRIES || 6));
+  for (let round = 1; round <= authRounds; round += 1) {
+    let sawTransient = false;
+    for (const [index, candidate] of candidates.entries()) {
+      const response = await context.request.post(apiUrl(`/api/sites/${siteId}/auth/login`), {
+        data: { email: candidate.email, password: candidate.password },
+        failOnStatusCode: false,
+        timeout: 60_000
+      });
+      const data = await response.json().catch(() => ({}));
+      if (response.ok() && data.ok !== false) {
+        log("authenticated browser context", { candidate: index + 1, source: candidate.source, round });
+        return;
+      }
+      lastError = data.error || response.status();
+      sawTransient = sawTransient || response.status() >= 500 || response.status() === 429;
+      log(`credential candidate ${index + 1} failed`, { error: lastError, source: candidate.source, round });
     }
-    lastError = data.error || response.status();
-    log(`credential candidate ${index + 1} failed`, { error: lastError, source: candidate.source });
+    if (!sawTransient) break;
+    await page.waitForTimeout(10_000);
   }
   throw new Error(`customer_login_failed: ${sanitizeText(lastError)}`);
 }
@@ -415,22 +423,183 @@ async function configurePrompt(page) {
   if (await six.isVisible().catch(() => false)) await clickWithPointer(page, six, { force: true }).catch(() => undefined);
 }
 
+async function submitJobViaApiFallback(page, reason) {
+  const result = await page.evaluate(async ({ siteId, promptText, reason }) => {
+    function cookieValue(name) {
+      return document.cookie
+        .split(";")
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(`${name}=`))
+        ?.split("=")
+        .slice(1)
+        .join("=");
+    }
+    async function jsonFetch(url, options = {}) {
+      const response = await fetch(url, { cache: "no-store", credentials: "include", ...options });
+      const data = await response.json().catch(() => ({}));
+      return { response, data };
+    }
+    let runtimeResponse = await jsonFetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=direct-${Date.now()}`);
+    if (!runtimeResponse.response.ok) {
+      return { ok: false, error: `runtime_${runtimeResponse.response.status}` };
+    }
+    const customer = runtimeResponse.data.customer || runtimeResponse.data.runtime?.customer;
+    const assets = Array.isArray(runtimeResponse.data.runtime?.assets) ? runtimeResponse.data.runtime.assets : [];
+    const frameAssets = assets
+      .filter((asset) => asset?.subjectRole === "video_frame" && asset?.role === "input" && String(asset.mimeType || "").startsWith("image/"))
+      .sort((a, b) => Date.parse(b.createdAt || "") - Date.parse(a.createdAt || ""));
+    const frameAsset = frameAssets.find((asset) => /source-frame-clean/i.test(asset.label || "")) || frameAssets[0];
+    if (!customer?.id) return { ok: false, error: "customer_missing" };
+    if (!frameAsset?.id) return { ok: false, error: "frame_asset_missing" };
+
+    const themeResponse = await jsonFetch(`/api/sites/${siteId}/video-themes?pageSize=100&includeCategories=1&refresh=${Date.now()}`);
+    if (!themeResponse.response.ok) return { ok: false, error: `themes_${themeResponse.response.status}` };
+    const themes = Array.isArray(themeResponse.data.themes) ? themeResponse.data.themes : [];
+    const selectedTheme = themes.find((theme) => /automatic motion/i.test(`${theme.name || ""} ${theme.headline || ""}`)) || themes[0];
+    if (!selectedTheme?.id) return { ok: false, error: "video_theme_missing" };
+
+    const frameAssetIds = [frameAsset.id];
+    const idempotencyKey = `tutorial-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const csrf = cookieValue(`customer_csrf_${siteId}`);
+    const requestBody = {
+      customerId: customer.id,
+      aiAppSlug: "video_generator",
+      idempotencyKey,
+      params: {
+        mode: "video",
+        outputType: "video",
+        videoModelFamily: "auto",
+        modelFamily: "auto",
+        videoThemeId: selectedTheme.id,
+        videoThemeSlug: selectedTheme.slug,
+        videoThemeCategorySlug: selectedTheme.category?.slug,
+        videoThemeCategoryLabel: selectedTheme.category?.label,
+        videoTheme: {
+          id: selectedTheme.id,
+          slug: selectedTheme.slug,
+          name: selectedTheme.name,
+          categorySlug: selectedTheme.category?.slug,
+          categoryLabel: selectedTheme.category?.label
+        },
+        duration: "6",
+        videoDuration: "6",
+        durationSeconds: 6,
+        videoDurationSeconds: 6,
+        aspect_ratio: "16:9",
+        aspectRatio: "16:9",
+        resolution: "720p",
+        estimatedCreditCost: 24,
+        assetIds: frameAssetIds,
+        fields: {
+          mode: "video",
+          outputType: "video",
+          videoInputMode: "image_to_video",
+          videoModelFamily: "auto",
+          modelFamily: "auto",
+          videoThemeId: selectedTheme.id,
+          videoThemeSlug: selectedTheme.slug,
+          videoThemeCategorySlug: selectedTheme.category?.slug,
+          videoThemeCategoryLabel: selectedTheme.category?.label,
+          videoThemeName: selectedTheme.name,
+          videoThemePrompt: selectedTheme.prompt,
+          frameAssetIds,
+          duration: "6",
+          videoDuration: "6",
+          durationSeconds: 6,
+          videoDurationSeconds: 6,
+          aspect_ratio: "16:9",
+          aspectRatio: "16:9",
+          resolution: "720p",
+          estimatedCreditCost: 24,
+          promptNote: promptText,
+          tutorialFallbackReason: reason
+        }
+      }
+    };
+    async function submit() {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 120_000);
+      try {
+        return await jsonFetch(`/api/sites/${siteId}/ai/jobs`, {
+          method: "POST",
+          signal: controller.signal,
+          headers: {
+            "Content-Type": "application/json",
+            "Idempotency-Key": idempotencyKey,
+            ...(csrf ? { "x-csrf-token": decodeURIComponent(csrf) } : {})
+          },
+          body: JSON.stringify(requestBody)
+        });
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    }
+    let submitResponse = await submit();
+    if (!submitResponse.response.ok && /csrf/i.test(String(submitResponse.data.error || ""))) {
+      await jsonFetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=csrf-${Date.now()}`).catch(() => undefined);
+      submitResponse = await submit();
+    }
+    if (!submitResponse.response.ok || !submitResponse.data.job?.id) {
+      return { ok: false, status: submitResponse.response.status, error: submitResponse.data.error || "job_create_failed" };
+    }
+    return {
+      ok: true,
+      jobId: submitResponse.data.job.id,
+      reused: Boolean(submitResponse.data.reused),
+      workerDispatchStatus: submitResponse.data.workerDispatch?.status,
+      frameAssetId: frameAsset.id
+    };
+  }, { siteId, promptText, reason });
+  if (!result.ok || !result.jobId) throw new Error(`video_job_api_fallback_failed: ${sanitizeText(result.error || result.status || "unknown")}`);
+  log("video job submitted via api fallback", {
+    jobId: result.jobId,
+    reused: Boolean(result.reused),
+    workerDispatchStatus: result.workerDispatchStatus,
+    reason
+  });
+  return String(result.jobId);
+}
+
 async function submitJob(page) {
   const button = page.locator("#video-step-generate").getByRole("button", { name: /Generate video/i }).first();
   await button.waitFor({ state: "visible", timeout: 45_000 });
-  await page.waitForFunction(() => {
-    const button = [...document.querySelectorAll("#video-step-generate button")].find((el) => /Generate video/i.test(el.textContent || ""));
-    return button && !button.disabled;
-  }, undefined, { timeout: 60_000 });
-  const responsePromise = page.waitForResponse((response) =>
-    response.url().includes(`/api/sites/${siteId}/ai/jobs`) && response.request().method() === "POST",
-  { timeout: 120_000 });
-  await clickWithPointer(page, button);
-  const response = await responsePromise;
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok() || !data.ok || !data.job?.id) throw new Error(`video_job_create_failed: ${sanitizeText(data.error || response.status())}`);
-  log("video job submitted", { jobId: data.job.id, reused: Boolean(data.reused), workerDispatchStatus: data.workerDispatch?.status });
-  return String(data.job.id);
+  const responsePredicate = (response) =>
+    response.url().includes(`/api/sites/${siteId}/ai/jobs`) && response.request().method() === "POST";
+  let lastMessage = "";
+  for (let attempt = 1; attempt <= 6; attempt += 1) {
+    await page.waitForFunction(() => {
+      const button = [...document.querySelectorAll("#video-step-generate button")].find((el) => /Generate video/i.test(el.textContent || ""));
+      return button && !button.disabled;
+    }, undefined, { timeout: 60_000 });
+    const responsePromise = page.waitForResponse(responsePredicate, { timeout: 120_000 }).catch((error) => ({ __error: error }));
+    await clickWithPointer(page, button);
+    const quickResponse = await Promise.race([
+      responsePromise,
+      page.waitForTimeout(4_000).then(() => null)
+    ]);
+    const response = quickResponse || await Promise.race([
+      responsePromise,
+      page.waitForTimeout(30_000).then(() => null)
+    ]);
+    if (response && !response.__error) {
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok() || !data.ok || !data.job?.id) throw new Error(`video_job_create_failed: ${sanitizeText(data.error || response.status())}`);
+      log("video job submitted", { jobId: data.job.id, reused: Boolean(data.reused), workerDispatchStatus: data.workerDispatch?.status });
+      return String(data.job.id);
+    }
+    lastMessage = await page.locator("#video-step-generate").textContent({ timeout: 5_000 }).catch(() => "");
+    if (/still checking your subscription|Frame uploads are still finishing|Video presets are still loading|Creating your video request/i.test(lastMessage)) {
+      log("generate click deferred by frontend state", { attempt, message: lastMessage.slice(-180) });
+      if (/still checking your subscription/i.test(lastMessage) && attempt >= 2) {
+        return await submitJobViaApiFallback(page, "frontend_subscription_loading");
+      }
+      await page.waitForTimeout(8_000);
+      continue;
+    }
+    log("generate click did not create request yet", { attempt, message: lastMessage.slice(-180) });
+    await page.waitForTimeout(5_000);
+  }
+  return await submitJobViaApiFallback(page, "frontend_no_job_response");
 }
 
 async function openResults(page) {
@@ -604,6 +773,7 @@ async function main() {
       } catch (error) {
         lastError = error;
         log(`video generation attempt ${attempt} failed`, { error: error instanceof Error ? error.message : String(error) });
+        if (/insufficient_credits|Choose a subscription|add enough credits/i.test(error instanceof Error ? error.message : String(error))) throw error;
         if (attempt >= maxAttempts) throw error;
         await page.waitForTimeout(2_000);
       }
