@@ -6,6 +6,8 @@ export const MAX_VIDEO_DURATION_SECONDS = 15;
 export const MAX_GROK_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
 export const VIDEO_MODEL_FAMILIES = ["grok", "gemini"] as const;
 export type VideoModelFamily = typeof VIDEO_MODEL_FAMILIES[number];
+export const AUTO_VIDEO_MODEL_FAMILY = "auto";
+export type VideoModelPreference = VideoModelFamily | typeof AUTO_VIDEO_MODEL_FAMILY;
 export const DEFAULT_VIDEO_MODEL_FAMILY: VideoModelFamily = "grok";
 export const DEFAULT_VIDEO_RESOLUTION = "720p";
 export type VideoResolution = typeof DEFAULT_VIDEO_RESOLUTION;
@@ -26,6 +28,19 @@ export function normalizeVideoModelFamily(value: unknown, fallback: VideoModelFa
   return value === "gemini" || value === "grok" ? value : fallback;
 }
 
+export function normalizeVideoModelPreference(
+  value: unknown,
+  fallback: VideoModelPreference = DEFAULT_VIDEO_MODEL_FAMILY
+): VideoModelPreference {
+  if (value === AUTO_VIDEO_MODEL_FAMILY) return AUTO_VIDEO_MODEL_FAMILY;
+  if (value === "gemini" || value === "grok") return value;
+  return fallback;
+}
+
+export function isAutoVideoModelPreference(value: unknown): value is typeof AUTO_VIDEO_MODEL_FAMILY {
+  return value === AUTO_VIDEO_MODEL_FAMILY;
+}
+
 export function normalizeVideoResolution(_value: unknown): VideoResolution {
   return DEFAULT_VIDEO_RESOLUTION;
 }
@@ -43,13 +58,18 @@ export function trimVideoFrameSelection(frameIds: string[], maxFrames: unknown):
   return frameIds.length > limit ? frameIds.slice(-limit) : frameIds;
 }
 
-function videoDurationOptionsForModelFamily(modelFamily: VideoModelFamily): VideoDurationOption[] {
-  return VIDEO_DURATION_OPTIONS.filter((option) => option.modelFamilies.includes(modelFamily));
+function videoDurationOptionsForModelPreference(modelPreference: VideoModelPreference): VideoDurationOption[] {
+  if (isAutoVideoModelPreference(modelPreference)) {
+    return VIDEO_DURATION_OPTIONS.filter((option) =>
+      VIDEO_MODEL_FAMILIES.every((family) => option.modelFamilies.includes(family))
+    );
+  }
+  return VIDEO_DURATION_OPTIONS.filter((option) => option.modelFamilies.includes(modelPreference));
 }
 
-function fallbackVideoDurationOption(modelFamily: VideoModelFamily, fallback: unknown): VideoDurationOption {
+function fallbackVideoDurationOption(modelPreference: VideoModelPreference, fallback: unknown): VideoDurationOption {
   const fallbackNumber = typeof fallback === "number" || typeof fallback === "string" ? Number(fallback) : DEFAULT_VIDEO_DURATION_SECONDS;
-  const options = videoDurationOptionsForModelFamily(modelFamily);
+  const options = videoDurationOptionsForModelPreference(modelPreference);
   return options.find((option) => option.seconds === Math.trunc(fallbackNumber)) ?? options[0] ?? VIDEO_DURATION_OPTIONS[0];
 }
 
@@ -58,9 +78,9 @@ export function normalizeVideoDurationSeconds(
   fallback: unknown = DEFAULT_VIDEO_DURATION_SECONDS,
   modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY
 ): VideoDurationSeconds {
-  const normalizedFamily = normalizeVideoModelFamily(modelFamily);
-  const options = videoDurationOptionsForModelFamily(normalizedFamily);
-  const fallbackOption = fallbackVideoDurationOption(normalizedFamily, fallback);
+  const normalizedPreference = normalizeVideoModelPreference(modelFamily);
+  const options = videoDurationOptionsForModelPreference(normalizedPreference);
+  const fallbackOption = fallbackVideoDurationOption(normalizedPreference, fallback);
   const parsed = typeof value === "number" || typeof value === "string" ? Number(value) : Number.NaN;
   if (!Number.isFinite(parsed)) return fallbackOption.seconds;
   const seconds = Math.trunc(parsed);
@@ -74,7 +94,7 @@ export function videoDurationOptionsForFrameCount(
   modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY
 ): VideoDurationOption[] {
   void frameCount;
-  return videoDurationOptionsForModelFamily(normalizeVideoModelFamily(modelFamily));
+  return videoDurationOptionsForModelPreference(normalizeVideoModelPreference(modelFamily));
 }
 
 export function normalizeVideoDurationSecondsForFrameCount(
@@ -83,9 +103,9 @@ export function normalizeVideoDurationSecondsForFrameCount(
   fallback: unknown = DEFAULT_VIDEO_DURATION_SECONDS,
   modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY
 ): VideoDurationSeconds {
-  const normalizedFamily = normalizeVideoModelFamily(modelFamily);
-  const normalized = normalizeVideoDurationSeconds(value, fallback, normalizedFamily);
-  const options = videoDurationOptionsForFrameCount(frameCount, normalizedFamily);
+  const normalizedPreference = normalizeVideoModelPreference(modelFamily);
+  const normalized = normalizeVideoDurationSeconds(value, fallback, normalizedPreference);
+  const options = videoDurationOptionsForFrameCount(frameCount, normalizedPreference);
   if (options.some((option) => option.seconds === normalized)) return normalized;
   return options[0]?.seconds ?? DEFAULT_VIDEO_DURATION_SECONDS;
 }
@@ -117,9 +137,27 @@ export function videoDurationCreditCost(
   modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY,
   pricing?: unknown
 ): number {
-  const normalizedFamily = normalizeVideoModelFamily(modelFamily);
-  const duration = normalizeVideoDurationSeconds(seconds, undefined, normalizedFamily);
-  return configuredDurationCreditCost(pricing, normalizedFamily, duration) ?? fallbackDurationCreditCost(baseCreditCost, duration);
+  const normalizedPreference = normalizeVideoModelPreference(modelFamily);
+  const duration = normalizeVideoDurationSeconds(seconds, undefined, normalizedPreference);
+  if (isAutoVideoModelPreference(normalizedPreference)) {
+    return Math.max(...VIDEO_MODEL_FAMILIES.map((family) =>
+      configuredDurationCreditCost(pricing, family, duration) ?? fallbackDurationCreditCost(baseCreditCost, duration)
+    ));
+  }
+  return configuredDurationCreditCost(pricing, normalizedPreference, duration) ?? fallbackDurationCreditCost(baseCreditCost, duration);
+}
+
+export function videoDurationCreditCostForModelFamilies(
+  baseCreditCost: unknown,
+  seconds: unknown,
+  modelFamilies: unknown,
+  pricing?: unknown
+): number {
+  const families = Array.isArray(modelFamilies)
+    ? Array.from(new Set(modelFamilies.map((family) => normalizeVideoModelPreference(family)).filter((family): family is VideoModelFamily => family === "grok" || family === "gemini")))
+    : [];
+  if (!families.length) return videoDurationCreditCost(baseCreditCost, seconds, AUTO_VIDEO_MODEL_FAMILY, pricing);
+  return Math.max(...families.map((family) => videoDurationCreditCost(baseCreditCost, seconds, family, pricing)));
 }
 
 export function defaultVideoModelPricing(baseCreditCost: unknown): VideoModelPricing {

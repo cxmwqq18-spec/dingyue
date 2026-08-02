@@ -6,6 +6,7 @@ import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 
 const PAGE_SIZE = 8;
 
@@ -198,12 +199,22 @@ export function AssetsPanel({
           Continue to tool setup
         </button>
       </div>
+      <DreamshootShowcasePreview>
       <div className="mt-5 grid gap-3">
         {visibleItems.length ? (
           visibleItems.map((asset) => (
             <div className={`grid gap-3 rounded-[20px] border p-4 text-sm md:grid-cols-[92px_1fr_0.32fr_0.4fr] ${cardClass}`} key={asset.id}>
               <div className={`overflow-hidden rounded-[16px] ${dark ? "bg-white/[0.06]" : "bg-[#efe6d9]"}`}>
-                <img className="aspect-[4/5] h-full w-full object-cover" src={asset.previewUrl} alt={asset.label} />
+                <img
+                  alt={asset.label}
+                  aria-label={`View ${asset.label} full screen`}
+                  className="aspect-[4/5] h-full w-full cursor-zoom-in object-cover"
+                  data-dreamshoot-preview-meta={asset.role === "input" ? "Private source image" : "Private gallery image"}
+                  data-dreamshoot-preview-src={asset.previewUrl}
+                  data-dreamshoot-preview-title={asset.label}
+                  data-dreamshoot-showcase-preview="image"
+                  src={asset.previewUrl}
+                />
               </div>
               <span className="min-w-0">
                 <span className={`block font-medium ${textClass}`}>{asset.label}</span>
@@ -248,6 +259,7 @@ export function AssetsPanel({
           </div>
         )}
       </div>
+      </DreamshootShowcasePreview>
       {totalPages > 1 ? (
         <div className={`mt-4 flex flex-wrap items-center justify-between gap-3 text-xs ${mutedClass}`}>
           <span className="whitespace-nowrap">

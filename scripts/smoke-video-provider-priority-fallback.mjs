@@ -43,11 +43,25 @@ check(
     !orderedVideoProvidersFunction.includes("const preferredProviders = Array.from(new Map")
 );
 check(
-  "dispatch prioritizes TokenGo Grok Imagine 1.5 only for text or single-frame video",
+  "explicit Grok dispatch keeps the TokenGo single-reference adapter ordering",
   orderedVideoProvidersFunction.includes("isTokengoGrokImagine15VideoProvider") &&
-    orderedVideoProvidersFunction.includes("videoFrameAssets(payload).length <= 1") &&
+    orderedVideoProvidersFunction.includes("const referenceAssetCount = videoFrameAssets(payload).length") &&
+    orderedVideoProvidersFunction.includes("const hasAtMostOneReference = referenceAssetCount <= 1") &&
     orderedVideoProvidersFunction.includes("? [...tokengoSingleReferenceProviders, ...otherVideoProviders]") &&
-    orderedVideoProvidersFunction.includes(": [...otherVideoProviders, ...tokengoSingleReferenceProviders]")
+    orderedVideoProvidersFunction.includes(": [...otherVideoProviders, ...tokengoSingleReferenceProviders]") &&
+    !orderedVideoProvidersFunction.toLowerCase().includes("seedance")
+);
+check(
+  "automatic video dispatch preserves priority order while explicit Grok keeps adapter ordering",
+  orderedVideoProvidersFunction.includes("requestedVideoModelPreference(payload)") &&
+    orderedVideoProvidersFunction.includes("videoProviderMatchesModelPreference(provider, selectedModelPreference)") &&
+    orderedVideoProvidersFunction.includes("videoProviderSupportsCurrentRequest(provider, referenceAssetCount)") &&
+    orderedVideoProvidersFunction.includes('if (selectedModelPreference === "auto") return ordered;')
+);
+check(
+  "platform provider model picker includes Seedance special without dispatch priority special-casing",
+  source.providerRoute.includes('"seedance-2-0-special"') &&
+    !orderedVideoProvidersFunction.toLowerCase().includes("seedance")
 );
 check(
   "worker uses paid-safe provider fallback gate after a failed create attempt",

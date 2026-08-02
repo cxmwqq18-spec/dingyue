@@ -714,6 +714,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("title", "Title", "See how it works"),
       textarea("subtitle", "Subtitle", "Frame a featured photo story, collection, or sports campaign."),
       image("imageUrl", "Poster image"),
+      url("videoUrl", "Video URL", ""),
       text("videoBadge", "Video badge", "HAPPY NEW YEAR"),
       text("playLabel", "Play label", "Watch tutorial")
     ]
@@ -1450,9 +1451,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       textarea("subtitle", "Subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set."),
       text("imageTitle", "Image heading", "Customer image themes"),
       text("videoTitle", "Video heading", "Customer video themes"),
-      textarea("imageSlugs", "Image package slugs", "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk"),
+      textarea("imageSlugs", "Priority image package slugs", "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk"),
       textarea("videoSlugs", "Video theme slugs", "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"),
-      range("itemLimit", "Items per group", 8, 1, 8),
+      range("videoItemLimit", "Video items", 8, 1, 8),
       text("primaryCta", "Primary CTA", "Start with your photos"),
       url("primaryHref", "Primary link", "/login")
     ],
@@ -1468,7 +1469,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           videoTitle: "Customer video themes",
           imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
           videoSlugs: "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
-          itemLimit: 8,
+          videoItemLimit: 8,
           primaryCta: "Start with your photos",
           primaryHref: "/login"
         }
@@ -2061,6 +2062,15 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("anchor", "Anchor", "proof"),
       text("title", "Title", "Common ways people use MyDreamShoots"),
       textarea("subtitle", "Subtitle"),
+      select(
+        "mode",
+        "Display mode",
+        [
+          ["use_cases", "Use cases"],
+          ["reviews", "Customer reviews"]
+        ],
+        "use_cases"
+      ),
       text("summaryTitle", "Summary title", "Ways people use MyDreamShoots"),
       textarea("summaryBody", "Summary body", "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits."),
       text("summaryRating", "Summary rating", ""),

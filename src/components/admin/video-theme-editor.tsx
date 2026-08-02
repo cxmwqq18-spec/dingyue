@@ -573,7 +573,7 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         <ErpField label="视频时长（秒）">
           <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 6} />
         </ErpField>
-        <ErpField hint="前台按所选模型和时长扣费；旧积分消耗仅作为未配置时的兜底基准。" label="分模型用户扣费" span="full">
+        <ErpField hint="前台自动按可用视频供应商候选中的最高配置价和时长扣费；旧积分消耗仅作为未配置时的兜底基准。" label="分模型用户扣费" span="full">
           <div className="grid gap-2 rounded-[10px] border border-slate-200 bg-slate-50 p-3 sm:grid-cols-4">
             {videoModelPricingInputs.map((item) => (
               <label className="grid gap-1 text-xs font-semibold text-slate-500" key={`${item.family}-${item.seconds}`}>

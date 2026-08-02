@@ -20,6 +20,7 @@ const defaultModelTypes = [
   "gpt-5.5",
   "grok-video-3-pro",
   "grok-video-3-max",
+  "seedance-2-0-special",
   "grok-imagine-video-special",
   "grok-imagine-1.5-special",
   "grok-imagine-video",

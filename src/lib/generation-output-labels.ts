@@ -206,7 +206,6 @@ export function generatedOutputCopy(params: {
   const videoJob = isVideoJob(params.job);
   const outputNoun = videoJob ? "Video" : "Image";
   const categoryLabel = params.job ? generationCategoryLabel(params.job) : "";
-  const videoModelLabel = videoJob ? generationVideoModelLabel(params.job) : "";
   const title = compactParts([
     generationThemeLabel(params.job),
     generationTimeLabel(params.job),
@@ -219,7 +218,6 @@ export function generatedOutputCopy(params: {
     title: shouldUseStoredLabel ? storedLabel : title,
     description: compactParts([
       params.job ? `Package: ${generationThemeLabel(params.job)}` : undefined,
-      videoModelLabel ? `Video model: ${videoModelLabel}` : undefined,
       params.job && categoryLabel ? `Category: ${categoryLabel}` : undefined,
       optionTitle,
       `Created ${generationTimeLabel(params.job)}`,
@@ -227,7 +225,6 @@ export function generatedOutputCopy(params: {
       `${outputNoun} ${params.imageIndex}`
     ]),
     tags: [
-      videoModelLabel ? `Model: ${videoModelLabel}` : undefined,
       params.job && categoryLabel ? `Category: ${categoryLabel}` : undefined
     ].filter((tag): tag is string => Boolean(tag))
   };

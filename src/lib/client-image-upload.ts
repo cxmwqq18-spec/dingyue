@@ -160,8 +160,8 @@ export function customerImageUploadErrorMessage(fileName: string, error: string 
   }
   if (error === "unsupported_video_frame_type") {
     return spanish
-      ? `${fileName} no es compatible para video Gemini. Usa un archivo JPG o PNG.`
-      : `${fileName} is not supported for Gemini video. Use a JPG or PNG file.`;
+      ? `${fileName} no es compatible como referencia de video. Usa un archivo JPG o PNG.`
+      : `${fileName} is not supported as a video reference. Use a JPG or PNG file.`;
   }
   if (error === "rate_limited") {
     return spanish

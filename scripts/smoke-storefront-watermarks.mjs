@@ -72,12 +72,12 @@ async function smokeImageWatermark(tempDir) {
   const watermarkedMeta = await sharp(watermarked).metadata();
   assert(result.changed, "image watermark should modify the file");
   assert(originalMeta.width === watermarkedMeta.width && originalMeta.height === watermarkedMeta.height, "image watermark should keep dimensions unchanged");
-  const diff = await cropAbsDiff(original, watermarked, { left: 360, top: 400, width: 250, height: 60 });
-  assert(diff > 2, `image watermark should change the bottom-right pixels, diff=${diff.toFixed(2)}`);
+  const diff = await cropAbsDiff(original, watermarked, { left: 430, top: 440, width: 190, height: 30 });
+  assert(diff > 0.2, `image subtle watermark should change the bottom-right pixels, diff=${diff.toFixed(2)}`);
   const second = await watermarkMediaFile(watermarked, "myDreamshoots.com");
   assert(second.skipped, "current image watermark marker should prevent repeated overlays");
   const marker = readWatermarkMarker(watermarked);
-  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "myDreamshoots.com", "image watermark marker should record version and text");
+  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "myDreamshoots.com" && marker.opacity === 0.05, "image watermark marker should record version, text, and opacity");
 }
 
 async function smokeVideoWatermark(tempDir) {
@@ -108,12 +108,12 @@ async function smokeVideoWatermark(tempDir) {
   const dimensions = await videoDimensions(watermarked);
   assert(dimensions.width === 320 && dimensions.height === 240, `video watermark should keep dimensions unchanged, got ${dimensions.width}x${dimensions.height}`);
   await runFfmpeg(["-hide_banner", "-loglevel", "error", "-y", "-ss", "0.1", "-i", watermarked, "-frames:v", "1", "-q:v", "3", watermarkedFrame]);
-  const diff = await cropAbsDiff(originalFrame, watermarkedFrame, { left: 145, top: 188, width: 160, height: 40 });
-  assert(diff > 1, `video watermark should change the bottom-right pixels, diff=${diff.toFixed(2)}`);
+  const diff = await cropAbsDiff(originalFrame, watermarkedFrame, { left: 185, top: 210, width: 125, height: 22 });
+  assert(diff > 0.2, `video subtle watermark should change the bottom-right pixels, diff=${diff.toFixed(2)}`);
   const second = await watermarkMediaFile(watermarked, "Aidreamcapes.com");
   assert(second.skipped, "current video watermark marker should prevent repeated overlays");
   const marker = readWatermarkMarker(watermarked);
-  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "Aidreamcapes.com", "video watermark marker should record version and text");
+  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "Aidreamcapes.com" && marker.opacity === 0.05, "video watermark marker should record version, text, and opacity");
 }
 
 async function smokeRouteContracts() {

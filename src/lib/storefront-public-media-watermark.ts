@@ -3,7 +3,7 @@ import "server-only";
 import { readFileSync } from "fs";
 import { readFile, readdir, stat, writeFile } from "fs/promises";
 import path from "path";
-import { MEDIA_WATERMARK_VERSION, watermarkMediaBytes } from "@/lib/media-watermark";
+import { DEFAULT_MEDIA_WATERMARK_OPACITY, MEDIA_WATERMARK_VERSION, watermarkMediaBytes } from "@/lib/media-watermark";
 
 const imageExtensions = new Set([".avif", ".jpeg", ".jpg", ".png", ".webp"]);
 const videoExtensions = new Set([".m4v", ".mov", ".mp4", ".webm"]);
@@ -20,6 +20,7 @@ export type PublicMediaWatermarkSummary = {
   version: string;
   dryRun: boolean;
   force: boolean;
+  opacity: number;
   roots: string[];
   discovered: number;
   processed: number;
@@ -37,6 +38,7 @@ type PublicMediaWatermarkPlan = {
 type PublicMediaWatermarkMarker = {
   version: string;
   text: string;
+  opacity?: number;
 };
 
 const sitePlans: Record<string, { text: string; roots: string[] }> = {
@@ -103,7 +105,11 @@ function readWatermarkMarker(filePath: string): PublicMediaWatermarkMarker | und
   try {
     const value = JSON.parse(readFileSync(markerPath(filePath), "utf8")) as Partial<PublicMediaWatermarkMarker>;
     return typeof value.version === "string" && typeof value.text === "string"
-      ? { version: value.version, text: value.text }
+      ? {
+        version: value.version,
+        text: value.text,
+        opacity: typeof value.opacity === "number" ? value.opacity : undefined
+      }
       : undefined;
   } catch {
     return undefined;
@@ -119,7 +125,7 @@ async function writeWatermarkMarker(filePath: string, marker: PublicMediaWaterma
 
 function hasCurrentWatermarkMarker(filePath: string, text: string): boolean {
   const marker = readWatermarkMarker(filePath);
-  return marker?.version === MEDIA_WATERMARK_VERSION && marker.text === text;
+  return marker?.version === MEDIA_WATERMARK_VERSION && marker.text === text && (marker.opacity ?? DEFAULT_MEDIA_WATERMARK_OPACITY) === DEFAULT_MEDIA_WATERMARK_OPACITY;
 }
 
 export function publicMediaWatermarkPlanForSite(siteId: string): PublicMediaWatermarkPlan | undefined {
@@ -162,6 +168,7 @@ async function watermarkPublicMediaFile(params: {
   text: string;
   dryRun: boolean;
   force: boolean;
+  opacity: number;
 }): Promise<{ changed: boolean; skipped: boolean }> {
   if (!isInsidePublic(params.filePath)) throw new Error("public_media_path_outside_public_root");
   if (!params.force && hasCurrentWatermarkMarker(params.filePath, params.text)) {
@@ -173,12 +180,14 @@ async function watermarkPublicMediaFile(params: {
   const result = await watermarkMediaBytes({
     bytes,
     mimeType: mimeTypeForPublicMedia(params.filePath),
-    text: params.text
+    text: params.text,
+    opacity: params.opacity
   });
   await writeFile(params.filePath, result.bytes);
   await writeWatermarkMarker(params.filePath, {
     version: MEDIA_WATERMARK_VERSION,
-    text: params.text
+    text: params.text,
+    opacity: params.opacity
   });
   return { changed: true, skipped: false };
 }
@@ -188,6 +197,7 @@ export async function batchWatermarkSitePublicMedia(params: {
   dryRun?: boolean;
   force?: boolean;
   limit?: number;
+  opacity?: number;
 }): Promise<PublicMediaWatermarkSummary> {
   const plan = publicMediaWatermarkPlanForSite(params.siteId);
   if (!plan) {
@@ -195,6 +205,7 @@ export async function batchWatermarkSitePublicMedia(params: {
   }
   const dryRun = Boolean(params.dryRun);
   const force = Boolean(params.force);
+  const opacity = DEFAULT_MEDIA_WATERMARK_OPACITY;
   const limit = Number.isFinite(params.limit) && Number(params.limit) > 0
     ? Math.floor(Number(params.limit))
     : Number.POSITIVE_INFINITY;
@@ -213,7 +224,8 @@ export async function batchWatermarkSitePublicMedia(params: {
         filePath,
         text: plan.text,
         dryRun,
-        force
+        force,
+        opacity
       });
       if (result.changed) changed += 1;
       if (result.skipped) skipped += 1;
@@ -232,6 +244,7 @@ export async function batchWatermarkSitePublicMedia(params: {
     version: MEDIA_WATERMARK_VERSION,
     dryRun,
     force,
+    opacity,
     roots: plan.roots.map(repoRelative),
     discovered: files.length,
     processed,

@@ -114,20 +114,20 @@ export function isGeminiVideoFrameUploadFile(file: { name?: string; type?: strin
 
 export function geminiVideoFrameRequirementMessage(spanish = false): string {
   return spanish
-    ? "El video Gemini necesita al menos un fotograma."
-    : "Gemini video needs at least one frame image.";
+    ? "El video con referencia necesita al menos un fotograma."
+    : "Reference-based video needs at least one frame image.";
 }
 
 export function geminiVideoFrameUploadTypeMessage(spanish = false): string {
   return spanish
-    ? "Usa archivos JPG o PNG para fotogramas de video Gemini."
-    : "Use JPG or PNG frame images for Gemini video.";
+    ? "Usa archivos JPG o PNG para fotogramas de video."
+    : "Use JPG or PNG frame images for video references.";
 }
 
 export function geminiVideoFramePolicyWarningMessage(spanish = false): string {
   return spanish
-    ? "Gemini puede rechazar imagenes de referencia con personas reales o reconocibles. Las referencias ficticias/estilizadas pueden enviarse, pero pueden fallar en la revision del proveedor."
-    : "Gemini may reject reference images with real or recognizable people. Fictional or stylized references can be submitted, but may still fail provider review.";
+    ? "El proveedor de video puede rechazar imagenes de referencia con personas reales o reconocibles. Las referencias ficticias/estilizadas pueden enviarse, pero pueden fallar en la revision del proveedor."
+    : "The video provider may reject reference images with real or recognizable people. Fictional or stylized references can be submitted, but may still fail provider review.";
 }
 
 export function geminiVideoFramePolicyDetailMessage(spanish = false): string {
@@ -138,8 +138,8 @@ export function geminiVideoFramePolicyDetailMessage(spanish = false): string {
 
 export function grokVideoFrameGuidanceMessage(spanish = false): string {
   return spanish
-    ? "Grok admite texto a video o imagen a video. Sube fotogramas JPG o PNG solo cuando quieras que el clip siga referencias; deja los fotogramas vacios para un prompt solo de texto."
-    : "Grok supports text-to-video or image-to-video. Upload JPG or PNG frame images only when you want the clip to follow references; leave frames empty for a text-only prompt.";
+    ? "El video puede generarse desde texto o desde imagenes de referencia. Sube fotogramas JPG o PNG solo cuando quieras que el clip siga referencias; deja los fotogramas vacios para un prompt solo de texto."
+    : "Video can be generated from text or reference images. Upload JPG or PNG frame images only when you want the clip to follow references; leave frames empty for a text-only prompt.";
 }
 
 export function grokVideoFrameGuidanceDetailMessage(spanish = false): string {
@@ -153,8 +153,8 @@ export function videoProviderFailureCustomerMessage(failure: VideoProviderFailur
   const providerFamily = typeof failure === "string" ? undefined : failure.providerFamily;
   if (code === "real_person_reference_unsupported") {
     return spanish
-      ? "Gemini no puede usar imagenes de referencia que contengan personas reales o reconocibles. Elige una referencia sin personas reales e intentalo de nuevo."
-      : "Gemini cannot use reference images that contain real or recognizable people. Choose a non-real-person reference and try again.";
+      ? "El proveedor de video no puede usar imagenes de referencia que contengan personas reales o reconocibles. Elige una referencia sin personas reales e intentalo de nuevo."
+      : "The video provider cannot use reference images that contain real or recognizable people. Choose a non-real-person reference and try again.";
   }
   if (code === "minor_reference_unsupported") {
     return spanish
@@ -193,8 +193,8 @@ export function videoProviderFailureCustomerMessage(failure: VideoProviderFailur
   }
   if (providerFamily === "gemini") {
     return spanish
-      ? "Gemini rechazo la referencia durante la revision de seguridad. Usa una imagen JPG/PNG simple de un producto, objeto, paisaje, mascota o referencia original no sensible; evita personas reales, menores, desnudez, violencia y personajes de anime/juegos/comics que puedan tener copyright."
-      : "Gemini rejected the reference during safety review. Use a simple JPG/PNG product, object, landscape, pet, or original non-sensitive reference; avoid real people, minors, nudity, violence, and anime/game/comic characters that may be copyrighted.";
+      ? "El proveedor de video rechazo la referencia durante la revision de seguridad. Usa una imagen JPG/PNG simple de un producto, objeto, paisaje, mascota o referencia original no sensible; evita personas reales, menores, desnudez, violencia y personajes de anime/juegos/comics que puedan tener copyright."
+      : "The video provider rejected the reference during safety review. Use a simple JPG/PNG product, object, landscape, pet, or original non-sensitive reference; avoid real people, minors, nudity, violence, and anime/game/comic characters that may be copyrighted.";
   }
   return spanish
     ? "El proveedor de video rechazo la referencia. Revisa la imagen, elige otra referencia segura e intentalo de nuevo."

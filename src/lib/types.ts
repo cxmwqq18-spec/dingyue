@@ -1,4 +1,4 @@
-import type { VideoModelPricing } from "@/lib/video-frame-config";
+import type { VideoModelFamily, VideoModelPricing } from "@/lib/video-frame-config";
 
 export type SiteStatus = "active" | "draft" | "suspended";
 export type ConnectStatus = "not_started" | "pending" | "enabled" | "restricted";
@@ -699,6 +699,9 @@ export interface VideoTheme {
   maxFrames: number;
   effectiveMaxFrames?: number;
   providerMaxFrames?: number;
+  providerModelFamilies?: VideoModelFamily[];
+  textToVideoProviderModelFamilies?: VideoModelFamily[];
+  imageToVideoProviderModelFamilies?: VideoModelFamily[];
   generationCount: number;
   createdAt: string;
   imageUrl?: string;

@@ -148,19 +148,27 @@ function tokengoMediaModelSupportsMode(model?: string) {
     normalized.startsWith("veo-");
 }
 
+function isTokengoMediaSeedanceSpecialModel(model?: string) {
+  return model?.trim().toLowerCase() === "seedance-2-0-special";
+}
+
 function tokengoMediaModelSupportsResolution(model?: string) {
   return model?.trim().toLowerCase() === "grok-imagine-1.5";
 }
 
 export function tokengoMediaVideoParams(videoParams: TokengoVideoParams, imageUrls: string[], endImageUrl?: string, model?: string) {
-  const duration = numberValue(videoParams.duration) ?? 6;
+  const seedanceSpecial = isTokengoMediaSeedanceSpecialModel(model);
+  const duration = seedanceSpecial ? 15 : numberValue(videoParams.duration) ?? 6;
   return {
     aspect_ratio: videoParams.aspect_ratio,
     duration,
-    ...(tokengoMediaModelSupportsResolution(model) && videoParams.resolution
+    ...(seedanceSpecial
+      ? { resolution: "720p", quality: "标准", count: 1 }
+      : {}),
+    ...(!seedanceSpecial && tokengoMediaModelSupportsResolution(model) && videoParams.resolution
       ? { resolution: videoParams.resolution }
       : {}),
-    ...(tokengoMediaModelSupportsResolution(model)
+    ...(!seedanceSpecial && tokengoMediaModelSupportsResolution(model)
       ? { count: videoParams.count ?? 1 }
       : {}),
     ...(imageUrls.length ? { images: imageUrls } : {}),

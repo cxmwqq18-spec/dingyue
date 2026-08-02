@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
+import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
@@ -26,6 +26,7 @@ import { customerSessionCookie } from "@/lib/session";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
+import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -161,6 +162,33 @@ async function getHostPublicCollectionRuntimeStateWithFallback(hosts: Array<stri
   return getHostRuntimeStateForModeWithFallback(hosts, "public", "/collections", collectionSlug);
 }
 
+function knownWorkspaceSiteSlugForHost(hosts: Array<string | null>): string | undefined {
+  for (const hostValue of hosts) {
+    const host = cleanHost(hostValue);
+    if (!host) continue;
+    if (host === "mydreamshoots.com" || host === "www.mydreamshoots.com" || host.endsWith(".mydreamshoots.localhost")) return "mydreamshoots";
+    if (host === "aidreamcapes.com" || host === "www.aidreamcapes.com" || host.endsWith(".aidreamcapes.localhost")) return "aidreamcapes";
+    if (host === "aidreamshoots.eu" || host === "www.aidreamshoots.eu" || host.endsWith(".aidreamshoots.localhost")) return "aidreamshoots";
+    if (host === "aidreamcapes.eu" || host === "www.aidreamcapes.eu") return "aidreamcapes-eu";
+  }
+  return undefined;
+}
+
+async function getHostSiteSlugShellWithFallback(hosts: Array<string | null>): Promise<string | undefined> {
+  const knownSlug = knownWorkspaceSiteSlugForHost(hosts);
+  if (knownSlug) return knownSlug;
+  try {
+    for (const host of hosts) {
+      const site = await getSiteByHostForPublicAuth(host);
+      if (site) return site.slug;
+    }
+  } catch {
+    // Fall through to the full state reader for local or migrating databases.
+  }
+  const state = await readStorefrontPlatformStateFromDatabase();
+  return getSiteByHostCandidatesFromState(state, hosts)?.slug;
+}
+
 async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null>, mode: "public" | "private", pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> {
   try {
     for (const host of hosts) {
@@ -208,6 +236,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
+    const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
+    return { title: spanishTitle ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
+  }
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
     return {};
   }
@@ -217,9 +249,6 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
-  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
-    return { title: isSpanishXbyStorefrontSite(site) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
-  }
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
@@ -303,6 +332,14 @@ export default async function HostStorefrontCatchAllPage({
   if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie())) {
     const query = searchParams ? await searchParams : {};
     redirect(`/login?next=${encodeURIComponent(`${slug}${searchParamsSuffix(query)}`)}`);
+  }
+  const canUseFastWorkspaceShell = firstSegment === "app" && !(path[1] === "jobs" && path[2] && path[2] !== "progress");
+  if (canUseFastWorkspaceShell) {
+    const query = searchParams ? await searchParams : {};
+    if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
+    const siteSlug = await getHostSiteSlugShellWithFallback(hostCandidates);
+    if (!siteSlug) notFound();
+    return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }
   const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";

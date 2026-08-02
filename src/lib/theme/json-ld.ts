@@ -195,8 +195,38 @@ function siteBaseUrl(site: Site, routeMode: "host" | "path"): string {
   return hasCanonicalDomain ? origin : `${origin}/site/${site.slug}`;
 }
 
+const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark1";
+
+function withStorefrontPublicWatermarkCacheVersion(value: string): string {
+  const cleanValue = value.trim();
+  if (!cleanValue) return value;
+  const mediaPattern = /\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)(?:[?#]|$)/i;
+  if (!mediaPattern.test(cleanValue) || cleanValue.includes("/brand/")) return value;
+
+  if (cleanValue.startsWith("http://") || cleanValue.startsWith("https://")) {
+    try {
+      const url = new URL(cleanValue);
+      if (!url.pathname.startsWith("/assets/")) return value;
+      url.searchParams.set("wm", storefrontPublicWatermarkCacheVersion);
+      return url.toString();
+    } catch {
+      return value;
+    }
+  }
+
+  if (!cleanValue.startsWith("/assets/")) return value;
+  const hashStart = cleanValue.indexOf("#");
+  const withoutHash = hashStart >= 0 ? cleanValue.slice(0, hashStart) : cleanValue;
+  const hash = hashStart >= 0 ? cleanValue.slice(hashStart) : "";
+  const queryStart = withoutHash.indexOf("?");
+  const pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
+  const params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
+  params.set("wm", storefrontPublicWatermarkCacheVersion);
+  return `${pathname}?${params.toString()}${hash}`;
+}
+
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
-  const value = cleanText(pathOrUrl, "/");
+  const value = withStorefrontPublicWatermarkCacheVersion(cleanText(pathOrUrl, "/"));
   if (value.startsWith("http://") || value.startsWith("https://")) return value;
   const base = siteOriginUrl(site).replace(/\/$/, "");
   return `${base}${value.startsWith("/") ? value : `/${value}`}`;

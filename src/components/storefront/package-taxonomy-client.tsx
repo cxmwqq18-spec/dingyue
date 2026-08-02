@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 
 export type PackageTaxonomyCard = {
   id: string;
@@ -79,7 +80,12 @@ function SafeTaxonomyImage({
   return (
     <img
       alt={safeAlt}
-      className={`block h-auto w-full object-center ${className}`}
+      aria-label={`View ${safeAlt} full screen`}
+      className={`block w-full cursor-zoom-in object-center ${className}`}
+      data-dreamshoot-preview-meta=""
+      data-dreamshoot-preview-src={src}
+      data-dreamshoot-preview-title={safeAlt}
+      data-dreamshoot-showcase-preview="image"
       decoding={decoding}
       fetchPriority={fetchPriority}
       loading={loading}
@@ -91,8 +97,8 @@ function SafeTaxonomyImage({
 const splitCardClass =
   "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const splitImageShellClass = "bg-[#0B1020]/[0.70]";
-const splitImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
-const splitSingleImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
+const splitImageFrameClass = "relative aspect-[4/3] overflow-hidden rounded-[9px] bg-[#070B14]";
+const splitSingleImageFrameClass = "relative aspect-[8/3] overflow-hidden rounded-[9px] bg-[#070B14]";
 const splitContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
 const splitTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
 const splitDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
@@ -114,12 +120,12 @@ function SplitPackageTaxonomyCard({ card, index }: { card: PackageTaxonomyCard; 
       href={card.href}
     >
       <div className={splitImageShellClass}>
-        <div className={images.length > 1 ? "grid grid-cols-2 items-start gap-0.5 p-3" : "grid items-start p-3"}>
+        <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
               <SafeTaxonomyImage
                 alt={imageIndex === 0 ? `${card.title} preview` : `${card.title} gallery preview`}
-                className="transition duration-500"
+                className="h-full object-cover transition duration-500"
                 decoding="async"
                 fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
                 loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
@@ -189,6 +195,7 @@ export function PackageTaxonomyClient({
       : "w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end";
     const selectedImageBgClass = variant === "cream" ? "bg-[#EADFCF]" : "bg-zinc-900";
     return (
+      <DreamshootShowcasePreview>
       <div data-package-taxonomy-client="ready">
         <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-start">
           <div className={selectedPanelClass}>
@@ -301,20 +308,24 @@ export function PackageTaxonomyClient({
           </div>
         ) : null}
       </div>
+      </DreamshootShowcasePreview>
     );
   }
 
   if (cards.some((card) => card.layout === "split")) {
     return (
+      <DreamshootShowcasePreview>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-package-taxonomy-client="ready">
         {cards.map((card, index) => (
           <SplitPackageTaxonomyCard card={card} index={index} key={card.id} />
         ))}
       </div>
+      </DreamshootShowcasePreview>
     );
   }
 
   return (
+    <DreamshootShowcasePreview>
     <div className="mt-10 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
       {cards.map((card, index) => {
         const spanish = isSpanishCard(card);
@@ -382,5 +393,6 @@ export function PackageTaxonomyClient({
         );
       })}
     </div>
+    </DreamshootShowcasePreview>
   );
 }

@@ -7,6 +7,7 @@ import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, C
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { creativePackCollectionHref, creativePackMatchesCategory, getPhotoPackageMegaGroups, photoPackageSlug, type PhotoPackageMegaGroup } from "@/lib/photo-package-taxonomy";
 import { themeValueToString } from "@/lib/theme-values";
 
@@ -46,6 +47,18 @@ type VideoToolSelection = {
   title: string;
   href?: string;
 };
+
+function previewImageAttrs(src: string, title: string, meta = "") {
+  return {
+    "aria-label": `View ${title} full screen`,
+    "data-dreamshoot-preview-meta": meta,
+    "data-dreamshoot-preview-src": src,
+    "data-dreamshoot-preview-title": title,
+    "data-dreamshoot-showcase-preview": "image",
+    role: "button",
+    tabIndex: 0
+  } as const;
+}
 
 function jobT(spanish: boolean, english: string, spanishText: string): string {
   return spanish ? spanishText : english;
@@ -1783,7 +1796,7 @@ export function JobCreateForm({
             const deleting = deletingAssetIds.includes(asset.id);
             return (
               <div className={`group relative overflow-hidden rounded-[14px] border transition ${checked ? (light ? "border-[#ff8a5c] bg-[#fff1e7] text-[#171514] shadow-[0_12px_30px_-24px_rgba(224,105,63,0.58)]" : "border-white bg-white text-[#14161a]") : (light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/10 bg-black/18 text-white")} ${deleting ? "opacity-55" : ""}`} key={`${target}_${asset.id}`}>
-                <img className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} alt={asset.label} />
+                <img alt={asset.label} className="aspect-[4/5] w-full cursor-zoom-in object-cover" src={asset.previewUrl} {...previewImageAttrs(asset.previewUrl, asset.label, jobT(spanish, "Private source image", "Imagen fuente privada"))} />
                 <button
                   aria-label={jobT(spanish, `Delete ${asset.label}`, `Eliminar ${asset.label}`)}
                   className="absolute left-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/62 text-white opacity-90 shadow-sm transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-45"
@@ -1800,7 +1813,7 @@ export function JobCreateForm({
                 </button>
                 <button
                   aria-pressed={checked}
-                  className="absolute inset-0 cursor-pointer"
+                  className="absolute inset-x-0 bottom-0 top-[52%] cursor-pointer"
                   disabled={deleting}
                   onClick={() => toggleAsset(asset.id, target)}
                   type="button"
@@ -1913,6 +1926,7 @@ export function JobCreateForm({
   }
 
   return (
+    <DreamshootShowcasePreview>
     <form className="grid gap-5" onSubmit={createJob}>
       <div className="grid gap-5">
         <div className="grid gap-3">
@@ -2006,7 +2020,7 @@ export function JobCreateForm({
           {createMode === "theme" ? (
             <div className={`relative min-h-[340px] ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
               {selectionPreviewImage ? (
-                <img alt={selectionTitle} className="absolute inset-0 h-full w-full object-cover" src={selectionPreviewImage} />
+                <img alt={selectionTitle} className="absolute inset-0 h-full w-full cursor-zoom-in object-cover" src={selectionPreviewImage} {...previewImageAttrs(selectionPreviewImage, selectionTitle, jobT(spanish, "Selected package", "Paquete seleccionado"))} />
               ) : (
                 <div className="absolute inset-0 grid place-items-center">
                   <Sparkles className="h-8 w-8 opacity-60" strokeWidth={1.8} />
@@ -2098,7 +2112,7 @@ export function JobCreateForm({
               >
                 <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
                   {pack.imageUrl ? (
-                    <img className="aspect-[4/3] w-full object-cover" src={pack.imageUrl} alt={packageCardTitle} />
+                    <img className="aspect-[4/3] w-full cursor-zoom-in object-cover" src={pack.imageUrl} alt={packageCardTitle} {...previewImageAttrs(pack.imageUrl, packageCardTitle, jobT(spanish, "Package preview", "Vista previa del paquete"))} />
                   ) : (
                     <span className="flex aspect-[4/3] items-center justify-center">
                       <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
@@ -2440,7 +2454,7 @@ export function JobCreateForm({
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
                   {selectedSourceAssets.slice(0, 10).map((asset) => (
                     <div className={`overflow-hidden rounded-[12px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/18"}`} key={asset.id}>
-                      <img alt={asset.label} className="aspect-[4/5] w-full object-cover" src={asset.previewUrl} />
+                      <img alt={asset.label} className="aspect-[4/5] w-full cursor-zoom-in object-cover" src={asset.previewUrl} {...previewImageAttrs(asset.previewUrl, asset.label, jobT(spanish, "Selected selfie", "Selfie seleccionada"))} />
                     </div>
                   ))}
                 </div>
@@ -2604,7 +2618,7 @@ export function JobCreateForm({
                           <p className={`text-sm font-semibold ${textClass}`}>{group.title} · {group.assets.length}</p>
                           <div className="mt-2 grid grid-cols-4 gap-2">
                             {group.assets.slice(0, 8).map((asset) => (
-                              <img alt={asset.label} className="aspect-square rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} />
+                              <img alt={asset.label} className="aspect-square cursor-zoom-in rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} {...previewImageAttrs(asset.previewUrl, asset.label, group.title)} />
                             ))}
                           </div>
                         </div>
@@ -2613,7 +2627,7 @@ export function JobCreateForm({
                   ) : (
                     <div className="grid grid-cols-5 gap-2">
                       {primarySourceAssets.slice(0, 10).map((asset) => (
-                        <img alt={asset.label} className="aspect-square rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} />
+                        <img alt={asset.label} className="aspect-square cursor-zoom-in rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} {...previewImageAttrs(asset.previewUrl, asset.label, jobT(spanish, "Selected upload", "Subida seleccionada"))} />
                       ))}
                     </div>
                   )}
@@ -2698,5 +2712,6 @@ export function JobCreateForm({
         </div>
       </div>
     </form>
+    </DreamshootShowcasePreview>
   );
 }

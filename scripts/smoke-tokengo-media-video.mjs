@@ -155,6 +155,69 @@ try {
       count: 1
     }
   );
+  assert.deepEqual(
+    tokengoMediaVideoParams(
+      { aspect_ratio: "9:16", duration: "10", resolution: "1080p", count: 3 },
+      ["https://cdn.example/1.jpg", "https://cdn.example/2.jpg"],
+      undefined,
+      "seedance-2-0-special"
+    ),
+    {
+      aspect_ratio: "9:16",
+      duration: 15,
+      resolution: "720p",
+      quality: "标准",
+      count: 1,
+      images: ["https://cdn.example/1.jpg", "https://cdn.example/2.jpg"],
+      mode: "reference"
+    }
+  );
+  assert.deepEqual(
+    tokengoMediaVideoParams(
+      { aspect_ratio: "16:9", duration: "6", resolution: "480p" },
+      ["https://cdn.example/first.jpg"],
+      undefined,
+      "seedance-2-0-special"
+    ),
+    {
+      aspect_ratio: "16:9",
+      duration: 15,
+      resolution: "720p",
+      quality: "标准",
+      count: 1,
+      images: ["https://cdn.example/first.jpg"],
+      mode: "first-frame"
+    }
+  );
+  assert.deepEqual(
+    tokengoMediaVideoParams(
+      { aspect_ratio: "16:9", duration: "6", resolution: "480p" },
+      ["https://cdn.example/first.jpg"],
+      "https://cdn.example/end.jpg",
+      "seedance-2-0-special"
+    ),
+    {
+      aspect_ratio: "16:9",
+      duration: 15,
+      resolution: "720p",
+      quality: "标准",
+      count: 1,
+      images: ["https://cdn.example/first.jpg"],
+      end_image_url: "https://cdn.example/end.jpg",
+      mode: "first-last"
+    }
+  );
+  assert.deepEqual(
+    tokengoMediaVideoParams({ aspect_ratio: "16:9", duration: "6", resolution: "480p" }, [], undefined, "seedance-2-0-special"),
+    {
+      aspect_ratio: "16:9",
+      duration: 15,
+      resolution: "720p",
+      quality: "标准",
+      count: 1,
+      mode: "text-to-video"
+    }
+  );
   assert.deepEqual(tokengoMediaVideoParams({ aspect_ratio: "9:16", duration: "bad" }, []), {
     aspect_ratio: "9:16",
     duration: 6
@@ -207,6 +270,28 @@ try {
     images: ["https://cdn.example/first.jpg"]
   });
   assert.equal("mode" in grok15Body.params, false);
+
+  const seedanceCreated = await createTokengoMediaVideoTask({
+    baseUrl,
+    apiKey: "sk_test_tokengo",
+    model: "seedance-2-0-special",
+    prompt: "seedance references",
+    imageUrls: ["https://cdn.example/1.jpg", "https://cdn.example/2.jpg"],
+    videoParams: { aspect_ratio: "9:16", duration: "10", resolution: "1080p", count: 3 },
+    fetchWithTimeout,
+    timeoutMs: 5000
+  });
+  assert.equal(seedanceCreated.id, "task-created");
+  const seedanceBody = requests.filter((item) => item.method === "POST").at(-1)?.body;
+  assert.deepEqual(seedanceBody.params, {
+    aspect_ratio: "9:16",
+    duration: 15,
+    resolution: "720p",
+    quality: "标准",
+    count: 1,
+    images: ["https://cdn.example/1.jpg", "https://cdn.example/2.jpg"],
+    mode: "reference"
+  });
 
   const success = await fetchTokengoMediaVideoTask({
     baseUrl,
@@ -284,7 +369,7 @@ try {
     /ai_provider_tokengo_insufficient_funds_403/
   );
 
-  assert.equal(requests.filter((item) => item.method === "POST").length, 3);
+  assert.equal(requests.filter((item) => item.method === "POST").length, 4);
   console.log("tokengo_media_video_smoke_ok");
 } finally {
   await new Promise((resolve) => server.close(resolve));

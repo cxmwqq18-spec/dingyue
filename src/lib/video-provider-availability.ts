@@ -1,6 +1,7 @@
 import "server-only";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
-import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderModelFamiliesForProviders, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import type { VideoModelFamily } from "@/lib/video-frame-config";
 
 export type VideoProviderAvailabilityReason =
   | "ai_provider_disabled"
@@ -155,4 +156,18 @@ export function videoProviderAvailability(
     runnableProviders,
     blockedProviders: videoDiagnostics.filter((diagnostic) => diagnostic.reason)
   };
+}
+
+export function runnableVideoProviderModelFamiliesForRequest<T extends VideoProviderAvailabilityInput>(
+  providers: T[],
+  params: { referenceAssetCount: number; assumeApiKeyConfigured?: boolean }
+): VideoModelFamily[] {
+  return videoProviderModelFamiliesForProviders(
+    providers.filter((provider) => !videoProviderAvailabilityReason(
+      params.assumeApiKeyConfigured && !provider.apiKey
+        ? { ...provider, apiKey: "configured" }
+        : provider,
+      params
+    ))
+  );
 }

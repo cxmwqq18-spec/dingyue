@@ -11,6 +11,7 @@ import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { DreamshootPackageCatalogClient, type DreamshootCategoryHrefOverrides } from "@/components/storefront/dreamshoot-package-catalog-client";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showcase-rail";
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
@@ -606,20 +607,22 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
       style={lazyStyle}
       {...previewSelectedAttrs(previewSelection, id)}
     >
-      <SectionView
-        creativePackCategories={sectionTypesUsingCreativePacks.has(sectionType) ? creativePackCategories : []}
-        creativePacks={sectionTypesUsingCreativePacks.has(sectionType) ? creativePacks : []}
-        id={id}
-        mode={mode}
-        products={sectionTypesUsingProducts.has(sectionType) ? products : []}
-        renderContext={renderContext}
-        runtime={runtimeForSection(section, runtime)}
-        section={sectionType === section.type ? section : { ...section, type: sectionType }}
-        site={site}
-        siteAiApps={sectionTypesUsingSiteAiApps.has(sectionType) ? siteAiApps : []}
-        toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
-        videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
-      />
+      <DreamshootShowcasePreview>
+        <SectionView
+          creativePackCategories={sectionTypesUsingCreativePacks.has(sectionType) ? creativePackCategories : []}
+          creativePacks={sectionTypesUsingCreativePacks.has(sectionType) ? creativePacks : []}
+          id={id}
+          mode={mode}
+          products={sectionTypesUsingProducts.has(sectionType) ? products : []}
+          renderContext={renderContext}
+          runtime={runtimeForSection(section, runtime)}
+          section={sectionType === section.type ? section : { ...section, type: sectionType }}
+          site={site}
+          siteAiApps={sectionTypesUsingSiteAiApps.has(sectionType) ? siteAiApps : []}
+          toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
+          videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
+        />
+      </DreamshootShowcasePreview>
     </div>
   );
 }
@@ -2120,10 +2123,28 @@ function storefrontSectionLabel(type: string): string {
   return labels[type] ?? type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark1";
+
+function withStorefrontPublicWatermarkCacheVersion(value: string): string {
+  const cleanValue = value.trim();
+  if (!cleanValue.startsWith("/assets/")) return value;
+  if (cleanValue.includes("/brand/")) return value;
+  if (!/\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)(?:[?#]|$)/i.test(cleanValue)) return value;
+
+  const hashStart = cleanValue.indexOf("#");
+  const withoutHash = hashStart >= 0 ? cleanValue.slice(0, hashStart) : cleanValue;
+  const hash = hashStart >= 0 ? cleanValue.slice(hashStart) : "";
+  const queryStart = withoutHash.indexOf("?");
+  const pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
+  const params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
+  params.set("wm", storefrontPublicWatermarkCacheVersion);
+  return `${pathname}?${params.toString()}${hash}`;
+}
+
 function mediaAssetUrl(site: Site, value: string): string {
   const resolved = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
-  return spanishXbyPublicAssetUrl(site, preferred);
+  return withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
 }
 
 function spanishXbyPublicAssetUrl(site: Site, value: string): string {
@@ -2151,8 +2172,104 @@ function dreamshootShowcaseImagePath(site: Site, slug: string): string {
 
 function generationShowcaseImageDedupeKey(site: Site, slug: string): string {
   const normalizedSlug = dreamshootCategorySlug(slug);
-  if (isAidreamcapesSite(site) && normalizedSlug === "christmas-group-albums") return "christmas-holiday-albums";
   return normalizedSlug;
+}
+
+type GenerationShowcaseImageCard = {
+  id: string;
+  slug: string;
+  title: string;
+  imageUrl: string;
+  meta: string;
+};
+
+function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: (item: T) => string, fallbackSortFor?: (item: T) => number): T[] {
+  const priorities = new Map(selectedSlugs.map((slug, index) => [dreamshootCategorySlug(slug), index]));
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      const aPriority = priorities.get(dreamshootCategorySlug(slugFor(a.item))) ?? Number.POSITIVE_INFINITY;
+      const bPriority = priorities.get(dreamshootCategorySlug(slugFor(b.item))) ?? Number.POSITIVE_INFINITY;
+      if (aPriority !== bPriority) return aPriority - bPriority;
+      const aFallback = fallbackSortFor?.(a.item) ?? a.index;
+      const bFallback = fallbackSortFor?.(b.item) ?? b.index;
+      if (aFallback !== bFallback) return aFallback - bFallback;
+      return a.index - b.index;
+    })
+    .map(({ item }) => item);
+}
+
+function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeImages: string[] = []): string {
+  const excluded = new Set([packImage(site, pack), ...excludeImages].map((image) => comparableImageUrl(image)).filter(Boolean));
+  const gallery = uniqueImageUrlList((pack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image)))
+    .filter((image) => !excluded.has(comparableImageUrl(image)) && !isGeneratedDreamshootPackCoverUrl(image));
+  return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? packImage(site, pack);
+}
+
+function generationShowcaseCardFromPack(site: Site, pack: CreativePack): GenerationShowcaseImageCard {
+  const slug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
+  return {
+    id: pack.id,
+    slug,
+    title: pack.categoryRecord?.label || pack.name,
+    imageUrl: generationShowcaseImageForPack(site, pack),
+    meta: pack.categoryRecord?.parent?.label ?? pack.categoryRecord?.label ?? dreamshootCategoryLabel(pack.category || pack.name)
+  };
+}
+
+function generationShowcaseCardFromCategory(site: Site, category: CreativePackCategory, creativePacks: CreativePack[]): GenerationShowcaseImageCard | null {
+  const relatedPacks = creativePacks.filter((pack) => pack.status === "active" && creativePackMatchesCategory(pack, category));
+  const matchingPack = relatedPacks[0];
+  const categoryImage = category.imageUrl ? mediaAssetUrl(site, category.imageUrl) : "";
+  const slug = dreamshootCategorySlug(category.slug || category.label);
+  const imageUrl = matchingPack
+    ? generationShowcaseImageForPack(site, matchingPack, categoryImage ? [categoryImage] : [])
+    : categoryImage || dreamshootShowcaseImagePath(site, slug);
+  if (!imageUrl) return null;
+  return {
+    id: category.id,
+    slug,
+    title: category.label,
+    imageUrl,
+    meta: category.parent?.label ?? category.label
+  };
+}
+
+function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], creativePackCategories: CreativePackCategory[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
+  const activePacks = creativePacks.filter((pack) => pack.status === "active");
+  const selectedFallbackCards = selectedImageSlugs.map((slug) => {
+    const normalizedSlug = dreamshootCategorySlug(slug);
+    return {
+      id: `showcase-image-${normalizedSlug}`,
+      slug: normalizedSlug,
+      title: dreamshootCategoryLabel(normalizedSlug),
+      imageUrl: dreamshootShowcaseImagePath(site, normalizedSlug),
+      meta: dreamshootCategoryLabel(normalizedSlug)
+    };
+  });
+  const rawCards = isAidreamcapesSite(site) && !isSpanishXbySite(site)
+    ? sortedByShowcaseSlugs(
+        creativePackCategories.filter((category) => category.status === "active"),
+        selectedImageSlugs,
+        (category) => category.slug || category.label,
+        (category) => category.sortOrder
+      )
+        .map((category) => generationShowcaseCardFromCategory(site, category, activePacks))
+        .filter((card): card is GenerationShowcaseImageCard => Boolean(card))
+    : sortedByShowcaseSlugs(
+        activePacks,
+        selectedImageSlugs,
+        (pack) => pack.categoryRecord?.slug || pack.category || pack.name,
+        (_pack) => Number.POSITIVE_INFINITY
+      ).map((pack) => generationShowcaseCardFromPack(site, pack));
+  const cards = rawCards.length ? rawCards : selectedFallbackCards;
+  const seen = new Set<string>();
+  return cards.filter((card) => {
+    const key = generationShowcaseImageDedupeKey(site, card.slug || card.id);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return Boolean(card.imageUrl);
+  });
 }
 
 function cleanStorefrontImageSrc(src: string): string {
@@ -2324,12 +2441,42 @@ type StorefrontImageProps = {
   priority?: boolean;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
+  preview?: StorefrontImagePreview;
 };
 
 type StorefrontSafeImageProps = StorefrontImageProps & {
   backgroundClassName?: string;
   imageClassName?: string;
 };
+
+type StorefrontImagePreview = false | {
+  src?: string;
+  title?: string;
+  meta?: string;
+};
+
+function previewTitleFromAlt(alt: string): string {
+  return alt.trim() || "Image preview";
+}
+
+function storefrontImagePreviewAttrs(src: string, alt: string, preview?: StorefrontImagePreview) {
+  if (preview === false) return {};
+  const previewSrc = preview?.src?.trim() || src;
+  if (!previewSrc.trim()) return {};
+  return {
+    "aria-label": `View ${previewTitleFromAlt(preview?.title || alt)} full screen`,
+    "data-dreamshoot-preview-meta": preview?.meta || "",
+    "data-dreamshoot-preview-src": previewSrc,
+    "data-dreamshoot-preview-title": previewTitleFromAlt(preview?.title || alt),
+    "data-dreamshoot-showcase-preview": "image",
+    role: "button",
+    tabIndex: 0
+  } as const;
+}
+
+function previewableImageClassName(className = "", preview?: StorefrontImagePreview): string {
+  return preview === false ? className : `${className} cursor-zoom-in`.trim();
+}
 
 function canUseNextImage(src: string): boolean {
   return src.startsWith("/") && /\.(png|jpe?g|webp|avif)(\?|$)/i.test(src);
@@ -2413,7 +2560,8 @@ function StorefrontImage({
   sizes = "(max-width: 768px) 100vw, 33vw",
   priority = false,
   loading,
-  fetchPriority
+  fetchPriority,
+  preview
 }: StorefrontImageProps) {
   const resolvedSrc = preferAidreamcapesPhotoAsset(src);
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
@@ -2421,22 +2569,25 @@ function StorefrontImage({
   const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
   const fallbackAlt = alt?.trim() || fallbackAltFromImageSrc(resolvedSrc);
   const resolvedAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
+  const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, resolvedAlt, preview);
+  const resolvedClassName = previewableImageClassName(className, preview);
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
     return (
       <img
         alt={resolvedAlt}
-        className={className}
+        className={resolvedClassName}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
         loading={resolvedLoading}
         src={resolvedSrc}
+        {...previewAttrs}
       />
     );
   }
   return (
     <NextImage
       alt={resolvedAlt}
-      className={className}
+      className={resolvedClassName}
       decoding={priority ? "sync" : "async"}
       fetchPriority={resolvedFetchPriority}
       fill
@@ -2444,6 +2595,7 @@ function StorefrontImage({
       priority={priority}
       sizes={sizes}
       src={resolvedSrc}
+      {...previewAttrs}
     />
   );
 }
@@ -2457,7 +2609,8 @@ function StorefrontSafeImage({
   sizes,
   priority,
   loading,
-  fetchPriority
+  fetchPriority,
+  preview
 }: StorefrontSafeImageProps) {
   const resolvedSrc = preferAidreamcapesPhotoAsset(src);
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
@@ -2477,6 +2630,7 @@ function StorefrontSafeImage({
         className={`relative z-10 h-full w-full object-contain object-center ${imageClassName}`}
         fetchPriority={fetchPriority}
         loading={loading}
+        preview={preview}
         priority={priority}
         sizes={sizes}
         src={resolvedSrc}
@@ -2493,6 +2647,7 @@ type StorefrontNaturalImageProps = {
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
   decoding?: "async" | "auto" | "sync";
+  preview?: StorefrontImagePreview;
 };
 
 function StorefrontNaturalImage({
@@ -2502,12 +2657,14 @@ function StorefrontNaturalImage({
   imageClassName = "",
   loading = "lazy",
   fetchPriority = "low",
-  decoding = "async"
+  decoding = "async",
+  preview
 }: StorefrontNaturalImageProps) {
   const resolvedSrc = preferAidreamcapesPhotoAsset(src);
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
+  const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, safeAlt, preview);
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div className={`overflow-hidden ${previewableImageClassName(className, preview)}`} {...previewAttrs}>
       <img
         alt={safeAlt}
         className={`block h-auto w-full object-center ${imageClassName}`}
@@ -7293,6 +7450,8 @@ function SectionView({
 
   if (section.type === "video_feature") {
     const image = mediaAssetUrl(site, setting(section, "imageUrl", fallbackHeroImages[0]));
+    const videoUrlSetting = setting(section, "videoUrl", "");
+    const videoUrl = videoUrlSetting ? mediaAssetUrl(site, videoUrlSetting) : "";
     return (
       <section className="bg-[#0a0a0b] px-5 py-16 text-white" id={sectionAnchor(section, "how-it-works")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -7303,16 +7462,30 @@ function SectionView({
           </div>
           <div className="mt-8 overflow-hidden rounded-[26px] p-[3px] shadow-[0_28px_90px_-52px_rgba(47,111,237,0.24)]" style={{ borderColor: "rgba(47,111,237,0.3)", background: `linear-gradient(180deg, ${accentBlueSoft}, ${accentBlue})` }}>
             <div className="relative overflow-hidden rounded-[24px] bg-[#121216]">
-              <img className="aspect-[16/9] w-full object-cover opacity-80" src={image} alt={setting(section, "title", "Video feature")} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-              <div className="absolute left-4 top-4 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white" style={{ background: accentForest }}>
+              {videoUrl ? (
+                <video
+                  aria-label={setting(section, "playLabel", "Watch tutorial")}
+                  className="aspect-[16/9] w-full object-cover"
+                  controls
+                  playsInline
+                  poster={image || undefined}
+                  preload="metadata"
+                  src={videoUrl}
+                />
+              ) : (
+                <img className="aspect-[16/9] w-full object-cover opacity-80" src={image} alt={setting(section, "title", "Video feature")} />
+              )}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              <div className="pointer-events-none absolute left-4 top-4 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white" style={{ background: accentForest }}>
                 {setting(section, "videoBadge", "HAPPY NEW YEAR")}
               </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-zinc-950 shadow-[0_18px_60px_-28px_rgba(255,255,255,0.8)]">
-                  <PlayCircle className="h-10 w-10" strokeWidth={1.8} />
+              {!videoUrl ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-zinc-950 shadow-[0_18px_60px_-28px_rgba(255,255,255,0.8)]">
+                    <PlayCircle className="h-10 w-10" strokeWidth={1.8} />
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -9882,60 +10055,13 @@ function SectionView({
 
   if (section.type === "dreamshoot_generation_showcase") {
     const aidreamcapes = isAidreamcapesSite(site);
-    const itemLimit = Math.max(1, Math.min(8, numberSetting(section, "itemLimit", 8)));
+    const videoItemLimit = Math.max(1, Math.min(8, numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8))));
     const selectedImageSlugs = listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = listLines(setting(section, "videoSlugs"));
     const accent = aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient;
     const shellTone = "bg-[#05070E] text-white";
     const mutedText = "text-white/66";
-    const categoryBySlug = new Map<string, CreativePackCategory>();
-    creativePackCategories
-      .filter((category) => category.status === "active")
-      .forEach((category) => categoryBySlug.set(dreamshootCategorySlug(category.slug), category));
-
-    const packBySlug = new Map<string, CreativePack>();
-    creativePacks
-      .filter((pack) => pack.status === "active")
-      .forEach((pack) => {
-        [pack.category, pack.categoryRecord?.slug, pack.categoryRecord?.parent?.slug, pack.name]
-          .filter(Boolean)
-          .forEach((value) => packBySlug.set(dreamshootCategorySlug(String(value)), pack));
-      });
-    const configuredImageCards = selectedImageSlugs
-      .map((slug) => {
-        const normalizedSlug = dreamshootCategorySlug(slug);
-        const category = categoryBySlug.get(normalizedSlug);
-        const pack = packBySlug.get(normalizedSlug);
-        return {
-          slug: normalizedSlug,
-          id: category?.id ?? pack?.id ?? `showcase-image-${normalizedSlug}`,
-          title: category?.label ?? pack?.name ?? dreamshootCategoryLabel(normalizedSlug),
-          imageUrl: category?.imageUrl || dreamshootShowcaseImagePath(site, normalizedSlug),
-          meta: category?.parent?.label ?? category?.label ?? pack?.categoryRecord?.label ?? dreamshootCategoryLabel(pack?.category || normalizedSlug)
-        };
-      });
-    const fallbackImageCards = creativePacks
-      .filter((pack) => pack.status === "active")
-      .map((pack) => {
-        const slug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
-        return {
-          slug,
-          id: pack.id,
-          title: pack.name,
-          imageUrl: (pack.galleryImages ?? []).filter(Boolean)[0] ?? pack.imageUrl ?? "",
-          meta: pack.categoryRecord?.label ?? dreamshootCategoryLabel(pack.category || pack.name)
-        };
-      })
-      .filter((card) => Boolean(card.imageUrl));
-    const seenImageKeys = new Set<string>();
-    const imageCards = [...configuredImageCards, ...fallbackImageCards]
-      .filter((card) => {
-        const key = generationShowcaseImageDedupeKey(site, card.slug || card.id);
-        if (!key || seenImageKeys.has(key)) return false;
-        seenImageKeys.add(key);
-        return Boolean(card.imageUrl);
-      })
-      .slice(0, itemLimit)
+    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, creativePackCategories, selectedImageSlugs)
       .map((card, index) => ({ ...card, index }));
 
     const videoBySlug = new Map<string, VideoTheme>();
@@ -9953,7 +10079,7 @@ function SectionView({
         seenVideoIds.add(theme.id);
         return Boolean((theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)));
       })
-      .slice(0, itemLimit)
+      .slice(0, videoItemLimit)
       .map((theme, index) => {
         const videoUrl = (theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)) ?? "";
         return {
@@ -9965,7 +10091,11 @@ function SectionView({
           index
         };
       });
-    const imageRailCards = imageCards.map((card) => ({ ...card, railKey: `${card.id}-image` }));
+    const imageSplitIndex = Math.ceil(imageCards.length / 2);
+    const imageRailRows = [
+      imageCards.slice(0, imageSplitIndex),
+      imageCards.slice(imageSplitIndex)
+    ].filter((row) => row.length).map((row, rowIndex) => row.map((card) => ({ ...card, railKey: `${card.id}-image-${rowIndex}` })));
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
 
     return (
@@ -9993,55 +10123,77 @@ function SectionView({
             </div>
           </div>
 
-          <div className="mt-10">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "imageTitle", "Customer image themes")}</h3>
-              <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{imageCards.length} examples</span>
+          <DreamshootShowcasePreview>
+            <div className="mt-10">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "imageTitle", "Customer image themes")}</h3>
+                <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{imageCards.length} examples</span>
+              </div>
+              <div className="mt-5 space-y-2">
+                {imageRailRows.map((row, rowIndex) => (
+                  <DreamshootShowcaseRail
+                    className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    key={`image_showcase_row_${rowIndex}`}
+                    reverse={rowIndex % 2 === 1}
+                    speed={rowIndex % 2 === 1 ? 48 : 52}
+                    trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0"
+                  >
+                    {row.map((card) => (
+                      <figure
+                        aria-label={`View ${card.meta} customer-created image example from ${card.title}`}
+                        className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[16px] border bg-[#0a0c12] shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                        data-dreamshoot-preview-meta={card.meta}
+                        data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                        data-dreamshoot-preview-title={card.title}
+                        data-dreamshoot-showcase-preview="image"
+                        key={card.railKey}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <StorefrontImage
+                          alt={`${card.meta} customer-created image example from ${card.title}`}
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
+                          fetchPriority={card.index < 4 ? "high" : "low"}
+                          loading={card.index < 4 ? "eager" : "lazy"}
+                          preview={false}
+                          sizes="(max-width: 640px) 86vw, 25vw"
+                          src={mediaAssetUrl(site, card.imageUrl)}
+                        />
+                        <figcaption className="sr-only">{`${card.meta} customer-created image theme example.`}</figcaption>
+                      </figure>
+                    ))}
+                  </DreamshootShowcaseRail>
+                ))}
+              </div>
             </div>
-            <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative -mx-5 mt-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" speed={52} trackClassName="dreamshoot-showcase-track flex w-max gap-4 pr-5">
-              {imageRailCards.map((card) => (
-                <figure className={`group w-[min(74vw,22rem)] shrink-0 overflow-hidden rounded-[22px] border bg-[#0a0c12] shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`} key={card.railKey}>
-                  <div className="relative overflow-hidden">
-                    <StorefrontNaturalImage
-                      alt={`${card.meta} customer-created image example from ${card.title}`}
-                      className="relative z-0"
-                      imageClassName="transition duration-700 group-hover:scale-[1.015]"
-                      fetchPriority={card.index < 4 ? "high" : "low"}
-                      loading={card.index < 4 ? "eager" : "lazy"}
-                      src={mediaAssetUrl(site, card.imageUrl)}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.04)_54%,rgba(0,0,0,0.58)_100%)]" />
-                    <div className="absolute inset-x-3 top-3 flex justify-between gap-3">
-                      <span className="rounded-full border border-white/50 bg-white/74 px-3 py-1.5 text-[11px] font-bold text-zinc-900 backdrop-blur">{String(card.index + 1).padStart(2, "0")}</span>
-                      <span className="rounded-full border border-white/40 bg-black/24 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur">{card.meta}</span>
-                    </div>
-                  </div>
-                  <figcaption className="sr-only">{`${card.meta} customer-created image theme example.`}</figcaption>
-                </figure>
-              ))}
-            </DreamshootShowcaseRail>
-          </div>
 
-          <div className="mt-12">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "videoTitle", "Customer video themes")}</h3>
-              <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{videoCards.length} clips</span>
-            </div>
-            <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative -mx-5 mt-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-4 pr-5">
-              {videoRailCards.map((card) => (
-                <figure className={`group w-[min(74vw,22rem)] shrink-0 overflow-hidden rounded-[22px] border bg-[#0a0c12] text-white shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] ${aidreamcapes ? "border-[#f2b27c]/40" : "border-white/10"}`} data-showcase-card-kind="video" key={card.railKey}>
-                  <div className="relative aspect-square overflow-hidden bg-black">
+            <div className="mt-12">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "videoTitle", "Customer video themes")}</h3>
+                <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{videoCards.length} clips</span>
+              </div>
+              <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] mt-5 w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0">
+                {videoRailCards.map((card) => (
+                  <figure
+                    aria-label={`Play ${card.meta} customer-created video example from ${card.title} with sound`}
+                    className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-pointer overflow-hidden rounded-[16px] border bg-black text-white shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-[#f2b27c]/40" : "border-white/10"}`}
+                    data-dreamshoot-preview-meta={card.meta}
+                    data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
+                    data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
+                    data-dreamshoot-preview-title={card.title}
+                    data-dreamshoot-showcase-preview="video"
+                    data-showcase-card-kind="video"
+                    key={card.railKey}
+                    role="button"
+                    tabIndex={0}
+                  >
                     <DreamshootShowcaseVideo className="h-full w-full object-cover" label={`${card.meta} customer-created video example from ${card.title}`} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.12)_50%,rgba(0,0,0,0.7)_100%)]" />
-                    <div className="pointer-events-none absolute left-3 top-3 rounded-full border border-white/20 bg-white/14 px-3 py-1.5 text-[11px] font-bold backdrop-blur">{String(card.index + 1).padStart(2, "0")}</div>
-                    <div className="pointer-events-none absolute right-3 top-3 rounded-full border border-white/18 bg-black/28 px-3 py-1.5 text-[11px] font-semibold text-white/86 backdrop-blur">{card.meta}</div>
-                    <div className="pointer-events-none absolute bottom-3 left-3 rounded-full border border-white/24 bg-black/42 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white/88 backdrop-blur">Motion clip</div>
-                  </div>
-                  <figcaption className="sr-only">{`${card.meta} customer-created video theme example.`}</figcaption>
-                </figure>
-              ))}
-            </DreamshootShowcaseRail>
-          </div>
+                    <figcaption className="sr-only">{`${card.meta} customer-created video theme example.`}</figcaption>
+                  </figure>
+                ))}
+              </DreamshootShowcaseRail>
+            </div>
+          </DreamshootShowcasePreview>
         </div>
       </section>
     );
@@ -13025,9 +13177,10 @@ function SectionView({
         return { id: `legacy_testimonial_${index}`, type: "testimonial", settings: { quote, name, role } };
       }
     );
-    const featuredVoices = items.slice(0, 4);
+    const reviewMode = setting(section, "mode", "use_cases") === "reviews";
+    const featuredVoices = items.slice(0, reviewMode ? 6 : 4);
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
-    const isDreamShootUseCaseWall = !spanishXbyUseCaseWall && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
+    const isDreamShootUseCaseWall = !reviewMode && !spanishXbyUseCaseWall && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
     return (
       <section className="relative overflow-hidden bg-[#fffaf3] px-5 py-16 text-[#14161a] md:py-18" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -13067,7 +13220,7 @@ function SectionView({
                   );
                 })}
                 <span className="ml-1 rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]">
-                  Private examples
+                  {reviewMode ? "Positive reviews" : "Private examples"}
                 </span>
               </div>
             </div>

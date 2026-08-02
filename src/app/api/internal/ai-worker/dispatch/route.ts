@@ -43,10 +43,11 @@ import {
   sleepWithLocalWorkerAbort,
   throwIfLocalWorkerAborted
 } from "@/lib/local-worker-abort-registry";
-import { DEFAULT_VIDEO_RESOLUTION, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelFamily, normalizeVideoResolution, type VideoModelFamily } from "@/lib/video-frame-config";
+import { DEFAULT_VIDEO_RESOLUTION, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, type VideoModelFamily, type VideoModelPreference } from "@/lib/video-frame-config";
 import { orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
-import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderMatchesModelFamily, videoProviderModelFamilyForProvider, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider, type VideoProviderProtocol } from "@/lib/video-provider-family";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
+import { videoProviderAvailabilityReason } from "@/lib/video-provider-availability";
 import {
   attachVideoProviderFailure,
   normalizeVideoProviderFailure,
@@ -454,15 +455,16 @@ function requestedModelOverride(payload: WorkerPayload) {
   return textValue(payload.params.modelOverride) || textValue(fields?.modelOverride);
 }
 
-function requestedVideoModelFamily(payload: WorkerPayload): VideoModelFamily {
+function requestedVideoModelPreference(payload: WorkerPayload): VideoModelPreference {
   const fields = recordValue(payload.params.fields);
   const selection = recordValue(payload.providerSelection) ?? {};
-  return normalizeVideoModelFamily(
+  return normalizeVideoModelPreference(
     textValue(payload.params.videoModelFamily) ||
     textValue(payload.params.modelFamily) ||
     textValue(fields?.videoModelFamily) ||
     textValue(fields?.modelFamily) ||
-    textValue(selection?.videoModelFamily)
+    textValue(selection?.videoModelFamily),
+    "auto"
   );
 }
 
@@ -512,19 +514,26 @@ function isTokengoGrokImagine15VideoProvider(provider: WorkerImageProvider) {
     provider.modelType?.trim().toLowerCase() === "grok-imagine-1.5";
 }
 
+function videoProviderSupportsCurrentRequest(provider: WorkerImageProvider, referenceAssetCount: number) {
+  return !videoProviderAvailabilityReason({ ...provider, apiKey: "configured" }, { referenceAssetCount });
+}
+
 function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const selectedModelFamily = requestedVideoModelFamily(payload);
+  const selectedModelPreference = requestedVideoModelPreference(payload);
+  const referenceAssetCount = videoFrameAssets(payload).length;
   const videoProviders = payload.aiProviderFallback.providers.filter((provider) =>
     provider.id &&
     provider.enabled !== false &&
     provider.providerType !== "image" &&
     (provider.providerType === "video" || isVideoGenerationModel(provider.modelType)) &&
-    videoProviderMatchesModelFamily(provider, selectedModelFamily)
+    videoProviderMatchesModelPreference(provider, selectedModelPreference) &&
+    videoProviderSupportsCurrentRequest(provider, referenceAssetCount)
   );
   const ordered = orderSelectableAiProviderFallbackCandidates(videoProviders, payload.providerSelection);
   const selection = recordValue(payload.providerSelection) ?? {};
   if (selection.mode === "fixed_provider" || selection.mode === "preferred_provider") return ordered;
-  const hasAtMostOneReference = videoFrameAssets(payload).length <= 1;
+  if (selectedModelPreference === "auto") return ordered;
+  const hasAtMostOneReference = referenceAssetCount <= 1;
   const tokengoSingleReferenceProviders = ordered.filter(isTokengoGrokImagine15VideoProvider);
   const otherVideoProviders = ordered.filter((provider) => !isTokengoGrokImagine15VideoProvider(provider));
   return hasAtMostOneReference
@@ -1210,13 +1219,13 @@ function parseVideoPixelSize(value: string) {
 
 function videoProviderParams(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
-  const modelFamily = requestedVideoModelFamily(payload);
+  const modelPreference = requestedVideoModelPreference(payload);
   const rawAspectRatio = textValue(payload.params.aspect_ratio) || textValue(payload.params.aspectRatio) || textValue(fields?.aspect_ratio) || textValue(fields?.aspectRatio);
   const rawResolution = textValue(payload.params.resolution) || textValue(fields?.resolution);
   const rawDuration = textValue(payload.params.durationSeconds) || textValue(payload.params.videoDurationSeconds) || textValue(payload.params.duration) || textValue(payload.params.videoDuration) || textValue(fields?.durationSeconds) || textValue(fields?.videoDurationSeconds) || textValue(fields?.duration) || textValue(fields?.videoDuration);
   const aspect_ratio = videoAspectRatios.has(rawAspectRatio) ? rawAspectRatio : "16:9";
   const resolution = videoResolutions.has(rawResolution) ? rawResolution : normalizeVideoResolution(rawResolution);
-  const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelFamily));
+  const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelPreference));
   return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio) };
 }
 
@@ -2609,6 +2618,7 @@ async function pollVideoTask(params: {
   apiKey: string;
   taskId: string;
   protocol: VideoProviderProtocol;
+  providerFamily: VideoModelFamily;
   signal?: AbortSignal;
   timeoutMs: number;
   timing?: Record<string, string>;
@@ -2675,7 +2685,7 @@ async function pollVideoTask(params: {
             new Error(`ai_provider_video_failed_${body.status}_${rawFailure}`),
             normalizeVideoProviderFailure({
               error: rawFailure,
-              providerFamily: requestedVideoModelFamily(params.payload),
+              providerFamily: params.providerFamily,
               providerProtocol: params.protocol
             })
           );
@@ -2722,7 +2732,7 @@ async function pollVideoTask(params: {
             new Error(`ai_provider_video_failed_${body.state || "unknown"}_${rawFailure}`),
             normalizeVideoProviderFailure({
               error: rawFailure,
-              providerFamily: requestedVideoModelFamily(params.payload),
+              providerFamily: params.providerFamily,
               providerProtocol: params.protocol
             })
           );
@@ -2768,7 +2778,7 @@ async function pollVideoTask(params: {
             new Error(`ai_provider_video_failed_failed_${rawFailure}`),
             normalizeVideoProviderFailure({
               error: rawFailure,
-              providerFamily: requestedVideoModelFamily(params.payload),
+              providerFamily: params.providerFamily,
               providerProtocol: params.protocol
             })
           );
@@ -2782,7 +2792,7 @@ async function pollVideoTask(params: {
           new Error(`ai_provider_video_failed_${body.state || "unknown"}_${rawFailure}`),
           normalizeVideoProviderFailure({
             error: rawFailure,
-            providerFamily: requestedVideoModelFamily(params.payload),
+            providerFamily: params.providerFamily,
             providerProtocol: params.protocol
           })
         );
@@ -3060,6 +3070,7 @@ async function generateVideoWithProvider(params: {
       apiKey: providerApiKey,
       taskId,
       protocol,
+      providerFamily: videoProviderModelFamilyForProvider(provider),
       timing,
       signal: params.signal,
       timeoutMs

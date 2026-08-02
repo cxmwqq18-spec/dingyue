@@ -40,6 +40,7 @@
     "smoke:huitu-video-openapi": "node --no-warnings --experimental-strip-types scripts/smoke-huitu-video-openapi.mjs",
     "repair:video-provider-config": "node scripts/repair-video-site-provider-config.mjs",
     "configure:tokengo-video-provider": "node scripts/configure-tokengo-video-provider.mjs",
+    "configure:seedance-special-video-provider": "node scripts/configure-seedance-special-video-provider.mjs",
     "sync:dreamshoot-homepage-showcase": "node scripts/sync-dreamshoot-homepage-showcase.mjs",
     "sync:dreamshoot-featured-packs": "node scripts/sync-dreamshoot-homepage-featured-packs.mjs",
     "sync:dreamshoot-blog-content": "node scripts/sync-dreamshoot-blog-content.mjs",

@@ -778,6 +778,9 @@ export function toVideoTheme(record: {
   modelPricing?: unknown;
   durationSeconds: number;
   maxFrames: number;
+  providerModelFamilies?: unknown;
+  textToVideoProviderModelFamilies?: unknown;
+  imageToVideoProviderModelFamilies?: unknown;
   generationCount: number;
   imageUrl?: string | null;
   galleryImages?: unknown;
@@ -798,6 +801,15 @@ export function toVideoTheme(record: {
     modelPricing: normalizeVideoModelPricing(record.modelPricing, record.creditCost),
     durationSeconds: record.durationSeconds,
     maxFrames: normalizeVideoFrameLimit(record.maxFrames),
+    providerModelFamilies: Array.isArray(record.providerModelFamilies)
+      ? record.providerModelFamilies.filter((item): item is "grok" | "gemini" => item === "grok" || item === "gemini")
+      : undefined,
+    textToVideoProviderModelFamilies: Array.isArray(record.textToVideoProviderModelFamilies)
+      ? record.textToVideoProviderModelFamilies.filter((item): item is "grok" | "gemini" => item === "grok" || item === "gemini")
+      : undefined,
+    imageToVideoProviderModelFamilies: Array.isArray(record.imageToVideoProviderModelFamilies)
+      ? record.imageToVideoProviderModelFamilies.filter((item): item is "grok" | "gemini" => item === "grok" || item === "gemini")
+      : undefined,
     generationCount: record.generationCount,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     imageUrl: record.imageUrl ?? undefined,

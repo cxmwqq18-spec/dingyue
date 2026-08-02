@@ -1,4 +1,4 @@
-import { normalizeVideoModelFamily, type VideoModelFamily } from "@/lib/video-frame-config";
+import { normalizeVideoModelFamily, normalizeVideoModelPreference, VIDEO_MODEL_FAMILIES, type VideoModelFamily } from "@/lib/video-frame-config";
 
 export type VideoProviderProtocol = "lk888-media" | "openai-videos" | "huitu-openapi" | "tokengo-media";
 
@@ -32,4 +32,19 @@ export function videoProviderMatchesModelFamily(
   modelFamily: unknown
 ) {
   return videoProviderModelFamilyForProvider(provider) === normalizeVideoModelFamily(modelFamily);
+}
+
+export function videoProviderMatchesModelPreference(
+  provider: { aiUrl?: string | null; modelType?: string | null },
+  modelPreference: unknown
+) {
+  const preference = normalizeVideoModelPreference(modelPreference);
+  return preference === "auto" || videoProviderMatchesModelFamily(provider, preference);
+}
+
+export function videoProviderModelFamiliesForProviders(
+  providers: Array<{ aiUrl?: string | null; modelType?: string | null }>
+): VideoModelFamily[] {
+  const families = new Set(providers.map(videoProviderModelFamilyForProvider));
+  return VIDEO_MODEL_FAMILIES.filter((family) => families.has(family));
 }

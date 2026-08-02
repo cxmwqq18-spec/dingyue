@@ -478,28 +478,23 @@ function numberRequestValue(...values: unknown[]): number | undefined {
   return undefined;
 }
 
-function shouldRestoreGeminiRetryAsGrok(failure?: VideoProviderFailure): boolean {
-  return failure?.providerFamily === "gemini" && failure.code === "real_person_reference_unsupported";
-}
-
 function canDirectRetryVideoJob(job: RuntimeJob, failure?: VideoProviderFailure): boolean {
   if (!isVideoRuntimeJob(job)) return false;
   if (!failure) return true;
   return failure.code === "frame_url_unreadable";
 }
 
-function videoRetryDraftFromJob(job: RuntimeJob, providerFailure?: VideoProviderFailure, spanish = false): Omit<VideoRetryDraft, "key"> | undefined {
+function videoRetryDraftFromJob(job: RuntimeJob): Omit<VideoRetryDraft, "key"> | undefined {
   if (!isVideoRuntimeJob(job)) return undefined;
   const request = recordValue(job.requestJson);
   const fields = recordValue(request.fields);
   const frameAssetIds = videoJobFrameIds(job);
   if (!frameAssetIds.length) return undefined;
-  const restoreAsGrok = shouldRestoreGeminiRetryAsGrok(providerFailure);
   return {
     sourceJobId: job.id,
     frameAssetIds,
     videoThemeId: stringRequestValue(fields.videoThemeId, request.videoThemeId),
-    videoModelFamily: restoreAsGrok ? "grok" : stringRequestValue(fields.videoModelFamily, fields.modelFamily, request.videoModelFamily, request.modelFamily),
+    videoModelFamily: stringRequestValue(fields.videoModelFamily, fields.modelFamily, request.videoModelFamily, request.modelFamily),
     promptNote: stringRequestValue(fields.promptNote, request.promptNote),
     durationSeconds: numberRequestValue(
       fields.durationSeconds,
@@ -512,16 +507,7 @@ function videoRetryDraftFromJob(job: RuntimeJob, providerFailure?: VideoProvider
       request.duration
     ),
     aspectRatio: stringRequestValue(fields.aspectRatio, fields.aspect_ratio, request.aspectRatio, request.aspect_ratio),
-    resolution: stringRequestValue(fields.resolution, request.resolution),
-    ...(restoreAsGrok
-      ? {
-          restoreMessage: t(
-            spanish,
-            "Gemini rejected that reference because it looks like a real person. I switched this retry draft to Grok; review the setup, then generate again.",
-            "Gemini rechazo esa referencia porque parece una persona real. Cambie este reintento a Grok; revisa la configuracion y vuelve a generar."
-          )
-        }
-      : {})
+    resolution: stringRequestValue(fields.resolution, request.resolution)
   };
 }
 
@@ -588,7 +574,7 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
       return t(spanish, "Video generation is temporarily unavailable while provider access is being updated. Credits were returned automatically, and you can retry once video access is restored.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. Los creditos se devolvieron automaticamente y podras reintentar cuando se restaure el acceso de video.");
     }
     if (isVideoRequest && isVideoProviderUpstreamUnavailableError(error)) {
-      return t(spanish, "The Grok video provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers or use a healthy video provider.", "El proveedor de video Grok no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso o usa un proveedor de video disponible.");
+      return t(spanish, "The video provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers.", "El proveedor de video no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso.");
     }
     if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
     if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "The video provider timed out while creating the video task. The starter image was created correctly, credits were returned automatically, and you can retry after the provider recovers.", "El proveedor de video agoto el tiempo al crear la tarea. La imagen inicial se creo correctamente, los creditos se devolvieron automaticamente y puedes reintentar cuando el proveedor se recupere.");
@@ -1113,7 +1099,7 @@ function isVideoRuntimeJob(job: RuntimeJob): boolean {
 function workspaceGenerationErrorText(error: string, spanish = false, providerFailure?: VideoProviderFailure): string {
   const lowerError = error.toLowerCase();
   if (isVideoProviderUpstreamUnavailableError(error)) {
-    return t(spanish, "The Grok video provider is temporarily unavailable upstream.", "El proveedor de video Grok no esta disponible temporalmente en upstream.");
+    return t(spanish, "The video provider is temporarily unavailable upstream.", "El proveedor de video no esta disponible temporalmente en upstream.");
   }
   const normalizedFailure = providerFailure ?? normalizeVideoProviderFailure({ error });
   if (normalizedFailure) return videoProviderFailureCustomerMessage(normalizedFailure, spanish);
@@ -1314,7 +1300,7 @@ export function CustomerWorkspaceShell({
   const [selectedVideoFrameIds, setSelectedVideoFrameIds] = useState<string[]>([]);
   const [draggedVideoFrameId, setDraggedVideoFrameId] = useState<string | null>(null);
   const [uploadingVideoFrames, setUploadingVideoFrames] = useState(false);
-  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files. WebP and other browser-readable images are converted for Gemini before upload.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} archivos de imagen. WebP y otras imagenes legibles por el navegador se convierten para Gemini antes de subir.`));
+  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files. WebP and other browser-readable images are converted to video-ready JPG or PNG before upload.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} archivos de imagen. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG listo para video antes de subir.`));
   const [videoWorkspaceTab, setVideoWorkspaceTab] = useState<VideoWorkspaceTab>("generate");
   const [retryVideoDraft, setRetryVideoDraft] = useState<VideoRetryDraft | null>(null);
   const [preferredToolId, setPreferredToolId] = useState<string | undefined>(undefined);
@@ -2120,10 +2106,7 @@ export function CustomerWorkspaceShell({
   }
 
   function editAndRetryVideoJob(job: RuntimeJob) {
-    const slots = workspaceJobOutputSlots(job, outputAssetsByJobId.get(job.id) ?? []);
-    const providerFailure = workspaceJobProviderFailure(job, slots);
-    const restoreAsGrok = shouldRestoreGeminiRetryAsGrok(providerFailure);
-    const draft = videoRetryDraftFromJob(job, providerFailure, spanishXby);
+    const draft = videoRetryDraftFromJob(job);
     if (!draft) {
       setRuntimeRefreshMessage(t(spanishXby, "This failed video request cannot be restored because its frame selection is missing.", "No se puede restaurar esta solicitud porque falta su seleccion de fotogramas."));
       chooseVideoWorkspaceTab("generate");
@@ -2140,12 +2123,8 @@ export function CustomerWorkspaceShell({
     setFocusedJobId(job.id);
     setWorkspaceNotice(t(
       spanishXby,
-      restoreAsGrok
-        ? "Previous failed video request restored and switched to Grok because Gemini rejected the real-person reference. Review the form, then submit it again when ready."
-        : "Previous failed video request restored. Review the form, then submit it again when ready.",
-      restoreAsGrok
-        ? "Solicitud de video fallida restaurada y cambiada a Grok porque Gemini rechazo la referencia de persona real. Revisa el formulario y vuelve a enviarlo cuando este listo."
-        : "Solicitud de video fallida restaurada. Revisa el formulario y vuelve a enviarlo cuando este listo."
+      "Previous failed video request restored. Review the form, then submit it again when ready.",
+      "Solicitud de video fallida restaurada. Revisa el formulario y vuelve a enviarlo cuando este listo."
     ));
     setVideoFrameMessage(missingFrameCount > 0
       ? t(
@@ -2301,7 +2280,7 @@ export function CustomerWorkspaceShell({
     const imageFiles = selectedFiles.filter(canPrepareCustomerVideoFrameUploadFile);
     const unsupportedCount = selectedFiles.length - imageFiles.length;
     if (!imageFiles.length) {
-      setVideoFrameMessage(selectedFiles.length ? t(spanishXby, "Choose a browser-readable image file for video. GIF and SVG files cannot be converted for Gemini.", "Elige una imagen legible por el navegador para video. Los archivos GIF y SVG no se pueden convertir para Gemini.") : t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
+      setVideoFrameMessage(selectedFiles.length ? t(spanishXby, "Choose a browser-readable image file for video. GIF and SVG files cannot be converted to video-ready JPG or PNG.", "Elige una imagen legible por el navegador para video. Los archivos GIF y SVG no se pueden convertir a JPG o PNG listo para video.") : t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
       return;
     }
     const uploadFiles = imageFiles.slice(0, maxVideoFrameCount);
@@ -2342,7 +2321,7 @@ export function CustomerWorkspaceShell({
         setRuntimeAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
         setSelectedVideoFrameIds((current) => current.filter((assetId) => assetId !== optimisticAsset.id));
         setUploadingVideoFrames(false);
-        setVideoFrameMessage(t(spanishXby, `${file.name} could not be converted for Gemini video. Try exporting it as JPG or PNG, then upload again.`, `${file.name} no se pudo convertir para video Gemini. Exportala como JPG o PNG y vuelve a subirla.`));
+        setVideoFrameMessage(t(spanishXby, `${file.name} could not be converted for video. Try exporting it as JPG or PNG, then upload again.`, `${file.name} no se pudo convertir para video. Exportala como JPG o PNG y vuelve a subirla.`));
         return;
       }
       if (preparedUpload.converted) convertedCount += 1;
@@ -2373,10 +2352,10 @@ export function CustomerWorkspaceShell({
       ? t(spanishXby, ` Only the first ${maxVideoFrameCount} images were uploaded.`, ` Solo se subieron las primeras ${maxVideoFrameCount} imagenes.`)
       : "";
     const unsupportedNotice = unsupportedCount > 0
-      ? t(spanishXby, ` ${unsupportedCount} unsupported file${unsupportedCount === 1 ? "" : "s"} skipped. GIF and SVG files cannot be converted for Gemini video.`, ` ${unsupportedCount} archivo${unsupportedCount === 1 ? "" : "s"} no compatible${unsupportedCount === 1 ? "" : "s"} omitido${unsupportedCount === 1 ? "" : "s"}. Los archivos GIF y SVG no se pueden convertir para video Gemini.`)
+      ? t(spanishXby, ` ${unsupportedCount} unsupported file${unsupportedCount === 1 ? "" : "s"} skipped. GIF and SVG files cannot be converted to video-ready JPG or PNG.`, ` ${unsupportedCount} archivo${unsupportedCount === 1 ? "" : "s"} no compatible${unsupportedCount === 1 ? "" : "s"} omitido${unsupportedCount === 1 ? "" : "s"}. Los archivos GIF y SVG no se pueden convertir a JPG o PNG listo para video.`)
       : "";
     const convertedNotice = convertedCount > 0
-      ? t(spanishXby, ` ${convertedCount} image${convertedCount === 1 ? "" : "s"} converted to JPG for Gemini.`, ` ${convertedCount} imagen${convertedCount === 1 ? "" : "es"} convertida${convertedCount === 1 ? "" : "s"} a JPG para Gemini.`)
+      ? t(spanishXby, ` ${convertedCount} image${convertedCount === 1 ? "" : "s"} converted to video-ready JPG.`, ` ${convertedCount} imagen${convertedCount === 1 ? "" : "es"} convertida${convertedCount === 1 ? "" : "s"} a JPG listo para video.`)
       : "";
     setVideoFrameMessage(spanishXby
       ? `${createdAssets.length} fotograma${createdAssets.length === 1 ? "" : "s"} subido${createdAssets.length === 1 ? "" : "s"} y seleccionado${createdAssets.length === 1 ? "" : "s"}.${limitNotice}${convertedNotice}${unsupportedNotice}`
@@ -2755,7 +2734,7 @@ export function CustomerWorkspaceShell({
             </span>
           </div>
           <p className="mt-3 text-xs leading-5 text-white/56">
-            {t(spanishXby, `Upload up to ${maxVideoFrameCount} images here. WebP and other browser-readable images are converted to a Gemini-ready format before upload. Only video frame uploads appear in this list, and new uploads are selected automatically.`, `Sube hasta ${maxVideoFrameCount} imagenes aqui. WebP y otras imagenes legibles por el navegador se convierten a un formato listo para Gemini antes de subir. Solo aparecen fotogramas subidos para video y las nuevas subidas se seleccionan automaticamente.`)}
+            {t(spanishXby, `Upload up to ${maxVideoFrameCount} images here. WebP and other browser-readable images are converted to video-ready JPG or PNG before upload. Only video frame uploads appear in this list, and new uploads are selected automatically.`, `Sube hasta ${maxVideoFrameCount} imagenes aqui. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG listo para video antes de subir. Solo aparecen fotogramas subidos para video y las nuevas subidas se seleccionan automaticamente.`)}
           </p>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
@@ -3637,7 +3616,7 @@ export function CustomerWorkspaceShell({
                           const slots = workspaceJobOutputSlots(job, outputAssets);
                           const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
                           const providerFailure = failed ? workspaceJobProviderFailure(job, slots) : undefined;
-                          const retryDraft = failed ? videoRetryDraftFromJob(job, providerFailure, spanishXby) : undefined;
+                          const retryDraft = failed ? videoRetryDraftFromJob(job) : undefined;
                           const directRetry = failed && canDirectRetryVideoJob(job, providerFailure);
                           const retryingThisJob = retryingVideoJobId === job.id;
                           const timingBreakdown = workspaceVideoTimingBreakdown(job, spanishXby);

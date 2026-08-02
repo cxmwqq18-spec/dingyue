@@ -13,6 +13,8 @@ import {
 } from "@/lib/stores/site-store";
 import type { PlatformState, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
+import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
+import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 
 const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
@@ -128,9 +130,15 @@ async function localVideoThemePayload(params: {
     .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt))
     .slice(0, params.pageSize);
   const providers = (state.platformAiProviders ?? []).filter((provider) =>
-    provider.providerType === "video" || isVideoProviderModel(provider.modelType)
+    provider.enabled !== false &&
+    Boolean(provider.aiUrl?.trim()) &&
+    Boolean(provider.apiKey?.trim()) &&
+    (provider.providerType === "video" || isVideoProviderModel(provider.modelType))
   );
   const providerMaxFrames = configuredVideoProviderFrameLimit(providers);
+  const providerModelFamilies = videoProviderModelFamiliesForProviders(providers);
+  const textToVideoProviderModelFamilies = runnableVideoProviderModelFamiliesForRequest(providers, { referenceAssetCount: 0 });
+  const imageToVideoProviderModelFamilies = runnableVideoProviderModelFamiliesForRequest(providers, { referenceAssetCount: 1 });
   const categories = params.includeCategories
     ? Array.from(categoriesById.values())
         .filter((category) => category.status === "active")
@@ -142,7 +150,10 @@ async function localVideoThemePayload(params: {
       ...theme,
       category: theme.category ?? (theme.categoryId ? categoriesById.get(theme.categoryId) : undefined),
       effectiveMaxFrames: effectiveVideoFrameLimit(providers, theme.maxFrames),
-      providerMaxFrames
+      providerMaxFrames,
+      providerModelFamilies,
+      textToVideoProviderModelFamilies,
+      imageToVideoProviderModelFamilies
     })),
     categories,
     total: themes.length,
@@ -181,7 +192,10 @@ async function videoThemeProviderFrameLimits() {
   const providers = await getPlatformAiProviderFallbackQueueRelational("video");
   return {
     effectiveMaxFrames: (theme: Pick<VideoTheme, "maxFrames">) => effectiveVideoFrameLimit(providers, theme.maxFrames),
-    providerMaxFrames: configuredVideoProviderFrameLimit(providers)
+    providerMaxFrames: configuredVideoProviderFrameLimit(providers),
+    providerModelFamilies: videoProviderModelFamiliesForProviders(providers),
+    textToVideoProviderModelFamilies: runnableVideoProviderModelFamiliesForRequest(providers, { referenceAssetCount: 0, assumeApiKeyConfigured: true }),
+    imageToVideoProviderModelFamilies: runnableVideoProviderModelFamiliesForRequest(providers, { referenceAssetCount: 1, assumeApiKeyConfigured: true })
   };
 }
 
@@ -260,7 +274,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         return {
           ...mapped,
           effectiveMaxFrames: frameLimits.effectiveMaxFrames(mapped),
-          providerMaxFrames: frameLimits.providerMaxFrames
+          providerMaxFrames: frameLimits.providerMaxFrames,
+          providerModelFamilies: frameLimits.providerModelFamilies,
+          textToVideoProviderModelFamilies: frameLimits.textToVideoProviderModelFamilies,
+          imageToVideoProviderModelFamilies: frameLimits.imageToVideoProviderModelFamilies
         };
       }),
       categories: categories.map(toVideoThemeCategory),

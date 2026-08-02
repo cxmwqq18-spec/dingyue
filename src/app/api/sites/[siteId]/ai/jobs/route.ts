@@ -5,7 +5,7 @@ import { submitGenerationJob } from "@/lib/generation-submit";
 import { StoreError } from "@/lib/server-store";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { publicUrlForRequest } from "@/lib/session";
-import { normalizeVideoModelFamily } from "@/lib/video-frame-config";
+import { AUTO_VIDEO_MODEL_FAMILY } from "@/lib/video-frame-config";
 import { isLoopbackBaseUrl, resolveWorkerBaseUrls } from "@/lib/worker";
 import type { NextRequest } from "next/server";
 
@@ -51,21 +51,26 @@ function requestAssetIds(body: { aiAppSlug?: string; params?: Record<string, unk
   ]));
 }
 
-function requestedVideoModelFamily(body: { params?: Record<string, unknown> }): "grok" | "gemini" {
-  const params = body.params ?? {};
-  const fields = recordValue(params.fields);
-  return normalizeVideoModelFamily(
-    params.videoModelFamily ??
-    params.modelFamily ??
-    fields.videoModelFamily ??
-    fields.modelFamily
-  );
-}
-
 function shouldRequireProviderReachableVideoFrames() {
   if (process.env.ALLOW_LOOPBACK_VIDEO_FRAME_URLS === "1") return false;
   if (process.env.REQUIRE_PUBLIC_VIDEO_FRAME_URLS === "1") return true;
   return process.env.NODE_ENV === "production";
+}
+
+function customerVideoAutoProviderParams(body: { aiAppSlug?: string; params?: Record<string, unknown> & { assetIds?: unknown } }) {
+  const params = body.params ?? {};
+  if (!isVideoJobRequest({ aiAppSlug: body.aiAppSlug, params })) return params;
+  const fields = recordValue(params.fields);
+  return {
+    ...params,
+    videoModelFamily: AUTO_VIDEO_MODEL_FAMILY,
+    modelFamily: AUTO_VIDEO_MODEL_FAMILY,
+    fields: {
+      ...fields,
+      videoModelFamily: AUTO_VIDEO_MODEL_FAMILY,
+      modelFamily: AUTO_VIDEO_MODEL_FAMILY
+    }
+  };
 }
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -83,12 +88,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const workerBaseUrls = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
   const assetIds = requestAssetIds(body);
-  if (isVideoJobRequest(body) && requestedVideoModelFamily(body) === "gemini" && assetIds.length < 1) {
-    return NextResponse.json({ error: "video_frame_selection_required" }, { status: 400 });
-  }
   if (shouldRequireProviderReachableVideoFrames() && isVideoJobRequest(body) && assetIds.length > 0 && isLoopbackBaseUrl(workerBaseUrls.publicBaseUrl)) {
     return NextResponse.json({ error: "video_public_asset_url_required" }, { status: 400 });
   }
+  const sanitizedParams = customerVideoAutoProviderParams(body);
   const skipWorkerDispatch = process.env.NODE_ENV !== "production" && request.headers.get("x-smoke-skip-worker-dispatch") === "1";
   const idempotencyKey = request.headers.get("idempotency-key")?.trim() || body.idempotencyKey?.trim() || undefined;
   try {
@@ -105,10 +108,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         ? { enabled: true, reason: "site_admin", siteAdminId: adminAccess.siteAdminId }
         : undefined,
       params: {
-        ...(body.params ?? {}),
+        ...sanitizedParams,
         assetIds,
-        creativePackId: typeof body.params?.creativePackId === "string" ? body.params.creativePackId : undefined,
-        customerModelId: typeof body.params?.customerModelId === "string" ? body.params.customerModelId : undefined
+        creativePackId: typeof sanitizedParams.creativePackId === "string" ? sanitizedParams.creativePackId : undefined,
+        customerModelId: typeof sanitizedParams.customerModelId === "string" ? sanitizedParams.customerModelId : undefined
       },
       skipWorkerDispatch,
       includeWorkerPayload: true

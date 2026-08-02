@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import path from "path";
 import { hasSiteAdminSession, requireSiteMutation } from "@/lib/api-auth";
+import { DEFAULT_MEDIA_WATERMARK_OPACITY, MEDIA_WATERMARK_VERSION } from "@/lib/media-watermark";
 import {
   batchWatermarkSitePublicMedia,
   publicMediaWatermarkPlanForSite
@@ -29,6 +30,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     ok: true,
     siteId,
     text: plan.text,
+    version: MEDIA_WATERMARK_VERSION,
+    opacity: DEFAULT_MEDIA_WATERMARK_OPACITY,
     roots: plan.roots.map((root) => path.relative(process.cwd(), root).split(path.sep).join("/"))
   });
 }

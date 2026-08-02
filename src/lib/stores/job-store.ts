@@ -8,9 +8,9 @@ import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerE
 import { generatedOutputCopy, generationThemeLabel } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { addAuditLogRelational, mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
-import { CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, normalizeVideoModelFamily, normalizeVideoResolution, videoDurationCreditCost, type VideoModelFamily } from "@/lib/video-frame-config";
+import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, videoDurationCreditCost, videoDurationCreditCostForModelFamilies, type VideoModelPreference } from "@/lib/video-frame-config";
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
-import { videoProviderMatchesModelFamily } from "@/lib/video-provider-family";
+import { videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
 import { isGeminiVideoFrameMimeType, type VideoProviderFailure } from "@/lib/video-provider-policy";
 import { videoProviderCreateTimeoutMs, videoProviderWorkerTimeoutMs } from "@/lib/video-provider-timeouts";
@@ -533,7 +533,7 @@ function videoReferenceContractInstruction(requestJson: Record<string, unknown> 
 }
 
 function videoSkillPackQualityInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
-  const modelFamily = requestedVideoModelFamily(requestJson);
+  const modelPreference = requestedVideoModelPreference(requestJson);
   return [
     "Store video quality rules powered by the latest installed AI video skill pack: treat the user's written prompt as editable direction, not as the whole production prompt.",
     "Prompt upgrade requirements: preserve the user's intent while adding a clear first 0-3 second hook, a simple beginning-middle-end motion plan, one motivated camera move, and a clear final frame.",
@@ -542,9 +542,11 @@ function videoSkillPackQualityInstruction(requestJson: Record<string, unknown> |
       ? `Reference continuity requirements: use all ${requestedAssetIds.length} selected frame image${requestedAssetIds.length === 1 ? "" : "s"} in order as binding visual evidence.`
       : "Text-to-video requirements: follow the customer's written direction as the source of truth and do not borrow unrelated preset travel, lifestyle, or stock-footage scenes.",
     "Continuity requirements: lock identity, product shape, material state, scene geometry, lighting direction, object contact, and selected-frame order when references are present. Avoid extra people, warped hands, product drift, impossible physics, text overlays, watermarks, or generic stock-video polish.",
-    modelFamily === "grok"
+    modelPreference === "grok"
       ? "Grok supplier rule: final provider prompts should remain plain natural English with reference roles described in words, not Seedance @Image/@Video syntax."
-      : "Gemini supplier rule: keep references concise and policy-safe, with concrete visible action instead of real-person identity claims when unsupported."
+      : modelPreference === "gemini"
+        ? "Gemini supplier rule: keep references concise and policy-safe, with concrete visible action instead of real-person identity claims when unsupported."
+        : "Automatic supplier rule: keep the prompt plain, concise, reference-aware, and safe for either text-to-video or image-to-video adapters."
   ].filter(Boolean).join("\n");
 }
 
@@ -561,13 +563,14 @@ function videoPromptText(requestJson: Record<string, unknown> | undefined): stri
   return "";
 }
 
-function requestedVideoModelFamily(requestJson: Record<string, unknown> | undefined): VideoModelFamily {
+function requestedVideoModelPreference(requestJson: Record<string, unknown> | undefined): VideoModelPreference {
   const fields = fieldRecord(requestJson);
-  return normalizeVideoModelFamily(
+  return normalizeVideoModelPreference(
     fields.videoModelFamily ??
     fields.modelFamily ??
     requestJson?.videoModelFamily ??
-    requestJson?.modelFamily
+    requestJson?.modelFamily,
+    AUTO_VIDEO_MODEL_FAMILY
   );
 }
 
@@ -1155,7 +1158,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
       : undefined;
   const videoMode = isVideoModeRequest(params.requestJson) || params.aiAppSlug === "video_generator";
   const requestedAssetIds = requestedAssetIdsForRequest(params.requestJson, videoMode);
-  const requestedModelFamily = videoMode ? requestedVideoModelFamily(params.requestJson) : undefined;
+  const requestedModelPreference = videoMode ? requestedVideoModelPreference(params.requestJson) : undefined;
   if (videoMode && params.aiAppSlug !== "video_generator") throw new StoreError("video_theme_tool_mismatch", 400);
   if (videoMode && !rawVideoThemeId && !rawVideoThemeSlug) throw new StoreError("video_theme_required", 400);
   const videoTheme = rawVideoThemeId || rawVideoThemeSlug
@@ -1188,24 +1191,34 @@ async function createGenerationJobInTx(tx: Tx, params: {
   if (videoMode && !videoTheme) throw new StoreError("video_theme_not_found_for_site", 404);
   let videoProviderMaxFrames: number | undefined;
   let effectiveVideoMaxFrames: number | undefined;
+  let videoCandidateModelFamilies: ReturnType<typeof videoProviderModelFamilyForProvider>[] = [];
   if (videoTheme) {
     const videoProviders = await tx.platformAiProvider.findMany({
       where: { enabled: true, providerType: "video" },
-      select: { id: true, label: true, aiUrl: true, apiKey: true, modelType: true, enabled: true, maxImagesPerRequest: true },
-      orderBy: [{ preferred: "desc" }, { priority: "asc" }]
+      select: { id: true, label: true, aiUrl: true, apiKey: true, modelType: true, providerType: true, enabled: true, maxImagesPerRequest: true, priority: true, preferred: true },
+      orderBy: [{ priority: "asc" }, { preferred: "desc" }]
     });
-    const modelFamilyVideoProviders = videoProviders.filter((provider) => videoProviderMatchesModelFamily(provider, requestedModelFamily));
-    videoProviderMaxFrames = configuredVideoProviderFrameLimit(modelFamilyVideoProviders);
-    effectiveVideoMaxFrames = effectiveVideoFrameLimit(modelFamilyVideoProviders, videoTheme.maxFrames);
+    const modelPreferenceVideoProviders = videoProviders.filter((provider) =>
+      videoProviderMatchesModelPreference(provider, requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY)
+    );
+    videoCandidateModelFamilies = Array.from(new Set(modelPreferenceVideoProviders.map(videoProviderModelFamilyForProvider)));
+    videoProviderMaxFrames = configuredVideoProviderFrameLimit(modelPreferenceVideoProviders);
+    effectiveVideoMaxFrames = effectiveVideoFrameLimit(modelPreferenceVideoProviders, videoTheme.maxFrames);
     const maxFrames = effectiveVideoMaxFrames;
-    if (requestedModelFamily === "gemini" && requestedAssetIds.length < 1) throw new StoreError("video_frame_selection_required", 400);
+    if (requestedModelPreference === "gemini" && requestedAssetIds.length < 1) throw new StoreError("video_frame_selection_required", 400);
     if (requestedAssetIds.length < 1 && !videoPromptText(params.requestJson)) throw new StoreError("video_prompt_required", 400);
     if (requestedAssetIds.length < 1 && videoPromptRequiresFrameImages(videoPromptText(params.requestJson))) {
       throw new StoreError("video_frame_selection_required", 400);
     }
     if (!params.skipProviderAvailabilityCheck) {
-      const availability = videoProviderAvailability(modelFamilyVideoProviders, { referenceAssetCount: requestedAssetIds.length });
+      const availability = videoProviderAvailability(modelPreferenceVideoProviders, { referenceAssetCount: requestedAssetIds.length });
       if (!availability.ok) throw new StoreError(availability.error, 503);
+      videoCandidateModelFamilies = Array.from(new Set(
+        availability.runnableProviders
+          .map((diagnostic) => modelPreferenceVideoProviders.find((provider) => provider.id === diagnostic.id))
+          .filter((provider): provider is typeof modelPreferenceVideoProviders[number] => Boolean(provider))
+          .map(videoProviderModelFamilyForProvider)
+      ));
     }
     if (requestedAssetIds.length > maxFrames) throw new StoreError("too_many_video_frames_for_provider", 400);
   }
@@ -1240,14 +1253,16 @@ async function createGenerationJobInTx(tx: Tx, params: {
         params.requestJson?.videoDuration,
         requestedAssetIds.length,
         videoTheme.durationSeconds,
-        requestedModelFamily
+        requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY
       )
     : undefined;
   const requestedVideoResolution = videoTheme
     ? normalizeVideoResolution(fields.resolution ?? params.requestJson?.resolution)
     : undefined;
   const unitCreditCost = videoTheme
-    ? videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds, requestedModelFamily, videoTheme.modelPricing)
+    ? (requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY) === AUTO_VIDEO_MODEL_FAMILY
+      ? videoDurationCreditCostForModelFamilies(videoTheme.creditCost, requestedVideoDurationSeconds, videoCandidateModelFamilies, videoTheme.modelPricing)
+      : videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds, requestedModelPreference, videoTheme.modelPricing)
     : creativePack?.creditCost ?? siteAiApp.creditCost;
   const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
   const billableCredits = unitCreditCost * outputCount;
@@ -1264,7 +1279,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   const videoProviderSelection = videoTheme
     ? {
         ...resolvedProviderSelection,
-        videoModelFamily: requestedModelFamily
+        videoModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY
       }
     : resolvedProviderSelection;
   if (requestedAssetIds.length) {
@@ -1278,7 +1293,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
     if (videoTheme) {
       const invalidVideoFrameAsset = validAssets.find((asset) => asset.role !== "input" || !asset.mimeType.startsWith("image/"));
       if (invalidVideoFrameAsset) throw new StoreError("video_frame_asset_required", 400);
-      if (requestedModelFamily === "gemini" && validAssets.some((asset) => !isGeminiVideoFrameMimeType(asset.mimeType))) {
+      if (((requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY) === AUTO_VIDEO_MODEL_FAMILY || requestedModelPreference === "gemini") && validAssets.some((asset) => !isGeminiVideoFrameMimeType(asset.mimeType))) {
         throw new StoreError("unsupported_video_frame_type", 400);
       }
     }
@@ -1292,8 +1307,8 @@ async function createGenerationJobInTx(tx: Tx, params: {
         videoThemeSlug: videoTheme.slug,
         videoThemeName: videoTheme.name,
         videoThemePrompt: videoTheme.prompt,
-        videoModelFamily: requestedModelFamily,
-        modelFamily: requestedModelFamily,
+        videoModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
+        modelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
         frameAssetIds: requestedAssetIds,
         duration: String(requestedVideoDurationSeconds),
         videoDuration: String(requestedVideoDurationSeconds),
@@ -1329,8 +1344,8 @@ async function createGenerationJobInTx(tx: Tx, params: {
               outputType: "video",
               videoThemeId: videoTheme.id,
               videoThemeSlug: videoTheme.slug,
-              videoModelFamily: requestedModelFamily,
-              modelFamily: requestedModelFamily,
+              videoModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
+              modelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
               duration: String(requestedVideoDurationSeconds),
               videoDuration: String(requestedVideoDurationSeconds),
               durationSeconds: requestedVideoDurationSeconds,
@@ -1389,7 +1404,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
               creditCost: videoTheme.creditCost,
               modelPricing: videoTheme.modelPricing,
               selectedCreditCost: unitCreditCost,
-              selectedModelFamily: requestedModelFamily,
+              selectedModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
               durationSeconds: videoTheme.durationSeconds,
               selectedDurationSeconds: requestedVideoDurationSeconds,
               themeMaxFrames: normalizeVideoFrameLimit(videoTheme.maxFrames),

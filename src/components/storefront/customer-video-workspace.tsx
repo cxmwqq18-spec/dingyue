@@ -1,29 +1,22 @@
 "use client";
 
 import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Check, ChevronDown, Cpu, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
+import { AlertTriangle, Check, ChevronDown, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme } from "@/lib/types";
 import {
+  AUTO_VIDEO_MODEL_FAMILY,
   DEFAULT_VIDEO_DURATION_SECONDS,
-  DEFAULT_VIDEO_MODEL_FAMILY,
   DEFAULT_VIDEO_RESOLUTION,
   CUSTOMER_VIDEO_FRAME_LIMIT,
   normalizeVideoDurationSecondsForFrameCount,
-  normalizeVideoModelFamily,
   trimVideoFrameSelection,
-  videoDurationCreditCost,
+  videoDurationCreditCostForModelFamilies,
   videoDurationOptionsForFrameCount,
-  type VideoModelFamily,
   type VideoDurationSeconds,
   type VideoResolution
 } from "@/lib/video-frame-config";
 import {
-  geminiVideoFramePolicyDetailMessage,
-  geminiVideoFramePolicyWarningMessage,
-  geminiVideoFrameRequirementMessage,
-  grokVideoFrameGuidanceDetailMessage,
-  grokVideoFrameGuidanceMessage,
   isGeminiVideoFrameMimeType
 } from "@/lib/video-provider-policy";
 
@@ -67,11 +60,6 @@ const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string }> = 
   { id: DEFAULT_VIDEO_RESOLUTION, label: "720P" }
 ];
 
-const VIDEO_MODEL_OPTIONS: Array<{ id: VideoModelFamily; label: string }> = [
-  { id: "grok", label: "Grok" },
-  { id: "gemini", label: "Gemini" }
-];
-
 const PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion";
 const VIDEO_PROMPT_MAX_LENGTH = 5000;
 const VIDEO_PROMPT_TEMPLATE = [
@@ -95,24 +83,20 @@ function defaultVideoTheme(themes: VideoTheme[]): VideoTheme | undefined {
     themes[0];
 }
 
-function errorText(error: string | undefined, status: number, spanish: boolean, modelFamily: VideoModelFamily) {
+function errorText(error: string | undefined, status: number, spanish: boolean) {
   if (status === 401 || error === "customer_login_required") return vt(spanish, "Please sign in again before generating video.", "Vuelve a iniciar sesion antes de generar video.");
   if (status === 403 || error?.includes("csrf")) return vt(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.");
   if (error === "subscription_required") return vt(spanish, "Choose a subscription or use enough credits before generating video.", "Elige una suscripcion o usa creditos suficientes antes de generar video.");
   if (error === "insufficient_credits") return vt(spanish, "Not enough credits for this video theme.", "No hay creditos suficientes para este tema de video.");
   if (error === "video_theme_required") return vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento.");
   if (error === "video_frames_required" || error === "video_prompt_required") return vt(spanish, "Describe the video or select at least one frame image.", "Describe el video o selecciona al menos una imagen de fotograma.");
-  if (error === "video_frame_selection_required") return modelFamily === "gemini"
-    ? geminiVideoFrameRequirementMessage(spanish)
-    : vt(spanish, "Your prompt refers to uploaded images. Select frame images on the left before generating image-to-video.", "Tu prompt menciona imagenes subidas. Selecciona fotogramas a la izquierda antes de generar imagen a video.");
+  if (error === "video_frame_selection_required") return vt(spanish, "Your prompt refers to uploaded images. Select frame images on the left before generating image-to-video.", "Tu prompt menciona imagenes subidas. Selecciona fotogramas a la izquierda antes de generar imagen a video.");
   if (error === "too_many_video_frames") return vt(spanish, "This theme allows fewer frame images.", "Este tema permite menos imagenes de fotograma.");
   if (error === "too_many_video_frames_for_provider") return vt(spanish, "This video preset allows fewer frame images. Remove extra frames and try again.", "Este ajuste de video permite menos fotogramas. Quita fotogramas extra e intentalo de nuevo.");
   if (error === "video_frame_asset_required") return vt(spanish, "Use images uploaded in the video frame area before generating.", "Usa imagenes subidas en el area de fotogramas antes de generar.");
-  if (error === "unsupported_video_frame_type") return vt(spanish, "Gemini video can only use JPG or PNG frame images.", "El video Gemini solo puede usar fotogramas JPG o PNG.");
+  if (error === "unsupported_video_frame_type") return vt(spanish, "Video references need JPG or PNG frame images.", "Las referencias de video necesitan fotogramas JPG o PNG.");
   if (error === "video_public_asset_url_required") return vt(spanish, "Video generation needs a public asset URL so the provider can read the selected frame images.", "La generacion de video necesita una URL publica de recursos para que el proveedor lea los fotogramas seleccionados.");
-  if (error === "video_provider_temporarily_unavailable" || error === "no_video_ai_provider_configured") return modelFamily === "gemini"
-    ? vt(spanish, "Gemini video provider is not available right now. No video request was created and no credits were reserved.", "El proveedor de video Gemini no esta disponible ahora. No se creo ninguna solicitud de video y no se reservaron creditos.")
-    : vt(spanish, "Video generation is temporarily unavailable while provider access is being updated. No credits were reserved.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. No se reservaron creditos.");
+  if (error === "video_provider_temporarily_unavailable" || error === "no_video_ai_provider_configured") return vt(spanish, "Video generation is not available right now. Provider access is being updated. No credits were reserved.", "La generacion de video no esta disponible ahora. Se esta actualizando el acceso del proveedor. No se reservaron creditos.");
   if (error === "missing_required_prompt_input") return vt(spanish, "Complete the required prompt details before generating video.", "Completa los detalles requeridos del prompt antes de generar video.");
   if (status === 409) return vt(spanish, "Another request is already running. Check the All tab before starting a new one.", "Ya hay otra solicitud en ejecucion. Revisa la pestana Todo antes de iniciar otra.");
   return vt(spanish, "Video generation could not start. Please check the frame images and try again.", "No se pudo iniciar el video. Revisa las imagenes e intentalo de nuevo.");
@@ -120,6 +104,15 @@ function errorText(error: string | undefined, status: number, spanish: boolean, 
 
 function isCsrfError(error: string | undefined, status: number) {
   return status === 403 && (error === "csrf_token_required" || error === "csrf_token_mismatch" || Boolean(error?.includes("csrf")));
+}
+
+function videoDurationCostForCandidateFamilies(
+  theme: Pick<VideoTheme, "creditCost" | "modelPricing">,
+  seconds: unknown,
+  modelFamilies?: VideoTheme["providerModelFamilies"]
+): number {
+  if (modelFamilies && !modelFamilies.length) return 0;
+  return videoDurationCreditCostForModelFamilies(theme.creditCost, seconds, modelFamilies, theme.modelPricing);
 }
 
 function newVideoSubmitIdempotencyKey() {
@@ -222,7 +215,6 @@ function videoPromptRequiresFrameImages(prompt: string): boolean {
 
 function videoPromptRiskMessages(params: {
   aspectRatio: VideoAspectRatio;
-  modelFamily: VideoModelFamily;
   prompt: string;
   selectedFrameCount: number;
   spanish: boolean;
@@ -253,14 +245,14 @@ function videoPromptRiskMessages(params: {
       message: formatConflictMessage
     });
   }
-  if (params.modelFamily === "gemini" && params.selectedFrameCount > 0 && promptSuggestsPeopleReference(prompt)) {
+  if (params.selectedFrameCount > 0 && promptSuggestsPeopleReference(prompt)) {
     messages.push({
-      id: "gemini_people_reference",
+      id: "people_reference",
       severity: "warn",
       message: vt(
         params.spanish,
-        "Gemini may reject real or recognizable people in frame references. You can still submit this request; if the provider rejects it, switch to Grok or use product/object/landscape references.",
-        "Gemini puede rechazar personas reales o reconocibles en referencias. Puedes enviar esta solicitud; si el proveedor la rechaza, cambia a Grok o usa referencias de productos, objetos o paisajes."
+        "Video providers may reject real or recognizable people in frame references. Product, object, landscape, pet, fictional, or stylized references are usually easier to process.",
+        "Los proveedores de video pueden rechazar personas reales o reconocibles en referencias. Productos, objetos, paisajes, mascotas o referencias ficticias/estilizadas suelen procesarse mejor."
       )
     });
   }
@@ -341,7 +333,6 @@ export function CustomerVideoWorkspace({
 }) {
   const [themes, setThemes] = useState<VideoTheme[]>(() => initialThemes);
   const [selectedThemeId, setSelectedThemeId] = useState(() => defaultVideoTheme(initialThemes)?.id || "");
-  const [selectedVideoModelFamily, setSelectedVideoModelFamily] = useState<VideoModelFamily>(DEFAULT_VIDEO_MODEL_FAMILY);
   const [selectedDurationSeconds, setSelectedDurationSeconds] = useState<VideoDurationSeconds>(DEFAULT_VIDEO_DURATION_SECONDS);
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<VideoAspectRatio>("16:9");
   const [selectedResolution, setSelectedResolution] = useState<VideoResolution>(DEFAULT_VIDEO_RESOLUTION);
@@ -397,22 +388,27 @@ export function CustomerVideoWorkspace({
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
   const maxFrames = CUSTOMER_VIDEO_FRAME_LIMIT;
-  const selectedModelNeedsFrames = selectedVideoModelFamily === "gemini";
+  const selectedProviderModelFamilies = selectedFrameIds.length
+    ? selectedTheme?.imageToVideoProviderModelFamilies
+    : selectedTheme?.textToVideoProviderModelFamilies;
+  const selectedPricingModelFamilies = selectedProviderModelFamilies ?? selectedTheme?.providerModelFamilies;
   const availableDurationOptions = videoDurationOptionsForFrameCount(
     selectedFrameIds.length,
-    selectedVideoModelFamily
+    AUTO_VIDEO_MODEL_FAMILY
   );
   const effectiveDurationSeconds = normalizeVideoDurationSecondsForFrameCount(
     selectedDurationSeconds,
     selectedFrameIds.length,
     selectedTheme?.durationSeconds,
-    selectedVideoModelFamily
+    AUTO_VIDEO_MODEL_FAMILY
   );
   const providerFrameLimitMessage = maxFrames > 1
     ? vt(spanish, `Selected frames are treated as ordered reference images for image-to-video.`, `Los fotogramas seleccionados se tratan como imagenes de referencia ordenadas para imagen a video.`)
     : "";
   const selectedCreditCost = selectedTheme
-    ? videoDurationCreditCost(selectedTheme.creditCost, effectiveDurationSeconds, selectedVideoModelFamily, selectedTheme.modelPricing)
+    ? selectedPricingModelFamilies
+      ? videoDurationCostForCandidateFamilies(selectedTheme, effectiveDurationSeconds, selectedPricingModelFamilies)
+      : videoDurationCostForCandidateFamilies(selectedTheme, effectiveDurationSeconds)
     : 0;
   const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
   const generationFrameIds = readyFrameIds ?? selectedFrameIds;
@@ -422,25 +418,20 @@ export function CustomerVideoWorkspace({
   const hasSelectedFrameInput = selectedFrameIds.length > 0;
   const isTextToVideo = selectedFrameIds.length === 0;
   const selectedFrameInfoById = new Map(selectedFrames.map((frame) => [frame.id, frame]));
-  const unsupportedGeminiFrames = selectedVideoModelFamily === "gemini"
-    ? generationFrameIds
-      .map((assetId) => selectedFrameInfoById.get(assetId))
-      .filter((frame): frame is SelectedVideoFrameInfo => {
-        if (!frame) return false;
-        return !isGeminiVideoFrameMimeType(frame.mimeType);
-      })
-    : [];
-  const unsupportedGeminiFrameMessage = unsupportedGeminiFrames.length
+  const unsupportedVideoFrames = generationFrameIds
+    .map((assetId) => selectedFrameInfoById.get(assetId))
+    .filter((frame): frame is SelectedVideoFrameInfo => {
+      if (!frame) return false;
+      return !isGeminiVideoFrameMimeType(frame.mimeType);
+    });
+  const unsupportedVideoFrameMessage = unsupportedVideoFrames.length
     ? vt(
         spanish,
-        `Gemini video needs JPG or PNG frame images. Re-upload ${unsupportedGeminiFrames.length === 1 ? "this frame" : "these frames"} as JPG or PNG, or switch to Grok for WebP/reference frames.`,
-        `El video Gemini necesita fotogramas JPG o PNG. Vuelve a subir ${unsupportedGeminiFrames.length === 1 ? "este fotograma" : "estos fotogramas"} como JPG o PNG, o cambia a Grok para WebP/referencias.`
+        `Video references need JPG or PNG frame images. Re-upload ${unsupportedVideoFrames.length === 1 ? "this frame" : "these frames"} as JPG or PNG.`,
+        `Las referencias de video necesitan fotogramas JPG o PNG. Vuelve a subir ${unsupportedVideoFrames.length === 1 ? "este fotograma" : "estos fotogramas"} como JPG o PNG.`
       )
     : "";
-  const geminiSwitchMessages = [unsupportedGeminiFrameMessage].filter(Boolean);
-  const geminiSwitchMessage = geminiSwitchMessages[0] ?? "";
-  const canSwitchGeminiToGrok = selectedVideoModelFamily === "gemini" && Boolean(geminiSwitchMessage);
-  const needsTextToVideoConfirmation = !selectedModelNeedsFrames && isTextToVideo && trimmedPromptNote.length > 0;
+  const needsTextToVideoConfirmation = isTextToVideo && trimmedPromptNote.length > 0;
   const textToVideoConfirmationMessage = vt(
     spanish,
     "No frame images are selected. This will run as text-to-video and follow only your written prompt. Select frame images on the left for image-to-video, or continue only if you want a prompt-only result.",
@@ -448,7 +439,6 @@ export function CustomerVideoWorkspace({
   );
   const promptRiskMessages = videoPromptRiskMessages({
     aspectRatio: selectedAspectRatio,
-    modelFamily: selectedVideoModelFamily,
     prompt: trimmedPromptNote,
     selectedFrameCount: selectedFrameIds.length,
     spanish
@@ -458,12 +448,10 @@ export function CustomerVideoWorkspace({
   const isSubmitting = pending || submissionPending;
   const generateButtonLabel = isSubmitting
     ? vt(spanish, "Starting", "Iniciando")
-    : canSwitchGeminiToGrok
-      ? vt(spanish, "Use Grok", "Usar Grok")
-      : textToVideoConfirmArmed && needsTextToVideoConfirmation
+    : textToVideoConfirmArmed && needsTextToVideoConfirmation
       ? vt(spanish, "Generate text-to-video", "Generar texto a video")
       : vt(spanish, "Generate video", "Generar video");
-  const canGenerateCurrentVideo = hasSelectedFrameInput || hasReadyFrameInput || (!selectedModelNeedsFrames && trimmedPromptNote.length > 0);
+  const canGenerateCurrentVideo = hasSelectedFrameInput || hasReadyFrameInput || trimmedPromptNote.length > 0;
 
   useEffect(() => {
     if (!retryDraft || appliedRetryDraftKeyRef.current === retryDraft.key) return;
@@ -473,15 +461,13 @@ export function CustomerVideoWorkspace({
     const restoredThemeId = restoredTheme?.id ?? retryDraft.videoThemeId;
     const restoredMaxFrames = CUSTOMER_VIDEO_FRAME_LIMIT;
     const restoredFrameIds = trimVideoFrameSelection(retryDraft.frameAssetIds, restoredMaxFrames);
-    const restoredModelFamily = normalizeVideoModelFamily(retryDraft.videoModelFamily);
     setSelectedFrameIds(restoredFrameIds);
     if (restoredThemeId) setSelectedThemeId(restoredThemeId);
-    setSelectedVideoModelFamily(restoredModelFamily);
     setSelectedDurationSeconds(normalizeVideoDurationSecondsForFrameCount(
       retryDraft.durationSeconds,
       restoredFrameIds.length,
       undefined,
-      restoredModelFamily
+      AUTO_VIDEO_MODEL_FAMILY
     ));
     if (retryDraft.durationSeconds !== undefined && restoredThemeId) retryDurationThemeIdRef.current = restoredThemeId;
     if (isVideoAspectRatio(retryDraft.aspectRatio)) setSelectedAspectRatio(retryDraft.aspectRatio);
@@ -503,9 +489,9 @@ export function CustomerVideoWorkspace({
       selectedDurationSeconds,
       selectedFrameIds.length,
       selectedTheme.durationSeconds,
-      selectedVideoModelFamily
+      AUTO_VIDEO_MODEL_FAMILY
     ));
-  }, [selectedDurationSeconds, selectedFrameIds.length, selectedTheme, selectedVideoModelFamily]);
+  }, [selectedDurationSeconds, selectedFrameIds.length, selectedTheme]);
 
   useEffect(() => {
     if (selectedFrameIds.length > maxFrames) setSelectedFrameIds((current) => trimVideoFrameSelection(current, maxFrames));
@@ -545,14 +531,6 @@ export function CustomerVideoWorkspace({
 
   async function generateVideo(options: { confirmedTextToVideo?: boolean } = {}) {
     if (isSubmitting) return;
-    if (subscriptionStatus === "loading") {
-      setMessage(vt(spanish, "We are still checking your subscription. Try again in a moment.", "Aun estamos revisando tu suscripcion. Intentalo en un momento."));
-      return;
-    }
-    if (subscriptionStatus === "required" && !hasCreditsForSelectedVideo) {
-      setMessage(vt(spanish, "Choose a subscription or add enough credits before generating video.", "Elige una suscripcion o anade creditos suficientes antes de generar video."));
-      return;
-    }
     if (!selectedTheme) {
       setThemeReloadKey((current) => current + 1);
       setMessage(vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento."));
@@ -568,35 +546,30 @@ export function CustomerVideoWorkspace({
       setMessage(blockingPromptRisk.message);
       return;
     }
-    if (canSwitchGeminiToGrok) {
-      setSelectedVideoModelFamily("grok");
-      setMessage(vt(
-        spanish,
-        "Switched to Grok for frame formats that Gemini cannot use directly. Review the setup, then generate the video.",
-        "Se cambio a Grok para formatos de fotograma que Gemini no puede usar directamente. Revisa la configuracion y luego genera el video."
-      ));
-      return;
-    }
-    if (selectedModelNeedsFrames && !selectedFrameIds.length) {
-      setMessage(geminiVideoFrameRequirementMessage(spanish));
-      return;
-    }
-    if (selectedModelNeedsFrames && unsupportedGeminiFrameMessage) {
-      setMessage(unsupportedGeminiFrameMessage);
+    if (unsupportedVideoFrameMessage) {
+      setMessage(unsupportedVideoFrameMessage);
       return;
     }
     if (selectedFrameIds.length && (hasPendingFrameUploads || !generationFrameIds.length)) {
       setMessage(vt(spanish, "Frame uploads are still finishing. Generate after every selected frame is ready.", "Las subidas de fotogramas aun estan terminando. Genera cuando todos los fotogramas seleccionados esten listos."));
       return;
     }
-    if (selectedCreditCost > customer.balance.available && subscriptionStatus !== "admin") {
-      setMessage(vt(spanish, `This duration needs ${selectedCreditCost} credits, but ${customer.balance.available} are available.`, `Esta duracion necesita ${selectedCreditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
-      return;
-    }
     if (needsTextToVideoConfirmation && !options.confirmedTextToVideo) {
       setTextToVideoConfirmArmed(true);
       setTextToVideoConfirmOpen(true);
       setMessage(textToVideoConfirmationMessage);
+      return;
+    }
+    if (subscriptionStatus === "loading") {
+      setMessage(vt(spanish, "We are still checking your subscription. Try again in a moment.", "Aun estamos revisando tu suscripcion. Intentalo en un momento."));
+      return;
+    }
+    if (subscriptionStatus === "required" && !hasCreditsForSelectedVideo) {
+      setMessage(vt(spanish, "Choose a subscription or add enough credits before generating video.", "Elige una suscripcion o anade creditos suficientes antes de generar video."));
+      return;
+    }
+    if (selectedCreditCost > customer.balance.available && subscriptionStatus !== "admin") {
+      setMessage(vt(spanish, `This duration needs ${selectedCreditCost} credits, but ${customer.balance.available} are available.`, `Esta duracion necesita ${selectedCreditCost} creditos, pero hay ${customer.balance.available} disponibles.`));
       return;
     }
     setTextToVideoConfirmOpen(false);
@@ -609,8 +582,8 @@ export function CustomerVideoWorkspace({
       params: {
         mode: "video",
         outputType: "video",
-        videoModelFamily: selectedVideoModelFamily,
-        modelFamily: selectedVideoModelFamily,
+        videoModelFamily: AUTO_VIDEO_MODEL_FAMILY,
+        modelFamily: AUTO_VIDEO_MODEL_FAMILY,
         videoThemeId: selectedTheme.id,
         videoThemeSlug: selectedTheme.slug,
         videoThemeCategorySlug: selectedTheme.category?.slug,
@@ -635,8 +608,8 @@ export function CustomerVideoWorkspace({
           mode: "video",
           outputType: "video",
           videoInputMode: hasReadyFrameInput ? "image_to_video" : "text_to_video",
-          videoModelFamily: selectedVideoModelFamily,
-          modelFamily: selectedVideoModelFamily,
+          videoModelFamily: AUTO_VIDEO_MODEL_FAMILY,
+          modelFamily: AUTO_VIDEO_MODEL_FAMILY,
           videoThemeId: selectedTheme.id,
           videoThemeSlug: selectedTheme.slug,
           videoThemeCategorySlug: selectedTheme.category?.slug,
@@ -701,7 +674,7 @@ export function CustomerVideoWorkspace({
     }
     if (!result.job?.id) {
       submitAttemptRef.current = null;
-      const nextMessage = errorText(result.error, response.status, spanish, selectedVideoModelFamily);
+      const nextMessage = errorText(result.error, response.status, spanish);
       setMessage(nextMessage);
       onGenerationFailed?.(nextMessage);
       return;
@@ -718,9 +691,7 @@ export function CustomerVideoWorkspace({
           <div>
             <h2 className="text-base font-semibold">{vt(spanish, "Create an AI video clip", "Crear un clip de video con IA")}</h2>
             <p className="mt-1 text-xs text-white/50">
-              {selectedModelNeedsFrames
-                ? geminiVideoFrameRequirementMessage(spanish)
-                : vt(spanish, "Use frame images for image-to-video, or leave them empty and describe a text-to-video clip.", "Usa fotogramas para imagen a video, o dejalos vacios y describe un clip de texto a video.")}
+              {vt(spanish, "Use frame images for image-to-video, or leave them empty and describe a text-to-video clip.", "Usa fotogramas para imagen a video, o dejalos vacios y describe un clip de texto a video.")}
             </p>
           </div>
         </div>
@@ -736,9 +707,7 @@ export function CustomerVideoWorkspace({
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Agent video composer", "Compositor de video")}</p>
               <h3 className="mt-2 text-xl font-semibold">{vt(spanish, "Describe the clip you want", "Describe el clip que quieres")}</h3>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-white/56">
-                {selectedModelNeedsFrames
-                  ? vt(spanish, "Select at least one frame image, then describe how the image-to-video clip should move.", "Selecciona al menos un fotograma y describe como debe moverse el clip de imagen a video.")
-                  : vt(spanish, "Use selected frames when you want image-to-video, or write a standalone prompt when you want text-to-video.", "Usa fotogramas seleccionados para imagen a video, o escribe un prompt independiente para texto a video.")}
+                {vt(spanish, "Use selected frames when you want image-to-video, or write a standalone prompt when you want text-to-video.", "Usa fotogramas seleccionados para imagen a video, o escribe un prompt independiente para texto a video.")}
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-end gap-2">
@@ -757,23 +726,17 @@ export function CustomerVideoWorkspace({
             </div>
           </div>
 
-          {selectedVideoModelFamily === "gemini" ? (
-            <div className="mt-4 flex items-start gap-3 rounded-[16px] border border-amber-300/24 bg-amber-300/10 p-4 text-amber-50">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-200" strokeWidth={1.9} />
-              <div className="min-w-0">
-                <p className="text-sm font-semibold leading-5">{geminiVideoFramePolicyWarningMessage(spanish)}</p>
-                <p className="mt-1 text-xs leading-5 text-amber-50/72">{geminiVideoFramePolicyDetailMessage(spanish)}</p>
-              </div>
+          <div className="mt-4 flex items-start gap-3 rounded-[16px] border border-[#31d4ff]/20 bg-[#31d4ff]/10 p-4 text-[#d8f7ff]">
+            <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[#31d4ff]" strokeWidth={1.9} />
+            <div className="min-w-0">
+              <p className="text-sm font-semibold leading-5">
+                {vt(spanish, "Video uses the best available provider automatically. Upload JPG or PNG frame images only when you want the clip to follow references; leave frames empty for text-to-video.", "El video usa automaticamente el mejor proveedor disponible. Sube fotogramas JPG o PNG solo cuando quieras que el clip siga referencias; deja los fotogramas vacios para texto a video.")}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[#d8f7ff]/72">
+                {vt(spanish, "Keep prompts and uploads provider-ready: avoid minors, nudity, celebrity or public figures, copyrighted characters, violence, hate, illegal activity, weapons, self-harm, sensitive documents, watermarks, large text, blurry images, or private images.", "Manten prompts y subidas listos para proveedores: evita menores, desnudez, celebridades o figuras publicas, personajes con copyright, violencia, odio, actividad ilegal, armas, autolesion, documentos sensibles, marcas de agua, mucho texto, imagenes borrosas o imagenes privadas.")}
+              </p>
             </div>
-          ) : selectedVideoModelFamily === "grok" ? (
-            <div className="mt-4 flex items-start gap-3 rounded-[16px] border border-[#31d4ff]/20 bg-[#31d4ff]/10 p-4 text-[#d8f7ff]">
-              <Cpu className="mt-0.5 h-4 w-4 shrink-0 text-[#31d4ff]" strokeWidth={1.9} />
-              <div className="min-w-0">
-                <p className="text-sm font-semibold leading-5">{grokVideoFrameGuidanceMessage(spanish)}</p>
-                <p className="mt-1 text-xs leading-5 text-[#d8f7ff]/72">{grokVideoFrameGuidanceDetailMessage(spanish)}</p>
-              </div>
-            </div>
-          ) : null}
+          </div>
 
           <div className="mt-5 rounded-[20px] border border-white/10 bg-[#1a1d24] p-3 sm:p-4">
             <label className="block">
@@ -795,12 +758,8 @@ export function CustomerVideoWorkspace({
                 }}
                 placeholder={vt(
                   spanish,
-                  selectedModelNeedsFrames
-                    ? `Describe the video motion. Gemini will use the selected frame images on the left as required references.`
-                    : `Describe the video. Add frame images on the left when you want the clip to follow uploaded subjects; leave frames empty for text-to-video.`,
-                  selectedModelNeedsFrames
-                    ? `Describe el movimiento del video. Gemini usara los fotogramas seleccionados a la izquierda como referencias obligatorias.`
-                    : `Describe el video. Agrega fotogramas a la izquierda si quieres que el clip siga sujetos subidos; dejalos vacios para texto a video.`
+                  `Describe the video. Add frame images on the left when you want the clip to follow uploaded subjects; leave frames empty for text-to-video.`,
+                  `Describe el video. Agrega fotogramas a la izquierda si quieres que el clip siga sujetos subidos; dejalos vacios para texto a video.`
                 )}
                 value={promptNote}
               />
@@ -825,24 +784,8 @@ export function CustomerVideoWorkspace({
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-[#31d4ff]/30 bg-[#31d4ff]/10 px-3 text-xs font-semibold text-[#31d4ff]">
                   <Film className="h-4 w-4" strokeWidth={1.8} />
-                  {isTextToVideo && !selectedModelNeedsFrames ? vt(spanish, "Text to video", "Texto a video") : vt(spanish, "Image to video", "Imagen a video")}
+                  {isTextToVideo ? vt(spanish, "Text to video", "Texto a video") : vt(spanish, "Image to video", "Imagen a video")}
                 </span>
-                <div className="inline-flex min-h-9 rounded-[10px] border border-white/10 bg-black/16 p-1" aria-label={vt(spanish, "Video model", "Modelo de video")}>
-                  {VIDEO_MODEL_OPTIONS.map((option) => {
-                    const selected = selectedVideoModelFamily === option.id;
-                    return (
-                      <button
-                        className={`inline-flex min-h-7 items-center gap-1.5 rounded-[8px] px-3 text-xs font-semibold transition ${selected ? "bg-white text-[#101114]" : "text-white/56 hover:bg-white/[0.08] hover:text-white"}`}
-                        key={option.id}
-                        onClick={() => setSelectedVideoModelFamily(option.id)}
-                        type="button"
-                      >
-                        <Cpu className="h-3.5 w-3.5" strokeWidth={1.9} />
-                        {option.label}
-                      </button>
-                    );
-                  })}
-                </div>
                 <span className="inline-flex min-h-9 items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.04] px-3 text-xs font-semibold text-white/66">
                   <Sparkles className="h-4 w-4" strokeWidth={1.8} />
                   {selectedTheme ? vt(spanish, "Auto motion", "Movimiento automatico") : vt(spanish, "Loading preset", "Cargando ajuste")}
@@ -858,7 +801,7 @@ export function CustomerVideoWorkspace({
                     type="button"
                   >
                     <Monitor className="h-4 w-4" strokeWidth={1.8} />
-                    {selectedVideoModelFamily === "gemini" ? selectedAspectRatio : `${selectedAspectRatio} · ${selectedResolution.toUpperCase()}`}
+                    {`${selectedAspectRatio} · ${selectedResolution.toUpperCase()}`}
                     <ChevronDown className={`h-3.5 w-3.5 transition ${formatPanelOpen ? "rotate-180" : ""}`} strokeWidth={1.8} />
                   </button>
                   {formatPanelOpen ? (
@@ -880,30 +823,26 @@ export function CustomerVideoWorkspace({
                           );
                         })}
                       </div>
-                      {selectedVideoModelFamily === "grok" ? (
-                        <>
-                          <p className="mt-4 px-1 text-[11px] font-semibold text-white/36">{vt(spanish, "Resolution", "Resolucion")}</p>
-                          <div className="mt-2 grid grid-cols-1 gap-1 rounded-[12px] bg-white/[0.035] p-1">
-                            {VIDEO_RESOLUTION_OPTIONS.map((option) => {
-                              const selected = selectedResolution === option.id;
-                              return (
-                                <button
-                                  className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-3 text-sm font-semibold transition ${selected ? "bg-white/[0.1] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
-                                  key={option.id}
-                                  onClick={() => {
-                                    setSelectedResolution(option.id);
-                                    setFormatPanelOpen(false);
-                                  }}
-                                  type="button"
-                                >
-                                  {option.label}
-                                  {selected ? <Check className="h-3.5 w-3.5 text-[#31d4ff]" strokeWidth={2} /> : null}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </>
-                      ) : null}
+                      <p className="mt-4 px-1 text-[11px] font-semibold text-white/36">{vt(spanish, "Resolution", "Resolucion")}</p>
+                      <div className="mt-2 grid grid-cols-1 gap-1 rounded-[12px] bg-white/[0.035] p-1">
+                        {VIDEO_RESOLUTION_OPTIONS.map((option) => {
+                          const selected = selectedResolution === option.id;
+                          return (
+                            <button
+                              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-3 text-sm font-semibold transition ${selected ? "bg-white/[0.1] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
+                              key={option.id}
+                              onClick={() => {
+                                setSelectedResolution(option.id);
+                                setFormatPanelOpen(false);
+                              }}
+                              type="button"
+                            >
+                              {option.label}
+                              {selected ? <Check className="h-3.5 w-3.5 text-[#31d4ff]" strokeWidth={2} /> : null}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   ) : null}
                 </div>
@@ -911,7 +850,9 @@ export function CustomerVideoWorkspace({
                   {availableDurationOptions.map((option) => {
                     const selected = effectiveDurationSeconds === option.seconds;
                     const cost = selectedTheme
-                      ? videoDurationCreditCost(selectedTheme.creditCost, option.seconds, selectedVideoModelFamily, selectedTheme.modelPricing)
+                      ? selectedPricingModelFamilies
+                        ? videoDurationCostForCandidateFamilies(selectedTheme, option.seconds, selectedPricingModelFamilies)
+                        : videoDurationCostForCandidateFamilies(selectedTheme, option.seconds)
                       : 0;
                     return (
                       <button
@@ -934,7 +875,7 @@ export function CustomerVideoWorkspace({
                 </span>
                 <button
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45 sm:min-w-40"
-                  disabled={isSubmitting || (!canGenerateCurrentVideo && !canSwitchGeminiToGrok)}
+                  disabled={isSubmitting || !canGenerateCurrentVideo}
                   onClick={() => void generateVideo()}
                   type="button"
                 >
@@ -954,14 +895,10 @@ export function CustomerVideoWorkspace({
                     ? vt(spanish, "Some selected frame uploads are still finishing.", "Algunos fotogramas seleccionados aun se estan subiendo.")
                     : selectedFrameIds.length
                       ? vt(spanish, "The selected frames on the left will drive the clip sequence.", "Los fotogramas seleccionados a la izquierda guiaran la secuencia.")
-                      : selectedModelNeedsFrames
-                        ? vt(spanish, "No frame images selected. Gemini will not start until you choose at least one frame image.", "No hay fotogramas seleccionados. Gemini no iniciara hasta que elijas al menos un fotograma.")
-                        : vt(spanish, "No frames selected. This request will run as text-to-video and follow only your written prompt.", "No hay fotogramas seleccionados. Esta solicitud se ejecutara como texto a video y seguira solo tu prompt escrito.")}
+                      : vt(spanish, "No frames selected. This request will run as text-to-video and follow only your written prompt.", "No hay fotogramas seleccionados. Esta solicitud se ejecutara como texto a video y seguira solo tu prompt escrito.")}
                 </p>
                 {providerFrameLimitMessage && selectedFrameIds.length ? <p className="mt-2 text-xs leading-5 text-[#31d4ff]">{providerFrameLimitMessage}</p> : null}
-                {geminiSwitchMessages.map((switchMessage) => (
-                  <p className="mt-2 text-xs font-semibold leading-5 text-amber-200" key={switchMessage}>{switchMessage}</p>
-                ))}
+                {unsupportedVideoFrameMessage ? <p className="mt-2 text-xs font-semibold leading-5 text-amber-200">{unsupportedVideoFrameMessage}</p> : null}
               </div>
             </div>
 
@@ -969,7 +906,7 @@ export function CustomerVideoWorkspace({
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Generation setup", "Configuracion")}</p>
               <div className="mt-3 grid gap-2 text-sm leading-6 text-white/62">
                 <p>{vt(spanish, "Preset", "Ajuste")}: <span className="font-semibold text-white">{selectedTheme ? vt(spanish, "Automatic motion", "Movimiento automatico") : vt(spanish, "Loading", "Cargando")}</span></p>
-                <p>{vt(spanish, "Model", "Modelo")}: <span className="font-semibold text-white">{selectedVideoModelFamily === "gemini" ? "Gemini" : "Grok"}</span></p>
+                <p>{vt(spanish, "Format", "Formato")}: <span className="font-semibold text-white">{selectedAspectRatio} · {selectedResolution.toUpperCase()}</span></p>
                 <p>{vt(spanish, "Duration", "Duracion")}: <span className="font-semibold text-white">{effectiveDurationSeconds}s</span></p>
                 <p>{vt(spanish, "Cost", "Costo")}: <span className="font-semibold text-white">{selectedCreditCost}</span></p>
               </div>

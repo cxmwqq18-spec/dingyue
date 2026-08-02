@@ -9,7 +9,8 @@ import ffmpegPath from "ffmpeg-static";
 
 const execFileAsync = promisify(execFile);
 
-export const MEDIA_WATERMARK_VERSION = "20260801-storefront-watermark1";
+export const MEDIA_WATERMARK_VERSION = "20260802-subtle-watermark1";
+export const DEFAULT_MEDIA_WATERMARK_OPACITY = 0.05;
 
 export type MediaWatermarkResult = {
   bytes: Buffer;
@@ -43,25 +44,52 @@ function clamped(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
-async function sharpFactory() {
-  const moduleName = "sharp";
-  const mod = await import(/* webpackIgnore: true */ moduleName);
-  return (mod.default ?? mod) as typeof import("sharp");
+function normalizedWatermarkOpacity(value: unknown): number {
+  const parsed = Number(value);
+  const opacity = Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_MEDIA_WATERMARK_OPACITY;
+  return Number(clamped(opacity, 0.01, 0.12).toFixed(4));
 }
 
-function imageWatermarkSvg(params: { width: number; height: number; text: string }): Buffer {
+async function sharpFactory(): Promise<typeof import("sharp") | undefined> {
+  try {
+    const moduleName = "sharp";
+    const mod = await import(/* webpackIgnore: true */ moduleName);
+    return (mod.default ?? mod) as typeof import("sharp");
+  } catch {
+    return undefined;
+  }
+}
+
+function watermarkGeometry(params: { width: number; height: number }): {
+  fontSize: number;
+  marginX: number;
+  marginY: number;
+  shadowOffset: number;
+} {
   const shortSide = Math.min(params.width, params.height);
-  const fontSize = Math.round(clamped(shortSide * 0.045, 18, 54));
-  const marginX = Math.round(clamped(params.width * 0.026, 18, 56));
-  const marginY = Math.round(clamped(params.height * 0.024, 16, 48));
-  const strokeWidth = Math.max(2, Math.round(fontSize * 0.08));
+  return {
+    fontSize: Math.round(clamped(shortSide * 0.024, 10, 28)),
+    marginX: Math.round(clamped(params.width * 0.022, 12, 36)),
+    marginY: Math.round(clamped(params.height * 0.02, 10, 32)),
+    shadowOffset: Math.round(clamped(shortSide * 0.002, 1, 2))
+  };
+}
+
+function imageWatermarkSvg(params: { width: number; height: number; text: string; opacity?: number }): Buffer {
+  const { fontSize, marginX, marginY, shadowOffset } = watermarkGeometry(params);
+  const opacity = normalizedWatermarkOpacity(params.opacity);
+  const shadowOpacity = Number(clamped(opacity * 0.75, 0.008, 0.08).toFixed(4));
+  const x = params.width - marginX;
+  const y = params.height - marginY;
   return Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${params.height}" viewBox="0 0 ${params.width} ${params.height}">
   <style>
     .wm { font-family: Arial, Helvetica, sans-serif; font-weight: 700; letter-spacing: 0; }
   </style>
-  <text class="wm" x="${params.width - marginX}" y="${params.height - marginY}" text-anchor="end" dominant-baseline="text-after-edge"
-    font-size="${fontSize}" fill="#ffffff" fill-opacity="0.76" stroke="#000000" stroke-opacity="0.42" stroke-width="${strokeWidth}" paint-order="stroke">${escapeXml(params.text)}</text>
+  <text class="wm" x="${x + shadowOffset}" y="${y + shadowOffset}" text-anchor="end" dominant-baseline="text-after-edge"
+    font-size="${fontSize}" fill="#000000" fill-opacity="${shadowOpacity}">${escapeXml(params.text)}</text>
+  <text class="wm" x="${x}" y="${y}" text-anchor="end" dominant-baseline="text-after-edge"
+    font-size="${fontSize}" fill="#ffffff" fill-opacity="${opacity}">${escapeXml(params.text)}</text>
 </svg>`
   );
 }
@@ -70,15 +98,17 @@ export async function watermarkImageBytes(params: {
   bytes: Buffer;
   mimeType: string;
   text: string;
+  opacity?: number;
 }): Promise<MediaWatermarkResult> {
   const sharp = await sharpFactory();
+  if (!sharp) return watermarkImageBytesWithFfmpeg(params);
   const source = sharp(params.bytes, { animated: false }).rotate();
   const metadata = await source.metadata();
   const width = metadata.width ?? 0;
   const height = metadata.height ?? 0;
   if (width <= 0 || height <= 0) throw new Error("watermark_image_dimensions_unavailable");
 
-  const pipeline = source.composite([{ input: imageWatermarkSvg({ width, height, text: params.text }), left: 0, top: 0 }]);
+  const pipeline = source.composite([{ input: imageWatermarkSvg({ width, height, text: params.text, opacity: params.opacity }), left: 0, top: 0 }]);
   const mimeType = params.mimeType.split(";")[0]?.trim().toLowerCase() || "image/webp";
   if (mimeType.includes("png")) {
     return { bytes: await pipeline.png().toBuffer(), mimeType: "image/png" };
@@ -136,35 +166,73 @@ async function probeVideoDimensions(inputPath: string): Promise<{ width: number;
   return { width, height };
 }
 
-async function videoOverlayPng(params: { width: number; height: number; text: string }): Promise<Buffer> {
-  const sharp = await sharpFactory();
-  return sharp({
-    create: {
-      width: params.width,
-      height: params.height,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }
-    }
-  })
-    .png()
-    .composite([{ input: imageWatermarkSvg(params), left: 0, top: 0 }])
-    .png()
-    .toBuffer();
+function assEscaped(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/{/g, "\\{").replace(/}/g, "\\}");
 }
 
-export async function watermarkVideoBytes(params: {
+function assAlphaForOpacity(opacity: number | undefined): string {
+  return Math.round(255 * (1 - normalizedWatermarkOpacity(opacity))).toString(16).padStart(2, "0").toUpperCase();
+}
+
+function assColor(hexColor: string, opacity: number | undefined): string {
+  const clean = hexColor.replace(/^#/, "").padStart(6, "0").slice(0, 6);
+  const rr = clean.slice(0, 2);
+  const gg = clean.slice(2, 4);
+  const bb = clean.slice(4, 6);
+  return `&H${assAlphaForOpacity(opacity)}${bb}${gg}${rr}`;
+}
+
+function watermarkAssText(params: { width: number; height: number; text: string; opacity?: number }): string {
+  const { fontSize, marginX, marginY, shadowOffset } = watermarkGeometry(params);
+  const opacity = normalizedWatermarkOpacity(params.opacity);
+  const shadowOpacity = Number(clamped(opacity * 0.75, 0.008, 0.08).toFixed(4));
+  return `[Script Info]
+ScriptType: v4.00+
+PlayResX: ${params.width}
+PlayResY: ${params.height}
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Watermark,Arial,${fontSize},${assColor("#ffffff", opacity)},&H000000FF,${assColor("#000000", shadowOpacity)},${assColor("#000000", shadowOpacity)},-1,0,0,0,100,100,0,0,1,0,${shadowOffset},3,${marginX},${marginX},${marginY},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,9:59:59.00,Watermark,,0,0,0,,${assEscaped(params.text)}
+`;
+}
+
+function ffmpegFilterPath(filePath: string): string {
+  return filePath.replace(/\\/g, "\\\\").replace(/:/g, "\\:");
+}
+
+async function writeWatermarkAssFile(tempDir: string, params: { width: number; height: number; text: string; opacity?: number }): Promise<string> {
+  const assPath = path.join(tempDir, "watermark.ass");
+  await writeFile(assPath, watermarkAssText(params));
+  return assPath;
+}
+
+function imageExtensionForMimeType(mimeType: string): { ext: string; outputMimeType: string; codecArgs: string[] } {
+  const clean = mimeType.split(";")[0]?.trim().toLowerCase() || "image/webp";
+  if (clean.includes("png")) return { ext: ".png", outputMimeType: "image/png", codecArgs: [] };
+  if (clean.includes("jpeg") || clean.includes("jpg")) return { ext: ".jpg", outputMimeType: "image/jpeg", codecArgs: ["-q:v", "2"] };
+  if (clean.includes("avif")) return { ext: ".avif", outputMimeType: "image/avif", codecArgs: ["-c:v", "libaom-av1", "-still-picture", "1", "-crf", "24", "-b:v", "0"] };
+  return { ext: ".webp", outputMimeType: "image/webp", codecArgs: ["-c:v", "libwebp", "-quality", "92", "-compression_level", "4"] };
+}
+
+async function watermarkImageBytesWithFfmpeg(params: {
   bytes: Buffer;
   mimeType: string;
   text: string;
+  opacity?: number;
 }): Promise<MediaWatermarkResult> {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), "dreamshoot-video-watermark-"));
-  const inputPath = path.join(tempDir, "input.mp4");
-  const overlayPath = path.join(tempDir, "watermark.png");
-  const outputPath = path.join(tempDir, "output.mp4");
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), "dreamshoot-image-watermark-"));
+  const imageType = imageExtensionForMimeType(params.mimeType);
+  const inputPath = path.join(tempDir, `input${imageType.ext}`);
+  const outputPath = path.join(tempDir, `output${imageType.ext}`);
   try {
     await writeFile(inputPath, params.bytes);
     const dimensions = await probeVideoDimensions(inputPath);
-    await writeFile(overlayPath, await videoOverlayPng({ ...dimensions, text: params.text }));
+    const assPath = await writeWatermarkAssFile(tempDir, { ...dimensions, text: params.text, opacity: params.opacity });
     await execFileAsync(
       ffmpegExecutablePath(),
       [
@@ -174,10 +242,45 @@ export async function watermarkVideoBytes(params: {
         "-y",
         "-i",
         inputPath,
+        "-vf",
+        `subtitles=${ffmpegFilterPath(assPath)}`,
+        "-frames:v",
+        "1",
+        ...imageType.codecArgs,
+        outputPath
+      ],
+      { timeout: Number(process.env.CUSTOMER_ASSET_WATERMARK_IMAGE_TIMEOUT_MS ?? 120_000), maxBuffer: 1024 * 1024 }
+    );
+    return { bytes: await readFile(outputPath), mimeType: imageType.outputMimeType };
+  } finally {
+    await rm(tempDir, { force: true, recursive: true });
+  }
+}
+
+export async function watermarkVideoBytes(params: {
+  bytes: Buffer;
+  mimeType: string;
+  text: string;
+  opacity?: number;
+}): Promise<MediaWatermarkResult> {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), "dreamshoot-video-watermark-"));
+  const inputPath = path.join(tempDir, "input.mp4");
+  const outputPath = path.join(tempDir, "output.mp4");
+  try {
+    await writeFile(inputPath, params.bytes);
+    const dimensions = await probeVideoDimensions(inputPath);
+    const assPath = await writeWatermarkAssFile(tempDir, { ...dimensions, text: params.text, opacity: params.opacity });
+    await execFileAsync(
+      ffmpegExecutablePath(),
+      [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
         "-i",
-        overlayPath,
+        inputPath,
         "-filter_complex",
-        "[0:v][1:v]overlay=0:0:format=auto,format=yuv420p[v]",
+        `[0:v]subtitles=${ffmpegFilterPath(assPath)},format=yuv420p[v]`,
         "-map",
         "[v]",
         "-map",
@@ -208,6 +311,7 @@ export async function watermarkMediaBytes(params: {
   bytes: Buffer;
   mimeType: string;
   text: string;
+  opacity?: number;
 }): Promise<MediaWatermarkResult> {
   const mimeType = params.mimeType.split(";")[0]?.trim().toLowerCase() || "";
   if (mimeType.startsWith("image/")) return watermarkImageBytes(params);

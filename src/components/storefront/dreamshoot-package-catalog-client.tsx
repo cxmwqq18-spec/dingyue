@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
 
 export type DreamshootPackageCatalogCard = {
@@ -112,7 +113,12 @@ function SafeCatalogImage({
   return (
     <img
       alt={safeAlt}
-      className={`block h-auto w-full object-center ${className}`}
+      aria-label={`View ${safeAlt} full screen`}
+      className={`block w-full cursor-zoom-in object-center ${className}`}
+      data-dreamshoot-preview-meta=""
+      data-dreamshoot-preview-src={src}
+      data-dreamshoot-preview-title={safeAlt}
+      data-dreamshoot-showcase-preview="image"
       decoding={decoding}
       fetchPriority={fetchPriority}
       loading={loading}
@@ -125,8 +131,8 @@ function SafeCatalogImage({
 const referenceCardClass =
   "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const referenceImageShellClass = "bg-[#0B1020]/[0.70]";
-const referenceImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
-const referenceSingleImageFrameClass = "relative overflow-hidden rounded-[9px] bg-[#070B14]";
+const referenceImageFrameClass = "relative aspect-[4/3] overflow-hidden rounded-[9px] bg-[#070B14]";
+const referenceSingleImageFrameClass = "relative aspect-[8/3] overflow-hidden rounded-[9px] bg-[#070B14]";
 const referenceContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
 const referenceTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
 const referenceDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
@@ -166,12 +172,12 @@ function ReferencePackageCard({
       href={resolvedCardHref(siteBasePath, card, categoryHrefOverrides)}
     >
       <div className={referenceImageShellClass}>
-        <div className={images.length > 1 ? "grid grid-cols-2 items-start gap-0.5 p-3" : "grid items-start p-3"}>
+        <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? referenceImageFrameClass : referenceSingleImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
               <SafeCatalogImage
                 alt={imageIndex === 0 ? imageAlt(card) : `${card.title} gallery preview`}
-                className="transition duration-500"
+                className="h-full object-cover transition duration-500"
                 decoding="async"
                 fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
                 loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
@@ -327,7 +333,8 @@ export function DreamshootPackageCatalogClient({
   const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
 
   return (
-    <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionId} data-dreamshoot-catalog-count={displayCards.length}>
+    <DreamshootShowcasePreview>
+      <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-24" id={sectionId} data-dreamshoot-catalog-count={displayCards.length}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_8%,rgba(122,76,255,0.28),transparent_31%),radial-gradient(circle_at_82%_18%,rgba(22,220,240,0.2),transparent_31%),radial-gradient(circle_at_54%_92%,rgba(255,166,68,0.24),transparent_39%)]" />
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" />
       <div className="relative mx-auto max-w-[var(--site-content-width)]">
@@ -490,6 +497,7 @@ export function DreamshootPackageCatalogClient({
           </div>
         ) : null}
       </div>
-    </section>
+      </section>
+    </DreamshootShowcasePreview>
   );
 }

@@ -19,7 +19,9 @@ const files = {
   providerPrompt: fs.readFileSync(path.join(root, "src/lib/video-provider-prompt.ts"), "utf8"),
   providerTimeouts: fs.readFileSync(path.join(root, "src/lib/video-provider-timeouts.ts"), "utf8"),
   providerPanel: fs.readFileSync(path.join(root, "src/components/platform/platform-ai-provider-panel.tsx"), "utf8"),
-  multiframeScript: fs.readFileSync(path.join(root, "scripts/enable-video-provider-multiframe.mjs"), "utf8")
+  multiframeScript: fs.readFileSync(path.join(root, "scripts/enable-video-provider-multiframe.mjs"), "utf8"),
+  seedanceConfigure: fs.readFileSync(path.join(root, "scripts/configure-seedance-special-video-provider.mjs"), "utf8"),
+  packageJson: fs.readFileSync(path.join(root, "package.json"), "utf8")
 };
 
 const singleReferenceJsonPromptFunction = files.dispatch.match(/function buildSingleReferenceDirectJsonVideoPrompt[\s\S]*?\n}\n\nfunction buildDirectJsonVideoPrompt/)?.[0] ?? "";
@@ -67,6 +69,9 @@ const checks = [
       files.tokengoAdapter.includes("/v1/skills/task-status") &&
       files.tokengoAdapter.includes("tokengoMediaVideoParams") &&
       files.tokengoAdapter.includes("end_image_url") &&
+      files.tokengoAdapter.includes('return model?.trim().toLowerCase() === "seedance-2-0-special";') &&
+      files.tokengoAdapter.includes("const duration = seedanceSpecial ? 15") &&
+      files.tokengoAdapter.includes('{ resolution: "720p", quality: "标准", count: 1 }') &&
       files.dispatch.includes('const usePreparedProviderDataUris = protocol === "lk888-media";') &&
       files.dispatch.includes('allowDataUriFallback: protocol !== "tokengo-media"') &&
       files.dispatch.includes("assertTokengoMediaPublicFrameUrls(protocol, imageUrls)") &&
@@ -124,7 +129,8 @@ const checks = [
       orderedVideoProvidersFunction.includes("isTokengoGrokImagine15VideoProvider") &&
       orderedVideoProvidersFunction.includes("videoFrameAssets(payload).length <= 1") &&
       orderedVideoProvidersFunction.includes("? [...tokengoSingleReferenceProviders, ...otherVideoProviders]") &&
-      orderedVideoProvidersFunction.includes(": [...otherVideoProviders, ...tokengoSingleReferenceProviders]")
+      orderedVideoProvidersFunction.includes(": [...otherVideoProviders, ...tokengoSingleReferenceProviders]") &&
+      !orderedVideoProvidersFunction.toLowerCase().includes("seedance")
   },
   {
     label: "video worker sends SmartPickLid Grok Imagine multi-frame uploads directly without scene composition fallback",
@@ -416,13 +422,32 @@ const checks = [
       files.storage.includes("mimeType.includes(\"mp4\")")
   },
   {
-    label: "platform provider model picker includes the Grok video models",
+    label: "platform provider model picker includes the Grok and Seedance special video models",
     pass: files.providers.includes("grok-video-3-pro") &&
+      files.providers.includes("seedance-2-0-special") &&
       files.providers.includes("grok-imagine-video-special") &&
       files.providers.includes("grok-imagine-1.5-special") &&
       files.providers.includes("grok-imagine-video") &&
       files.providers.includes("grok-imagine-video-1.5-preview") &&
       files.providers.includes("grok-video-3.5-1015")
+  },
+  {
+    label: "Seedance special configure script appends without changing provider priorities or site apps",
+    pass: files.seedanceConfigure.includes("aiprov_tokengo_media_seedance_2_0_special") &&
+      files.seedanceConfigure.includes("seedance-2-0-special") &&
+      files.seedanceConfigure.includes('providerType: "video"') &&
+      files.seedanceConfigure.includes("DEFAULT_VIDEO_PROVIDER_REFERENCE_LIMIT = 9") &&
+      files.seedanceConfigure.includes("nextVideoProviderPriority") &&
+      files.seedanceConfigure.includes("provider ? provider.priority + 1 : 0") &&
+      files.seedanceConfigure.includes("preferred = existingProvider?.preferred ?? false") &&
+      files.seedanceConfigure.includes("SEEDANCE_SPECIAL_VIDEO_API_KEY") &&
+      files.seedanceConfigure.includes("TOKENGO_VIDEO_API_KEY") &&
+      files.seedanceConfigure.includes("BUMING_VIDEO_API_KEY") &&
+      files.seedanceConfigure.includes("billableCreateAttempts: 0") &&
+      files.packageJson.includes('"configure:seedance-special-video-provider"') &&
+      !files.seedanceConfigure.includes("siteAiApp.updateMany") &&
+      !files.seedanceConfigure.includes("updateMany") &&
+      !files.seedanceConfigure.includes("makeCurrent")
   },
   {
     label: "platform provider UI exposes the inferred provider protocol",

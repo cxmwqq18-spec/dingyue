@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import type { ThemeRuntimeAsset } from "@/lib/types";
 import { customerJsonHeaders } from "@/lib/client-csrf";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 
 function reviewLabel(status: ThemeRuntimeAsset["reviewStatus"]) {
   if (status === "approved") return "Ready";
@@ -48,14 +49,20 @@ export function JobAssetsPanel({
   return (
     <div>
       <p className="mb-4 text-sm leading-6 text-zinc-600">{message}</p>
+      <DreamshootShowcasePreview>
       <div className="grid grid-cols-2 gap-3">
         {items.map((asset) => (
           <div className="overflow-hidden rounded-[20px] border border-[#e4dace] bg-[#fffaf3] p-3 text-[#171514]" key={asset.id}>
             <div className="overflow-hidden rounded-[16px] bg-[#efe6d9]">
               <img
-                className="aspect-[4/3] w-full object-cover"
-                src={asset.previewUrl}
                 alt={asset.label}
+                aria-label={`View ${asset.label} full screen`}
+                className="aspect-[4/3] w-full cursor-zoom-in object-cover"
+                data-dreamshoot-preview-meta="Private gallery image"
+                data-dreamshoot-preview-src={asset.previewUrl}
+                data-dreamshoot-preview-title={asset.label}
+                data-dreamshoot-showcase-preview="image"
+                src={asset.previewUrl}
               />
             </div>
             <div className="mt-3">
@@ -79,6 +86,7 @@ export function JobAssetsPanel({
           </div>
         ) : null}
       </div>
+      </DreamshootShowcasePreview>
     </div>
   );
 }
