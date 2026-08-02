@@ -9,8 +9,8 @@ import ffmpegPath from "ffmpeg-static";
 
 const execFileAsync = promisify(execFile);
 
-export const MEDIA_WATERMARK_VERSION = "20260802-subtle-watermark1";
-export const DEFAULT_MEDIA_WATERMARK_OPACITY = 0.05;
+export const MEDIA_WATERMARK_VERSION = "20260802-subtle-watermark30";
+export const DEFAULT_MEDIA_WATERMARK_OPACITY = 0.3;
 
 export type MediaWatermarkResult = {
   bytes: Buffer;
@@ -47,7 +47,7 @@ function clamped(value: number, min: number, max: number): number {
 function normalizedWatermarkOpacity(value: unknown): number {
   const parsed = Number(value);
   const opacity = Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_MEDIA_WATERMARK_OPACITY;
-  return Number(clamped(opacity, 0.01, 0.12).toFixed(4));
+  return Number(clamped(opacity, 0.01, 0.5).toFixed(4));
 }
 
 async function sharpFactory(): Promise<typeof import("sharp") | undefined> {

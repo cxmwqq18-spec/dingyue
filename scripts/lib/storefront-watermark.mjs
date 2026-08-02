@@ -9,9 +9,9 @@ import ffmpegPath from "ffmpeg-static";
 const execFileAsync = promisify(execFile);
 let sharpLoader;
 
-export const STOREFRONT_WATERMARK_VERSION = "20260802-subtle-watermark1";
-export const DEFAULT_STOREFRONT_WATERMARK_OPACITY = 0.05;
-export const SAMPLE_STOREFRONT_WATERMARK_OPACITIES = [0.03, 0.05, 0.07];
+export const STOREFRONT_WATERMARK_VERSION = "20260802-subtle-watermark30";
+export const DEFAULT_STOREFRONT_WATERMARK_OPACITY = 0.3;
+export const SAMPLE_STOREFRONT_WATERMARK_OPACITIES = [0.2, 0.3, 0.4];
 
 const imageExtensions = new Set([".avif", ".jpeg", ".jpg", ".png", ".webp"]);
 const videoExtensions = new Set([".m4v", ".mov", ".mp4", ".webm"]);
@@ -57,7 +57,7 @@ function clamped(value, min, max) {
 export function normalizedStorefrontWatermarkOpacity(value) {
   const parsed = Number(value);
   const opacity = Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_STOREFRONT_WATERMARK_OPACITY;
-  return Number(clamped(opacity, 0.01, 0.12).toFixed(4));
+  return Number(clamped(opacity, 0.01, 0.5).toFixed(4));
 }
 
 async function loadSharp() {

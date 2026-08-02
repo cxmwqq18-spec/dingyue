@@ -31,6 +31,7 @@ const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
+const skipRealGeneration = process.env.TUTORIAL_REAL_GENERATION !== "1";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
 
@@ -614,6 +615,29 @@ async function openResults(page) {
   await page.locator("#video-workspace-videos").waitFor({ state: "visible", timeout: 60_000 });
 }
 
+async function showGenerateClickOnly(page) {
+  const button = page.locator("#video-step-generate").getByRole("button", { name: /Generate video/i }).first();
+  await button.waitFor({ state: "visible", timeout: 45_000 });
+  await pointAt(page, button);
+  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  log("skipped real supplier generation by request");
+}
+
+async function openHistoricalVideoPreview(page) {
+  await openResults(page);
+  const preview = page.getByRole("button", { name: /Open preview/i }).first();
+  if (await preview.isVisible().catch(() => false)) {
+    await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
+    const video = page.locator("video").first();
+    if (await video.isVisible({ timeout: 10_000 }).catch(() => false)) {
+      await page.evaluate(() => {
+        const video = document.querySelector("video");
+        if (video) void video.play().catch(() => undefined);
+      }).catch(() => undefined);
+    }
+  }
+}
+
 async function runtime(page) {
   const result = await page.evaluate(async ({ siteId }) => {
     const response = await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=${Date.now()}`, { cache: "no-store", credentials: "include" });
@@ -756,6 +780,20 @@ async function main() {
           await recorder.captureFor(6, captions.prompt);
           captured.prompt = true;
         }
+        if (skipRealGeneration) {
+          await showGenerateClickOnly(page);
+          if (!captured.generate) {
+            await recorder.captureFor(4, captions.generate);
+            captured.generate = true;
+          }
+          await openResults(page);
+          if (!captured.progress) {
+            await recorder.captureFor(3, captions.progress);
+            captured.progress = true;
+          }
+          success = { skippedRealGeneration: true };
+          break;
+        }
         const jobId = await submitJob(page);
         jobIds.push(jobId);
         if (!captured.generate) {
@@ -779,15 +817,24 @@ async function main() {
       }
     }
     if (!success) throw lastError || new Error("video_generation_failed_without_status");
-    await openResults(page);
+    if (skipRealGeneration) await openHistoricalVideoPreview(page);
+    else await openResults(page);
     await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
     await recorder.captureFor(5, captions.result);
     if (recorder.index !== 300) throw new Error(`capture_frame_count_invalid: ${recorder.index}`);
     await buildVideo(recorder.index);
     const finalProbe = verifyProbe(await probe(finalOutputPath));
-    await probe(providerResultPath);
+    if (!skipRealGeneration) await probe(providerResultPath);
     await exportSamples();
-    const result = { ok: true, output: finalOutputPath, providerResult: providerResultPath, contactSheet: contactSheetPath, jobIds, finalProbe };
+    const result = {
+      ok: true,
+      output: finalOutputPath,
+      providerResult: skipRealGeneration ? undefined : providerResultPath,
+      contactSheet: contactSheetPath,
+      jobIds,
+      skippedRealGeneration: skipRealGeneration,
+      finalProbe
+    };
     log("tutorial export complete", result);
     console.log(JSON.stringify(sanitizeJson(result), null, 2));
   } catch (error) {

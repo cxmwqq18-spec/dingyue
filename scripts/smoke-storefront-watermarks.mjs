@@ -77,7 +77,7 @@ async function smokeImageWatermark(tempDir) {
   const second = await watermarkMediaFile(watermarked, "myDreamshoots.com");
   assert(second.skipped, "current image watermark marker should prevent repeated overlays");
   const marker = readWatermarkMarker(watermarked);
-  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "myDreamshoots.com" && marker.opacity === 0.05, "image watermark marker should record version, text, and opacity");
+  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "myDreamshoots.com" && marker.opacity === 0.3, "image watermark marker should record version, text, and opacity");
 }
 
 async function smokeVideoWatermark(tempDir) {
@@ -113,7 +113,7 @@ async function smokeVideoWatermark(tempDir) {
   const second = await watermarkMediaFile(watermarked, "Aidreamcapes.com");
   assert(second.skipped, "current video watermark marker should prevent repeated overlays");
   const marker = readWatermarkMarker(watermarked);
-  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "Aidreamcapes.com" && marker.opacity === 0.05, "video watermark marker should record version, text, and opacity");
+  assert(marker?.version === STOREFRONT_WATERMARK_VERSION && marker.text === "Aidreamcapes.com" && marker.opacity === 0.3, "video watermark marker should record version, text, and opacity");
 }
 
 async function smokeRouteContracts() {
