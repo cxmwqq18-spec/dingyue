@@ -105250,8 +105250,6 @@
             },
             "brand_strip_1": {
               "type": "brand_logo_strip",
-              "version": "1",
-              "card_name": "Brand Logo Strip",
               "settings": {
                 "anchor": "trusted",
                 "title": "Built for creators, photographers, social sellers, studios, fan communities, and small teams.",
@@ -105458,8 +105456,6 @@
             },
             "proof_1": {
               "type": "testimonial_wall",
-              "version": "1",
-              "card_name": "Testimonial Wall",
               "settings": {
                 "anchor": "reviews",
                 "mode": "reviews",
@@ -105553,8 +105549,6 @@
             },
             "faq_1": {
               "type": "faq",
-              "version": "1",
-              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -105725,8 +105719,6 @@
             },
             "tutorial_video_1": {
               "type": "video_feature",
-              "version": "1",
-              "card_name": "Video Feature",
               "settings": {
                 "anchor": "how-it-works",
                 "eyebrow": "How it works",
@@ -111224,17 +111216,13 @@
         "index": {
           "content_for_page": [
             "hero_1",
-            "brand_strip_1",
-            "visual_proof_1",
-            "featured_pack_1",
-            "featured_christmas_1",
-            "featured_thanksgiving_1",
+            "generation_showcase_1",
+            "tutorial_video_1",
             "package_catalog_1",
-            "flow_bridge_1",
-            "pricing_1",
             "proof_1",
+            "pricing_1",
             "faq_1",
-            "trust_1",
+            "brand_strip_1",
             "conversion_1"
           ],
           "sections": {
@@ -111310,225 +111298,82 @@
             },
             "brand_strip_1": {
               "type": "brand_logo_strip",
-              "version": "1",
-              "card_name": "brand_logo_strip",
               "settings": {
                 "anchor": "trusted",
-                "title": "Private photo sets for fan meetups, sports-idol style moments, VIP looks, Christmas cards, Thanksgiving portraits, and Halloween albums.",
+                "title": "Built for creators, photographers, social sellers, studios, fan communities, and small teams.",
                 "style": "dark"
               },
               "blocks": [
                 {
-                  "id": "logo_reviews",
+                  "id": "partner_creator_teams",
                   "type": "logo",
                   "settings": {
-                    "name": "Fan meetups",
+                    "name": "Creator teams",
                     "imageUrl": "",
-                    "badge": "Private"
+                    "badge": "Content"
                   }
                 },
                 {
-                  "id": "logo_packages",
+                  "id": "partner_photo_studios",
                   "type": "logo",
                   "settings": {
-                    "name": "Sports fan packs",
+                    "name": "Photo studios",
                     "imageUrl": "",
-                    "badge": "Catalog"
+                    "badge": "Studio"
                   }
                 },
                 {
-                  "id": "logo_model",
+                  "id": "partner_social_sellers",
                   "type": "logo",
                   "settings": {
-                    "name": "VIP-style looks",
+                    "name": "Social sellers",
                     "imageUrl": "",
-                    "badge": "Permission-safe"
+                    "badge": "Commerce"
                   }
                 },
                 {
-                  "id": "logo_video",
+                  "id": "partner_fan_pages",
                   "type": "logo",
                   "settings": {
-                    "name": "Christmas albums",
+                    "name": "Fan pages",
+                    "imageUrl": "",
+                    "badge": "Community"
+                  }
+                },
+                {
+                  "id": "partner_event_marketers",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Event marketers",
+                    "imageUrl": "",
+                    "badge": "Campaigns"
+                  }
+                },
+                {
+                  "id": "partner_holiday_shops",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Holiday shops",
                     "imageUrl": "",
                     "badge": "Seasonal"
                   }
                 },
                 {
-                  "id": "logo_tryon",
+                  "id": "partner_creator_coaches",
                   "type": "logo",
                   "settings": {
-                    "name": "Halloween & Thanksgiving",
+                    "name": "Creator coaches",
                     "imageUrl": "",
-                    "badge": "Holiday"
-                  }
-                }
-              ]
-            },
-            "visual_proof_1": {
-              "type": "dreamshoot_visual_proof",
-              "version": "1",
-              "card_name": "dreamshoot_visual_proof",
-              "settings": {
-                "anchor": "proof-gallery",
-                "label": "Visual proof gallery",
-                "title": "See what your selfies can become.",
-                "subtitle": "See examples of fan meetups, sports-idol style photos, VIP looks, Christmas group portraits, Thanksgiving albums, Halloween party shots, and seasonal cards.",
-                "tabs": "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal",
-                "badges": "Private model|Fan-safe styling|Holiday albums",
-                "primaryCta": "Start this pack",
-                "primaryHref": "/login"
-              },
-              "blocks": [
-                {
-                  "id": "proof_worldcup",
-                  "type": "proof_card",
-                  "settings": {
-                    "title": "World Cup fan photos",
-                    "description": "Stadium fan posters, match-day group shots, and social-ready supporter portraits.",
-                    "category": "Fan Photos",
-                    "badge": "Featured",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp",
-                    "href": "/collections/world-cup-fan-photos"
+                    "badge": "Guides"
                   }
                 },
                 {
-                  "id": "proof_sports_meetup",
-                  "type": "proof_card",
+                  "id": "partner_small_teams",
+                  "type": "logo",
                   "settings": {
-                    "title": "Sports idol-style meetups",
-                    "description": "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.",
-                    "category": "Sports Stars",
-                    "badge": "Sports Stars",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp",
-                    "href": "/collections/world-cup-fan-photos"
-                  }
-                },
-                {
-                  "id": "proof_vip",
-                  "type": "proof_card",
-                  "settings": {
-                    "title": "Red-carpet fan moments",
-                    "description": "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.",
-                    "category": "VIP Looks",
-                    "badge": "VIP Looks",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp",
-                    "href": "/collections/gala-photos"
-                  }
-                },
-                {
-                  "id": "proof_christmas",
-                  "type": "proof_card",
-                  "settings": {
-                    "title": "Christmas group photos",
-                    "description": "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.",
-                    "category": "Christmas",
-                    "badge": "Holiday",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp?v=20260801visualfix1",
-                    "href": "/collections/christmas-photos",
-                    "previewImages": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp?v=20260801visualfix1|/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp?v=20260801visualfix1"
-                  }
-                },
-                {
-                  "id": "proof_seasonal",
-                  "type": "proof_card",
-                  "settings": {
-                    "title": "Seasonal holiday albums",
-                    "description": "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.",
-                    "category": "Seasonal",
-                    "badge": "Seasonal",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1",
-                    "href": "/collections/holiday"
-                  }
-                }
-              ]
-            },
-            "featured_pack_1": {
-              "type": "dreamshoot_featured_pack",
-              "version": "1",
-              "card_name": "dreamshoot_featured_pack",
-              "settings": {
-                "anchor": "featured-pack",
-                "label": "Featured seasonal pack",
-                "badge": "Match-day pack",
-                "title": "World Cup fan photos for sports-idol style moments.",
-                "subtitle": "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
-                "primaryCta": "Create Fan Photos",
-                "primaryHref": "/login",
-                "secondaryCta": "View Sports Packs",
-                "secondaryHref": "/collections",
-                "photos": "Private gallery",
-                "credits": "26 credits",
-                "privacy": "Private album",
-                "includedTitle": "Included outputs",
-                "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
-                "safetyCopy": "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
-                "overlayTitle": "World Cup Pack",
-                "overlaySubtitle": "Sports-idol style fan photos without a studio.",
-                "overlayChips": "fan meetup|group shot|stadium|social-ready",
-                "bottomNote": "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
-                "campaignLabel": "Current campaign: World Cup Fan Photos",
-                "nextCampaignLabel": "Next: Christmas / Thanksgiving / Halloween"
-              },
-              "blocks": [
-                {
-                  "id": "seasonal_worldcup_1",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Stadium Portrait",
-                    "meta": "Cinematic fan look",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
-                    "shape": "tall"
-                  }
-                },
-                {
-                  "id": "seasonal_worldcup_2",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Fan Meetup Photos",
-                    "meta": "Group-friendly shots",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                    "shape": "wide"
-                  }
-                },
-                {
-                  "id": "seasonal_worldcup_3",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Match-day Avatar",
-                    "meta": "Profile-ready crop",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_worldcup_4",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Fan Poster",
-                    "meta": "Story and feed artwork",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
-                    "shape": "tall"
-                  }
-                },
-                {
-                  "id": "seasonal_worldcup_5",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Social Story",
-                    "meta": "Mobile-first layout",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                    "shape": "tall"
-                  }
-                },
-                {
-                  "id": "seasonal_worldcup_6",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Banner / Cover",
-                    "meta": "Wide campaign image",
-                    "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                    "shape": "wide"
+                    "name": "Small teams",
+                    "imageUrl": "",
+                    "badge": "Profiles"
                   }
                 }
               ]
@@ -111641,62 +111486,6 @@
                 }
               ]
             },
-            "flow_bridge_1": {
-              "type": "dreamshoot_flow_bridge",
-              "version": "1",
-              "card_name": "dreamshoot_flow_bridge",
-              "settings": {
-                "anchor": "workflow",
-                "label": "Private album workflow",
-                "title": "From upload to private album.",
-                "subtitle": "Upload source photos, confirm the package and credits, then follow the request into a private gallery.",
-                "beforeImage": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
-                "afterImage": "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-                "albumImageOne": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-                "albumImageTwo": "/assets/dreamshoot/editorial-headshot-gpt2.png",
-                "albumImageThree": "/assets/dreamshoot/frames/sample-cyberpunk.png",
-                "bridgeCta": "Choose a plan for your photo set",
-                "bridgeHref": "/pricing"
-              },
-              "blocks": [
-                {
-                  "id": "flow_upload",
-                  "type": "card",
-                  "settings": {
-                    "title": "Private by default",
-                    "text": "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.",
-                    "meta": "01"
-                  }
-                },
-                {
-                  "id": "flow_model",
-                  "type": "card",
-                  "settings": {
-                    "title": "Review the credit cost",
-                    "text": "Review the credit cost before generation.",
-                    "meta": "02"
-                  }
-                },
-                {
-                  "id": "flow_pack",
-                  "type": "card",
-                  "settings": {
-                    "title": "Pick a package",
-                    "text": "Choose the outcome first, then view the credit cost.",
-                    "meta": "03"
-                  }
-                },
-                {
-                  "id": "flow_album",
-                  "type": "card",
-                  "settings": {
-                    "title": "Generate album",
-                    "text": "Download finished results from the private gallery.",
-                    "meta": "04"
-                  }
-                }
-              ]
-            },
             "pricing_1": {
               "type": "pricing_table",
               "version": "1",
@@ -111715,92 +111504,91 @@
             },
             "proof_1": {
               "type": "testimonial_wall",
-              "version": "1",
-              "card_name": "testimonial_wall",
               "settings": {
                 "anchor": "reviews",
-                "title": "Ways people use MyDreamShoots.",
-                "subtitle": "Theme examples for fan meetup albums, VIP-style looks, Christmas cards, holiday groups, and short private clips.",
-                "summaryTitle": "Ways people use MyDreamShoots",
-                "summaryBody": "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits.",
-                "summaryRating": "",
-                "summaryMeta": "Private theme examples"
+                "mode": "reviews",
+                "title": "What customers like about MyDreamShoots.",
+                "subtitle": "Clear credit costs, realistic-looking themes, private galleries, and quick planning keep showing up in customer feedback.",
+                "summaryTitle": "Customers love the private gallery flow.",
+                "summaryBody": "Creators, small teams, sports fans, and holiday-card buyers use MyDreamShoots to test polished AI photo ideas before booking a studio or building a campaign.",
+                "summaryRating": "4.9/5",
+                "summaryMeta": "Customer feedback"
               },
               "blocks": [
                 {
-                  "id": "review_fan_meetup",
+                  "id": "review_ava",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Turn match-day selfies into sports fan photos, supporter portraits, and group-friendly fan meetup images without using official logos or real player likenesses.",
-                    "name": "Fan meetup album",
-                    "role": "Sports fan photos",
-                    "location": "Fan Photos",
-                    "rating": "",
+                    "quote": "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.",
+                    "name": "Ava M.",
+                    "role": "Sports fan album",
+                    "location": "Fan photos",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                   }
                 },
                 {
-                  "id": "review_vip",
+                  "id": "review_lucas",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Plan VIP-style portraits and red-carpet fan moments from approved source photos before spending credits on a full private gallery.",
-                    "name": "VIP-style portrait set",
-                    "role": "Red-carpet style",
-                    "location": "VIP Looks",
-                    "rating": "",
+                    "quote": "I needed profile images for a launch week. The VIP-style portraits gave me several usable looks without arranging a shoot or chasing edits.",
+                    "name": "Lucas R.",
+                    "role": "Creator portraits",
+                    "location": "VIP-style set",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                   }
                 },
                 {
-                  "id": "review_christmas",
+                  "id": "review_mia",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Compare Christmas couple, friend-card, and group portrait directions before creating card-ready favorites for a private album.",
-                    "name": "Christmas card set",
+                    "quote": "The Christmas couple pack saved a lot of time. We compared the theme first, checked credits, then downloaded card-ready images from the gallery.",
+                    "name": "Mia C.",
                     "role": "Holiday cards",
-                    "location": "Christmas photos",
-                    "rating": "",
+                    "location": "Christmas album",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp"
                   }
                 },
                 {
-                  "id": "review_holiday",
+                  "id": "review_noah",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Build seasonal holiday albums around Christmas cards, Thanksgiving warmth, Halloween mood, and private family-style keepsakes.",
-                    "name": "Holiday group album",
-                    "role": "Seasonal albums",
-                    "location": "Private gallery",
-                    "rating": "",
+                    "quote": "My favorite part is the workflow. Upload, choose a package, approve the cost, and the finished set is easy to review with the rest of my account history.",
+                    "name": "Noah P.",
+                    "role": "Private gallery user",
+                    "location": "Credit planning",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
-                    "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/holiday/holiday-02.webp?v=20260715b"
+                    "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                   }
                 },
                 {
-                  "id": "review_credit",
+                  "id": "review_chloe",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Pick a theme, check the credit cost, and keep every fan-photo or holiday result inside a private MyDreamShoots gallery.",
-                    "name": "Credit planning",
-                    "role": "Private workflow",
-                    "location": "Clear credits",
-                    "rating": "",
+                    "quote": "The theme labels helped me explain options to a client. We tested creator portraits, holiday images, and short motion ideas from the same source photos.",
+                    "name": "Chloe S.",
+                    "role": "Social seller",
+                    "location": "Creator workflow",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                   }
                 },
                 {
-                  "id": "review_clip",
+                  "id": "review_eli",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Turn finished fan portraits or VIP-style images into short private clips after reviewing the credit cost and source-frame guidance.",
-                    "name": "Short motion preview",
-                    "role": "Image-to-video ideas",
-                    "location": "Private clips",
-                    "rating": "",
+                    "quote": "Good quality, clear wording, and no confusing checkout surprise. I knew what each generation would use before starting the album.",
+                    "name": "Eli T.",
+                    "role": "Small team admin",
+                    "location": "Headshots and cards",
+                    "rating": "5",
                     "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                   }
@@ -111809,32 +111597,30 @@
             },
             "faq_1": {
               "type": "faq",
-              "version": "1",
-              "card_name": "faq",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
                 "title": "FAQ",
-                "subtitle": "Answers to pricing, privacy, uploads, credits, refunds, and photo quality.",
+                "subtitle": "Answers to photo uploads, AI video examples, package themes, credits, privacy, refunds, subscriptions, quality, and gallery delivery.",
                 "journeyTitle": "Your photo flow",
                 "journeyTitles": "Upload|Choose Pack|Generate|Download",
                 "journeyDescriptions": "Add clean source photos.|Pick a scene or style.|AI builds your set.|Download from the private gallery."
               },
               "blocks": [
                 {
-                  "id": "faq_cost",
+                  "id": "faq_free",
                   "type": "faq_item",
                   "settings": {
                     "question": "Can I try MyDreamShoots for free?",
-                    "answer": "Some lightweight tools can be free. Private model creation and premium photo packages require credits because they use dedicated generation capacity."
+                    "answer": "Some lightweight tools can be free. Private model creation, premium photo packages, and AI video requests require credits because they use dedicated generation capacity."
                   }
                 },
                 {
-                  "id": "faq_uploads",
+                  "id": "faq_credits",
                   "type": "faq_item",
                   "settings": {
-                    "question": "What photos should I upload?",
-                    "answer": "Recent, clear, high-quality phone photos work best. Use different angles, expressions, lighting, and outfits so the private model has enough visual range."
+                    "question": "When are credits used?",
+                    "answer": "The credit cost is shown before each generation. Credits are reserved when a request starts, used after successful delivery, and returned when a failed request releases the reservation."
                   }
                 },
                 {
@@ -111846,78 +111632,75 @@
                   }
                 },
                 {
+                  "id": "faq_uploads",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "What photos should I upload?",
+                    "answer": "Recent, clear, high-quality phone photos work best. Use different angles, expressions, lighting, and outfits so the private workflow has enough visual range."
+                  }
+                },
+                {
+                  "id": "faq_videos",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Can I create AI videos too?",
+                    "answer": "Yes. Some themes include short AI video examples or video add-ons. The request screen shows source requirements and credit cost before video generation begins."
+                  }
+                },
+                {
+                  "id": "faq_categories",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Why are there so many package categories?",
+                    "answer": "Each category represents a different output goal such as fan photos, VIP-style portraits, headshots, creator images, Christmas cards, Thanksgiving albums, Halloween portraits, or seasonal group photos."
+                  }
+                },
+                {
+                  "id": "faq_faces",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Will the images keep my facial features?",
+                    "answer": "Results depend on source photo quality, lighting, pose, and model behavior. Clear source photos usually help the generated images stay more consistent, but AI output can vary."
+                  }
+                },
+                {
+                  "id": "faq_safety",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Can I use celebrity, athlete, or brand references?",
+                    "answer": "Do not upload or request content that copies real celebrities, athletes, public figures, official marks, logos, trademarks, or protected materials without permission."
+                  }
+                },
+                {
+                  "id": "faq_delete",
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Can I delete my photos?",
+                    "answer": "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required."
+                  }
+                },
+                {
                   "id": "faq_refunds",
                   "type": "faq_item",
                   "settings": {
                     "question": "What is the refund policy?",
-                    "answer": "Refund eligibility follows the site policy and checkout terms. Credits already spent on successful generations are not refundable, while failed requests can return reserved credits according to request status."
+                    "answer": "Refund eligibility follows the site policy and checkout terms. Credits already spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status."
                   }
                 },
                 {
-                  "id": "faq_credits",
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "When are credits used?",
-                    "answer": "Credit cost is shown before each generation. Different packages may use different credit amounts based on style, output size, and generation settings."
-                  }
-                },
-                {
-                  "id": "faq_model",
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "Why do premium packs need a private model?",
-                    "answer": "A private model keeps the customer's face and style consistent across different photo packages. Studio tools can help prepare inputs, while premium albums use the model for better continuity."
-                  }
-                },
-                {
-                  "id": "faq_expiry",
+                  "id": "faq_cancel",
                   "type": "faq_item",
                   "settings": {
                     "question": "What happens if I cancel a plan?",
                     "answer": "Access to previous albums follows the account and gallery policy. New package requests may require an active plan or enough available credits."
                   }
-                }
-              ]
-            },
-            "trust_1": {
-              "type": "trust_signal_bar",
-              "version": "1",
-              "card_name": "trust_signal_bar",
-              "settings": {
-                "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
-              },
-              "blocks": [
-                {
-                  "id": "trust_private",
-                  "type": "stat",
-                  "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
-                  }
                 },
                 {
-                  "id": "trust_credits",
-                  "type": "stat",
+                  "id": "faq_commercial",
+                  "type": "faq_item",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
-                  }
-                },
-                {
-                  "id": "trust_model",
-                  "type": "stat",
-                  "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
-                  }
-                },
-                {
-                  "id": "trust_checkout",
-                  "type": "stat",
-                  "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "question": "Can I use results for business or social content?",
+                    "answer": "Many customers use finished images for profiles, social posts, cards, campaigns, or creator content. Review the output, rights, and platform rules before publishing or selling anything."
                   }
                 }
               ]
@@ -111963,187 +111746,36 @@
                 }
               ]
             },
-            "featured_christmas_1": {
-              "type": "dreamshoot_featured_pack",
-              "version": "1",
-              "card_name": "dreamshoot_featured_pack",
+            "generation_showcase_1": {
+              "type": "dreamshoot_generation_showcase",
+              "blocks": [],
               "settings": {
-                "anchor": "christmas-holiday-pack",
-                "label": "Featured holiday pack",
-                "badge": "Christmas pack",
-                "title": "Christmas group photos for cards, posts, and private albums.",
-                "subtitle": "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
-                "primaryCta": "Create Christmas Photos",
+                "anchor": "generated-showcase",
+                "eyebrow": "Customer-created examples",
+                "title": "Browse image and video themes customers have already created.",
+                "subtitle": "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+                "imageTitle": "Customer image themes",
+                "videoTitle": "Customer video themes",
+                "primaryCta": "Start with your photos",
                 "primaryHref": "/login",
-                "secondaryCta": "View Christmas Photos",
-                "secondaryHref": "/collections/christmas-photos",
-                "photos": "Holiday cards",
-                "credits": "20 credits",
-                "privacy": "Private album",
-                "includedTitle": "Included outputs",
-                "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
-                "safetyCopy": "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
-                "overlayTitle": "Christmas Photos",
-                "overlaySubtitle": "Festive holiday portraits without a studio.",
-                "overlayChips": "Christmas cards|group portraits|cozy scenes|private",
-                "bottomNote": "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
-                "campaignLabel": "Current campaign: Christmas Photos",
-                "nextCampaignLabel": "Next: Thanksgiving / Halloween / Seasonal",
-                "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-10.webp?v=20260801visualfix1"
-              },
-              "blocks": [
-                {
-                  "id": "seasonal_christmas_1",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Christmas Portraits",
-                    "meta": "Card-ready mood",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_christmas_2",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Greeting Card Scene",
-                    "meta": "Festive group crop",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_christmas_3",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Cozy Couple",
-                    "meta": "Warm keepsake",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_christmas_4",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Holiday Cover",
-                    "meta": "Private album art",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_christmas_5",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Seasonal Album",
-                    "meta": "Family-style glow",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_christmas_6",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Giftable Keepsake",
-                    "meta": "Social-ready crop",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                }
-              ]
+                "imageSlugs": "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
+                "videoSlugs": "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+                "videoItemLimit": 8
+              }
             },
-            "featured_thanksgiving_1": {
-              "type": "dreamshoot_featured_pack",
-              "version": "1",
-              "card_name": "dreamshoot_featured_pack",
+            "tutorial_video_1": {
+              "type": "video_feature",
               "settings": {
-                "anchor": "thanksgiving-pack",
-                "label": "Featured seasonal pack",
-                "badge": "Thanksgiving pack",
-                "title": "Thanksgiving group photos for warm private albums.",
-                "subtitle": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
-                "primaryCta": "Create Thanksgiving Photos",
-                "primaryHref": "/login",
-                "secondaryCta": "View Thanksgiving Photos",
-                "secondaryHref": "/collections/thanksgiving-group-photos",
-                "photos": "Group portraits",
-                "credits": "20 credits",
-                "privacy": "Private gallery",
-                "includedTitle": "Included outputs",
-                "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
-                "safetyCopy": "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
-                "overlayTitle": "Thanksgiving Photos",
-                "overlaySubtitle": "Warm gratitude scenes from approved photos.",
-                "overlayChips": "group portraits|gratitude cards|Friendsgiving|private",
-                "bottomNote": "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
-                "campaignLabel": "Current campaign: Thanksgiving Group Photos",
-                "nextCampaignLabel": "Next: Christmas / Halloween / Seasonal",
-                "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-10.webp?v=20260801visualfix1"
+                "anchor": "how-it-works",
+                "eyebrow": "How it works",
+                "title": "Watch the private photo package workflow.",
+                "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
+                "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+                "videoUrl": "",
+                "videoBadge": "Private gallery workflow",
+                "playLabel": "Watch the MyDreamShoots workflow"
               },
-              "blocks": [
-                {
-                  "id": "seasonal_thanksgiving_1",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Dinner Portraits",
-                    "meta": "Warm table scene",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_thanksgiving_2",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Friendsgiving Set",
-                    "meta": "Group-friendly crop",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_thanksgiving_3",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Gratitude Card",
-                    "meta": "Seasonal note",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_thanksgiving_4",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Keepsake Cover",
-                    "meta": "Private album art",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_thanksgiving_5",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Family-style Album",
-                    "meta": "Harvest warmth",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                },
-                {
-                  "id": "seasonal_thanksgiving_6",
-                  "type": "seasonal_image",
-                  "settings": {
-                    "label": "Host Story",
-                    "meta": "Download-ready image",
-                    "imageUrl": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp?v=20260801visualfix1",
-                    "shape": "square"
-                  }
-                }
-              ]
+              "blocks": []
             }
           }
         },
@@ -116606,8 +116238,6 @@
             },
             "brand_strip_1": {
               "type": "brand_logo_strip",
-              "version": "1",
-              "card_name": "Brand Logo Strip",
               "settings": {
                 "anchor": "trusted",
                 "title": "Built for fan communities, event planners, holiday sellers, creator teams, and local studios.",
@@ -116833,8 +116463,6 @@
             },
             "proof_1": {
               "type": "testimonial_wall",
-              "version": "1",
-              "card_name": "Testimonial Wall",
               "settings": {
                 "anchor": "reviews",
                 "mode": "reviews",
@@ -116928,8 +116556,6 @@
             },
             "faq_1": {
               "type": "faq",
-              "version": "1",
-              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -117081,8 +116707,6 @@
             },
             "tutorial_video_1": {
               "type": "video_feature",
-              "version": "1",
-              "card_name": "Video Feature",
               "settings": {
                 "anchor": "how-it-works",
                 "eyebrow": "How it works",
@@ -121652,8 +121276,6 @@
             },
             "brand_strip_1": {
               "type": "brand_logo_strip",
-              "version": "1",
-              "card_name": "Brand Logo Strip",
               "settings": {
                 "anchor": "trusted",
                 "title": "Built for fan communities, event planners, holiday sellers, creator teams, and local studios.",
@@ -121879,8 +121501,6 @@
             },
             "proof_1": {
               "type": "testimonial_wall",
-              "version": "1",
-              "card_name": "Testimonial Wall",
               "settings": {
                 "anchor": "reviews",
                 "mode": "reviews",
@@ -121974,8 +121594,6 @@
             },
             "faq_1": {
               "type": "faq",
-              "version": "1",
-              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -122127,8 +121745,6 @@
             },
             "tutorial_video_1": {
               "type": "video_feature",
-              "version": "1",
-              "card_name": "Video Feature",
               "settings": {
                 "anchor": "how-it-works",
                 "eyebrow": "How it works",

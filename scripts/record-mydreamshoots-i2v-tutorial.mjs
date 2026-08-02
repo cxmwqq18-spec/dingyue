@@ -210,9 +210,11 @@ async function installOverlay(page) {
         if (!parent || parent.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask")) continue;
         let text = node.nodeValue || "";
         const original = text;
+        const parentText = parent.textContent || "";
         text = text.replace(emailPattern, "demo@masked.local");
         text = text.replace(/\b(Credits:\s*)\d{3,}\b/gi, "$1----");
         text = text.replace(/\b\d{3,}\s+credits\b/gi, "---- credits");
+        if (/\b(credits|creditos)\b/i.test(parentText)) text = text.replace(/\b\d{3,}\b/g, "----");
         for (const name of names) text = text.split(name).join("Demo Account");
         if (text !== original) node.nodeValue = text;
       }
@@ -607,7 +609,11 @@ async function openResults(page) {
   const resultsSection = page.locator("#video-workspace-videos").first();
   const tab = page.getByRole("button", { name: /Video results/i }).first();
   for (let attempt = 1; attempt <= 4; attempt += 1) {
-    if (await resultsSection.isVisible({ timeout: 2_000 }).catch(() => false)) return;
+    if (await resultsSection.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await installOverlay(page);
+      await closeMegaMenus(page);
+      return;
+    }
     if (await tab.isVisible({ timeout: 2_000 }).catch(() => false)) {
       await clickWithPointer(page, tab, { force: true }).catch(() => undefined);
     } else if (attempt === 1) {
@@ -623,6 +629,7 @@ async function openResults(page) {
     }).catch(() => undefined);
     await waitReady(page);
     await installOverlay(page);
+    await closeMegaMenus(page);
     await page.waitForTimeout(1_000);
   }
   const state = await page.evaluate(() => ({
@@ -633,6 +640,7 @@ async function openResults(page) {
   })).catch(() => ({}));
   log("video results tab did not become visible", state);
   await resultsSection.waitFor({ state: "visible", timeout: 15_000 });
+  await closeMegaMenus(page);
 }
 
 async function showGenerateClickOnly(page) {
@@ -643,10 +651,24 @@ async function showGenerateClickOnly(page) {
   log("skipped real supplier generation by request");
 }
 
+async function closeMegaMenus(page) {
+  await page.evaluate(() => {
+    const closeButtons = [...document.querySelectorAll("button[aria-label]")].filter((button) =>
+      /^Close .+ menu$/i.test(button.getAttribute("aria-label") || "")
+    );
+    closeButtons.forEach((button) => button.click());
+  }).catch(() => undefined);
+  await page.waitForTimeout(250);
+  await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
+}
+
 async function openHistoricalVideoPreview(page) {
   await openResults(page);
-  const preview = page.getByRole("button", { name: /Open preview/i }).first();
-  if (await preview.isVisible().catch(() => false)) {
+  await closeMegaMenus(page);
+  const resultsSection = page.locator("#video-workspace-videos").first();
+  await resultsSection.scrollIntoViewIfNeeded().catch(() => undefined);
+  const preview = resultsSection.getByRole("button", { name: /Open preview/i }).first();
+  if (await preview.isVisible({ timeout: 15_000 }).catch(() => false)) {
     await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
     const video = page.locator("video").first();
     if (await video.isVisible({ timeout: 10_000 }).catch(() => false)) {
@@ -656,6 +678,7 @@ async function openHistoricalVideoPreview(page) {
       }).catch(() => undefined);
     }
   }
+  await closeMegaMenus(page);
 }
 
 async function runtime(page) {

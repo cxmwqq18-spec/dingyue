@@ -394,7 +394,7 @@ SECURE Data Act / GUARD Financial Data Act 监测记录：
 - MyDreamShoots 使用 `myDreamshoots.com`，AIdreamcapes 使用 `Aidreamcapes.com`。
 - `.com` 店铺的生成结果、用户上传、下载预览和工作区访问不再自动打水印。
 - 旧的公开素材必须先从 clean release 恢复无明显水印源文件，再用后台按钮 `刷新展示水印` 或 `npm run watermark:storefront-public-media -- --restore-from=<clean-release>` 重刷，避免明显水印与透明水印叠加。
-- `public/assets/dreamshoot` 非品牌公开素材、`public/assets/sites/site_aidreamcapes` 非品牌公开素材、以及对应 `.eu` 公开素材均使用 `20260802-subtle-watermark1` 标记，默认透明度 `0.05`；品牌 logo/icon 不进批处理。
+- `public/assets/dreamshoot` 非品牌公开素材、`public/assets/sites/site_aidreamcapes` 非品牌公开素材、以及对应 `.eu` 公开素材均使用 `20260802-subtle-watermark30` 标记，默认透明度 `0.3`；品牌 logo/icon 不进批处理。
 - 上线前执行 `npm run watermark:storefront-public-media -- --dry-run`，如果公开素材已刷新完成，应返回 `changed: 0` 且 `failures: []`。
 
 本轮验证：
