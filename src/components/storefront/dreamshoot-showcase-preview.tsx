@@ -198,7 +198,7 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_36%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.72))]" />
           <div
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center px-4 pb-16 pt-20 sm:px-20 sm:py-20"
             onClick={(event) => {
               if (event.target === event.currentTarget) closePreview();
             }}
@@ -206,7 +206,8 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
             {preview.kind === "image" ? (
               <img
                 alt={preview.title}
-                className="max-h-screen max-w-screen object-contain"
+                className="max-h-[calc(100vh-8.5rem)] max-w-[calc(100vw-2rem)] object-contain sm:max-h-[calc(100vh-10rem)] sm:max-w-[calc(100vw-10rem)]"
+                data-dreamshoot-preview-media="image"
                 decoding="async"
                 src={preview.src}
               />
@@ -215,8 +216,9 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
                 key={preview.src}
                 ref={videoRef}
                 autoPlay
-                className="max-h-screen max-w-screen bg-black object-contain"
+                className="max-h-[calc(100vh-8.5rem)] max-w-[calc(100vw-2rem)] bg-black object-contain sm:max-h-[calc(100vh-10rem)] sm:max-w-[calc(100vw-10rem)]"
                 controls
+                data-dreamshoot-preview-media="video"
                 playsInline
                 poster={preview.poster}
                 preload="auto"

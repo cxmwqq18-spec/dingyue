@@ -10375,7 +10375,7 @@ function SectionView({
                     {row.map((card) => (
                       <figure
                         aria-label={`View ${card.meta} customer-created image product from ${card.title}`}
-                        className={`group relative aspect-[3/4] w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                        className={`group relative aspect-square w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
                         data-dreamshoot-image-product-card="true"
                         data-dreamshoot-image-product-row={String(rowIndex + 1)}
                         data-dreamshoot-preview-meta={card.meta}
@@ -10388,7 +10388,7 @@ function SectionView({
                       >
                         <StorefrontImage
                           alt={`${card.meta} customer-created image product from ${card.title}`}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
+                          className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
                           fetchPriority={card.productIndex < 4 ? "high" : "low"}
                           loading={card.productIndex < 4 ? "eager" : "lazy"}
                           preview={false}

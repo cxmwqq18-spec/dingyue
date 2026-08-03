@@ -358,8 +358,11 @@ assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "sh
 assert(!imageShowcaseRenderer.includes("row.concat(row)"), "showcase image wall must not duplicate homepage theme cards in the render tree");
 assert(!imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall should not emit cloned product cards");
 assert(!imageShowcaseRenderer.includes("xl:grid-cols-7"), "showcase image wall should not regress to the static seven-column grid");
-assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column portrait tiles on desktop");
+assert(imageShowcaseRenderer.includes("aspect-square") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column square tiles on desktop");
 assert(imageShowcaseRenderer.includes("StorefrontImage"), "showcase image cards should render fixed-ratio large images");
+assert(imageShowcaseRenderer.includes("object-contain object-center"), "showcase image cards should show the complete source image without cover cropping");
+assert(!imageShowcaseRenderer.includes('className="h-full w-full object-cover transition duration-700'), "showcase image cards must not crop source images with object-cover");
+assert(!imageShowcaseRenderer.includes("group-hover:scale-[1.018]"), "showcase image cards must not crop source images on hover");
 assert(imageShowcaseRenderer.includes("preview={false}"), "showcase image img tags should not duplicate the outer lightbox trigger");
 assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image product"), "showcase images should have customer-created alt text");
 assert(!imageShowcaseRenderer.includes("{card.title}</p>"), "showcase image cards should not show visible titles");
@@ -399,6 +402,8 @@ const showcasePreviewComponent = fs.readFileSync(path.join(repoRoot, "src/compon
 assert(showcasePreviewComponent.includes('role="dialog"') && showcasePreviewComponent.includes('aria-modal="true"'), "showcase preview should render an accessible modal dialog");
 assert(showcasePreviewComponent.includes("controls") && showcasePreviewComponent.includes("video.muted = false") && !showcasePreviewComponent.includes(" muted"), "showcase detail videos should play from the source with sound enabled");
 assert(showcasePreviewComponent.includes("fixed inset-0 z-[160] bg-black"), "showcase preview should be a true fullscreen lightbox");
+assert(showcasePreviewComponent.includes('data-dreamshoot-preview-media="image"') && showcasePreviewComponent.includes("max-h-[calc(100vh-8.5rem)]"), "showcase image preview should reserve safe space around full-size media");
+assert(!showcasePreviewComponent.includes("max-h-screen max-w-screen object-contain"), "showcase image preview should not let controls overlap edge-to-edge media");
 assert(showcasePreviewComponent.includes("ArrowLeft") && showcasePreviewComponent.includes("ArrowRight") && showcasePreviewComponent.includes("Escape"), "showcase preview should support keyboard navigation and close");
 assert(showcasePreviewComponent.includes("ChevronLeft") && showcasePreviewComponent.includes("ChevronRight"), "showcase preview should include previous and next controls");
 
