@@ -33,6 +33,8 @@ const removedHomeSections = [
   "flow_bridge_1",
   "trust_1"
 ];
+const expectedImageShowcasePriorityCount = 8;
+const expectedImageShowcaseCardCount = 28;
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
@@ -123,13 +125,22 @@ function assertShowcaseImageSourceData(store, site, pageJson, label) {
   assert(slugs.join("|") === expectedSlugs.join("|"), `${label}: homepage image slug order drifted: ${slugs.join("|")}`);
   assert(uniqueSlugs.size === slugs.length, `${label}: duplicate homepage image theme slugs: ${slugs.join("|")}`);
   assert(uniqueSources.size === imageSources.length, `${label}: duplicate homepage image source paths: ${imageSources.join("|")}`);
-  assert(imageSources.length === 8, `${label}: expected 8 unique homepage image themes, got ${imageSources.length}`);
+  assert(imageSources.length === expectedImageShowcasePriorityCount, `${label}: expected ${expectedImageShowcasePriorityCount} priority homepage image themes, got ${imageSources.length}`);
+  assert(activePacks.length === expectedImageShowcaseCardCount, `${label}: expected ${expectedImageShowcaseCardCount} active homepage image product themes, got ${activePacks.length}`);
   for (const slug of slugs) {
     const source = homepageShowcaseImageUrlForStore(store, site, slug);
     const assetFile = path.resolve(repoRoot, "public", `.${comparableImageUrl(source)}`);
     assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing single-image homepage showcase asset ${assetFile}`);
     assert(!looksLikeCompositeShowcaseAsset(source), `${label}: homepage image source must not be a collage/contact-sheet/gallery asset: ${source}`);
     assert(activePacks.some((pack) => creativePackMatchesShowcaseSlug(pack, slug)), `${label}: homepage image slug has no active creative pack match: ${slug}`);
+  }
+  const packCoverSources = activePacks.map((pack) => comparableImageUrl(pack.imageUrl));
+  const uniquePackCoverSources = new Set(packCoverSources);
+  assert(uniquePackCoverSources.size === activePacks.length, `${label}: duplicate active homepage pack image sources: ${packCoverSources.join("|")}`);
+  for (const source of packCoverSources) {
+    const assetFile = path.resolve(repoRoot, "public", `.${source}`);
+    assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing active homepage pack image asset ${assetFile}`);
+    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: active homepage pack image must not be a collage/contact-sheet/gallery asset: ${source}`);
   }
   if (isAidreamcapesStore(store, site)) {
     assert(imageSources.every((source) => source.includes("/fan-holiday-theme/categories/")), `${label}: Aidreamcapes homepage should use clean category images, got ${imageSources.join("|")}`);
@@ -335,6 +346,10 @@ assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "s
 assert(themeRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should keep dedicated AI-generated homepage fallback assets");
 assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
 assert(themeRenderer.includes("homepageShowcaseImageCardFromSlug"), "homepage showcase should build cards directly from configured image slugs before falling back to pack galleries");
+assert(themeRenderer.includes("generationShowcasePriorityImageCardFromSlug"), "homepage showcase should use configured image slugs as priority cards without limiting total image products");
+assert(themeRenderer.includes("generationShowcasePackPriorityIndex"), "homepage showcase should sort active packs by configured priority image slugs");
+assert(themeRenderer.includes("generationShowcasePackDedupeKey"), "homepage showcase should dedupe by active pack identity so all 28 visible themes remain available");
+assert(!themeRenderer.includes("return generationShowcaseCardsFromSources(uniqueSelectedImageSlugs"), "homepage showcase must not return only the eight configured priority image slugs");
 assert(themeRenderer.includes("looksLikeCompositeShowcaseImageUrl"), "homepage showcase image selection should reject collage/contact-sheet/gallery composite candidates");
 assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)"), "showcase images should come from each store's dynamic theme source list");
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
@@ -351,6 +366,7 @@ assert(!imageShowcaseRenderer.includes("{card.title}</p>"), "showcase image card
 assert(!imageShowcaseRenderer.includes("{card.meta}</p>"), "showcase image cards should not show visible meta labels");
 assert(!imageShowcaseRenderer.includes("bg-gradient-to-t from-black/78"), "showcase image cards should not add a text overlay gradient");
 assert(showcaseRenderer.includes("const imageProductCards = imageCards.map"), "homepage showcase should include every dynamic image product card in the wall");
+assert(!showcaseRenderer.includes("imageCards.slice(0, 8)"), "homepage showcase image wall should not truncate themes to 8 priority cards");
 assert(!showcaseRenderer.includes("imageCards.slice(0, 12)"), "homepage showcase image wall should not truncate themes to 12 cards");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-grid="true"'), "showcase should expose a stable image product grid marker");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-wall="true"'), "showcase should expose a stable four-row image product wall marker");

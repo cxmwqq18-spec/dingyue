@@ -2250,7 +2250,11 @@ function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeI
 }
 
 function generationShowcaseThemeSlugForPack(pack: CreativePack): string {
-  return dreamshootCategorySlug(pack.categoryRecord?.parent?.slug || pack.categoryRecord?.slug || pack.category || pack.name);
+  return dreamshootCategorySlug(creativePackCollectionHref(pack).replace(/^\/collections\//, "") || pack.categoryRecord?.slug || pack.category || pack.name || pack.id);
+}
+
+function generationShowcasePackDedupeKey(pack: CreativePack): string {
+  return dreamshootCategorySlug(pack.id || generationShowcaseThemeSlugForPack(pack) || pack.name);
 }
 
 function creativePackMatchesShowcaseSlug(pack: CreativePack, slug: string): boolean {
@@ -2283,6 +2287,34 @@ function homepageShowcaseImageCardFromSlug(site: Site, slug: string, creativePac
     title: categoryLabel || matchingPack?.name || dreamshootCategoryLabel(normalizedSlug),
     imageUrl,
     meta: categoryLabel || dreamshootCategoryLabel(normalizedSlug)
+  };
+}
+
+function generationShowcasePackPriorityIndex(pack: CreativePack, selectedImageSlugs: string[]): number {
+  const themeSlug = generationShowcaseThemeSlugForPack(pack);
+  const directIndex = selectedImageSlugs.findIndex((slug) => dreamshootCategorySlug(slug) === themeSlug);
+  if (directIndex >= 0) return directIndex;
+  const matchedIndex = selectedImageSlugs.findIndex((slug) => creativePackMatchesShowcaseSlug(pack, slug));
+  return matchedIndex >= 0 ? matchedIndex : Number.POSITIVE_INFINITY;
+}
+
+function generationShowcasePriorityImageCardFromSlug(
+  site: Site,
+  slug: string,
+  creativePacks: CreativePack[],
+  claimedPackKeys: Set<string>,
+  excludeImages: string[] = []
+): GenerationShowcaseImageCard | null {
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  if (!normalizedSlug) return null;
+  const excludedImages = new Set(excludeImages.map((image) => comparableImageUrl(image)).filter(Boolean));
+  const matchingPack = creativePacks.find((pack) => !claimedPackKeys.has(generationShowcasePackDedupeKey(pack)) && creativePackMatchesShowcaseSlug(pack, normalizedSlug));
+  const card = homepageShowcaseImageCardFromSlug(site, normalizedSlug, matchingPack ? [matchingPack] : creativePacks);
+  if (!card?.imageUrl || excludedImages.has(comparableImageUrl(card.imageUrl))) return null;
+  if (matchingPack) claimedPackKeys.add(generationShowcasePackDedupeKey(matchingPack));
+  return {
+    ...card,
+    id: matchingPack?.id || card.id
   };
 }
 
@@ -2358,38 +2390,55 @@ function generationShowcaseCardsFromSources<T>(
 function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
   const uniqueSelectedImageSlugs = uniqueStringList(selectedImageSlugs.map((slug) => dreamshootCategorySlug(slug)));
-  if (uniqueSelectedImageSlugs.length) {
-    return generationShowcaseCardsFromSources(uniqueSelectedImageSlugs, (slug) => homepageShowcaseImageCardFromSlug(site, slug, activePacks));
-  }
-  const selectedFallbackCards = selectedImageSlugs.map((slug) => {
-    const normalizedSlug = dreamshootCategorySlug(slug);
-    return {
-      id: `showcase-image-${normalizedSlug}`,
-      slug: normalizedSlug,
-      title: dreamshootCategoryLabel(normalizedSlug),
-      imageUrl: dreamshootShowcaseImagePath(site, normalizedSlug),
-      meta: dreamshootCategoryLabel(normalizedSlug)
-    };
-  });
-  const seenThemeSlugs = new Set<string>();
-  const uniqueThemePacks = activePacks.filter((pack) => {
-    const key = generationShowcaseThemeSlugForPack(pack);
-    if (!key || seenThemeSlugs.has(key)) return false;
-    seenThemeSlugs.add(key);
+  const seenPackKeys = new Set<string>();
+  const uniquePacks = activePacks.filter((pack) => {
+    const key = generationShowcasePackDedupeKey(pack);
+    if (!key || seenPackKeys.has(key)) return false;
+    seenPackKeys.add(key);
     return true;
   });
-  const rawCards = generationShowcaseCardsFromSources(sortedByShowcaseSlugs(
-    uniqueThemePacks,
-    selectedImageSlugs,
-    (pack) => generationShowcaseThemeSlugForPack(pack),
-    (_pack) => Number.POSITIVE_INFINITY
-  ), (pack, excludeImages) => generationShowcaseCardFromPack(site, pack, excludeImages));
+  const claimedPackKeys = new Set<string>();
+  const usedImages: string[] = [];
+  const priorityCards = uniqueSelectedImageSlugs
+    .map((slug) => {
+      const card = generationShowcasePriorityImageCardFromSlug(site, slug, uniquePacks, claimedPackKeys, usedImages);
+      if (card?.imageUrl) usedImages.push(card.imageUrl);
+      return card;
+    })
+    .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
+  const orderedPacks = uniquePacks
+    .filter((pack) => !claimedPackKeys.has(generationShowcasePackDedupeKey(pack)))
+    .map((pack, index) => ({
+      pack,
+      index,
+      priority: generationShowcasePackPriorityIndex(pack, uniqueSelectedImageSlugs)
+    }))
+    .sort((a, b) => {
+      if (a.priority !== b.priority) return a.priority - b.priority;
+      const aSort = a.pack.categoryRecord?.sortOrder ?? 9999;
+      const bSort = b.pack.categoryRecord?.sortOrder ?? 9999;
+      if (aSort !== bSort) return aSort - bSort;
+      return a.index - b.index;
+    })
+    .map(({ pack }) => pack);
+  const packCards = orderedPacks
+    .map((pack) => {
+      const card = generationShowcaseCardFromPack(site, pack, usedImages);
+      if (card?.imageUrl) usedImages.push(card.imageUrl);
+      return card;
+    })
+    .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
+  const rawCards = [...priorityCards, ...packCards];
+  const selectedFallbackCards = generationShowcaseCardsFromSources(uniqueSelectedImageSlugs, (slug) => homepageShowcaseImageCardFromSlug(site, slug, activePacks));
   const cards = rawCards.length ? rawCards : selectedFallbackCards;
   const seen = new Set<string>();
+  const seenImages = new Set<string>();
   return cards.filter((card) => {
-    const key = generationShowcaseImageDedupeKey(site, card.slug || card.id);
-    if (!key || seen.has(key)) return false;
+    const key = generationShowcaseImageDedupeKey(site, card.id || card.slug);
+    const imageKey = comparableImageUrl(card.imageUrl);
+    if (!key || seen.has(key) || !imageKey || seenImages.has(imageKey)) return false;
     seen.add(key);
+    seenImages.add(imageKey);
     return Boolean(card.imageUrl);
   });
 }
