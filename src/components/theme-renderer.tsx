@@ -2127,18 +2127,35 @@ const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark30";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
-  if (!cleanValue.startsWith("/assets/")) return value;
-  if (cleanValue.includes("/brand/")) return value;
-  if (!/\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)(?:[?#]|$)/i.test(cleanValue)) return value;
-
-  const hashStart = cleanValue.indexOf("#");
-  const withoutHash = hashStart >= 0 ? cleanValue.slice(0, hashStart) : cleanValue;
-  const hash = hashStart >= 0 ? cleanValue.slice(hashStart) : "";
-  const queryStart = withoutHash.indexOf("?");
-  const pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
-  const params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
+  let pathname = "";
+  let prefix = "";
+  let hash = "";
+  let params = new URLSearchParams();
+  if (cleanValue.startsWith("/assets/")) {
+    const hashStart = cleanValue.indexOf("#");
+    const withoutHash = hashStart >= 0 ? cleanValue.slice(0, hashStart) : cleanValue;
+    hash = hashStart >= 0 ? cleanValue.slice(hashStart) : "";
+    const queryStart = withoutHash.indexOf("?");
+    pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
+    params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
+  } else if (/^https?:\/\//i.test(cleanValue)) {
+    try {
+      const url = new URL(cleanValue);
+      if (!url.pathname.startsWith("/assets/")) return value;
+      pathname = url.pathname;
+      prefix = `${url.protocol}//${url.host}`;
+      params = url.searchParams;
+      hash = url.hash;
+    } catch {
+      return value;
+    }
+  } else {
+    return value;
+  }
+  if (pathname.includes("/brand/")) return value;
+  if (!/\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)$/i.test(pathname)) return value;
   params.set("wm", storefrontPublicWatermarkCacheVersion);
-  return `${pathname}?${params.toString()}${hash}`;
+  return `${prefix}${pathname}?${params.toString()}${hash}`;
 }
 
 function mediaAssetUrl(site: Site, value: string): string {
@@ -2161,6 +2178,19 @@ function spanishXbyPublicAssetUrl(site: Site, value: string): string {
 }
 
 const dreamshootHomepageShowcaseVersion = "20260801visualfix1";
+const aidreamcapesRootCategoryShowcaseSlugs = [
+  "fan-scene-albums",
+  "game-day-group-photos",
+  "premiere-style-portraits",
+  "christmas-holiday-albums",
+  "thanksgiving-memory-sets",
+  "halloween-party-portraits",
+  "seasonal-celebration-photos"
+];
+
+function isAidreamcapesRootCategorySlug(value: string | null | undefined): boolean {
+  return aidreamcapesRootCategoryShowcaseSlugs.includes(dreamshootCategorySlug(value || ""));
+}
 
 function dreamshootShowcaseImagePath(site: Site, slug: string): string {
   const root = isAidreamcapesSite(site)
@@ -2168,6 +2198,10 @@ function dreamshootShowcaseImagePath(site: Site, slug: string): string {
     : "/assets/dreamshoot/generated/homepage-showcase";
   const directory = isAidreamcapesSite(site) ? "categories" : "images";
   return spanishXbyPublicAssetUrl(site, `${root}/${directory}/${dreamshootCategorySlug(slug)}.webp?v=${dreamshootHomepageShowcaseVersion}`);
+}
+
+function aidreamcapesHomepageCategoryShowcaseImagePath(site: Site, slug: string): string {
+  return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/${dreamshootCategorySlug(slug)}.webp?v=${aidreamcapesFanHolidayAssetVersion}`);
 }
 
 function generationShowcaseImageDedupeKey(site: Site, slug: string): string {
@@ -2206,25 +2240,51 @@ function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeI
   return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? packImage(site, pack);
 }
 
-function generationShowcaseCardFromPack(site: Site, pack: CreativePack): GenerationShowcaseImageCard {
+function generationShowcaseCardFromPack(site: Site, pack: CreativePack, excludeImages: string[] = []): GenerationShowcaseImageCard {
   const slug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
   return {
     id: pack.id,
     slug,
     title: pack.categoryRecord?.label || pack.name,
-    imageUrl: generationShowcaseImageForPack(site, pack),
+    imageUrl: generationShowcaseImageForPack(site, pack, excludeImages),
     meta: pack.categoryRecord?.parent?.label ?? pack.categoryRecord?.label ?? dreamshootCategoryLabel(pack.category || pack.name)
   };
 }
 
-function generationShowcaseCardFromCategory(site: Site, category: CreativePackCategory, creativePacks: CreativePack[]): GenerationShowcaseImageCard | null {
-  const relatedPacks = creativePacks.filter((pack) => pack.status === "active" && creativePackMatchesCategory(pack, category));
+function creativePackCategoryMatchScore(pack: CreativePack, category: CreativePackCategory): number {
+  const categorySlug = dreamshootCategorySlug(category.slug || category.label);
+  const directSlugs = [
+    pack.categoryRecord?.slug,
+    pack.category,
+    pack.name,
+    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+  ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+  if (pack.categoryRecord?.id && String(pack.categoryRecord.id) === category.id) return 0;
+  if (directSlugs.includes(categorySlug)) return 1;
+  if (pack.categoryRecord?.parent?.id && String(pack.categoryRecord.parent.id) === category.id) return 20;
+  if (dreamshootCategorySlug(pack.categoryRecord?.parent?.slug || "") === categorySlug) return 21;
+  return creativePackMatchesCategory(pack, category) ? 40 : Number.POSITIVE_INFINITY;
+}
+
+function creativePacksSortedForCategory(creativePacks: CreativePack[], category: CreativePackCategory): CreativePack[] {
+  return creativePacks
+    .map((pack, index) => ({ pack, index, score: creativePackCategoryMatchScore(pack, category) }))
+    .filter((item) => item.pack.status === "active" && Number.isFinite(item.score))
+    .sort((a, b) => a.score - b.score || (a.pack.categoryRecord?.sortOrder ?? 9999) - (b.pack.categoryRecord?.sortOrder ?? 9999) || a.index - b.index)
+    .map(({ pack }) => pack);
+}
+
+function generationShowcaseCardFromCategory(site: Site, category: CreativePackCategory, creativePacks: CreativePack[], excludeImages: string[] = []): GenerationShowcaseImageCard | null {
+  const slug = dreamshootCategorySlug(category.slug || category.label);
+  const rootAidreamcapesCategory = isAidreamcapesSite(site) && !isSpanishXbySite(site) && isAidreamcapesRootCategorySlug(slug);
+  const relatedPacks = creativePacksSortedForCategory(creativePacks, category);
   const matchingPack = relatedPacks[0];
   const categoryImage = category.imageUrl ? mediaAssetUrl(site, category.imageUrl) : "";
-  const slug = dreamshootCategorySlug(category.slug || category.label);
-  const imageUrl = matchingPack
-    ? generationShowcaseImageForPack(site, matchingPack, categoryImage ? [categoryImage] : [])
-    : categoryImage || dreamshootShowcaseImagePath(site, slug);
+  const imageUrl = rootAidreamcapesCategory
+    ? aidreamcapesHomepageCategoryShowcaseImagePath(site, slug) || categoryImage
+    : matchingPack
+      ? generationShowcaseImageForPack(site, matchingPack, [...(categoryImage ? [categoryImage] : []), ...excludeImages])
+      : categoryImage || dreamshootShowcaseImagePath(site, slug);
   if (!imageUrl) return null;
   return {
     id: category.id,
@@ -2235,7 +2295,21 @@ function generationShowcaseCardFromCategory(site: Site, category: CreativePackCa
   };
 }
 
-function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], creativePackCategories: CreativePackCategory[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
+function generationShowcaseCardsFromSources<T>(
+  sources: T[],
+  cardForSource: (source: T, excludeImages: string[]) => GenerationShowcaseImageCard | null
+): GenerationShowcaseImageCard[] {
+  const usedImages: string[] = [];
+  return sources
+    .map((source) => {
+      const card = cardForSource(source, usedImages);
+      if (card?.imageUrl) usedImages.push(card.imageUrl);
+      return card;
+    })
+    .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
+}
+
+function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
   const selectedFallbackCards = selectedImageSlugs.map((slug) => {
     const normalizedSlug = dreamshootCategorySlug(slug);
@@ -2247,29 +2321,40 @@ function generationShowcaseImageCardsForSite(site: Site, creativePacks: Creative
       meta: dreamshootCategoryLabel(normalizedSlug)
     };
   });
-  const rawCards = isAidreamcapesSite(site) && !isSpanishXbySite(site)
-    ? sortedByShowcaseSlugs(
-        creativePackCategories.filter((category) => category.status === "active"),
-        selectedImageSlugs,
-        (category) => category.slug || category.label,
-        (category) => category.sortOrder
-      )
-        .map((category) => generationShowcaseCardFromCategory(site, category, activePacks))
-        .filter((card): card is GenerationShowcaseImageCard => Boolean(card))
-    : sortedByShowcaseSlugs(
-        activePacks,
-        selectedImageSlugs,
-        (pack) => pack.categoryRecord?.slug || pack.category || pack.name,
-        (_pack) => Number.POSITIVE_INFINITY
-      ).map((pack) => generationShowcaseCardFromPack(site, pack));
+  const rawCards = generationShowcaseCardsFromSources(sortedByShowcaseSlugs(
+    activePacks,
+    selectedImageSlugs,
+    (pack) => pack.categoryRecord?.slug || pack.category || pack.name,
+    (_pack) => Number.POSITIVE_INFINITY
+  ), (pack, excludeImages) => generationShowcaseCardFromPack(site, pack, excludeImages));
   const cards = rawCards.length ? rawCards : selectedFallbackCards;
   const seen = new Set<string>();
   return cards.filter((card) => {
-    const key = generationShowcaseImageDedupeKey(site, card.slug || card.id);
+    const key = card.id || generationShowcaseImageDedupeKey(site, card.slug || card.id);
     if (!key || seen.has(key)) return false;
     seen.add(key);
     return Boolean(card.imageUrl);
   });
+}
+
+function aidreamcapesRootCategoryImageUrlsForSite(site: Site, creativePackCategories: CreativePackCategory[]): string[] {
+  if (!isAidreamcapesSite(site) || isSpanishXbySite(site)) return [];
+  const rootCategories = creativePackCategories.filter((category) => category.status === "active" && isAidreamcapesRootCategorySlug(category.slug || category.label));
+  const rootCategoryImages = uniqueImageUrlList(
+    sortedByShowcaseSlugs(
+      rootCategories,
+      [],
+      (category) => category.slug || category.label,
+      (category) => category.sortOrder
+    ).map((category) => {
+      const slug = dreamshootCategorySlug(category.slug || category.label);
+      return aidreamcapesHomepageCategoryShowcaseImagePath(site, slug) || (category.imageUrl ? mediaAssetUrl(site, category.imageUrl) : "");
+    })
+  );
+  if (rootCategoryImages.length) return rootCategoryImages;
+  return aidreamcapesRootCategoryShowcaseSlugs.map((slug) =>
+    mediaAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${slug}.webp?v=${aidreamcapesFanHolidayAssetVersion}`)
+  );
 }
 
 function cleanStorefrontImageSrc(src: string): string {
@@ -2563,7 +2648,7 @@ function StorefrontImage({
   fetchPriority,
   preview
 }: StorefrontImageProps) {
-  const resolvedSrc = preferAidreamcapesPhotoAsset(src);
+  const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
   const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
@@ -2612,7 +2697,7 @@ function StorefrontSafeImage({
   fetchPriority,
   preview
 }: StorefrontSafeImageProps) {
-  const resolvedSrc = preferAidreamcapesPhotoAsset(src);
+  const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -2660,7 +2745,7 @@ function StorefrontNaturalImage({
   decoding = "async",
   preview
 }: StorefrontNaturalImageProps) {
-  const resolvedSrc = preferAidreamcapesPhotoAsset(src);
+  const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, safeAlt, preview);
   return (
@@ -3914,7 +3999,7 @@ const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; c
   { id: "aidream_fallback_fan_scene", title: "Fan-Scene Albums", category: "Fan Scenes", description: "Private meetup-style moments, supporter photo walls, and original star-adjacent album images.", meta: "Private album", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/fan-scene-albums" },
   { id: "aidream_fallback_game_day", title: "Game-Day Group Portraits", category: "Game Day", description: "Arena-inspired group portraits, watch-party images, and supporter albums without official marks.", meta: "Group portraits", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/game-day-group-photos" },
   { id: "aidream_fallback_premiere", title: "Premiere-Inspired Portrait Sets", category: "Premiere", description: "Flash-lit VIP mood, formal arrival portraits, and polished private creator images.", meta: "VIP mood", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/premiere-style-portraits.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/premiere-style-portraits" },
-  { id: "aidream_fallback_christmas", title: "Christmas Group Albums", category: "Christmas", description: "Festive group photos, card-ready crops, and cozy private holiday album images.", meta: "Holiday album", credits: "22 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/christmas-group-albums" },
+  { id: "aidream_fallback_christmas", title: "Christmas Holiday Albums", category: "Christmas", description: "Festive group photos, card-ready crops, and cozy private holiday album images.", meta: "Holiday album", credits: "22 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/christmas-holiday-albums" },
   { id: "aidream_fallback_thanksgiving", title: "Thanksgiving Keepsake Sets", category: "Thanksgiving", description: "Warm gratitude portraits, Friendsgiving scenes, and family-style private keepsakes.", meta: "Keepsake set", credits: "20 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/thanksgiving-memory-sets.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/thanksgiving-memory-sets" },
   { id: "aidream_fallback_halloween", title: "Halloween Party Portraits", category: "Halloween", description: "Original costume-friendly group portraits, dramatic color, and spooky seasonal albums.", meta: "Party portraits", credits: "22 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/halloween-party-portraits.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/halloween-party-portraits" },
   { id: "aidream_fallback_seasonal", title: "Seasonal Celebration Photos", category: "Seasonal", description: "Birthday, New Year, family occasion, and rotating holiday albums in one private workflow.", meta: "Occasion photos", credits: "20 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/seasonal-celebration-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/seasonal-celebration-photos" }
@@ -4136,19 +4221,30 @@ function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): stri
       parent: pack.categoryRecord?.parent?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.parent.imageUrl) : ""
     }
     : undefined;
-  const orderedImages = aidreamcapesCategoryImages
-    ? [
+  if (aidreamcapesCategoryImages) {
+    const images = uniqueImageUrlList([
       aidreamcapesCategoryImages.leaf,
-      ...galleryPreviewImages,
-      primaryImage,
-      aidreamcapesCategoryImages.parent
-    ]
-    : [primaryImage, ...packageCardGalleryImages];
+      aidreamcapesCategoryImages.parent,
+      primaryImage
+    ]).slice(0, 1);
+    return images.length ? images : [primaryImage];
+  }
+  const orderedImages = [primaryImage, ...packageCardGalleryImages];
   const images = uniqueImageUrlList(orderedImages).slice(0, limit);
   return images.length ? images : [primaryImage];
 }
 
 function dreamshootCategoryPreviewImageSet(site: Site, categoryImageUrl: string, packs: CreativePack[], limit = 2): string[] {
+  if (isAidreamcapesSite(site) && !isSpanishXbySite(site)) {
+    return uniqueImageUrlList([
+      categoryImageUrl,
+      ...packs.flatMap((pack) => [
+        pack.categoryRecord?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.imageUrl) : "",
+        pack.categoryRecord?.parent?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.parent.imageUrl) : "",
+        packImage(site, pack)
+      ])
+    ]).slice(0, 1);
+  }
   const aidreamcapesCategoryImages = isAidreamcapesSite(site) && !isSpanishXbySite(site)
     ? packs.flatMap((pack) => [
       pack.categoryRecord?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.imageUrl) : ""
@@ -6868,7 +6964,7 @@ function SectionView({
           });
       const proofBullets = bullets.slice(0, 4);
       const primaryImage = displayImages[0] ?? fallbackHeroImages[0];
-      const gridImages = listSetting(section, "heroGridImages", [
+      const configuredGridImages = listSetting(section, "heroGridImages", [
         primaryImage,
         displayImages[1] ?? fallbackHeroImages[1],
         displayImages[2] ?? fallbackHeroImages[2],
@@ -6879,7 +6975,9 @@ function SectionView({
         "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"
       ])
         .filter(Boolean)
-        .slice(0, 10)
+        .slice(0, 10);
+      const aidreamcapesHeroCategoryImages = aidreamcapesRootCategoryImageUrlsForSite(site, creativePackCategories);
+      const gridImages = (aidreamcapesHeroCategoryImages.length ? aidreamcapesHeroCategoryImages : configuredGridImages)
         .map((image) => mediaAssetUrl(site, image));
       const imageBadge = setting(section, "imageBadge", "Private photo album");
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
@@ -9039,7 +9137,9 @@ function SectionView({
         meta: spanishXbyTaxonomy ? spanishXbyCategoryLinkLabel(card.meta, aidreamcapes) : profile?.metaLabel || card.meta,
         keywords: Array.from(new Set(localizedKeywords)).slice(0, 5),
         imageUrl: card.imageUrl,
-        imageUrls: matchingPack && profile ? dreamshootPackImageSet(site, matchingPack, 2) : aidreamcapesImageUrls?.length ? aidreamcapesImageUrls : card.imageUrls,
+        imageUrls: aidreamcapes && !spanishXbyTaxonomy
+          ? aidreamcapesImageUrls?.length ? aidreamcapesImageUrls : uniqueImageUrlList([...(card.imageUrls ?? []), card.imageUrl]).slice(0, 1)
+          : matchingPack && profile ? dreamshootPackImageSet(site, matchingPack, 2) : card.imageUrls,
         href: hrefFor(site, card.href),
         appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack, site)) : hrefFor(site, "/app/create"),
         ...profileDetailFields,
@@ -10061,7 +10161,7 @@ function SectionView({
     const accent = aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient;
     const shellTone = "bg-[#05070E] text-white";
     const mutedText = "text-white/66";
-    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, creativePackCategories, selectedImageSlugs)
+    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)
       .map((card, index) => ({ ...card, index }));
 
     const videoBySlug = new Map<string, VideoTheme>();
@@ -10091,11 +10191,19 @@ function SectionView({
           index
         };
       });
-    const imageSplitIndex = Math.ceil(imageCards.length / 2);
-    const imageRailRows = [
-      imageCards.slice(0, imageSplitIndex),
-      imageCards.slice(imageSplitIndex)
-    ].filter((row) => row.length).map((row, rowIndex) => row.map((card) => ({ ...card, railKey: `${card.id}-image-${rowIndex}` })));
+    const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
+    const imageProductRowCount = Math.max(1, Math.ceil(imageProductCards.length / 7));
+    type ImageProductWallCard = (typeof imageProductCards)[number] & { railKey: string };
+    const imageProductRows: ImageProductWallCard[][] = [];
+    let imageProductCursor = 0;
+    for (let rowIndex = 0; rowIndex < imageProductRowCount; rowIndex += 1) {
+      const remainingCards = imageProductCards.length - imageProductCursor;
+      const remainingRows = imageProductRowCount - rowIndex;
+      const rowSize = Math.ceil(remainingCards / remainingRows);
+      const row = imageProductCards.slice(imageProductCursor, imageProductCursor + rowSize);
+      imageProductCursor += rowSize;
+      imageProductRows.push(row.map((card) => ({ ...card, railKey: `${card.id}-image-product-${rowIndex}` })));
+    }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
 
     return (
@@ -10129,39 +10237,45 @@ function SectionView({
                 <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "imageTitle", "Customer image themes")}</h3>
                 <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{imageCards.length} examples</span>
               </div>
-              <div className="mt-5 space-y-2">
-                {imageRailRows.map((row, rowIndex) => (
+              <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
+                {imageProductRows.map((row, rowIndex) => (
                   <DreamshootShowcaseRail
                     className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                    key={`image_showcase_row_${rowIndex}`}
+                    key={`image_product_wall_row_${rowIndex}`}
                     reverse={rowIndex % 2 === 1}
-                    speed={rowIndex % 2 === 1 ? 48 : 52}
-                    trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0"
+                    speed={rowIndex % 2 === 1 ? 12 : 14}
+                    trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
                   >
-                    {row.map((card) => (
-                      <figure
-                        aria-label={`View ${card.meta} customer-created image example from ${card.title}`}
-                        className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[16px] border bg-[#0a0c12] shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
-                        data-dreamshoot-preview-meta={card.meta}
-                        data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                        data-dreamshoot-preview-title={card.title}
-                        data-dreamshoot-showcase-preview="image"
-                        key={card.railKey}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <StorefrontImage
-                          alt={`${card.meta} customer-created image example from ${card.title}`}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
-                          fetchPriority={card.index < 4 ? "high" : "low"}
-                          loading={card.index < 4 ? "eager" : "lazy"}
-                          preview={false}
-                          sizes="(max-width: 640px) 86vw, 25vw"
-                          src={mediaAssetUrl(site, card.imageUrl)}
-                        />
-                        <figcaption className="sr-only">{`${card.meta} customer-created image theme example.`}</figcaption>
-                      </figure>
-                    ))}
+                    {row.concat(row).map((card, copyIndex) => {
+                      const primaryCard = copyIndex < row.length;
+                      return (
+                        <figure
+                          aria-hidden={primaryCard ? undefined : true}
+                          aria-label={primaryCard ? `View ${card.meta} customer-created image product from ${card.title}` : undefined}
+                          className={`group relative aspect-[3/4] w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                          data-dreamshoot-image-product-card={primaryCard ? "true" : undefined}
+                          data-dreamshoot-image-product-clone={primaryCard ? undefined : "true"}
+                          data-dreamshoot-image-product-row={primaryCard ? String(rowIndex + 1) : undefined}
+                          data-dreamshoot-preview-meta={card.meta}
+                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                          data-dreamshoot-preview-title={card.title}
+                          data-dreamshoot-showcase-preview="image"
+                          key={`${card.railKey}_${copyIndex}`}
+                          role={primaryCard ? "button" : undefined}
+                          tabIndex={primaryCard ? 0 : -1}
+                          >
+                            <StorefrontImage
+                              alt={`${card.meta} customer-created image product from ${card.title}`}
+                              className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
+                            fetchPriority={card.productIndex < 4 ? "high" : "low"}
+                            loading={card.productIndex < 4 ? "eager" : "lazy"}
+                            preview={false}
+                              sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                              src={mediaAssetUrl(site, card.imageUrl)}
+                            />
+                          </figure>
+                      );
+                    })}
                   </DreamshootShowcaseRail>
                 ))}
               </div>
@@ -10418,8 +10532,8 @@ function SectionView({
       : baseCards;
     const categoryHrefOverrides = storefrontCatalogCategoryHrefOverrides(site);
     const displayCards = normalizeStorefrontCatalogCards(site, cards.length ? cards : fallbackCards, categoryHrefOverrides);
-    const featuredCountDefault = aidreamcapes ? Math.min(10, displayCards.length || 10) : 5;
-    const featuredCountMax = aidreamcapes ? 10 : 6;
+    const featuredCountDefault = Math.min(12, displayCards.length || 12);
+    const featuredCountMax = 12;
     const featuredCount = Math.max(3, Math.min(featuredCountMax, numberSetting(section, "featuredCount", featuredCountDefault)));
     const sortedDisplayCards = isMyDreamShootsProfileSite(site)
       ? [...displayCards].sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
@@ -10438,6 +10552,7 @@ function SectionView({
         initialCategory={selectedCategory || "all"}
         locale={spanishXbyCatalog ? "es" : "en"}
         openCollectionsHref={hrefFor(site, "/collections")}
+        showDirectory={renderContext.pagePath !== "/"}
         sectionId={sectionAnchor(section, "packages")}
         siteBasePath={routedSitePath(site, "")}
         steps={spanishXbyCatalog && steps.join("|") === "Pick pack|See credit cost|Generate album" ? ["Elige paquete", "Revisa creditos", "Genera album"] : steps}
@@ -13178,7 +13293,68 @@ function SectionView({
       }
     );
     const reviewMode = setting(section, "mode", "use_cases") === "reviews";
-    const featuredVoices = items.slice(0, reviewMode ? 6 : 4);
+    const fallbackReviewItems: SectionBlockInstance[] = reviewMode && !isAidreamcapesSite(site)
+      ? [
+          {
+            id: "review_fallback_jordan",
+            type: "testimonial",
+            settings: {
+              quote: "I compared the creator, holiday, and profile directions before choosing a set. The result previews made the decision much easier.",
+              name: "Jordan K.",
+              role: "Creator campaign",
+              location: "Seasonal and profile images",
+              rating: "5",
+              avatarUrl: packImages.creator,
+              resultImageUrl: packImages.creator
+            }
+          },
+          {
+            id: "review_fallback_riley",
+            type: "testimonial",
+            settings: {
+              quote: "The short motion examples gave our social team a clear visual reference before we planned the next image set.",
+              name: "Riley W.",
+              role: "Social content team",
+              location: "Image and video examples",
+              rating: "5",
+              avatarUrl: packImages.copy,
+              resultImageUrl: packImages.copy,
+              resultVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/creator-intro-motion.mp4"
+            }
+          }
+        ]
+      : reviewMode && isAidreamcapesSite(site)
+        ? [
+            {
+              id: "aidream_review_fallback_zoe",
+              type: "testimonial",
+              settings: {
+                quote: "The holiday themes gave our shop a clear seasonal direction, and the motion example helped us plan the social cut.",
+                name: "Zoe P.",
+                role: "Seasonal shop",
+                location: "Holiday album and motion example",
+                rating: "5",
+                avatarUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp?v=20260801visualfix2",
+                resultImageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp?v=20260801visualfix2",
+                resultVideoUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/videos/christmas-card-motion.mp4"
+              }
+            },
+            {
+              id: "aidream_review_fallback_eli",
+              type: "testimonial",
+              settings: {
+                quote: "The game-day and premiere categories made it easy to compare the mood before uploading our approved group photos.",
+                name: "Eli S.",
+                role: "Event planner",
+                location: "Game-day and premiere portraits",
+                rating: "5",
+                avatarUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/game-day-group-portraits.webp?v=20260801visualfix2",
+                resultImageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/game-day-group-portraits.webp?v=20260801visualfix2"
+              }
+            }
+          ]
+        : [];
+    const featuredVoices = [...items, ...fallbackReviewItems].slice(0, reviewMode ? 8 : 4);
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
     const isDreamShootUseCaseWall = !reviewMode && !spanishXbyUseCaseWall && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
     return (
@@ -13228,6 +13404,7 @@ function SectionView({
               {featuredVoices.map((item, index) => {
                 const avatar = mediaAssetUrl(site, blockValue(item, "avatarUrl", ""));
                 const resultImage = mediaAssetUrl(site, blockValue(item, "resultImageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
+                const resultVideo = mediaAssetUrl(site, blockValue(item, "resultVideoUrl", ""));
                 const rating = Math.max(1, Math.min(5, Number(blockValue(item, "rating", "5")) || 5));
                 const cardTitle = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Private photo set")) : blockValue(item, "name", "Customer");
                 const cardMeta = isDreamShootUseCaseWall ? blockValue(item, "location", blockValue(item, "name", "")) : blockValue(item, "location", "");
@@ -13258,21 +13435,44 @@ function SectionView({
                       ) : null}
                       <p className="mt-4 text-[0.9rem] leading-6 text-[#1c2026]">{blockValue(item, "quote")}</p>
                     </div>
-                    <div className="relative h-[180px] overflow-hidden bg-[#f2e8da]">
-                      <StorefrontSafeImage
-                        alt={manualImageAlt({ src: resultImage, fallback: `AI photo result from ${customerName}'s ${customerRole} review` })}
-                        className="absolute inset-0 bg-[#f2e8da]"
-                        fetchPriority="low"
-                        loading="lazy"
-                        sizes="(max-width: 640px) 100vw, 20rem"
-                        src={resultImage}
-                      />
-                      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/38 to-transparent" />
-                      <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />
-                        Private gallery example
+                    <button
+                      aria-label={`Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`}
+                      className="group/result relative block h-[180px] w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset"
+                      data-dreamshoot-preview-meta={cardMeta}
+                      data-dreamshoot-preview-poster={resultImage}
+                      data-dreamshoot-preview-src={resultVideo || resultImage}
+                      data-dreamshoot-preview-title={`${cardTitle} ${resultVideo ? "video" : "image"} result`}
+                      data-dreamshoot-review-preview="true"
+                      data-dreamshoot-showcase-preview={resultVideo ? "video" : "image"}
+                      type="button"
+                    >
+                      {resultVideo ? (
+                        <video
+                          aria-label={`${cardTitle} video result`}
+                          className="absolute inset-0 h-full w-full object-cover"
+                          controls={false}
+                          muted
+                          playsInline
+                          poster={resultImage}
+                          preload="metadata"
+                          src={resultVideo}
+                        />
+                      ) : (
+                        <StorefrontSafeImage
+                          alt={manualImageAlt({ src: resultImage, fallback: `AI photo result from ${customerName}'s ${customerRole} review` })}
+                          className="absolute inset-0 bg-[#f2e8da]"
+                          fetchPriority="low"
+                          loading="lazy"
+                          sizes="(max-width: 640px) 100vw, 20rem"
+                          src={resultImage}
+                        />
+                      )}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/48 via-transparent to-transparent" />
+                      <div className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
+                        {resultVideo ? <PlayCircle className="h-3.5 w-3.5 text-[#b98a57]" strokeWidth={1.8} /> : <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />}
+                        {resultVideo ? "Video review example" : "Private gallery example"}
                       </div>
-                    </div>
+                    </button>
                   </article>
                 );
               })}
@@ -13298,12 +13498,12 @@ function SectionView({
     const journeyIcons = [Camera, Globe2, Sparkles, Download];
     return (
       <section className="bg-[#f7f2ea] px-5 py-[4.5rem]" id={sectionAnchor(section, "faq")}>
-        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 md:grid-cols-[0.56fr_0.44fr]">
-          <div>
+        <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col items-center gap-10">
+          <div className="w-full max-w-4xl text-center">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8f7d6d]">{setting(section, "eyebrow", "Questions before upload")}</p>
             <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "FAQ")}</h2>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-[#6d665f]">{setting(section, "subtitle", "Answer the objections customers have before they upload private images or subscribe.")}</p>
-            <div className="mt-7 grid gap-0 overflow-hidden rounded-[18px] border border-[#e6dccf] bg-white shadow-[0_22px_62px_-50px_rgba(24,24,27,0.12)]">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#6d665f]">{setting(section, "subtitle", "Answer the objections customers have before they upload private images or subscribe.")}</p>
+            <div className="mt-7 overflow-hidden rounded-[18px] border border-[#e6dccf] bg-white text-left shadow-[0_22px_62px_-50px_rgba(24,24,27,0.12)]">
               {list.map((item, index) => {
                 const question = headingBlockValue(item, "question", `Question ${index + 1}`);
                 const answer = blockValue(item, "answer");
@@ -13321,11 +13521,11 @@ function SectionView({
               })}
             </div>
           </div>
-          <div className="border-l border-[#eadfce] bg-[#fffaf3] px-4 py-2 lg:px-8">
-            <h3 className="max-w-[14ch] text-[1.75rem] font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] lg:text-[2.05rem]">
+          <div className="w-full max-w-5xl border-t border-[#eadfce] bg-[#fffaf3] px-4 py-8 text-center lg:px-8">
+            <h3 className="text-[1.75rem] font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] lg:text-[2.05rem]">
               {headingSetting(section, "journeyTitle", "Your photo flow")}
             </h3>
-            <div className="mt-7 grid grid-cols-2 items-start gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-1">
+            <div className="mx-auto mt-7 grid max-w-4xl grid-cols-2 items-start gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-1">
               {journeyTitles.slice(0, 4).map((title, index) => {
                 const Icon = journeyIcons[index] || Sparkles;
                 return (

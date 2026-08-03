@@ -131,7 +131,7 @@ const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidre
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
 const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase"]);
 const customerRuntimeSectionTypes = new Set(["album_gallery", "cart_summary", "generation_form", "job_detail", "job_progress", "login_method_panel", "upload_panel"]);
-const publicHomePackLimit: number | undefined = undefined;
+const publicHomePackLimit = 12;
 const publicDirectoryPackLimit = 128;
 const publicToolLimit = 96;
 
@@ -497,7 +497,9 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
   const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
-  const packLimit = slug === "/" ? publicHomePackLimit : slug === "/collections" ? publicDirectoryPackLimit : publicHomePackLimit;
+  const packLimit = slug === "/collections" || sectionTypes.has("dreamshoot_generation_showcase")
+    ? publicDirectoryPackLimit
+    : publicHomePackLimit;
   const siteAiAppLimit = slug === "/tools" ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],
@@ -520,7 +522,9 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
   const needsToolMenuItems = toolMenuItemSectionTypes.has(sectionType);
   const needsVideoThemes = videoThemeSectionTypes.has(sectionType);
   const hasPricingTable = sectionType === "pricing_table";
-  const packLimit = slug === "/collections" ? publicDirectoryPackLimit : publicHomePackLimit;
+  const packLimit = slug === "/collections" || sectionType === "dreamshoot_generation_showcase"
+    ? publicDirectoryPackLimit
+    : publicHomePackLimit;
   const siteAiAppLimit = sectionType.includes("tool_collection") ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],
@@ -2361,14 +2365,18 @@ export async function renderStorefrontPage({
     trimRenderDataForPage(renderDataForPage, pageJson, slug)
   );
   if (shouldCompletePublicPacks && slug === "/") {
-    const directoryPackLimit = publicHomePackLimit;
+    const directoryPackLimit = pageSectionTypes(pageJson).has("dreamshoot_generation_showcase")
+      ? publicDirectoryPackLimit
+      : publicHomePackLimit;
     pageRenderData = {
       ...pageRenderData,
       creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
     };
   }
   if (shouldCompletePublicPacks && slug === "/" && !pageRenderData.creativePacks.length) {
-    const directoryPackLimit = publicHomePackLimit;
+    const directoryPackLimit = pageSectionTypes(pageJson).has("dreamshoot_generation_showcase")
+      ? publicDirectoryPackLimit
+      : publicHomePackLimit;
     pageRenderData = {
       ...pageRenderData,
       creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, directoryPackLimit)).map((pack) => ({
@@ -2567,7 +2575,9 @@ export async function renderStorefrontSectionPayloads({
       )
     );
     if (shouldCompletePublicPacks && (slug === "/" || (slug === "/collections" && !isFocusedCollectionPage)) && pageRenderData.creativePacks.length > 0) {
-      const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
+      const directoryPackLimit = slug === "/" && section.type !== "dreamshoot_generation_showcase"
+        ? publicHomePackLimit
+        : publicDirectoryPackLimit;
       pageRenderData = {
         ...pageRenderData,
         creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
@@ -2705,7 +2715,9 @@ export async function renderStorefrontSectionPayload({
     )
   );
   if (shouldCompletePublicPacks && (slug === "/" || (slug === "/collections" && !isFocusedCollectionPage)) && pageRenderData.creativePacks.length > 0) {
-    const directoryPackLimit = slug === "/" ? publicHomePackLimit : publicDirectoryPackLimit;
+    const directoryPackLimit = slug === "/" && section.type !== "dreamshoot_generation_showcase"
+      ? publicHomePackLimit
+      : publicDirectoryPackLimit;
     pageRenderData = {
       ...pageRenderData,
       creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)

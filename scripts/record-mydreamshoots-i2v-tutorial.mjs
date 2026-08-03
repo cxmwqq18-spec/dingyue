@@ -14,18 +14,25 @@ const repoRoot = path.resolve(__dirname, "..");
 const baseUrl = (process.env.TUTORIAL_BASE_URL || "https://www.mydreamshoots.com").replace(/\/$/, "");
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
+const tutorialBrandName = process.env.TUTORIAL_BRAND_NAME || "MyDreamShoots";
 const outputDir = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_DIR || "output");
-const runDir = path.join(outputDir, "mydreamshoots-i2v-tutorial-real-work");
+const runDir = path.join(outputDir, process.env.TUTORIAL_RUN_SLUG || "mydreamshoots-i2v-tutorial-real-work");
 const framesDir = path.join(runDir, "frames");
 const samplesDir = path.join(runDir, "samples");
+const narrationDir = path.join(runDir, "narration");
 const cleanFramePath = path.join(runDir, "source-frame-clean.jpg");
-const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-tutorial-20260802.mp4");
+const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-tutorial-45s.mp4");
 const providerResultPath = path.join(runDir, "supplier-result.mp4");
+const narrationPath = path.join(runDir, "narration.m4a");
+const narrationVoicePath = path.join(runDir, "narration-voice.m4a");
+const musicBedPath = path.join(runDir, "background-bed.m4a");
 const failurePath = path.join(runDir, "failure-status.json");
 const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
+const cleanFrameSourcePath = path.resolve(repoRoot, process.env.TUTORIAL_SOURCE_FRAME_IMAGE || "public/assets/dreamshoot/generated/homepage-showcase/images/creator-portraits.webp");
 
 const viewport = { width: 1920, height: 1080 };
 const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 10);
+const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 45);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
 const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
@@ -34,18 +41,68 @@ const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_
 const skipRealGeneration = process.env.TUTORIAL_REAL_GENERATION !== "1";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
+const includeBackgroundMusic = process.env.TUTORIAL_BACKGROUND_MUSIC !== "0";
+const backgroundMusicVolume = Math.max(0, Math.min(1, Number(process.env.TUTORIAL_BACKGROUND_VOLUME || 0.12)));
 
-const promptText = `Create a 6-second image-to-video clip from the selected frame. Keep the adult creator's face, hair, outfit, warm studio lighting, microphone, laptop, and background consistent. Add a slow 35mm push-in, gentle hair movement, subtle lamp glow, natural blinking, and a calm confident expression. No extra people, no logos, no watermark, no captions, no distorted hands. End on a steady close frame.`;
+const promptText = process.env.TUTORIAL_PROMPT_TEXT || `Create a 6-second image-to-video clip from the selected frame. Keep the adult creator's face, hair, outfit, warm studio lighting, microphone, laptop, and background consistent. Add a slow 35mm push-in, gentle hair movement, subtle lamp glow, natural blinking, and a calm confident expression. No extra people, no logos, no watermark, no captions, no distorted hands. End on a steady close frame.`;
+
+const narrationSegments = jsonEnv("TUTORIAL_NARRATION_JSON", [
+  { duration: 3, text: `First, sign in to your private ${tutorialBrandName} workspace.` },
+  { duration: 3, text: "Open the Image to Video workspace from your account." },
+  { duration: 8, text: "Click Upload, choose a clean frame image, and open it in the workspace." },
+  { duration: 4, text: "Wait for the frame to finish uploading before continuing." },
+  { duration: 4, text: "Select the uploaded image as the reference frame for the clip." },
+  { duration: 6, text: "Paste a clear motion prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
+  { duration: 4, text: "Click Generate video to submit the request to the active provider." },
+  { duration: 6, text: "Track the request in Video results while the provider prepares and delivers the video." },
+  { duration: 7, text: "Open the preview, press play, and review the finished video before downloading it." }
+]);
 
 const captions = {
   login: "Sign in to your private workspace",
   workspace: "Open the Image to Video workspace",
-  upload: "Upload a frame image for motion",
-  prompt: "Describe the clip with clear motion direction",
-  generate: "Generate with the active video provider",
-  progress: "Your request runs securely in your account",
-  result: "Preview and download the finished video"
+  upload: "Click Upload and choose a frame image",
+  uploaded: "Wait for the uploaded frame to appear",
+  select: "Select the frame image to guide the video",
+  prompt: "Paste the prompt and keep 16:9 / 720P / 6s",
+  generate: "Click Generate video to submit",
+  progress: "Track generation progress in Video results",
+  result: "Open preview and play the finished video",
+  ...jsonEnv("TUTORIAL_CAPTIONS_JSON", {})
 };
+
+const captureDurations = {
+  login: 3,
+  workspace: 3,
+  uploadChooser: 4,
+  uploadSelected: 4,
+  uploaded: 4,
+  select: 4,
+  prompt: 6,
+  generate: 4,
+  progress: 6,
+  result: 7,
+  ...jsonEnv("TUTORIAL_CAPTURE_DURATIONS_JSON", {})
+};
+
+const maskNames = listEnv("TUTORIAL_MASK_NAMES", ["Nora Whitman", "Nora", "Aria", "Mira", "Lena", "Rowan"]);
+
+function jsonEnv(name, fallback) {
+  const value = process.env[name];
+  if (!value) return fallback;
+  try {
+    const parsed = JSON.parse(value);
+    return parsed && typeof parsed === "object" ? parsed : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function listEnv(name, fallback) {
+  const value = process.env[name];
+  if (!value) return fallback;
+  return value.split(",").map((item) => item.trim()).filter(Boolean);
+}
 
 function siblingFfprobe(binary) {
   if (!binary || binary === "ffmpeg") return undefined;
@@ -79,20 +136,36 @@ function pushCredential(list, email, password, source) {
 function credentials() {
   const list = [];
   pushCredential(list, process.env.TUTORIAL_CUSTOMER_EMAIL, process.env.TUTORIAL_CUSTOMER_PASSWORD, "tutorial_env");
-  if (!isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
-  pushCredential(
-    list,
-    process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL,
-    process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD,
-    "smoke_env"
-  );
-  pushCredential(
-    list,
-    "nora@mydreamshoots.localhost",
-    process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "nora123",
-    "local_demo"
-  );
-  if (isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
+  if (/aidreamcapes/i.test(`${siteId} ${siteSlug} ${tutorialBrandName}`)) {
+    pushCredential(
+      list,
+      process.env.SMOKE_AIDREAMCAPES_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL,
+      process.env.SMOKE_AIDREAMCAPES_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD,
+      "aidreamcapes_smoke_env"
+    );
+    pushCredential(
+      list,
+      "aria@aidreamcapes.localhost",
+      process.env.SMOKE_AIDREAMCAPES_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "aria123",
+      "aidreamcapes_local_demo"
+    );
+    pushCredential(list, "1621417163@qq.com", process.env.SMOKE_AIDREAMCAPES_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "aidreamcapes123", "aidreamcapes_demo");
+  } else {
+    if (!isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
+    pushCredential(
+      list,
+      process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL,
+      process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD,
+      "smoke_env"
+    );
+    pushCredential(
+      list,
+      "nora@mydreamshoots.localhost",
+      process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "nora123",
+      "local_demo"
+    );
+    if (isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
+  }
   const seen = new Set();
   return list.filter((item) => {
     const key = `${item.email}\n${item.password}`;
@@ -136,11 +209,10 @@ function run(command, args) {
 }
 
 async function prepareCleanFrame() {
-  const source = path.join(repoRoot, "public/assets/dreamshoot/generated/homepage-showcase/images/creator-portraits.webp");
-  const meta = await sharp(source).metadata();
+  const meta = await sharp(cleanFrameSourcePath).metadata();
   if (!meta.width || !meta.height) throw new Error("source_frame_metadata_missing");
   const cropHeight = Math.floor(meta.height * 0.83);
-  const cleanCrop = await sharp(source).extract({ left: 0, top: 0, width: meta.width, height: cropHeight }).toBuffer();
+  const cleanCrop = await sharp(cleanFrameSourcePath).extract({ left: 0, top: 0, width: meta.width, height: cropHeight }).toBuffer();
   const background = await sharp(cleanCrop)
     .resize(1280, 720, { fit: "cover" })
     .blur(18)
@@ -187,10 +259,28 @@ async function installOverlay(page) {
     .tutorial-cursor.click { transform: translate(-5px,-5px) scale(.86); }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.94); color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: rgba(2,6,23,.95); color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .tutorial-file-backdrop { position: fixed; inset: 0; z-index: 2147482990; background: rgba(8,12,20,.42); backdrop-filter: blur(3px); pointer-events: none; }
+    .tutorial-file-dialog { position: fixed; left: 50%; top: 50%; z-index: 2147482992; width: min(1120px, calc(100vw - 120px)); height: 610px; transform: translate(-50%,-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 16px; background: #f5f6f8; color: #20242b; box-shadow: 0 30px 90px rgba(0,0,0,.46); font: 500 16px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
+    .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 22px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
+    .tutorial-file-dot { width: 13px; height: 13px; border-radius: 50%; background: #ff5f57; box-shadow: 23px 0 #febc2e, 46px 0 #28c840; }
+    .tutorial-file-toolbar { display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 24px; border-bottom: 1px solid #d7d9df; color: #626975; }
+    .tutorial-file-toolbar strong { margin-left: auto; margin-right: auto; color: #303641; font-size: 15px; }
+    .tutorial-file-body { display: grid; grid-template-columns: 220px 1fr; height: 498px; }
+    .tutorial-file-sidebar { padding: 24px 16px; border-right: 1px solid #d7d9df; background: #eceef2; }
+    .tutorial-file-sidebar div { padding: 11px 14px; border-radius: 8px; color: #5e6672; }
+    .tutorial-file-sidebar .active { background: #d8e8ff; color: #1264c8; font-weight: 800; }
+    .tutorial-file-main { display: grid; grid-template-rows: 1fr 64px; min-width: 0; }
+    .tutorial-file-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 24px; align-content: start; background: #ffffff; }
+    .tutorial-file-item { display: grid; gap: 8px; place-items: center; min-height: 155px; padding: 12px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
+    .tutorial-file-item.selected { border-color: #2575e8; background: #e7f0ff; color: #0f55a7; }
+    .tutorial-file-thumb { display: grid; place-items: center; width: 112px; height: 94px; overflow: hidden; border-radius: 7px; background: linear-gradient(135deg,#2d5e52,#e5a26f 54%,#231a1d); color: #ffffff; font-size: 12px; font-weight: 800; }
+    .tutorial-file-footer { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 12px 24px; border-top: 1px solid #d7d9df; background: #fbfbfc; }
+    .tutorial-file-button { min-width: 98px; padding: 9px 18px; border: 1px solid #c4c8d0; border-radius: 8px; background: #ffffff; color: #4b5563; text-align: center; font-weight: 700; }
+    .tutorial-file-button.primary { border-color: #2575e8; background: #2575e8; color: #ffffff; }
   ` });
-  await page.evaluate(() => {
+  await page.evaluate(({ maskNames }) => {
     const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
-    const names = ["Nora Whitman", "Nora"];
+    const names = maskNames;
     function ensure(cls, text = "") {
       let el = document.querySelector(`.${cls}`);
       if (!el) {
@@ -271,6 +361,39 @@ async function installOverlay(page) {
       },
       cursor(x, y) { cursor.style.left = `${x}px`; cursor.style.top = `${y}px`; },
       clickPulse() { cursor.classList.add("click"); window.setTimeout(() => cursor.classList.remove("click"), 180); },
+      fileDialog(state) {
+        const oldBackdrop = document.querySelector(".tutorial-file-backdrop");
+        const oldDialog = document.querySelector(".tutorial-file-dialog");
+        if (!state) {
+          oldBackdrop?.remove();
+          oldDialog?.remove();
+          return;
+        }
+        oldBackdrop?.remove();
+        oldDialog?.remove();
+        const backdrop = document.createElement("div");
+        backdrop.className = "tutorial-file-backdrop";
+        const dialog = document.createElement("div");
+        dialog.className = "tutorial-file-dialog";
+        const selected = state === "selected";
+        dialog.innerHTML = `
+          <div class="tutorial-file-titlebar"><span class="tutorial-file-dot"></span><strong>Choose a file</strong></div>
+          <div class="tutorial-file-toolbar"><span>&lsaquo;</span><span>&rsaquo;</span><span>Columns</span><strong>${state === "image" || selected ? "image" : "Desktop"}</strong><span>Search</span></div>
+          <div class="tutorial-file-body">
+            <aside class="tutorial-file-sidebar">
+              <div>Recents</div><div>Shared</div><div class="active">Desktop</div><div>Documents</div><div>Downloads</div><div>Home</div>
+            </aside>
+            <div class="tutorial-file-main">
+              <div class="tutorial-file-list">
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images.jpeg</div><strong>images.jpeg</strong></div>
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">source-frame-clean.jpg</div><strong>source-frame-clean.jpg</strong></div>
+                <div class="tutorial-file-item"><div class="tutorial-file-thumb">creator-frame.png</div><strong>creator-frame.png</strong></div>
+              </div>
+              <div class="tutorial-file-footer"><span class="tutorial-file-button">Cancel</span><span class="tutorial-file-button primary">${selected ? "Open" : "Choose"}</span></div>
+            </div>
+          </div>`;
+        document.body.append(backdrop, dialog);
+      },
       redact() {
         redactTextNodes(document.body);
         positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
@@ -281,11 +404,18 @@ async function installOverlay(page) {
     window.__tutorial.cursor(1160, 680);
     window.__tutorial.redact();
     window.setInterval(() => window.__tutorial?.redact?.(), 250);
-  });
+  }, { maskNames });
 }
 
 async function setCaption(page, caption) {
   await page.evaluate((text) => window.__tutorial?.setCaption?.(text), caption).catch(() => undefined);
+}
+
+async function moveTutorialPointer(page, x, y, pulse = false) {
+  await page.evaluate(({ x, y, pulse }) => {
+    window.__tutorial?.cursor?.(x, y);
+    if (pulse) window.__tutorial?.clickPulse?.();
+  }, { x, y, pulse }).catch(() => undefined);
 }
 
 async function pointAt(page, locator) {
@@ -341,7 +471,7 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
   await password.fill(candidates[0].password);
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
   await pointAt(page, submit);
-  await recorder.captureFor(4, captions.login);
+  await recorder.captureFor(captureDurations.login, captions.login);
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
 
   let lastError = "login_failed";
@@ -390,19 +520,36 @@ async function openWorkspace(page, hash = "#step-video") {
 
 async function clearSelectedFrames(page) {
   await page.waitForTimeout(1500);
-  const text = await page.locator("#studio-console-video").textContent({ timeout: 10_000 }).catch(() => "");
-  if (!/\b[1-7]\s+of\s+7\s+selected\b/i.test(text || "")) return;
-  await clickWithPointer(page, page.getByLabel(/Clear selected video frames/i).first(), { force: true }).catch(() => undefined);
-  await page.waitForFunction(() => /0\s+of\s+7\s+selected/i.test(document.querySelector("#studio-console-video")?.textContent || ""), undefined, { timeout: 10_000 }).catch(() => undefined);
+  const clearButton = page.getByLabel(/Clear selected video frames/i).first();
+  if (!await clearButton.isVisible().catch(() => false)) return;
+  if (await clearButton.isDisabled().catch(() => true)) return;
+  await clickWithPointer(page, clearButton, { force: true }).catch(() => undefined);
+  await page.waitForFunction(() => {
+    return !document.querySelector("#studio-console-video button[aria-pressed='true']");
+  }, undefined, { timeout: 15_000 }).catch(() => undefined);
 }
 
-async function uploadFrame(page) {
+async function uploadFrame(page, recorder, recordChooser) {
   await clearSelectedFrames(page);
   await clearSelectedFrames(page);
   const uploadResponsePromise = page.waitForResponse((response) =>
     response.url().includes(`/api/sites/${siteId}/customers/`) && response.url().includes("/assets") && response.request().method() === "POST",
   { timeout: 120_000 }).catch(() => null);
-  await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePath);
+  if (recordChooser) {
+    const uploadButton = page.locator("#studio-console-video").getByRole("button", { name: /^Upload$/i }).first();
+    await uploadButton.waitFor({ state: "visible", timeout: 45_000 });
+    await clickWithPointer(page, uploadButton, { force: true });
+    await page.evaluate(() => window.__tutorial?.fileDialog?.("desktop")).catch(() => undefined);
+    await moveTutorialPointer(page, 1030, 510);
+    await recorder.captureFor(captureDurations.uploadChooser, captions.upload);
+    await page.evaluate(() => window.__tutorial?.fileDialog?.("selected")).catch(() => undefined);
+    await moveTutorialPointer(page, 1210, 860);
+    await recorder.captureFor(captureDurations.uploadSelected, captions.upload);
+    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePath);
+    await page.evaluate(() => window.__tutorial?.fileDialog?.(null)).catch(() => undefined);
+  } else {
+    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePath);
+  }
   await page.waitForFunction(() => {
     const text = `${document.querySelector("#studio-console-video")?.textContent || ""} ${document.querySelector("#video-step-generate")?.textContent || ""}`;
     return /[1-7]\s+of\s+7\s+selected/i.test(text) || /[1-7]\/7\s+(selected|frames)/i.test(text);
@@ -415,6 +562,17 @@ async function uploadFrame(page) {
     const data = await uploadResponse.json().catch(() => ({}));
     throw new Error(`video_frame_upload_failed: ${sanitizeText(data.error || uploadResponse.status())}`);
   }
+}
+
+async function selectUploadedFrame(page) {
+  await clearSelectedFrames(page);
+  const frameButton = page.locator('#studio-console-video button[aria-pressed="false"]').first();
+  await frameButton.waitFor({ state: "visible", timeout: 45_000 });
+  await frameButton.scrollIntoViewIfNeeded().catch(() => undefined);
+  await clickWithPointer(page, frameButton, { force: true });
+  await page.waitForFunction(() => {
+    return Boolean(document.querySelector("#studio-console-video button[aria-pressed='true']"));
+  }, undefined, { timeout: 30_000 });
 }
 
 async function configurePrompt(page) {
@@ -662,20 +820,40 @@ async function closeMegaMenus(page) {
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
 }
 
+async function focusGenerationProgress(page) {
+  await openResults(page);
+  const progressHeading = page.locator("#video-workspace-videos").getByText(/Video request progress/i).first();
+  await progressHeading.scrollIntoViewIfNeeded().catch(() => undefined);
+  await pointAt(page, progressHeading).catch(() => undefined);
+  await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
+}
+
 async function openHistoricalVideoPreview(page) {
   await openResults(page);
   await closeMegaMenus(page);
   const resultsSection = page.locator("#video-workspace-videos").first();
   await resultsSection.scrollIntoViewIfNeeded().catch(() => undefined);
-  const preview = resultsSection.getByRole("button", { name: /Open preview/i }).first();
+  const preview = resultsSection.locator('button:has-text("Open preview")').first();
   if (await preview.isVisible({ timeout: 15_000 }).catch(() => false)) {
     await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
+    const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
+    if (!await dialog.isVisible({ timeout: 5_000 }).catch(() => false)) {
+      await preview.click({ force: true, timeout: 10_000 }).catch(() => undefined);
+      await dialog.waitFor({ state: "visible", timeout: 10_000 }).catch(() => undefined);
+    }
     const video = page.locator("video").first();
     if (await video.isVisible({ timeout: 10_000 }).catch(() => false)) {
+      const box = await video.boundingBox().catch(() => null);
+      if (box) {
+        await moveTutorialPointer(page, box.x + box.width / 2, box.y + box.height / 2);
+        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2).catch(() => undefined);
+        await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+      }
       await page.evaluate(() => {
         const video = document.querySelector("video");
         if (video) void video.play().catch(() => undefined);
       }).catch(() => undefined);
+      await page.waitForTimeout(1_000);
     }
   }
   await closeMegaMenus(page);
@@ -738,17 +916,99 @@ async function downloadResult(page, asset) {
   if (stats.size < 10_000) throw new Error("generated_video_download_too_small");
 }
 
-async function buildVideo(frameCount) {
+async function generateNarration() {
+  await fs.mkdir(narrationDir, { recursive: true });
+  const sayPath = process.env.TUTORIAL_SAY_PATH || "say";
+  const segmentPaths = [];
+  for (const [index, segment] of narrationSegments.entries()) {
+    const segmentPath = path.join(narrationDir, `segment-${String(index).padStart(2, "0")}.aiff`);
+    await run(sayPath, ["-v", process.env.TUTORIAL_VOICE || "Samantha", "-r", process.env.TUTORIAL_VOICE_RATE || "195", "-o", segmentPath, segment.text]);
+    segmentPaths.push(segmentPath);
+  }
+  const filters = narrationSegments.map((segment, index) =>
+    `[${index}:a]apad,atrim=duration=${segment.duration},asetpts=N/SR/TB[a${index}]`
+  );
+  const concatInputs = narrationSegments.map((_, index) => `[a${index}]`).join("");
+  filters.push(`${concatInputs}concat=n=${narrationSegments.length}:v=0:a=1,apad,atrim=duration=${targetSeconds},asetpts=N/SR/TB[aout]`);
+  const args = ["-y"];
+  for (const segmentPath of segmentPaths) args.push("-i", segmentPath);
+  args.push(
+    "-filter_complex", filters.join(";"),
+    "-map", "[aout]",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-ar", "48000",
+    "-ac", "2",
+    "-t", String(targetSeconds),
+    narrationVoicePath
+  );
+  await run(ffmpegPath, args);
+  if (!includeBackgroundMusic || backgroundMusicVolume <= 0) {
+    await fs.copyFile(narrationVoicePath, narrationPath);
+    return narrationPath;
+  }
+  await generateBackgroundMusic();
+  await run(ffmpegPath, [
+    "-y",
+    "-i", narrationVoicePath,
+    "-i", musicBedPath,
+    "-filter_complex", `[0:a]volume=1.0[voice];[1:a]volume=${backgroundMusicVolume}[music];[voice][music]amix=inputs=2:duration=first:dropout_transition=0,alimiter=limit=0.98[aout]`,
+    "-map", "[aout]",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-ar", "48000",
+    "-ac", "2",
+    "-t", String(targetSeconds),
+    narrationPath
+  ]);
+  return narrationPath;
+}
+
+async function generateBackgroundMusic() {
+  const fadeOutStart = Math.max(0, targetSeconds - 3);
+  const filters = [
+    `[0:a]volume=0.34,afade=t=in:st=0:d=2,afade=t=out:st=${fadeOutStart}:d=3[a0]`,
+    `[1:a]volume=0.22,afade=t=in:st=0:d=2,afade=t=out:st=${fadeOutStart}:d=3[a1]`,
+    `[2:a]volume=0.18,afade=t=in:st=0:d=2,afade=t=out:st=${fadeOutStart}:d=3[a2]`,
+    "[a0][a1][a2]amix=inputs=3:normalize=0,lowpass=f=1300,highpass=f=90,alimiter=limit=0.92[aout]"
+  ];
+  await run(ffmpegPath, [
+    "-y",
+    "-f", "lavfi",
+    "-i", `sine=frequency=196:sample_rate=48000:duration=${targetSeconds}`,
+    "-f", "lavfi",
+    "-i", `sine=frequency=246.94:sample_rate=48000:duration=${targetSeconds}`,
+    "-f", "lavfi",
+    "-i", `sine=frequency=329.63:sample_rate=48000:duration=${targetSeconds}`,
+    "-filter_complex", filters.join(";"),
+    "-map", "[aout]",
+    "-c:a", "aac",
+    "-b:a", "96k",
+    "-ar", "48000",
+    "-ac", "2",
+    "-t", String(targetSeconds),
+    musicBedPath
+  ]);
+}
+
+async function buildVideo(frameCount, voiceoverPath) {
   await run(ffmpegPath, [
     "-y",
     "-framerate", String(captureFps),
     "-i", path.join(framesDir, "frame_%05d.png"),
+    "-i", voiceoverPath,
     "-frames:v", String(Math.round(frameCount * (30 / captureFps))),
     "-vf", "fps=30,scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,format=yuv420p",
-    "-an",
+    "-map", "0:v:0",
+    "-map", "1:a:0",
     "-c:v", "libx264",
     "-preset", "medium",
     "-crf", "18",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-ar", "48000",
+    "-ac", "2",
+    "-t", String(targetSeconds),
     "-movflags", "+faststart",
     finalOutputPath
   ]);
@@ -766,17 +1026,21 @@ function verifyProbe(info) {
   const duration = Number(info.format?.duration || video?.duration || 0);
   if (!video) throw new Error("final_video_stream_missing");
   if (Number(video.width) !== 1920 || Number(video.height) !== 1080) throw new Error(`final_video_dimensions_invalid: ${video.width}x${video.height}`);
-  if (audio.length) throw new Error("final_video_should_be_muted");
-  if (Math.abs(duration - 30) > 0.75) throw new Error(`final_video_duration_invalid: ${duration}`);
+  if (!audio.length) throw new Error("final_video_narration_missing");
+  if (Math.abs(duration - targetSeconds) > 0.75) throw new Error(`final_video_duration_invalid: ${duration}`);
   return { duration, width: video.width, height: video.height, audioStreams: audio.length };
 }
 
 async function exportSamples() {
   await fs.mkdir(samplesDir, { recursive: true });
-  for (const second of [3, 9, 15, 21, 27]) {
+  const sampleSeconds = [3, 10, 18, 25, 34, 41, Math.max(1, targetSeconds - 6), Math.max(1, targetSeconds - 2)]
+    .map((second) => Math.min(Math.max(1, Math.round(second)), Math.max(1, Math.floor(targetSeconds - 1))))
+    .filter((second, index, list) => list.indexOf(second) === index);
+  for (const second of sampleSeconds) {
     await run(ffmpegPath, ["-y", "-ss", String(second), "-i", finalOutputPath, "-frames:v", "1", "-q:v", "2", path.join(samplesDir, `sample-${String(second).padStart(2, "0")}s.jpg`)]);
   }
-  await run(ffmpegPath, ["-y", "-i", finalOutputPath, "-vf", "fps=1/6,scale=480:270,tile=3x2", "-frames:v", "1", "-update", "1", contactSheetPath]);
+  const contactSheetStep = Math.max(4, Math.ceil(targetSeconds / 8));
+  await run(ffmpegPath, ["-y", "-i", finalOutputPath, "-vf", `fps=1/${contactSheetStep},scale=480:270,tile=4x2`, "-frames:v", "1", "-update", "1", contactSheetPath]);
 }
 
 async function writeFailure(error, extra = {}) {
@@ -805,33 +1069,41 @@ async function main() {
     await captureLoginAndAuthenticate(page, context, recorder);
     await openWorkspace(page, "#step-video");
     await pointAt(page, page.locator("#video-step-generate").getByText(/Create an AI video clip/i).first()).catch(() => undefined);
-    await recorder.captureFor(4, captions.workspace);
+    await recorder.captureFor(captureDurations.workspace, captions.workspace);
 
     let success;
     let lastError;
-    const captured = { upload: false, prompt: false, generate: false, progress: false };
+    const captured = { upload: false, uploaded: false, select: false, prompt: false, generate: false, progress: false };
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
       try {
         await openWorkspace(page, "#step-video");
-        await uploadFrame(page);
+        await uploadFrame(page, recorder, !captured.upload);
         if (!captured.upload) {
-          await recorder.captureFor(4, captions.upload);
           captured.upload = true;
+        }
+        if (!captured.uploaded) {
+          await recorder.captureFor(captureDurations.uploaded, captions.uploaded);
+          captured.uploaded = true;
+        }
+        await selectUploadedFrame(page);
+        if (!captured.select) {
+          await recorder.captureFor(captureDurations.select, captions.select);
+          captured.select = true;
         }
         await configurePrompt(page);
         if (!captured.prompt) {
-          await recorder.captureFor(6, captions.prompt);
+          await recorder.captureFor(captureDurations.prompt, captions.prompt);
           captured.prompt = true;
         }
         if (skipRealGeneration) {
           await showGenerateClickOnly(page);
           if (!captured.generate) {
-            await recorder.captureFor(4, captions.generate);
+            await recorder.captureFor(captureDurations.generate, captions.generate);
             captured.generate = true;
           }
-          await openResults(page);
+          await focusGenerationProgress(page);
           if (!captured.progress) {
-            await recorder.captureFor(3, captions.progress);
+            await recorder.captureFor(captureDurations.progress, captions.progress);
             captured.progress = true;
           }
           success = { skippedRealGeneration: true };
@@ -841,11 +1113,12 @@ async function main() {
         jobIds.push(jobId);
         if (!captured.generate) {
           await openResults(page);
-          await recorder.captureFor(4, captions.generate);
+          await recorder.captureFor(captureDurations.generate, captions.generate);
           captured.generate = true;
         }
         if (!captured.progress) {
-          await recorder.captureFor(3, captions.progress);
+          await focusGenerationProgress(page);
+          await recorder.captureFor(captureDurations.progress, captions.progress);
           captured.progress = true;
         }
         success = await waitForSuccess(page, jobId);
@@ -863,9 +1136,11 @@ async function main() {
     if (skipRealGeneration) await openHistoricalVideoPreview(page);
     else await openResults(page);
     await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
-    await recorder.captureFor(5, captions.result);
-    if (recorder.index !== 300) throw new Error(`capture_frame_count_invalid: ${recorder.index}`);
-    await buildVideo(recorder.index);
+    await recorder.captureFor(captureDurations.result, captions.result);
+    const expectedFrameCount = Math.round(targetSeconds * captureFps);
+    if (recorder.index !== expectedFrameCount) throw new Error(`capture_frame_count_invalid: ${recorder.index}`);
+    const voiceover = await generateNarration();
+    await buildVideo(recorder.index, voiceover);
     const finalProbe = verifyProbe(await probe(finalOutputPath));
     if (!skipRealGeneration) await probe(providerResultPath);
     await exportSamples();

@@ -10,7 +10,7 @@ type DreamshootShowcaseRailProps = {
   speed?: number;
 };
 
-export function DreamshootShowcaseRail({ children, className, trackClassName, reverse = false, speed = 38 }: DreamshootShowcaseRailProps) {
+export function DreamshootShowcaseRail({ children, className, trackClassName, reverse = false, speed = 18 }: DreamshootShowcaseRailProps) {
   const railRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
   const scrollPositionRef = useRef<number | null>(null);

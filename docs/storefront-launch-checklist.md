@@ -396,6 +396,7 @@ SECURE Data Act / GUARD Financial Data Act 监测记录：
 - 旧的公开素材必须先从 clean release 恢复无明显水印源文件，再用后台按钮 `刷新展示水印` 或 `npm run watermark:storefront-public-media -- --restore-from=<clean-release>` 重刷，避免明显水印与透明水印叠加。
 - `public/assets/dreamshoot` 非品牌公开素材、`public/assets/sites/site_aidreamcapes` 非品牌公开素材、以及对应 `.eu` 公开素材均使用 `20260802-subtle-watermark30` 标记，默认透明度 `0.3`；品牌 logo/icon 不进批处理。
 - 上线前执行 `npm run watermark:storefront-public-media -- --dry-run`，如果公开素材已刷新完成，应返回 `changed: 0` 且 `failures: []`。
+- 上线前执行 `npm run audit:storefront-watermarks`，同时检查本地公开素材 marker 和两个 `.com` storefront 实际 DOM 引用的图片/视频 URL；报告中的 `issueCount` 必须为 `0`。
 
 本轮验证：
 

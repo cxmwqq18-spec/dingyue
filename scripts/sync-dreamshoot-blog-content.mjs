@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 
@@ -345,50 +346,6 @@ const mydreamshootsThemeArticles = [
   ...item
 }));
 
-const mydreamshootsToolArticles = [
-  {
-    label: "Photo AI",
-    blogSlug: "/blog/photo-ai-tool-guide",
-    description: "Portrait-generation tools for headshots, creator albums, fan photos, avatars, editorial looks, and product-style personal-brand images.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-headshot-card.png",
-    examples: ["headshot maker", "creator portrait studio", "fan photos", "cinematic portrait tools"],
-    bestFor: "Use Photo AI when the main goal is to create a new private image set from clear source photos and a focused visual direction.",
-    sourceFocus: "Prepare identity photos first, then choose the tool that matches the final use: work profile, creator page, themed album, or social crop.",
-    reviewFocus: "Review identity, crop, expression, scene fit, and whether the tool produced images that match the intended public or private use.",
-    elementStory: "Photo AI tools turn category choice into visual language: professional restraint, creator warmth, fan energy, or cinematic atmosphere.",
-    avoid: "Avoid choosing a dramatic tool just because it looks exciting if the finished image needs to serve a quieter profile purpose."
-  },
-  {
-    label: "AI Photo Edit",
-    blogSlug: "/blog/ai-photo-edit-tool-guide",
-    description: "Editing tools for backgrounds, cleanup, enhancement, retouching, color correction, restoration, prompt edits, and upscale preparation.",
-    imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-before-upload.png",
-    examples: ["background changer", "photo enhancer", "portrait retouch", "magic upscaler"],
-    bestFor: "Use AI Photo Edit when a source or finished image needs preparation, cleanup, color control, or a narrower correction before use.",
-    sourceFocus: "Start with the best available image and choose one edit goal, such as cleaner background, sharper file, calmer color, or a specific prompt-directed change.",
-    reviewFocus: "Review edges, skin texture, hair detail, background realism, color balance, and whether the edit still represents the person honestly.",
-    elementStory: "Editing tools are about polish and control: cleaner edges, calmer color, simpler backgrounds, and more useful final crops.",
-    avoid: "Avoid stacking many edits at once or using edit tools to misrepresent another person without permission."
-  },
-  {
-    label: "Video AI",
-    blogSlug: "/blog/video-ai-tool-guide",
-    description: "Motion tools for image-to-video concepts, profile clips, fan poster motion, creator intros, product teasers, avatar previews, and album stories.",
-    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
-    examples: ["image-to-video concepts", "profile clips", "fan poster motion", "creator intro videos"],
-    bestFor: "Use Video AI when a finished image or frame sequence should become a short private motion test for social, profile, or album review.",
-    sourceFocus: "Choose one strong image, define the movement, and keep the clip purpose clear before spending credits on motion.",
-    reviewFocus: "Review face stability, motion artifacts, crop, pacing, background movement, and whether the clip still fits the original image goal.",
-    elementStory: "Video tools add rhythm to a still image, so small decisions about direction, pace, and crop become part of the story.",
-    avoid: "Avoid animating weak frames before identity, crop, and background detail have been reviewed."
-  }
-].map((item) => makeCategoryArticle({
-  sitePrefix: "site_dreamshoot",
-  brand: "MyDreamShoots",
-  kind: "tool",
-  ...item
-}));
-
 const aidreamcapesThemeArticles = [
   {
     label: "Fan-Scene Albums",
@@ -488,86 +445,6 @@ const aidreamcapesThemeArticles = [
   ...item
 }));
 
-const aidreamcapesToolArticles = [
-  {
-    label: "Fan-Scene Builders",
-    blogSlug: "/blog/fan-scene-builders-guide",
-    description: "Builders for private fan-scene albums, meetup portraits, supporter walls, and keepsake card workflows.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp?v=20260731assetfix1",
-    examples: ["fan-scene album builder", "backstage meetup scene builder", "supporter photo wall maker", "fan keepsake card maker"],
-    bestFor: "Use Fan-Scene Builders when the workflow needs an original supporter scene with clear permission boundaries before generation starts.",
-    sourceFocus: "Prepare approved portraits, choose one fan-scene builder, and write what public figures, marks, or copyrighted details must stay out.",
-    reviewFocus: "Review identity, fan-scene originality, private album fit, and whether the selected builder keeps the request safe.",
-    elementStory: "Fan-scene builder tools turn the same safety rules into different formats: albums, walls, meetup portraits, and cards.",
-    avoid: "Avoid selecting several fan-scene builders for one job when each one needs different review criteria."
-  },
-  {
-    label: "Game-Day Builders",
-    blogSlug: "/blog/game-day-builders-guide",
-    description: "Builders for game-day group portraits, stadium night sets, and watch party album workflows.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/game-day-group-portraits.webp?v=20260731assetfix1",
-    examples: ["game-day group portrait maker", "stadium night fan set maker", "watch party album builder"],
-    bestFor: "Use Game-Day Builders when the private job needs supporter energy, group balance, and a sports-inspired mood without official marks.",
-    sourceFocus: "Use approved group portraits or individual portraits, then define colors, energy, crop, and the marks or teams to avoid.",
-    reviewFocus: "Review every face, group spacing, celebratory mood, and whether the result avoids affiliation or endorsement signals.",
-    elementStory: "Game-day builder tools use arena-like light, poster framing, and group gesture while staying independent from official branding.",
-    avoid: "Avoid real athlete likenesses, protected team names, official logos, or group photos without permission."
-  },
-  {
-    label: "Premiere Creator Tools",
-    blogSlug: "/blog/premiere-creator-tools-guide",
-    description: "Tools for premiere-style portraits, VIP arrival photos, and award-night private albums.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/premiere-flash-portraits.webp?v=20260731assetfix1",
-    examples: ["premiere portrait set builder", "VIP arrival photo maker", "award night album studio"],
-    bestFor: "Use Premiere Creator Tools when the customer wants polished event styling, flash mood, or formal creator portraits without public-figure copying.",
-    sourceFocus: "Prepare clear portraits with outfit notes and choose one formal event direction before adding flash or venue cues.",
-    reviewFocus: "Review formal styling, face consistency, background restraint, and whether the result avoids brand or celebrity confusion.",
-    elementStory: "Premiere creator tools use flash, dark venue polish, formal posture, and private arrival energy as the main visual signals.",
-    avoid: "Avoid public-figure prompts, real event branding, protected logo walls, or implied endorsements."
-  },
-  {
-    label: "Holiday Album Tools",
-    blogSlug: "/blog/holiday-album-tools-guide",
-    description: "Tools for Christmas group albums, Thanksgiving keepsakes, Halloween portraits, and winter greetings.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp?v=20260731assetfix1",
-    examples: ["Christmas group album studio", "Thanksgiving keepsake set maker", "Halloween party portrait maker", "winter fan greeting maker"],
-    bestFor: "Use Holiday Album Tools when the job needs one specific seasonal album workflow with clear card, group, or keepsake goals.",
-    sourceFocus: "Prepare approved portraits, name the holiday, choose the album use, and keep protected decorations or characters out of the brief.",
-    reviewFocus: "Review identity, holiday clarity, crop, private-gallery usefulness, and whether the chosen tool fits the exact occasion.",
-    elementStory: "Holiday album tools translate seasonal details into practical albums: Christmas cards, gratitude sets, Halloween portraits, and winter greetings.",
-    avoid: "Avoid combining several holidays in one prompt or relying on protected characters and branded decorations."
-  },
-  {
-    label: "Occasion Card Tools",
-    blogSlug: "/blog/occasion-card-tools-guide",
-    description: "Tools for birthday fan moments, New Year countdown albums, cozy cards, and Friendsgiving private images.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/birthday-fan-moment-set.webp?v=20260731assetfix1",
-    examples: ["birthday fan moment maker", "New Year countdown album maker", "cozy card portrait maker", "Friendsgiving memory maker"],
-    bestFor: "Use Occasion Card Tools when the image should work as a private greeting, celebration card, or small event album.",
-    sourceFocus: "Use approved portraits, define the occasion, decide whether the result is a card or album, and note any personal details to keep private.",
-    reviewFocus: "Review card readability, facial consistency, occasion cues, and whether the finished image is ready for private sharing.",
-    elementStory: "Occasion card tools rely on concise event signals: date mood, greeting-card crop, expression, color, and personal warmth.",
-    avoid: "Avoid vague party prompts, unapproved group images, or mixing birthdays, New Year, and other occasions in one request."
-  },
-  {
-    label: "Safety Prep Tools",
-    blogSlug: "/blog/safety-prep-tools-guide",
-    description: "Tools for permission-safe photo planning, source checks, and safer fan or holiday album briefs.",
-    imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/fan-letter-moment-set.webp?v=20260731assetfix1",
-    examples: ["permission-safe photo planner", "source-photo review", "brand-safe brief planning", "private album checklist"],
-    bestFor: "Use Safety Prep Tools before generation when the request involves fan scenes, group photos, public references, or seasonal materials.",
-    sourceFocus: "Check that photos are approved, remove protected marks, write what should not appear, and keep the prompt focused on original scenes.",
-    reviewFocus: "Review permission status, identity clarity, brand safety, and whether the selected creative direction can be generated responsibly.",
-    elementStory: "Safety prep tools turn boundaries into usable creative constraints before credits are spent.",
-    avoid: "Avoid using safety prep as a substitute for rights, consent, or permission when the input material is not yours to use."
-  }
-].map((item) => makeCategoryArticle({
-  sitePrefix: "site_aidreamcapes",
-  brand: "Aidreamcapes",
-  kind: "tool",
-  ...item
-}));
-
 const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
 
 function slugifySegment(value) {
@@ -603,42 +480,6 @@ function siteById(state, siteId) {
   return (state.sites ?? []).find((site) => site.id === siteId);
 }
 
-function blockString(block, key, fallback = "") {
-  const value = block?.settings?.[key];
-  return typeof value === "string" && value.trim() ? value.trim() : fallback;
-}
-
-function activeToolCardsFromSite(site) {
-  const headerBlocks = site?.themeSettings?.publishedJson?.globalSections?.header?.blocks ?? [];
-  const pageBlocks = (site?.pages ?? []).flatMap((page) =>
-    Object.values(page.publishedJson?.sections ?? {}).flatMap((section) => section.blocks ?? [])
-  );
-  const seen = new Set();
-  return [...headerBlocks, ...pageBlocks]
-    .filter((block) => block.type === "tool_card")
-    .map((block) => {
-      const title = blockString(block, "title", block.id);
-      const href = blockString(block, "href", "/tools");
-      const slug = slugifySegment(href.split("?")[0].replace(/\/+$/, "").split("/").filter(Boolean).pop() || title);
-      return {
-        slug,
-        title,
-        category: blockString(block, "category", "AI Tools"),
-        badge: blockString(block, "badge", "Tool"),
-        href,
-        description: blockString(block, "description", `${title} for private AI photo planning.`),
-        imageUrl: blockString(block, "imageUrl")
-      };
-    })
-    .filter((tool) => tool.slug && tool.title)
-    .filter((tool) => {
-      const key = `${tool.slug}:${tool.href}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-}
-
 function articleSlugs(articles) {
   return new Set(articles.map((article) => article.slug));
 }
@@ -648,44 +489,10 @@ function compactList(items, fallback) {
   return values.length ? values.slice(0, 4) : [fallback];
 }
 
-function sanitizeBlogCoverageText(siteId, value) {
-  if (siteId !== "site_dreamshoot") return value;
-  return String(value ?? "")
-    .replace(/travel-inspired profiles/gi, "outdoor creator profiles")
-    .replace(/travel-inspired/gi, "outdoor creator")
-    .replace(/travel profile/gi, "creator profile")
-    .replace(/travel mood/gi, "creator mood")
-    .replace(/travel moodboards/gi, "creator moodboards")
-    .replace(/destination moods/gi, "outdoor moods")
-    .replace(/destination crops/gi, "outdoor crops");
-}
-
 function defaultSiteImage(brand) {
   return brand === "Aidreamcapes"
     ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/fan-scene-albums.webp"
     : "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.webp";
-}
-
-function safeToolCoverImage(tool, brand) {
-  const sourceImage = String(tool.imageUrl ?? "").trim();
-  if (brand !== "MyDreamShoots" || !/(category-covers|hero-grid)/i.test(sourceImage)) {
-    return sourceImage || defaultSiteImage(brand);
-  }
-  const slug = slugifySegment(tool.slug || tool.title);
-  const galleryBySlug = {
-    "creator-portrait": "creator-portraits",
-    "cyberpunk-portrait": "cyberpunk",
-    "gala-photo": "gala-photos",
-    "noir-portrait": "mafia",
-    "anime-avatar": "anime-avatar",
-    "product-lifestyle": "product-style",
-    "unblur-image": "magic-upscaler",
-    "image-to-video": "ai-video-add-ons"
-  };
-  const gallery = galleryBySlug[slug];
-  return gallery
-    ? `/assets/dreamshoot/generated/pack-galleries/${gallery}/${gallery}-01.webp`
-    : defaultSiteImage(brand);
 }
 
 function makeCreativeCategoryArticle(state, siteId, brand, category, parent, packs) {
@@ -722,115 +529,26 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
   });
 }
 
-function makeToolItemArticle(siteId, brand, tool, categoryLabel) {
-  const label = tool.title || tool.slug;
-  const examples = compactList([tool.badge, categoryLabel, label, tool.href], label);
-  const description = sanitizeBlogCoverageText(
-    siteId,
-    tool.description || `${label} is a ${categoryLabel} tool for focused private image planning and gallery review.`
-  );
-  return makeCategoryArticle({
-    sitePrefix: siteId,
-    brand,
-    kind: "tool",
-    label,
-    blogSlug: `/blog/${slugifySegment(tool.slug || label)}-tool-guide`,
-    description,
-    imageUrl: safeToolCoverImage(tool, brand),
-    imageAlt: `${brand} ${label} tool cover`,
-    targetLabel: `Open ${label} tool`,
-    targetHref: tool.href?.startsWith("/tools/") ? tool.href : `/tools/${slugifySegment(tool.slug || label)}`,
-    examples,
-    bestFor: `Use ${label} when the customer needs the ${categoryLabel} workflow to solve one visible job before generation or download.`,
-    sourceFocus: brand === "Aidreamcapes"
-      ? `Prepare source portraits and reference notes that match ${label}, then keep the tool brief focused on one scene, format, or motion need.`
-      : `Prepare source photos or finished gallery images that match ${label}, then keep the tool brief focused on one edit, portrait, or motion need.`,
-    reviewFocus: `Review whether ${label} improved the intended output without introducing identity drift, edge artifacts, crop problems, or confusing style changes.`,
-    elementStory: `${label} should leave a visible reason for using the tool: cleaner detail, stronger crop, clearer theme fit, stronger profile fit, or better motion readiness.`,
-    avoid: `Avoid using ${label} as a catch-all for unrelated edits, new portraits, and motion requests in the same credit spend.`,
-    seoTitle: searchFriendlySeoTitle(label, brand),
-    seoDescription: `Use ${label} in ${brand}: prepare inputs, compare tool fit, review credit cost, and check private gallery results before downloads.`,
-    seoKeywords: `${label}, ${brand} tools, ${categoryLabel}, AI photo tool guide, private gallery workflow`
-  });
-}
-
-function makeVideoThemeCategoryArticle(siteId, brand, category) {
-  const label = category.label || category.slug;
-  return makeCategoryArticle({
-    sitePrefix: siteId,
-    brand,
-    kind: "video-theme",
-    label,
-    blogSlug: `/blog/${slugifySegment(category.slug || label)}-video-theme-guide`,
-    description: category.description || `${label} groups video themes for short private clips made from selected image frames.`,
-    imageUrl: category.imageUrl || defaultSiteImage(brand),
-    imageAlt: `${brand} ${label} video theme category cover`,
-    targetLabel: `Open ${label} video themes`,
-    targetHref: "/tools",
-    examples: compactList([label, category.slug, "private video clips", "source frames"], label),
-    bestFor: `Use ${label} when a still image or ordered frame set needs a short motion direction instead of another still-image gallery.`,
-    sourceFocus: `Choose clean source frames, define one motion idea, and make sure the image is already worth animating before spending credits.`,
-    reviewFocus: `Review face stability, frame crop, background movement, hand and hair edges, and whether the clip still fits the original image goal.`,
-    elementStory: `${label} adds pacing to the image story, so motion direction, camera rhythm, and crop stability matter as much as style.`,
-    avoid: `Avoid using ${label} to fix weak source frames; identity, crop, and background detail should be reviewed before animation.`,
-    sourceTerm: "source frames",
-    seoTitle: searchFriendlySeoTitle(label, brand, "video themes"),
-    seoDescription: `Plan ${label} video themes in ${brand}: choose source frames, review motion fit, check credits, and compare private clips.`,
-    seoKeywords: `${label}, ${brand} video themes, image to video guide, private video clip, source frames`
-  });
-}
-
 function buildCreativeCategoryCoverageArticles(state, siteId, brand, existingArticles) {
   const existing = articleSlugs(existingArticles);
+  const existingTargets = new Set(existingArticles.map((article) => article.targetHref).filter(Boolean));
   const categories = activeItems(state, "creativePackCategories", siteId);
   const byId = new Map(categories.map((category) => [category.id, category]));
   const packs = activeItems(state, "creativePacks", siteId);
   return categories
     .filter((category) => !isExcludedBlogCoverage(siteId, "creative-category", category.slug))
-    .filter((category) => category.parentId)
+    .filter((category) => !category.parentId)
     .map((category) => {
       const parent = category.parentId ? byId.get(category.parentId) : undefined;
       const categoryPacks = packs.filter((pack) => pack.categoryId === category.id || pack.category === category.slug);
       return makeCreativeCategoryArticle(state, siteId, brand, category, parent, categoryPacks);
     })
-    .filter((article) => !existing.has(article.slug));
-}
-
-function buildToolItemCoverageArticles(state, siteId, brand, existingArticles) {
-  const existing = articleSlugs(existingArticles);
-  const toolCategories = activeItems(state, "toolCategories", siteId);
-  const categoryById = new Map(toolCategories.map((category) => [category.id, category]));
-  const menuItems = activeItems(state, "toolMenuItems", siteId);
-  const site = siteById(state, siteId);
-  const tools = menuItems.length
-    ? menuItems.map((item) => ({
-      slug: item.slug,
-      title: item.title,
-      category: categoryById.get(item.categoryId)?.label || "Tools",
-      badge: item.badge || categoryById.get(item.categoryId)?.label || "Tool",
-      href: item.href,
-      description: item.description,
-      imageUrl: item.imageUrl
-    }))
-    : activeToolCardsFromSite(site);
-  return tools
-    .map((tool) => makeToolItemArticle(siteId, brand, tool, tool.category || "Tools"))
-    .filter((article) => !existing.has(article.slug));
-}
-
-function buildVideoThemeCategoryCoverageArticles(state, siteId, brand, existingArticles) {
-  const existing = articleSlugs(existingArticles);
-  return activeItems(state, "videoThemeCategories", siteId)
-    .filter((category) => !isExcludedBlogCoverage(siteId, "video-category", category.slug))
-    .map((category) => makeVideoThemeCategoryArticle(siteId, brand, category))
-    .filter((article) => !existing.has(article.slug));
+    .filter((article) => !existing.has(article.slug) && !existingTargets.has(article.targetHref));
 }
 
 function buildCoverageArticles(state, siteId, brand, existingArticles) {
   const articles = [
-    ...buildCreativeCategoryCoverageArticles(state, siteId, brand, existingArticles),
-    ...buildToolItemCoverageArticles(state, siteId, brand, existingArticles),
-    ...buildVideoThemeCategoryCoverageArticles(state, siteId, brand, existingArticles)
+    ...buildCreativeCategoryCoverageArticles(state, siteId, brand, existingArticles)
   ];
   const seen = new Set(existingArticles.map((article) => article.slug));
   return articles.filter((article) => {
@@ -838,6 +556,49 @@ function buildCoverageArticles(state, siteId, brand, existingArticles) {
     seen.add(article.slug);
     return true;
   });
+}
+
+function imagePathnameForUrl(imageUrl) {
+  return new URL(String(imageUrl ?? ""), "https://local.invalid").pathname;
+}
+
+function normalizedImageUrlForUniqueness(imageUrl) {
+  return decodeURIComponent(imagePathnameForUrl(imageUrl)).replace(/\/+/g, "/").toLowerCase();
+}
+
+function imageFilePathForUrl(imageUrl) {
+  return path.join(process.cwd(), "public", decodeURIComponent(imagePathnameForUrl(imageUrl)).replace(/^\/+/, ""));
+}
+
+function imageShaForUrl(imageUrl) {
+  const filePath = imageFilePathForUrl(imageUrl);
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Blog cover image is missing from public assets: ${imageUrl}`);
+  }
+  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
+
+function assertUniqueArticleCovers(config) {
+  const seenUrls = new Map();
+  const seenShas = new Map();
+  for (const article of config.articles) {
+    if (!article.imageUrl) {
+      throw new Error(`${config.slug}${article.slug} is missing imageUrl`);
+    }
+    const normalizedUrl = normalizedImageUrlForUniqueness(article.imageUrl);
+    const previousUrlArticle = seenUrls.get(normalizedUrl);
+    if (previousUrlArticle) {
+      throw new Error(`${config.slug} blog cover URL reused by ${previousUrlArticle} and ${article.slug}: ${normalizedUrl}`);
+    }
+    seenUrls.set(normalizedUrl, article.slug);
+
+    const imageSha = imageShaForUrl(article.imageUrl);
+    const previousShaArticle = seenShas.get(imageSha);
+    if (previousShaArticle) {
+      throw new Error(`${config.slug} blog cover file reused by ${previousShaArticle} and ${article.slug}: ${normalizedUrl}`);
+    }
+    seenShas.set(imageSha, article.slug);
+  }
 }
 
 const siteConfigs = [
@@ -1027,8 +788,7 @@ const siteConfigs = [
           <p>A private gallery is most useful when it becomes a review space, not just a download folder. Treat each set as feedback for the next one.</p>
         `
       },
-      ...mydreamshootsThemeArticles,
-      ...mydreamshootsToolArticles
+      ...mydreamshootsThemeArticles
     ]
   },
   {
@@ -1122,7 +882,7 @@ const siteConfigs = [
         publishedAt: "2026-07-28",
         updatedAt: "2026-07-28",
         readMinutes: "6",
-        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/seasonal-celebration-photos.webp",
+        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/posters/permission-safe-story-clip.webp?v=20260731assetfix1",
         imageAlt: "Aidreamcapes fan-scene reference cover",
         tags: "Fan-scene references|Holiday cues|Private albums|Permission-safe planning",
         primaryCta: "Plan a fan scene",
@@ -1221,14 +981,14 @@ const siteConfigs = [
           <p>Credits are easiest to manage when each request has a clear purpose. Plan the album, review the cost, then let the private gallery show you what the next set should become.</p>
         `
       },
-      ...aidreamcapesThemeArticles,
-      ...aidreamcapesToolArticles
+      ...aidreamcapesThemeArticles
     ]
   }
 ];
 
 for (const config of siteConfigs) {
   config.articles.push(...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles));
+  assertUniqueArticleCovers(config);
 }
 
 function toTemplate(pageJson) {
@@ -1456,8 +1216,12 @@ function syncSiteThemes(state, site) {
   const blogHome = site.pages.find((page) => page.slug === "/blog");
   const firstArticle = site.pages.find((page) => page.slug.startsWith("/blog/"));
   for (const theme of state.siteThemes ?? []) {
-    if (theme.siteId !== site.id || !theme.templates) continue;
+    if (theme.siteId !== site.id) continue;
     const usePublished = theme.status === "active";
+    theme.settings ??= {};
+    theme.settings.settings_data ??= {};
+    theme.settings.settings_data.current = clone(usePublished ? site.themeSettings.publishedJson : site.themeSettings.draftJson);
+    if (!theme.templates) continue;
     if (blogHome) theme.templates.blog = toTemplate(usePublished ? blogHome.publishedJson : blogHome.draftJson);
     if (firstArticle) theme.templates["blog-detail"] = toTemplate(usePublished ? firstArticle.publishedJson : firstArticle.draftJson);
   }

@@ -369,7 +369,7 @@ const homeSections: ThemePageJson["sections"] = {
       tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
       steps: "Pick pack|See credit cost|Generate album",
       source: "creative_packs",
-      featuredCount: 5
+      featuredCount: 12
     },
     [
       block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/collections/world-cup-fan-photos" }),
@@ -968,7 +968,7 @@ function aidreamcapesPackageCatalogSection(): SectionInstance {
       tabs: "All|Fan Scenes|Game Day|Premiere|Christmas|Thanksgiving|Halloween|Seasonal",
       steps: "Pick album|See credit cost|Generate gallery",
       source: "creative_packs",
-      featuredCount: 5
+      featuredCount: 12
     },
     [
       block("aidream_catalog_fan", "catalog_pack", { title: "Private fan-scene album", description: "Create original fan-scene portraits and keepsake images from approved source photos without copying public figures, official marks, or protected logos.", category: "Fan Scenes", meta: "Fan albums", credits: "24 credits", imageUrl: aidreamcapesPublicAssets.fan, href: "/collections/private-fan-scene-album" }),
@@ -1059,7 +1059,7 @@ function aidreamcapesReviewSection(): SectionInstance {
 function mydreamshootsPartnerStripSection(): SectionInstance {
   return section(
     "brand_logo_strip",
-    { anchor: "trusted", title: "Built for creators, photographers, social sellers, studios, fan communities, and small teams.", style: "dark" },
+    { anchor: "trusted", title: "For creators, photographers, social sellers, studios, fan communities, and small teams.", style: "dark" },
     [
       block("partner_creator_teams", "logo", { name: "Creator teams", imageUrl: "", badge: "Content" }),
       block("partner_photo_studios", "logo", { name: "Photo studios", imageUrl: "", badge: "Studio" }),
@@ -1076,7 +1076,7 @@ function mydreamshootsPartnerStripSection(): SectionInstance {
 function aidreamcapesPartnerStripSection(): SectionInstance {
   return section(
     "brand_logo_strip",
-    { anchor: "trusted", title: "Built for fan communities, event planners, holiday sellers, creator teams, and local studios.", style: "dark" },
+    { anchor: "trusted", title: "For fan communities, event planners, holiday sellers, creator teams, and local studios.", style: "dark" },
     [
       block("aidream_partner_fan_communities", "logo", { name: "Fan communities", imageUrl: "", badge: "Groups" }),
       block("aidream_partner_event_planners", "logo", { name: "Event planners", imageUrl: "", badge: "Occasions" }),
@@ -1276,6 +1276,43 @@ function aidreamcapesGenerationShowcaseSection(): SectionInstance {
     primaryCta: "Start with approved photos",
     primaryHref: "/login"
   });
+}
+
+function aidreamcapesFeaturedPackSection(): SectionInstance {
+  return section(
+    "dreamshoot_featured_pack",
+    {
+      anchor: "featured-pack",
+      label: "Recommended occasion album",
+      badge: "Current seasonal pick",
+      title: "Christmas and game-day albums for the next campaign.",
+      subtitle: "Compare a focused occasion direction before browsing the full catalog. Start with approved source photos, review the credit cost, and keep the finished gallery private.",
+      primaryCta: "Create this album",
+      primaryHref: "/login",
+      secondaryCta: "View all themes",
+      secondaryHref: "/collections",
+      photos: "Private gallery",
+      credits: "20-24 credits",
+      privacy: "Approved uploads",
+      includedTitle: "Recommended directions",
+      includedOutputs: "Game-day group portraits|Watch-party and supporter scenes|Christmas holiday albums|Card-ready festive crops|Premiere-inspired portraits|Private occasion keepsakes",
+      safetyCopy: "Use photos you own or have permission to use. Aidreamcapes does not recreate public-figure likenesses, official marks, logos, or protected event artwork without permission.",
+      overlayTitle: "Occasion picks",
+      overlaySubtitle: "A small set of seasonal directions to compare first.",
+      overlayChips: "game day|Christmas|premiere|private",
+      bottomNote: "Recommendations can rotate around tournaments, holidays, celebrations, and local campaign needs.",
+      campaignLabel: "Current recommendation: Game day + Christmas",
+      nextCampaignLabel: "Next: Premiere / Thanksgiving / Halloween"
+    },
+    [
+      block("aidream_featured_game_day", "seasonal_image", { label: "Game-Day Group Portraits", meta: "Supporter scenes", imageUrl: aidreamcapesPublicAssets.gameDay, shape: "square" }),
+      block("aidream_featured_christmas", "seasonal_image", { label: "Christmas Holiday Albums", meta: "Card-ready mood", imageUrl: aidreamcapesPublicAssets.christmas, shape: "square" }),
+      block("aidream_featured_premiere", "seasonal_image", { label: "Premiere-Inspired Portraits", meta: "Spotlight arrivals", imageUrl: aidreamcapesPublicAssets.premiere, shape: "square" }),
+      block("aidream_featured_fan", "seasonal_image", { label: "Private Fan-Scene Album", meta: "Approved group photos", imageUrl: aidreamcapesPublicAssets.fan, shape: "square" }),
+      block("aidream_featured_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsakes", meta: "Warm table scenes", imageUrl: aidreamcapesPublicAssets.thanksgiving, shape: "square" }),
+      block("aidream_featured_seasonal", "seasonal_image", { label: "Seasonal Celebration Photos", meta: "Rotating campaign pick", imageUrl: aidreamcapesPublicAssets.seasonal, shape: "square" })
+    ]
+  );
 }
 
 function aidreamcapesWorkflowPage(): ThemePageJson {
@@ -1501,6 +1538,7 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
 export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSiteSeed): Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> {
   const aidreamcapesTemplateSite = isAidreamcapesTemplateSite(site);
   const homeHeroSection = aidreamcapesTemplateSite ? aidreamcapesHomeHeroSection() : homeSections.hero_1;
+  const featuredPackSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedPackSection() : homeSections.featured_pack_1;
   const generationShowcaseSection = aidreamcapesTemplateSite ? aidreamcapesGenerationShowcaseSection() : homeSections.generation_showcase_1;
   const tutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsTutorialVideoSection();
   const packageCatalogSection = aidreamcapesTemplateSite ? aidreamcapesPackageCatalogSection() : homeSections.package_catalog_1;
@@ -1511,17 +1549,18 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "brand_strip_1", "conversion_1"],
+    ["hero_1", "featured_pack_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "conversion_1", "brand_strip_1"],
     {
       hero_1: homeHeroSection,
+      featured_pack_1: featuredPackSection,
       generation_showcase_1: generationShowcaseSection,
       tutorial_video_1: tutorialVideoSection,
       package_catalog_1: packageCatalogSection,
       proof_1: reviewSection,
       pricing_1: homeSections.pricing_1,
       faq_1: faqSection,
-      brand_strip_1: partnerStripSection,
-      conversion_1: conversionSection
+      conversion_1: conversionSection,
+      brand_strip_1: partnerStripSection
     },
     1
   ),

@@ -7,6 +7,15 @@ const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-stat
 const baseUrl = process.env.STOREFRONT_BASE_URL || "http://127.0.0.1:3002";
 const siteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const failures = [];
+const aidreamcapesRootCategorySlugs = [
+  "fan-scene-albums",
+  "game-day-group-photos",
+  "premiere-style-portraits",
+  "christmas-holiday-albums",
+  "thanksgiving-memory-sets",
+  "halloween-party-portraits",
+  "seasonal-celebration-photos"
+];
 
 function siteSlug(siteId) {
   return state.sites.find((site) => site.id === siteId)?.slug;
@@ -35,6 +44,22 @@ function activeCollectionSlugs(siteId) {
       (state.creativePacks ?? [])
         .filter((pack) => pack.siteId === siteId && pack.status === "active")
         .map((pack) => String(pack.category ?? pack.slug ?? "").trim())
+        .filter(Boolean)
+    )
+  ].sort();
+}
+
+function isRootCategory(category) {
+  return !category.parentId && !category.parent?.id && !category.parent?.slug;
+}
+
+function activeRootCategorySlugs(siteId) {
+  if (siteId === "site_aidreamcapes") return [...aidreamcapesRootCategorySlugs].sort();
+  return [
+    ...new Set(
+      (state.creativePackCategories ?? [])
+        .filter((category) => category.siteId === siteId && category.status === "active" && isRootCategory(category))
+        .map((category) => String(category.slug ?? "").trim())
         .filter(Boolean)
     )
   ].sort();
@@ -113,7 +138,7 @@ function assertUnique(label, values) {
   if (duplicates.length) failures.push(`${label}:${[...new Set(duplicates)].join(" | ")}`);
 }
 
-async function auditCatalogRoute(page, route) {
+async function auditCatalogRoute(page, siteId, route) {
   const images = await imageSnapshot(page);
   const cardImages = images
     .filter((image) => /\b(?:gallery )?preview$/i.test(image.alt))
@@ -129,7 +154,17 @@ async function auditCatalogRoute(page, route) {
     const urls = group.map((image) => image.url);
     const uniqueUrls = [...new Set(urls)];
     const witness = `${group[0]?.sectionId || group[0]?.sectionType}:${group[0]?.href}:${group[0]?.alt}`;
-    if (uniqueUrls.length < 2) failures.push(`catalog_single_foreground_image:${route}:${witness}:${uniqueUrls.join(" | ")}`);
+    const aidreamcapesCollectionCard = siteId === "site_aidreamcapes" && /\/collections(?:\/|$)/.test(group[0]?.href || "");
+    if (aidreamcapesCollectionCard) {
+      if (uniqueUrls.length !== 1) failures.push(`catalog_category_card_image_count:${route}:${witness}:${uniqueUrls.join(" | ")}`);
+      for (const url of uniqueUrls) {
+        if (!/\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/categories\//.test(url)) {
+          failures.push(`catalog_category_card_non_category_image:${route}:${witness}:${url}`);
+        }
+      }
+    } else if (uniqueUrls.length < 2) {
+      failures.push(`catalog_single_foreground_image:${route}:${witness}:${uniqueUrls.join(" | ")}`);
+    }
     assertUnique(`catalog_duplicate_card_image:${route}:${witness}`, urls);
   }
   const cardsByHref = new Map();
@@ -151,6 +186,62 @@ async function auditCatalogRoute(page, route) {
       .map((image) => `${image.sectionId || image.sectionType}:${image.href}:${image.alt}`)
       .join(" <> ");
     failures.push(`catalog_duplicate_foreground_image:${route}:${duplicateUrl}:${witnesses}`);
+  }
+}
+
+async function auditAidreamcapesHomepageShowcase(page, route) {
+  const images = await imageSnapshot(page);
+  const expectedSlugs = activeRootCategorySlugs("site_aidreamcapes");
+  const imageCardText = await page.locator('[data-dreamshoot-image-product-card="true"]').evaluateAll((cards) =>
+    cards.map((card) => (card.textContent || "").trim()).filter(Boolean)
+  );
+  const heroImages = images.filter((image) =>
+    /scrolling fan-scene and holiday album preview/i.test(image.alt)
+  );
+  const heroUrls = [...new Set(heroImages.map((image) => image.url))];
+  const showcaseImages = images.filter((image) =>
+    /customer-created image (?:example|product)/i.test(image.alt) &&
+    /\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\//.test(image.url)
+  );
+  const urls = [...new Set(showcaseImages.map((image) => image.url))];
+
+  if (!heroImages.length) failures.push(`aidreamcapes_home_hero_grid_missing:${route}`);
+  for (const text of imageCardText) {
+    failures.push(`aidreamcapes_home_image_card_visible_text:${route}:${text}`);
+  }
+  if (heroUrls.length !== expectedSlugs.length) {
+    failures.push(`aidreamcapes_home_hero_grid_count:${route}:expected=${expectedSlugs.length}:actual=${heroUrls.length}:${heroUrls.join(" | ")}`);
+  }
+  for (const url of heroUrls) {
+    if (/\/fan-holiday-theme\/(?:gallery|covers)\//.test(url)) {
+      failures.push(`aidreamcapes_home_hero_grid_non_category_image:${route}:${url}`);
+    }
+    if (!/\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/(?:categories|showcase)\//.test(url)) {
+      failures.push(`aidreamcapes_home_hero_grid_unexpected_image:${route}:${url}`);
+    }
+  }
+  for (const slug of expectedSlugs) {
+    if (!heroUrls.some((url) => url.includes(`/${slug}.webp`))) {
+      failures.push(`aidreamcapes_home_hero_grid_missing_theme:${route}:${slug}`);
+    }
+  }
+
+  if (!showcaseImages.length) failures.push(`aidreamcapes_home_showcase_missing:${route}`);
+  if (urls.length !== expectedSlugs.length) {
+    failures.push(`aidreamcapes_home_showcase_count:${route}:expected=${expectedSlugs.length}:actual=${urls.length}:${urls.join(" | ")}`);
+  }
+  for (const url of urls) {
+    if (/\/fan-holiday-theme\/(?:gallery|covers)\//.test(url)) {
+      failures.push(`aidreamcapes_home_showcase_non_category_image:${route}:${url}`);
+    }
+    if (!/\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/(?:categories|showcase)\//.test(url)) {
+      failures.push(`aidreamcapes_home_showcase_unexpected_image:${route}:${url}`);
+    }
+  }
+  for (const slug of expectedSlugs) {
+    if (!urls.some((url) => url.includes(`/${slug}.webp`))) {
+      failures.push(`aidreamcapes_home_showcase_missing_theme:${route}:${slug}`);
+    }
   }
 }
 
@@ -198,6 +289,11 @@ async function visit(page, route) {
   for (let attempt = 1; attempt <= 2; attempt += 1) {
     try {
       response = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 45_000 });
+      if (!response) {
+        lastError = new Error("navigation returned no response");
+        await page.waitForTimeout(1000);
+        continue;
+      }
       lastError = null;
       break;
     } catch (error) {
@@ -229,7 +325,12 @@ for (const siteId of siteIds) {
   }
   for (const route of [`/site/${slug}`, `/site/${slug}/collections`]) {
     auditedRoutes.push(route);
-    if (await visit(page, route)) await auditCatalogRoute(page, route);
+    if (await visit(page, route)) {
+      await auditCatalogRoute(page, siteId, route);
+      if (siteId === "site_aidreamcapes" && route === `/site/${slug}`) {
+        await auditAidreamcapesHomepageShowcase(page, route);
+      }
+    }
   }
   for (const collectionSlug of activeCollectionSlugs(siteId)) {
     const route = `/site/${slug}/collections/${collectionSlug}`;

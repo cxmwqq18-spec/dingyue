@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
@@ -7,6 +8,7 @@ const seoIndexing = fs.readFileSync(path.join(process.cwd(), "src/lib/seo-indexi
 const storefrontRender = fs.readFileSync(path.join(process.cwd(), "src/lib/storefront-render.tsx"), "utf8");
 const themeRenderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
 const siteStore = fs.readFileSync(path.join(process.cwd(), "src/lib/stores/site-store.ts"), "utf8");
+const hostCatchAllPage = fs.readFileSync(path.join(process.cwd(), "src/app/[...path]/page.tsx"), "utf8");
 
 const checks = [];
 
@@ -59,104 +61,56 @@ const forbiddenArticlePhrases = [
   "helpful details to notice"
 ];
 
-function slugifySegment(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, " and ")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function activeItems(key, siteId) {
   return (state[key] ?? []).filter((item) => item.siteId === siteId && item.status === "active");
 }
-
-const blogCoverageExclusions = {
-  site_dreamshoot: {
-    creativeCategorySlugs: new Set(["travel-scene-pack"]),
-    videoCategorySlugs: new Set(["travel-story"])
-  }
-};
 
 const oldThemeArticlePatterns = {
   site_dreamshoot: /\b(travel|route|destination|coastal|getaway|itinerary|postcard|traveler|journey|trip|vacation)\b/i,
   site_aidreamcapes: /\b(travel|route|destination|coastal|getaway|itinerary|postcard|traveler|journey|trip|vacation)\b/i
 };
 
-function isExcludedBlogCoverage(siteId, kind, slug) {
-  const exclusions = blogCoverageExclusions[siteId];
-  if (!exclusions) return false;
-  if (kind === "creative-category") return exclusions.creativeCategorySlugs.has(slug);
-  if (kind === "video-category") return exclusions.videoCategorySlugs.has(slug);
-  return false;
-}
-
-function blockString(block, key, fallback = "") {
-  const value = block?.settings?.[key];
-  return typeof value === "string" && value.trim() ? value.trim() : fallback;
-}
-
-function toolCardsFromSite(site) {
-  const headerBlocks = site?.themeSettings?.publishedJson?.globalSections?.header?.blocks ?? [];
-  const pageBlocks = (site?.pages ?? []).flatMap((page) =>
-    Object.values(page.publishedJson?.sections ?? {}).flatMap((section) => section.blocks ?? [])
-  );
-  const seen = new Set();
-  return [...headerBlocks, ...pageBlocks]
-    .filter((block) => block.type === "tool_card")
-    .map((block) => {
-      const title = blockString(block, "title", block.id);
-      const href = blockString(block, "href", "/tools");
-      const slug = slugifySegment(href.split("?")[0].replace(/\/+$/, "").split("/").filter(Boolean).pop() || title);
-      return {
-        slug,
-        title,
-        category: blockString(block, "category", "AI Tools"),
-        href
-      };
-    })
-    .filter((tool) => tool.slug && tool.title)
-    .filter((tool) => {
-      const key = `${tool.slug}:${tool.href}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-}
-
-function uniqueValues(values) {
-  return Array.from(new Set(values.map((value) => String(value ?? "").trim()).filter(Boolean)));
-}
-
-function expectedCoverageForSite(site, expected) {
+function expectedCoverageForSite(expected) {
   const creativeCategories = activeItems("creativePackCategories", expected.siteId)
-    .filter((category) => !isExcludedBlogCoverage(expected.siteId, "creative-category", category.slug));
-  const toolCategories = activeItems("toolCategories", expected.siteId);
-  const toolMenuItems = activeItems("toolMenuItems", expected.siteId);
-  const fallbackToolCards = toolMenuItems.length ? [] : toolCardsFromSite(site);
-  const toolGroupLabels = toolCategories.length
-    ? toolCategories.filter((category) => !category.parentId).map((category) => category.label)
-    : uniqueValues(fallbackToolCards.map((tool) => tool.category));
-  const toolItemLabels = toolMenuItems.length
-    ? toolMenuItems.map((tool) => tool.title)
-    : fallbackToolCards.map((tool) => tool.title);
-  const videoThemeCategories = activeItems("videoThemeCategories", expected.siteId)
-    .filter((category) => !isExcludedBlogCoverage(expected.siteId, "video-category", category.slug));
+    .filter((category) => !category.parentId);
   return {
-    total:
-      expected.baseArticleSlugs.length +
-      creativeCategories.length +
-      toolGroupLabels.length +
-      toolItemLabels.length +
-      videoThemeCategories.length,
+    total: expected.baseArticleSlugs.length + creativeCategories.length,
     labels: {
-      creativeCategories: creativeCategories.map((category) => category.label),
-      toolGroups: toolGroupLabels,
-      toolItems: toolItemLabels,
-      videoThemeCategories: videoThemeCategories.map((category) => category.label)
+      topLevelCreativeCategories: creativeCategories.map((category) => category.label)
     }
   };
+}
+
+function constStringArrayValues(source) {
+  return Array.from(source.matchAll(/"([^"]+)"/g), (match) => match[1]);
+}
+
+function imagePathnameForUrl(imageUrl) {
+  return new URL(String(imageUrl ?? ""), "https://local.invalid").pathname;
+}
+
+function normalizedImageUrlForUniqueness(imageUrl) {
+  return decodeURIComponent(imagePathnameForUrl(imageUrl)).replace(/\/+/g, "/").toLowerCase();
+}
+
+function imageFilePathForUrl(imageUrl) {
+  return path.join(process.cwd(), "public", decodeURIComponent(imagePathnameForUrl(imageUrl)).replace(/^\/+/, ""));
+}
+
+function imageShaForUrl(imageUrl) {
+  const filePath = imageFilePathForUrl(imageUrl);
+  if (!fs.existsSync(filePath)) return `missing:${normalizedImageUrlForUniqueness(imageUrl)}`;
+  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
+
+function duplicateGroups(rows, keyFn) {
+  const grouped = new Map();
+  for (const row of rows) {
+    const key = keyFn(row);
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(row);
+  }
+  return Array.from(grouped.entries()).filter(([, group]) => group.length > 1);
 }
 
 function normalizedText(value) {
@@ -212,7 +166,19 @@ assert(Boolean(mydreamshootsFallbackMatch), "sitemap fallback keeps MyDreamShoot
 assert(Boolean(aidreamcapesFallbackMatch), "sitemap fallback keeps Aidreamcapes path list");
 const mydreamshootsFallback = mydreamshootsFallbackMatch?.[1] ?? "";
 const aidreamcapesFallback = aidreamcapesFallbackMatch?.[1] ?? "";
+const mydreamshootsFallbackPaths = constStringArrayValues(mydreamshootsFallback);
+const aidreamcapesFallbackPaths = constStringArrayValues(aidreamcapesFallback);
 assert(!aidreamcapesFallback.includes('"/blog/preparing-source-photos"'), "Aidreamcapes sitemap fallback does not include MyDreamShoots source-photo slug");
+assert(
+  hostCatchAllPage.includes("DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS") &&
+    hostCatchAllPage.includes("DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS") &&
+    hostCatchAllPage.includes("DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS") &&
+    hostCatchAllPage.includes("AIDREAMCAPES_LEGACY_BLOG_CATEGORY_REDIRECTS") &&
+    hostCatchAllPage.includes("AIDREAMCAPES_LEGACY_BLOG_TOOL_REDIRECTS") &&
+    hostCatchAllPage.includes("AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS") &&
+    hostCatchAllPage.includes("redirectLegacyBlogArticle(site, slug)"),
+  "host route keeps legacy duplicate blog URLs on a permanent redirect path"
+);
 assert(
   seoIndexing.includes("if (isLocalHostRequest) return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));") &&
     !seoIndexing.includes("if (isLocalHostRequest) return publicFallbackSitemapUrlsForHost(normalizedHosts);"),
@@ -270,24 +236,20 @@ for (const expected of expectedSites) {
   assert(blogHome?.publishedJson?.sections?.blog_list_1?.type === "blog_list", `${expected.slug}: /blog renders blog_list`);
 
   const articlePages = site.pages.filter((page) => page.slug.startsWith("/blog/"));
-  const coverage = expectedCoverageForSite(site, expected);
-  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover current category and tool surfaces`, `expected ${coverage.total}, found ${articlePages.length}`);
+  const coverage = expectedCoverageForSite(expected);
+  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover base guides and top-level theme categories`, `expected ${coverage.total}, found ${articlePages.length}`);
   const articleSlugs = articlePages.map((page) => page.slug).sort();
-  const excludedSlugs = blogCoverageExclusions[expected.siteId];
-  if (excludedSlugs) {
-    for (const slug of excludedSlugs.creativeCategorySlugs) {
-      assert(!articleSlugs.includes(`/blog/${slugifySegment(slug)}-photo-package-guide`), `${expected.slug}: excluded old package category has no blog article`, slug);
-    }
-    for (const slug of excludedSlugs.videoCategorySlugs) {
-      assert(!articleSlugs.includes(`/blog/${slugifySegment(slug)}-video-theme-guide`), `${expected.slug}: excluded old video category has no blog article`, slug);
-    }
-  }
+  assert(!articleSlugs.some((slug) => /-tool-guide$/i.test(slug)), `${expected.slug}: no tool-level blog articles remain`);
+  assert(!articleSlugs.some((slug) => /-video-theme-guide$/i.test(slug)), `${expected.slug}: no video-theme blog articles remain`);
   for (const slug of expected.baseArticleSlugs) {
     assert(articleSlugs.includes(slug), `${expected.slug}: base article slug present ${slug}`);
   }
-  const fallbackSource = expected.siteId === "site_aidreamcapes" ? aidreamcapesFallback : mydreamshootsFallback;
+  const fallbackPaths = expected.siteId === "site_aidreamcapes" ? aidreamcapesFallbackPaths : mydreamshootsFallbackPaths;
   for (const slug of articleSlugs) {
-    assert(fallbackSource.includes(`"${slug}"`), `${expected.slug}: sitemap fallback includes article ${slug}`);
+    assert(fallbackPaths.includes(slug), `${expected.slug}: sitemap fallback includes article ${slug}`);
+  }
+  for (const slug of fallbackPaths.filter((item) => item.startsWith("/blog/"))) {
+    assert(articleSlugs.includes(slug), `${expected.slug}: sitemap fallback omits removed blog article`, slug);
   }
   const articleTexts = articlePages.map(articleLabelText);
   for (const [coverageType, labels] of Object.entries(coverage.labels)) {
@@ -298,6 +260,22 @@ for (const expected of expectedSites) {
 
   const allSlugs = site.pages.map((page) => page.slug);
   assert(new Set(allSlugs).size === allSlugs.length, `${expected.slug}: page slugs are unique`);
+  const articleTitles = articlePages.map((article) => sectionSetting(article.publishedJson?.sections?.blog_detail_1, "title") || article.title);
+  const duplicateTitleGroups = duplicateGroups(articleTitles.map((title, index) => ({ title, slug: articlePages[index].slug })), (row) => normalizedText(row.title));
+  assert(duplicateTitleGroups.length === 0, `${expected.slug}: blog article titles are unique`, JSON.stringify(duplicateTitleGroups));
+  const imageRows = articlePages.map((article) => {
+    const imageUrl = sectionSetting(article.publishedJson?.sections?.blog_detail_1, "imageUrl");
+    return {
+      slug: article.slug,
+      imageUrl,
+      normalizedUrl: normalizedImageUrlForUniqueness(imageUrl),
+      sha: imageShaForUrl(imageUrl)
+    };
+  });
+  const duplicateImageUrlGroups = duplicateGroups(imageRows, (row) => row.normalizedUrl);
+  const duplicateImageShaGroups = duplicateGroups(imageRows, (row) => row.sha);
+  assert(duplicateImageUrlGroups.length === 0, `${expected.slug}: blog cover normalized image URLs are unique`, JSON.stringify(duplicateImageUrlGroups));
+  assert(duplicateImageShaGroups.length === 0, `${expected.slug}: blog cover image SHA fingerprints are unique`, JSON.stringify(duplicateImageShaGroups));
 
   const navBlogLinks = site.themeSettings?.publishedJson?.navigation?.footerLinks?.filter((link) => link.href === "/blog") ?? [];
   const blockBlogLinks = site.themeSettings?.publishedJson?.globalSections?.footer?.blocks?.filter((block) => block.settings?.href === "/blog") ?? [];
@@ -339,23 +317,10 @@ for (const expected of expectedSites) {
       `${expected.slug}${article.slug}: detail page contains only blog_detail_1`
     );
     const targetHref = sectionSetting(articleSection, "targetHref");
-    const toolGroupSlugs = new Set([
-      "/blog/photo-ai-tool-guide",
-      "/blog/ai-photo-edit-tool-guide",
-      "/blog/video-ai-tool-guide",
-      "/blog/destination-tools-guide",
-      "/blog/travel-moment-tools-guide",
-      "/blog/adventure-tools-guide",
-      "/blog/creator-travel-tools-guide"
-    ]);
-    if (/-tool-guide$/i.test(article.slug) && !toolGroupSlugs.has(article.slug)) {
-      assert(targetHref.startsWith("/tools/"), `${expected.slug}${article.slug}: tool article links to a specific tool`, targetHref);
-    } else if (/-video-theme-guide$/i.test(article.slug)) {
-      assert(targetHref === "/tools" || targetHref.startsWith("/tools/"), `${expected.slug}${article.slug}: video theme article links to tools`, targetHref);
-    } else if (/-photo-package-guide$/i.test(article.slug) && !expected.baseArticleSlugs.includes(article.slug)) {
-      assert(targetHref.startsWith("/collections/"), `${expected.slug}${article.slug}: package article links to a specific collection`, targetHref);
+    if (!expected.baseArticleSlugs.includes(article.slug)) {
+      assert(targetHref.startsWith("/collections/"), `${expected.slug}${article.slug}: theme article links to a specific collection`, targetHref);
     } else {
-      assert(/^(\/collections(?:\/[^/]+)?|\/tools(?:\/[^/]+)?|\/pricing|\/login)$/.test(targetHref), `${expected.slug}${article.slug}: base article has a store entry link`, targetHref);
+      assert(/^(\/collections(?:\/[^/]+)?|\/pricing|\/login)$/.test(targetHref), `${expected.slug}${article.slug}: base article has a store entry link`, targetHref);
     }
     if (expected.siteId === "site_dreamshoot") {
       assert(!/\/(category-covers|hero-grid)-/i.test(sectionSetting(articleSection, "imageUrl")), `${expected.slug}${article.slug}: cover avoids collage-style assets`, sectionSetting(articleSection, "imageUrl"));

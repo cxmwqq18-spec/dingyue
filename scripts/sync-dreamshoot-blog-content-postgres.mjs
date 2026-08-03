@@ -17,6 +17,25 @@ function jsonSize(value) {
   return Buffer.byteLength(JSON.stringify(value ?? {}), "utf8");
 }
 
+function themeSettingsWithLegacyNoindexPages(settings, legacyPages) {
+  const next = clone(settings);
+  next.seo ??= {};
+  next.seo.pages ??= {};
+  for (const page of legacyPages) {
+    const seo = page.publishedJson?.seo ?? {};
+    next.seo.pages[page.id] = {
+      title: seo.title ?? page.title,
+      description: seo.description ?? "",
+      keywords: seo.keywords ?? "",
+      ogImage: seo.ogImage ?? "",
+      canonicalPath: seo.canonicalPath ?? page.slug,
+      index: false,
+      follow: true
+    };
+  }
+  return next;
+}
+
 function sectionCountForSite(site) {
   return site.pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
 }
@@ -75,18 +94,34 @@ async function upsertPublication(tx, site, publication) {
 
 async function syncSite(state, site) {
   const blogPages = site.pages.filter((page) => page.slug === "/blog" || page.slug.startsWith("/blog/"));
-  await prisma.$transaction(async (tx) => {
+  const retainedBlogSlugs = blogPages.map((page) => page.slug);
+  const transactionResult = await prisma.$transaction(async (tx) => {
+    const legacyBlogPages = await tx.themePage.findMany({
+      where: { siteId: site.id, slug: { startsWith: "/blog/" }, title: "Consolidated blog guide" },
+      select: { id: true, slug: true, title: true, publishedJson: true }
+    });
+    const draftSettings = themeSettingsWithLegacyNoindexPages(site.themeSettings.draftJson, legacyBlogPages);
+    const publishedSettings = themeSettingsWithLegacyNoindexPages(site.themeSettings.publishedJson, legacyBlogPages);
+
     await tx.themeSettings.upsert({
       where: { siteId: site.id },
       create: {
         id: `settings_${site.id}`,
         siteId: site.id,
-        draftJson: clone(site.themeSettings.draftJson),
-        publishedJson: clone(site.themeSettings.publishedJson)
+        draftJson: draftSettings,
+        publishedJson: publishedSettings
       },
       update: {
-        draftJson: clone(site.themeSettings.draftJson),
-        publishedJson: clone(site.themeSettings.publishedJson)
+        draftJson: draftSettings,
+        publishedJson: publishedSettings
+      }
+    });
+
+    const staleBlogPages = await tx.themePage.deleteMany({
+      where: {
+        siteId: site.id,
+        slug: { startsWith: "/blog/" },
+        NOT: [{ slug: { in: retainedBlogSlugs } }, { title: "Consolidated blog guide" }]
       }
     });
 
@@ -123,9 +158,11 @@ async function syncSite(state, site) {
     for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === site.id)) {
       await upsertPublication(tx, site, publication);
     }
+
+    return { staleBlogPagesDeleted: staleBlogPages.count };
   }, { timeout: syncTransactionTimeoutMs });
 
-  return { siteId: site.id, blogPages: blogPages.map((page) => page.slug) };
+  return { siteId: site.id, blogPages: blogPages.map((page) => page.slug), ...transactionResult };
 }
 
 async function syncPlatformStateDocument(state, targetSites) {

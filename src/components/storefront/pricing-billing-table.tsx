@@ -110,7 +110,7 @@ export function PricingBillingTable({
                   {price.features.map((feature, index) => (
                     <div className="flex items-start gap-3" key={`${id}_${feature}_${index}`}>
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} />
-                      <span>{feature}</span>
+                      <span className="min-w-0 break-words">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -121,22 +121,22 @@ export function PricingBillingTable({
             );
           })}
         </div>
-        <div className="relative hidden min-h-[430px] xl:block">
-          <div className={aidreamcapes ? "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "absolute inset-y-0 right-0 flex w-full flex-col justify-between rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
-            <div>
+        <div className="relative hidden min-h-[430px] min-w-0 xl:block">
+          <div className={aidreamcapes ? "flex h-full min-w-0 flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "flex h-full min-w-0 flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
+            <div className="min-w-0">
               <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]">{activeSidePanel.eyebrow}</p>
-              <h3 className="mt-3 max-w-[14ch] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
+              <h3 className="mt-3 max-w-full break-words text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">
                 {activeSidePanel.title}
               </h3>
-              <p className={aidreamcapes ? "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68" : "mt-4 max-w-[26rem] text-[0.94rem] leading-7 text-white/68"}>
+              <p className={aidreamcapes ? "mt-4 max-w-[26rem] break-words text-[0.94rem] leading-7 text-white/68" : "mt-4 max-w-[26rem] break-words text-[0.94rem] leading-7 text-white/68"}>
                 {activeSidePanel.body}
               </p>
             </div>
             <div className="grid gap-3">
               {activeSidePanel.items.map(([label, detail]) => (
-                <div className={aidreamcapes ? "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" : "rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
-                  <p className={aidreamcapes ? "text-sm font-semibold text-white" : "text-sm font-semibold text-white"}>{label}</p>
-                  <p className={aidreamcapes ? "mt-1 text-sm leading-6 text-white/64" : "mt-1 text-sm leading-6 text-white/64"}>{detail}</p>
+                <div className={aidreamcapes ? "min-w-0 rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" : "min-w-0 rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4"} key={label}>
+                  <p className={aidreamcapes ? "break-words text-sm font-semibold text-white" : "break-words text-sm font-semibold text-white"}>{label}</p>
+                  <p className={aidreamcapes ? "mt-1 break-words text-sm leading-6 text-white/64" : "mt-1 break-words text-sm leading-6 text-white/64"}>{detail}</p>
                 </div>
               ))}
             </div>

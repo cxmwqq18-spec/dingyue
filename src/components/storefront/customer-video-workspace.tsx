@@ -302,6 +302,7 @@ export function CustomerVideoWorkspace({
   onGenerationFailed,
   onGenerationStarted,
   onJobCreated,
+  onPrepareVideoFrames,
   onOpenFrameManager,
   onRetryDraftApplied,
   readyFrameIds,
@@ -326,6 +327,7 @@ export function CustomerVideoWorkspace({
   onGenerationFailed?: (message: string) => void;
   onGenerationStarted?: () => void;
   onJobCreated: (jobId: string, feedback?: CreatedVideoJobFeedback) => void;
+  onPrepareVideoFrames?: (assetIds: string[]) => Promise<string[]>;
   onOpenFrameManager: () => void;
   onRetryDraftApplied?: () => void;
   retryDraft?: VideoRetryDraft | null;
@@ -412,6 +414,7 @@ export function CustomerVideoWorkspace({
     : 0;
   const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
   const generationFrameIds = readyFrameIds ?? selectedFrameIds;
+  let submitFrameIds = generationFrameIds;
   const hasPendingFrameUploads = generationFrameIds.length !== selectedFrameIds.length;
   const trimmedPromptNote = promptNote.trim();
   const hasReadyFrameInput = generationFrameIds.length > 0;
@@ -427,8 +430,8 @@ export function CustomerVideoWorkspace({
   const unsupportedVideoFrameMessage = unsupportedVideoFrames.length
     ? vt(
         spanish,
-        `Video references need JPG or PNG frame images. Re-upload ${unsupportedVideoFrames.length === 1 ? "this frame" : "these frames"} as JPG or PNG.`,
-        `Las referencias de video necesitan fotogramas JPG o PNG. Vuelve a subir ${unsupportedVideoFrames.length === 1 ? "este fotograma" : "estos fotogramas"} como JPG o PNG.`
+        `${unsupportedVideoFrames.length === 1 ? "This selected frame will" : "These selected frames will"} be converted to JPG before generation.`,
+        `${unsupportedVideoFrames.length === 1 ? "Este fotograma seleccionado se convertira" : "Estos fotogramas seleccionados se convertiran"} a JPG antes de generar.`
       )
     : "";
   const needsTextToVideoConfirmation = isTextToVideo && trimmedPromptNote.length > 0;
@@ -546,13 +549,30 @@ export function CustomerVideoWorkspace({
       setMessage(blockingPromptRisk.message);
       return;
     }
-    if (unsupportedVideoFrameMessage) {
-      setMessage(unsupportedVideoFrameMessage);
-      return;
-    }
     if (selectedFrameIds.length && (hasPendingFrameUploads || !generationFrameIds.length)) {
       setMessage(vt(spanish, "Frame uploads are still finishing. Generate after every selected frame is ready.", "Las subidas de fotogramas aun estan terminando. Genera cuando todos los fotogramas seleccionados esten listos."));
       return;
+    }
+    if (unsupportedVideoFrames.length) {
+      if (!onPrepareVideoFrames) {
+        setMessage(vt(spanish, "This selected frame is not ready for video. Re-upload it as JPG or PNG.", "Este fotograma no esta listo para video. Vuelve a subirlo como JPG o PNG."));
+        return;
+      }
+      setPending(true);
+      setMessage(vt(spanish, "Preparing the selected frame images for video...", "Preparando los fotogramas seleccionados para video..."));
+      try {
+        const normalizedFrameIds = await onPrepareVideoFrames(generationFrameIds);
+        if (normalizedFrameIds.length !== generationFrameIds.length || normalizedFrameIds.some((assetId) => !assetId)) {
+          throw new Error("video_frame_conversion_failed");
+        }
+        submitFrameIds = normalizedFrameIds;
+        setSelectedFrameIds(normalizedFrameIds);
+      } catch {
+        setPending(false);
+        setMessage(vt(spanish, "The selected frame could not be converted for video. Re-upload it as JPG or PNG.", "No se pudo convertir el fotograma para video. Vuelve a subirlo como JPG o PNG."));
+        return;
+      }
+      setPending(false);
     }
     if (needsTextToVideoConfirmation && !options.confirmedTextToVideo) {
       setTextToVideoConfirmArmed(true);
@@ -603,11 +623,11 @@ export function CustomerVideoWorkspace({
         aspectRatio: selectedAspectRatio,
         resolution: selectedResolution,
         estimatedCreditCost: selectedCreditCost,
-        assetIds: generationFrameIds,
+        assetIds: submitFrameIds,
         fields: {
           mode: "video",
           outputType: "video",
-          videoInputMode: hasReadyFrameInput ? "image_to_video" : "text_to_video",
+          videoInputMode: submitFrameIds.length ? "image_to_video" : "text_to_video",
           videoModelFamily: AUTO_VIDEO_MODEL_FAMILY,
           modelFamily: AUTO_VIDEO_MODEL_FAMILY,
           videoThemeId: selectedTheme.id,
@@ -616,7 +636,7 @@ export function CustomerVideoWorkspace({
           videoThemeCategoryLabel: selectedTheme.category?.label,
           videoThemeName: selectedTheme.name,
           videoThemePrompt: selectedTheme.prompt,
-          frameAssetIds: generationFrameIds,
+          frameAssetIds: submitFrameIds,
           duration: String(effectiveDurationSeconds),
           videoDuration: String(effectiveDurationSeconds),
           durationSeconds: effectiveDurationSeconds,

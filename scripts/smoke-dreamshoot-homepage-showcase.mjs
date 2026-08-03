@@ -15,18 +15,18 @@ const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data", "platform-s
 const failures = [];
 const expectedHomeOrder = [
   "hero_1",
+  "featured_pack_1",
   "generation_showcase_1",
   "tutorial_video_1",
   "package_catalog_1",
   "proof_1",
   "pricing_1",
   "faq_1",
-  "brand_strip_1",
-  "conversion_1"
+  "conversion_1",
+  "brand_strip_1"
 ];
 const removedHomeSections = [
   "visual_proof_1",
-  "featured_pack_1",
   "featured_christmas_1",
   "featured_thanksgiving_1",
   "flow_bridge_1",
@@ -50,38 +50,109 @@ function showcaseSlug(value) {
 }
 
 function activeCreativePacksForSite(site) {
-  return (state.creativePacks ?? []).filter((pack) => pack.siteId === site.id && pack.status === "active");
+  const categories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+  return (state.creativePacks ?? [])
+    .filter((pack) => pack.siteId === site.id && pack.status === "active")
+    .map((pack) => {
+      const categoryRecord = pack.categoryRecord ?? categoryById.get(pack.categoryId);
+      const parent = categoryRecord?.parent ?? categoryById.get(categoryRecord?.parentId);
+      return {
+        ...pack,
+        categoryRecord: categoryRecord ? { ...categoryRecord, parent } : pack.categoryRecord
+      };
+    });
 }
 
 function activeCreativePackCategoriesForSite(site) {
-  return (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id && category.status === "active");
+  const categories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+  return categories
+    .filter((category) => category.status === "active")
+    .map((category) => ({ ...category, parent: category.parent ?? categoryById.get(category.parentId) }));
 }
 
 function expectedShowcaseImageSources(store, site) {
-  if (store.key === "aidreamcapes") return activeCreativePackCategoriesForSite(site);
   return activeCreativePacksForSite(site);
+}
+
+function comparableImageUrl(value) {
+  return String(value || "").trim().split("?")[0];
+}
+
+function uniqueImageUrlList(values) {
+  const seen = new Set();
+  const images = [];
+  for (const value of values.map((item) => String(item || "").trim()).filter(Boolean)) {
+    const key = comparableImageUrl(value);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    images.push(value);
+  }
+  return images;
+}
+
+function creativePackHrefSlug(pack) {
+  return showcaseSlug(pack.categoryRecord?.slug || pack.category || pack.name);
+}
+
+function creativePackTokens(pack) {
+  return Array.from(new Set([
+    pack.categoryRecord?.id,
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.categoryRecord?.parent?.id,
+    pack.categoryRecord?.parent?.slug,
+    pack.categoryRecord?.parent?.label,
+    pack.category,
+    pack.name,
+    pack.aiAppSlug,
+    creativePackHrefSlug(pack)
+  ].filter(Boolean).map((value) => showcaseSlug(String(value)))));
+}
+
+function creativePackCategoryMatchScore(pack, category) {
+  const categorySlug = showcaseSlug(category.slug || category.label);
+  const directSlugs = [
+    pack.categoryRecord?.slug,
+    pack.category,
+    pack.name,
+    creativePackHrefSlug(pack)
+  ].filter(Boolean).map((value) => showcaseSlug(String(value)));
+  if (pack.categoryRecord?.id && String(pack.categoryRecord.id) === category.id) return 0;
+  if (directSlugs.includes(categorySlug)) return 1;
+  if (pack.categoryRecord?.parent?.id && String(pack.categoryRecord.parent.id) === category.id) return 20;
+  if (showcaseSlug(pack.categoryRecord?.parent?.slug || "") === categorySlug) return 21;
+  return creativePackTokens(pack).includes(categorySlug) ? 40 : Number.POSITIVE_INFINITY;
+}
+
+function creativePacksSortedForCategory(packs, category) {
+  return packs
+    .map((pack, index) => ({ pack, index, score: creativePackCategoryMatchScore(pack, category) }))
+    .filter((item) => Number.isFinite(item.score))
+    .sort((a, b) => a.score - b.score || (a.pack.categoryRecord?.sortOrder ?? 9999) - (b.pack.categoryRecord?.sortOrder ?? 9999) || a.index - b.index)
+    .map(({ pack }) => pack);
+}
+
+function aidreamcapesRootCategoryShowcaseImage(category) {
+  return `/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/${showcaseSlug(category.slug || category.label)}.webp`;
+}
+
+function showcaseImageForPack(pack, excludeImages = []) {
+  const excluded = new Set([pack.imageUrl, ...excludeImages].map(comparableImageUrl).filter(Boolean));
+  const gallery = uniqueImageUrlList(pack.galleryImages ?? [])
+    .filter((image) => !excluded.has(comparableImageUrl(image)) && !/\/assets\/dreamshoot\/generated\/pack-covers\//i.test(comparableImageUrl(image)));
+  return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? pack.imageUrl ?? "";
 }
 
 function assertShowcaseImageSourceData(store, site) {
   const sources = expectedShowcaseImageSources(store, site);
-  const expectedFirstRow = Math.ceil(sources.length / 2);
-  const expectedSecondRow = Math.floor(sources.length / 2);
+  const expectedRowCount = Math.max(1, Math.ceil(sources.length / 7));
+  const baseRowSize = Math.floor(sources.length / expectedRowCount);
+  const rowsWithExtraCard = sources.length % expectedRowCount;
   assert(sources.length > 0, `${store.key}: expected dynamic showcase image sources`);
-  assert(expectedFirstRow + expectedSecondRow === sources.length, `${store.key}: invalid dynamic image split`);
-  assert(expectedFirstRow >= expectedSecondRow, `${store.key}: first image row should be the same size or one larger`);
-  if (store.key === "aidreamcapes") {
-    const activePacks = activeCreativePacksForSite(site);
-    for (const category of sources) {
-      const categorySlug = showcaseSlug(category.slug || category.label);
-      const relatedPacks = activePacks.filter((pack) =>
-        [pack.categoryRecord?.id, pack.categoryRecord?.parent?.id].filter(Boolean).some((value) => String(value) === category.id) ||
-        [pack.categoryRecord?.slug, pack.categoryRecord?.parent?.slug, pack.category, pack.name].filter(Boolean).map(showcaseSlug).includes(categorySlug)
-      );
-      assert(relatedPacks.length > 0, `${store.key}: category ${category.slug} should have a related active pack for alternate showcase art`);
-      assert((relatedPacks[0]?.galleryImages ?? []).length >= 3, `${store.key}: category ${category.slug} needs at least three gallery images for non-cover showcase art`);
-    }
-    return;
-  }
+  assert(baseRowSize * expectedRowCount + rowsWithExtraCard === sources.length, `${store.key}: invalid dynamic image wall split`);
+  assert(baseRowSize + (rowsWithExtraCard > 0 ? 1 : 0) <= 7, `${store.key}: image wall rows should target seven products each`);
   for (const pack of sources) {
     assert((pack.galleryImages ?? []).length >= 3, `${store.key}: pack ${pack.name} needs at least three gallery images for non-cover showcase art`);
     const selected = pack.galleryImages?.[2] ?? "";
@@ -98,13 +169,17 @@ function assertOrder(order, label) {
 }
 
 function assertPage(pageJson, label) {
+  assert(pageJson?.sections?.featured_pack_1?.type === "dreamshoot_featured_pack", `${label}: missing recommended theme section`);
   assert(pageJson?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${label}: wrong showcase section type`);
   assert(pageJson?.sections?.tutorial_video_1?.type === "video_feature", `${label}: missing tutorial video section`);
+  assert(pageJson?.sections?.package_catalog_1?.type === "dreamshoot_package_catalog", `${label}: wrong package catalog section type`);
+  assert(Number(pageJson?.sections?.package_catalog_1?.settings?.featuredCount ?? 0) === 12, `${label}: homepage package catalog should feature 12 packs`);
   assert(pageJson?.sections?.proof_1?.type === "testimonial_wall", `${label}: wrong review section type`);
   assert(pageJson?.sections?.proof_1?.settings?.mode === "reviews", `${label}: testimonial wall should render customer reviews`);
   assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 review cards`);
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
-  assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing partner trust strip after FAQ`);
+  assert(pageJson?.sections?.conversion_1?.type === "conversion_panel", `${label}: missing conversion CTA before customer types`);
+  assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing customer type strip before footer`);
   for (const sectionId of removedHomeSections) {
     assert(!pageJson?.sections?.[sectionId], `${label}: obsolete homepage section still present: ${sectionId}`);
   }
@@ -260,18 +335,26 @@ assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="image"'), "s
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "showcase video cards should be clickable preview triggers");
 assert(themeRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should keep dedicated AI-generated homepage fallback assets");
 assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
-assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, creativePacks, creativePackCategories, selectedImageSlugs)"), "showcase images should come from each store's dynamic theme source list");
-assert(showcaseRenderer.includes("Math.ceil(imageCards.length / 2)"), "showcase images should split dynamically with the first row taking the odd extra card");
-assert(imageShowcaseRenderer.includes("imageRailRows.map"), "showcase image cards should render in two dynamic rows");
-assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("md:w-[clamp(24rem,25vw,34rem)]"), "showcase image cards should use large portrait tiles");
+assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)"), "showcase images should come from each store's dynamic theme source list");
+assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
+assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should render in dynamically balanced wall rows");
+assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");
+assert(imageShowcaseRenderer.includes("row.concat(row)"), "showcase image rows should repeat their four-card sequence for continuous slow scrolling");
+assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column portrait tiles on desktop");
 assert(imageShowcaseRenderer.includes("StorefrontImage"), "showcase image cards should render fixed-ratio large images");
 assert(imageShowcaseRenderer.includes("preview={false}"), "showcase image img tags should not duplicate the outer lightbox trigger");
-assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image example"), "showcase images should have customer-created alt text");
-assert(showcaseRenderer.includes('fetchPriority={card.index < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image cards");
-assert(showcaseRenderer.includes('loading={card.index < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image cards");
-assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
+assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image product"), "showcase images should have customer-created alt text");
 assert(!imageShowcaseRenderer.includes("{card.title}</p>"), "showcase image cards should not show visible titles");
-assert(!imageShowcaseRenderer.includes("{card.meta}</span>"), "showcase image cards should not show visible meta pills");
+assert(!imageShowcaseRenderer.includes("{card.meta}</p>"), "showcase image cards should not show visible meta labels");
+assert(!imageShowcaseRenderer.includes("bg-gradient-to-t from-black/78"), "showcase image cards should not add a text overlay gradient");
+assert(showcaseRenderer.includes("const imageProductCards = imageCards.map"), "homepage showcase should include every dynamic image product card in the wall");
+assert(!showcaseRenderer.includes("imageCards.slice(0, 12)"), "homepage showcase image wall should not truncate themes to 12 cards");
+assert(showcaseRenderer.includes('data-dreamshoot-image-product-grid="true"'), "showcase should expose a stable image product grid marker");
+assert(showcaseRenderer.includes('data-dreamshoot-image-product-wall="true"'), "showcase should expose a stable three-row image product wall marker");
+assert(showcaseRenderer.includes("data-dreamshoot-image-product-card={primaryCard ? \"true\" : undefined}"), "showcase should expose stable image product card markers");
+assert(showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image product cards");
+assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image product cards");
+assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
 assert(showcaseRenderer.includes("priority={card.index < 4}"), "showcase should eagerly prepare initially visible motion cards");
 assert(videoShowcaseRenderer.includes("aspect-[3/4]") && videoShowcaseRenderer.includes("md:w-[clamp(24rem,25vw,34rem)]"), "showcase video cards should match the large portrait image tile size");
@@ -282,7 +365,7 @@ assert(!videoShowcaseRenderer.includes("{card.meta}</div>") && !videoShowcaseRen
 assert(!videoShowcaseRenderer.includes("Motion clip"), "showcase video cards should not show visible motion labels");
 assert(!showcaseRenderer.includes("autoLoad={railIndex"), "showcase videos must not leave most rail cards poster-only behind an index gate");
 assert(showcaseRenderer.includes("customer-created video example"), "showcase videos should have accessible labels");
-assert(!showcaseRenderer.includes("[...imageCards, ...imageCards]"), "showcase image rail must not duplicate the data array");
+assert(!showcaseRenderer.includes("[...imageCards, ...imageCards]"), "showcase image wall must not duplicate the full product data array");
 assert(!showcaseRenderer.includes("[...videoCards, ...videoCards]"), "showcase video rail must not duplicate the data array");
 assert(!showcaseRenderer.includes("dreamshoot-showcase-marquee"), "showcase rails should not use duplicated marquee animation");
 assert(!showcaseRenderer.includes("mask-image"), "showcase rails should not use white edge fade masks");
@@ -290,7 +373,8 @@ assert(!showcaseRenderer.includes("href: \"/tools/image-to-video\""), "showcase 
 assert(!showcaseRenderer.includes("href={hrefFor(site, card.href)}"), "showcase material cards should not be wrapped in internal links");
 assert(!showcaseRenderer.includes("Make a clip"), "showcase material cards should not show workspace CTAs");
 assert(testimonialRenderer.includes('setting(section, "mode", "use_cases") === "reviews"'), "testimonial wall should support explicit customer review mode");
-assert(testimonialRenderer.includes("items.slice(0, reviewMode ? 6 : 4)"), "review mode should render six cards for a two-row desktop wall");
+assert(testimonialRenderer.includes("slice(0, reviewMode ? 8 : 4)"), "review mode should render eight cards for a richer desktop wall");
+assert(testimonialRenderer.includes('data-dreamshoot-review-preview="true"'), "review results should expose clickable preview markers");
 
 const showcasePreviewComponent = fs.readFileSync(path.join(repoRoot, "src/components/storefront/dreamshoot-showcase-preview.tsx"), "utf8");
 assert(showcasePreviewComponent.includes('role="dialog"') && showcasePreviewComponent.includes('aria-modal="true"'), "showcase preview should render an accessible modal dialog");

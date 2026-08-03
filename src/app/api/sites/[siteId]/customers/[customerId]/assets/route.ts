@@ -15,7 +15,9 @@ import { StoreError } from "@/lib/server-store";
 import {
   createAssetUploadRelational,
   deleteAssetUploadsRelational,
+  getCustomerAssetRelational,
   getCustomerAssetsRelational,
+  readCustomerAssetFileByStorageKey,
   pruneCustomerInputAssetsRelational,
   toThemeRuntimeAssetRelational
 } from "@/lib/stores/asset-store";
@@ -167,6 +169,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       role?: "input" | "output";
       jobId?: string;
       subjectRole?: string;
+      sourceAssetId?: string;
       file?: File;
     } = {};
 
@@ -198,19 +201,37 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         role?: "input" | "output";
         jobId?: string;
         subjectRole?: string;
+        sourceAssetId?: string;
       };
-      if (body.subjectRole === "video_frame" && body.mimeType && !isGeminiVideoFrameMimeType(body.mimeType)) {
+      body.sourceAssetId = typeof body.sourceAssetId === "string" ? body.sourceAssetId.trim() : undefined;
+      if (body.subjectRole === "video_frame" && body.mimeType && !body.sourceAssetId && !isGeminiVideoFrameMimeType(body.mimeType)) {
         return NextResponse.json({ ok: false, error: "unsupported_video_frame_type" }, { status: 400 });
       }
     }
 
+    let sourceFile: File | undefined;
+    if (!body.file && body.sourceAssetId) {
+      const { asset: sourceAsset } = await getCustomerAssetRelational({
+        siteId,
+        customerId,
+        assetId: body.sourceAssetId
+      });
+      const source = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset: sourceAsset });
+      sourceFile = new File(
+        [new Uint8Array(source.bytes)],
+        `${sourceAsset.label || sourceAsset.id}.source`,
+        { type: source.mimeType || sourceAsset.mimeType }
+      );
+      body.label = body.label || sourceAsset.label;
+    }
+    const inputFile = body.file ?? sourceFile;
     const preserveOriginal = body.subjectRole === "video_frame";
-    const preparedFile = body.file
+    const preparedFile = inputFile
       ? preserveOriginal
-        ? await prepareVideoFrameImage(body.file)
-        : await prepareUploadedImage(body.file)
+        ? await prepareVideoFrameImage(inputFile)
+        : await prepareUploadedImage(inputFile)
       : undefined;
-    if (body.subjectRole === "video_frame" && body.file && !preparedFile) {
+    if (body.subjectRole === "video_frame" && inputFile && !preparedFile) {
       return NextResponse.json({ ok: false, error: "unsupported_video_frame_type" }, { status: 400 });
     }
     if (preparedFile) body.mimeType = preparedFile.mimeType;
@@ -223,7 +244,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       })
       : preparedFile;
     if (compressedFile) body.mimeType = compressedFile.mimeType;
-    const storageKey = body.file && compressedFile
+    const storageKey = inputFile && compressedFile
       ? customerAssetStorageKey({
         siteId,
         customerId,

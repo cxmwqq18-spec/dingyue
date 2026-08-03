@@ -25,6 +25,7 @@
     "smoke:storefront-image-isolation": "node scripts/smoke-storefront-image-isolation.mjs",
     "smoke:storefront-dom-image-isolation": "node scripts/smoke-storefront-dom-image-isolation.mjs",
     "smoke:storefront-watermarks": "node scripts/smoke-storefront-watermarks.mjs",
+    "audit:storefront-watermarks": "node scripts/audit-storefront-watermarks.mjs",
     "watermark:storefront-public-media": "node scripts/apply-storefront-watermarks.mjs",
     "smoke:fan-holiday-storefront-theme": "node scripts/smoke-fan-holiday-storefront-theme.mjs",
     "smoke:aidreamcapes-before-after-assets": "node scripts/smoke-aidreamcapes-before-after-assets.mjs",

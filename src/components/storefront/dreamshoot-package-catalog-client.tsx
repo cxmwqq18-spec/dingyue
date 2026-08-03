@@ -285,6 +285,7 @@ export function DreamshootPackageCatalogClient({
   featuredCount,
   initialCategory = "",
   openCollectionsHref,
+  showDirectory = true,
   locale = "en",
   sectionId,
   siteBasePath,
@@ -302,6 +303,7 @@ export function DreamshootPackageCatalogClient({
   featuredCount: number;
   initialCategory?: string;
   openCollectionsHref: string;
+  showDirectory?: boolean;
   locale?: "en" | "es";
   sectionId: string;
   siteBasePath: string;
@@ -317,9 +319,9 @@ export function DreamshootPackageCatalogClient({
   );
   const displayCards = visibleCards.length ? visibleCards : cards;
   const useReferenceCards = locale === "en";
-  const featuredLimit = useReferenceCards ? Math.min(featuredCount, 4) : featuredCount;
-  const featured = displayCards.length > featuredLimit ? displayCards.slice(0, featuredLimit) : [];
-  const directory = featured.length ? displayCards.slice(featured.length) : displayCards;
+  const featuredLimit = Math.max(1, Math.min(featuredCount, displayCards.length || featuredCount));
+  const featured = displayCards.slice(0, featuredLimit);
+  const directory = showDirectory ? displayCards.slice(featured.length) : [];
   const activeCount = displayCards.length;
   const activeCountLabel = displayCards.some((card) => card.kind === "collection")
     ? locale === "es" ? "temas" : "themes"
@@ -384,7 +386,7 @@ export function DreamshootPackageCatalogClient({
             </div>
           </div>
         </div>
-        <div className={useReferenceCards ? "mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" : aidreamcapes ? "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" : "mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-5"}>
+        <div className={useReferenceCards ? "mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : aidreamcapes ? "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"}>
           {featured.map((card, index) => (
             useReferenceCards ? (
               <ReferencePackageCard
@@ -431,7 +433,7 @@ export function DreamshootPackageCatalogClient({
             )
           ))}
         </div>
-        {directory.length ? (
+        {showDirectory && directory.length ? (
           <div className="mt-9">
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -443,7 +445,7 @@ export function DreamshootPackageCatalogClient({
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </a>
             </div>
-            <div className={useReferenceCards ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-4" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
+            <div className={useReferenceCards ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
               {directory.map((card, index) => (
                 useReferenceCards ? (
                   <ReferencePackageCard
@@ -494,6 +496,21 @@ export function DreamshootPackageCatalogClient({
                 )
               ))}
             </div>
+          </div>
+        ) : !showDirectory ? (
+          <div className="mt-9 flex flex-col gap-4 rounded-[22px] border border-white/12 bg-white/[0.045] p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
+                {locale === "es" ? "Directorio completo" : "Full theme directory"}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white/62">
+                {locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page."}
+              </p>
+            </div>
+            <a className="inline-flex shrink-0 items-center justify-center gap-2 rounded-[16px] border border-white/14 px-4 py-3 text-sm font-semibold text-white/82 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
+              {locale === "es" ? "Ver todos los temas" : "View all themes"}
+              <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+            </a>
           </div>
         ) : null}
       </div>

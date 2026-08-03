@@ -24,6 +24,7 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
 import { CUSTOMER_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
 import {
+  isGeminiVideoFrameMimeType,
   isVideoProviderUpstreamUnavailableError,
   normalizeVideoProviderFailure,
   parseVideoProviderFailure,
@@ -2275,6 +2276,43 @@ export function CustomerWorkspaceShell({
     setSelectedVideoFrameIds((current) => trimVideoFrameSelection(Array.from(new Set(current.map((assetId) => assetId === localId ? nextAsset.id : assetId))), maxVideoFrameCount));
   }
 
+  async function prepareVideoFramesForGeneration(assetIds: string[]): Promise<string[]> {
+    const assetById = new Map(videoFrameAssets.map((asset) => [asset.id, asset]));
+    const normalizedIds = [...assetIds];
+    let convertedCount = 0;
+    for (const [index, assetId] of assetIds.entries()) {
+      const asset = assetById.get(assetId);
+      if (!asset || isGeminiVideoFrameMimeType(asset.mimeType)) continue;
+      const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
+        method: "POST",
+        headers: customerJsonHeaders(site.id),
+        body: JSON.stringify({
+          sourceAssetId: asset.id,
+          label: asset.label,
+          role: "input",
+          subjectRole: "video_frame"
+        })
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; error?: string };
+      if (!response.ok || !result.asset || !isGeminiVideoFrameMimeType(result.asset.mimeType)) {
+        throw new Error(result.error || "video_frame_conversion_failed");
+      }
+      replaceVideoFrameAsset(asset.id, result.asset);
+      normalizedIds[index] = result.asset.id;
+      convertedCount += 1;
+    }
+    if (convertedCount) {
+      setVideoFrameMessage(t(
+        spanishXby,
+        `${convertedCount} selected frame${convertedCount === 1 ? "" : "s"} converted to JPG and ready for video.`,
+        `${convertedCount} fotograma${convertedCount === 1 ? "" : "s"} seleccionado${convertedCount === 1 ? "" : "s"} convertido${convertedCount === 1 ? "" : "s"} a JPG y listo${convertedCount === 1 ? "" : "s"} para video.`
+      ));
+      invalidateCustomerAssets(site.id, customer.id);
+      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+    }
+    return normalizedIds;
+  }
+
   async function uploadVideoFrameFiles(files: FileList | null) {
     const selectedFiles = Array.from(files ?? []);
     const imageFiles = selectedFiles.filter(canPrepareCustomerVideoFrameUploadFile);
@@ -3468,6 +3506,7 @@ export function CustomerWorkspaceShell({
                     onGenerationFailed={showVideoJobCreationFailed}
                     onGenerationStarted={showVideoJobSubmitting}
                     onJobCreated={showVideoJobStatus}
+                    onPrepareVideoFrames={prepareVideoFramesForGeneration}
                     onOpenFrameManager={focusVideoFrameManager}
                     onRetryDraftApplied={() => setRetryVideoDraft(null)}
                     initialThemes={videoThemes}

@@ -135,7 +135,7 @@ assert(videoWorkspace.includes("formatPanelOpen"), "video format options should 
 assert(videoWorkspace.includes("aspect_ratio: selectedAspectRatio"), "video jobs should submit the selected aspect ratio");
 assert(videoWorkspace.includes("resolution: selectedResolution"), "video jobs should submit the selected resolution");
 assert(videoWorkspace.includes("const isTextToVideo = selectedFrameIds.length === 0"), "video workspace should detect text-to-video mode when no frames are selected");
-assert(videoWorkspace.includes("videoInputMode: hasReadyFrameInput ? \"image_to_video\" : \"text_to_video\""), "video workspace should submit an explicit text-to-video or image-to-video mode");
+assert(videoWorkspace.includes("videoInputMode: submitFrameIds.length ? \"image_to_video\" : \"text_to_video\""), "video workspace should submit an explicit text-to-video or image-to-video mode after frame normalization");
 assert(videoWorkspace.includes("videoThemeSlug: selectedTheme.slug"), "video workspace should submit the selected video theme slug so stale cached ids can be reconciled");
 assert(videoWorkspace.includes("Describe the video you want, or select frame images"), "video workspace should allow text prompts instead of forcing frame selection");
 assert(videoWorkspace.includes("{isTextToVideo ? vt(spanish, \"Text to video\""), "video workspace should show text-to-video mode in the composer");
@@ -292,6 +292,8 @@ assert(customerWorkspaceShell.includes("canPrepareCustomerVideoFrameUploadFile")
 assert(customerWorkspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should convert unsupported reference formats before upload");
 assert(customerWorkspaceShell.includes('accept="image/*,.jpg,.jpeg,.png,.webp,.heic,.heif,.bmp,.tif,.tiff"'), "video frame upload input should accept common image files that can be converted before upload");
 assert(customerWorkspaceShell.includes("selectedFrames={selectedVideoFrames.map"), "video composer should receive selected frame MIME metadata for provider-neutral preflight");
+assert(customerWorkspaceShell.includes("onPrepareVideoFrames={prepareVideoFramesForGeneration}"), "video composer should normalize legacy selected frame assets before submit");
+assert(customerWorkspaceShell.includes("sourceAssetId: asset.id"), "legacy video frame normalization should ask the asset API to convert the existing source asset");
 assert(customerWorkspaceShell.includes("function videoFrameAssetReadyForGeneration"), "video generation should treat uploaded frame assets as ready even while preview thumbnails are still loading");
 assert(!customerWorkspaceShell.match(/readySelectedVideoFrameIds[\s\S]{0,220}assetPreviewIsLoading\(asset\)/), "video generation payload should not drop selected uploaded frames just because preview thumbnails are loading");
 assert(customerWorkspaceShell.includes("function videoFrameAssetSelectable"), "video frame selection should separate upload readiness from thumbnail preview readiness");
@@ -730,6 +732,8 @@ assert(customerAssetsUploadRoute.includes("CUSTOMER_UPLOAD_MAX_BYTES"), "custome
 assert(customerAssetsUploadRoute.includes("defaultMaxUploadBytes = 32 * 1024 * 1024"), "customer asset upload route should accept modern phone photos before compression");
 assert(customerAssetsUploadRoute.includes('body.subjectRole === "video_frame"'), "customer asset upload route should detect video frame uploads");
 assert(customerAssetsUploadRoute.includes("preserveOriginal"), "customer asset upload route should preserve original video frame bytes");
+assert(customerAssetsUploadRoute.includes("sourceAssetId"), "customer asset upload route should accept an existing asset as a conversion source");
+assert(customerAssetsUploadRoute.includes("readCustomerAssetFileByStorageKey"), "legacy video frame conversion should read the existing customer asset bytes server-side");
 assert(customerAssetsUploadRoute.includes("writeCustomerAssetFileShared({"), "customer asset uploads should use shared storage so production thumbnails survive deploys and multi-instance reads");
 assert(customerAssetsUploadRoute.includes("deleteCustomerAssetFileShared"), "customer asset uploads should clean up metadata failures from the same shared storage target");
 assert(!customerAssetsUploadRoute.includes("body.file.size > 10 * 1024 * 1024"), "customer asset upload route should not keep the old hard-coded 10MB rejection");
