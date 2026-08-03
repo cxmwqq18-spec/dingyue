@@ -10,6 +10,7 @@ const failures = [];
 
 const aidreamcapesSiteId = "site_aidreamcapes";
 const mydreamshootsSiteId = "site_dreamshoot";
+const expectedFeaturedOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
 const aidreamcapesRootCategories = [
   "fan-scene-albums",
   "game-day-group-photos",
@@ -157,11 +158,10 @@ function requireHomeFeaturedPacks(data, siteId, checks) {
   const pageJson = homePage?.publishedJson;
   const order = pageJson?.sectionsOrder ?? [];
   const featuredOrder = order.filter((id) => id.startsWith("featured_"));
-  const expectedOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
-  if (JSON.stringify(featuredOrder) !== JSON.stringify(expectedOrder)) {
+  if (JSON.stringify(featuredOrder) !== JSON.stringify(expectedFeaturedOrder)) {
     fail(`${siteId}_featured_pack_order:${featuredOrder.join(",")}`);
   }
-  for (const id of expectedOrder) {
+  for (const id of expectedFeaturedOrder) {
     if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") fail(`${siteId}_missing_featured_pack:${id}`);
   }
   for (const check of checks) {
@@ -174,6 +174,22 @@ function requireHomeFeaturedPacks(data, siteId, checks) {
     }
     for (const forbidden of check.forbiddenPatterns ?? []) {
       if (forbidden.test(raw)) fail(`${siteId}_${check.id}_forbidden_asset_or_copy:${forbidden}`);
+    }
+  }
+}
+
+function requirePublishedSnapshotFeaturedPacks(data, siteId) {
+  for (const publication of data.themePublications) {
+    const homeSnapshot = publication.snapshot?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
+    const pageJson = homeSnapshot?.publishedJson ?? homeSnapshot?.draftJson;
+    const featuredOrder = (pageJson?.sectionsOrder ?? []).filter((id) => String(id).startsWith("featured_"));
+    if (JSON.stringify(featuredOrder) !== JSON.stringify(expectedFeaturedOrder)) {
+      fail(`${siteId}_publication_featured_pack_order:${publication.id}:${featuredOrder.join(",")}`);
+    }
+    for (const id of expectedFeaturedOrder) {
+      if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") {
+        fail(`${siteId}_publication_missing_featured_pack:${publication.id}:${id}`);
+      }
     }
   }
 }
@@ -261,6 +277,8 @@ requireHomeFeaturedPacks(aidreamcapesData, aidreamcapesSiteId, [
     forbiddenPatterns: [/\/assets\/dreamshoot\//i, /MyDreamShoots/i]
   }
 ]);
+requirePublishedSnapshotFeaturedPacks(mydreamshootsData, mydreamshootsSiteId);
+requirePublishedSnapshotFeaturedPacks(aidreamcapesData, aidreamcapesSiteId);
 
 const aidreamcapesRootRows = aidreamcapesData.creativePackCategories.filter((category) => !category.parentId && aidreamcapesRootCategories.includes(category.slug));
 const aidreamcapesChildRows = aidreamcapesData.creativePackCategories.filter((category) => category.parentId && aidreamcapesNewCategories.includes(category.slug));

@@ -387,6 +387,36 @@ function applyToState(state) {
   return report;
 }
 
+function applyFeaturedSectionsToPublicationSnapshot(snapshot, store) {
+  if (!snapshot || typeof snapshot !== "object") return { changed: false, snapshot };
+  const nextSnapshot = clone(snapshot);
+  let changed = false;
+  const homeSnapshot = nextSnapshot.pages?.find((page) => page.slug === "/" || page.pageType === "home");
+  if (homeSnapshot?.draftJson && applyFeaturedSectionsToPageJson(homeSnapshot.draftJson, store)) {
+    changed = true;
+  }
+  if (homeSnapshot?.publishedJson && applyFeaturedSectionsToPageJson(homeSnapshot.publishedJson, store)) {
+    changed = true;
+  }
+  if (applyFeaturedSectionsToThemeTemplate(nextSnapshot.saasTheme?.templates?.index, store)) {
+    changed = true;
+  }
+  return { changed, snapshot: nextSnapshot };
+}
+
+function publicationMetrics(snapshot) {
+  const pages = Array.isArray(snapshot?.pages) ? snapshot.pages : [];
+  const sectionCount = pages.reduce((sum, page) => {
+    const pageJson = page?.publishedJson ?? page?.draftJson;
+    return sum + (Array.isArray(pageJson?.sectionsOrder) ? pageJson.sectionsOrder.length : 0);
+  }, 0);
+  return {
+    pageCount: pages.length,
+    sectionCount,
+    snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot))
+  };
+}
+
 async function updateDatabase(state) {
   const prisma = new PrismaClient();
   const report = { pages: 0, siteThemes: 0, publications: 0 };
@@ -406,21 +436,33 @@ async function updateDatabase(state) {
         report.pages += 1;
       }
 
-      for (const theme of (state.siteThemes ?? []).filter((item) => item.siteId === store.siteId)) {
-        await prisma.siteTheme.updateMany({
-          where: { siteId: store.siteId, themeId: theme.themeId },
-          data: { templates: theme.templates }
+      const dbThemes = await prisma.siteTheme.findMany({
+        where: { siteId: store.siteId },
+        select: { id: true, templates: true }
+      });
+      for (const theme of dbThemes) {
+        const templates = clone(theme.templates);
+        if (!applyFeaturedSectionsToThemeTemplate(templates?.index, store)) continue;
+        await prisma.siteTheme.update({
+          where: { id: theme.id },
+          data: { templates }
         });
         report.siteThemes += 1;
       }
 
-      const latestPublication = (state.themePublications ?? [])
-        .filter((publication) => publication.siteId === store.siteId)
-        .sort((a, b) => Number(b.version ?? 0) - Number(a.version ?? 0))[0];
-      if (latestPublication) {
-        await prisma.themePublication.updateMany({
-          where: { siteId: store.siteId, version: latestPublication.version },
-          data: { snapshot: latestPublication.snapshot }
+      const publications = await prisma.themePublication.findMany({
+        where: { siteId: store.siteId },
+        select: { id: true, snapshot: true }
+      });
+      for (const publication of publications) {
+        const result = applyFeaturedSectionsToPublicationSnapshot(publication.snapshot, store);
+        if (!result.changed) continue;
+        await prisma.themePublication.update({
+          where: { id: publication.id },
+          data: {
+            snapshot: result.snapshot,
+            ...publicationMetrics(result.snapshot)
+          }
         });
         report.publications += 1;
       }
