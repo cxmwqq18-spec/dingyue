@@ -212,6 +212,7 @@ assert(jobStore.includes("videoDurationCreditCostForModelFamilies(videoTheme.cre
 assert(jobStore.includes("rawVideoThemeSlug") && jobStore.includes("{ slug: rawVideoThemeSlug }"), "job store should resolve video themes by slug when a cached frontend id is stale");
 assert(jobStore.includes("selectedDurationSeconds"), "job store should snapshot the selected video duration");
 assert(jobStore.includes("requestedAssetIdsForRequest(params.requestJson, videoMode)"), "job store should accept video frame ids from either assetIds or fields.frameAssetIds");
+assert(jobStore.includes("imageCoupleSourceGroupsMissing") && jobStore.includes('StoreError("couple_source_groups_required"'), "couple image requests should require primary and partner source groups before job creation");
 assert(jobStore.includes("modelPreferenceVideoProviders") && jobStore.includes("effectiveVideoFrameLimit(modelPreferenceVideoProviders, videoTheme.maxFrames)"), "job store should validate video frames against the requested model preference or auto candidate queue frame limit");
 assert(jobStore.includes("function videoPromptText"), "job store should read the written prompt for text-to-video requests");
 assert(jobStore.includes("function videoPromptRequiresFrameImages"), "job store should detect prompts that require selected frame images");
@@ -308,9 +309,10 @@ assert(htmlLangSync.includes("Node.prototype.insertBefore") && htmlLangSync.incl
 assert(!customerWorkspaceShell.includes("activeJob ?? videoRuntimeJobs[0]"), "video progress cards should not fall back to the latest succeeded video when no active or focused video job exists");
 assert(customerWorkspaceShell.includes('status === "failed" || status === "partial"'), "video progress cards should still surface failed video jobs that need attention");
 assert(
-  customerWorkspaceShell.indexOf("isVideoProviderUpstreamUnavailableError(error)") >= 0 &&
-  customerWorkspaceShell.indexOf("isVideoProviderUpstreamUnavailableError(error)") < customerWorkspaceShell.indexOf("const normalizedFailure = providerFailure ?? normalizeVideoProviderFailure({ error })"),
-  "slot-level upstream video provider outages should be shown before providerFailure reference-rejection copy"
+  customerWorkspaceShell.includes('workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job))') &&
+  customerWorkspaceShell.indexOf("isVideoRequest && isVideoProviderUpstreamUnavailableError(error)") >= 0 &&
+  customerWorkspaceShell.indexOf("isVideoRequest && isVideoProviderUpstreamUnavailableError(error)") < customerWorkspaceShell.indexOf("const normalizedFailure = isVideoRequest ? providerFailure ?? normalizeVideoProviderFailure({ error }) : undefined"),
+  "slot-level upstream provider outages should be typed before providerFailure reference-rejection copy"
 );
 
 const assetDownloadButton = read("src/components/storefront/customer-asset-download-button.tsx");
@@ -503,6 +505,8 @@ assert(workspaceRuntimeJobs.includes("const persistedRequestJson = jsonRecord(jo
 assert(workspaceShell.includes("sample-selection:v2"), "workspace sample selection storage should invalidate older overlapping primary/partner selections");
 assert(workspaceShell.includes('if (!asset.subjectRole && !asset.localTarget) return target === "primary";'), "unassigned legacy samples should not appear in both couple sample pickers");
 assert(workspaceShell.includes("partnerSampleIds.filter((id) => !savedPrimarySet.has(id))"), "saved primary and partner sample selections should stay mutually exclusive");
+assert(workspaceShell.includes("hasRequiredStudioSamples") && workspaceShell.includes("Couple mode requires at least one selected photo in both Your Samples and Partner Samples."), "couple training mode should require selected primary and partner samples before opening generation");
+assert(workspaceShell.includes("isImageProviderError") && workspaceShell.includes("The image provider is temporarily unavailable upstream.") && workspaceShell.includes("isVideoRuntimeJob(job)"), "image job slot errors should not be displayed as video provider failures");
 assert(workspaceShell.includes("setCurrentCustomerBalance(feedback.customerBalance)"), "workspace shell should apply created job balance updates immediately");
 assert(workspaceShell.includes("const workspaceCustomer = useMemo"), "workspace shell should pass a locally refreshed customer object to generation panels");
 assert(workspaceShell.includes("function videoJobFrameIds"), "workspace shell should read video frame ids consistently from job request data");
@@ -673,6 +677,8 @@ assert(jobCreateForm.includes("customerBalance?: PublicCustomer[\"balance\"]"), 
 assert(jobCreateForm.includes("customerBalance: result.customerBalance"), "image job creation should return updated balance to the workspace shell");
 assert(jobCreateForm.includes("selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available"), "image job form should allow paid requests to start from available credits");
 assert(jobCreateForm.includes("const subscriptionHardGate = subscriptionStatus === \"required\" && !hasCreditsForRequest"), "image job form should only hard-gate subscription when credits cannot cover the request");
+assert(jobCreateForm.includes("requiresCoupleSampleGroups") && jobCreateForm.includes("hasRequiredCoupleSampleGroups") && jobCreateForm.includes("Couple mode requires at least one selected photo in both Your photos and Partner photos."), "image job form should require both primary and partner photos in couple mode");
+assert(jobCreateForm.includes("mergeRequestAssetIds") && jobCreateForm.includes("const primaryBudget = Math.max(1, limit - 1)"), "couple image job asset merging should preserve at least one partner photo when the primary group is full");
 
 assert(videoWorkspace.includes("const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available"), "video workspace should allow paid video requests to start from available credits");
 assert(videoWorkspace.includes("subscriptionStatus === \"required\" && !hasCreditsForSelectedVideo"), "video workspace should only hard-gate subscription when credits cannot cover the video");

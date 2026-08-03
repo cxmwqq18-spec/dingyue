@@ -64,7 +64,7 @@ let videoProviderId = "";
 
 const page = await request("/platform?module=gateway", { cookie });
 const html = await page.text();
-for (const marker of ["AI 配置面板", "供应商列表", "测试连通性", "AI 网关策略", "域名管理"]) {
+for (const marker of ["AI 配置面板", "供应商列表", "新增供应商", "测试连通性", "AI 网关策略", "域名管理"]) {
   if (!html.includes(marker)) throw new Error(`platform gateway page missing marker: ${marker}`);
 }
 
@@ -89,12 +89,13 @@ const saved = await request("/api/platform/ai-providers", {
     modelType: "gpt-image-2",
     providerType: "image",
     makeCurrent: true,
+    supportsEditN: true,
     maxImagesPerRequest: 7
   }
 });
 const provider = saved.json.providers.find((item) => item.id === saved.json.currentProviderIds?.image);
 providerId = provider?.id ?? "";
-if (!provider?.isCurrent || provider.providerType !== "image" || provider.maxImagesPerRequest !== 7 || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
+if (!provider?.isCurrent || provider.providerType !== "image" || provider.supportsEditN !== true || provider.maxImagesPerRequest !== 7 || !provider.status.apiKeyConfigured || JSON.stringify(saved.json).includes("sk_smoke_secret")) {
   throw new Error(`ai provider save/mask failed: ${JSON.stringify(saved.json)}`);
 }
 

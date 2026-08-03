@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, Pencil, Play, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { invalidateCustomerAssets } from "@/components/app/customer-assets-client-cache";
-import { JobCreateForm } from "@/components/app/job-create-form";
+import { JobCreateForm, type JobCreateRetryDraft } from "@/components/app/job-create-form";
 import { CustomerShellHeader } from "@/components/storefront/customer-shell-header";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
@@ -41,9 +41,17 @@ type CreatedWorkspaceJobFeedback = {
 };
 type WorkspaceAnchor = "step-upload" | "step-create" | "step-video" | "source-photos" | "review-request" | "video-workspace-videos" | "resources-videos" | `resources-${WorkspaceResourceTab}`;
 
+function newGenerationRetryIdempotencyKey(kind: "image" | "video", sourceJobId: string) {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `${kind}_retry_${sourceJobId}_${crypto.randomUUID()}`;
+  return `${kind}_retry_${sourceJobId}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+function newImageRetryIdempotencyKey(sourceJobId: string) {
+  return newGenerationRetryIdempotencyKey("image", sourceJobId);
+}
+
 function newVideoRetryIdempotencyKey(sourceJobId: string) {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `video_retry_${sourceJobId}_${crypto.randomUUID()}`;
-  return `video_retry_${sourceJobId}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  return newGenerationRetryIdempotencyKey("video", sourceJobId);
 }
 type WorkspaceCreateMode = "theme" | "tool";
 type WorkspaceSubscriptionStatus = "loading" | "active" | "required" | "admin";
@@ -512,6 +520,54 @@ function videoRetryDraftFromJob(job: RuntimeJob): Omit<VideoRetryDraft, "key"> |
   };
 }
 
+function primitiveRetryFormValues(fields: Record<string, unknown>): Record<string, string | number | boolean> {
+  const values: Record<string, string | number | boolean> = {};
+  Object.entries(fields).forEach(([key, value]) => {
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") values[key] = value;
+  });
+  return values;
+}
+
+function packageAudienceFromRequestValue(value: unknown): JobCreateRetryDraft["packageAudience"] {
+  return value === "self" || value === "partner" || value === "both" ? value : undefined;
+}
+
+function imageRetryDraftFromJob(job: RuntimeJob): Omit<JobCreateRetryDraft, "key"> | undefined {
+  if (isVideoRuntimeJob(job)) return undefined;
+  const request = recordValue(job.requestJson);
+  const fields = recordValue(request.fields);
+  const billing = recordValue(request.billing);
+  const creativePackSnapshot = recordValue(request.creativePack);
+  const mode = stringRequestValue(request.mode, fields.mode) === "tool" || Boolean(stringRequestValue(fields.toolPresetId, request.toolPresetId))
+    ? "tool"
+    : "theme";
+  const requestPrimaryIds = stringArray(fields.primaryAssetIds).length
+    ? stringArray(fields.primaryAssetIds)
+    : stringArray(request.primaryAssetIds);
+  const partnerAssetIds = stringArray(fields.partnerAssetIds).length
+    ? stringArray(fields.partnerAssetIds)
+    : stringArray(request.partnerAssetIds);
+  const primaryAssetIds = requestPrimaryIds.length || partnerAssetIds.length
+    ? requestPrimaryIds
+    : stringArray(request.assetIds);
+  const outputCount = numberRequestValue(fields.outputCount, request.outputCount, billing.outputCount);
+  const prompt = mode === "tool"
+    ? stringRequestValue(fields.prompt, request.prompt, fields.packagePrompt, fields.userDirection)
+    : stringRequestValue(fields.packagePrompt, fields.userDirection, request.packagePrompt, fields.prompt, request.prompt);
+  return {
+    mode,
+    creativePackId: stringRequestValue(request.creativePackId, fields.creativePackId, creativePackSnapshot.id),
+    toolId: stringRequestValue(fields.toolPresetId, request.toolPresetId),
+    primaryAssetIds,
+    partnerAssetIds,
+    ...(outputCount !== undefined ? { outputCount } : {}),
+    ...(prompt !== undefined ? { prompt } : {}),
+    formValues: primitiveRetryFormValues(fields),
+    customerModelId: stringRequestValue(request.customerModelId, fields.customerModelId),
+    packageAudience: packageAudienceFromRequestValue(fields.packageAudience)
+  };
+}
+
 function workspaceJobTitle(job: RuntimeJob, spanish = false): string {
   const fields = jobFields(job);
   const title = fields.videoThemeName ?? fields.creativePackName ?? fields.packageName ?? fields.toolName ?? fields.prompt;
@@ -576,6 +632,18 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
     }
     if (isVideoRequest && isVideoProviderUpstreamUnavailableError(error)) {
       return t(spanish, "The video provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers.", "El proveedor de video no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso.");
+    }
+    if (!isVideoRequest && isImageProviderError(error)) {
+      if (error.includes("no_image_ai_provider_configured")) {
+        return t(spanish, "Image generation is temporarily unavailable while provider access is being updated. Credits were returned automatically, and you can retry once image access is restored.", "La generacion de imagenes no esta disponible temporalmente mientras se actualiza el acceso del proveedor. Los creditos se devolvieron automaticamente y podras reintentar cuando se restaure el acceso.");
+      }
+      if (isProviderTemporarilyUnavailableError(error)) {
+        return t(spanish, "The image provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers.", "El proveedor de imagenes no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso.");
+      }
+      if (error.includes("ai_provider_image_edit_failed_404")) {
+        return t(spanish, "The selected image provider endpoint rejected this request. Credits were returned automatically; retry after provider configuration is updated.", "El endpoint del proveedor de imagenes rechazo esta solicitud. Los creditos se devolvieron automaticamente; reintenta cuando se actualice la configuracion.");
+      }
+      return t(spanish, "The image provider could not finish this image. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de imagenes no pudo terminar esta imagen. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
     }
     if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
     if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "The video provider timed out while creating the video task. The starter image was created correctly, credits were returned automatically, and you can retry after the provider recovers.", "El proveedor de video agoto el tiempo al crear la tarea. La imagen inicial se creo correctamente, los creditos se devolvieron automaticamente y puedes reintentar cuando el proveedor se recupere.");
@@ -1097,26 +1165,53 @@ function isVideoRuntimeJob(job: RuntimeJob): boolean {
     .includes("video");
 }
 
-function workspaceGenerationErrorText(error: string, spanish = false, providerFailure?: VideoProviderFailure): string {
+function isImageProviderError(error: string): boolean {
+  return error.includes("ai_provider_image_") || error.includes("no_image_ai_provider_configured");
+}
+
+function isProviderTemporarilyUnavailableError(error: string): boolean {
   const lowerError = error.toLowerCase();
-  if (isVideoProviderUpstreamUnavailableError(error)) {
+  return /upstream_error|temporarily unavailable|service unavailable|try again later|failed_502|failed_503|failed_504|failed_524|\u670d\u52a1\u6682\u65f6\u4e0d\u53ef\u7528|\u7a0d\u540e\u91cd\u8bd5/.test(lowerError);
+}
+
+function workspaceGenerationErrorText(error: string, spanish = false, providerFailure?: VideoProviderFailure, isVideoRequest = false): string {
+  const lowerError = error.toLowerCase();
+  if (!isVideoRequest && isImageProviderError(error)) {
+    if (error.includes("no_image_ai_provider_configured")) {
+      return t(spanish, "Image generation is temporarily unavailable while provider access is being updated.", "La generacion de imagenes no esta disponible temporalmente mientras se actualiza el acceso del proveedor.");
+    }
+    if (isProviderTemporarilyUnavailableError(error)) {
+      return t(spanish, "The image provider is temporarily unavailable upstream.", "El proveedor de imagenes no esta disponible temporalmente en upstream.");
+    }
+    if (error.includes("ai_provider_image_edit_failed_404")) {
+      return t(spanish, "The selected image provider endpoint rejected this request.", "El endpoint del proveedor de imagenes rechazo esta solicitud.");
+    }
+    if (lowerError.includes("timeout") || lowerError.includes("und_err_connect_timeout")) {
+      return t(spanish, "The image provider did not respond in time.", "El proveedor de imagenes no respondio a tiempo.");
+    }
+    if (lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("econnreset") || lowerError.includes("terminated")) {
+      return t(spanish, "The image provider connection was interrupted.", "La conexion con el proveedor de imagenes se interrumpio.");
+    }
+    return t(spanish, "The image provider could not finish this image.", "El proveedor de imagenes no pudo terminar esta imagen.");
+  }
+  if (isVideoRequest && isVideoProviderUpstreamUnavailableError(error)) {
     return t(spanish, "The video provider is temporarily unavailable upstream.", "El proveedor de video no esta disponible temporalmente en upstream.");
   }
-  const normalizedFailure = providerFailure ?? normalizeVideoProviderFailure({ error });
+  const normalizedFailure = isVideoRequest ? providerFailure ?? normalizeVideoProviderFailure({ error }) : undefined;
   if (normalizedFailure) return videoProviderFailureCustomerMessage(normalizedFailure, spanish);
-  if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) {
+  if (isVideoRequest && (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required"))) {
     return t(spanish, "Frame images need a public URL before the video provider can read them.", "Los fotogramas necesitan una URL publica antes de que el proveedor de video pueda leerlos.");
   }
-  if (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured")) {
+  if (isVideoRequest && (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured"))) {
     return t(spanish, "Video generation is temporarily unavailable while provider access is being updated.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor.");
   }
-  if (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504")) {
+  if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) {
     return t(spanish, "The video provider timed out while creating the video task.", "El proveedor de video agoto el tiempo al crear la tarea.");
   }
-  if (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated")) {
+  if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) {
     return t(spanish, "The video provider connection was interrupted.", "La conexion con el proveedor de video se interrumpio.");
   }
-  if (error.includes("ai_provider_video_failed")) {
+  if (isVideoRequest && error.includes("ai_provider_video_failed")) {
     return t(spanish, "The video provider could not finish this video.", "El proveedor de video no pudo terminar este video.");
   }
   return error;
@@ -1304,6 +1399,7 @@ export function CustomerWorkspaceShell({
   const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files. WebP and other browser-readable images are converted to video-ready JPG or PNG before upload.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} archivos de imagen. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG listo para video antes de subir.`));
   const [videoWorkspaceTab, setVideoWorkspaceTab] = useState<VideoWorkspaceTab>("generate");
   const [retryVideoDraft, setRetryVideoDraft] = useState<VideoRetryDraft | null>(null);
+  const [retryImageDraft, setRetryImageDraft] = useState<JobCreateRetryDraft | null>(null);
   const [preferredToolId, setPreferredToolId] = useState<string | undefined>(undefined);
   const [uploadingSampleTarget, setUploadingSampleTarget] = useState<SampleTarget | null>(null);
   const [sampleUploadMessage, setSampleUploadMessage] = useState(() => t(spanishXby, "Upload samples to preview them here before generation.", "Sube muestras para verlas aqui antes de generar."));
@@ -1323,6 +1419,7 @@ export function CustomerWorkspaceShell({
   const [videoCreationFailureMessage, setVideoCreationFailureMessage] = useState("");
   const [videoCreationFailureAtMs, setVideoCreationFailureAtMs] = useState<number | null>(null);
   const [retryingVideoJobId, setRetryingVideoJobId] = useState<string | null>(null);
+  const [retryingImageJobId, setRetryingImageJobId] = useState<string | null>(null);
   const [previewSampleId, setPreviewSampleId] = useState<string | null>(null);
   const [deletingSampleId, setDeletingSampleId] = useState<string | null>(null);
   const [sampleDeleteConfirm, setSampleDeleteConfirm] = useState<{ assets: SampleAsset[]; label: string } | null>(null);
@@ -1357,6 +1454,12 @@ export function CustomerWorkspaceShell({
   const readySourceAssets = sourceAssets.filter((asset) => !asset.id.startsWith("local:") && !assetPreviewIsLoading(asset) && asset.localStatus !== "failed");
   const readyPrimarySampleIds = primarySampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
   const readyPartnerSampleIds = partnerSampleIds.filter((id) => readySourceAssets.some((asset) => asset.id === id));
+  const hasRequiredStudioSamples = studioTrainingMode === "couple"
+    ? readyPrimarySampleIds.length > 0 && readyPartnerSampleIds.length > 0
+    : readyPrimarySampleIds.length > 0;
+  const studioSampleRequirementMessage = studioTrainingMode === "couple"
+    ? t(spanishXby, "Couple mode requires at least one selected photo in both Your Samples and Partner Samples.", "El modo pareja requiere al menos una foto seleccionada en Tus muestras y Muestras de la pareja.")
+    : t(spanishXby, "Select at least one sample before training.", "Selecciona al menos una muestra antes de entrenar.");
   const previewSamples = sourceAssets.filter((asset) => asset.localStatus !== "failed");
   const previewSampleIndex = previewSampleId ? previewSamples.findIndex((asset) => asset.id === previewSampleId) : -1;
   const previewSample = previewSampleIndex >= 0 ? previewSamples[previewSampleIndex] : undefined;
@@ -2141,6 +2244,118 @@ export function CustomerWorkspaceShell({
     chooseVideoWorkspaceTab("generate");
   }
 
+  function imageRetryRequestErrorMessage(error: string | undefined, status: number) {
+    if (status === 401 || error === "customer_login_required") return t(spanishXby, "Please sign in again before retrying this image request.", "Vuelve a iniciar sesion antes de reintentar esta solicitud de imagen.");
+    if (status === 403 || error?.includes("csrf")) return t(spanishXby, "Your secure session expired. Refresh the page, then retry this image request.", "Tu sesion segura expiro. Actualiza la pagina y reintenta esta solicitud.");
+    if (error === "insufficient_credits") return t(spanishXby, "Not enough credits to retry this image request.", "No hay creditos suficientes para reintentar esta solicitud de imagen.");
+    if (error === "couple_source_groups_required") return t(spanishXby, "Couple mode needs one saved photo in both Your Samples and Partner Samples. Use Edit and retry to choose both groups.", "El modo pareja necesita una foto guardada en Tus muestras y Muestras de la pareja. Usa Editar y reintentar para elegir ambos grupos.");
+    if (error === "asset_not_found_for_customer" || error === "not_enough_source_assets") return t(spanishXby, "One or more saved source photos are no longer available. Use Edit and retry to choose replacements.", "Una o mas fotos fuente guardadas ya no estan disponibles. Usa Editar y reintentar para elegir reemplazos.");
+    if (error === "missing_required_prompt_input") return t(spanishXby, "This request is missing a required field. Use Edit and retry to review the setup.", "A esta solicitud le falta un campo obligatorio. Usa Editar y reintentar para revisar la configuracion.");
+    if (error === "only_failed_or_refunded_jobs_can_be_rerun") return t(spanishXby, "Only failed image requests can be retried.", "Solo se pueden reintentar solicitudes de imagen fallidas.");
+    if (error === "generation_job_already_running") return t(spanishXby, "Another request is already running. Wait for it to finish before retrying.", "Ya hay otra solicitud en ejecucion. Espera a que termine antes de reintentar.");
+    if (status === 409) return t(spanishXby, "This image request cannot be retried right now. Refresh the workspace and check its latest status.", "Esta solicitud de imagen no se puede reintentar ahora. Actualiza el espacio y revisa su estado mas reciente.");
+    return t(spanishXby, "We could not start a retry for this image request. Refresh the workspace and try again.", "No pudimos iniciar el reintento de esta solicitud de imagen. Actualiza el espacio e intentalo de nuevo.");
+  }
+
+  async function retryImageJob(job: RuntimeJob) {
+    if (retryingImageJobId) return;
+    if (job.status !== "failed" && job.status !== "refunded") {
+      setRuntimeRefreshMessage(t(spanishXby, "Wait until this request reaches a final failed state before retrying.", "Espera a que esta solicitud llegue a un estado fallido final antes de reintentar."));
+      return;
+    }
+    const idempotencyKey = newImageRetryIdempotencyKey(job.id);
+    setRetryingImageJobId(job.id);
+    setRetryImageDraft(null);
+    setFocusedJobId(job.id);
+    setRuntimeFetchEnabled(true);
+    setRuntimeRefreshMessage("");
+    setWorkspaceNotice(t(spanishXby, "Retrying this failed image request. A new request will appear here as soon as it is accepted.", "Reintentando esta solicitud de imagen fallida. Una nueva solicitud aparecera aqui en cuanto se acepte."));
+    chooseResourceTab("all");
+    try {
+      const response = await fetch(`/api/sites/${site.id}/ai/jobs/${job.id}/retry`, {
+        method: "POST",
+        headers: customerJsonHeaders(site.id, { "Idempotency-Key": idempotencyKey }),
+        body: JSON.stringify({ customerId: customer.id, idempotencyKey })
+      });
+      const result = (await response.json().catch(() => ({}))) as {
+        job?: { id: string };
+        customerBalance?: PublicCustomer["balance"];
+        error?: string;
+        reused?: boolean;
+      };
+      if (!response.ok || !result.job) {
+        const message = imageRetryRequestErrorMessage(result.error, response.status);
+        setWorkspaceNotice(t(spanishXby, `The image retry could not be created. ${message}`, `No se pudo crear el reintento de imagen. ${message}`));
+        return;
+      }
+      showJobStatus(result.job.id, "all", { customerBalance: result.customerBalance });
+    } catch {
+      setWorkspaceNotice(t(spanishXby, "The network failed while starting this image retry. Check the connection and try again.", "La red fallo al iniciar este reintento de imagen. Revisa la conexion e intentalo de nuevo."));
+    } finally {
+      setRetryingImageJobId(null);
+    }
+  }
+
+  function editAndRetryImageJob(job: RuntimeJob) {
+    if (job.status !== "failed" && job.status !== "refunded") {
+      setRuntimeRefreshMessage(t(spanishXby, "Wait until this request reaches a final failed state before editing a retry.", "Espera a que esta solicitud llegue a un estado fallido final antes de editar un reintento."));
+      return;
+    }
+    const draft = imageRetryDraftFromJob(job);
+    if (!draft) {
+      setRuntimeRefreshMessage(t(spanishXby, "This failed image request cannot be restored. Pick a package and start again.", "No se puede restaurar esta solicitud de imagen. Elige un paquete y vuelve a empezar."));
+      setPreferredToolId(undefined);
+      setPreferredCreateMode("theme");
+      setPreferredCreateModeRequest((current) => current + 1);
+      choosePanel("create", "step-create");
+      return;
+    }
+    const availableAssetIds = new Set(readySourceAssets.map((asset) => asset.id));
+    const originalAssetIds = Array.from(new Set([...(draft.primaryAssetIds ?? []), ...(draft.partnerAssetIds ?? [])]));
+    const restoredPrimaryIds = (draft.primaryAssetIds ?? [])
+      .filter((assetId) => availableAssetIds.has(assetId))
+      .slice(0, 15);
+    const restoredPrimarySet = new Set(restoredPrimaryIds);
+    const restoredPartnerIds = (draft.partnerAssetIds ?? [])
+      .filter((assetId) => availableAssetIds.has(assetId) && !restoredPrimarySet.has(assetId))
+      .slice(0, 15);
+    const restoredAssetCount = new Set([...restoredPrimaryIds, ...restoredPartnerIds]).size;
+    const missingAssetCount = Math.max(0, originalAssetIds.length - restoredAssetCount);
+    const draftKey = `${job.id}:${Date.now()}`;
+
+    setRetryImageDraft({ ...draft, key: draftKey, primaryAssetIds: restoredPrimaryIds, partnerAssetIds: restoredPartnerIds });
+    setFocusedJobId(job.id);
+    setPrimarySampleIds(restoredPrimaryIds);
+    setPartnerSampleIds(restoredPartnerIds);
+    const draftTrainingMode = draft.formValues?.trainingMode;
+    if (draftTrainingMode === "single" || draftTrainingMode === "couple") {
+      setStudioTrainingMode(draftTrainingMode);
+    } else if (restoredPartnerIds.length) {
+      setStudioTrainingMode("couple");
+    }
+    setPreferredCreateMode(draft.mode);
+    setPreferredToolId(draft.mode === "tool" ? draft.toolId : undefined);
+    setPreferredCreateModeRequest((current) => current + 1);
+    setAppliedOperationContext({});
+    setWorkspaceNotice(t(
+      spanishXby,
+      "Previous failed image request restored. Review the form, adjust anything needed, then submit it again when ready.",
+      "Solicitud de imagen fallida restaurada. Revisa el formulario, ajusta lo necesario y vuelve a enviarla cuando este lista."
+    ));
+    setSampleUploadMessage(missingAssetCount > 0
+      ? t(
+          spanishXby,
+          `Restored ${restoredAssetCount} of ${originalAssetIds.length} source photo${originalAssetIds.length === 1 ? "" : "s"}. Upload or select replacements before generating.`,
+          `Se restauraron ${restoredAssetCount} de ${originalAssetIds.length} foto${originalAssetIds.length === 1 ? "" : "s"} fuente. Sube o elige reemplazos antes de generar.`
+        )
+      : t(
+          spanishXby,
+          `Restored ${restoredAssetCount} source photo${restoredAssetCount === 1 ? "" : "s"} from the failed request.`,
+          `Se restauraron ${restoredAssetCount} foto${restoredAssetCount === 1 ? "" : "s"} fuente de la solicitud fallida.`
+        ));
+    choosePanel("create", "step-create");
+  }
+
   function focusVideoFrameManager() {
     setActivePanel("video");
     setActiveStudioSection("video");
@@ -2474,6 +2689,7 @@ export function CustomerWorkspaceShell({
 
   function showJobStatus(jobId: string, nextResourceTab: WorkspaceResourceTab = "all", feedback?: CreatedWorkspaceJobFeedback) {
     applyCreatedJobFeedback(feedback);
+    setRetryImageDraft(null);
     setFocusedJobId(jobId);
     setRuntimeFetchEnabled(true);
     setRuntimeRefreshKey((current) => current + 1);
@@ -3350,8 +3566,12 @@ export function CustomerWorkspaceShell({
                           <p className="text-xs leading-5 text-white/46">{sampleUploadMessage}</p>
                           <button
                             className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#4c55e8] px-4 py-3 text-xs font-semibold text-white transition hover:bg-[#5c66ff] disabled:cursor-not-allowed disabled:opacity-55"
-                            disabled={!primarySampleIds.length && !partnerSampleIds.length}
+                            disabled={!hasRequiredStudioSamples}
                             onClick={() => {
+                              if (!hasRequiredStudioSamples) {
+                                setSampleUploadMessage(studioSampleRequirementMessage);
+                                return;
+                              }
                               setAppliedOperationContext({
                                 action: isAidreamcapes ? t(spanishXby, "Travel model training", "Entrenamiento de modelo de viaje") : t(spanishXby, "AI model training", "Entrenamiento de modelo IA"),
                                 note: studioModelName.trim() || undefined,
@@ -3366,6 +3586,9 @@ export function CustomerWorkspaceShell({
                           >
                             {t(spanishXby, "Train Model", "Entrenar modelo")} ({studioTrainingMode === "couple" ? 100 : 50} {t(spanishXby, "credits", "creditos")})
                           </button>
+                          {!hasRequiredStudioSamples ? (
+                            <p className="text-xs leading-5 text-amber-100/72" role="status">{studioSampleRequirementMessage}</p>
+                          ) : null}
                         </div>
                       </div>
                     ) : section.id === "video" ? renderVideoFrameSidebar() : (
@@ -3741,7 +3964,7 @@ export function CustomerWorkspaceShell({
                                   const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                   const slotProgress = workspaceSlotProgress(slot);
                                   const slotFailure = slot.providerFailure ?? normalizeVideoProviderFailure({ error: slot.error });
-                                  const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure) : "";
+                                  const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job)) : "";
                                   return (
                                     <div
                                       className={`overflow-hidden rounded-[10px] border ${
@@ -3890,6 +4113,7 @@ export function CustomerWorkspaceShell({
                     preferredMode={preferredCreateMode}
                     preferredModeRequest={preferredCreateModeRequest}
                     preferredToolId={preferredToolId}
+                    retryDraft={retryImageDraft}
                     site={site}
                     siteAiApps={siteAiApps}
                     siteId={site.id}
@@ -3977,6 +4201,9 @@ export function CustomerWorkspaceShell({
                         const outputAssets = outputAssetsByJobId.get(job.id) ?? [];
                         const slots = workspaceJobOutputSlots(job, outputAssets);
                         const failed = job.status === "failed" || slots.some((slot) => slot.status === "failed");
+                        const rerunnable = job.status === "failed" || job.status === "refunded";
+                        const retryDraft = failed && rerunnable ? imageRetryDraftFromJob(job) : undefined;
+                        const retryingThisJob = retryingImageJobId === job.id;
                         return (
                           <div
                             className={`rounded-[14px] border p-4 ${
@@ -3995,6 +4222,34 @@ export function CustomerWorkspaceShell({
                               </span>
                             </div>
                             <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                            {failed ? (
+                              <div className="mt-3 flex flex-wrap items-center gap-2">
+                                <button
+                                  className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-rose-200/24 bg-rose-100/10 px-3 text-xs font-semibold text-rose-50 transition hover:bg-rose-100/16 disabled:cursor-not-allowed disabled:opacity-45"
+                                  disabled={!rerunnable || Boolean(retryingImageJobId)}
+                                  onClick={() => retryImageJob(job)}
+                                  title={rerunnable
+                                    ? t(spanishXby, "Create a new image request with the same saved inputs", "Crear una nueva solicitud de imagen con las mismas entradas guardadas")
+                                    : t(spanishXby, "Wait for the request to finish before retrying", "Espera a que la solicitud termine antes de reintentar")}
+                                  type="button"
+                                >
+                                  <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
+                                  {retryingThisJob ? t(spanishXby, "Retrying...", "Reintentando...") : t(spanishXby, "Retry", "Reintentar")}
+                                </button>
+                                <button
+                                  className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 text-xs font-semibold text-white/72 transition hover:bg-white/[0.1] disabled:cursor-not-allowed disabled:opacity-45"
+                                  disabled={!retryDraft || !rerunnable || Boolean(retryingImageJobId)}
+                                  onClick={() => editAndRetryImageJob(job)}
+                                  title={retryDraft
+                                    ? t(spanishXby, "Restore the previous inputs so you can edit them and generate again", "Restaurar entradas anteriores para editarlas y volver a generar")
+                                    : t(spanishXby, "This request no longer has saved editable inputs", "Esta solicitud ya no tiene entradas editables guardadas")}
+                                  type="button"
+                                >
+                                  <Pencil className="h-3.5 w-3.5" strokeWidth={1.8} />
+                                  {t(spanishXby, "Edit and retry", "Editar y reintentar")}
+                                </button>
+                              </div>
+                            ) : null}
                             <div className="mt-3 grid gap-2 sm:grid-cols-2">
                               {slots.map((slot) => {
                                 const slotSucceeded = slot.status === "succeeded";
@@ -4009,7 +4264,7 @@ export function CustomerWorkspaceShell({
                                 const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                 const slotProgress = workspaceSlotProgress(slot);
                                 const slotFailure = slot.providerFailure ?? normalizeVideoProviderFailure({ error: slot.error });
-                                const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure) : "";
+                                const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job)) : "";
                                 return (
                                   <div
                                     className={`overflow-hidden rounded-[10px] border ${

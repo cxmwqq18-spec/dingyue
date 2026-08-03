@@ -9,6 +9,7 @@ import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from 
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { creativePackCollectionHref, creativePackMatchesCategory, getPhotoPackageMegaGroups, photoPackageSlug, type PhotoPackageMegaGroup } from "@/lib/photo-package-taxonomy";
+import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { themeValueToString } from "@/lib/theme-values";
 
 type CreateMode = "theme" | "tool";
@@ -27,6 +28,20 @@ type OperationContext = {
   action?: string;
   note?: string;
   source?: string;
+};
+type RetryDraftFormValue = string | number | boolean;
+export type JobCreateRetryDraft = {
+  key: string;
+  mode: CreateMode;
+  creativePackId?: string;
+  toolId?: string;
+  primaryAssetIds?: string[];
+  partnerAssetIds?: string[];
+  outputCount?: number;
+  prompt?: string;
+  formValues?: Record<string, RetryDraftFormValue>;
+  customerModelId?: string;
+  packageAudience?: PackageAudience;
 };
 type SubscriptionStatus = "loading" | "active" | "required" | "admin";
 
@@ -627,6 +642,20 @@ function mergeAssetLists(primary: ThemeRuntimeAsset[], secondary: ThemeRuntimeAs
   return [...filteredPrimary, ...secondary.filter((asset) => asset.subjectRole !== "video_frame" && !seen.has(asset.id))];
 }
 
+function mergeRequestAssetIds(primaryIds: string[], partnerIds: string[], maxAssets: number, requirePartnerGroup: boolean): string[] {
+  const limit = Math.max(1, Math.min(DEFAULT_MAX_SOURCE_ASSETS, Math.trunc(maxAssets)));
+  const primary = Array.from(new Set(primaryIds.filter(Boolean)));
+  const primarySet = new Set(primary);
+  const partner = Array.from(new Set(partnerIds.filter((id) => id && !primarySet.has(id))));
+  if (!requirePartnerGroup || !primary.length || !partner.length || limit < 2) {
+    return Array.from(new Set([...primary, ...partner])).slice(0, limit);
+  }
+  const primaryBudget = Math.max(1, limit - 1);
+  const selectedPrimary = primary.slice(0, primaryBudget);
+  const selectedPartner = partner.slice(0, limit - selectedPrimary.length);
+  return Array.from(new Set([...selectedPrimary, ...selectedPartner])).slice(0, limit);
+}
+
 function packsForApp(packs: CreativePack[], aiAppSlug: string): CreativePack[] {
   return packs.filter((pack) => pack.status === "active" && pack.aiAppSlug === aiAppSlug);
 }
@@ -787,6 +816,9 @@ function jobErrorMessage(error?: string, status?: number, spanish = false): stri
   }
   if (error === "asset_not_found_for_customer") {
     return jobT(spanish, "One selected private photo is no longer available in this account. Reselect your photos and try again.", "Una foto privada seleccionada ya no esta disponible en esta cuenta. Vuelve a seleccionar tus fotos e intentalo de nuevo.");
+  }
+  if (error === "couple_source_groups_required") {
+    return jobT(spanish, "Couple mode requires at least one selected photo in both Your photos and Partner photos.", "El modo pareja requiere al menos una foto seleccionada en Tus fotos y Fotos de pareja.");
   }
   if (error === "not_enough_source_assets") {
     return jobT(spanish, "Select the required private photos before starting this request.", "Selecciona las fotos privadas requeridas antes de iniciar esta solicitud.");
@@ -969,6 +1001,7 @@ export function JobCreateForm({
   preferredModeRequest,
   preferredToolId,
   operationContext,
+  retryDraft,
   subscriptionStatus = "active",
   trainingMode = "single",
   locale = "en",
@@ -1001,6 +1034,7 @@ export function JobCreateForm({
   preferredModeRequest?: number;
   preferredToolId?: string;
   operationContext?: OperationContext;
+  retryDraft?: JobCreateRetryDraft | null;
   subscriptionStatus?: SubscriptionStatus;
   trainingMode?: "single" | "couple";
   locale?: JobCreateLocale;
@@ -1090,7 +1124,7 @@ export function JobCreateForm({
   const selectedWorkflow = workflowFor(selectedApp);
   const selectedToolPreset = toolPresets.find((preset) => preset.id === selectedToolId);
   const selectedToolIsVideo = createMode === "tool" && selectedToolPreset?.kind === "video";
-  const selectionPreviewImage = createMode === "theme" ? selectedPack?.imageUrl : undefined;
+  const selectionPreviewImage = createMode === "theme" ? withStorefrontPublicWatermarkUrl(selectedPack?.imageUrl) : undefined;
   const selectionTitle = createMode === "theme" ? selectedPack ? workspacePackageLabel(selectedPack, packageMegaGroups) : jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
   const selectionDescription = createMode === "theme"
     ? selectedPack?.description || selectedPack?.headline || jobT(spanish, "Choose this package, attach selfies, then review credits before generation.", "Elige este paquete, adjunta selfies y revisa los creditos antes de generar.")
@@ -1119,7 +1153,8 @@ export function JobCreateForm({
       : jobT(spanish, `${unitCreditCost} per request`, `${unitCreditCost} por solicitud`);
   const selectionOutputLabel = createMode === "theme" ? String(requestOutputCount) : selectedToolIsVideo ? jobT(spanish, "Video workspace", "Espacio de video") : jobT(spanish, "Tool result", "Resultado de herramienta");
   const configureSelectionLabel = createMode === "theme" ? jobT(spanish, "Configure package", "Configurar paquete") : selectedToolIsVideo ? jobT(spanish, "Open video workspace", "Abrir espacio de video") : jobT(spanish, "Configure tool", "Configurar herramienta");
-  const selectedRequestAssetIds = Array.from(new Set([...selectedAssetIds, ...partnerSelectedAssetIds])).slice(0, effectiveMaxAssets);
+  const requiresCoupleSampleGroups = trainingMode === "couple";
+  const selectedRequestAssetIds = mergeRequestAssetIds(selectedAssetIds, partnerSelectedAssetIds, effectiveMaxAssets, requiresCoupleSampleGroups);
   const light = tone === "light";
   const pricingHref = `/site/${siteSlug}/pricing`;
   const subscriptionGateMessage = selectedToolIsVideo
@@ -1144,7 +1179,12 @@ export function JobCreateForm({
   const subscriptionGateClass = subscriptionHardGate
     ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
     : (light ? "border-[#dfd3c4] bg-white text-[#625d56]" : "border-white/10 bg-white/[0.05] text-white/68");
-  const canStartRequest = selectedToolIsVideo || Boolean(aiAppSlug && selectedRequestAssetIds.length >= minAssets && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive || hasCreditsForRequest));
+  const hasRequiredCoupleSampleGroups = !requiresCoupleSampleGroups || (selectedAssetIds.length > 0 && partnerSelectedAssetIds.length > 0);
+  const coupleSampleRequirementMessage = jobT(spanish, "Couple mode requires at least one selected photo in both Your photos and Partner photos.", "El modo pareja requiere al menos una foto seleccionada en Tus fotos y Fotos de pareja.");
+  const sampleRequirementMessage = requiresCoupleSampleGroups && !hasRequiredCoupleSampleGroups
+    ? coupleSampleRequirementMessage
+    : jobT(spanish, `Select at least ${minAssets} private photo before starting. Add more angles for stronger results.`, `Selecciona al menos ${minAssets} foto privada antes de empezar. Anade mas angulos para mejores resultados.`);
+  const canStartRequest = selectedToolIsVideo || Boolean(aiAppSlug && hasRequiredCoupleSampleGroups && selectedRequestAssetIds.length >= minAssets && selectedRequestAssetIds.length <= effectiveMaxAssets && (subscriptionStatus === "active" || subscriptionBypassActive || hasCreditsForRequest));
   const selectedSourceAssets = sourceAssets.filter((asset) => selectedRequestAssetIds.includes(asset.id));
   const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
   const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
@@ -1516,6 +1556,80 @@ export function JobCreateForm({
     }
   }, [operationContext?.action, operationContext?.note, preferredModeRequest, createMode]);
 
+  useEffect(() => {
+    if (!retryDraft) return;
+    const nextMode: CreateMode = retryDraft.mode === "tool" ? "tool" : "theme";
+    const availableAssetIds = new Set(availableAssets.map((asset) => asset.id));
+    const restoredPrimaryIds = (retryDraft.primaryAssetIds ?? [])
+      .filter((assetId) => availableAssetIds.has(assetId))
+      .slice(0, DEFAULT_MAX_SOURCE_ASSETS);
+    const restoredPrimarySet = new Set(restoredPrimaryIds);
+    const restoredPartnerIds = (retryDraft.partnerAssetIds ?? [])
+      .filter((assetId) => availableAssetIds.has(assetId) && !restoredPrimarySet.has(assetId))
+      .slice(0, DEFAULT_MAX_SOURCE_ASSETS);
+    const restoredOutputCount = retryDraft.outputCount !== undefined && Number.isFinite(retryDraft.outputCount) && retryDraft.outputCount > 0
+      ? Math.trunc(retryDraft.outputCount)
+      : undefined;
+    const retryValues = retryDraft.formValues ?? {};
+
+    setCreateMode(nextMode);
+    setPromptBuilderSelections({});
+    setDialogMessage("");
+    setDialogTone("info");
+    setPackageDialogOpen(false);
+    setSelectedAssetIds(restoredPrimaryIds);
+    setPartnerSelectedAssetIds(restoredPartnerIds);
+    if (retryDraft.packageAudience) setPackageAudience(retryDraft.packageAudience);
+    if (retryDraft.customerModelId && customerModels.some((model) => model.id === retryDraft.customerModelId)) {
+      setSelectedCustomerModelId(retryDraft.customerModelId);
+    }
+    if (restoredOutputCount !== undefined) {
+      setThemeOutputCount(restoredOutputCount);
+      setThemeOutputCountDraft(String(restoredOutputCount));
+    }
+    if (retryDraft.prompt !== undefined) {
+      setPackagePromptDraft(retryDraft.prompt);
+    }
+
+    if (nextMode === "tool") {
+      const normalizedToolId = normalizeToolId(retryDraft.toolId);
+      const nextPreset =
+        toolPresets.find((preset) => preset.id === normalizedToolId) ??
+        toolPresets.find((preset) => preset.id === selectedToolId) ??
+        toolPresets[0];
+      if (nextPreset) {
+        setSelectedToolId(nextPreset.id);
+        if (nextPreset.backendSlug) setAiAppSlug(nextPreset.backendSlug);
+      }
+      const nextApp = nextPreset?.backendSlug
+        ? siteAiApps.find((app) => app.aiApp.slug === nextPreset.backendSlug)
+        : selectedApp;
+      setFormValues({
+        ...valuesForMode(nextApp, "tool"),
+        ...retryValues,
+        ...(retryDraft.prompt !== undefined ? { [TOOL_PROMPT_FIELD_ID]: retryDraft.prompt } : {})
+      });
+    } else {
+      const nextPack = retryDraft.creativePackId
+        ? orderedActiveCreativePacks.find((pack) => pack.id === retryDraft.creativePackId)
+        : undefined;
+      if (nextPack) {
+        setCreativePackId(nextPack.id);
+        setAiAppSlug(nextPack.aiAppSlug);
+      }
+      const nextApp = nextPack
+        ? siteAiApps.find((app) => app.aiApp.slug === nextPack.aiAppSlug)
+        : selectedApp;
+      setFormValues({
+        ...valuesForMode(nextApp, "theme"),
+        ...retryValues,
+        ...(restoredOutputCount !== undefined ? { outputCount: restoredOutputCount } : {})
+      });
+    }
+
+    setMessage(jobT(spanish, "Previous failed request restored. Review the setup, then start generation again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a iniciar la generacion."));
+  }, [retryDraft?.key]);
+
   async function uploadSourceFiles(files: FileList | null) {
     const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
     if (!imageFiles.length) {
@@ -1653,6 +1767,10 @@ export function JobCreateForm({
     }
     if (selectedRequestAssetIds.length < minAssets) {
       showDialogError(jobT(spanish, `Select at least ${minAssets} private photo before starting this request.`, `Selecciona al menos ${minAssets} foto privada antes de iniciar esta solicitud.`));
+      return;
+    }
+    if (!hasRequiredCoupleSampleGroups) {
+      showDialogError(coupleSampleRequirementMessage);
       return;
     }
     if (selectedRequestAssetIds.length > effectiveMaxAssets) {
@@ -2097,6 +2215,7 @@ export function JobCreateForm({
             const packageCardTitle = workspacePackageLabel(pack, packageMegaGroups);
             const packageCardHref = workspacePackageHref(pack, packageMegaGroups);
             const packageCardCopy = pack.description.trim() || (pack.headline.trim() !== packageCardTitle.trim() ? pack.headline.trim() : "");
+            const packageCardImage = withStorefrontPublicWatermarkUrl(pack.imageUrl);
             return (
               <button
                 aria-label={packageCardCopy ? `${packageCardTitle}. ${packageCardCopy}` : packageCardTitle}
@@ -2111,8 +2230,8 @@ export function JobCreateForm({
                 type="button"
               >
                 <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
-                  {pack.imageUrl ? (
-                    <img className="aspect-[4/3] w-full cursor-zoom-in object-cover" src={pack.imageUrl} alt={packageCardTitle} {...previewImageAttrs(pack.imageUrl, packageCardTitle, jobT(spanish, "Package preview", "Vista previa del paquete"))} />
+                  {packageCardImage ? (
+                    <img className="aspect-[4/3] w-full cursor-zoom-in object-cover" src={packageCardImage} alt={packageCardTitle} {...previewImageAttrs(packageCardImage, packageCardTitle, jobT(spanish, "Package preview", "Vista previa del paquete"))} />
                   ) : (
                     <span className="flex aspect-[4/3] items-center justify-center">
                       <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />
@@ -2425,6 +2544,12 @@ export function JobCreateForm({
                 {jobT(spanish, "No trained model is ready yet. This request will use the selected private selfies.", "Aun no hay modelo entrenado listo. Esta solicitud usara las selfies privadas seleccionadas.")}
               </div>
             )}
+            <div>
+              <p className={`text-sm font-semibold ${textClass}`}>{jobT(spanish, "Subject focus", "Enfoque del sujeto")}</p>
+              <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+                {jobT(spanish, "Choose whether the result should center on you, your partner, or both.", "Elige si el resultado debe centrarse en ti, en tu pareja o en ambos.")}
+              </p>
+            </div>
             <div className="grid gap-2 sm:grid-cols-3">
               {packageAudienceOptions.map((option) => {
                 const active = packageAudience === option.id;
@@ -2471,7 +2596,7 @@ export function JobCreateForm({
               </div>
                 {[
                   { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
-                  { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
+                  { label: jobT(spanish, "Subject focus", "Enfoque del sujeto"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
                   { label: jobT(spanish, "Selfies", "Selfies"), value: jobT(spanish, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} selected`, `${selectedRequestAssetIds.length}/${effectiveMaxAssets} seleccionadas`) },
                   { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
                   { label: createMode === "theme" ? jobT(spanish, "Price per image", "Precio por imagen") : selectedToolIsVideo ? jobT(spanish, "Workspace", "Espacio") : jobT(spanish, "Price per request", "Precio por solicitud"), value: selectedToolIsVideo ? jobT(spanish, "Image to Video", "Image to Video") : `${unitCreditCost}` },
@@ -2497,7 +2622,7 @@ export function JobCreateForm({
                   ? jobT(spanish, "Open the video workspace to upload frame images and write the motion prompt.", "Abre el espacio de video para subir fotogramas y escribir el prompt de movimiento.")
                   : selectedRequestAssetIds.length > effectiveMaxAssets
                   ? jobT(spanish, `Use up to ${effectiveMaxAssets} private photos before starting.`, `Usa hasta ${effectiveMaxAssets} fotos privadas antes de empezar.`)
-                  : jobT(spanish, `Select at least ${minAssets} private photo before starting. Add more angles for stronger results.`, `Selecciona al menos ${minAssets} foto privada antes de empezar. Anade mas angulos para mejores resultados.`)}
+                  : sampleRequirementMessage}
               </p>
               {subscriptionGateMessage ? (
                 <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>
@@ -2565,6 +2690,13 @@ export function JobCreateForm({
                     )}
                   </label>
 
+                  <div>
+                    <p className={`text-sm font-semibold ${textClass}`}>{jobT(spanish, "Subject focus", "Enfoque del sujeto")}</p>
+                    <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+                      {jobT(spanish, "Choose whether the result should center on you, your partner, or both.", "Elige si el resultado debe centrarse en ti, en tu pareja o en ambos.")}
+                    </p>
+                  </div>
+
                   <div className="grid gap-2 sm:grid-cols-3">
                     {packageAudienceOptions.map((option) => {
                       const active = packageAudience === option.id;
@@ -2620,6 +2752,11 @@ export function JobCreateForm({
                             {group.assets.slice(0, 8).map((asset) => (
                               <img alt={asset.label} className="aspect-square cursor-zoom-in rounded-[8px] object-cover" key={asset.id} src={asset.previewUrl} {...previewImageAttrs(asset.previewUrl, asset.label, group.title)} />
                             ))}
+                            {!group.assets.length ? (
+                              <span className={`col-span-4 rounded-[8px] border border-dashed px-3 py-4 text-center text-xs leading-5 ${light ? "border-[#d8cab9] text-[#706961]" : "border-white/12 text-white/52"}`}>
+                                {jobT(spanish, "Required for Couple mode.", "Obligatorio en modo pareja.")}
+                              </span>
+                            ) : null}
                           </div>
                         </div>
                       ))}
@@ -2641,7 +2778,7 @@ export function JobCreateForm({
                 <div className="grid gap-3">
                   {[
                     { label: jobT(spanish, "Model", "Modelo"), value: selectedModelLabel },
-                    { label: jobT(spanish, "Audience", "Audiencia"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
+                    { label: jobT(spanish, "Subject focus", "Enfoque del sujeto"), value: packageAudienceOptions.find((option) => option.id === packageAudience)?.title ?? jobT(spanish, "For Myself", "Para mi") },
                     { label: jobT(spanish, "Primary", "Principal"), value: photoCountLabel(selectedAssetIds.length, spanish) },
                     { label: jobT(spanish, "Partner", "Pareja"), value: isCoupleFlow ? photoCountLabel(partnerSelectedAssetIds.length, spanish) : jobT(spanish, "Not used", "No usado") },
                     { label: jobT(spanish, "Required credits", "Creditos requeridos"), value: `${selectionCreditCost}` },
@@ -2657,7 +2794,7 @@ export function JobCreateForm({
                 </div>
                 <div className="grid gap-3">
                   <p className={`text-xs leading-5 ${mutedClass}`}>
-                    {jobT(spanish, "The request sends the selected package, prompt notes, primary photos, partner photos, audience, model, and output count to the generation job.", "La solicitud envia al trabajo de generacion el paquete, notas, fotos principales, fotos de pareja, audiencia, modelo y cantidad de resultados.")}
+                    {jobT(spanish, "The request sends the selected package, prompt notes, primary photos, partner photos, subject focus, model, and output count to the generation job.", "La solicitud envia al trabajo de generacion el paquete, notas, fotos principales, fotos de pareja, enfoque del sujeto, modelo y cantidad de resultados.")}
                   </p>
                   {subscriptionGateMessage ? (
                     <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>

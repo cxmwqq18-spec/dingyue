@@ -150,6 +150,18 @@ async function smokeRouteContracts() {
   assert(storefrontBatchScript.includes("public/assets/sites/site_aidreamcapes/fan-holiday-theme"), "CLI batch should include Aidreamcapes theme assets");
   assert(storefrontBatchScript.includes("public/assets/sites/site_aidreamshoots"), "CLI batch should include AIdreamshoots public assets");
 
+  const storefrontWatermarkUrl = await read("src/lib/storefront-public-watermark-url.ts");
+  assert(storefrontWatermarkUrl.includes("20260803watermark30sync1"), "shared public watermark URL helper should use the current cache-buster");
+  assert(storefrontWatermarkUrl.includes("params.set(\"wm\""), "shared public watermark URL helper should append the wm query");
+
+  const jobCreateForm = await read("src/components/app/job-create-form.tsx");
+  assert(jobCreateForm.includes("withStorefrontPublicWatermarkUrl(selectedPack?.imageUrl)"), "workspace selected package image should use the public watermark URL helper");
+  assert(jobCreateForm.includes("withStorefrontPublicWatermarkUrl(pack.imageUrl)"), "workspace package cards should use the public watermark URL helper");
+
+  const siteStore = await read("src/lib/stores/site-store.ts");
+  assert(siteStore.includes("watermarkedCreativePackForWorkspace") && siteStore.includes("navigationData.creativePacks.map(watermarkedCreativePackForWorkspace)"), "workspace bootstrap should watermark creative pack media URLs");
+  assert(siteStore.includes("watermarkedVideoThemeForWorkspace") && siteStore.includes("videoThemes.map(watermarkedVideoThemeForWorkspace)"), "workspace bootstrap should watermark video theme media URLs");
+
   const adminRoute = await read("src/app/api/sites/[siteId]/admin/media-watermark/route.ts");
   assert(adminRoute.includes("batchWatermarkSitePublicMedia"), "admin media watermark route should call the batch helper");
   assert(adminRoute.includes("requireSiteMutation"), "admin media watermark route should require a site mutation guard");

@@ -1,4 +1,7 @@
 import "./load-runtime-env.mjs";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { PrismaClient } from "@prisma/client";
 
 process.env.TUTORIAL_BASE_URL = process.env.AIDREAMCAPES_TUTORIAL_BASE_URL || "http://127.0.0.1:3002";
 process.env.TUTORIAL_SITE_ID = "site_aidreamcapes";
@@ -63,4 +66,131 @@ process.env.TUTORIAL_CAPTIONS_JSON = JSON.stringify({
   result: "Open preview and play the finished video"
 });
 
+await ensureAidreamcapesLocalPreviewVideo();
 await import("./record-mydreamshoots-i2v-tutorial.mjs");
+
+async function ensureAidreamcapesLocalPreviewVideo() {
+  if (process.env.AIDREAMCAPES_TUTORIAL_SEED_PREVIEW === "0") return;
+  const prisma = new PrismaClient();
+  try {
+    const siteId = "site_aidreamcapes";
+    const customer = await prisma.customer.findUnique({
+      where: { siteId_email: { siteId, email: "aria@aidreamcapes.localhost" } },
+      select: { id: true }
+    });
+    if (!customer) return;
+    const aiApp = await prisma.aiApp.findUnique({ where: { id: "ai_video_generator" }, select: { id: true } });
+    if (!aiApp) return;
+
+    const now = new Date();
+    const jobId = "job_aidreamcapes_tutorial_preview";
+    const assetId = "asset_aidreamcapes_tutorial_preview_video";
+    const storageKey = `sites/${siteId}/customers/${customer.id}/assets/${jobId}-video-1.mp4`;
+    const sourceVideo = path.resolve(
+      process.cwd(),
+      "data/customer-assets/sites/site_aidreamcapes/customers/cust_aidreamcapes_mqq9gas9_i1vjal/assets/job_mrlqua3n_4f8408-video-1.mp4"
+    );
+    const targetVideo = path.resolve(process.cwd(), "data/customer-assets", storageKey);
+    await fs.mkdir(path.dirname(targetVideo), { recursive: true });
+    await fs.copyFile(sourceVideo, targetVideo);
+
+    const requestJson = {
+      mode: "video",
+      outputType: "video",
+      duration: "6",
+      videoDuration: "6",
+      durationSeconds: 6,
+      videoDurationSeconds: 6,
+      aspectRatio: "16:9",
+      aspect_ratio: "16:9",
+      resolution: "720p",
+      fields: {
+        mode: "video",
+        outputType: "video",
+        videoInputMode: "image_to_video",
+        duration: "6",
+        videoDuration: "6",
+        durationSeconds: 6,
+        videoDurationSeconds: 6,
+        aspectRatio: "16:9",
+        aspect_ratio: "16:9",
+        resolution: "720p",
+        promptNote: process.env.TUTORIAL_PROMPT_TEXT
+      },
+      prompt: process.env.TUTORIAL_PROMPT_TEXT,
+      worker: "local.demo.video",
+      tutorialSeed: true
+    };
+    const resultJson = {
+      error: null,
+      outputs: [{ mimeType: "video/mp4", storageKey }],
+      outputSlots: [{
+        index: 1,
+        status: "succeeded",
+        stage: "video_result_received",
+        progress: 100,
+        mimeType: "video/mp4",
+        storageKey,
+        updatedAt: now.toISOString()
+      }],
+      requestId: "local_aidreamcapes_tutorial_preview",
+      settledAt: now.toISOString(),
+      lastWorkerStage: "video_result_received",
+      lastWorkerStatus: "succeeded",
+      tutorialSeed: true
+    };
+
+    await prisma.generationJob.upsert({
+      where: { id: jobId },
+      create: {
+        id: jobId,
+        siteId,
+        customerId: customer.id,
+        aiAppId: aiApp.id,
+        status: "succeeded",
+        creditsReserved: 0,
+        entryPoint: "customer_workspace",
+        requestJson,
+        resultJson,
+        createdAt: now,
+        updatedAt: now
+      },
+      update: {
+        status: "succeeded",
+        requestJson,
+        resultJson,
+        updatedAt: now
+      }
+    });
+    await prisma.assetUpload.upsert({
+      where: { id: assetId },
+      create: {
+        id: assetId,
+        siteId,
+        customerId: customer.id,
+        jobId,
+        label: "Prompt Directed Motion tutorial preview",
+        storageKey,
+        mimeType: "video/mp4",
+        role: "output",
+        visibility: "private",
+        reviewStatus: "approved",
+        createdAt: now,
+        updatedAt: now
+      },
+      update: {
+        jobId,
+        label: "Prompt Directed Motion tutorial preview",
+        storageKey,
+        mimeType: "video/mp4",
+        role: "output",
+        visibility: "private",
+        reviewStatus: "approved",
+        deletedAt: null,
+        updatedAt: now
+      }
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+}

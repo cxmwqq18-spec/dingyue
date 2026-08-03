@@ -2123,7 +2123,7 @@ function storefrontSectionLabel(type: string): string {
   return labels[type] ?? type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260802subtlewatermark30";
+const storefrontPublicWatermarkCacheVersion = "20260803watermark30sync1";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
@@ -2192,16 +2192,25 @@ function isAidreamcapesRootCategorySlug(value: string | null | undefined): boole
   return aidreamcapesRootCategoryShowcaseSlugs.includes(dreamshootCategorySlug(value || ""));
 }
 
+function homepageShowcaseAssetSlug(site: Site, slug: string): string {
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  if (isSpanishXbySite(site) && normalizedSlug === "professional-retratos-profesionales") return "professional-headshots";
+  return normalizedSlug;
+}
+
 function dreamshootShowcaseImagePath(site: Site, slug: string): string {
-  const root = isAidreamcapesSite(site)
-    ? "/assets/sites/site_aidreamcapes/fan-holiday-theme"
-    : "/assets/dreamshoot/generated/homepage-showcase";
-  const directory = isAidreamcapesSite(site) ? "categories" : "images";
-  return spanishXbyPublicAssetUrl(site, `${root}/${directory}/${dreamshootCategorySlug(slug)}.webp?v=${dreamshootHomepageShowcaseVersion}`);
+  const normalizedSlug = homepageShowcaseAssetSlug(site, slug);
+  if (isAidreamcapesSite(site) && isSpanishXbySite(site)) {
+    return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/homepage-showcase/images/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
+  }
+  if (isAidreamcapesSite(site)) {
+    return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
+  }
+  return spanishXbyPublicAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/images/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
 }
 
 function aidreamcapesHomepageCategoryShowcaseImagePath(site: Site, slug: string): string {
-  return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/${dreamshootCategorySlug(slug)}.webp?v=${aidreamcapesFanHolidayAssetVersion}`);
+  return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${dreamshootCategorySlug(slug)}.webp?v=${aidreamcapesFanHolidayAssetVersion}`);
 }
 
 function generationShowcaseImageDedupeKey(site: Site, slug: string): string {
@@ -2236,8 +2245,45 @@ function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: 
 function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeImages: string[] = []): string {
   const excluded = new Set([packImage(site, pack), ...excludeImages].map((image) => comparableImageUrl(image)).filter(Boolean));
   const gallery = uniqueImageUrlList((pack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image)))
-    .filter((image) => !excluded.has(comparableImageUrl(image)) && !isGeneratedDreamshootPackCoverUrl(image));
+    .filter((image) => !excluded.has(comparableImageUrl(image)) && !isGeneratedDreamshootPackCoverUrl(image) && !looksLikeCompositeShowcaseImageUrl(image));
   return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? packImage(site, pack);
+}
+
+function generationShowcaseThemeSlugForPack(pack: CreativePack): string {
+  return dreamshootCategorySlug(pack.categoryRecord?.parent?.slug || pack.categoryRecord?.slug || pack.category || pack.name);
+}
+
+function creativePackMatchesShowcaseSlug(pack: CreativePack, slug: string): boolean {
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  if (!normalizedSlug) return false;
+  return [
+    pack.categoryRecord?.parent?.slug,
+    pack.categoryRecord?.parent?.label,
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.category,
+    pack.name,
+    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+  ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value))).includes(normalizedSlug);
+}
+
+function homepageShowcaseImageCardFromSlug(site: Site, slug: string, creativePacks: CreativePack[]): GenerationShowcaseImageCard | null {
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  if (!normalizedSlug) return null;
+  const matchingPack = creativePacks.find((pack) => pack.status === "active" && creativePackMatchesShowcaseSlug(pack, normalizedSlug));
+  const parentMatches = dreamshootCategorySlug(matchingPack?.categoryRecord?.parent?.slug || "") === normalizedSlug;
+  const categoryLabel = parentMatches
+    ? matchingPack?.categoryRecord?.parent?.label
+    : matchingPack?.categoryRecord?.label || matchingPack?.categoryRecord?.parent?.label;
+  const imageUrl = dreamshootShowcaseImagePath(site, normalizedSlug);
+  if (!imageUrl || looksLikeCompositeShowcaseImageUrl(imageUrl)) return null;
+  return {
+    id: `homepage-showcase-${normalizedSlug}`,
+    slug: normalizedSlug,
+    title: categoryLabel || matchingPack?.name || dreamshootCategoryLabel(normalizedSlug),
+    imageUrl,
+    meta: categoryLabel || dreamshootCategoryLabel(normalizedSlug)
+  };
 }
 
 function generationShowcaseCardFromPack(site: Site, pack: CreativePack, excludeImages: string[] = []): GenerationShowcaseImageCard {
@@ -2311,6 +2357,10 @@ function generationShowcaseCardsFromSources<T>(
 
 function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
+  const uniqueSelectedImageSlugs = uniqueStringList(selectedImageSlugs.map((slug) => dreamshootCategorySlug(slug)));
+  if (uniqueSelectedImageSlugs.length) {
+    return generationShowcaseCardsFromSources(uniqueSelectedImageSlugs, (slug) => homepageShowcaseImageCardFromSlug(site, slug, activePacks));
+  }
   const selectedFallbackCards = selectedImageSlugs.map((slug) => {
     const normalizedSlug = dreamshootCategorySlug(slug);
     return {
@@ -2321,16 +2371,23 @@ function generationShowcaseImageCardsForSite(site: Site, creativePacks: Creative
       meta: dreamshootCategoryLabel(normalizedSlug)
     };
   });
+  const seenThemeSlugs = new Set<string>();
+  const uniqueThemePacks = activePacks.filter((pack) => {
+    const key = generationShowcaseThemeSlugForPack(pack);
+    if (!key || seenThemeSlugs.has(key)) return false;
+    seenThemeSlugs.add(key);
+    return true;
+  });
   const rawCards = generationShowcaseCardsFromSources(sortedByShowcaseSlugs(
-    activePacks,
+    uniqueThemePacks,
     selectedImageSlugs,
-    (pack) => pack.categoryRecord?.slug || pack.category || pack.name,
+    (pack) => generationShowcaseThemeSlugForPack(pack),
     (_pack) => Number.POSITIVE_INFINITY
   ), (pack, excludeImages) => generationShowcaseCardFromPack(site, pack, excludeImages));
   const cards = rawCards.length ? rawCards : selectedFallbackCards;
   const seen = new Set<string>();
   return cards.filter((card) => {
-    const key = card.id || generationShowcaseImageDedupeKey(site, card.slug || card.id);
+    const key = generationShowcaseImageDedupeKey(site, card.slug || card.id);
     if (!key || seen.has(key)) return false;
     seen.add(key);
     return Boolean(card.imageUrl);
@@ -3072,6 +3129,13 @@ function comparableImageUrl(value: string): string {
   return value.trim().split("?")[0] ?? value.trim();
 }
 
+function looksLikeCompositeShowcaseImageUrl(value: string): boolean {
+  const normalized = comparableImageUrl(value).toLowerCase();
+  return /(?:^|[-_/])(collage|contact-sheet|contact|sheet|split|before-after|beforeafter|grid|montage|storyboard|multi-panel|panel)(?:[-_/]|$)/.test(normalized) ||
+    normalized.includes("/pack-galleries/") ||
+    normalized.includes("/fan-holiday-theme/gallery/");
+}
+
 function uniqueImageUrlList(values: string[]): string[] {
   const seen = new Set<string>();
   const images: string[] = [];
@@ -3810,6 +3874,13 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
     })
     .filter((item): item is BlogArticleCard => Boolean(item))
     .sort((left, right) => right.sortTime - left.sortTime || left.title.localeCompare(right.title));
+}
+
+function blogCoverImageClassName(site: Site, hover = false): string {
+  if (isAidreamcapesSite(site) && !isSpanishXbySite(site)) {
+    return `h-full w-full origin-top scale-[1.38] object-cover object-top ${hover ? "transition duration-500 group-hover:scale-[1.42]" : ""}`.trim();
+  }
+  return `h-full w-full object-cover ${hover ? "transition duration-500 group-hover:scale-[1.04]" : ""}`.trim();
 }
 
 export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
@@ -6435,8 +6506,14 @@ function renderLegacySaasSection({
             ) : null}
           </header>
 
-          <div className="mt-9 aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]">
-            <img className="h-full w-full object-contain" src={coverImage} alt={setting(section, "imageAlt", title)} />
+          <div className="mt-9 aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]" data-dreamshoot-preview-disabled="true">
+            <StorefrontImage
+              className={blogCoverImageClassName(site)}
+              src={coverImage}
+              alt={setting(section, "imageAlt", title)}
+              preview={false}
+              sizes="(max-width: 768px) 100vw, 896px"
+            />
           </div>
 
           {headings.length ? (
@@ -10246,36 +10323,31 @@ function SectionView({
                     speed={rowIndex % 2 === 1 ? 12 : 14}
                     trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
                   >
-                    {row.concat(row).map((card, copyIndex) => {
-                      const primaryCard = copyIndex < row.length;
-                      return (
-                        <figure
-                          aria-hidden={primaryCard ? undefined : true}
-                          aria-label={primaryCard ? `View ${card.meta} customer-created image product from ${card.title}` : undefined}
-                          className={`group relative aspect-[3/4] w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
-                          data-dreamshoot-image-product-card={primaryCard ? "true" : undefined}
-                          data-dreamshoot-image-product-clone={primaryCard ? undefined : "true"}
-                          data-dreamshoot-image-product-row={primaryCard ? String(rowIndex + 1) : undefined}
-                          data-dreamshoot-preview-meta={card.meta}
-                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                          data-dreamshoot-preview-title={card.title}
-                          data-dreamshoot-showcase-preview="image"
-                          key={`${card.railKey}_${copyIndex}`}
-                          role={primaryCard ? "button" : undefined}
-                          tabIndex={primaryCard ? 0 : -1}
-                        >
-                          <StorefrontImage
-                            alt={`${card.meta} customer-created image product from ${card.title}`}
-                            className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
-                            fetchPriority={card.productIndex < 4 ? "high" : "low"}
-                            loading={card.productIndex < 4 ? "eager" : "lazy"}
-                            preview={false}
-                            sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            src={mediaAssetUrl(site, card.imageUrl)}
-                          />
-                        </figure>
-                      );
-                    })}
+                    {row.map((card) => (
+                      <figure
+                        aria-label={`View ${card.meta} customer-created image product from ${card.title}`}
+                        className={`group relative aspect-[3/4] w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                        data-dreamshoot-image-product-card="true"
+                        data-dreamshoot-image-product-row={String(rowIndex + 1)}
+                        data-dreamshoot-preview-meta={card.meta}
+                        data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                        data-dreamshoot-preview-title={card.title}
+                        data-dreamshoot-showcase-preview="image"
+                        key={card.railKey}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <StorefrontImage
+                          alt={`${card.meta} customer-created image product from ${card.title}`}
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
+                          fetchPriority={card.productIndex < 4 ? "high" : "low"}
+                          loading={card.productIndex < 4 ? "eager" : "lazy"}
+                          preview={false}
+                          sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          src={mediaAssetUrl(site, card.imageUrl)}
+                        />
+                      </figure>
+                    ))}
                   </DreamshootShowcaseRail>
                 ))}
               </div>
@@ -13924,9 +13996,15 @@ function SectionView({
             <h2 className="sr-only">{setting(section, "title", spanishBlog ? aidreamcapesBlog ? "Notas" : "Blog" : "Blog articles")}</h2>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {visibleArticles.map((article) => (
-                <Link className="group overflow-hidden rounded-lg border border-white/10 bg-[#1b2635] text-white shadow-[0_24px_80px_-64px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24" href={hrefFor(site, article.href)} key={article.id}>
+                <Link className="group overflow-hidden rounded-lg border border-white/10 bg-[#1b2635] text-white shadow-[0_24px_80px_-64px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24" data-dreamshoot-preview-disabled="true" href={hrefFor(site, article.href)} key={article.id}>
                   <div className="aspect-[4/3] overflow-hidden bg-white/[0.08]">
-                    <img className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" src={article.imageUrl} alt={article.imageAlt} />
+                    <StorefrontImage
+                      className={blogCoverImageClassName(site, true)}
+                      src={article.imageUrl}
+                      alt={article.imageAlt}
+                      preview={false}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    />
                   </div>
                   <article className="p-5 md:p-6">
                     <h3 className="text-xl font-semibold leading-tight tracking-tight text-white">{article.title}</h3>
@@ -13961,9 +14039,15 @@ function SectionView({
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {visibleArticles.map((article) => (
-              <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-white shadow-[0_24px_70px_-62px_rgba(24,24,27,0.35)] transition hover:-translate-y-1" href={hrefFor(site, article.href)} key={article.id}>
+              <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-white shadow-[0_24px_70px_-62px_rgba(24,24,27,0.35)] transition hover:-translate-y-1" data-dreamshoot-preview-disabled="true" href={hrefFor(site, article.href)} key={article.id}>
                 <div className="aspect-[4/3] overflow-hidden bg-zinc-100">
-                  <img className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" src={article.imageUrl} alt={article.imageAlt} />
+                  <StorefrontImage
+                    className={blogCoverImageClassName(site, true)}
+                    src={article.imageUrl}
+                    alt={article.imageAlt}
+                    preview={false}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
                 <article className="p-5">
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-zinc-500">

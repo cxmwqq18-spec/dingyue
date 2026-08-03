@@ -144,7 +144,7 @@ function errorLabel(code?: string): string {
 function providerCapabilityText(provider: Pick<AiProviderRow, "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">) {
   const maxImages = Math.max(1, Math.min(Math.trunc(Number(provider.maxImagesPerRequest) || 1), 20));
   const generation = provider.supportsGenerationN ? "文生图 n" : "文生图单张";
-  const edit = provider.supportsEditN ? "图生图 n" : "图生图单张";
+  const edit = provider.supportsEditN ? "图生图可用" : "不参与图生图";
   return `${generation} / ${edit} / 单次参考图 ${maxImages}`;
 }
 
@@ -280,6 +280,22 @@ export function PlatformAiProviderPanel({
     });
     setEditCustomModelType(modelTypes.includes(provider.modelType) ? "" : provider.modelType);
     setEditMessage("API Key 默认隐藏；点击“显示”可查看当前保存的密钥。AI URL 可以清空保存。");
+  }
+
+  function startCreate(providerType: PlatformAiProviderType = "image") {
+    setForm({
+      ...nextProviderForm(status.providers, providerType),
+      supportsEditN: providerType === "image",
+      maxImagesPerRequest: providerType === "image" ? 8 : 1
+    });
+    setCustomModelType("");
+    setEditForm(null);
+    setMessage(providerType === "image"
+      ? "已切换到新增生图供应商。填写名称、URL 和 API Key；如果支持 /images/edits，请保持“支持图生图”勾选。"
+      : "已切换到新增视频供应商。填写名称、URL 和 API Key 后保存。");
+    window.setTimeout(() => {
+      document.getElementById("platform-ai-provider-create-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
 
   function validateProviderForm(nextForm: ProviderFormState, modelType: string, mode: "create" | "edit", action: "save" | "test") {
@@ -598,7 +614,7 @@ export function PlatformAiProviderPanel({
       />
 
       <div className="grid gap-4">
-        <ErpSection description="支持维护多个 AI 供应商，只有启用通道会进入生成队列。API Key 留空会保留原值。测试连通性会向 AI URL 发起 HEAD/GET，并携带 Authorization。" eyebrow="ai provider" title="AI 供应商配置">
+        <ErpSection description="支持维护多个 AI 供应商，只有启用通道会进入生成队列。API Key 留空会保留原值。测试连通性会向 AI URL 发起 HEAD/GET，并携带 Authorization。" eyebrow="ai provider" id="platform-ai-provider-create-form" title="AI 供应商配置">
           <div className="grid gap-4">
             <ErpInfoList
               items={[
@@ -671,7 +687,7 @@ export function PlatformAiProviderPanel({
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.supportsEditN} onChange={(event) => setForm((draft) => ({ ...draft, supportsEditN: event.target.checked }))} type="checkbox" />
-                图生图支持 n 多图返回
+                支持图生图 /images/edits
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled }))} type="checkbox" />
@@ -701,7 +717,12 @@ export function PlatformAiProviderPanel({
         <ErpSection description="选择平台优先使用的 AI 供应商。生成任务只会把已启用的非敏感供应商队列带给 worker，按优先项再到其他配置 fallback。" eyebrow="providers" title="供应商列表">
           <WorkbenchSearchRow
             controls={<WorkbenchSearchInput onChange={setQuery} placeholder="搜索名称、URL、模型、key 掩码" value={query} />}
-            actions={<WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />}
+            actions={(
+              <>
+                <WorkbenchActionButton label="新增供应商" onClick={() => startCreate("image")} primary />
+                <WorkbenchActionButton label="重置" onClick={() => setQuery("")} quiet />
+              </>
+            )}
           />
           <WorkbenchTableShell>
             <WorkbenchTableHeader className="md:grid-cols-[minmax(180px,0.7fr)_minmax(110px,0.35fr)_minmax(280px,1.15fr)_minmax(180px,0.5fr)_minmax(360px,1fr)]" columns={["供应商", "类型", "AI URL", "状态", "操作"]} />
@@ -841,7 +862,7 @@ export function PlatformAiProviderPanel({
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.supportsEditN} onChange={(event) => setEditForm((draft) => draft ? { ...draft, supportsEditN: event.target.checked } : draft)} type="checkbox" />
-                  图生图支持 n 多图返回
+                  支持图生图 /images/edits
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled } : draft)} type="checkbox" />

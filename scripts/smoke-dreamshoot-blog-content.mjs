@@ -70,14 +70,35 @@ const oldThemeArticlePatterns = {
   site_aidreamcapes: /\b(travel|route|destination|coastal|getaway|itinerary|postcard|traveler|journey|trip|vacation)\b/i
 };
 
+function slugifySegment(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72);
+}
+
 function expectedCoverageForSite(expected) {
+  if (expected.coverageMode === "creative-packs") {
+    const creativePacks = activeItems("creativePacks", expected.siteId);
+    return {
+      total: creativePacks.length,
+      labels: {
+        activeCreativePacks: creativePacks.map((pack) => pack.name)
+      },
+      targetHrefs: creativePacks.map((pack) => `/collections/${slugifySegment(pack.name)}`)
+    };
+  }
   const creativeCategories = activeItems("creativePackCategories", expected.siteId)
     .filter((category) => !category.parentId);
   return {
     total: expected.baseArticleSlugs.length + creativeCategories.length,
     labels: {
       topLevelCreativeCategories: creativeCategories.map((category) => category.label)
-    }
+    },
+    targetHrefs: []
   };
 }
 
@@ -151,12 +172,9 @@ const expectedSites = [
     slug: "aidreamcapes",
     siteId: "site_aidreamcapes",
     label: "Blog",
+    coverageMode: "creative-packs",
     foreignBrandPatterns: [/MyDreamShoots/i, /mydreamshoots/i, /DreamShootAI/i],
-    baseArticleSlugs: [
-      "/blog/approved-source-photo-planning",
-      "/blog/permission-safe-fan-scene-references",
-      "/blog/private-album-credit-planning"
-    ]
+    baseArticleSlugs: []
   }
 ];
 
@@ -205,14 +223,17 @@ assert(
 );
 assert(
   themeRenderer.includes('aria-label="More guides"') &&
-    themeRenderer.includes('className="h-full w-full object-contain"') &&
+    themeRenderer.includes("blogCoverImageClassName(site)") &&
+    themeRenderer.includes("preview={false}") &&
+    themeRenderer.includes('data-dreamshoot-preview-disabled="true"') &&
     !themeRenderer.includes("Try the workflow yourself"),
-  "blog details use a light internal-link footer without the old dark CTA block"
+  "blog details use a light internal-link footer and disable fullscreen cover previews"
 );
 assert(
   themeRenderer.includes("aspect-[4/3] overflow-hidden bg-white/[0.08]") &&
-    themeRenderer.includes("aspect-[4/3] overflow-hidden bg-zinc-100"),
-  "blog cards use safe, complete-image cover frames"
+    themeRenderer.includes("aspect-[4/3] overflow-hidden bg-zinc-100") &&
+    themeRenderer.includes("origin-top scale-[1.38] object-cover object-top"),
+  "blog cards use link-safe cover frames and crop Aidreamcapes image labels"
 );
 assert(
   storefrontRender.includes("lightweightBlogArticlePageForClient(page)") &&
@@ -237,7 +258,8 @@ for (const expected of expectedSites) {
 
   const articlePages = site.pages.filter((page) => page.slug.startsWith("/blog/"));
   const coverage = expectedCoverageForSite(expected);
-  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover base guides and top-level theme categories`, `expected ${coverage.total}, found ${articlePages.length}`);
+  const coverageLabel = expected.coverageMode === "creative-packs" ? "active package themes" : "base guides and top-level theme categories";
+  assert(articlePages.length === coverage.total, `${expected.slug}: blog articles cover ${coverageLabel}`, `expected ${coverage.total}, found ${articlePages.length}`);
   const articleSlugs = articlePages.map((page) => page.slug).sort();
   assert(!articleSlugs.some((slug) => /-tool-guide$/i.test(slug)), `${expected.slug}: no tool-level blog articles remain`);
   assert(!articleSlugs.some((slug) => /-video-theme-guide$/i.test(slug)), `${expected.slug}: no video-theme blog articles remain`);
@@ -256,6 +278,13 @@ for (const expected of expectedSites) {
     for (const label of labels) {
       assert(hasArticleForLabel(articleTexts, label), `${expected.slug}: ${coverageType} label has blog coverage`, label);
     }
+  }
+  const articleTargetHrefs = articlePages.map((article) => sectionSetting(article.publishedJson?.sections?.blog_detail_1, "targetHref"));
+  for (const href of coverage.targetHrefs ?? []) {
+    assert(articleTargetHrefs.includes(href), `${expected.slug}: package article links to focused theme detail`, href);
+  }
+  if (coverage.targetHrefs?.length) {
+    assert(new Set(articleTargetHrefs).size === articleTargetHrefs.length, `${expected.slug}: package article target links are unique`);
   }
 
   const allSlugs = site.pages.map((page) => page.slug);

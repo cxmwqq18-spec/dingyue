@@ -185,7 +185,12 @@ function sanitizeText(value) {
 }
 
 function sanitizeJson(value) {
-  return JSON.parse(sanitizeText(JSON.stringify(value ?? null)));
+  const text = sanitizeText(JSON.stringify(value ?? null));
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { sanitized: text.slice(0, 2000) };
+  }
 }
 
 function log(message, details = {}) {

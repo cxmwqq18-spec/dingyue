@@ -406,9 +406,11 @@ function stringArray(value: unknown): string[] {
 
 function requestedAssetIdsForRequest(requestJson: Record<string, unknown> | undefined, videoMode: boolean): string[] {
   const fields = fieldRecord(requestJson);
+  const primaryAssetIds = stringArray(fields.primaryAssetIds ?? requestJson?.primaryAssetIds);
+  const partnerAssetIds = stringArray(fields.partnerAssetIds ?? requestJson?.partnerAssetIds);
   return Array.from(new Set([
     ...stringArray(requestJson?.assetIds),
-    ...(videoMode ? stringArray(fields.frameAssetIds) : [])
+    ...(videoMode ? stringArray(fields.frameAssetIds) : [...primaryAssetIds, ...partnerAssetIds])
   ]));
 }
 
@@ -422,6 +424,16 @@ function requestedOutputCount(requestJson?: Record<string, unknown>): number {
 function fieldRecord(requestJson?: Record<string, unknown>): Record<string, unknown> {
   const fields = requestJson?.fields;
   return fields && typeof fields === "object" && !Array.isArray(fields) ? fields as Record<string, unknown> : {};
+}
+
+function imageCoupleSourceGroupsMissing(requestJson: Record<string, unknown> | undefined, videoMode: boolean): boolean {
+  if (videoMode) return false;
+  const fields = fieldRecord(requestJson);
+  const trainingMode = String(fields.trainingMode ?? requestJson?.trainingMode ?? "").toLowerCase();
+  if (trainingMode !== "couple") return false;
+  const primaryAssetIds = stringArray(fields.primaryAssetIds ?? requestJson?.primaryAssetIds);
+  const partnerAssetIds = stringArray(fields.partnerAssetIds ?? requestJson?.partnerAssetIds);
+  return primaryAssetIds.length < 1 || partnerAssetIds.length < 1;
 }
 
 function subjectCompositionInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
@@ -1161,6 +1173,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   const requestedModelPreference = videoMode ? requestedVideoModelPreference(params.requestJson) : undefined;
   if (videoMode && params.aiAppSlug !== "video_generator") throw new StoreError("video_theme_tool_mismatch", 400);
   if (videoMode && !rawVideoThemeId && !rawVideoThemeSlug) throw new StoreError("video_theme_required", 400);
+  if (imageCoupleSourceGroupsMissing(params.requestJson, videoMode)) throw new StoreError("couple_source_groups_required", 400);
   const videoTheme = rawVideoThemeId || rawVideoThemeSlug
     ? await tx.videoTheme.findFirst({
         where: {
@@ -1338,6 +1351,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
       requestHash,
       requestJson: toPrismaJson({
         ...(params.requestJson ?? {}),
+        assetIds: requestedAssetIds,
         ...(videoTheme
           ? {
               mode: "video",

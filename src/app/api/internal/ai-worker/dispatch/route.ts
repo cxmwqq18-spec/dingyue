@@ -493,19 +493,26 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
   const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
   const selection = recordValue(payload.providerSelection) ?? {};
   const selectedProviderId = textValue(selection?.providerId);
-  const selectedProvider = selectedProviderId
+  const forcedSelectedProvider = selectedProviderId
     ? imageProviders.find((provider) => provider.id === selectedProviderId)
     : undefined;
 
-  if (selection?.mode === "fixed_provider") return selectedProvider ? [selectedProvider] : [];
-  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && selectedProvider) return [selectedProvider];
+  if (selection?.mode === "fixed_provider") return forcedSelectedProvider ? [forcedSelectedProvider] : [];
+  if (selection?.mode === "preferred_provider" && selection.fallbackEnabled === false && forcedSelectedProvider) return [forcedSelectedProvider];
+
+  const requiresImageEdit = inputAssets(payload).length > 0;
+  const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN);
+  const candidateProviders = requiresImageEdit && editCapableProviders.length ? editCapableProviders : imageProviders;
+  const selectedProvider = selectedProviderId
+    ? candidateProviders.find((provider) => provider.id === selectedProviderId)
+    : undefined;
 
   const preferredProviders = Array.from(new Map([
     ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
-    ...imageProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
+    ...candidateProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
   ]).values());
   const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
-  const fallbackProviders = imageProviders.filter((provider) => !preferredIds.has(provider.id));
+  const fallbackProviders = candidateProviders.filter((provider) => !preferredIds.has(provider.id));
   return [...preferredProviders, ...fallbackProviders];
 }
 

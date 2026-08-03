@@ -988,8 +988,8 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
     eyebrow: "How it works",
     title: "Watch the private photo package workflow.",
     subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-    imageUrl: assets.flowPrivateAlbumWorkspace,
-    videoUrl: "",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260803assetfix2",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260803assetfix2",
     videoBadge: "Private gallery workflow",
     playLabel: "Watch the MyDreamShoots workflow"
   });
@@ -1001,8 +1001,8 @@ function aidreamcapesTutorialVideoSection(): SectionInstance {
     eyebrow: "How it works",
     title: "See how an Aidreamcapes occasion album is planned.",
     subtitle: "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-    imageUrl: aidreamcapesPublicAssets.gameDay,
-    videoUrl: "",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260803assetfix2",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260803assetfix2",
     videoBadge: "Occasion album workflow",
     playLabel: "Watch the Aidreamcapes workflow"
   });

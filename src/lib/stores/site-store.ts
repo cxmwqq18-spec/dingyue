@@ -11,6 +11,7 @@ import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-conte
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { mutateLocalPlatformStateFallback, readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -2310,6 +2311,48 @@ export type CustomerWorkspaceBootstrapRelational = {
   videoThemes: VideoTheme[];
 };
 
+function watermarkedCreativePackCategoryForWorkspace(category: CreativePackCategory | undefined): CreativePackCategory | undefined {
+  if (!category) return undefined;
+  return {
+    ...category,
+    imageUrl: withStorefrontPublicWatermarkUrl(category.imageUrl),
+    parent: watermarkedCreativePackCategoryForWorkspace(category.parent)
+  };
+}
+
+function watermarkedCreativePackForWorkspace(pack: CreativePack): CreativePack {
+  return {
+    ...pack,
+    imageUrl: withStorefrontPublicWatermarkUrl(pack.imageUrl),
+    galleryImages: pack.galleryImages?.map((image) => withStorefrontPublicWatermarkUrl(image)),
+    categoryRecord: pack.categoryRecord ? watermarkedCreativePackCategoryForWorkspace(pack.categoryRecord) : undefined
+  };
+}
+
+function watermarkedToolMenuItemForWorkspace(item: ToolMenuItem): ToolMenuItem {
+  return {
+    ...item,
+    imageUrl: withStorefrontPublicWatermarkUrl(item.imageUrl)
+  };
+}
+
+function watermarkedVideoThemeCategoryForWorkspace(category: VideoThemeCategory | undefined): VideoThemeCategory | undefined {
+  if (!category) return undefined;
+  return {
+    ...category,
+    imageUrl: withStorefrontPublicWatermarkUrl(category.imageUrl)
+  };
+}
+
+function watermarkedVideoThemeForWorkspace(theme: VideoTheme): VideoTheme {
+  return {
+    ...theme,
+    imageUrl: withStorefrontPublicWatermarkUrl(theme.imageUrl),
+    galleryImages: theme.galleryImages?.map((image) => withStorefrontPublicWatermarkUrl(image)),
+    category: watermarkedVideoThemeCategoryForWorkspace(theme.category)
+  };
+}
+
 export async function getCustomerWorkspaceSiteShellRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational["site"] | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get<CustomerWorkspaceBootstrapRelational["site"] | undefined>(`workspace-site-shell:${canonicalSlug}`, async () => {
@@ -2372,10 +2415,10 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         branding: site.branding
       },
       siteAiApps,
-      creativePackCategories: navigationData.creativePackCategories,
-      creativePacks: navigationData.creativePacks,
-      toolMenuItems: navigationData.toolMenuItems,
-      videoThemes
+      creativePackCategories: navigationData.creativePackCategories.map((category) => watermarkedCreativePackCategoryForWorkspace(category) ?? category),
+      creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),
+      toolMenuItems: navigationData.toolMenuItems.map(watermarkedToolMenuItemForWorkspace),
+      videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace)
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }

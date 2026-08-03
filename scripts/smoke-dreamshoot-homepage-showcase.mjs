@@ -64,32 +64,27 @@ function activeCreativePacksForSite(site) {
     });
 }
 
-function activeCreativePackCategoriesForSite(site) {
-  const categories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  const categoryById = new Map(categories.map((category) => [category.id, category]));
-  return categories
-    .filter((category) => category.status === "active")
-    .map((category) => ({ ...category, parent: category.parent ?? categoryById.get(category.parentId) }));
-}
-
-function expectedShowcaseImageSources(store, site) {
-  return activeCreativePacksForSite(site);
-}
-
 function comparableImageUrl(value) {
   return String(value || "").trim().split("?")[0];
 }
 
-function uniqueImageUrlList(values) {
-  const seen = new Set();
-  const images = [];
-  for (const value of values.map((item) => String(item || "").trim()).filter(Boolean)) {
-    const key = comparableImageUrl(value);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
-    images.push(value);
+function isAidreamcapesStore(store, site) {
+  return /aidreamcapes/i.test(`${store.key} ${site?.slug ?? ""} ${site?.primaryDomain ?? ""}`);
+}
+
+function homepageShowcaseImageUrlForStore(store, site, slug) {
+  const normalizedSlug = showcaseSlug(slug);
+  if (isAidreamcapesStore(store, site)) {
+    return `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${normalizedSlug}.webp`;
   }
-  return images;
+  return `/assets/dreamshoot/generated/homepage-showcase/images/${normalizedSlug}.webp`;
+}
+
+function looksLikeCompositeShowcaseAsset(value) {
+  const normalized = comparableImageUrl(value).toLowerCase();
+  return /(?:^|[-_/])(collage|contact-sheet|contact|sheet|split|before-after|beforeafter|grid|montage|storyboard|multi-panel|panel)(?:[-_/]|$)/.test(normalized) ||
+    normalized.includes("/pack-galleries/") ||
+    normalized.includes("/fan-holiday-theme/gallery/");
 }
 
 function creativePackHrefSlug(pack) {
@@ -111,55 +106,34 @@ function creativePackTokens(pack) {
   ].filter(Boolean).map((value) => showcaseSlug(String(value)))));
 }
 
-function creativePackCategoryMatchScore(pack, category) {
-  const categorySlug = showcaseSlug(category.slug || category.label);
-  const directSlugs = [
-    pack.categoryRecord?.slug,
-    pack.category,
-    pack.name,
-    creativePackHrefSlug(pack)
-  ].filter(Boolean).map((value) => showcaseSlug(String(value)));
-  if (pack.categoryRecord?.id && String(pack.categoryRecord.id) === category.id) return 0;
-  if (directSlugs.includes(categorySlug)) return 1;
-  if (pack.categoryRecord?.parent?.id && String(pack.categoryRecord.parent.id) === category.id) return 20;
-  if (showcaseSlug(pack.categoryRecord?.parent?.slug || "") === categorySlug) return 21;
-  return creativePackTokens(pack).includes(categorySlug) ? 40 : Number.POSITIVE_INFINITY;
+function creativePackMatchesShowcaseSlug(pack, slug) {
+  const normalizedSlug = showcaseSlug(slug);
+  return Boolean(normalizedSlug) && creativePackTokens(pack).includes(normalizedSlug);
 }
 
-function creativePacksSortedForCategory(packs, category) {
-  return packs
-    .map((pack, index) => ({ pack, index, score: creativePackCategoryMatchScore(pack, category) }))
-    .filter((item) => Number.isFinite(item.score))
-    .sort((a, b) => a.score - b.score || (a.pack.categoryRecord?.sortOrder ?? 9999) - (b.pack.categoryRecord?.sortOrder ?? 9999) || a.index - b.index)
-    .map(({ pack }) => pack);
-}
-
-function aidreamcapesRootCategoryShowcaseImage(category) {
-  return `/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/${showcaseSlug(category.slug || category.label)}.webp`;
-}
-
-function showcaseImageForPack(pack, excludeImages = []) {
-  const excluded = new Set([pack.imageUrl, ...excludeImages].map(comparableImageUrl).filter(Boolean));
-  const gallery = uniqueImageUrlList(pack.galleryImages ?? [])
-    .filter((image) => !excluded.has(comparableImageUrl(image)) && !/\/assets\/dreamshoot\/generated\/pack-covers\//i.test(comparableImageUrl(image)));
-  return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? pack.imageUrl ?? "";
-}
-
-function assertShowcaseImageSourceData(store, site) {
-  const sources = expectedShowcaseImageSources(store, site);
-  const expectedRowCount = Math.max(1, Math.ceil(sources.length / 7));
-  const baseRowSize = Math.floor(sources.length / expectedRowCount);
-  const rowsWithExtraCard = sources.length % expectedRowCount;
-  assert(sources.length > 0, `${store.key}: expected dynamic showcase image sources`);
-  assert(sources.length === 28, `${store.key}: expected exactly 28 homepage image theme examples, got ${sources.length}`);
-  assert(expectedRowCount === 4, `${store.key}: expected four homepage image rows, got ${expectedRowCount}`);
-  assert(baseRowSize === 7 && rowsWithExtraCard === 0, `${store.key}: expected four rows of seven image examples`);
-  assert(baseRowSize * expectedRowCount + rowsWithExtraCard === sources.length, `${store.key}: invalid dynamic image wall split`);
-  assert(baseRowSize + (rowsWithExtraCard > 0 ? 1 : 0) <= 7, `${store.key}: image wall rows should target seven products each`);
-  for (const pack of sources) {
-    assert((pack.galleryImages ?? []).length >= 3, `${store.key}: pack ${pack.name} needs at least three gallery images for non-cover showcase art`);
-    const selected = pack.galleryImages?.[2] ?? "";
-    assert(selected && selected !== pack.imageUrl, `${store.key}: pack ${pack.name} showcase image should not reuse the package cover`);
+function assertShowcaseImageSourceData(store, site, pageJson, label) {
+  const slugs = imageSlugsForPage(pageJson).map(showcaseSlug);
+  const expectedSlugs = (store.imageSlugs ?? []).map(showcaseSlug);
+  const uniqueSlugs = new Set(slugs);
+  const imageSources = slugs.map((slug) => homepageShowcaseImageUrlForStore(store, site, slug));
+  const uniqueSources = new Set(imageSources.map(comparableImageUrl));
+  const activePacks = activeCreativePacksForSite(site);
+  assert(slugs.length > 0, `${label}: expected configured homepage image theme slugs`);
+  assert(slugs.join("|") === expectedSlugs.join("|"), `${label}: homepage image slug order drifted: ${slugs.join("|")}`);
+  assert(uniqueSlugs.size === slugs.length, `${label}: duplicate homepage image theme slugs: ${slugs.join("|")}`);
+  assert(uniqueSources.size === imageSources.length, `${label}: duplicate homepage image source paths: ${imageSources.join("|")}`);
+  assert(imageSources.length === 8, `${label}: expected 8 unique homepage image themes, got ${imageSources.length}`);
+  for (const slug of slugs) {
+    const source = homepageShowcaseImageUrlForStore(store, site, slug);
+    const assetFile = path.resolve(repoRoot, "public", `.${comparableImageUrl(source)}`);
+    assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing single-image homepage showcase asset ${assetFile}`);
+    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: homepage image source must not be a collage/contact-sheet/gallery asset: ${source}`);
+    assert(activePacks.some((pack) => creativePackMatchesShowcaseSlug(pack, slug)), `${label}: homepage image slug has no active creative pack match: ${slug}`);
+  }
+  if (isAidreamcapesStore(store, site)) {
+    assert(imageSources.every((source) => source.includes("/fan-holiday-theme/categories/")), `${label}: Aidreamcapes homepage should use clean category images, got ${imageSources.join("|")}`);
+  } else {
+    assert(imageSources.every((source) => source.includes("/homepage-showcase/images/")), `${label}: DreamShoot homepage should use dedicated single-image showcase assets, got ${imageSources.join("|")}`);
   }
 }
 
@@ -250,9 +224,10 @@ for (const store of showcaseStores) {
   assert(site, `${store.key}: site missing from platform state`);
   const home = site?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
   assert(home, `${store.key}: home page missing`);
-  assertShowcaseImageSourceData(store, site);
   assertPage(home?.draftJson, `${store.key}: draft home`);
   assertPage(home?.publishedJson, `${store.key}: published home`);
+  assertShowcaseImageSourceData(store, site, home?.draftJson, `${store.key}: draft home`);
+  assertShowcaseImageSourceData(store, site, home?.publishedJson, `${store.key}: published home`);
   if (store.key === "mydreamshoots") {
     assertMydreamshootsImageSlugPriority(home?.draftJson, `${store.key}: draft home`);
     assertMydreamshootsImageSlugPriority(home?.publishedJson, `${store.key}: published home`);
@@ -338,13 +313,14 @@ assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="image"'), "s
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "showcase video cards should be clickable preview triggers");
 assert(themeRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should keep dedicated AI-generated homepage fallback assets");
 assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
-assert(themeRenderer.includes("title: pack.name || pack.categoryRecord?.label"), "showcase image cards should identify package themes by pack name before category label");
+assert(themeRenderer.includes("homepageShowcaseImageCardFromSlug"), "homepage showcase should build cards directly from configured image slugs before falling back to pack galleries");
+assert(themeRenderer.includes("looksLikeCompositeShowcaseImageUrl"), "homepage showcase image selection should reject collage/contact-sheet/gallery composite candidates");
 assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)"), "showcase images should come from each store's dynamic theme source list");
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
 assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should render in dynamically balanced wall rows");
 assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");
-assert(imageShowcaseRenderer.includes("row.concat(row)"), "showcase image rows should repeat their seven-theme sequence for continuous slow scrolling");
-assert(imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall should mark cloned cards separately from primary themes");
+assert(!imageShowcaseRenderer.includes("row.concat(row)"), "showcase image wall must not duplicate homepage theme cards in the render tree");
+assert(!imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall should not emit cloned product cards");
 assert(!imageShowcaseRenderer.includes("xl:grid-cols-7"), "showcase image wall should not regress to the static seven-column grid");
 assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column portrait tiles on desktop");
 assert(imageShowcaseRenderer.includes("StorefrontImage"), "showcase image cards should render fixed-ratio large images");
@@ -357,7 +333,7 @@ assert(showcaseRenderer.includes("const imageProductCards = imageCards.map"), "h
 assert(!showcaseRenderer.includes("imageCards.slice(0, 12)"), "homepage showcase image wall should not truncate themes to 12 cards");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-grid="true"'), "showcase should expose a stable image product grid marker");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-wall="true"'), "showcase should expose a stable four-row image product wall marker");
-assert(showcaseRenderer.includes("data-dreamshoot-image-product-card={primaryCard ? \"true\" : undefined}"), "showcase should expose stable primary image product card markers");
+assert(showcaseRenderer.includes('data-dreamshoot-image-product-card="true"'), "showcase should expose stable image product card markers");
 assert(showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image product cards");
 assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image product cards");
 assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");

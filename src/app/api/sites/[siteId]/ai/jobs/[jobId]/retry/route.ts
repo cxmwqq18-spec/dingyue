@@ -22,7 +22,7 @@ export async function POST(
 
   const guard = await requireCustomerMutation(request, siteId, body.customerId, {
     rateLimit: RATE_LIMITS.generation,
-    key: `${siteId}:${body.customerId}:video-job-retry`
+    key: `${siteId}:${body.customerId}:job-retry`
   });
   if (!guard.ok) return guard.response;
 
@@ -37,7 +37,6 @@ export async function POST(
       customerId: body.customerId,
       actor: guard.current.customer.id,
       idempotencyKey,
-      requireVideo: true,
       baseUrls: workerBaseUrls,
       skipWorkerDispatch
     });
@@ -66,6 +65,6 @@ export async function POST(
     }, { status: result.reused ? 200 : 202 });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
-    return NextResponse.json({ error: error instanceof Error ? error.message : "video_job_retry_failed" }, { status });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "job_retry_failed" }, { status });
   }
 }

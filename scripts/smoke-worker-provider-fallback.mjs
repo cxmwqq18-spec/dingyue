@@ -25,6 +25,13 @@ const checks = [
     pass: !source.includes("const providers = preferredImageProviders.length ? preferredImageProviders : imageProviders")
   },
   {
+    label: "image edit requests prefer providers marked as edit-capable",
+    pass: source.includes("const requiresImageEdit = inputAssets(payload).length > 0") &&
+      source.includes("const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN)") &&
+      source.includes("const candidateProviders = requiresImageEdit && editCapableProviders.length ? editCapableProviders : imageProviders") &&
+      source.includes("const fallbackProviders = candidateProviders.filter((provider) => !preferredIds.has(provider.id))")
+  },
+  {
     label: "video worker prioritizes lower priority values before preferred badges",
     pass: source.includes("orderSelectableAiProviderFallbackCandidates(videoProviders, payload.providerSelection)") &&
       videoFallbackSource.includes("providerPriority(left.priority) - providerPriority(right.priority)") &&

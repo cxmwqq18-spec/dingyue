@@ -103,8 +103,8 @@ function makeCategoryArticle(input) {
     ? `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Keep one occasion, one mood, and one review standard at a time, then run a second request when the next direction is different enough to need its own review.`
     : `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Do not ask one job to be a professional portrait, a themed album, a restoration pass, and a motion concept at the same time. Keep the category honest, then run a second request when the next direction is different enough to need its own review.`;
   const planningHeading = isAidreamcapes ? "A planning pass before credits" : "A planning pass before you spend credits";
-  const planningIntro = isAidreamcapes
-    ? `For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.`
+  const planningIntro = isAidreamcapes && targetHref && targetHref !== directoryHref
+    ? `Open <a href="${targetHref}">${label}</a> for the focused theme page, or browse <a href="${directoryHref}">${directoryLabel}</a> to compare it with nearby choices. The best choice is the one that makes the review criteria obvious before the first image is generated.`
     : `For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.`;
   const planningBullets = isAidreamcapes
     ? [
@@ -529,6 +529,67 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
   });
 }
 
+function numericSortValue(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : Number.MAX_SAFE_INTEGER;
+}
+
+function dateSortValue(value) {
+  const timestamp = new Date(value ?? "").getTime();
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
+
+function packCategoryContext(pack, categoriesById) {
+  const category = pack.categoryRecord ?? categoriesById.get(pack.categoryId);
+  const parent = category?.parent ?? (category?.parentId ? categoriesById.get(category.parentId) : undefined);
+  return { category, parent };
+}
+
+function buildCreativePackCoverageArticles(state, siteId, brand) {
+  const categories = activeItems(state, "creativePackCategories", siteId);
+  const categoriesById = new Map(categories.map((category) => [category.id, category]));
+  const packs = activeItems(state, "creativePacks", siteId);
+  return packs
+    .slice()
+    .sort((left, right) => {
+      const leftContext = packCategoryContext(left, categoriesById);
+      const rightContext = packCategoryContext(right, categoriesById);
+      return numericSortValue(leftContext.parent?.sortOrder) - numericSortValue(rightContext.parent?.sortOrder) ||
+        numericSortValue(leftContext.category?.sortOrder) - numericSortValue(rightContext.category?.sortOrder) ||
+        dateSortValue(left.createdAt) - dateSortValue(right.createdAt) ||
+        String(left.name ?? "").localeCompare(String(right.name ?? ""));
+    })
+    .map((pack) => {
+      const { category, parent } = packCategoryContext(pack, categoriesById);
+      const label = pack.name || category?.label || pack.category || "Photo package";
+      const categoryLabel = category?.label || pack.category || label;
+      const parentLabel = parent?.label || categoryLabel || "fan and holiday albums";
+      const examples = compactList([label, categoryLabel, parentLabel], label);
+      const targetHref = `/collections/${slugifySegment(label)}`;
+      return makeCategoryArticle({
+        sitePrefix: siteId,
+        brand,
+        kind: "theme",
+        label,
+        blogSlug: `/blog/${slugifySegment(label)}-photo-package-guide`,
+        description: pack.description || pack.headline || `${label} gives shoppers a focused ${parentLabel} direction to compare before starting a private album.`,
+        imageUrl: pack.imageUrl || category?.imageUrl || parent?.imageUrl || defaultSiteImage(brand),
+        imageAlt: `${brand} ${label} theme cover`,
+        targetLabel: `Open ${label} theme`,
+        targetHref,
+        examples,
+        bestFor: `Use ${label} when ${parentLabel} is the right broad direction and the private album needs the specific look, scene, or keepsake format described by ${categoryLabel}.`,
+        sourceFocus: `Prepare clear approved source portraits, then add one cue that belongs to ${label}: light, scene texture, outfit tone, occasion, group size, or card-ready crop.`,
+        reviewFocus: `Review whether the finished images look like ${label} instead of drifting into a generic ${parentLabel} album.`,
+        elementStory: `${label} should be recognizable through visible details such as color, posture, card framing, scene texture, seasonal cues, supporter energy, or private keepsake mood.`,
+        avoid: `Avoid asking ${label} to cover several unrelated fan, game-day, premiere, or holiday scenes at once; the narrower theme should make review easier.`,
+        seoTitle: searchFriendlySeoTitle(label, brand),
+        seoDescription: `Plan ${label} in ${brand}: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.`,
+        seoKeywords: `${label}, ${brand} ${categoryLabel}, ${parentLabel}, private album guide, credit review`
+      });
+    });
+}
+
 function buildCreativeCategoryCoverageArticles(state, siteId, brand, existingArticles) {
   const existing = articleSlugs(existingArticles);
   const existingTargets = new Set(existingArticles.map((article) => article.targetHref).filter(Boolean));
@@ -795,6 +856,7 @@ const siteConfigs = [
     slug: "aidreamcapes",
     siteId: "site_aidreamcapes",
     brand: "Aidreamcapes",
+    coverageMode: "creative-packs",
     blogTitle: "Field Notes",
     footerLabel: "Blog",
     guideType: "Fan and holiday guide",
@@ -987,7 +1049,12 @@ const siteConfigs = [
 ];
 
 for (const config of siteConfigs) {
-  config.articles.push(...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles));
+  config.articles = config.coverageMode === "creative-packs"
+    ? buildCreativePackCoverageArticles(sourceState, config.siteId, config.brand)
+    : [
+        ...config.articles,
+        ...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles)
+      ];
   assertUniqueArticleCovers(config);
 }
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import process from "node:process";
 import {
@@ -33,8 +34,11 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 const repoRoot = path.resolve(String(args.get("root") ?? process.cwd()));
 const diskOnly = flags.has("disk-only");
 const liveOnly = flags.has("live-only");
+const verifyLiveContent = !flags.has("skip-content-verify");
+const hashVideos = flags.has("hash-videos");
 const maxPages = Math.max(1, Number(args.get("max-pages") ?? 80));
 const outputPath = String(args.get("output") ?? "").trim();
+const expectedWatermarkCacheVersion = "20260803watermark30sync1";
 const expectedWatermark = {
   version: STOREFRONT_WATERMARK_VERSION,
   opacity: DEFAULT_STOREFRONT_WATERMARK_OPACITY
@@ -172,6 +176,137 @@ function isPublicMediaUrl(url) {
   return url.pathname.startsWith("/assets/") && !url.pathname.includes("/brand/");
 }
 
+function isVideoMediaPath(value) {
+  return /\.(?:m4v|mov|mp4|webm)$/i.test(value);
+}
+
+function publicFilePathForUrl(url) {
+  try {
+    const relative = decodeURIComponent(url.pathname).replace(/^\/+/, "");
+    const filePath = path.resolve(repoRoot, "public", relative.replace(/^assets\//, "assets/"));
+    const publicRoot = path.resolve(repoRoot, "public");
+    const insidePublic = path.relative(publicRoot, filePath);
+    if (!insidePublic || insidePublic.startsWith("..") || path.isAbsolute(insidePublic)) return "";
+    return filePath;
+  } catch {
+    return "";
+  }
+}
+
+function sha256(bytes) {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = 30_000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function mapWithConcurrency(items, concurrency, mapper) {
+  const results = [];
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
+    while (cursor < items.length) {
+      const index = cursor;
+      cursor += 1;
+      results[index] = await mapper(items[index], index);
+    }
+  });
+  await Promise.all(workers);
+  return results;
+}
+
+async function verifyLiveMediaContent(media) {
+  const uniqueByPath = new Map();
+  for (const item of media) {
+    if (!uniqueByPath.has(item.path)) uniqueByPath.set(item.path, item);
+  }
+  const checks = [...uniqueByPath.values()];
+  const issues = [];
+  const summary = {
+    checked: 0,
+    images: 0,
+    videos: 0,
+    hashedVideos: 0,
+    issueCount: 0
+  };
+
+  await mapWithConcurrency(checks, 8, async (item) => {
+    const url = new URL(item.url);
+    const filePath = publicFilePathForUrl(url);
+    const type = isVideoMediaPath(url.pathname) ? "video" : "image";
+    const publicFile = filePath ? relativePath(filePath) : "";
+    summary.checked += 1;
+    summary[type === "video" ? "videos" : "images"] += 1;
+
+    if (!filePath) {
+      issues.push({ reason: "local_file_path_unresolved", type, url: item.url, path: item.path });
+      return;
+    }
+    const localStat = await fs.stat(filePath).catch(() => null);
+    if (!localStat?.isFile()) {
+      issues.push({ reason: "local_file_missing", type, url: item.url, file: publicFile });
+      return;
+    }
+
+    if (type === "video" && !hashVideos) {
+      const response = await fetchWithTimeout(item.url, { method: "HEAD" }, 20_000).catch((error) => ({ error }));
+      if (response.error) {
+        issues.push({ reason: "live_video_head_failed", type, url: item.url, file: publicFile, error: response.error instanceof Error ? response.error.message : String(response.error) });
+        return;
+      }
+      if (!response.ok) {
+        issues.push({ reason: "live_video_http_error", type, url: item.url, file: publicFile, status: response.status });
+        return;
+      }
+      const liveBytes = Number(response.headers.get("content-length"));
+      if (!Number.isFinite(liveBytes)) {
+        issues.push({ reason: "live_video_content_length_missing", type, url: item.url, file: publicFile, localBytes: localStat.size });
+        return;
+      }
+      if (liveBytes !== localStat.size) {
+        issues.push({ reason: "live_video_content_length_mismatch", type, url: item.url, file: publicFile, liveBytes, localBytes: localStat.size });
+      }
+      return;
+    }
+
+    if (type === "video") summary.hashedVideos += 1;
+    const response = await fetchWithTimeout(item.url, {}, type === "video" ? 120_000 : 30_000).catch((error) => ({ error }));
+    if (response.error) {
+      issues.push({ reason: "live_media_fetch_failed", type, url: item.url, file: publicFile, error: response.error instanceof Error ? response.error.message : String(response.error) });
+      return;
+    }
+    if (!response.ok) {
+      issues.push({ reason: "live_media_http_error", type, url: item.url, file: publicFile, status: response.status });
+      return;
+    }
+    const liveBytes = Buffer.from(await response.arrayBuffer());
+    const localBytes = await fs.readFile(filePath);
+    const liveHash = sha256(liveBytes);
+    const localHash = sha256(localBytes);
+    if (liveHash !== localHash) {
+      issues.push({
+        reason: "live_file_hash_mismatch",
+        type,
+        url: item.url,
+        file: publicFile,
+        liveBytes: liveBytes.length,
+        localBytes: localBytes.length,
+        liveSha256: liveHash,
+        localSha256: localHash
+      });
+    }
+  });
+
+  summary.issueCount = issues.length;
+  return { summary, issues };
+}
+
 async function collectLiveMedia(page, pageUrl, errors) {
   const refs = await page.evaluate(() => {
     const result = [];
@@ -287,13 +422,19 @@ async function auditLive() {
       storeReport.videos = media.filter((item) => item.kind.startsWith("video")).length;
       storeReport.playableVideos = media.filter((item) => item.kind === "video" && item.width > 0 && item.height > 0 && item.paused === false).length;
       storeReport.missingWatermarkUrls = media
-        .filter((item) => item.wm !== "20260802subtlewatermark30")
+        .filter((item) => item.wm !== expectedWatermarkCacheVersion)
         .map((item) => ({ kind: item.kind, url: item.url, wm: item.wm }));
       storeReport.mediaRequestErrors = responseErrors;
+      if (verifyLiveContent) {
+        const contentVerification = await verifyLiveMediaContent(media);
+        storeReport.contentVerification = contentVerification.summary;
+        storeReport.staleMediaFiles = contentVerification.issues;
+      }
       report.stores.push(storeReport);
       report.issues.push(
         ...storeReport.missingWatermarkUrls.map((item) => ({ store: store.id, reason: "missing_or_wrong_wm_query", ...item })),
         ...storeReport.mediaRequestErrors.map((item) => ({ store: store.id, reason: "media_http_error", ...item })),
+        ...(storeReport.staleMediaFiles ?? []).map((item) => ({ store: store.id, ...item })),
         ...storeReport.pageErrors.map((item) => ({ store: store.id, reason: "page_or_video_error", ...item }))
       );
     }
