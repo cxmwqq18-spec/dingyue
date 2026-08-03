@@ -995,6 +995,19 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
   });
 }
 
+function mydreamshootsImageTutorialVideoSection(): SectionInstance {
+  return section("video_feature", {
+    anchor: "ai-image-tutorial",
+    eyebrow: "AI image tutorial",
+    title: "Create an AI photo set from source photos.",
+    subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260803aitutorial1",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260803aitutorial1",
+    videoBadge: "AI photo generation",
+    playLabel: "Watch the MyDreamShoots AI image tutorial"
+  });
+}
+
 function aidreamcapesTutorialVideoSection(): SectionInstance {
   return section("video_feature", {
     anchor: "how-it-works",
@@ -1005,6 +1018,19 @@ function aidreamcapesTutorialVideoSection(): SectionInstance {
     videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260803assetfix2",
     videoBadge: "Occasion album workflow",
     playLabel: "Watch the Aidreamcapes workflow"
+  });
+}
+
+function aidreamcapesImageTutorialVideoSection(): SectionInstance {
+  return section("video_feature", {
+    anchor: "ai-image-tutorial",
+    eyebrow: "AI image tutorial",
+    title: "Create a private fan-scene image album.",
+    subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260803aitutorial1",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260803aitutorial1",
+    videoBadge: "AI image album workflow",
+    playLabel: "Watch the Aidreamcapes AI image tutorial"
   });
 }
 
@@ -1541,6 +1567,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const featuredPackSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedPackSection() : homeSections.featured_pack_1;
   const generationShowcaseSection = aidreamcapesTemplateSite ? aidreamcapesGenerationShowcaseSection() : homeSections.generation_showcase_1;
   const tutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsTutorialVideoSection();
+  const imageTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesImageTutorialVideoSection() : mydreamshootsImageTutorialVideoSection();
   const packageCatalogSection = aidreamcapesTemplateSite ? aidreamcapesPackageCatalogSection() : homeSections.package_catalog_1;
   const reviewSection = aidreamcapesTemplateSite ? aidreamcapesReviewSection() : mydreamshootsReviewSection();
   const faqSection = aidreamcapesTemplateSite ? aidreamcapesFaqSection() : mydreamshootsFaqSection();
@@ -1549,12 +1576,13 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "featured_pack_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "conversion_1", "brand_strip_1"],
+    ["hero_1", "featured_pack_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "conversion_1", "brand_strip_1"],
     {
       hero_1: homeHeroSection,
       featured_pack_1: featuredPackSection,
       generation_showcase_1: generationShowcaseSection,
       tutorial_video_1: tutorialVideoSection,
+      tutorial_video_2: imageTutorialVideoSection,
       package_catalog_1: packageCatalogSection,
       proof_1: reviewSection,
       pricing_1: homeSections.pricing_1,

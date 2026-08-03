@@ -11,6 +11,7 @@ const homeOrder = [
   "featured_pack_1",
   "generation_showcase_1",
   "tutorial_video_1",
+  "tutorial_video_2",
   "package_catalog_1",
   "proof_1",
   "pricing_1",
@@ -138,6 +139,16 @@ const stores = [
       videoBadge: "Private gallery workflow",
       playLabel: "Watch the MyDreamShoots workflow"
     }),
+    imageTutorial: section("video_feature", {
+      anchor: "ai-image-tutorial",
+      eyebrow: "AI image tutorial",
+      title: "Create an AI photo set from source photos.",
+      subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260803aitutorial1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260803aitutorial1",
+      videoBadge: "AI photo generation",
+      playLabel: "Watch the MyDreamShoots AI image tutorial"
+    }),
     reviews: section("testimonial_wall", {
       anchor: "reviews",
       mode: "reviews",
@@ -260,6 +271,16 @@ const stores = [
       videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260803assetfix2",
       videoBadge: "Occasion album workflow",
       playLabel: "Watch the Aidreamcapes workflow"
+    }),
+    imageTutorial: section("video_feature", {
+      anchor: "ai-image-tutorial",
+      eyebrow: "AI image tutorial",
+      title: "Create a private fan-scene image album.",
+      subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
+      imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260803aitutorial1",
+      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260803aitutorial1",
+      videoBadge: "AI image album workflow",
+      playLabel: "Watch the Aidreamcapes AI image tutorial"
     }),
     reviews: section("testimonial_wall", {
       anchor: "reviews",
@@ -394,6 +415,7 @@ function applyStoreSpecificExistingSections(pageJson, store) {
     blocks: []
   };
   sections.tutorial_video_1 = clone(store.tutorial);
+  sections.tutorial_video_2 = clone(store.imageTutorial);
   sections.proof_1 = clone(store.reviews);
   sections.faq_1 = clone(store.faq);
   sections.brand_strip_1 = clone(store.partnerStrip);

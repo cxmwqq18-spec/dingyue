@@ -18,6 +18,7 @@ const expectedHomeOrder = [
   "featured_pack_1",
   "generation_showcase_1",
   "tutorial_video_1",
+  "tutorial_video_2",
   "package_catalog_1",
   "proof_1",
   "pricing_1",
@@ -149,6 +150,7 @@ function assertPage(pageJson, label) {
   assert(pageJson?.sections?.featured_pack_1?.type === "dreamshoot_featured_pack", `${label}: missing recommended theme section`);
   assert(pageJson?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${label}: wrong showcase section type`);
   assert(pageJson?.sections?.tutorial_video_1?.type === "video_feature", `${label}: missing tutorial video section`);
+  assert(pageJson?.sections?.tutorial_video_2?.type === "video_feature", `${label}: missing AI image tutorial video section`);
   assert(pageJson?.sections?.package_catalog_1?.type === "dreamshoot_package_catalog", `${label}: wrong package catalog section type`);
   assert(Number(pageJson?.sections?.package_catalog_1?.settings?.featuredCount ?? 0) === 12, `${label}: homepage package catalog should feature 12 packs`);
   assert(pageJson?.sections?.proof_1?.type === "testimonial_wall", `${label}: wrong review section type`);
@@ -166,6 +168,21 @@ function assertPage(pageJson, label) {
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
   assert(settings.primaryHref === "/login", `${label}: primary CTA should stay customer-safe`);
+}
+
+function assertTutorialVideoSection(section, label) {
+  const settings = section?.settings ?? {};
+  const imageUrl = comparableImageUrl(settings.imageUrl);
+  const videoUrl = comparableImageUrl(settings.videoUrl);
+  assert(String(settings.eyebrow ?? "").toLowerCase().includes("ai image"), `${label}: AI image tutorial eyebrow should identify the image workflow`);
+  assert(String(settings.title ?? "").trim().length > 12, `${label}: AI image tutorial should have a real title`);
+  assert(String(settings.subtitle ?? "").includes("source photo"), `${label}: AI image tutorial copy should mention source photos`);
+  assert(/\.jpg$/.test(imageUrl), `${label}: AI image tutorial should use a poster jpg`);
+  assert(/\.mp4$/.test(videoUrl), `${label}: AI image tutorial should use an mp4 video`);
+  for (const url of [imageUrl, videoUrl]) {
+    const assetFile = path.resolve(repoRoot, "public", `.${url}`);
+    assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing AI image tutorial asset ${assetFile}`);
+  }
 }
 
 function assetUrlsFromValue(value, urls = []) {
@@ -226,6 +243,8 @@ for (const store of showcaseStores) {
   assert(home, `${store.key}: home page missing`);
   assertPage(home?.draftJson, `${store.key}: draft home`);
   assertPage(home?.publishedJson, `${store.key}: published home`);
+  assertTutorialVideoSection(home?.draftJson?.sections?.tutorial_video_2, `${store.key}: draft home`);
+  assertTutorialVideoSection(home?.publishedJson?.sections?.tutorial_video_2, `${store.key}: published home`);
   assertShowcaseImageSourceData(store, site, home?.draftJson, `${store.key}: draft home`);
   assertShowcaseImageSourceData(store, site, home?.publishedJson, `${store.key}: published home`);
   if (store.key === "mydreamshoots") {
@@ -240,6 +259,7 @@ for (const store of showcaseStores) {
     const template = theme.templates?.index;
     assert(template?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${store.key}: site theme ${theme.id} missing showcase`);
     assertOrder(template?.content_for_page ?? [], `${store.key}: site theme ${theme.id}`);
+    assertTutorialVideoSection(template?.sections?.tutorial_video_2, `${store.key}: site theme ${theme.id}`);
     if (store.key === "mydreamshoots") {
       assertMydreamshootsImageSlugPriority({ sections: { generation_showcase_1: template?.sections?.generation_showcase_1 } }, `${store.key}: site theme ${theme.id}`);
       assertMydreamshootsHomepageAssets(template, `${store.key}: site theme ${theme.id}`);
@@ -249,6 +269,7 @@ for (const store of showcaseStores) {
   for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === store.siteId)) {
     const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/")?.publishedJson;
     assertPage(snapshotHome, `${store.key}: publication ${publication.version}`);
+    assertTutorialVideoSection(snapshotHome?.sections?.tutorial_video_2, `${store.key}: publication ${publication.version}`);
     if (store.key === "mydreamshoots") {
       assertMydreamshootsImageSlugPriority(snapshotHome, `${store.key}: publication ${publication.version}`);
       assertMydreamshootsHomepageAssets(snapshotHome, `${store.key}: publication ${publication.version}`);
