@@ -14,13 +14,15 @@ const repoRoot = path.resolve(__dirname, "..");
 const baseUrl = (process.env.TUTORIAL_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
+const brandName = process.env.TUTORIAL_BRAND_NAME || (siteSlug === "aidreamcapes" ? "Aidreamcapes" : "MyDreamShoots");
+const tutorialKey = process.env.TUTORIAL_RUN_KEY || `${siteSlug}-ai-image-tutorial`;
 const outputDir = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_DIR || "output");
-const runDir = path.join(outputDir, "mydreamshoots-ai-image-tutorial-real-work");
+const runDir = path.join(outputDir, process.env.TUTORIAL_WORK_DIR || `${tutorialKey}-work`);
 const framesDir = path.join(runDir, "frames");
 const samplesDir = path.join(runDir, "samples");
 const narrationDir = path.join(runDir, "narration");
 const sourcePhotoPath = path.join(runDir, "source-selfie-clean.jpg");
-const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-ai-image-tutorial-55s.mp4");
+const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || `output/${tutorialKey}-55s.mp4`);
 const narrationPath = path.join(runDir, "narration.m4a");
 const failurePath = path.join(runDir, "failure-status.json");
 const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
@@ -43,12 +45,12 @@ const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
   "Warm romantic portrait with soft date-night lighting, natural expression, clean face detail, polished private album finish, no logos, no text, no watermark.";
 
 const baseTimeline = [
-  { id: "login", duration: 5, caption: "Sign in to your private workspace", narration: "First, sign in to your private MyDreamShoots workspace." },
+  { id: "login", duration: 5, caption: "Sign in to your private workspace", narration: `First, sign in to your private ${brandName} workspace.` },
   { id: "workspace", duration: 6, caption: "Open the AI photo workspace", narration: "Open the private workspace where uploads, credits, and results stay together." },
   { id: "package", duration: 7, caption: "Choose a Photo package", narration: "Choose a photo package to set the style, credit cost, and output count." },
   { id: "upload", duration: 8, caption: "Upload or select clear source photos", narration: "Upload or select clear source photos for the private model." },
   { id: "review", duration: 9, caption: "Review model, audience, credits, and uploads", narration: "Review the package, audience, credits, and selected uploads." },
-  { id: "start", duration: 5, caption: "Start the photo generation request", narration: "Start generation and let MyDreamShoots create the photo request." },
+  { id: "start", duration: 5, caption: "Start the photo generation request", narration: `Start generation and let ${brandName} create the photo request.` },
   { id: "progress", duration: 8, caption: "Refresh status in All assets", narration: "Refresh the workspace to track the request and load the latest results." },
   { id: "result", duration: 7, caption: "Open and review the generated image", narration: "Open the finished result and review the generated image." }
 ];
