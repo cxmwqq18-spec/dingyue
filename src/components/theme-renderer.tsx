@@ -2178,6 +2178,36 @@ function spanishXbyPublicAssetUrl(site: Site, value: string): string {
 }
 
 const dreamshootHomepageShowcaseVersion = "20260801visualfix1";
+const dreamshootHomepageSafeShowcaseImagePathBySlug: Record<string, string> = {
+  "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
+  "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
+  boudoir: "/assets/dreamshoot/generated/pack-galleries/boudoir/boudoir-10.webp",
+  "christmas-couple": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
+  "christmas-photos": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-03.webp",
+  "creator-portraits": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-04.webp",
+  cyberpunk: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-03.webp",
+  "desi-wedding": "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-07.webp",
+  engagement: "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-05.webp",
+  "fashion-editorial": "/assets/dreamshoot/generated/pack-galleries/fashion-editorial/fashion-editorial-03.webp",
+  "gala-photos": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-03.webp",
+  hairstyle: "/assets/dreamshoot/generated/homepage-showcase/images/hairstyle.webp",
+  "halloween-party-photos": "/assets/dreamshoot/generated/pack-galleries/halloween-party-photos/halloween-party-photos-10.webp",
+  holiday: "/assets/dreamshoot/generated/pack-galleries/holiday/holiday-03.webp",
+  "indian-wedding": "/assets/dreamshoot/generated/pack-galleries/indian-wedding/indian-wedding-04.webp",
+  mafia: "/assets/dreamshoot/generated/pack-galleries/mafia/mafia-06.webp",
+  "magic-upscaler": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.webp",
+  nature: "/assets/dreamshoot/generated/homepage-showcase/images/nature.webp",
+  "outdoor-creator-scenes": "/assets/dreamshoot/generated/pack-galleries/outdoor-creator-scenes/outdoor-creator-scenes-04.webp",
+  "product-style": "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-09.webp",
+  "professional-headshots": "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-03.webp",
+  "profile-cards": "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-04.webp",
+  "social-cards": "/assets/dreamshoot/generated/pack-galleries/social-cards/social-cards-06.webp",
+  "thanksgiving-group-photos": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-02.webp",
+  "valentine-photos": "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-08.webp",
+  "virtual-try-on": "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-08.webp",
+  "wedding-portraits": "/assets/dreamshoot/generated/homepage-showcase/images/wedding-portraits.webp",
+  "world-cup-fan-photos": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
+};
 const aidreamcapesRootCategoryShowcaseSlugs = [
   "fan-scene-albums",
   "game-day-group-photos",
@@ -2244,9 +2274,25 @@ function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: 
 
 function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeImages: string[] = []): string {
   const excluded = new Set([packImage(site, pack), ...excludeImages].map((image) => comparableImageUrl(image)).filter(Boolean));
+  const safeHomepageImage = dreamshootHomepageSafeImageForPack(site, pack);
+  if (safeHomepageImage && !excluded.has(comparableImageUrl(safeHomepageImage)) && !looksLikeCompositeShowcaseImageUrl(safeHomepageImage)) {
+    return safeHomepageImage;
+  }
   const gallery = uniqueImageUrlList((pack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image)))
     .filter((image) => !excluded.has(comparableImageUrl(image)) && !isGeneratedDreamshootPackCoverUrl(image) && !looksLikeCompositeShowcaseImageUrl(image));
   return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? packImage(site, pack);
+}
+
+function dreamshootHomepageSafeImageForPack(site: Site, pack: CreativePack): string {
+  if (isAidreamcapesSite(site)) return "";
+  const candidateSlugs = uniqueStringList([
+    generationShowcaseThemeSlugForPack(pack),
+    pack.categoryRecord?.slug ? dreamshootCategorySlug(pack.categoryRecord.slug) : "",
+    pack.category ? dreamshootCategorySlug(pack.category) : "",
+    pack.name ? dreamshootCategorySlug(pack.name) : ""
+  ]);
+  const safePath = candidateSlugs.map((slug) => dreamshootHomepageSafeShowcaseImagePathBySlug[slug]).find(Boolean);
+  return safePath ? mediaAssetUrl(site, safePath) : "";
 }
 
 function generationShowcaseThemeSlugForPack(pack: CreativePack): string {
@@ -3181,8 +3227,7 @@ function comparableImageUrl(value: string): string {
 function looksLikeCompositeShowcaseImageUrl(value: string): boolean {
   const normalized = comparableImageUrl(value).toLowerCase();
   return /(?:^|[-_/])(collage|contact-sheet|contact|sheet|split|before-after|beforeafter|grid|montage|storyboard|multi-panel|panel)(?:[-_/]|$)/.test(normalized) ||
-    normalized.includes("/pack-galleries/") ||
-    normalized.includes("/fan-holiday-theme/gallery/");
+    normalized.includes("/_sheets/");
 }
 
 function uniqueImageUrlList(values: string[]): string[] {

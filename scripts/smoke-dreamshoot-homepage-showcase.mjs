@@ -35,6 +35,41 @@ const removedHomeSections = [
 ];
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
+const dreamshootHomepageSafeShowcaseImagePathBySlug = {
+  "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
+  "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
+  boudoir: "/assets/dreamshoot/generated/pack-galleries/boudoir/boudoir-10.webp",
+  "christmas-couple": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
+  "christmas-photos": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-03.webp",
+  "creator-portraits": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-04.webp",
+  cyberpunk: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-03.webp",
+  "desi-wedding": "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-07.webp",
+  engagement: "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-05.webp",
+  "fashion-editorial": "/assets/dreamshoot/generated/pack-galleries/fashion-editorial/fashion-editorial-03.webp",
+  "gala-photos": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-03.webp",
+  hairstyle: "/assets/dreamshoot/generated/homepage-showcase/images/hairstyle.webp",
+  "halloween-party-photos": "/assets/dreamshoot/generated/pack-galleries/halloween-party-photos/halloween-party-photos-10.webp",
+  holiday: "/assets/dreamshoot/generated/pack-galleries/holiday/holiday-03.webp",
+  "indian-wedding": "/assets/dreamshoot/generated/pack-galleries/indian-wedding/indian-wedding-04.webp",
+  mafia: "/assets/dreamshoot/generated/pack-galleries/mafia/mafia-06.webp",
+  "magic-upscaler": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.webp",
+  nature: "/assets/dreamshoot/generated/homepage-showcase/images/nature.webp",
+  "outdoor-creator-scenes": "/assets/dreamshoot/generated/pack-galleries/outdoor-creator-scenes/outdoor-creator-scenes-04.webp",
+  "product-style": "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-09.webp",
+  "professional-headshots": "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-03.webp",
+  "profile-cards": "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-04.webp",
+  "social-cards": "/assets/dreamshoot/generated/pack-galleries/social-cards/social-cards-06.webp",
+  "thanksgiving-group-photos": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-02.webp",
+  "valentine-photos": "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-08.webp",
+  "virtual-try-on": "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-08.webp",
+  "wedding-portraits": "/assets/dreamshoot/generated/homepage-showcase/images/wedding-portraits.webp",
+  "world-cup-fan-photos": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
+};
+const bannedDreamshootHomepageSafeImages = new Set([
+  "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-03.webp",
+  "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-03.webp",
+  "/assets/dreamshoot/generated/pack-galleries/halloween-party-photos/halloween-party-photos-03.webp"
+]);
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
@@ -86,8 +121,7 @@ function homepageShowcaseImageUrlForStore(store, site, slug) {
 function looksLikeCompositeShowcaseAsset(value) {
   const normalized = comparableImageUrl(value).toLowerCase();
   return /(?:^|[-_/])(collage|contact-sheet|contact|sheet|split|before-after|beforeafter|grid|montage|storyboard|multi-panel|panel)(?:[-_/]|$)/.test(normalized) ||
-    normalized.includes("/pack-galleries/") ||
-    normalized.includes("/fan-holiday-theme/gallery/");
+    normalized.includes("/_sheets/");
 }
 
 function creativePackHrefSlug(pack) {
@@ -114,6 +148,16 @@ function creativePackMatchesShowcaseSlug(pack, slug) {
   return Boolean(normalizedSlug) && creativePackTokens(pack).includes(normalizedSlug);
 }
 
+function dreamshootHomepageSafeShowcaseImageForPack(pack) {
+  const source = [
+    creativePackHrefSlug(pack),
+    pack.categoryRecord?.slug,
+    pack.category,
+    pack.name
+  ].map(showcaseSlug).map((slug) => dreamshootHomepageSafeShowcaseImagePathBySlug[slug]).find(Boolean);
+  return source || "";
+}
+
 function assertShowcaseImageSourceData(store, site, pageJson, label) {
   const slugs = imageSlugsForPage(pageJson).map(showcaseSlug);
   const expectedSlugs = (store.imageSlugs ?? []).map(showcaseSlug);
@@ -131,7 +175,7 @@ function assertShowcaseImageSourceData(store, site, pageJson, label) {
     const source = homepageShowcaseImageUrlForStore(store, site, slug);
     const assetFile = path.resolve(repoRoot, "public", `.${comparableImageUrl(source)}`);
     assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing single-image homepage showcase asset ${assetFile}`);
-    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: homepage image source must not be a collage/contact-sheet/gallery asset: ${source}`);
+    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: homepage image source must not be a collage/contact-sheet composite asset: ${source}`);
     assert(activePacks.some((pack) => creativePackMatchesShowcaseSlug(pack, slug)), `${label}: homepage image slug has no active creative pack match: ${slug}`);
   }
   const packCoverSources = activePacks.map((pack) => comparableImageUrl(pack.imageUrl));
@@ -140,11 +184,23 @@ function assertShowcaseImageSourceData(store, site, pageJson, label) {
   for (const source of packCoverSources) {
     const assetFile = path.resolve(repoRoot, "public", `.${source}`);
     assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing active homepage pack image asset ${assetFile}`);
-    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: active homepage pack image must not be a collage/contact-sheet/gallery asset: ${source}`);
+    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: active homepage pack image must not be a collage/contact-sheet composite asset: ${source}`);
   }
   if (isAidreamcapesStore(store, site)) {
     assert(imageSources.every((source) => source.includes("/fan-holiday-theme/categories/")), `${label}: Aidreamcapes homepage should use clean category images, got ${imageSources.join("|")}`);
   } else {
+    const safePackSources = activePacks.map((pack) => dreamshootHomepageSafeShowcaseImageForPack(pack));
+    const uniqueSafePackSources = new Set(safePackSources.map(comparableImageUrl));
+    assert(safePackSources.length === activePacks.length && safePackSources.every(Boolean), `${label}: every DreamShoot homepage pack should have a curated safe single-image source`);
+    assert(uniqueSafePackSources.size === safePackSources.length, `${label}: duplicate curated DreamShoot homepage image sources: ${safePackSources.join("|")}`);
+    for (const source of safePackSources) {
+      const comparableSource = comparableImageUrl(source);
+      const assetFile = path.resolve(repoRoot, "public", `.${comparableSource}`);
+      assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing curated DreamShoot homepage image asset ${assetFile}`);
+      assert(!comparableSource.includes("/pack-covers/"), `${label}: curated DreamShoot homepage images must not fall back to pack covers: ${source}`);
+      assert(!looksLikeCompositeShowcaseAsset(source), `${label}: curated DreamShoot homepage image must be a single clean image: ${source}`);
+      assert(!bannedDreamshootHomepageSafeImages.has(comparableSource), `${label}: curated DreamShoot homepage image selected a known split/collage candidate: ${source}`);
+    }
     assert(imageSources.every((source) => source.includes("/homepage-showcase/images/")), `${label}: DreamShoot homepage should use dedicated single-image showcase assets, got ${imageSources.join("|")}`);
   }
 }
@@ -345,12 +401,16 @@ assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="image"'), "s
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "showcase video cards should be clickable preview triggers");
 assert(themeRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should keep dedicated AI-generated homepage fallback assets");
 assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
+assert(themeRenderer.includes("dreamshootHomepageSafeShowcaseImagePathBySlug"), "homepage showcase should keep a curated safe single-image source table for DreamShoot product cards");
+assert(themeRenderer.includes("dreamshootHomepageSafeImageForPack"), "homepage showcase should check curated safe product-card images before gallery fallback");
 assert(themeRenderer.includes("homepageShowcaseImageCardFromSlug"), "homepage showcase should build cards directly from configured image slugs before falling back to pack galleries");
 assert(themeRenderer.includes("generationShowcasePriorityImageCardFromSlug"), "homepage showcase should use configured image slugs as priority cards without limiting total image products");
 assert(themeRenderer.includes("generationShowcasePackPriorityIndex"), "homepage showcase should sort active packs by configured priority image slugs");
 assert(themeRenderer.includes("generationShowcasePackDedupeKey"), "homepage showcase should dedupe by active pack identity so all 28 visible themes remain available");
 assert(!themeRenderer.includes("return generationShowcaseCardsFromSources(uniqueSelectedImageSlugs"), "homepage showcase must not return only the eight configured priority image slugs");
 assert(themeRenderer.includes("looksLikeCompositeShowcaseImageUrl"), "homepage showcase image selection should reject collage/contact-sheet/gallery composite candidates");
+assert(!themeRenderer.includes('normalized.includes("/pack-galleries/")'), "homepage showcase must not reject every gallery single image as a composite");
+assert(!themeRenderer.includes('normalized.includes("/fan-holiday-theme/gallery/")'), "homepage showcase must not reject every Aidreamcapes gallery single image as a composite");
 assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)"), "showcase images should come from each store's dynamic theme source list");
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
 assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should render in dynamically balanced wall rows");
