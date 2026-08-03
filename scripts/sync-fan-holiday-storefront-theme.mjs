@@ -3,7 +3,6 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
-import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import {
   localShowcasePosterPath,
@@ -108,6 +107,7 @@ const skipAssets = flags.has("skip-assets");
 const forceAssets = flags.has("force-assets") || flags.has("force");
 const fallbackDerivedAssets = flags.has("fallback-derived-assets") || process.env.AIDREAMCAPES_FAN_HOLIDAY_FALLBACK_DERIVED_ASSETS === "1";
 const gallerySlotCount = 12;
+let sharpLoader;
 
 const rootCategoryDefs = [
   {
@@ -669,6 +669,7 @@ async function renderDerivedImage({ source, output, title, meta, index, width = 
   if (!forceAssets && await fileExists(output)) {
     return { output, created: false };
   }
+  const sharp = await loadSharp();
   await ensureDir(output);
   const [background, accent, soft] = paletteForIndex(index);
   const overlay = Buffer.from(`
@@ -696,6 +697,18 @@ async function renderDerivedImage({ source, output, title, meta, index, width = 
     .webp({ quality: 86 })
     .toFile(output);
   return { output, created: true };
+}
+
+async function loadSharp() {
+  if (sharpLoader !== undefined) return sharpLoader;
+  try {
+    const moduleName = "sharp";
+    const mod = await import(moduleName);
+    sharpLoader = mod.default ?? mod;
+    return sharpLoader;
+  } catch (error) {
+    throw new Error(`sharp_unavailable_for_fallback_asset_generation:${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
 async function prepareAssets() {
