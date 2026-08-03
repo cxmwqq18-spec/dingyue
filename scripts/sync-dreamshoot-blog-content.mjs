@@ -70,7 +70,6 @@ function makeCategoryArticle(input) {
   const examples = input.examples.length ? input.examples : [label];
   const examplesText = readableList(examples);
   const anchorPrefix = input.blogSlug.replace(/^\/blog\//, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const description = input.description.replace(/\.$/, "");
   const summary = input.summary ?? `Use this ${brand} guide to decide when ${label} fits, which ${sourceTerm} or references help, what to compare before spending credits, and how to review finished images privately.`;
   const seoTitle = input.seoTitle ?? searchFriendlySeoTitle(label, brand, isVideoTheme ? "video themes" : "private galleries");
   const seoDescription = input.seoDescription ?? `Plan ${label} in ${brand}: choose ${sourceTerm}, compare fit, review credit cost, and check the private gallery before downloads.`;
@@ -476,10 +475,6 @@ function isExcludedBlogCoverage(siteId, kind, slug) {
   return false;
 }
 
-function siteById(state, siteId) {
-  return (state.sites ?? []).find((site) => site.id === siteId);
-}
-
 function articleSlugs(articles) {
   return new Set(articles.map((article) => article.slug));
 }
@@ -493,6 +488,33 @@ function defaultSiteImage(brand) {
   return brand === "Aidreamcapes"
     ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/showcase/fan-scene-albums.webp"
     : "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.webp";
+}
+
+const mydreamshootsBlogSafeImageOverrides = new Map([
+  ["holiday", "/assets/dreamshoot/generated/homepage-showcase/images/holiday.webp?v=20260803blogsafe1"],
+  ["magic-upscaler", "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.webp?v=20260803blogsafe1"]
+]);
+
+function publicAssetExists(imageUrl) {
+  const pathname = imagePathnameForUrl(imageUrl);
+  if (!pathname.startsWith("/assets/")) return false;
+  return fs.existsSync(path.join(process.cwd(), "public", decodeURIComponent(pathname).replace(/^\/+/, "")));
+}
+
+function mydreamshootsBlogGalleryImage(slug) {
+  const imageUrl = `/assets/dreamshoot/generated/pack-galleries/${slug}/${slug}-01.webp?v=20260715b`;
+  return publicAssetExists(imageUrl) ? imageUrl : "";
+}
+
+function blogSafeImageUrlForPack({ brand, slug, pack, category, parent }) {
+  if (brand !== "MyDreamShoots") {
+    return pack.imageUrl || category?.imageUrl || parent?.imageUrl || defaultSiteImage(brand);
+  }
+  const override = mydreamshootsBlogSafeImageOverrides.get(slug);
+  if (override && publicAssetExists(override)) return override;
+  const galleryImage = mydreamshootsBlogGalleryImage(slug);
+  if (galleryImage) return galleryImage;
+  return category?.imageUrl || pack.imageUrl || parent?.imageUrl || defaultSiteImage(brand);
 }
 
 function makeCreativeCategoryArticle(state, siteId, brand, category, parent, packs) {
@@ -562,18 +584,19 @@ function buildCreativePackCoverageArticles(state, siteId, brand) {
     .map((pack) => {
       const { category, parent } = packCategoryContext(pack, categoriesById);
       const label = pack.name || category?.label || pack.category || "Photo package";
+      const slug = slugifySegment(label);
       const categoryLabel = category?.label || pack.category || label;
       const parentLabel = parent?.label || categoryLabel || "fan and holiday albums";
       const examples = compactList([label, categoryLabel, parentLabel], label);
-      const targetHref = `/collections/${slugifySegment(label)}`;
+      const targetHref = `/collections/${slug}`;
       return makeCategoryArticle({
         sitePrefix: siteId,
         brand,
         kind: "theme",
         label,
-        blogSlug: `/blog/${slugifySegment(label)}-photo-package-guide`,
+        blogSlug: `/blog/${slug}-photo-package-guide`,
         description: pack.description || pack.headline || `${label} gives shoppers a focused ${parentLabel} direction to compare before starting a private album.`,
-        imageUrl: pack.imageUrl || category?.imageUrl || parent?.imageUrl || defaultSiteImage(brand),
+        imageUrl: blogSafeImageUrlForPack({ brand, slug, pack, category, parent }),
         imageAlt: `${brand} ${label} theme cover`,
         targetLabel: `Open ${label} theme`,
         targetHref,
@@ -667,6 +690,7 @@ const siteConfigs = [
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
     brand: "MyDreamShoots",
+    coverageMode: "creative-packs",
     blogTitle: "Guides",
     footerLabel: "Blog",
     guideType: "AI photo guide",

@@ -161,12 +161,9 @@ const expectedSites = [
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
     label: "Blog",
+    coverageMode: "creative-packs",
     foreignBrandPatterns: [/Aidreamcapes/i, /AIdreamcapes/i],
-    baseArticleSlugs: [
-      "/blog/preparing-source-photos",
-      "/blog/choosing-ai-photo-packages",
-      "/blog/private-gallery-and-credits-guide"
-    ]
+    baseArticleSlugs: []
   },
   {
     slug: "aidreamcapes",
@@ -229,11 +226,14 @@ assert(
     !themeRenderer.includes("Try the workflow yourself"),
   "blog details use a light internal-link footer and disable fullscreen cover previews"
 );
+const blogCoverHelper = themeRenderer.match(/function blogCoverImageClassName[\s\S]*?\n}\n/)?.[0] ?? "";
 assert(
   themeRenderer.includes("aspect-[4/3] overflow-hidden bg-white/[0.08]") &&
     themeRenderer.includes("aspect-[4/3] overflow-hidden bg-zinc-100") &&
-    themeRenderer.includes("origin-top scale-[1.38] object-cover object-top"),
-  "blog cards use link-safe cover frames and crop Aidreamcapes image labels"
+    blogCoverHelper.includes("object-contain object-center") &&
+    !blogCoverHelper.includes("object-cover") &&
+    !blogCoverHelper.includes("scale-["),
+  "blog cards use link-safe cover frames without crop or scale obstruction"
 );
 assert(
   storefrontRender.includes("lightweightBlogArticlePageForClient(page)") &&
@@ -352,7 +352,9 @@ for (const expected of expectedSites) {
       assert(/^(\/collections(?:\/[^/]+)?|\/pricing|\/login)$/.test(targetHref), `${expected.slug}${article.slug}: base article has a store entry link`, targetHref);
     }
     if (expected.siteId === "site_dreamshoot") {
-      assert(!/\/(category-covers|hero-grid)-/i.test(sectionSetting(articleSection, "imageUrl")), `${expected.slug}${article.slug}: cover avoids collage-style assets`, sectionSetting(articleSection, "imageUrl"));
+      const imageUrl = sectionSetting(articleSection, "imageUrl");
+      assert(!/\/pack-covers\//i.test(imageUrl), `${expected.slug}${article.slug}: cover avoids package cover composites`, imageUrl);
+      assert(!/\/(category-covers|hero-grid)-|collage|contact-sheet|before-after|beforeafter|split|grid|montage|multi-panel|panel/i.test(imageUrl), `${expected.slug}${article.slug}: cover avoids collage-style assets`, imageUrl);
     }
     assert((pageSeo.title ?? "").length >= 45 && (pageSeo.title ?? "").length <= 70, `${expected.slug}${article.slug}: SEO title is search-result friendly`, pageSeo.title ?? "");
     assert((pageSeo.description ?? "").length >= 120 && (pageSeo.description ?? "").length <= 160, `${expected.slug}${article.slug}: SEO description is search-result friendly`, pageSeo.description ?? "");

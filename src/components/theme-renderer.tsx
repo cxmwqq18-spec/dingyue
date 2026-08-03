@@ -3970,11 +3970,8 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
     .sort((left, right) => right.sortTime - left.sortTime || left.title.localeCompare(right.title));
 }
 
-function blogCoverImageClassName(site: Site, hover = false): string {
-  if (isAidreamcapesSite(site) && !isSpanishXbySite(site)) {
-    return `h-full w-full origin-top scale-[1.38] object-cover object-top ${hover ? "transition duration-500 group-hover:scale-[1.42]" : ""}`.trim();
-  }
-  return `h-full w-full object-cover ${hover ? "transition duration-500 group-hover:scale-[1.04]" : ""}`.trim();
+function blogCoverImageClassName(_site: Site, _hover = false): string {
+  return "h-full w-full object-contain object-center";
 }
 
 export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
@@ -4934,7 +4931,7 @@ const packImages: Record<string, string> = {
   creator: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
   gala: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
   sports: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp",
-  seasonal: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1",
+  seasonal: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1",
   beauty: "/assets/dreamshoot/beauty-portrait-gpt2.png",
   travel: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
   avatar: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
@@ -4963,11 +4960,11 @@ const dreamshootPackHeroImages: Record<string, string> = {
   "valentine-photos": "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.webp",
   engagement: "/assets/dreamshoot/generated/20260622-homepage-unique/proof-couple-engagement.webp",
   boudoir: "/assets/dreamshoot/beauty-portrait-gpt2.webp",
-  holiday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1",
+  holiday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1",
   "christmas-couple": "/assets/dreamshoot/generated/pack-covers/christmas-couple/christmas-couple-cover.webp?v=20260731themeuniqueness1",
   "christmas-photos": "/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260731themeuniqueness1",
   "thanksgiving-group-photos": "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
-  "halloween-party-photos": "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260731themeuniqueness1",
+  "halloween-party-photos": "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1",
   "ai-video-add-ons": "/assets/dreamshoot/generated/20260622-pack-fill/ai-video-addons-pack.webp",
   "magic-upscaler": "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.webp"
 };
@@ -5975,10 +5972,10 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
     card("catalog_worldcup", "World Cup fan photos", "Fan Photos", "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/collections/world-cup-fan-photos"),
     card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photos"),
     card("catalog_christmas_couple", "Christmas Couple", "Christmas", "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.", "Couple cards", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/collections/christmas-couple"),
-    card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1", "/collections/holiday"),
+    card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", "/collections/holiday"),
     card("catalog_creator_vip", "Creator red-carpet style", "VIP Looks", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/collections/creator-portraits"),
     card("catalog_thanksgiving", "Thanksgiving Group Photos", "Thanksgiving", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/collections/thanksgiving-group-photos"),
-    card("catalog_halloween", "Halloween Party Photos", "Halloween", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260731themeuniqueness1", "/collections/halloween-party-photos"),
+    card("catalog_halloween", "Halloween Party Photos", "Halloween", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/collections/halloween-party-photos"),
     card("catalog_headshot", "Professional Headshots", "Headshots", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/collections/headshots"),
     card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/collections/hairstyle"),
     card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/collections/cyberpunk"),
@@ -9999,7 +9996,7 @@ function SectionView({
       { id: "proof_sports_meetup", type: "proof_card", settings: { title: "Sports idol-style meetups", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Sports Stars", badge: "Sports Stars", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/world-cup-fan-photos" } },
       { id: "proof_vip", type: "proof_card", settings: { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photos" } },
       { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas group photos", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Christmas", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" } },
-      { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1", href: "/collections/holiday" } }
+      { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }
     ];
     const tabs = listLines(setting(section, "tabs", "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal"));
     const aidreamcapesProofTabHrefByLabel: Record<string, string> = {
@@ -10684,7 +10681,7 @@ function SectionView({
     const fallbackCards: DreamShootCatalogCard[] = [
       dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" } }),
       dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photos", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Christmas", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1", href: "/collections/holiday" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }),
       dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Creator red-carpet style", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "VIP Looks", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: "/collections/creator-portraits" } })
     ];
     const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site, creativePacks, creativePackCategories) : defaultDreamshootCatalogCards(site);

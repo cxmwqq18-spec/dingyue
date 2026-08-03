@@ -266,16 +266,16 @@ function applyDreamshootVisualProofIsolation(sections) {
     previewImages: `${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp")}|${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp")}`
   });
   updateBlock(blocks, "proof_seasonal", {
-    imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1"
+    imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
   });
   updateBlock(catalog, "catalog_holiday", {
-    imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260731themeuniqueness1"
+    imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
   });
   updateBlock(catalog, "catalog_thanksgiving", {
     imageUrl: "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1"
   });
   updateBlock(catalog, "catalog_halloween", {
-    imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260731themeuniqueness1"
+    imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1"
   });
 
   return changed;
